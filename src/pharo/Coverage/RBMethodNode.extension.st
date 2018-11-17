@@ -12,8 +12,13 @@ RBMethodNode >> covInvoke: aContext [
 		collect: [ :e | 
 			CovInvocation new
 				method: e method;
-				receiverClass: aContext receiver class;
-				argumentClasses: (aContext arguments collect: #class);
+				receiverClass: e receiver class;
+				argumentClasses:
+					([ e arguments collect: #class ]
+						on: SubscriptOutOfBounds
+						do: [ self flag: 'how can this happen?'.
+							e method numArgs timesCollect: [ nil ] ]);
 				yourself ].
-	(self propertyAt: #covMonitor) critical: [ (self propertyAt: #covInvocations ifAbsentPut: [ CovInvocations new ]) add: invocations ]
+	(self propertyAt: #covMonitor)
+		critical: [ (self propertyAt: #covInvocations ifAbsentPut: [ CovInvocations new ]) add: invocations ]
 ]

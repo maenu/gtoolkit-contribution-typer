@@ -49,8 +49,9 @@ CovCoverage class >> initialize [
 		selector: #covInvoke:;
 		arguments: #(context).
 	messageLink := MetaLink new
-		metaObject: #node;
-		selector: #covSend:to:with:;
+		metaObject: [];
+		selector: #cull:cull:cull:;
+		control: #after;
 		arguments: #(selector receiver arguments).
 	assignmentLink := MetaLink new
 		metaObject: #node;
@@ -85,9 +86,9 @@ CovCoverage class >> installOnMethod: aMethod [
 	self flag: 'context is problematic'.
 	self flag: 'message is problematic'.
 	method ast do: [ :n | self install: contextLink onNode: n ].
-	method ast covAllMessages do: [ :n | self install: messageLink onNode: n ].
-	method ast covAllAssignments do: [ :n | self install: assignmentLink onNode: n ].
-	method ast covAllReturns do: [ :n | self install: returnLink onNode: n ]
+	"method ast covAllMessages do: [ :n | self install: messageLink onNode: n ]."
+	"method ast covAllAssignments do: [ :n | self install: assignmentLink onNode: n ].
+	method ast covAllReturns do: [ :n | self install: returnLink onNode: n ]"
 ]
 
 { #category : #'as yet unclassified' }

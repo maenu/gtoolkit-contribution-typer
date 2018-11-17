@@ -37,7 +37,7 @@ CovCollection >> initialize [
 { #category : #initialization }
 CovCollection >> summary [
 	| summary |
-	summary := (collection groupedBy: #youself) associations collect: [ :e | e key -> e value size ].
-	summary associations sort: [ :a :b | a value > b value ].
+	summary := (collection groupedBy: #yourself) associations collect: [ :e | e key -> e value size ].
+	summary sort: [ :a :b | a value > b value ].
 	^ summary asOrderedDictionary
 ]
