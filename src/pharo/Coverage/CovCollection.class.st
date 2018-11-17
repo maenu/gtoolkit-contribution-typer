@@ -22,6 +22,12 @@ CovCollection >> collection: anObject [
 	collection := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+CovCollection >> gtInspectorSummaryIn: aComposite [
+	<gtInspectorPresentationOrder: 1>
+	^ self summary gtInspectorItemsIn: aComposite
+]
+
 { #category : #initialization }
 CovCollection >> initialize [
 	super initialize.
@@ -33,5 +39,5 @@ CovCollection >> summary [
 	| summary |
 	summary := (collection groupedBy: #youself) associations collect: [ :e | e key -> e value size ].
 	summary associations sort: [ :a :b | a value > b value ].
-	^ summary
+	^ summary asOrderedDictionary
 ]
