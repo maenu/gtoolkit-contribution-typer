@@ -82,10 +82,10 @@ CovCoverage class >> installOnMethod: aMethod [
 	"after uninstall method is detached, get executed method"
 	method := aMethod methodClass >> aMethod selector.
 	installedMethods add: method.
-	method methodNode do: [ :n | n link: contextLink ].
-	method ast covAllMessages do: [ :n | n link: messageLink ].
-	method ast covAllAssignments do: [ :n | n link: assignmentLink ].
-	method ast covAllReturns do: [ :n | n link: returnLink ]
+	method methodNode do: [ :n | self install: contextLink onNode: n ].
+	method ast covAllMessages do: [ :n | self install: messageLink onNode: n ].
+	method ast covAllAssignments do: [ :n | self install: assignmentLink onNode: n ].
+	method ast covAllReturns do: [ :n | self install: returnLink onNode: n ]
 ]
 
 { #category : #'as yet unclassified' }

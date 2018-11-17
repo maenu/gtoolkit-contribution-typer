@@ -8,8 +8,12 @@ RBMethodNode >> covInvocations [
 { #category : #'*Coverage' }
 RBMethodNode >> covInvoke: aContext [
 	| invocation |
-	invocation := {aContext receiver class.
-	(aContext arguments collect: [ :e | e class ]).
-	(aContext stack collect: [ :e | e method ])}.
-	(self propertyAt: #covMonitor) critical: [ (self propertyAt: #covInvocations ifAbsentPut: [ OrderedCollection new ]) add: invocation ]
+	invocation := aContext stack
+		collect: [ :e | 
+			{e method.
+			aContext receiver class.
+			(aContext arguments collect: #class)} ].
+	(self propertyAt: #covMonitor)
+		critical:
+			[ (self propertyAt: #covInvocations ifAbsentPut: [ OrderedCollection new ]) add: invocation ]
 ]
