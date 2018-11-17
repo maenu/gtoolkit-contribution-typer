@@ -5,12 +5,29 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+CovCoverageExamples >> installOnZincHttp [
+	<gtExample>
+	| testResult |
+	testResult := self runTestsInPackage: #'Zinc-Tests' asPackage.
+	^ testResult
+]
+
+{ #category : #'as yet unclassified' }
 CovCoverageExamples >> runTestsInPackage: aPackage [
 	| result |
 	result := TestResult new.
 	(aPackage definedClasses select: [ :e | e isTestCase and: e isAbstract not ])
 		do: [ :e | e suite run: result ].
 	^ result
+]
+
+{ #category : #'as yet unclassified' }
+CovCoverageExamples >> runTestsInZinc [
+	<gtExample>
+	| package |
+	package := #'Zinc-HTTP' asPackage.
+	CovCoverage installOnPackage: package.
+	^ package
 ]
 
 { #category : #'as yet unclassified' }
@@ -26,9 +43,9 @@ CovCoverageExamples >> uninstallFromAllInstalledMethods [
 { #category : #'as yet unclassified' }
 CovCoverageExamples >> zincHttp [
 	<gtExample>
-	| package |
-	package := #'Zinc-HTTP' asPackage.
-	CovCoverage uninstallFromAllInstalledMethods.
-	CovCoverage installOnPackage: package.
-	^ package -> (self runTestsInPackage: #'Zinc-Tests' asPackage)
+	| package testResult |
+	self uninstallFromAllInstalledMethods.
+	package := self installOnZincHttp.
+	testResult := self runTestsInZinc.
+	^ package -> testResult
 ]
