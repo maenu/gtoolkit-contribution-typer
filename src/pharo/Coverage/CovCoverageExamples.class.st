@@ -14,6 +14,16 @@ CovCoverageExamples >> runTestsInPackage: aPackage [
 ]
 
 { #category : #'as yet unclassified' }
+CovCoverageExamples >> uninstallFromAllInstalledMethods [
+	<gtExample>
+	| installedMethods |
+	CovCoverage uninstallFromAllInstalledMethods.
+	installedMethods := CovCoverage installedMethods.
+	self assert: installedMethods isEmpty.
+	^ installedMethods
+]
+
+{ #category : #'as yet unclassified' }
 CovCoverageExamples >> zincHttp [
 	<gtExample>
 	| package |
