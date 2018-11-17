@@ -5,12 +5,30 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-CovCoverageExamples >> installOnZincHttp [
+CovCoverageExamples >> installOnNeoJsonCore [
 	<gtExample>
 	| package |
-	package := #'Zinc-HTTP' asPackage.
+	package := #'Neo-JSON-Core' asPackage.
 	CovCoverage installOnPackage: package.
 	^ package
+]
+
+{ #category : #'as yet unclassified' }
+CovCoverageExamples >> neoJsonCore [
+	<gtExample>
+	| package testResult |
+	self uninstallFromAllInstalledMethods.
+	package := self installOnNeoJsonCore.
+	testResult := self runTestsInNeoJsonTests.
+	^ package -> testResult
+]
+
+{ #category : #'as yet unclassified' }
+CovCoverageExamples >> runTestsInNeoJsonTests [
+	<gtExample>
+	| testResult |
+	testResult := self runTestsInPackage: #'Neo-JSON-Tests' asPackage.
+	^ testResult
 ]
 
 { #category : #'as yet unclassified' }
@@ -23,14 +41,6 @@ CovCoverageExamples >> runTestsInPackage: aPackage [
 ]
 
 { #category : #'as yet unclassified' }
-CovCoverageExamples >> runTestsInZincTests [
-	<gtExample>
-	| testResult |
-	testResult := self runTestsInPackage: #'Zinc-Tests' asPackage.
-	^ testResult
-]
-
-{ #category : #'as yet unclassified' }
 CovCoverageExamples >> uninstallFromAllInstalledMethods [
 	<gtExample>
 	| installedMethods |
@@ -38,14 +48,4 @@ CovCoverageExamples >> uninstallFromAllInstalledMethods [
 	installedMethods := CovCoverage installedMethods.
 	self assert: installedMethods isEmpty.
 	^ installedMethods
-]
-
-{ #category : #'as yet unclassified' }
-CovCoverageExamples >> zincHttp [
-	<gtExample>
-	| package testResult |
-	self uninstallFromAllInstalledMethods.
-	package := self installOnZincHttp.
-	testResult := self runTestsInZincTests.
-	^ package -> testResult
 ]

@@ -30,10 +30,11 @@ CovSend >> printOn: aStream [
 					aStream << ' '.
 					(argumentClasses at: 1) printOn: aStream ]
 				ifFalse: [ | keywords |
-					keywords := selector separateKeywords.
-					1 to: keywords size do: [ :i | 
-						(keywords at: i) printOn: aStream.
+					keywords := ':' split: selector.
+					1 to: keywords size - 1 do: [ :i | 
 						aStream << ' '.
+						(keywords at: i) printOn: aStream.
+						aStream << ': '.
 						(argumentClasses at: i) printOn: aStream ] ] ]
 ]
 

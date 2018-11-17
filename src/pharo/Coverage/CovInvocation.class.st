@@ -31,19 +31,22 @@ CovInvocation >> method: anObject [
 
 { #category : #printing }
 CovInvocation >> printOn: aStream [
+	| selector |
 	receiverClass printOn: aStream.
 	aStream << ' '.
-	method selector isUnary
-		ifTrue: [ method selector printOn: aStream ]
-		ifFalse: [ method selector isBinary
-				ifTrue: [ method selector printOn: aStream.
+	selector := method selector.
+	selector isUnary
+		ifTrue: [ selector printOn: aStream ]
+		ifFalse: [ selector isBinary
+				ifTrue: [ selector printOn: aStream.
 					aStream << ' '.
 					(argumentClasses at: 1) printOn: aStream ]
 				ifFalse: [ | keywords |
-					keywords := method selector separateKeywords.
-					1 to: keywords size do: [ :i | 
-						(keywords at: i) printOn: aStream.
+					keywords := ':' split: selector.
+					1 to: keywords size - 1 do: [ :i | 
 						aStream << ' '.
+						(keywords at: i) printOn: aStream.
+						aStream << ': '.
 						(argumentClasses at: i) printOn: aStream ] ] ]
 ]
 

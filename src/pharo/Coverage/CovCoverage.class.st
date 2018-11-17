@@ -110,7 +110,7 @@ CovCoverage class >> installedMethods [
 { #category : #'as yet unclassified' }
 CovCoverage class >> installedNodeIn: aMethod for: aNode ifFound: aBlock ifNone: anotherBlock [
 	^ self
-		covMethodFor: aMethod
+		installedMethodFor: aMethod
 		ifFound: [ :e | 
 			| nodes installedNodes i |
 			nodes := aMethod ast allChildren.
