@@ -42,21 +42,21 @@ CovCoverage class >> covSendsIn: aMethod for: aNode [
 
 { #category : #'class initialization' }
 CovCoverage class >> initialize [
+	installedMethods ifNotNil: [ self uninstallFromAllInstalledMethods ].
 	installedMethods := Set new.
 	contextLink := MetaLink new
 		metaObject: #node;
 		selector: #covInvoke:;
-		control: #after;
 		arguments: #(context).
+	messageLink := MetaLink new
+		metaObject: #node;
+		selector: #covSend:to:with:;
+		arguments: #(selector receiver arguments).
 	assignmentLink := MetaLink new
 		metaObject: #node;
 		selector: #covAssign:;
 		control: #after;
 		arguments: #(value).
-	messageLink := MetaLink new
-		metaObject: #node;
-		selector: #covSend:to:with:;
-		arguments: #(selector receiver arguments).
 	returnLink := MetaLink new
 		metaObject: #node;
 		selector: #covReturn:;
@@ -82,7 +82,9 @@ CovCoverage class >> installOnMethod: aMethod [
 	"after uninstall method is detached, get executed method"
 	method := aMethod methodClass >> aMethod selector.
 	installedMethods add: method.
-	method methodNode do: [ :n | self install: contextLink onNode: n ].
+	self flag: 'context is problematic'.
+	self flag: 'message is problematic'.
+	method ast do: [ :n | self install: contextLink onNode: n ].
 	method ast covAllMessages do: [ :n | self install: messageLink onNode: n ].
 	method ast covAllAssignments do: [ :n | self install: assignmentLink onNode: n ].
 	method ast covAllReturns do: [ :n | self install: returnLink onNode: n ]

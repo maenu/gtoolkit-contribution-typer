@@ -8,7 +8,7 @@ RBMethodNode >> covInvocations [
 { #category : #'*Coverage' }
 RBMethodNode >> covInvoke: aContext [
 	| invocations |
-	invocations := aContext stack
+	invocations := (aContext stackOfSize: 100)
 		collect: [ :e | 
 			CovInvocation new
 				method: e method;
