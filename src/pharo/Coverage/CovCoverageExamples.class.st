@@ -7,9 +7,10 @@ Class {
 { #category : #'as yet unclassified' }
 CovCoverageExamples >> installOnZincHttp [
 	<gtExample>
-	| testResult |
-	testResult := self runTestsInPackage: #'Zinc-Tests' asPackage.
-	^ testResult
+	| package |
+	package := #'Zinc-HTTP' asPackage.
+	CovCoverage installOnPackage: package.
+	^ package
 ]
 
 { #category : #'as yet unclassified' }
@@ -22,12 +23,11 @@ CovCoverageExamples >> runTestsInPackage: aPackage [
 ]
 
 { #category : #'as yet unclassified' }
-CovCoverageExamples >> runTestsInZinc [
+CovCoverageExamples >> runTestsInZincTests [
 	<gtExample>
-	| package |
-	package := #'Zinc-HTTP' asPackage.
-	CovCoverage installOnPackage: package.
-	^ package
+	| testResult |
+	testResult := self runTestsInPackage: #'Zinc-Tests' asPackage.
+	^ testResult
 ]
 
 { #category : #'as yet unclassified' }
@@ -46,6 +46,6 @@ CovCoverageExamples >> zincHttp [
 	| package testResult |
 	self uninstallFromAllInstalledMethods.
 	package := self installOnZincHttp.
-	testResult := self runTestsInZinc.
+	testResult := self runTestsInZincTests.
 	^ package -> testResult
 ]
