@@ -9,6 +9,13 @@ Class {
 	#category : #Coverage
 }
 
+{ #category : #comparing }
+CovSend >> = anObject [
+	^ super = anObject
+		and: [ self class = anObject class
+				and: [ selector = anObject selector and: [ argumentClasses = anObject argumentClasses and: [ receiverClass = anObject receiverClass ] ] ] ]
+]
+
 { #category : #accessing }
 CovSend >> argumentClasses [
 	^ argumentClasses
@@ -19,23 +26,22 @@ CovSend >> argumentClasses: anObject [
 	argumentClasses := anObject
 ]
 
+{ #category : #comparing }
+CovSend >> hash [
+	^ selector hash + argumentClasses hash + receiverClass hash
+]
+
 { #category : #printing }
 CovSend >> printOn: aStream [
 	receiverClass printOn: aStream.
 	aStream << ' '.
 	selector isUnary
-		ifTrue: [ selector printOn: aStream ]
+		ifTrue: [ aStream << selector asString ]
 		ifFalse: [ selector isBinary
-				ifTrue: [ selector printOn: aStream.
-					aStream << ' '.
-					(argumentClasses at: 1) printOn: aStream ]
+				ifTrue: [ aStream << selector asString << ' ' << (argumentClasses at: 1) name ]
 				ifFalse: [ | keywords |
 					keywords := ':' split: selector.
-					1 to: keywords size - 1 do: [ :i | 
-						aStream << ' '.
-						(keywords at: i) printOn: aStream.
-						aStream << ': '.
-						(argumentClasses at: i) printOn: aStream ] ] ]
+					1 to: keywords size - 1 do: [ :i | aStream << ' ' << (keywords at: i) asString << ': ' << (argumentClasses at: 1) name ] ] ]
 ]
 
 { #category : #accessing }

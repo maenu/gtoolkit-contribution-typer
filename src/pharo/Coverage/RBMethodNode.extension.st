@@ -15,7 +15,5 @@ RBMethodNode >> covInvoke: aContext [
 				receiverClass: aContext receiver class;
 				argumentClasses: (aContext arguments collect: #class);
 				yourself ].
-	(self propertyAt: #covMonitor)
-		critical:
-			[ (self propertyAt: #covInvocations ifAbsentPut: [ OrderedCollection new ]) add: invocations ]
+	(self propertyAt: #covMonitor) critical: [ (self propertyAt: #covInvocations ifAbsentPut: [ CovInvocations new ]) add: invocations ]
 ]

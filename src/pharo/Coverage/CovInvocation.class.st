@@ -9,6 +9,13 @@ Class {
 	#category : #Coverage
 }
 
+{ #category : #comparing }
+CovInvocation >> = anObject [
+	^ super = anObject
+		and: [ self class = anObject class
+				and: [ method = anObject method and: [ argumentClasses = anObject argumentClasses and: [ receiverClass = anObject receiverClass ] ] ] ]
+]
+
 { #category : #accessing }
 CovInvocation >> argumentClasses [
 	^ argumentClasses
@@ -17,6 +24,11 @@ CovInvocation >> argumentClasses [
 { #category : #accessing }
 CovInvocation >> argumentClasses: anObject [
 	argumentClasses := anObject
+]
+
+{ #category : #comparing }
+CovInvocation >> hash [
+	^ method hash + argumentClasses hash + receiverClass hash
 ]
 
 { #category : #accessing }
@@ -36,18 +48,12 @@ CovInvocation >> printOn: aStream [
 	aStream << ' '.
 	selector := method selector.
 	selector isUnary
-		ifTrue: [ selector printOn: aStream ]
+		ifTrue: [ aStream << selector asString ]
 		ifFalse: [ selector isBinary
-				ifTrue: [ selector printOn: aStream.
-					aStream << ' '.
-					(argumentClasses at: 1) printOn: aStream ]
+				ifTrue: [ aStream << selector asString << ' ' << (argumentClasses at: 1) name ]
 				ifFalse: [ | keywords |
 					keywords := ':' split: selector.
-					1 to: keywords size - 1 do: [ :i | 
-						aStream << ' '.
-						(keywords at: i) printOn: aStream.
-						aStream << ': '.
-						(argumentClasses at: i) printOn: aStream ] ] ]
+					1 to: keywords size - 1 do: [ :i | aStream << ' ' << (keywords at: i) asString << ': ' << (argumentClasses at: 1) name ] ] ]
 ]
 
 { #category : #accessing }
