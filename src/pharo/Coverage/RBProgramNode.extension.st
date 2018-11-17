@@ -7,7 +7,7 @@ RBProgramNode >> covAllAssignments [
 
 { #category : #'*Coverage' }
 RBProgramNode >> covAllMessages [
-	self flag: 'cascaded seem not to work'.
+	self flag: 'seems not to work reliably'.
 	^ (self allChildren select: #isMessage) reject: #isCascade
 ]
 

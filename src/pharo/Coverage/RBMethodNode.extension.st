@@ -8,7 +8,7 @@ RBMethodNode >> covInvocations [
 { #category : #'*Coverage' }
 RBMethodNode >> covInvoke: aContext [
 	| invocations |
-	invocations := (aContext stackOfSize: 100)
+	invocations := (aContext stackOfSize: 10)
 		collect: [ :e | 
 			CovInvocation new
 				method: e method;
@@ -16,9 +16,8 @@ RBMethodNode >> covInvoke: aContext [
 				argumentClasses:
 					([ e arguments collect: #class ]
 						on: SubscriptOutOfBounds
-						do: [ self flag: 'how can this happen?'.
+						do: [ self flag: 'how does this happen?'.
 							e method numArgs timesCollect: [ nil ] ]);
 				yourself ].
-	(self propertyAt: #covMonitor)
-		critical: [ (self propertyAt: #covInvocations ifAbsentPut: [ CovInvocations new ]) add: invocations ]
+	(self propertyAt: #covMonitor) critical: [ (self propertyAt: #covInvocations ifAbsentPut: [ CovInvocations new ]) add: invocations ]
 ]
