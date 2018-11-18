@@ -1,12 +1,12 @@
-Extension { #name : #RBMethodNode }
+Extension { #name : #RBSequenceNode }
 
 { #category : #'*Coverage' }
-RBMethodNode >> covInvocations [
+RBSequenceNode >> covInvocations [
 	^ self propertyAt: #covInvocations ifAbsent: [ CovInvocations new ]
 ]
 
 { #category : #'*Coverage' }
-RBMethodNode >> covInvoke: aContext [
+RBSequenceNode >> covInvoke: aContext [
 	| invocations |
 	self flag: 'make stack customizable'.
 	invocations := (aContext stackOfSize: 10)
@@ -21,4 +21,16 @@ RBMethodNode >> covInvoke: aContext [
 							e method numArgs timesCollect: [ nil ] ]);
 				yourself ].
 	self covMonitor critical: [ self covInvocations add: invocations ]
+]
+
+{ #category : #'*Coverage' }
+RBSequenceNode >> covReturn: anObject [
+	| value_ |
+	value_ := anObject class.
+	self covMonitor critical: [ self covReturns add: value_ ]
+]
+
+{ #category : #'*Coverage' }
+RBSequenceNode >> covReturns [
+	^ self propertyAt: #covReturns ifAbsent: [ CovValues new ]
 ]
