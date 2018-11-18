@@ -72,8 +72,7 @@ CovCoverage class >> install: aMetaLink onNode: aNode [
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> installOnClass: aClass [
-	(aClass methods reject: #isExtension) do: [ :e | self installOnMethod: e ].
-	aClass class methods do: [ :e | self installOnMethod: e ]
+	aClass methods do: [ :e | self installOnMethod: e ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -92,8 +91,7 @@ CovCoverage class >> installOnMethod: aMethod [
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> installOnPackage: aPackage [
-	aPackage definedClasses do: [ :e | self installOnClass: e ].
-	aPackage extensionMethods do: [ :e | self installOnMethod: e ]
+	aPackage methods do: [ :e | self installOnMethod: e ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -130,8 +128,7 @@ CovCoverage class >> uninstallFromAllInstalledMethods [
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> uninstallFromClass: aClass [
-	(aClass methods reject: #isExtension) do: [ :e | self uninstallFromMethod: e ].
-	aClass class methods do: [ :e | self uninstallFromMethod: e ]
+	aClass methods do: [ :e | self uninstallFromMethod: e ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -142,6 +139,5 @@ CovCoverage class >> uninstallFromMethod: aMethod [
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> uninstallFromPackage: aPackage [
-	aPackage definedClasses do: [ :e | self uninstallFromClass: e ].
-	aPackage extensionMethods do: [ :e | self uninstallFromMethod: e ]
+	aPackage methods do: [ :e | self uninstallFromMethod: e ]
 ]
