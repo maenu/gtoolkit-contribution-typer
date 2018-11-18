@@ -83,6 +83,7 @@ CovCoverage class >> installOnMethod: aMethod [
 		cr ]
 		on: Error
 		do: [ :e | 
+			Halt now.
 			Transcript
 				show: 'Failed ' , e class name , ' ' , aMethod printString;
 				cr.
@@ -94,7 +95,7 @@ CovCoverage class >> installOnMethodUnsafe: aMethod [
 	self flag: 'message is problematic'.
 	aMethod ast do: [ :n | self install: contextLink onNode: n ].
 	aMethod ast covAllBlockBodies do: [ :n | self install: contextLink onNode: n ].
-	aMethod ast covAllBlockBodies do: [ :n | self install: returnLink onNode: n ].
+	aMethod ast covAllBlockBodyLasts do: [ :n | self install: returnLink onNode: n ].
 	aMethod ast covAllMessages do: [ :n | self install: messageLink onNode: n ].
 	aMethod ast covAllAssignments do: [ :n | self install: assignmentLink onNode: n ].
 	aMethod ast covAllReturns do: [ :n | self install: returnLink onNode: n ].

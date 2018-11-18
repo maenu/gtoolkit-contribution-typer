@@ -11,6 +11,11 @@ RBProgramNode >> covAllBlockBodies [
 ]
 
 { #category : #'*Coverage' }
+RBProgramNode >> covAllBlockBodyLasts [
+	^ (self covAllBlockBodies select: [ :e | e children isNotEmpty ]) collect: #last
+]
+
+{ #category : #'*Coverage' }
 RBProgramNode >> covAllBlocks [
 	^ self allChildren select: #isBlock
 ]
@@ -29,4 +34,16 @@ RBProgramNode >> covAllReturns [
 { #category : #'*Coverage' }
 RBProgramNode >> covMonitor [
 	^ self propertyAt: #covMonitor ifAbsentPut: [ Monitor new ]
+]
+
+{ #category : #'*Coverage' }
+RBProgramNode >> covReturn: anObject [
+	| value_ |
+	value_ := anObject class.
+	self covMonitor critical: [ self covReturns add: value_ ]
+]
+
+{ #category : #'*Coverage' }
+RBProgramNode >> covReturns [
+	^ self propertyAt: #covReturns ifAbsent: [ CovValues new ]
 ]
