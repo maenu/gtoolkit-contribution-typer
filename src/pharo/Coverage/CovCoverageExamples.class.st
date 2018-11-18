@@ -9,6 +9,7 @@ CovCoverageExamples >> installOnNeoJsonCore [
 	<gtExample>
 	| package |
 	package := #'Neo-JSON-Core' asPackage.
+	self uninstallFromAllInstalledMethods.
 	CovCoverage installOnPackage: package.
 	^ package
 ]

@@ -38,10 +38,10 @@ CovSend >> printOn: aStream [
 	selector isUnary
 		ifTrue: [ aStream << selector asString ]
 		ifFalse: [ selector isBinary
-				ifTrue: [ aStream << selector asString << ' ' << (argumentClasses at: 1) name ]
+				ifTrue: [ aStream << selector asString << ' ' << (argumentClasses at: 1) asString ]
 				ifFalse: [ | keywords |
 					keywords := ':' split: selector.
-					1 to: keywords size - 1 do: [ :i | aStream << ' ' << (keywords at: i) asString << ': ' << (argumentClasses at: 1) name ] ] ]
+					1 to: keywords size - 1 do: [ :i | aStream << ' ' << (keywords at: i) asString << ': ' << (argumentClasses at: 1) asString ] ] ]
 ]
 
 { #category : #accessing }
