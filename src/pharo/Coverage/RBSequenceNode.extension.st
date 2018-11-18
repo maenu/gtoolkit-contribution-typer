@@ -18,7 +18,7 @@ RBSequenceNode >> covInvoke: aContext [
 					([ e arguments collect: #class ]
 						on: SubscriptOutOfBounds
 						do: [ self flag: 'how can this happen?'.
-							e method numArgs timesCollect: [ nil ] ]);
+							e numArgs timesCollect: [ nil ] ]);
 				yourself ].
 	self covMonitor critical: [ self covInvocations add: invocations ]
 ]

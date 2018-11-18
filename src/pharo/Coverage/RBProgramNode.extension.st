@@ -12,7 +12,13 @@ RBProgramNode >> covAllBlockBodies [
 
 { #category : #'*Coverage' }
 RBProgramNode >> covAllBlockBodyLasts [
-	^ (self covAllBlockBodies select: [ :e | e children isNotEmpty ]) collect: #last
+	^ ((self covAllBlockBodies select: [ :e | e children isNotEmpty ])
+		collect: [ :e | 
+			| last |
+			last := e children last.
+			last isCascade
+				ifTrue: [ last children last ]
+				ifFalse: [ last ] ]) reject: #isReturn
 ]
 
 { #category : #'*Coverage' }
