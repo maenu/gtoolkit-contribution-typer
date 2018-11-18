@@ -49,8 +49,9 @@ CovCoverage class >> initialize [
 		selector: #covInvoke:;
 		arguments: #(context).
 	messageLink := MetaLink new
-		metaObject: #node;
-		selector: #covSend:to:with:;
+		metaObject: [];
+		selector: #cull:cull:cull:;
+		control: #after;
 		arguments: #(selector receiver arguments).
 	assignmentLink := MetaLink new
 		metaObject: #node;
