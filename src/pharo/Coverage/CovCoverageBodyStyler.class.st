@@ -3,7 +3,7 @@ Class {
 	#superclass : #GtCoderBodyStyler,
 	#traits : 'TRBProgramNodeVisitor',
 	#classTraits : 'TRBProgramNodeVisitor classTrait',
-	#category : #Coverage
+	#category : #'Coverage-GToolkit'
 }
 
 { #category : #visiting }

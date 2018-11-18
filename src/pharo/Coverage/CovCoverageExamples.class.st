@@ -1,7 +1,7 @@
 Class {
 	#name : #CovCoverageExamples,
 	#superclass : #Object,
-	#category : #Coverage
+	#category : #'Coverage-Examples'
 }
 
 { #category : #'as yet unclassified' }
