@@ -50,9 +50,9 @@ CovCoverage class >> initialize [
 		arguments: #(context).
 	messageLink := MetaLink new
 		metaObject: #node;
-		selector: #covSend:to:with:;
+		selector: #covSend:to:with:resultingIn:;
 		control: #after;
-		arguments: #(selector receiver arguments).
+		arguments: #(selector receiver arguments value).
 	assignmentLink := MetaLink new
 		metaObject: #node;
 		selector: #covAssign:;
@@ -77,12 +77,7 @@ CovCoverage class >> installOnClass: aClass [
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> installOnMethod: aMethod [
-	self flag: 'message is problematic'.
-	[ aMethod ast do: [ :n | self install: contextLink onNode: n ].
-	aMethod ast covAllMessages do: [ :n | self install: messageLink onNode: n ].
-	aMethod ast covAllAssignments do: [ :n | self install: assignmentLink onNode: n ].
-	aMethod ast covAllReturns do: [ :n | self install: returnLink onNode: n ].
-	installedMethods add: (aMethod methodClass >> aMethod selector) compileAndInstallCompiledMethod.
+	[ self installOnMethodUnsafe: aMethod.
 	Transcript
 		show: 'Worked ' , aMethod printString;
 		cr ]
@@ -92,6 +87,16 @@ CovCoverage class >> installOnMethod: aMethod [
 				show: 'Failed ' , e class name , ' ' , aMethod printString;
 				cr.
 			aMethod recompile ]
+]
+
+{ #category : #'as yet unclassified' }
+CovCoverage class >> installOnMethodUnsafe: aMethod [
+	self flag: 'message is problematic'.
+	aMethod ast do: [ :n | self install: contextLink onNode: n ].
+	aMethod ast covAllMessages do: [ :n | self install: messageLink onNode: n ].
+	aMethod ast covAllAssignments do: [ :n | self install: assignmentLink onNode: n ].
+	aMethod ast covAllReturns do: [ :n | self install: returnLink onNode: n ].
+	installedMethods add: (aMethod methodClass >> aMethod selector) compileAndInstallCompiledMethod
 ]
 
 { #category : #'as yet unclassified' }

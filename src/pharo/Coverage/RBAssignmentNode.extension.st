@@ -9,5 +9,5 @@ RBAssignmentNode >> covAssign: anObject [
 
 { #category : #'*Coverage' }
 RBAssignmentNode >> covAssigns [
-	^ self propertyAt: #covAssigns ifAbsent: [ OrderedCollection new ]
+	^ self propertyAt: #covAssigns ifAbsent: [ CovValues new ]
 ]

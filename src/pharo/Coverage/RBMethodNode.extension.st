@@ -2,7 +2,7 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*Coverage' }
 RBMethodNode >> covInvocations [
-	^ self propertyAt: #covInvocations ifAbsent: [ OrderedCollection new ]
+	^ self propertyAt: #covInvocations ifAbsent: [ CovInvocations new ]
 ]
 
 { #category : #'*Coverage' }

@@ -9,5 +9,5 @@ RBReturnNode >> covReturn: anObject [
 
 { #category : #'*Coverage' }
 RBReturnNode >> covReturns [
-	^ self propertyAt: #covReturns ifAbsent: [ OrderedCollection new ]
+	^ self propertyAt: #covReturns ifAbsent: [ CovValues new ]
 ]

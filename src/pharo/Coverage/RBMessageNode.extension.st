@@ -1,17 +1,18 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Coverage' }
-RBMessageNode >> covSend: aSelector to: anObject with: aCollection [
+RBMessageNode >> covSend: aSelector to: anObject with: aCollection resultingIn: anotherObject [
 	| send |
 	send := CovSend new
 		selector: aSelector;
 		receiverClass: anObject class;
 		argumentClasses: (aCollection collect: #class);
+		resultClass: anotherObject class;
 		yourself.
 	(self propertyAt: #covMonitor) critical: [ (self propertyAt: #covSends ifAbsentPut: [ CovSends new ]) add: send ]
 ]
 
 { #category : #'*Coverage' }
 RBMessageNode >> covSends [
-	^ self propertyAt: #covSends ifAbsent: [ OrderedCollection new ]
+	^ self propertyAt: #covSends ifAbsent: [ CovSends new ]
 ]
