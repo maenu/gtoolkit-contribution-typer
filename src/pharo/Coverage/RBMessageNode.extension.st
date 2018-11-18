@@ -9,7 +9,7 @@ RBMessageNode >> covSend: aSelector to: anObject with: aCollection resultingIn: 
 		argumentClasses: (aCollection collect: #class);
 		resultClass: anotherObject class;
 		yourself.
-	(self propertyAt: #covMonitor) critical: [ (self propertyAt: #covSends ifAbsentPut: [ CovSends new ]) add: send ]
+	(self propertyAt: #covMonitor) critical: [ self covSends add: send ]
 ]
 
 { #category : #'*Coverage' }

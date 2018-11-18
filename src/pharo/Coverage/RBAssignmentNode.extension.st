@@ -4,7 +4,7 @@ Extension { #name : #RBAssignmentNode }
 RBAssignmentNode >> covAssign: anObject [
 	| value_ |
 	value_ := anObject class.
-	(self propertyAt: #covMonitor) critical: [ (self propertyAt: #covAssigns ifAbsentPut: [ CovValues new ]) add: value_ ]
+	(self propertyAt: #covMonitor) critical: [ self covAssigns add: value_ ]
 ]
 
 { #category : #'*Coverage' }

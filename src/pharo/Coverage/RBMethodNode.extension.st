@@ -21,5 +21,5 @@ RBMethodNode >> covInvoke: aContext [
 							e method numArgs timesCollect: [ nil ] ]);
 				yourself ].
 	(self propertyAt: #covMonitor)
-		critical: [ (self propertyAt: #covInvocations ifAbsentPut: [ CovInvocations new ]) add: invocations ]
+		critical: [ self covInvocations add: invocations ]
 ]
