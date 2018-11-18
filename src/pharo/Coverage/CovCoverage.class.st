@@ -77,12 +77,21 @@ CovCoverage class >> installOnClass: aClass [
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> installOnMethod: aMethod [
-	installedMethods add: aMethod.
 	self flag: 'message is problematic'.
-	aMethod ast do: [ :n | self install: contextLink onNode: n ].
-	"method ast covAllMessages do: [ :n | self install: messageLink onNode: n ]."
+	[ aMethod ast do: [ :n | self install: contextLink onNode: n ].
+	aMethod ast covAllMessages do: [ :n | self install: messageLink onNode: n ].
 	aMethod ast covAllAssignments do: [ :n | self install: assignmentLink onNode: n ].
-	aMethod ast covAllReturns do: [ :n | self install: returnLink onNode: n ]
+	aMethod ast covAllReturns do: [ :n | self install: returnLink onNode: n ].
+	installedMethods add: (aMethod methodClass >> aMethod selector) compileAndInstallCompiledMethod.
+	Transcript
+		show: 'Worked ' , aMethod printString;
+		cr ]
+		on: Error
+		do: [ :e | 
+			Transcript
+				show: 'Failed ' , e class name , ' ' , aMethod printString;
+				cr.
+			aMethod recompile ]
 ]
 
 { #category : #'as yet unclassified' }

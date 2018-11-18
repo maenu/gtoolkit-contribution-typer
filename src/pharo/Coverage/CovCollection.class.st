@@ -1,26 +1,8 @@
 Class {
 	#name : #CovCollection,
-	#superclass : #Object,
-	#instVars : [
-		'collection'
-	],
+	#superclass : #OrderedCollection,
 	#category : #Coverage
 }
-
-{ #category : #initialization }
-CovCollection >> add: anObject [
-	collection add: anObject
-]
-
-{ #category : #accessing }
-CovCollection >> collection [
-	^ collection
-]
-
-{ #category : #accessing }
-CovCollection >> collection: anObject [
-	collection := anObject
-]
 
 { #category : #'as yet unclassified' }
 CovCollection >> gtInspectorSummaryIn: aComposite [
@@ -29,15 +11,9 @@ CovCollection >> gtInspectorSummaryIn: aComposite [
 ]
 
 { #category : #initialization }
-CovCollection >> initialize [
-	super initialize.
-	collection := OrderedCollection new
-]
-
-{ #category : #initialization }
 CovCollection >> summary [
 	| summary |
-	summary := (collection groupedBy: #yourself) associations collect: [ :e | e key -> e value size ].
+	summary := (self groupedBy: #yourself) associations collect: [ :e | e key -> e value size ].
 	summary sort: [ :a :b | a value > b value ].
 	^ summary asOrderedDictionary
 ]
