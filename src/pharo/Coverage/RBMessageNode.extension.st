@@ -14,5 +14,5 @@ RBMessageNode >> covSend: aSelector to: anObject with: aCollection resultingIn: 
 
 { #category : #'*Coverage' }
 RBMessageNode >> covSends [
-	^ self propertyAt: #covSends ifAbsent: [ CovSends new ]
+	^ self propertyAt: #covSends ifAbsentPut: [ CovSends new ]
 ]

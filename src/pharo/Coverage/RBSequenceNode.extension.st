@@ -2,7 +2,7 @@ Extension { #name : #RBSequenceNode }
 
 { #category : #'*Coverage' }
 RBSequenceNode >> covInvocations [
-	^ self propertyAt: #covInvocations ifAbsent: [ CovInvocations new ]
+	^ self propertyAt: #covInvocations ifAbsentPut: [ CovInvocations new ]
 ]
 
 { #category : #'*Coverage' }
@@ -21,16 +21,4 @@ RBSequenceNode >> covInvoke: aContext [
 							e numArgs timesCollect: [ nil ] ]);
 				yourself ].
 	self covMonitor critical: [ self covInvocations add: invocations ]
-]
-
-{ #category : #'*Coverage' }
-RBSequenceNode >> covReturn: anObject [
-	| value_ |
-	value_ := anObject class.
-	self covMonitor critical: [ self covReturns add: value_ ]
-]
-
-{ #category : #'*Coverage' }
-RBSequenceNode >> covReturns [
-	^ self propertyAt: #covReturns ifAbsent: [ CovValues new ]
 ]

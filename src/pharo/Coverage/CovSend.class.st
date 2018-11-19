@@ -12,8 +12,8 @@ Class {
 
 { #category : #comparing }
 CovSend >> = anObject [
-	^ super = anObject
-		and: [ self class = anObject class
+	^ self == anObject
+		or: [ self class = anObject class
 				and: [ selector = anObject selector
 						and: [ argumentClasses = anObject argumentClasses
 								and: [ receiverClass = anObject receiverClass and: [ resultClass = anObject resultClass ] ] ] ] ]
@@ -41,10 +41,10 @@ CovSend >> printOn: aStream [
 	selector isUnary
 		ifTrue: [ aStream << selector asString ]
 		ifFalse: [ selector isBinary
-				ifTrue: [ aStream << selector asString << ' ' << (argumentClasses at: 1) asString ]
+				ifTrue: [ aStream << selector asString << ' ' << (argumentClasses at: 1) printString ]
 				ifFalse: [ | keywords |
 					keywords := ':' split: selector.
-					1 to: keywords size - 1 do: [ :i | aStream << ' ' << (keywords at: i) asString << ': ' << (argumentClasses at: 1) asString ] ] ]
+					1 to: keywords size - 1 do: [ :i | aStream << ' ' << (keywords at: i) asString << ': ' << (argumentClasses at: 1 ifAbsent: [ nil ]) printString ] ] ]
 ]
 
 { #category : #accessing }

@@ -51,5 +51,5 @@ RBProgramNode >> covReturn: anObject [
 
 { #category : #'*Coverage' }
 RBProgramNode >> covReturns [
-	^ self propertyAt: #covReturns ifAbsent: [ CovValues new ]
+	^ self propertyAt: #covReturns ifAbsentPut: [ CovValues new ]
 ]

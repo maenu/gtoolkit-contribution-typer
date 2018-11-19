@@ -137,11 +137,11 @@ CovCoverage class >> installedNodeIn: aMethod for: aNode ifFound: aBlock ifNone:
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> uninstallFromAllInstalledMethods [
-	installedMethods copy do: [ :e | self uninstallFromMethod: e ].
 	messageLink uninstall.
 	returnLink uninstall.
 	contextLink uninstall.
-	assignmentLink uninstall
+	assignmentLink uninstall.
+	installedMethods copy do: [ :e | self uninstallFromMethod: e ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -151,6 +151,7 @@ CovCoverage class >> uninstallFromClass: aClass [
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> uninstallFromMethod: aMethod [
+	aMethod ast removeProperty: #cov.
 	installedMethods remove: aMethod ifAbsent: [  ].
 	aMethod recompile
 ]
