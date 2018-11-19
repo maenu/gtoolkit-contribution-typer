@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'selector',
 		'receiverClass',
-		'argumentClasses',
-		'resultClass'
+		'argumentClasses'
 	],
 	#category : #Coverage
 }
@@ -16,7 +15,7 @@ CovSend >> = anObject [
 		or: [ self class = anObject class
 				and: [ selector = anObject selector
 						and: [ argumentClasses = anObject argumentClasses
-								and: [ receiverClass = anObject receiverClass and: [ resultClass = anObject resultClass ] ] ] ] ]
+								and: [ receiverClass = anObject receiverClass ] ] ] ]
 ]
 
 { #category : #accessing }
@@ -31,7 +30,7 @@ CovSend >> argumentClasses: anObject [
 
 { #category : #comparing }
 CovSend >> hash [
-	^ selector hash + argumentClasses hash + receiverClass hash + resultClass hash
+	^ selector hash + argumentClasses hash + receiverClass hash
 ]
 
 { #category : #printing }
@@ -55,16 +54,6 @@ CovSend >> receiverClass [
 { #category : #accessing }
 CovSend >> receiverClass: anObject [
 	receiverClass := anObject
-]
-
-{ #category : #accessing }
-CovSend >> resultClass [
-	^ resultClass
-]
-
-{ #category : #accessing }
-CovSend >> resultClass: anObject [
-	resultClass := anObject
 ]
 
 { #category : #accessing }

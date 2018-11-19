@@ -50,9 +50,8 @@ CovCoverage class >> initialize [
 		arguments: #(context).
 	messageLink := MetaLink new
 		metaObject: #node;
-		selector: #covSend:to:with:resultingIn:;
-		control: #after;
-		arguments: #(selector receiver arguments value).
+		selector: #covSend:to:with:;
+		arguments: #(selector receiver arguments).
 	assignmentLink := MetaLink new
 		metaObject: #node;
 		selector: #covAssign:;
