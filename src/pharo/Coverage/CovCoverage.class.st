@@ -93,10 +93,11 @@ CovCoverage class >> installOnMethod: aMethod [
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> installOnMethodUnsafe: aMethod [
+	self flag: 'non-working hack for block closures, needs context, arguments, return for block closure'.
 	self flag: 'message is problematic'.
 	aMethod ast do: [ :n | self install: contextLink onNode: n ].
-	aMethod ast covAllBlockBodies do: [ :n | self install: contextLink onNode: n ].
-	aMethod ast covAllBlockBodyLasts do: [ :n | self install: returnLink onNode: n ].
+	"aMethod ast covAllBlockBodies do: [ :n | self install: contextLink onNode: n ].
+	aMethod ast covAllBlockBodyLasts do: [ :n | self install: returnLink onNode: n ]."
 	aMethod ast covAllMessages do: [ :n | self install: messageLink onNode: n ].
 	aMethod ast covAllAssignments do: [ :n | self install: assignmentLink onNode: n ].
 	aMethod ast covAllReturns do: [ :n | self install: returnLink onNode: n ].

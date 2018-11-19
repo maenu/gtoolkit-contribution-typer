@@ -2,12 +2,14 @@ Extension { #name : #RBSequenceNode }
 
 { #category : #'*Coverage' }
 RBSequenceNode >> covInvocations [
+	self flag: 'non-working hack for block closures, needs context, arguments, return for block closure'.
 	^ self propertyAt: #covInvocations ifAbsentPut: [ CovInvocations new ]
 ]
 
 { #category : #'*Coverage' }
 RBSequenceNode >> covInvoke: aContext [
 	| invocations |
+	self flag: 'non-working hack for block closures, needs context, arguments, return for block closure'.
 	self flag: 'make stack customizable'.
 	invocations := (aContext stackOfSize: 10)
 		collect: [ :e | 

@@ -7,11 +7,13 @@ RBProgramNode >> covAllAssignments [
 
 { #category : #'*Coverage' }
 RBProgramNode >> covAllBlockBodies [
+	self flag: 'non-working hack for block closures, needs context, arguments, return for block closure'.
 	^ (self allChildren select: #isBlock) collect: #body
 ]
 
 { #category : #'*Coverage' }
 RBProgramNode >> covAllBlockBodyLasts [
+	self flag: 'non-working hack for block closures, needs context, arguments, return for block closure'.
 	^ (self covAllBlockBodies select: [ :e | e children isNotEmpty ])
 		collect: [ :e | 
 			| last |
@@ -45,11 +47,13 @@ RBProgramNode >> covMonitor [
 { #category : #'*Coverage' }
 RBProgramNode >> covReturn: anObject [
 	| value_ |
+	self flag: 'non-working hack for block closures, needs context, arguments, return for block closure'.
 	value_ := anObject class.
 	self covMonitor critical: [ self covReturns add: value_ ]
 ]
 
 { #category : #'*Coverage' }
 RBProgramNode >> covReturns [
+	self flag: 'non-working hack for block closures, needs context, arguments, return for block closure'.
 	^ self propertyAt: #covReturns ifAbsentPut: [ CovValues new ]
 ]
