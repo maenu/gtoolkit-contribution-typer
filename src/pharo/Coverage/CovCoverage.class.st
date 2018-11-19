@@ -78,12 +78,13 @@ CovCoverage class >> installOnClass: aClass [
 { #category : #'as yet unclassified' }
 CovCoverage class >> installOnMethod: aMethod [
 	[ self installOnMethodUnsafe: aMethod.
+	aMethod ast propertyAt: #cov put: true.
 	Transcript
 		show: 'Worked ' , aMethod printString;
 		cr ]
 		on: Error
 		do: [ :e | 
-			Halt now.
+			aMethod ast propertyAt: #cov put: false.
 			Transcript
 				show: 'Failed ' , e class name , ' ' , aMethod printString;
 				cr.
@@ -96,7 +97,7 @@ CovCoverage class >> installOnMethodUnsafe: aMethod [
 	aMethod ast do: [ :n | self install: contextLink onNode: n ].
 	aMethod ast covAllBlockBodies do: [ :n | self install: contextLink onNode: n ].
 	aMethod ast covAllBlockBodyLasts do: [ :n | self install: returnLink onNode: n ].
-	"aMethod ast covAllMessages do: [ :n | self install: messageLink onNode: n ]."
+	aMethod ast covAllMessages do: [ :n | self install: messageLink onNode: n ].
 	aMethod ast covAllAssignments do: [ :n | self install: assignmentLink onNode: n ].
 	aMethod ast covAllReturns do: [ :n | self install: returnLink onNode: n ].
 	installedMethods add: (aMethod methodClass >> aMethod selector) compileAndInstallCompiledMethod
@@ -136,7 +137,11 @@ CovCoverage class >> installedNodeIn: aMethod for: aNode ifFound: aBlock ifNone:
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> uninstallFromAllInstalledMethods [
-	installedMethods copy do: [ :e | self uninstallFromMethod: e ]
+	installedMethods copy do: [ :e | self uninstallFromMethod: e ].
+	messageLink uninstall.
+	returnLink uninstall.
+	contextLink uninstall.
+	assignmentLink uninstall
 ]
 
 { #category : #'as yet unclassified' }
