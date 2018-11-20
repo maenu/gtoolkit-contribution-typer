@@ -1,5 +1,5 @@
 Class {
 	#name : #CovInvocations,
-	#superclass : #CovCollection,
+	#superclass : #CovSummary,
 	#category : #Coverage
 }

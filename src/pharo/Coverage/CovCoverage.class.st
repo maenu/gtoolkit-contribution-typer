@@ -97,7 +97,9 @@ CovCoverage class >> installOnMethodUnsafe: aMethod [
 	aMethod ast covAllMessages do: [ :n | self install: messageLink onNode: n ].
 	aMethod ast covAllAssignments do: [ :n | self install: assignmentLink onNode: n ].
 	aMethod ast covAllReturns do: [ :n | self install: returnLink onNode: n ].
-	installedMethods add: (aMethod methodClass >> aMethod selector) compileAndInstallCompiledMethod
+	(aMethod methodClass >> aMethod selector) compileAndInstallCompiledMethod.
+	installedMethods add: aMethod.
+	aMethod ast propertyAt: #cov put: true
 ]
 
 { #category : #'as yet unclassified' }
@@ -148,9 +150,13 @@ CovCoverage class >> uninstallFromClass: aClass [
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> uninstallFromMethod: aMethod [
-	aMethod ast removeProperty: #cov.
+	aMethod ast do: [ :n | n removeLink: contextLink ].
+	aMethod ast covAllMessages do: [ :n | n removeLink: messageLink ].
+	aMethod ast covAllAssignments do: [ :n | n removeLink: assignmentLink ].
+	aMethod ast covAllReturns do: [ :n | n removeLink: returnLink ].
+	(aMethod methodClass >> aMethod selector) compileAndInstallCompiledMethod.
 	installedMethods remove: aMethod ifAbsent: [  ].
-	aMethod recompile
+	aMethod ast removeProperty: #cov
 ]
 
 { #category : #'as yet unclassified' }

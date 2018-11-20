@@ -1,5 +1,5 @@
 Class {
 	#name : #CovSends,
-	#superclass : #CovCollection,
+	#superclass : #CovSummary,
 	#category : #Coverage
 }
