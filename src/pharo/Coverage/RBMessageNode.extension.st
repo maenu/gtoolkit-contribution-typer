@@ -3,7 +3,7 @@ Extension { #name : #RBMessageNode }
 { #category : #'*Coverage' }
 RBMessageNode >> covSend: aSelector to: anObject with: aCollection [
 	| send |
-	send := CovSend new
+	send := CovMessage new
 		selector: aSelector;
 		receiverClass: anObject class;
 		argumentClasses: (aCollection collect: #class);
@@ -13,5 +13,11 @@ RBMessageNode >> covSend: aSelector to: anObject with: aCollection [
 
 { #category : #'*Coverage' }
 RBMessageNode >> covSends [
-	^ self propertyAt: #covSends ifAbsentPut: [ CovSends new ]
+	^ self propertyAt: #covSends ifAbsentPut: [ CovSummary new ]
+]
+
+{ #category : #'*Coverage' }
+RBMessageNode >> covUninstall [
+	super covUninstall.
+	self removeProperty: #covSends ifAbsent: [  ].
 ]

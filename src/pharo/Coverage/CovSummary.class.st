@@ -33,8 +33,7 @@ CovSummary >> gtInspectorSummaryIn: aComposite [
 { #category : #'as yet unclassified' }
 CovSummary >> gtItemsFor: aView [
 	<gtView>
-	
-	^ dictionary gtItemsFor: aView
+	^ self summary gtItemsFor: aView
 ]
 
 { #category : #accessing }

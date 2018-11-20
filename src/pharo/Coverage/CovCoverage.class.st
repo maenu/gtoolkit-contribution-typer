@@ -40,9 +40,14 @@ CovCoverage class >> covSendsIn: aMethod for: aNode [
 	^ self covPropertiesIn: aMethod for: aNode named: #covSends
 ]
 
-{ #category : #'class initialization' }
+{ #category : #'as yet unclassified' }
+CovCoverage class >> finalize [
+	self uninstallFromAllInstalledMethods.
+	super finalize
+]
+
+{ #category : #'as yet unclassified' }
 CovCoverage class >> initialize [
-	installedMethods ifNotNil: [ self uninstallFromAllInstalledMethods ].
 	installedMethods := Set new.
 	contextLink := MetaLink new
 		metaObject: #node;
@@ -77,13 +82,12 @@ CovCoverage class >> installOnClass: aClass [
 { #category : #'as yet unclassified' }
 CovCoverage class >> installOnMethod: aMethod [
 	[ self installOnMethodUnsafe: aMethod.
-	aMethod ast propertyAt: #cov put: true.
 	Transcript
 		show: 'Worked ' , aMethod printString;
 		cr ]
 		on: Error
 		do: [ :e | 
-			aMethod ast propertyAt: #cov put: false.
+			self uninstallFromMethod: aMethod.
 			Transcript
 				show: 'Failed ' , e class name , ' ' , aMethod printString;
 				cr.
@@ -93,13 +97,14 @@ CovCoverage class >> installOnMethod: aMethod [
 { #category : #'as yet unclassified' }
 CovCoverage class >> installOnMethodUnsafe: aMethod [
 	self flag: 'message is problematic'.
+	installedMethods add: aMethod.
+	aMethod ast covUninstall.
+	aMethod ast propertyAt: #cov put: true.
 	aMethod ast do: [ :n | self install: contextLink onNode: n ].
 	aMethod ast covAllMessages do: [ :n | self install: messageLink onNode: n ].
 	aMethod ast covAllAssignments do: [ :n | self install: assignmentLink onNode: n ].
 	aMethod ast covAllReturns do: [ :n | self install: returnLink onNode: n ].
-	(aMethod methodClass >> aMethod selector) compileAndInstallCompiledMethod.
-	installedMethods add: aMethod.
-	aMethod ast propertyAt: #cov put: true
+	aMethod reflectiveMethod compileAndInstallCompiledMethod
 ]
 
 { #category : #'as yet unclassified' }
@@ -150,12 +155,13 @@ CovCoverage class >> uninstallFromClass: aClass [
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> uninstallFromMethod: aMethod [
+	aMethod ast removeProperty: #cov ifAbsent: [].
+	aMethod ast covUninstall.
 	aMethod ast do: [ :n | n removeLink: contextLink ].
 	aMethod ast covAllMessages do: [ :n | n removeLink: messageLink ].
 	aMethod ast covAllAssignments do: [ :n | n removeLink: assignmentLink ].
 	aMethod ast covAllReturns do: [ :n | n removeLink: returnLink ].
-	installedMethods remove: aMethod ifAbsent: [  ].
-	aMethod ast removeProperty: #cov
+	installedMethods remove: aMethod ifAbsent: [  ]
 ]
 
 { #category : #'as yet unclassified' }

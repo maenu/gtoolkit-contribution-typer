@@ -1,8 +1,8 @@
 Class {
-	#name : #CovInvocation,
+	#name : #CovMessage,
 	#superclass : #Object,
 	#instVars : [
-		'method',
+		'selector',
 		'receiverClass',
 		'argumentClasses'
 	],
@@ -10,43 +10,33 @@ Class {
 }
 
 { #category : #comparing }
-CovInvocation >> = anObject [
+CovMessage >> = anObject [
 	^ self == anObject
 		or: [ self class = anObject class
-				and: [ method = anObject method and: [ argumentClasses = anObject argumentClasses and: [ receiverClass = anObject receiverClass ] ] ] ]
+				and: [ selector = anObject selector
+						and: [ argumentClasses = anObject argumentClasses
+								and: [ receiverClass = anObject receiverClass ] ] ] ]
 ]
 
 { #category : #accessing }
-CovInvocation >> argumentClasses [
+CovMessage >> argumentClasses [
 	^ argumentClasses
 ]
 
 { #category : #accessing }
-CovInvocation >> argumentClasses: anObject [
+CovMessage >> argumentClasses: anObject [
 	argumentClasses := anObject
 ]
 
 { #category : #comparing }
-CovInvocation >> hash [
-	^ method hash + argumentClasses hash + receiverClass hash
-]
-
-{ #category : #accessing }
-CovInvocation >> method [
-	^ method
-]
-
-{ #category : #accessing }
-CovInvocation >> method: anObject [
-	method := anObject
+CovMessage >> hash [
+	^ selector hash + argumentClasses hash + receiverClass hash
 ]
 
 { #category : #printing }
-CovInvocation >> printOn: aStream [
-	| selector |
+CovMessage >> printOn: aStream [
 	receiverClass printOn: aStream.
 	aStream << ' '.
-	selector := method selector.
 	selector isUnary
 		ifTrue: [ aStream << selector asString ]
 		ifFalse: [ selector isBinary
@@ -57,11 +47,21 @@ CovInvocation >> printOn: aStream [
 ]
 
 { #category : #accessing }
-CovInvocation >> receiverClass [
+CovMessage >> receiverClass [
 	^ receiverClass
 ]
 
 { #category : #accessing }
-CovInvocation >> receiverClass: anObject [
+CovMessage >> receiverClass: anObject [
 	receiverClass := anObject
+]
+
+{ #category : #accessing }
+CovMessage >> selector [
+	^ selector
+]
+
+{ #category : #accessing }
+CovMessage >> selector: anObject [
+	selector := anObject
 ]

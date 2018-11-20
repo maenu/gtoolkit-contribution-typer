@@ -9,5 +9,11 @@ RBAssignmentNode >> covAssign: anObject [
 
 { #category : #'*Coverage' }
 RBAssignmentNode >> covAssigns [
-	^ self propertyAt: #covAssigns ifAbsentPut: [ CovValues new ]
+	^ self propertyAt: #covAssigns ifAbsentPut: [ CovSummary new ]
+]
+
+{ #category : #'*Coverage' }
+RBAssignmentNode >> covUninstall [
+	super covUninstall.
+	self removeProperty: #covAssigns ifAbsent: [  ].
 ]

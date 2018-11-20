@@ -19,3 +19,9 @@ RBProgramNode >> covAllReturns [
 RBProgramNode >> covMonitor [
 	^ self propertyAt: #covMonitor ifAbsentPut: [ Monitor new ]
 ]
+
+{ #category : #'*Coverage' }
+RBProgramNode >> covUninstall [
+	self children do: #covUninstall.
+	self removeProperty: #covMonitor ifAbsent: [  ]
+]

@@ -9,5 +9,11 @@ RBReturnNode >> covReturn: anObject [
 
 { #category : #'*Coverage' }
 RBReturnNode >> covReturns [
-	^ self propertyAt: #covReturns ifAbsentPut: [ CovValues new ]
+	^ self propertyAt: #covReturns ifAbsentPut: [ CovSummary new ]
+]
+
+{ #category : #'*Coverage' }
+RBReturnNode >> covUninstall [
+	super covUninstall.
+	self removeProperty: #covReturns ifAbsent: [  ].
 ]
