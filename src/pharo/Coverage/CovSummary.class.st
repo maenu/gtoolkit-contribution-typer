@@ -11,7 +11,7 @@ Class {
 CovSummary >> add: anObject [
 	| n |
 	n := dictionary at: anObject ifAbsentPut: [ 0 ].
-	^ dictionary at: n put: n + 1
+	^ dictionary at: anObject put: n + 1
 ]
 
 { #category : #accessing }
@@ -30,6 +30,13 @@ CovSummary >> gtInspectorSummaryIn: aComposite [
 	^ self summary gtInspectorItemsIn: aComposite
 ]
 
+{ #category : #'as yet unclassified' }
+CovSummary >> gtItemsFor: aView [
+	<gtView>
+	
+	^ dictionary gtItemsFor: aView
+]
+
 { #category : #accessing }
 CovSummary >> initialize [
 	super initialize.
@@ -44,7 +51,7 @@ CovSummary >> size [
 { #category : #initialization }
 CovSummary >> summary [
 	| summary |
-	summary := dictionary associations collect: [ :e | e key -> e value ].
+	summary := dictionary associations.
 	summary sort: [ :a :b | a value > b value ].
 	^ summary asOrderedDictionary
 ]

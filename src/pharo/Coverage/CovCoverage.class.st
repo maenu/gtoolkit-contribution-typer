@@ -154,7 +154,6 @@ CovCoverage class >> uninstallFromMethod: aMethod [
 	aMethod ast covAllMessages do: [ :n | n removeLink: messageLink ].
 	aMethod ast covAllAssignments do: [ :n | n removeLink: assignmentLink ].
 	aMethod ast covAllReturns do: [ :n | n removeLink: returnLink ].
-	(aMethod methodClass >> aMethod selector) compileAndInstallCompiledMethod.
 	installedMethods remove: aMethod ifAbsent: [  ].
 	aMethod ast removeProperty: #cov
 ]

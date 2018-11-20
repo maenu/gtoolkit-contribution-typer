@@ -6,6 +6,16 @@ Class {
 	#category : #'Coverage-GToolkit'
 }
 
+{ #category : #'instance creation' }
+CovCoverageBodyStyler >> newCoverageLabelFor: aText [
+	^ BrLabel new
+		text: aText;
+		look:
+			(BrGlamorousLabelLook new
+				foreground: Color veryLightGray;
+				fontSize: 10)
+]
+
 { #category : #visiting }
 CovCoverageBodyStyler >> visitAssignmentNode: aNode [
 	self
@@ -14,7 +24,7 @@ CovCoverageBodyStyler >> visitAssignmentNode: aNode [
 		with:
 			{(BrTextAdornmentDynamicAttribute new
 				beAppend;
-				stencil: [ (CovCoverage covAssignsIn: aNode methodNode method for: aNode) size asRopedText ])}.
+				stencil: [ self newCoverageLabelFor: (CovCoverage covAssignsIn: aNode methodNode method for: aNode) size asString ])}.
 	^ super visitAssignmentNode: aNode
 ]
 
@@ -28,28 +38,28 @@ CovCoverageBodyStyler >> visitMessageNode: aNode [
 		with:
 			{(BrTextAdornmentDynamicAttribute new
 				beAppend;
-				stencil: [ sends size asRopedText
-						foreground: Color veryLightGray;
-						fontSize: 6 ]).
+				stencil: [ self newCoverageLabelFor: sends size asString ]).
 			(BrTextExpandButtonAttribute new
 				attributesCreatingBlock: [ {(BrTextAdornmentDynamicAttribute new
 						beAppend;
-						stencil: [ | editorElement |
-							editorElement := GtInspector new.
-							editorElement
+						stencil: [
+							| aContainer anObjectView |
+							
+							aContainer := BlElement new.
+							aContainer
+								look: BrShadowLook new;
+								layout: BlLinearLayout vertical;
+								margin: (BlInsets all: 20);
+								background: Color white;
 								constraintsDo: [ :c | 
+									c textFlow pushLine.
 									c horizontal matchParent.
-									c vertical matchParent ].
-							editorElement size: 600 @ 300.
-							editorElement spawnInitial: sends.
-							editorElement border: (BlBorder paint: Color veryLightGray width: 1).
-							editorElement
-								margin:
-									(BlInsets
-										top: 0
-										right: 10
-										bottom: 10
-										left: 10) ])} ])}.
+									c vertical exact: 200 ].
+							
+							anObjectView := sends gtViewsFor: GtPhlowView empty.
+							anObjectView asElementDo: [ :aViewElement | aContainer addChild: aViewElement ].
+							
+							aContainer ])} ])}.
 	^ super visitMessageNode: aNode
 ]
 
@@ -61,7 +71,7 @@ CovCoverageBodyStyler >> visitMethodNode: aNode [
 		with:
 			{(BrTextAdornmentDynamicAttribute new
 				beAppend;
-				stencil: [ (CovCoverage covInvocationsIn: aNode methodNode method for: aNode methodNode) size asRopedText ])}.
+				stencil: [ self newCoverageLabelFor: (CovCoverage covInvocationsIn: aNode methodNode method for: aNode methodNode) size asString ])}.
 	^ super visitMethodNode: aNode
 ]
 
@@ -73,6 +83,6 @@ CovCoverageBodyStyler >> visitReturnNode: aNode [
 		with:
 			{(BrTextAdornmentDynamicAttribute new
 				beAppend;
-				stencil: [ (CovCoverage covReturnsIn: aNode methodNode method for: aNode) size asRopedText ])}.
+				stencil: [ self newCoverageLabelFor:  (CovCoverage covReturnsIn: aNode methodNode method for: aNode) size asString ])}.
 	^ super visitReturnNode: aNode
 ]
