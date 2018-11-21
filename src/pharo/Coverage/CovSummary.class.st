@@ -2,17 +2,11 @@ Class {
 	#name : #CovSummary,
 	#superclass : #Object,
 	#instVars : [
-		'dictionary'
+		'dictionary',
+		'stack'
 	],
 	#category : #'Coverage-Core'
 }
-
-{ #category : #accessing }
-CovSummary >> add: anObject [
-	| n |
-	n := dictionary at: anObject ifAbsentPut: [ 0 ].
-	^ dictionary at: anObject put: n + 1
-]
 
 { #category : #accessing }
 CovSummary >> dictionary [
@@ -37,9 +31,17 @@ CovSummary >> gtItemsFor: aView [
 ]
 
 { #category : #accessing }
+CovSummary >> increment: anObject [
+	| n |
+	n := dictionary at: anObject ifAbsentPut: [ 0 ].
+	^ dictionary at: anObject put: n + 1
+]
+
+{ #category : #accessing }
 CovSummary >> initialize [
 	super initialize.
-	dictionary := Dictionary new
+	dictionary := Dictionary new.
+	stack := Stack new
 ]
 
 { #category : #accessing }
@@ -47,6 +49,11 @@ CovSummary >> size [
 	^ dictionary isEmpty
 		ifTrue: [ 0 ]
 		ifFalse: [ dictionary sum ]
+]
+
+{ #category : #accessing }
+CovSummary >> stack [
+	^ stack
 ]
 
 { #category : #initialization }

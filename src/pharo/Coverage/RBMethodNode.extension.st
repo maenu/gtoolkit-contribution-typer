@@ -32,12 +32,12 @@ RBMethodNode >> covInvoke: aContext [
 		and: [ sender sender method ~~ aContext method and: [ sender sender method ast covIsCovered not and: [ sender sender method ast covIsEntryPoint not ] ] ] ]
 		whileTrue: [ sender := sender sender ].
 	self covMonitor
-		critical: [ self covInvocations add: invocation.
+		critical: [ self covInvocations increment: invocation.
 			sender sender
 				ifNotNil: [ | caller |
 					caller := sender sender method ast.
-					caller covCallees add: self.
-					self covCallers add: caller ] ]
+					caller covCallees increment: self.
+					self covCallers increment: caller ] ]
 ]
 
 { #category : #'*Coverage' }

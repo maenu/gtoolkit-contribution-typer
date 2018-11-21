@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'selector',
 		'receiverClass',
-		'argumentClasses'
+		'argumentClasses',
+		'resultClass'
 	],
 	#category : #'Coverage-Core'
 }
@@ -14,8 +15,7 @@ CovMessage >> = anObject [
 	^ self == anObject
 		or: [ self class = anObject class
 				and: [ selector = anObject selector
-						and: [ argumentClasses = anObject argumentClasses
-								and: [ receiverClass = anObject receiverClass ] ] ] ]
+						and: [ argumentClasses = anObject argumentClasses and: [ receiverClass = anObject receiverClass and: [ resultClass = anObject resultClass ] ] ] ] ]
 ]
 
 { #category : #accessing }
@@ -30,7 +30,7 @@ CovMessage >> argumentClasses: anObject [
 
 { #category : #comparing }
 CovMessage >> hash [
-	^ selector hash + argumentClasses hash + receiverClass hash
+	^ selector hash + argumentClasses hash + receiverClass hash + resultClass hash
 ]
 
 { #category : #printing }
@@ -43,7 +43,8 @@ CovMessage >> printOn: aStream [
 				ifTrue: [ aStream << selector asString << ' ' << (argumentClasses at: 1) printString ]
 				ifFalse: [ | keywords |
 					keywords := ':' split: selector.
-					1 to: keywords size - 1 do: [ :i | aStream << ' ' << (keywords at: i) asString << ': ' << (argumentClasses at: 1 ifAbsent: [ nil ]) printString ] ] ]
+					1 to: keywords size - 1 do: [ :i | aStream << ' ' << (keywords at: i) asString << ': ' << (argumentClasses at: 1 ifAbsent: [ nil ]) printString ] ] ].
+	aStream << ' ' << resultClass asString
 ]
 
 { #category : #accessing }
@@ -54,6 +55,16 @@ CovMessage >> receiverClass [
 { #category : #accessing }
 CovMessage >> receiverClass: anObject [
 	receiverClass := anObject
+]
+
+{ #category : #accessing }
+CovMessage >> resultClass [
+	^ resultClass
+]
+
+{ #category : #accessing }
+CovMessage >> resultClass: anObject [
+	resultClass := anObject
 ]
 
 { #category : #accessing }

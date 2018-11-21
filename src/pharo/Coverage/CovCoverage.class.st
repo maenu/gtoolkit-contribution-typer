@@ -2,11 +2,12 @@ Class {
 	#name : #CovCoverage,
 	#superclass : #Object,
 	#classInstVars : [
-		'installedAsts',
-		'returnLink',
-		'messageLink',
+		'messageResultLink',
+		'assignmentLink',
 		'contextLink',
-		'assignmentLink'
+		'messageLink',
+		'returnLink',
+		'installedAsts'
 	],
 	#category : #'Coverage-Core'
 }
@@ -28,6 +29,11 @@ CovCoverage class >> initialize [
 		metaObject: #node;
 		selector: #covSend:to:with:;
 		arguments: #(selector receiver arguments).
+	messageResultLink := MetaLink new
+		metaObject: #node;
+		selector: #covResult:;
+		control: #after;
+		arguments: #(value).
 	assignmentLink := MetaLink new
 		metaObject: #node;
 		selector: #covAssign:;
@@ -72,7 +78,11 @@ CovCoverage class >> installOnMethodUnsafe: aMethod [
 	aMethod ast covUninstall.
 	aMethod ast propertyAt: #cov put: true.
 	aMethod ast do: [ :n | self install: contextLink onNode: n ].
-	aMethod ast covAllMessages do: [ :n | self install: messageLink onNode: n ].
+	aMethod ast covAllMessages
+		do: [ :n | 
+			self
+				install: messageLink onNode: n;
+				install: messageResultLink onNode: n ].
 	aMethod ast covAllAssignments do: [ :n | self install: assignmentLink onNode: n ].
 	aMethod ast covAllReturns do: [ :n | self install: returnLink onNode: n ].
 	aMethod reflectiveMethod compileAndInstallCompiledMethod
@@ -114,10 +124,11 @@ CovCoverage class >> installedNodeFor: aNode ifFound: aBlock ifNone: anotherBloc
 { #category : #'as yet unclassified' }
 CovCoverage class >> uninstallFromAllInstalledAsts [
 	messageLink uninstall.
+	messageResultLink uninstall.
 	returnLink uninstall.
 	contextLink uninstall.
 	assignmentLink uninstall.
-	installedAsts copy do: [ :e | self uninstallFromMethod: e ]
+	installedAsts copy do: [ :e | self uninstallFromMethod: e method ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -130,7 +141,11 @@ CovCoverage class >> uninstallFromMethod: aMethod [
 	aMethod ast removeProperty: #cov ifAbsent: [  ].
 	aMethod ast covUninstall.
 	aMethod ast do: [ :n | n removeLink: contextLink ].
-	aMethod ast covAllMessages do: [ :n | n removeLink: messageLink ].
+	aMethod ast covAllMessages
+		do: [ :n | 
+			n
+				removeLink: messageLink;
+				removeLink: messageResultLink ].
 	aMethod ast covAllAssignments do: [ :n | n removeLink: assignmentLink ].
 	aMethod ast covAllReturns do: [ :n | n removeLink: returnLink ].
 	installedAsts removeKey: aMethod methodClass -> aMethod selector ifAbsent: [  ]

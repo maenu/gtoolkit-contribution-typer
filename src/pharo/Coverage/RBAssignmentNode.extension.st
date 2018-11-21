@@ -4,7 +4,7 @@ Extension { #name : #RBAssignmentNode }
 RBAssignmentNode >> covAssign: anObject [
 	| value_ |
 	value_ := anObject class.
-	self covMonitor critical: [ self covAssigns add: value_ ]
+	self covMonitor critical: [ self covAssigns increment: value_ ]
 ]
 
 { #category : #'*Coverage' }

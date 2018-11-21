@@ -4,7 +4,7 @@ Extension { #name : #RBReturnNode }
 RBReturnNode >> covReturn: anObject [
 	| value_ |
 	value_ := anObject class.
-	self covMonitor critical: [ self covReturns add: value_ ]
+	self covMonitor critical: [ self covReturns increment: value_ ]
 ]
 
 { #category : #'*Coverage' }
