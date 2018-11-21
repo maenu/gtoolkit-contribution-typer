@@ -2,24 +2,24 @@ Class {
 	#name : #CovCoverage,
 	#superclass : #Object,
 	#classInstVars : [
-		'installedMethods',
-		'assignmentLink',
-		'contextLink',
+		'installedAsts',
+		'returnLink',
 		'messageLink',
-		'returnLink'
+		'contextLink',
+		'assignmentLink'
 	],
 	#category : #'Coverage-Core'
 }
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> finalize [
-	self uninstallFromAllInstalledMethods.
+	self uninstallFromAllInstalledAsts.
 	super finalize
 ]
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> initialize [
-	installedMethods := Set new.
+	installedAsts := Dictionary new.
 	contextLink := MetaLink new
 		metaObject: #node;
 		selector: #covInvoke:;
@@ -68,7 +68,7 @@ CovCoverage class >> installOnMethod: aMethod [
 { #category : #'as yet unclassified' }
 CovCoverage class >> installOnMethodUnsafe: aMethod [
 	self flag: 'message is problematic'.
-	installedMethods add: aMethod.
+	installedAsts at: aMethod methodClass -> aMethod selector put: aMethod ast.
 	aMethod ast covUninstall.
 	aMethod ast propertyAt: #cov put: true.
 	aMethod ast do: [ :n | self install: contextLink onNode: n ].
@@ -84,16 +84,13 @@ CovCoverage class >> installOnPackage: aPackage [
 ]
 
 { #category : #'as yet unclassified' }
-CovCoverage class >> installedMethodFor: aMethod ifFound: aBlock ifNone: anotherBlock [
-	^ installedMethods
-		detect: [ :e | e methodClass = aMethod methodClass and: [ e selector = aMethod selector and: [ e ast formattedCode = aMethod ast formattedCode ] ] ]
-		ifFound: aBlock
-		ifNone: anotherBlock
+CovCoverage class >> installedAstFor: aMethod ifFound: aBlock ifNone: anotherBlock [
+	^ installedAsts at: aMethod methodClass -> aMethod selector ifPresent: aBlock ifAbsent: anotherBlock
 ]
 
 { #category : #accessing }
-CovCoverage class >> installedMethods [
-	^ installedMethods
+CovCoverage class >> installedAsts [
+	^ installedAsts
 ]
 
 { #category : #'as yet unclassified' }
@@ -101,11 +98,13 @@ CovCoverage class >> installedNodeFor: aNode ifFound: aBlock ifNone: anotherBloc
 	| method |
 	method := aNode methodNode method.
 	^ self
-		installedMethodFor: method
+		installedAstFor: method
 		ifFound: [ :e | 
 			| nodes installedNodes i |
-			nodes := method ast allChildren.
-			installedNodes := e ast allChildren.
+			e formattedCode = aNode methodNode formattedCode
+				ifFalse: [ ^ anotherBlock cull: e ].
+			nodes := aNode methodNode allChildren.
+			installedNodes := e methodNode allChildren.
 			self assert: [ nodes size = installedNodes size ].
 			i := nodes indexOf: aNode.
 			aBlock cull: (installedNodes at: i) ]
@@ -113,12 +112,12 @@ CovCoverage class >> installedNodeFor: aNode ifFound: aBlock ifNone: anotherBloc
 ]
 
 { #category : #'as yet unclassified' }
-CovCoverage class >> uninstallFromAllInstalledMethods [
+CovCoverage class >> uninstallFromAllInstalledAsts [
 	messageLink uninstall.
 	returnLink uninstall.
 	contextLink uninstall.
 	assignmentLink uninstall.
-	installedMethods copy do: [ :e | self uninstallFromMethod: e ]
+	installedAsts copy do: [ :e | self uninstallFromMethod: e ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -128,13 +127,13 @@ CovCoverage class >> uninstallFromClass: aClass [
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> uninstallFromMethod: aMethod [
-	aMethod ast removeProperty: #cov ifAbsent: [].
+	aMethod ast removeProperty: #cov ifAbsent: [  ].
 	aMethod ast covUninstall.
 	aMethod ast do: [ :n | n removeLink: contextLink ].
 	aMethod ast covAllMessages do: [ :n | n removeLink: messageLink ].
 	aMethod ast covAllAssignments do: [ :n | n removeLink: assignmentLink ].
 	aMethod ast covAllReturns do: [ :n | n removeLink: returnLink ].
-	installedMethods remove: aMethod ifAbsent: [  ]
+	installedAsts removeKey: aMethod methodClass -> aMethod selector ifAbsent: [  ]
 ]
 
 { #category : #'as yet unclassified' }

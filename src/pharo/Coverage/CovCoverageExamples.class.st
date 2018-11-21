@@ -9,7 +9,7 @@ CovCoverageExamples >> installOnNeoJsonCore [
 	<gtExample>
 	| package |
 	package := #'Neo-JSON-Core' asPackage.
-	self uninstallFromAllInstalledMethods.
+	self uninstallFromAllInstalledAsts.
 	CovCoverage installOnPackage: package.
 	^ package
 ]
@@ -18,7 +18,7 @@ CovCoverageExamples >> installOnNeoJsonCore [
 CovCoverageExamples >> neoJsonCore [
 	<gtExample>
 	| package testResult |
-	self uninstallFromAllInstalledMethods.
+	self uninstallFromAllInstalledAsts.
 	package := self installOnNeoJsonCore.
 	testResult := self runTestsInNeoJsonTests.
 	^ package -> testResult
@@ -42,11 +42,11 @@ CovCoverageExamples >> runTestsInPackage: aPackage [
 ]
 
 { #category : #'as yet unclassified' }
-CovCoverageExamples >> uninstallFromAllInstalledMethods [
+CovCoverageExamples >> uninstallFromAllInstalledAsts [
 	<gtExample>
 	| installedMethods |
-	CovCoverage uninstallFromAllInstalledMethods.
-	installedMethods := CovCoverage installedMethods.
+	CovCoverage uninstallFromAllInstalledAsts.
+	installedMethods := CovCoverage installedAsts.
 	self assert: installedMethods isEmpty.
 	^ installedMethods
 ]

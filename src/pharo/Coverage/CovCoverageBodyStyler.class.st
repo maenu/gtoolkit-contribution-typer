@@ -12,8 +12,8 @@ CovCoverageBodyStyler >> visitAssignmentNode: aNode [
 		installedNodeFor: aNode
 		ifFound: [ :e | 
 			self
-				styleFrom: aNode start - 1
-				to: aNode start - 1
+				styleFrom: aNode variable stop
+				to: aNode variable stop
 				with:
 					{(CovSummarySizeAttribute new
 						summary: e covAssigns;
@@ -31,8 +31,8 @@ CovCoverageBodyStyler >> visitMessageNode: aNode [
 		installedNodeFor: aNode
 		ifFound: [ :e | 
 			self
-				styleFrom: aNode stop
-				to: aNode stop
+				styleFrom: (aNode keywordsPositions at: 1) - 1
+				to: (aNode keywordsPositions at: 1) - 1
 				with:
 					{(CovSummarySizeAttribute new
 						summary: e covSends;
@@ -59,7 +59,7 @@ CovCoverageBodyStyler >> visitMethodNode: aNode [
 					(CovSummaryExpandButtonAttribute new
 						summary: e covInvocations;
 						yourself)} ]
-		ifNone: [  ].
+		ifNone: [ ].
 	^ super visitMethodNode: aNode
 ]
 
@@ -69,8 +69,8 @@ CovCoverageBodyStyler >> visitReturnNode: aNode [
 		installedNodeFor: aNode
 		ifFound: [ :e | 
 			self
-				styleFrom: aNode start - 1
-				to: aNode start - 1
+				styleFrom: aNode value start - 1
+				to: aNode value start - 1
 				with:
 					{(CovSummarySizeAttribute new
 						summary: e covReturns;
