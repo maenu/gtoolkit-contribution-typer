@@ -58,10 +58,16 @@ CovCoverage class >> installOnClass: aClass [
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> installOnMethod: aMethod [
-	[ self installOnMethodUnsafe: aMethod.
+	[ [ self installOnMethod: aMethod safe: false.
 	Transcript
-		show: 'Worked ' , aMethod printString;
+		show: 'Worked unsafe ' , aMethod printString;
 		cr ]
+		on: Error
+		do: [ self uninstallFromMethod: aMethod.
+			self installOnMethod: aMethod safe: true.
+			Transcript
+				show: 'Worked safe ' , aMethod printString;
+				cr ] ]
 		on: Error
 		do: [ :e | 
 			self uninstallFromMethod: aMethod.
@@ -72,17 +78,18 @@ CovCoverage class >> installOnMethod: aMethod [
 ]
 
 { #category : #'as yet unclassified' }
-CovCoverage class >> installOnMethodUnsafe: aMethod [
-	self flag: 'message is problematic'.
+CovCoverage class >> installOnMethod: aMethod safe: aBoolean [
 	installedAsts at: aMethod methodClass -> aMethod selector put: aMethod ast.
 	aMethod ast covUninstall.
 	aMethod ast propertyAt: #cov put: true.
 	aMethod ast do: [ :n | self install: contextLink onNode: n ].
-	aMethod ast covAllMessages
-		do: [ :n | 
-			self
-				install: messageLink onNode: n;
-				install: messageResultLink onNode: n ].
+	aBoolean
+		ifFalse: [ self flag: 'message is problematic'.
+			aMethod ast covAllMessages
+				do: [ :n | 
+					self
+						install: messageLink onNode: n;
+						install: messageResultLink onNode: n ] ].
 	aMethod ast covAllAssignments do: [ :n | self install: assignmentLink onNode: n ].
 	aMethod ast covAllReturns do: [ :n | self install: returnLink onNode: n ].
 	aMethod reflectiveMethod compileAndInstallCompiledMethod
