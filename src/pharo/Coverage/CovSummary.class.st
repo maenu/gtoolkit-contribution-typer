@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'dictionary'
 	],
-	#category : #Coverage
+	#category : #'Coverage-Core'
 }
 
 { #category : #accessing }
@@ -44,7 +44,9 @@ CovSummary >> initialize [
 
 { #category : #accessing }
 CovSummary >> size [
-	^ dictionary size
+	^ dictionary isEmpty
+		ifTrue: [ 0 ]
+		ifFalse: [ dictionary sum ]
 ]
 
 { #category : #initialization }

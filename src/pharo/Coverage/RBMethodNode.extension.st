@@ -51,6 +51,15 @@ RBMethodNode >> covIsEntryPoint [
 ]
 
 { #category : #'*Coverage' }
+RBMethodNode >> covRunAsEntryPoint [
+	self assert: [ self covIsEntryPoint ].
+	self method isTestMethod
+		ifTrue: [ ^ self method methodClass run: self method selector ].
+	self method isGTExampleMethod
+		ifTrue: [ ^ self method gtExampleValue ]
+]
+
+{ #category : #'*Coverage' }
 RBMethodNode >> covUninstall [
 	super covUninstall.
 	self removeProperty: #covCallees ifAbsent: [  ].

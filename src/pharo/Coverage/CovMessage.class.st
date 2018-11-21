@@ -6,7 +6,7 @@ Class {
 		'receiverClass',
 		'argumentClasses'
 	],
-	#category : #Coverage
+	#category : #'Coverage-Core'
 }
 
 { #category : #comparing }

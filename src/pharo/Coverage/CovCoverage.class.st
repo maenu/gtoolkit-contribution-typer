@@ -8,37 +8,8 @@ Class {
 		'messageLink',
 		'returnLink'
 	],
-	#category : #Coverage
+	#category : #'Coverage-Core'
 }
-
-{ #category : #'as yet unclassified' }
-CovCoverage class >> covAssignsIn: aMethod for: aNode [
-	^ self covPropertiesIn: aMethod for: aNode named: #covAssigns
-]
-
-{ #category : #'as yet unclassified' }
-CovCoverage class >> covInvocationsIn: aMethod for: aNode [
-	^ self covPropertiesIn: aMethod for: aNode named: #covInvocations
-]
-
-{ #category : #'as yet unclassified' }
-CovCoverage class >> covPropertiesIn: aMethod for: aNode named: aSymbol [
-	^ self
-		installedNodeIn: aMethod
-		for: aNode
-		ifFound: aSymbol
-		ifNone: [ OrderedCollection new ]
-]
-
-{ #category : #'as yet unclassified' }
-CovCoverage class >> covReturnsIn: aMethod for: aNode [
-	^ self covPropertiesIn: aMethod for: aNode named: #covReturns
-]
-
-{ #category : #'as yet unclassified' }
-CovCoverage class >> covSendsIn: aMethod for: aNode [
-	^ self covPropertiesIn: aMethod for: aNode named: #covSends
-]
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> finalize [
@@ -126,12 +97,14 @@ CovCoverage class >> installedMethods [
 ]
 
 { #category : #'as yet unclassified' }
-CovCoverage class >> installedNodeIn: aMethod for: aNode ifFound: aBlock ifNone: anotherBlock [
+CovCoverage class >> installedNodeFor: aNode ifFound: aBlock ifNone: anotherBlock [
+	| method |
+	method := aNode methodNode method.
 	^ self
-		installedMethodFor: aMethod
+		installedMethodFor: method
 		ifFound: [ :e | 
 			| nodes installedNodes i |
-			nodes := aMethod ast allChildren.
+			nodes := method ast allChildren.
 			installedNodes := e ast allChildren.
 			self assert: [ nodes size = installedNodes size ].
 			i := nodes indexOf: aNode.
