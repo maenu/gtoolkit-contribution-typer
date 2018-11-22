@@ -7,17 +7,18 @@ RBMessageNode >> covClass [
 
 { #category : #'*Coverage' }
 RBMessageNode >> covClassForArgumentAt: anInteger [
-	^ ((self covSends collect: [ :e | (e key argumentClasses at: anInteger) -> e value ]) select: [ :e | e key isNotNil ]) inferredClass
+	^ (self covSends collect: [ :e | (e key argumentClasses at: anInteger) -> e value ])
+		inferredClass
 ]
 
 { #category : #'*Coverage' }
 RBMessageNode >> covClassForReceiver [
-	^ ((self covSends collect: [ :e | e key receiverClass -> e value ]) select: [ :e | e key isNotNil ]) inferredClass
+	^ (self covSends collect: [ :e | e key receiverClass -> e value ]) inferredClass
 ]
 
 { #category : #'*Coverage' }
 RBMessageNode >> covClassForResult [
-	^ ((self covSends collect: [ :e | e key resultClass -> e value ]) select: [ :e | e key isNotNil ]) inferredClass
+	^ (self covSends collect: [ :e | e key resultClass -> e value ]) inferredClass
 ]
 
 { #category : #'*Coverage' }

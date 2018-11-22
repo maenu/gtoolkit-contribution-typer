@@ -12,7 +12,8 @@ RBMethodNode >> covCallers [
 
 { #category : #'*Coverage' }
 RBMethodNode >> covClassForArgumentAt: anInteger [
-	^ ((self covInvocations collect: [ :e | (e key argumentClasses at: anInteger) -> e value ]) select: [ :e | e key isNotNil ]) inferredClass
+	^ (self covInvocations collect: [ :e | (e key argumentClasses at: anInteger) -> e value ])
+		inferredClass
 ]
 
 { #category : #'*Coverage' }
@@ -20,26 +21,6 @@ RBMethodNode >> covClassForArgumentNamed: aString [
 	| i |
 	i := self arguments detectIndex: [ :f | f name = aString ].
 	^ self covClassForArgumentAt: i
-]
-
-{ #category : #'*Coverage' }
-RBMethodNode >> covInferredArgumentClasses [
-	| allClasses |
-	allClasses := self covInvocations collect: [ :e | e key argumentClasses -> e value ].
-	^ self numArgs
-		timesCollect: [ :i | 
-			| classes |
-			classes := (allClasses collect: [ :e | (e key at: i) -> e value ]) select: [ :e | e key isNotNil ].
-			classes isEmpty
-				ifTrue: [ classes inferredClass ]
-				ifFalse: [ Object ] ]
-]
-
-{ #category : #'*Coverage' }
-RBMethodNode >> covInferredReturnClass [
-	| allClasses |
-	allClasses := self covAllReturns flatCollect: #covReturns.
-	^ (allClasses select: [ :e | e key isNotNil ]) inferredClass
 ]
 
 { #category : #'*Coverage' }

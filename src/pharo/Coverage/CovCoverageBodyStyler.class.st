@@ -15,7 +15,10 @@ CovCoverageBodyStyler >> visitAssignmentNode: aNode [
 				styleFrom: aNode variable stop
 				to: aNode variable stop
 				with:
-					{(CovSummarySizeAttribute new
+					{(CovClassAttribute new
+						class_: e variable covClass;
+						yourself).
+					(CovSummarySizeAttribute new
 						summary: e covAssigns;
 						yourself).
 					(CovSummaryExpandButtonAttribute new
@@ -69,8 +72,8 @@ CovCoverageBodyStyler >> visitReturnNode: aNode [
 		installedNodeFor: aNode
 		ifFound: [ :e | 
 			self
-				styleFrom: aNode value start - 1
-				to: aNode value start - 1
+				styleFrom: aNode value stop
+				to: aNode value stop
 				with:
 					{(CovSummarySizeAttribute new
 						summary: e covReturns;

@@ -68,9 +68,10 @@ CovSummary >> increment: anObject [
 { #category : #'as yet unclassified' }
 CovSummary >> inferredClass [
 	| remains current |
-	dictionary ifEmpty: [ ^ Object ].
-	self assert: [ dictionary keys allSatisfy: [ :e | e isClass ] ].
 	remains := self copy.
+	remains dictionary removeKey: nil ifAbsent: [  ].
+	remains dictionary ifEmpty: [ ^ nil ].
+	self assert: [ remains dictionary keys allSatisfy: [ :e | e isClass ] ].
 	current := remains dictionary associationAt: (remains summary orderedKeys at: 1).
 	remains dictionary removeKey: current key.
 	[ remains dictionary isEmpty ]

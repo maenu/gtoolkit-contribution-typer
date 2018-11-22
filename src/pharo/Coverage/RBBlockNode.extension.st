@@ -19,6 +19,6 @@ RBBlockNode >> covClassForArgumentNamed: aString [
 						ifTrue: [ message covClassForReceiver ]
 						ifFalse: [ | i |
 							i := message arguments detectIndex: [ :f | f isArgument and: [ f name = aString ] ].
-							message covClassForArgumentAt: i ] ] ]) do: [ :e | e ifNotNil: [ summary add: e ] ].
+							message covClassForArgumentAt: i ] ] ]) do: [ :e | summary add: e ].
 	^ summary inferredClass
 ]
