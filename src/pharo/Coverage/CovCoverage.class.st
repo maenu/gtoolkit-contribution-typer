@@ -113,19 +113,9 @@ CovCoverage class >> installedAsts [
 { #category : #'as yet unclassified' }
 CovCoverage class >> installedNodeFor: aNode ifFound: aBlock ifNone: anotherBlock [
 	| method |
+	self flag: 'find better heuristic for match, = is imprecise'.
 	method := aNode methodNode method.
-	^ self
-		installedAstFor: method
-		ifFound: [ :e | 
-			| nodes installedNodes i |
-			e formattedCode = aNode methodNode formattedCode
-				ifFalse: [ ^ anotherBlock cull: e ].
-			nodes := aNode methodNode allChildren.
-			installedNodes := e methodNode allChildren.
-			self assert: [ nodes size = installedNodes size ].
-			i := nodes indexOf: aNode.
-			aBlock cull: (installedNodes at: i) ]
-		ifNone: anotherBlock
+	^ self installedAstFor: method ifFound: [ :e | e methodNode allChildren detect: [ :f | f = aNode ] ifFound: aBlock ifNone: anotherBlock ] ifNone: anotherBlock
 ]
 
 { #category : #'as yet unclassified' }

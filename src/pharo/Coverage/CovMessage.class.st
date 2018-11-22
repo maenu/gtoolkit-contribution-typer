@@ -43,7 +43,7 @@ CovMessage >> printOn: aStream [
 				ifTrue: [ aStream << selector asString << ' ' << (argumentClasses at: 1) printString ]
 				ifFalse: [ | keywords |
 					keywords := ':' split: selector.
-					1 to: keywords size - 1 do: [ :i | aStream << ' ' << (keywords at: i) asString << ': ' << (argumentClasses at: 1 ifAbsent: [ nil ]) printString ] ] ].
+					1 to: keywords size - 1 do: [ :i | aStream << ' ' << (keywords at: i) asString << ': ' << (argumentClasses at: i ifAbsent: [ nil ]) printString ] ] ].
 	aStream << ' ' << resultClass asString
 ]
 

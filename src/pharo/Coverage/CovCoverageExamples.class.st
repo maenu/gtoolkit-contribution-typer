@@ -14,7 +14,7 @@ CovCoverageExamples >> installOnNeoJsonCore [
 	^ package
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 CovCoverageExamples >> neoJsonCore [
 	<gtExample>
 	| package testResult |
