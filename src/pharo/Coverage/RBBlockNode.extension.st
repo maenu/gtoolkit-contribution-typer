@@ -14,8 +14,10 @@ RBBlockNode >> covClassesForArgumentNamed: aString withDiscovered: aSet [
 				ifFalse: [ (e receiver isArgument and: [ e receiver name = aString ])
 						ifTrue: [ e covClassesForReceiverWithDiscovered: aSet ]
 						ifFalse: [ | i |
-							i := e arguments detectIndex: [ :f | f isArgument and: [ f name = aString ] ].
-							e covClassesForArgumentAt: i withDiscovered: aSet ] ] ]) inject: CovSummary new into: [ :a :b | a , b ]
+							i := e arguments detectIndex: [ :f | f isArgument and: [ f name = aString ] ] ifNone: [ 0 ].
+							i > 0
+								ifTrue: [ e covClassesForArgumentAt: i withDiscovered: aSet ]
+								ifFalse: [ CovSummary new ] ] ] ]) inject: CovSummary new into: [ :a :b | a , b ]
 ]
 
 { #category : #'*Coverage' }

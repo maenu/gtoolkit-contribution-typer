@@ -15,7 +15,9 @@ CovCoverageBodyStyler >> styleFrom: from to: to with: attributes [
 { #category : #visiting }
 CovCoverageBodyStyler >> styleValueNode: aNode [
 	| summary |
-	summary := aNode covClasses.
+	summary := [ aNode covClasses ]
+		on: Error
+		do: [ Halt now ].
 	self
 		styleFrom: aNode stop
 		to: aNode stop

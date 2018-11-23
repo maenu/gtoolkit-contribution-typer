@@ -25,30 +25,38 @@ CovCoveragePatternStyler >> styleFrom: from to: to with: attributes [
 
 { #category : #visiting }
 CovCoveragePatternStyler >> styleValueNode: aNode with: aSummary [
-	| summary |
-	summary := aSummary.
 	self
 		styleFrom: aNode stop
 		to: aNode stop
 		with:
 			{(CovSummaryClassAttribute new
-				summary: summary;
+				summary: aSummary;
 				yourself).
 			(CovSummarySizeAttribute new
-				summary: summary;
+				summary: aSummary;
 				yourself).
 			(CovSummaryExpandButtonAttribute new
-				summary: summary;
+				summary: aSummary;
 				yourself)}
 ]
 
 { #category : #visiting }
 CovCoveragePatternStyler >> visitArgumentNode: aNode [
-	self styleValueNode: aNode with: aNode covClasses
+	self
+		styleValueNode: aNode
+		with:
+			([ aNode covClasses ]
+				on: Error
+				do: [ Halt now ])
 ]
 
 { #category : #visiting }
 CovCoveragePatternStyler >> visitMethodNode: aNode [
 	aNode arguments do: [ :e | self visitArgumentNode: e ].
-	self styleValueNode: aNode with: aNode covClassesForResult
+	self
+		styleValueNode: aNode
+		with:
+			([ aNode covClassesForResult ]
+				on: Error
+				do: [ Halt now ])
 ]
