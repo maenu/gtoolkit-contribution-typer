@@ -1,6 +1,8 @@
 Extension { #name : #RBLiteralArrayNode }
 
 { #category : #'*Coverage' }
-RBLiteralArrayNode >> covClass [
-	^ Array
+RBLiteralArrayNode >> covClasses [
+	^ CovSummary new
+		increment: Array;
+		yourself
 ]

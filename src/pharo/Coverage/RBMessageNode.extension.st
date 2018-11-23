@@ -1,56 +1,29 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Coverage' }
-RBMessageNode >> covClass [
-	^ self covClassForResult
+RBMessageNode >> covClasses [
+	^ self covClassesForResult
 ]
 
 { #category : #'*Coverage' }
-RBMessageNode >> covClassForArgumentAt: anInteger [
-	^ (self covSends collect: [ :e | (e key argumentClasses at: anInteger) -> e value ])
-		inferredClass
+RBMessageNode >> covClassesForArgumentAt: anInteger [
+	^ (self covMethodAsts collect: [ :e | e covClassesForArgumentAt: anInteger ]) inject: CovSummary new into: [ :a :b | a , b ]
 ]
 
 { #category : #'*Coverage' }
-RBMessageNode >> covClassForReceiver [
-	^ (self covSends collect: [ :e | e key receiverClass -> e value ]) inferredClass
+RBMessageNode >> covClassesForReceiver [
+	^ receiver covClasses
 ]
 
 { #category : #'*Coverage' }
-RBMessageNode >> covClassForResult [
-	^ (self covSends collect: [ :e | e key resultClass -> e value ]) inferredClass
+RBMessageNode >> covClassesForResult [
+	^ (self covMethodAsts collect: [ :e | e covClassesForResultForReceivers: self covClassesForReceiver ]) inject: CovSummary new into: [ :a :b | a , b ]
 ]
 
 { #category : #'*Coverage' }
-RBMessageNode >> covResult: anObject [
-	| value_ |
-	value_ := anObject class.
-	self covMonitor
-		critical: [ | top |
-			top := self covSends stack pop.
-			top resultClass: value_.
-			self covSends increment: top ]
-]
-
-{ #category : #'*Coverage' }
-RBMessageNode >> covSend: aSelector to: anObject with: aCollection [
-	| send |
-	send := CovMessage new
-		selector: aSelector;
-		receiverClass: anObject class;
-		argumentClasses: (aCollection collect: #class);
-		resultClass: anObject class;
-		yourself.
-	self covMonitor critical: [ self covSends stack push: send ]
-]
-
-{ #category : #'*Coverage' }
-RBMessageNode >> covSends [
-	^ self propertyAt: #covSends ifAbsentPut: [ CovSummary new ]
-]
-
-{ #category : #'*Coverage' }
-RBMessageNode >> covUninstall [
-	super covUninstall.
-	self removeProperty: #covSends ifAbsent: [  ].
+RBMessageNode >> covMethodAsts [
+	| asts |
+	asts := Set new.
+	(self covClassesForReceiver lookupSelector: selector) do: [ :e | CovCoverage installedAstFor: e ifFound: [ :f | asts add: f ] ifNone: [  ] ].
+	^ asts
 ]

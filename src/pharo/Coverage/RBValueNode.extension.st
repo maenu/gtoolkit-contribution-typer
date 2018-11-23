@@ -2,5 +2,12 @@ Extension { #name : #RBValueNode }
 
 { #category : #'*Coverage' }
 RBValueNode >> covClass [
-	^ Object
+	^ self covClasses inferredClass
+]
+
+{ #category : #'*Coverage' }
+RBValueNode >> covClasses [
+	^ CovSummary new
+		increment: Object;
+		yourself
 ]

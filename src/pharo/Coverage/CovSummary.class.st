@@ -2,8 +2,7 @@ Class {
 	#name : #CovSummary,
 	#superclass : #Object,
 	#instVars : [
-		'dictionary',
-		'stack'
+		'dictionary'
 	],
 	#category : #'Coverage-Core'
 }
@@ -70,7 +69,7 @@ CovSummary >> inferredClass [
 	| remains current |
 	remains := self copy.
 	remains dictionary removeKey: nil ifAbsent: [  ].
-	remains dictionary ifEmpty: [ ^ nil ].
+	remains dictionary ifEmpty: [ NoInferrableClassError signal ].
 	self assert: [ remains dictionary keys allSatisfy: [ :e | e isClass ] ].
 	current := remains dictionary associationAt: (remains summary orderedKeys at: 1).
 	remains dictionary removeKey: current key.
@@ -88,8 +87,7 @@ CovSummary >> inferredClass [
 { #category : #accessing }
 CovSummary >> initialize [
 	super initialize.
-	dictionary := Dictionary new.
-	stack := Stack new
+	dictionary := Dictionary new
 ]
 
 { #category : #testing }
@@ -100,8 +98,7 @@ CovSummary >> isEmpty [
 { #category : #'as yet unclassified' }
 CovSummary >> postCopy [
 	super postCopy.
-	dictionary := dictionary copy.
-	stack := stack copy
+	dictionary := dictionary copy
 ]
 
 { #category : #enumerating }
@@ -120,11 +117,6 @@ CovSummary >> size [
 	^ dictionary isEmpty
 		ifTrue: [ 0 ]
 		ifFalse: [ dictionary sum ]
-]
-
-{ #category : #accessing }
-CovSummary >> stack [
-	^ stack
 ]
 
 { #category : #initialization }

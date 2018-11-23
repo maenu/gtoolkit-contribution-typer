@@ -11,16 +11,25 @@ RBMethodNode >> covCallers [
 ]
 
 { #category : #'*Coverage' }
-RBMethodNode >> covClassForArgumentAt: anInteger [
-	^ (self covInvocations collect: [ :e | (e key argumentClasses at: anInteger) -> e value ])
-		inferredClass
+RBMethodNode >> covClassesForArgumentAt: anInteger [
+	^ self covInvocations collect: [ :e | (e key argumentClasses at: anInteger) -> e value ]
 ]
 
 { #category : #'*Coverage' }
-RBMethodNode >> covClassForArgumentNamed: aString [
+RBMethodNode >> covClassesForArgumentNamed: aString [
 	| i |
 	i := self arguments detectIndex: [ :f | f name = aString ].
-	^ self covClassForArgumentAt: i
+	^ self covClassesForArgumentAt: i
+]
+
+{ #category : #'*Coverage' }
+RBMethodNode >> covClassesForResult [
+	^ (self covAllReturns collect: #covReturns) inject: CovSummary new into: [ :a :b | a , b ]
+]
+
+{ #category : #'*Coverage' }
+RBMethodNode >> covClassesForResultForReceivers: aSummary [
+	^ self covAllReturns ifEmpty: [ aSummary ] ifNotEmpty: [ self covClassesForResult ]
 ]
 
 { #category : #'*Coverage' }
@@ -39,12 +48,11 @@ RBMethodNode >> covInvoke: aContext [
 				on: SubscriptOutOfBounds
 				do: [ self flag: 'how can this happen?'.
 					aContext numArgs timesCollect: [ nil ] ]);
-		resultClass: aContext receiver class;
 		yourself.
 	sender := aContext.
 	[ sender sender isNotNil and: [ sender sender method ~~ aContext method and: [ sender sender method ast covIsCovered not and: [ sender sender method ast covIsEntryPoint not ] ] ] ] whileTrue: [ sender := sender sender ].
 	self covMonitor
-		critical: [ self covInvocations stack push: invocation.
+		critical: [ self covInvocations increment: invocation.
 			sender sender
 				ifNotNil: [ | caller |
 					caller := sender sender method ast.
@@ -60,11 +68,6 @@ RBMethodNode >> covIsCovered [
 { #category : #'*Coverage' }
 RBMethodNode >> covIsEntryPoint [
 	^ self method isTestMethod or: [ self method compiledMethod isGTExampleMethod ]
-]
-
-{ #category : #'*Coverage' }
-RBMethodNode >> covReturnDefault [
-	self covMonitor critical: [ self covInvocations increment: self covInvocations stack pop ]
 ]
 
 { #category : #'*Coverage' }

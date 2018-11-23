@@ -1,6 +1,8 @@
 Extension { #name : #RBThisContextNode }
 
 { #category : #'*Coverage' }
-RBThisContextNode >> covClass [
-	^ Context
+RBThisContextNode >> covClasses [
+	^ CovSummary new
+		increment: Context;
+		yourself
 ]

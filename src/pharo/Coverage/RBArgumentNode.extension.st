@@ -1,6 +1,6 @@
 Extension { #name : #RBArgumentNode }
 
 { #category : #'*Coverage' }
-RBArgumentNode >> covClass [
-	^ (self whoDefines: self name) covClassForArgumentNamed: self name
+RBArgumentNode >> covClasses [
+	^ (self whoDefines: self name) covClassesForArgumentNamed: self name
 ]

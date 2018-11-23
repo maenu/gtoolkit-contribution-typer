@@ -4,8 +4,7 @@ Class {
 	#classInstVars : [
 		'invokeLink',
 		'returnLink',
-		'installedAsts',
-		'returnDefaultLink'
+		'installedAsts'
 	],
 	#category : #'Coverage-Core'
 }
@@ -23,10 +22,6 @@ CovCoverage class >> initialize [
 		metaObject: #node;
 		selector: #covInvoke:;
 		arguments: #(context).
-	returnDefaultLink := MetaLink new
-		metaObject: #node;
-		control: #after;
-		selector: #covReturnDefault.
 	returnLink := MetaLink new
 		metaObject: #node;
 		selector: #covReturn:;
@@ -50,7 +45,6 @@ CovCoverage class >> installOnMethod: aMethod [
 	aMethod ast covUninstall.
 	aMethod ast propertyAt: #cov put: true.
 	aMethod ast do: [ :n | self install: invokeLink onNode: n ].
-	"aMethod ast body do: [ :n | self install: returnDefaultLink onNode: n ]".
 	aMethod ast covAllReturns do: [ :n | self install: returnLink onNode: n ].
 	aMethod reflectiveMethod compileAndInstallCompiledMethod
 ]
@@ -81,7 +75,6 @@ CovCoverage class >> installedNodeFor: aNode ifFound: aBlock ifNone: anotherBloc
 { #category : #'as yet unclassified' }
 CovCoverage class >> uninstallFromAllInstalledAsts [
 	invokeLink uninstall.
-	returnDefaultLink uninstall.
 	returnLink uninstall.
 	installedAsts copy do: [ :e | self uninstallFromMethod: e method ]
 ]
@@ -96,7 +89,6 @@ CovCoverage class >> uninstallFromMethod: aMethod [
 	aMethod ast removeProperty: #cov ifAbsent: [  ].
 	aMethod ast covUninstall.
 	aMethod ast do: [ :n | n removeLink: invokeLink ].
-	aMethod ast body do: [ :n | n removeLink: returnDefaultLink ].
 	aMethod ast covAllReturns do: [ :n | n removeLink: returnLink ].
 	installedAsts removeKey: aMethod methodClass -> aMethod selector ifAbsent: [  ]
 ]

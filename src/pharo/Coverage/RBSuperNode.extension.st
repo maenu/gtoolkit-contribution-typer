@@ -1,6 +1,8 @@
 Extension { #name : #RBSuperNode }
 
 { #category : #'*Coverage' }
-RBSuperNode >> covClass [
-	^ self methodNode method methodClass superclass
+RBSuperNode >> covClasses [
+	^ CovSummary new
+		increment: self methodNode method methodClass superclass;
+		yourself
 ]
