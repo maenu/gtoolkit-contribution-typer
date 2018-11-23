@@ -1,7 +1,10 @@
 Extension { #name : #RBGlobalNode }
 
 { #category : #'*Coverage' }
-RBGlobalNode >> covClasses [
+RBGlobalNode >> covClassesWithDiscovered: aSet [
+	(aSet includes: self)
+		ifTrue: [ ^ CovSummary new ].
+	aSet add: self.
 	^ CovSummary new
 		increment: self binding value class;
 		yourself

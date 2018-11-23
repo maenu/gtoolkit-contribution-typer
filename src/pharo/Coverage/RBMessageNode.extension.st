@@ -1,23 +1,41 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Coverage' }
-RBMessageNode >> covClasses [
-	^ self covClassesForResult
+RBMessageNode >> covClassesForArgumentAt: anInteger [
+	^ self covClassesForArgumentAt: anInteger withDiscovered: Set new
 ]
 
 { #category : #'*Coverage' }
-RBMessageNode >> covClassesForArgumentAt: anInteger [
-	^ (self covMethodAsts collect: [ :e | e covClassesForArgumentAt: anInteger ]) inject: CovSummary new into: [ :a :b | a , b ]
+RBMessageNode >> covClassesForArgumentAt: anInteger withDiscovered: aSet [
+	^ (self covMethodAsts collect: [ :e | e covClassesForArgumentAt: anInteger withDiscovered: aSet ]) inject: CovSummary new into: [ :a :b | a , b ]
 ]
 
 { #category : #'*Coverage' }
 RBMessageNode >> covClassesForReceiver [
-	^ receiver covClasses
+	^ self covClassesForReceiverWithDiscovered: Set new
+]
+
+{ #category : #'*Coverage' }
+RBMessageNode >> covClassesForReceiverWithDiscovered: aSet [
+	^ receiver covClassesWithDiscovered: aSet
 ]
 
 { #category : #'*Coverage' }
 RBMessageNode >> covClassesForResult [
-	^ (self covMethodAsts collect: [ :e | e covClassesForResultForReceivers: self covClassesForReceiver ]) inject: CovSummary new into: [ :a :b | a , b ]
+	^ self covClassesForResultWithDiscovered: Set new
+]
+
+{ #category : #'*Coverage' }
+RBMessageNode >> covClassesForResultWithDiscovered: aSet [
+	^ (self covMethodAsts collect: [ :e | e covClassesForResultForReceivers: (self covClassesForReceiverWithDiscovered: aSet) withDiscovered: aSet ]) inject: CovSummary new into: [ :a :b | a , b ]
+]
+
+{ #category : #'*Coverage' }
+RBMessageNode >> covClassesWithDiscovered: aSet [
+	(aSet includes: self)
+		ifTrue: [ ^ CovSummary new ].
+	aSet add: self.
+	^ self covClassesForResultWithDiscovered: aSet
 ]
 
 { #category : #'*Coverage' }

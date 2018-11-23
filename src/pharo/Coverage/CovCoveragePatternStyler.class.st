@@ -1,23 +1,21 @@
 Class {
 	#name : #CovCoveragePatternStyler,
 	#superclass : #Object,
-	#traits : 'TRBProgramNodeVisitor',
-	#classTraits : 'TRBProgramNodeVisitor classTrait',
 	#instVars : [
 		'source'
 	],
 	#category : #'Coverage-GToolkit'
 }
 
-{ #category : #private }
+{ #category : #'as yet unclassified' }
 CovCoveragePatternStyler >> extraStyle: aText ast: ast [
 	
 ]
 
-{ #category : #private }
+{ #category : #'as yet unclassified' }
 CovCoveragePatternStyler >> style: aText ast: ast [
-	source := aText asString.
-	self visitNode: ast
+	source := aText.
+	self visitMethodNode: ast
 ]
 
 { #category : #visiting }
@@ -26,9 +24,9 @@ CovCoveragePatternStyler >> styleFrom: from to: to with: attributes [
 ]
 
 { #category : #visiting }
-CovCoveragePatternStyler >> styleValueNode: aNode [
+CovCoveragePatternStyler >> styleValueNode: aNode with: aSummary [
 	| summary |
-	summary := aNode covClasses.
+	summary := aSummary.
 	self
 		styleFrom: aNode stop
 		to: aNode stop
@@ -46,12 +44,11 @@ CovCoveragePatternStyler >> styleValueNode: aNode [
 
 { #category : #visiting }
 CovCoveragePatternStyler >> visitArgumentNode: aNode [
-	super visitArgumentNode: aNode.
-	self styleValueNode: aNode
+	self styleValueNode: aNode with: aNode covClasses
 ]
 
 { #category : #visiting }
 CovCoveragePatternStyler >> visitMethodNode: aNode [
-	super visitMethodNode: aNode.
-	self styleValueNode: aNode
+	aNode arguments do: [ :e | self visitArgumentNode: e ].
+	self styleValueNode: aNode with: aNode covClassesForResult
 ]

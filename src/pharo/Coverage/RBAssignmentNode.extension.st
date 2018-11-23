@@ -1,6 +1,9 @@
 Extension { #name : #RBAssignmentNode }
 
 { #category : #'*Coverage' }
-RBAssignmentNode >> covClasses [
-	^ value covClasses
+RBAssignmentNode >> covClassesWithDiscovered: aSet [
+	(aSet includes: self)
+		ifTrue: [ ^ CovSummary new ].
+	aSet add: self.
+	^ value covClassesWithDiscovered: aSet
 ]

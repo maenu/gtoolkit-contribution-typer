@@ -12,24 +12,44 @@ RBMethodNode >> covCallers [
 
 { #category : #'*Coverage' }
 RBMethodNode >> covClassesForArgumentAt: anInteger [
+	^ self covClassesForArgumentAt: anInteger withDiscovered: Set new
+]
+
+{ #category : #'*Coverage' }
+RBMethodNode >> covClassesForArgumentAt: anInteger withDiscovered: aSet [
 	^ (self covMethodAsts collect: [ :e | e covInvocations collect: [ :f | (f key argumentClasses at: anInteger) -> f value ] ]) inject: CovSummary new into: [ :a :b | a , b ]
 ]
 
 { #category : #'*Coverage' }
 RBMethodNode >> covClassesForArgumentNamed: aString [
+	^ self covClassesForArgumentNamed: aString withDiscovered: Set new
+]
+
+{ #category : #'*Coverage' }
+RBMethodNode >> covClassesForArgumentNamed: aString withDiscovered: aSet [
 	| i |
 	i := self arguments detectIndex: [ :f | f name = aString ].
-	^ self covClassesForArgumentAt: i
+	^ self covClassesForArgumentAt: i withDiscovered: aSet
 ]
 
 { #category : #'*Coverage' }
 RBMethodNode >> covClassesForResult [
-	^ (self covMethodAsts flatCollect: [ :e | e covAllReturns collect: #covReturns ]) inject: CovSummary new into: [ :a :b | a , b ]
+	^ self covClassesForResultWithDiscovered: Set new
 ]
 
 { #category : #'*Coverage' }
 RBMethodNode >> covClassesForResultForReceivers: aSummary [
-	^ self covMethodAsts ifEmpty: [ aSummary ] ifNotEmpty: [ :e | (e collect: #covClassesForResult) inject: CovSummary new into: [ :a :b | a , b ] ]
+	^ self covClassesForResultForReceivers: aSummary withDiscovered: Set new
+]
+
+{ #category : #'*Coverage' }
+RBMethodNode >> covClassesForResultForReceivers: aSummary withDiscovered: aSet [
+	^ self covMethodAsts ifEmpty: [ aSummary ] ifNotEmpty: [ :e | (e collect: [ :f | f covClassesForResultWithDiscovered: aSet ]) inject: CovSummary new into: [ :a :b | a , b ] ]
+]
+
+{ #category : #'*Coverage' }
+RBMethodNode >> covClassesForResultWithDiscovered: aSet [
+	^ (self covMethodAsts flatCollect: [ :e | e covAllReturns collect: #covReturns ]) inject: CovSummary new into: [ :a :b | a , b ]
 ]
 
 { #category : #'*Coverage' }
