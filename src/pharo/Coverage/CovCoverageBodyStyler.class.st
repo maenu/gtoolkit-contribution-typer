@@ -1,86 +1,101 @@
 Class {
 	#name : #CovCoverageBodyStyler,
 	#superclass : #GtCoderBodyStyler,
-	#traits : 'TRBProgramNodeVisitor',
-	#classTraits : 'TRBProgramNodeVisitor classTrait',
 	#category : #'Coverage-GToolkit'
 }
 
 { #category : #visiting }
-CovCoverageBodyStyler >> visitAssignmentNode: aNode [
-	CovCoverage
-		installedNodeFor: aNode
-		ifFound: [ :e | 
-			self
-				styleFrom: aNode variable stop
-				to: aNode variable stop
-				with:
-					{(CovClassAttribute new
-						class_: e variable covClass;
-						yourself).
-					(CovSummarySizeAttribute new
-						summary: e covAssigns;
-						yourself).
-					(CovSummaryExpandButtonAttribute new
-						summary: e covAssigns;
-						yourself)} ]
-		ifNone: [  ].
-	^ super visitAssignmentNode: aNode
+CovCoverageBodyStyler >> styleFrom: from to: to with: attributes [
+	"style only if within body"
+
+	from - patternSource size - 1 <= 0
+		ifFalse: [ super styleFrom: from to: to with: attributes ]
+]
+
+{ #category : #visiting }
+CovCoverageBodyStyler >> styleValueNode: aNode [
+	| summary |
+	summary := aNode covClasses.
+	self
+		styleFrom: aNode stop
+		to: aNode stop
+		with:
+			{(CovNodeAttribute new
+				node: aNode;
+				yourself).
+			(CovSummaryClassAttribute new
+				summary: summary;
+				yourself).
+			(CovSummarySizeAttribute new
+				summary: summary;
+				yourself).
+			(CovSummaryExpandButtonAttribute new
+				summary: summary;
+				yourself)}
+]
+
+{ #category : #visiting }
+CovCoverageBodyStyler >> visitArgumentNode: aNode [
+	super visitArgumentNode: aNode.
+	self styleValueNode: aNode
+]
+
+{ #category : #visiting }
+CovCoverageBodyStyler >> visitArrayNode: aNode [
+	super visitArrayNode: aNode.
+	self styleValueNode: aNode
+]
+
+{ #category : #visiting }
+CovCoverageBodyStyler >> visitBlockNode: aNode [
+	super visitBlockNode: aNode.
+	self styleValueNode: aNode
+]
+
+{ #category : #visiting }
+CovCoverageBodyStyler >> visitGlobalNode: aNode [
+	super visitGlobalNode: aNode.
+	self styleValueNode: aNode
+]
+
+{ #category : #visiting }
+CovCoverageBodyStyler >> visitInstanceVariableNode: aNode [
+	super visitInstanceVariableNode: aNode.
+	self styleValueNode: aNode
+]
+
+{ #category : #visiting }
+CovCoverageBodyStyler >> visitLiteralArrayNode: aNode [
+	super visitLiteralArrayNode: aNode.
+	self styleValueNode: aNode
 ]
 
 { #category : #visiting }
 CovCoverageBodyStyler >> visitMessageNode: aNode [
-	CovCoverage
-		installedNodeFor: aNode
-		ifFound: [ :e | 
-			self
-				styleFrom: (aNode keywordsPositions at: 1) - 1
-				to: (aNode keywordsPositions at: 1) - 1
-				with:
-					{(CovSummarySizeAttribute new
-						summary: e covSends;
-						yourself).
-					(CovSummaryExpandButtonAttribute new
-						summary: e covSends;
-						yourself)} ]
-		ifNone: [  ].
-	^ super visitMessageNode: aNode
+	super visitMessageNode: aNode.
+	self styleValueNode: aNode
 ]
 
 { #category : #visiting }
-CovCoverageBodyStyler >> visitMethodNode: aNode [
-	CovCoverage
-		installedNodeFor: aNode
-		ifFound: [ :e | 
-			self
-				styleFrom: patternSource size + 2
-				to: patternSource size + 2
-				with:
-					{(CovSummarySizeAttribute new
-						summary: e covInvocations;
-						yourself).
-					(CovSummaryExpandButtonAttribute new
-						summary: e covInvocations;
-						yourself)} ]
-		ifNone: [ ].
-	^ super visitMethodNode: aNode
+CovCoverageBodyStyler >> visitSelfNode: aNode [
+	super visitSelfNode: aNode.
+	self styleValueNode: aNode
 ]
 
 { #category : #visiting }
-CovCoverageBodyStyler >> visitReturnNode: aNode [
-	CovCoverage
-		installedNodeFor: aNode
-		ifFound: [ :e | 
-			self
-				styleFrom: aNode value stop
-				to: aNode value stop
-				with:
-					{(CovSummarySizeAttribute new
-						summary: e covReturns;
-						yourself).
-					(CovSummaryExpandButtonAttribute new
-						summary: e covReturns;
-						yourself)} ]
-		ifNone: [  ].
-	^ super visitReturnNode: aNode
+CovCoverageBodyStyler >> visitSuperNode: aNode [
+	super visitSuperNode: aNode.
+	self styleValueNode: aNode
+]
+
+{ #category : #visiting }
+CovCoverageBodyStyler >> visitTemporaryNode: aNode [
+	super visitTemporaryNode: aNode.
+	self styleValueNode: aNode
+]
+
+{ #category : #visiting }
+CovCoverageBodyStyler >> visitThisContextNode: aNode [
+	super visitThisContextNode: aNode.
+	self styleValueNode: aNode
 ]

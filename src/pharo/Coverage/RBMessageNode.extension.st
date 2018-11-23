@@ -24,6 +24,6 @@ RBMessageNode >> covClassesForResult [
 RBMessageNode >> covMethodAsts [
 	| asts |
 	asts := Set new.
-	(self covClassesForReceiver lookupSelector: selector) do: [ :e | CovCoverage installedAstFor: e ifFound: [ :f | asts add: f ] ifNone: [  ] ].
+	((self covClassesForReceiver collect: [ :e | (e key lookupSelector: selector) -> e value ]) select: [ :e | e key isNotNil ]) do: [ :e | CovCoverage installedAstFor: e key ifFound: [ :f | asts add: f ] ifNone: [  ] ].
 	^ asts
 ]

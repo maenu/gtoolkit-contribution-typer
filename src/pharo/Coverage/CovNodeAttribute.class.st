@@ -1,29 +1,19 @@
 Class {
-	#name : #CovClassAttribute,
+	#name : #CovNodeAttribute,
 	#superclass : #BrTextAdornmentDynamicAttribute,
 	#instVars : [
-		'class_'
+		'node'
 	],
 	#category : #'Coverage-GToolkit'
 }
 
-{ #category : #accessing }
-CovClassAttribute >> class_ [
-	^ class_
-]
-
-{ #category : #accessing }
-CovClassAttribute >> class_: anObject [
-	class_ := anObject
-]
-
 { #category : #initialization }
-CovClassAttribute >> initialize [
+CovNodeAttribute >> initialize [
 	super initialize.
 	self
 		beAppend;
 		stencil: [ BrLabel new
-				text: ':' , class_ printString;
+				text: '|' , node printString;
 				margin:
 					(BlInsets
 						top: 4
@@ -34,4 +24,14 @@ CovClassAttribute >> initialize [
 					(BrGlamorousLabelLook new
 						foreground: Color veryLightGray;
 						fontSize: 12) ]
+]
+
+{ #category : #accessing }
+CovNodeAttribute >> node [
+	^ node
+]
+
+{ #category : #accessing }
+CovNodeAttribute >> node: anObject [
+	node := anObject
 ]

@@ -12,7 +12,7 @@ RBMethodNode >> covCallers [
 
 { #category : #'*Coverage' }
 RBMethodNode >> covClassesForArgumentAt: anInteger [
-	^ self covInvocations collect: [ :e | (e key argumentClasses at: anInteger) -> e value ]
+	^ (self covMethodAsts collect: [ :e | e covInvocations collect: [ :f | (f key argumentClasses at: anInteger) -> f value ] ]) inject: CovSummary new into: [ :a :b | a , b ]
 ]
 
 { #category : #'*Coverage' }
@@ -24,12 +24,12 @@ RBMethodNode >> covClassesForArgumentNamed: aString [
 
 { #category : #'*Coverage' }
 RBMethodNode >> covClassesForResult [
-	^ (self covAllReturns collect: #covReturns) inject: CovSummary new into: [ :a :b | a , b ]
+	^ (self covMethodAsts flatCollect: [ :e | e covAllReturns collect: #covReturns ]) inject: CovSummary new into: [ :a :b | a , b ]
 ]
 
 { #category : #'*Coverage' }
 RBMethodNode >> covClassesForResultForReceivers: aSummary [
-	^ self covAllReturns ifEmpty: [ aSummary ] ifNotEmpty: [ self covClassesForResult ]
+	^ self covMethodAsts ifEmpty: [ aSummary ] ifNotEmpty: [ :e | (e collect: #covClassesForResult) inject: CovSummary new into: [ :a :b | a , b ] ]
 ]
 
 { #category : #'*Coverage' }
@@ -68,6 +68,14 @@ RBMethodNode >> covIsCovered [
 { #category : #'*Coverage' }
 RBMethodNode >> covIsEntryPoint [
 	^ self method isTestMethod or: [ self method compiledMethod isGTExampleMethod ]
+]
+
+{ #category : #'*Coverage' }
+RBMethodNode >> covMethodAsts [
+	| asts |
+	asts := Set new.
+	CovCoverage installedAstFor: self method ifFound: [ :f | asts add: f ] ifNone: [  ].
+	^ asts
 ]
 
 { #category : #'*Coverage' }
