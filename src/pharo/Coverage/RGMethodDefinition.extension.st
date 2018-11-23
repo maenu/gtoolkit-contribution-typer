@@ -13,6 +13,7 @@ RGMethodDefinition >> covSourceFor: aView [
 		stencil: [ | coder |
 			coder := GtMethodCoder forMethod: self.
 			coder expanded: true.
+			coder addOns addPatternStyler: CovCoveragePatternStyler new.
 			coder addOns addBodyStyler: CovCoverageBodyStyler new.
 			coder asElement ]
 ]

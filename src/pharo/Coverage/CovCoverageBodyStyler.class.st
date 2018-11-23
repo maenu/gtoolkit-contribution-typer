@@ -20,10 +20,7 @@ CovCoverageBodyStyler >> styleValueNode: aNode [
 		styleFrom: aNode stop
 		to: aNode stop
 		with:
-			{(CovNodeAttribute new
-				node: aNode;
-				yourself).
-			(CovSummaryClassAttribute new
+			{(CovSummaryClassAttribute new
 				summary: summary;
 				yourself).
 			(CovSummarySizeAttribute new
