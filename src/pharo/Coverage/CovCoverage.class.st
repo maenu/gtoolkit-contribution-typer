@@ -2,12 +2,10 @@ Class {
 	#name : #CovCoverage,
 	#superclass : #Object,
 	#classInstVars : [
-		'messageResultLink',
-		'assignmentLink',
-		'contextLink',
-		'messageLink',
+		'invokeLink',
 		'returnLink',
-		'installedAsts'
+		'installedAsts',
+		'returnDefaultLink'
 	],
 	#category : #'Coverage-Core'
 }
@@ -21,24 +19,14 @@ CovCoverage class >> finalize [
 { #category : #'as yet unclassified' }
 CovCoverage class >> initialize [
 	installedAsts := Dictionary new.
-	contextLink := MetaLink new
+	invokeLink := MetaLink new
 		metaObject: #node;
 		selector: #covInvoke:;
 		arguments: #(context).
-	messageLink := MetaLink new
+	returnDefaultLink := MetaLink new
 		metaObject: #node;
-		selector: #covSend:to:with:;
-		arguments: #(selector receiver arguments).
-	messageResultLink := MetaLink new
-		metaObject: #node;
-		selector: #covResult:;
 		control: #after;
-		arguments: #(value).
-	assignmentLink := MetaLink new
-		metaObject: #node;
-		selector: #covAssign:;
-		control: #after;
-		arguments: #(value).
+		selector: #covReturnDefault.
 	returnLink := MetaLink new
 		metaObject: #node;
 		selector: #covReturn:;
@@ -58,39 +46,11 @@ CovCoverage class >> installOnClass: aClass [
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> installOnMethod: aMethod [
-	[ [ self installOnMethod: aMethod safe: false.
-	Transcript
-		show: 'Worked unsafe ' , aMethod printString;
-		cr ]
-		on: Error
-		do: [ self uninstallFromMethod: aMethod.
-			self installOnMethod: aMethod safe: true.
-			Transcript
-				show: 'Worked safe ' , aMethod printString;
-				cr ] ]
-		on: Error
-		do: [ :e | 
-			self uninstallFromMethod: aMethod.
-			Transcript
-				show: 'Failed ' , e class name , ' ' , aMethod printString;
-				cr.
-			aMethod recompile ]
-]
-
-{ #category : #'as yet unclassified' }
-CovCoverage class >> installOnMethod: aMethod safe: aBoolean [
 	installedAsts at: aMethod methodClass -> aMethod selector put: aMethod ast.
 	aMethod ast covUninstall.
 	aMethod ast propertyAt: #cov put: true.
-	aMethod ast do: [ :n | self install: contextLink onNode: n ].
-	aBoolean
-		ifFalse: [ self flag: 'message is problematic'.
-			aMethod ast covAllMessages
-				do: [ :n | 
-					self
-						install: messageLink onNode: n;
-						install: messageResultLink onNode: n ] ].
-	aMethod ast covAllAssignments do: [ :n | self install: assignmentLink onNode: n ].
+	aMethod ast do: [ :n | self install: invokeLink onNode: n ].
+	"aMethod ast body do: [ :n | self install: returnDefaultLink onNode: n ]".
 	aMethod ast covAllReturns do: [ :n | self install: returnLink onNode: n ].
 	aMethod reflectiveMethod compileAndInstallCompiledMethod
 ]
@@ -120,11 +80,9 @@ CovCoverage class >> installedNodeFor: aNode ifFound: aBlock ifNone: anotherBloc
 
 { #category : #'as yet unclassified' }
 CovCoverage class >> uninstallFromAllInstalledAsts [
-	messageLink uninstall.
-	messageResultLink uninstall.
+	invokeLink uninstall.
+	returnDefaultLink uninstall.
 	returnLink uninstall.
-	contextLink uninstall.
-	assignmentLink uninstall.
 	installedAsts copy do: [ :e | self uninstallFromMethod: e method ]
 ]
 
@@ -137,13 +95,8 @@ CovCoverage class >> uninstallFromClass: aClass [
 CovCoverage class >> uninstallFromMethod: aMethod [
 	aMethod ast removeProperty: #cov ifAbsent: [  ].
 	aMethod ast covUninstall.
-	aMethod ast do: [ :n | n removeLink: contextLink ].
-	aMethod ast covAllMessages
-		do: [ :n | 
-			n
-				removeLink: messageLink;
-				removeLink: messageResultLink ].
-	aMethod ast covAllAssignments do: [ :n | n removeLink: assignmentLink ].
+	aMethod ast do: [ :n | n removeLink: invokeLink ].
+	aMethod ast body do: [ :n | n removeLink: returnDefaultLink ].
 	aMethod ast covAllReturns do: [ :n | n removeLink: returnLink ].
 	installedAsts removeKey: aMethod methodClass -> aMethod selector ifAbsent: [  ]
 ]

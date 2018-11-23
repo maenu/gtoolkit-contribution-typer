@@ -1,18 +1,6 @@
 Extension { #name : #RBAssignmentNode }
 
 { #category : #'*Coverage' }
-RBAssignmentNode >> covAssign: anObject [
-	| value_ |
-	value_ := anObject class.
-	self covMonitor critical: [ self covAssigns increment: value_ ]
-]
-
-{ #category : #'*Coverage' }
-RBAssignmentNode >> covAssigns [
-	^ self propertyAt: #covAssigns ifAbsentPut: [ CovSummary new ]
-]
-
-{ #category : #'*Coverage' }
 RBAssignmentNode >> covClass [
 	^ variable covClass
 ]

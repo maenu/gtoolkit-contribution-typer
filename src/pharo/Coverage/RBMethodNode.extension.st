@@ -39,13 +39,12 @@ RBMethodNode >> covInvoke: aContext [
 				on: SubscriptOutOfBounds
 				do: [ self flag: 'how can this happen?'.
 					aContext numArgs timesCollect: [ nil ] ]);
+		resultClass: aContext receiver class;
 		yourself.
 	sender := aContext.
-	[ sender sender isNotNil
-		and: [ sender sender method ~~ aContext method and: [ sender sender method ast covIsCovered not and: [ sender sender method ast covIsEntryPoint not ] ] ] ]
-		whileTrue: [ sender := sender sender ].
+	[ sender sender isNotNil and: [ sender sender method ~~ aContext method and: [ sender sender method ast covIsCovered not and: [ sender sender method ast covIsEntryPoint not ] ] ] ] whileTrue: [ sender := sender sender ].
 	self covMonitor
-		critical: [ self covInvocations increment: invocation.
+		critical: [ self covInvocations stack push: invocation.
 			sender sender
 				ifNotNil: [ | caller |
 					caller := sender sender method ast.
@@ -61,6 +60,11 @@ RBMethodNode >> covIsCovered [
 { #category : #'*Coverage' }
 RBMethodNode >> covIsEntryPoint [
 	^ self method isTestMethod or: [ self method compiledMethod isGTExampleMethod ]
+]
+
+{ #category : #'*Coverage' }
+RBMethodNode >> covReturnDefault [
+	self covMonitor critical: [ self covInvocations increment: self covInvocations stack pop ]
 ]
 
 { #category : #'*Coverage' }
