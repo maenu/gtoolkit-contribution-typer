@@ -39,6 +39,7 @@ RBMessageNode >> covSend: aSelector to: anObject with: aCollection [
 		selector: aSelector;
 		receiverClass: anObject class;
 		argumentClasses: (aCollection collect: #class);
+		resultClass: anObject class;
 		yourself.
 	self covMonitor critical: [ self covSends stack push: send ]
 ]
