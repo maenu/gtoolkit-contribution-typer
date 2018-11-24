@@ -2,20 +2,10 @@ Class {
 	#name : #TypGtTypeAttribute,
 	#superclass : #BrTextAdornmentDynamicAttribute,
 	#instVars : [
-		'classes'
+		'types'
 	],
 	#category : #'Typer-GToolkit'
 }
-
-{ #category : #accessing }
-TypGtTypeAttribute >> classes [
-	^ classes
-]
-
-{ #category : #accessing }
-TypGtTypeAttribute >> classes: anObject [
-	classes := anObject
-]
 
 { #category : #initialization }
 TypGtTypeAttribute >> initialize [
@@ -23,11 +13,11 @@ TypGtTypeAttribute >> initialize [
 	self
 		beAppend;
 		stencil: [ | s |
-			s := [ classes inferredType ]
+			s := [ types inferredType printString ]
 				on: TypNoInferrableTypeError
-				do: [ nil ].
+				do: [ '?' ].
 			BrLabel new
-				text: ':' , s printString;
+				text: ':' , s;
 				margin:
 					(BlInsets
 						top: 4
@@ -38,4 +28,14 @@ TypGtTypeAttribute >> initialize [
 					(BrGlamorousLabelLook new
 						foreground: Color veryLightGray;
 						fontSize: 12) ]
+]
+
+{ #category : #accessing }
+TypGtTypeAttribute >> types [
+	^ types
+]
+
+{ #category : #accessing }
+TypGtTypeAttribute >> types: anObject [
+	types := anObject
 ]

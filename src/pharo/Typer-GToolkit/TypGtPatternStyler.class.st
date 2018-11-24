@@ -24,13 +24,13 @@ TypGtPatternStyler >> styleFrom: from to: to with: attributes [
 ]
 
 { #category : #visiting }
-TypGtPatternStyler >> styleValueNode: aNode with: aClasses [
+TypGtPatternStyler >> styleValueNode: aNode with: aTypes [
 	self
 		styleFrom: aNode stop
 		to: aNode stop
 		with:
 			{(TypGtTypeAttribute new
-				classes: aClasses;
+				types: aTypes;
 				yourself)}
 ]
 
