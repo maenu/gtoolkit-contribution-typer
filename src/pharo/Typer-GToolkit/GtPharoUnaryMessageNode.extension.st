@@ -7,7 +7,6 @@ GtPharoUnaryMessageNode >> typGtCompletionActionsFor: strategy in: anRbNode [
 	selectorPart stopPosition = index
 		ifFalse: [ ^ #() ].
 	startingText := selectorPart value.
-	Halt once.
 	^ (strategy selectorsForReceiver: (parent receiver typGtGuessType: strategy in: anRbNode receiver) matching: startingText)
 		collect: [ :each | self actionForSelector: each startingWith: startingText at: index ]
 ]
