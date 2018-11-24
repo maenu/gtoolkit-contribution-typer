@@ -58,7 +58,8 @@ TypDynTypeCollector >> installOn: aNode [
 	aNode propertyAt: #typDyn put: true.
 	aNode do: [ :n | self install: invokeLink on: n ].
 	aNode typDynReturnNodes do: [ :n | self install: returnLink on: n ].
-	aNode method reflectiveMethod compileAndInstallCompiledMethod
+	aNode method reflectiveMethod compileAndInstallCompiledMethod.
+	^ aNode method ast
 ]
 
 { #category : #'as yet unclassified' }

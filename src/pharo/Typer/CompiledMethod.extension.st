@@ -7,7 +7,7 @@ CompiledMethod >> typTypesForArgumentAt: anInteger [
 
 { #category : #'*Typer' }
 CompiledMethod >> typTypesForArgumentAt: anInteger withDiscovered: aSet [
-	^ (TypMethodResolvers instance resolverFor: self) typTypesForArgumentAt: anInteger withDiscovered: aSet
+	^ TypMethodResolvers instance typTypesForArgumentAt: anInteger ofMethod: self withDiscovered: aSet
 ]
 
 { #category : #'*Typer' }
@@ -34,10 +34,10 @@ CompiledMethod >> typTypesForResultForReceivers: aTypes [
 
 { #category : #'*Typer' }
 CompiledMethod >> typTypesForResultForReceivers: aTypes withDiscovered: aSet [
-	^ (TypMethodResolvers instance resolverFor: self) typTypesForResultForReceivers: aTypes withDiscovered: aSet
+	^ TypMethodResolvers instance typTypesForResultForReceivers: aTypes ofMethod: self withDiscovered: aSet
 ]
 
 { #category : #'*Typer' }
 CompiledMethod >> typTypesForResultWithDiscovered: aSet [
-	^ (TypMethodResolvers instance resolverFor: self) typTypesForResultWithDiscovered: aSet
+	^ TypMethodResolvers instance typTypesForResultOfMethod: self withDiscovered: aSet
 ]

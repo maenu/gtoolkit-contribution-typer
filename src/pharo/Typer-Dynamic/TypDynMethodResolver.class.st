@@ -2,37 +2,65 @@ Class {
 	#name : #TypDynMethodResolver,
 	#superclass : #TypMethodResolver,
 	#instVars : [
-		'ast'
+		'methodClass',
+		'methodSelector',
+		'argumentTypes',
+		'resultTypes'
 	],
 	#category : #'Typer-Dynamic'
 }
 
 { #category : #accessing }
-TypDynMethodResolver >> ast [
-	^ ast
+TypDynMethodResolver >> argumentTypes [
+	^ argumentTypes
 ]
 
 { #category : #accessing }
-TypDynMethodResolver >> ast: anObject [
-	ast := anObject
+TypDynMethodResolver >> argumentTypes: anObject [
+	argumentTypes := anObject
+]
+
+{ #category : #accessing }
+TypDynMethodResolver >> methodClass [
+	^ methodClass
+]
+
+{ #category : #accessing }
+TypDynMethodResolver >> methodClass: anObject [
+	methodClass := anObject
+]
+
+{ #category : #accessing }
+TypDynMethodResolver >> methodSelector [
+	^ methodSelector
+]
+
+{ #category : #accessing }
+TypDynMethodResolver >> methodSelector: anObject [
+	methodSelector := anObject
 ]
 
 { #category : #'as yet unclassified' }
 TypDynMethodResolver >> resolves: aCompiledMethod [
-	^ aCompiledMethod methodClass = ast methodClass and: [ aCompiledMethod selector = ast selector and: [ ast typDynIsCovered ] ]
+	^ aCompiledMethod methodClass = methodClass and: [ aCompiledMethod selector = methodSelector ]
+]
+
+{ #category : #accessing }
+TypDynMethodResolver >> resultTypes [
+	^ resultTypes
+]
+
+{ #category : #accessing }
+TypDynMethodResolver >> resultTypes: anObject [
+	resultTypes := anObject
 ]
 
 { #category : #'as yet unclassified' }
 TypDynMethodResolver >> typTypesForArgumentAt: anInteger withDiscovered: aSet [
-	^ ast typDynTypesForArgumentAt: anInteger withDiscovered: aSet
-]
-
-{ #category : #'as yet unclassified' }
-TypDynMethodResolver >> typTypesForResultForReceivers: aTypes withDiscovered: aSet [
-	^ ast typDynTypesForResultForReceivers: aTypes withDiscovered: aSet
+	^ (argumentTypes at: anInteger) copy
 ]
 
 { #category : #'as yet unclassified' }
 TypDynMethodResolver >> typTypesForResultWithDiscovered: aSet [
-	^ ast typDynTypesForResultWithDiscovered: aSet
+	^ resultTypes copy
 ]

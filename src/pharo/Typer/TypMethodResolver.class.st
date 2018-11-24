@@ -4,9 +4,8 @@ Class {
 	#category : #'Typer-Core'
 }
 
-{ #category : #initialization }
+{ #category : #'as yet unclassified' }
 TypMethodResolver >> resolverFor: aCompiledMethod [
-	self assert: [ self resolves: aCompiledMethod ].
 	^ self
 ]
 
@@ -16,13 +15,32 @@ TypMethodResolver >> resolves: aCompiledMethod [
 ]
 
 { #category : #'as yet unclassified' }
+TypMethodResolver >> typTypesForArgumentAt: anInteger [
+	^ self typTypesForArgumentAt: anInteger withDiscovered: Set new
+]
+
+{ #category : #'as yet unclassified' }
 TypMethodResolver >> typTypesForArgumentAt: anInteger withDiscovered: aSet [
 	^ TypTypes new
 ]
 
 { #category : #'as yet unclassified' }
+TypMethodResolver >> typTypesForResult [
+	^ self typTypesForResultWithDiscovered: Set new
+]
+
+{ #category : #'as yet unclassified' }
+TypMethodResolver >> typTypesForResultForReceivers: aTypes [
+	^ self typTypesForResultForReceivers: aTypes withDiscovered: Set new
+]
+
+{ #category : #'as yet unclassified' }
 TypMethodResolver >> typTypesForResultForReceivers: aTypes withDiscovered: aSet [
-	^ TypTypes new
+	| returns |
+	returns := self typTypesForResultWithDiscovered: aSet.
+	^ returns isEmpty
+		ifTrue: [ aTypes ]
+		ifFalse: [ returns ]
 ]
 
 { #category : #'as yet unclassified' }

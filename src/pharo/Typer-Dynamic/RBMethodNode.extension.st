@@ -3,7 +3,10 @@ Extension { #name : #RBMethodNode }
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynAsMethodResolver [
 	^ TypDynMethodResolver new
-		ast: self;
+		methodClass: self method methodClass;
+		methodSelector: self method selector;
+		argumentTypes: (self method numArgs timesCollect: [ :i | self typDynTypesForArgumentAt: i ]);
+		resultTypes: self typDynTypesForResult;
 		yourself
 ]
 
@@ -33,21 +36,12 @@ RBMethodNode >> typDynIsCovered [
 ]
 
 { #category : #'*Typer-Dynamic' }
-RBMethodNode >> typDynTypesForArgumentAt: anInteger withDiscovered: aSet [
-	^ (self typDynInvocations collect: [ :f | (f key argumentClasses at: anInteger) -> f value ]) inject: TypTypes new into: [ :a :b | a , b ]
+RBMethodNode >> typDynTypesForArgumentAt: anInteger [
+	^ self typDynInvocations collect: [ :f | (f key argumentClasses at: anInteger) -> f value ]
 ]
 
 { #category : #'*Typer-Dynamic' }
-RBMethodNode >> typDynTypesForResultForReceivers: aTypes withDiscovered: aSet [
-	| returns |
-	returns := self typDynTypesForResultWithDiscovered: aSet.
-	^ returns size > 0
-		ifTrue: [ returns ]
-		ifFalse: [ aTypes ]
-]
-
-{ #category : #'*Typer-Dynamic' }
-RBMethodNode >> typDynTypesForResultWithDiscovered: aSet [
+RBMethodNode >> typDynTypesForResult [
 	^ (self typDynReturnNodes collect: #typDynReturns) inject: TypTypes new into: [ :a :b | a , b ]
 ]
 
