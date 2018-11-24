@@ -12,5 +12,10 @@ RBValueNode >> typTypes [
 
 { #category : #'*Typer' }
 RBValueNode >> typTypesWithDiscovered: aSet [
-	self subclassResponsibility
+	(aSet includes: self)
+		ifTrue: [ ^ TypTypes new ].
+	aSet add: self.
+	^ TypTypes new
+		increment: Object;
+		yourself
 ]
