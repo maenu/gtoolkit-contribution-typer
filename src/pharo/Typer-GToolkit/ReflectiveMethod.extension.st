@@ -1,7 +1,7 @@
-Extension { #name : #RGMethodDefinition }
+Extension { #name : #ReflectiveMethod }
 
 { #category : #'*Typer-GToolkit' }
-RGMethodDefinition >> typGtSourceFor: aView [
+ReflectiveMethod >> typGtSourceFor: aView [
 	<gtView>
 	^ self compiledMethod typGtSourceFor: aView
 ]
