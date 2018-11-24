@@ -4,14 +4,14 @@ Extension { #name : #CompiledMethod }
 CompiledMethod >> typGtSourceFor: aView [
 	<gtView>
 	^ aView explicit
-		title: 'Source (coverage)' translated;
+		title: 'Source (Typer)' translated;
 		priority: 1;
 		actionStencil: [ BrButton new
 				look: BrGlamorousButtonExteriorRectangularLook + BrGlamorousButtonIconLook;
 				icon: BrGlamorousIcons browse asElement;
 				action: [ self browse ] ];
 		stencil: [ | coder |
-			coder := GtMethodCoder forMethod: self.
+			coder := TypGtMethodCoder forMethod: self.
 			coder expanded: true.
 			coder addOns addPatternStyler: TypGtPatternStyler new.
 			coder addOns addBodyStyler: TypGtBodyStyler new.

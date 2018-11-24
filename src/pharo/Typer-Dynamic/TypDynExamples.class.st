@@ -14,5 +14,8 @@ TypDynExamples >> neoJsonCore [
 	collector
 		collectAll: methods
 		doing: [ (#'Neo-JSON-Tests' asPackage definedClasses select: [ :e | e isTestCase and: e isAbstract not ]) do: [ :e | e suite run: testResult ] ].
-	^ testResult -> collector
+	TypMethodResolvers instance resolvers
+		removeAll;
+		add: collector asMethodResolvers.
+	^ #'Neo-JSON-Tests' asPackage methods
 ]
