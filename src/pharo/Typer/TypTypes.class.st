@@ -75,7 +75,7 @@ TypTypes >> inferredType [
 	remains := self copy.
 	remains dictionary removeKey: nil ifAbsent: [  ].
 	remains dictionary ifEmpty: [ TypNoInferrableTypeError signal ].
-	self assert: [ remains dictionary keys allSatisfy: [ :e | e isKindOf: TypClassType ] ].
+	self assert: [ remains dictionary keys allSatisfy: [ :e | e isKindOf: TypType ] ].
 	current := remains dictionary associationAt: (remains summary orderedKeys at: 1).
 	remains dictionary removeKey: current key.
 	[ remains dictionary isEmpty ]
