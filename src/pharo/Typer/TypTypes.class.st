@@ -75,14 +75,14 @@ TypTypes >> inferredType [
 	remains := self copy.
 	remains dictionary removeKey: nil ifAbsent: [  ].
 	remains dictionary ifEmpty: [ TypNoInferrableTypeError signal ].
-	self assert: [ remains dictionary keys allSatisfy: [ :e | e isClass ] ].
+	self assert: [ remains dictionary keys allSatisfy: [ :e | e isKindOf: TypClassType ] ].
 	current := remains dictionary associationAt: (remains summary orderedKeys at: 1).
 	remains dictionary removeKey: current key.
 	[ remains dictionary isEmpty ]
 		whileFalse: [ | next common |
 			next := remains dictionary associationAt: (remains summary orderedKeys at: 1).
 			remains dictionary removeKey: next key.
-			common := current key withAllSuperclasses detect: [ :e | e == next key or: [ next key inheritsFrom: e ] ].
+			common := current key withAllSuperTypes detect: [ :e | next key <= e ].
 			common == current key
 				ifFalse: [ current := common -> (current value + next value).
 					remains add: current ] ].

@@ -6,6 +6,6 @@ RBGlobalNode >> typTypesWithDiscovered: aSet [
 		ifTrue: [ ^ TypTypes new ].
 	aSet add: self.
 	^ TypTypes new
-		increment: self binding value class;
+		increment: self binding value class typAsType;
 		yourself
 ]

@@ -6,6 +6,6 @@ RBArrayNode >> typTypesWithDiscovered: aSet [
 		ifTrue: [ ^ TypTypes new ].
 	aSet add: self.
 	^ TypTypes new
-		increment: Array;
+		increment: Array typAsType;
 		yourself
 ]

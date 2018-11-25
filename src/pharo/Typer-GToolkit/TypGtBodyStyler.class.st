@@ -60,6 +60,12 @@ TypGtBodyStyler >> visitLiteralArrayNode: aNode [
 ]
 
 { #category : #visiting }
+TypGtBodyStyler >> visitLiteralNode: aNode [
+	super visitLiteralNode: aNode.
+	self styleValueNode: aNode
+]
+
+{ #category : #visiting }
 TypGtBodyStyler >> visitMessageNode: aNode [
 	super visitMessageNode: aNode.
 	self styleValueNode: aNode

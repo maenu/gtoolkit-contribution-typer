@@ -6,6 +6,6 @@ RBSuperNode >> typTypesWithDiscovered: aSet [
 		ifTrue: [ ^ TypTypes new ].
 	aSet add: self.
 	^ TypTypes new
-		increment: self methodNode method methodClass superclass;
+		increment: self methodNode method methodClass superclass typAsType;
 		yourself
 ]

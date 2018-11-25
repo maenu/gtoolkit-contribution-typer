@@ -13,7 +13,7 @@ ClassDescription >> typDynAsVariableResolversWithDiscovered: aSet [
 	^ types associations
 		collect: [ :e | 
 			TypVariableResolver new
-				variableClass: self;
+				variableType: self typAsType;
 				variableSelector: e key;
 				typTypes: e value;
 				yourself ]

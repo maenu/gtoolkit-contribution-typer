@@ -3,7 +3,7 @@ Extension { #name : #RBMethodNode }
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynAsMethodResolver [
 	^ TypMethodResolver new
-		methodClass: self method methodClass;
+		methodType: self method methodClass typAsType;
 		methodSelector: self method selector;
 		argumentTypes: (self method numArgs timesCollect: [ :i | self typDynTypesForArgumentAt: i ]);
 		resultTypes: self typDynTypesForResult;
@@ -19,10 +19,10 @@ RBMethodNode >> typDynInvocations [
 RBMethodNode >> typDynInvokeIn: aContext [
 	| invocation |
 	invocation := TypDynMessage new
-		receiverClass: aContext receiver class;
+		receiverType: aContext receiver class typAsType;
 		selector: aContext method selector;
-		argumentClasses:
-			([ aContext arguments collect: #class ]
+		argumentTypes:
+			([ aContext arguments collect: [ :e | e class typAsType ] ]
 				on: SubscriptOutOfBounds
 				do: [ self flag: 'how can this happen?'.
 					aContext numArgs timesCollect: [ nil ] ]);
@@ -37,7 +37,7 @@ RBMethodNode >> typDynIsCovered [
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForArgumentAt: anInteger [
-	^ self typDynInvocations collect: [ :f | (f key argumentClasses at: anInteger) -> f value ]
+	^ self typDynInvocations collect: [ :f | (f key argumentTypes at: anInteger) -> f value ]
 ]
 
 { #category : #'*Typer-Dynamic' }

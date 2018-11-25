@@ -6,6 +6,6 @@ RBLiteralValueNode >> typTypesWithDiscovered: aSet [
 		ifTrue: [ ^ TypTypes new ].
 	aSet add: self.
 	^ TypTypes new
-		increment: value class;
+		increment: value class typAsType;
 		yourself
 ]

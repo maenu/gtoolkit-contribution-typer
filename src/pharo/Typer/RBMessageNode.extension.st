@@ -7,7 +7,7 @@ RBMessageNode >> typMethodTypes [
 
 { #category : #'*Typer' }
 RBMessageNode >> typMethodTypesWithDiscovered: aSet [
-	^ ((self typTypesForReceiverWithDiscovered: aSet) collect: [ :e | (e key lookupSelector: selector) -> e value ]) select: [ :e | e key isNotNil ]
+	^ ((self typTypesForReceiverWithDiscovered: aSet) collect: [ :e | (e key lookupMethodSelector: selector) -> e value ]) select: [ :e | e key isNotNil ]
 ]
 
 { #category : #'*Typer' }

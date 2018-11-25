@@ -6,6 +6,6 @@ RBSelfNode >> typTypesWithDiscovered: aSet [
 		ifTrue: [ ^ TypTypes new ].
 	aSet add: self.
 	^ TypTypes new
-		increment: self methodNode method methodClass;
+		increment: self methodNode method methodClass typAsType;
 		yourself
 ]

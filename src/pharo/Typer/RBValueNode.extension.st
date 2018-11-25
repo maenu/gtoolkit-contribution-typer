@@ -16,6 +16,6 @@ RBValueNode >> typTypesWithDiscovered: aSet [
 		ifTrue: [ ^ TypTypes new ].
 	aSet add: self.
 	^ TypTypes new
-		increment: Object;
+		increment: Object typAsType;
 		yourself
 ]

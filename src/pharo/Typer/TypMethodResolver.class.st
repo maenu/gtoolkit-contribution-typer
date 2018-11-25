@@ -2,10 +2,10 @@ Class {
 	#name : #TypMethodResolver,
 	#superclass : #TypResolver,
 	#instVars : [
-		'methodClass',
 		'methodSelector',
 		'argumentTypes',
-		'resultTypes'
+		'resultTypes',
+		'methodType'
 	],
 	#category : #'Typer-Core'
 }
@@ -21,16 +21,6 @@ TypMethodResolver >> argumentTypes: anObject [
 ]
 
 { #category : #accessing }
-TypMethodResolver >> methodClass [
-	^ methodClass
-]
-
-{ #category : #accessing }
-TypMethodResolver >> methodClass: anObject [
-	methodClass := anObject
-]
-
-{ #category : #accessing }
 TypMethodResolver >> methodSelector [
 	^ methodSelector
 ]
@@ -40,9 +30,19 @@ TypMethodResolver >> methodSelector: anObject [
 	methodSelector := anObject
 ]
 
+{ #category : #accessing }
+TypMethodResolver >> methodType [
+	^ methodType
+]
+
+{ #category : #accessing }
+TypMethodResolver >> methodType: anObject [
+	methodType := anObject
+]
+
 { #category : #'as yet unclassified' }
 TypMethodResolver >> resolves: aCompiledMethod [
-	^ aCompiledMethod methodClass = methodClass and: [ aCompiledMethod selector = methodSelector ]
+	^ aCompiledMethod methodClass typAsType = methodType and: [ aCompiledMethod selector = methodSelector ]
 ]
 
 { #category : #accessing }

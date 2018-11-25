@@ -2,16 +2,16 @@ Class {
 	#name : #TypVariableResolver,
 	#superclass : #TypResolver,
 	#instVars : [
-		'variableClass',
 		'variableSelector',
-		'types'
+		'types',
+		'variableType'
 	],
 	#category : #'Typer-Core'
 }
 
 { #category : #'as yet unclassified' }
 TypVariableResolver >> resolves: anAssociation [
-	^ anAssociation key = variableClass and: [ anAssociation value = variableSelector ]
+	^ anAssociation key = variableType and: [ anAssociation value = variableSelector ]
 ]
 
 { #category : #accessing }
@@ -30,16 +30,6 @@ TypVariableResolver >> typTypesWithDiscovered: aSet [
 ]
 
 { #category : #accessing }
-TypVariableResolver >> variableClass [
-	^ variableClass
-]
-
-{ #category : #accessing }
-TypVariableResolver >> variableClass: anObject [
-	variableClass := anObject
-]
-
-{ #category : #accessing }
 TypVariableResolver >> variableSelector [
 	^ variableSelector
 ]
@@ -47,4 +37,14 @@ TypVariableResolver >> variableSelector [
 { #category : #accessing }
 TypVariableResolver >> variableSelector: anObject [
 	variableSelector := anObject
+]
+
+{ #category : #accessing }
+TypVariableResolver >> variableType [
+	^ variableType
+]
+
+{ #category : #accessing }
+TypVariableResolver >> variableType: anObject [
+	variableType := anObject
 ]

@@ -3,53 +3,53 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'selector',
-		'receiverClass',
-		'argumentClasses'
+		'argumentTypes',
+		'receiverTypes'
 	],
 	#category : #'Typer-Dynamic'
 }
 
 { #category : #comparing }
 TypDynMessage >> = anObject [
-	^ self == anObject or: [ self class = anObject class and: [ selector = anObject selector and: [ argumentClasses = anObject argumentClasses and: [ receiverClass = anObject receiverClass ] ] ] ]
+	^ self == anObject or: [ self class = anObject class and: [ selector = anObject selector and: [ argumentTypes = anObject argumentTypes and: [ receiverTypes = anObject receiverType ] ] ] ]
 ]
 
 { #category : #accessing }
-TypDynMessage >> argumentClasses [
-	^ argumentClasses
+TypDynMessage >> argumentTypes [
+	^ argumentTypes
 ]
 
 { #category : #accessing }
-TypDynMessage >> argumentClasses: anObject [
-	argumentClasses := anObject
+TypDynMessage >> argumentTypes: anObject [
+	argumentTypes := anObject
 ]
 
 { #category : #comparing }
 TypDynMessage >> hash [
-	^ selector hash + argumentClasses hash + receiverClass hash
+	^ selector hash bitXor: (argumentTypes hash bitXor: receiverTypes hash)
 ]
 
 { #category : #printing }
 TypDynMessage >> printOn: aStream [
-	receiverClass printOn: aStream.
+	receiverTypes printOn: aStream.
 	aStream << ' '.
 	selector isUnary
 		ifTrue: [ aStream << selector asString ]
 		ifFalse: [ selector isBinary
-				ifTrue: [ aStream << selector asString << ' ' << (argumentClasses at: 1) printString ]
+				ifTrue: [ aStream << selector asString << ' ' << (argumentTypes at: 1) printString ]
 				ifFalse: [ | keywords |
 					keywords := ':' split: selector.
-					1 to: keywords size - 1 do: [ :i | aStream << ' ' << (keywords at: i) asString << ': ' << (argumentClasses at: i ifAbsent: [ nil ]) printString ] ] ]
+					1 to: keywords size - 1 do: [ :i | aStream << ' ' << (keywords at: i) asString << ': ' << (argumentTypes at: i ifAbsent: [ nil ]) printString ] ] ]
 ]
 
 { #category : #accessing }
-TypDynMessage >> receiverClass [
-	^ receiverClass
+TypDynMessage >> receiverType [
+	^ receiverTypes
 ]
 
 { #category : #accessing }
-TypDynMessage >> receiverClass: anObject [
-	receiverClass := anObject
+TypDynMessage >> receiverType: anObject [
+	receiverTypes := anObject
 ]
 
 { #category : #accessing }

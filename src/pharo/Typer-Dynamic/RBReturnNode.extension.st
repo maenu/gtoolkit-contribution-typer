@@ -3,7 +3,7 @@ Extension { #name : #RBReturnNode }
 { #category : #'*Typer-Dynamic' }
 RBReturnNode >> typDynReturn: anObject [
 	| value_ |
-	value_ := anObject class.
+	value_ := anObject class typAsType.
 	self typDynMonitor critical: [ self typDynReturns increment: value_ ]
 ]
 

@@ -3,7 +3,7 @@ Extension { #name : #RBAssignmentNode }
 { #category : #'*Typer-Dynamic' }
 RBAssignmentNode >> typDynAssign: anObject [
 	| value_ |
-	value_ := anObject class.
+	value_ := anObject class typAsType.
 	self typDynMonitor critical: [ self typDynAssigns increment: value_ ]
 ]
 

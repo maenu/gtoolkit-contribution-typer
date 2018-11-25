@@ -6,6 +6,6 @@ RBThisContextNode >> typTypesWithDiscovered: aSet [
 		ifTrue: [ ^ TypTypes new ].
 	aSet add: self.
 	^ TypTypes new
-		increment: Context;
+		increment: Context typAsType;
 		yourself
 ]
