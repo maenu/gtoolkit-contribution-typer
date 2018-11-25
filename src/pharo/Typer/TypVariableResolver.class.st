@@ -14,19 +14,19 @@ TypVariableResolver >> resolves: anAssociation [
 	^ anAssociation key = variableClass and: [ anAssociation value = variableSelector ]
 ]
 
-{ #category : #'as yet unclassified' }
-TypVariableResolver >> typTypesWithDiscovered: aSet [
-	^ self types
-]
-
 { #category : #accessing }
-TypVariableResolver >> types [
+TypVariableResolver >> typTypes [
 	^ types
 ]
 
 { #category : #accessing }
-TypVariableResolver >> types: anObject [
+TypVariableResolver >> typTypes: anObject [
 	types := anObject
+]
+
+{ #category : #'as yet unclassified' }
+TypVariableResolver >> typTypesWithDiscovered: aSet [
+	^ self typTypes
 ]
 
 { #category : #accessing }

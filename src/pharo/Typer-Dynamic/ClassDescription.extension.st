@@ -15,6 +15,6 @@ ClassDescription >> typDynAsVariableResolversWithDiscovered: aSet [
 			TypVariableResolver new
 				variableClass: self;
 				variableSelector: e key;
-				types: e value;
+				typTypes: e value;
 				yourself ]
 ]
