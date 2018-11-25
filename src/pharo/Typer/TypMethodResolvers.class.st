@@ -1,45 +1,8 @@
 Class {
 	#name : #TypMethodResolvers,
-	#superclass : #Object,
-	#instVars : [
-		'resolvers'
-	],
-	#classInstVars : [
-		'instance'
-	],
+	#superclass : #TypResolvers,
 	#category : #'Typer-Core'
 }
-
-{ #category : #accessing }
-TypMethodResolvers class >> instance [
-	^ instance ifNil: [ instance := self new ]
-]
-
-{ #category : #initialization }
-TypMethodResolvers >> initialize [
-	super initialize.
-	resolvers := OrderedCollection new
-]
-
-{ #category : #accessing }
-TypMethodResolvers >> resolverFor: aCompiledMethod [
-	^ resolvers detect: [ :e | e resolves: aCompiledMethod ] ifNone: [ nil ]
-]
-
-{ #category : #accessing }
-TypMethodResolvers >> resolvers [
-	^ resolvers
-]
-
-{ #category : #accessing }
-TypMethodResolvers >> resolvers: anObject [
-	resolvers := anObject
-]
-
-{ #category : #accessing }
-TypMethodResolvers >> resolves: aCompiledMethod [
-	resolvers anySatisfy: [ :e | e resolves: aCompiledMethod ]
-]
 
 { #category : #accessing }
 TypMethodResolvers >> typTypesForArgumentAt: anInteger ofMethod: aCompiledMethod [

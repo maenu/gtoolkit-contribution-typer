@@ -4,7 +4,9 @@ Class {
 	#instVars : [
 		'invokeLink',
 		'returnLink',
-		'methodResolvers'
+		'assignLink',
+		'methodResolvers',
+		'variableResolvers'
 	],
 	#classInstVars : [
 		'instance'
@@ -19,6 +21,13 @@ TypDynTypeCollector >> asMethodResolvers [
 		yourself
 ]
 
+{ #category : #converting }
+TypDynTypeCollector >> asVariableResolvers [
+	^ TypVariableResolvers new
+		resolvers: variableResolvers;
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypDynTypeCollector >> collectAll: aCollection doing: aBlock [
 	| asts |
@@ -30,16 +39,23 @@ TypDynTypeCollector >> collectAll: aCollection doing: aBlock [
 			ast ].
 	^ [ aBlock value ]
 		ensure: [ methodResolvers addAll: (asts collect: #typDynAsMethodResolver).
+			variableResolvers addAll: ((asts collect: [ :e | e method methodClass ]) asSet flatCollect: #typDynAsVariableResolvers).
 			asts do: [ :e | self uninstallFrom: e ] ]
 ]
 
 { #category : #initialization }
 TypDynTypeCollector >> initialize [
 	methodResolvers := OrderedCollection new.
+	variableResolvers := OrderedCollection new.
 	invokeLink := MetaLink new
 		metaObject: #node;
 		selector: #typDynInvokeIn:;
 		arguments: #(context).
+	assignLink := MetaLink new
+		metaObject: #node;
+		selector: #typDynAssign:;
+		control: #after;
+		arguments: #(value).
 	returnLink := MetaLink new
 		metaObject: #node;
 		selector: #typDynReturn:;
@@ -57,6 +73,7 @@ TypDynTypeCollector >> installOn: aNode [
 	aNode typDynUninstall.
 	aNode propertyAt: #typDyn put: true.
 	aNode do: [ :n | self install: invokeLink on: n ].
+	aNode typDynAssignNodes do: [ :n | self install: assignLink on: n ].
 	aNode typDynReturnNodes do: [ :n | self install: returnLink on: n ].
 	aNode method reflectiveMethod compileAndInstallCompiledMethod.
 	^ aNode method ast
@@ -67,5 +84,6 @@ TypDynTypeCollector >> uninstallFrom: aNode [
 	aNode removeProperty: #typDyn ifAbsent: [  ].
 	aNode typDynUninstall.
 	aNode do: [ :n | n removeLink: invokeLink ].
-	aNode typDynReturnNodes do: [ :n | n removeLink: returnLink ].
+	aNode typDynAssignNodes do: [ :n | n removeLink: assignLink ].
+	aNode typDynReturnNodes do: [ :n | n removeLink: returnLink ]
 ]

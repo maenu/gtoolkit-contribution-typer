@@ -1,17 +1,58 @@
 Class {
 	#name : #TypMethodResolver,
-	#superclass : #Object,
+	#superclass : #TypResolver,
+	#instVars : [
+		'methodClass',
+		'methodSelector',
+		'argumentTypes',
+		'resultTypes'
+	],
 	#category : #'Typer-Core'
 }
 
-{ #category : #'as yet unclassified' }
-TypMethodResolver >> resolverFor: aCompiledMethod [
-	^ self
+{ #category : #accessing }
+TypMethodResolver >> argumentTypes [
+	^ argumentTypes
+]
+
+{ #category : #accessing }
+TypMethodResolver >> argumentTypes: anObject [
+	argumentTypes := anObject
+]
+
+{ #category : #accessing }
+TypMethodResolver >> methodClass [
+	^ methodClass
+]
+
+{ #category : #accessing }
+TypMethodResolver >> methodClass: anObject [
+	methodClass := anObject
+]
+
+{ #category : #accessing }
+TypMethodResolver >> methodSelector [
+	^ methodSelector
+]
+
+{ #category : #accessing }
+TypMethodResolver >> methodSelector: anObject [
+	methodSelector := anObject
 ]
 
 { #category : #'as yet unclassified' }
 TypMethodResolver >> resolves: aCompiledMethod [
-	^ true
+	^ aCompiledMethod methodClass = methodClass and: [ aCompiledMethod selector = methodSelector ]
+]
+
+{ #category : #accessing }
+TypMethodResolver >> resultTypes [
+	^ resultTypes
+]
+
+{ #category : #accessing }
+TypMethodResolver >> resultTypes: anObject [
+	resultTypes := anObject
 ]
 
 { #category : #'as yet unclassified' }
@@ -21,7 +62,7 @@ TypMethodResolver >> typTypesForArgumentAt: anInteger [
 
 { #category : #'as yet unclassified' }
 TypMethodResolver >> typTypesForArgumentAt: anInteger withDiscovered: aSet [
-	^ TypTypes new
+	^ (argumentTypes at: anInteger) copy
 ]
 
 { #category : #'as yet unclassified' }
@@ -45,5 +86,5 @@ TypMethodResolver >> typTypesForResultForReceivers: aTypes withDiscovered: aSet 
 
 { #category : #'as yet unclassified' }
 TypMethodResolver >> typTypesForResultWithDiscovered: aSet [
-	^ TypTypes new
+	^ resultTypes copy
 ]

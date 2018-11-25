@@ -2,7 +2,7 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynAsMethodResolver [
-	^ TypDynMethodResolver new
+	^ TypMethodResolver new
 		methodClass: self method methodClass;
 		methodSelector: self method selector;
 		argumentTypes: (self method numArgs timesCollect: [ :i | self typDynTypesForArgumentAt: i ]);
@@ -38,6 +38,12 @@ RBMethodNode >> typDynIsCovered [
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForArgumentAt: anInteger [
 	^ self typDynInvocations collect: [ :f | (f key argumentClasses at: anInteger) -> f value ]
+]
+
+{ #category : #'*Typer-Dynamic' }
+RBMethodNode >> typDynTypesForInstanceVariables [
+	^ (((self typDynAssignNodes collect: [ :e | e variable name -> e typDynAssigns ]) groupedBy: #key) collect: [ :e | e collect: #value ])
+		collect: [ :e | e inject: TypTypes new into: [ :a :b | a , b ] ]
 ]
 
 { #category : #'*Typer-Dynamic' }

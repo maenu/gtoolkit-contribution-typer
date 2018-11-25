@@ -1,6 +1,11 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*Typer-Dynamic' }
+RBProgramNode >> typDynAssignNodes [
+	^ self assignmentNodes select: [ :e | e variable isInstance ]
+]
+
+{ #category : #'*Typer-Dynamic' }
 RBProgramNode >> typDynMonitor [
 	^ self propertyAt: #typDynMonitor ifAbsentPut: [ Monitor new ]
 ]

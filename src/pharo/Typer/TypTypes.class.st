@@ -23,6 +23,11 @@ TypTypes >> add: anAssociation [
 ]
 
 { #category : #enumerating }
+TypTypes >> addAll: aTypes [
+	^ aTypes do: [ :e | self add: e ]
+]
+
+{ #category : #enumerating }
 TypTypes >> collect: aBlock [
 	| copy |
 	copy := TypTypes new.

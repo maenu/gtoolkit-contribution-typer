@@ -17,5 +17,8 @@ TypDynExamples >> neoJsonCore [
 	TypMethodResolvers instance resolvers
 		removeAll;
 		add: collector asMethodResolvers.
+	TypVariableResolvers instance resolvers
+		removeAll;
+		add: collector asVariableResolvers.
 	^ #'Neo-JSON-Tests' asPackage methods
 ]
