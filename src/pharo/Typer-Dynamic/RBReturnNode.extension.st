@@ -9,7 +9,7 @@ RBReturnNode >> typDynReturn: anObject [
 
 { #category : #'*Typer-Dynamic' }
 RBReturnNode >> typDynReturns [
-	^ self propertyAt: #typDynReturns ifAbsentPut: [ TypDynTypes new ]
+	^ self propertyAt: #typDynReturns ifAbsentPut: [ TypUnionType new ]
 ]
 
 { #category : #'*Typer-Dynamic' }

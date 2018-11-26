@@ -7,7 +7,7 @@ RBGlobalNode >> typTypeWithDiscovered: aSet [
 	aSet add: self.
 	^ self binding isClassVariable
 		ifTrue: [ self methodNode methodClass instanceSide typTypeForClassVariableNamed: name withDiscovered: aSet ]
-		ifFalse: [ self binding isGlobalVariable
-				ifTrue: [ self binding value class typAsType ]
-				ifFalse: [ self methodNode methodClass instanceSide typTypeForPoolVariableNamed: name withDiscovered: aSet ] ]
+		ifFalse: [ self binding isFromSharedPool
+				ifTrue: [ self methodNode methodClass instanceSide typTypeForPoolVariableNamed: name withDiscovered: aSet ]
+				ifFalse: [ self binding value class typAsType ] ]
 ]

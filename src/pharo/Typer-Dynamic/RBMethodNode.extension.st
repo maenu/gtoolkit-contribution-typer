@@ -5,21 +5,21 @@ RBMethodNode >> typDynAsMethodResolver [
 	^ TypMethodResolver new
 		methodType: self method methodClass typAsType;
 		methodSelector: self method selector;
-		argumentTypes: (self method numArgs timesCollect: [ :i | (self typDynTypesForArgumentAt: i) asType ]);
-		resultType: self typDynTypesForResult asType;
+		argumentTypes: (self method numArgs timesCollect: [ :i | self typDynTypeForArgumentAt: i ]);
+		resultType: self typDynTypeForResult;
 		yourself
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynInvocations [
-	^ self propertyAt: #typDynInvocations ifAbsentPut: [ TypDynTypes new ]
+	^ self propertyAt: #typDynInvocations ifAbsentPut: [ TypUnionType new ]
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynInvokeIn: aContext [
 	| invocation |
 	invocation := TypDynMessage new
-		receiverTypes: aContext receiver class typAsType;
+		receiverType: aContext receiver class typAsType;
 		selector: aContext method selector;
 		argumentTypes:
 			([ aContext arguments collect: [ :e | e class typAsType ] ]
@@ -36,19 +36,33 @@ RBMethodNode >> typDynIsCovered [
 ]
 
 { #category : #'*Typer-Dynamic' }
-RBMethodNode >> typDynTypesForArgumentAt: anInteger [
+RBMethodNode >> typDynTypeForArgumentAt: anInteger [
 	^ self typDynInvocations collect: [ :f | (f key argumentTypes at: anInteger) -> f value ]
 ]
 
 { #category : #'*Typer-Dynamic' }
-RBMethodNode >> typDynTypesForInstanceVariables [
-	^ (((self typDynAssignNodes collect: [ :e | e variable name -> e typDynAssigns ]) groupedBy: #key) collect: [ :e | e collect: #value ])
-		collect: [ :e | e inject: TypDynTypes new into: [ :a :b | a , b ] ]
+RBMethodNode >> typDynTypeForResult [
+	^ (self typDynReturnNodes collect: #typDynReturns) inject: TypUnionType new into: [ :a :b | a , b ]
 ]
 
 { #category : #'*Typer-Dynamic' }
-RBMethodNode >> typDynTypesForResult [
-	^ (self typDynReturnNodes collect: #typDynReturns) inject: TypDynTypes new into: [ :a :b | a , b ]
+RBMethodNode >> typDynTypesForClassVariables [
+	^ self typDynTypesForVariablesSelectedWith: [ :e | e variable isInstance not and: [ e variable binding isClassVariable ] ]
+]
+
+{ #category : #'*Typer-Dynamic' }
+RBMethodNode >> typDynTypesForInstanceVariables [
+	^ self typDynTypesForVariablesSelectedWith: [ :e | e variable isInstance ]
+]
+
+{ #category : #'*Typer-Dynamic' }
+RBMethodNode >> typDynTypesForPoolVariables [
+	^ self typDynTypesForVariablesSelectedWith: [ :e | e variable isInstance not and: [ e variable binding isFromSharedPool ] ]
+]
+
+{ #category : #'*Typer-Dynamic' }
+RBMethodNode >> typDynTypesForVariablesSelectedWith: aBlock [
+	^ ((((self typDynAssignNodes select: aBlock) collect: [ :e | e variable name -> e typDynAssigns ]) groupedBy: #key) collect: [ :e | e collect: #value ]) collect: [ :e | e inject: TypUnionType new into: [ :a :b | a , b ] ]
 ]
 
 { #category : #'*Typer-Dynamic' }

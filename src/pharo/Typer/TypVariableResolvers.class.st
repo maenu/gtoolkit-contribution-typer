@@ -11,5 +11,5 @@ TypVariableResolvers >> typTypeForVariableNamed: aString ofClass: aClass [
 
 { #category : #'as yet unclassified' }
 TypVariableResolvers >> typTypeForVariableNamed: aString ofClass: aClass withDiscovered: aSet [
-	^ self typTypeFor: aClass -> aString using: [ :r :a :s | r typTypeWithDiscovered: s ] withDiscovered: aSet
+	^ self typTypeFor: aClass typAsType -> aString using: [ :r :a | r typTypeWithDiscovered: aSet ] withDiscovered: aSet
 ]

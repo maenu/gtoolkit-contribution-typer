@@ -9,7 +9,7 @@ RBAssignmentNode >> typDynAssign: anObject [
 
 { #category : #'*Typer-Dynamic' }
 RBAssignmentNode >> typDynAssigns [
-	^ self propertyAt: #typDynAssigns ifAbsentPut: [ TypDynTypes new ]
+	^ self propertyAt: #typDynAssigns ifAbsentPut: [ TypUnionType new ]
 ]
 
 { #category : #'*Typer-Dynamic' }

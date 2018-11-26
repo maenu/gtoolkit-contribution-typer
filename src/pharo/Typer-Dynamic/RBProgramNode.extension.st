@@ -2,7 +2,7 @@ Extension { #name : #RBProgramNode }
 
 { #category : #'*Typer-Dynamic' }
 RBProgramNode >> typDynAssignNodes [
-	^ self assignmentNodes select: [ :e | e variable isInstance ]
+	^ self assignmentNodes reject: [ :e | e variable isTemp ]
 ]
 
 { #category : #'*Typer-Dynamic' }

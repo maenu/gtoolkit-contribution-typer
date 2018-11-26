@@ -4,14 +4,14 @@ Class {
 	#instVars : [
 		'selector',
 		'argumentTypes',
-		'receiverTypes'
+		'receiverType'
 	],
 	#category : #'Typer-Dynamic-Core'
 }
 
 { #category : #comparing }
 TypDynMessage >> = anObject [
-	^ self == anObject or: [ self class = anObject class and: [ selector = anObject selector and: [ argumentTypes = anObject argumentTypes and: [ receiverTypes = anObject receiverTypes ] ] ] ]
+	^ self == anObject or: [ self class = anObject class and: [ selector = anObject selector and: [ argumentTypes = anObject argumentTypes and: [ receiverType = anObject receiverType ] ] ] ]
 ]
 
 { #category : #accessing }
@@ -26,12 +26,12 @@ TypDynMessage >> argumentTypes: anObject [
 
 { #category : #comparing }
 TypDynMessage >> hash [
-	^ selector hash bitXor: (argumentTypes hash bitXor: receiverTypes hash)
+	^ selector hash bitXor: (argumentTypes hash bitXor: receiverType hash)
 ]
 
 { #category : #printing }
 TypDynMessage >> printOn: aStream [
-	receiverTypes printOn: aStream.
+	receiverType printOn: aStream.
 	aStream << ' '.
 	selector isUnary
 		ifTrue: [ aStream << selector asString ]
@@ -43,13 +43,13 @@ TypDynMessage >> printOn: aStream [
 ]
 
 { #category : #accessing }
-TypDynMessage >> receiverTypes [
-	^ receiverTypes
+TypDynMessage >> receiverType [
+	^ receiverType
 ]
 
 { #category : #accessing }
-TypDynMessage >> receiverTypes: anObject [
-	receiverTypes := anObject
+TypDynMessage >> receiverType: anObject [
+	receiverType := anObject
 ]
 
 { #category : #accessing }

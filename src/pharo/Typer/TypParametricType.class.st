@@ -35,13 +35,8 @@ TypParametricType >> parameters: anObject [
 
 { #category : #printing }
 TypParametricType >> printOn: aStream [
-	| size |
 	super printOn: aStream.
 	aStream << '<'.
-	size := parameters size.
-	1 to: size do: [ :e | 
-		(parameters at: e) printOn: aStream.
-		e < size
-			ifTrue: [ aStream << '>' ] ].
+	aStream << (',' join: (parameters collect: #printString)).
 	aStream << '>'
 ]

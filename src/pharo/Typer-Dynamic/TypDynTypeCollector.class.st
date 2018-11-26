@@ -39,7 +39,7 @@ TypDynTypeCollector >> collectAll: aCollection doing: aBlock [
 			ast ].
 	^ [ aBlock value ]
 		ensure: [ methodResolvers addAll: (asts collect: #typDynAsMethodResolver).
-			variableResolvers addAll: ((asts collect: [ :e | e method methodClass ]) asSet flatCollect: #typDynAsVariableResolvers).
+			variableResolvers addAll: ((asts collect: [ :e | e method methodClass ]) asSet flatCollect: [ :e | e typDynAsInstanceVariableResolvers , e typDynAsClassVariableResolvers , e typDynAsPoolVariableResolvers ]).
 			asts do: [ :e | self uninstallFrom: e ] ]
 ]
 
