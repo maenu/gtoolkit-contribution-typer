@@ -9,7 +9,7 @@ Class {
 
 { #category : #comparing }
 TypClassType >> = anObject [
-	^ self == anObject or: [ self class = anObject class and: [ clazz = anObject clazz ] ]
+	^ self == anObject or: [ self class = anObject class and: [ nullable = anObject nullable and: [ clazz = anObject clazz ] ] ]
 ]
 
 { #category : #converting }
@@ -39,13 +39,7 @@ TypClassType >> hasSuperType [
 
 { #category : #comparing }
 TypClassType >> hash [
-	^ self clazz hash
-]
-
-{ #category : #initialization }
-TypClassType >> initialize [
-	super initialize.
-	nullable := true
+	^ super hash bitXor: self clazz hash
 ]
 
 { #category : #'as yet unclassified' }

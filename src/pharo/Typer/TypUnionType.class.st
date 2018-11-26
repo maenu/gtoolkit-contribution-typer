@@ -17,7 +17,7 @@ TypUnionType >> , aClasses [
 
 { #category : #comparing }
 TypUnionType >> = anObject [
-	^ self == anObject or: [ self class = anObject class and: [ weights keys asSet = anObject weights keys asSet ] ]
+	^ self == anObject or: [ self class = anObject class and: [ nullable = anObject nullable and: [ weights keys asSet = anObject weights keys asSet ] ] ]
 ]
 
 { #category : #enumerating }
@@ -78,7 +78,7 @@ TypUnionType >> hasClass [
 
 { #category : #comparing }
 TypUnionType >> hash [
-	^ weights keys asSet hash
+	^ super hash bitXor: weights keys asSet hash
 ]
 
 { #category : #accessing }

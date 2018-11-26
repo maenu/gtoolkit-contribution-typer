@@ -18,6 +18,11 @@ TypType >> <= aType [
 ]
 
 { #category : #comparing }
+TypType >> = anObject [
+	^ self == anObject or: [ self class = anObject class and: [ nullable = anObject nullable ] ]
+]
+
+{ #category : #comparing }
 TypType >> > aType [
 	^ aType isSubTypeOf: self
 ]
@@ -50,6 +55,17 @@ TypType >> hasClass [
 { #category : #testing }
 TypType >> hasSuperType [
 	^ true
+]
+
+{ #category : #comparing }
+TypType >> hash [
+	^ nullable hash
+]
+
+{ #category : #initialization }
+TypType >> initialize [
+	super initialize.
+	nullable := true
 ]
 
 { #category : #testing }

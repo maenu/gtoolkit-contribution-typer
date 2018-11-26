@@ -9,7 +9,7 @@ Class {
 
 { #category : #comparing }
 TypParametricType >> = anObject [
-	^ self == anObject or: [ self class = anObject class and: [ clazz = anObject clazz and: [ parameters = anObject parameters ] ] ]
+	^ self == anObject or: [ self class = anObject class and: [ nullable = anObject nullable and: [ clazz = anObject clazz and: [ parameters = anObject parameters ] ] ] ]
 ]
 
 { #category : #comparing }
