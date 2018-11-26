@@ -52,7 +52,7 @@ TypResolvers >> typeFor: anAssociation using: aBlock [
 			type := aBlock cull: e cull: association.
 			type isUnknown
 				ifFalse: [ ^ type ] ].
-	association hasSuperType
-		ifTrue: [ association := association key superType -> association value ] ] doWhileTrue: [ association hasSuperType ].
+	association key hasSuperType
+		ifTrue: [ association := association key superType -> association value ] ] doWhileTrue: [ association key hasSuperType ].
 	^ TypUnknownType instance
 ]

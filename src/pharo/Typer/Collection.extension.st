@@ -18,3 +18,11 @@ Collection >> typAsCompatibleType [
 					remains add: current ] ].
 	^ current
 ]
+
+{ #category : #'*Typer' }
+Collection >> typAsUnionType [
+	| type |
+	type := TypUnionType new.
+	self do: [ :e | type increment: e ].
+	^ type
+]

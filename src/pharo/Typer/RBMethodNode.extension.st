@@ -2,7 +2,7 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer' }
 RBMethodNode >> typTypeForArgumentAt: anInteger withDiscovered: aSet [
-	^ TypMethodResolvers instance typTypeForArgumentAt: anInteger ofMethod: self methodClass typAsType -> selector withDiscovered: aSet
+	^ TypMethodResolvers instance typeForArgumentAt: anInteger ofMethod: self methodClass typAsType -> selector
 ]
 
 { #category : #'*Typer' }
@@ -14,5 +14,5 @@ RBMethodNode >> typTypeForArgumentNamed: aSymbol withDiscovered: aSet [
 
 { #category : #'*Typer' }
 RBMethodNode >> typTypeForResultWithDiscovered: aSet [
-	^ TypMethodResolvers instance typTypeForResultOfMethod: self methodClass typAsType -> selector withDiscovered: aSet
+	^ TypMethodResolvers instance typeForResultOfMethod: self methodClass typAsType -> selector
 ]

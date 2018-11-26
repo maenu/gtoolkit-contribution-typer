@@ -2,7 +2,7 @@ Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer' }
 RBBlockNode >> typTypeForArgumentNamed: aSymbol withDiscovered: aSet [
-	^ ((self allChildren select: [ :e | e isArgument and: [ e name = aSymbol and: [ e parent isMessage or: [ e parent isReturn ] ] ] ]) collect: #parent)
+	^ (((self allChildren select: [ :e | e isArgument and: [ e name = aSymbol and: [ e parent isMessage or: [ e parent isReturn ] ] ] ]) collect: #parent)
 		collect: [ :e | 
 			e isReturn
 				ifTrue: [ e methodNode typTypeForResultWithDiscovered: aSet ]
@@ -14,7 +14,7 @@ RBBlockNode >> typTypeForArgumentNamed: aSymbol withDiscovered: aSet [
 					i > 0
 						ifTrue: [ types increment: (e typTypeForArgumentAt: i withDiscovered: aSet) ]
 						ifFalse: [ types increment: TypUnknownType instance ].
-					types ] ]
+					types ] ]) typAsUnionType
 ]
 
 { #category : #'*Typer' }
@@ -24,6 +24,6 @@ RBBlockNode >> typTypeWithDiscovered: aSet [
 	aSet add: self.
 	^ TypParametricType new
 		clazz: BlockClosure;
-		parameters: {(arguments collect: [ :e | e typTypeWithDiscovered: aSet ])};
+		parameters: (arguments collect: [ :e | e typTypeWithDiscovered: aSet ]);
 		yourself
 ]

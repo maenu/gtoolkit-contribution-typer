@@ -19,7 +19,7 @@ TypGtBodyStyler >> styleValueNode: aNode [
 		to: aNode stop
 		with:
 			{(TypGtTypeAttribute new
-				type: aNode typType;
+				type: ([aNode typType] on: Error do: [Halt now]);
 				yourself)}
 ]
 
