@@ -5,19 +5,19 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypVariableResolvers >> typTypesForVariableNamed: aString ofClass: aClass [
-	^ self typTypesForVariableNamed: aString ofClass: aClass withDiscovered: Set new
+TypVariableResolvers >> typTypeForVariableNamed: aString ofClass: aClass [
+	^ self typTypeForVariableNamed: aString ofClass: aClass withDiscovered: Set new
 ]
 
 { #category : #'as yet unclassified' }
-TypVariableResolvers >> typTypesForVariableNamed: aString ofClass: aClass withDiscovered: aSet [
+TypVariableResolvers >> typTypeForVariableNamed: aString ofClass: aClass withDiscovered: aSet [
 	resolvers
 		do: [ :e | 
 			(e resolverFor: aClass -> aString)
 				ifNotNil: [ :f | 
-					| types |
-					types := f typTypesWithDiscovered: aSet.
-					types isEmpty
-						ifFalse: [ ^ types ] ] ].
-	^ TypTypes new
+					| type |
+					type := f typTypeWithDiscovered: aSet.
+					type isUnknown
+						ifFalse: [ ^ type ] ] ].
+	^ TypUnknownType instance
 ]

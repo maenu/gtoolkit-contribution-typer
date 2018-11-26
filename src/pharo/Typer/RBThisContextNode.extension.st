@@ -1,11 +1,9 @@
 Extension { #name : #RBThisContextNode }
 
 { #category : #'*Typer' }
-RBThisContextNode >> typTypesWithDiscovered: aSet [
+RBThisContextNode >> typTypeWithDiscovered: aSet [
 	(aSet includes: self)
-		ifTrue: [ ^ TypTypes new ].
+		ifTrue: [ ^ TypUnknownType instance ].
 	aSet add: self.
-	^ TypTypes new
-		increment: Context typAsType;
-		yourself
+	^ Context typAsType
 ]

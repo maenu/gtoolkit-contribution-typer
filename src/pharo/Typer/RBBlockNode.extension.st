@@ -1,31 +1,29 @@
 Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer' }
-RBBlockNode >> typTypesForArgumentNamed: aString [
-	^ self typTypesForArgumentNamed: aString withDiscovered: Set new
+RBBlockNode >> typTypeForArgumentNamed: aString [
+	^ self typTypeForArgumentNamed: aString withDiscovered: Set new
 ]
 
 { #category : #'*Typer' }
-RBBlockNode >> typTypesForArgumentNamed: aString withDiscovered: aSet [
+RBBlockNode >> typTypeForArgumentNamed: aString withDiscovered: aSet [
 	^ (((self allChildren select: [ :e | e isArgument and: [ e parent isMessage or: [ e parent isReturn ] ] ]) collect: #parent)
 		collect: [ :e | 
 			e isReturn
-				ifTrue: [ e typTypesWithDiscovered: aSet ]
+				ifTrue: [ e typTypeWithDiscovered: aSet ]
 				ifFalse: [ (e receiver isArgument and: [ e receiver name = aString ])
-						ifTrue: [ e typTypesForReceiverWithDiscovered: aSet ]
+						ifTrue: [ e typTypeForReceiverWithDiscovered: aSet ]
 						ifFalse: [ | i |
 							i := e arguments detectIndex: [ :f | f isArgument and: [ f name = aString ] ] ifNone: [ 0 ].
 							i > 0
-								ifTrue: [ e typTypesForArgumentAt: i withDiscovered: aSet ]
-								ifFalse: [ TypTypes new ] ] ] ]) inject: TypTypes new into: [ :a :b | a , b ]
+								ifTrue: [ e typTypeForArgumentAt: i withDiscovered: aSet ]
+								ifFalse: [ TypUnknownType instance ] ] ] ]) typAsCompatibleType
 ]
 
 { #category : #'*Typer' }
-RBBlockNode >> typTypesWithDiscovered: aSet [
+RBBlockNode >> typTypeWithDiscovered: aSet [
 	(aSet includes: self)
-		ifTrue: [ ^ TypTypes new ].
+		ifTrue: [ ^ TypUnknownType instance ].
 	aSet add: self.
-	^ TypTypes new
-		increment: BlockClosure typAsType;
-		yourself
+	^ BlockClosure typAsType
 ]

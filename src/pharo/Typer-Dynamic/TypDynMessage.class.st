@@ -6,12 +6,12 @@ Class {
 		'argumentTypes',
 		'receiverTypes'
 	],
-	#category : #'Typer-Dynamic'
+	#category : #'Typer-Dynamic-Core'
 }
 
 { #category : #comparing }
 TypDynMessage >> = anObject [
-	^ self == anObject or: [ self class = anObject class and: [ selector = anObject selector and: [ argumentTypes = anObject argumentTypes and: [ receiverTypes = anObject receiverType ] ] ] ]
+	^ self == anObject or: [ self class = anObject class and: [ selector = anObject selector and: [ argumentTypes = anObject argumentTypes and: [ receiverTypes = anObject receiverTypes ] ] ] ]
 ]
 
 { #category : #accessing }
@@ -43,12 +43,12 @@ TypDynMessage >> printOn: aStream [
 ]
 
 { #category : #accessing }
-TypDynMessage >> receiverType [
+TypDynMessage >> receiverTypes [
 	^ receiverTypes
 ]
 
 { #category : #accessing }
-TypDynMessage >> receiverType: anObject [
+TypDynMessage >> receiverTypes: anObject [
 	receiverTypes := anObject
 ]
 

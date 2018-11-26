@@ -1,11 +1,9 @@
 Extension { #name : #RBSuperNode }
 
 { #category : #'*Typer' }
-RBSuperNode >> typTypesWithDiscovered: aSet [
+RBSuperNode >> typTypeWithDiscovered: aSet [
 	(aSet includes: self)
-		ifTrue: [ ^ TypTypes new ].
+		ifTrue: [ ^ TypUnknownType instance ].
 	aSet add: self.
-	^ TypTypes new
-		increment: self methodNode method methodClass superclass typAsType;
-		yourself
+	^ self methodNode method methodClass superclass typAsType
 ]

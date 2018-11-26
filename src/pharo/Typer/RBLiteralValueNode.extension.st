@@ -1,11 +1,9 @@
 Extension { #name : #RBLiteralValueNode }
 
 { #category : #'*Typer' }
-RBLiteralValueNode >> typTypesWithDiscovered: aSet [
+RBLiteralValueNode >> typTypeWithDiscovered: aSet [
 	(aSet includes: self)
-		ifTrue: [ ^ TypTypes new ].
+		ifTrue: [ ^ TypUnknownType instance ].
 	aSet add: self.
-	^ TypTypes new
-		increment: value class typAsType;
-		yourself
+	^ value class typAsType
 ]

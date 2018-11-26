@@ -8,11 +8,11 @@ ClassDescription >> typAsType [
 ]
 
 { #category : #'*Typer' }
-ClassDescription >> typTypesForVariableNamed: aString [
-	^ self typTypesForVariableNamed: aString withDiscovered: Set new
+ClassDescription >> typTypeForVariableNamed: aString [
+	^ self typTypeForVariableNamed: aString withDiscovered: Set new
 ]
 
 { #category : #'*Typer' }
-ClassDescription >> typTypesForVariableNamed: aString withDiscovered: aSet [
-	^ TypVariableResolvers instance typTypesForVariableNamed: aString ofClass: self withDiscovered: aSet
+ClassDescription >> typTypeForVariableNamed: aString withDiscovered: aSet [
+	^ TypVariableResolvers instance typTypeForVariableNamed: aString ofClass: self withDiscovered: aSet
 ]

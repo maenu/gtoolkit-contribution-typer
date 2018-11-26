@@ -1,7 +1,7 @@
 Class {
 	#name : #TypGtPharoCompletionStrategy,
 	#superclass : #GtPharoCompletionStrategy,
-	#category : #'Typer-GToolkit'
+	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #private }

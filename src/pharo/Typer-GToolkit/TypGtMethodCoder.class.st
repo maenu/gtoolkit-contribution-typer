@@ -1,7 +1,7 @@
 Class {
 	#name : #TypGtMethodCoder,
 	#superclass : #GtMethodCoder,
-	#category : #'Typer-GToolkit'
+	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #accessing }

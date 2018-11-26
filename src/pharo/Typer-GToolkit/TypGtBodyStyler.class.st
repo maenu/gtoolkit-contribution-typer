@@ -1,7 +1,7 @@
 Class {
 	#name : #TypGtBodyStyler,
 	#superclass : #GtCoderBodyStyler,
-	#category : #'Typer-GToolkit'
+	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #visiting }
@@ -19,7 +19,7 @@ TypGtBodyStyler >> styleValueNode: aNode [
 		to: aNode stop
 		with:
 			{(TypGtTypeAttribute new
-				types: aNode typTypes;
+				type: aNode typType;
 				yourself)}
 ]
 

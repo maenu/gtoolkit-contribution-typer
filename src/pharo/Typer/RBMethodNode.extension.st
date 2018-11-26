@@ -1,41 +1,41 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer' }
-RBMethodNode >> typTypesForArgumentAt: anInteger [
-	^ self method typTypesForArgumentAt: anInteger
+RBMethodNode >> typTypeForArgumentAt: anInteger [
+	^ self method typTypeForArgumentAt: anInteger
 ]
 
 { #category : #'*Typer' }
-RBMethodNode >> typTypesForArgumentAt: anInteger withDiscovered: aSet [
-	^ self method typTypesForArgumentAt: anInteger withDiscovered: aSet
+RBMethodNode >> typTypeForArgumentAt: anInteger withDiscovered: aSet [
+	^ self method typTypeForArgumentAt: anInteger withDiscovered: aSet
 ]
 
 { #category : #'*Typer' }
-RBMethodNode >> typTypesForArgumentNamed: aString [
-	^ self method typTypesForArgumentNamed: aString
+RBMethodNode >> typTypeForArgumentNamed: aString [
+	^ self method typTypeForArgumentNamed: aString
 ]
 
 { #category : #'*Typer' }
-RBMethodNode >> typTypesForArgumentNamed: aString withDiscovered: aSet [
-	^ self method typTypesForArgumentNamed: aString withDiscovered: aSet
+RBMethodNode >> typTypeForArgumentNamed: aString withDiscovered: aSet [
+	^ self method typTypeForArgumentNamed: aString withDiscovered: aSet
 ]
 
 { #category : #'*Typer' }
-RBMethodNode >> typTypesForResult [
-	^ self method typTypesForResult
+RBMethodNode >> typTypeForResult [
+	^ self method typTypeForResult
 ]
 
 { #category : #'*Typer' }
-RBMethodNode >> typTypesForResultForReceivers: aTypes [
-	^ self method typTypesForResultForReceivers: aTypes
+RBMethodNode >> typTypeForResultForReceiver: aType withDiscovered: aSet [
+	^ self method typTypeForResultForReceiver: aType withDiscovered: aSet
 ]
 
 { #category : #'*Typer' }
-RBMethodNode >> typTypesForResultForReceivers: aTypes withDiscovered: aSet [
-	^ self method typTypesForResultForReceivers: aTypes withDiscovered: aSet
+RBMethodNode >> typTypeForResultForReceivers: aType [
+	^ self method typTypeForResultForReceivers: aType
 ]
 
 { #category : #'*Typer' }
-RBMethodNode >> typTypesForResultWithDiscovered: aSet [
-	^ self method typTypesForResultWithDiscovered: aSet
+RBMethodNode >> typTypeForResultWithDiscovered: aSet [
+	^ self method typTypeForResultWithDiscovered: aSet
 ]

@@ -39,9 +39,19 @@ TypType >> hasSuperType [
 	^ true
 ]
 
+{ #category : #testing }
+TypType >> isNil [
+	^ false
+]
+
 { #category : #comparing }
 TypType >> isSubTypeOf: aType [
 	^ self allSuperTypes includes: aType
+]
+
+{ #category : #testing }
+TypType >> isUnknown [
+	^ false
 ]
 
 { #category : #'as yet unclassified' }

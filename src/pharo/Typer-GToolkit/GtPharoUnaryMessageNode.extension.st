@@ -2,11 +2,14 @@ Extension { #name : #GtPharoUnaryMessageNode }
 
 { #category : #'*Typer-GToolkit' }
 GtPharoUnaryMessageNode >> typGtCompletionActionsFor: strategy in: anRbNode [
-	| startingText index |
+	| startingText index type clazz |
 	index := strategy index.
 	selectorPart stopPosition = index
 		ifFalse: [ ^ #() ].
 	startingText := selectorPart value.
-	^ (strategy selectorsForReceiver: (parent receiver typGtGuessType: strategy in: anRbNode receiver) matching: startingText)
-		collect: [ :each | self actionForSelector: each startingWith: startingText at: index ]
+	type := parent receiver typGtGuessType: strategy in: anRbNode receiver.
+	clazz := (type isKindOf: TypClassType)
+		ifTrue: [ type clazz ]
+		ifFalse: [ Object ].
+	^ (strategy selectorsForReceiver: clazz matching: startingText) collect: [ :each | self actionForSelector: each startingWith: startingText at: index ]
 ]

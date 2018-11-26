@@ -1,9 +1,9 @@
 Extension { #name : #RBInstanceVariableNode }
 
 { #category : #'*Typer' }
-RBInstanceVariableNode >> typTypesWithDiscovered: aSet [
+RBInstanceVariableNode >> typTypeWithDiscovered: aSet [
 	(aSet includes: self)
-		ifTrue: [ ^ TypTypes new ].
+		ifTrue: [ ^ TypUnknownType instance ].
 	aSet add: self.
-	^ self methodNode methodClass typTypesForVariableNamed: name withDiscovered: aSet
+	^ self methodNode methodClass typTypeForVariableNamed: name withDiscovered: aSet
 ]

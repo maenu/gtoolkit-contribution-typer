@@ -1,9 +1,9 @@
 Extension { #name : #RBAssignmentNode }
 
 { #category : #'*Typer' }
-RBAssignmentNode >> typTypesWithDiscovered: aSet [
+RBAssignmentNode >> typTypeWithDiscovered: aSet [
 	(aSet includes: self)
-		ifTrue: [ ^ TypTypes new ].
+		ifTrue: [ ^ TypUnknownType instance ].
 	aSet add: self.
-	^ value typTypesWithDiscovered: aSet
+	^ value typTypeWithDiscovered: aSet
 ]

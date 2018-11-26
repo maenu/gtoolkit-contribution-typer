@@ -1,43 +1,43 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*Typer' }
-CompiledMethod >> typTypesForArgumentAt: anInteger [
-	^ self typTypesForArgumentAt: anInteger withDiscovered: Set new
+CompiledMethod >> typTypeForArgumentAt: anInteger [
+	^ self typTypeForArgumentAt: anInteger withDiscovered: Set new
 ]
 
 { #category : #'*Typer' }
-CompiledMethod >> typTypesForArgumentAt: anInteger withDiscovered: aSet [
-	^ TypMethodResolvers instance typTypesForArgumentAt: anInteger ofMethod: self withDiscovered: aSet
+CompiledMethod >> typTypeForArgumentAt: anInteger withDiscovered: aSet [
+	^ TypMethodResolvers instance typTypeForArgumentAt: anInteger ofMethod: self withDiscovered: aSet
 ]
 
 { #category : #'*Typer' }
-CompiledMethod >> typTypesForArgumentNamed: aString [
-	^ self typTypesForArgumentNamed: aString withDiscovered: Set new
+CompiledMethod >> typTypeForArgumentNamed: aString [
+	^ self typTypeForArgumentNamed: aString withDiscovered: Set new
 ]
 
 { #category : #'*Typer' }
-CompiledMethod >> typTypesForArgumentNamed: aString withDiscovered: aSet [
+CompiledMethod >> typTypeForArgumentNamed: aString withDiscovered: aSet [
 	| i |
 	i := self ast arguments detectIndex: [ :f | f name = aString ].
-	^ self typTypesForArgumentAt: i withDiscovered: aSet
+	^ self typTypeForArgumentAt: i withDiscovered: aSet
 ]
 
 { #category : #'*Typer' }
-CompiledMethod >> typTypesForResult [
-	^ self typTypesForResultWithDiscovered: Set new
+CompiledMethod >> typTypeForResult [
+	^ self typTypeForResultWithDiscovered: Set new
 ]
 
 { #category : #'*Typer' }
-CompiledMethod >> typTypesForResultForReceivers: aTypes [
-	^ self typTypesForResultForReceivers: aTypes withDiscovered: Set new
+CompiledMethod >> typTypeForResultForReceiver: aType withDiscovered: aSet [
+	^ TypMethodResolvers instance typTypeForResultForReceivers: aType ofMethod: self withDiscovered: aSet
 ]
 
 { #category : #'*Typer' }
-CompiledMethod >> typTypesForResultForReceivers: aTypes withDiscovered: aSet [
-	^ TypMethodResolvers instance typTypesForResultForReceivers: aTypes ofMethod: self withDiscovered: aSet
+CompiledMethod >> typTypeForResultForReceivers: aType [
+	^ self typTypeForResultForReceiver: aType withDiscovered: Set new
 ]
 
 { #category : #'*Typer' }
-CompiledMethod >> typTypesForResultWithDiscovered: aSet [
-	^ TypMethodResolvers instance typTypesForResultOfMethod: self withDiscovered: aSet
+CompiledMethod >> typTypeForResultWithDiscovered: aSet [
+	^ TypMethodResolvers instance typTypeForResultOfMethod: self withDiscovered: aSet
 ]

@@ -2,9 +2,9 @@ Class {
 	#name : #TypGtTypeAttribute,
 	#superclass : #BrTextAdornmentDynamicAttribute,
 	#instVars : [
-		'types'
+		'type'
 	],
-	#category : #'Typer-GToolkit'
+	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #initialization }
@@ -13,9 +13,7 @@ TypGtTypeAttribute >> initialize [
 	self
 		beAppend;
 		stencil: [ | s |
-			s := [ types inferredType printString ]
-				on: TypNoInferrableTypeError
-				do: [ '?' ].
+			s := type printString.
 			BrLabel new
 				text: ':' , s;
 				margin:
@@ -31,11 +29,11 @@ TypGtTypeAttribute >> initialize [
 ]
 
 { #category : #accessing }
-TypGtTypeAttribute >> types [
-	^ types
+TypGtTypeAttribute >> type [
+	^ type
 ]
 
 { #category : #accessing }
-TypGtTypeAttribute >> types: anObject [
-	types := anObject
+TypGtTypeAttribute >> type: anObject [
+	type := anObject
 ]

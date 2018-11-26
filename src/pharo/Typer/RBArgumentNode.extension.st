@@ -1,9 +1,9 @@
 Extension { #name : #RBArgumentNode }
 
 { #category : #'*Typer' }
-RBArgumentNode >> typTypesWithDiscovered: aSet [
+RBArgumentNode >> typTypeWithDiscovered: aSet [
 	(aSet includes: self)
-		ifTrue: [ ^ TypTypes new ].
+		ifTrue: [ ^ TypUnknownType instance ].
 	aSet add: self.
-	^ (self whoDefines: self name) typTypesForArgumentNamed: self name withDiscovered: aSet
+	^ (self whoDefines: self name) typTypeForArgumentNamed: self name withDiscovered: aSet
 ]

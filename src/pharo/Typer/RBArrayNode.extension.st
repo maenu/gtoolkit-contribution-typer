@@ -1,11 +1,9 @@
 Extension { #name : #RBArrayNode }
 
 { #category : #'*Typer' }
-RBArrayNode >> typTypesWithDiscovered: aSet [
-	(aSet includes: self)
-		ifTrue: [ ^ TypTypes new ].
-	aSet add: self.
-	^ TypTypes new
-		increment: Array typAsType;
+RBArrayNode >> typTypeWithDiscovered: aSet [
+	^ TypParametricType new
+		clazz: Array;
+		parameters: {(self statements collect: [ :e | e typTypeWithDiscovered: aSet ]) typAsCompatibleType};
 		yourself
 ]

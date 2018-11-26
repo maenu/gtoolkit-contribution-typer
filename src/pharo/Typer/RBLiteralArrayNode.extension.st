@@ -1,21 +1,12 @@
 Extension { #name : #RBLiteralArrayNode }
 
 { #category : #'*Typer' }
-RBLiteralArrayNode >> typTypesWithDiscovered: aSet [
+RBLiteralArrayNode >> typTypeWithDiscovered: aSet [
 	(aSet includes: self)
-		ifTrue: [ ^ TypTypes new ].
+		ifTrue: [ ^ TypUnknownType instance ].
 	aSet add: self.
-	^ [ | type |
-	type := ((self contents collect: [ :e | e typTypesWithDiscovered: aSet ]) inject: TypTypes new into: [ :a :b | a , b ]) inferredType.
-	TypTypes new
-		increment:
-			(TypParametricType new
-				clazz: Array;
-				parameters: {type};
-				yourself);
-		yourself ]
-		on: TypNoInferrableTypeError
-		do: [ TypType new
-				clazz: Array;
-				yourself ]
+	^ TypParametricType new
+		clazz: Array;
+		parameters: {(self contents collect: [ :e | e typTypeWithDiscovered: aSet ]) typAsCompatibleType};
+		yourself
 ]

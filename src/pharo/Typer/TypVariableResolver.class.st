@@ -3,8 +3,8 @@ Class {
 	#superclass : #TypResolver,
 	#instVars : [
 		'variableSelector',
-		'types',
-		'variableType'
+		'variableType',
+		'type'
 	],
 	#category : #'Typer-Core'
 }
@@ -15,18 +15,18 @@ TypVariableResolver >> resolves: anAssociation [
 ]
 
 { #category : #accessing }
-TypVariableResolver >> typTypes [
-	^ types
+TypVariableResolver >> typType [
+	^ type
 ]
 
 { #category : #accessing }
-TypVariableResolver >> typTypes: anObject [
-	types := anObject
+TypVariableResolver >> typType: anObject [
+	type := anObject
 ]
 
 { #category : #'as yet unclassified' }
-TypVariableResolver >> typTypesWithDiscovered: aSet [
-	^ self typTypes
+TypVariableResolver >> typTypeWithDiscovered: aSet [
+	^ self typType
 ]
 
 { #category : #accessing }

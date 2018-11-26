@@ -1,54 +1,51 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer' }
-RBMessageNode >> typMethodTypes [
-	^ self typMethodTypesWithDiscovered: Set new
+RBMessageNode >> typMethod [
+	^ self typMethodWithDiscovered: Set new
 ]
 
 { #category : #'*Typer' }
-RBMessageNode >> typMethodTypesWithDiscovered: aSet [
-	^ ((self typTypesForReceiverWithDiscovered: aSet) collect: [ :e | (e key lookupMethodSelector: selector) -> e value ]) select: [ :e | e key isNotNil ]
+RBMessageNode >> typMethodWithDiscovered: aSet [
+	^ (self typTypeForReceiverWithDiscovered: aSet) lookupMethodSelector: selector
 ]
 
 { #category : #'*Typer' }
-RBMessageNode >> typTypesForArgumentAt: anInteger [
-	^ self typTypesForArgumentAt: anInteger withDiscovered: Set new
+RBMessageNode >> typTypeForArgumentAt: anInteger [
+	^ self typTypeForArgumentAt: anInteger withDiscovered: Set new
 ]
 
 { #category : #'*Typer' }
-RBMessageNode >> typTypesForArgumentAt: anInteger withDiscovered: aSet [
-	^ ((self typMethodTypesWithDiscovered: aSet) summary orderedKeys collect: [ :e | e typTypesForArgumentAt: anInteger withDiscovered: aSet ])
-		inject: TypTypes new
-		into: [ :a :b | a , b ]
+RBMessageNode >> typTypeForArgumentAt: anInteger withDiscovered: aSet [
+	^ (self typMethodWithDiscovered: aSet) ifNil: [ TypUnknownType instance ] ifNotNil: [ :e | e typTypeForArgumentAt: anInteger withDiscovered: aSet ]
 ]
 
 { #category : #'*Typer' }
-RBMessageNode >> typTypesForReceiver [
-	^ self typTypesForReceiverWithDiscovered: Set new
+RBMessageNode >> typTypeForReceiver [
+	^ self typTypeForReceiverWithDiscovered: Set new
 ]
 
 { #category : #'*Typer' }
-RBMessageNode >> typTypesForReceiverWithDiscovered: aSet [
-	^ receiver typTypesWithDiscovered: aSet
+RBMessageNode >> typTypeForReceiverWithDiscovered: aSet [
+	^ receiver typTypeWithDiscovered: aSet
 ]
 
 { #category : #'*Typer' }
-RBMessageNode >> typTypesForResult [
-	^ self typTypesForResultWithDiscovered: Set new
+RBMessageNode >> typTypeForResult [
+	^ self typTypeForResultWithDiscovered: Set new
 ]
 
 { #category : #'*Typer' }
-RBMessageNode >> typTypesForResultWithDiscovered: aSet [
-	^ ((self typMethodTypesWithDiscovered: aSet) summary orderedKeys
-		collect: [ :e | e typTypesForResultForReceivers: (self typTypesForReceiverWithDiscovered: aSet) withDiscovered: aSet ])
-		inject: TypTypes new
-		into: [ :a :b | a , b ]
+RBMessageNode >> typTypeForResultWithDiscovered: aSet [
+	^ (self typMethodWithDiscovered: aSet)
+		ifNil: [ TypUnknownType instance ]
+		ifNotNil: [ :e | e typTypeForResultForReceiver: (self typTypeForReceiverWithDiscovered: aSet) withDiscovered: aSet ]
 ]
 
 { #category : #'*Typer' }
-RBMessageNode >> typTypesWithDiscovered: aSet [
+RBMessageNode >> typTypeWithDiscovered: aSet [
 	(aSet includes: self)
-		ifTrue: [ ^ TypTypes new ].
+		ifTrue: [ ^ TypUnknownType instance ].
 	aSet add: self.
-	^ self typTypesForResultWithDiscovered: aSet
+	^ self typTypeForResultWithDiscovered: aSet
 ]

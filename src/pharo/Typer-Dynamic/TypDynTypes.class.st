@@ -1,14 +1,14 @@
 Class {
-	#name : #TypTypes,
+	#name : #TypDynTypes,
 	#superclass : #Object,
 	#instVars : [
 		'dictionary'
 	],
-	#category : #'Typer-Core'
+	#category : #'Typer-Dynamic-Core'
 }
 
 { #category : #copying }
-TypTypes >> , aClasses [
+TypDynTypes >> , aClasses [
 	| copy |
 	copy := self copy.
 	aClasses do: [ :e | copy add: e ].
@@ -16,100 +16,89 @@ TypTypes >> , aClasses [
 ]
 
 { #category : #enumerating }
-TypTypes >> add: anAssociation [
+TypDynTypes >> add: anAssociation [
 	| n |
 	n := dictionary at: anAssociation key ifAbsentPut: [ 0 ].
 	^ dictionary at: anAssociation key put: n + anAssociation value
 ]
 
 { #category : #enumerating }
-TypTypes >> addAll: aTypes [
+TypDynTypes >> addAll: aTypes [
 	^ aTypes do: [ :e | self add: e ]
 ]
 
+{ #category : #converting }
+TypDynTypes >> asType [
+	| remains |
+	remains := dictionary keys asSet copy.
+	remains remove: TypNilType instance ifAbsent: [  ].
+	remains ifEmpty: [ ^ TypUnknownType instance ].
+	^ remains typAsCompatibleType
+]
+
 { #category : #enumerating }
-TypTypes >> collect: aBlock [
+TypDynTypes >> collect: aBlock [
 	| copy |
-	copy := TypTypes new.
+	copy := TypDynTypes new.
 	self do: [ :e | copy add: (aBlock cull: e) ].
 	^ copy
 ]
 
 { #category : #accessing }
-TypTypes >> dictionary [
+TypDynTypes >> dictionary [
 	^ dictionary
 ]
 
 { #category : #accessing }
-TypTypes >> dictionary: anObject [
+TypDynTypes >> dictionary: anObject [
 	dictionary := anObject
 ]
 
 { #category : #enumerating }
-TypTypes >> do: aBlock [
+TypDynTypes >> do: aBlock [
 	dictionary associationsDo: aBlock
 ]
 
 { #category : #'as yet unclassified' }
-TypTypes >> gtInspectorSummaryIn: aComposite [
+TypDynTypes >> gtInspectorSummaryIn: aComposite [
 	<gtInspectorPresentationOrder: 1>
 	^ self summary gtInspectorItemsIn: aComposite
 ]
 
 { #category : #'as yet unclassified' }
-TypTypes >> gtItemsFor: aView [
+TypDynTypes >> gtItemsFor: aView [
 	<gtView>
 	^ self summary gtItemsFor: aView
 ]
 
 { #category : #accessing }
-TypTypes >> increment: anObject [
+TypDynTypes >> increment: anObject [
 	| n |
 	n := dictionary at: anObject ifAbsentPut: [ 0 ].
 	^ dictionary at: anObject put: n + 1
 ]
 
-{ #category : #'as yet unclassified' }
-TypTypes >> inferredType [
-	| remains current |
-	remains := self copy.
-	remains dictionary removeKey: nil ifAbsent: [  ].
-	remains dictionary ifEmpty: [ TypNoInferrableTypeError signal ].
-	self assert: [ remains dictionary keys allSatisfy: [ :e | e isKindOf: TypType ] ].
-	current := remains dictionary associationAt: (remains summary orderedKeys at: 1).
-	remains dictionary removeKey: current key.
-	[ remains dictionary isEmpty ]
-		whileFalse: [ | next common |
-			next := remains dictionary associationAt: (remains summary orderedKeys at: 1).
-			remains dictionary removeKey: next key.
-			common := current key withAllSuperTypes detect: [ :e | next key <= e ].
-			common == current key
-				ifFalse: [ current := common -> (current value + next value).
-					remains add: current ] ].
-	^ current key
-]
-
 { #category : #accessing }
-TypTypes >> initialize [
+TypDynTypes >> initialize [
 	super initialize.
 	dictionary := Dictionary new
 ]
 
 { #category : #testing }
-TypTypes >> isEmpty [
+TypDynTypes >> isEmpty [
 	^ dictionary isEmpty
 ]
 
 { #category : #'as yet unclassified' }
-TypTypes >> postCopy [
+TypDynTypes >> postCopy [
 	super postCopy.
 	dictionary := dictionary copy
 ]
 
 { #category : #enumerating }
-TypTypes >> select: aBlock [
+TypDynTypes >> select: aBlock [
 	| copy |
-	copy := TypTypes new.
+	copy := TypDynTypes new.
 	dictionary
 		associationsDo: [ :e | 
 			(aBlock cull: e)
@@ -118,14 +107,14 @@ TypTypes >> select: aBlock [
 ]
 
 { #category : #accessing }
-TypTypes >> size [
+TypDynTypes >> size [
 	^ dictionary isEmpty
 		ifTrue: [ 0 ]
 		ifFalse: [ dictionary sum ]
 ]
 
 { #category : #initialization }
-TypTypes >> summary [
+TypDynTypes >> summary [
 	| summary |
 	summary := dictionary associations copy.
 	summary sort: [ :a :b | a value > b value ].

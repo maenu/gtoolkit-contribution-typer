@@ -1,6 +1,6 @@
 Class {
 	#name : #TypNilType,
-	#superclass : #TypType,
+	#superclass : #TypClassType,
 	#classInstVars : [
 		'instance'
 	],
@@ -15,6 +15,17 @@ TypNilType class >> instance [
 { #category : #accessing }
 TypNilType >> hasSuperType [
 	^ false
+]
+
+{ #category : #initialization }
+TypNilType >> initialize [
+	super initialize.
+	clazz := UndefinedObject
+]
+
+{ #category : #testing }
+TypNilType >> isNil [
+	^ true
 ]
 
 { #category : #'as yet unclassified' }

@@ -2,20 +2,13 @@ Extension { #name : #RBValueNode }
 
 { #category : #'*Typer' }
 RBValueNode >> typType [
-	^ self typTypes inferredType
+	^ self typTypeWithDiscovered: Set new
 ]
 
 { #category : #'*Typer' }
-RBValueNode >> typTypes [
-	^ self typTypesWithDiscovered: Set new
-]
-
-{ #category : #'*Typer' }
-RBValueNode >> typTypesWithDiscovered: aSet [
+RBValueNode >> typTypeWithDiscovered: aSet [
 	(aSet includes: self)
-		ifTrue: [ ^ TypTypes new ].
+		ifTrue: [ ^ TypUnknownType instance ].
 	aSet add: self.
-	^ TypTypes new
-		increment: Object typAsType;
-		yourself
+	^ Object typAsType
 ]

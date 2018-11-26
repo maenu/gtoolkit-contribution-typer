@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'source'
 	],
-	#category : #'Typer-GToolkit'
+	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #'as yet unclassified' }
@@ -24,23 +24,23 @@ TypGtPatternStyler >> styleFrom: from to: to with: attributes [
 ]
 
 { #category : #visiting }
-TypGtPatternStyler >> styleValueNode: aNode with: aTypes [
+TypGtPatternStyler >> styleValueNode: aNode with: aType [
 	self
 		styleFrom: aNode stop
 		to: aNode stop
 		with:
 			{(TypGtTypeAttribute new
-				types: aTypes;
+				type: aType;
 				yourself)}
 ]
 
 { #category : #visiting }
 TypGtPatternStyler >> visitArgumentNode: aNode [
-	self styleValueNode: aNode with: aNode typTypes
+	self styleValueNode: aNode with: aNode typType
 ]
 
 { #category : #visiting }
 TypGtPatternStyler >> visitMethodNode: aNode [
 	aNode arguments do: [ :e | self visitArgumentNode: e ].
-	self styleValueNode: aNode with: aNode typTypesForResult
+	self styleValueNode: aNode with: aNode typTypeForResult
 ]

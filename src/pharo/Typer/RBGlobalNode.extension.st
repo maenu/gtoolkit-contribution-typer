@@ -1,11 +1,9 @@
 Extension { #name : #RBGlobalNode }
 
 { #category : #'*Typer' }
-RBGlobalNode >> typTypesWithDiscovered: aSet [
+RBGlobalNode >> typTypeWithDiscovered: aSet [
 	(aSet includes: self)
-		ifTrue: [ ^ TypTypes new ].
+		ifTrue: [ ^ TypUnknownType instance ].
 	aSet add: self.
-	^ TypTypes new
-		increment: self binding value class typAsType;
-		yourself
+	^ self binding value class typAsType
 ]
