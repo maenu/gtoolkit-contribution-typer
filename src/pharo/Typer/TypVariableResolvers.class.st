@@ -11,13 +11,11 @@ TypVariableResolvers >> typTypeForVariableNamed: aString ofClass: aClass [
 
 { #category : #'as yet unclassified' }
 TypVariableResolvers >> typTypeForVariableNamed: aString ofClass: aClass withDiscovered: aSet [
-	resolvers
+	((resolvers select: [ :e | e resolves: aClass -> aString ]) collect: [ :e | e resolverFor: aClass -> aString ])
 		do: [ :e | 
-			(e resolverFor: aClass -> aString)
-				ifNotNil: [ :f | 
-					| type |
-					type := f typTypeWithDiscovered: aSet.
-					type isUnknown
-						ifFalse: [ ^ type ] ] ].
+			| type |
+			type := e typTypeWithDiscovered: aSet.
+			type isUnknown
+				ifFalse: [ ^ type ] ].
 	^ TypUnknownType instance
 ]

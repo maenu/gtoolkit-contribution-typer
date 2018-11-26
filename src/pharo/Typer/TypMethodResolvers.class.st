@@ -11,14 +11,12 @@ TypMethodResolvers >> typTypeForArgumentAt: anInteger ofMethod: aCompiledMethod 
 
 { #category : #accessing }
 TypMethodResolvers >> typTypeForArgumentAt: anInteger ofMethod: aCompiledMethod withDiscovered: aSet [
-	resolvers
+	((resolvers select: [ :e | e resolves: aCompiledMethod ]) collect: [ :e | e resolverFor: aCompiledMethod ])
 		do: [ :e | 
-			(e resolverFor: aCompiledMethod)
-				ifNotNil: [ :f | 
-					| type |
-					type := f typTypeForArgumentAt: anInteger withDiscovered: aSet.
-					type isUnknown
-						ifFalse: [ ^ type ] ] ].
+			| type |
+			type := e typTypeForArgumentAt: anInteger withDiscovered: aSet.
+			type isUnknown
+				ifFalse: [ ^ type ] ].
 	^ TypUnknownType instance
 ]
 
@@ -29,14 +27,12 @@ TypMethodResolvers >> typTypeForResultForReceivers: aType ofMethod: aCompiledMet
 
 { #category : #'as yet unclassified' }
 TypMethodResolvers >> typTypeForResultForReceivers: aType ofMethod: aCompiledMethod withDiscovered: aSet [
-	resolvers
+	((resolvers select: [ :e | e resolves: aCompiledMethod ]) collect: [ :e | e resolverFor: aCompiledMethod ])
 		do: [ :e | 
-			(e resolverFor: aCompiledMethod)
-				ifNotNil: [ :f | 
-					| type |
-					type := f typTypeForResultForReceiver: aType withDiscovered: aSet.
-					type isUnknown
-						ifFalse: [ ^ type ] ] ].
+			| type |
+			type := e typTypeForResultForReceiver: aType withDiscovered: aSet.
+			type isUnknown
+				ifFalse: [ ^ type ] ].
 	^ TypUnknownType instance
 ]
 
@@ -47,13 +43,11 @@ TypMethodResolvers >> typTypeForResultOfMethod: aCompiledMethod [
 
 { #category : #'as yet unclassified' }
 TypMethodResolvers >> typTypeForResultOfMethod: aCompiledMethod withDiscovered: aSet [
-	resolvers
+	((resolvers select: [ :e | e resolves: aCompiledMethod ]) collect: [ :e | e resolverFor: aCompiledMethod ])
 		do: [ :e | 
-			(e resolverFor: aCompiledMethod)
-				ifNotNil: [ :f | 
-					| type |
-					type := f typTypeForResultWithDiscovered: aSet.
-					type isUnknown
-						ifFalse: [ ^ type ] ] ].
+			| type |
+			type := e typTypeForResultWithDiscovered: aSet.
+			type isUnknown
+				ifFalse: [ ^ type ] ].
 	^ TypUnknownType instance
 ]

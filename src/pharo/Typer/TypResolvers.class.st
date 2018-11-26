@@ -23,7 +23,8 @@ TypResolvers >> initialize [
 
 { #category : #accessing }
 TypResolvers >> resolverFor: anObject [
-	^ resolvers detect: [ :e | e resolves: anObject ] ifNone: [ nil ]
+	self assert: [ self resolves: anObject ].
+	^ resolvers detect: [ :e | e resolves: anObject ]
 ]
 
 { #category : #accessing }
@@ -38,5 +39,5 @@ TypResolvers >> resolvers: anObject [
 
 { #category : #accessing }
 TypResolvers >> resolves: anObject [
-	resolvers anySatisfy: [ :e | e resolves: anObject ]
+	^ resolvers anySatisfy: [ :e | e resolves: anObject ]
 ]
