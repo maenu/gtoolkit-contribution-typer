@@ -11,13 +11,7 @@ TypMethodResolvers >> typTypeForArgumentAt: anInteger ofMethod: aCompiledMethod 
 
 { #category : #accessing }
 TypMethodResolvers >> typTypeForArgumentAt: anInteger ofMethod: aCompiledMethod withDiscovered: aSet [
-	((resolvers select: [ :e | e resolves: aCompiledMethod ]) collect: [ :e | e resolverFor: aCompiledMethod ])
-		do: [ :e | 
-			| type |
-			type := e typTypeForArgumentAt: anInteger withDiscovered: aSet.
-			type isUnknown
-				ifFalse: [ ^ type ] ].
-	^ TypUnknownType instance
+	^ self typTypeFor: aCompiledMethod using: [ :r :m :s | r typTypeForArgumentAt: anInteger withDiscovered: s ] withDiscovered: aSet
 ]
 
 { #category : #'as yet unclassified' }
@@ -27,13 +21,7 @@ TypMethodResolvers >> typTypeForResultForReceivers: aType ofMethod: aCompiledMet
 
 { #category : #'as yet unclassified' }
 TypMethodResolvers >> typTypeForResultForReceivers: aType ofMethod: aCompiledMethod withDiscovered: aSet [
-	((resolvers select: [ :e | e resolves: aCompiledMethod ]) collect: [ :e | e resolverFor: aCompiledMethod ])
-		do: [ :e | 
-			| type |
-			type := e typTypeForResultForReceiver: aType withDiscovered: aSet.
-			type isUnknown
-				ifFalse: [ ^ type ] ].
-	^ TypUnknownType instance
+	^ self typTypeFor: aCompiledMethod using: [ :r :m :s | r typTypeForResultForReceiver: aType withDiscovered: s ] withDiscovered: aSet
 ]
 
 { #category : #'as yet unclassified' }
@@ -43,11 +31,5 @@ TypMethodResolvers >> typTypeForResultOfMethod: aCompiledMethod [
 
 { #category : #'as yet unclassified' }
 TypMethodResolvers >> typTypeForResultOfMethod: aCompiledMethod withDiscovered: aSet [
-	((resolvers select: [ :e | e resolves: aCompiledMethod ]) collect: [ :e | e resolverFor: aCompiledMethod ])
-		do: [ :e | 
-			| type |
-			type := e typTypeForResultWithDiscovered: aSet.
-			type isUnknown
-				ifFalse: [ ^ type ] ].
-	^ TypUnknownType instance
+	^ self typTypeFor: aCompiledMethod using: [ :r :m :s | r typTypeForResultWithDiscovered: s ] withDiscovered: aSet
 ]
