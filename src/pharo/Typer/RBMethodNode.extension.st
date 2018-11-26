@@ -1,41 +1,18 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer' }
-RBMethodNode >> typTypeForArgumentAt: anInteger [
-	^ self method typTypeForArgumentAt: anInteger
-]
-
-{ #category : #'*Typer' }
 RBMethodNode >> typTypeForArgumentAt: anInteger withDiscovered: aSet [
-	^ self method typTypeForArgumentAt: anInteger withDiscovered: aSet
-]
-
-{ #category : #'*Typer' }
-RBMethodNode >> typTypeForArgumentNamed: aSymbol [
-	^ self method typTypeForArgumentNamed: aSymbol
+	^ TypMethodResolvers instance typTypeForArgumentAt: anInteger ofMethod: self methodClass typAsType -> selector withDiscovered: aSet
 ]
 
 { #category : #'*Typer' }
 RBMethodNode >> typTypeForArgumentNamed: aSymbol withDiscovered: aSet [
-	^ self method typTypeForArgumentNamed: aSymbol withDiscovered: aSet
-]
-
-{ #category : #'*Typer' }
-RBMethodNode >> typTypeForResult [
-	^ self method typTypeForResult
-]
-
-{ #category : #'*Typer' }
-RBMethodNode >> typTypeForResultForReceiver: aType withDiscovered: aSet [
-	^ self method typTypeForResultForReceiver: aType withDiscovered: aSet
-]
-
-{ #category : #'*Typer' }
-RBMethodNode >> typTypeForResultForReceivers: aType [
-	^ self method typTypeForResultForReceivers: aType
+	| i |
+	i := arguments detectIndex: [ :f | f name = aSymbol ].
+	^ self typTypeForArgumentAt: i withDiscovered: aSet
 ]
 
 { #category : #'*Typer' }
 RBMethodNode >> typTypeForResultWithDiscovered: aSet [
-	^ self method typTypeForResultWithDiscovered: aSet
+	^ TypMethodResolvers instance typTypeForResultOfMethod: self methodClass typAsType -> selector withDiscovered: aSet
 ]

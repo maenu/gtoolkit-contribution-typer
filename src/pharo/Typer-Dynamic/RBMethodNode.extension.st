@@ -3,8 +3,8 @@ Extension { #name : #RBMethodNode }
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynAsMethodResolver [
 	^ TypMethodResolver new
-		methodType: self method methodClass typAsType;
-		methodSelector: self method selector;
+		receiverType: self method methodClass typAsType;
+		selector: self method selector;
 		argumentTypes: (self method numArgs timesCollect: [ :i | self typDynTypeForArgumentAt: i ]);
 		resultType: self typDynTypeForResult;
 		yourself

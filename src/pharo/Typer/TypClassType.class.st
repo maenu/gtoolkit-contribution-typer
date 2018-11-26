@@ -57,8 +57,6 @@ TypClassType >> lookupVariable: aSymbol [
 		do: [ :e | 
 			(e classVarNames includes: aSymbol)
 				ifTrue: [ ^ e typAsType -> aSymbol ] ].
-	(clazz class instVarNames includes: aSymbol)
-		ifTrue: [ ^ self class typAsType -> aSymbol ].
 	self hasSuperType
 		ifTrue: [ ^ self superType lookupVariable: aSymbol ].
 	TypNoVariableFoundError signal

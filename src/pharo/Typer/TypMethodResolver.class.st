@@ -2,10 +2,10 @@ Class {
 	#name : #TypMethodResolver,
 	#superclass : #TypResolver,
 	#instVars : [
-		'methodSelector',
 		'argumentTypes',
-		'methodType',
-		'resultType'
+		'resultType',
+		'selector',
+		'receiverType'
 	],
 	#category : #'Typer-Core'
 }
@@ -21,28 +21,18 @@ TypMethodResolver >> argumentTypes: anObject [
 ]
 
 { #category : #accessing }
-TypMethodResolver >> methodSelector [
-	^ methodSelector
+TypMethodResolver >> receiverType [
+	^ receiverType
 ]
 
 { #category : #accessing }
-TypMethodResolver >> methodSelector: anObject [
-	methodSelector := anObject
-]
-
-{ #category : #accessing }
-TypMethodResolver >> methodType [
-	^ methodType
-]
-
-{ #category : #accessing }
-TypMethodResolver >> methodType: anObject [
-	methodType := anObject
+TypMethodResolver >> receiverType: anObject [
+	receiverType := anObject
 ]
 
 { #category : #'as yet unclassified' }
-TypMethodResolver >> resolves: aCompiledMethod [
-	^ aCompiledMethod methodClass typAsType = methodType and: [ aCompiledMethod selector = methodSelector ]
+TypMethodResolver >> resolves: anAssociation [
+	^ anAssociation key = receiverType and: [ anAssociation value = selector ]
 ]
 
 { #category : #accessing }
@@ -55,36 +45,12 @@ TypMethodResolver >> resultType: anObject [
 	resultType := anObject
 ]
 
-{ #category : #'as yet unclassified' }
-TypMethodResolver >> typTypeForArgumentAt: anInteger [
-	^ self typTypeForArgumentAt: anInteger withDiscovered: Set new
+{ #category : #accessing }
+TypMethodResolver >> selector [
+	^ selector
 ]
 
-{ #category : #'as yet unclassified' }
-TypMethodResolver >> typTypeForArgumentAt: anInteger withDiscovered: aSet [
-	^ (argumentTypes at: anInteger) copy
-]
-
-{ #category : #'as yet unclassified' }
-TypMethodResolver >> typTypeForResult [
-	^ self typTypeForResultWithDiscovered: Set new
-]
-
-{ #category : #'as yet unclassified' }
-TypMethodResolver >> typTypeForResultForReceiver: aType withDiscovered: aSet [
-	| returns |
-	returns := self typTypeForResultWithDiscovered: aSet.
-	^ returns isUnknown
-		ifTrue: [ aType ]
-		ifFalse: [ returns ]
-]
-
-{ #category : #'as yet unclassified' }
-TypMethodResolver >> typTypeForResultForReceivers: aType [
-	^ self typTypeForResultForReceiver: aType withDiscovered: Set new
-]
-
-{ #category : #'as yet unclassified' }
-TypMethodResolver >> typTypeForResultWithDiscovered: aSet [
-	^ resultType copy
+{ #category : #accessing }
+TypMethodResolver >> selector: anObject [
+	selector := anObject
 ]

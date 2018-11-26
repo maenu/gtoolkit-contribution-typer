@@ -1,30 +1,10 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer' }
-RBMessageNode >> typMethod [
-	^ self typMethodWithDiscovered: Set new
-]
-
-{ #category : #'*Typer' }
-RBMessageNode >> typMethodWithDiscovered: aSet [
-	^ (self typTypeForReceiverWithDiscovered: aSet) lookupMethod: selector
-]
-
-{ #category : #'*Typer' }
-RBMessageNode >> typTypeForArgumentAt: anInteger [
-	^ self typTypeForArgumentAt: anInteger withDiscovered: Set new
-]
-
-{ #category : #'*Typer' }
 RBMessageNode >> typTypeForArgumentAt: anInteger withDiscovered: aSet [
-	^ [ (self typMethodWithDiscovered: aSet) typTypeForArgumentAt: anInteger withDiscovered: aSet ]
-		on: TypNoMethodFoundError
-		do: [ TypUnknownType instance ]
-]
-
-{ #category : #'*Typer' }
-RBMessageNode >> typTypeForReceiver [
-	^ self typTypeForReceiverWithDiscovered: Set new
+	| receiverType |
+	receiverType := self typTypeForReceiverWithDiscovered: aSet.
+	^ TypMethodResolvers instance typeForArgumentAt: anInteger ofMethod: receiverType -> selector
 ]
 
 { #category : #'*Typer' }
@@ -33,15 +13,10 @@ RBMessageNode >> typTypeForReceiverWithDiscovered: aSet [
 ]
 
 { #category : #'*Typer' }
-RBMessageNode >> typTypeForResult [
-	^ self typTypeForResultWithDiscovered: Set new
-]
-
-{ #category : #'*Typer' }
 RBMessageNode >> typTypeForResultWithDiscovered: aSet [
-	^ [ (self typMethodWithDiscovered: aSet) typTypeForResultForReceiver: (self typTypeForReceiverWithDiscovered: aSet) withDiscovered: aSet ]
-		on: TypNoMethodFoundError
-		do: [ TypUnknownType instance ]
+	| receiverType |
+	receiverType := self typTypeForReceiverWithDiscovered: aSet.
+	^ TypMethodResolvers instance typeForResultOfMethod: receiverType -> selector
 ]
 
 { #category : #'*Typer' }

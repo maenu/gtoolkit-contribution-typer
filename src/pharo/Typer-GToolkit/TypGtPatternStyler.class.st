@@ -42,5 +42,5 @@ TypGtPatternStyler >> visitArgumentNode: aNode [
 { #category : #visiting }
 TypGtPatternStyler >> visitMethodNode: aNode [
 	aNode arguments do: [ :e | self visitArgumentNode: e ].
-	self styleValueNode: aNode with: aNode typTypeForResult
+	self styleValueNode: aNode with: (aNode typTypeForResultWithDiscovered: Set new)
 ]

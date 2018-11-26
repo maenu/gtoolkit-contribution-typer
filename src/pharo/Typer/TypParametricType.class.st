@@ -33,6 +33,12 @@ TypParametricType >> parameters: anObject [
 	parameters := anObject
 ]
 
+{ #category : #copying }
+TypParametricType >> postCopy [
+	super postCopy.
+	parameters := parameters copy
+]
+
 { #category : #printing }
 TypParametricType >> printOn: aStream [
 	super printOn: aStream.

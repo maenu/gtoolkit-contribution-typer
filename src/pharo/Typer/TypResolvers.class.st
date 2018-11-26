@@ -43,7 +43,7 @@ TypResolvers >> resolves: anObject [
 ]
 
 { #category : #'as yet unclassified' }
-TypResolvers >> typTypeFor: anObject using: aBlock withDiscovered: aSet [
+TypResolvers >> typeFor: anObject using: aBlock [
 	((resolvers select: [ :e | e resolves: anObject ]) collect: [ :e | e resolverFor: anObject ])
 		do: [ :e | 
 			| type |
