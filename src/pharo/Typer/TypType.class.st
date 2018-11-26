@@ -83,16 +83,6 @@ TypType >> isUnknown [
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
-TypType >> lookupMethod: aSymbol [
-	self subclassResponsibility
-]
-
-{ #category : #'as yet unclassified' }
-TypType >> lookupVariable: aSymbol [
-	self subclassResponsibility
-]
-
 { #category : #accessing }
 TypType >> nullable [
 	^ nullable

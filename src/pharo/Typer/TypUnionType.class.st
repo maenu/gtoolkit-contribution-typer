@@ -102,16 +102,6 @@ TypUnionType >> isEmpty [
 ]
 
 { #category : #'as yet unclassified' }
-TypUnionType >> lookupMethod: aSymbol [
-	^ self superType lookupMethod: aSymbol
-]
-
-{ #category : #'as yet unclassified' }
-TypUnionType >> lookupVariable: aSymbol [
-	^ self superType lookupVariable: aSymbol
-]
-
-{ #category : #'as yet unclassified' }
 TypUnionType >> postCopy [
 	super postCopy.
 	weights := weights copy

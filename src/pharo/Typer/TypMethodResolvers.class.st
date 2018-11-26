@@ -5,11 +5,11 @@ Class {
 }
 
 { #category : #accessing }
-TypMethodResolvers >> typeForArgumentAt: anInteger ofMethod: anAssociation [
+TypMethodResolvers >> typeForArgumentAt: anInteger ofMethod: anAssociation withDiscovered: aSet [
 	^ self typeFor: anAssociation using: [ :r | r argumentTypes at: anInteger ]
 ]
 
 { #category : #'as yet unclassified' }
-TypMethodResolvers >> typeForResultOfMethod: anAssociation [
+TypMethodResolvers >> typeForResultOfMethod: anAssociation withDiscovered: aSet [
 	^ self typeFor: anAssociation using: [ :r :m | r resultType ]
 ]

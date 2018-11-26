@@ -42,26 +42,6 @@ TypClassType >> hash [
 	^ super hash bitXor: self clazz hash
 ]
 
-{ #category : #'as yet unclassified' }
-TypClassType >> lookupMethod: aSymbol [
-	^ (clazz lookupSelector: aSymbol) ifNil: [ TypNoMethodFoundError signal ]
-]
-
-{ #category : #'as yet unclassified' }
-TypClassType >> lookupVariable: aSymbol [
-	(clazz instVarNames includes: aSymbol)
-		ifTrue: [ ^ self -> aSymbol ].
-	(clazz classVarNames includes: aSymbol)
-		ifTrue: [ ^ self -> aSymbol ].
-	clazz allSharedPools
-		do: [ :e | 
-			(e classVarNames includes: aSymbol)
-				ifTrue: [ ^ e typAsType -> aSymbol ] ].
-	self hasSuperType
-		ifTrue: [ ^ self superType lookupVariable: aSymbol ].
-	TypNoVariableFoundError signal
-]
-
 { #category : #printing }
 TypClassType >> printOn: aStream [
 	clazz printOn: aStream

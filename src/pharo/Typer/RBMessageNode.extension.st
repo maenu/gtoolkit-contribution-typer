@@ -4,7 +4,7 @@ Extension { #name : #RBMessageNode }
 RBMessageNode >> typTypeForArgumentAt: anInteger withDiscovered: aSet [
 	| receiverType |
 	receiverType := self typTypeForReceiverWithDiscovered: aSet.
-	^ TypMethodResolvers instance typeForArgumentAt: anInteger ofMethod: receiverType -> selector
+	^ TypMethodResolvers instance typeForArgumentAt: anInteger ofMethod: receiverType -> selector withDiscovered: aSet
 ]
 
 { #category : #'*Typer' }
@@ -16,7 +16,7 @@ RBMessageNode >> typTypeForReceiverWithDiscovered: aSet [
 RBMessageNode >> typTypeForResultWithDiscovered: aSet [
 	| receiverType |
 	receiverType := self typTypeForReceiverWithDiscovered: aSet.
-	^ TypMethodResolvers instance typeForResultOfMethod: receiverType -> selector
+	^ TypMethodResolvers instance typeForResultOfMethod: receiverType -> selector withDiscovered: aSet
 ]
 
 { #category : #'*Typer' }

@@ -43,12 +43,16 @@ TypResolvers >> resolves: anObject [
 ]
 
 { #category : #'as yet unclassified' }
-TypResolvers >> typeFor: anObject using: aBlock [
-	((resolvers select: [ :e | e resolves: anObject ]) collect: [ :e | e resolverFor: anObject ])
+TypResolvers >> typeFor: anAssociation using: aBlock [
+	| association |
+	association := anAssociation.
+	[ ((resolvers select: [ :e | e resolves: association ]) collect: [ :e | e resolverFor: association ])
 		do: [ :e | 
 			| type |
-			type := aBlock cull: e cull: anObject.
+			type := aBlock cull: e cull: association.
 			type isUnknown
 				ifFalse: [ ^ type ] ].
+	association hasSuperType
+		ifTrue: [ association := association key superType -> association value ] ] doWhileTrue: [ association hasSuperType ].
 	^ TypUnknownType instance
 ]

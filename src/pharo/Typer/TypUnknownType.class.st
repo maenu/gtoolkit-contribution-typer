@@ -27,16 +27,6 @@ TypUnknownType >> isUnknown [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
-TypUnknownType >> lookupMethod: aSymbol [
-	TypNoMethodFoundError signal
-]
-
-{ #category : #'as yet unclassified' }
-TypUnknownType >> lookupVariable: aSymbol [
-	TypNoVariableFoundError signal
-]
-
 { #category : #accessing }
 TypUnknownType >> printOn: aStream [
 	aStream << '?'

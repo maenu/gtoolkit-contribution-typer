@@ -22,5 +22,8 @@ RBBlockNode >> typTypeWithDiscovered: aSet [
 	(aSet includes: self)
 		ifTrue: [ ^ TypUnknownType instance ].
 	aSet add: self.
-	^ BlockClosure typAsType
+	^ TypParametricType new
+		clazz: BlockClosure;
+		parameters: {(arguments collect: [ :e | e typTypeWithDiscovered: aSet ])};
+		yourself
 ]

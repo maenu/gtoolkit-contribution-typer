@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypVariableResolvers >> typeForVariable: anAssociation [
+TypVariableResolvers >> typeForVariable: anAssociation withDiscovered: aSet [
 	^ self typeFor: anAssociation using: [ :r :a | r type ]
 ]
