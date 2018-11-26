@@ -7,5 +7,5 @@ RBInstanceVariableNode >> typTypeWithDiscovered: aSet [
 		ifTrue: [ ^ TypUnknownType instance ].
 	aSet add: self.
 	type := self methodNode methodClass typAsType.
-	^ TypVariableResolvers instance typeForVariable: type -> name withDiscovered: aSet
+	^ TypVariableResolvers instance typeForVariable: type -> name
 ]

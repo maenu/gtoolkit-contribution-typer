@@ -11,5 +11,5 @@ RBGlobalNode >> typTypeWithDiscovered: aSet [
 		ifFalse: [ self binding isGlobalClassNameBinding
 				ifTrue: [ self binding value class typAsType ]
 				ifFalse: [ self methodNode methodClass instanceSide typAsType ] ].
-	^ TypVariableResolvers instance typeForVariable: type -> name withDiscovered: aSet
+	^ TypVariableResolvers instance typeForVariable: type -> name
 ]
