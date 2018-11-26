@@ -84,10 +84,10 @@ TypUnionType >> hash [
 { #category : #accessing }
 TypUnionType >> increment: anObject [
 	| n |
-	(anObject isKindOf: TypUnionType)
-		ifTrue: [ ^ self addAll: anObject ]
+	^ anObject isUnion
+		ifTrue: [ self addAll: anObject ]
 		ifFalse: [ n := weights at: anObject ifAbsentPut: [ 0 ].
-			^ weights at: anObject put: n + 1 ]
+			weights at: anObject put: n + 1 ]
 ]
 
 { #category : #accessing }
@@ -99,6 +99,11 @@ TypUnionType >> initialize [
 { #category : #testing }
 TypUnionType >> isEmpty [
 	^ weights isEmpty
+]
+
+{ #category : #testing }
+TypUnionType >> isUnion [
+	^ true
 ]
 
 { #category : #'as yet unclassified' }

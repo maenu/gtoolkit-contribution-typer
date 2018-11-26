@@ -1,10 +1,15 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer' }
+RBMessageNode >> typKnownArgumentTypesWithDiscovered: aSet [
+	^ arguments collect: [ :f | f typTypeWithDiscovered: aSet ]
+]
+
+{ #category : #'*Typer' }
 RBMessageNode >> typTypeForArgumentAt: anInteger withDiscovered: aSet [
 	| receiverType |
 	receiverType := self typTypeForReceiverWithDiscovered: aSet.
-	^ TypMethodResolvers instance typeForArgumentAt: anInteger ofMethod: receiverType -> selector
+	^ TypMethodResolvers instance typeForArgumentAt: anInteger ofMethod: receiverType -> (selector -> (self typKnownArgumentTypesWithDiscovered: aSet))
 ]
 
 { #category : #'*Typer' }
@@ -16,7 +21,7 @@ RBMessageNode >> typTypeForReceiverWithDiscovered: aSet [
 RBMessageNode >> typTypeForResultWithDiscovered: aSet [
 	| receiverType |
 	receiverType := self typTypeForReceiverWithDiscovered: aSet.
-	^ TypMethodResolvers instance typeForResultOfMethod: receiverType -> selector
+	^ TypMethodResolvers instance typeForResultOfMethod: receiverType -> (selector -> (self typKnownArgumentTypesWithDiscovered: aSet))
 ]
 
 { #category : #'*Typer' }

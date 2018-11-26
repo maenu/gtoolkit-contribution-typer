@@ -73,9 +73,19 @@ TypType >> isNil [
 	^ false
 ]
 
+{ #category : #testing }
+TypType >> isParametric [
+	^ false
+]
+
 { #category : #comparing }
 TypType >> isSubTypeOf: aType [
 	^ self allSuperTypes includes: aType
+]
+
+{ #category : #testing }
+TypType >> isUnion [
+	^ false
 ]
 
 { #category : #testing }

@@ -5,11 +5,11 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypResolver >> resolverFor: anObject [
+TypResolver >> resolverFor: anAssociation [
 	^ self
 ]
 
 { #category : #'as yet unclassified' }
-TypResolver >> resolves: anObject [
+TypResolver >> resolves: anAssociation [
 	^ false
 ]

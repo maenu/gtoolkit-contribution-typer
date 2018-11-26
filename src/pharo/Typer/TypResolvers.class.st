@@ -21,7 +21,7 @@ TypResolvers >> initialize [
 	resolvers := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 TypResolvers >> resolverFor: anObject [
 	self assert: [ self resolves: anObject ].
 	^ resolvers detect: [ :e | e resolves: anObject ]
@@ -38,8 +38,8 @@ TypResolvers >> resolvers: anObject [
 ]
 
 { #category : #accessing }
-TypResolvers >> resolves: anObject [
-	^ resolvers anySatisfy: [ :e | e resolves: anObject ]
+TypResolvers >> resolves: anAssociation [
+	^ resolvers anySatisfy: [ :e | e resolves: anAssociation ]
 ]
 
 { #category : #'as yet unclassified' }

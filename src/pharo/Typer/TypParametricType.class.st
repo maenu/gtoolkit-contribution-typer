@@ -23,6 +23,11 @@ TypParametricType >> initialize [
 	parameters := OrderedCollection new
 ]
 
+{ #category : #testing }
+TypParametricType >> isParametric [
+	^ true
+]
+
 { #category : #accessing }
 TypParametricType >> parameters [
 	^ parameters

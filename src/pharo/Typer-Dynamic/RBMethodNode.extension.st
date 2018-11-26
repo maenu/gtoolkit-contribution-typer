@@ -2,7 +2,8 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynAsMethodResolver [
-	^ TypMethodResolver new
+	(self typDynInvocations isEmpty ) ifFalse: [Halt once].
+	^ TypNonParametricMethodResolver new
 		receiverType: self method methodClass typAsType;
 		selector: self method selector;
 		argumentTypes: (self method numArgs timesCollect: [ :i | self typDynTypeForArgumentAt: i ]);
@@ -18,6 +19,7 @@ RBMethodNode >> typDynInvocations [
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynInvokeIn: aContext [
 	| invocation |
+	Halt once.
 	invocation := TypDynMessage new
 		receiverType: aContext receiver class typAsType;
 		selector: aContext method selector;
