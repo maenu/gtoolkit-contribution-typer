@@ -28,11 +28,6 @@ TypNilType >> isNil [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
-TypNilType >> lookupMethodSelector: aSymbol [
-	^ UndefinedObject lookupSelector: aSymbol
-]
-
 { #category : #printing }
 TypNilType >> printOn: aStream [
 	aStream << 'nil'

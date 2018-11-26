@@ -17,7 +17,9 @@ RBMessageNode >> typTypeForArgumentAt: anInteger [
 
 { #category : #'*Typer' }
 RBMessageNode >> typTypeForArgumentAt: anInteger withDiscovered: aSet [
-	^ (self typMethodWithDiscovered: aSet) ifNil: [ TypUnknownType instance ] ifNotNil: [ :e | e typTypeForArgumentAt: anInteger withDiscovered: aSet ]
+	^ [ (self typMethodWithDiscovered: aSet) typTypeForArgumentAt: anInteger withDiscovered: aSet ]
+		on: TypNoMethodFoundError
+		do: [ TypUnknownType instance ]
 ]
 
 { #category : #'*Typer' }
@@ -37,9 +39,9 @@ RBMessageNode >> typTypeForResult [
 
 { #category : #'*Typer' }
 RBMessageNode >> typTypeForResultWithDiscovered: aSet [
-	^ (self typMethodWithDiscovered: aSet)
-		ifNil: [ TypUnknownType instance ]
-		ifNotNil: [ :e | e typTypeForResultForReceiver: (self typTypeForReceiverWithDiscovered: aSet) withDiscovered: aSet ]
+	^ [ (self typMethodWithDiscovered: aSet) typTypeForResultForReceiver: (self typTypeForReceiverWithDiscovered: aSet) withDiscovered: aSet ]
+		on: TypNoMethodFoundError
+		do: [ TypUnknownType instance ]
 ]
 
 { #category : #'*Typer' }

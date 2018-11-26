@@ -41,7 +41,7 @@ TypClassType >> initialize [
 
 { #category : #'as yet unclassified' }
 TypClassType >> lookupMethodSelector: aSymbol [
-	^ clazz lookupSelector: aSymbol
+	^ (clazz lookupSelector: aSymbol) ifNil: [ TypNoMethodFoundError signal ]
 ]
 
 { #category : #accessing }

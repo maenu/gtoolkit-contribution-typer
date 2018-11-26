@@ -24,7 +24,7 @@ TypUnknownType >> isUnknown [
 
 { #category : #'as yet unclassified' }
 TypUnknownType >> lookupMethodSelector: aSymbol [
-	^ nil
+	TypNoMethodFoundError signal
 ]
 
 { #category : #accessing }
