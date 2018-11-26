@@ -93,6 +93,12 @@ TypType >> nullable: anObject [
 	nullable := anObject
 ]
 
+{ #category : #printing }
+TypType >> printOn: aStream [
+	nullable
+		ifTrue: [ aStream << '! ' ]
+]
+
 { #category : #accessing }
 TypType >> superType [
 	self subclassResponsibility

@@ -29,6 +29,7 @@ TypUnknownType >> isUnknown [
 
 { #category : #accessing }
 TypUnknownType >> printOn: aStream [
+	super printOn: aStream.
 	aStream << '?'
 ]
 

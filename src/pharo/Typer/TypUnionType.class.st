@@ -109,7 +109,8 @@ TypUnionType >> postCopy [
 
 { #category : #printing }
 TypUnionType >> printOn: aStream [
-	aStream << ('|' join: (self summary orderedKeys ifEmpty: [ {TypUnknownType instance} ] ifNotEmpty: [ :e | e collect: #printString ]))
+	super printOn: aStream.
+	aStream << 'U ' << self superType printString
 ]
 
 { #category : #enumerating }

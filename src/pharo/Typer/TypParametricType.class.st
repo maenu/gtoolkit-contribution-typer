@@ -42,7 +42,7 @@ TypParametricType >> postCopy [
 { #category : #printing }
 TypParametricType >> printOn: aStream [
 	super printOn: aStream.
-	aStream << '<'.
-	aStream << (',' join: (parameters collect: #printString)).
-	aStream << '>'
+	aStream << '< '.
+	aStream << (' , ' join: (parameters collect: #printString)).
+	aStream << ' >'
 ]

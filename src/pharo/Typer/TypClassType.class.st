@@ -44,6 +44,7 @@ TypClassType >> hash [
 
 { #category : #printing }
 TypClassType >> printOn: aStream [
+	super printOn: aStream.
 	clazz printOn: aStream
 ]
 

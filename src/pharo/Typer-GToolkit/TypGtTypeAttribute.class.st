@@ -15,7 +15,7 @@ TypGtTypeAttribute >> initialize [
 		stencil: [ | s |
 			s := type printString.
 			BrLabel new
-				text: ':' , s;
+				text: ': ' , s;
 				margin:
 					(BlInsets
 						top: 4
