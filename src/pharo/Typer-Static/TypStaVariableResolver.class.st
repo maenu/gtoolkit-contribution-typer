@@ -9,13 +9,13 @@ TypStaVariableResolver >> resolverFor: anAssociation [
 	| clazz |
 	self assert: [ self resolves: anAssociation ].
 	clazz := anAssociation key asClass.
-	^ clazz isMeta
+	^ (clazz isMeta
 		ifTrue: [ (clazz instanceSide typStaResolvesClassInstanceVariable: anAssociation value)
 				ifTrue: [ clazz instanceSide typStaClassInstanceVariableResolver ]
 				ifFalse: [ clazz instanceSide typStaClassVariableResolver ] ]
 		ifFalse: [ (clazz typStaResolvesInstanceVariable: anAssociation value)
 				ifTrue: [ clazz typStaInstanceVariableResolver ]
-				ifFalse: [ clazz typStaClassVariableResolver ] ]
+				ifFalse: [ clazz typStaClassVariableResolver ] ]) resolverFor: anAssociation
 ]
 
 { #category : #'as yet unclassified' }

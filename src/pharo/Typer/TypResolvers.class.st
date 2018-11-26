@@ -22,9 +22,9 @@ TypResolvers >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
-TypResolvers >> resolverFor: anObject [
-	self assert: [ self resolves: anObject ].
-	^ resolvers detect: [ :e | e resolves: anObject ]
+TypResolvers >> resolverFor: anAssociation [
+	self assert: [ self resolves: anAssociation ].
+	^ (resolvers detect: [ :e | e resolves: anAssociation ]) resolverFor: anAssociation
 ]
 
 { #category : #accessing }

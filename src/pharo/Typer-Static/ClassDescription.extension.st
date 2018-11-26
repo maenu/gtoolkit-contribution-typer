@@ -2,27 +2,62 @@ Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Static' }
 ClassDescription >> typStaClassInstanceVariableResolver [
-	self flag: 'TODO'
+	^ TypVariableResolvers new
+		resolvers: self typStaClassInstanceVariableResolvers;
+		yourself
+]
+
+{ #category : #'*Typer-Static' }
+ClassDescription >> typStaClassInstanceVariableResolvers [
+	^ OrderedCollection new
 ]
 
 { #category : #'*Typer-Static' }
 ClassDescription >> typStaClassMethodResolver [
-	self flag: 'TODO'
+	^ TypMethodResolvers new
+		resolvers: self typStaClassMethodResolvers;
+		yourself
+]
+
+{ #category : #'*Typer-Static' }
+ClassDescription >> typStaClassMethodResolvers [
+	^ OrderedCollection new
 ]
 
 { #category : #'*Typer-Static' }
 ClassDescription >> typStaClassVariableResolver [
-	self flag: 'TODO'
+	^ TypVariableResolvers new
+		resolvers: self typStaClassVariableResolvers;
+		yourself
+]
+
+{ #category : #'*Typer-Static' }
+ClassDescription >> typStaClassVariableResolvers [
+	^ OrderedCollection new
 ]
 
 { #category : #'*Typer-Static' }
 ClassDescription >> typStaInstanceMethodResolver [
-	self flag: 'TODO'
+	^ TypMethodResolvers new
+		resolvers: self typStaInstanceMethodResolvers;
+		yourself
+]
+
+{ #category : #'*Typer-Static' }
+ClassDescription >> typStaInstanceMethodResolvers [
+	^ OrderedCollection new
 ]
 
 { #category : #'*Typer-Static' }
 ClassDescription >> typStaInstanceVariableResolver [
-	self flag: 'TODO'
+	^ TypVariableResolvers new
+		resolvers: self typStaInstanceVariableResolvers;
+		yourself
+]
+
+{ #category : #'*Typer-Static' }
+ClassDescription >> typStaInstanceVariableResolvers [
+	^ OrderedCollection new
 ]
 
 { #category : #'*Typer-Static' }
