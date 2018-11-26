@@ -3,14 +3,25 @@ Class {
 	#superclass : #TypResolver,
 	#instVars : [
 		'selector',
-		'type'
+		'type',
+		'receiverType'
 	],
 	#category : #'Typer-Core'
 }
 
+{ #category : #accessing }
+TypVariableResolver >> receiverType [
+	^ receiverType
+]
+
+{ #category : #accessing }
+TypVariableResolver >> receiverType: anObject [
+	receiverType := anObject
+]
+
 { #category : #'as yet unclassified' }
 TypVariableResolver >> resolves: anAssociation [
-	^ anAssociation key = type and: [ anAssociation value = selector ]
+	^ anAssociation key = receiverType and: [ anAssociation value = selector ]
 ]
 
 { #category : #accessing }
