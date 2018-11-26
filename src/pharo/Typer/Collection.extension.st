@@ -4,7 +4,7 @@ Extension { #name : #Collection }
 Collection >> typAsCompatibleType [
 	| remains current |
 	remains := self asSet copy.
-	remains remove: TypUnknownType instance ifAbsent: [].
+	remains remove: TypUnknownType instance ifAbsent: [  ].
 	remains ifEmpty: [ ^ TypUnknownType instance ].
 	current := remains anyOne.
 	remains remove: current.

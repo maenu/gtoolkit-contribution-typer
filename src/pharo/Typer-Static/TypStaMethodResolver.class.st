@@ -5,16 +5,22 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypStaMethodResolver >> resolverFor: aCompiledMethod [
-	self assert: [ self resolves: aCompiledMethod ].
-	^ aCompiledMethod methodClass isMeta
-		ifTrue: [ aCompiledMethod methodClass instanceSide typStaClassMethodResolver ]
-		ifFalse: [ aCompiledMethod methodClass typStaMethodResolver ]
+TypStaMethodResolver >> resolverFor: anAssociation [
+	| clazz |
+	self assert: [ self resolves: anAssociation ].
+	clazz := anAssociation key asClass.
+	^ clazz isMeta
+		ifTrue: [ clazz instanceSide typStaClassMethodResolver ]
+		ifFalse: [ clazz typStaInstanceMethodResolver ]
 ]
 
 { #category : #'as yet unclassified' }
-TypStaMethodResolver >> resolves: aCompiledMethod [
-	^ aCompiledMethod methodClass isMeta
-		ifTrue: [ aCompiledMethod methodClass instanceSide typStaResolvesMethod: aCompiledMethod ]
-		ifFalse: [ aCompiledMethod methodClass typStaResolvesMethod: aCompiledMethod ]
+TypStaMethodResolver >> resolves: anAssociation [
+	| clazz |
+	anAssociation key hasClass
+		ifFalse: [ ^ false ].
+	clazz := anAssociation key asClass.
+	^ clazz isMeta
+		ifTrue: [ clazz instanceSide typStaClassMethodResolver ]
+		ifFalse: [ clazz typStaInstanceMethodResolver ]
 ]

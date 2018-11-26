@@ -1,6 +1,11 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Static' }
+ClassDescription >> typStaClassInstanceVariableResolver [
+	self flag: 'TODO'
+]
+
+{ #category : #'*Typer-Static' }
 ClassDescription >> typStaClassMethodResolver [
 	self flag: 'TODO'
 ]
@@ -11,36 +16,36 @@ ClassDescription >> typStaClassVariableResolver [
 ]
 
 { #category : #'*Typer-Static' }
-ClassDescription >> typStaMethodResolver [
+ClassDescription >> typStaInstanceMethodResolver [
 	self flag: 'TODO'
 ]
 
 { #category : #'*Typer-Static' }
-ClassDescription >> typStaResolvesClassInstanceVariable: aSymbol [
-	^ self typStaClassVariableResolver resolves: self class typAsType -> aSymbol
-]
-
-{ #category : #'*Typer-Static' }
-ClassDescription >> typStaResolvesClassMethod: aCompiledMethod [
-	^ self typStaClassMethodResolver resolves: aCompiledMethod selector
-]
-
-{ #category : #'*Typer-Static' }
-ClassDescription >> typStaResolvesClassVariable: aSymbol [
-	^ self typStaVariableResolver resolves: self typAsType -> aSymbol
-]
-
-{ #category : #'*Typer-Static' }
-ClassDescription >> typStaResolvesInstanceVariable: aSymbol [
-	^ self typStaVariableResolver resolves: self typAsType -> aSymbol
-]
-
-{ #category : #'*Typer-Static' }
-ClassDescription >> typStaResolvesMethod: aCompiledMethod [
-	^ self typStaMethodResolver resolves: aCompiledMethod selector
-]
-
-{ #category : #'*Typer-Static' }
-ClassDescription >> typStaVariableResolver [
+ClassDescription >> typStaInstanceVariableResolver [
 	self flag: 'TODO'
+]
+
+{ #category : #'*Typer-Static' }
+ClassDescription >> typStaResolvesClassInstanceVariable: anAssociation [
+	^ self typStaClassVariableResolver resolves: anAssociation
+]
+
+{ #category : #'*Typer-Static' }
+ClassDescription >> typStaResolvesClassMethod: anAssociation [
+	^ self typStaClassMethodResolver resolves: anAssociation
+]
+
+{ #category : #'*Typer-Static' }
+ClassDescription >> typStaResolvesClassVariable: anAssociation [
+	^ self typStaClassVariableResolver resolves: anAssociation
+]
+
+{ #category : #'*Typer-Static' }
+ClassDescription >> typStaResolvesInstanceMethod: anAssociation [
+	^ self typStaInstanceMethodResolver resolves: anAssociation
+]
+
+{ #category : #'*Typer-Static' }
+ClassDescription >> typStaResolvesInstanceVariable: anAssociation [
+	^ self typStaInstanceVariableResolver resolves: anAssociation
 ]

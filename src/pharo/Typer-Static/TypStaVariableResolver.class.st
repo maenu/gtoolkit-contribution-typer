@@ -6,55 +6,25 @@ Class {
 
 { #category : #'as yet unclassified' }
 TypStaVariableResolver >> resolverFor: anAssociation [
-	| type name |
+	| clazz |
 	self assert: [ self resolves: anAssociation ].
-	type := anAssociation key.
-	name := anAssociation value.
-	type hasClass
-		ifFalse: [ ^ false ].
-	^ type asClass isMeta
-		ifTrue: [ type asClass instanceSide typStaClassVariableResolver ]
-		ifFalse: [ type asClass typStaVariableResolver ]
-]
-
-{ #category : #'as yet unclassified' }
-TypStaVariableResolver >> resolverFor_: anAssociation [
-	| type name |
-	self assert: [ self resolves: anAssociation ].
-	type := anAssociation key.
-	name := anAssociation value.
-	[ type hasClass
-		ifFalse: [ ^ false ].
-	type asClass isMeta
-		ifTrue: [ (type asClass instanceSide typStaResolvesClassInstanceVariable: name) or: [ type asClass instanceSide typStaResolvesClassVariable: name ] ]
-		ifFalse: [ (type asClass typStaResolvesInstanceVariable: name) or: [ type asClass typStaResolvesClassVariable: name ] ] ] whileFalse: [ type := type superType ].
-	^ type asClass isMeta
-		ifTrue: [ type asClass instanceSide typStaVariableResolver ]
-		ifFalse: [ type asClass typStaVariableResolver ]
+	clazz := anAssociation key asClass.
+	^ clazz isMeta
+		ifTrue: [ (clazz instanceSide typStaResolvesClassInstanceVariable: anAssociation value)
+				ifTrue: [ clazz instanceSide typStaClassInstanceVariableResolver ]
+				ifFalse: [ clazz instanceSide typStaClassVariableResolver ] ]
+		ifFalse: [ (clazz typStaResolvesInstanceVariable: anAssociation value)
+				ifTrue: [ clazz typStaInstanceVariableResolver ]
+				ifFalse: [ clazz typStaClassVariableResolver ] ]
 ]
 
 { #category : #'as yet unclassified' }
 TypStaVariableResolver >> resolves: anAssociation [
-	| type name |
-	type := anAssociation key.
-	name := anAssociation value.
-	[ type hasClass
+	| clazz |
+	anAssociation key hasClass
 		ifFalse: [ ^ false ].
-	type asClass isMeta
-		ifTrue: [ (type asClass instanceSide typStaResolvesClassInstanceVariable: name) or: [ type asClass instanceSide typStaResolvesClassVariable: name ] ]
-		ifFalse: [ (type asClass typStaResolvesInstanceVariable: name) or: [ type asClass typStaResolvesClassVariable: name ] ] ] whileFalse: [ type := type superType ].
-	^ true
-]
-
-{ #category : #'as yet unclassified' }
-TypStaVariableResolver >> resolves_: anAssociation [
-	| type name |
-	type := anAssociation key.
-	name := anAssociation value.
-	[ type hasClass
-		ifFalse: [ ^ false ].
-	type asClass isMeta
-		ifTrue: [ (type asClass instanceSide typStaResolvesClassInstanceVariable: name) or: [ type asClass instanceSide typStaResolvesClassVariable: name ] ]
-		ifFalse: [ (type asClass typStaResolvesInstanceVariable: name) or: [ type asClass typStaResolvesClassVariable: name ] ] ] whileFalse: [ type := type superType ].
-	^ true
+	clazz := anAssociation key asClass.
+	^ clazz isMeta
+		ifTrue: [ (clazz instanceSide typStaResolvesClassInstanceVariable: anAssociation value) or: [ clazz instanceSide typStaResolvesClassVariable: anAssociation value ] ]
+		ifFalse: [ (clazz typStaResolvesInstanceVariable: anAssociation value) or: [ clazz typStaResolvesClassVariable: anAssociation value ] ]
 ]
