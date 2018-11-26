@@ -84,7 +84,7 @@ TypUnionType >> hash [
 { #category : #accessing }
 TypUnionType >> increment: anObject [
 	| n |
-	^ anObject isUnion
+	^ (anObject isKindOf: TypUnionType)
 		ifTrue: [ self addAll: anObject ]
 		ifFalse: [ n := weights at: anObject ifAbsentPut: [ 0 ].
 			weights at: anObject put: n + 1 ]
