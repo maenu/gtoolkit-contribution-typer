@@ -8,41 +8,41 @@ ClassDescription >> typAsType [
 ]
 
 { #category : #'*Typer' }
-ClassDescription >> typTypeForClassInstanceVariableNamed: aString [
-	^ self typTypeForClassInstanceVariableNamed: aString withDiscovered: Set new
+ClassDescription >> typTypeForClassInstanceVariableNamed: aSymbol [
+	^ self typTypeForClassInstanceVariableNamed: aSymbol withDiscovered: Set new
 ]
 
 { #category : #'*Typer' }
-ClassDescription >> typTypeForClassInstanceVariableNamed: aString withDiscovered: aSet [
-	^ TypVariableResolvers instance typTypeForVariableNamed: aString ofClass: self class withDiscovered: aSet
+ClassDescription >> typTypeForClassInstanceVariableNamed: aSymbol withDiscovered: aSet [
+	^ TypVariableResolvers instance typTypeForVariableNamed: aSymbol ofClass: self class withDiscovered: aSet
 ]
 
 { #category : #'*Typer' }
-ClassDescription >> typTypeForClassVariableNamed: aString [
-	^ self typTypeForClassVariableNamed: aString withDiscovered: Set new
+ClassDescription >> typTypeForClassVariableNamed: aSymbol [
+	^ self typTypeForClassVariableNamed: aSymbol withDiscovered: Set new
 ]
 
 { #category : #'*Typer' }
-ClassDescription >> typTypeForClassVariableNamed: aString withDiscovered: aSet [
-	^ TypVariableResolvers instance typTypeForVariableNamed: aString ofClass: self instanceSide withDiscovered: aSet
+ClassDescription >> typTypeForClassVariableNamed: aSymbol withDiscovered: aSet [
+	^ TypVariableResolvers instance typTypeForVariableNamed: aSymbol ofClass: self instanceSide withDiscovered: aSet
 ]
 
 { #category : #'*Typer' }
-ClassDescription >> typTypeForInstanceVariableNamed: aString [
-	^ self typTypeForInstanceVariableNamed: aString withDiscovered: Set new
+ClassDescription >> typTypeForInstanceVariableNamed: aSymbol [
+	^ self typTypeForInstanceVariableNamed: aSymbol withDiscovered: Set new
 ]
 
 { #category : #'*Typer' }
-ClassDescription >> typTypeForInstanceVariableNamed: aString withDiscovered: aSet [
-	^ TypVariableResolvers instance typTypeForVariableNamed: aString ofClass: self withDiscovered: aSet
+ClassDescription >> typTypeForInstanceVariableNamed: aSymbol withDiscovered: aSet [
+	^ TypVariableResolvers instance typTypeForVariableNamed: aSymbol ofClass: self withDiscovered: aSet
 ]
 
 { #category : #'*Typer' }
-ClassDescription >> typTypeForPoolVariableNamed: aString [
-	^ self typTypeForPoolVariableNamed: aString withDiscovered: Set new
+ClassDescription >> typTypeForPoolVariableNamed: aSymbol [
+	^ self typTypeForPoolVariableNamed: aSymbol withDiscovered: Set new
 ]
 
 { #category : #'*Typer' }
-ClassDescription >> typTypeForPoolVariableNamed: aString withDiscovered: aSet [
-	^ TypVariableResolvers instance typTypeForVariableNamed: aString ofClass: self instanceSide withDiscovered: aSet
+ClassDescription >> typTypeForPoolVariableNamed: aSymbol withDiscovered: aSet [
+	^ TypVariableResolvers instance typTypeForVariableNamed: aSymbol ofClass: self instanceSide withDiscovered: aSet
 ]

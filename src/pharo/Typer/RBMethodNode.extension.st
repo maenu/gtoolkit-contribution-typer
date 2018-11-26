@@ -11,13 +11,13 @@ RBMethodNode >> typTypeForArgumentAt: anInteger withDiscovered: aSet [
 ]
 
 { #category : #'*Typer' }
-RBMethodNode >> typTypeForArgumentNamed: aString [
-	^ self method typTypeForArgumentNamed: aString
+RBMethodNode >> typTypeForArgumentNamed: aSymbol [
+	^ self method typTypeForArgumentNamed: aSymbol
 ]
 
 { #category : #'*Typer' }
-RBMethodNode >> typTypeForArgumentNamed: aString withDiscovered: aSet [
-	^ self method typTypeForArgumentNamed: aString withDiscovered: aSet
+RBMethodNode >> typTypeForArgumentNamed: aSymbol withDiscovered: aSet [
+	^ self method typTypeForArgumentNamed: aSymbol withDiscovered: aSet
 ]
 
 { #category : #'*Typer' }

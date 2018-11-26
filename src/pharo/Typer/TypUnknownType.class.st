@@ -12,6 +12,11 @@ TypUnknownType class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
+{ #category : #converting }
+TypUnknownType >> asClass [
+	TypNoClassFoundError signal
+]
+
 { #category : #accessing }
 TypUnknownType >> hasSuperType [
 	^ false
@@ -23,8 +28,13 @@ TypUnknownType >> isUnknown [
 ]
 
 { #category : #'as yet unclassified' }
-TypUnknownType >> lookupMethodSelector: aSymbol [
+TypUnknownType >> lookupMethod: aSymbol [
 	TypNoMethodFoundError signal
+]
+
+{ #category : #'as yet unclassified' }
+TypUnknownType >> lookupVariable: aSymbol [
+	TypNoVariableFoundError signal
 ]
 
 { #category : #accessing }

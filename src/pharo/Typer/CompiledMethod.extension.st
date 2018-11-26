@@ -11,14 +11,14 @@ CompiledMethod >> typTypeForArgumentAt: anInteger withDiscovered: aSet [
 ]
 
 { #category : #'*Typer' }
-CompiledMethod >> typTypeForArgumentNamed: aString [
-	^ self typTypeForArgumentNamed: aString withDiscovered: Set new
+CompiledMethod >> typTypeForArgumentNamed: aSymbol [
+	^ self typTypeForArgumentNamed: aSymbol withDiscovered: Set new
 ]
 
 { #category : #'*Typer' }
-CompiledMethod >> typTypeForArgumentNamed: aString withDiscovered: aSet [
+CompiledMethod >> typTypeForArgumentNamed: aSymbol withDiscovered: aSet [
 	| i |
-	i := self ast arguments detectIndex: [ :f | f name = aString ].
+	i := self ast arguments detectIndex: [ :f | f name = aSymbol ].
 	^ self typTypeForArgumentAt: i withDiscovered: aSet
 ]
 

@@ -1,6 +1,9 @@
 Class {
 	#name : #TypType,
 	#superclass : #Object,
+	#instVars : [
+		'nullable'
+	],
 	#category : #'Typer-Core'
 }
 
@@ -34,6 +37,16 @@ TypType >> allSuperTypes [
 		ifFalse: [ OrderedCollection new ]
 ]
 
+{ #category : #converting }
+TypType >> asClass [
+	self subclassResponsibility
+]
+
+{ #category : #testing }
+TypType >> hasClass [
+	^ false
+]
+
 { #category : #testing }
 TypType >> hasSuperType [
 	^ true
@@ -55,8 +68,23 @@ TypType >> isUnknown [
 ]
 
 { #category : #'as yet unclassified' }
-TypType >> lookupMethodSelector: aSymbol [
+TypType >> lookupMethod: aSymbol [
 	self subclassResponsibility
+]
+
+{ #category : #'as yet unclassified' }
+TypType >> lookupVariable: aSymbol [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
+TypType >> nullable [
+	^ nullable
+]
+
+{ #category : #accessing }
+TypType >> nullable: anObject [
+	nullable := anObject
 ]
 
 { #category : #accessing }

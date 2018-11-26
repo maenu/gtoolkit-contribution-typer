@@ -2,8 +2,7 @@ Class {
 	#name : #TypClassType,
 	#superclass : #TypType,
 	#instVars : [
-		'clazz',
-		'nullable'
+		'clazz'
 	],
 	#category : #'Typer-Core'
 }
@@ -11,6 +10,11 @@ Class {
 { #category : #comparing }
 TypClassType >> = anObject [
 	^ self == anObject or: [ self class = anObject class and: [ clazz = anObject clazz ] ]
+]
+
+{ #category : #converting }
+TypClassType >> asClass [
+	^ clazz
 ]
 
 { #category : #accessing }
@@ -21,6 +25,11 @@ TypClassType >> clazz [
 { #category : #accessing }
 TypClassType >> clazz: anObject [
 	clazz := anObject
+]
+
+{ #category : #testing }
+TypClassType >> hasClass [
+	^ true
 ]
 
 { #category : #'as yet unclassified' }
@@ -40,18 +49,25 @@ TypClassType >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
-TypClassType >> lookupMethodSelector: aSymbol [
+TypClassType >> lookupMethod: aSymbol [
 	^ (clazz lookupSelector: aSymbol) ifNil: [ TypNoMethodFoundError signal ]
 ]
 
-{ #category : #accessing }
-TypClassType >> nullable [
-	^ nullable
-]
-
-{ #category : #accessing }
-TypClassType >> nullable: anObject [
-	nullable := anObject
+{ #category : #'as yet unclassified' }
+TypClassType >> lookupVariable: aSymbol [
+	(clazz instVarNames includes: aSymbol)
+		ifTrue: [ ^ self -> aSymbol ].
+	(clazz classVarNames includes: aSymbol)
+		ifTrue: [ ^ self -> aSymbol ].
+	clazz allSharedPools
+		do: [ :e | 
+			(e classVarNames includes: aSymbol)
+				ifTrue: [ ^ e typAsType -> aSymbol ] ].
+	(clazz class instVarNames includes: aSymbol)
+		ifTrue: [ ^ self class typAsType -> aSymbol ].
+	self hasSuperType
+		ifTrue: [ ^ self superType lookupVariable: aSymbol ].
+	TypNoVariableFoundError signal
 ]
 
 { #category : #printing }

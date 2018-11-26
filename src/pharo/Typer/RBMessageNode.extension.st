@@ -7,7 +7,7 @@ RBMessageNode >> typMethod [
 
 { #category : #'*Typer' }
 RBMessageNode >> typMethodWithDiscovered: aSet [
-	^ (self typTypeForReceiverWithDiscovered: aSet) lookupMethodSelector: selector
+	^ (self typTypeForReceiverWithDiscovered: aSet) lookupMethod: selector
 ]
 
 { #category : #'*Typer' }

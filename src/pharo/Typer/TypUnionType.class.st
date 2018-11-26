@@ -33,6 +33,11 @@ TypUnionType >> addAll: aTypes [
 ]
 
 { #category : #converting }
+TypUnionType >> asClass [
+	^ self superType asClass
+]
+
+{ #category : #converting }
 TypUnionType >> asType [
 	| remains |
 	remains := weights keys asSet copy.
@@ -66,6 +71,11 @@ TypUnionType >> gtItemsFor: aView [
 	^ self summary gtItemsFor: aView
 ]
 
+{ #category : #testing }
+TypUnionType >> hasClass [
+	^ self superType hasClass
+]
+
 { #category : #comparing }
 TypUnionType >> hash [
 	^ weights keys asSet hash
@@ -90,8 +100,13 @@ TypUnionType >> isEmpty [
 ]
 
 { #category : #'as yet unclassified' }
-TypUnionType >> lookupMethodSelector: aSymbol [
-	^ self superType lookupMethodSelector: aSymbol
+TypUnionType >> lookupMethod: aSymbol [
+	^ self superType lookupMethod: aSymbol
+]
+
+{ #category : #'as yet unclassified' }
+TypUnionType >> lookupVariable: aSymbol [
+	^ self superType lookupVariable: aSymbol
 ]
 
 { #category : #'as yet unclassified' }
