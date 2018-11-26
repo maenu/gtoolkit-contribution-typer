@@ -65,7 +65,7 @@ TypType >> hash [
 { #category : #initialization }
 TypType >> initialize [
 	super initialize.
-	nullable := true
+	nullable := false
 ]
 
 { #category : #testing }

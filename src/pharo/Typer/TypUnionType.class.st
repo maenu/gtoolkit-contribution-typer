@@ -141,11 +141,15 @@ TypUnionType >> summary [
 
 { #category : #accessing }
 TypUnionType >> superType [
-	| remains |
+	| remains nullable_ union |
 	remains := weights keys asSet copy.
+	nullable_ := remains includes: TypNilType instance.
 	remains remove: TypNilType instance ifAbsent: [  ].
-	remains ifEmpty: [ ^ TypUnknownType instance ].
-	^ remains typAsCompatibleType
+	union := remains
+		ifEmpty: [ TypUnknownType instance ]
+		ifNotEmpty: [ remains typAsCompatibleType ].
+	union nullable: nullable_.
+	^ union
 ]
 
 { #category : #accessing }
