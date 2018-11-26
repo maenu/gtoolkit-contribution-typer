@@ -57,7 +57,7 @@ RBMethodNode >> typDynTypesForInstanceVariables [
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForPoolVariables [
-	^ self typDynTypesForVariablesSelectedWith: [ :e | e variable isInstance not and: [ e variable binding isFromSharedPool ] ]
+	^ self typDynTypesForVariablesSelectedWith: [ :e | e variable isInstance not and: [ e variable binding isGlobalClassNameBinding not ] ]
 ]
 
 { #category : #'*Typer-Dynamic' }
