@@ -45,6 +45,11 @@ TypClassType >> clazz: anObject [
 
 { #category : #testing }
 TypClassType >> hasClass [
+	| clazz_ |
+	clazz_ := clazz.
+	(clazz_ endsWith: ' class')
+		ifTrue: [ clazz_ := clazz copyFrom: 1 to: clazz size - ' class' size ].
+	clazz_ asClassInEnvironment: Smalltalk globals ifAbsent: [ ^ false ].
 	^ true
 ]
 

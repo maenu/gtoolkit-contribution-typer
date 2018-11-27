@@ -48,6 +48,11 @@ TypType >> asClass [
 ]
 
 { #category : #converting }
+TypType >> asNonParametricType [
+	^ self
+]
+
+{ #category : #converting }
 TypType >> asParametricType: someTypes [
 	self subclassResponsibility
 ]

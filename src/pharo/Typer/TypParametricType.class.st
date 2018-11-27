@@ -19,6 +19,11 @@ TypParametricType >> asClass [
 ]
 
 { #category : #testing }
+TypParametricType >> asNonParametricType [
+	^ type
+]
+
+{ #category : #testing }
 TypParametricType >> asParametricType: someTypes [
 	| copy parameters_ |
 	copy := self copy.
@@ -32,6 +37,11 @@ TypParametricType >> asParametricType: someTypes [
 { #category : #comparing }
 TypParametricType >> canBeParametricType [
 	^ true
+]
+
+{ #category : #converting }
+TypParametricType >> hasClass [
+	^ type hasClass
 ]
 
 { #category : #testing }

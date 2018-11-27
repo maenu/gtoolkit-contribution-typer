@@ -29,7 +29,7 @@ TypMethodResolver >> argumentTypes: anObject [
 
 { #category : #'as yet unclassified' }
 TypMethodResolver >> resolves: anAssociation [
-	^ anAssociation key = receiverType and: [ anAssociation value key = selector ]
+	^ anAssociation key asNonParametricType = receiverType asNonParametricType and: [ anAssociation value key = selector ]
 ]
 
 { #category : #accessing }

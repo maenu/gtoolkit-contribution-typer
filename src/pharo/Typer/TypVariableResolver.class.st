@@ -9,7 +9,7 @@ Class {
 
 { #category : #'as yet unclassified' }
 TypVariableResolver >> resolves: anAssociation [
-	^ anAssociation key = receiverType and: [ anAssociation value = selector ]
+	^ anAssociation key asNonParametricType = receiverType asNonParametricType and: [ anAssociation value = selector ]
 ]
 
 { #category : #accessing }
