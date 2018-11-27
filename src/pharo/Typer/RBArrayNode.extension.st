@@ -1,9 +1,11 @@
 Extension { #name : #RBArrayNode }
 
 { #category : #'*Typer' }
-RBArrayNode >> typTypeWithDiscovered: aSet [
-	^ TypParametricType new
-		clazz: Array;
-		parameters: {(self statements collect: [ :e | e typTypeWithDiscovered: aSet ]) typAsType};
-		yourself
+RBArrayNode >> typTypeWithDiscovered: aDictionary [
+	^ aDictionary
+		at: self
+		ifAbsentPut: [ TypParametricType new
+				clazz: Array;
+				parameters: {(self statements collect: [ :e | e typTypeWithDiscovered: aDictionary ]) typAsType};
+				yourself ]
 ]

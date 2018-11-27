@@ -50,8 +50,8 @@ TypUnionType >> asType [
 		ifTrue: [ current := remains anyOne.
 			nullable_
 				ifTrue: [ current := current copy.
-					current nullable: true.
-					^ current ] ].
+					current nullable: true ].
+			^ current ].
 	^ self
 ]
 

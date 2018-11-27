@@ -1,25 +1,25 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer' }
-RBMethodNode >> typKnownArgumentTypesWithDiscovered: aSet [
-	^ arguments collect: [ :f | f typTypeWithDiscovered: aSet ]
+RBMethodNode >> typKnownArgumentTypesWithDiscovered: aDictionary [
+	^ arguments collect: [ :f | f typTypeWithDiscovered: aDictionary ]
 ]
 
 { #category : #'*Typer' }
-RBMethodNode >> typTypeForArgumentAt: anInteger withDiscovered: aSet [
+RBMethodNode >> typTypeForArgumentAt: anInteger withDiscovered: aDictionary [
 	^ TypMethodResolvers instance
 		typeForArgumentAt: anInteger
-		ofMethod: self methodClass typAsType -> (selector -> (self typKnownArgumentTypesWithDiscovered: aSet))
+		ofMethod: self methodClass typAsType -> (selector -> (self typKnownArgumentTypesWithDiscovered: aDictionary))
 ]
 
 { #category : #'*Typer' }
-RBMethodNode >> typTypeForArgumentNamed: aSymbol withDiscovered: aSet [
+RBMethodNode >> typTypeForArgumentNamed: aSymbol withDiscovered: aDictionary [
 	| i |
 	i := arguments detectIndex: [ :f | f name = aSymbol ].
-	^ self typTypeForArgumentAt: i withDiscovered: aSet
+	^ self typTypeForArgumentAt: i withDiscovered: aDictionary
 ]
 
 { #category : #'*Typer' }
-RBMethodNode >> typTypeForResultWithDiscovered: aSet [
-	^ TypMethodResolvers instance typeForResultOfMethod: self methodClass typAsType -> (selector -> (self typKnownArgumentTypesWithDiscovered: aSet))
+RBMethodNode >> typTypeForResultWithDiscovered: aDictionary [
+	^ TypMethodResolvers instance typeForResultOfMethod: self methodClass typAsType -> (selector -> (self typKnownArgumentTypesWithDiscovered: aDictionary))
 ]

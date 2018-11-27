@@ -1,33 +1,30 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer' }
-RBMessageNode >> typKnownArgumentTypesWithDiscovered: aSet [
-	^ arguments collect: [ :f | f typTypeWithDiscovered: aSet ]
+RBMessageNode >> typKnownArgumentTypesWithDiscovered: aDictionary [
+	^ arguments collect: [ :f | f typTypeWithDiscovered: aDictionary ]
 ]
 
 { #category : #'*Typer' }
-RBMessageNode >> typTypeForArgumentAt: anInteger withDiscovered: aSet [
+RBMessageNode >> typTypeForArgumentAt: anInteger withDiscovered: aDictionary [
 	| receiverType |
-	receiverType := self typTypeForReceiverWithDiscovered: aSet.
-	^ TypMethodResolvers instance typeForArgumentAt: anInteger ofMethod: receiverType -> (selector -> (self typKnownArgumentTypesWithDiscovered: aSet))
+	receiverType := self typTypeForReceiverWithDiscovered: aDictionary.
+	^ TypMethodResolvers instance typeForArgumentAt: anInteger ofMethod: receiverType -> (selector -> (self typKnownArgumentTypesWithDiscovered: aDictionary))
 ]
 
 { #category : #'*Typer' }
-RBMessageNode >> typTypeForReceiverWithDiscovered: aSet [
-	^ receiver typTypeWithDiscovered: aSet
+RBMessageNode >> typTypeForReceiverWithDiscovered: aDictionary [
+	^ receiver typTypeWithDiscovered: aDictionary
 ]
 
 { #category : #'*Typer' }
-RBMessageNode >> typTypeForResultWithDiscovered: aSet [
+RBMessageNode >> typTypeForResultWithDiscovered: aDictionary [
 	| receiverType |
-	receiverType := self typTypeForReceiverWithDiscovered: aSet.
-	^ TypMethodResolvers instance typeForResultOfMethod: receiverType -> (selector -> (self typKnownArgumentTypesWithDiscovered: aSet))
+	receiverType := self typTypeForReceiverWithDiscovered: aDictionary.
+	^ TypMethodResolvers instance typeForResultOfMethod: receiverType -> (selector -> (self typKnownArgumentTypesWithDiscovered: aDictionary))
 ]
 
 { #category : #'*Typer' }
-RBMessageNode >> typTypeWithDiscovered: aSet [
-	(aSet includes: self)
-		ifTrue: [ ^ TypUnknownType instance ].
-	aSet add: self.
-	^ self typTypeForResultWithDiscovered: aSet
+RBMessageNode >> typTypeWithDiscovered: aDictionary [
+	^ aDictionary at: self ifAbsentPut: [ self typTypeForResultWithDiscovered: aDictionary ]
 ]
