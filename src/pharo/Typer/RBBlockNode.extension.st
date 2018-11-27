@@ -14,7 +14,7 @@ RBBlockNode >> typTypeForArgumentNamed: aSymbol withDiscovered: aSet [
 					i > 0
 						ifTrue: [ types increment: (e typTypeForArgumentAt: i withDiscovered: aSet) ]
 						ifFalse: [ types increment: TypUnknownType instance ].
-					types ] ]) typAsUnionType
+					types ] ]) typAsType
 ]
 
 { #category : #'*Typer' }

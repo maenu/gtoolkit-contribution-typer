@@ -23,8 +23,8 @@ Object class >> typStaInstanceMethodResolvers [
 	resolvers
 		add:
 			(TypNonParametricMethodResolver new
-				receiverType: self class typAsType;
-				selector: #new;
+				receiverType: self typAsType;
+				selector: #yourself;
 				argumentTypes: {};
 				resultType: self typAsType;
 				yourself).

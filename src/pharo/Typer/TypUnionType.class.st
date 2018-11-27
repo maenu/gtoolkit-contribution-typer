@@ -37,13 +37,22 @@ TypUnionType >> asClass [
 	^ self superType asClass
 ]
 
-{ #category : #converting }
+{ #category : #'as yet unclassified' }
 TypUnionType >> asType [
-	| remains |
+	| remains current nullable_ |
+	(weights includesKey: TypUnknownType instance)
+		ifTrue: [ ^ self ].
 	remains := weights keys asSet copy.
+	nullable_ := remains includes: TypNilType instance.
 	remains remove: TypNilType instance ifAbsent: [  ].
-	remains ifEmpty: [ ^ TypUnknownType instance ].
-	^ remains typAsCompatibleType
+	remains ifEmpty: [ ^ TypNilType instance ].
+	remains size = 1
+		ifTrue: [ current := remains anyOne.
+			nullable_
+				ifTrue: [ current := current copy.
+					current nullable: true.
+					^ current ] ].
+	^ self
 ]
 
 { #category : #enumerating }
@@ -146,15 +155,27 @@ TypUnionType >> summary [
 
 { #category : #accessing }
 TypUnionType >> superType [
-	| remains nullable_ union |
+	| remains nullable_ current |
 	remains := weights keys asSet copy.
+	remains remove: TypUnknownType instance ifAbsent: [  ].
+	remains ifEmpty: [ ^ TypUnknownType instance ].
 	nullable_ := remains includes: TypNilType instance.
 	remains remove: TypNilType instance ifAbsent: [  ].
-	union := remains
-		ifEmpty: [ TypUnknownType instance ]
-		ifNotEmpty: [ remains typAsCompatibleType ].
-	union nullable: nullable_.
-	^ union
+	remains ifEmpty: [ ^ TypNilType instance ].
+	current := remains anyOne.
+	remains remove: current.
+	[ remains isEmpty ]
+		whileFalse: [ | next common |
+			next := remains anyOne.
+			remains remove: next.
+			common := current withAllSuperTypes detect: [ :e | next <= e ].
+			common == current
+				ifFalse: [ current := common.
+					remains add: current ] ].
+	nullable_
+		ifTrue: [ current := current copy.
+			current nullable: true ].
+	^ current
 ]
 
 { #category : #accessing }

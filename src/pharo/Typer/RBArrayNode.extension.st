@@ -4,6 +4,6 @@ Extension { #name : #RBArrayNode }
 RBArrayNode >> typTypeWithDiscovered: aSet [
 	^ TypParametricType new
 		clazz: Array;
-		parameters: {(self statements collect: [ :e | e typTypeWithDiscovered: aSet ]) typAsUnionType};
+		parameters: {(self statements collect: [ :e | e typTypeWithDiscovered: aSet ]) typAsType};
 		yourself
 ]

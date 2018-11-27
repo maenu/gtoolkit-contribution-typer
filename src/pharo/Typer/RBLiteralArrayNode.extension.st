@@ -7,6 +7,6 @@ RBLiteralArrayNode >> typTypeWithDiscovered: aSet [
 	aSet add: self.
 	^ TypParametricType new
 		clazz: Array;
-		parameters: {((self contents collect: [ :e | e typTypeWithDiscovered: aSet ])) typAsUnionType};
+		parameters: {((self contents collect: [ :e | e typTypeWithDiscovered: aSet ])) typAsType};
 		yourself
 ]
