@@ -6,11 +6,11 @@ Object class >> typStaClassMethodResolvers [
 	resolvers := OrderedCollection new.
 	resolvers
 		add:
-			(TypNonParametricMethodResolver new
+			(TypMethodResolver new
 				receiverType: self class typAsType;
 				selector: #new;
-				argumentTypes: {};
-				resultType: self typAsType;
+				argumentTypes: [ {} ];
+				resultType: [ :r :a | self typAsType ];
 				yourself).
 	resolvers addAll: super typStaInstanceMethodResolvers.
 	^ resolvers
@@ -22,11 +22,11 @@ Object class >> typStaInstanceMethodResolvers [
 	resolvers := OrderedCollection new.
 	resolvers
 		add:
-			(TypNonParametricMethodResolver new
+			(TypMethodResolver new
 				receiverType: self typAsType;
 				selector: #yourself;
-				argumentTypes: {};
-				resultType: self typAsType;
+				argumentTypes: [ {} ];
+				resultType: [ self typAsType ];
 				yourself).
 	resolvers addAll: super typStaInstanceMethodResolvers.
 	^ resolvers

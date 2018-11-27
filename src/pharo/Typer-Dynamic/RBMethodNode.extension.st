@@ -2,11 +2,14 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynAsMethodResolver [
-	^ TypNonParametricMethodResolver new
+	| arguments_ result |
+	arguments_ := (self method numArgs timesCollect: [ :i | self typDynTypeForArgumentAt: i ]).
+	result := self typDynTypeForResult.
+	^ TypMethodResolver new
 		receiverType: self method methodClass typAsType;
 		selector: self method selector;
-		argumentTypes: (self method numArgs timesCollect: [ :i | self typDynTypeForArgumentAt: i ]);
-		resultType: self typDynTypeForResult;
+		argumentTypes: [ arguments_ ];
+		resultType: [ result ];
 		yourself
 ]
 

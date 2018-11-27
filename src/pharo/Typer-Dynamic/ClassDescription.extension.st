@@ -7,10 +7,10 @@ ClassDescription >> typDynAsClassInstanceVariableResolvers [
 	(self instanceSide withAllSuperclasses flatCollect: [ :e | e class methods ]) do: [ :e | e ast typDynTypesForInstanceVariables associationsDo: [ :f | (types at: f key) addAll: f value ] ].
 	^ types associations
 		collect: [ :e | 
-			TypNonParametricVariableResolver new
+			TypVariableResolver new
 				receiverType: self classSide typAsType;
 				selector: e key;
-				type: e value;
+				type: [ e value ];
 				yourself ]
 ]
 
@@ -21,10 +21,10 @@ ClassDescription >> typDynAsClassVariableResolvers [
 	((self instanceSide withAllSuperclasses flatCollect: #methods) , (self classSide withAllSuperclasses flatCollect: #methods)) asSet do: [ :e | e ast typDynTypesForClassVariables associationsDo: [ :f | (types at: f key) addAll: f value ] ].
 	^ types associations
 		collect: [ :e | 
-			TypNonParametricVariableResolver new
+			TypVariableResolver new
 				receiverType: self typAsType;
 				selector: e key;
-				type: e value;
+				type: [ e value ];
 				yourself ]
 ]
 
@@ -35,10 +35,10 @@ ClassDescription >> typDynAsInstanceVariableResolvers [
 	(self instanceSide withAllSuperclasses flatCollect: #methods) do: [ :e | e ast typDynTypesForInstanceVariables associationsDo: [ :f | (types at: f key) addAll: f value ] ].
 	^ types associations
 		collect: [ :e | 
-			TypNonParametricVariableResolver new
+			TypVariableResolver new
 				receiverType: self typAsType;
 				selector: e key;
-				type: e value;
+				type: [ e value ];
 				yourself ]
 ]
 
@@ -49,9 +49,9 @@ ClassDescription >> typDynAsPoolVariableResolvers [
 	((self instanceSide withAllSuperclasses flatCollect: #methods) , (self classSide withAllSuperclasses flatCollect: #methods)) asSet do: [ :e | e ast typDynTypesForPoolVariables associationsDo: [ :f | (types at: f key) addAll: f value ] ].
 	^ types associations
 		collect: [ :e | 
-			TypNonParametricVariableResolver new
+			TypVariableResolver new
 				receiverType: self typAsType;
 				selector: e key;
-				type: e value;
+				type: [ e value ];
 				yourself ]
 ]

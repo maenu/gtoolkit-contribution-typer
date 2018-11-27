@@ -4,6 +4,6 @@ Extension { #name : #RBArrayNode }
 RBArrayNode >> typTypeRecursiveWithDiscovered: aDictionary [
 	^ TypParametricType new
 		clazz: Array;
-		parameters: {(self statements collect: [ :e | e typTypeWithDiscovered: aDictionary ]) typAsType};
+		parameters: {(statements ifEmpty: [ TypUnknownType instance ] ifNotEmpty: [ (statements collect: [ :e | e typTypeWithDiscovered: aDictionary ]) typAsType ])};
 		yourself
 ]

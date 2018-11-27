@@ -1,17 +1,42 @@
 Extension { #name : #Collection }
 
 { #category : #'*Typer-Static-Pharo' }
+Collection class >> typStaClassMethodResolvers [
+	| resolvers |
+	resolvers := OrderedCollection new.
+	resolvers
+		add:
+			(TypMethodResolver new
+				receiverType: self class typAsType;
+				selector: #new;
+				argumentTypes: [ {  } ];
+				resultType: [ :r :a :s | 
+					TypParametricType new
+						clazz: self;
+						parameters: {TypUnknownType instance};
+						yourself ];
+				yourself).
+	resolvers addAll: super typStaInstanceMethodResolvers.
+	^ resolvers
+]
+
+{ #category : #'*Typer-Static-Pharo' }
 Collection class >> typStaInstanceMethodResolvers [
 	| resolvers |
 	resolvers := OrderedCollection new.
 	resolvers
 		add:
-			(TypParametricMethodResolver new
+			(TypMethodResolver new
 				receiverType: self typAsType;
 				selector: #do:;
 				argumentTypes: [ :r :i :a :s | 
 					a key isParametric
-						ifTrue: [ a key parameters at: i ]
+						ifTrue: [ TypParametricType new
+								clazz: BlockClosure;
+								parameters:
+									{(a key parameters at: i).
+									a key};
+								yourself ]
 						ifFalse: [ a value key ] ];
 				resultType: [ :r :a :s | a key ];
 				yourself).
