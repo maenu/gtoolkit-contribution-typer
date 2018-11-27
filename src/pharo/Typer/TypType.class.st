@@ -47,6 +47,16 @@ TypType >> asClass [
 	self subclassResponsibility
 ]
 
+{ #category : #converting }
+TypType >> asParametricType: someTypes [
+	self subclassResponsibility
+]
+
+{ #category : #converting }
+TypType >> canBeParametricType [
+	^ false
+]
+
 { #category : #testing }
 TypType >> hasClass [
 	^ false

@@ -12,6 +12,16 @@ TypNilType class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
+{ #category : #converting }
+TypNilType >> asParametricType: someTypes [
+	TypCannotBeParametricTypeError signal
+]
+
+{ #category : #converting }
+TypNilType >> canBeParametricType [
+	^ false
+]
+
 { #category : #accessing }
 TypNilType >> hasSuperType [
 	^ false

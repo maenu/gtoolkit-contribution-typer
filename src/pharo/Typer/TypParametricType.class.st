@@ -12,6 +12,17 @@ TypParametricType >> = anObject [
 	^ self == anObject or: [ self class = anObject class and: [ nullable = anObject nullable and: [ clazz = anObject clazz and: [ parameters = anObject parameters ] ] ] ]
 ]
 
+{ #category : #testing }
+TypParametricType >> asParametricType: someTypes [
+	| type parameters_ |
+	type := self copy.
+	parameters_ := OrderedCollection ofSize: (parameters size max: someTypes size).
+	parameters withIndexDo: [ :e :i | parameters_ at: i put: e ].
+	someTypes withIndexDo: [ :e :i | parameters_ at: i put: e ].
+	type parameters: parameters_.
+	^ type
+]
+
 { #category : #comparing }
 TypParametricType >> hash [
 	^ super hash bitXor: parameters hash

@@ -37,6 +37,21 @@ TypUnionType >> asClass [
 	^ self superType asClass
 ]
 
+{ #category : #converting }
+TypUnionType >> asParametricType: someTypes [
+	| type |
+	type := self copy.
+	type weights removeAll.
+	weights associations
+		do: [ :e | 
+			| f |
+			f := e key.
+			f canBeParametricType
+				ifTrue: [ f := f asParametricType: someTypes ].
+			type weights at: f put: e value ].
+	^ type
+]
+
 { #category : #'as yet unclassified' }
 TypUnionType >> asType [
 	| remains current nullable_ |
@@ -53,6 +68,11 @@ TypUnionType >> asType [
 					current nullable: true ].
 			^ current ].
 	^ self
+]
+
+{ #category : #converting }
+TypUnionType >> canBeParametricType [
+	^ true
 ]
 
 { #category : #enumerating }

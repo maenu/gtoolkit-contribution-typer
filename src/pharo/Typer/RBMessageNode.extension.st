@@ -19,9 +19,12 @@ RBMessageNode >> typTypeForReceiverWithDiscovered: aDictionary [
 
 { #category : #'*Typer' }
 RBMessageNode >> typTypeForResultWithDiscovered: aDictionary [
-	| receiverType |
+	| receiverType resultType parameters |
 	receiverType := self typTypeForReceiverWithDiscovered: aDictionary.
-	^ TypMethodResolvers instance typeForResultOfMethod: receiverType -> (selector -> (self typKnownArgumentTypesWithDiscovered: aDictionary))
+	resultType := TypMethodResolvers instance typeForResultOfMethod: receiverType -> (selector -> (self typKnownArgumentTypesWithDiscovered: aDictionary)).
+	parameters := self typParseCommentParameters.
+	parameters ifNotEmpty: [ resultType := resultType asParametricType: parameters ].
+	^ resultType
 ]
 
 { #category : #'*Typer' }

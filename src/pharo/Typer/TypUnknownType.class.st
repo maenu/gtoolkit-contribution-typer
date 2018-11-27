@@ -18,6 +18,11 @@ TypUnknownType >> asClass [
 ]
 
 { #category : #accessing }
+TypUnknownType >> asParametricType: someTypes [
+	TypCannotBeParametricTypeError signal
+]
+
+{ #category : #accessing }
 TypUnknownType >> hasSuperType [
 	^ false
 ]

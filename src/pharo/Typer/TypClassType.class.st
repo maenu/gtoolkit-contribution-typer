@@ -17,6 +17,20 @@ TypClassType >> asClass [
 	^ clazz
 ]
 
+{ #category : #converting }
+TypClassType >> asParametricType: someTypes [
+	^ TypParametricType new
+		nullable: nullable;
+		clazz: clazz;
+		parameters: someTypes;
+		yourself
+]
+
+{ #category : #converting }
+TypClassType >> canBeParametricType [
+	^ true
+]
+
 { #category : #accessing }
 TypClassType >> clazz [
 	^ clazz
