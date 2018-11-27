@@ -19,7 +19,16 @@ TypUnknownType >> asClass [
 
 { #category : #accessing }
 TypUnknownType >> asParametricType: someTypes [
-	TypCannotBeParametricTypeError signal
+	^ TypParametricType new
+		nullable: nullable;
+		type: self;
+		parameters: {};
+		yourself
+]
+
+{ #category : #accessing }
+TypUnknownType >> canBeParametricType [
+	^ true
 ]
 
 { #category : #accessing }

@@ -17,7 +17,7 @@ TypUnionType >> , aClasses [
 
 { #category : #comparing }
 TypUnionType >> = anObject [
-	^ self == anObject or: [ self class = anObject class and: [ nullable = anObject nullable and: [ weights keys asSet = anObject weights keys asSet ] ] ]
+	^ self == anObject or: [ self class = anObject class and: [ nullable = anObject nullable and: [ weights = anObject weights ] ] ]
 ]
 
 { #category : #enumerating }

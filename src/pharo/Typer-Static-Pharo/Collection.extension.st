@@ -9,10 +9,10 @@ Collection class >> typStaClassMethodResolvers [
 			(TypMethodResolver new
 				receiverType: self class typAsType;
 				selector: #new;
-				argumentTypes: [ {  } ];
+				argumentTypes: [ {} ];
 				resultType: [ :r :a :s | 
 					TypParametricType new
-						clazz: self;
+						type: self typAsType;
 						parameters: {TypUnknownType instance};
 						yourself ];
 				yourself).
@@ -32,7 +32,7 @@ Collection class >> typStaInstanceMethodResolvers [
 				argumentTypes: [ :r :i :a :s | 
 					a key isParametric
 						ifTrue: [ TypParametricType new
-								clazz: BlockClosure;
+								type: BlockClosure typAsType;
 								parameters:
 									{(a key parameters at: i).
 									a key};

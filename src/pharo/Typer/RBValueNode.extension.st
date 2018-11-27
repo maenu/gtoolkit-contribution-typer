@@ -14,16 +14,16 @@ RBValueNode >> typParseCommentParameters [
 RBValueNode >> typParseType: aString [
 	| clazz i |
 	i := aString indexOf: $< ifAbsent: [ aString size ].
-	clazz := (aString copyFrom: 1 to: i) asClass.
+	clazz := aString copyFrom: 1 to: i.
 	^ i < aString size
 		ifTrue: [ | parameters |
 			parameters := ($, split: (aString copyFrom: i + 1)) collect: [ :f | self typParseType: f ].
 			TypParametricType new
-				clazz: clazz;
+				type: clazz asClass typAsType;
 				parameters: parameters;
 				yourself ]
 		ifFalse: [ TypClassType new
-				clazz: clazz;
+				clazz: clazz asSymbol;
 				yourself ]
 ]
 

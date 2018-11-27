@@ -14,14 +14,16 @@ TypClassType >> = anObject [
 
 { #category : #converting }
 TypClassType >> asClass [
-	^ clazz
+	(clazz endsWith: ' class')
+		ifFalse: [ ^ clazz asClass ].
+	^ (clazz copyFrom: 1 to: clazz size - ' class' size) asClass classSide
 ]
 
 { #category : #converting }
 TypClassType >> asParametricType: someTypes [
 	^ TypParametricType new
 		nullable: nullable;
-		clazz: clazz;
+		type: self;
 		parameters: someTypes;
 		yourself
 ]
@@ -48,7 +50,7 @@ TypClassType >> hasClass [
 
 { #category : #'as yet unclassified' }
 TypClassType >> hasSuperType [
-	^ clazz superclass isNotNil or: [ nullable ]
+	^ self asClass superclass isNotNil or: [ nullable ]
 ]
 
 { #category : #comparing }
@@ -59,12 +61,12 @@ TypClassType >> hash [
 { #category : #printing }
 TypClassType >> printOn: aStream [
 	super printOn: aStream.
-	clazz printOn: aStream
+	aStream << clazz asString
 ]
 
 { #category : #'as yet unclassified' }
 TypClassType >> superType [
-	^ clazz superclass
+	^ self asClass superclass
 		ifNil: [ nullable
 				ifTrue: [ TypNilType instance ]
 				ifFalse: [ TypNoSuperTypeError signal ] ]

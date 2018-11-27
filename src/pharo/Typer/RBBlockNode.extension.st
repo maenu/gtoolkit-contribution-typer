@@ -1,65 +1,9 @@
 Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer' }
-RBBlockNode >> _typTypeForArgumentAt: anInteger withDiscovered: aSet [
-	| aSymbol |
-	self flag: 'finds types based on use of arg, which is useful for finding conflict, not determining types'.
-	^ (((self allChildren select: [ :e | e isArgument and: [ e name = aSymbol and: [ e parent isMessage or: [ e parent isReturn ] ] ] ]) collect: #parent)
-		collect: [ :e | 
-			e isReturn
-				ifTrue: [ e methodNode typTypeForResultWithDiscovered: aSet ]
-				ifFalse: [ | types i |
-					types := TypUnionType new.
-					(e receiver isArgument and: [ e receiver name = aSymbol ])
-						ifTrue: [ types increment: (e typTypeForReceiverWithDiscovered: aSet) ].
-					i := e arguments detectIndex: [ :f | f isArgument and: [ f name = aSymbol ] ] ifNone: [ 0 ].
-					i > 0
-						ifTrue: [ types increment: (e typTypeForArgumentAt: i withDiscovered: aSet) ]
-						ifFalse: [ types increment: TypUnknownType instance ].
-					types ] ]) typAsType
-]
-
-{ #category : #'*Typer' }
-RBBlockNode >> _typTypeForArgumentNamedInternal: aSymbol withDiscovered: aSet [
-	self flag: 'finds types based on use of arg, which is useful for finding conflict, not determining types'.
-	^ (((self allChildren select: [ :e | e isArgument and: [ e name = aSymbol and: [ e parent isMessage or: [ e parent isReturn ] ] ] ]) collect: #parent)
-		collect: [ :e | 
-			e isReturn
-				ifTrue: [ e methodNode typTypeForResultWithDiscovered: aSet ]
-				ifFalse: [ | types i |
-					types := TypUnionType new.
-					(e receiver isArgument and: [ e receiver name = aSymbol ])
-						ifTrue: [ types increment: (e typTypeForReceiverWithDiscovered: aSet) ].
-					i := e arguments detectIndex: [ :f | f isArgument and: [ f name = aSymbol ] ] ifNone: [ 0 ].
-					i > 0
-						ifTrue: [ types increment: (e typTypeForArgumentAt: i withDiscovered: aSet) ]
-						ifFalse: [ types increment: TypUnknownType instance ].
-					types ] ]) typAsType
-]
-
-{ #category : #'*Typer' }
-RBBlockNode >> _typTypeFromExternalUsageWithDiscovered: aSet [
-	| aSymbol |
-	self flag: 'finds types based on use of arg, which is useful for finding conflict, not determining types'.
-	^ (((self allChildren select: [ :e | e isArgument and: [ e name = aSymbol and: [ e parent isMessage or: [ e parent isReturn ] ] ] ]) collect: #parent)
-		collect: [ :e | 
-			e isReturn
-				ifTrue: [ e methodNode typTypeForResultWithDiscovered: aSet ]
-				ifFalse: [ | types i |
-					types := TypUnionType new.
-					(e receiver isArgument and: [ e receiver name = aSymbol ])
-						ifTrue: [ types increment: (e typTypeForReceiverWithDiscovered: aSet) ].
-					i := e arguments detectIndex: [ :f | f isArgument and: [ f name = aSymbol ] ] ifNone: [ 0 ].
-					i > 0
-						ifTrue: [ types increment: (e typTypeForArgumentAt: i withDiscovered: aSet) ]
-						ifFalse: [ types increment: TypUnknownType instance ].
-					types ] ]) typAsType
-]
-
-{ #category : #'*Typer' }
 RBBlockNode >> typTypeAsUnknownWithDiscovered: aDictionary [
 	^ TypParametricType new
-		clazz: BlockClosure;
+		type: BlockClosure typAsType;
 		parameters: (arguments collect: [ :e | e typTypeWithDiscovered: aDictionary ]) , {(self typTypeForResultWithDiscovered: aDictionary)};
 		yourself
 ]

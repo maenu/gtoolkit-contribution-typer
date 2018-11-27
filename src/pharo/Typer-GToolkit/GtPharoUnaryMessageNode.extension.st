@@ -8,8 +8,8 @@ GtPharoUnaryMessageNode >> typGtCompletionActionsFor: strategy in: anRbNode [
 		ifFalse: [ ^ #() ].
 	startingText := selectorPart value.
 	type := parent receiver typGtGuessType: strategy in: anRbNode receiver.
-	clazz := (type isKindOf: TypClassType)
-		ifTrue: [ type clazz ]
+	clazz := type hasClass
+		ifTrue: [ type asClass ]
 		ifFalse: [ Object ].
 	^ (strategy selectorsForReceiver: clazz matching: startingText) collect: [ :each | self actionForSelector: each startingWith: startingText at: index ]
 ]

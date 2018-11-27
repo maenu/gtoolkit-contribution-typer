@@ -30,7 +30,7 @@ TypNilType >> hasSuperType [
 { #category : #initialization }
 TypNilType >> initialize [
 	super initialize.
-	clazz := UndefinedObject
+	clazz := #UndefinedObject
 ]
 
 { #category : #testing }

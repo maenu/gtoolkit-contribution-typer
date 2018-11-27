@@ -1,7 +1,8 @@
 Class {
 	#name : #TypParametricType,
-	#superclass : #TypClassType,
+	#superclass : #TypType,
 	#instVars : [
+		'type',
 		'parameters'
 	],
 	#category : #'Typer-Core'
@@ -9,23 +10,38 @@ Class {
 
 { #category : #comparing }
 TypParametricType >> = anObject [
-	^ self == anObject or: [ self class = anObject class and: [ nullable = anObject nullable and: [ clazz = anObject clazz and: [ parameters = anObject parameters ] ] ] ]
+	^ self == anObject or: [ self class = anObject class and: [ nullable = anObject nullable and: [ type = anObject type and: [ parameters = anObject parameters ] ] ] ]
+]
+
+{ #category : #converting }
+TypParametricType >> asClass [
+	^ type asClass
 ]
 
 { #category : #testing }
 TypParametricType >> asParametricType: someTypes [
-	| type parameters_ |
-	type := self copy.
+	| copy parameters_ |
+	copy := self copy.
 	parameters_ := OrderedCollection ofSize: (parameters size max: someTypes size).
 	parameters withIndexDo: [ :e :i | parameters_ at: i put: e ].
 	someTypes withIndexDo: [ :e :i | parameters_ at: i put: e ].
-	type parameters: parameters_.
-	^ type
+	copy parameters: parameters_.
+	^ copy
+]
+
+{ #category : #comparing }
+TypParametricType >> canBeParametricType [
+	^ true
+]
+
+{ #category : #testing }
+TypParametricType >> hasSuperType [
+	^ type hasSuperType
 ]
 
 { #category : #comparing }
 TypParametricType >> hash [
-	^ super hash bitXor: parameters hash
+	^ (super hash bitXor: type hash) bitXor: parameters hash
 ]
 
 { #category : #initialization }
@@ -58,7 +74,26 @@ TypParametricType >> postCopy [
 { #category : #printing }
 TypParametricType >> printOn: aStream [
 	super printOn: aStream.
+	type printOn: aStream.
 	aStream << '< '.
 	aStream << (' , ' join: (parameters collect: #printString)).
 	aStream << ' >'
+]
+
+{ #category : #accessing }
+TypParametricType >> superType [
+	| copy |
+	copy := self copy.
+	copy type: type superType.
+	^ copy
+]
+
+{ #category : #accessing }
+TypParametricType >> type [
+	^ type
+]
+
+{ #category : #accessing }
+TypParametricType >> type: anObject [
+	type := anObject
 ]

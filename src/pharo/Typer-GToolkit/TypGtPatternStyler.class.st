@@ -15,7 +15,9 @@ TypGtPatternStyler >> extraStyle: aText ast: ast [
 { #category : #'as yet unclassified' }
 TypGtPatternStyler >> style: aText ast: ast [
 	source := aText.
-	self visitMethodNode: ast
+	[ self visitMethodNode: ast ]
+		on: Error
+		do: [ Halt now ]
 ]
 
 { #category : #visiting }
