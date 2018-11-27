@@ -20,7 +20,9 @@ TypPraExamples >> comment: aThing [
 	<typTypeArgument: 1 as: 'String'>
 	<typTypeResultAs: 'String'>
 	| o c i s |
-	o := Object new.
+	o := 10 atRandom > 5
+		ifTrue: [ Object new ]
+		ifFalse: [ Dictionary new ].
 	c := OrderedCollection new.	"typParameters Point"
 	i := thing.	"thing is instance variable"
 	s := self.
