@@ -90,16 +90,14 @@ RBBlockNode >> typTypeForResultWithDiscovered: aDictionary [
 ]
 
 { #category : #'*Typer' }
-RBBlockNode >> typTypeWithDiscovered: aDictionary [
-	^ aDictionary
-		at: self
-		ifAbsentPut: [ parent isAssignment
-				ifTrue: [ parent variable typTypeWithDiscovered: aDictionary ]
-				ifFalse: [ parent isMessage
-						ifTrue: [ parent receiver == self
-								ifTrue: [ self typTypeAsUnknownWithDiscovered: aDictionary ]
-								ifFalse: [ | i |
-									i := parent arguments detectIndex: [ :e | e == self ].
-									parent typTypeForArgumentAt: i withDiscovered: aDictionary ] ]
-						ifFalse: [ self typTypeAsUnknownWithDiscovered: aDictionary ] ] ]
+RBBlockNode >> typTypeRecursiveWithDiscovered: aDictionary [
+	| i |
+	parent isAssignment
+		ifTrue: [ ^ parent variable typTypeWithDiscovered: aDictionary ].
+	parent isMessage
+		ifTrue: [ parent receiver == self
+				ifTrue: [ ^ self typTypeAsUnknownWithDiscovered: aDictionary ].
+			i := parent arguments detectIndex: [ :e | e == self ].
+			^ parent typTypeForArgumentAt: i withDiscovered: aDictionary ].
+	^ self typTypeAsUnknownWithDiscovered: aDictionary
 ]

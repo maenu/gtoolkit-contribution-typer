@@ -1,6 +1,6 @@
 Extension { #name : #RBCascadeNode }
 
 { #category : #'*Typer' }
-RBCascadeNode >> typTypeWithDiscovered: aDictionary [
+RBCascadeNode >> typTypeRecursiveWithDiscovered: aDictionary [
 	^ messages last typTypeWithDiscovered: aDictionary
 ]

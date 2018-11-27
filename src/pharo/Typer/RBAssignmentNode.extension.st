@@ -1,6 +1,6 @@
 Extension { #name : #RBAssignmentNode }
 
 { #category : #'*Typer' }
-RBAssignmentNode >> typTypeWithDiscovered: aDictionary [
+RBAssignmentNode >> typTypeRecursiveWithDiscovered: aDictionary [
 	^ value typTypeWithDiscovered: aDictionary
 ]

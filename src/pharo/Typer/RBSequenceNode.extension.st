@@ -6,11 +6,17 @@ RBSequenceNode >> typType [
 ]
 
 { #category : #'*Typer' }
+RBSequenceNode >> typTypeRecursiveWithDiscovered: aDictionary [
+	| values |
+	values := statements select: #isValue.
+	values ifEmpty: [ ^ TypNilType instance ].
+	^ values last typTypeWithDiscovered: aDictionary
+]
+
+{ #category : #'*Typer' }
 RBSequenceNode >> typTypeWithDiscovered: aDictionary [
 	^ aDictionary
 		at: self
-		ifAbsentPut: [ | values |
-			values := statements select: #isValue.
-			values ifEmpty: [ ^ TypNilType instance ].
-			values last typTypeWithDiscovered: aDictionary ]
+		ifAbsentPut: [ aDictionary at: self put: TypUnknownType instance.
+			self typTypeRecursiveWithDiscovered: aDictionary ]
 ]

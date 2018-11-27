@@ -25,6 +25,6 @@ RBMessageNode >> typTypeForResultWithDiscovered: aDictionary [
 ]
 
 { #category : #'*Typer' }
-RBMessageNode >> typTypeWithDiscovered: aDictionary [
-	^ aDictionary at: self ifAbsentPut: [ self typTypeForResultWithDiscovered: aDictionary ]
+RBMessageNode >> typTypeRecursiveWithDiscovered: aDictionary [
+	^ self typTypeForResultWithDiscovered: aDictionary
 ]

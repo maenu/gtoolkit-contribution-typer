@@ -6,6 +6,14 @@ RBValueNode >> typType [
 ]
 
 { #category : #'*Typer' }
+RBValueNode >> typTypeRecursiveWithDiscovered: aDictionary [
+	^ Object typAsType
+]
+
+{ #category : #'*Typer' }
 RBValueNode >> typTypeWithDiscovered: aDictionary [
-	^ aDictionary at: self ifAbsentPut: [ Object typAsType ]
+	^ aDictionary
+		at: self
+		ifAbsentPut: [ aDictionary at: self put: TypUnknownType instance.
+			self typTypeRecursiveWithDiscovered: aDictionary ]
 ]
