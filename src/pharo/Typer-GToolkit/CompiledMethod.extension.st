@@ -14,6 +14,6 @@ CompiledMethod >> typGtSourceFor: aView [
 			coder := TypGtMethodCoder forMethod: self.
 			coder expanded: true.
 			coder addOns addPatternStyler: TypGtPatternStyler new.
-			coder addOns addBodyStyler: TypGtBodyStyler new.
+			coder addOns addBodyStyler: TypGtDeclarationBodyStyler new.
 			coder asElement ]
 ]
