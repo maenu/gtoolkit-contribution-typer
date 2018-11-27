@@ -3,7 +3,7 @@ Extension { #name : #RBGlobalNode }
 { #category : #'*Typer' }
 RBGlobalNode >> typTypeRecursiveWithDiscovered: aDictionary [
 	| type clazz |
-	self binding isGlobalClassNameBinding
+	(self binding isGlobalClassNameBinding or: [ self binding isGlobalVariable ])
 		ifTrue: [ ^ self binding value class typAsType ].
 	clazz := self methodNode methodClass.
 	"need to ensure getClass can be called before checking pool"
