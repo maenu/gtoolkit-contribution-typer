@@ -37,7 +37,12 @@ Collection class >> typStaInstanceMethodResolvers [
 									{(a key parameters at: i).
 									a key};
 								yourself ]
-						ifFalse: [ a value key ] ];
+						ifFalse: [ TypParametricType new
+								type: BlockClosure typAsType;
+								parameters:
+									{TypUnknownType instance.
+									a key};
+								yourself ] ];
 				resultType: [ :r :a :s | a key ];
 				yourself).
 	resolvers addAll: super typStaInstanceMethodResolvers.
