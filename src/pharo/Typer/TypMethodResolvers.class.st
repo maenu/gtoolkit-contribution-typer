@@ -11,5 +11,13 @@ TypMethodResolvers >> typeForArgumentAt: anInteger ofMethod: anAssociation [
 
 { #category : #'as yet unclassified' }
 TypMethodResolvers >> typeForResultOfMethod: anAssociation [
-	^ self typeFor: anAssociation using: [ :r :a | r resultTypeFor: anAssociation resolvedBy: a ]
+	| type |
+	type := self typeFor: anAssociation using: [ :r :a | r resultTypeFor: anAssociation resolvedBy: a ].
+	(type isUnknown and: [ anAssociation key hasClass ])
+		ifTrue: [ "assume self return if no explicit return"
+			| method |
+			method := anAssociation key asClass lookupSelector: anAssociation value key.
+			(method isNotNil and: [ method isAbstract not and: [ (method ast allChildren select: #isReturn) isEmpty ] ])
+				ifTrue: [ ^ anAssociation key ] ].
+	^ type
 ]

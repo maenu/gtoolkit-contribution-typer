@@ -66,6 +66,16 @@ TypParametricType >> isParametric [
 ]
 
 { #category : #accessing }
+TypParametricType >> nullable [
+	^ type nullable
+]
+
+{ #category : #accessing }
+TypParametricType >> nullable: anObject [
+	type nullable: anObject
+]
+
+{ #category : #accessing }
 TypParametricType >> parameters [
 	^ parameters
 ]

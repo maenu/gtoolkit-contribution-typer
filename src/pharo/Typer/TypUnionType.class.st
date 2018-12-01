@@ -8,10 +8,12 @@ Class {
 }
 
 { #category : #copying }
-TypUnionType >> , aClasses [
+TypUnionType >> , aType [
+	<typTypeArgument: 1 as: 'TypUnionType<E>'>
+	<typTypeResultAs: 'TypUnionType<E>'>
 	| copy |
 	copy := self copy.
-	aClasses do: [ :e | copy add: e ].
+	aType do: [ :e | copy add: e ].
 	^ copy
 ]
 
@@ -22,6 +24,7 @@ TypUnionType >> = anObject [
 
 { #category : #enumerating }
 TypUnionType >> add: anAssociation [
+	<typTypeArgument: 1 as: 'Association<E,Integer>'>
 	| n |
 	n := weights at: anAssociation key ifAbsentPut: [ 0 ].
 	^ weights at: anAssociation key put: n + anAssociation value
@@ -29,6 +32,7 @@ TypUnionType >> add: anAssociation [
 
 { #category : #enumerating }
 TypUnionType >> addAll: aTypes [
+	<typTypeArgument: 1 as: 'TypUnionType<E>'>
 	^ aTypes do: [ :e | self add: e ]
 ]
 
@@ -52,8 +56,9 @@ TypUnionType >> asParametricType: someTypes [
 	^ type
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypUnionType >> asType [
+	<typTypeResultAs: 'TypType'>
 	| remains current nullable_ |
 	(weights includesKey: TypUnknownType instance)
 		ifTrue: [ ^ self ].
@@ -77,6 +82,7 @@ TypUnionType >> canBeParametricType [
 
 { #category : #enumerating }
 TypUnionType >> collect: aBlock [
+	<typTypeArgument: 1 as: 'BlockClosure<Association<E,Integer>,?>'>
 	| copy |
 	copy := TypUnionType new.
 	self do: [ :e | copy add: (aBlock cull: e) ].
@@ -86,18 +92,6 @@ TypUnionType >> collect: aBlock [
 { #category : #enumerating }
 TypUnionType >> do: aBlock [
 	weights associationsDo: aBlock
-]
-
-{ #category : #'as yet unclassified' }
-TypUnionType >> gtInspectorSummaryIn: aComposite [
-	<gtInspectorPresentationOrder: 1>
-	^ self summary gtInspectorItemsIn: aComposite
-]
-
-{ #category : #'as yet unclassified' }
-TypUnionType >> gtItemsFor: aView [
-	<gtView>
-	^ self summary gtItemsFor: aView
 ]
 
 { #category : #testing }
@@ -121,6 +115,7 @@ TypUnionType >> increment: anObject [
 
 { #category : #accessing }
 TypUnionType >> initialize [
+	<typTypeVariable: 'weights' as: 'Dictionary<?,Integer>'>
 	super initialize.
 	weights := Dictionary new
 ]
@@ -196,6 +191,12 @@ TypUnionType >> superType [
 		ifTrue: [ current := current copy.
 			current nullable: true ].
 	^ current
+]
+
+{ #category : #'as yet unclassified' }
+TypUnionType >> typGtItemsFor: aView [
+	<gtView>
+	^ self summary gtItemsFor: aView
 ]
 
 { #category : #accessing }

@@ -1,6 +1,6 @@
 Class {
 	#name : #TypNilType,
-	#superclass : #TypClassType,
+	#superclass : #TypNamedType,
 	#classInstVars : [
 		'instance'
 	],
@@ -30,7 +30,7 @@ TypNilType >> hasSuperType [
 { #category : #initialization }
 TypNilType >> initialize [
 	super initialize.
-	clazz := #UndefinedObject
+	name := #UndefinedObject
 ]
 
 { #category : #testing }

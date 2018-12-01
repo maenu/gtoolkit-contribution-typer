@@ -2,7 +2,7 @@ Extension { #name : #ClassDescription }
 
 { #category : #'*Typer' }
 ClassDescription >> typAsType [
-	^ TypClassType new
-		clazz: self name asSymbol;
+	^ TypNamedType new
+		name: self name asSymbol;
 		yourself
 ]
