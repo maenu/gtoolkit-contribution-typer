@@ -56,6 +56,8 @@ TypParametricType >> hash [
 
 { #category : #initialization }
 TypParametricType >> initialize [
+	<typTypeVariable: 'type' as: 'TypType'>
+	<typTypeVariable: 'parameters' as: 'OrderedCollection<TypType>'>
 	super initialize.
 	parameters := OrderedCollection new
 ]
@@ -77,11 +79,13 @@ TypParametricType >> nullable: anObject [
 
 { #category : #accessing }
 TypParametricType >> parameters [
+	<typTypeResultAs: 'OrderedCollection<TypType>'>
 	^ parameters
 ]
 
 { #category : #accessing }
 TypParametricType >> parameters: anObject [
+	<typTypeArgument: 1 as: 'OrderedCollection<TypType>'>
 	parameters := anObject
 ]
 
@@ -110,10 +114,12 @@ TypParametricType >> superType [
 
 { #category : #accessing }
 TypParametricType >> type [
+	<typTypeResultAs: 'TypType'>
 	^ type
 ]
 
 { #category : #accessing }
 TypParametricType >> type: anObject [
+	<typTypeArgument: 1 as: 'TypType'>
 	type := anObject
 ]

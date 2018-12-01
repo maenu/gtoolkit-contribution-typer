@@ -98,6 +98,7 @@ TypType >> hash [
 
 { #category : #initialization }
 TypType >> initialize [
+	<typTypeVariable: 'nullable' as: 'Boolean'>
 	super initialize.
 	nullable := false
 ]
