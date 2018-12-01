@@ -5,7 +5,7 @@ CompiledMethod >> typGtSourceFor: aView [
 	<gtView>
 	^ aView explicit
 		title: 'Source (Typer)' translated;
-		priority: 1;
+		priority: -1;
 		actionStencil: [ BrButton new
 				look: BrGlamorousButtonExteriorRectangularLook + BrGlamorousButtonIconLook;
 				icon: BrGlamorousIcons browse asElement;

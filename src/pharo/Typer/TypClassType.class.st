@@ -35,11 +35,13 @@ TypClassType >> canBeParametricType [
 
 { #category : #accessing }
 TypClassType >> clazz [
+	<typTypeResultAs: 'String'>
 	^ clazz
 ]
 
 { #category : #accessing }
 TypClassType >> clazz: anObject [
+	<typTypeArgument: 1 as: 'String'>
 	clazz := anObject
 ]
 
