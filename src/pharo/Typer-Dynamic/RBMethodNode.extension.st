@@ -14,8 +14,32 @@ RBMethodNode >> typDynAsMethodResolver [
 ]
 
 { #category : #'*Typer-Dynamic' }
+RBMethodNode >> typDynAssignNodes [
+	^ self assignmentNodes reject: [ :e | e variable isTemp ]
+]
+
+{ #category : #'*Typer-Dynamic' }
+RBMethodNode >> typDynInstall [
+	| link |
+	self typDynUninstall.
+	link := MetaLink new
+		metaObject: #node;
+		selector: #typDynInvokeIn:;
+		arguments: #(context).
+	self propertyAt: #typDyn put: true.
+	self propertyAt: #typDynMonitor put: Monitor new.
+	self propertyAt: #typDynInvocations put: TypUnionType new.
+	self propertyAt: #typDynLink put: link.
+	self link: link.
+	self typDynAssignNodes do: #typDynInstall.
+	self typDynReturnNodes do: #typDynInstall.
+	self method reflectiveMethod compileAndInstallCompiledMethod.
+	^ self method ast
+]
+
+{ #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynInvocations [
-	^ self propertyAt: #typDynInvocations ifAbsentPut: [ TypUnionType new ]
+	^ self propertyAt: #typDynInvocations
 ]
 
 { #category : #'*Typer-Dynamic' }
@@ -32,6 +56,16 @@ RBMethodNode >> typDynInvokeIn: aContext [
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynIsCovered [
 	^ self hasProperty: #typDyn
+]
+
+{ #category : #'*Typer-Dynamic' }
+RBMethodNode >> typDynMonitor [
+	^ self propertyAt: #typDynMonitor
+]
+
+{ #category : #'*Typer-Dynamic' }
+RBMethodNode >> typDynReturnNodes [
+	^ self allChildren select: #isReturn
 ]
 
 { #category : #'*Typer-Dynamic' }
@@ -66,6 +100,15 @@ RBMethodNode >> typDynTypesForVariablesSelectedWith: aBlock [
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynUninstall [
-	super typDynUninstall.
-	self removeProperty: #typDynInvocations ifAbsent: [  ]
+	self removeProperty: #typDyn ifAbsent: [  ].
+	self removeProperty: #typDynMonitor ifAbsent: [  ].
+	self removeProperty: #typDynInvocations ifAbsent: [  ].
+	self
+		propertyAt: #typDynLink
+		ifPresent: [ :e | 
+			self removeProperty: #typDynLink ifAbsent: [  ].
+			self removeLink: e ]
+		ifAbsent: [  ].
+	self typDynAssignNodes do: #typDynUninstall.
+	self typDynReturnNodes do: #typDynUninstall
 ]

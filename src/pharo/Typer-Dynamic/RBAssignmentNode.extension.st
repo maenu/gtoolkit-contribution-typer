@@ -13,7 +13,33 @@ RBAssignmentNode >> typDynAssigns [
 ]
 
 { #category : #'*Typer-Dynamic' }
+RBAssignmentNode >> typDynInstall [
+	| link |
+	self typDynUninstall.
+	link := MetaLink new
+		metaObject: #node;
+		selector: #typDynAssign:;
+		control: #after;
+		arguments: #(value).
+	self propertyAt: #typDynMonitor put: Monitor new.
+	self propertyAt: #typDynAssigns put: TypUnionType new.
+	self propertyAt: #typDynLink put: link.
+	self link: link
+]
+
+{ #category : #'*Typer-Dynamic' }
+RBAssignmentNode >> typDynMonitor [
+	^ self propertyAt: #typDynMonitor
+]
+
+{ #category : #'*Typer-Dynamic' }
 RBAssignmentNode >> typDynUninstall [
-	super typDynUninstall.
-	self removeProperty: #typDynAssigns ifAbsent: [  ]
+	self removeProperty: #typDynMonitor ifAbsent: [  ].
+	self removeProperty: #typDynAssigns ifAbsent: [  ].
+	self
+		propertyAt: #typDynLink
+		ifPresent: [ :e | 
+			self removeProperty: #typDynLink ifAbsent: [  ].
+			self removeLink: e ]
+		ifAbsent: [  ]
 ]
