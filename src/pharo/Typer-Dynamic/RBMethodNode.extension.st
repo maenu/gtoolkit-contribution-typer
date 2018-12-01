@@ -8,7 +8,7 @@ RBMethodNode >> typDynAsMethodResolver [
 	^ TypMethodResolver new
 		receiverType: self method methodClass typAsType;
 		selector: self method selector;
-		argumentTypes: [ arguments_ ];
+		argumentTypes: [ :r :i | arguments_ at: i ];
 		resultType: [ result ];
 		yourself
 ]

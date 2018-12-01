@@ -18,9 +18,9 @@ TypDynExamples >> neoJsonCore [
 				do: [ :e | e suite run: testResult ] ].
 	TypMethodResolvers instance resolvers
 		removeAll;
-		add: association value key.
+		add: association key value.
 	TypVariableResolvers instance resolvers
 		removeAll;
-		add: association value value.
+		add: association value.
 	^ testResult -> #'Neo-JSON-Tests' asPackage methods
 ]
