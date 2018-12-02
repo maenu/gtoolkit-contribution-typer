@@ -27,7 +27,7 @@ TypParametricType >> asNonParametricType [
 TypParametricType >> asParametricType: someTypes [
 	| copy parameters_ |
 	copy := self copy.
-	parameters_ := OrderedCollection ofSize: (parameters size max: someTypes size).
+	parameters_ := (OrderedCollection ofSize: (parameters size max: someTypes size)) "typParameters TypType".
 	parameters withIndexDo: [ :e :i | parameters_ at: i put: e ].
 	someTypes withIndexDo: [ :e :i | parameters_ at: i put: e ].
 	copy parameters: parameters_.

@@ -20,8 +20,8 @@ TypUnknownType >> asClass [
 { #category : #accessing }
 TypUnknownType >> asParametricType: someTypes [
 	^ TypParametricType new
+		type: self copy;
 		nullable: nullable;
-		type: self;
 		parameters: {};
 		yourself
 ]

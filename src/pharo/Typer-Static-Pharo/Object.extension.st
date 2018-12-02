@@ -9,8 +9,8 @@ Object class >> typStaClassMethodResolvers [
 			(TypMethodResolver new
 				receiverType: self class typAsType;
 				selector: #new;
-				argumentTypes: [ {} ];
-				resultType: [ :r :a | self typAsType ];
+				argumentTypes: [ TypNoTypeError signal ];
+				resultType: [ self typAsType ];
 				yourself).
 	resolvers addAll: super typStaInstanceMethodResolvers.
 	^ resolvers
@@ -25,8 +25,16 @@ Object class >> typStaInstanceMethodResolvers [
 			(TypMethodResolver new
 				receiverType: self typAsType;
 				selector: #yourself;
-				argumentTypes: [ {} ];
-				resultType: [ self typAsType ];
+				argumentTypes: [ TypNoTypeError signal ];
+				resultType: [ :r :a | a key ];
+				yourself).
+	resolvers
+		add:
+			(TypMethodResolver new
+				receiverType: self typAsType;
+				selector: #copy;
+				argumentTypes: [ TypNoTypeError signal ];
+				resultType: [ :r :a | a key ];
 				yourself).
 	resolvers addAll: super typStaInstanceMethodResolvers.
 	^ resolvers

@@ -7,10 +7,18 @@ Class {
 	#category : #'Typer-Core'
 }
 
+{ #category : #'as yet unclassified' }
+TypUnionType class >> typAsType [
+	^ TypParametricType new
+		type: super typAsType;
+		parameters: {TypType typAsType};
+		yourself
+]
+
 { #category : #copying }
 TypUnionType >> , aType [
-	<typTypeArgument: 1 as: 'TypUnionType<E>'>
-	<typTypeResultAs: 'TypUnionType<E>'>
+	<typTypeArgument: 1 as: 'TypUnionType<TypType>'>
+	<typTypeResultAs: 'TypUnionType<TypType>'>
 	| copy |
 	copy := self copy.
 	aType do: [ :e | copy add: e ].
@@ -24,7 +32,8 @@ TypUnionType >> = anObject [
 
 { #category : #enumerating }
 TypUnionType >> add: anAssociation [
-	<typTypeArgument: 1 as: 'Association<E,Integer>'>
+	<typTypeArgument: 1 as: 'Association<TypType,Integer>'>
+	<typTypeResultAs: 'Integer'>
 	| n |
 	n := weights at: anAssociation key ifAbsentPut: [ 0 ].
 	^ weights at: anAssociation key put: n + anAssociation value
@@ -32,8 +41,8 @@ TypUnionType >> add: anAssociation [
 
 { #category : #enumerating }
 TypUnionType >> addAll: aTypes [
-	<typTypeArgument: 1 as: 'TypUnionType<E>'>
-	^ aTypes do: [ :e | self add: e ]
+	<typTypeArgument: 1 as: 'TypUnionType<TypType>'>
+	aTypes do: [ :e | self add: e ]
 ]
 
 { #category : #converting }
@@ -82,7 +91,8 @@ TypUnionType >> canBeParametricType [
 
 { #category : #enumerating }
 TypUnionType >> collect: aBlock [
-	<typTypeArgument: 1 as: 'BlockClosure<Association<E,Integer>,?>'>
+	<typTypeArgument: 1 as: 'BlockClosure<Association<TypType,Integer>,?>'>
+	<typTypeResultAs: 'TypUnionType<TypType>'>
 	| copy |
 	copy := TypUnionType new.
 	self do: [ :e | copy add: (aBlock cull: e) ].
@@ -91,6 +101,7 @@ TypUnionType >> collect: aBlock [
 
 { #category : #enumerating }
 TypUnionType >> do: aBlock [
+	<typTypeArgument: 1 as: 'BlockClosure<Association<TypType,Integer>,?>'>
 	weights associationsDo: aBlock
 ]
 
@@ -106,22 +117,25 @@ TypUnionType >> hash [
 
 { #category : #accessing }
 TypUnionType >> increment: anObject [
-	| n |
+	<typTypeArgument: 1 as: 'TypType'>
+	<typTypeResultAs: 'Integer'>
 	^ (anObject isKindOf: TypUnionType)
 		ifTrue: [ self addAll: anObject ]
-		ifFalse: [ n := weights at: anObject ifAbsentPut: [ 0 ].
+		ifFalse: [ | n |
+			n := weights at: anObject ifAbsentPut: [ 0 ].
 			weights at: anObject put: n + 1 ]
 ]
 
 { #category : #accessing }
 TypUnionType >> initialize [
-	<typTypeVariable: 'weights' as: 'Dictionary<?,Integer>'>
+	<typTypeVariable: 'weights' as: 'Dictionary<TypType,Integer>'>
 	super initialize.
 	weights := Dictionary new
 ]
 
 { #category : #testing }
 TypUnionType >> isEmpty [
+	<typTypeResultAs: 'Boolean'>
 	^ weights isEmpty
 ]
 
@@ -144,6 +158,8 @@ TypUnionType >> printOn: aStream [
 
 { #category : #enumerating }
 TypUnionType >> select: aBlock [
+	<typTypeArgument: 1 as: 'BlockClosure<Association<TypType,Integer>,Boolean>'>
+	<typTypeResultAs: 'TypUnionType'>
 	| copy |
 	copy := TypUnionType new.
 	weights
@@ -155,6 +171,7 @@ TypUnionType >> select: aBlock [
 
 { #category : #accessing }
 TypUnionType >> size [
+	<typTypeResultAs: 'Integer'>
 	^ weights isEmpty
 		ifTrue: [ 0 ]
 		ifFalse: [ weights sum ]
@@ -162,6 +179,7 @@ TypUnionType >> size [
 
 { #category : #initialization }
 TypUnionType >> summary [
+	<typTypeResultAs: 'OrderedDictionary<TypType,Integer>'>
 	| summary |
 	summary := weights associations copy.
 	summary sort: [ :a :b | a value > b value ].
@@ -193,18 +211,22 @@ TypUnionType >> superType [
 	^ current
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypUnionType >> typGtItemsFor: aView [
+	<typTypeArgument: 1 as: 'GtPhlowView'>
+	<typTypeResultAs: 'GtPhlowView'>
 	<gtView>
 	^ self summary gtItemsFor: aView
 ]
 
 { #category : #accessing }
 TypUnionType >> weights [
+	<typTypeResultAs: 'Dictionary<TypType,Integer>'>
 	^ weights
 ]
 
 { #category : #accessing }
 TypUnionType >> weights: anObject [
+	<typTypeArgument: 1 as: 'Dictionary<TypType,Integer>'>
 	weights := anObject
 ]

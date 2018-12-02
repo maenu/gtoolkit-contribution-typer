@@ -22,8 +22,8 @@ TypNamedType >> asClass [
 { #category : #converting }
 TypNamedType >> asParametricType: someTypes [
 	^ TypParametricType new
+		type: self copy;
 		nullable: nullable;
-		type: self;
 		parameters: someTypes;
 		yourself
 ]
@@ -45,7 +45,7 @@ TypNamedType >> hasClass [
 
 { #category : #'as yet unclassified' }
 TypNamedType >> hasSuperType [
-	^ self asClass superclass isNotNil or: [ nullable ]
+	^ nullable or: [ self hasClass and: [ self asClass superclass isNotNil ] ]
 ]
 
 { #category : #comparing }
