@@ -10,8 +10,9 @@ BlockClosure class >> typAsType [
 
 { #category : #'*Typer-Static-Pharo' }
 BlockClosure class >> typStaInstanceMethodResolvers [
+	<typTypeResultAs: 'OrderedCollection<TypMethodResolver>'>
 	| resolvers |
-	resolvers := OrderedCollection new.
+	resolvers := OrderedCollection new "typParameters TypMethodResolver".
 	resolvers
 		add:
 			(TypMethodResolver new

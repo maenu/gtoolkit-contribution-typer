@@ -2,8 +2,9 @@ Extension { #name : #OCLiteralVariable }
 
 { #category : #'*Typer-Static-Pharo' }
 OCLiteralVariable class >> typStaInstanceMethodResolvers [
+	<typTypeResultAs: 'OrderedCollection<TypMethodResolver>'>
 	| resolvers |
-	resolvers := OrderedCollection new.
+	resolvers := OrderedCollection new "typParameters TypMethodResolver".
 	resolvers
 		add:
 			(TypMethodResolver new

@@ -10,14 +10,15 @@ Collection class >> typAsType [
 
 { #category : #'*Typer-Static-Pharo' }
 Collection class >> typStaInstanceMethodResolvers [
+	<typTypeResultAs: 'OrderedCollection<TypMethodResolver>'>
 	| resolvers |
-	resolvers := OrderedCollection new.
+	resolvers := OrderedCollection new.	"typParameters TypMethodResolver"
 	resolvers
 		add:
 			(TypMethodResolver new
 				receiverType: self typAsType;
 				selector: #do:;
-				argumentTypes: [ :r :i :a :s | 
+				argumentTypes: [ :r :i :a | 
 					TypParametricType new
 						type: BlockClosure typAsType asNonParametricType;
 						parameters:
@@ -25,6 +26,22 @@ Collection class >> typStaInstanceMethodResolvers [
 							a receiverType};
 						yourself ];
 				resultType: [ :r :a | a receiverType ];
+				yourself);
+		add:
+			(TypMethodResolver new
+				receiverType: self typAsType;
+				selector: #inject:into:;
+				argumentTypes: [ :r :i :a | 
+					i = 1
+						ifTrue: [ a argumentTypes at: 1 ]
+						ifFalse: [ TypParametricType new
+								type: BlockClosure typAsType asNonParametricType;
+								parameters:
+									{(a argumentTypes at: 1).
+									(a receiverType parameters at: 1).
+									(a argumentTypes at: 1)};
+								yourself ] ];
+				resultType: [ :r :a | a argumentTypes at: 1 ];
 				yourself);
 		add:
 			(TypMethodResolver new
@@ -75,7 +92,7 @@ Collection class >> typStaInstanceMethodResolvers [
 			(TypMethodResolver new
 				receiverType: self typAsType;
 				selector: #sort:;
-				argumentTypes: [ :r :i :a :s | 
+				argumentTypes: [ :r :i :a | 
 					TypParametricType new
 						type: BlockClosure typAsType asNonParametricType;
 						parameters:
@@ -97,6 +114,26 @@ Collection class >> typStaInstanceMethodResolvers [
 							Boolean typAsType};
 						yourself ];
 				resultType: [ :r :a | a receiverType parameters at: 1 ];
+				yourself);
+		add:
+			(TypMethodResolver new
+				receiverType: self typAsType;
+				selector: #detect:ifNone:;
+				argumentTypes: [ :r :i :a | 
+					i = 1
+						ifTrue: [ TypParametricType new
+								type: BlockClosure typAsType asNonParametricType;
+								parameters:
+									{(a receiverType parameters at: 1).
+									Boolean typAsType};
+								yourself ]
+						ifFalse: [ TypParametricType new
+								type: BlockClosure typAsType asNonParametricType;
+								parameters:
+									{(a receiverType parameters at: 1).
+									TypUnknownType instance};
+								yourself ] ];
+				resultType: [ TypUnknownType instance ];
 				yourself);
 		add:
 			(TypMethodResolver new

@@ -2,6 +2,7 @@ Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Static' }
 ClassDescription >> typStaClassInstanceVariableResolver [
+	<typTypeResultAs: 'TypVariableResolver'>
 	^ TypVariableResolvers new
 		resolvers: self typStaClassInstanceVariableResolvers;
 		yourself
@@ -14,6 +15,7 @@ ClassDescription >> typStaClassInstanceVariableResolvers [
 
 { #category : #'*Typer-Static' }
 ClassDescription >> typStaClassMethodResolver [
+	<typTypeResultAs: 'TypMethodResolver'>
 	^ TypMethodResolvers new
 		resolvers: self typStaClassMethodResolvers;
 		yourself
@@ -21,11 +23,13 @@ ClassDescription >> typStaClassMethodResolver [
 
 { #category : #'*Typer-Static' }
 ClassDescription >> typStaClassMethodResolvers [
+	<typTypeResultAs: 'OrderedCollection<TypMethodResolver>'>
 	^ OrderedCollection new
 ]
 
 { #category : #'*Typer-Static' }
 ClassDescription >> typStaClassVariableResolver [
+	<typTypeResultAs: 'TypVariableResolver'>
 	^ TypVariableResolvers new
 		resolvers: self typStaClassVariableResolvers;
 		yourself
@@ -38,6 +42,7 @@ ClassDescription >> typStaClassVariableResolvers [
 
 { #category : #'*Typer-Static' }
 ClassDescription >> typStaInstanceMethodResolver [
+	<typTypeResultAs: 'TypMethodResolver'>
 	^ TypMethodResolvers new
 		resolvers: self typStaInstanceMethodResolvers;
 		yourself
@@ -50,6 +55,7 @@ ClassDescription >> typStaInstanceMethodResolvers [
 
 { #category : #'*Typer-Static' }
 ClassDescription >> typStaInstanceVariableResolver [
+	<typTypeResultAs: 'TypVariableResolver'>
 	^ TypVariableResolvers new
 		resolvers: self typStaInstanceVariableResolvers;
 		yourself
@@ -61,13 +67,17 @@ ClassDescription >> typStaInstanceVariableResolvers [
 ]
 
 { #category : #'*Typer-Static' }
-ClassDescription >> typStaResolvesClassInstanceVariable: anAssociation [
-	^ self typStaClassVariableResolver resolves: anAssociation
+ClassDescription >> typStaResolvesClassInstanceVariable: aVariableLookup [
+	<typTypeArgument: 1 as: 'TypVariableLookup'>
+	<typTypeResultAs: 'Boolean'>
+	^ self typStaClassVariableResolver resolves: aVariableLookup
 ]
 
 { #category : #'*Typer-Static' }
-ClassDescription >> typStaResolvesClassMethod: anAssociation [
-	^ self typStaClassMethodResolver resolves: anAssociation
+ClassDescription >> typStaResolvesClassMethod: aMethodLookup [
+	<typTypeArgument: 1 as: 'TypMethodLookup'>
+	<typTypeResultAs: 'Boolean'>
+	^ self typStaClassMethodResolver resolves: aMethodLookup
 ]
 
 { #category : #'*Typer-Static' }
@@ -76,11 +86,15 @@ ClassDescription >> typStaResolvesClassVariable: anAssociation [
 ]
 
 { #category : #'*Typer-Static' }
-ClassDescription >> typStaResolvesInstanceMethod: anAssociation [
-	^ self typStaInstanceMethodResolver resolves: anAssociation
+ClassDescription >> typStaResolvesInstanceMethod: aMethodLookup [
+	<typTypeArgument: 1 as: 'TypMethodLookup'>
+	<typTypeResultAs: 'Boolean'>
+	^ self typStaInstanceMethodResolver resolves: aMethodLookup
 ]
 
 { #category : #'*Typer-Static' }
-ClassDescription >> typStaResolvesInstanceVariable: anAssociation [
-	^ self typStaInstanceVariableResolver resolves: anAssociation
+ClassDescription >> typStaResolvesInstanceVariable: aVariableLookup [
+	<typTypeArgument: 1 as: 'TypVariableLookup'>
+	<typTypeResultAs: 'Boolean'>
+	^ self typStaInstanceVariableResolver resolves: aVariableLookup
 ]

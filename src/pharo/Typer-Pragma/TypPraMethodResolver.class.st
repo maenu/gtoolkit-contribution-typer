@@ -4,9 +4,9 @@ Class {
 	#category : #'Typer-Pragma-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypPraMethodResolver >> resolverFor: aLookup [
-	| clazz method argumentPragmas resultPragma argumentTypes resultType |
+	| clazz method argumentPragmas resultPragma "typCastAs !Pragma" argumentTypes "typParameters TypType" resultType "typCastAs TypType" |
 	self assert: [ self resolves: aLookup ].
 	clazz := aLookup receiverType asClass.
 	method := clazz methods detect: [ :e | e selector = aLookup selector ].

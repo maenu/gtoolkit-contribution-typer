@@ -2,8 +2,9 @@ Extension { #name : #RBArrayNode }
 
 { #category : #'*Typer-Static-Pharo' }
 RBArrayNode class >> typStaInstanceVariableResolvers [
+	<typTypeResultAs: 'OrderedCollection<TypVariableResolver>'>
 	| resolvers |
-	resolvers := OrderedCollection new.
+	resolvers := OrderedCollection new "typParameters TypVariableResolver".
 	resolvers
 		add:
 			(TypVariableResolver new

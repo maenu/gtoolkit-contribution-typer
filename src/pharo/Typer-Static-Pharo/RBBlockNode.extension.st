@@ -2,8 +2,9 @@ Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer-Static-Pharo' }
 RBBlockNode class >> typStaInstanceVariableResolvers [
+	<typTypeResultAs: 'OrderedCollection<TypVariableResolver>'>
 	| resolvers |
-	resolvers := OrderedCollection new.
+	resolvers := OrderedCollection new "typParameters TypVariableResolver".
 	resolvers
 		add:
 			(TypVariableResolver new

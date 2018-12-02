@@ -2,8 +2,9 @@ Extension { #name : #Object }
 
 { #category : #'*Typer-Static-Pharo' }
 Object class >> typStaClassMethodResolvers [
+	<typTypeResultAs: 'OrderedCollection<TypMethodResolver>'>
 	| resolvers |
-	resolvers := OrderedCollection new.
+	resolvers := OrderedCollection new "typParameters TypMethodResolver".
 	resolvers
 		add:
 			(TypMethodResolver new
@@ -18,8 +19,9 @@ Object class >> typStaClassMethodResolvers [
 
 { #category : #'*Typer-Static-Pharo' }
 Object class >> typStaInstanceMethodResolvers [
+	<typTypeResultAs: 'OrderedCollection<TypMethodResolver>'>
 	| resolvers |
-	resolvers := OrderedCollection new.
+	resolvers := OrderedCollection new "typParameters TypMethodResolver".
 	resolvers
 		add:
 			(TypMethodResolver new

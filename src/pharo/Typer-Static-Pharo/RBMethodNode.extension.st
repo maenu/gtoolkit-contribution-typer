@@ -2,8 +2,9 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Static-Pharo' }
 RBMethodNode class >> typStaInstanceMethodResolvers [
+	<typTypeResultAs: 'OrderedCollection<TypMethodResolver>'>
 	| resolvers |
-	resolvers := OrderedCollection new.
+	resolvers := OrderedCollection new "typParameters TypMethodResolver".
 	resolvers
 		add:
 			(TypMethodResolver new
@@ -27,8 +28,9 @@ RBMethodNode class >> typStaInstanceMethodResolvers [
 
 { #category : #'*Typer-Static-Pharo' }
 RBMethodNode class >> typStaInstanceVariableResolvers [
+	<typTypeResultAs: 'OrderedCollection<TypVariableResolver>'>
 	| resolvers |
-	resolvers := OrderedCollection new.
+	resolvers := OrderedCollection new "typParameters TypVariableResolver".
 	resolvers
 		add:
 			(TypVariableResolver new

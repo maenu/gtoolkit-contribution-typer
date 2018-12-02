@@ -2,15 +2,15 @@ Extension { #name : #Number }
 
 { #category : #'*Typer-Static-Pharo' }
 Number class >> typStaInstanceMethodResolvers [
+	<typTypeResultAs: 'OrderedCollection<TypMethodResolver>'>
 	| resolvers |
-	resolvers := OrderedCollection new.
+	resolvers := OrderedCollection new.	"typParameters TypMethodResolver"
 	resolvers
 		add:
 			(TypMethodResolver new
 				receiverType: self typAsType;
 				selector: #timesCollect:;
-				argumentTypes: [ :r :i :a | 
-					BlockClosure typAsType
+				argumentTypes: [ BlockClosure typAsType
 						asParametricType:
 							{Integer typAsType.
 							TypUnknownType instance} ];

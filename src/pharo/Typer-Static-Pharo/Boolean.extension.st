@@ -2,8 +2,9 @@ Extension { #name : #Boolean }
 
 { #category : #'*Typer-Static-Pharo' }
 Boolean class >> typStaInstanceMethodResolvers [
+	<typTypeResultAs: 'OrderedCollection<TypMethodResolver>'>
 	| resolvers |
-	resolvers := OrderedCollection new.
+	resolvers := OrderedCollection new "typParameters TypMethodResolver".
 	resolvers
 		add:
 			(TypMethodResolver new
@@ -28,8 +29,8 @@ Boolean class >> typStaInstanceMethodResolvers [
 				receiverType: self typAsType;
 				selector: #ifTrue:ifFalse:;
 				argumentTypes: [ :r :i :a | 
-					| argumentType resultType |
-					argumentType := a argumentTypes at: i.
+					| argumentType resultType "typCastAs TypType" |
+					argumentType := (a argumentTypes at: i).
 					resultType := (argumentType isParametric and: [ argumentType hasClass and: [ argumentType asClass == BlockClosure ] ])
 						ifTrue: [ argumentType parameters last ]
 						ifFalse: [ TypUnknownType instance ].

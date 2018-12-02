@@ -12,28 +12,29 @@ Dictionary class >> typAsType [
 
 { #category : #'*Typer-Static-Pharo' }
 Dictionary class >> typStaInstanceMethodResolvers [
+	<typTypeResultAs: 'OrderedCollection<TypMethodResolver>'>
 	| resolvers |
-	resolvers := OrderedCollection new.
+	resolvers := OrderedCollection new "typParameters TypMethodResolver".
 	resolvers
 		add:
 			(TypMethodResolver new
 				receiverType: self typAsType;
 				selector: #at:put:;
-				argumentTypes: [ :r :i :a :s | a receiverType parameters at: i ];
-				resultType: [ :r :a :s | a receiverType parameters at: 2 ];
+				argumentTypes: [ :r :i :a | a receiverType parameters at: i ];
+				resultType: [ :r :a | a receiverType parameters at: 2 ];
 				yourself);
 		add:
 			(TypMethodResolver new
 				receiverType: self typAsType;
 				selector: #at:ifAbsentPut:;
-				argumentTypes: [ :r :i :a :s | 
+				argumentTypes: [ :r :i :a | 
 					i = 1
 						ifTrue: [ a receiverType parameters at: 1 ]
 						ifFalse: [ TypParametricType new
 								type: BlockClosure typAsType asNonParametricType;
 								parameters: {(a receiverType parameters at: 2)};
 								yourself ] ];
-				resultType: [ :r :a :s | a receiverType parameters at: 2 ];
+				resultType: [ :r :a | a receiverType parameters at: 2 ];
 				yourself);
 		add:
 			(TypMethodResolver new
@@ -75,7 +76,7 @@ Dictionary class >> typStaInstanceMethodResolvers [
 				receiverType: self typAsType;
 				selector: #keys;
 				argumentTypes: [ TypNoTypeError signal ];
-				resultType: [ :r :a :s | 
+				resultType: [ :r :a | 
 					TypParametricType new
 						type: Set typAsType asNonParametricType;
 						parameters: {(a receiverType parameters at: 1)};

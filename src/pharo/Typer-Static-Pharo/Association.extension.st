@@ -12,22 +12,23 @@ Association class >> typAsType [
 
 { #category : #'*Typer-Static-Pharo' }
 Association class >> typStaInstanceMethodResolvers [
+	<typTypeResultAs: 'OrderedCollection<TypMethodResolver>'>
 	| resolvers |
-	resolvers := OrderedCollection new.
+	resolvers := OrderedCollection new "typParameters TypMethodResolver".
 	resolvers
 		add:
 			(TypMethodResolver new
 				receiverType: self typAsType;
 				selector: #key;
 				argumentTypes: [ TypNoTypeError signal ];
-				resultType: [ :r :a :s | a receiverType parameters at: 1 ];
+				resultType: [ :r :a | a receiverType parameters at: 1 ];
 				yourself);
 		add:
 			(TypMethodResolver new
 				receiverType: self typAsType;
 				selector: #value;
 				argumentTypes: [ TypNoTypeError signal ];
-				resultType: [ :r :a :s | a receiverType parameters at: 2 ];
+				resultType: [ :r :a | a receiverType parameters at: 2 ];
 				yourself).
 	resolvers addAll: super typStaInstanceMethodResolvers.
 	^ resolvers
