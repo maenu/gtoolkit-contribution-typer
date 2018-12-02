@@ -7,6 +7,12 @@ Class {
 	#category : #'Typer-Core'
 }
 
+{ #category : #initialization }
+TypVariableResolver >> initialize [
+	<typTypeVariable: 'type' as: 'TypType'>
+	super initialize
+]
+
 { #category : #'as yet unclassified' }
 TypVariableResolver >> resolves: anAssociation [
 	^ anAssociation key asNonParametricType = receiverType asNonParametricType and: [ anAssociation value = selector ]

@@ -17,6 +17,10 @@ RBValueNode >> typTypeWithDiscovered: aDictionary [
 		ifAbsentPut: [ | type parameters |
 			aDictionary at: self put: TypUnknownType instance.
 			type := self typTypeRecursiveWithDiscovered: aDictionary.
+			self comments
+				detect: #typIsCastAs
+				ifFound: [ :e | type := e typCastAs ]
+				ifNone: [ {} ].
 			parameters := self comments
 				detect: #typIsParameters
 				ifFound: [ :e | e typParameters ]

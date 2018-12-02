@@ -10,7 +10,7 @@ Class {
 { #category : #'as yet unclassified' }
 TypUnionType class >> typAsType [
 	^ TypParametricType new
-		type: super typAsType;
+		type: super typAsType asNonParametricType;
 		parameters: {TypType typAsType};
 		yourself
 ]
@@ -158,7 +158,7 @@ TypUnionType >> parameters [
 	keys
 		do: [ :e | 
 			e isParametric
-				ifTrue: [ e parameters withIndexDo: [ :f :i | (parameters at: i) increment: f ] ] ].
+				ifTrue: [ e "typCastAs TypParametricType" parameters withIndexDo: [ :f :i | (parameters at: i) increment: f ] ] ].
 	^ parameters collect: #asType
 ]
 

@@ -3,7 +3,7 @@ Extension { #name : #Collection }
 { #category : #'*Typer-Static-Pharo' }
 Collection class >> typAsType [
 	^ TypParametricType new
-		type: super typAsType;
+		type: super typAsType asNonParametricType;
 		parameters: {TypUnknownType instance};
 		yourself
 ]
@@ -49,6 +49,19 @@ Collection class >> typStaInstanceMethodResolvers [
 				receiverType: self typAsType;
 				selector: #includes:;
 				argumentTypes: [ :r :i :a | a key parameters at: 1 ];
+				resultType: [ Boolean typAsType ];
+				yourself);
+		add:
+			(TypMethodResolver new
+				receiverType: self typAsType;
+				selector: #anySatisfy:;
+				argumentTypes: [ :r :i :a | 
+					TypParametricType new
+						type: BlockClosure typAsType;
+						parameters:
+							{(a key parameters at: 1).
+							Boolean typAsType};
+						yourself ];
 				resultType: [ Boolean typAsType ];
 				yourself);
 		add:

@@ -1,6 +1,16 @@
 Extension { #name : #Dictionary }
 
 { #category : #'*Typer-Static-Pharo' }
+Dictionary class >> typAsType [
+	^ TypParametricType new
+		type: super typAsType asNonParametricType;
+		parameters:
+			{TypUnknownType instance.
+			TypUnknownType instance};
+		yourself
+]
+
+{ #category : #'*Typer-Static-Pharo' }
 Dictionary class >> typStaInstanceMethodResolvers [
 	| resolvers |
 	resolvers := OrderedCollection new.

@@ -7,7 +7,7 @@ Class {
 { #category : #'as yet unclassified' }
 TypResolver class >> typAsType [
 	^ TypParametricType new
-		type: super typAsType;
+		type: super typAsType asNonParametricType;
 		parameters: {TypUnknownType instance};
 		yourself
 ]

@@ -10,7 +10,7 @@ Class {
 { #category : #'as yet unclassified' }
 TypPraExamples class >> typAsType [
 	^ TypParametricType new
-		type: super typAsType;
+		type: super typAsType asNonParametricType;
 		parameters: {Date typAsType};
 		yourself
 ]
