@@ -31,7 +31,7 @@ TypVariableResolver >> initialize [
 TypVariableResolver >> resolves: anAssociation [
 	<typTypeArgument: 1 as: 'Association<TypType,Symbol>'>
 	<typTypeResultAs: 'TypType'>
-	^ anAssociation key asNonParametricType = receiverType asNonParametricType and: [ anAssociation value = selector ]
+	^ anAssociation key asNonParametricType asNonNullableType = receiverType asNonParametricType asNonNullableType and: [ anAssociation value = selector ]
 ]
 
 { #category : #accessing }

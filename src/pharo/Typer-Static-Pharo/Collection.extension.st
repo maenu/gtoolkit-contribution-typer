@@ -94,6 +94,33 @@ Collection class >> typStaInstanceMethodResolvers [
 		add:
 			(TypMethodResolver new
 				receiverType: self typAsType;
+				selector: #detect:ifFound:ifNone:;
+				argumentTypes: [ :r :i :a | 
+					i = 1
+						ifTrue: [ TypParametricType new
+								type: BlockClosure typAsType asNonParametricType;
+								parameters:
+									{(a key parameters at: 1).
+									Boolean typAsType};
+								yourself ]
+						ifFalse: [ i = 2
+								ifTrue: [ TypParametricType new
+										type: BlockClosure typAsType asNonParametricType;
+										parameters:
+											{(a key parameters at: 1).
+											TypUnknownType instance};
+										yourself ]
+								ifFalse: [ TypParametricType new
+										type: BlockClosure typAsType asNonParametricType;
+										parameters:
+											{(a key parameters at: 1).
+											TypUnknownType instance};
+										yourself ] ] ];
+				resultType: [ TypUnknownType instance ];
+				yourself);
+		add:
+			(TypMethodResolver new
+				receiverType: self typAsType;
 				selector: #size;
 				argumentTypes: [ TypNoTypeError ];
 				resultType: [ Integer typAsType ];

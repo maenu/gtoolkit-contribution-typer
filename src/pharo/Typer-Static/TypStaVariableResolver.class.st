@@ -10,10 +10,10 @@ TypStaVariableResolver >> resolverFor: anAssociation [
 	self assert: [ self resolves: anAssociation ].
 	clazz := anAssociation key asClass.
 	^ (clazz isMeta
-		ifTrue: [ (clazz instanceSide typStaResolvesClassInstanceVariable: anAssociation value)
+		ifTrue: [ (clazz instanceSide typStaResolvesClassInstanceVariable: anAssociation)
 				ifTrue: [ clazz instanceSide typStaClassInstanceVariableResolver ]
 				ifFalse: [ clazz instanceSide typStaClassVariableResolver ] ]
-		ifFalse: [ (clazz typStaResolvesInstanceVariable: anAssociation value)
+		ifFalse: [ (clazz typStaResolvesInstanceVariable: anAssociation)
 				ifTrue: [ clazz typStaInstanceVariableResolver ]
 				ifFalse: [ clazz typStaClassVariableResolver ] ]) resolverFor: anAssociation
 ]
@@ -25,6 +25,6 @@ TypStaVariableResolver >> resolves: anAssociation [
 		ifFalse: [ ^ false ].
 	clazz := anAssociation key asClass.
 	^ clazz isMeta
-		ifTrue: [ (clazz instanceSide typStaResolvesClassInstanceVariable: anAssociation value) or: [ clazz instanceSide typStaResolvesClassVariable: anAssociation value ] ]
-		ifFalse: [ (clazz typStaResolvesInstanceVariable: anAssociation value) or: [ clazz typStaResolvesClassVariable: anAssociation value ] ]
+		ifTrue: [ (clazz instanceSide typStaResolvesClassInstanceVariable: anAssociation) or: [ clazz instanceSide typStaResolvesClassVariable: anAssociation ] ]
+		ifFalse: [ (clazz typStaResolvesInstanceVariable: anAssociation) or: [ clazz typStaResolvesClassVariable: anAssociation ] ]
 ]

@@ -59,7 +59,7 @@ TypMethodResolver >> initialize [
 
 { #category : #'as yet unclassified' }
 TypMethodResolver >> resolves: anAssociation [
-	^ anAssociation key asNonParametricType = receiverType asNonParametricType and: [ anAssociation value key = selector ]
+	^ anAssociation key asNonParametricType asNonNullableType = receiverType asNonParametricType asNonNullableType and: [ anAssociation value key = selector ]
 ]
 
 { #category : #accessing }

@@ -60,6 +60,16 @@ TypType >> asClass [
 ]
 
 { #category : #converting }
+TypType >> asNonNullableType [
+	<typTypeResultAs: 'TypType'>
+	^ nullable
+		ifTrue: [ self copy
+				nullable: false;
+				yourself ]
+		ifFalse: [ self ]
+]
+
+{ #category : #converting }
 TypType >> asNonParametricType [
 	<typTypeResultAs: 'TypType'>
 	^ self

@@ -2,11 +2,16 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer' }
 RBMethodNode >> typKnownArgumentTypesWithDiscovered: aDictionary [
+	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
+	<typTypeResultAs: 'OrderedCollection<TypType>'>
 	^ arguments collect: [ :f | f typTypeWithDiscovered: aDictionary ]
 ]
 
 { #category : #'*Typer' }
 RBMethodNode >> typTypeForArgumentAt: anInteger withDiscovered: aDictionary [
+	<typTypeArgument: 1 as: 'Integer'>
+	<typTypeArgument: 2 as: 'Dictionary<RBProgramNode,TypType>'>
+	<typTypeResultAs: 'TypType'>
 	^ TypMethodResolvers instance
 		typeForArgumentAt: anInteger
 		ofMethod: self methodClass typAsType -> (selector -> (self typKnownArgumentTypesWithDiscovered: aDictionary))
@@ -14,6 +19,9 @@ RBMethodNode >> typTypeForArgumentAt: anInteger withDiscovered: aDictionary [
 
 { #category : #'*Typer' }
 RBMethodNode >> typTypeForArgumentNamed: aSymbol withDiscovered: aDictionary [
+	<typTypeArgument: 1 as: 'Symbol'>
+	<typTypeArgument: 2 as: 'Dictionary<RBProgramNode,TypType>'>
+	<typTypeResultAs: 'TypType'>
 	| i |
 	i := arguments detectIndex: [ :f | f name = aSymbol ].
 	^ self typTypeForArgumentAt: i withDiscovered: aDictionary
@@ -21,5 +29,7 @@ RBMethodNode >> typTypeForArgumentNamed: aSymbol withDiscovered: aDictionary [
 
 { #category : #'*Typer' }
 RBMethodNode >> typTypeForResultWithDiscovered: aDictionary [
+	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
+	<typTypeResultAs: 'TypType'>
 	^ TypMethodResolvers instance typeForResultOfMethod: self methodClass typAsType -> (selector -> (self typKnownArgumentTypesWithDiscovered: aDictionary))
 ]

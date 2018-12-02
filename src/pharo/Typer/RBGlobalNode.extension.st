@@ -2,6 +2,8 @@ Extension { #name : #RBGlobalNode }
 
 { #category : #'*Typer' }
 RBGlobalNode >> typTypeRecursiveWithDiscovered: aDictionary [
+	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
+	<typTypeResultAs: 'TypType'>
 	| type clazz |
 	(self binding isGlobalClassNameBinding or: [ self binding isGlobalVariable ])
 		ifTrue: [ ^ self binding value class typAsType ].

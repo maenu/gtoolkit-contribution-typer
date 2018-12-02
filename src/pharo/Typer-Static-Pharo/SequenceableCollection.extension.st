@@ -38,6 +38,19 @@ SequenceableCollection class >> typStaInstanceMethodResolvers [
 		add:
 			(TypMethodResolver new
 				receiverType: self typAsType;
+				selector: #detectIndex:;
+				argumentTypes: [ :r :i :a | 
+					TypParametricType new
+						type: BlockClosure typAsType asNonParametricType;
+						parameters:
+							{(a key parameters at: i).
+							Boolean typAsType};
+						yourself ];
+				resultType: [ Integer typAsType ];
+				yourself);
+		add:
+			(TypMethodResolver new
+				receiverType: self typAsType;
 				selector: #copyFrom:to:;
 				argumentTypes: [ Integer typAsType ];
 				resultType: [ :r :a | a key ];
