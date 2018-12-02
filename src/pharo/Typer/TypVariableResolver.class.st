@@ -11,38 +11,32 @@ Class {
 TypVariableResolver class >> typAsType [
 	^ TypParametricType new
 		type: super typAsType asNonParametricType;
-		parameters:
-			{(TypParametricType new
-				type: Association typAsType asNonParametricType;
-				parameters:
-					{Symbol typAsType.
-					TypType typAsType};
-				yourself)};
+		parameters: {TypVariableLookup typAsType};
 		yourself
 ]
 
 { #category : #initialization }
 TypVariableResolver >> initialize [
-	<typTypeVariable: 'type' as: 'BlockClosure<TypResolver<Symbol>,Association<TypType,Symbol>>'>
+	<typTypeVariable: 'type' as: 'BlockClosure<TypResolver<TypLookup>,TypVariableLookup,TypVariableLookup,TypType>'>
 	super initialize
 ]
 
 { #category : #accessing }
-TypVariableResolver >> resolves: anAssociation [
-	<typTypeArgument: 1 as: 'Association<TypType,Symbol>'>
+TypVariableResolver >> resolves: aLookup [
+	<typTypeArgument: 1 as: 'TypVariableLookup'>
 	<typTypeResultAs: 'TypType'>
-	^ anAssociation key asNonParametricType asNonNullableType = receiverType asNonParametricType asNonNullableType and: [ anAssociation value = selector ]
+	^ aLookup receiverType asNonParametricType asNonNullableType = receiverType asNonParametricType asNonNullableType and: [ aLookup selector = selector ]
 ]
 
 { #category : #accessing }
 TypVariableResolver >> type [
-	<typTypeResultAs: 'BlockClosure<TypResolver<Symbol>,Association<TypType,Symbol>>'>
+	<typTypeResultAs: 'BlockClosure<TypResolver<TypLookup>,TypVariableLookup,TypVariableLookup,TypType>'>
 	^ type
 ]
 
 { #category : #accessing }
 TypVariableResolver >> type: anObject [
-	<typTypeArgument: 1 as: 'BlockClosure<TypResolver<Symbol>,Association<TypType,Symbol>>'>
+	<typTypeArgument: 1 as: 'BlockClosure<TypResolver<TypLookup>,TypVariableLookup,TypVariableLookup,TypType>'>
 	type := anObject
 ]
 

@@ -14,7 +14,12 @@ RBMethodNode >> typTypeForArgumentAt: anInteger withDiscovered: aDictionary [
 	<typTypeResultAs: 'TypType'>
 	^ TypMethodResolvers instance
 		typeForArgumentAt: anInteger
-		ofMethod: self methodClass typAsType -> (selector -> (self typKnownArgumentTypesWithDiscovered: aDictionary))
+		ofMethod:
+			(TypMethodLookup new
+				receiverType: self methodClass typAsType;
+				selector: selector asSymbol;
+				argumentTypes: (self typKnownArgumentTypesWithDiscovered: aDictionary);
+				yourself)
 ]
 
 { #category : #'*Typer' }
@@ -31,5 +36,11 @@ RBMethodNode >> typTypeForArgumentNamed: aSymbol withDiscovered: aDictionary [
 RBMethodNode >> typTypeForResultWithDiscovered: aDictionary [
 	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
 	<typTypeResultAs: 'TypType'>
-	^ TypMethodResolvers instance typeForResultOfMethod: self methodClass typAsType -> (selector -> (self typKnownArgumentTypesWithDiscovered: aDictionary))
+	^ TypMethodResolvers instance
+		typeForResultOfMethod:
+			(TypMethodLookup new
+				receiverType: self methodClass typAsType;
+				selector: selector asSymbol;
+				argumentTypes: (self typKnownArgumentTypesWithDiscovered: aDictionary);
+				yourself)
 ]

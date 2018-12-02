@@ -8,20 +8,20 @@ Class {
 TypResolver class >> typAsType [
 	^ TypParametricType new
 		type: super typAsType asNonParametricType;
-		parameters: {TypUnknownType instance};
+		parameters: {TypLookup typAsType};
 		yourself
 ]
 
 { #category : #accessing }
-TypResolver >> resolverFor: anAssociation [
-	<typTypeArgument: 1 as: 'Association<TypType,?>'>
-	<typTypeResultAs: 'TypResolver<?>'>
+TypResolver >> resolverFor: aLookup [
+	<typTypeArgument: 1 as: 'TypLookup'>
+	<typTypeResultAs: 'TypResolver<TypLookup>'>
 	^ self
 ]
 
 { #category : #accessing }
-TypResolver >> resolves: anAssociation [
-	<typTypeArgument: 1 as: 'Association<TypType,?>'>
+TypResolver >> resolves: aLookup [
+	<typTypeArgument: 1 as: 'TypLookup'>
 	<typTypeResultAs: 'Boolean'>
 	^ false
 ]

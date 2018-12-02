@@ -14,7 +14,14 @@ RBMessageNode >> typTypeForArgumentAt: anInteger withDiscovered: aDictionary [
 	<typTypeResultAs: 'TypType'>
 	| receiverType |
 	receiverType := self typTypeForReceiverWithDiscovered: aDictionary.
-	^ TypMethodResolvers instance typeForArgumentAt: anInteger ofMethod: receiverType -> (selector -> (self typKnownArgumentTypesWithDiscovered: aDictionary))
+	^ TypMethodResolvers instance
+		typeForArgumentAt: anInteger
+		ofMethod:
+			(TypMethodLookup new
+				receiverType: receiverType;
+				selector: selector asSymbol;
+				argumentTypes: (self typKnownArgumentTypesWithDiscovered: aDictionary);
+				yourself)
 ]
 
 { #category : #'*Typer' }
@@ -30,7 +37,13 @@ RBMessageNode >> typTypeForResultWithDiscovered: aDictionary [
 	<typTypeResultAs: 'TypType'>
 	| receiverType |
 	receiverType := self typTypeForReceiverWithDiscovered: aDictionary.
-	^ TypMethodResolvers instance typeForResultOfMethod: receiverType -> (selector -> (self typKnownArgumentTypesWithDiscovered: aDictionary))
+	^ TypMethodResolvers instance
+		typeForResultOfMethod:
+			(TypMethodLookup new
+				receiverType: receiverType;
+				selector: selector asSymbol;
+				argumentTypes: (self typKnownArgumentTypesWithDiscovered: aDictionary);
+				yourself)
 ]
 
 { #category : #'*Typer' }

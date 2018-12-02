@@ -6,5 +6,10 @@ RBInstanceVariableNode >> typTypeRecursiveWithDiscovered: aDictionary [
 	<typTypeResultAs: 'TypType'>
 	| type |
 	type := self methodNode methodClass typAsType.
-	^ TypVariableResolvers instance typeForVariable: type -> name
+	^ TypVariableResolvers instance
+		typeForVariable:
+			(TypVariableLookup new
+				receiverType: type;
+				selector: name asSymbol;
+				yourself)
 ]

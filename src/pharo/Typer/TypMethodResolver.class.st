@@ -12,72 +12,63 @@ Class {
 TypMethodResolver class >> typAsType [
 	^ TypParametricType new
 		type: super typAsType asNonParametricType;
-		parameters:
-			{(TypParametricType new
-				type: Association typAsType asNonParametricType;
-				parameters:
-					{Symbol typAsType.
-					(TypParametricType new
-						type: OrderedCollection typAsType asNonParametricType;
-						parameters: {TypType typAsType};
-						yourself)};
-				yourself)};
+		parameters: {TypMethodLookup typAsType};
 		yourself
 ]
 
 { #category : #accessing }
-TypMethodResolver >> argumentTypeAt: anInteger for: anAssociation resolvedBy: anotherAssociation [
+TypMethodResolver >> argumentTypeAt: anInteger for: aLookup resolvedBy: anotherLookup [
 	<typTypeArgument: 1 as: 'Integer'>
-	<typTypeArgument: 2 as: 'Association<TypType,Association<Symbol,OrderedCollection<TypType>>>'>
-	<typTypeArgument: 3 as: 'Association<TypType,Association<Symbol,OrderedCollection<TypType>>>'>
+	<typTypeArgument: 2 as: 'TypMethodLookup'>
+	<typTypeArgument: 3 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'TypType'>
 	^ argumentTypes
 		cull: self
 		cull: anInteger
-		cull: anAssociation
-		cull: anotherAssociation
+		cull: aLookup
+		cull: anotherLookup
 ]
 
 { #category : #accessing }
 TypMethodResolver >> argumentTypes [
-	<typTypeResultAs: 'BlockClosure<TypResolver<Association<Symbol,OrderedCollection<TypType>>>,Integer,Association<TypType,Association<Symbol,OrderedCollection<TypType>>>>'>
+	<typTypeResultAs: 'BlockClosure<TypResolver<TypMethodLookup>,Integer,TypMethodLookup,TypMethodLookup,TypType>'>
 	^ argumentTypes
 ]
 
 { #category : #accessing }
 TypMethodResolver >> argumentTypes: anObject [
-	<typTypeArgument: 1 as: 'BlockClosure<TypResolver<Association<Symbol,OrderedCollection<TypType>>>,Integer,Association<TypType,Association<Symbol,OrderedCollection<TypType>>>>'>
+	<typTypeArgument: 1 as: 'BlockClosure<TypResolver<TypMethodLookup>,Integer,TypMethodLookup,TypMethodLookup,TypType>'>
 	argumentTypes := anObject
 ]
 
 { #category : #initialization }
 TypMethodResolver >> initialize [
-	<typTypeVariable: 'argumentTypes' as: 'BlockClosure<TypResolver<Association<Symbol,OrderedCollection<TypType>>>,Integer,Association<TypType,Association<Symbol,OrderedCollection<TypType>>>>'>
-	<typTypeVariable: 'resultType' as: 'BlockClosure<TypResolver<Association<Symbol,OrderedCollection<TypType>>>,Association<TypType,Association<Symbol,OrderedCollection<TypType>>>>'>
+	<typTypeVariable: 'argumentTypes' as: 'BlockClosure<TypResolver<TypMethodLookup>,Integer,TypMethodLookup,TypMethodLookup,TypType>'>
+	<typTypeVariable: 'resultType' as: 'BlockClosure<TypResolver<TypMethodLookup>,TypMethodLookup,TypMethodLookup,TypType>'>
 	super initialize
 ]
 
 { #category : #'as yet unclassified' }
-TypMethodResolver >> resolves: anAssociation [
-	^ anAssociation key asNonParametricType asNonNullableType = receiverType asNonParametricType asNonNullableType and: [ anAssociation value key = selector ]
+TypMethodResolver >> resolves: aLookup [
+	^ aLookup receiverType asNonParametricType asNonNullableType = receiverType asNonParametricType asNonNullableType and: [ aLookup selector = selector ]
 ]
 
 { #category : #accessing }
 TypMethodResolver >> resultType [
-	<typTypeResultAs: 'BlockClosure<TypResolver<Association<Symbol,OrderedCollection<TypType>>>,Association<TypType,Association<Symbol,OrderedCollection<TypType>>>>'>
+	<typTypeResultAs: 'BlockClosure<TypResolver<TypMethodLookup>,TypMethodLookup,TypMethodLookup,TypType>'>
 	^ resultType
 ]
 
 { #category : #accessing }
 TypMethodResolver >> resultType: anObject [
-	<typTypeArgument: 1 as: 'BlockClosure<TypResolver<Association<Symbol,OrderedCollection<TypType>>>,Association<TypType,Association<Symbol,OrderedCollection<TypType>>>>'>
+	<typTypeArgument: 1 as: 'BlockClosure<TypResolver<TypMethodLookup>,TypMethodLookup,TypMethodLookup,TypType>'>
 	resultType := anObject
 ]
 
 { #category : #accessing }
-TypMethodResolver >> resultTypeFor: anAssociation resolvedBy: anotherAssociation [
-	<typTypeArgument: 1 as: 'Association<TypType,Association<Symbol,OrderedCollection<TypType>>>'>
-	<typTypeArgument: 2 as: 'Association<TypType,Association<Symbol,OrderedCollection<TypType>>>'>
+TypMethodResolver >> resultTypeFor: aLookup resolvedBy: anotherLookup [
+	<typTypeArgument: 1 as: 'TypMethodLookup'>
+	<typTypeArgument: 2 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'TypType'>
-	^ resultType cull: self cull: anAssociation cull: anotherAssociation
+	^ resultType cull: self cull: aLookup cull: anotherLookup
 ]

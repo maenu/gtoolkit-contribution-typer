@@ -4,39 +4,47 @@ Class {
 	#category : #'Typer-Core'
 }
 
+{ #category : #'as yet unclassified' }
+TypMethodResolvers class >> typAsType [
+	^ TypParametricType new
+		type: super typAsType asNonParametricType;
+		parameters: {TypMethodLookup typAsType};
+		yourself
+]
+
 { #category : #initialization }
 TypMethodResolvers >> initialize [
-	<typTypeVariable: 'resolvers' as: 'OrderedCollection<TypResolver<Association<TypType,Association<Symbol,OrderedCollection<TypType>>>>>'>
+	<typTypeVariable: 'resolvers' as: 'OrderedCollection<TypResolver<TypMethodLookup>>'>
 	super initialize
 ]
 
 { #category : #initialization }
-TypMethodResolvers >> typeFor: anAssociation using: aBlock [
-	<typTypeArgument: 1 as: 'Association<TypType,Association<Symbol,OrderedCollection<TypType>>>'>
-	<typTypeArgument: 2 as: 'BlockClosure<TypResolver<Association<TypType,Association<Symbol,OrderedCollection<TypType>>>>,Association<TypType,Association<Symbol,OrderedCollection<TypType>>>,TypType>'>
+TypMethodResolvers >> typeFor: aLookup using: aBlock [
+	<typTypeArgument: 1 as: 'TypMethodLookup'>
+	<typTypeArgument: 2 as: 'BlockClosure<TypResolver<TypMethodLookup>,TypMethodLookup,TypType>'>
 	<typTypeResultAs: 'TypType'>
-	^ super typeFor: anAssociation using: aBlock
+	^ super typeFor: aLookup using: aBlock
 ]
 
 { #category : #accessing }
-TypMethodResolvers >> typeForArgumentAt: anInteger ofMethod: anAssociation [
+TypMethodResolvers >> typeForArgumentAt: anInteger ofMethod: aLookup [
 	<typTypeArgument: 1 as: 'Integer'>
-	<typTypeArgument: 2 as: 'Association<TypType,Association<Symbol,OrderedCollection<TypType>>>'>
+	<typTypeArgument: 2 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'TypType'>
-	^ self typeFor: anAssociation using: [ :r :a | r argumentTypeAt: anInteger for: anAssociation resolvedBy: a ]
+	^ self typeFor: aLookup using: [ :r :a | r argumentTypeAt: anInteger for: aLookup resolvedBy: a ]
 ]
 
 { #category : #accessing }
-TypMethodResolvers >> typeForResultOfMethod: anAssociation [
-	<typTypeArgument: 1 as: 'Association<TypType,Association<Symbol,OrderedCollection<TypType>>>'>
+TypMethodResolvers >> typeForResultOfMethod: aLookup [
+	<typTypeArgument: 1 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'TypType'>
 	| type |
-	type := self typeFor: anAssociation using: [ :r :a | r resultTypeFor: anAssociation resolvedBy: a ].
-	(type isUnknown and: [ anAssociation key hasClass ])
+	type := self typeFor: aLookup using: [ :r :a | r resultTypeFor: aLookup resolvedBy: a ].
+	(type isUnknown and: [ aLookup receiverType hasClass ])
 		ifTrue: [ "assume self return if no explicit return"
 			| method |
-			method := anAssociation key asClass lookupSelector: anAssociation value key.
+			method := aLookup receiverType asClass lookupSelector: aLookup selector.
 			(method isNotNil and: [ method isAbstract not and: [ (method ast allChildren select: #isReturn) isEmpty ] ])
-				ifTrue: [ ^ anAssociation key ] ].
+				ifTrue: [ ^ aLookup receiverType ] ].
 	^ type
 ]

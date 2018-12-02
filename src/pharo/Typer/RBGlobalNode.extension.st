@@ -12,5 +12,10 @@ RBGlobalNode >> typTypeRecursiveWithDiscovered: aDictionary [
 	type := (self binding isClassVariable or: [ (self binding scope respondsTo: #getClass) and: [ self binding isFromSharedPool ] ])
 		ifTrue: [ clazz instanceSide typAsType ]
 		ifFalse: [ clazz typAsType ].
-	^ TypVariableResolvers instance typeForVariable: type -> name
+	^ TypVariableResolvers instance
+		typeForVariable:
+			(TypVariableLookup new
+				receiverType: type;
+				selector: name asSymbol;
+				yourself)
 ]
