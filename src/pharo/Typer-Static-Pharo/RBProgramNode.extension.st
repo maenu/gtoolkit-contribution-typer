@@ -35,8 +35,7 @@ RBProgramNode class >> typStaInstanceMethodResolvers [
 				receiverType: self typAsType;
 				selector: #whoDefines:;
 				argumentTypes: [ String typAsType ];
-				resultType: [ RBProgramNode typAsType
-						copy;
+				resultType: [ RBProgramNode typAsType copy
 						nullable: true;
 						yourself ];
 				yourself).

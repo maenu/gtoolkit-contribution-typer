@@ -21,10 +21,10 @@ Collection class >> typStaInstanceMethodResolvers [
 					TypParametricType new
 						type: BlockClosure typAsType asNonParametricType;
 						parameters:
-							{(a key parameters at: i).
-							a key};
+							{(a receiverType parameters at: i).
+							a receiverType};
 						yourself ];
-				resultType: [ :r :a | a key ];
+				resultType: [ :r :a | a receiverType ];
 				yourself);
 		add:
 			(TypMethodResolver new
@@ -34,7 +34,7 @@ Collection class >> typStaInstanceMethodResolvers [
 				resultType: [ :r :a | 
 					TypParametricType new
 						type: Set typAsType asNonParametricType;
-						parameters: {(a key parameters at: 1)};
+						parameters: {(a receiverType parameters at: 1)};
 						yourself ];
 				yourself);
 		add:
@@ -42,13 +42,20 @@ Collection class >> typStaInstanceMethodResolvers [
 				receiverType: self typAsType;
 				selector: #anyOne;
 				argumentTypes: [ TypNoTypeError signal ];
-				resultType: [ :r :a | a key parameters at: 1 ];
+				resultType: [ :r :a | a receiverType parameters at: 1 ];
+				yourself);
+		add:
+			(TypMethodResolver new
+				receiverType: self typAsType;
+				selector: #max;
+				argumentTypes: [ TypNoTypeError signal ];
+				resultType: [ Number typAsType ];
 				yourself);
 		add:
 			(TypMethodResolver new
 				receiverType: self typAsType;
 				selector: #includes:;
-				argumentTypes: [ :r :i :a | a key parameters at: 1 ];
+				argumentTypes: [ :r :i :a | a receiverType parameters at: 1 ];
 				resultType: [ Boolean typAsType ];
 				yourself);
 		add:
@@ -59,7 +66,7 @@ Collection class >> typStaInstanceMethodResolvers [
 					TypParametricType new
 						type: BlockClosure typAsType asNonParametricType;
 						parameters:
-							{(a key parameters at: 1).
+							{(a receiverType parameters at: 1).
 							Boolean typAsType};
 						yourself ];
 				resultType: [ Boolean typAsType ];
@@ -72,11 +79,11 @@ Collection class >> typStaInstanceMethodResolvers [
 					TypParametricType new
 						type: BlockClosure typAsType asNonParametricType;
 						parameters:
-							{(a key parameters at: 1).
-							(a key parameters at: 1).
+							{(a receiverType parameters at: 1).
+							(a receiverType parameters at: 1).
 							Boolean typAsType};
 						yourself ];
-				resultType: [ :r :a | a key ];
+				resultType: [ :r :a | a receiverType ];
 				yourself);
 		add:
 			(TypMethodResolver new
@@ -86,10 +93,10 @@ Collection class >> typStaInstanceMethodResolvers [
 					TypParametricType new
 						type: BlockClosure typAsType asNonParametricType;
 						parameters:
-							{(a key parameters at: 1).
+							{(a receiverType parameters at: 1).
 							Boolean typAsType};
 						yourself ];
-				resultType: [ :r :a | a key parameters at: 1 ];
+				resultType: [ :r :a | a receiverType parameters at: 1 ];
 				yourself);
 		add:
 			(TypMethodResolver new
@@ -100,20 +107,20 @@ Collection class >> typStaInstanceMethodResolvers [
 						ifTrue: [ TypParametricType new
 								type: BlockClosure typAsType asNonParametricType;
 								parameters:
-									{(a key parameters at: 1).
+									{(a receiverType parameters at: 1).
 									Boolean typAsType};
 								yourself ]
 						ifFalse: [ i = 2
 								ifTrue: [ TypParametricType new
 										type: BlockClosure typAsType asNonParametricType;
 										parameters:
-											{(a key parameters at: 1).
+											{(a receiverType parameters at: 1).
 											TypUnknownType instance};
 										yourself ]
 								ifFalse: [ TypParametricType new
 										type: BlockClosure typAsType asNonParametricType;
 										parameters:
-											{(a key parameters at: 1).
+											{(a receiverType parameters at: 1).
 											TypUnknownType instance};
 										yourself ] ] ];
 				resultType: [ TypUnknownType instance ];
@@ -133,10 +140,10 @@ Collection class >> typStaInstanceMethodResolvers [
 					TypParametricType new
 						type: BlockClosure typAsType asNonParametricType;
 						parameters:
-							{(a key parameters at: 1).
+							{(a receiverType parameters at: 1).
 							Boolean typAsType};
 						yourself ];
-				resultType: [ :r :a | a key ];
+				resultType: [ :r :a | a receiverType ];
 				yourself);
 		add:
 			(TypMethodResolver new
@@ -146,11 +153,11 @@ Collection class >> typStaInstanceMethodResolvers [
 					TypParametricType new
 						type: BlockClosure typAsType asNonParametricType;
 						parameters:
-							{(a key parameters at: 1).
+							{(a receiverType parameters at: 1).
 							TypUnknownType instance};
 						yourself ];
 				resultType: [ :r :a | 
-					a key copy
+					a receiverType copy
 						parameters: {TypUnknownType instance};
 						yourself ];
 				yourself).

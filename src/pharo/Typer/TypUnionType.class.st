@@ -154,7 +154,7 @@ TypUnionType >> parameters [
 			e isParametric
 				ifTrue: [ e parameters size ]
 				ifFalse: [ 0 ] ]) max.
-	parameters := size timesCollect: [ TypUnionType new ].
+	parameters := (size timesCollect: [ TypUnionType new ]) "typParameters TypType".
 	keys
 		do: [ :e | 
 			e isParametric

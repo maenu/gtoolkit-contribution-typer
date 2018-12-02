@@ -52,7 +52,7 @@ TypResolvers >> typeFor: aLookup using: aBlock [
 	<typTypeResultAs: 'TypType'>
 	| lookup |
 	lookup := aLookup.
-	[ ((resolvers select: [ :e | e resolves: lookup ]) collect: [ :e | e resolverFor: lookup ])
+	[ ((resolvers select: [ :e | e resolves: lookup ]) collect: [ :e | e resolverFor: lookup ]) "typParameters TypResolver<TypLookup>"
 		do: [ :e | 
 			| type |
 			type := aBlock cull: e cull: lookup.

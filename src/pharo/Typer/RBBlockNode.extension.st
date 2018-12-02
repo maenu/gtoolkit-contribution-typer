@@ -54,8 +54,8 @@ RBBlockNode >> typTypeRecursiveWithDiscovered: aDictionary [
 		ifTrue: [ | i type |
 			parent receiver == self
 				ifTrue: [ ^ self typTypeAsUnknownWithDiscovered: aDictionary ].
-			i := parent "typCastAs RBMessageNode" arguments detectIndex: [ :e | e == self ].
-			type := parent "typCastAs RBMessageNode" typTypeForArgumentAt: i withDiscovered: aDictionary.
+			i := parent "typCastAs RBMessageNode"  arguments detectIndex: [ :e | e == self ].
+			type := parent "typCastAs RBMessageNode"  typTypeForArgumentAt: i withDiscovered: aDictionary.
 			(type isParametric
 				and: [ type hasClass and: [ type asClass == BlockClosure and: [ type parameters last isUnknown ] ] ])
 				ifTrue: [ type := type copy.

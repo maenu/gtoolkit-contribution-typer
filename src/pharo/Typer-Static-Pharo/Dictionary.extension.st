@@ -19,8 +19,8 @@ Dictionary class >> typStaInstanceMethodResolvers [
 			(TypMethodResolver new
 				receiverType: self typAsType;
 				selector: #at:put:;
-				argumentTypes: [ :r :i :a :s | a key parameters at: i ];
-				resultType: [ :r :a :s | a key parameters at: 2 ];
+				argumentTypes: [ :r :i :a :s | a receiverType parameters at: i ];
+				resultType: [ :r :a :s | a receiverType parameters at: 2 ];
 				yourself);
 		add:
 			(TypMethodResolver new
@@ -28,12 +28,12 @@ Dictionary class >> typStaInstanceMethodResolvers [
 				selector: #at:ifAbsentPut:;
 				argumentTypes: [ :r :i :a :s | 
 					i = 1
-						ifTrue: [ a key parameters at: 1 ]
+						ifTrue: [ a receiverType parameters at: 1 ]
 						ifFalse: [ TypParametricType new
 								type: BlockClosure typAsType asNonParametricType;
-								parameters: {(a key parameters at: 2)};
+								parameters: {(a receiverType parameters at: 2)};
 								yourself ] ];
-				resultType: [ :r :a :s | a key parameters at: 2 ];
+				resultType: [ :r :a :s | a receiverType parameters at: 2 ];
 				yourself);
 		add:
 			(TypMethodResolver new
@@ -47,8 +47,8 @@ Dictionary class >> typStaInstanceMethodResolvers [
 							{(TypParametricType new
 								type: Association typAsType asNonParametricType;
 								parameters:
-									{(a key parameters at: 1).
-									(a key parameters at: 2)};
+									{(a receiverType parameters at: 1).
+									(a receiverType parameters at: 2)};
 								yourself)};
 						yourself ];
 				yourself);
@@ -63,12 +63,12 @@ Dictionary class >> typStaInstanceMethodResolvers [
 							{(TypParametricType new
 								type: Association typAsType asNonParametricType;
 								parameters:
-									{(a key parameters at: 1).
-									(a key parameters at: 2)};
+									{(a receiverType parameters at: 1).
+									(a receiverType parameters at: 2)};
 								yourself).
 							TypUnknownType instance};
 						yourself ];
-				resultType: [ :r :a :s | a key ];
+				resultType: [ :r :a :s | a receiverType ];
 				yourself);
 		add:
 			(TypMethodResolver new
@@ -78,7 +78,7 @@ Dictionary class >> typStaInstanceMethodResolvers [
 				resultType: [ :r :a :s | 
 					TypParametricType new
 						type: Set typAsType asNonParametricType;
-						parameters: {(a key parameters at: 1)};
+						parameters: {(a receiverType parameters at: 1)};
 						yourself ];
 				yourself);
 		add:
@@ -86,20 +86,20 @@ Dictionary class >> typStaInstanceMethodResolvers [
 				receiverType: self typAsType;
 				selector: #anyOne;
 				argumentTypes: [ TypNoTypeError signal ];
-				resultType: [ :r :a | a key parameters at: 2 ];
+				resultType: [ :r :a | a receiverType parameters at: 2 ];
 				yourself);
 		add:
 			(TypMethodResolver new
 				receiverType: self typAsType;
 				selector: #includes:;
-				argumentTypes: [ :r :i :a | a key parameters at: 2 ];
+				argumentTypes: [ :r :i :a | a receiverType parameters at: 2 ];
 				resultType: [ Boolean typAsType ];
 				yourself);
 		add:
 			(TypMethodResolver new
 				receiverType: self typAsType;
 				selector: #includesKey:;
-				argumentTypes: [ :r :i :a | a key parameters at: 1 ];
+				argumentTypes: [ :r :i :a | a receiverType parameters at: 1 ];
 				resultType: [ Boolean typAsType ];
 				yourself);
 		add:
@@ -111,8 +111,8 @@ Dictionary class >> typStaInstanceMethodResolvers [
 					TypParametricType new
 						type: OrderedDictionary typAsType asNonParametricType;
 						parameters:
-							{(a key parameters at: 1).
-							(a key parameters at: 2)};
+							{(a receiverType parameters at: 1).
+							(a receiverType parameters at: 2)};
 						yourself ];
 				yourself).
 	resolvers addAll: super typStaInstanceMethodResolvers.

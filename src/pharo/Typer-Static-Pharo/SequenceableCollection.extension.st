@@ -29,11 +29,11 @@ SequenceableCollection class >> typStaInstanceMethodResolvers [
 					TypParametricType new
 						type: BlockClosure typAsType asNonParametricType;
 						parameters:
-							{(a key parameters at: i).
+							{(a receiverType parameters at: i).
 							Integer typAsType.
-							a key};
+							a receiverType};
 						yourself ];
-				resultType: [ :r :a | a key ];
+				resultType: [ :r :a | a receiverType ];
 				yourself);
 		add:
 			(TypMethodResolver new
@@ -43,7 +43,7 @@ SequenceableCollection class >> typStaInstanceMethodResolvers [
 					TypParametricType new
 						type: BlockClosure typAsType asNonParametricType;
 						parameters:
-							{(a key parameters at: i).
+							{(a receiverType parameters at: i).
 							Boolean typAsType};
 						yourself ];
 				resultType: [ Integer typAsType ];
@@ -53,7 +53,7 @@ SequenceableCollection class >> typStaInstanceMethodResolvers [
 				receiverType: self typAsType;
 				selector: #copyFrom:to:;
 				argumentTypes: [ Integer typAsType ];
-				resultType: [ :r :a | a key ];
+				resultType: [ :r :a | a receiverType ];
 				yourself).
 	resolvers addAll: super typStaInstanceMethodResolvers.
 	^ resolvers

@@ -44,5 +44,6 @@ TypVariableResolver >> type: anObject [
 TypVariableResolver >> typeFor: anAssociation resolvedBy: anotherAssociation [
 	<typTypeArgument: 1 as: 'Association<TypType,Symbol>'>
 	<typTypeArgument: 2 as: 'Association<TypType,Symbol>'>
+	<typTypeResultAs: 'TypType'>
 	^ type cull: self cull: anAssociation cull: anotherAssociation
 ]

@@ -28,18 +28,17 @@ Boolean class >> typStaInstanceMethodResolvers [
 				receiverType: self typAsType;
 				selector: #ifTrue:ifFalse:;
 				argumentTypes: [ :r :i :a | 
-					| argument resultType |
-					argument := a value value at: i.
-					resultType := (argument isParametric
-						and: [ argument hasClass and: [ argument asClass == BlockClosure ] ])
-						ifTrue: [ argument parameters last ]
+					| argumentType resultType |
+					argumentType := a argumentTypes at: i.
+					resultType := (argumentType isParametric and: [ argumentType hasClass and: [ argumentType asClass == BlockClosure ] ])
+						ifTrue: [ argumentType parameters last ]
 						ifFalse: [ TypUnknownType instance ].
 					BlockClosure typAsType copy
 						parameters: {resultType};
 						yourself ];
 				resultType: [ :r :a | 
 					| resultType |
-					resultType := a value value
+					resultType := a argumentTypes
 						inject: TypUnionType new
 						into: [ :e :f | 
 							e
