@@ -14,7 +14,7 @@ TypUnknownType class >> instance [
 
 { #category : #converting }
 TypUnknownType >> asClass [
-	TypNoClassFoundError signal
+	TypNoClassError signal
 ]
 
 { #category : #accessing }

@@ -6,7 +6,7 @@ Class {
 
 { #category : #'generated-accessing' }
 TypTypeParser class >> cacheId [
-	^'2018-12-01T17:37:49.896553+01:00'
+	^'2018-12-02T13:36:24.759483+01:00'
 ]
 
 { #category : #generated }
@@ -53,6 +53,11 @@ TypTypeParser class >> reduceTable [
 	#(7 3 #reduceActionForTypes2:) 
 	#(11 3 #liftSecondValue:)
 	).
+]
+
+{ #category : #'generated-accessing' }
+TypTypeParser class >> scannerClass [
+	^TypTypeScanner
 ]
 
 { #category : #generated }

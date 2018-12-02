@@ -144,6 +144,24 @@ TypUnionType >> isUnion [
 	^ true
 ]
 
+{ #category : #generated }
+TypUnionType >> parameters [
+	<typTypeResultAs: 'OrderedCollection<TypType>'>
+	| keys size parameters |
+	keys := weights keys asSet.
+	size := (keys
+		collect: [ :e | 
+			e isParametric
+				ifTrue: [ e parameters size ]
+				ifFalse: [ 0 ] ]) max.
+	parameters := size timesCollect: [ TypUnionType new ].
+	keys
+		do: [ :e | 
+			e isParametric
+				ifTrue: [ e parameters withIndexDo: [ :f :i | (parameters at: i) increment: f ] ] ].
+	^ parameters collect: #asType
+]
+
 { #category : #'as yet unclassified' }
 TypUnionType >> postCopy [
 	super postCopy.

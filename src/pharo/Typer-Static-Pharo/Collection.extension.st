@@ -69,7 +69,7 @@ Collection class >> typStaInstanceMethodResolvers [
 			(TypMethodResolver new
 				receiverType: self typAsType;
 				selector: #detect:;
-				argumentTypes: [ :r :i :a |
+				argumentTypes: [ :r :i :a | 
 					TypParametricType new
 						type: BlockClosure typAsType;
 						parameters:
@@ -77,6 +77,42 @@ Collection class >> typStaInstanceMethodResolvers [
 							Boolean typAsType};
 						yourself ];
 				resultType: [ :r :a | a key parameters at: 1 ];
+				yourself);
+		add:
+			(TypMethodResolver new
+				receiverType: self typAsType;
+				selector: #size;
+				argumentTypes: [ TypNoTypeError ];
+				resultType: [ Integer typAsType ];
+				yourself);
+		add:
+			(TypMethodResolver new
+				receiverType: self typAsType;
+				selector: #select:;
+				argumentTypes: [ :r :i :a | 
+					TypParametricType new
+						type: BlockClosure typAsType;
+						parameters:
+							{(a key parameters at: 1).
+							Boolean typAsType};
+						yourself ];
+				resultType: [ :r :a | a key ];
+				yourself);
+		add:
+			(TypMethodResolver new
+				receiverType: self typAsType;
+				selector: #collect:;
+				argumentTypes: [ :r :i :a | 
+					TypParametricType new
+						type: BlockClosure typAsType;
+						parameters:
+							{(a key parameters at: 1).
+							TypUnknownType instance};
+						yourself ];
+				resultType: [ :r :a | 
+					a key copy
+						parameters: {TypUnknownType instance};
+						yourself ];
 				yourself).
 	resolvers addAll: super typStaInstanceMethodResolvers.
 	^ resolvers

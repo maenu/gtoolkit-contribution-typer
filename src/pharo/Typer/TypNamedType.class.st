@@ -53,6 +53,12 @@ TypNamedType >> hash [
 	^ super hash bitXor: self name hash
 ]
 
+{ #category : #initialization }
+TypNamedType >> initialize [
+	<typTypeVariable: 'name' as: 'String'>
+	super initialize
+]
+
 { #category : #accessing }
 TypNamedType >> name [
 	<typTypeResultAs: 'String'>

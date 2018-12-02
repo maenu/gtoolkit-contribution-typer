@@ -5,11 +5,23 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+TypResolver class >> typAsType [
+	^ TypParametricType new
+		type: super typAsType;
+		parameters: {TypUnknownType instance};
+		yourself
+]
+
+{ #category : #accessing }
 TypResolver >> resolverFor: anAssociation [
+	<typTypeArgument: 1 as: 'Association<TypType,?>'>
+	<typTypeResultAs: 'TypResolver<?>'>
 	^ self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypResolver >> resolves: anAssociation [
+	<typTypeArgument: 1 as: 'Association<TypType,?>'>
+	<typTypeResultAs: 'Boolean'>
 	^ false
 ]

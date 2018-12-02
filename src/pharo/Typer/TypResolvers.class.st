@@ -17,6 +17,7 @@ TypResolvers class >> instance [
 
 { #category : #initialization }
 TypResolvers >> initialize [
+	<typTypeVariable: 'resolvers' as: 'OrderedCollection<TypResolver<?>>'>
 	super initialize.
 	resolvers := OrderedCollection new
 ]
@@ -29,11 +30,13 @@ TypResolvers >> resolverFor: anAssociation [
 
 { #category : #accessing }
 TypResolvers >> resolvers [
+	<typTypeResultAs: 'OrderedCollection<TypResolver<?>>'>
 	^ resolvers
 ]
 
 { #category : #accessing }
 TypResolvers >> resolvers: anObject [
+	<typTypeArgument: 1 as: 'OrderedCollection<TypResolver<?>>'>
 	resolvers := anObject
 ]
 
@@ -42,11 +45,14 @@ TypResolvers >> resolves: anAssociation [
 	^ resolvers anySatisfy: [ :e | e resolves: anAssociation ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypResolvers >> typeFor: anAssociation using: aBlock [
+	<typTypeArgument: 1 as: 'Association<TypType,?>'>
+	<typTypeArgument: 2 as: 'BlockClosure<TypType,TypType>'>
+	<typTypeResultAs: 'TypType'>
 	| association |
 	association := anAssociation.
-	[ ((resolvers select: [ :e | e resolves: association ]) collect: [ :e | e resolverFor: association ])
+	[ ((resolvers select: [ :e | e resolves: association ]) collect: [ :e | e resolverFor: association ]) "typParameters TypResolver<?>"
 		do: [ :e | 
 			| type |
 			type := aBlock cull: e cull: association.

@@ -7,5 +7,7 @@ String >> typAsType [
 
 { #category : #'*Typer' }
 String >> typAsTypes [
-	^ TypTypeParser parse: self
+	^ [ TypTypeParser parse: self ]
+		on: SmaCCParserError
+		do: [ {TypUnknownType instance} ]
 ]
