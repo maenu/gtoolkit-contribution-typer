@@ -48,7 +48,7 @@ TypResolvers >> resolves: anAssociation [
 { #category : #accessing }
 TypResolvers >> typeFor: anAssociation using: aBlock [
 	<typTypeArgument: 1 as: 'Association<TypType,?>'>
-	<typTypeArgument: 2 as: 'BlockClosure<TypType,TypType>'>
+	<typTypeArgument: 2 as: 'BlockClosure<TypResolver<?>,Association<TypType,?>,TypType>'>
 	<typTypeResultAs: 'TypType'>
 	| association |
 	association := anAssociation.

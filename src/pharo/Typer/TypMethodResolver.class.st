@@ -15,17 +15,22 @@ TypMethodResolver class >> typAsType [
 		parameters:
 			{(TypParametricType new
 				type: Association typAsType asNonParametricType;
-				parameters: {Symbol typAsType};
-				yourself).
-			(TypParametricType new
-				type: OrderedCollection typAsType asNonParametricType;
-				parameters: {TypType typAsType};
+				parameters:
+					{Symbol typAsType.
+					(TypParametricType new
+						type: OrderedCollection typAsType asNonParametricType;
+						parameters: {TypType typAsType};
+						yourself)};
 				yourself)};
 		yourself
 ]
 
 { #category : #accessing }
 TypMethodResolver >> argumentTypeAt: anInteger for: anAssociation resolvedBy: anotherAssociation [
+	<typTypeArgument: 1 as: 'Integer'>
+	<typTypeArgument: 2 as: 'Association<TypType,Association<Symbol,OrderedCollection<TypType>>>'>
+	<typTypeArgument: 3 as: 'Association<TypType,Association<Symbol,OrderedCollection<TypType>>>'>
+	<typTypeResultAs: 'TypType'>
 	^ argumentTypes
 		cull: self
 		cull: anInteger
@@ -35,11 +40,13 @@ TypMethodResolver >> argumentTypeAt: anInteger for: anAssociation resolvedBy: an
 
 { #category : #accessing }
 TypMethodResolver >> argumentTypes [
+	<typTypeResultAs: 'BlockClosure<TypResolver<Association<Symbol,OrderedCollection<TypType>>>,Integer,Association<TypType,Association<Symbol,OrderedCollection<TypType>>>>'>
 	^ argumentTypes
 ]
 
 { #category : #accessing }
 TypMethodResolver >> argumentTypes: anObject [
+	<typTypeArgument: 1 as: 'BlockClosure<TypResolver<Association<Symbol,OrderedCollection<TypType>>>,Integer,Association<TypType,Association<Symbol,OrderedCollection<TypType>>>>'>
 	argumentTypes := anObject
 ]
 
@@ -57,15 +64,20 @@ TypMethodResolver >> resolves: anAssociation [
 
 { #category : #accessing }
 TypMethodResolver >> resultType [
+	<typTypeResultAs: 'BlockClosure<TypResolver<Association<Symbol,OrderedCollection<TypType>>>,Association<TypType,Association<Symbol,OrderedCollection<TypType>>>>'>
 	^ resultType
 ]
 
 { #category : #accessing }
 TypMethodResolver >> resultType: anObject [
+	<typTypeArgument: 1 as: 'BlockClosure<TypResolver<Association<Symbol,OrderedCollection<TypType>>>,Association<TypType,Association<Symbol,OrderedCollection<TypType>>>>'>
 	resultType := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypMethodResolver >> resultTypeFor: anAssociation resolvedBy: anotherAssociation [
+	<typTypeArgument: 1 as: 'Association<TypType,Association<Symbol,OrderedCollection<TypType>>>'>
+	<typTypeArgument: 2 as: 'Association<TypType,Association<Symbol,OrderedCollection<TypType>>>'>
+	<typTypeResultAs: 'TypType'>
 	^ resultType cull: self cull: anAssociation cull: anotherAssociation
 ]

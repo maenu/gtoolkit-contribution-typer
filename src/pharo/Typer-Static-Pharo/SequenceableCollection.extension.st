@@ -27,7 +27,7 @@ SequenceableCollection class >> typStaInstanceMethodResolvers [
 				selector: #withIndexDo:;
 				argumentTypes: [ :r :i :a | 
 					TypParametricType new
-						type: BlockClosure typAsType;
+						type: BlockClosure typAsType asNonParametricType;
 						parameters:
 							{(a key parameters at: i).
 							Integer typAsType.

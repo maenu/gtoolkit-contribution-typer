@@ -30,7 +30,7 @@ Dictionary class >> typStaInstanceMethodResolvers [
 					i = 1
 						ifTrue: [ a key parameters at: 1 ]
 						ifFalse: [ TypParametricType new
-								type: BlockClosure typAsType;
+								type: BlockClosure typAsType asNonParametricType;
 								parameters: {(a key parameters at: 2)};
 								yourself ] ];
 				resultType: [ :r :a :s | a key parameters at: 2 ];
@@ -58,7 +58,7 @@ Dictionary class >> typStaInstanceMethodResolvers [
 				selector: #associationsDo:;
 				argumentTypes: [ :r :i :a | 
 					TypParametricType new
-						type: BlockClosure typAsType;
+						type: BlockClosure typAsType asNonParametricType;
 						parameters:
 							{(TypParametricType new
 								type: Association typAsType asNonParametricType;

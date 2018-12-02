@@ -4,13 +4,32 @@ Class {
 	#category : #'Typer-Core'
 }
 
+{ #category : #initialization }
+TypMethodResolvers >> initialize [
+	<typTypeVariable: 'resolvers' as: 'OrderedCollection<TypResolver<Association<TypType,Association<Symbol,OrderedCollection<TypType>>>>>'>
+	super initialize
+]
+
+{ #category : #initialization }
+TypMethodResolvers >> typeFor: anAssociation using: aBlock [
+	<typTypeArgument: 1 as: 'Association<TypType,Association<Symbol,OrderedCollection<TypType>>>'>
+	<typTypeArgument: 2 as: 'BlockClosure<TypResolver<Association<TypType,Association<Symbol,OrderedCollection<TypType>>>>,Association<TypType,Association<Symbol,OrderedCollection<TypType>>>,TypType>'>
+	<typTypeResultAs: 'TypType'>
+	^ super typeFor: anAssociation using: aBlock
+]
+
 { #category : #accessing }
 TypMethodResolvers >> typeForArgumentAt: anInteger ofMethod: anAssociation [
+	<typTypeArgument: 1 as: 'Integer'>
+	<typTypeArgument: 2 as: 'Association<TypType,Association<Symbol,OrderedCollection<TypType>>>'>
+	<typTypeResultAs: 'TypType'>
 	^ self typeFor: anAssociation using: [ :r :a | r argumentTypeAt: anInteger for: anAssociation resolvedBy: a ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypMethodResolvers >> typeForResultOfMethod: anAssociation [
+	<typTypeArgument: 1 as: 'Association<TypType,Association<Symbol,OrderedCollection<TypType>>>'>
+	<typTypeResultAs: 'TypType'>
 	| type |
 	type := self typeFor: anAssociation using: [ :r :a | r resultTypeFor: anAssociation resolvedBy: a ].
 	(type isUnknown and: [ anAssociation key hasClass ])

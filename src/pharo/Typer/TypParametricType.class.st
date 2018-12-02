@@ -108,7 +108,7 @@ TypParametricType >> printOn: aStream [
 TypParametricType >> superType [
 	| copy |
 	copy := self copy.
-	copy type: type superType.
+	copy type: type superType asNonParametricType.
 	^ copy
 ]
 

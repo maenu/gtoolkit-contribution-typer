@@ -19,7 +19,7 @@ Collection class >> typStaInstanceMethodResolvers [
 				selector: #do:;
 				argumentTypes: [ :r :i :a :s | 
 					TypParametricType new
-						type: BlockClosure typAsType;
+						type: BlockClosure typAsType asNonParametricType;
 						parameters:
 							{(a key parameters at: i).
 							a key};
@@ -57,7 +57,7 @@ Collection class >> typStaInstanceMethodResolvers [
 				selector: #anySatisfy:;
 				argumentTypes: [ :r :i :a | 
 					TypParametricType new
-						type: BlockClosure typAsType;
+						type: BlockClosure typAsType asNonParametricType;
 						parameters:
 							{(a key parameters at: 1).
 							Boolean typAsType};
@@ -70,7 +70,7 @@ Collection class >> typStaInstanceMethodResolvers [
 				selector: #sort:;
 				argumentTypes: [ :r :i :a :s | 
 					TypParametricType new
-						type: BlockClosure typAsType;
+						type: BlockClosure typAsType asNonParametricType;
 						parameters:
 							{(a key parameters at: 1).
 							(a key parameters at: 1).
@@ -84,7 +84,7 @@ Collection class >> typStaInstanceMethodResolvers [
 				selector: #detect:;
 				argumentTypes: [ :r :i :a | 
 					TypParametricType new
-						type: BlockClosure typAsType;
+						type: BlockClosure typAsType asNonParametricType;
 						parameters:
 							{(a key parameters at: 1).
 							Boolean typAsType};
@@ -104,7 +104,7 @@ Collection class >> typStaInstanceMethodResolvers [
 				selector: #select:;
 				argumentTypes: [ :r :i :a | 
 					TypParametricType new
-						type: BlockClosure typAsType;
+						type: BlockClosure typAsType asNonParametricType;
 						parameters:
 							{(a key parameters at: 1).
 							Boolean typAsType};
@@ -117,7 +117,7 @@ Collection class >> typStaInstanceMethodResolvers [
 				selector: #collect:;
 				argumentTypes: [ :r :i :a | 
 					TypParametricType new
-						type: BlockClosure typAsType;
+						type: BlockClosure typAsType asNonParametricType;
 						parameters:
 							{(a key parameters at: 1).
 							TypUnknownType instance};
