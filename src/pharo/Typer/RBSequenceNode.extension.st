@@ -10,10 +10,8 @@ RBSequenceNode >> typType [
 RBSequenceNode >> typTypeRecursiveWithDiscovered: aDictionary [
 	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
 	<typTypeResultAs: 'TypType'>
-	| values |
-	values := statements select: #isValue.
-	values ifEmpty: [ ^ TypNilType instance ].
-	^ values last typTypeWithDiscovered: aDictionary
+	statements ifEmpty: [ ^ TypNilType instance ].
+	^ statements last typTypeWithDiscovered: aDictionary
 ]
 
 { #category : #'*Typer' }
