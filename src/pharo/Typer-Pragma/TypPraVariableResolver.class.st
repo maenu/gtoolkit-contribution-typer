@@ -5,34 +5,32 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypPraVariableResolver >> resolverFor: anAssociation [
+TypPraVariableResolver >> resolverFor: aLookup [
 	| clazz pragma |
-	self assert: [ self resolves: anAssociation ].
-	clazz := anAssociation key asClass.
-	anAssociation value first isUppercase
+	self assert: [ self resolves: aLookup ].
+	clazz := aLookup receiverType asClass.
+	aLookup selector first isUppercase
 		ifTrue: [ clazz := clazz classSide ].
 	pragma := (clazz methods detect: [ :e | e selector = #initialize ]) pragmas
-		detect: [ :e | e selector = #typTypeVariable:as: and: [ e arguments first = anAssociation value ] ].
-	anAssociation value first isUppercase
+		detect: [ :e | e selector = #typTypeVariable:as: and: [ e arguments first = aLookup selector ] ].
+	aLookup selector first isUppercase
 		ifTrue: [ clazz := clazz instanceSide ].
 	^ TypVariableResolver new
 		receiverType: clazz typAsType;
-		selector: anAssociation value;
+		selector: aLookup selector;
 		type: [ (pragma arguments at: 2) typAsType ];
 		yourself
 ]
 
 { #category : #'as yet unclassified' }
-TypPraVariableResolver >> resolves: anAssociation [
+TypPraVariableResolver >> resolves: aLookup [
 	| clazz |
-	anAssociation key hasClass
+	aLookup receiverType hasClass
 		ifFalse: [ ^ false ].
-	clazz := anAssociation key asClass.
-	anAssociation value first isUppercase
+	clazz := aLookup receiverType asClass.
+	aLookup selector first isUppercase
 		ifTrue: [ clazz := clazz classSide ].
 	^ clazz methods
-		anySatisfy: [ :e | 
-			e selector = #initialize
-				and: [ e pragmas
-						anySatisfy: [ :f | f selector = #typTypeVariable:as: and: [ f arguments first = anAssociation value ] ] ] ]
+		anySatisfy:
+			[ :e | e selector = #initialize and: [ e pragmas anySatisfy: [ :f | f selector = #typTypeVariable:as: and: [ f arguments first = aLookup selector ] ] ] ]
 ]

@@ -5,22 +5,22 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypStaMethodResolver >> resolverFor: anAssociation [
+TypStaMethodResolver >> resolverFor: aLookup [
 	| clazz |
-	self assert: [ self resolves: anAssociation ].
-	clazz := anAssociation key asClass.
+	self assert: [ self resolves: aLookup ].
+	clazz := aLookup receiverType asClass.
 	^ (clazz isMeta
 		ifTrue: [ clazz instanceSide typStaClassMethodResolver ]
-		ifFalse: [ clazz typStaInstanceMethodResolver ]) resolverFor: anAssociation
+		ifFalse: [ clazz typStaInstanceMethodResolver ]) resolverFor: aLookup
 ]
 
 { #category : #'as yet unclassified' }
-TypStaMethodResolver >> resolves: anAssociation [
+TypStaMethodResolver >> resolves: aLookup [
 	| clazz |
-	anAssociation key hasClass
+	aLookup receiverType hasClass
 		ifFalse: [ ^ false ].
-	clazz := anAssociation key asClass.
+	clazz := aLookup receiverType asClass.
 	^ clazz isMeta
-		ifTrue: [ clazz instanceSide typStaResolvesClassMethod: anAssociation ]
-		ifFalse: [ clazz typStaResolvesInstanceMethod: anAssociation ]
+		ifTrue: [ clazz instanceSide typStaResolvesClassMethod: aLookup ]
+		ifFalse: [ clazz typStaResolvesInstanceMethod: aLookup ]
 ]

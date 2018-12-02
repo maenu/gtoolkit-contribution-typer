@@ -5,26 +5,26 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypStaVariableResolver >> resolverFor: anAssociation [
+TypStaVariableResolver >> resolverFor: aLookup [
 	| clazz |
-	self assert: [ self resolves: anAssociation ].
-	clazz := anAssociation key asClass.
+	self assert: [ self resolves: aLookup ].
+	clazz := aLookup receiverType asClass.
 	^ (clazz isMeta
-		ifTrue: [ (clazz instanceSide typStaResolvesClassInstanceVariable: anAssociation)
+		ifTrue: [ (clazz instanceSide typStaResolvesClassInstanceVariable: aLookup)
 				ifTrue: [ clazz instanceSide typStaClassInstanceVariableResolver ]
 				ifFalse: [ clazz instanceSide typStaClassVariableResolver ] ]
-		ifFalse: [ (clazz typStaResolvesInstanceVariable: anAssociation)
+		ifFalse: [ (clazz typStaResolvesInstanceVariable: aLookup)
 				ifTrue: [ clazz typStaInstanceVariableResolver ]
-				ifFalse: [ clazz typStaClassVariableResolver ] ]) resolverFor: anAssociation
+				ifFalse: [ clazz typStaClassVariableResolver ] ]) resolverFor: aLookup
 ]
 
 { #category : #'as yet unclassified' }
-TypStaVariableResolver >> resolves: anAssociation [
+TypStaVariableResolver >> resolves: aLookup [
 	| clazz |
-	anAssociation key hasClass
+	aLookup receiverType hasClass
 		ifFalse: [ ^ false ].
-	clazz := anAssociation key asClass.
+	clazz := aLookup receiverType asClass.
 	^ clazz isMeta
-		ifTrue: [ (clazz instanceSide typStaResolvesClassInstanceVariable: anAssociation) or: [ clazz instanceSide typStaResolvesClassVariable: anAssociation ] ]
-		ifFalse: [ (clazz typStaResolvesInstanceVariable: anAssociation) or: [ clazz typStaResolvesClassVariable: anAssociation ] ]
+		ifTrue: [ (clazz instanceSide typStaResolvesClassInstanceVariable: aLookup) or: [ clazz instanceSide typStaResolvesClassVariable: aLookup ] ]
+		ifFalse: [ (clazz typStaResolvesInstanceVariable: aLookup) or: [ clazz typStaResolvesClassVariable: aLookup ] ]
 ]

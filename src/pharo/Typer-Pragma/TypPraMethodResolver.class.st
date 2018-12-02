@@ -5,11 +5,11 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypPraMethodResolver >> resolverFor: anAssociation [
+TypPraMethodResolver >> resolverFor: aLookup [
 	| clazz method argumentPragmas resultPragma argumentTypes resultType |
-	self assert: [ self resolves: anAssociation ].
-	clazz := anAssociation key asClass.
-	method := clazz methods detect: [ :e | e selector = anAssociation value key ].
+	self assert: [ self resolves: aLookup ].
+	clazz := aLookup receiverType asClass.
+	method := clazz methods detect: [ :e | e selector = aLookup selector ].
 	argumentPragmas := method pragmas select: [ :e | e selector = #typTypeArgument:as: ].
 	resultPragma := method pragmas detect: [ :e | e selector = #typTypeResultAs: ] ifNone: [ nil ].
 	argumentTypes := method numArgs
@@ -30,13 +30,12 @@ TypPraMethodResolver >> resolverFor: anAssociation [
 ]
 
 { #category : #'as yet unclassified' }
-TypPraMethodResolver >> resolves: anAssociation [
+TypPraMethodResolver >> resolves: aLookup [
 	| clazz |
-	anAssociation key hasClass
+	aLookup receiverType hasClass
 		ifFalse: [ ^ false ].
-	clazz := anAssociation key asClass.
+	clazz := aLookup receiverType asClass.
 	^ clazz methods
-		anySatisfy: [ :e | 
-			e selector = anAssociation value key
-				and: [ e pragmas anySatisfy: [ :f | f selector = #typTypeArgument:as: or: [ f selector = #typTypeResultAs: ] ] ] ]
+		anySatisfy:
+			[ :e | e selector = aLookup selector and: [ e pragmas anySatisfy: [ :f | f selector = #typTypeArgument:as: or: [ f selector = #typTypeResultAs: ] ] ] ]
 ]
