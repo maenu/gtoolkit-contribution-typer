@@ -1,8 +1,7 @@
 Extension { #name : #RBLiteralValueNode }
 
 { #category : #'*Typer' }
-RBLiteralValueNode >> typTypeRecursiveWithDiscovered: aDictionary [
-	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
+RBLiteralValueNode >> typTypeRecursive [
 	<typTypeResultAs: 'TypType'>
 	^ value class typAsType
 ]

@@ -1,41 +1,36 @@
 Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer' }
-RBBlockNode >> typTypeForArgumentAt: anInteger withDiscovered: aDictionary [
+RBBlockNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
-	<typTypeArgument: 2 as: 'Dictionary<RBProgramNode,TypType>'>
 	<typTypeResultAs: 'TypType'>
 	| type |
-	type := self typTypeWithDiscovered: aDictionary.
+	type := self typType.
+	(parent isMessage and: [ parent receiver ~~ self ])
+		ifTrue: [ | i parent_ type_ |
+			parent_ := parent.	"typCastAs RBMessageNode"
+			i := parent_ arguments detectIndex: [ :e | e == self ].
+			type_ := parent_ typTypeForArgumentAt: i.
+			type_ isParametric
+				ifTrue: [ ^ type_ parameters at: anInteger ] ].
 	(type isParametric and: [ anInteger < type parameters size ])
-		ifTrue: [ (parent isMessage and: [ parent receiver ~~ self ])
-				ifTrue: [ | i parent_ type_ |
-					parent_ := parent.	"typCastAs RBMessageNode"
-					i := parent_ arguments detectIndex: [ :e | e == self ].
-					type_ := parent_ typTypeForArgumentAt: i withDiscovered: aDictionary.
-					type_ isParametric
-						ifTrue: [ ^ type_ parameters at: anInteger ] ].
-			^ type parameters at: anInteger ].
+		ifTrue: [ ^ type parameters at: anInteger ].
 	^ TypUnknownType instance
 ]
 
 { #category : #'*Typer' }
-RBBlockNode >> typTypeForArgumentNamed: aSymbol withDiscovered: aDictionary [
+RBBlockNode >> typTypeForArgumentNamed: aSymbol [
 	<typTypeArgument: 1 as: 'Symbol'>
-	<typTypeArgument: 2 as: 'Dictionary<RBProgramNode,TypType>'>
 	<typTypeResultAs: 'TypType'>
 	| i |
 	i := arguments detectIndex: [ :f | f name = aSymbol ].
-	^ self typTypeForArgumentAt: i withDiscovered: aDictionary
+	^ self typTypeForArgumentAt: i
 ]
 
 { #category : #'*Typer' }
-RBBlockNode >> typTypeRecursiveWithDiscovered: aDictionary [
-	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
+RBBlockNode >> typTypeRecursive [
 	<typTypeResultAs: 'TypType'>
 	^ BlockClosure typAsType copy
-		parameters:
-			(arguments collect: [ :e | e typTypeWithDiscovered: aDictionary ])
-				, {(body typTypeWithDiscovered: aDictionary)};
+		parameters: (arguments collect: #typType) , {body typType};
 		yourself
 ]

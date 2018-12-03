@@ -1,8 +1,7 @@
 Extension { #name : #RBInstanceVariableNode }
 
 { #category : #'*Typer' }
-RBInstanceVariableNode >> typTypeRecursiveWithDiscovered: aDictionary [
-	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
+RBInstanceVariableNode >> typTypeRecursive [
 	<typTypeResultAs: 'TypType'>
 	| type |
 	type := self methodNode methodClass typAsType.

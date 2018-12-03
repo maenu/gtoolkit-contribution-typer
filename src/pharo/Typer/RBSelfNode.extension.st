@@ -1,8 +1,7 @@
 Extension { #name : #RBSelfNode }
 
 { #category : #'*Typer' }
-RBSelfNode >> typTypeRecursiveWithDiscovered: aDictionary [
-	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
+RBSelfNode >> typTypeRecursive [
 	<typTypeResultAs: 'TypType'>
 	^ self methodNode method methodClass typAsType
 ]

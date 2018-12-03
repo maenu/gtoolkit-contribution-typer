@@ -1,54 +1,49 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer' }
-RBMessageNode >> typKnownArgumentTypesWithDiscovered: aDictionary [
-	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
-	<typTypeResultAs: 'OrderedCollection<TypType>'>
-	^ arguments collect: [ :f | f typTypeWithDiscovered: aDictionary ]
-]
-
-{ #category : #'*Typer' }
-RBMessageNode >> typTypeForArgumentAt: anInteger withDiscovered: aDictionary [
+RBMessageNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
-	<typTypeArgument: 2 as: 'Dictionary<RBProgramNode,TypType>'>
 	<typTypeResultAs: 'TypType'>
 	| receiverType |
-	receiverType := self typTypeForReceiverWithDiscovered: aDictionary.
+	receiverType := self typTypeForReceiver.
 	^ TypMethodResolvers instance
 		typeForArgumentAt: anInteger
 		ofMethod:
 			(TypMethodLookup new
 				receiverType: receiverType;
 				selector: selector asSymbol;
-				argumentTypes: (self typKnownArgumentTypesWithDiscovered: aDictionary);
+				argumentTypes: self typTypesForArguments;
 				yourself)
 ]
 
 { #category : #'*Typer' }
-RBMessageNode >> typTypeForReceiverWithDiscovered: aDictionary [
-	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
+RBMessageNode >> typTypeForReceiver [
 	<typTypeResultAs: 'TypType'>
-	^ receiver typTypeWithDiscovered: aDictionary
+	^ receiver typType
 ]
 
 { #category : #'*Typer' }
-RBMessageNode >> typTypeForResultWithDiscovered: aDictionary [
-	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
+RBMessageNode >> typTypeForResult [
 	<typTypeResultAs: 'TypType'>
 	| receiverType |
-	receiverType := self typTypeForReceiverWithDiscovered: aDictionary.
+	receiverType := self typTypeForReceiver.
 	^ TypMethodResolvers instance
 		typeForResultOfMethod:
 			(TypMethodLookup new
 				receiverType: receiverType;
 				selector: selector asSymbol;
-				argumentTypes: (self typKnownArgumentTypesWithDiscovered: aDictionary);
+				argumentTypes: (self typTypesForArguments);
 				yourself)
 ]
 
 { #category : #'*Typer' }
-RBMessageNode >> typTypeRecursiveWithDiscovered: aDictionary [
-	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
+RBMessageNode >> typTypeRecursive [
 	<typTypeResultAs: 'TypType'>
-	^ self typTypeForResultWithDiscovered: aDictionary
+	^ self typTypeForResult
+]
+
+{ #category : #'*Typer' }
+RBMessageNode >> typTypesForArguments [
+	<typTypeResultAs: 'OrderedCollection<TypType>'>
+	^ arguments collect: #typType
 ]

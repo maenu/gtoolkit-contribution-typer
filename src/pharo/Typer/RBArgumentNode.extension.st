@@ -1,8 +1,7 @@
 Extension { #name : #RBArgumentNode }
 
 { #category : #'*Typer' }
-RBArgumentNode >> typTypeRecursiveWithDiscovered: aDictionary [
-	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
+RBArgumentNode >> typTypeRecursive [
 	<typTypeResultAs: 'TypType'>
-	^ (self whoDefines: name) typTypeForArgumentNamed: name withDiscovered: aDictionary
+	^ (self whoDefines: name) typTypeForArgumentNamed: name
 ]

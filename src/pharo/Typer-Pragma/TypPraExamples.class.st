@@ -26,7 +26,7 @@ TypPraExamples >> comment: aThing [
 	c := OrderedCollection new.	"typParameters Point"
 	i := thing.	"thing is instance variable"
 	s := self.
-	d := (c select: [ :e | e abs > 1 ]) collect: [ :e | e abs ].
+	d := (c select: [ :e | e abs > 1 ]) select: [ :e | e abs ].
 	o.
 	c.
 	i.

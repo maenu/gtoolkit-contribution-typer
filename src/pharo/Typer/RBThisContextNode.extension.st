@@ -1,8 +1,7 @@
 Extension { #name : #RBThisContextNode }
 
 { #category : #'*Typer' }
-RBThisContextNode >> typTypeRecursiveWithDiscovered: aDictionary [
-	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
+RBThisContextNode >> typTypeRecursive [
 	<typTypeResultAs: 'TypType'>
 	^ Context typAsType
 ]
