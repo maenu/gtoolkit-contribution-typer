@@ -14,6 +14,7 @@ TypNamedType >> = anObject [
 
 { #category : #converting }
 TypNamedType >> asClass [
+	self assert: [ self hasClass ].
 	(name endsWith: ' class')
 		ifFalse: [ ^ name asClass ].
 	^ (name copyFrom: 1 to: name size - ' class' size) asClass classSide
@@ -79,9 +80,10 @@ TypNamedType >> printOn: aStream [
 
 { #category : #'as yet unclassified' }
 TypNamedType >> superType [
-	^ self asClass superclass
-		ifNil: [ nullable
-				ifTrue: [ TypNilType instance ]
-				ifFalse: [ TypNoSuperTypeError signal ] ]
-		ifNotNil: #typAsType
+	self assert: [ self hasSuperType ].
+	(self hasClass not or: [ self asClass superclass isNil ])
+		ifTrue: [ "must be nullable" ^ TypNilType instance ].
+	^ self asClass superclass typAsType copy
+		nullable: nullable;
+		yourself
 ]

@@ -20,7 +20,7 @@ TypParametricType >> asClass [
 
 { #category : #testing }
 TypParametricType >> asNonParametricType [
-	^ type
+	^ type asNonParametricType
 ]
 
 { #category : #testing }
@@ -106,10 +106,14 @@ TypParametricType >> printOn: aStream [
 
 { #category : #accessing }
 TypParametricType >> superType [
-	| copy |
-	copy := self copy.
-	copy type: type superType asNonParametricType.
-	^ copy
+	| superType |
+	self assert: [ self hasSuperType ].
+	superType := type superType.
+	^ superType isParametric
+		ifTrue: [ self copy
+				type: type superType asNonParametricType;
+				yourself ]
+		ifFalse: [ superType ]
 ]
 
 { #category : #accessing }

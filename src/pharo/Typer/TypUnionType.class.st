@@ -207,6 +207,7 @@ TypUnionType >> summary [
 { #category : #accessing }
 TypUnionType >> superType [
 	| remains nullable_ current |
+	self assert: [ self hasSuperType ].
 	remains := weights keys asSet copy.
 	remains remove: TypUnknownType instance ifAbsent: [  ].
 	remains ifEmpty: [ ^ TypUnknownType instance ].

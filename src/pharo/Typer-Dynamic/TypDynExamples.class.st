@@ -22,5 +22,5 @@ TypDynExamples >> neoJsonCore [
 	TypVariableResolvers instance resolvers
 		removeAll;
 		add: association value.
-	^ testResult -> #'Neo-JSON-Tests' asPackage methods
+	^ testResult -> #'Neo-JSON-Core' asPackage methods
 ]

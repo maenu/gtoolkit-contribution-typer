@@ -29,7 +29,6 @@ RBBlockNode >> typTypeForArgumentNamed: aSymbol [
 
 { #category : #'*Typer' }
 RBBlockNode >> typTypeRecursive [
-	<typTypeResultAs: 'TypType'>
 	^ BlockClosure typAsType copy
 		parameters: (arguments collect: #typType) , {body typType};
 		yourself

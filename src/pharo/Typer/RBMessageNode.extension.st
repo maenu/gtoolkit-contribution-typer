@@ -38,7 +38,6 @@ RBMessageNode >> typTypeForResult [
 
 { #category : #'*Typer' }
 RBMessageNode >> typTypeRecursive [
-	<typTypeResultAs: 'TypType'>
 	^ self typTypeForResult
 ]
 

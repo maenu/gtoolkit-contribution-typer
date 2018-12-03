@@ -2,7 +2,6 @@ Extension { #name : #RBArrayNode }
 
 { #category : #'*Typer' }
 RBArrayNode >> typTypeRecursive [
-	<typTypeResultAs: 'TypType'>
 	^ TypParametricType new
 		type: Array typAsType;
 		parameters: {(statements ifEmpty: [ TypUnknownType instance ] ifNotEmpty: [ (statements collect: #typType) typAsType ])};
