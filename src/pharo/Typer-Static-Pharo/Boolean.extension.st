@@ -4,7 +4,7 @@ Extension { #name : #Boolean }
 Boolean class >> typStaInstanceMethodResolvers [
 	<typTypeResultAs: 'OrderedCollection<TypMethodResolver>'>
 	| resolvers |
-	resolvers := OrderedCollection new "typParameters TypMethodResolver".
+	resolvers := OrderedCollection new.	"typParameters TypMethodResolver"
 	resolvers
 		add:
 			(TypMethodResolver new
@@ -29,13 +29,14 @@ Boolean class >> typStaInstanceMethodResolvers [
 				receiverType: self typAsType;
 				selector: #ifTrue:ifFalse:;
 				argumentTypes: [ :r :i :a | 
-					| argumentType resultType "typCastAs TypType" |
-					argumentType := (a argumentTypes at: i).
-					resultType := (argumentType isParametric and: [ argumentType hasClass and: [ argumentType asClass == BlockClosure ] ])
-						ifTrue: [ argumentType parameters last ]
+					| argumentType resultType	"typCastAs TypType" |
+					argumentType := a argumentTypes at: i.
+					resultType := argumentType isBlockClosure
+						ifTrue: [ argumentType internalResultType ]
 						ifFalse: [ TypUnknownType instance ].
 					BlockClosure typAsType copy
 						parameters: {resultType};
+						internalResultType: {resultType};
 						yourself ];
 				resultType: [ :r :a | 
 					| resultType |
@@ -44,8 +45,8 @@ Boolean class >> typStaInstanceMethodResolvers [
 						into: [ :e :f | 
 							e
 								increment:
-									((f isParametric and: [ f hasClass and: [ f asClass == BlockClosure ] ])
-										ifTrue: [ f parameters last ]
+									(f isBlockClosure
+										ifTrue: [ f internalResultType ]
 										ifFalse: [ TypUnknownType instance ]).
 							e ].
 					resultType asType ];

@@ -114,6 +114,12 @@ TypType >> initialize [
 ]
 
 { #category : #testing }
+TypType >> isBlockClosure [
+	<typTypeResultAs: 'Boolean'>
+	^ false
+]
+
+{ #category : #testing }
 TypType >> isNil [
 	<typTypeResultAs: 'Boolean'>
 	^ false

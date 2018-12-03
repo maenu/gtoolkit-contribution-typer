@@ -4,9 +4,10 @@ Extension { #name : #RBBlockNode }
 RBBlockNode >> typTypeAsUnknownWithDiscovered: aDictionary [
 	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
 	<typTypeResultAs: 'TypType'>
-	^ TypParametricType new
+	^ TypBlockClosureType new
 		type: BlockClosure typAsType asNonParametricType;
 		parameters: (arguments collect: [ :e | e typTypeWithDiscovered: aDictionary ]) , {(self typTypeForResultWithDiscovered: aDictionary)};
+		internalResultType: (body typTypeWithDiscovered: aDictionary);
 		yourself
 ]
 
@@ -36,30 +37,35 @@ RBBlockNode >> typTypeForArgumentNamed: aSymbol withDiscovered: aDictionary [
 RBBlockNode >> typTypeForResultWithDiscovered: aDictionary [
 	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
 	<typTypeResultAs: 'TypType'>
-	| type resultType |
+	| type |
 	type := self typTypeWithDiscovered: aDictionary.
-	resultType := (type isParametric and: [ type parameters isNotEmpty ])
-		ifTrue: [ type parameters last "typCastAs TypType"]
-		ifFalse: [ TypUnknownType instance ].
-	resultType isUnknown
-		ifTrue: [ ^ body typTypeWithDiscovered: aDictionary ].
-	^ resultType
+	(type isParametric and: [ type parameters isNotEmpty ])
+		ifTrue: [ ^ type parameters last ].
+	^ TypUnknownType instance
 ]
 
 { #category : #'*Typer' }
 RBBlockNode >> typTypeRecursiveWithDiscovered: aDictionary [
 	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
 	<typTypeResultAs: 'TypType'>
-	parent isMessage
-		ifTrue: [ | i type |
-			parent receiver == self
-				ifTrue: [ ^ self typTypeAsUnknownWithDiscovered: aDictionary ].
-			i := parent "typCastAs RBMessageNode"  arguments detectIndex: [ :e | e == self ].
-			type := parent "typCastAs RBMessageNode"  typTypeForArgumentAt: i withDiscovered: aDictionary.
-			(type isParametric
-				and: [ type hasClass and: [ type asClass == BlockClosure and: [ type parameters last isUnknown ] ] ])
-				ifTrue: [ type := type copy.
-					type parameters at: type parameters size put: (body typTypeRecursiveWithDiscovered: aDictionary) ].
-			^ type ].
+	(parent isMessage and: [ parent receiver ~~ self ])
+		ifTrue: [ | i parent_ type internalResultType |
+			parent_ := parent.	"typCastAs RBMessageNode"
+			i := parent_ arguments detectIndex: [ :e | e == self ].
+			internalResultType := body typTypeWithDiscovered: aDictionary.
+			type := parent_ typTypeForArgumentAt: i withDiscovered: aDictionary.
+			^ type isBlockClosure
+				ifTrue: [ type copy
+						internalResultType: internalResultType;
+						yourself ]
+				ifFalse: [ type isParametric
+						ifTrue: [ TypBlockClosureType new
+								type: type type;
+								parameters: type parameters;
+								internalResultType: internalResultType;
+								yourself ]
+						ifFalse: [ BlockClosure typAsType copy
+								internalResultType: internalResultType;
+								yourself ] ] ].
 	^ self typTypeAsUnknownWithDiscovered: aDictionary
 ]

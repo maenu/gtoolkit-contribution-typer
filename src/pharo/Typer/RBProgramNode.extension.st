@@ -1,20 +1,20 @@
-Extension { #name : #RBValueNode }
+Extension { #name : #RBProgramNode }
 
 { #category : #'*Typer' }
-RBValueNode >> typType [
+RBProgramNode >> typType [
 	<typTypeResultAs: 'TypType'>
 	^ self typTypeWithDiscovered: Dictionary new
 ]
 
 { #category : #'*Typer' }
-RBValueNode >> typTypeRecursiveWithDiscovered: aDictionary [
+RBProgramNode >> typTypeRecursiveWithDiscovered: aDictionary [
 	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
 	<typTypeResultAs: 'TypType'>
-	^ Object typAsType
+	^ TypUnknownType instance
 ]
 
 { #category : #'*Typer' }
-RBValueNode >> typTypeWithDiscovered: aDictionary [
+RBProgramNode >> typTypeWithDiscovered: aDictionary [
 	<typTypeArgument: 1 as: 'Dictionary<RBProgramNode,TypType>'>
 	<typTypeResultAs: 'TypType'>
 	^ aDictionary
