@@ -194,9 +194,17 @@ Collection class >> typStaInstanceMethodResolvers [
 							TypUnknownType instance};
 						yourself ];
 				resultType: [ :r :a | 
-					a receiverType copy
-						parameters: {TypUnknownType instance};
-						yourself ];
+					| resultType |
+					resultType := a argumentTypes
+						inject: TypUnionType new
+						into: [ :e :f | 
+							e
+								increment:
+									(f isParametric
+										ifTrue: [ f parameters last	"typCastAs TypParametricType" ]
+										ifFalse: [ TypUnknownType instance ]).
+							e ].
+					a receiverType copy asParametricType: {resultType asType} ];
 				yourself).
 	resolvers addAll: super typStaInstanceMethodResolvers.
 	^ resolvers

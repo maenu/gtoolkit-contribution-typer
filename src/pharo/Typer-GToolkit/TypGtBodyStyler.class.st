@@ -28,7 +28,8 @@ TypGtBodyStyler >> styleValueNode: aNode [
 
 { #category : #visiting }
 TypGtBodyStyler >> styleValueNodeWithCursor: aNode [
-	self
+	self flag: 'not working yet, needs work'.
+	"self
 		styleFrom: aNode start
 		to: aNode stop
 		with:
@@ -40,7 +41,7 @@ TypGtBodyStyler >> styleValueNodeWithCursor: aNode [
 								on: Error
 								do: [ Halt now ]);
 						yourself);
-				yourself)}
+				yourself)}"
 ]
 
 { #category : #visiting }

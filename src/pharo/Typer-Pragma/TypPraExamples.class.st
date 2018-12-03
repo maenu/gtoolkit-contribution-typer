@@ -19,13 +19,14 @@ TypPraExamples class >> typAsType [
 TypPraExamples >> comment: aThing [
 	<typTypeArgument: 1 as: 'String'>
 	<typTypeResultAs: 'String'>
-	| o c i s |
+	| o c i s d |
 	o := 10 atRandom > 5
 		ifTrue: [ Object new ]
 		ifFalse: [ Dictionary new ].
 	c := OrderedCollection new.	"typParameters Point"
 	i := thing.	"thing is instance variable"
 	s := self.
+	d := (c select: [ :e | e abs > 1 ]) collect: [ :e | e abs ].
 	o.
 	c.
 	i.

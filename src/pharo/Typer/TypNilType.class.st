@@ -9,6 +9,7 @@ Class {
 
 { #category : #accessing }
 TypNilType class >> instance [
+	<typTypeResultAs: 'TypNilType'>
 	^ instance ifNil: [ instance := self new ]
 ]
 

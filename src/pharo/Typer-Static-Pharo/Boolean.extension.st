@@ -28,15 +28,8 @@ Boolean class >> typStaInstanceMethodResolvers [
 			(TypMethodResolver new
 				receiverType: self typAsType;
 				selector: #ifTrue:ifFalse:;
-				argumentTypes: [ :r :i :a | 
-					| argumentType resultType	"typCastAs TypType" |
-					argumentType := a argumentTypes at: i.
-					resultType := argumentType isBlockClosure
-						ifTrue: [ argumentType internalResultType ]
-						ifFalse: [ TypUnknownType instance ].
-					BlockClosure typAsType copy
-						parameters: {resultType};
-						internalResultType: {resultType};
+				argumentTypes: [ BlockClosure typAsType copy
+						parameters: {TypUnknownType instance};
 						yourself ];
 				resultType: [ :r :a | 
 					| resultType |
@@ -45,8 +38,8 @@ Boolean class >> typStaInstanceMethodResolvers [
 						into: [ :e :f | 
 							e
 								increment:
-									(f isBlockClosure
-										ifTrue: [ f internalResultType ]
+									(f isParametric
+										ifTrue: [ (f "typCastAs TypParametricType") parameters last ]
 										ifFalse: [ TypUnknownType instance ]).
 							e ].
 					resultType asType ];

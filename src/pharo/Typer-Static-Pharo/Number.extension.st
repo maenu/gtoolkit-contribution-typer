@@ -14,8 +14,19 @@ Number class >> typStaInstanceMethodResolvers [
 						asParametricType:
 							{Integer typAsType.
 							TypUnknownType instance} ];
-				resultType: [ OrderedCollection typAsType copy
-						asParametricType: {TypUnknownType instance};
+				resultType: [ :r :a | 
+					| resultType |
+					resultType := a argumentTypes
+						inject: TypUnionType new
+						into: [ :e :f | 
+							e
+								increment:
+									(f isParametric
+										ifTrue: [ f parameters "typCastAs TypParametricType" last	 ]
+										ifFalse: [ TypUnknownType instance ]).
+							e ].
+					OrderedCollection typAsType copy
+						asParametricType: {resultType asType};
 						yourself ];
 				yourself).
 	resolvers addAll: super typStaInstanceMethodResolvers.

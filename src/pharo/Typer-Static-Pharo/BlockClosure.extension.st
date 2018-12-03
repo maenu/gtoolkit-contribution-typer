@@ -2,10 +2,9 @@ Extension { #name : #BlockClosure }
 
 { #category : #'*Typer-Static-Pharo' }
 BlockClosure class >> typAsType [
-	^ TypBlockClosureType new
+	^ TypParametricType new
 		type: super typAsType asNonParametricType;
 		parameters: {TypUnknownType instance};
-		internalResultType: TypUnknownType instance;
 		yourself
 ]
 

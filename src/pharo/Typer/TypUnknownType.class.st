@@ -9,6 +9,7 @@ Class {
 
 { #category : #accessing }
 TypUnknownType class >> instance [
+	<typTypeResultAs: 'TypUnknownType'>
 	^ instance ifNil: [ instance := self new ]
 ]
 
