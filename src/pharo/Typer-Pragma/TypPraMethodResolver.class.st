@@ -24,7 +24,7 @@ TypPraMethodResolver >> resolverFor: aLookup [
 	^ TypMethodResolver new
 		receiverType: clazz typAsType;
 		selector: method selector;
-		argumentTypes: [ :r :i | argumentTypes at: i ];
+		argumentTypes: [ :i | argumentTypes at: i ];
 		resultType: [ resultType ];
 		yourself
 ]

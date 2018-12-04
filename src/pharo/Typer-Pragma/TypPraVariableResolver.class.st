@@ -11,11 +11,7 @@ TypPraVariableResolver >> resolverFor: aLookup [
 	clazz := aLookup receiverType asClass.
 	aLookup selector first isUppercase
 		ifTrue: [ clazz := clazz classSide ].
-	pragma := (clazz methods detect: [ :e | e selector = #initialize ]) pragmas
-		detect: [ :e | e selector = #typTypeVariable:as: and: [ e arguments first = aLookup selector ] ].
-	self flag: 'FIXME why instance side, shoud it not be class side?'.
-	aLookup selector first isUppercase
-		ifTrue: [ clazz := clazz instanceSide ].
+	pragma := (clazz methods detect: [ :e | e selector = #initialize ]) pragmas detect: [ :e | e selector = #typTypeVariable:as: and: [ e arguments first = aLookup selector ] ].
 	^ TypVariableResolver new
 		receiverType: clazz typAsType;
 		selector: aLookup selector;
