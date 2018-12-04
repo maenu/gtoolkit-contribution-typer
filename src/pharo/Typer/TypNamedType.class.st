@@ -29,6 +29,11 @@ TypNamedType >> asParametricType: someTypes [
 		yourself
 ]
 
+{ #category : #accessing }
+TypNamedType >> asSourceString [
+	^ super asSourceString , name asString
+]
+
 { #category : #converting }
 TypNamedType >> canBeParametricType [
 	^ true

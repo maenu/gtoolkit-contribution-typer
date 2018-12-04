@@ -6,7 +6,7 @@ Class {
 
 { #category : #'generated-accessing' }
 TypTypeParser class >> cacheId [
-	^'2018-12-02T13:36:24.759483+01:00'
+	^'2018-12-05T00:25:17.587777+01:00'
 ]
 
 { #category : #generated }
@@ -26,10 +26,12 @@ Types
 	| Types 'types' "","" Type 'type' { types , {type} }
 	;
 Type
-	: NullableType 'type' Parameters 'parameters'  { parameters ifEmpty: [ type ] ifNotEmpty: [ TypParametricType new  type: type; parameters: parameters; yourself ] }
+	: ""nil"" {  TypNilType instance  }
+	| ""?"" {  TypUnknownType instance  }
+	| NullableType 'type' Parameters 'parameters'  { parameters ifEmpty: [ type ] ifNotEmpty: [ type asParametricType: parameters ] }
 	;
 NullableType
-	: Nullable 'nullable' <name> 'name'  {  name = '?' ifTrue: [ TypUnknownType instance copy ] ifFalse: [ TypNamedType new nullable: nullable; name: name value asSymbol; yourself ] }
+	: Nullable 'nullable' <name> 'name'  { TypNamedType new nullable: nullable; name: name value asSymbol; yourself }
 	;
 Nullable
 	:""!"" { true }
@@ -37,21 +39,23 @@ Nullable
 	;
 Parameters
 	: ""<"" Types 'parameters' "">""  { parameters }
-	| {{}}
+	| { {} }
 	;"
 ]
 
 { #category : #generated }
 TypTypeParser class >> reduceTable [
 ^#(
-	#(10 0 #reduceActionForNullable2:) 
-	#(10 1 #reduceActionForNullable1:) 
-	#(7 1 #reduceActionForTypes1:) 
-	#(11 0 #reduceFor:) 
-	#(8 2 #reduceActionForType1:) 
-	#(9 2 #reduceActionForNullableType1:) 
-	#(7 3 #reduceActionForTypes2:) 
-	#(11 3 #liftSecondValue:)
+	#(12 0 #reduceActionForNullable2:) 
+	#(12 1 #reduceActionForNullable1:) 
+	#(10 1 #reduceActionForType2:) 
+	#(10 1 #reduceActionForType1:) 
+	#(9 1 #reduceActionForTypes1:) 
+	#(13 0 #reduceActionForParameters2:) 
+	#(10 2 #reduceActionForType3:) 
+	#(11 2 #reduceActionForNullableType1:) 
+	#(9 3 #reduceActionForTypes2:) 
+	#(13 3 #liftSecondValue:)
 	).
 ]
 
@@ -67,25 +71,27 @@ TypTypeParser class >> startingStateForTypes [
 
 { #category : #generated }
 TypTypeParser class >> symbolNames [
-	^ #('"!"' '","' '"<"' '">"' '<name>' 'B e g i n' 'Types' 'Type' 'NullableType' 'Nullable' 'Parameters' 'E O F' 'error')
+	^ #('"!"' '","' '"<"' '">"' '"?"' '"nil"' '<name>' 'B e g i n' 'Types' 'Type' 'NullableType' 'Nullable' 'Parameters' 'E O F' 'error')
 ]
 
 { #category : #generated }
 TypTypeParser class >> transitionTable [
 ^#(
-#[1 0 9 0 1 0 6 0 5 0 13 0 7 0 17 0 8 0 21 0 9 0 25 0 10] 
-#[0 0 10 0 5] 
-#[1 0 29 0 2 0 0 0 12] 
-#[0 0 14 0 2 0 4 0 12] 
-#[1 0 18 0 2 0 33 0 3 0 18 0 4 0 37 0 11 0 18 0 12] 
-#[0 0 41 0 5] 
-#[1 0 9 0 1 0 6 0 5 0 45 0 8 0 21 0 9 0 25 0 10] 
-#[1 0 9 0 1 0 6 0 5 0 49 0 7 0 17 0 8 0 21 0 9 0 25 0 10] 
-#[0 0 22 0 2 0 4 0 12] 
-#[0 0 26 0 2 0 3 0 4 0 12] 
-#[0 0 30 0 2 0 4 0 12] 
-#[1 0 29 0 2 0 53 0 4] 
-#[0 0 34 0 2 0 4 0 12]
+#[1 0 9 0 1 0 13 0 5 0 17 0 6 0 6 0 7 0 21 0 9 0 25 0 10 0 29 0 11 0 33 0 12] 
+#[0 0 10 0 7] 
+#[0 0 14 0 2 0 4 0 14] 
+#[0 0 18 0 2 0 4 0 14] 
+#[1 0 37 0 2 0 0 0 14] 
+#[0 0 22 0 2 0 4 0 14] 
+#[1 0 26 0 2 0 41 0 3 0 26 0 4 0 45 0 13 0 26 0 14] 
+#[0 0 49 0 7] 
+#[1 0 9 0 1 0 13 0 5 0 17 0 6 0 6 0 7 0 53 0 10 0 29 0 11 0 33 0 12] 
+#[1 0 9 0 1 0 13 0 5 0 17 0 6 0 6 0 7 0 57 0 9 0 25 0 10 0 29 0 11 0 33 0 12] 
+#[0 0 30 0 2 0 4 0 14] 
+#[0 0 34 0 2 0 3 0 4 0 14] 
+#[0 0 38 0 2 0 4 0 14] 
+#[1 0 37 0 2 0 61 0 4] 
+#[0 0 42 0 2 0 4 0 14]
 	).
 ]
 
@@ -101,23 +107,32 @@ TypTypeParser >> reduceActionForNullable2: nodes [
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForNullableType1: nodes [
-	^ (nodes at: 2) = '?'
-		ifTrue: [ TypUnknownType instance copy ]
-		ifFalse: [ TypNamedType new
-				nullable: (nodes at: 1);
-				name:
-					(nodes at: 2) value asSymbol;
-				yourself ]
+	^ TypNamedType new
+		nullable: (nodes at: 1);
+		name: (nodes at: 2) value asSymbol;
+		yourself
+]
+
+{ #category : #'generated-reduction actions' }
+TypTypeParser >> reduceActionForParameters2: nodes [
+	^ {}
 ]
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForType1: nodes [
+	^ TypNilType instance
+]
+
+{ #category : #'generated-reduction actions' }
+TypTypeParser >> reduceActionForType2: nodes [
+	^ TypUnknownType instance
+]
+
+{ #category : #'generated-reduction actions' }
+TypTypeParser >> reduceActionForType3: nodes [
 	^ (nodes at: 2)
 		ifEmpty: [ nodes at: 1 ]
-		ifNotEmpty: [ TypParametricType new
-				type: (nodes at: 1);
-				parameters: (nodes at: 2);
-				yourself ]
+		ifNotEmpty: [ (nodes at: 1) asParametricType: (nodes at: 2) ]
 ]
 
 { #category : #'generated-reduction actions' }

@@ -1,6 +1,11 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer' }
+RBMethodNode >> typIsReturnSelf [
+	^ ((self allChildren select: #isReturn) reject: [ :e | e value isSelf ]) isEmpty
+]
+
+{ #category : #'*Typer' }
 RBMethodNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>

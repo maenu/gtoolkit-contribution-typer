@@ -28,6 +28,11 @@ TypUnknownType >> asParametricType: someTypes [
 ]
 
 { #category : #accessing }
+TypUnknownType >> asSourceString [
+	^ '?'
+]
+
+{ #category : #accessing }
 TypUnknownType >> canBeParametricType [
 	^ true
 ]

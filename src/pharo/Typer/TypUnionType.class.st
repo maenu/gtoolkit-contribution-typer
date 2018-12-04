@@ -58,6 +58,11 @@ TypUnionType >> asParametricType: someTypes [
 ]
 
 { #category : #accessing }
+TypUnionType >> asSourceString [
+	^ super asSourceString , self superType asSourceString
+]
+
+{ #category : #accessing }
 TypUnionType >> asType [
 	<typTypeResultAs: 'TypType'>
 	| remains current nullable_ |

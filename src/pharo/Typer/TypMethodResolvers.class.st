@@ -41,7 +41,7 @@ TypMethodResolvers >> typeForResultOfMethod: aLookup [
 		ifTrue: [ "assume self return if no explicit return"
 			| method |
 			method := aLookup receiverType asClass lookupSelector: aLookup selector.
-			(method isNotNil and: [ method isAbstract not and: [ (method ast allChildren select: #isReturn) isEmpty ] ])
+			(method isNotNil and: [ method isAbstract not and: [ method ast typIsReturnSelf ] ])
 				ifTrue: [ ^ aLookup receiverType ] ].
 	^ type
 ]

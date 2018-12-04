@@ -82,6 +82,13 @@ TypType >> asParametricType: someTypes [
 	self subclassResponsibility
 ]
 
+{ #category : #accessing }
+TypType >> asSourceString [
+	^ nullable
+		ifTrue: [ '!' ]
+		ifFalse: [ '' ]
+]
+
 { #category : #converting }
 TypType >> canBeParametricType [
 	<typTypeResultAs: 'Boolean'>

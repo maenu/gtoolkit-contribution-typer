@@ -34,6 +34,11 @@ TypParametricType >> asParametricType: someTypes [
 	^ copy
 ]
 
+{ #category : #accessing }
+TypParametricType >> asSourceString [
+	^ super asSourceString , type asSourceString , '<' , (',' join: (parameters collect: #asSourceString)) , '>'
+]
+
 { #category : #comparing }
 TypParametricType >> canBeParametricType [
 	^ true
@@ -99,9 +104,9 @@ TypParametricType >> postCopy [
 TypParametricType >> printOn: aStream [
 	super printOn: aStream.
 	type printOn: aStream.
-	aStream << '< '.
-	aStream << (' , ' join: (parameters collect: #printString)).
-	aStream << ' >'
+	aStream << '<'.
+	aStream << (',' join: (parameters collect: #printString)).
+	aStream << '>'
 ]
 
 { #category : #accessing }

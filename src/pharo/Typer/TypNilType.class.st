@@ -18,6 +18,11 @@ TypNilType >> asParametricType: someTypes [
 	TypNoParametricTypeError signal
 ]
 
+{ #category : #accessing }
+TypNilType >> asSourceString [
+	^ 'nil'
+]
+
 { #category : #converting }
 TypNilType >> canBeParametricType [
 	^ false
