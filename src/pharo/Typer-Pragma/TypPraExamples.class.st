@@ -31,13 +31,11 @@ TypPraExamples >> example [
 	<gtExample>
 	TypMethodResolvers instance resolvers
 		removeAll;
-		add: TypPraMethodResolver new;
-		add: TypStaMethodResolver new.
+		add: TypPraMethodResolver new.
 	TypVariableResolvers instance resolvers
 		removeAll;
-		add: TypPraVariableResolver new;
-		add: TypStaVariableResolver new.
-	^ self class methods
+		add: TypPraVariableResolver new.
+	^ self class methodNamed: #comment:
 ]
 
 { #category : #initialization }
