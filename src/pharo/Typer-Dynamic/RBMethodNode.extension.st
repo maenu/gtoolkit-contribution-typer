@@ -92,6 +92,13 @@ RBMethodNode >> typDynTypesForPoolVariables [
 ]
 
 { #category : #'*Typer-Dynamic' }
+RBMethodNode >> typDynTypesForVariables [
+	"keys are unique as defining class and name are unique accross different variable kinds, concat dictionaries is fine"
+
+	^ self typDynTypesForPoolVariables , self typDynTypesForInstanceVariables , self typDynTypesForClassVariables
+]
+
+{ #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForVariablesSelectedWith: aBlock definedBy: anotherBlock [
 	^ ((((self typDynAssignNodes select: aBlock) collect: [ :e | (anotherBlock cull: e variable) -> e variable name -> e typDynAssigns ]) groupedBy: #key) collect: [ :e | e collect: #value ]) collect: [ :e | e inject: TypUnionType new into: [ :a :b | a , b ] ]
 ]

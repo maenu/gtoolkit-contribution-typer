@@ -4,6 +4,11 @@ Class {
 	#category : #'Typer-Core'
 }
 
+{ #category : #accessing }
+TypTypeResolvers class >> instance [
+	^ instance ifNil: [ instance := self new ]
+]
+
 { #category : #initialization }
 TypTypeResolvers >> initialize [
 	<typTypeVariable: 'resolvers' as: 'OrderedCollection<TypResolver<TypTypeLookup>>'>

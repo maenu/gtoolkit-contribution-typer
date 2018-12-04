@@ -14,21 +14,33 @@ TypDynCollector >> collectIn: aCollection doing: aBlock [
 	variableResolvers := OrderedCollection new.
 	result := nil.
 	asts := aCollection collect: [ :e | e ast typDynInstall ].
-	[ result := aBlock value ]
-		ensure: [ methodResolvers addAll: (asts collect: #typDynAsMethodResolver).
-			variableResolvers
-				addAll:
-					((asts collect: [ :e | e method methodClass ]) asSet
-						flatCollect:
-							[ :e | e typDynAsInstanceVariableResolvers , e typDynAsClassInstanceVariableResolvers , e typDynAsClassVariableResolvers , e typDynAsPoolVariableResolvers ]).
-			asts do: #typDynUninstall ].
+	[ result := aBlock value.
+	methodResolvers := self collectMethodResolversIn: aCollection.
+	variableResolvers := self collectVariableResolversIn: aCollection ]
+		ensure: [ asts do: #typDynUninstall ].
 	^ result
 		->
-			(TypMethodResolvers new
+			(TypDynMethodResolver new
 				resolvers: methodResolvers;
 				yourself)
 		->
-			(TypVariableResolvers new
+			(TypDynVariableResolver new
 				resolvers: variableResolvers;
 				yourself)
+]
+
+{ #category : #'as yet unclassified' }
+TypDynCollector >> collectMethodResolversIn: aCollection [
+	^ (aCollection collect: [ :e | e methodClass -> e selector -> e typDynAsMethodResolver ]) asDictionary
+]
+
+{ #category : #'as yet unclassified' }
+TypDynCollector >> collectVariableResolversIn: aCollection [
+	^ ((aCollection flatCollect: [ :e | e typDynTypesForVariables associations ]) groupedBy: #key)
+		collect: [ :e | 
+			| type |
+			type := e value inject: TypUnionType new into: [ :a :b | a , b ].
+			TypVariableResolver new
+				type: [ type ];
+				yourself ]
 ]

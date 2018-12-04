@@ -10,11 +10,6 @@ Class {
 	#category : #'Typer-Core'
 }
 
-{ #category : #accessing }
-TypResolvers class >> instance [
-	^ instance ifNil: [ instance := self new ]
-]
-
 { #category : #initialization }
 TypResolvers >> initialize [
 	<typTypeVariable: 'resolvers' as: 'OrderedCollection<TypResolver<TypLookup>>'>
