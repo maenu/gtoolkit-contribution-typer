@@ -183,9 +183,6 @@ TypShaPhaCollection >> _sort: _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCollection >> typShaAsType: aClass [
-	^ TypParametricType new
-		type: aClass typAsNamedType;
-		parameters: {TypUnknownType instance};
-		yourself
+TypShaPhaCollection >> typShaAsType: aType [
+	^ aType asParametricType: {TypUnknownType instance}
 ]

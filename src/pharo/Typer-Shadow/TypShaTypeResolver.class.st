@@ -16,5 +16,5 @@ TypShaTypeResolver >> resolves: aLookup [
 
 { #category : #accessing }
 TypShaTypeResolver >> typeFor: aLookup resolvedBy: anotherLookup [
-	^ shadow typShaAsType: aLookup clazz
+	^ shadow typShaAsType: aLookup clazz typAsType
 ]
