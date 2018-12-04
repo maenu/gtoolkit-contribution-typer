@@ -20,11 +20,11 @@ TypDynCollector >> collectIn: aCollection doing: aBlock [
 		ensure: [ asts do: #typDynUninstall ].
 	^ result
 		->
-			(TypDynMethodResolver new
+			(TypDynResolver new
 				resolvers: methodResolvers;
 				yourself)
 		->
-			(TypDynVariableResolver new
+			(TypDynResolver new
 				resolvers: variableResolvers;
 				yourself)
 ]

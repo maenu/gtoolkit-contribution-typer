@@ -5,11 +5,6 @@ Class {
 }
 
 { #category : #accessing }
-TypShaTypeResolver >> resolverFor: aLookup [
-	^ self
-]
-
-{ #category : #accessing }
 TypShaTypeResolver >> resolves: aLookup [
 	^ aLookup clazz == shadow shadowedClass and: [ shadow respondsTo: #typShaAsType: ]
 ]

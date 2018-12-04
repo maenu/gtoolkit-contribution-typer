@@ -17,12 +17,6 @@ TypResolvers >> initialize [
 	resolvers := OrderedCollection new
 ]
 
-{ #category : #'as yet unclassified' }
-TypResolvers >> resolverFor: aLookup [
-	self assert: [ self resolves: aLookup ].
-	^ (resolvers detect: [ :e | e resolves: aLookup ]) resolverFor: aLookup
-]
-
 { #category : #accessing }
 TypResolvers >> resolvers [
 	<typTypeResultAs: 'OrderedCollection<TypResolver<TypLookup>>'>
@@ -33,6 +27,12 @@ TypResolvers >> resolvers [
 TypResolvers >> resolvers: anObject [
 	<typTypeArgument: 1 as: 'OrderedCollection<TypResolver<TypLookup>>'>
 	resolvers := anObject
+]
+
+{ #category : #'as yet unclassified' }
+TypResolvers >> resolversFor: aLookup [
+	self assert: [ self resolves: aLookup ].
+	^ (resolvers select: [ :e | e resolves: aLookup ]) flatCollect: [ :e | e resolversFor: aLookup ]
 ]
 
 { #category : #accessing }
@@ -47,7 +47,7 @@ TypResolvers >> typeFor: aLookup using: aBlock [
 	<typTypeResultAs: 'TypType'>
 	| lookup |
 	lookup := aLookup.
-	[ ((resolvers select: [ :e | e resolves: lookup ]) collect: [ :e | e resolverFor: lookup ])
+	[ ((resolvers select: [ :e | e resolves: lookup ]) flatCollect: [ :e | e resolversFor: lookup ])
 		do: [ :e | 
 			| type |
 			type := aBlock cull: e cull: lookup.

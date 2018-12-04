@@ -5,18 +5,18 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypPraVariableResolver >> resolverFor: aLookup [
+TypPraVariableResolver >> resolversFor: aLookup [
 	| clazz pragma |
 	self assert: [ self resolves: aLookup ].
 	clazz := aLookup receiverType asClass.
 	aLookup selector first isUppercase
 		ifTrue: [ clazz := clazz classSide ].
 	pragma := (clazz methods detect: [ :e | e selector = #initialize ]) pragmas detect: [ :e | e selector = #typTypeVariable:as: and: [ e arguments first = aLookup selector ] ].
-	^ TypVariableResolver new
+	^ {TypVariableResolver new
 		receiverType: clazz typAsType;
 		selector: aLookup selector;
 		type: [ (pragma arguments at: 2) typAsType ];
-		yourself
+		yourself}
 ]
 
 { #category : #'as yet unclassified' }

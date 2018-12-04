@@ -5,8 +5,8 @@ Class {
 }
 
 { #category : #accessing }
-TypShaMethodResolver >> resolverFor: aLookup [
-	^ shadow perform: ('_' , aLookup selector) asSymbol withEnoughArguments: {}
+TypShaMethodResolver >> resolversFor: aLookup [
+	^ {shadow perform: ('_' , aLookup selector) asSymbol withEnoughArguments: {}}
 ]
 
 { #category : #accessing }

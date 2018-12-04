@@ -5,10 +5,10 @@ Class {
 }
 
 { #category : #accessing }
-TypResolver >> resolverFor: aLookup [
+TypResolver >> resolversFor: aLookup [
 	<typTypeArgument: 1 as: 'TypLookup'>
-	<typTypeResultAs: 'TypResolver<TypLookup>'>
-	^ self
+	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypLookup>>'>
+	^ {self}
 ]
 
 { #category : #accessing }

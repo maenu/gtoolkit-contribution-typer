@@ -5,8 +5,8 @@ Class {
 }
 
 { #category : #accessing }
-TypShaVariableResolver >> resolverFor: aLookup [
-	^ shadow instVarNamed: '_' , aLookup selector
+TypShaVariableResolver >> resolversFor: aLookup [
+	^ {shadow instVarNamed: '_' , aLookup selector}
 ]
 
 { #category : #accessing }

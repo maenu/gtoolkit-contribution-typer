@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #accessing }
-TypPraMethodResolver >> resolverFor: aLookup [
+TypPraMethodResolver >> resolversFor: aLookup [
 	| clazz method argumentPragmas resultPragma "typCastAs !Pragma" argumentTypes "typParameters TypType" resultType "typCastAs TypType" |
 	self assert: [ self resolves: aLookup ].
 	clazz := aLookup receiverType asClass.
@@ -21,12 +21,12 @@ TypPraMethodResolver >> resolverFor: aLookup [
 	resultType := resultPragma
 		ifNil: [ TypUnknownType instance ]
 		ifNotNil: [ resultPragma arguments first typAsType ].
-	^ TypMethodResolver new
+	^ {TypMethodResolver new
 		receiverType: clazz typAsType;
 		selector: method selector;
 		argumentTypes: [ :i | argumentTypes at: i ];
 		resultType: [ resultType ];
-		yourself
+		yourself}
 ]
 
 { #category : #'as yet unclassified' }
