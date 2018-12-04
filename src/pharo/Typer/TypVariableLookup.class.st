@@ -1,5 +1,5 @@
 Class {
 	#name : #TypVariableLookup,
-	#superclass : #TypLookup,
+	#superclass : #TypObjectLookup,
 	#category : #'Typer-Core'
 }

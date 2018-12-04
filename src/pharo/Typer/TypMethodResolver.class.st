@@ -8,14 +8,6 @@ Class {
 	#category : #'Typer-Core'
 }
 
-{ #category : #'as yet unclassified' }
-TypMethodResolver class >> typAsType [
-	^ TypParametricType new
-		type: super typAsType asNonParametricType;
-		parameters: {TypMethodLookup typAsType};
-		yourself
-]
-
 { #category : #accessing }
 TypMethodResolver >> argumentTypeAt: anInteger for: aLookup resolvedBy: anotherLookup [
 	<typTypeArgument: 1 as: 'Integer'>

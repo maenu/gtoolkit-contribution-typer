@@ -7,14 +7,6 @@ Class {
 	#category : #'Typer-Core'
 }
 
-{ #category : #'as yet unclassified' }
-TypUnionType class >> typAsType [
-	^ TypParametricType new
-		type: super typAsType asNonParametricType;
-		parameters: {TypType typAsType};
-		yourself
-]
-
 { #category : #copying }
 TypUnionType >> , aType [
 	<typTypeArgument: 1 as: 'TypUnionType<TypType>'>

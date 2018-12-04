@@ -4,14 +4,6 @@ Class {
 	#category : #'Typer-Core'
 }
 
-{ #category : #'as yet unclassified' }
-TypVariableResolvers class >> typAsType [
-	^ TypParametricType new
-		type: super typAsType asNonParametricType;
-		parameters: {TypVariableLookup typAsType};
-		yourself
-]
-
 { #category : #initialization }
 TypVariableResolvers >> initialize [
 	<typTypeVariable: 'resolvers' as: 'OrderedCollection<TypResolver<TypVariableLookup>>'>

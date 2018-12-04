@@ -4,14 +4,6 @@ Class {
 	#category : #'Typer-Core'
 }
 
-{ #category : #'as yet unclassified' }
-TypResolver class >> typAsType [
-	^ TypParametricType new
-		type: super typAsType asNonParametricType;
-		parameters: {TypLookup typAsType};
-		yourself
-]
-
 { #category : #accessing }
 TypResolver >> resolverFor: aLookup [
 	<typTypeArgument: 1 as: 'TypLookup'>

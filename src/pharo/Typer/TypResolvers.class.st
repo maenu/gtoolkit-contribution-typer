@@ -52,13 +52,13 @@ TypResolvers >> typeFor: aLookup using: aBlock [
 	<typTypeResultAs: 'TypType'>
 	| lookup |
 	lookup := aLookup.
-	[ ((resolvers select: [ :e | e resolves: lookup ]) collect: [ :e | e resolverFor: lookup ]) "typParameters TypResolver<TypLookup>"
+	[ ((resolvers select: [ :e | e resolves: lookup ]) collect: [ :e | e resolverFor: lookup ])
 		do: [ :e | 
 			| type |
 			type := aBlock cull: e cull: lookup.
 			type isUnknown
 				ifFalse: [ ^ type ] ].
-	lookup receiverType hasSuperType
-		ifTrue: [ lookup := lookup copyWithSuperType ] ] doWhileTrue: [ lookup receiverType hasSuperType ].
+	lookup hasSuperType
+		ifTrue: [ lookup := lookup copyWithSuperType ] ] doWhileTrue: [ lookup hasSuperType ].
 	^ TypUnknownType instance
 ]

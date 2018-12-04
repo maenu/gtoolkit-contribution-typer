@@ -4,14 +4,6 @@ Class {
 	#category : #'Typer-Core'
 }
 
-{ #category : #'as yet unclassified' }
-TypMethodResolvers class >> typAsType [
-	^ TypParametricType new
-		type: super typAsType asNonParametricType;
-		parameters: {TypMethodLookup typAsType};
-		yourself
-]
-
 { #category : #initialization }
 TypMethodResolvers >> initialize [
 	<typTypeVariable: 'resolvers' as: 'OrderedCollection<TypResolver<TypMethodLookup>>'>
@@ -21,7 +13,7 @@ TypMethodResolvers >> initialize [
 { #category : #initialization }
 TypMethodResolvers >> typeFor: aLookup using: aBlock [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
-	<typTypeArgument: 2 as: 'BlockClosure<TypResolver<TypMethodLookup>,TypMethodLookup,TypType>'>
+	<typTypeArgument: 2 as: 'BlockClosure<TypMethodLookup,TypResolver<TypMethodLookup>,TypType>'>
 	<typTypeResultAs: 'TypType'>
 	^ super typeFor: aLookup using: aBlock
 ]

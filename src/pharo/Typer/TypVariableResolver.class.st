@@ -7,14 +7,6 @@ Class {
 	#category : #'Typer-Core'
 }
 
-{ #category : #'as yet unclassified' }
-TypVariableResolver class >> typAsType [
-	^ TypParametricType new
-		type: super typAsType asNonParametricType;
-		parameters: {TypVariableLookup typAsType};
-		yourself
-]
-
 { #category : #initialization }
 TypVariableResolver >> initialize [
 	<typTypeVariable: 'type' as: 'BlockClosure<TypResolver<TypLookup>,TypVariableLookup,TypVariableLookup,TypType>'>

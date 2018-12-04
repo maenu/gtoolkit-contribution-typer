@@ -1,6 +1,6 @@
 Class {
 	#name : #TypMethodLookup,
-	#superclass : #TypLookup,
+	#superclass : #TypObjectLookup,
 	#instVars : [
 		'argumentTypes'
 	],

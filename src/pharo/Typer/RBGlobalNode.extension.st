@@ -7,6 +7,7 @@ RBGlobalNode >> typTypeRecursive [
 		ifTrue: [ ^ self binding value class typAsType ].
 	clazz := self methodNode methodClass.
 	"need to ensure getClass can be called before checking pool"
+	self flag: 'FIXME should it not lookup those in class?'.
 	type := (self binding isClassVariable or: [ (self binding scope respondsTo: #getClass) and: [ self binding isFromSharedPool ] ])
 		ifTrue: [ clazz instanceSide typAsType ]
 		ifFalse: [ clazz typAsType ].
