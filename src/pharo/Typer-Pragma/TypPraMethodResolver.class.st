@@ -6,27 +6,18 @@ Class {
 
 { #category : #accessing }
 TypPraMethodResolver >> resolversFor: aLookup [
-	| clazz method argumentPragmas resultPragma "typCastAs !Pragma" argumentTypes "typParameters TypType" resultType "typCastAs TypType" |
+	| clazz method argumentPragmas resultPragma	"typCastAs !Pragma" argumentTypes	"typParameters TypType" resultType	"typCastAs TypType" |
 	self assert: [ self resolves: aLookup ].
 	clazz := aLookup receiverType asClass.
 	method := clazz methods detect: [ :e | e selector = aLookup selector ].
 	argumentPragmas := method pragmas select: [ :e | e selector = #typTypeArgument:as: ].
 	resultPragma := method pragmas detect: [ :e | e selector = #typTypeResultAs: ] ifNone: [ nil ].
-	argumentTypes := method numArgs
-		timesCollect: [ :i | 
-			argumentPragmas
-				detect: [ :e | (e arguments at: 1) = i ]
-				ifFound: [ :e | (e arguments at: 2) typAsType ]
-				ifNone: [ TypUnknownType instance ] ].
-	resultType := resultPragma
-		ifNil: [ TypUnknownType instance ]
-		ifNotNil: [ resultPragma arguments first typAsType ].
-	^ {TypMethodResolver new
-		receiverType: clazz typAsType;
-		selector: method selector;
+	argumentTypes := method numArgs timesCollect: [ :i | argumentPragmas detect: [ :e | (e arguments at: 1) = i ] ifFound: [ :e | (e arguments at: 2) typAsType ] ifNone: [ TypUnknownType instance ] ].
+	resultType := resultPragma ifNil: [ TypUnknownType instance ] ifNotNil: [ resultPragma arguments first typAsType ].
+	^ {(TypMethodResolver new
 		argumentTypes: [ :i | argumentTypes at: i ];
 		resultType: [ resultType ];
-		yourself}
+		yourself)}
 ]
 
 { #category : #'as yet unclassified' }

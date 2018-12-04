@@ -21,7 +21,7 @@ TypShaPhaExamples >> pharo [
 	^ self class methodNamed: #playground
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaExamples >> playground [
 	| o c i s d |
 	o := 10 atRandom > 5
@@ -29,7 +29,7 @@ TypShaPhaExamples >> playground [
 		ifFalse: [ Dictionary new ].
 	c := OrderedCollection new.	"typParameters Point"
 	s := self.
-	d := (c select: [ :e | e abs > 1 ]) select: [ :e | e abs ].
+	d := (c select: [ :e | e abs > 1 ]) collect: [ :e | 4 ].
 	o.
 	c.
 	i.

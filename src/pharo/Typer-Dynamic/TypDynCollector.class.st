@@ -15,8 +15,8 @@ TypDynCollector >> collectIn: aCollection doing: aBlock [
 	result := nil.
 	asts := aCollection collect: [ :e | e ast typDynInstall ].
 	[ result := aBlock value.
-	methodResolvers := self collectMethodResolversIn: aCollection.
-	variableResolvers := self collectVariableResolversIn: aCollection ]
+	methodResolvers := self collectMethodResolversIn: asts.
+	variableResolvers := self collectVariableResolversIn: asts ]
 		ensure: [ asts do: #typDynUninstall ].
 	^ result
 		->
@@ -39,7 +39,7 @@ TypDynCollector >> collectVariableResolversIn: aCollection [
 	^ ((aCollection flatCollect: [ :e | e typDynTypesForVariables associations ]) groupedBy: #key)
 		collect: [ :e | 
 			| type |
-			type := e value inject: TypUnionType new into: [ :a :b | a , b ].
+			type := (e collect: #value) inject: TypUnionType new into: [ :a :b | a , b ].
 			TypVariableResolver new
 				type: [ type ];
 				yourself ]

@@ -11,19 +11,11 @@ Class {
 TypPraExamples >> comment: aThing [
 	<typTypeArgument: 1 as: 'String'>
 	<typTypeResultAs: 'String'>
-	| o c i s d |
-	o := 10 atRandom > 5
-		ifTrue: [ Object new ]
-		ifFalse: [ Dictionary new ].
-	c := OrderedCollection new.	"typParameters Point"
+	| i s x |
 	i := thing.	"thing is instance variable"
 	s := self.
-	d := (c select: [ :e | e abs > 1 ]) select: [ :e | e abs ].
-	o.
-	c.
-	i.
-	s.
-	^ c asString
+	x := s comment: 'hello'.
+	^ i asString
 ]
 
 { #category : #accessing }

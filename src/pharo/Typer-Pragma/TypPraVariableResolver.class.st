@@ -12,11 +12,9 @@ TypPraVariableResolver >> resolversFor: aLookup [
 	aLookup selector first isUppercase
 		ifTrue: [ clazz := clazz classSide ].
 	pragma := (clazz methods detect: [ :e | e selector = #initialize ]) pragmas detect: [ :e | e selector = #typTypeVariable:as: and: [ e arguments first = aLookup selector ] ].
-	^ {TypVariableResolver new
-		receiverType: clazz typAsType;
-		selector: aLookup selector;
+	^ {(TypVariableResolver new
 		type: [ (pragma arguments at: 2) typAsType ];
-		yourself}
+		yourself)}
 ]
 
 { #category : #'as yet unclassified' }
