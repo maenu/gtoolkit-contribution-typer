@@ -33,9 +33,9 @@ TypVariableResolver >> type: anObject [
 ]
 
 { #category : #accessing }
-TypVariableResolver >> typeFor: anAssociation resolvedBy: anotherAssociation [
-	<typTypeArgument: 1 as: 'Association<TypType,Symbol>'>
-	<typTypeArgument: 2 as: 'Association<TypType,Symbol>'>
+TypVariableResolver >> typeFor: aLookup resolvedBy: anotherLookup [
+	<typTypeArgument: 1 as: 'TypVariableLookup'>
+	<typTypeArgument: 2 as: 'TypVariableLookup'>
 	<typTypeResultAs: 'TypType'>
-	^ type cull: self cull: anAssociation cull: anotherAssociation
+	^ type cull: aLookup cull: anotherLookup cull: self
 ]

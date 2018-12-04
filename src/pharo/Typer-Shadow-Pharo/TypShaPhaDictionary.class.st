@@ -1,7 +1,7 @@
 Class {
 	#name : #TypShaPhaDictionary,
 	#superclass : #TypShaShadow,
-	#category : #'Typer-Shadow-Pharo'
+	#category : #'Typer-Shadow-Pharo-Core'
 }
 
 { #category : #'as yet unclassified' }

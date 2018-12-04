@@ -1,7 +1,7 @@
 Class {
 	#name : #TypShaTypeResolver,
 	#superclass : #TypShaResolver,
-	#category : #'Typer-Shadow'
+	#category : #'Typer-Shadow-Core'
 }
 
 { #category : #accessing }
@@ -16,5 +16,5 @@ TypShaTypeResolver >> resolves: aLookup [
 
 { #category : #accessing }
 TypShaTypeResolver >> typeFor: aLookup resolvedBy: anotherLookup [
-	^ shadow typShaAsType: aLookup clazz typAsType
+	^ shadow typShaAsType: aLookup clazz typAsNamedType
 ]

@@ -15,10 +15,10 @@ TypMethodResolver >> argumentTypeAt: anInteger for: aLookup resolvedBy: anotherL
 	<typTypeArgument: 3 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'TypType'>
 	^ argumentTypes
-		cull: self
 		cull: anInteger
 		cull: aLookup
 		cull: anotherLookup
+		cull: self
 ]
 
 { #category : #accessing }
@@ -62,5 +62,5 @@ TypMethodResolver >> resultTypeFor: aLookup resolvedBy: anotherLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
 	<typTypeArgument: 2 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'TypType'>
-	^ resultType cull: self cull: aLookup cull: anotherLookup
+	^ resultType cull: aLookup cull: anotherLookup cull: self
 ]

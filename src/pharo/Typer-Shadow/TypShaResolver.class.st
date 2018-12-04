@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'shadow'
 	],
-	#category : #'Typer-Shadow'
+	#category : #'Typer-Shadow-Core'
 }
 
 { #category : #accessing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #TypShaMethodResolver,
 	#superclass : #TypShaResolver,
-	#category : #'Typer-Shadow'
+	#category : #'Typer-Shadow-Core'
 }
 
 { #category : #accessing }
@@ -11,5 +11,5 @@ TypShaMethodResolver >> resolverFor: aLookup [
 
 { #category : #accessing }
 TypShaMethodResolver >> resolves: aLookup [
-	^ aLookup receiverType == shadow shadowedClass and: [ shadow respondsTo: ('_' , aLookup selector) asSymbol ]
+	^ aLookup receiverType hasClass and: [ aLookup receiverType asClass == shadow shadowedClass and: [ shadow respondsTo: ('_' , aLookup selector) asSymbol ] ]
 ]

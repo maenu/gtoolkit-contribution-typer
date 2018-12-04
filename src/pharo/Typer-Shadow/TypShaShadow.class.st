@@ -4,7 +4,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'Typer-Shadow'
+	#category : #'Typer-Shadow-Core'
 }
 
 { #category : #converting }

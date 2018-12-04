@@ -15,7 +15,7 @@ TypNilType class >> instance [
 
 { #category : #converting }
 TypNilType >> asParametricType: someTypes [
-	TypCannotBeParametricTypeError signal
+	TypNoParametricTypeError signal
 ]
 
 { #category : #converting }

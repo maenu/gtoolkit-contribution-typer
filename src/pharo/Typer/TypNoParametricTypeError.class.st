@@ -1,5 +1,5 @@
 Class {
-	#name : #TypCannotBeParametricTypeError,
+	#name : #TypNoParametricTypeError,
 	#superclass : #Error,
 	#category : #'Typer-Core'
 }

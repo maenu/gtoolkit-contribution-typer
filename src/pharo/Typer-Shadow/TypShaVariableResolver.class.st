@@ -1,7 +1,7 @@
 Class {
 	#name : #TypShaVariableResolver,
 	#superclass : #TypShaResolver,
-	#category : #'Typer-Shadow'
+	#category : #'Typer-Shadow-Core'
 }
 
 { #category : #accessing }
@@ -11,5 +11,5 @@ TypShaVariableResolver >> resolverFor: aLookup [
 
 { #category : #accessing }
 TypShaVariableResolver >> resolves: aLookup [
-	^ aLookup receiverType == shadow shadowedClass and: [ shadow hasInstVarNamed: '_' , aLookup selector ]
+	^ aLookup receiverType hasClass and: [ aLookup receiverType asClass == shadow shadowedClass and: [ shadow hasInstVarNamed: '_' , aLookup selector ] ]
 ]
