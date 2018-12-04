@@ -1,37 +1,39 @@
 Class {
-	#name : #TypVariableResolver,
-	#superclass : #TypResolver,
+	#name : #TypDynVariableResolver,
+	#superclass : #TypDynObjectResolver,
 	#instVars : [
 		'type'
 	],
-	#category : #'Typer-Core'
+	#category : #'Typer-Dynamic-Core'
 }
 
 { #category : #initialization }
-TypVariableResolver >> initialize [
+TypDynVariableResolver >> initialize [
 	<typTypeVariable: 'type' as: 'BlockClosure<TypVariableLookup,TypVariableLookup,TypResolver<TypLookup>,TypType>'>
 	super initialize
 ]
 
 { #category : #accessing }
-TypVariableResolver >> resolves: aLookup [
-	^ true
+TypDynVariableResolver >> resolves: aLookup [
+	<typTypeArgument: 1 as: 'TypVariableLookup'>
+	<typTypeResultAs: 'TypType'>
+	^ aLookup receiverType asNonParametricType asNonNullableType = receiverType asNonParametricType asNonNullableType and: [ aLookup selector = selector ]
 ]
 
 { #category : #accessing }
-TypVariableResolver >> type [
+TypDynVariableResolver >> type [
 	<typTypeResultAs: 'BlockClosure<TypResolver<TypLookup>,TypVariableLookup,TypVariableLookup,TypType>'>
 	^ type
 ]
 
 { #category : #accessing }
-TypVariableResolver >> type: anObject [
+TypDynVariableResolver >> type: anObject [
 	<typTypeArgument: 1 as: 'BlockClosure<TypResolver<TypLookup>,TypVariableLookup,TypVariableLookup,TypType>'>
 	type := anObject
 ]
 
 { #category : #accessing }
-TypVariableResolver >> typeFor: aLookup resolvedBy: anotherLookup [
+TypDynVariableResolver >> typeFor: aLookup resolvedBy: anotherLookup [
 	<typTypeArgument: 1 as: 'TypVariableLookup'>
 	<typTypeArgument: 2 as: 'TypVariableLookup'>
 	<typTypeResultAs: 'TypType'>

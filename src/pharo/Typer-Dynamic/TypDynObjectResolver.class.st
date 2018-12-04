@@ -1,40 +1,40 @@
 Class {
-	#name : #TypObjectResolver,
+	#name : #TypDynObjectResolver,
 	#superclass : #TypResolver,
 	#instVars : [
 		'selector',
 		'receiverType'
 	],
-	#category : #'Typer-Core'
+	#category : #'Typer-Dynamic-Core'
 }
 
 { #category : #initialization }
-TypObjectResolver >> initialize [
+TypDynObjectResolver >> initialize [
 	<typTypeVariable: 'receiveType' as: 'TypType'>
 	<typTypeVariable: 'selector' as: 'Symbol'>
 	super initialize
 ]
 
 { #category : #accessing }
-TypObjectResolver >> receiverType [
+TypDynObjectResolver >> receiverType [
 	<typTypeResultAs: 'TypType'>
 	^ receiverType
 ]
 
 { #category : #accessing }
-TypObjectResolver >> receiverType: anObject [
+TypDynObjectResolver >> receiverType: anObject [
 	<typTypeArgument: 1 as: 'TypType'>
 	receiverType := anObject
 ]
 
 { #category : #accessing }
-TypObjectResolver >> selector [
+TypDynObjectResolver >> selector [
 	<typTypeResultAs: 'Symbol'>
 	^ selector
 ]
 
 { #category : #accessing }
-TypObjectResolver >> selector: anObject [
+TypDynObjectResolver >> selector: anObject [
 	<typTypeArgument: 1 as: 'Symbol'>
 	selector := anObject
 ]
