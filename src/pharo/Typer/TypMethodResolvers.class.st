@@ -22,13 +22,5 @@ TypMethodResolvers >> typeForArgumentAt: anInteger ofMethod: aLookup [
 TypMethodResolvers >> typeForResultOfMethod: aLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'TypType'>
-	| type |
-	type := self typeFor: aLookup using: [ :r :a | r resultTypeFor: aLookup resolvedBy: a ].
-	(type isUnknown and: [ aLookup receiverType hasClass ])
-		ifTrue: [ "assume self return if no explicit return"
-			| method |
-			method := aLookup receiverType asClass lookupSelector: aLookup selector.
-			(method isNotNil and: [ method isAbstract not and: [ method ast typIsReturnSelf ] ])
-				ifTrue: [ ^ aLookup receiverType ] ].
-	^ type
+	^ self typeFor: aLookup using: [ :r :a | r resultTypeFor: aLookup resolvedBy: a ]
 ]

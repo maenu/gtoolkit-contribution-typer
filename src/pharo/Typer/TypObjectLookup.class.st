@@ -8,6 +8,11 @@ Class {
 	#category : #'Typer-Core'
 }
 
+{ #category : #comparing }
+TypObjectLookup >> = anObject [
+	^ self == anObject or: [ self class == anObject class and: [ selector = anObject selector and: [ receiverType = anObject receiverType ] ] ]
+]
+
 { #category : #copying }
 TypObjectLookup >> copyWithSuperType [
 	self assert: [ self hasSuperType ].
@@ -19,6 +24,11 @@ TypObjectLookup >> copyWithSuperType [
 { #category : #testing }
 TypObjectLookup >> hasSuperType [
 	^ receiverType hasSuperType
+]
+
+{ #category : #comparing }
+TypObjectLookup >> hash [
+	^ selector hash bitXor: receiverType hash
 ]
 
 { #category : #initialization }

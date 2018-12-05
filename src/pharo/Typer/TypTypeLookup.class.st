@@ -7,6 +7,11 @@ Class {
 	#category : #'Typer-Core'
 }
 
+{ #category : #comparing }
+TypTypeLookup >> = anObject [
+	^ self == anObject or: [ self class == anObject class and: [ clazz = anObject clazz ] ]
+]
+
 { #category : #accessing }
 TypTypeLookup >> clazz [
 	^ clazz
@@ -28,6 +33,11 @@ TypTypeLookup >> copyWithSuperType [
 { #category : #testing }
 TypTypeLookup >> hasSuperType [
 	^ clazz superclass isNotNil
+]
+
+{ #category : #comparing }
+TypTypeLookup >> hash [
+	^ clazz hash
 ]
 
 { #category : #initialization }
