@@ -10,8 +10,6 @@ TypShaPhaString class >> shadowedClass [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaString >> typShaAsType: aClass [
-	^ TypNamedType new
-		name: aClass name;
-		yourself
+TypShaPhaString >> asType: aClass [
+	^ aClass typAsNamedType
 ]

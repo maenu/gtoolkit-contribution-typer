@@ -102,8 +102,8 @@ TypShaPhaDictionary >> _keys [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaDictionary >> typShaAsType: aType [
-	^ aType
+TypShaPhaDictionary >> asType: aClass [
+	^ aClass typAsNamedType
 		asParametricType:
 			{TypUnknownType instance.
 			TypUnknownType instance}

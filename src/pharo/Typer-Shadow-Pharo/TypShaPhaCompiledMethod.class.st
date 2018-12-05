@@ -26,8 +26,6 @@ TypShaPhaCompiledMethod >> _pragmas [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCompiledMethod >> typShaAsType: aClass [
-	^ TypNamedType new
-		name: aClass name;
-		yourself
+TypShaPhaCompiledMethod >> asType: aClass [
+	^ aClass typAsNamedType
 ]

@@ -74,6 +74,6 @@ TypShaPhaBlockClosure >> _value: _a value: _b value: _c value: _d [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaBlockClosure >> typShaAsType: aType [
-	^ aType asParametricType: {TypUnknownType instance}
+TypShaPhaBlockClosure >> asType: aClass [
+	^ aClass typAsNamedType asParametricType: {TypUnknownType instance}
 ]

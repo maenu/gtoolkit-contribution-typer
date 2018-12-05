@@ -17,6 +17,11 @@ TypShaShadow class >> asMethodResolvers [
 		yourself)}
 ]
 
+{ #category : #accessing }
+TypShaShadow class >> asType: aClass [
+	^ aClass typAsNamedType
+]
+
 { #category : #converting }
 TypShaShadow class >> asTypeResolvers [
 	^ {(TypShaTypeResolver new
@@ -42,14 +47,38 @@ TypShaShadow class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
+{ #category : #accessing }
+TypShaShadow class >> instance: anObject [
+	instance := anObject
+]
+
 { #category : #'as yet unclassified' }
 TypShaShadow class >> shadowedClass [
 	<typTypeResultAs: 'ClassDescription'>
 	self subclassResponsibility
 ]
 
+{ #category : #accessing }
+TypShaShadow class >> typeResolver [
+	^ TypTypeResolver new
+		type: [ :a | self asType: a clazz ];
+		yourself
+]
+
+{ #category : #converting }
+TypShaShadow >> asType: aClass [
+	^ aClass typAsNamedType
+]
+
 { #category : #'as yet unclassified' }
 TypShaShadow >> shadowedClass [
 	<typTypeResultAs: 'ClassDescription'>
 	^ self class shadowedClass instanceSide
+]
+
+{ #category : #accessing }
+TypShaShadow >> typeResolver [
+	^ TypTypeResolver new
+		type: [ :a | self asType: a clazz ];
+		yourself
 ]

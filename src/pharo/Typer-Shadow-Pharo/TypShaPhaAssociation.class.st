@@ -26,8 +26,8 @@ TypShaPhaAssociation >> _value [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaAssociation >> typShaAsType: aType [
-	^ aType
+TypShaPhaAssociation >> asType: aClass [
+	^ aClass typAsNamedType
 		asParametricType:
 			{TypUnknownType instance.
 			TypUnknownType instance}
