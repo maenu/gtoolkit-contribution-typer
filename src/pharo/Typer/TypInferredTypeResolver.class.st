@@ -1,17 +1,17 @@
 Class {
-	#name : #TypTypeResolvers,
-	#superclass : #TypResolvers,
+	#name : #TypInferredTypeResolver,
+	#superclass : #TypInferredResolver,
 	#category : #'Typer-Core'
 }
 
 { #category : #initialization }
-TypTypeResolvers >> initialize [
-	<typTypeVariable: 'resolvers' as: 'OrderedCollection<TypResolver<TypTypeLookup>>'>
+TypInferredTypeResolver >> initialize [
+	<typTypeVariable: 'cache' as: 'Dictionary<TypTypeLookup,TypType>'>
 	super initialize
 ]
 
 { #category : #'as yet unclassified' }
-TypTypeResolvers >> typForClass: aLookup [
+TypInferredTypeResolver >> typForClass: aLookup [
 	<typTypeArgument: 1 as: 'TypTypeLookup'>
 	<typTypeResultAs: 'TypType'>
 	| type |

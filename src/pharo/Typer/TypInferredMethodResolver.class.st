@@ -1,17 +1,17 @@
 Class {
-	#name : #TypMethodResolvers,
-	#superclass : #TypResolvers,
+	#name : #TypInferredMethodResolver,
+	#superclass : #TypInferredResolver,
 	#category : #'Typer-Core'
 }
 
 { #category : #initialization }
-TypMethodResolvers >> initialize [
-	<typTypeVariable: 'resolvers' as: 'OrderedCollection<TypResolver<TypMethodLookup>>'>
+TypInferredMethodResolver >> initialize [
+	<typTypeVariable: 'cache' as: 'Dictionary<TypMethodLookup,TypType>'>
 	super initialize
 ]
 
 { #category : #accessing }
-TypMethodResolvers >> typeForArgumentAt: anInteger ofMethod: aLookup [
+TypInferredMethodResolver >> typeForArgumentAt: anInteger ofMethod: aLookup [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeArgument: 2 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'TypType'>
@@ -19,7 +19,7 @@ TypMethodResolvers >> typeForArgumentAt: anInteger ofMethod: aLookup [
 ]
 
 { #category : #accessing }
-TypMethodResolvers >> typeForResultOfMethod: aLookup [
+TypInferredMethodResolver >> typeForResultOfMethod: aLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'TypType'>
 	| type |

@@ -1,0 +1,39 @@
+Class {
+	#name : #TypTypeResolver,
+	#superclass : #TypResolver,
+	#instVars : [
+		'type'
+	],
+	#category : #'Typer-Core'
+}
+
+{ #category : #initialization }
+TypTypeResolver >> initialize [
+	<typTypeVariable: 'type' as: 'BlockClosure<TypTypeLookup,TypTypeLookup,TypResolver<TypLookup>,TypType>'>
+	super initialize
+]
+
+{ #category : #accessing }
+TypTypeResolver >> resolves: aLookup [
+	^ true
+]
+
+{ #category : #accessing }
+TypTypeResolver >> type [
+	<typTypeResultAs: 'BlockClosure<TypResolver<TypLookup>,TypTypeLookup,TypTypeLookup,TypType>'>
+	^ type
+]
+
+{ #category : #accessing }
+TypTypeResolver >> type: anObject [
+	<typTypeArgument: 1 as: 'BlockClosure<TypResolver<TypLookup>,TypTypeLookup,TypTypeLookup,TypType>'>
+	type := anObject
+]
+
+{ #category : #accessing }
+TypTypeResolver >> typeFor: aLookup resolvedBy: anotherLookup [
+	<typTypeArgument: 1 as: 'TypTypeLookup'>
+	<typTypeArgument: 2 as: 'TypTypeLookup'>
+	<typTypeResultAs: 'TypType'>
+	^ type cull: aLookup cull: anotherLookup cull: self
+]

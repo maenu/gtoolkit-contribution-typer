@@ -21,6 +21,9 @@ TypPraExamples >> comment: aThing [
 { #category : #accessing }
 TypPraExamples >> example [
 	<gtExample>
+	TypTypeResolvers instance resolvers
+		removeAll;
+		add: TypPraTypeResolver new.
 	TypMethodResolvers instance resolvers
 		removeAll;
 		add: TypPraMethodResolver new.
@@ -32,6 +35,7 @@ TypPraExamples >> example [
 
 { #category : #initialization }
 TypPraExamples >> initialize [
+	<typTypeParametersAs: 'Date'>
 	<typTypeVariable: #thing as: #Integer>
 	super initialize
 ]

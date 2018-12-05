@@ -7,6 +7,13 @@ Class {
 	#category : #'Typer-Core'
 }
 
+{ #category : #comparing }
+TypMethodLookup >> = anObject [
+	^ self == anObject
+		or: [ self class == anObject class
+				and: [ selector = anObject selector and: [ receiverType = anObject receiverType and: [ argumentTypes = anObject argumentTypes ] ] ] ]
+]
+
 { #category : #accessing }
 TypMethodLookup >> argumentTypes [
 	<typTypeResultAs: 'OrderedCollection<TypType>'>
@@ -17,6 +24,11 @@ TypMethodLookup >> argumentTypes [
 TypMethodLookup >> argumentTypes: anObject [
 	<typTypeArgument: 1 as: 'OrderedCollection<TypType>'>
 	argumentTypes := anObject
+]
+
+{ #category : #comparing }
+TypMethodLookup >> hash [
+	^ super hash bitXor: argumentTypes hash
 ]
 
 { #category : #initialization }

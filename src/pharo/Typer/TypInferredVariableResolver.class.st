@@ -1,17 +1,17 @@
 Class {
-	#name : #TypVariableResolvers,
-	#superclass : #TypResolvers,
+	#name : #TypInferredVariableResolver,
+	#superclass : #TypInferredResolver,
 	#category : #'Typer-Core'
 }
 
 { #category : #initialization }
-TypVariableResolvers >> initialize [
-	<typTypeVariable: 'resolvers' as: 'OrderedCollection<TypResolver<TypVariableLookup>>'>
+TypInferredVariableResolver >> initialize [
+	<typTypeVariable: 'cache' as: 'Dictionary<TypVariableLookup,TypType>'>
 	super initialize
 ]
 
 { #category : #accessing }
-TypVariableResolvers >> typeForVariable: aLookup [
+TypInferredVariableResolver >> typeForVariable: aLookup [
 	<typTypeArgument: 1 as: 'TypVariableLookup'>
 	<typTypeResultAs: 'TypType'>
 	^ self typeFor: aLookup using: [ :r :a | r typeFor: aLookup resolvedBy: a ]
