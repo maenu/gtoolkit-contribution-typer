@@ -133,8 +133,8 @@ TypUnionType >> increment: anObject [
 						nullable: false;
 						yourself ]
 				ifFalse: [ anObject ].
-			n := weights at: anObject ifAbsentPut: [ 0 ].
-			weights at: anObject put: n + 1 ]
+			n := weights at: type ifAbsentPut: [ 0 ].
+			weights at: type put: n + 1 ]
 ]
 
 { #category : #accessing }

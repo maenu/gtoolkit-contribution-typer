@@ -23,6 +23,36 @@ TypGtMethodCoder >> browseImplementors: editorElement [
 ]
 
 { #category : #'initialize-release' }
+TypGtMethodCoder >> browseToTypeWithPragma: anEditorElement [
+	| node |
+	node := self rbNodeAtCursor.
+	node isNil
+		ifTrue: [ ^ self ].
+	node typGtCanType
+		ifFalse: [ ^ self ].
+	anEditorElement
+		fireEvent:
+			(GtPhlowObjectToSpawn new
+				object: node typGtFiltersToTypeWithPragma;
+				sourceElement: anEditorElement)
+]
+
+{ #category : #'initialize-release' }
+TypGtMethodCoder >> browseToTypeWithShadow: anEditorElement [
+	| node |
+	node := self rbNodeAtCursor.
+	node isNil
+		ifTrue: [ ^ self ].
+	node typGtCanType
+		ifFalse: [ ^ self ].
+	anEditorElement
+		fireEvent:
+			(GtPhlowObjectToSpawn new
+				object: node typGtFiltersToTypeWithShadow;
+				sourceElement: anEditorElement)
+]
+
+{ #category : #'initialize-release' }
 TypGtMethodCoder >> initializeAddOns [
 	super initializeAddOns.
 	addOns addPatternStyler: TypGtPatternStyler new.
@@ -38,16 +68,7 @@ TypGtMethodCoder >> initializeShortcuts [
 				combination:
 					(BlKeyCombination builder
 						primary;
-						key: Key t;
-						build);
-				action: [ :editorElement | self typeSelfWithPragma: editorElement ]);
-		addShortcut:
-			(BlShortcut new
-				combination:
-					(BlKeyCombination builder
-						primary;
-						shift;
-						key: Key t;
+						key: Key h;
 						build);
 				action: [ :editorElement | self typeWithPragma: editorElement ]);
 		addShortcut:
@@ -56,10 +77,26 @@ TypGtMethodCoder >> initializeShortcuts [
 					(BlKeyCombination builder
 						primary;
 						shift;
-						alt;
 						key: Key t;
 						build);
-				action: [ :editorElement | self typeWithShadow: editorElement ])
+				action: [ :editorElement | self browseToTypeWithPragma: editorElement ]);
+		addShortcut:
+			(BlShortcut new
+				combination:
+					(BlKeyCombination builder
+						primary;
+						key: Key h;
+						build);
+				action: [ :editorElement | self typeWithShadow: editorElement ]);
+		addShortcut:
+			(BlShortcut new
+				combination:
+					(BlKeyCombination builder
+						primary;
+						shift;
+						key: Key h;
+						build);
+				action: [ :editorElement | self browseToTypeWithShadow: editorElement ])
 ]
 
 { #category : #'instance creation' }
@@ -87,7 +124,7 @@ TypGtMethodCoder >> rbNodeAtCursor [
 ]
 
 { #category : #'initialize-release' }
-TypGtMethodCoder >> typeSelfWithPragma: anEditorElement [
+TypGtMethodCoder >> typeWithPragma: anEditorElement [
 	| rbAst |
 	rbAst := self rbAST ifNil: [ ^ self ].
 	rbAst typGtTypeWithPragma.
@@ -96,31 +133,10 @@ TypGtMethodCoder >> typeSelfWithPragma: anEditorElement [
 ]
 
 { #category : #'initialize-release' }
-TypGtMethodCoder >> typeWithPragma: anEditorElement [
-	| node |
-	node := self rbNodeAtCursor.
-	node isNil
-		ifTrue: [ ^ self ].
-	node typGtCanTypeWithPragma
-		ifFalse: [ ^ self ].
-	anEditorElement
-		fireEvent:
-			(GtPhlowObjectToSpawn new
-				object: node typGtTypeWithPragma;
-				sourceElement: anEditorElement)
-]
-
-{ #category : #'initialize-release' }
 TypGtMethodCoder >> typeWithShadow: anEditorElement [
-	| node |
-	node := self rbNodeAtCursor.
-	node isNil
-		ifTrue: [ ^ self ].
-	node typGtCanTypeWithShadow
-		ifFalse: [ ^ self ].
-	anEditorElement
-		fireEvent:
-			(GtPhlowObjectToSpawn new
-				object: (node typGtTypeWithShadow);
-				sourceElement: anEditorElement)
+	| rbAst |
+	rbAst := self rbAST ifNil: [ ^ self ].
+	rbAst typGtTypeWithPragma.
+	methodSource := rbAst formattedCode.
+	self buildSource
 ]

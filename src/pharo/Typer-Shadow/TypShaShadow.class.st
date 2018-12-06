@@ -53,6 +53,11 @@ TypShaShadow class >> instance: anObject [
 ]
 
 { #category : #'as yet unclassified' }
+TypShaShadow class >> shadowClassesFor: aClass [
+	^ self allSubclasses select: [ :e | e shadowedClass == aClass classSide ]
+]
+
+{ #category : #'as yet unclassified' }
 TypShaShadow class >> shadowedClass [
 	<typTypeResultAs: 'ClassDescription'>
 	self subclassResponsibility

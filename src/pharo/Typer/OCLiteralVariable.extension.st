@@ -4,6 +4,6 @@ Extension { #name : #OCLiteralVariable }
 OCLiteralVariable >> typSharedPool [
 	<typTypeResultAs: 'ClassDescription'>
 	self assert: [ self typIsFromSharedPool ].
-	^ scope getClass instanceSide sharedPools
-		detect: [ :e | e classVarNames includes: assoc key ]
+	^ (self scope "typCastAs OCClassScope") getClass instanceSide sharedPools
+		detect: [ :e | e classVarNames includes: self assoc key ]
 ]

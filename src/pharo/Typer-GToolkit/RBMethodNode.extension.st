@@ -1,7 +1,7 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-GToolkit' }
-RBMethodNode >> typGtCanTypeWithPragma [
+RBMethodNode >> typGtCanType [
 	^ true
 ]
 
@@ -44,4 +44,9 @@ RBMethodNode >> typGtTypeWithPragma [
 	self addPragma: result_.
 	variables_ do: [ :e | self addPragma: e ].
 	^ self
+]
+
+{ #category : #'*Typer-GToolkit' }
+RBMethodNode >> typGtTypeWithShadow [
+	self subclassResponsibility
 ]

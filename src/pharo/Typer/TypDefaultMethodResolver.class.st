@@ -10,17 +10,10 @@ TypDefaultMethodResolver >> initialize [
 	self
 		argumentTypes: [ TypUnknownType instance ];
 		resultType: [ :a | 
-			"assume self return if no explicit return, otherwise check all return values"
+			"assume self return if no explicit return"
 			| method |
 			method := a receiverType asClass lookupSelector: a selector.
-			(method ast allChildren select: #isReturn)
-				ifEmpty: [ a receiverType ]
-				ifNotEmpty: [ :e | 
-					((e collect: [ :f | f value typType ])
-						inject: TypUnionType new
-						into: [ :f :g | 
-							f increment: g.
-							f ]) asType ] ]
+			((method ast allChildren select: #isReturn) reject: [ :e | e value isSelf ]) ifEmpty: [ a receiverType ] ifNotEmpty: [ TypUnknownType instance ] ]
 ]
 
 { #category : #'as yet unclassified' }
