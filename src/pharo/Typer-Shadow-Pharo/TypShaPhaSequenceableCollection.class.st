@@ -65,3 +65,8 @@ TypShaPhaSequenceableCollection >> _withIndexDo: _a [
 		resultType: [ :a | a receiverType ];
 		yourself
 ]
+
+{ #category : #converting }
+TypShaPhaSequenceableCollection >> asType: aClass [
+	^ aClass typAsNamedType asParametricType: {TypUnknownType instance}
+]

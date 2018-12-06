@@ -29,7 +29,7 @@ TypUnionType >> add: anAssociation [
 	| n association |
 	association := anAssociation key nullable
 		ifTrue: [ n := weights at: TypNilType instance ifAbsentPut: [ 0 ].
-			weights at: TypNilType instance put: n + association value.
+			weights at: TypNilType instance put: n + anAssociation value.
 			(anAssociation key copy
 				nullable: false;
 				yourself) -> anAssociation value ]

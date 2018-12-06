@@ -13,7 +13,5 @@ CompiledMethod >> typGtSourceFor: aView [
 		stencil: [ | coder |
 			coder := TypGtMethodCoder forMethod: self.
 			coder expanded: true.
-			coder addOns addPatternStyler: TypGtPatternStyler new.
-			coder addOns addBodyStyler: TypGtDeclarationBodyStyler new.
 			coder asElement ]
 ]

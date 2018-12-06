@@ -21,7 +21,7 @@ TypDefaultVariableResolver >> initialize [
 				ifFalse: [ | definer |
 					definer := clazz whichClassDefinesInstVar: a selector.
 					self withAllSuperclassesOf: clazz until: definer ].
-			"this might also catch overridden methods"
+			self flag: 'this might also catch overridden methods, making it not completely sound'.
 			types := clazzes
 				flatCollect: [ :e | e methods flatCollect: [ :f | (f assignmentNodes select: [ :g | g variable name = a selector ]) collect: [ :g | g value typType ] ] ].
 			(types

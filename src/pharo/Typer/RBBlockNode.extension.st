@@ -23,11 +23,11 @@ RBBlockNode >> typTypeForArgumentNamed: aSymbol [
 	<typTypeArgument: 1 as: 'Symbol'>
 	<typTypeResultAs: 'TypType'>
 	| i |
-	i := arguments detectIndex: [ :f | f name = aSymbol ].
+	i := self arguments detectIndex: [ :f | f name = aSymbol ].
 	^ self typTypeForArgumentAt: i
 ]
 
 { #category : #'*Typer' }
 RBBlockNode >> typTypeRecursive [
-	^ BlockClosure typAsType asParametricType: (arguments collect: #typType) , {body typType}
+	^ BlockClosure typAsType asParametricType: (self arguments collect: #typType) , {self body typType}
 ]

@@ -4,9 +4,29 @@ Class {
 	#category : #'Typer-GToolkit-Core'
 }
 
-{ #category : #accessing }
-TypGtMethodCoder >> addOns [
-	^ addOns
+{ #category : #actions }
+TypGtMethodCoder >> browseImplementors: editorElement [
+	| node |
+	node := self rbNodeAtCursor.
+	node isNil
+		ifTrue: [ ^ self ].
+	node isMessage
+		ifFalse: [ ^ self ].
+	editorElement
+		fireEvent:
+			(GtPhlowObjectToSpawn new
+				object:
+					(TypGtCoderTypeFilter new
+						type: node receiver typType;
+						yourself) & (GtCoderImplementorsFilter selector: node selector);
+				sourceElement: editorElement)
+]
+
+{ #category : #'initialize-release' }
+TypGtMethodCoder >> initializeAddOns [
+	super initializeAddOns.
+	addOns addPatternStyler: TypGtPatternStyler new.
+	addOns addBodyStyler: TypGtDeclarationBodyStyler new
 ]
 
 { #category : #'initialize-release' }
@@ -58,7 +78,9 @@ TypGtMethodCoder >> newCompletionStrategy [
 TypGtMethodCoder >> rbNodeAtCursor [
 	self
 		cursorPositionDo: [ :e | 
-			[ self rbAST bestNodeFor: (e to: e) ]
+			| i |
+			i := e + self patternSource size + 1.
+			[ ^ self rbAST bestNodeFor: (i to: i) ]
 				on: Error
 				do: [ :ex | ex return ] ].
 	^ nil
@@ -84,7 +106,7 @@ TypGtMethodCoder >> typeWithPragma: anEditorElement [
 	anEditorElement
 		fireEvent:
 			(GtPhlowObjectToSpawn new
-				object: (node typGtTypeWithPragma);
+				object: node typGtTypeWithPragma;
 				sourceElement: anEditorElement)
 ]
 
