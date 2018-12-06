@@ -9,15 +9,13 @@ TypExamples >> example [
 	<gtExample>
 	| tag |
 	tag := #'Typer-Shadow-Pharo' asPackage classTagNamed: #Core.
-	TypTypeResolvers instance resolvers
-		removeAll;
+	TypTypeResolvers initializeGlobal resolvers
+		add: TypPraTypeResolver new;
 		add: tag typShaAsTypeResolver.
-	TypMethodResolvers instance resolvers
-		removeAll;
+	TypMethodResolvers initializeGlobal resolvers
 		add: TypPraMethodResolver new;
 		add: tag typShaAsMethodResolver.
-	TypVariableResolvers instance resolvers
-		removeAll;
+	TypVariableResolvers initializeGlobal resolvers
 		add: TypPraVariableResolver new;
 		add: tag typShaAsVariableResolver.
 	^ self

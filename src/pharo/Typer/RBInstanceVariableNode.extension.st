@@ -4,7 +4,7 @@ Extension { #name : #RBInstanceVariableNode }
 RBInstanceVariableNode >> typTypeRecursive [
 	| type |
 	type := self methodNode methodClass typAsType.
-	^ TypVariableResolvers instance
+	^ TypVariableResolvers global
 		typeForVariable:
 			(TypVariableLookup new
 				receiverType: type;

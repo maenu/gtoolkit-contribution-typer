@@ -1,11 +1,11 @@
 Class {
-	#name : #TypInfImpVariableResolver,
+	#name : #TypDefaultVariableResolver,
 	#superclass : #TypVariableResolver,
-	#category : #'Typer-Inference-Implementation-Core'
+	#category : #'Typer-Core'
 }
 
 { #category : #initialization }
-TypInfImpVariableResolver >> initialize [
+TypDefaultVariableResolver >> initialize [
 	super initialize.
 	self
 		type: [ :a | 
@@ -32,19 +32,12 @@ TypInfImpVariableResolver >> initialize [
 ]
 
 { #category : #accessing }
-TypInfImpVariableResolver >> resolves: aLookup [
+TypDefaultVariableResolver >> resolves: aLookup [
 	^ aLookup receiverType hasClass
 ]
 
-{ #category : #accessing }
-TypInfImpVariableResolver >> typeForVariable: aLookup [
-	<typTypeArgument: 1 as: 'TypVariableLookup'>
-	<typTypeResultAs: 'TypType'>
-	^ self typeFor: aLookup using: [ :r :a | r typeFor: aLookup resolvedBy: a ]
-]
-
 { #category : #initialization }
-TypInfImpVariableResolver >> withAllSuperclassesOf: aClass until: anotherClass [
+TypDefaultVariableResolver >> withAllSuperclassesOf: aClass until: anotherClass [
 	| clazzes |
 	clazzes := aClass withAllSuperclasses.
 	^ clazzes copyFrom: 1 to: (clazzes indexOf: anotherClass)

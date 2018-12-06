@@ -1,6 +1,6 @@
 Class {
 	#name : #TypDynMessage,
-	#superclass : #Object,
+	#superclass : #TypType,
 	#instVars : [
 		'selector',
 		'argumentTypes',

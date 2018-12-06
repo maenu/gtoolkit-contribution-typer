@@ -9,7 +9,7 @@ RBGlobalNode >> typTypeRecursive [
 	"lookup pool in defining class"
 	self binding typIsFromSharedPool
 		ifTrue: [ clazz := self binding scope getClass instanceSide sharedPools detect: [ :e | e classVarNames includes: name ] ].
-	^ TypVariableResolvers instance
+	^ TypVariableResolvers global
 		typeForVariable:
 			(TypVariableLookup new
 				receiverType: clazz classSide typAsType;

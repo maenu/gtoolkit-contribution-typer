@@ -2,22 +2,39 @@ Class {
 	#name : #TypResolvers,
 	#superclass : #TypResolver,
 	#instVars : [
-		'resolvers'
+		'resolvers',
+		'defaultResolver'
 	],
 	#classInstVars : [
-		'instance'
+		'global'
 	],
 	#category : #'Typer-Core'
 }
 
 { #category : #accessing }
-TypResolvers class >> instance [
-	^ instance ifNil: [ instance := self new ]
+TypResolvers class >> global [
+	^ global ifNil: [ self initializeGlobal ]
+]
+
+{ #category : #accessing }
+TypResolvers class >> initializeGlobal [
+	^ global := self new
+]
+
+{ #category : #accessing }
+TypResolvers >> defaultResolver [
+	^ defaultResolver
+]
+
+{ #category : #accessing }
+TypResolvers >> defaultResolver: anObject [
+	defaultResolver := anObject
 ]
 
 { #category : #initialization }
 TypResolvers >> initialize [
 	<typTypeVariable: 'resolvers' as: 'OrderedCollection<TypResolver<TypLookup>>'>
+	<typTypeVariable: 'defaultResolver' as: 'TypResolver<TypLookup>'>
 	super initialize.
 	resolvers := OrderedCollection new
 ]
@@ -36,7 +53,6 @@ TypResolvers >> resolvers: anObject [
 
 { #category : #'as yet unclassified' }
 TypResolvers >> resolversFor: aLookup [
-	self assert: [ self resolves: aLookup ].
 	^ (resolvers select: [ :e | e resolves: aLookup ]) flatCollect: [ :e | e resolversFor: aLookup ]
 ]
 
@@ -52,7 +68,7 @@ TypResolvers >> typeFor: aLookup using: aBlock [
 	<typTypeResultAs: 'TypType'>
 	| lookup |
 	lookup := aLookup.
-	[ ((resolvers select: [ :e | e resolves: lookup ]) flatCollect: [ :e | e resolversFor: lookup ])
+	[ (self resolversFor: lookup)
 		do: [ :e | 
 			| type |
 			type := aBlock cull: e cull: lookup.
@@ -60,5 +76,7 @@ TypResolvers >> typeFor: aLookup using: aBlock [
 				ifFalse: [ ^ type ] ].
 	lookup hasSuperType
 		ifTrue: [ lookup := lookup copyWithSuperType ] ] doWhileTrue: [ lookup hasSuperType ].
+	(defaultResolver isNotNil and: [ defaultResolver resolves: aLookup ])
+		ifTrue: [ ^ aBlock cull: defaultResolver cull: aLookup ].
 	^ TypUnknownType instance
 ]

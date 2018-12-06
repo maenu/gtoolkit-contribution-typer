@@ -1,11 +1,11 @@
 Class {
-	#name : #TypInfImpMethodResolver,
+	#name : #TypDefaultMethodResolver,
 	#superclass : #TypMethodResolver,
-	#category : #'Typer-Inference-Implementation-Core'
+	#category : #'Typer-Core'
 }
 
 { #category : #initialization }
-TypInfImpMethodResolver >> initialize [
+TypDefaultMethodResolver >> initialize [
 	super initialize.
 	self
 		argumentTypes: [ TypUnknownType instance ];
@@ -24,7 +24,7 @@ TypInfImpMethodResolver >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfImpMethodResolver >> resolves: aLookup [
+TypDefaultMethodResolver >> resolves: aLookup [
 	^ aLookup receiverType hasClass
 		and: [ | method |
 			method := aLookup receiverType asClass lookupSelector: aLookup selector.

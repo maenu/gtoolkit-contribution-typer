@@ -9,7 +9,7 @@ RBMethodNode >> typIsReturnSelf [
 RBMethodNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>
-	^ TypMethodResolvers instance
+	^ TypMethodResolvers global
 		typeForArgumentAt: anInteger
 		ofMethod:
 			(TypMethodLookup new
@@ -31,7 +31,7 @@ RBMethodNode >> typTypeForArgumentNamed: aSymbol [
 { #category : #'*Typer' }
 RBMethodNode >> typTypeForResult [
 	<typTypeResultAs: 'TypType'>
-	^ TypMethodResolvers instance
+	^ TypMethodResolvers global
 		typeForResultOfMethod:
 			(TypMethodLookup new
 				receiverType: self methodClass typAsType;

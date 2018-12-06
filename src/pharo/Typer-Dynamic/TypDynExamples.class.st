@@ -11,16 +11,8 @@ TypDynExamples >> neoJsonCore [
 	methods := #'Neo-JSON-Core' asPackage methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
-	association := collector
-		collectIn: methods
-		doing: [ (#'Neo-JSON-Tests' asPackage definedClasses
-				select: [ :e | e isTestCase and: e isAbstract not ])
-				do: [ :e | e suite run: testResult ] ].
-	TypMethodResolvers instance resolvers
-		removeAll;
-		add: association key value.
-	TypVariableResolvers instance resolvers
-		removeAll;
-		add: association value.
+	association := collector collectIn: methods doing: [ (#'Neo-JSON-Tests' asPackage definedClasses select: [ :e | e isTestCase and: e isAbstract not ]) do: [ :e | e suite run: testResult ] ].
+	TypMethodResolvers initializeGlobal resolvers add: association key value.
+	TypVariableResolvers initializeGlobal resolvers add: association value.
 	^ testResult -> #'Neo-JSON-Core' asPackage methods
 ]

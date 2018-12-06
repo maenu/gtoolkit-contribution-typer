@@ -21,15 +21,9 @@ TypPraExamples >> comment: aThing [
 { #category : #accessing }
 TypPraExamples >> example [
 	<gtExample>
-	TypTypeResolvers instance resolvers
-		removeAll;
-		add: TypPraTypeResolver new.
-	TypMethodResolvers instance resolvers
-		removeAll;
-		add: TypPraMethodResolver new.
-	TypVariableResolvers instance resolvers
-		removeAll;
-		add: TypPraVariableResolver new.
+	TypTypeResolvers initializeGlobal resolvers add: TypPraTypeResolver new.
+	TypMethodResolvers initializeGlobal resolvers add: TypPraMethodResolver new.
+	TypVariableResolvers initializeGlobal resolvers add: TypPraVariableResolver new.
 	^ self class methodNamed: #comment:
 ]
 

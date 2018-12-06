@@ -4,9 +4,17 @@ Class {
 	#category : #'Typer-Core'
 }
 
+{ #category : #accessing }
+TypVariableResolvers class >> initializeGlobal [
+	^ super initializeGlobal
+		defaultResolver: TypDefaultVariableResolver new;
+		yourself
+]
+
 { #category : #initialization }
 TypVariableResolvers >> initialize [
 	<typTypeVariable: 'resolvers' as: 'OrderedCollection<TypResolver<TypVariableLookup>>'>
+	<typTypeVariable: 'defaultResolver' as: 'TypResolver<TypVariableLookup>'>
 	super initialize
 ]
 

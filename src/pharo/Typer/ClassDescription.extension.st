@@ -11,7 +11,7 @@ ClassDescription >> typAsNamedType [
 { #category : #'*Typer' }
 ClassDescription >> typAsType [
 	<typTypeResultAs: 'TypType'>
-	^ TypTypeResolvers instance
+	^ TypTypeResolvers global
 		typForClass:
 			(TypTypeLookup new
 				clazz: self;

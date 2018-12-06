@@ -6,7 +6,7 @@ RBMessageNode >> typTypeForArgumentAt: anInteger [
 	<typTypeResultAs: 'TypType'>
 	| receiverType |
 	receiverType := self typTypeForReceiver.
-	^ TypMethodResolvers instance
+	^ TypMethodResolvers global
 		typeForArgumentAt: anInteger
 		ofMethod:
 			(TypMethodLookup new
@@ -27,7 +27,7 @@ RBMessageNode >> typTypeForResult [
 	<typTypeResultAs: 'TypType'>
 	| receiverType |
 	receiverType := self typTypeForReceiver.
-	^ TypMethodResolvers instance
+	^ TypMethodResolvers global
 		typeForResultOfMethod:
 			(TypMethodLookup new
 				receiverType: receiverType;

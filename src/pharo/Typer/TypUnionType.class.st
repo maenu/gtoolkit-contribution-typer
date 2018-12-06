@@ -26,9 +26,16 @@ TypUnionType >> = anObject [
 TypUnionType >> add: anAssociation [
 	<typTypeArgument: 1 as: 'Association<TypType,Integer>'>
 	<typTypeResultAs: 'Integer'>
-	| n |
-	n := weights at: anAssociation key ifAbsentPut: [ 0 ].
-	^ weights at: anAssociation key put: n + anAssociation value
+	| n association |
+	association := anAssociation key nullable
+		ifTrue: [ n := weights at: TypNilType instance ifAbsentPut: [ 0 ].
+			weights at: TypNilType instance put: n + association value.
+			(anAssociation key copy
+				nullable: false;
+				yourself) -> anAssociation value ]
+		ifFalse: [ anAssociation ].
+	n := weights at: association key ifAbsentPut: [ 0 ].
+	^ weights at: association key put: n + association value
 ]
 
 { #category : #enumerating }
@@ -109,7 +116,7 @@ TypUnionType >> hasClass [
 
 { #category : #comparing }
 TypUnionType >> hash [
-	^ super hash bitXor: weights keys asSet hash
+	^ super hash bitXor: weights keys hash
 ]
 
 { #category : #accessing }
@@ -118,7 +125,14 @@ TypUnionType >> increment: anObject [
 	<typTypeResultAs: 'Integer'>
 	^ (anObject isKindOf: TypUnionType)
 		ifTrue: [ self addAll: anObject ]
-		ifFalse: [ | n |
+		ifFalse: [ | n type |
+			type := anObject nullable
+				ifTrue: [ n := weights at: TypNilType instance ifAbsentPut: [ 0 ].
+					weights at: TypNilType instance put: n + 1.
+					anObject copy
+						nullable: false;
+						yourself ]
+				ifFalse: [ anObject ].
 			n := weights at: anObject ifAbsentPut: [ 0 ].
 			weights at: anObject put: n + 1 ]
 ]
