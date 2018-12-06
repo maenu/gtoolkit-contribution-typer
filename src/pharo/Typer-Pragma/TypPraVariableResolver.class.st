@@ -6,12 +6,9 @@ Class {
 
 { #category : #'as yet unclassified' }
 TypPraVariableResolver >> resolversFor: aLookup [
-	| clazz pragma |
+	| pragma |
 	self assert: [ self resolves: aLookup ].
-	clazz := aLookup receiverType asClass.
-	aLookup selector first isUppercase
-		ifTrue: [ clazz := clazz classSide ].
-	pragma := (clazz methods detect: [ :e | e selector = #initialize ]) pragmas detect: [ :e | e selector = #typTypeVariable:as: and: [ e arguments first = aLookup selector ] ].
+	pragma := (aLookup receiverType asClass methods detect: [ :e | e selector = #initialize ]) pragmas detect: [ :e | e selector = #typTypeVariable:as: and: [ e arguments first = aLookup selector ] ].
 	^ {(TypVariableResolver new
 		type: [ (pragma arguments at: 2) typAsType ];
 		yourself)}
@@ -19,13 +16,7 @@ TypPraVariableResolver >> resolversFor: aLookup [
 
 { #category : #'as yet unclassified' }
 TypPraVariableResolver >> resolves: aLookup [
-	| clazz |
 	aLookup receiverType hasClass
 		ifFalse: [ ^ false ].
-	clazz := aLookup receiverType asClass.
-	aLookup selector first isUppercase
-		ifTrue: [ clazz := clazz classSide ].
-	^ clazz methods
-		anySatisfy:
-			[ :e | e selector = #initialize and: [ e pragmas anySatisfy: [ :f | f selector = #typTypeVariable:as: and: [ f arguments first = aLookup selector ] ] ] ]
+	^ aLookup receiverType asClass methods anySatisfy: [ :e | e selector = #initialize and: [ e pragmas anySatisfy: [ :f | f selector = #typTypeVariable:as: and: [ f arguments first = aLookup selector ] ] ] ]
 ]

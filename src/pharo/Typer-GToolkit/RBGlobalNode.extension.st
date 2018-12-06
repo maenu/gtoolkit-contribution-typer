@@ -7,5 +7,5 @@ RBGlobalNode >> typGtCanTypeWithPragma [
 
 { #category : #'*Typer-GToolkit' }
 RBGlobalNode >> typGtCanTypeWithShadow [
-	^ true
+	^ self binding isClassVariable or: [ self binding typIsFromSharedPool ]
 ]

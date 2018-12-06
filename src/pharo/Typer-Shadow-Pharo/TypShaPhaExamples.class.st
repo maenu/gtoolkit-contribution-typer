@@ -7,11 +7,9 @@ Class {
 { #category : #accessing }
 TypShaPhaExamples >> pharo [
 	<gtExample>
-	| tag |
-	tag := #'Typer-Shadow-Pharo' asPackage classTagNamed: #Core.
-	TypTypeResolvers initializeGlobal resolvers add: tag typShaAsTypeResolver.
-	TypMethodResolvers initializeGlobal resolvers add: tag typShaAsMethodResolver.
-	TypVariableResolvers initializeGlobal resolvers add: tag typShaAsVariableResolver.
+	TypTypeResolvers initializeGlobal resolvers add: TypShaTypeResolvers new.
+	TypMethodResolvers initializeGlobal resolvers add: TypShaMethodResolvers new.
+	TypVariableResolvers initializeGlobal resolvers add: TypShaVariableResolvers new.
 	^ self class methodNamed: #playground
 ]
 

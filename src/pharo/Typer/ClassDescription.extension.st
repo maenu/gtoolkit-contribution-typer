@@ -17,3 +17,15 @@ ClassDescription >> typAsType [
 				clazz: self;
 				yourself)
 ]
+
+{ #category : #'*Typer' }
+ClassDescription >> typTypeForVariable: aSymbol [
+	| type |
+	type := self typAsType.
+	^ TypVariableResolvers global
+		typeForVariable:
+			(TypVariableLookup new
+				receiverType: type;
+				selector: aSymbol asSymbol;
+				yourself)
+]

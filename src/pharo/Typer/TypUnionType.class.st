@@ -155,6 +155,18 @@ TypUnionType >> isUnion [
 	^ true
 ]
 
+{ #category : #accessing }
+TypUnionType >> nullable [
+	^ weights includesKey: TypNilType instance
+]
+
+{ #category : #accessing }
+TypUnionType >> nullable: aBoolean [
+	aBoolean
+		ifTrue: [ self increment: TypNilType instance ]
+		ifFalse: [ weights removeKey: TypNilType instance ifAbsent: [  ] ]
+]
+
 { #category : #generated }
 TypUnionType >> parameters [
 	<typTypeResultAs: 'OrderedCollection<TypType>'>
