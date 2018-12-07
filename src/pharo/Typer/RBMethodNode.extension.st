@@ -14,7 +14,7 @@ RBMethodNode >> typTypeForArgumentAt: anInteger [
 		ofMethod:
 			(TypMethodLookup new
 				receiverType: self methodClass typAsType;
-				selector: selector asSymbol;
+				selector: self selector asSymbol;
 				argumentTypes: self typTypesForArguments;
 				yourself)
 ]
@@ -24,7 +24,7 @@ RBMethodNode >> typTypeForArgumentNamed: aSymbol [
 	<typTypeArgument: 1 as: 'Symbol'>
 	<typTypeResultAs: 'TypType'>
 	| i |
-	i := arguments detectIndex: [ :f | f name = aSymbol ].
+	i := self arguments detectIndex: [ :f | f name = aSymbol ].
 	^ self typTypeForArgumentAt: i
 ]
 
@@ -35,7 +35,7 @@ RBMethodNode >> typTypeForResult [
 		typeForResultOfMethod:
 			(TypMethodLookup new
 				receiverType: self methodClass typAsType;
-				selector: selector asSymbol;
+				selector: self selector asSymbol;
 				argumentTypes: self typTypesForArguments;
 				yourself)
 ]
@@ -43,5 +43,5 @@ RBMethodNode >> typTypeForResult [
 { #category : #'*Typer' }
 RBMethodNode >> typTypesForArguments [
 	<typTypeResultAs: 'OrderedCollection<TypType>'>
-	^ arguments collect: #typType
+	^ self arguments collect: #typType
 ]

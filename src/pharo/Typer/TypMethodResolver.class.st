@@ -23,13 +23,13 @@ TypMethodResolver >> argumentTypeAt: anInteger for: aLookup resolvedBy: anotherL
 
 { #category : #accessing }
 TypMethodResolver >> argumentTypes [
-	<typTypeResultAs: 'BlockClosure<TypResolver<TypMethodLookup>,Integer,TypMethodLookup,TypMethodLookup,TypType>'>
+	<typTypeResultAs: 'BlockClosure<Integer,TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>,TypType>'>
 	^ argumentTypes
 ]
 
 { #category : #accessing }
 TypMethodResolver >> argumentTypes: anObject [
-	<typTypeArgument: 1 as: 'BlockClosure<TypResolver<TypMethodLookup>,Integer,TypMethodLookup,TypMethodLookup,TypType>'>
+	<typTypeArgument: 1 as: 'BlockClosure<Integer,TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>,TypType>'>
 	argumentTypes := anObject
 ]
 
@@ -42,18 +42,19 @@ TypMethodResolver >> initialize [
 
 { #category : #'as yet unclassified' }
 TypMethodResolver >> resolves: aLookup [
+	<typTypeArgument: 1 as: 'TypMethodLookup'>
 	^ true
 ]
 
 { #category : #accessing }
 TypMethodResolver >> resultType [
-	<typTypeResultAs: 'BlockClosure<TypResolver<TypMethodLookup>,TypMethodLookup,TypMethodLookup,TypType>'>
+	<typTypeResultAs: 'BlockClosure<TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>,TypType>'>
 	^ resultType
 ]
 
 { #category : #accessing }
 TypMethodResolver >> resultType: anObject [
-	<typTypeArgument: 1 as: 'BlockClosure<TypResolver<TypMethodLookup>,TypMethodLookup,TypMethodLookup,TypType>'>
+	<typTypeArgument: 1 as: 'BlockClosure<TypMethodLookup,TypMethodLookup,TypType,TypResolver<TypMethodLookup>>'>
 	resultType := anObject
 ]
 

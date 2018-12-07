@@ -11,7 +11,7 @@ RBMessageNode >> typTypeForArgumentAt: anInteger [
 		ofMethod:
 			(TypMethodLookup new
 				receiverType: receiverType;
-				selector: selector asSymbol;
+				selector: self selector asSymbol;
 				argumentTypes: self typTypesForArguments;
 				yourself)
 ]
@@ -19,7 +19,7 @@ RBMessageNode >> typTypeForArgumentAt: anInteger [
 { #category : #'*Typer' }
 RBMessageNode >> typTypeForReceiver [
 	<typTypeResultAs: 'TypType'>
-	^ receiver typType
+	^ self receiver typType
 ]
 
 { #category : #'*Typer' }
@@ -31,7 +31,7 @@ RBMessageNode >> typTypeForResult [
 		typeForResultOfMethod:
 			(TypMethodLookup new
 				receiverType: receiverType;
-				selector: selector asSymbol;
+				selector: self selector asSymbol;
 				argumentTypes: (self typTypesForArguments);
 				yourself)
 ]
@@ -44,5 +44,5 @@ RBMessageNode >> typTypeRecursive [
 { #category : #'*Typer' }
 RBMessageNode >> typTypesForArguments [
 	<typTypeResultAs: 'OrderedCollection<TypType>'>
-	^ arguments collect: #typType
+	^ self arguments collect: #typType
 ]

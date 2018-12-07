@@ -2,5 +2,5 @@ Extension { #name : #RBArgumentNode }
 
 { #category : #'*Typer' }
 RBArgumentNode >> typTypeRecursive [
-	^ (self whoDefines: name) typTypeForArgumentNamed: name
+	^ (self whoDefines: self name) typTypeForArgumentNamed: self name
 ]

@@ -10,7 +10,7 @@ RBProgramNode >> typType [
 			self propertyAt: #typType put: TypUnknownType instance.
 			type := self typTypeRecursive.
 			self comments detect: #typIsCastAs ifFound: [ :e | type := e typCastAs ] ifNone: [ {} ].
-			parameters := self comments detect: #typIsParameters ifFound: [ :e | e typParameters ] ifNone: [ "typCastAs OrderedCollection<TypType>" {} ].
+			parameters := self comments detect: #typIsParameters ifFound: [ :e | e typParameters ] ifNone: [ {} "typCastAs OrderedCollection<TypType>" ].
 			parameters ifNotEmpty: [ type := type asParametricType: parameters ].
 			type ]
 ]

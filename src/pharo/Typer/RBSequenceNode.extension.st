@@ -2,6 +2,6 @@ Extension { #name : #RBSequenceNode }
 
 { #category : #'*Typer' }
 RBSequenceNode >> typTypeRecursive [
-	statements ifEmpty: [ ^ TypNilType instance ].
-	^ statements last typType
+	self statements ifEmpty: [ ^ TypNilType instance ].
+	^ self statements last typType
 ]

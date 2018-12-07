@@ -15,18 +15,19 @@ TypTypeResolver >> initialize [
 
 { #category : #accessing }
 TypTypeResolver >> resolves: aLookup [
+	<typTypeArgument: 1 as: 'TypVariableLookup'>
 	^ true
 ]
 
 { #category : #accessing }
 TypTypeResolver >> type [
-	<typTypeResultAs: 'BlockClosure<TypResolver<TypLookup>,TypTypeLookup,TypTypeLookup,TypType>'>
+	<typTypeResultAs: 'BlockClosure<TypTypeLookup,TypTypeLookupTypResolver<TypLookup>,,TypType>'>
 	^ type
 ]
 
 { #category : #accessing }
 TypTypeResolver >> type: anObject [
-	<typTypeArgument: 1 as: 'BlockClosure<TypResolver<TypLookup>,TypTypeLookup,TypTypeLookup,TypType>'>
+	<typTypeArgument: 1 as: 'BlockClosure<TypTypeLookup,TypTypeLookup,TypResolver<TypLookup>,TypType>'>
 	type := anObject
 ]
 

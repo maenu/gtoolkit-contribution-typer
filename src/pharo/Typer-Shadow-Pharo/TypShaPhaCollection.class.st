@@ -85,7 +85,9 @@ TypShaPhaCollection >> _detect: _a ifFound: _b ifNone: _c [
 						asParametricType:
 							{(a receiverType parameters at: 1).
 							TypUnknownType instance} ] ];
-		resultType: [ TypUnknownType instance ];
+		resultType: [ :a | 
+			{(a argumentTypes at: 2) parameters last.
+			(a argumentTypes at: 3) parameters last} typAsType ];
 		yourself
 ]
 
@@ -102,7 +104,9 @@ TypShaPhaCollection >> _detect: _a ifNone: _b [
 						asParametricType:
 							{(a receiverType parameters at: 1).
 							TypUnknownType instance} ] ];
-		resultType: [ TypUnknownType instance ];
+		resultType: [ :a | 
+			{(a receiverType parameters at: 1).
+			(a argumentTypes at: 2) parameters last} typAsType ];
 		yourself
 ]
 

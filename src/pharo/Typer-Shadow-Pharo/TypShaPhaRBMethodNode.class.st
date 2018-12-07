@@ -9,6 +9,16 @@ TypShaPhaRBMethodNode class >> shadowedClass [
 	^ RBMethodNode class
 ]
 
+{ #category : #accessing }
+TypShaPhaRBMethodNode >> _allChildren [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType: {RBProgramNode typAsType} ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaRBMethodNode >> _arguments [
 	^ TypMethodResolver new

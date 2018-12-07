@@ -6,9 +6,9 @@ RBBlockNode >> typTypeForArgumentAt: anInteger [
 	<typTypeResultAs: 'TypType'>
 	| type |
 	type := self typType.
-	(parent isMessage and: [ parent receiver ~~ self ])
+	(self parent isMessage and: [ self parent receiver ~~ self ])
 		ifTrue: [ | i parent_ type_ |
-			parent_ := parent.	"typCastAs RBMessageNode"
+			parent_ := self parent.	"typCastAs RBMessageNode"
 			i := parent_ arguments detectIndex: [ :e | e == self ].
 			type_ := parent_ typTypeForArgumentAt: i.
 			type_ isParametric

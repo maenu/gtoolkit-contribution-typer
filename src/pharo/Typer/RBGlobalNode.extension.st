@@ -20,5 +20,5 @@ RBGlobalNode >> typHasDefiningClass [
 RBGlobalNode >> typTypeRecursive [
 	(self binding isGlobalClassNameBinding or: [ self binding isGlobalVariable ])
 		ifTrue: [ ^ self binding value class typAsType ].
-	^ self typDefiningClass typTypeForVariable: name asSymbol
+	^ self typDefiningClass typTypeForVariable: self name asSymbol
 ]

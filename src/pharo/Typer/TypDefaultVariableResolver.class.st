@@ -38,6 +38,9 @@ TypDefaultVariableResolver >> resolves: aLookup [
 
 { #category : #initialization }
 TypDefaultVariableResolver >> withAllSuperclassesOf: aClass until: anotherClass [
+	<typTypeArgument: 1 as: 'ClassDescription'>
+	<typTypeArgument: 2 as: 'ClassDescription'>
+	<typTypeResultAs: 'SequenceableCollection<ClassDescription>'>
 	| clazzes |
 	clazzes := aClass withAllSuperclasses.
 	^ clazzes copyFrom: 1 to: (clazzes indexOf: anotherClass)

@@ -2,5 +2,5 @@ Extension { #name : #RBLiteralArrayNode }
 
 { #category : #'*Typer' }
 RBLiteralArrayNode >> typTypeRecursive [
-	^ Array typAsType asParametricType: {(contents ifEmpty: [ TypUnknownType instance ] ifNotEmpty: [ (contents collect: #typType) typAsType ])}
+	^ Array typAsType asParametricType: {(self contents ifEmpty: [ TypUnknownType instance ] ifNotEmpty: [ (self contents collect: #typType) typAsType ])}
 ]

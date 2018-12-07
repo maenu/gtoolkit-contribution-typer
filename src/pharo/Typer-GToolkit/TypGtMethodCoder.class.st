@@ -79,7 +79,7 @@ TypGtMethodCoder >> initializeShortcuts [
 				combination:
 					(BlKeyCombination builder
 						primary;
-						key: Key h;
+						key: Key t;
 						build);
 				action: [ :editorElement | self typeWithPragma: editorElement ]);
 		addShortcut:
