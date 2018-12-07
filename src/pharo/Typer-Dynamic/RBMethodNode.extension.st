@@ -87,42 +87,57 @@ RBMethodNode >> typDynTypeForArgumentAt: anInteger [
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypeForResult [
 	<typTypeResultAs: 'TypUnionType<TypType>'>
-	^ (self typDynReturnNodes collect: #typDynReturns) "typParameters TypUnionType<TypType>"
+	^ (self typDynReturnNodes collect: [ :e | e typDynReturns ])
 		inject: TypUnionType new
 		into: [ :a :b | a , b ]
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForClassVariables [
-	^ self typDynTypesForVariablesSelectedWith: [ :e | e variable binding isClassVariable ] definedBy: [ self methodClass classSide ]
+	<typTypeResultAs:
+		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypUnionType<TypType>>'>
+	^ self
+		typDynTypesForVariablesSelectedWith: [ :e | e variable binding isClassVariable ]
+		definedBy: [ self methodClass classSide ]
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForInstanceVariables [
+	<typTypeResultAs:
+		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypUnionType<TypType>>'>
 	^ self typDynTypesForVariablesSelectedWith: [ :e | e variable isInstance ] definedBy: [ self methodClass ]
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForPoolVariables [
-	^ self typDynTypesForVariablesSelectedWith: [ :e | e variable binding typIsFromSharedPool ] definedBy: [ :e | e binding typSharedPool ]
+	<typTypeResultAs:
+		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypUnionType<TypType>>'>
+	^ self
+		typDynTypesForVariablesSelectedWith: [ :e | e variable binding typIsFromSharedPool ]
+		definedBy: [ :e | e binding typSharedPool ]
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForVariables [
 	"keys are unique as defining class and name are unique accross different variable kinds, concat dictionaries is fine"
 
-	^ self typDynTypesForPoolVariables , self typDynTypesForInstanceVariables , self typDynTypesForClassVariables
+	<typTypeResultAs:
+		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypUnionType<TypType>>'>
+	^ self typDynTypesForPoolVariables
+		, self typDynTypesForInstanceVariables
+		, self typDynTypesForClassVariables
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForVariablesSelectedWith: aBlock definedBy: anotherBlock [
 	<typTypeArgument: 1 as: 'BlockClosure<RBVariableNode,Boolean>'>
 	<typTypeArgument: 2 as: 'BlockClosure<RBVariableNode,ClassDescription>'>
-	<typTypeResultAs: '?'>
+	<typTypeResultAs:
+		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypUnionType<TypType>>'>
 	^ ((((self typDynAssignNodes select: aBlock)
 		collect:
 			[ :e | (anotherBlock cull: e variable) -> e variable name -> e typDynAssigns ])
-		groupedBy: #key) collect: [ :e | e collect: #value ])
+		groupedBy: [:e | e key ]) collect: [ :e | e collect: [ :f | f value ] ])
 		collect: [ :e | e inject: TypUnionType new into: [ :a :b | a , b ] ]
 ]
 

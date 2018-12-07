@@ -18,6 +18,14 @@ TypShaPhaCompiledMethod >> _assignmentNodes [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaCompiledMethod >> _ast [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | RBMethodNode typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaCompiledMethod >> _numArgs [
 	^ TypMethodResolver new

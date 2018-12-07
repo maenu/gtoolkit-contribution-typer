@@ -16,11 +16,13 @@ RBReturnNode >> typDynInstall [
 
 { #category : #'*Typer-Dynamic' }
 RBReturnNode >> typDynMonitor [
+	<typTypeResultAs: 'Monitor'>
 	^ self propertyAt: #typDynMonitor
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBReturnNode >> typDynReturn: anObject [
+	<typTypeArgument: 1 as: 'Object'>
 	| value_ |
 	value_ := anObject class typAsType.
 	self typDynMonitor critical: [ self typDynReturns increment: value_ ]
@@ -28,6 +30,7 @@ RBReturnNode >> typDynReturn: anObject [
 
 { #category : #'*Typer-Dynamic' }
 RBReturnNode >> typDynReturns [
+	<typTypeResultAs: 'TypUnionType<TypType>'>
 	^ self propertyAt: #typDynReturns
 ]
 

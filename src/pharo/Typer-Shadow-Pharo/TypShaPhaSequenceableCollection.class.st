@@ -53,71 +53,11 @@ TypShaPhaSequenceableCollection >> _first [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> _groupedBy: _a [
-	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | 
-			BlockClosure typeAsType
-				asParametricType:
-					{(a receiverType parameters at: 1).
-					TypUnknownType instance} ];
-		resultType: [ :a :s :r | 
-			Dictionary typAsType
-				asParametricType:
-					{((a argumentTypes at: 1) isParametric
-						ifTrue: [ (a argumentTypes at: 1) parameters last ]
-						ifFalse: [ TypUnknownType instance ]).
-					(Collection typAsType
-						asParametricType: {(a receiverType parameters at: 1)})} ];
-		yourself
-]
-
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> _inject: _a incto: _b [
-	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | 
-			i = 1
-				ifTrue: [ a argumentTypes at: 1 ]
-				ifFalse: [ BlockClosure typAsType
-						asParametricType:
-							{(a argumentTypes at: 1).
-							(a receiverType parameters at: 1)} ] ];
-		resultType: [ :a :s :r | a argumentTypes at: 1 ];
-		yourself
-]
-
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> _inject: _a into: _b [
-	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | 
-			i = 1
-				ifTrue: [ TypUnknownType instance ]
-				ifFalse: [ BlockClosure typAsType
-						asParametricType:
-							{(a argumentTypes at: 1).
-							(a receiverType parameters at: 1).
-							TypUnknownType instance} ] ];
-		resultType: [ :a :s :r | a argumentTypes at: 1 ];
-		yourself
-]
-
 { #category : #'as yet unclassified' }
 TypShaPhaSequenceableCollection >> _last [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | a receiverType parameters at: 1 ];
-		yourself
-]
-
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> _reject: _a [
-	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | 
-			BlockClosure typAsType
-				asParametricType:
-					{(a receiverType parameters at: 1).
-					Boolean typAsType} ];
-		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 

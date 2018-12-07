@@ -30,3 +30,25 @@ TypShaPhaNumber >> _timesCollect: _a [
 			OrderedCollection typAsType asParametricType: {resultType asType} ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaPhaNumber >> _to: _a do: _b [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			i = 1
+				ifTrue: [ Number typAsType ]
+				ifFalse: [ BlockClosure typAsType
+						asParametricType:
+							{Number typAsType.
+							TypUnknownType instance} ] ];
+		resultType: [ :a :s :r | a receiverType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaNumber >> ~- _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | Number typAsType ];
+		resultType: [ :a :s :r | Number typAsType ];
+		yourself
+]

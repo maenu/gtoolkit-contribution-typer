@@ -77,6 +77,22 @@ TypShaPhaDictionary >> _at: _a put: _b [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaDictionary >> _collect: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			BlockClosure typAsType
+				asParametricType:
+					{(a receiverType parameters at: 2).
+					TypUnknownType instance} ];
+		resultType: [ :a :s :r | 
+			a receiverType
+				asParametricType:
+					{(a receiverType parameters at: 1).
+					(a argumentTypes at: 1) parameters last} ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaDictionary >> _includes: _a [
 	^ TypMethodResolver new

@@ -7,11 +7,14 @@ Class {
 	#category : #'Typer-Dynamic-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypDynCollector >> collectIn: aCollection doing: aBlock [
+	<typTypeArgument: 1 as: 'Collection<CompiledMethod>'>
+	<typTypeArgument: 2 as: 'BlockClosure<?>'>
+	<typTypeResultAs: 'Association<Association<?,TypDynResolver>,TypDynResolver>'>
 	| methodResolvers variableResolvers result asts |
-	methodResolvers := OrderedCollection new.
-	variableResolvers := OrderedCollection new.
+	methodResolvers := Dictionary new "typParameters Association<ClassDescription,Symbol<Character>>,TypMethodResolver<TypMethodLookup>".
+	variableResolvers := Dictionary new "typParameters Association<ClassDescription,Symbol<Character>>,TypVariableResolver<TypVariableLookup>".
 	result := nil.
 	asts := aCollection collect: [ :e | e ast typDynInstall ].
 	[ result := aBlock value.
@@ -29,17 +32,29 @@ TypDynCollector >> collectIn: aCollection doing: aBlock [
 				yourself)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypDynCollector >> collectMethodResolversIn: aCollection [
-	^ (aCollection collect: [ :e | e methodClass -> e selector -> e typDynAsMethodResolver ]) asDictionary
+	<typTypeArgument: 1 as: 'Collection<RBMethodNode>'>
+	<typTypeResultAs:
+		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypMethodResolver<TypMethodLookup>>'>
+	^ (aCollection
+		collect: [ :e | e methodClass -> e selector -> e typDynAsMethodResolver ])
+		asDictionary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypDynCollector >> collectVariableResolversIn: aCollection [
-	^ ((aCollection flatCollect: [ :e | e typDynTypesForVariables associations ]) groupedBy: #key)
+	<typTypeArgument: 1 as: 'Collection<RBMethodNode>'>
+	<typTypeResultAs:
+		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypVariableResolver<TypVariableLookup>>'>
+	^ ((aCollection
+		flatCollect: [ :e | e typDynTypesForVariables associations ])
+		groupedBy: [ :e | e key ])
 		collect: [ :e | 
 			| type |
-			type := (e collect: #value) inject: TypUnionType new into: [ :a :b | a , b ].
+			type := (e collect: [ :f | f value ])
+				inject: TypUnionType new
+				into: [ :a :b | a , b ].
 			TypVariableResolver new
 				type: [ type ];
 				yourself ]
