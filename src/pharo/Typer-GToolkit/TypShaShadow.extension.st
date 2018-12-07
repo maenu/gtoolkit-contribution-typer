@@ -18,15 +18,15 @@ TypShaShadow class >> typGtNewShadowFor: aClass [
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowClassInstanceMethod: aSymbol arguments: someTypes result: aType [
 	| name_ |
-	name_ := '_' , aSymbol.
+	name_ := (aSymbol isBinary
+		ifTrue: [ '~' , aSymbol ]
+		ifFalse: [ '_' , aSymbol ]) asSymbol.
 	(self class includesSelector: name_)
 		ifFalse: [ | header argumentBody |
-			header := name_ isKeyword
+			header := (name_ isKeyword or: name_ isBinary)
 				ifTrue: [ ' ' join: (name_ keywords withIndexCollect: [ :e :i | e , ' _' , (96 + i) asCharacter asString ]) ]
 				ifFalse: [ name_ ].
-			argumentBody := someTypes
-				ifEmpty: [ 'TypNoTypeError signal' ]
-				ifNotEmpty: [ ':i :a :s :r | {' , (' . ' join: (someTypes withIndexCollect: [ :e :i | '''' , aType asSourceString , ''' typAsType' ])) , '} at: i' ].
+			argumentBody := someTypes ifEmpty: [ 'TypNoTypeError signal' ] ifNotEmpty: [ ':i :a :s :r | {' , (' . ' join: (someTypes withIndexCollect: [ :e :i | '''' , aType asSourceString , ''' typAsType' ])) , '} at: i' ].
 			self class
 				compile:
 					header
@@ -102,10 +102,12 @@ TypShaShadow class >> typGtShadowClassVariable: aSymbol type: aType [
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowInstanceMethod: aSymbol arguments: someTypes result: aType [
 	| name_ |
-	name_ := ('_' , aSymbol) asSymbol.
+	name_ := (aSymbol isBinary
+		ifTrue: [ '~' , aSymbol ]
+		ifFalse: [ '_' , aSymbol ]) asSymbol.
 	(self includesSelector: name_)
 		ifFalse: [ | header argumentBody |
-			header := name_ isKeyword
+			header := (name_ isKeyword or: name_ isBinary)
 				ifTrue: [ ' ' join: (name_ keywords withIndexCollect: [ :e :i | e , ' _' , (96 + i) asCharacter asString ]) ]
 				ifFalse: [ name_ ].
 			argumentBody := someTypes

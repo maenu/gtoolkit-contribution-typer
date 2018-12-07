@@ -13,7 +13,7 @@ TypVariableResolvers class >> initializeGlobal [
 
 { #category : #initialization }
 TypVariableResolvers >> initialize [
-	<typTypeVariable: 'resolvers' as: 'OrderedCollection<TypResolver<TypVariableLookup>>'>
+	<typTypeVariable: 'resolvers' as: 'SequenceableCollection<TypResolver<TypVariableLookup>>'>
 	<typTypeVariable: 'defaultResolver' as: 'TypResolver<TypVariableLookup>'>
 	super initialize
 ]

@@ -21,7 +21,7 @@ RBComment >> typIsParameters [
 
 { #category : #'*Typer' }
 RBComment >> typParameters [
-	<typTypeResultAs: 'OrderedCollection<TypType>'>
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	self assert: [ self typIsParameters ].
 	^ (self contents copyFrom: 'typParameters ' size + 1 to: self contents size) typAsTypes
 ]

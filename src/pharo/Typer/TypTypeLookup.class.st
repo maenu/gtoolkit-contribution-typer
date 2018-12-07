@@ -14,11 +14,13 @@ TypTypeLookup >> = anObject [
 
 { #category : #accessing }
 TypTypeLookup >> clazz [
+	<typTypeResultAs: 'ClassDescription'>
 	^ clazz
 ]
 
 { #category : #accessing }
 TypTypeLookup >> clazz: anObject [
+	<typTypeArgument: 1 as: 'ClassDescription'>
 	clazz := anObject
 ]
 

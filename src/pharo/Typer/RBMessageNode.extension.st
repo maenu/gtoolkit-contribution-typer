@@ -43,6 +43,6 @@ RBMessageNode >> typTypeRecursive [
 
 { #category : #'*Typer' }
 RBMessageNode >> typTypesForArguments [
-	<typTypeResultAs: 'OrderedCollection<TypType>'>
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	^ self arguments collect: #typType
 ]

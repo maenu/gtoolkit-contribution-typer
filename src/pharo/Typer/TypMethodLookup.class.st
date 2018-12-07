@@ -16,13 +16,13 @@ TypMethodLookup >> = anObject [
 
 { #category : #accessing }
 TypMethodLookup >> argumentTypes [
-	<typTypeResultAs: 'OrderedCollection<TypType>'>
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	^ argumentTypes
 ]
 
 { #category : #accessing }
 TypMethodLookup >> argumentTypes: anObject [
-	<typTypeArgument: 1 as: 'OrderedCollection<TypType>'>
+	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
 	argumentTypes := anObject
 ]
 
@@ -33,7 +33,7 @@ TypMethodLookup >> hash [
 
 { #category : #initialization }
 TypMethodLookup >> initialize [
-	<typTypeVariable: 'argumentTypes' as: 'OrderedCollection<TypType>'>
+	<typTypeVariable: 'argumentTypes' as: 'SequenceableCollection<TypType>'>
 	super initialize
 ]
 

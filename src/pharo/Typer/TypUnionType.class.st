@@ -169,7 +169,7 @@ TypUnionType >> nullable: aBoolean [
 
 { #category : #generated }
 TypUnionType >> parameters [
-	<typTypeResultAs: 'OrderedCollection<TypType>'>
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	| keys size parameters |
 	keys := weights keys asSet.
 	size := (keys

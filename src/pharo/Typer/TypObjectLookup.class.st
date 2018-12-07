@@ -34,7 +34,7 @@ TypObjectLookup >> hash [
 { #category : #initialization }
 TypObjectLookup >> initialize [
 	<typTypeVariable: 'receiverType' as: 'TypType'>
-	<typTypeVariable: 'selector' as:  'Symbol'>
+	<typTypeVariable: 'selector' as:  'Symbol<Character>'>
 	super initialize
 ]
 
@@ -52,12 +52,12 @@ TypObjectLookup >> receiverType: anObject [
 
 { #category : #accessing }
 TypObjectLookup >> selector [
-	<typTypeResultAs:  'Symbol'>
+	<typTypeResultAs:  'Symbol<Character>'>
 	^ selector
 ]
 
 { #category : #accessing }
 TypObjectLookup >> selector: anObject [
-	<typTypeArgument: 1 as:  'Symbol'>
+	<typTypeArgument: 1 as:  'Symbol<Character>'>
 	selector := anObject
 ]

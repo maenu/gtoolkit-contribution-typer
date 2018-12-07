@@ -10,7 +10,7 @@ Class {
 
 { #category : #comparing }
 TypParametricType >> = anObject [
-	^ self == anObject or: [ self class = anObject class and: [ nullable = anObject nullable and: [ type = anObject type and: [ parameters = anObject parameters ] ] ] ]
+	^ self == anObject or: [ self class = anObject class and: [ nullable = anObject nullable and: [ type = anObject type and: [ parameters asOrderedCollection = anObject parameters asOrderedCollection ] ] ] ]
 ]
 
 { #category : #converting }
@@ -56,7 +56,7 @@ TypParametricType >> hasSuperType [
 
 { #category : #comparing }
 TypParametricType >> hash [
-	^ (super hash bitXor: type hash) bitXor: parameters hash
+	^ (super hash bitXor: type hash) bitXor: parameters asOrderedCollection hash
 ]
 
 { #category : #initialization }
@@ -84,13 +84,13 @@ TypParametricType >> nullable: anObject [
 
 { #category : #accessing }
 TypParametricType >> parameters [
-	<typTypeResultAs: 'OrderedCollection<TypType>'>
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	^ parameters
 ]
 
 { #category : #accessing }
 TypParametricType >> parameters: anObject [
-	<typTypeArgument: 1 as: 'OrderedCollection<TypType>'>
+	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
 	parameters := anObject
 ]
 

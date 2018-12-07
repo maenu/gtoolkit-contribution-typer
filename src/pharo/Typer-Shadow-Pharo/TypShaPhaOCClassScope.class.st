@@ -1,0 +1,18 @@
+Class {
+	#name : #TypShaPhaOCClassScope,
+	#superclass : #TypShaShadow,
+	#category : #'Typer-Shadow-Pharo-Core'
+}
+
+{ #category : #'as yet unclassified' }
+TypShaPhaOCClassScope class >> shadowedClass [
+	^ OCClassScope class
+]
+
+{ #category : #accessing }
+TypShaPhaOCClassScope >> _getClass [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | ClassDescription typAsType ];
+		yourself
+]

@@ -13,7 +13,9 @@ RBGlobalNode >> typDefiningClass [
 
 { #category : #'*Typer' }
 RBGlobalNode >> typHasDefiningClass [
-	^ self binding isClassVariable or: [ self binding typIsFromSharedPool ]
+	<typTypeResultAs: 'Boolean'>
+	^ self binding isClassVariable
+		or: [ self binding typIsFromSharedPool ]
 ]
 
 { #category : #'*Typer' }

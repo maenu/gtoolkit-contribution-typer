@@ -9,6 +9,15 @@ TypShaPhaCompiledMethod class >> shadowedClass [
 	^ CompiledMethod class
 ]
 
+{ #category : #accessing }
+TypShaPhaCompiledMethod >> _assignmentNodes [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType:
+				[ :a :s :r | Collection typAsType asParametricType: {RBAssignmentNode typAsType} ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaCompiledMethod >> _numArgs [
 	^ TypMethodResolver new

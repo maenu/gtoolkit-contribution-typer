@@ -95,7 +95,7 @@ TypShaPhaDictionary >> _includesKey: _a [
 
 { #category : #'as yet unclassified' }
 TypShaPhaDictionary >> _keys [
-	TypMethodResolver new
+	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | Collection typAsType asParametricType: {(a receiverType parameters at: 1)} ];
 		yourself

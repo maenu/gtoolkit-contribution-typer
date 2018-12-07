@@ -23,17 +23,19 @@ TypResolvers class >> initializeGlobal [
 
 { #category : #accessing }
 TypResolvers >> defaultResolver [
+	<typTypeResultAs: 'TypResolver<TypLookup>'>
 	^ defaultResolver
 ]
 
 { #category : #accessing }
 TypResolvers >> defaultResolver: anObject [
+	<typTypeArgument: 1 as: 'TypResolver<TypLookup>'>
 	defaultResolver := anObject
 ]
 
 { #category : #initialization }
 TypResolvers >> initialize [
-	<typTypeVariable: 'resolvers' as: 'OrderedCollection<TypResolver<TypLookup>>'>
+	<typTypeVariable: 'resolvers' as: 'SequenceableCollection<TypResolver<TypLookup>>'>
 	<typTypeVariable: 'defaultResolver' as: 'TypResolver<TypLookup>'>
 	super initialize.
 	resolvers := OrderedCollection new
@@ -41,13 +43,13 @@ TypResolvers >> initialize [
 
 { #category : #accessing }
 TypResolvers >> resolvers [
-	<typTypeResultAs: 'OrderedCollection<TypResolver<TypLookup>>'>
+	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypLookup>>'>
 	^ resolvers
 ]
 
 { #category : #accessing }
 TypResolvers >> resolvers: anObject [
-	<typTypeArgument: 1 as: 'OrderedCollection<TypResolver<TypLookup>>'>
+	<typTypeArgument: 1 as: 'SequenceableCollection<TypResolver<TypLookup>>'>
 	resolvers := anObject
 ]
 

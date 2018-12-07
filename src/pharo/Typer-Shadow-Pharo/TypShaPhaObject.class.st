@@ -26,9 +26,25 @@ TypShaPhaObject >> _copy [
 ]
 
 { #category : #'as yet unclassified' }
+TypShaPhaObject >> _hash [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Integer typAsType ];
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
 TypShaPhaObject >> _yourself [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | a receiverType ];
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
+TypShaPhaObject >> ~= _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | Object typAsType ];
+		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]

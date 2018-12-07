@@ -32,3 +32,19 @@ TypShaPhaClassDescription >> _methods [
 		resultType: [ Collection typAsType asParametricType: {CompiledMethod typAsType} ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaPhaClassDescription >> _whichClassDefinesInstVar: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | String typAsType ];
+		resultType: [ :a :s :r | ClassDescription typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaClassDescription >> _withAllSuperclasses [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | SequenceableCollection typAsType asParametricType: {ClassDescription typAsType} ];
+		yourself
+]

@@ -45,24 +45,11 @@ TypShaPhaSequenceableCollection >> _detectIndex: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> _flatCollect: _a [
+{ #category : #'as yet unclassified' }
+TypShaPhaSequenceableCollection >> _first [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a | 
-			BlockClosure typAsType
-				asParametricType:
-					{(a receiverType parameters at: 1).
-					(Collection typAsType
-						asParametricType:
-							{((a argumentTypes at: 1) isParametric
-								ifTrue: [ (a argumentTypes at: 1) parameters at: 1 ]
-								ifFalse: [ TypUnknownType instance ])})} ];
-		resultType: [ :a | 
-			a receiverType
-				asParametricType:
-					{((a argumentTypes at: 1) isParametric
-						ifTrue: [ (a argumentTypes at: 1) parameters at: 1 ]
-						ifFalse: [ TypUnknownType instance ])} ];
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | a receiverType parameters at: 1 ];
 		yourself
 ]
 

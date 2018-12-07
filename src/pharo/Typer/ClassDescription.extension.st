@@ -20,6 +20,8 @@ ClassDescription >> typAsType [
 
 { #category : #'*Typer' }
 ClassDescription >> typTypeForVariable: aSymbol [
+	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeResultAs: 'TypType'>
 	| type |
 	type := self typAsType.
 	^ TypVariableResolvers global

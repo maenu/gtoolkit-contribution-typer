@@ -6,10 +6,18 @@ Class {
 
 { #category : #accessing }
 TypShaMethodResolver >> resolversFor: aLookup [
-	^ {shadow perform: ('_' , aLookup selector) asSymbol withEnoughArguments: {}}
+	| name |
+	name := (aLookup selector isBinary
+		ifTrue: [ '~' , aLookup selector ]
+		ifFalse: [ '_' , aLookup selector ]) asSymbol.
+	^ {(shadow perform: name asSymbol withEnoughArguments: {})}
 ]
 
 { #category : #accessing }
 TypShaMethodResolver >> resolves: aLookup [
-	^ aLookup receiverType hasClass and: [ aLookup receiverType asClass == shadow shadowedClass and: [ shadow class includesSelector: ('_' , aLookup selector) asSymbol ] ]
+	| name |
+	name := (aLookup selector isBinary
+		ifTrue: [ '~' , aLookup selector ]
+		ifFalse: [ '_' , aLookup selector ]) asSymbol.
+	^ aLookup receiverType hasClass and: [ aLookup receiverType asClass == shadow shadowedClass and: [ shadow class includesSelector: name ] ]
 ]

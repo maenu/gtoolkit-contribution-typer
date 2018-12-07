@@ -2,7 +2,9 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer' }
 RBMethodNode >> typIsReturnSelf [
-	^ ((self allChildren select: #isReturn) reject: [ :e | e value isSelf ]) isEmpty
+	<typTypeResultAs: 'Boolean'>
+	^ ((self allChildren select: #isReturn)
+		reject: [ :e | e value isSelf ]) isEmpty
 ]
 
 { #category : #'*Typer' }
@@ -42,6 +44,6 @@ RBMethodNode >> typTypeForResult [
 
 { #category : #'*Typer' }
 RBMethodNode >> typTypesForArguments [
-	<typTypeResultAs: 'OrderedCollection<TypType>'>
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	^ self arguments collect: #typType
 ]

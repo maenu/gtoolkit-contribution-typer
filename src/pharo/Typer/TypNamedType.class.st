@@ -61,19 +61,19 @@ TypNamedType >> hash [
 
 { #category : #initialization }
 TypNamedType >> initialize [
-	<typTypeVariable: 'name' as: 'String'>
+	<typTypeVariable: 'name' as: 'String<Character>'>
 	super initialize
 ]
 
 { #category : #accessing }
 TypNamedType >> name [
-	<typTypeResultAs: 'String'>
+	<typTypeResultAs: 'String<Character>'>
 	^ name
 ]
 
 { #category : #accessing }
 TypNamedType >> name: anObject [
-	<typTypeArgument: 1 as: 'String'>
+	<typTypeArgument: 1 as: 'String<Character>'>
 	name := anObject
 ]
 

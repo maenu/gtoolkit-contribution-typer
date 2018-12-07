@@ -122,6 +122,27 @@ TypShaPhaCollection >> _do: _a [
 		yourself
 ]
 
+{ #category : #enumerating }
+TypShaPhaCollection >> _flatCollect: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a | 
+			BlockClosure typAsType
+				asParametricType:
+					{(a receiverType parameters at: 1).
+					(Collection typAsType
+						asParametricType:
+							{((a argumentTypes at: 1) isParametric
+								ifTrue: [ (a argumentTypes at: 1) parameters at: 1 ]
+								ifFalse: [ TypUnknownType instance ])})} ];
+		resultType: [ :a | 
+			a receiverType
+				asParametricType:
+					{((a argumentTypes at: 1) isParametric
+						ifTrue: [ (a argumentTypes at: 1) parameters at: 1 ]
+						ifFalse: [ TypUnknownType instance ])} ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> _includes: _a [
 	^ TypMethodResolver new

@@ -9,7 +9,7 @@ TypShaPhaString class >> shadowedClass [
 	^ String class
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #converting }
 TypShaPhaString >> asType: aClass [
-	^ aClass typAsNamedType
+	^ aClass typAsNamedType asParametricType: {Character typAsType}
 ]

@@ -23,9 +23,8 @@ TypType >> <= aType [
 
 { #category : #comparing }
 TypType >> = anObject [
-	<typTypeArgument: 1 as: 'Object'>
-	<typTypeResultAs: 'Boolean'>
-	^ self == anObject or: [ self class = anObject class and: [ nullable = anObject nullable ] ]
+	^ self == anObject
+		or: [ self class = anObject class and: [ nullable = anObject nullable ] ]
 ]
 
 { #category : #comparing }
@@ -44,7 +43,7 @@ TypType >> >= aType [
 
 { #category : #accessing }
 TypType >> allSuperTypes [
-	<typTypeResultAs: 'OrderedCollection<TypType>'>
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	^ self hasSuperType
 		ifTrue: [ | temp |
 			temp := self superType allSuperTypes.
@@ -77,13 +76,14 @@ TypType >> asNonParametricType [
 
 { #category : #converting }
 TypType >> asParametricType: someTypes [
-	<typTypeArgument: 1 as: 'OrderedCollection<TypType>'>
+	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
 	<typTypeResultAs: 'TypParametricType'>
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
 TypType >> asSourceString [
+	<typTypeResultAs: 'String<Character>'>
 	^ nullable
 		ifTrue: [ '!' ]
 		ifFalse: [ '' ]
@@ -109,7 +109,6 @@ TypType >> hasSuperType [
 
 { #category : #comparing }
 TypType >> hash [
-	<typTypeResultAs: 'Integer'>
 	^ nullable hash
 ]
 
@@ -178,7 +177,7 @@ TypType >> superType [
 
 { #category : #accessing }
 TypType >> withAllSuperTypes [
-	<typTypeResultAs: 'OrderedCollection<TypType>'>
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	| superTypes |
 	superTypes := self allSuperTypes.
 	superTypes addFirst: self.
