@@ -56,7 +56,18 @@ TypGtMethodCoder >> browseToTypeWithShadow: anEditorElement [
 TypGtMethodCoder >> initializeAddOns [
 	super initializeAddOns.
 	addOns addPatternStyler: TypGtPatternStyler new.
-	addOns addBodyStyler: TypGtDeclarationBodyStyler new
+	addOns addBodyStyler: TypGtDeclarationBodyStyler new.
+	addOns
+		addMainAction: 'Types' translated
+		icon: BrGlamorousIcons inspect
+		action: [ | declaration |
+			declaration := addOns bodyStylers anySatisfy: [ :e | e isKindOf: TypGtDeclarationBodyStyler ].
+			declaration
+				ifTrue: [ addOns removeBodyStylerOfType: TypGtDeclarationBodyStyler.
+					addOns addBodyStyler: TypGtAllBodyStyler new ]
+				ifFalse: [ addOns removeBodyStylerOfType: TypGtAllBodyStyler.
+					addOns addBodyStyler: TypGtDeclarationBodyStyler new ].
+			self refreshForChanges ]
 ]
 
 { #category : #'initialize-release' }

@@ -9,6 +9,14 @@ TypShaPhaClassDescription class >> shadowedClass [
 	^ ClassDescription class
 ]
 
+{ #category : #accessing }
+TypShaPhaClassDescription >> _instanceSide [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Class typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaClassDescription >> _lookupSelector: _a [
 	^ TypMethodResolver new
