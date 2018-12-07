@@ -8,12 +8,21 @@ Class {
 }
 
 { #category : #accessing }
+TypDynResolver >> initialize [
+	<typTypeVariable: 'resolvers' as: 'SequenceableCollection<TypResolver>'>
+	super initialize.
+	resolvers := OrderedCollection new
+]
+
+{ #category : #accessing }
 TypDynResolver >> resolvers [
+	<typTypeResultAs: 'SequenceableCollection<TypResolver>'>
 	^ resolvers
 ]
 
 { #category : #accessing }
 TypDynResolver >> resolvers: anObject [
+	<typTypeArgument: 1 as: 'SequenceableCollection<TypResolver>'>
 	resolvers := anObject
 ]
 

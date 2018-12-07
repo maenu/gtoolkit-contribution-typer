@@ -5,14 +5,6 @@ Class {
 }
 
 { #category : #visiting }
-TypGtBodyStyler >> styleFrom: from to: to with: attributes [
-	"style only if within body"
-
-	from - patternSource size - 1 <= 0
-		ifFalse: [ super styleFrom: from to: to with: attributes ]
-]
-
-{ #category : #visiting }
 TypGtBodyStyler >> styleValueNode: aNode [
 	self
 		styleFrom: aNode stop
@@ -89,6 +81,12 @@ TypGtBodyStyler >> visitLiteralNode: aNode [
 { #category : #visiting }
 TypGtBodyStyler >> visitMessageNode: aNode [
 	super visitMessageNode: aNode.
+	self styleValueNodeWithCursor: aNode
+]
+
+{ #category : #visiting }
+TypGtBodyStyler >> visitMethodNode: aNode [
+	super visitMethodNode: aNode.
 	self styleValueNodeWithCursor: aNode
 ]
 

@@ -16,17 +16,27 @@ TypDynMessage >> = anObject [
 
 { #category : #accessing }
 TypDynMessage >> argumentTypes [
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	^ argumentTypes
 ]
 
 { #category : #accessing }
 TypDynMessage >> argumentTypes: anObject [
+	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
 	argumentTypes := anObject
 ]
 
 { #category : #comparing }
 TypDynMessage >> hash [
 	^ selector hash bitXor: (argumentTypes hash bitXor: receiverType hash)
+]
+
+{ #category : #accessing }
+TypDynMessage >> initialize [
+	<typTypeVariable: 'argumentTypes' as: 'SequenceableCollection<TypType>'>
+	<typTypeVariable: 'receiverType' as: 'TypType'>
+	<typTypeVariable: 'selector' as: 'Symbol<Character>'>
+	super initialize
 ]
 
 { #category : #printing }
@@ -44,20 +54,24 @@ TypDynMessage >> printOn: aStream [
 
 { #category : #accessing }
 TypDynMessage >> receiverType [
+	<typTypeResultAs: 'TypType'>
 	^ receiverType
 ]
 
 { #category : #accessing }
 TypDynMessage >> receiverType: anObject [
+	<typTypeArgument: 1 as: 'TypType'>
 	receiverType := anObject
 ]
 
 { #category : #accessing }
 TypDynMessage >> selector [
+	<typTypeResultAs: 'Symbol<Character>'>
 	^ selector
 ]
 
 { #category : #accessing }
 TypDynMessage >> selector: anObject [
+	<typTypeArgument: 1 as: 'Symbol<Character>'>
 	selector := anObject
 ]

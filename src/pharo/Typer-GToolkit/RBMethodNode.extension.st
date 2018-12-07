@@ -6,6 +6,26 @@ RBMethodNode >> typGtCanType [
 ]
 
 { #category : #'*Typer-GToolkit' }
+RBMethodNode >> typGtFiltersToTypeWithShadow [
+	| clazz shadows shadow argumentTypes resultType method |
+	clazz := self methodClass.
+	shadows := TypShaShadow shadowClassesFor: clazz.
+	shadows size > 1
+		ifTrue: [ ^ shadows ].
+	shadow := shadows isEmpty
+		ifTrue: [ TypShaShadow typGtNewShadowFor: clazz ]
+		ifFalse: [ shadows anyOne ].
+	argumentTypes := self numArgs timesCollect: [ :i | self typTypeForArgumentAt: i ].
+	resultType := self typTypeForResult.
+	method := clazz isClassSide
+		ifTrue: [ shadow typGtShadowClassInstanceMethod: self selector arguments: argumentTypes result: resultType ]
+		ifFalse: [ shadow typGtShadowInstanceMethod: self selector arguments: argumentTypes result: resultType ].
+	^ (TypGtCoderTypeFilter new
+		type: method methodClass typAsType;
+		yourself) & (GtCoderImplementorsFilter selector: method selector)
+]
+
+{ #category : #'*Typer-GToolkit' }
 RBMethodNode >> typGtTypeWithPragma [
 	| arguments_ result_ variables_ |
 	arguments_ := self numArgs
@@ -44,9 +64,4 @@ RBMethodNode >> typGtTypeWithPragma [
 	self addPragma: result_.
 	variables_ do: [ :e | self addPragma: e ].
 	^ self
-]
-
-{ #category : #'*Typer-GToolkit' }
-RBMethodNode >> typGtTypeWithShadow [
-	self subclassResponsibility
 ]

@@ -2,6 +2,7 @@ Extension { #name : #RBAssignmentNode }
 
 { #category : #'*Typer-Dynamic' }
 RBAssignmentNode >> typDynAssign: anObject [
+	<typTypeArgument: 1 as: 'Object'>
 	| value_ |
 	value_ := anObject class typAsType.
 	self typDynMonitor critical: [ self typDynAssigns increment: value_ ]
@@ -9,6 +10,7 @@ RBAssignmentNode >> typDynAssign: anObject [
 
 { #category : #'*Typer-Dynamic' }
 RBAssignmentNode >> typDynAssigns [
+	<typTypeResultAs: 'TypUnionType<TypType>'>
 	^ self propertyAt: #typDynAssigns ifAbsentPut: [ TypUnionType new ]
 ]
 
@@ -29,6 +31,7 @@ RBAssignmentNode >> typDynInstall [
 
 { #category : #'*Typer-Dynamic' }
 RBAssignmentNode >> typDynMonitor [
+	<typTypeResultAs: 'Monitor'>
 	^ self propertyAt: #typDynMonitor
 ]
 

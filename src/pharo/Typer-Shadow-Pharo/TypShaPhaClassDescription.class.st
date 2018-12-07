@@ -48,3 +48,15 @@ TypShaPhaClassDescription >> _withAllSuperclasses [
 		resultType: [ :a :s :r | SequenceableCollection typAsType asParametricType: {ClassDescription typAsType} ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaPhaClassDescription >> ~-> _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | a argumentTypes at: 1 ];
+		resultType: [ :a :s :r | 
+			Association typAsType
+				asParametricType:
+					{a receiverType.
+					(a argumentTypes at: 1)} ];
+		yourself
+]

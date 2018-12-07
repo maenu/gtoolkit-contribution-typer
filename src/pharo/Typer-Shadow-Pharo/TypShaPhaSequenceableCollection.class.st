@@ -17,7 +17,7 @@ TypShaPhaSequenceableCollection class >> shadowedClass [
 	^ SequenceableCollection class
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaSequenceableCollection >> _at: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ Integer typAsType ];
@@ -50,6 +50,54 @@ TypShaPhaSequenceableCollection >> _first [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | a receiverType parameters at: 1 ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaSequenceableCollection >> _groupedBy: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			BlockClosure typeAsType
+				asParametricType:
+					{(a receiverType parameters at: 1).
+					TypUnknownType instance} ];
+		resultType: [ :a :s :r | 
+			Dictionary typAsType
+				asParametricType:
+					{((a argumentTypes at: 1) isParametric
+						ifTrue: [ (a argumentTypes at: 1) parameters last ]
+						ifFalse: [ TypUnknownType instance ]).
+					(Collection typAsType
+						asParametricType: {(a receiverType parameters at: 1)})} ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaSequenceableCollection >> _inject: _a incto: _b [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			i = 1
+				ifTrue: [ a argumentTypes at: 1 ]
+				ifFalse: [ BlockClosure typAsType
+						asParametricType:
+							{(a argumentTypes at: 1).
+							(a receiverType parameters at: 1)} ] ];
+		resultType: [ :a :s :r | a argumentTypes at: 1 ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaSequenceableCollection >> _inject: _a into: _b [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			i = 1
+				ifTrue: [ TypUnknownType instance ]
+				ifFalse: [ BlockClosure typAsType
+						asParametricType:
+							{(a argumentTypes at: 1).
+							(a receiverType parameters at: 1).
+							TypUnknownType instance} ] ];
+		resultType: [ :a :s :r | a argumentTypes at: 1 ];
 		yourself
 ]
 

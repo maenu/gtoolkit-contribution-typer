@@ -10,6 +10,16 @@ TypShaPhaString class >> shadowedClass [
 ]
 
 { #category : #converting }
+TypShaPhaString >> _split: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | SequenceableCollection typAsType ];
+		resultType: [ :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType: {(a argumentTypes at: 1)} ];
+		yourself
+]
+
+{ #category : #converting }
 TypShaPhaString >> asType: aClass [
 	^ aClass typAsNamedType asParametricType: {Character typAsType}
 ]

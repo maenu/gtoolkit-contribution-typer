@@ -2,8 +2,10 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynAsMethodResolver [
+	<typTypeResultAs: 'TypMethodResolver<TypMethodLookup>'>
 	| arguments_ result |
-	arguments_ := self method numArgs timesCollect: [ :i | self typDynTypeForArgumentAt: i ].
+	arguments_ := self method numArgs
+		timesCollect: [ :i | self typDynTypeForArgumentAt: i ].
 	result := self typDynTypeForResult.
 	^ TypMethodResolver new
 		argumentTypes: [ :i | arguments_ at: i ];
@@ -13,11 +15,13 @@ RBMethodNode >> typDynAsMethodResolver [
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynAssignNodes [
+	<typTypeResultAs: 'SequenceableCollection<RBAssignmentNode>'>
 	^ self assignmentNodes reject: [ :e | e variable isTemp ]
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynInstall [
+	<typTypeResultAs: 'RBMethodNode'>
 	| link |
 	self typDynUninstall.
 	link := MetaLink new
@@ -37,43 +41,55 @@ RBMethodNode >> typDynInstall [
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynInvocations [
+	<typTypeResultAs: 'TypUnionType<TypDynMessage>'>
 	^ self propertyAt: #typDynInvocations
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynInvokeIn: aContext [
+	<typTypeArgument: 1 as: 'Context'>
 	| invocation |
 	invocation := TypDynMessage new
 		receiverType: aContext receiver class typAsType;
 		selector: aContext method selector;
 		argumentTypes: (aContext arguments collect: [ :e | e class typAsType ]);
 		yourself.
-	self typDynMonitor critical: [ self typDynInvocations increment: invocation ]
+	self typDynMonitor
+		critical: [ self typDynInvocations increment: invocation ]
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynIsCovered [
+	<typTypeResultAs: 'Boolean'>
 	^ self hasProperty: #typDyn
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynMonitor [
+	<typTypeResultAs: 'Monitor'>
 	^ self propertyAt: #typDynMonitor
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynReturnNodes [
+	<typTypeResultAs: 'SequenceableCollection<RBReturnNode>'>
 	^ self allChildren select: #isReturn
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypeForArgumentAt: anInteger [
-	^ self typDynInvocations collect: [ :f | (f key argumentTypes at: anInteger) -> f value ]
+	<typTypeArgument: 1 as: 'Integer'>
+	<typTypeResultAs: 'TypUnionType<TypType>'>
+	^ self typDynInvocations
+		collect: [ :f | (f key argumentTypes at: anInteger) -> f value ]
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypeForResult [
-	^ (self typDynReturnNodes collect: #typDynReturns) inject: TypUnionType new into: [ :a :b | a , b ]
+	<typTypeResultAs: 'TypUnionType<TypType>'>
+	^ (self typDynReturnNodes collect: #typDynReturns) "typParameters TypUnionType<TypType>"
+		inject: TypUnionType new
+		into: [ :a :b | a , b ]
 ]
 
 { #category : #'*Typer-Dynamic' }
@@ -100,7 +116,14 @@ RBMethodNode >> typDynTypesForVariables [
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForVariablesSelectedWith: aBlock definedBy: anotherBlock [
-	^ ((((self typDynAssignNodes select: aBlock) collect: [ :e | (anotherBlock cull: e variable) -> e variable name -> e typDynAssigns ]) groupedBy: #key) collect: [ :e | e collect: #value ]) collect: [ :e | e inject: TypUnionType new into: [ :a :b | a , b ] ]
+	<typTypeArgument: 1 as: 'BlockClosure<RBVariableNode,Boolean>'>
+	<typTypeArgument: 2 as: 'BlockClosure<RBVariableNode,ClassDescription>'>
+	<typTypeResultAs: '?'>
+	^ ((((self typDynAssignNodes select: aBlock)
+		collect:
+			[ :e | (anotherBlock cull: e variable) -> e variable name -> e typDynAssigns ])
+		groupedBy: #key) collect: [ :e | e collect: #value ])
+		collect: [ :e | e inject: TypUnionType new into: [ :a :b | a , b ] ]
 ]
 
 { #category : #'*Typer-Dynamic' }

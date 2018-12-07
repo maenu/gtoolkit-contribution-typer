@@ -33,6 +33,43 @@ TypShaPhaRBProgramNode >> _methodNode [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaRBProgramNode >> _propertyAt: _a ifAbsentPut: _b [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			i = 1
+				ifTrue: [ String typAsType ]
+				ifFalse: [ BlockClosure typAsType
+						asParametricType:
+							{Object typAsType.
+							TypUnknownType instance} ] ];
+		resultType: [ :a :s :r | 
+			{TypUnknownType instance.
+			(a argumentTypes at: 2) parameters last} typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaRBProgramNode >> _propertyAt: _a ifPresent: _b ifAbsent: _c [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			i = 1
+				ifTrue: [ String typAsType ]
+				ifFalse: [ i = 2
+						ifTrue: [ BlockClosure typAsType
+								asParametricType:
+									{Object typAsType.
+									TypUnknownType instance} ]
+						ifFalse: [ BlockClosure typAsType
+								asParametricType:
+									{Object typAsType.
+									TypUnknownType instance} ] ] ];
+		resultType: [ :a :s :r | 
+			{(a argumentTypes at: 2) parameters last.
+			(a argumentTypes at: 3) parameters last} typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaRBProgramNode >> _whoDefines: _a [
 	^ TypMethodResolver new

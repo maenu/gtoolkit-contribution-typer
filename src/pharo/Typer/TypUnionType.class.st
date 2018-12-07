@@ -139,6 +139,7 @@ TypUnionType >> increment: anObject [
 
 { #category : #accessing }
 TypUnionType >> initialize [
+	<typTypeParametersAs: 'TypType'>
 	<typTypeVariable: 'weights' as: 'Dictionary<TypType,Integer>'>
 	super initialize.
 	weights := Dictionary new

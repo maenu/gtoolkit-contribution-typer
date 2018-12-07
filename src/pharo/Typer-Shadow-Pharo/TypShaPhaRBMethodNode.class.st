@@ -27,6 +27,14 @@ TypShaPhaRBMethodNode >> _arguments [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaRBMethodNode >> _method [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | CompiledMethod typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaRBMethodNode >> _methodClass [
 	^ TypMethodResolver new

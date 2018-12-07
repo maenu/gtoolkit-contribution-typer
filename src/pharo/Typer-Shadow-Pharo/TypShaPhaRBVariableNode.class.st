@@ -16,3 +16,11 @@ TypShaPhaRBVariableNode >> _binding [
 		resultType: [ OCLiteralVariable typAsType ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaPhaRBVariableNode >> _name [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | String typAsType ];
+		yourself
+]

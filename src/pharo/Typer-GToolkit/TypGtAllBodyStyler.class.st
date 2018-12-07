@@ -53,6 +53,25 @@ TypGtAllBodyStyler >> visitMessageNode: aNode [
 ]
 
 { #category : #visiting }
+TypGtAllBodyStyler >> visitMethodNode: aNode [
+	| position |
+	super visitMethodNode: aNode.
+	position := aNode arguments isEmpty
+		ifTrue: [ aNode selector size ]
+		ifFalse: [ aNode arguments last stop ].
+	self
+		styleFrom: position
+		to: position
+		with:
+			{(TypGtTypeAttribute new
+				type:
+					([ aNode typTypeForResult ]
+						on: Error
+						do: [ Halt now ]);
+				yourself)}
+]
+
+{ #category : #visiting }
 TypGtAllBodyStyler >> visitSelfNode: aNode [
 	super visitSelfNode: aNode.
 	self styleValueNode: aNode

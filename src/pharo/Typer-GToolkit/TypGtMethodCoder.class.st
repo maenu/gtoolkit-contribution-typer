@@ -55,18 +55,18 @@ TypGtMethodCoder >> browseToTypeWithShadow: anEditorElement [
 { #category : #'initialize-release' }
 TypGtMethodCoder >> initializeAddOns [
 	super initializeAddOns.
-	addOns addPatternStyler: TypGtPatternStyler new.
-	addOns addBodyStyler: TypGtDeclarationBodyStyler new.
+	addOns addStyler: TypGtDeclarationBodyStyler new.
 	addOns
 		addMainAction: 'Types' translated
 		icon: BrGlamorousIcons inspect
 		action: [ | declaration |
-			declaration := addOns bodyStylers anySatisfy: [ :e | e isKindOf: TypGtDeclarationBodyStyler ].
+			declaration := addOns stylers
+				anySatisfy: [ :e | e isKindOf: TypGtDeclarationBodyStyler ].
 			declaration
-				ifTrue: [ addOns removeBodyStylerOfType: TypGtDeclarationBodyStyler.
-					addOns addBodyStyler: TypGtAllBodyStyler new ]
-				ifFalse: [ addOns removeBodyStylerOfType: TypGtAllBodyStyler.
-					addOns addBodyStyler: TypGtDeclarationBodyStyler new ].
+				ifTrue: [ addOns removeStylerOfType: TypGtDeclarationBodyStyler.
+					addOns addStyler: TypGtAllBodyStyler new ]
+				ifFalse: [ addOns removeStylerOfType: TypGtAllBodyStyler.
+					addOns addStyler: TypGtDeclarationBodyStyler new ].
 			self refreshForChanges ]
 ]
 
@@ -126,12 +126,17 @@ TypGtMethodCoder >> newCompletionStrategy [
 TypGtMethodCoder >> rbNodeAtCursor [
 	self
 		cursorPositionDo: [ :e | 
-			| i |
-			i := e + self patternSource size + 1.
-			[ ^ self rbAST bestNodeFor: (i to: i) ]
+			[ ^ self rbAST bestNodeFor: (e to: e) ]
 				on: Error
 				do: [ :ex | ex return ] ].
 	^ nil
+]
+
+{ #category : #actions }
+TypGtMethodCoder >> save [
+	^ super save
+		ifTrue: [ self updateMethod: self compiledMethod ]
+		ifFalse: [ false ]
 ]
 
 { #category : #'initialize-release' }
@@ -145,9 +150,15 @@ TypGtMethodCoder >> typeWithPragma: anEditorElement [
 
 { #category : #'initialize-release' }
 TypGtMethodCoder >> typeWithShadow: anEditorElement [
-	| rbAst |
-	rbAst := self rbAST ifNil: [ ^ self ].
-	rbAst typGtTypeWithPragma.
-	methodSource := rbAst formattedCode.
-	self buildSource
+	| node |
+	node := self rbNodeAtCursor.
+	node isNil
+		ifTrue: [ ^ self ].
+	node typGtCanType
+		ifFalse: [ ^ self ].
+	anEditorElement
+		fireEvent:
+			(GtPhlowObjectToSpawn new
+				object: node typGtFiltersToTypeWithShadow;
+				sourceElement: anEditorElement)
 ]
