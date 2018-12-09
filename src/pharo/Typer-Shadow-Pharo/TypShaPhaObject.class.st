@@ -41,6 +41,22 @@ TypShaPhaObject >> _hash [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaObject >> _ifNil: _a ifNotNil: _b [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			i = 1
+				ifTrue: [ BlockClosure typAsType asParametricType: {TypUnknownType instance} ]
+				ifFalse: [ BlockClosure typAsType
+						asParametricType:
+							{a receiverType.
+							TypUnknownType instance} ] ];
+		resultType: [ :a :s :r | 
+			{(a argumentTypes at: 1) parameters last.
+			(a argumentTypes at: 2) parameters last} typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaObject >> _yourself [
 	^ TypMethodResolver new

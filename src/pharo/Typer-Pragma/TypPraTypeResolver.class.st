@@ -4,8 +4,10 @@ Class {
 	#category : #'Typer-Pragma-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypPraTypeResolver >> resolversFor: aLookup [
+	<typTypeArgument: 1 as: 'TypTypeLookup'>
+	<typTypeResultAs: 'SequenceableCollection<TypTypeResolver<TypTypeLookup>>'>
 	| pragma |
 	self assert: [ self resolves: aLookup ].
 	pragma := (aLookup clazz methods detect: [ :e | e selector = #initialize ]) pragmas detect: [ :e | e selector = #typTypeParametersAs: ].
@@ -14,7 +16,9 @@ TypPraTypeResolver >> resolversFor: aLookup [
 		yourself)}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypPraTypeResolver >> resolves: aLookup [
+	<typTypeArgument: 1 as: 'TypTypeLookup'>
+	<typTypeResultAs: 'Boolean'>
 	^ aLookup clazz methods anySatisfy: [ :e | e selector = #initialize and: [ e pragmas anySatisfy: [ :f | f selector = #typTypeParametersAs: ] ] ]
 ]
