@@ -18,7 +18,7 @@ TypShaPhaObject class >> shadowedClass [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaObject >> _asSymbol [
+TypShaPhaObject >> ___asSymbol [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Symbol typAsType ];
@@ -26,7 +26,7 @@ TypShaPhaObject >> _asSymbol [
 ]
 
 { #category : #accessing }
-TypShaPhaObject >> _class [
+TypShaPhaObject >> ___class [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | ClassDescription typAsType ];
@@ -34,7 +34,7 @@ TypShaPhaObject >> _class [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaObject >> _copy [
+TypShaPhaObject >> ___copy [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | a receiverType ];
@@ -42,7 +42,7 @@ TypShaPhaObject >> _copy [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaObject >> _hash [
+TypShaPhaObject >> ___hash [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Integer typAsType ];
@@ -50,7 +50,7 @@ TypShaPhaObject >> _hash [
 ]
 
 { #category : #accessing }
-TypShaPhaObject >> _ifNil: _a ifNotNil: _b [
+TypShaPhaObject >> ___ifNil: _a ifNotNil: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -66,7 +66,7 @@ TypShaPhaObject >> _ifNil: _a ifNotNil: _b [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaObject >> _yourself [
+TypShaPhaObject >> ___yourself [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | a receiverType ];
@@ -74,7 +74,7 @@ TypShaPhaObject >> _yourself [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaObject >> ~-> _a [
+TypShaPhaObject >> ~~~-> _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | a argumentTypes at: 1 ];
 		resultType: [ :a :s :r | 
@@ -86,7 +86,7 @@ TypShaPhaObject >> ~-> _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaObject >> ~= _a [
+TypShaPhaObject >> ~~~= _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | Object typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];

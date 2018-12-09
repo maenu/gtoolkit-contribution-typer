@@ -10,7 +10,7 @@ TypShaPhaRBAssignmentNode class >> shadowedClass [
 ]
 
 { #category : #accessing }
-TypShaPhaRBAssignmentNode >> _variable [
+TypShaPhaRBAssignmentNode >> ___variable [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RBVariableNode typAsType ];

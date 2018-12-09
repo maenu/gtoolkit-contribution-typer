@@ -10,7 +10,7 @@ TypShaPhaRBProgramNode class >> shadowedClass [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaRBProgramNode >> _assignmentNodes [
+TypShaPhaRBProgramNode >> ___assignmentNodes [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType asParametricType: {RBAssignmentNode typAsType} ];
@@ -18,7 +18,7 @@ TypShaPhaRBProgramNode >> _assignmentNodes [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaRBProgramNode >> _comments [
+TypShaPhaRBProgramNode >> ___comments [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType asParametricType: {RBComment typAsType} ];
@@ -26,7 +26,7 @@ TypShaPhaRBProgramNode >> _comments [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaRBProgramNode >> _methodNode [
+TypShaPhaRBProgramNode >> ___methodNode [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ RBMethodNode typAsType ];
@@ -34,7 +34,7 @@ TypShaPhaRBProgramNode >> _methodNode [
 ]
 
 { #category : #accessing }
-TypShaPhaRBProgramNode >> _propertyAt: _a ifAbsentPut: _b [
+TypShaPhaRBProgramNode >> ___propertyAt: _a ifAbsentPut: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -50,7 +50,7 @@ TypShaPhaRBProgramNode >> _propertyAt: _a ifAbsentPut: _b [
 ]
 
 { #category : #accessing }
-TypShaPhaRBProgramNode >> _propertyAt: _a ifPresent: _b ifAbsent: _c [
+TypShaPhaRBProgramNode >> ___propertyAt: _a ifPresent: _b ifAbsent: _c [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -71,7 +71,7 @@ TypShaPhaRBProgramNode >> _propertyAt: _a ifPresent: _b ifAbsent: _c [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaRBProgramNode >> _whoDefines: _a [
+TypShaPhaRBProgramNode >> ___whoDefines: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ String typAsType ];
 		resultType: [ RBProgramNode typAsType copy

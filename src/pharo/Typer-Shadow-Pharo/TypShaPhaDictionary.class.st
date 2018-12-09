@@ -10,7 +10,7 @@ TypShaPhaDictionary class >> shadowedClass [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaDictionary >> _anyOne [
+TypShaPhaDictionary >> ___anyOne [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | a receiverType parameters at: 2 ];
@@ -18,7 +18,7 @@ TypShaPhaDictionary >> _anyOne [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaDictionary >> _asOrderedDictionary [
+TypShaPhaDictionary >> ___asOrderedDictionary [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
@@ -30,7 +30,7 @@ TypShaPhaDictionary >> _asOrderedDictionary [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaDictionary >> _associations [
+TypShaPhaDictionary >> ___associations [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
@@ -44,7 +44,7 @@ TypShaPhaDictionary >> _associations [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaDictionary >> _associationsDo: _a [
+TypShaPhaDictionary >> ___associationsDo: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | 
 			BlockClosure typAsType
@@ -59,7 +59,7 @@ TypShaPhaDictionary >> _associationsDo: _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaDictionary >> _at: _a ifAbsentPut: _b [
+TypShaPhaDictionary >> ___at: _a ifAbsentPut: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | 
 			i = 1
@@ -70,7 +70,7 @@ TypShaPhaDictionary >> _at: _a ifAbsentPut: _b [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaDictionary >> _at: _a put: _b [
+TypShaPhaDictionary >> ___at: _a put: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | a receiverType parameters at: i ];
 		resultType: [ :a | a receiverType parameters at: 2 ];
@@ -78,7 +78,7 @@ TypShaPhaDictionary >> _at: _a put: _b [
 ]
 
 { #category : #accessing }
-TypShaPhaDictionary >> _collect: _a [
+TypShaPhaDictionary >> ___collect: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure typAsType
@@ -94,7 +94,7 @@ TypShaPhaDictionary >> _collect: _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaDictionary >> _includes: _a [
+TypShaPhaDictionary >> ___includes: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | a receiverType parameters at: 2 ];
 		resultType: [ Boolean typAsType ];
@@ -102,7 +102,7 @@ TypShaPhaDictionary >> _includes: _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaDictionary >> _includesKey: _a [
+TypShaPhaDictionary >> ___includesKey: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | a receiverType parameters at: 1 ];
 		resultType: [ Boolean typAsType ];
@@ -110,7 +110,7 @@ TypShaPhaDictionary >> _includesKey: _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaDictionary >> _keys [
+TypShaPhaDictionary >> ___keys [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | Collection typAsType asParametricType: {(a receiverType parameters at: 1)} ];

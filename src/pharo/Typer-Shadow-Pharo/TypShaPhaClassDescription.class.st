@@ -20,7 +20,7 @@ TypShaPhaClassDescription class >> shadowedClass [
 ]
 
 { #category : #accessing }
-TypShaPhaClassDescription >> _instanceSide [
+TypShaPhaClassDescription >> ___instanceSide [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Class typAsType ];
@@ -28,7 +28,7 @@ TypShaPhaClassDescription >> _instanceSide [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaClassDescription >> _lookupSelector: _a [
+TypShaPhaClassDescription >> ___lookupSelector: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ Symbol typAsType ];
 		resultType: [ CompiledMethod typAsType ];
@@ -36,7 +36,7 @@ TypShaPhaClassDescription >> _lookupSelector: _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaClassDescription >> _methods [
+TypShaPhaClassDescription >> ___methods [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Collection typAsType asParametricType: {CompiledMethod typAsType} ];
@@ -44,7 +44,7 @@ TypShaPhaClassDescription >> _methods [
 ]
 
 { #category : #accessing }
-TypShaPhaClassDescription >> _whichClassDefinesInstVar: _a [
+TypShaPhaClassDescription >> ___whichClassDefinesInstVar: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | ClassDescription typAsType ];
@@ -52,7 +52,7 @@ TypShaPhaClassDescription >> _whichClassDefinesInstVar: _a [
 ]
 
 { #category : #accessing }
-TypShaPhaClassDescription >> _withAllSuperclasses [
+TypShaPhaClassDescription >> ___withAllSuperclasses [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | SequenceableCollection typAsType asParametricType: {ClassDescription typAsType} ];
@@ -60,7 +60,7 @@ TypShaPhaClassDescription >> _withAllSuperclasses [
 ]
 
 { #category : #accessing }
-TypShaPhaClassDescription >> ~-> _a [
+TypShaPhaClassDescription >> ~~~-> _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | a argumentTypes at: 1 ];
 		resultType: [ :a :s :r | 

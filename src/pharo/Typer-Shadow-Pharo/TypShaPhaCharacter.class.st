@@ -10,7 +10,7 @@ TypShaPhaCharacter class >> shadowedClass [
 ]
 
 { #category : #accessing }
-TypShaPhaCharacter >> _isUppercase [
+TypShaPhaCharacter >> ___isUppercase [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];

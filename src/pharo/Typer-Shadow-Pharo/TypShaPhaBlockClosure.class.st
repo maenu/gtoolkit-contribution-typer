@@ -10,7 +10,7 @@ TypShaPhaBlockClosure class >> shadowedClass [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaBlockClosure >> _cull: _a [
+TypShaPhaBlockClosure >> ___cull: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | a receiverType parameters at: i ];
 		resultType: [ :a | a receiverType parameters last ];
@@ -18,7 +18,7 @@ TypShaPhaBlockClosure >> _cull: _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaBlockClosure >> _cull: _a cull: _b [
+TypShaPhaBlockClosure >> ___cull: _a cull: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | a receiverType parameters at: i ];
 		resultType: [ :a | a receiverType parameters last ];
@@ -26,7 +26,7 @@ TypShaPhaBlockClosure >> _cull: _a cull: _b [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaBlockClosure >> _cull: _a cull: _b cull: _c [
+TypShaPhaBlockClosure >> ___cull: _a cull: _b cull: _c [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | a receiverType parameters at: i ];
 		resultType: [ :a | a receiverType parameters last ];
@@ -34,7 +34,7 @@ TypShaPhaBlockClosure >> _cull: _a cull: _b cull: _c [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaBlockClosure >> _cull: _a cull: _b cull: _c cull: _d [
+TypShaPhaBlockClosure >> ___cull: _a cull: _b cull: _c cull: _d [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | a receiverType parameters at: i ];
 		resultType: [ :a | a receiverType parameters last ];
@@ -42,7 +42,7 @@ TypShaPhaBlockClosure >> _cull: _a cull: _b cull: _c cull: _d [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaBlockClosure >> _value: _a [
+TypShaPhaBlockClosure >> ___value: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | a receiverType parameters at: i ];
 		resultType: [ :a | a receiverType parameters last ];
@@ -50,7 +50,7 @@ TypShaPhaBlockClosure >> _value: _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaBlockClosure >> _value: _a value: _b [
+TypShaPhaBlockClosure >> ___value: _a value: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | a receiverType parameters at: i ];
 		resultType: [ :a | a receiverType parameters last ];
@@ -58,7 +58,7 @@ TypShaPhaBlockClosure >> _value: _a value: _b [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaBlockClosure >> _value: _a value: _b value: _c [
+TypShaPhaBlockClosure >> ___value: _a value: _b value: _c [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | a receiverType parameters at: i ];
 		resultType: [ :a | a receiverType parameters last ];
@@ -66,7 +66,7 @@ TypShaPhaBlockClosure >> _value: _a value: _b value: _c [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaBlockClosure >> _value: _a value: _b value: _c value: _d [
+TypShaPhaBlockClosure >> ___value: _a value: _b value: _c value: _d [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | a receiverType parameters at: i ];
 		resultType: [ :a | a receiverType parameters last ];

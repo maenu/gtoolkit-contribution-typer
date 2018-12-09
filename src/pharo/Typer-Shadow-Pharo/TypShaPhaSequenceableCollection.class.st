@@ -18,7 +18,7 @@ TypShaPhaSequenceableCollection class >> shadowedClass [
 ]
 
 { #category : #accessing }
-TypShaPhaSequenceableCollection >> _at: _a [
+TypShaPhaSequenceableCollection >> ___at: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ Integer typAsType ];
 		resultType: [ :a | a receiverType parameters at: 1 ];
@@ -26,7 +26,7 @@ TypShaPhaSequenceableCollection >> _at: _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaSequenceableCollection >> _copyFrom: _a to: _b [
+TypShaPhaSequenceableCollection >> ___copyFrom: _a to: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ Integer typAsType ];
 		resultType: [ :a | a receiverType ];
@@ -34,7 +34,7 @@ TypShaPhaSequenceableCollection >> _copyFrom: _a to: _b [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaSequenceableCollection >> _detectIndex: _a [
+TypShaPhaSequenceableCollection >> ___detectIndex: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | 
 			BlockClosure typAsType
@@ -46,7 +46,7 @@ TypShaPhaSequenceableCollection >> _detectIndex: _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaSequenceableCollection >> _first [
+TypShaPhaSequenceableCollection >> ___first [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | a receiverType parameters at: 1 ];
@@ -54,7 +54,7 @@ TypShaPhaSequenceableCollection >> _first [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaSequenceableCollection >> _last [
+TypShaPhaSequenceableCollection >> ___last [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | a receiverType parameters at: 1 ];
@@ -62,7 +62,7 @@ TypShaPhaSequenceableCollection >> _last [
 ]
 
 { #category : #enumerating }
-TypShaPhaSequenceableCollection >> _withIndexDo: _a [
+TypShaPhaSequenceableCollection >> ___withIndexDo: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | 
 			BlockClosure typAsType

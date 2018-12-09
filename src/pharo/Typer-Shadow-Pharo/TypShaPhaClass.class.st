@@ -10,7 +10,7 @@ TypShaPhaClass class >> shadowedClass [
 ]
 
 { #category : #accessing }
-TypShaPhaClass >> _sharedPools [
+TypShaPhaClass >> ___sharedPools [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Collection typAsType asParametricType: { Class typAsType } ];
@@ -18,7 +18,7 @@ TypShaPhaClass >> _sharedPools [
 ]
 
 { #category : #accessing }
-TypShaPhaClass >> _whichClassDefinesClassVar: _a [
+TypShaPhaClass >> ___whichClassDefinesClassVar: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | Class typAsType ];

@@ -10,7 +10,7 @@ TypShaPhaSymbol class >> shadowedClass [
 ]
 
 { #category : #accessing }
-TypShaPhaSymbol >> _isBinary [
+TypShaPhaSymbol >> ___isBinary [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
@@ -18,7 +18,7 @@ TypShaPhaSymbol >> _isBinary [
 ]
 
 { #category : #accessing }
-TypShaPhaSymbol >> _isUnary [
+TypShaPhaSymbol >> ___isUnary [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];

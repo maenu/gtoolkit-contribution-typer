@@ -10,7 +10,7 @@ TypShaPhaString class >> shadowedClass [
 ]
 
 { #category : #converting }
-TypShaPhaString >> _split: _a [
+TypShaPhaString >> ___split: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | SequenceableCollection typAsType ];
 		resultType: [ :a :s :r | 

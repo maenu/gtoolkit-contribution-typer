@@ -10,7 +10,7 @@ TypShaPhaCollection class >> shadowedClass [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCollection >> _anyOne [
+TypShaPhaCollection >> ___anyOne [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | a receiverType parameters at: 1 ];
@@ -18,7 +18,7 @@ TypShaPhaCollection >> _anyOne [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCollection >> _anySatisfy: _a [
+TypShaPhaCollection >> ___anySatisfy: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | 
 			BlockClosure typAsType
@@ -30,7 +30,7 @@ TypShaPhaCollection >> _anySatisfy: _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCollection >> _asSet [
+TypShaPhaCollection >> ___asSet [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | Set typAsType asParametricType: {(a receiverType parameters at: 1)} ];
@@ -38,7 +38,7 @@ TypShaPhaCollection >> _asSet [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCollection >> _collect: _a [
+TypShaPhaCollection >> ___collect: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | 
 			BlockClosure typAsType
@@ -61,7 +61,7 @@ TypShaPhaCollection >> _collect: _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCollection >> _detect: _a [
+TypShaPhaCollection >> ___detect: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | 
 			BlockClosure typAsType
@@ -73,7 +73,7 @@ TypShaPhaCollection >> _detect: _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCollection >> _detect: _a ifFound: _b ifNone: _c [
+TypShaPhaCollection >> ___detect: _a ifFound: _b ifNone: _c [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | 
 			i = 1
@@ -92,7 +92,7 @@ TypShaPhaCollection >> _detect: _a ifFound: _b ifNone: _c [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCollection >> _detect: _a ifNone: _b [
+TypShaPhaCollection >> ___detect: _a ifNone: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | 
 			i = 1
@@ -111,7 +111,7 @@ TypShaPhaCollection >> _detect: _a ifNone: _b [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCollection >> _do: _a [
+TypShaPhaCollection >> ___do: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | 
 			BlockClosure typAsType
@@ -123,7 +123,7 @@ TypShaPhaCollection >> _do: _a [
 ]
 
 { #category : #enumerating }
-TypShaPhaCollection >> _flatCollect: _a [
+TypShaPhaCollection >> ___flatCollect: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | 
 			BlockClosure typAsType
@@ -141,7 +141,7 @@ TypShaPhaCollection >> _flatCollect: _a [
 ]
 
 { #category : #accessing }
-TypShaPhaCollection >> _groupedBy: _a [
+TypShaPhaCollection >> ___groupedBy: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure typAsType
@@ -158,7 +158,7 @@ TypShaPhaCollection >> _groupedBy: _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCollection >> _includes: _a [
+TypShaPhaCollection >> ___includes: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | a receiverType parameters at: 1 ];
 		resultType: [ Boolean typAsType ];
@@ -166,7 +166,7 @@ TypShaPhaCollection >> _includes: _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCollection >> _inject: _a into: _b [
+TypShaPhaCollection >> ___inject: _a into: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -180,7 +180,7 @@ TypShaPhaCollection >> _inject: _a into: _b [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCollection >> _max [
+TypShaPhaCollection >> ___max [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Number typAsType ];
@@ -188,7 +188,7 @@ TypShaPhaCollection >> _max [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCollection >> _reject: _a [
+TypShaPhaCollection >> ___reject: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure typAsType
@@ -200,7 +200,7 @@ TypShaPhaCollection >> _reject: _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCollection >> _select: _a [
+TypShaPhaCollection >> ___select: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | 
 			BlockClosure typAsType
@@ -212,7 +212,7 @@ TypShaPhaCollection >> _select: _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCollection >> _size [
+TypShaPhaCollection >> ___size [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Integer typAsType ];
@@ -220,7 +220,7 @@ TypShaPhaCollection >> _size [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCollection >> _sort: _a [
+TypShaPhaCollection >> ___sort: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | 
 			BlockClosure typAsType
@@ -238,7 +238,7 @@ TypShaPhaCollection >> asType: aClass [
 ]
 
 { #category : #accessing }
-TypShaPhaCollection >> ~, _a [
+TypShaPhaCollection >> ~~~, _a [
 	^ TypMethodResolver new
 		argumentTypes:
 				[ :i :a :s :r | Collection typAsType asParametricType: a receiverType parameters ];

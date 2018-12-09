@@ -10,7 +10,7 @@ TypShaPhaPragma class >> shadowedClass [
 ]
 
 { #category : #accessing }
-TypShaPhaPragma >> _arguments [
+TypShaPhaPragma >> ___arguments [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType:

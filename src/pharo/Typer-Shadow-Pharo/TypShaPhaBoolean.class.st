@@ -10,7 +10,7 @@ TypShaPhaBoolean class >> shadowedClass [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaBoolean >> _and: _a [
+TypShaPhaBoolean >> ___and: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ BlockClosure typAsType asParametricType: {Boolean typAsType} ];
 		resultType: [ Boolean typAsType ];
@@ -18,7 +18,7 @@ TypShaPhaBoolean >> _and: _a [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaBoolean >> _ifTrue: _a ifFalse: _b [
+TypShaPhaBoolean >> ___ifTrue: _a ifFalse: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ BlockClosure typAsType asParametricType: {TypUnknownType instance} ];
 		resultType: [ :a | 
@@ -37,7 +37,7 @@ TypShaPhaBoolean >> _ifTrue: _a ifFalse: _b [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaBoolean >> _not [
+TypShaPhaBoolean >> ___not [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Boolean typAsType ];
@@ -45,7 +45,7 @@ TypShaPhaBoolean >> _not [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaBoolean >> _or: _a [
+TypShaPhaBoolean >> ___or: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ BlockClosure typAsType asParametricType: {Boolean typAsType} ];
 		resultType: [ Boolean typAsType ];

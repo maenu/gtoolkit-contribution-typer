@@ -10,7 +10,7 @@ TypShaPhaRBMethodNode class >> shadowedClass [
 ]
 
 { #category : #accessing }
-TypShaPhaRBMethodNode >> _allChildren [
+TypShaPhaRBMethodNode >> ___allChildren [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
@@ -20,7 +20,7 @@ TypShaPhaRBMethodNode >> _allChildren [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaRBMethodNode >> _arguments [
+TypShaPhaRBMethodNode >> ___arguments [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType asParametricType: {RBArgumentNode typAsType} ];
@@ -28,7 +28,7 @@ TypShaPhaRBMethodNode >> _arguments [
 ]
 
 { #category : #accessing }
-TypShaPhaRBMethodNode >> _method [
+TypShaPhaRBMethodNode >> ___method [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | CompiledMethod typAsType ];
@@ -36,7 +36,7 @@ TypShaPhaRBMethodNode >> _method [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaRBMethodNode >> _methodClass [
+TypShaPhaRBMethodNode >> ___methodClass [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ ClassDescription typAsType ];

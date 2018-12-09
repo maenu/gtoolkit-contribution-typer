@@ -10,7 +10,7 @@ TypShaPhaNumber class >> shadowedClass [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaNumber >> _timesCollect: _a [
+TypShaPhaNumber >> ___timesCollect: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ BlockClosure typAsType
 				asParametricType:
@@ -32,7 +32,7 @@ TypShaPhaNumber >> _timesCollect: _a [
 ]
 
 { #category : #accessing }
-TypShaPhaNumber >> _to: _a do: _b [
+TypShaPhaNumber >> ___to: _a do: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -46,7 +46,7 @@ TypShaPhaNumber >> _to: _a do: _b [
 ]
 
 { #category : #accessing }
-TypShaPhaNumber >> ~- _a [
+TypShaPhaNumber >> ~~~- _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];
 		resultType: [ :a :s :r | Number typAsType ];

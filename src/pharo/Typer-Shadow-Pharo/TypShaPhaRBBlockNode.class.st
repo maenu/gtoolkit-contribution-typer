@@ -10,7 +10,7 @@ TypShaPhaRBBlockNode class >> shadowedClass [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaRBBlockNode >> _arguments [
+TypShaPhaRBBlockNode >> ___arguments [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType asParametricType: {RBArgumentNode typAsType} ];

@@ -10,7 +10,7 @@ TypShaPhaCompiledMethod class >> shadowedClass [
 ]
 
 { #category : #accessing }
-TypShaPhaCompiledMethod >> _assignmentNodes [
+TypShaPhaCompiledMethod >> ___assignmentNodes [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType:
@@ -19,7 +19,7 @@ TypShaPhaCompiledMethod >> _assignmentNodes [
 ]
 
 { #category : #accessing }
-TypShaPhaCompiledMethod >> _ast [
+TypShaPhaCompiledMethod >> ___ast [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RBMethodNode typAsType ];
@@ -27,7 +27,7 @@ TypShaPhaCompiledMethod >> _ast [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCompiledMethod >> _numArgs [
+TypShaPhaCompiledMethod >> ___numArgs [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Integer typAsType ];
@@ -35,7 +35,7 @@ TypShaPhaCompiledMethod >> _numArgs [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaCompiledMethod >> _pragmas [
+TypShaPhaCompiledMethod >> ___pragmas [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType asParametricType: {Pragma typAsType} ];

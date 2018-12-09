@@ -10,7 +10,7 @@ TypShaPhaOCLiteralVariable class >> shadowedClass [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaOCLiteralVariable >> _isClassVariable [
+TypShaPhaOCLiteralVariable >> ___isClassVariable [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Boolean typAsType ];
@@ -18,7 +18,7 @@ TypShaPhaOCLiteralVariable >> _isClassVariable [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaOCLiteralVariable >> _isFromSharedPool [
+TypShaPhaOCLiteralVariable >> ___isFromSharedPool [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Boolean typAsType ];
@@ -26,7 +26,7 @@ TypShaPhaOCLiteralVariable >> _isFromSharedPool [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaOCLiteralVariable >> _isGlobalClassNameBinding [
+TypShaPhaOCLiteralVariable >> ___isGlobalClassNameBinding [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Boolean typAsType ];
@@ -34,7 +34,7 @@ TypShaPhaOCLiteralVariable >> _isGlobalClassNameBinding [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaOCLiteralVariable >> _isGlobalVariable [
+TypShaPhaOCLiteralVariable >> ___isGlobalVariable [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Boolean typAsType ];

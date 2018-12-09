@@ -10,7 +10,7 @@ TypShaPhaAssociation class >> shadowedClass [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaAssociation >> _key [
+TypShaPhaAssociation >> ___key [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | a receiverType parameters at: 1 ];
@@ -18,7 +18,7 @@ TypShaPhaAssociation >> _key [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaAssociation >> _value [
+TypShaPhaAssociation >> ___value [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | a receiverType parameters at: 2 ];
