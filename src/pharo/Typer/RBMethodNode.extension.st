@@ -23,7 +23,7 @@ RBMethodNode >> typTypeForArgumentAt: anInteger [
 
 { #category : #'*Typer' }
 RBMethodNode >> typTypeForArgumentNamed: aSymbol [
-	<typTypeArgument: 1 as: 'Symbol'>
+	<typTypeArgument: 1 as: 'Symbol<Character>'>
 	<typTypeResultAs: 'TypType'>
 	| i |
 	i := self arguments detectIndex: [ :f | f name = aSymbol ].

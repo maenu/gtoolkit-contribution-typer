@@ -75,6 +75,8 @@ TypShaShadow class >> typeResolver [
 
 { #category : #converting }
 TypShaShadow >> asType: aClass [
+	<typTypeArgument: 1 as: 'ClassDescription'>
+	<typTypeResultAs: 'TypType'>
 	^ aClass typAsNamedType
 ]
 
@@ -86,6 +88,7 @@ TypShaShadow >> shadowedClass [
 
 { #category : #accessing }
 TypShaShadow >> typeResolver [
+	<typTypeResultAs: 'TypTypeResolver<TypTypeLookup>'>
 	^ TypTypeResolver new
 		type: [ :a | self asType: a clazz ];
 		yourself

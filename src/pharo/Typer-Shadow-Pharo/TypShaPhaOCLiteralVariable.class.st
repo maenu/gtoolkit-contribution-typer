@@ -40,3 +40,11 @@ TypShaPhaOCLiteralVariable >> ___isGlobalVariable [
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaPhaOCLiteralVariable >> ___scope [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | OCAbstractScope typAsType ];
+		yourself
+]

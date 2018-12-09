@@ -86,10 +86,12 @@ TypShaPhaDictionary >> ___collect: _a [
 					{(a receiverType parameters at: 2).
 					TypUnknownType instance} ];
 		resultType: [ :a :s :r | 
-			a receiverType
-				asParametricType:
-					{(a receiverType parameters at: 1).
-					(a argumentTypes at: 1) parameters last} ];
+			| argument elementType |
+			argument := a argumentTypes at: 1.
+			elementType := (argument hasClass and: [ (argument asClass includesBehavior: BlockClosure) and: [ argument isParametric ] ])
+				ifTrue: [ argument parameters at: 1 ]
+				ifFalse: [ TypUnknownType instance ].
+			a receiverType asParametricType: {elementType} ];
 		yourself
 ]
 

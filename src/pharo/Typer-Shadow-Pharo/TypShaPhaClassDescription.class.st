@@ -20,6 +20,14 @@ TypShaPhaClassDescription class >> shadowedClass [
 ]
 
 { #category : #accessing }
+TypShaPhaClassDescription >> ___classSide [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Metaclass typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaClassDescription >> ___instanceSide [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

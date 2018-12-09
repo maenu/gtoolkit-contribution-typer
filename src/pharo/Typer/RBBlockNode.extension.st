@@ -20,7 +20,7 @@ RBBlockNode >> typTypeForArgumentAt: anInteger [
 
 { #category : #'*Typer' }
 RBBlockNode >> typTypeForArgumentNamed: aSymbol [
-	<typTypeArgument: 1 as: 'Symbol'>
+	<typTypeArgument: 1 as: 'Symbol<Character>'>
 	<typTypeResultAs: 'TypType'>
 	| i |
 	i := self arguments detectIndex: [ :f | f name = aSymbol ].

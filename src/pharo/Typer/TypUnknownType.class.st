@@ -18,23 +18,14 @@ TypUnknownType >> asClass [
 	TypNoClassError signal
 ]
 
-{ #category : #accessing }
+{ #category : #converting }
 TypUnknownType >> asParametricType: someTypes [
-	^ TypParametricType new
-		type: self copy;
-		nullable: nullable;
-		parameters: {};
-		yourself
+	TypNoTypeError signal
 ]
 
 { #category : #accessing }
 TypUnknownType >> asSourceString [
 	^ '?'
-]
-
-{ #category : #accessing }
-TypUnknownType >> canBeParametricType [
-	^ true
 ]
 
 { #category : #accessing }

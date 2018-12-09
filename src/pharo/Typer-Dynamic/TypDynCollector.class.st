@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 TypDynCollector >> collectIn: aCollection doing: aBlock [
-	<typTypeArgument: 1 as: 'Collection<CompiledMethod>'>
+	<typTypeArgument: 1 as: 'Collection<CompiledMethod<Integer>>'>
 	<typTypeArgument: 2 as: 'BlockClosure<?>'>
 	<typTypeResultAs: 'Association<Association<?,TypDynResolver>,TypDynResolver>'>
 	| methodResolvers variableResolvers result asts |

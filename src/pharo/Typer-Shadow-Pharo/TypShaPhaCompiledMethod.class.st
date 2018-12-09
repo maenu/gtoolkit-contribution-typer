@@ -44,5 +44,5 @@ TypShaPhaCompiledMethod >> ___pragmas [
 
 { #category : #'as yet unclassified' }
 TypShaPhaCompiledMethod >> asType: aClass [
-	^ aClass typAsNamedType
+	^ aClass typAsNamedType asParametricType: {Integer typAsType}
 ]

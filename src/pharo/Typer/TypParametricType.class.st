@@ -51,7 +51,7 @@ TypParametricType >> hasClass [
 
 { #category : #testing }
 TypParametricType >> hasSuperType [
-	^ type hasSuperType
+	^ (parameters anySatisfy: [ :e | e isUnion ]) or: [ type hasSuperType ]
 ]
 
 { #category : #comparing }
@@ -111,14 +111,23 @@ TypParametricType >> printOn: aStream [
 
 { #category : #accessing }
 TypParametricType >> superType [
-	| superType |
 	self assert: [ self hasSuperType ].
-	superType := type superType.
-	^ superType isParametric
+	^ (parameters anySatisfy: [ :e | e isUnion ])
 		ifTrue: [ self copy
-				type: type superType asNonParametricType;
+				parameters:
+					(parameters
+						collect: [ :e | 
+							e isUnion
+								ifTrue: [ e superType ]
+								ifFalse: [ e ] ]);
 				yourself ]
-		ifFalse: [ superType ]
+		ifFalse: [ | superType |
+			superType := type superType.
+			superType isParametric
+				ifTrue: [ self copy
+						type: superType asNonParametricType;
+						yourself ]
+				ifFalse: [ superType ] ]
 ]
 
 { #category : #accessing }

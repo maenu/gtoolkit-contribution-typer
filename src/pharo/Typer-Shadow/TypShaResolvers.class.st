@@ -15,15 +15,19 @@ TypShaResolvers >> initialize [
 
 { #category : #accessing }
 TypShaResolvers >> resolversFor: aLookup shadowing: aClass [
-	<typTypeArgument: 1 as: 'TypMethodLookup'>
+	<typTypeArgument: 1 as: 'TypLookup'>
 	<typTypeArgument: 2 as: 'ClassDescription'>
-	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypMethodLookup>>'>
-	^ (((TypShaShadow shadowClassesFor: aClass) flatCollect: resolvers)
+	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypLookup>>'>
+	^ (((TypShaShadow shadowClassesFor: aClass) flatCollect: resolvers) "typParameters TypResolver<TypResolver>"
 		select: [ :e | e resolves: aLookup ])
 		flatCollect: [ :e | e resolversFor: aLookup ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaResolvers >> resolves: aLookup shadowing: aClass [
-	^ ((TypShaShadow shadowClassesFor: aClass) flatCollect: resolvers) anySatisfy: [ :e | e resolves: aLookup ]
+	<typTypeArgument: 1 as: 'TypLookup'>
+	<typTypeArgument: 2 as: 'ClassDescription'>
+	<typTypeResultAs: 'Boolean'>
+	^ ((TypShaShadow shadowClassesFor: aClass) flatCollect: resolvers) "typParameters TypResolver<TypLookup>"
+		anySatisfy: [ :e | e resolves: aLookup ]
 ]

@@ -151,6 +151,11 @@ TypUnionType >> isEmpty [
 	^ weights isEmpty
 ]
 
+{ #category : #converting }
+TypUnionType >> isParametric [
+	^ self superType isParametric
+]
+
 { #category : #testing }
 TypUnionType >> isUnion [
 	^ true
@@ -168,22 +173,10 @@ TypUnionType >> nullable: aBoolean [
 		ifFalse: [ weights removeKey: TypNilType instance ifAbsent: [  ] ]
 ]
 
-{ #category : #generated }
+{ #category : #converting }
 TypUnionType >> parameters [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	| keys size parameters |
-	keys := weights keys asSet.
-	size := (keys
-		collect: [ :e | 
-			e isParametric
-				ifTrue: [ e parameters size ]
-				ifFalse: [ 0 ] ]) max.
-	parameters := (size timesCollect: [ TypUnionType new ]) "typParameters TypType".
-	keys
-		do: [ :e | 
-			e isParametric
-				ifTrue: [ e "typCastAs TypParametricType" parameters withIndexDo: [ :f :i | (parameters at: i) increment: f ] ] ].
-	^ parameters collect: #asType
+	^ self superType parameters
 ]
 
 { #category : #'as yet unclassified' }

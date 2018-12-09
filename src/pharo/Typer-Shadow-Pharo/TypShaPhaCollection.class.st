@@ -46,17 +46,12 @@ TypShaPhaCollection >> ___collect: _a [
 					{(a receiverType parameters at: 1).
 					TypUnknownType instance} ];
 		resultType: [ :a | 
-			| resultType |
-			resultType := a argumentTypes
-				inject: TypUnionType new
-				into: [ :e :f | 
-					e
-						increment:
-							(f isParametric
-								ifTrue: [ f parameters last	"typCastAs TypParametricType" ]
-								ifFalse: [ TypUnknownType instance ]).
-					e ].
-			a receiverType asParametricType: {resultType asType} ];
+			| argument elementType |
+			argument := a argumentTypes at: 1.
+			elementType := (argument hasClass and: [ (argument asClass includesBehavior: BlockClosure) and: [ argument isParametric ] ])
+				ifTrue: [ argument parameters last ]
+				ifFalse: [ TypUnknownType instance ].
+			a receiverType asParametricType: {elementType} ];
 		yourself
 ]
 
@@ -128,15 +123,16 @@ TypShaPhaCollection >> ___flatCollect: _a [
 		argumentTypes: [ :i :a | 
 			BlockClosure typAsType
 				asParametricType:
-					{(a receiverType isParametric
-						ifTrue: [ a receiverType parameters at: 1 ]
-						ifFalse: [ TypUnknownType instance ]).
+					{(a receiverType parameters at: 1).
 					TypUnknownType instance} ];
 		resultType: [ :a | 
-			(a argumentTypes at: 1) isParametric
-				ifTrue: [ a receiverType
-						asParametricType: {((a argumentTypes at: 1) parameters last parameters at: 1)} ]
-				ifFalse: [ Collection typAsType ] ];
+			| argument elementType |
+			argument := a argumentTypes at: 1.
+			elementType := (argument hasClass
+				and: [ (argument asClass includesBehavior: BlockClosure) and: [ argument isParametric and: [ argument parameters last isParametric ] ] ])
+				ifTrue: [ argument parameters last parameters at: 1 ]
+				ifFalse: [ TypUnknownType instance ].
+			a receiverType asParametricType: {elementType} ];
 		yourself
 ]
 
