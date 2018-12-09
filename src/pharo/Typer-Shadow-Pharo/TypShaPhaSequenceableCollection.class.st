@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypShaPhaSequenceableCollection class >> _ofSize: _a [
+TypShaPhaSequenceableCollection class >> ___ofSize: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ Integer typAsType ];
 		resultType: [ :a | a receiverType asClass instanceSide typAsType ];

@@ -52,9 +52,12 @@ TypShaShadow class >> instance: anObject [
 	instance := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaShadow class >> shadowClassesFor: aClass [
-	^ self allSubclasses select: [ :e | e shadowedClass == aClass classSide ]
+	<typTypeArgument: 1 as: 'ClassDescription'>
+	<typTypeResultAs: 'SequenceableCollection<ClassDescription>'>
+	^ self allSubclasses
+		select: [ :e | e shadowedClass == aClass classSide ]
 ]
 
 { #category : #'as yet unclassified' }

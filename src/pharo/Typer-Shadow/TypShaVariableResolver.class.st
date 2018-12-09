@@ -18,7 +18,7 @@ TypShaVariableResolver >> resolves: aLookup [
 	^ aLookup receiverType hasClass
 		and: [ aLookup receiverType asClass == shadow shadowedClass
 				and: [ | name |
-					name := '_' , aLookup selector.
+					name := '___' , aLookup selector.
 					name first isUppercase
 						ifTrue: [ shadow class instanceSide hasClassVarNamed: name ]
 						ifFalse: [ shadow class hasInstVarNamed: name ] ] ]

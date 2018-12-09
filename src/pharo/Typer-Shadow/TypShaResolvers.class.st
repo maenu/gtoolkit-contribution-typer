@@ -7,9 +7,20 @@ Class {
 	#category : #'Typer-Shadow-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
+TypShaResolvers >> initialize [
+	<typTypeVariable: 'resolvers' as: 'Symbol<Character>'>
+	super initialize
+]
+
+{ #category : #accessing }
 TypShaResolvers >> resolversFor: aLookup shadowing: aClass [
-	^ (((TypShaShadow shadowClassesFor: aClass) flatCollect: resolvers) select: [ :e | e resolves: aLookup ]) flatCollect: [ :e | e resolversFor: aLookup ]
+	<typTypeArgument: 1 as: 'TypMethodLookup'>
+	<typTypeArgument: 2 as: 'ClassDescription'>
+	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypMethodLookup>>'>
+	^ (((TypShaShadow shadowClassesFor: aClass) flatCollect: resolvers)
+		select: [ :e | e resolves: aLookup ])
+		flatCollect: [ :e | e resolversFor: aLookup ]
 ]
 
 { #category : #'as yet unclassified' }

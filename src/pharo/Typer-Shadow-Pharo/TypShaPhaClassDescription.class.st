@@ -4,6 +4,16 @@ Class {
 	#category : #'Typer-Shadow-Pharo-Core'
 }
 
+{ #category : #accessing }
+TypShaPhaClassDescription class >> ___allSubclasses [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType: {ClassDescription typAsType} ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaClassDescription class >> shadowedClass [
 	^ ClassDescription class

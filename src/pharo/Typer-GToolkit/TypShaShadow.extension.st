@@ -19,8 +19,8 @@ TypShaShadow class >> typGtNewShadowFor: aClass [
 TypShaShadow class >> typGtShadowClassInstanceMethod: aSymbol arguments: someTypes result: aType [
 	| name_ |
 	name_ := (aSymbol isBinary
-		ifTrue: [ '~' , aSymbol ]
-		ifFalse: [ '_' , aSymbol ]) asSymbol.
+		ifTrue: [ '~~~' , aSymbol ]
+		ifFalse: [ '___' , aSymbol ]) asSymbol.
 	(self class includesSelector: name_)
 		ifFalse: [ | header argumentBody |
 			header := (name_ isKeyword or: name_ isBinary)
@@ -46,7 +46,7 @@ TypShaShadow class >> typGtShadowClassInstanceMethod: aSymbol arguments: someTyp
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowClassInstanceVariable: aSymbol type: aType [
 	| name_ method |
-	name_ := '_' , aSymbol.
+	name_ := '___' , aSymbol.
 	(self class hasInstVarNamed: name_)
 		ifFalse: [ self class addInstVarNamed: name_ ].
 	(self class includesSelector: #initialize)
@@ -74,7 +74,7 @@ TypShaShadow class >> typGtShadowClassInstanceVariable: aSymbol type: aType [
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowClassVariable: aSymbol type: aType [
 	| name_ method |
-	name_ := '_' , aSymbol.
+	name_ := '___' , aSymbol.
 	(self hasClassVarNamed: name_)
 		ifFalse: [ self addClassVarNamed: name_ ].
 	(self class includesSelector: #initialize)
@@ -103,8 +103,8 @@ TypShaShadow class >> typGtShadowClassVariable: aSymbol type: aType [
 TypShaShadow class >> typGtShadowInstanceMethod: aSymbol arguments: someTypes result: aType [
 	| name_ |
 	name_ := (aSymbol isBinary
-		ifTrue: [ '~' , aSymbol ]
-		ifFalse: [ '_' , aSymbol ]) asSymbol.
+		ifTrue: [ '~~~' , aSymbol ]
+		ifFalse: [ '___' , aSymbol ]) asSymbol.
 	(self includesSelector: name_)
 		ifFalse: [ | header argumentBody |
 			header := (name_ isKeyword or: name_ isBinary)
@@ -132,7 +132,7 @@ TypShaShadow class >> typGtShadowInstanceMethod: aSymbol arguments: someTypes re
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowInstanceVariable: aSymbol type: aType [
 	| name_ method |
-	name_ := '_' , aSymbol.
+	name_ := '___' , aSymbol.
 	(self hasInstVarNamed: name_)
 		ifFalse: [ self addInstVarNamed: name_ ].
 	(self includesSelector: #initialize)

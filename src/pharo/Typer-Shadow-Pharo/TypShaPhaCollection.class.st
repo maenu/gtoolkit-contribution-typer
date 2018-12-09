@@ -128,9 +128,15 @@ TypShaPhaCollection >> _flatCollect: _a [
 		argumentTypes: [ :i :a | 
 			BlockClosure typAsType
 				asParametricType:
-					{(a receiverType parameters at: 1).
+					{(a receiverType isParametric
+						ifTrue: [ a receiverType parameters at: 1 ]
+						ifFalse: [ TypUnknownType instance ]).
 					TypUnknownType instance} ];
-		resultType: [ :a | a receiverType asParametricType: {((a argumentTypes at: 1) parameters last parameters at: 1)} ];
+		resultType: [ :a | 
+			(a argumentTypes at: 1) isParametric
+				ifTrue: [ a receiverType
+						asParametricType: {((a argumentTypes at: 1) parameters last parameters at: 1)} ]
+				ifFalse: [ Collection typAsType ] ];
 		yourself
 ]
 
@@ -229,4 +235,13 @@ TypShaPhaCollection >> _sort: _a [
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> asType: aClass [
 	^ aClass typAsNamedType asParametricType: {TypUnknownType instance}
+]
+
+{ #category : #accessing }
+TypShaPhaCollection >> ~, _a [
+	^ TypMethodResolver new
+		argumentTypes:
+				[ :i :a :s :r | Collection typAsType asParametricType: a receiverType parameters ];
+		resultType: [ :a :s :r | a receiverType ];
+		yourself
 ]
