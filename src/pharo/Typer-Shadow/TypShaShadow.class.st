@@ -1,9 +1,6 @@
 Class {
 	#name : #TypShaShadow,
 	#superclass : #TypResolver,
-	#classInstVars : [
-		'instance'
-	],
 	#category : #'Typer-Shadow-Core'
 }
 
