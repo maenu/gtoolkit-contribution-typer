@@ -18,6 +18,14 @@ TypShaPhaSymbol >> ___isBinary [
 ]
 
 { #category : #accessing }
+TypShaPhaSymbol >> ___isKeyword [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaSymbol >> ___isUnary [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

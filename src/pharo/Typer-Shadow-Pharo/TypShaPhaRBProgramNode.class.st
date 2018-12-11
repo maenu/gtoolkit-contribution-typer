@@ -25,6 +25,15 @@ TypShaPhaRBProgramNode >> ___comments [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaRBProgramNode >> ___instanceVariableWriteNodes [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType:
+				[ :a :s :r | Collection typAsType asParametricType: {RBAssignmentNode typAsType} ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaRBProgramNode >> ___methodNode [
 	^ TypMethodResolver new
@@ -83,6 +92,15 @@ TypShaPhaRBProgramNode >> ___stop [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Integer typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaRBProgramNode >> ___variableWriteNodes [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType:
+				[ :a :s :r | Collection typAsType asParametricType: {RBAssignmentNode typAsType} ];
 		yourself
 ]
 

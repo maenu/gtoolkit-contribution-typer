@@ -10,6 +10,14 @@ TypShaPhaClassDescription class >> shadowedClass [
 ]
 
 { #category : #accessing }
+TypShaPhaClassDescription >> ___addInstVarNamed: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | String typAsType ];
+		resultType: [ :a :s :r | a receiverType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaClassDescription >> ___classSide [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

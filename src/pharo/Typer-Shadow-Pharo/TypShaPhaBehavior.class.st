@@ -18,6 +18,14 @@ TypShaPhaBehavior >> ___allSubclasses [
 ]
 
 { #category : #accessing }
+TypShaPhaBehavior >> ___compiledMethodAt: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
+		resultType: [ :a :s :r | CompiledMethod typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaBehavior >> ___instVarNames [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
@@ -52,6 +60,14 @@ TypShaPhaBehavior >> ___selectors [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___whichClassDefinesClassVar: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | String typAsType ];
+		resultType: [ :a :s :r | Behavior typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaBehavior >> ___whichClassDefinesInstVar: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | Behavior typAsType ];

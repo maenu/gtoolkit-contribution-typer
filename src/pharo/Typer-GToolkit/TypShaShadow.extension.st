@@ -19,6 +19,10 @@ TypShaShadow class >> typGtNewShadowFor: aClass [
 
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowClassInstanceMethod: aSymbol arguments: someTypes result: aType [
+	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeArgument: 2 as: 'SequenceableCollection<TypType>'>
+	<typTypeArgument: 3 as: 'TypType'>
+	<typTypeResultAs: 'CompiledMethod<Integer>'>
 	| name_ |
 	name_ := (aSymbol isBinary
 		ifTrue: [ '~~~' , aSymbol ]
@@ -26,9 +30,20 @@ TypShaShadow class >> typGtShadowClassInstanceMethod: aSymbol arguments: someTyp
 	(self class includesSelector: name_)
 		ifFalse: [ | header argumentBody |
 			header := (name_ isKeyword or: name_ isBinary)
-				ifTrue: [ ' ' join: (name_ keywords withIndexCollect: [ :e :i | e , ' _' , (96 + i) asCharacter asString ]) ]
+				ifTrue: [ ' '
+						join:
+							(name_ keywords
+								withIndexCollect: [ :e :i | e , ' _' , (96 + i) asCharacter asString ]) ]
 				ifFalse: [ name_ ].
-			argumentBody := someTypes ifEmpty: [ 'TypNoTypeError signal' ] ifNotEmpty: [ ':i :a :s :r | {' , (' . ' join: (someTypes withIndexCollect: [ :e :i | '''' , aType asSourceString , ''' typAsType' ])) , '} at: i' ].
+			argumentBody := someTypes
+				ifEmpty: [ 'TypNoTypeError signal' ]
+				ifNotEmpty: [ ':i :a :s :r | {'
+						,
+							(' . '
+								join:
+									(someTypes
+										withIndexCollect: [ :e :i | '''' , aType asSourceString , ''' typAsType' ]))
+						, '} at: i' ].
 			self class
 				compile:
 					header
@@ -47,6 +62,9 @@ TypShaShadow class >> typGtShadowClassInstanceMethod: aSymbol arguments: someTyp
 
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowClassInstanceVariable: aSymbol type: aType [
+	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeArgument: 2 as: 'TypType'>
+	<typTypeResultAs: 'CompiledMethod<Integer>'>
 	| name_ method |
 	name_ := '___' , aSymbol.
 	(self class hasInstVarNamed: name_)
@@ -57,7 +75,8 @@ TypShaShadow class >> typGtShadowClassInstanceVariable: aSymbol type: aType [
 					'initialize
 	super initialize' ].
 	method := self class compiledMethodAt: #initialize.
-	(method ast instanceVariableWriteNodes anySatisfy: [ :e | e variable name = name_ ])
+	(method ast instanceVariableWriteNodes
+		anySatisfy: [ :e | e variable name = name_ ])
 		ifFalse: [ self
 				compile:
 					method sourceCode
@@ -75,6 +94,9 @@ TypShaShadow class >> typGtShadowClassInstanceVariable: aSymbol type: aType [
 
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowClassVariable: aSymbol type: aType [
+	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeArgument: 2 as: 'TypType'>
+	<typTypeResultAs: 'CompiledMethod<Integer>'>
 	| name_ method |
 	name_ := '___' , aSymbol.
 	(self hasClassVarNamed: name_)
@@ -98,11 +120,15 @@ TypShaShadow class >> typGtShadowClassVariable: aSymbol type: aType [
 						,
 							''' typAsType ];
 		yourself' ].
-	^ method
+	^ self class compiledMethodAt: #initialize
 ]
 
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowInstanceMethod: aSymbol arguments: someTypes result: aType [
+	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeArgument: 2 as: 'SequenceableCollection<TypType>'>
+	<typTypeArgument: 3 as: 'TypType'>
+	<typTypeResultAs: 'CompiledMethod<Integer>'>
 	| name_ |
 	name_ := (aSymbol isBinary
 		ifTrue: [ '~~~' , aSymbol ]
@@ -110,11 +136,20 @@ TypShaShadow class >> typGtShadowInstanceMethod: aSymbol arguments: someTypes re
 	(self includesSelector: name_)
 		ifFalse: [ | header argumentBody |
 			header := (name_ isKeyword or: name_ isBinary)
-				ifTrue: [ ' ' join: (name_ keywords withIndexCollect: [ :e :i | e , ' _' , (96 + i) asCharacter asString ]) ]
+				ifTrue: [ ' '
+						join:
+							(name_ keywords
+								withIndexCollect: [ :e :i | e , ' _' , (96 + i) asCharacter asString ]) ]
 				ifFalse: [ name_ ].
 			argumentBody := someTypes
 				ifEmpty: [ 'TypNoTypeError signal' ]
-				ifNotEmpty: [ ':i :a :s :r | {' , (' . ' join: (someTypes withIndexCollect: [ :e :i | '''' , aType asSourceString , ''' typAsType' ])) , '} at: i' ].
+				ifNotEmpty: [ ':i :a :s :r | {'
+						,
+							(' . '
+								join:
+									(someTypes
+										withIndexCollect: [ :e :i | '''' , aType asSourceString , ''' typAsType' ]))
+						, '} at: i' ].
 			self
 				compile:
 					header
@@ -133,6 +168,9 @@ TypShaShadow class >> typGtShadowInstanceMethod: aSymbol arguments: someTypes re
 
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowInstanceVariable: aSymbol type: aType [
+	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeArgument: 2 as: 'TypType'>
+	<typTypeResultAs: 'CompiledMethod<Integer>'>
 	| name_ method |
 	name_ := '___' , aSymbol.
 	(self hasInstVarNamed: name_)
@@ -143,7 +181,8 @@ TypShaShadow class >> typGtShadowInstanceVariable: aSymbol type: aType [
 					'initialize
 	super initialize' ].
 	method := self compiledMethodAt: #initialize.
-	(method ast instanceVariableWriteNodes anySatisfy: [ :e | e name = name_ ])
+	(method ast instanceVariableWriteNodes
+		anySatisfy: [ :e | e name = name_ ])
 		ifFalse: [ self
 				compile:
 					method sourceCode

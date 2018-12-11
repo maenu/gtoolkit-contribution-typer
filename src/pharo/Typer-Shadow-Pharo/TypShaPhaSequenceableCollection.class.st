@@ -61,11 +61,34 @@ TypShaPhaSequenceableCollection >> ___isEmpty [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaSequenceableCollection >> ___join: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType: {(a receiverType parameters at: 1)} ];
+		resultType: [ :a :s :r | a receiverType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaSequenceableCollection >> ___last [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | a receiverType parameters at: 1 ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaSequenceableCollection >> ___withIndexCollect: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			BlockClosure typAsType
+				asParametricType:
+					{(a receiverType parameters at: 1).
+					Integer typAsType.
+					TypUnknownType instance} ];
+		resultType: [ :a :s :r | a receiverType asParametricType: {(a argumentTypes at: 1) parameters last} ];
 		yourself
 ]
 

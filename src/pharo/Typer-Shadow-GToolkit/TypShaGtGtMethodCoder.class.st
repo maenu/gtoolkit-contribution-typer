@@ -30,6 +30,14 @@ TypShaGtGtMethodCoder >> ___cursorPositionDo: _a [
 ]
 
 { #category : #accessing }
+TypShaGtGtMethodCoder >> ___newCompletionStrategy [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | GtCompletionStrategy typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaGtGtMethodCoder >> ___rbAST [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

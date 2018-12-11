@@ -153,6 +153,22 @@ TypShaPhaCollection >> ___groupedBy: _a [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaCollection >> ___ifEmpty: _a ifNotEmpty: _b [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			i = 1
+				ifTrue: [ BlockClosure typAsType asParametricType: {TypUnknownType instance} ]
+				ifFalse: [ BlockClosure typAsType
+						asParametricType:
+							{a receiverType.
+							TypUnknownType instance} ] ];
+		resultType: [ :a :s :r | 
+			{(a argumentTypes at: 1) parameters last.
+			(a argumentTypes at: 1) parameters last} typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___includes: _a [
 	^ TypMethodResolver new
