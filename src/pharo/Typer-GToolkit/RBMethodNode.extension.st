@@ -7,6 +7,7 @@ RBMethodNode >> typGtCanType [
 
 { #category : #'*Typer-GToolkit' }
 RBMethodNode >> typGtFiltersToTypeWithShadow [
+	<typTypeResultAs: 'GtCoderMethodsFilter'>
 	| clazz shadows shadow argumentTypes resultType method |
 	clazz := self methodClass.
 	shadows := TypShaShadow shadowClassesFor: clazz.
@@ -17,9 +18,9 @@ RBMethodNode >> typGtFiltersToTypeWithShadow [
 		ifFalse: [ shadows anyOne ].
 	argumentTypes := self numArgs timesCollect: [ :i | self typTypeForArgumentAt: i ].
 	resultType := self typTypeForResult.
-	method := clazz isClassSide
+	method := (clazz isClassSide
 		ifTrue: [ shadow typGtShadowClassInstanceMethod: self selector arguments: argumentTypes result: resultType ]
-		ifFalse: [ shadow typGtShadowInstanceMethod: self selector arguments: argumentTypes result: resultType ].
+		ifFalse: [ shadow typGtShadowInstanceMethod: self selector arguments: argumentTypes result: resultType ]) "typCastAs CompiledMethod<Integer>".
 	^ (TypGtCoderTypeFilter new
 		type: method methodClass typAsType;
 		yourself) & (GtCoderImplementorsFilter selector: method selector)
@@ -27,6 +28,7 @@ RBMethodNode >> typGtFiltersToTypeWithShadow [
 
 { #category : #'*Typer-GToolkit' }
 RBMethodNode >> typGtTypeWithPragma [
+	<typTypeResultAs: 'GtCoderMethodsFilter'>
 	| arguments_ result_ variables_ |
 	arguments_ := self numArgs
 		timesCollect: [ :i | 
@@ -46,7 +48,7 @@ RBMethodNode >> typGtTypeWithPragma [
 			self removePragma: e.
 			e ]
 		ifNone: [ RBPragmaNode selector: #typTypeResultAs: arguments: {(RBLiteralValueNode value: self typTypeForResult asSourceString)} ].
-	variables_ := {}.
+	variables_ := {} "typCastAs SequenceableCollection<RBPragmaNode>".
 	self selector = #initialize
 		ifTrue: [ variables_ := self methodClass instVarNames
 				collect: [ :e | 

@@ -1,7 +1,7 @@
 Class {
 	#name : #TypShaPhaBlockClosure,
 	#superclass : #TypShaShadow,
-	#category : #'Typer-Shadow-Pharo-Core'
+	#category : #'Typer-Shadow-Pharo'
 }
 
 { #category : #'as yet unclassified' }
@@ -38,6 +38,22 @@ TypShaPhaBlockClosure >> ___cull: _a cull: _b cull: _c cull: _d [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | a receiverType parameters at: i ];
 		resultType: [ :a | a receiverType parameters last ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaBlockClosure >> ___on: _a do: _b [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			i = 1
+				ifTrue: [ Class typAsType ]
+				ifFalse: [ BlockClosure typAsType
+						asParametricType:
+							{Exception typAsType.
+							TypUnknownType instance} ] ];
+		resultType: [ :a :s :r | 
+			{a receiverType parameters last.
+			(a argumentTypes at: 2) parameters last} typAsType ];
 		yourself
 ]
 

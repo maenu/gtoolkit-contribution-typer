@@ -5,11 +5,11 @@ Class {
 }
 
 { #category : #private }
-TypGtPharoCompletionStrategy >> actionsFor: anAST at: anInteger [
+TypGtPharoCompletionStrategy >> actionsFor: aGtAst at: anInteger [
 	| gtNode rbAst rbPosition rbNode |
-	gtNode := self nodeFor: anInteger in: anAST.
+	gtNode := self nodeFor: anInteger in: aGtAst.
 	rbPosition := anInteger - gtNode source size.
-	rbAst := RBParser parseFaultyMethod: anAST source.
+	rbAst := RBParser parseFaultyMethod: aGtAst source.
 	rbAst methodNode
 		compilationContext:
 			(CompilationContext new
@@ -19,7 +19,9 @@ TypGtPharoCompletionStrategy >> actionsFor: anAST at: anInteger [
 				requestor: nil).
 	rbAst doSemanticAnalysis.
 	rbNode := rbAst bestNodeFor: (rbPosition to: rbPosition).
-	^ gtNode ifNil: [ #() ] ifNotNil: [ :node | node typGtCompletionActionsFor: self in: rbNode ]
+	^ gtNode
+		ifNil: [ #() ]
+		ifNotNil: [ :node | node typGtCompletionActionsFor: self in: rbNode ]
 ]
 
 { #category : #'private-selector' }
@@ -27,7 +29,11 @@ TypGtPharoCompletionStrategy >> selectorsForReceiver: aBehavior matching: aStrin
 	| tree |
 	tree := aBehavior notNil
 		ifTrue: [ tree := GtPrefixTree new.
-			aBehavior withAllSuperclasses withIndexDo: [ :e :i | e selectors do: [ :f | tree add: f weight: 999 - i "this is an incredible stupid trick to get an inverse order while being above zero, which is apparently required. never do 999 superclasses" ] ].
+			aBehavior withAllSuperclasses
+				withIndexDo: [ :e :i | 
+					e selectors
+						do:
+							[ :f | tree add: f weight: 999 - i	"this is an incredible stupid trick to get an inverse order while being above zero, which is apparently required. never do 999 superclasses" ] ].
 			tree ]
 		ifFalse: [ SelectorCache ].
 	^ tree weightedFirst: maxItems startingWith: aString

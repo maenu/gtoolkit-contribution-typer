@@ -1,15 +1,22 @@
 Extension { #name : #GtPharoUnaryMessageNode }
 
 { #category : #'*Typer-GToolkit' }
-GtPharoUnaryMessageNode >> typGtCompletionActionsFor: strategy in: anRbNode [
+GtPharoUnaryMessageNode >> typGtCompletionActionsFor: aStrategy in: anRbNode [
+	<typTypeArgument: 1 as: 'TypGtPharoCompletionStrategy'>
+	<typTypeArgument: 2 as: 'RbProgramNode'>
+	<typTypeResultAs: 'SequenceableCollection<String<Character>>'>
 	| startingText index type clazz |
-	index := strategy index.
-	selectorPart stopPosition = index
+	index := aStrategy index.
+	self selectorPart stopPosition = index
 		ifFalse: [ ^ #() ].
-	startingText := selectorPart value.
-	type := parent receiver typGtGuessType: strategy in: anRbNode receiver.
+	startingText := self selectorPart value.
+	type := self parent receiver
+		typGtGuessType: aStrategy
+		in: anRbNode receiver.
 	clazz := type hasClass
 		ifTrue: [ type asClass ]
 		ifFalse: [ Object ].
-	^ (strategy selectorsForReceiver: clazz matching: startingText) collect: [ :each | self actionForSelector: each startingWith: startingText at: index ]
+	^ (aStrategy selectorsForReceiver: clazz matching: startingText)
+		collect:
+			[ :e | self actionForSelector: e startingWith: startingText at: index ]
 ]

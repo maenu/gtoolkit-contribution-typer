@@ -13,7 +13,7 @@ TypShaShadow class >> asMethodResolvers [
 		shadow: self;
 		yourself).
 	(TypShaMethodResolver new
-		shadow: self instance;
+		shadow: self new;
 		yourself)}
 ]
 
@@ -28,7 +28,7 @@ TypShaShadow class >> asTypeResolvers [
 		shadow: self;
 		yourself).
 	(TypShaTypeResolver new
-		shadow: self instance;
+		shadow: self new;
 		yourself)}
 ]
 
@@ -38,18 +38,8 @@ TypShaShadow class >> asVariableResolvers [
 		shadow: self;
 		yourself).
 	(TypShaVariableResolver new
-		shadow: self instance;
+		shadow: self new;
 		yourself)}
-]
-
-{ #category : #accessing }
-TypShaShadow class >> instance [
-	^ instance ifNil: [ instance := self new ]
-]
-
-{ #category : #accessing }
-TypShaShadow class >> instance: anObject [
-	instance := anObject
 ]
 
 { #category : #accessing }

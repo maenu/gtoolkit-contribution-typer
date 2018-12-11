@@ -1,7 +1,7 @@
 Class {
 	#name : #TypShaPhaSequenceableCollection,
 	#superclass : #TypShaShadow,
-	#category : #'Typer-Shadow-Pharo-Core'
+	#category : #'Typer-Shadow-Pharo'
 }
 
 { #category : #'as yet unclassified' }
@@ -50,6 +50,14 @@ TypShaPhaSequenceableCollection >> ___first [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | a receiverType parameters at: 1 ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaSequenceableCollection >> ___isEmpty [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 

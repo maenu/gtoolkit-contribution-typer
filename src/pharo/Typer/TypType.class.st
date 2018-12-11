@@ -75,6 +75,16 @@ TypType >> asNonParametricType [
 ]
 
 { #category : #converting }
+TypType >> asNullableType [
+	<typTypeResultAs: 'TypType'>
+	^ nullable
+		ifTrue: [ self ]
+		ifFalse: [ self copy
+				nullable: true;
+				yourself ]
+]
+
+{ #category : #converting }
 TypType >> asParametricType: someTypes [
 	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
 	<typTypeResultAs: 'TypParametricType'>

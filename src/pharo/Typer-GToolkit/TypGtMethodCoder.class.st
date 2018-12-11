@@ -5,25 +5,27 @@ Class {
 }
 
 { #category : #actions }
-TypGtMethodCoder >> browseImplementors: editorElement [
+TypGtMethodCoder >> browseImplementors: anEditorElement [
+	<typTypeArgument: 1 as: 'BrTextEditor'>
 	| node |
 	node := self rbNodeAtCursor.
 	node isNil
 		ifTrue: [ ^ self ].
 	node isMessage
 		ifFalse: [ ^ self ].
-	editorElement
+	anEditorElement
 		fireEvent:
 			(GtPhlowObjectToSpawn new
 				object:
 					(TypGtCoderTypeFilter new
 						type: node receiver typType;
 						yourself) & (GtCoderImplementorsFilter selector: node selector);
-				sourceElement: editorElement)
+				sourceElement: anEditorElement)
 ]
 
 { #category : #'initialize-release' }
 TypGtMethodCoder >> browseToTypeWithPragma: anEditorElement [
+	<typTypeArgument: 1 as: 'BrTextEditor'>
 	| node |
 	node := self rbNodeAtCursor.
 	node isNil
@@ -39,6 +41,7 @@ TypGtMethodCoder >> browseToTypeWithPragma: anEditorElement [
 
 { #category : #'initialize-release' }
 TypGtMethodCoder >> browseToTypeWithShadow: anEditorElement [
+	<typTypeArgument: 1 as: 'BrTextEditor'>
 	| node |
 	node := self rbNodeAtCursor.
 	node isNil
@@ -81,7 +84,7 @@ TypGtMethodCoder >> initializeShortcuts [
 						primary;
 						key: Key t;
 						build);
-				action: [ :editorElement | self typeWithPragma: editorElement ]);
+				action: [ :e | self typeWithPragma: e ]);
 		addShortcut:
 			(BlShortcut new
 				combination:
@@ -90,7 +93,7 @@ TypGtMethodCoder >> initializeShortcuts [
 						shift;
 						key: Key t;
 						build);
-				action: [ :editorElement | self browseToTypeWithPragma: editorElement ]);
+				action: [ :e | self browseToTypeWithPragma: e ]);
 		addShortcut:
 			(BlShortcut new
 				combination:
@@ -98,7 +101,7 @@ TypGtMethodCoder >> initializeShortcuts [
 						primary;
 						key: Key h;
 						build);
-				action: [ :editorElement | self typeWithShadow: editorElement ]);
+				action: [ :e | self typeWithShadow: e ]);
 		addShortcut:
 			(BlShortcut new
 				combination:
@@ -107,7 +110,7 @@ TypGtMethodCoder >> initializeShortcuts [
 						shift;
 						key: Key h;
 						build);
-				action: [ :editorElement | self browseToTypeWithShadow: editorElement ])
+				action: [ :e | self browseToTypeWithShadow: e ])
 ]
 
 { #category : #'instance creation' }
@@ -120,11 +123,12 @@ TypGtMethodCoder >> newCompletionStrategy [
 
 { #category : #'initialize-release' }
 TypGtMethodCoder >> rbNodeAtCursor [
+	<typTypeResultAs: '!RBProgramNode'>
 	self
 		cursorPositionDo: [ :e | 
 			[ ^ self rbAST bestNodeFor: (e to: e) ]
 				on: Error
-				do: [ :ex | ex return ] ].
+				do: [ :f | f return ] ].
 	^ nil
 ]
 
@@ -137,6 +141,7 @@ TypGtMethodCoder >> save [
 
 { #category : #'initialize-release' }
 TypGtMethodCoder >> typeWithPragma: anEditorElement [
+	<typTypeArgument: 1 as: 'BrTextEditor'>
 	| rbAst |
 	rbAst := self rbAST ifNil: [ ^ self ].
 	rbAst typGtTypeWithPragma.
@@ -146,6 +151,7 @@ TypGtMethodCoder >> typeWithPragma: anEditorElement [
 
 { #category : #'initialize-release' }
 TypGtMethodCoder >> typeWithShadow: anEditorElement [
+	<typTypeArgument: 1 as: 'BrTextEditor'>
 	| node |
 	node := self rbNodeAtCursor.
 	node isNil

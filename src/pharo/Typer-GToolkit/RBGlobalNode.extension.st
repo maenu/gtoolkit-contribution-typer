@@ -2,11 +2,13 @@ Extension { #name : #RBGlobalNode }
 
 { #category : #'*Typer-GToolkit' }
 RBGlobalNode >> typGtCanType [
+	<typTypeResultAs: 'Boolean'>
 	^ self typHasDefiningClass
 ]
 
 { #category : #'*Typer-GToolkit' }
 RBGlobalNode >> typGtFiltersToTypeWithPragma [
+	<typTypeResultAs: 'GtCoderMethodsFilter'>
 	self assert: [ self typGtCanType ].
 	^ (TypGtCoderTypeFilter new
 		type: self typDefiningClass typAsType;
@@ -19,6 +21,7 @@ RBGlobalNode >> typGtFiltersToTypeWithPragma [
 
 { #category : #'*Typer-GToolkit' }
 RBGlobalNode >> typGtFiltersToTypeWithShadow [
+	<typTypeResultAs: 'GtCoderMethodsFilter'>
 	| clazz shadows shadow variableType method |
 	self assert: [ self typGtCanType ].
 	clazz := self typDefiningClass.
@@ -29,7 +32,7 @@ RBGlobalNode >> typGtFiltersToTypeWithShadow [
 		ifTrue: [ TypShaShadow typGtNewShadowFor: clazz ]
 		ifFalse: [ shadows anyOne ].
 	variableType := self typType.
-	method := shadow typGtShadowClassVariable: self name type: variableType.
+	method := (shadow typGtShadowClassVariable: self name type: variableType) "typCastAs CompiledMethod<Integer>".
 	^ (TypGtCoderTypeFilter new
 		type: method methodClass typAsType;
 		yourself) & (GtCoderImplementorsFilter selector: method selector)

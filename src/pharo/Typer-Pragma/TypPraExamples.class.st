@@ -30,6 +30,6 @@ TypPraExamples >> example [
 { #category : #initialization }
 TypPraExamples >> initialize [
 	<typTypeParametersAs: 'Date'>
-	<typTypeVariable: #thing as: #Integer>
+	<typTypeVariable: 'thing' as: 'Integer'>
 	super initialize
 ]

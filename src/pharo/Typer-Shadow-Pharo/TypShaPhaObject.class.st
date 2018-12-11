@@ -1,7 +1,7 @@
 Class {
 	#name : #TypShaPhaObject,
 	#superclass : #TypShaShadow,
-	#category : #'Typer-Shadow-Pharo-Core'
+	#category : #'Typer-Shadow-Pharo'
 }
 
 { #category : #'as yet unclassified' }
@@ -62,6 +62,14 @@ TypShaPhaObject >> ___ifNil: _a ifNotNil: _b [
 		resultType: [ :a :s :r | 
 			{(a argumentTypes at: 1) parameters last.
 			(a argumentTypes at: 2) parameters last} typAsType ];
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
+TypShaPhaObject >> ___printString [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | String typAsType ];
 		yourself
 ]
 

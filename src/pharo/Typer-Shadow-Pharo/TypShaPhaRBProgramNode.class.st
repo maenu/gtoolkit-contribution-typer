@@ -1,7 +1,7 @@
 Class {
 	#name : #TypShaPhaRBProgramNode,
 	#superclass : #TypShaShadow,
-	#category : #'Typer-Shadow-Pharo-Core'
+	#category : #'Typer-Shadow-Pharo'
 }
 
 { #category : #'as yet unclassified' }
@@ -67,6 +67,22 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifPresent: _b ifAbsent: _c [
 		resultType: [ :a :s :r | 
 			{(a argumentTypes at: 2) parameters last.
 			(a argumentTypes at: 3) parameters last} typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaRBProgramNode >> ___start [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Integer typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaRBProgramNode >> ___stop [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Integer typAsType ];
 		yourself
 ]
 

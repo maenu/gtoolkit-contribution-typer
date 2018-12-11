@@ -1,7 +1,7 @@
 Class {
 	#name : #TypShaPhaExamples,
 	#superclass : #Object,
-	#category : #'Typer-Shadow-Pharo-Examples'
+	#category : #'Typer-Shadow-Examples'
 }
 
 { #category : #accessing }

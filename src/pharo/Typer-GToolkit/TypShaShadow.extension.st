@@ -2,6 +2,8 @@ Extension { #name : #TypShaShadow }
 
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtNewShadowFor: aClass [
+	<typTypeArgument: 1 as: 'ClassDescription'>
+	<typTypeResultAs: 'ClassDescription'>
 	| shadow |
 	shadow := TypShaShadow
 		subclass: 'Sha_' , aClass instanceSide name
@@ -56,9 +58,9 @@ TypShaShadow class >> typGtShadowClassInstanceVariable: aSymbol type: aType [
 	super initialize' ].
 	method := self class compiledMethodAt: #initialize.
 	(method ast instanceVariableWriteNodes anySatisfy: [ :e | e variable name = name_ ])
-		ifFalse: [ method := self
+		ifFalse: [ self
 				compile:
-					method source
+					method sourceCode
 						,
 							'.
 	' , name_
@@ -68,7 +70,7 @@ TypShaShadow class >> typGtShadowClassInstanceVariable: aSymbol type: aType [
 						,
 							''' typAsType ];
 		yourself' ].
-	^ method
+	^ self class compiledMethodAt: #initialize
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -84,9 +86,9 @@ TypShaShadow class >> typGtShadowClassVariable: aSymbol type: aType [
 	super initialize' ].
 	method := self class compiledMethodAt: #initialize.
 	(method ast variableWriteNodes anySatisfy: [ :e | e variable name = name_ ])
-		ifFalse: [ method := self
+		ifFalse: [ self
 				compile:
-					method source
+					method sourceCode
 						,
 							'.
 	' , name_
@@ -141,10 +143,10 @@ TypShaShadow class >> typGtShadowInstanceVariable: aSymbol type: aType [
 					'initialize
 	super initialize' ].
 	method := self compiledMethodAt: #initialize.
-	(method ast instanceVariableWriteNodes anySatisfy: [ :e | e variable name = name_ ])
-		ifFalse: [ method := self
+	(method ast instanceVariableWriteNodes anySatisfy: [ :e | e name = name_ ])
+		ifFalse: [ self
 				compile:
-					method source
+					method sourceCode
 						,
 							'.
 	' , name_
@@ -154,5 +156,5 @@ TypShaShadow class >> typGtShadowInstanceVariable: aSymbol type: aType [
 						,
 							''' typAsType ];
 		yourself' ].
-	^ method
+	^ self compiledMethodAt: #initialize
 ]

@@ -7,6 +7,7 @@ RBInstanceVariableNode >> typGtCanType [
 
 { #category : #'*Typer-GToolkit' }
 RBInstanceVariableNode >> typGtFiltersToTypeWithPragma [
+	<typTypeResultAs: 'GtCoderMethodsFilter'>
 	^ (TypGtCoderTypeFilter new
 		type: self methodNode methodClass typAsType;
 		yourself)
@@ -18,8 +19,9 @@ RBInstanceVariableNode >> typGtFiltersToTypeWithPragma [
 
 { #category : #'*Typer-GToolkit' }
 RBInstanceVariableNode >> typGtFiltersToTypeWithShadow [
+	<typTypeResultAs: 'GtCoderMethodsFilter'>
 	| type clazz shadows shadow variableType method |
-	type := self methodNode methodClass typType.
+	type := self methodNode methodClass typAsType.
 	clazz := type hasClass
 		ifTrue: [ type asClass ]
 		ifFalse: [ Object ].
@@ -30,9 +32,9 @@ RBInstanceVariableNode >> typGtFiltersToTypeWithShadow [
 		ifTrue: [ TypShaShadow typGtNewShadowFor: clazz ]
 		ifFalse: [ shadows anyOne ].
 	variableType := self typType.
-	method := clazz isClassSide
+	method := (clazz isClassSide
 		ifTrue: [ shadow typGtShadowClassInstanceVariable: self name type: variableType ]
-		ifFalse: [ shadow typGtShadowInstanceVariable: self name type: variableType ].
+		ifFalse: [ shadow typGtShadowInstanceVariable: self name type: variableType ]) "typCastAs CompiledMethod<Integer>".
 	^ (TypGtCoderTypeFilter new
 		type: method methodClass typAsType;
 		yourself) & (GtCoderImplementorsFilter selector: method selector)

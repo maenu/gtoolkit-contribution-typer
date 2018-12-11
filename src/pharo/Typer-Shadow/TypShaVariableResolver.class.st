@@ -10,7 +10,7 @@ TypShaVariableResolver >> resolversFor: aLookup [
 	name := '___' , aLookup selector.
 	^ name first isUppercase
 		ifTrue: [ {(shadow class instanceSide classVarNamed: name)} ]
-		ifFalse: [ {(shadow class instVarNamed: name)} ]
+		ifFalse: [ {(shadow instVarNamed: name)} ]
 ]
 
 { #category : #accessing }

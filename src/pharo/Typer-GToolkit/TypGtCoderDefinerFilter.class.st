@@ -9,17 +9,35 @@ Class {
 	#category : #'Typer-GToolkit-Filter'
 }
 
+{ #category : #'logical operations' }
+TypGtCoderDefinerFilter >> & aFilter [
+	<typTypeArgument: 1 as: 'GtCoderMethodsFilter'>
+	<typTypeResultAs: 'TypGtCoderIntersectionFilter'>
+	^ TypGtCoderIntersectionFilter forFilter: self filter: aFilter
+]
+
 { #category : #testing }
 TypGtCoderDefinerFilter >> includeMethod: aCompiledMethod [
-	^ (aCompiledMethod methodClass hasInstVarNamed: name) or: [ aCompiledMethod methodClass hasClassVarNamed: name ]
+	<typTypeArgument: 1 as: 'CompiledMethod<Integer>'>
+	<typTypeResultAs: 'Boolean'>
+	^ (aCompiledMethod methodClass hasInstVarNamed: name)
+		or: [ aCompiledMethod methodClass hasClassVarNamed: name ]
+]
+
+{ #category : #accessing }
+TypGtCoderDefinerFilter >> initialize [
+	<typTypeVariable: 'name' as: 'String<Character>'>
+	super initialize
 ]
 
 { #category : #accessing }
 TypGtCoderDefinerFilter >> name [
+	<typTypeResultAs: 'String<Character>'>
 	^ name
 ]
 
 { #category : #accessing }
 TypGtCoderDefinerFilter >> name: anObject [
+	<typTypeArgument: 1 as: 'String<Character>'>
 	name := anObject
 ]

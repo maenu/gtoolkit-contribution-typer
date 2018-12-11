@@ -6,5 +6,6 @@ Class {
 
 { #category : #converting }
 TypGtCoderMethodsCollection >> asCoder [
+	<typTypeResultAs: 'TypGtMethodsCoder'>
 	^ TypGtMethodsCoder forMethods: self
 ]

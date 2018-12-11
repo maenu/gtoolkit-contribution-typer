@@ -3,6 +3,8 @@ Extension { #name : #CompiledMethod }
 { #category : #'*Typer-GToolkit' }
 CompiledMethod >> typGtSourceFor: aView [
 	<gtView>
+	<typTypeArgument: 1 as: 'GtPhlowProtoView'>
+	<typTypeResultAs: 'GtPhlowProtoView'>
 	^ aView explicit
 		title: 'Source (Typer)' translated;
 		priority: -1;
@@ -10,8 +12,7 @@ CompiledMethod >> typGtSourceFor: aView [
 				look: BrGlamorousButtonExteriorRectangularLook + BrGlamorousButtonIconLook;
 				icon: BrGlamorousIcons browse asElement;
 				action: [ self browse ] ];
-		stencil: [ | coder |
-			coder := TypGtMethodCoder forMethod: self.
-			coder expanded: true.
-			coder asElement ]
+		stencil: [ (TypGtMethodCoder forMethod: self)
+				expanded: true;
+				asElement ]
 ]
