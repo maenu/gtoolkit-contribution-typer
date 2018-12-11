@@ -1,11 +1,11 @@
 Class {
-	#name : #TypShaPhaExamples,
+	#name : #TypShaExamples,
 	#superclass : #Object,
 	#category : #'Typer-Shadow-Examples'
 }
 
 { #category : #accessing }
-TypShaPhaExamples >> pharo [
+TypShaExamples >> pharo [
 	<gtExample>
 	TypTypeResolvers initializeGlobal resolvers add: TypShaTypeResolvers new.
 	TypMethodResolvers initializeGlobal resolvers add: TypShaMethodResolvers new.
@@ -14,7 +14,7 @@ TypShaPhaExamples >> pharo [
 ]
 
 { #category : #accessing }
-TypShaPhaExamples >> playground [
+TypShaExamples >> playground [
 	| o c i s d |
 	o := 10 atRandom > 5
 		ifTrue: [ Object new ]
