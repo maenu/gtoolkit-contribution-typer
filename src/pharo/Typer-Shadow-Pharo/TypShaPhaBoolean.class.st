@@ -29,7 +29,7 @@ TypShaPhaBoolean >> ___ifTrue: _a ifFalse: _b [
 					e
 						increment:
 							(f isParametric
-								ifTrue: [ f parameters last	"typCastAs TypParametricType" ]
+								ifTrue: [ f parameters last ]
 								ifFalse: [ TypUnknownType instance ]).
 					e ].
 			resultType asType ];

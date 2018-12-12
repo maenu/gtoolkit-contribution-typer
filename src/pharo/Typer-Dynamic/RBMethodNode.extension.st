@@ -87,7 +87,7 @@ RBMethodNode >> typDynTypeForArgumentAt: anInteger [
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypeForResult [
 	<typTypeResultAs: 'TypUnionType<TypType>'>
-	^ (self typDynReturnNodes collect: [ :e | e typDynReturns ])
+	^ (self typDynReturnNodes collect: #typDynReturns)
 		inject: TypUnionType new
 		into: [ :a :b | a , b ]
 ]
@@ -137,7 +137,7 @@ RBMethodNode >> typDynTypesForVariablesSelectedWith: aBlock definedBy: anotherBl
 	^ ((((self typDynAssignNodes select: aBlock)
 		collect:
 			[ :e | (anotherBlock cull: e variable) -> e variable name -> e typDynAssigns ])
-		groupedBy: [:e | e key ]) collect: [ :e | e collect: [ :f | f value ] ])
+		groupedBy: #key) collect: [ :e | e collect: #value ])
 		collect: [ :e | e inject: TypUnionType new into: [ :a :b | a , b ] ]
 ]
 

@@ -25,7 +25,7 @@ TypShaGtGtMethodCoder >> ___cursorPositionDo: _a [
 				asParametricType:
 					{Integer typAsType.
 					TypUnknownType instance} ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 

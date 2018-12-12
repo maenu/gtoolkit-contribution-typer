@@ -46,11 +46,21 @@ TypShaPhaCollection >> ___collect: _a [
 					{(a receiverType parameters at: 1).
 					TypUnknownType instance} ];
 		resultType: [ :a | 
-			| argument elementType |
-			argument := a argumentTypes at: 1.
-			elementType := (argument hasClass and: [ (argument asClass includesBehavior: BlockClosure) and: [ argument isParametric ] ])
-				ifTrue: [ argument parameters last ]
-				ifFalse: [ TypUnknownType instance ].
+			| argumentType argumentNode elementType |
+			argumentType := a argumentTypes at: 1.
+			argumentNode := a argumentNodes at: 1.
+			elementType := (argumentType hasClass and: [ (argumentType asClass includesBehavior: BlockClosure) and: [ argumentType isParametric ] ])
+				ifTrue: [ argumentType parameters last ]
+				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
+						ifTrue: [ TypMethodResolvers global
+								typeForResultOfMethod:
+									(TypMethodLookup new
+										receiverType: (a receiverType parameters at: 1);
+										selector: argumentNode value asSymbol;
+										argumentTypes: {};
+										argumentNodes: {};
+										yourself) ]
+						ifFalse: [ TypUnknownType instance ] ].
 			a receiverType asParametricType: {elementType} ];
 		yourself
 ]
@@ -126,12 +136,21 @@ TypShaPhaCollection >> ___flatCollect: _a [
 					{(a receiverType parameters at: 1).
 					TypUnknownType instance} ];
 		resultType: [ :a | 
-			| argument elementType |
-			argument := a argumentTypes at: 1.
-			elementType := (argument hasClass
-				and: [ (argument asClass includesBehavior: BlockClosure) and: [ argument isParametric and: [ argument parameters last isParametric ] ] ])
-				ifTrue: [ argument parameters last parameters at: 1 ]
-				ifFalse: [ TypUnknownType instance ].
+			| argumentType argumentNode elementType |
+			argumentType := a argumentTypes at: 1.
+			argumentNode := a argumentNodes at: 1.
+			elementType := (argumentType hasClass and: [ (argumentType asClass includesBehavior: BlockClosure) and: [ argumentType isParametric ] ])
+				ifTrue: [ argumentType parameters last parameters at: 1 ]
+				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
+						ifTrue: [ (TypMethodResolvers global
+								typeForResultOfMethod:
+									(TypMethodLookup new
+										receiverType: (a receiverType parameters at: 1);
+										selector: argumentNode value asSymbol;
+										argumentTypes: {};
+										argumentNodes: {};
+										yourself)) parameters at: 1 ]
+						ifFalse: [ TypUnknownType instance ] ].
 			a receiverType asParametricType: {elementType} ];
 		yourself
 ]
@@ -145,11 +164,25 @@ TypShaPhaCollection >> ___groupedBy: _a [
 					{(a receiverType parameters at: 1).
 					TypUnknownType instance} ];
 		resultType: [ :a :s :r | 
+			| argumentType argumentNode keyType |
+			argumentType := a argumentTypes at: 1.
+			argumentNode := a argumentNodes at: 1.
+			keyType := (argumentType hasClass and: [ (argumentType asClass includesBehavior: BlockClosure) and: [ argumentType isParametric ] ])
+				ifTrue: [ argumentType parameters last ]
+				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
+						ifTrue: [ TypMethodResolvers global
+								typeForResultOfMethod:
+									(TypMethodLookup new
+										receiverType: (a receiverType parameters at: 1);
+										selector: argumentNode value asSymbol;
+										argumentTypes: {};
+										argumentNodes: {};
+										yourself) ]
+						ifFalse: [ TypUnknownType instance ] ].
 			Dictionary typAsType
 				asParametricType:
-					{(a argumentTypes at: 1) parameters last.
-					(Collection typAsType
-						asParametricType: {(a receiverType parameters at: 1)})} ];
+					{keyType.
+					(Collection typAsType asParametricType: {(a receiverType parameters at: 1)})} ];
 		yourself
 ]
 

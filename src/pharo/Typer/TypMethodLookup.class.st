@@ -2,7 +2,8 @@ Class {
 	#name : #TypMethodLookup,
 	#superclass : #TypObjectLookup,
 	#instVars : [
-		'argumentTypes'
+		'argumentTypes',
+		'argumentNodes'
 	],
 	#category : #'Typer-Core'
 }
@@ -11,7 +12,18 @@ Class {
 TypMethodLookup >> = anObject [
 	^ self == anObject
 		or: [ self class == anObject class
-				and: [ selector = anObject selector and: [ receiverType = anObject receiverType and: [ argumentTypes = anObject argumentTypes ] ] ] ]
+				and: [ selector = anObject selector
+						and: [ receiverType = anObject receiverType and: [ argumentTypes = anObject argumentTypes and: [ argumentNodes = anObject argumentNodes ] ] ] ] ]
+]
+
+{ #category : #accessing }
+TypMethodLookup >> argumentNodes [
+	^ argumentNodes
+]
+
+{ #category : #accessing }
+TypMethodLookup >> argumentNodes: anObject [
+	argumentNodes := anObject
 ]
 
 { #category : #accessing }
@@ -28,7 +40,7 @@ TypMethodLookup >> argumentTypes: anObject [
 
 { #category : #comparing }
 TypMethodLookup >> hash [
-	^ super hash bitXor: argumentTypes hash
+	^ (super hash bitXor: argumentTypes hash) bitXor: argumentNodes hash
 ]
 
 { #category : #initialization }
@@ -40,5 +52,6 @@ TypMethodLookup >> initialize [
 { #category : #accessing }
 TypMethodLookup >> postCopy [
 	super postCopy.
-	argumentTypes := argumentTypes copy
+	argumentTypes := argumentTypes copy.
+	argumentNodes := argumentNodes copy
 ]

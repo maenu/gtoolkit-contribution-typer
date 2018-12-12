@@ -18,6 +18,7 @@ RBMethodNode >> typTypeForArgumentAt: anInteger [
 				receiverType: self methodClass typAsType;
 				selector: self selector asSymbol;
 				argumentTypes: self typTypesForArguments;
+				argumentNodes: (self arguments);
 				yourself)
 ]
 
@@ -39,6 +40,7 @@ RBMethodNode >> typTypeForResult [
 				receiverType: self methodClass typAsType;
 				selector: self selector asSymbol;
 				argumentTypes: self typTypesForArguments;
+				argumentNodes: (self arguments);
 				yourself)
 ]
 

@@ -49,10 +49,10 @@ TypDynCollector >> collectVariableResolversIn: aCollection [
 		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypVariableResolver<TypVariableLookup>>'>
 	^ ((aCollection
 		flatCollect: [ :e | e typDynTypesForVariables associations ])
-		groupedBy: [ :e | e key ])
+		groupedBy: #key)
 		collect: [ :e | 
 			| type |
-			type := (e collect: [ :f | f value ])
+			type := (e collect: #value)
 				inject: TypUnionType new
 				into: [ :a :b | a , b ].
 			TypVariableResolver new

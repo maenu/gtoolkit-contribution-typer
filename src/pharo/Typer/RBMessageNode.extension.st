@@ -13,6 +13,7 @@ RBMessageNode >> typTypeForArgumentAt: anInteger [
 				receiverType: receiverType;
 				selector: self selector asSymbol;
 				argumentTypes: self typTypesForArguments;
+				argumentNodes: (self arguments);
 				yourself)
 ]
 
@@ -33,6 +34,7 @@ RBMessageNode >> typTypeForResult [
 				receiverType: receiverType;
 				selector: self selector asSymbol;
 				argumentTypes: (self typTypesForArguments);
+				argumentNodes: (self arguments);
 				yourself)
 ]
 
