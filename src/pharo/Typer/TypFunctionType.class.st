@@ -32,9 +32,10 @@ TypFunctionType >> asFunctionType: someTypes result: aType [
 { #category : #accessing }
 TypFunctionType >> asSourceString [
 	| parameters_ |
-	parameters_ := '<' , (',' join: (parameters collect: #asSourceString)) , '>'.
+	parameters_ := ',' join: (parameters collect: #asSourceString).
 	optionalParameters
-		ifTrue: [ parameters_ := '[' , parameters_ , ']' ].
+		ifTrue: [ parameters_ := '[' , parameters_ , ']' ]
+		ifFalse: [ parameters_ := '(' , parameters_ , ')' ].
 	^ super asSourceString , type asSourceString , parameters_ , '->' , result asSourceString
 ]
 
@@ -72,13 +73,17 @@ TypFunctionType >> optionalParameters: anObject [
 { #category : #accessing }
 TypFunctionType >> printOn: aStream [
 	type printOn: aStream.
-	optionalParameters
-		ifTrue: [ aStream << '[' ].
-	aStream << '<'.
+	aStream
+		<<
+			(optionalParameters
+				ifTrue: [ '[' ]
+				ifFalse: [ '(' ]).
 	aStream << (',' join: (parameters collect: #printString)).
-	aStream << '>'.
-	optionalParameters
-		ifTrue: [ aStream << ']' ].
+	aStream
+		<<
+			(optionalParameters
+				ifTrue: [ ']' ]
+				ifFalse: [ ')' ]).
 	aStream << '->'.
 	result printOn: aStream
 ]
