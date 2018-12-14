@@ -15,15 +15,11 @@ TypUnknownType class >> instance [
 
 { #category : #comparing }
 TypUnknownType >> < aType [
-	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeResultAs: 'Boolean'>
 	^ true
 ]
 
 { #category : #comparing }
 TypUnknownType >> > aType [
-	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeResultAs: 'Boolean'>
 	^ true
 ]
 

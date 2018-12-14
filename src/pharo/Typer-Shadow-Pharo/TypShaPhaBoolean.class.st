@@ -22,17 +22,11 @@ TypShaPhaBoolean >> ___ifTrue: _a ifFalse: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ BlockClosure typAsType asParametricType: {TypUnknownType instance} ];
 		resultType: [ :a | 
-			| resultType |
-			resultType := a argumentTypes
-				inject: TypUnionType new
-				into: [ :e :f | 
-					e
-						increment:
-							(f isParametric
-								ifTrue: [ f parameters last ]
-								ifFalse: [ TypUnknownType instance ]).
-					e ].
-			resultType asType ];
+			(a argumentTypes
+				collect: [ :e | 
+					e isFunction
+						ifTrue: [ e result ]
+						ifFalse: [ TypUnknownType instance ] ]) typAsType ];
 		yourself
 ]
 

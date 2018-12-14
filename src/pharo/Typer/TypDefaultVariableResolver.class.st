@@ -9,7 +9,7 @@ TypDefaultVariableResolver >> initialize [
 	super initialize.
 	self
 		type: [ :a | 
-			| clazz clazzes types |
+			| clazz clazzes |
 			clazz := a receiverType asClass.
 			clazzes := a selector first isUppercase
 				ifTrue: [ | definer |
@@ -22,13 +22,9 @@ TypDefaultVariableResolver >> initialize [
 					definer := clazz whichClassDefinesInstVar: a selector.
 					self withAllSuperclassesOf: clazz until: definer ].
 			self flag: 'this might also catch overridden methods, making it not completely sound'.
-			types := clazzes
-				flatCollect: [ :e | e methods flatCollect: [ :f | (f assignmentNodes select: [ :g | g variable name = a selector ]) collect: [ :g | g value typType ] ] ].
-			(types
-				inject: TypUnionType new
-				into: [ :f :g | 
-					f increment: g.
-					f ]) asType ]
+			(clazzes
+				flatCollect: [ :e | e methods flatCollect: [ :f | (f assignmentNodes select: [ :g | g variable name = a selector ]) collect: [ :g | g value typType ] ] ])
+				typAsType ]
 ]
 
 { #category : #accessing }

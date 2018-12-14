@@ -11,7 +11,7 @@ Class {
 TypType >> < aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'Boolean'>
-	^ self isSubTypeOf: aType
+	^ aType isSuperTypeOf: self
 ]
 
 { #category : #comparing }
@@ -31,7 +31,7 @@ TypType >> = anObject [
 TypType >> > aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'Boolean'>
-	^ aType isSubTypeOf: self
+	^ self isSuperTypeOf: aType
 ]
 
 { #category : #comparing }
@@ -55,6 +55,14 @@ TypType >> allSuperTypes [
 { #category : #converting }
 TypType >> asClass [
 	<typTypeResultAs: 'ClassDescription'>
+	self subclassResponsibility
+]
+
+{ #category : #converting }
+TypType >> asFunctionType: someTypes result: aType [
+	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
+	<typTypeArgument: 2 as: 'TypType'>
+	<typTypeResultAs: 'TypFunctionType'>
 	self subclassResponsibility
 ]
 
@@ -100,6 +108,12 @@ TypType >> asSourceString [
 ]
 
 { #category : #converting }
+TypType >> canBeFunctionType [
+	<typTypeResultAs: 'Boolean'>
+	^ false
+]
+
+{ #category : #converting }
 TypType >> canBeParametricType [
 	<typTypeResultAs: 'Boolean'>
 	^ false
@@ -130,6 +144,12 @@ TypType >> initialize [
 ]
 
 { #category : #testing }
+TypType >> isFunction [
+	<typTypeResultAs: 'Boolean'>
+	^ false
+]
+
+{ #category : #testing }
 TypType >> isNil [
 	<typTypeResultAs: 'Boolean'>
 	^ false
@@ -142,10 +162,10 @@ TypType >> isParametric [
 ]
 
 { #category : #comparing }
-TypType >> isSubTypeOf: aType [
+TypType >> isSuperTypeOf: aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'Boolean'>
-	^ self allSuperTypes includes: aType
+	^ aType allSuperTypes includes: self
 ]
 
 { #category : #testing }
@@ -176,7 +196,7 @@ TypType >> nullable: anObject [
 TypType >> printOn: aStream [
 	<typTypeArgument: 1 as: 'Stream'>
 	nullable
-		ifTrue: [ aStream << '! ' ]
+		ifTrue: [ aStream << '!' ]
 ]
 
 { #category : #accessing }

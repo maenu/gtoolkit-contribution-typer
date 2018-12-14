@@ -24,6 +24,11 @@ TypNilType >> asSourceString [
 ]
 
 { #category : #converting }
+TypNilType >> canBeFunctionType [
+	^ false
+]
+
+{ #category : #converting }
 TypNilType >> canBeParametricType [
 	^ false
 ]

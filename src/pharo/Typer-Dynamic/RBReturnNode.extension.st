@@ -9,7 +9,7 @@ RBReturnNode >> typDynInstall [
 		selector: #typDynReturn:;
 		arguments: #(value).
 	self propertyAt: #typDynMonitor put: Monitor new.
-	self propertyAt: #typDynReturns put: TypUnionType new.
+	self propertyAt: #typDynReturns put: TypDynUnionType new.
 	self propertyAt: #typDynLink put: link.
 	self link: link
 ]

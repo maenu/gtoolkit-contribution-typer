@@ -10,8 +10,8 @@ RBAssignmentNode >> typDynAssign: anObject [
 
 { #category : #'*Typer-Dynamic' }
 RBAssignmentNode >> typDynAssigns [
-	<typTypeResultAs: 'TypUnionType<TypType>'>
-	^ self propertyAt: #typDynAssigns ifAbsentPut: [ TypUnionType new ]
+	<typTypeResultAs: 'TypDynUnionType<TypType>'>
+	^ self propertyAt: #typDynAssigns ifAbsentPut: [ TypDynUnionType new ]
 ]
 
 { #category : #'*Typer-Dynamic' }
@@ -24,7 +24,7 @@ RBAssignmentNode >> typDynInstall [
 		control: #after;
 		arguments: #(value).
 	self propertyAt: #typDynMonitor put: Monitor new.
-	self propertyAt: #typDynAssigns put: TypUnionType new.
+	self propertyAt: #typDynAssigns put: TypDynUnionType new.
 	self propertyAt: #typDynLink put: link.
 	self link: link
 ]

@@ -2,46 +2,14 @@ Class {
 	#name : #TypUnionType,
 	#superclass : #TypType,
 	#instVars : [
-		'weights'
+		'types'
 	],
 	#category : #'Typer-Core'
 }
 
-{ #category : #copying }
-TypUnionType >> , aType [
-	<typTypeArgument: 1 as: 'TypUnionType<TypType>'>
-	<typTypeResultAs: 'TypUnionType<TypType>'>
-	| copy |
-	copy := self copy.
-	aType do: [ :e | copy add: e ].
-	^ copy
-]
-
 { #category : #comparing }
 TypUnionType >> = anObject [
-	^ self == anObject or: [ self class = anObject class and: [ nullable = anObject nullable and: [ weights = anObject weights ] ] ]
-]
-
-{ #category : #enumerating }
-TypUnionType >> add: anAssociation [
-	<typTypeArgument: 1 as: 'Association<TypType,Integer>'>
-	<typTypeResultAs: 'Integer'>
-	| n association |
-	association := anAssociation key nullable
-		ifTrue: [ n := weights at: TypNilType instance ifAbsentPut: [ 0 ].
-			weights at: TypNilType instance put: n + anAssociation value.
-			(anAssociation key copy
-				nullable: false;
-				yourself) -> anAssociation value ]
-		ifFalse: [ anAssociation ].
-	n := weights at: association key ifAbsentPut: [ 0 ].
-	^ weights at: association key put: n + association value
-]
-
-{ #category : #enumerating }
-TypUnionType >> addAll: aTypes [
-	<typTypeArgument: 1 as: 'TypUnionType<TypType>'>
-	aTypes do: [ :e | self add: e ]
+	^ self == anObject or: [ self class = anObject class and: [ nullable = anObject nullable and: [ types = anObject types ] ] ]
 ]
 
 { #category : #converting }
@@ -50,17 +18,32 @@ TypUnionType >> asClass [
 ]
 
 { #category : #converting }
+TypUnionType >> asFunctionType: someTypes result: aType [
+	| type |
+	type := self copy.
+	type types
+		removeAll;
+		addAll:
+			(types
+				collect: [ :e | 
+					e canBeFunctionType
+						ifTrue: [ e asFunctionType: someTypes result: aType ]
+						ifFalse: [ e ] ]).
+	^ type
+]
+
+{ #category : #converting }
 TypUnionType >> asParametricType: someTypes [
 	| type |
 	type := self copy.
-	type weights removeAll.
-	weights associations
-		do: [ :e | 
-			| f |
-			f := e key.
-			f canBeParametricType
-				ifTrue: [ f := f asParametricType: someTypes ].
-			type weights at: f put: e value ].
+	type types
+		removeAll;
+		addAll:
+			(types
+				collect: [ :e | 
+					e canBeParametricType
+						ifTrue: [ e asParametricType: someTypes ]
+						ifFalse: [ e ] ]).
 	^ type
 ]
 
@@ -73,9 +56,9 @@ TypUnionType >> asSourceString [
 TypUnionType >> asType [
 	<typTypeResultAs: 'TypType'>
 	| remains current nullable_ |
-	(weights includesKey: TypUnknownType instance)
+	(types includesKey: TypUnknownType instance)
 		ifTrue: [ ^ self ].
-	remains := weights keys asSet copy.
+	remains := types copy.
 	nullable_ := remains includes: TypNilType instance.
 	remains remove: TypNilType instance ifAbsent: [  ].
 	remains ifEmpty: [ ^ TypNilType instance ].
@@ -89,24 +72,13 @@ TypUnionType >> asType [
 ]
 
 { #category : #converting }
-TypUnionType >> canBeParametricType [
+TypUnionType >> canBeFunctionType [
 	^ true
 ]
 
-{ #category : #enumerating }
-TypUnionType >> collect: aBlock [
-	<typTypeArgument: 1 as: 'BlockClosure<Association<TypType,Integer>,?>'>
-	<typTypeResultAs: 'TypUnionType<TypType>'>
-	| copy |
-	copy := TypUnionType new.
-	self do: [ :e | copy add: (aBlock cull: e) ].
-	^ copy
-]
-
-{ #category : #enumerating }
-TypUnionType >> do: aBlock [
-	<typTypeArgument: 1 as: 'BlockClosure<Association<TypType,Integer>,?>'>
-	weights associationsDo: aBlock
+{ #category : #converting }
+TypUnionType >> canBeParametricType [
+	^ true
 ]
 
 { #category : #testing }
@@ -116,39 +88,15 @@ TypUnionType >> hasClass [
 
 { #category : #comparing }
 TypUnionType >> hash [
-	^ super hash bitXor: weights keys hash
-]
-
-{ #category : #accessing }
-TypUnionType >> increment: anObject [
-	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeResultAs: 'Integer'>
-	^ (anObject isKindOf: TypUnionType)
-		ifTrue: [ self addAll: anObject ]
-		ifFalse: [ | n type |
-			type := anObject nullable
-				ifTrue: [ n := weights at: TypNilType instance ifAbsentPut: [ 0 ].
-					weights at: TypNilType instance put: n + 1.
-					anObject copy
-						nullable: false;
-						yourself ]
-				ifFalse: [ anObject ].
-			n := weights at: type ifAbsentPut: [ 0 ].
-			weights at: type put: n + 1 ]
+	^ super hash bitXor: types keys hash
 ]
 
 { #category : #accessing }
 TypUnionType >> initialize [
 	<typTypeParametersAs: 'TypType'>
-	<typTypeVariable: 'weights' as: 'Dictionary<TypType,Integer>'>
+	<typTypeVariable: 'types' as: 'Set<TypType>'>
 	super initialize.
-	weights := Dictionary new
-]
-
-{ #category : #testing }
-TypUnionType >> isEmpty [
-	<typTypeResultAs: 'Boolean'>
-	^ weights isEmpty
+	types := Set new
 ]
 
 { #category : #converting }
@@ -163,14 +111,14 @@ TypUnionType >> isUnion [
 
 { #category : #accessing }
 TypUnionType >> nullable [
-	^ weights includesKey: TypNilType instance
+	^ types includes: TypNilType instance
 ]
 
 { #category : #accessing }
 TypUnionType >> nullable: aBoolean [
 	aBoolean
-		ifTrue: [ self increment: TypNilType instance ]
-		ifFalse: [ weights removeKey: TypNilType instance ifAbsent: [  ] ]
+		ifTrue: [ types add: TypNilType instance ]
+		ifFalse: [ types remove: TypNilType instance ifAbsent: [  ] ]
 ]
 
 { #category : #converting }
@@ -182,7 +130,7 @@ TypUnionType >> parameters [
 { #category : #'as yet unclassified' }
 TypUnionType >> postCopy [
 	super postCopy.
-	weights := weights copy
+	types := types copy
 ]
 
 { #category : #printing }
@@ -191,41 +139,11 @@ TypUnionType >> printOn: aStream [
 	aStream << 'U ' << self superType printString
 ]
 
-{ #category : #enumerating }
-TypUnionType >> select: aBlock [
-	<typTypeArgument: 1 as: 'BlockClosure<Association<TypType,Integer>,Boolean>'>
-	<typTypeResultAs: 'TypUnionType'>
-	| copy |
-	copy := TypUnionType new.
-	weights
-		associationsDo: [ :e | 
-			(aBlock cull: e)
-				ifTrue: [ copy add: e ] ].
-	^ copy
-]
-
-{ #category : #accessing }
-TypUnionType >> size [
-	<typTypeResultAs: 'Integer'>
-	^ weights isEmpty
-		ifTrue: [ 0 ]
-		ifFalse: [ weights sum ]
-]
-
-{ #category : #initialization }
-TypUnionType >> summary [
-	<typTypeResultAs: 'OrderedDictionary<TypType,Integer>'>
-	| summary |
-	summary := weights associations copy.
-	summary sort: [ :a :b | a value > b value ].
-	^ summary asOrderedDictionary
-]
-
 { #category : #accessing }
 TypUnionType >> superType [
 	| remains nullable_ current |
 	self assert: [ self hasSuperType ].
-	remains := weights keys asSet copy.
+	remains := types copy.
 	remains remove: TypUnknownType instance ifAbsent: [  ].
 	remains ifEmpty: [ ^ TypUnknownType instance ].
 	nullable_ := remains includes: TypNilType instance.
@@ -248,21 +166,11 @@ TypUnionType >> superType [
 ]
 
 { #category : #accessing }
-TypUnionType >> typGtItemsFor: aView [
-	<typTypeArgument: 1 as: 'GtPhlowView'>
-	<typTypeResultAs: 'GtPhlowView'>
-	<gtView>
-	^ self summary gtItemsFor: aView
+TypUnionType >> types [
+	^ types
 ]
 
 { #category : #accessing }
-TypUnionType >> weights [
-	<typTypeResultAs: 'Dictionary<TypType,Integer>'>
-	^ weights
-]
-
-{ #category : #accessing }
-TypUnionType >> weights: anObject [
-	<typTypeArgument: 1 as: 'Dictionary<TypType,Integer>'>
-	weights := anObject
+TypUnionType >> types: anObject [
+	types := anObject
 ]

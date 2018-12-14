@@ -53,7 +53,7 @@ TypDynCollector >> collectVariableResolversIn: aCollection [
 		collect: [ :e | 
 			| type |
 			type := (e collect: #value)
-				inject: TypUnionType new
+				inject: TypDynUnionType new
 				into: [ :a :b | a , b ].
 			TypVariableResolver new
 				type: [ type ];

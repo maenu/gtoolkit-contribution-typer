@@ -21,6 +21,14 @@ TypNamedType >> asClass [
 ]
 
 { #category : #converting }
+TypNamedType >> asFunctionType: someTypes result: aType [
+	^ TypFunctionType new
+		parameters: someTypes;
+		result: aType;
+		yourself
+]
+
+{ #category : #converting }
 TypNamedType >> asParametricType: someTypes [
 	^ TypParametricType new
 		type: self copy;
@@ -32,6 +40,11 @@ TypNamedType >> asParametricType: someTypes [
 { #category : #accessing }
 TypNamedType >> asSourceString [
 	^ super asSourceString , name asString
+]
+
+{ #category : #converting }
+TypNamedType >> canBeFunctionType [
+	^ true
 ]
 
 { #category : #converting }

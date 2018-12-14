@@ -17,17 +17,13 @@ TypShaPhaNumber >> ___timesCollect: _a [
 					{Integer typAsType.
 					TypUnknownType instance} ];
 		resultType: [ :a | 
-			| resultType |
-			resultType := a argumentTypes
-				inject: TypUnionType new
-				into: [ :e :f | 
-					e
-						increment:
-							(f isParametric
-								ifTrue: [ f parameters last	"typCastAs TypParametricType" ]
-								ifFalse: [ TypUnknownType instance ]).
-					e ].
-			OrderedCollection typAsType asParametricType: {resultType asType} ];
+			OrderedCollection typAsType
+				asParametricType:
+					{(a argumentTypes
+						collect: [ :e | 
+							e isFunction
+								ifTrue: [ e result ]
+								ifFalse: [ TypUnknownType instance ] ]) typAsType} ];
 		yourself
 ]
 
