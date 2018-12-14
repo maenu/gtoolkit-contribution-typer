@@ -13,6 +13,20 @@ TypUnknownType class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
+{ #category : #comparing }
+TypUnknownType >> < aType [
+	<typTypeArgument: 1 as: 'TypType'>
+	<typTypeResultAs: 'Boolean'>
+	^ true
+]
+
+{ #category : #comparing }
+TypUnknownType >> > aType [
+	<typTypeArgument: 1 as: 'TypType'>
+	<typTypeResultAs: 'Boolean'>
+	^ true
+]
+
 { #category : #converting }
 TypUnknownType >> asClass [
 	TypNoClassError signal

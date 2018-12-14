@@ -1,59 +1,59 @@
 Class {
-	#name : #TypGtAllBodyStyler,
-	#superclass : #TypGtBodyStyler,
+	#name : #TypGtTypeValueBodyStyler,
+	#superclass : #TypGtTypeBodyStyler,
 	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #visiting }
-TypGtAllBodyStyler >> visitArgumentNode: aNode [
+TypGtTypeValueBodyStyler >> visitArgumentNode: aNode [
 	super visitArgumentNode: aNode.
 	self styleValueNode: aNode
 ]
 
 { #category : #visiting }
-TypGtAllBodyStyler >> visitArrayNode: aNode [
+TypGtTypeValueBodyStyler >> visitArrayNode: aNode [
 	super visitArrayNode: aNode.
 	self styleValueNode: aNode
 ]
 
 { #category : #visiting }
-TypGtAllBodyStyler >> visitBlockNode: aNode [
+TypGtTypeValueBodyStyler >> visitBlockNode: aNode [
 	super visitBlockNode: aNode.
 	self styleValueNode: aNode
 ]
 
 { #category : #visiting }
-TypGtAllBodyStyler >> visitGlobalNode: aNode [
+TypGtTypeValueBodyStyler >> visitGlobalNode: aNode [
 	super visitGlobalNode: aNode.
 	self styleValueNode: aNode
 ]
 
 { #category : #visiting }
-TypGtAllBodyStyler >> visitInstanceVariableNode: aNode [
+TypGtTypeValueBodyStyler >> visitInstanceVariableNode: aNode [
 	super visitInstanceVariableNode: aNode.
 	self styleValueNode: aNode
 ]
 
 { #category : #visiting }
-TypGtAllBodyStyler >> visitLiteralArrayNode: aNode [
+TypGtTypeValueBodyStyler >> visitLiteralArrayNode: aNode [
 	super visitLiteralArrayNode: aNode.
 	self styleValueNode: aNode
 ]
 
 { #category : #visiting }
-TypGtAllBodyStyler >> visitLiteralNode: aNode [
+TypGtTypeValueBodyStyler >> visitLiteralNode: aNode [
 	super visitLiteralNode: aNode.
 	self styleValueNode: aNode
 ]
 
 { #category : #visiting }
-TypGtAllBodyStyler >> visitMessageNode: aNode [
+TypGtTypeValueBodyStyler >> visitMessageNode: aNode [
 	super visitMessageNode: aNode.
 	self styleValueNode: aNode
 ]
 
 { #category : #visiting }
-TypGtAllBodyStyler >> visitMethodNode: aNode [
+TypGtTypeValueBodyStyler >> visitMethodNode: aNode [
 	| position |
 	super visitMethodNode: aNode.
 	position := aNode arguments isEmpty
@@ -72,25 +72,25 @@ TypGtAllBodyStyler >> visitMethodNode: aNode [
 ]
 
 { #category : #visiting }
-TypGtAllBodyStyler >> visitSelfNode: aNode [
+TypGtTypeValueBodyStyler >> visitSelfNode: aNode [
 	super visitSelfNode: aNode.
 	self styleValueNode: aNode
 ]
 
 { #category : #visiting }
-TypGtAllBodyStyler >> visitSuperNode: aNode [
+TypGtTypeValueBodyStyler >> visitSuperNode: aNode [
 	super visitSuperNode: aNode.
 	self styleValueNode: aNode
 ]
 
 { #category : #visiting }
-TypGtAllBodyStyler >> visitTemporaryNode: aNode [
+TypGtTypeValueBodyStyler >> visitTemporaryNode: aNode [
 	super visitTemporaryNode: aNode.
 	self styleValueNode: aNode
 ]
 
 { #category : #visiting }
-TypGtAllBodyStyler >> visitThisContextNode: aNode [
+TypGtTypeValueBodyStyler >> visitThisContextNode: aNode [
 	super visitThisContextNode: aNode.
 	self styleValueNode: aNode
 ]

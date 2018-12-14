@@ -130,7 +130,7 @@ RBMethodNode >> typDynTypesForVariables [
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForVariablesSelectedWith: aBlock definedBy: anotherBlock [
-	<typTypeArgument: 1 as: 'BlockClosure<RBVariableNode,Boolean>'>
+	<typTypeArgument: 1 as: 'BlockClosure<RBAssignmentNode,Boolean>'>
 	<typTypeArgument: 2 as: 'BlockClosure<RBVariableNode,ClassDescription>'>
 	<typTypeResultAs:
 		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypUnionType<TypType>>'>
