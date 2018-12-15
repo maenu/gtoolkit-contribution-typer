@@ -128,7 +128,11 @@ TypUnionType >> postCopy [
 { #category : #printing }
 TypUnionType >> printOn: aStream [
 	super printOn: aStream.
-	aStream << 'U ' << self superType printString
+	aStream << 'U '
+		<<
+			(self hasSuperType
+				ifTrue: [ self superType printString ]
+				ifFalse: [ '...' ])
 ]
 
 { #category : #accessing }
