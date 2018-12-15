@@ -148,7 +148,7 @@ TypType >> initialize [
 TypType >> isCompatibleWith: aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'Boolean'>
-	^ self isSuperTypeOf: aType
+	^ aType isUnknown or: [ self isSuperTypeOf: aType ]
 ]
 
 { #category : #testing }

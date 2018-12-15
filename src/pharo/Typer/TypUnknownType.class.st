@@ -13,16 +13,6 @@ TypUnknownType class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
-{ #category : #comparing }
-TypUnknownType >> < aType [
-	^ true
-]
-
-{ #category : #comparing }
-TypUnknownType >> > aType [
-	^ true
-]
-
 { #category : #converting }
 TypUnknownType >> asClass [
 	TypNoClassError signal
