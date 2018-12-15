@@ -9,7 +9,11 @@ Class {
 
 { #category : #comparing }
 TypNamedType >> = anObject [
-	^ self == anObject or: [ self class = anObject class and: [ nullable = anObject nullable and: [ name = anObject name ] ] ]
+	^ self == anObject
+		or: [ self class = anObject class
+				and: [ | object |
+					object := anObject "typCastAs TypNamedType".
+					nullable = object nullable and: [ name = object name ] ] ]
 ]
 
 { #category : #converting }

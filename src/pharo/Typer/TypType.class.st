@@ -24,7 +24,10 @@ TypType >> <= aType [
 { #category : #comparing }
 TypType >> = anObject [
 	^ self == anObject
-		or: [ self class = anObject class and: [ nullable = anObject nullable ] ]
+		or: [ self class = anObject class
+				and: [ | object |
+					object := anObject "typCastAs TypType".
+					nullable = object nullable ] ]
 ]
 
 { #category : #comparing }

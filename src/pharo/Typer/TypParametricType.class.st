@@ -10,7 +10,14 @@ Class {
 
 { #category : #comparing }
 TypParametricType >> = anObject [
-	^ self == anObject or: [ self class = anObject class and: [ nullable = anObject nullable and: [ type = anObject type and: [ parameters asOrderedCollection = anObject parameters asOrderedCollection ] ] ] ]
+	^ self == anObject
+		or: [ self class = anObject class
+				and: [ | object |
+					object := anObject "typCastAs TypParametricType".
+					nullable = object nullable
+						and: [ type = object type
+								and: [ parameters asOrderedCollection
+										= object parameters asOrderedCollection ] ] ] ]
 ]
 
 { #category : #converting }

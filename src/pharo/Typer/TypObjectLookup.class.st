@@ -10,7 +10,12 @@ Class {
 
 { #category : #comparing }
 TypObjectLookup >> = anObject [
-	^ self == anObject or: [ self class == anObject class and: [ selector = anObject selector and: [ receiverType = anObject receiverType ] ] ]
+	^ self == anObject
+		or: [ self class == anObject class
+				and: [ | object |
+					object := anObject "typCastAs TypObjectLookup".
+					selector = object selector
+						and: [ receiverType = object receiverType ] ] ]
 ]
 
 { #category : #copying }

@@ -9,7 +9,11 @@ Class {
 
 { #category : #comparing }
 TypUnionType >> = anObject [
-	^ self == anObject or: [ self class = anObject class and: [ nullable = anObject nullable and: [ types = anObject types ] ] ]
+	^ self == anObject
+		or: [ self class = anObject class
+				and: [ | object |
+					object := anObject "typCastAs TypUnionType".
+					nullable = object nullable and: [ types = object types ] ] ]
 ]
 
 { #category : #converting }

@@ -58,6 +58,7 @@ TypGtMethodCoder >> browseToTypeWithShadow: anEditorElement [
 { #category : #'initialize-release' }
 TypGtMethodCoder >> initializeAddOns [
 	super initializeAddOns.
+	addOns addStyler: TypGtMethodCommentBodyStyler new.
 	addOns addStyler: TypGtTypeDeclarationBodyStyler new.
 	addOns addStyler: TypGtCheckBodyStyler new.
 	addOns

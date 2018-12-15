@@ -9,7 +9,11 @@ Class {
 
 { #category : #comparing }
 TypTypeLookup >> = anObject [
-	^ self == anObject or: [ self class == anObject class and: [ clazz = anObject clazz ] ]
+	^ self == anObject
+		or: [ self class == anObject class
+				and: [ | object |
+					object := anObject "typCastAs TypTypeLookup".
+					clazz = object clazz ] ]
 ]
 
 { #category : #accessing }
