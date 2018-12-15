@@ -40,6 +40,34 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 ]
 
 { #category : #visiting }
+TypGtCheckBodyStyler >> visitMethodNode: aNode [
+	| position |
+	super visitMethodNode: aNode.
+	position := aNode arguments isEmpty
+		ifTrue: [ aNode selector size ]
+		ifFalse: [ aNode arguments last stop ].
+	self
+		styleFrom: position
+		to: position
+		with:
+			{(BrTextAdornmentDynamicAttribute new
+				beAppend;
+				stencil: [ BlElement new
+						"pattern styler only gets pruned AST, use original for icon"
+						background: aNode method ast typCheColor;
+						constraintsDo: [ :c | 
+							c horizontal exact: 16.
+							c vertical exact: 16 ];
+						margin:
+							(BlInsets
+								top: 0
+								right: 2
+								bottom: 0
+								left: 2) ];
+				yourself)}
+]
+
+{ #category : #visiting }
 TypGtCheckBodyStyler >> visitReturnNode: aNode [
 	super visitReturnNode: aNode.
 	[ aNode typCheCheckCompatibility ]
