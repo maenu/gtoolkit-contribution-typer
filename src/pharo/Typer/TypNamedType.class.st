@@ -16,6 +16,11 @@ TypNamedType >> = anObject [
 					nullable = object nullable and: [ name = object name ] ] ]
 ]
 
+{ #category : #accessing }
+TypNamedType >> allSuperTypes [
+	^ super allSuperTypes collect: #asNonParametricType
+]
+
 { #category : #converting }
 TypNamedType >> asClass [
 	self assert: [ self hasClass ].
