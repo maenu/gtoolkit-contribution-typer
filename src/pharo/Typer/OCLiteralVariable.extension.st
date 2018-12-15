@@ -1,6 +1,11 @@
 Extension { #name : #OCLiteralVariable }
 
 { #category : #'*Typer' }
+OCLiteralVariable >> typIsFromSharedPool [
+	^ (self scope isKindOf: OCClassScope) and: [ self isFromSharedPool ] 
+]
+
+{ #category : #'*Typer' }
 OCLiteralVariable >> typSharedPool [
 	<typTypeResultAs: 'ClassDescription'>
 	self assert: [ self typIsFromSharedPool ].

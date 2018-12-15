@@ -23,8 +23,8 @@ TypDefaultVariableResolver >> initialize [
 					self withAllSuperclassesOf: clazz until: definer ].
 			self flag: 'this might also catch overridden methods, making it not completely sound'.
 			(clazzes
-				flatCollect: [ :e | e methods flatCollect: [ :f | (f assignmentNodes select: [ :g | g variable name = a selector ]) collect: [ :g | g value typType ] ] ])
-				typAsType ]
+				flatCollect:
+					[ :e | e methods flatCollect: [ :f | (f assignmentNodes select: [ :g | g variable name = a selector ]) collect: [ :g | g value typType ] ] ]) typAsType ]
 ]
 
 { #category : #accessing }

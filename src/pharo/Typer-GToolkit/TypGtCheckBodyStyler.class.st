@@ -21,7 +21,7 @@ TypGtCheckBodyStyler >> styleNode: aNode withText: aString [
 { #category : #visiting }
 TypGtCheckBodyStyler >> visitAssignmentNode: aNode [
 	super visitAssignmentNode: aNode.
-	[ aNode typCheIsCompatible ]
+	[ aNode typCheCheckCompatibility ]
 		on: TypCheIncompatibleTypeError
 		do: [ :e | self styleNode: aNode withText: 'expected ' , e expected asString , ', got ' , e actual asString ]
 ]
@@ -42,7 +42,7 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 { #category : #visiting }
 TypGtCheckBodyStyler >> visitReturnNode: aNode [
 	super visitReturnNode: aNode.
-	[ aNode typCheIsCompatible ]
+	[ aNode typCheCheckCompatibility ]
 		on: TypCheIncompatibleTypeError
 		do: [ :e | self styleNode: aNode withText: 'expected ' , e expected asString , ', got ' , e actual asString ]
 ]

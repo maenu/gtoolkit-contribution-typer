@@ -12,7 +12,9 @@ Class {
 TypMethodLookup >> = anObject [
 	^ self == anObject
 		or: [ self class == anObject class
-				and: [ selector = anObject selector
+				and: [ | object |
+					object := anObject "typCastAs TypMethodLookup".
+					selector = anObject selector
 						and: [ receiverType = anObject receiverType and: [ argumentTypes = anObject argumentTypes and: [ argumentNodes = anObject argumentNodes ] ] ] ] ]
 ]
 

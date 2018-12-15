@@ -9,13 +9,14 @@ Class {
 
 { #category : #initialization }
 TypVariableResolver >> initialize [
+	<typParameters: 'TypVariableLookup'>
 	<typTypeVariable: 'type' as: 'BlockClosure[TypVariableLookup,TypVariableLookup,TypResolver<TypLookup>]->TypType'>
 	super initialize
 ]
 
 { #category : #accessing }
 TypVariableResolver >> resolves: aLookup [
-	<typTypeArgument: 1 as: 'TypTypeLookup'>
+	<typTypeArgument: 1 as: 'TypVariableLookup'>
 	^ true
 ]
 

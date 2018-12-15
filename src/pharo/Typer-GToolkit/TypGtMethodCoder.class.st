@@ -64,8 +64,7 @@ TypGtMethodCoder >> initializeAddOns [
 		addMainAction: 'Types' translated
 		icon: BrGlamorousIcons inspect
 		action: [ | declaration |
-			declaration := addOns stylers
-				anySatisfy: [ :e | e isKindOf: TypGtTypeDeclarationBodyStyler ].
+			declaration := addOns stylers anySatisfy: [ :e | e isKindOf: TypGtTypeDeclarationBodyStyler ].
 			declaration
 				ifTrue: [ addOns removeStylerOfType: TypGtTypeDeclarationBodyStyler.
 					addOns addStyler: TypGtTypeValueBodyStyler new ]

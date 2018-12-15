@@ -103,7 +103,7 @@ TypNamedType >> superType [
 	self assert: [ self hasSuperType ].
 	(self hasClass not or: [ self asClass superclass isNil ])
 		ifTrue: [ "must be nullable" ^ TypNilType instance ].
-	^ self asClass superclass typAsNamedType copy
+	^ self asClass superclass typAsType copy
 		nullable: nullable;
 		yourself
 ]

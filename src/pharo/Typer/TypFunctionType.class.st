@@ -12,9 +12,13 @@ Class {
 TypFunctionType >> = anObject [
 	^ self == anObject
 		or: [ self class = anObject class
-				and: [ nullable = anObject nullable
-						and:
-							[ type = anObject type and: [ parameters asOrderedCollection = anObject parameters asOrderedCollection and: [ result = anObject result ] ] ] ] ]
+				and: [ | object |
+					object := anObject "typCastAs TypFunctionType".
+					nullable = object nullable
+						and: [ type = object type
+								and: [ parameters asOrderedCollection
+										= object parameters asOrderedCollection
+										and: [ result = object result ] ] ] ] ]
 ]
 
 { #category : #testing }
@@ -72,7 +76,7 @@ TypFunctionType >> isCompatibleWith: aType [
 								ifFalse: [ parameters size ].
 							size = 0
 								or:
-									[ size <= parameters size and: [ ((parameters copyFrom: 1 to: size) withIndexSelect: [ :e :i | e >= (aType parameters at: i) ]) size = parameters size ] ] ] ] ]
+									[ size <= parameters size and: [ ((parameters copyFrom: 1 to: size) withIndexSelect: [ :e :i | e >= (aType parameters at: i) ]) size = size ] ] ] ] ]
 		ifFalse: [ super isCompatibleWith: aType ]
 ]
 

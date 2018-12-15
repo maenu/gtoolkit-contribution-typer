@@ -52,25 +52,6 @@ TypUnionType >> asSourceString [
 	^ super asSourceString , self superType asSourceString
 ]
 
-{ #category : #accessing }
-TypUnionType >> asType [
-	<typTypeResultAs: 'TypType'>
-	| remains current nullable_ |
-	(types includes: TypUnknownType instance)
-		ifTrue: [ ^ self ].
-	remains := types copy.
-	nullable_ := remains includes: TypNilType instance.
-	remains remove: TypNilType instance ifAbsent: [  ].
-	remains ifEmpty: [ ^ TypNilType instance ].
-	remains size = 1
-		ifTrue: [ current := remains anyOne.
-			nullable_
-				ifTrue: [ current := current copy.
-					current nullable: true ].
-			^ current ].
-	^ self
-]
-
 { #category : #converting }
 TypUnionType >> canBeFunctionType [
 	^ types anySatisfy: #canBeFunctionType
@@ -86,9 +67,14 @@ TypUnionType >> hasClass [
 	^ self hasSuperType and: [ self superType hasClass ]
 ]
 
+{ #category : #testing }
+TypUnionType >> hasSuperType [
+	^ types allSatisfy: #hasSuperType
+]
+
 { #category : #comparing }
 TypUnionType >> hash [
-	^ super hash bitXor: types keys hash
+	^ super hash bitXor: types hash
 ]
 
 { #category : #accessing }
@@ -123,6 +109,12 @@ TypUnionType >> nullable: aBoolean [
 		ifFalse: [ types remove: TypNilType instance ifAbsent: [  ] ]
 ]
 
+{ #category : #generated }
+TypUnionType >> parameters [
+	self assert: [ (types allSatisfy: #isParametric) and: [ self hasSuperType and: [ self superType isParametric ] ] ].
+	^ self superType parameters
+]
+
 { #category : #'as yet unclassified' }
 TypUnionType >> postCopy [
 	super postCopy.
@@ -140,11 +132,11 @@ TypUnionType >> superType [
 	| remains nullable_ current |
 	self assert: [ self hasSuperType ].
 	remains := types copy.
-	remains remove: TypUnknownType instance ifAbsent: [  ].
-	remains ifEmpty: [ ^ TypUnknownType instance ].
 	nullable_ := remains includes: TypNilType instance.
 	remains remove: TypNilType instance ifAbsent: [  ].
 	remains ifEmpty: [ ^ TypNilType instance ].
+	remains remove: TypUnknownType instance ifAbsent: [  ].
+	remains ifEmpty: [ ^ TypUnknownType instance ].
 	current := remains anyOne.
 	remains remove: current.
 	[ remains isEmpty ]

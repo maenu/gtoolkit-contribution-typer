@@ -135,7 +135,7 @@ TypParametricType >> superType [
 				yourself ]
 		ifFalse: [ | superType |
 			superType := type superType.
-			superType isParametric
+			(superType isParametric and: [ parameters size = superType parameters size ])
 				ifTrue: [ self copy
 						type: superType asNonParametricType;
 						yourself ]
