@@ -16,13 +16,9 @@ RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 RBMessageNode >> typCheCheckMethod [
 	| receiverType |
 	receiverType := self receiver typType.
-	[ (receiverType hasClass and: [ receiverType asClass includesSelector: self selector ])
-		ifTrue: [ ^ self ].
-	receiverType := receiverType superType ] doWhileTrue: [ receiverType hasSuperType ].
-	(receiverType hasClass and: [ receiverType asClass includesSelector: self selector ])
-		ifTrue: [ ^ self ].
-	TypCheNoMethodError new
-		type: self receiver typType;
-		selector: self selector;
-		signal
+	(receiverType typCheHasMethod: self selector)
+		ifFalse: [ TypCheNoMethodError new
+				type: receiverType;
+				selector: self selector;
+				signal ]
 ]

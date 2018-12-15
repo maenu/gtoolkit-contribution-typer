@@ -56,7 +56,7 @@ TypUnionType >> asSourceString [
 TypUnionType >> asType [
 	<typTypeResultAs: 'TypType'>
 	| remains current nullable_ |
-	(types includesKey: TypUnknownType instance)
+	(types includes: TypUnknownType instance)
 		ifTrue: [ ^ self ].
 	remains := types copy.
 	nullable_ := remains includes: TypNilType instance.
@@ -97,6 +97,13 @@ TypUnionType >> initialize [
 	<typTypeVariable: 'types' as: 'Set<TypType>'>
 	super initialize.
 	types := Set new
+]
+
+{ #category : #comparing }
+TypUnionType >> isCompatibleWith: aType [
+	^ aType isUnion
+		ifTrue: [ aType types allSatisfy: [ :e | self isCompatibleWith: e ] ]
+		ifFalse: [ (types anySatisfy: [ :e | e isCompatibleWith: aType ]) or: [ super isCompatibleWith: aType ] ]
 ]
 
 { #category : #testing }

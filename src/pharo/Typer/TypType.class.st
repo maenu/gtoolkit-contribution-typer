@@ -11,7 +11,7 @@ Class {
 TypType >> < aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'Boolean'>
-	^ aType isSuperTypeOf: self
+	^ aType isCompatibleWith: self
 ]
 
 { #category : #comparing }
@@ -31,7 +31,7 @@ TypType >> = anObject [
 TypType >> > aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'Boolean'>
-	^ self isSuperTypeOf: aType
+	^ self isCompatibleWith: aType
 ]
 
 { #category : #comparing }
@@ -141,6 +141,13 @@ TypType >> initialize [
 	<typTypeVariable: 'nullable' as: 'Boolean'>
 	super initialize.
 	nullable := false
+]
+
+{ #category : #comparing }
+TypType >> isCompatibleWith: aType [
+	<typTypeArgument: 1 as: 'TypType'>
+	<typTypeResultAs: 'Boolean'>
+	^ self isSuperTypeOf: aType
 ]
 
 { #category : #testing }

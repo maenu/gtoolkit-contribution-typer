@@ -23,6 +23,7 @@ TypNamedType >> asClass [
 { #category : #converting }
 TypNamedType >> asFunctionType: someTypes result: aType [
 	^ TypFunctionType new
+		type: self;
 		parameters: someTypes;
 		result: aType;
 		yourself

@@ -44,6 +44,11 @@ TypFunctionType >> canBeFunctionType [
 	^ true
 ]
 
+{ #category : #testing }
+TypFunctionType >> hasSuperType [
+	^ result isUnion or: [ (parameters anySatisfy: [ :e | e isUnion ]) or: [ type hasSuperType ] ]
+]
+
 { #category : #comparing }
 TypFunctionType >> hash [
 	^ super hash bitXor: result hash
@@ -53,6 +58,21 @@ TypFunctionType >> hash [
 TypFunctionType >> initialize [
 	super initialize.
 	optionalParameters := false
+]
+
+{ #category : #comparing }
+TypFunctionType >> isCompatibleWith: aType [
+	^ aType isFunction
+		ifTrue: [ (type isCompatibleWith: aType type)
+				and: [ (result isCompatibleWith: aType result)
+						and: [ | size |
+							size := optionalParameters
+								ifTrue: [ aType parameters size ]
+								ifFalse: [ parameters size ].
+							size = 0
+								or: [ size <= parameters size
+										and: [ ((parameters copyFrom: 1 to: size) withIndexSelect: [ :e :i | e isCompatibleWith: (aType parameters at: i) ]) size = parameters size ] ] ] ] ]
+		ifFalse: [ super isCompatibleWith: aType ]
 ]
 
 { #category : #testing }
@@ -101,31 +121,24 @@ TypFunctionType >> result: anObject [
 { #category : #accessing }
 TypFunctionType >> superType [
 	self assert: [ self hasSuperType ].
-	^ (parameters anySatisfy: [ :e | e isUnion ])
+	^ result isUnion
 		ifTrue: [ self copy
-				parameters:
-					(parameters
-						collect: [ :e | 
-							e isUnion
-								ifTrue: [ e superType ]
-								ifFalse: [ e ] ]);
+				result: result superType;
 				yourself ]
-		ifFalse: [ result isUnion
+		ifFalse: [ (parameters anySatisfy: [ :e | e isUnion ])
 				ifTrue: [ self copy
-						result: result superType;
+						parameters:
+							(parameters
+								collect: [ :e | 
+									e isUnion
+										ifTrue: [ e superType ]
+										ifFalse: [ e ] ]);
 						yourself ]
-				ifFalse: [ optionalParameters
+				ifFalse: [ | superType |
+					superType := type superType.
+					superType isParametric
 						ifTrue: [ self copy
-								parameters:
-									(parameters size > 1
-										ifTrue: [ parameters copyFrom: 1 to: parameters size - 1 ]
-										ifFalse: [ {} ]);
+								type: superType asNonParametricType;
 								yourself ]
-						ifFalse: [ | superType |
-							superType := type superType.
-							superType isParametric
-								ifTrue: [ self copy
-										type: superType asNonParametricType;
-										yourself ]
-								ifFalse: [ superType ] ] ] ]
+						ifFalse: [ superType ] ] ]
 ]

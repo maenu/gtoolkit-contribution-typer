@@ -99,7 +99,8 @@ TypShaPhaRBProgramNode >> ___variableWriteNodes [
 TypShaPhaRBProgramNode >> ___whoDefines: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ String typAsType ];
-		resultType: [ RBProgramNode typAsType copy
+		resultType: [ {RBMethodNode typAsType.
+			RBBlockNode typAsType} typAsType
 				nullable: true;
 				yourself ];
 		yourself

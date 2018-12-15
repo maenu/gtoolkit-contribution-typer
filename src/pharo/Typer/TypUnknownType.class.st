@@ -48,6 +48,11 @@ TypUnknownType >> hasSuperType [
 	^ false
 ]
 
+{ #category : #comparing }
+TypUnknownType >> isCompatibleWith: aType [
+	^ true
+]
+
 { #category : #testing }
 TypUnknownType >> isUnknown [
 	^ true
