@@ -12,10 +12,7 @@ TypShaPhaNumber class >> shadowedClass [
 { #category : #'as yet unclassified' }
 TypShaPhaNumber >> ___timesCollect: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ BlockClosure typAsType
-				asParametricType:
-					{Integer typAsType.
-					TypUnknownType instance} ];
+		argumentTypes: [ BlockClosure typAsType asFunctionType: {Integer typAsType} result: TypUnknownType instance ];
 		resultType: [ :a | 
 			OrderedCollection typAsType
 				asParametricType:
@@ -33,10 +30,7 @@ TypShaPhaNumber >> ___to: _a do: _b [
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ Number typAsType ]
-				ifFalse: [ BlockClosure typAsType
-						asParametricType:
-							{Number typAsType.
-							TypUnknownType instance} ] ];
+				ifFalse: [ BlockClosure typAsType asFunctionType: {Number typAsType} result: TypUnknownType instance ] ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

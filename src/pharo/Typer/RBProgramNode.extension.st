@@ -5,13 +5,19 @@ RBProgramNode >> typType [
 	<typTypeResultAs: 'TypType'>
 	^ self
 		propertyAt: #typType
-		ifAbsentPut: [ | type parameters |
+		ifAbsentPut: [ | type |
 			"need to set property to default to unknown on recursive calls"
 			self propertyAt: #typType put: TypUnknownType instance.
 			type := self typTypeRecursive.
-			self comments detect: #typIsCastAs ifFound: [ :e | type := e typCastAs ] ifNone: [ {} ].
-			parameters := self comments detect: #typIsParameters ifFound: [ :e | e typParameters ] ifNone: [ {} "typCastAs OrderedCollection<TypType>" ].
-			parameters ifNotEmpty: [ type := type asParametricType: parameters ].
+			self comments detect: #typIsCastAs ifFound: [ :e | type := e typCastAs ] ifNone: [  ].
+			self comments
+				detect: #typIsParameters
+				ifFound: [ :e | 
+					| parameters |
+					parameters := e typParameters.
+					(type canBeParametricType and: [ parameters isNotEmpty ])
+						ifTrue: [ type := type asParametricType: parameters ] ]
+				ifNone: [  ].
 			type ]
 ]
 

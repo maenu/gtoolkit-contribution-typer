@@ -130,15 +130,11 @@ RBMethodNode >> typDynTypesForVariables [
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForVariablesSelectedWith: aBlock definedBy: anotherBlock [
-	<typTypeArgument: 1 as: 'BlockClosure<RBAssignmentNode,Boolean>'>
-	<typTypeArgument: 2 as: 'BlockClosure<RBVariableNode,ClassDescription>'>
-	<typTypeResultAs:
-		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypDynUnionType<TypType>>'>
-	^ ((((self typDynAssignNodes select: aBlock)
-		collect:
-			[ :e | (anotherBlock cull: e variable) -> e variable name -> e typDynAssigns ])
-		groupedBy: #key) collect: [ :e | e collect: #value ])
-		collect: [ :e | e inject: TypDynUnionType new into: [ :a :b | a , b ] ]
+	<typTypeArgument: 1 as: 'BlockClosure(RBAssignmentNode)->Boolean'>
+	<typTypeArgument: 2 as: 'BlockClosure(RBVariableNode)->ClassDescription'>
+	<typTypeResultAs: 'Dictionary<Association<ClassDescription,Symbol<Character>>,TypDynUnionType<TypType>>'>
+	^ ((((self typDynAssignNodes select: aBlock) collect: [ :e | (anotherBlock cull: e variable) -> e variable name -> e typDynAssigns ]) groupedBy: #key)
+		collect: [ :e | e collect: #value ]) collect: [ :e | e inject: TypDynUnionType new into: [ :a :b | a , b ] ]
 ]
 
 { #category : #'*Typer-Dynamic' }

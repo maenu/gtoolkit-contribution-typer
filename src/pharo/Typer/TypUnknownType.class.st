@@ -29,6 +29,11 @@ TypUnknownType >> asClass [
 ]
 
 { #category : #converting }
+TypUnknownType >> asFunctionType: someTypes result: aType [
+	TypNoTypeError signal
+]
+
+{ #category : #converting }
 TypUnknownType >> asParametricType: someTypes [
 	TypNoTypeError signal
 ]

@@ -18,6 +18,11 @@ TypParametricType >> asClass [
 	^ type asClass
 ]
 
+{ #category : #converting }
+TypParametricType >> asFunctionType: someTypes result: aType [
+	TypNoTypeError signal
+]
+
 { #category : #testing }
 TypParametricType >> asNonParametricType [
 	^ type asNonParametricType

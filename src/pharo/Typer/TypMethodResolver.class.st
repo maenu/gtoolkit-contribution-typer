@@ -23,20 +23,20 @@ TypMethodResolver >> argumentTypeAt: anInteger for: aLookup resolvedBy: anotherL
 
 { #category : #accessing }
 TypMethodResolver >> argumentTypes [
-	<typTypeResultAs: 'BlockClosure<Integer,TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>,TypType>'>
+	<typTypeResultAs: 'BlockClosure[Integer,TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->TypType'>
 	^ argumentTypes
 ]
 
 { #category : #accessing }
 TypMethodResolver >> argumentTypes: anObject [
-	<typTypeArgument: 1 as: 'BlockClosure<Integer,TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>,TypType>'>
+	<typTypeArgument: 1 as: 'BlockClosure[Integer,TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->TypType'>
 	argumentTypes := anObject
 ]
 
 { #category : #initialization }
 TypMethodResolver >> initialize [
-	<typTypeVariable: 'argumentTypes' as: 'BlockClosure<Integer,TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>,TypType>'>
-	<typTypeVariable: 'resultType' as: 'BlockClosure<TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>,TypType>'>
+	<typTypeVariable: 'argumentTypes' as: 'BlockClosure[Integer,TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->TypType'>
+	<typTypeVariable: 'resultType' as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->TypType'>
 	super initialize
 ]
 
@@ -48,13 +48,13 @@ TypMethodResolver >> resolves: aLookup [
 
 { #category : #accessing }
 TypMethodResolver >> resultType [
-	<typTypeResultAs: 'BlockClosure<TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>,TypType>'>
+	<typTypeResultAs: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->TypType'>
 	^ resultType
 ]
 
 { #category : #accessing }
 TypMethodResolver >> resultType: anObject [
-	<typTypeArgument: 1 as: 'BlockClosure<TypMethodLookup,TypMethodLookup,TypType,TypResolver<TypMethodLookup>>'>
+	<typTypeArgument: 1 as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->TypType'>
 	resultType := anObject
 ]
 

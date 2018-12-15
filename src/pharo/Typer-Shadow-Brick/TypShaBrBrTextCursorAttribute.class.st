@@ -14,9 +14,10 @@ TypShaBrBrTextCursorAttribute >> ___assert: _a description: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure typAsType
-				asParametricType:
+				asFunctionType:
 					{BrTextEditor typAsType.
-					BlMouseLeaveEvent typAsType} ];
+					BlMouseLeaveEvent typAsType}
+				result: TypUnknownType instance ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
@@ -26,9 +27,10 @@ TypShaBrBrTextCursorAttribute >> ___enterAction: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure typAsType
-				asParametricType:
+				asFunctionType:
 					{BrTextEditor typAsType.
-					BrTextEditorCursorAddedEvent typAsType} ];
+					BrTextEditorCursorAddedEvent typAsType}
+				result: TypUnknownType instance ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
@@ -38,9 +40,10 @@ TypShaBrBrTextCursorAttribute >> ___leaveAction: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure typAsType
-				asParametricType:
+				asFunctionType:
 					{BrTextEditor typAsType.
-					BrTextEditorCursorRemovedEvent typAsType} ];
+					BrTextEditorCursorRemovedEvent typAsType}
+				result: TypUnknownType instance ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

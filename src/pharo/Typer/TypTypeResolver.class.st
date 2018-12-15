@@ -9,7 +9,7 @@ Class {
 
 { #category : #initialization }
 TypTypeResolver >> initialize [
-	<typTypeVariable: 'type' as: 'BlockClosure<TypTypeLookup,TypTypeLookup,TypResolver<TypLookup>,TypType>'>
+	<typTypeVariable: 'type' as: 'BlockClosure[TypTypeLookup,TypTypeLookup,TypResolver<TypLookup>]->TypType'>
 	super initialize
 ]
 
@@ -21,13 +21,13 @@ TypTypeResolver >> resolves: aLookup [
 
 { #category : #accessing }
 TypTypeResolver >> type [
-	<typTypeResultAs: 'BlockClosure<TypTypeLookup,TypTypeLookup,TypResolver<TypLookup>,TypType>'>
+	<typTypeResultAs: 'BlockClosure[TypTypeLookup,TypTypeLookup,TypResolver<TypLookup>]->TypType'>
 	^ type
 ]
 
 { #category : #accessing }
 TypTypeResolver >> type: anObject [
-	<typTypeArgument: 1 as: 'BlockClosure<TypTypeLookup,TypTypeLookup,TypResolver<TypLookup>,TypType>'>
+	<typTypeArgument: 1 as: 'BlockClosure[TypTypeLookup,TypTypeLookup,TypResolver<TypLookup>]->TypType'>
 	type := anObject
 ]
 

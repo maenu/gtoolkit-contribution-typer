@@ -95,7 +95,7 @@ TypDynUnionType >> canBeParametricType [
 
 { #category : #enumerating }
 TypDynUnionType >> collect: aBlock [
-	<typTypeArgument: 1 as: 'BlockClosure<Association<TypType,Integer>,?>'>
+	<typTypeArgument: 1 as: 'BlockClosure(Association<TypType,Integer>)->?'>
 	<typTypeResultAs: 'TypUnionType<TypType>'>
 	| copy |
 	copy := TypDynUnionType new.
@@ -105,7 +105,7 @@ TypDynUnionType >> collect: aBlock [
 
 { #category : #enumerating }
 TypDynUnionType >> do: aBlock [
-	<typTypeArgument: 1 as: 'BlockClosure<Association<TypType,Integer>,?>'>
+	<typTypeArgument: 1 as: 'BlockClosure(Association<TypType,Integer>)->?'>
 	weights associationsDo: aBlock
 ]
 
@@ -193,7 +193,7 @@ TypDynUnionType >> printOn: aStream [
 
 { #category : #enumerating }
 TypDynUnionType >> select: aBlock [
-	<typTypeArgument: 1 as: 'BlockClosure<Association<TypType,Integer>,Boolean>'>
+	<typTypeArgument: 1 as: 'BlockClosure(Association<TypType,Integer>)->Boolean'>
 	<typTypeResultAs: 'TypDynUnionType'>
 	| copy |
 	copy := TypDynUnionType new.

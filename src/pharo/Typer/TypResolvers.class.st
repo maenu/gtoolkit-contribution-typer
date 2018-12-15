@@ -66,7 +66,7 @@ TypResolvers >> resolves: aLookup [
 { #category : #accessing }
 TypResolvers >> typeFor: aLookup using: aBlock [
 	<typTypeArgument: 1 as: 'TypLookup'>
-	<typTypeArgument: 2 as: 'BlockClosure<TypResolver<TypLookup>,TypLookup,TypType>'>
+	<typTypeArgument: 2 as: 'BlockClosure(TypResolver<TypLookup>,TypLookup)->TypType'>
 	<typTypeResultAs: 'TypType'>
 	| lookup |
 	lookup := aLookup.

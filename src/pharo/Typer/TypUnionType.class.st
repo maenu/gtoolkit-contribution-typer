@@ -73,17 +73,17 @@ TypUnionType >> asType [
 
 { #category : #converting }
 TypUnionType >> canBeFunctionType [
-	^ true
+	^ types anySatisfy: #canBeFunctionType
 ]
 
 { #category : #converting }
 TypUnionType >> canBeParametricType [
-	^ true
+	^ types anySatisfy: #canBeParametricType
 ]
 
 { #category : #testing }
 TypUnionType >> hasClass [
-	^ self superType hasClass
+	^ self hasSuperType and: [ self superType hasClass ]
 ]
 
 { #category : #comparing }
@@ -97,11 +97,6 @@ TypUnionType >> initialize [
 	<typTypeVariable: 'types' as: 'Set<TypType>'>
 	super initialize.
 	types := Set new
-]
-
-{ #category : #converting }
-TypUnionType >> isParametric [
-	^ self superType isParametric
 ]
 
 { #category : #testing }
@@ -119,12 +114,6 @@ TypUnionType >> nullable: aBoolean [
 	aBoolean
 		ifTrue: [ types add: TypNilType instance ]
 		ifFalse: [ types remove: TypNilType instance ifAbsent: [  ] ]
-]
-
-{ #category : #converting }
-TypUnionType >> parameters [
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	^ self superType parameters
 ]
 
 { #category : #'as yet unclassified' }
