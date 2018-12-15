@@ -57,8 +57,8 @@ TypShaPhaObject >> ___ifNil: _a ifNotNil: _b [
 				ifTrue: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance ]
 				ifFalse: [ BlockClosure typAsType asFunctionType: {a receiverType} result: TypUnknownType instance ] ];
 		resultType: [ :a :s :r | 
-			{(a argumentTypes at: 1) parameters last.
-			(a argumentTypes at: 2) parameters last} typAsType ];
+			{(a argumentTypes at: 1) result.
+			(a argumentTypes at: 2) result} typAsType ];
 		yourself
 ]
 

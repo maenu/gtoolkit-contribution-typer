@@ -84,7 +84,7 @@ TypShaPhaSequenceableCollection >> ___withIndexCollect: _a [
 					{(a receiverType parameters at: 1).
 					Integer typAsType}
 				result: TypUnknownType instance ];
-		resultType: [ :a :s :r | a receiverType asParametricType: {(a argumentTypes at: 1) parameters last} ];
+		resultType: [ :a :s :r | a receiverType asParametricType: {(a argumentTypes at: 1) result} ];
 		yourself
 ]
 

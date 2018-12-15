@@ -85,8 +85,8 @@ TypShaPhaDictionary >> ___collect: _a [
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 1.
 			argumentNode := a argumentNodes at: 1.
-			elementType := (argumentType hasClass and: [ (argumentType asClass includesBehavior: BlockClosure) and: [ argumentType isParametric ] ])
-				ifTrue: [ argumentType parameters last ]
+			elementType := argumentType isFunction
+				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodResolvers global
 								typeForResultOfMethod:
