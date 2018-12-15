@@ -75,8 +75,8 @@ TypFunctionType >> isCompatibleWith: aType [
 								ifTrue: [ aType parameters size ]
 								ifFalse: [ parameters size ].
 							size = 0
-								or:
-									[ size <= parameters size and: [ ((parameters copyFrom: 1 to: size) withIndexSelect: [ :e :i | e >= (aType parameters at: i) ]) size = size ] ] ] ] ]
+								or: [ size <= parameters size
+										and: [ size <= aType parameters size and: [ ((parameters copyFrom: 1 to: size) withIndexSelect: [ :e :i | e >= (aType parameters at: i) ]) size = size ] ] ] ] ] ]
 		ifFalse: [ super isCompatibleWith: aType ]
 ]
 

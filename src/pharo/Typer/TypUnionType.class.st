@@ -68,12 +68,7 @@ TypUnionType >> canBeParametricType [
 
 { #category : #testing }
 TypUnionType >> hasClass [
-	^ self hasSuperType and: [ self superType hasClass ]
-]
-
-{ #category : #testing }
-TypUnionType >> hasSuperType [
-	^ types allSatisfy: #hasSuperType
+	^ self superType hasClass
 ]
 
 { #category : #comparing }
@@ -115,7 +110,7 @@ TypUnionType >> nullable: aBoolean [
 
 { #category : #generated }
 TypUnionType >> parameters [
-	self assert: [ (types allSatisfy: #isParametric) and: [ self hasSuperType and: [ self superType isParametric ] ] ].
+	self assert: [ (types allSatisfy: #isParametric) and: [ self superType isParametric ] ].
 	^ self superType parameters
 ]
 
@@ -130,15 +125,14 @@ TypUnionType >> printOn: aStream [
 	super printOn: aStream.
 	aStream << 'U '
 		<<
-			(self hasSuperType
-				ifTrue: [ self superType printString ]
-				ifFalse: [ '...' ])
+			(self superType isUnion
+				ifTrue: [ '...' ]
+				ifFalse: [ self superType printString ])
 ]
 
 { #category : #accessing }
 TypUnionType >> superType [
 	| remains nullable_ current |
-	self assert: [ self hasSuperType ].
 	remains := types copy.
 	nullable_ := remains includes: TypNilType instance.
 	remains remove: TypNilType instance ifAbsent: [  ].

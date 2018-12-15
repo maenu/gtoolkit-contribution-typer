@@ -48,7 +48,7 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifAbsentPut: _b [
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ String typAsType ]
-				ifFalse: [ BlockClosure typAsType asFunctionType: {TypUnknownType instance} result: TypUnknownType instance optionalParameters: false ] ];
+				ifFalse: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ] ];
 		resultType: [ :a :s :r | 
 			{TypUnknownType instance.
 			(a argumentTypes at: 2) result} typAsType ];
