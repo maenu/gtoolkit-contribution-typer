@@ -48,6 +48,14 @@ TypUnknownType >> isUnknown [
 	^ true
 ]
 
+{ #category : #generated }
+TypUnknownType >> parameters [
+	self flag: 'this is very hackish'.
+	^ {self.
+	self.
+	self}
+]
+
 { #category : #accessing }
 TypUnknownType >> printOn: aStream [
 	super printOn: aStream.

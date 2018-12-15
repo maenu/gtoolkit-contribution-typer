@@ -12,8 +12,9 @@ TypGtMethodCommentBodyStyler >> styleComment: aComment [
 		to: aComment stop
 		with:
 			{(BrTextAdornmentDynamicAttribute new
-				beReplace;
-				stencil: [ (Gt2Document new
+				beAppend;
+				stencil: [ self flag: 'replacing replaces multiple times'.
+					(Gt2Document new
 						strategy: Gt2NoStorageStrategy uniqueInstance;
 						text: (aComment contents ifEmpty: [ 'what does this method do?' ] ifNotEmpty: #yourself);
 						read;

@@ -12,7 +12,8 @@ TypShaPhaBoolean class >> shadowedClass [
 { #category : #'as yet unclassified' }
 TypShaPhaBoolean >> ___and: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ BlockClosure typAsType asFunctionType: {} result: Boolean typAsType optionalParameters: false ];
+		argumentTypes: [ {Boolean typAsType.
+			(BlockClosure typAsType asFunctionType: {} result: Boolean typAsType optionalParameters: false)} typAsType ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
@@ -41,7 +42,8 @@ TypShaPhaBoolean >> ___not [
 { #category : #'as yet unclassified' }
 TypShaPhaBoolean >> ___or: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ BlockClosure typAsType asFunctionType: {} result: Boolean typAsType optionalParameters: false ];
+		argumentTypes: [ {Boolean typAsType.
+			(BlockClosure typAsType asFunctionType: {} result: Boolean typAsType optionalParameters: false)} typAsType ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
