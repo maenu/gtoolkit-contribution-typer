@@ -53,7 +53,8 @@ TypShaPhaDictionary >> ___associationsDo: _a [
 						asParametricType:
 							{(a receiverType parameters at: 1).
 							(a receiverType parameters at: 2)})}
-				result: TypUnknownType instance ];
+				result: TypUnknownType instance
+				optionalParameters: false ];
 		resultType: [ :a :s | a receiverType ];
 		yourself
 ]
@@ -64,7 +65,7 @@ TypShaPhaDictionary >> ___at: _a ifAbsentPut: _b [
 		argumentTypes: [ :i :a | 
 			i = 1
 				ifTrue: [ a receiverType parameters at: 1 ]
-				ifFalse: [ BlockClosure typAsType asFunctionType: {} result: (a receiverType parameters at: 2) ] ];
+				ifFalse: [ BlockClosure typAsType asFunctionType: {} result: (a receiverType parameters at: 2) optionalParameters: false ] ];
 		resultType: [ :a | a receiverType parameters at: 2 ];
 		yourself
 ]
@@ -80,7 +81,7 @@ TypShaPhaDictionary >> ___at: _a put: _b [
 { #category : #accessing }
 TypShaPhaDictionary >> ___collect: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 2)} result: TypUnknownType instance ];
+		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 2)} result: TypUnknownType instance optionalParameters: false ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 1.

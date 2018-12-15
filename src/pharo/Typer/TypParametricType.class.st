@@ -19,7 +19,7 @@ TypParametricType >> asClass [
 ]
 
 { #category : #converting }
-TypParametricType >> asFunctionType: someTypes result: aType [
+TypParametricType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
 	TypNoTypeError signal
 ]
 
@@ -75,9 +75,8 @@ TypParametricType >> initialize [
 { #category : #comparing }
 TypParametricType >> isCompatibleWith: aType [
 	^ aType isParametric
-		ifTrue: [ (type isCompatibleWith: aType type)
-				and: [ parameters size = aType parameters size
-						and: [ (parameters withIndexSelect: [ :e :i | e isCompatibleWith: (aType parameters at: i) ]) size = parameters size ] ] ]
+		ifTrue: [ type >= aType type
+				and: [ parameters size = aType parameters size and: [ (parameters withIndexSelect: [ :e :i | e >= (aType parameters at: i) ]) size = parameters size ] ] ]
 		ifFalse: [ super isCompatibleWith: aType ]
 ]
 

@@ -17,12 +17,12 @@ TypTypeScanner class >> initializeKeywordMap [
 
 { #category : #generated }
 TypTypeScanner >> emptySymbolTokenId [
-	^ 18
+	^ 19
 ]
 
 { #category : #generated }
 TypTypeScanner >> errorTokenId [
-	^ 19
+	^ 20
 ]
 
 { #category : #generated }

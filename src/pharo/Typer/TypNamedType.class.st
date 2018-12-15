@@ -21,11 +21,12 @@ TypNamedType >> asClass [
 ]
 
 { #category : #converting }
-TypNamedType >> asFunctionType: someTypes result: aType [
+TypNamedType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
 	^ TypFunctionType new
 		type: self;
 		parameters: someTypes;
 		result: aType;
+		optionalParameters: aBoolean;
 		yourself
 ]
 
@@ -102,7 +103,7 @@ TypNamedType >> superType [
 	self assert: [ self hasSuperType ].
 	(self hasClass not or: [ self asClass superclass isNil ])
 		ifTrue: [ "must be nullable" ^ TypNilType instance ].
-	^ self asClass superclass typAsType copy
+	^ self asClass superclass typAsNamedType copy
 		nullable: nullable;
 		yourself
 ]

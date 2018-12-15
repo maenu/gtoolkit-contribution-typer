@@ -54,8 +54,8 @@ TypShaPhaObject >> ___ifNil: _a ifNotNil: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
-				ifTrue: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance ]
-				ifFalse: [ BlockClosure typAsType asFunctionType: {a receiverType} result: TypUnknownType instance ] ];
+				ifTrue: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ]
+				ifFalse: [ BlockClosure typAsType asFunctionType: {a receiverType} result: TypUnknownType instance optionalParameters: true ] ];
 		resultType: [ :a :s :r | 
 			{(a argumentTypes at: 1) result.
 			(a argumentTypes at: 2) result} typAsType ];

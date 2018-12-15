@@ -36,7 +36,7 @@ TypShaPhaSequenceableCollection >> ___copyFrom: _a to: _b [
 { #category : #'as yet unclassified' }
 TypShaPhaSequenceableCollection >> ___detectIndex: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: Boolean typAsType ];
+		argumentTypes: [ :i :a | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: Boolean typAsType optionalParameters: false ];
 		resultType: [ Integer typAsType ];
 		yourself
 ]
@@ -75,6 +75,20 @@ TypShaPhaSequenceableCollection >> ___last [
 		yourself
 ]
 
+{ #category : #'as yet unclassified' }
+TypShaPhaSequenceableCollection >> ___sort: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a | 
+			BlockClosure typAsType
+				asFunctionType:
+					{(a receiverType parameters at: 1).
+					(a receiverType parameters at: 1)}
+				result: Boolean typAsType
+				optionalParameters: false ];
+		resultType: [ :a | a receiverType ];
+		yourself
+]
+
 { #category : #accessing }
 TypShaPhaSequenceableCollection >> ___withIndexCollect: _a [
 	^ TypMethodResolver new
@@ -83,7 +97,8 @@ TypShaPhaSequenceableCollection >> ___withIndexCollect: _a [
 				asFunctionType:
 					{(a receiverType parameters at: 1).
 					Integer typAsType}
-				result: TypUnknownType instance ];
+				result: TypUnknownType instance
+				optionalParameters: false ];
 		resultType: [ :a :s :r | a receiverType asParametricType: {(a argumentTypes at: 1) result} ];
 		yourself
 ]
@@ -96,7 +111,8 @@ TypShaPhaSequenceableCollection >> ___withIndexDo: _a [
 				asFunctionType:
 					{(a receiverType parameters at: 1).
 					Integer typAsType}
-				result: a receiverType ];
+				result: a receiverType
+				optionalParameters: false ];
 		resultType: [ :a | a receiverType ];
 		yourself
 ]

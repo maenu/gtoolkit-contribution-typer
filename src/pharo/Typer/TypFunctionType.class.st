@@ -18,7 +18,7 @@ TypFunctionType >> = anObject [
 ]
 
 { #category : #testing }
-TypFunctionType >> asFunctionType: someTypes result: aType [
+TypFunctionType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
 	| copy parameters_ |
 	copy := self copy.
 	parameters_ := OrderedCollection ofSize: (parameters size max: someTypes size).	"typParameters TypType"
@@ -26,6 +26,7 @@ TypFunctionType >> asFunctionType: someTypes result: aType [
 	someTypes withIndexDo: [ :e :i | parameters_ at: i put: e ].
 	copy parameters: parameters_.
 	copy result: aType.
+	copy optionalParameters: aBoolean.
 	^ copy
 ]
 
@@ -63,15 +64,15 @@ TypFunctionType >> initialize [
 { #category : #comparing }
 TypFunctionType >> isCompatibleWith: aType [
 	^ aType isFunction
-		ifTrue: [ (type isCompatibleWith: aType type)
-				and: [ (result isCompatibleWith: aType result)
+		ifTrue: [ type >= aType type
+				and: [ result >= aType result
 						and: [ | size |
 							size := optionalParameters
 								ifTrue: [ aType parameters size ]
 								ifFalse: [ parameters size ].
 							size = 0
-								or: [ size <= parameters size
-										and: [ ((parameters copyFrom: 1 to: size) withIndexSelect: [ :e :i | e isCompatibleWith: (aType parameters at: i) ]) size = parameters size ] ] ] ] ]
+								or:
+									[ size <= parameters size and: [ ((parameters copyFrom: 1 to: size) withIndexSelect: [ :e :i | e >= (aType parameters at: i) ]) size = parameters size ] ] ] ] ]
 		ifFalse: [ super isCompatibleWith: aType ]
 ]
 

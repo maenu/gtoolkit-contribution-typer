@@ -20,7 +20,7 @@ TypShaPhaCollection >> ___anyOne [
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___anySatisfy: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: Boolean typAsType ];
+		argumentTypes: [ :i :a | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: Boolean typAsType optionalParameters: false ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
@@ -36,7 +36,7 @@ TypShaPhaCollection >> ___asSet [
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___collect: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: TypUnknownType instance ];
+		argumentTypes: [ :i :a | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: TypUnknownType instance optionalParameters: false ];
 		resultType: [ :a | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 1.
@@ -60,7 +60,7 @@ TypShaPhaCollection >> ___collect: _a [
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___detect: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: Boolean typAsType ];
+		argumentTypes: [ :i :a | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: Boolean typAsType optionalParameters: false ];
 		resultType: [ :a | a receiverType parameters at: 1 ];
 		yourself
 ]
@@ -70,10 +70,10 @@ TypShaPhaCollection >> ___detect: _a ifFound: _b ifNone: _c [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | 
 			i = 1
-				ifTrue: [ BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: Boolean typAsType ]
+				ifTrue: [ BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: Boolean typAsType optionalParameters: false ]
 				ifFalse: [ i = 2
-						ifTrue: [ BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: TypUnknownType instance ]
-						ifFalse: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance ] ] ];
+						ifTrue: [ BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: TypUnknownType instance optionalParameters: true ]
+						ifFalse: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ] ] ];
 		resultType: [ :a | 
 			{(a argumentTypes at: 2) result.
 			(a argumentTypes at: 3) result} typAsType ];
@@ -85,8 +85,8 @@ TypShaPhaCollection >> ___detect: _a ifNone: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | 
 			i = 1
-				ifTrue: [ BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: Boolean typAsType ]
-				ifFalse: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance ] ];
+				ifTrue: [ BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: Boolean typAsType optionalParameters: false ]
+				ifFalse: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ] ];
 		resultType: [ :a | 
 			{(a receiverType parameters at: 1).
 			(a argumentTypes at: 2) result} typAsType ];
@@ -96,7 +96,7 @@ TypShaPhaCollection >> ___detect: _a ifNone: _b [
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___do: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: a receiverType ];
+		argumentTypes: [ :i :a | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: a receiverType optionalParameters: false ];
 		resultType: [ :a | a receiverType ];
 		yourself
 ]
@@ -104,7 +104,7 @@ TypShaPhaCollection >> ___do: _a [
 { #category : #enumerating }
 TypShaPhaCollection >> ___flatCollect: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: TypUnknownType instance ];
+		argumentTypes: [ :i :a | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: TypUnknownType instance optionalParameters: false ];
 		resultType: [ :a | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 1.
@@ -128,7 +128,7 @@ TypShaPhaCollection >> ___flatCollect: _a [
 { #category : #accessing }
 TypShaPhaCollection >> ___groupedBy: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: TypUnknownType instance ];
+		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: TypUnknownType instance optionalParameters: false ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode keyType |
 			argumentType := a argumentTypes at: 1.
@@ -157,8 +157,8 @@ TypShaPhaCollection >> ___ifEmpty: _a ifNotEmpty: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
-				ifTrue: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance ]
-				ifFalse: [ BlockClosure typAsType asFunctionType: {a receiverType} result: TypUnknownType instance ] ];
+				ifTrue: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ]
+				ifFalse: [ BlockClosure typAsType asFunctionType: {a receiverType} result: TypUnknownType instance optionalParameters: true ] ];
 		resultType: [ :a :s :r | 
 			{(a argumentTypes at: 1) result.
 			(a argumentTypes at: 1) result} typAsType ];
@@ -183,7 +183,8 @@ TypShaPhaCollection >> ___inject: _a into: _b [
 						asFunctionType:
 							{(a argumentTypes at: 1).
 							(a receiverType parameters at: 1)}
-						result: TypUnknownType instance ] ];
+						result: TypUnknownType instance
+						optionalParameters: false ] ];
 		resultType: [ :a :s :r | a argumentTypes at: 1 ];
 		yourself
 ]
@@ -199,7 +200,7 @@ TypShaPhaCollection >> ___max [
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___reject: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: Boolean typAsType ];
+		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: Boolean typAsType optionalParameters: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
@@ -207,7 +208,7 @@ TypShaPhaCollection >> ___reject: _a [
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___select: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: Boolean typAsType ];
+		argumentTypes: [ :i :a | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: Boolean typAsType optionalParameters: false ];
 		resultType: [ :a | a receiverType ];
 		yourself
 ]
@@ -217,19 +218,6 @@ TypShaPhaCollection >> ___size [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Integer typAsType ];
-		yourself
-]
-
-{ #category : #'as yet unclassified' }
-TypShaPhaCollection >> ___sort: _a [
-	^ TypMethodResolver new
-		argumentTypes: [ :i :a | 
-			BlockClosure typAsType
-				asFunctionType:
-					{(a receiverType parameters at: 1).
-					(a receiverType parameters at: 1)}
-				result: Boolean typAsType ];
-		resultType: [ :a | a receiverType ];
 		yourself
 ]
 

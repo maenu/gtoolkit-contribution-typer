@@ -12,7 +12,7 @@ TypShaBlBlText class >> shadowedClass [
 { #category : #accessing }
 TypShaBlBlText >> ___clearAttributes: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {BlTextAttribute typAsType} result: TypUnknownType instance ];
+		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {BlTextAttribute typAsType} result: TypUnknownType instance optionalParameters: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

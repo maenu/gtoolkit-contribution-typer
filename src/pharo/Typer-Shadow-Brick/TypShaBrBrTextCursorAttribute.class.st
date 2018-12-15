@@ -17,7 +17,8 @@ TypShaBrBrTextCursorAttribute >> ___enterAction: _a [
 				asFunctionType:
 					{BrTextEditor typAsType.
 					BrTextEditorCursorAddedEvent typAsType}
-				result: TypUnknownType instance ];
+				result: TypUnknownType instance
+				optionalParameters: true ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
@@ -30,7 +31,8 @@ TypShaBrBrTextCursorAttribute >> ___leaveAction: _a [
 				asFunctionType:
 					{BrTextEditor typAsType.
 					BrTextEditorCursorRemovedEvent typAsType}
-				result: TypUnknownType instance ];
+				result: TypUnknownType instance
+				optionalParameters: true ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

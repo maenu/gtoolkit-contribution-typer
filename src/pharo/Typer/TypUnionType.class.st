@@ -18,7 +18,7 @@ TypUnionType >> asClass [
 ]
 
 { #category : #converting }
-TypUnionType >> asFunctionType: someTypes result: aType [
+TypUnionType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
 	| type |
 	type := self copy.
 	type types
@@ -27,7 +27,7 @@ TypUnionType >> asFunctionType: someTypes result: aType [
 			(types
 				collect: [ :e | 
 					e canBeFunctionType
-						ifTrue: [ e asFunctionType: someTypes result: aType ]
+						ifTrue: [ e asFunctionType: someTypes result: aType optionalParameters: aBoolean ]
 						ifFalse: [ e ] ]).
 	^ type
 ]
@@ -102,8 +102,8 @@ TypUnionType >> initialize [
 { #category : #comparing }
 TypUnionType >> isCompatibleWith: aType [
 	^ aType isUnion
-		ifTrue: [ aType types allSatisfy: [ :e | self isCompatibleWith: e ] ]
-		ifFalse: [ (types anySatisfy: [ :e | e isCompatibleWith: aType ]) or: [ super isCompatibleWith: aType ] ]
+		ifTrue: [ aType types allSatisfy: [ :e | self >= e ] ]
+		ifFalse: [ (types anySatisfy: [ :e | e >= aType ]) or: [ super isCompatibleWith: aType ] ]
 ]
 
 { #category : #testing }

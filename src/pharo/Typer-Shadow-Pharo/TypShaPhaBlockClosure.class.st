@@ -47,7 +47,7 @@ TypShaPhaBlockClosure >> ___on: _a do: _b [
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ Class typAsType ]
-				ifFalse: [ BlockClosure typAsType asFunctionType: {Exception typAsType} result: TypUnknownType instance ] ];
+				ifFalse: [ BlockClosure typAsType asFunctionType: {Exception typAsType} result: TypUnknownType instance optionalParameters: true ] ];
 		resultType: [ :a :s :r | 
 			{a receiverType result.
 			(a argumentTypes at: 2) result} typAsType ];
@@ -88,5 +88,5 @@ TypShaPhaBlockClosure >> ___value: _a value: _b value: _c value: _d [
 
 { #category : #'as yet unclassified' }
 TypShaPhaBlockClosure >> asType: aClass [
-	^ aClass typAsNamedType asFunctionType: {} result: TypUnknownType instance
+	^ aClass typAsNamedType asFunctionType: {} result: TypUnknownType instance optionalParameters: false
 ]

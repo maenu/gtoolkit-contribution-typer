@@ -59,9 +59,10 @@ TypType >> asClass [
 ]
 
 { #category : #converting }
-TypType >> asFunctionType: someTypes result: aType [
+TypType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
 	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
 	<typTypeArgument: 2 as: 'TypType'>
+	<typTypeArgument: 3 as: 'Boolean'>
 	<typTypeResultAs: 'TypFunctionType'>
 	self subclassResponsibility
 ]
