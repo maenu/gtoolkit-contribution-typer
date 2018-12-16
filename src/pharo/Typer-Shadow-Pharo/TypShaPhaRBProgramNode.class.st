@@ -62,10 +62,26 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifPresent: _b ifAbsent: _c [
 			i = 1
 				ifTrue: [ String typAsType ]
 				ifFalse: [ i = 2
-						ifTrue: [ BlockClosure typAsType asFunctionType: {TypUnknownType instance} result: TypUnknownType instance optionalParameters: true ]
+						ifTrue: [ {String typAsType.
+							(BlockClosure typAsType asFunctionType: {TypUnknownType instance} result: TypUnknownType instance optionalParameters: true)} typAsType ]
 						ifFalse: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ] ] ];
 		resultType: [ :a :s :r | 
-			{(a argumentTypes at: 2) result.
+			| argumentType argumentNode elementType |
+			argumentType := a argumentTypes at: 2.
+			argumentNode := a argumentNodes at: 2.
+			elementType := argumentType isFunction
+				ifTrue: [ argumentType result ]
+				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
+						ifTrue: [ TypMethodResolvers global
+								typeForResultOfMethod:
+									(TypMethodLookup new
+										receiverType: a receiverType;
+										selector: argumentNode value asSymbol;
+										argumentTypes: {};
+										argumentNodes: {};
+										yourself) ]
+						ifFalse: [ TypUnknownType instance ] ].
+			{elementType.
 			(a argumentTypes at: 3) result} typAsType ];
 		yourself
 ]

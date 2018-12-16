@@ -9,7 +9,7 @@ Class {
 
 { #category : #initialization }
 TypVariableResolver >> initialize [
-	<typParameters: 'TypVariableLookup'>
+	<typTypeParametersAs: 'TypVariableLookup'>
 	<typTypeVariable: 'type' as: 'BlockClosure[TypVariableLookup,TypVariableLookup,TypResolver<TypLookup>]->TypType'>
 	super initialize
 ]

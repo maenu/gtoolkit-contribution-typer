@@ -26,3 +26,9 @@ RBProgramNode >> typTypeRecursive [
 	<typTypeResultAs: 'TypType'>
 	^ TypUnknownType instance
 ]
+
+{ #category : #'*Typer' }
+RBProgramNode >> typTypeReset [
+	self removeProperty: #typType ifAbsent: [  ].
+	self children do: #typTypeReset
+]

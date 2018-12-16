@@ -35,7 +35,7 @@ TypMethodResolver >> argumentTypes: anObject [
 
 { #category : #initialization }
 TypMethodResolver >> initialize [
-	<typParameters: 'TypMethodLookup'>
+	<typTypeParametersAs: 'TypMethodLookup'>
 	<typTypeVariable: 'argumentTypes' as: 'BlockClosure[Integer,TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->TypType'>
 	<typTypeVariable: 'resultType' as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->TypType'>
 	super initialize

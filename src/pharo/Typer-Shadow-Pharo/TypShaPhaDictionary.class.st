@@ -81,7 +81,9 @@ TypShaPhaDictionary >> ___at: _a put: _b [
 { #category : #accessing }
 TypShaPhaDictionary >> ___collect: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 2)} result: TypUnknownType instance optionalParameters: false ];
+		argumentTypes: [ :i :a :s :r | 
+			{String typAsType.
+			(BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 2)} result: TypUnknownType instance optionalParameters: false)} typAsType ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 1.

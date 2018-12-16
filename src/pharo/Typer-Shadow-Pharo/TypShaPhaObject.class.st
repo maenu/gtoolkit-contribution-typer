@@ -55,10 +55,26 @@ TypShaPhaObject >> ___ifNil: _a ifNotNil: _b [
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ]
-				ifFalse: [ BlockClosure typAsType asFunctionType: {a receiverType} result: TypUnknownType instance optionalParameters: true ] ];
+				ifFalse: [ {String typAsType.
+					(BlockClosure typAsType asFunctionType: {a receiverType} result: TypUnknownType instance optionalParameters: true)} typAsType ] ];
 		resultType: [ :a :s :r | 
+			| argumentType argumentNode elementType |
+			argumentType := a argumentTypes at: 2.
+			argumentNode := a argumentNodes at: 2.
+			elementType := argumentType isFunction
+				ifTrue: [ argumentType result ]
+				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
+						ifTrue: [ TypMethodResolvers global
+								typeForResultOfMethod:
+									(TypMethodLookup new
+										receiverType: a receiverType;
+										selector: argumentNode value asSymbol;
+										argumentTypes: {};
+										argumentNodes: {};
+										yourself) ]
+						ifFalse: [ TypUnknownType instance ] ].
 			{(a argumentTypes at: 1) result.
-			(a argumentTypes at: 2) result} typAsType ];
+			elementType} typAsType ];
 		yourself
 ]
 
