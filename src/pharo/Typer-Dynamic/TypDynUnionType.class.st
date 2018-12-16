@@ -1,6 +1,6 @@
 Class {
 	#name : #TypDynUnionType,
-	#superclass : #TypType,
+	#superclass : #TypUnionType,
 	#instVars : [
 		'weights'
 	],
@@ -9,8 +9,8 @@ Class {
 
 { #category : #copying }
 TypDynUnionType >> , aType [
-	<typTypeArgument: 1 as: 'TypUnionType<TypType>'>
-	<typTypeResultAs: 'TypUnionType<TypType>'>
+	<typTypeArgument: 1 as: 'TypDynUnionType<TypType>'>
+	<typTypeResultAs: 'TypDynUnionType<TypType>'>
 	| copy |
 	copy := self copy.
 	aType do: [ :e | copy add: e ].
@@ -19,7 +19,9 @@ TypDynUnionType >> , aType [
 
 { #category : #comparing }
 TypDynUnionType >> = anObject [
-	^ self == anObject or: [ self class = anObject class and: [ nullable = anObject nullable and: [ weights = anObject weights ] ] ]
+	^ self == anObject
+		or: [ self class = anObject class
+				and: [ nullable = anObject nullable and: [ types asSet = anObject types asSet and: [ weights keys = anObject weights keys ] ] ] ]
 ]
 
 { #category : #enumerating }
@@ -34,69 +36,21 @@ TypDynUnionType >> add: anAssociation [
 				nullable: false;
 				yourself) -> anAssociation value ]
 		ifFalse: [ anAssociation ].
+	types add: association key.
 	n := weights at: association key ifAbsentPut: [ 0 ].
 	^ weights at: association key put: n + association value
 ]
 
 { #category : #enumerating }
 TypDynUnionType >> addAll: aTypes [
-	<typTypeArgument: 1 as: 'TypUnionType<TypType>'>
+	<typTypeArgument: 1 as: 'TypDynUnionType<TypType>'>
 	aTypes do: [ :e | self add: e ]
-]
-
-{ #category : #converting }
-TypDynUnionType >> asClass [
-	^ self superType asClass
-]
-
-{ #category : #converting }
-TypDynUnionType >> asParametricType: someTypes [
-	| type |
-	type := self copy.
-	type weights removeAll.
-	weights associations
-		do: [ :e | 
-			| f |
-			f := e key.
-			f canBeParametricType
-				ifTrue: [ f := f asParametricType: someTypes ].
-			type weights at: f put: e value ].
-	^ type
-]
-
-{ #category : #accessing }
-TypDynUnionType >> asSourceString [
-	^ super asSourceString , self superType asSourceString
-]
-
-{ #category : #accessing }
-TypDynUnionType >> asType [
-	<typTypeResultAs: 'TypType'>
-	| remains current nullable_ |
-	(weights includesKey: TypUnknownType instance)
-		ifTrue: [ ^ self ].
-	remains := weights keys asSet copy.
-	nullable_ := remains includes: TypNilType instance.
-	remains remove: TypNilType instance ifAbsent: [  ].
-	remains ifEmpty: [ ^ TypNilType instance ].
-	remains size = 1
-		ifTrue: [ current := remains anyOne.
-			nullable_
-				ifTrue: [ current := current copy.
-					current nullable: true ].
-			^ current ].
-	^ self
-]
-
-{ #category : #converting }
-TypDynUnionType >> canBeParametricType [
-	^ true
 ]
 
 { #category : #enumerating }
 TypDynUnionType >> collect: aBlock [
 	<typTypeArgument: 1 as: 'BlockClosure(Association<TypType,Integer>)->?'>
-	<typTypeResultAs: 'TypUnionType<TypType>'>
+	<typTypeResultAs: 'TypDynUnionType<TypType>'>
 	| copy |
 	copy := TypDynUnionType new.
 	self do: [ :e | copy add: (aBlock cull: e) ].
@@ -107,11 +61,6 @@ TypDynUnionType >> collect: aBlock [
 TypDynUnionType >> do: aBlock [
 	<typTypeArgument: 1 as: 'BlockClosure(Association<TypType,Integer>)->?'>
 	weights associationsDo: aBlock
-]
-
-{ #category : #testing }
-TypDynUnionType >> hasClass [
-	^ self superType hasClass
 ]
 
 { #category : #comparing }
@@ -134,12 +83,12 @@ TypDynUnionType >> increment: anObject [
 						yourself ]
 				ifFalse: [ anObject ].
 			n := weights at: type ifAbsentPut: [ 0 ].
-			weights at: type put: n + 1 ]
+			weights at: type put: n + 1.
+			types add: type ]
 ]
 
 { #category : #accessing }
 TypDynUnionType >> initialize [
-	<typTypeParametersAs: 'TypType'>
 	<typTypeVariable: 'weights' as: 'Dictionary<TypType,Integer>'>
 	super initialize.
 	weights := Dictionary new
@@ -151,44 +100,10 @@ TypDynUnionType >> isEmpty [
 	^ weights isEmpty
 ]
 
-{ #category : #converting }
-TypDynUnionType >> isParametric [
-	^ self superType isParametric
-]
-
-{ #category : #testing }
-TypDynUnionType >> isUnion [
-	^ true
-]
-
-{ #category : #accessing }
-TypDynUnionType >> nullable [
-	^ weights includesKey: TypNilType instance
-]
-
-{ #category : #accessing }
-TypDynUnionType >> nullable: aBoolean [
-	aBoolean
-		ifTrue: [ self increment: TypNilType instance ]
-		ifFalse: [ weights removeKey: TypNilType instance ifAbsent: [  ] ]
-]
-
-{ #category : #converting }
-TypDynUnionType >> parameters [
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	^ self superType parameters
-]
-
 { #category : #'as yet unclassified' }
 TypDynUnionType >> postCopy [
 	super postCopy.
 	weights := weights copy
-]
-
-{ #category : #printing }
-TypDynUnionType >> printOn: aStream [
-	super printOn: aStream.
-	aStream << 'U ' << self superType printString
 ]
 
 { #category : #enumerating }
@@ -204,14 +119,6 @@ TypDynUnionType >> select: aBlock [
 	^ copy
 ]
 
-{ #category : #accessing }
-TypDynUnionType >> size [
-	<typTypeResultAs: 'Integer'>
-	^ weights isEmpty
-		ifTrue: [ 0 ]
-		ifFalse: [ weights sum ]
-]
-
 { #category : #initialization }
 TypDynUnionType >> summary [
 	<typTypeResultAs: 'OrderedDictionary<TypType,Integer>'>
@@ -219,32 +126,6 @@ TypDynUnionType >> summary [
 	summary := weights associations copy.
 	summary sort: [ :a :b | a value > b value ].
 	^ summary asOrderedDictionary
-]
-
-{ #category : #accessing }
-TypDynUnionType >> superType [
-	| remains nullable_ current |
-	self assert: [ self hasSuperType ].
-	remains := weights keys asSet copy.
-	remains remove: TypUnknownType instance ifAbsent: [  ].
-	remains ifEmpty: [ ^ TypUnknownType instance ].
-	nullable_ := remains includes: TypNilType instance.
-	remains remove: TypNilType instance ifAbsent: [  ].
-	remains ifEmpty: [ ^ TypNilType instance ].
-	current := remains anyOne.
-	remains remove: current.
-	[ remains isEmpty ]
-		whileFalse: [ | next common |
-			next := remains anyOne.
-			remains remove: next.
-			common := current withAllSuperTypes detect: [ :e | next <= e ].
-			common == current
-				ifFalse: [ current := common.
-					remains add: current ] ].
-	nullable_
-		ifTrue: [ current := current copy.
-			current nullable: true ].
-	^ current
 ]
 
 { #category : #accessing }
