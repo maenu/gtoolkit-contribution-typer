@@ -82,8 +82,8 @@ TypType >> asNonNullableType [
 
 { #category : #converting }
 TypType >> asNonParametricType [
-	<typTypeResultAs: 'TypType'>
-	^ self
+	<typTypeResultAs: 'TypNamedType'>
+	self subclassResponsibility
 ]
 
 { #category : #converting }

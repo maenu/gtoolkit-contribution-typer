@@ -26,6 +26,18 @@ TypShaPhaObject >> ___asSymbol [
 ]
 
 { #category : #accessing }
+TypShaPhaObject >> ___assert: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			BlockClosure typAsType
+				asFunctionType: {}
+				result: Boolean typAsType
+				optionalParameters: false ];
+		resultType: [ :a :s :r | a receiverType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaObject >> ___class [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
@@ -75,6 +87,14 @@ TypShaPhaObject >> ___ifNil: _a ifNotNil: _b [
 						ifFalse: [ TypUnknownType instance ] ].
 			{(a argumentTypes at: 1) result.
 			elementType} typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaObject >> ___isKindOf: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | {ClassDescription typAsType} at: i ];
+		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 

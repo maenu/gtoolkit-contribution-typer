@@ -40,6 +40,12 @@ TypNamedType >> asFunctionType: someTypes result: aType optionalParameters: aBoo
 ]
 
 { #category : #converting }
+TypNamedType >> asNonParametricType [
+	<typTypeResultAs: 'TypNamedType'>
+	^ self
+]
+
+{ #category : #converting }
 TypNamedType >> asParametricType: someTypes [
 	^ TypParametricType new
 		type: self copy;

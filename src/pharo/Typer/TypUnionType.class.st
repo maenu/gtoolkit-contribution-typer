@@ -37,6 +37,12 @@ TypUnionType >> asFunctionType: someTypes result: aType optionalParameters: aBoo
 ]
 
 { #category : #converting }
+TypUnionType >> asNonParametricType [
+	<typTypeResultAs: 'TypNamedType'>
+	^ self superType asNonParametricType
+]
+
+{ #category : #converting }
 TypUnionType >> asParametricType: someTypes [
 	| type |
 	type := self copy.
@@ -69,6 +75,11 @@ TypUnionType >> canBeParametricType [
 { #category : #testing }
 TypUnionType >> hasClass [
 	^ self superType hasClass
+]
+
+{ #category : #testing }
+TypUnionType >> hasSuperType [
+	^ self superType ~= self
 ]
 
 { #category : #comparing }
@@ -151,7 +162,7 @@ TypUnionType >> superType [
 		whileFalse: [ | next common |
 			next := remains anyOne.
 			remains remove: next.
-			common := current withAllSuperTypes detect: [ :e | e >= next ].
+			common := current withAllSuperTypes detect: [ :e | e >= next ] ifNone: [ ^ TypUnknownType instance ].
 			common == current
 				ifFalse: [ current := common.
 					remains add: current.

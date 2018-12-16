@@ -18,6 +18,15 @@ TypShaPhaBehavior >> ___allSubclasses [
 ]
 
 { #category : #accessing }
+TypShaPhaBehavior >> ___classVarNames [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType:
+				[ :a :s :r | Set typAsType asParametricType: {String typAsType} ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaBehavior >> ___compiledMethodAt: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];

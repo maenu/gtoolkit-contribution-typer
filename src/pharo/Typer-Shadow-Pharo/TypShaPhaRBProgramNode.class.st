@@ -34,11 +34,30 @@ TypShaPhaRBProgramNode >> ___instanceVariableWriteNodes [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaRBProgramNode >> ___isMessage [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaRBProgramNode >> ___methodNode [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ RBMethodNode typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaRBProgramNode >> ___parent [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | 
+			RBProgramNode typAsType copy
+				nullable: true;
+				yourself ];
 		yourself
 ]
 

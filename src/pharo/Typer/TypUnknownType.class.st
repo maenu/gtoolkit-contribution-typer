@@ -24,6 +24,12 @@ TypUnknownType >> asFunctionType: someTypes result: aType optionalParameters: aB
 ]
 
 { #category : #converting }
+TypUnknownType >> asNonParametricType [
+	<typTypeResultAs: 'TypNamedType'>
+	^ TypUnknownType instance
+]
+
+{ #category : #converting }
 TypUnknownType >> asParametricType: someTypes [
 	TypNoTypeError signal
 ]

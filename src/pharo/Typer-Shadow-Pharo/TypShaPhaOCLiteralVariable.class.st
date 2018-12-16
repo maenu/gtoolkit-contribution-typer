@@ -9,6 +9,18 @@ TypShaPhaOCLiteralVariable class >> shadowedClass [
 	^ OCLiteralVariable class
 ]
 
+{ #category : #accessing }
+TypShaPhaOCLiteralVariable >> ___assoc [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | 
+			Association typAsType
+				asParametricType:
+					{String typAsType.
+					TypUnknownType instance} ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaOCLiteralVariable >> ___isClassVariable [
 	^ TypMethodResolver new
