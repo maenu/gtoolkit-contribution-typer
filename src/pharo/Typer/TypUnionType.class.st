@@ -91,6 +91,11 @@ TypUnionType >> isCompatibleWith: aType [
 		ifFalse: [ (types anySatisfy: [ :e | e >= aType ]) or: [ super isCompatibleWith: aType ] ]
 ]
 
+{ #category : #converting }
+TypUnionType >> isParametric [
+	^ types allSatisfy: #isParametric
+]
+
 { #category : #testing }
 TypUnionType >> isUnion [
 	^ true
@@ -110,7 +115,7 @@ TypUnionType >> nullable: aBoolean [
 
 { #category : #generated }
 TypUnionType >> parameters [
-	self assert: [ (types allSatisfy: #isParametric) and: [ self superType isParametric ] ].
+	self assert: [ (self isParametric) and: [ self superType isParametric ] ].
 	^ self superType parameters
 ]
 
@@ -159,10 +164,12 @@ TypUnionType >> superType [
 
 { #category : #accessing }
 TypUnionType >> types [
+	<typTypeResultAs: 'Set<TypType>'>
 	^ types
 ]
 
 { #category : #accessing }
 TypUnionType >> types: anObject [
+	<typTypeArgument: 1 as: 'Set<TypType>'>
 	types := anObject
 ]

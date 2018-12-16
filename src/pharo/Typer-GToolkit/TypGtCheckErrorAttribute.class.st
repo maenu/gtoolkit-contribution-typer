@@ -2,10 +2,21 @@ Class {
 	#name : #TypGtCheckErrorAttribute,
 	#superclass : #BrTextAdornmentDynamicAttribute,
 	#instVars : [
-		'text'
+		'text',
+		'color'
 	],
 	#category : #'Typer-GToolkit-Core'
 }
+
+{ #category : #accessing }
+TypGtCheckErrorAttribute >> color [
+	^ color
+]
+
+{ #category : #accessing }
+TypGtCheckErrorAttribute >> color: anObject [
+	color := anObject
+]
 
 { #category : #initialization }
 TypGtCheckErrorAttribute >> initialize [
@@ -22,7 +33,7 @@ TypGtCheckErrorAttribute >> initialize [
 						left: 2);
 				look:
 					(BrGlamorousLabelLook new
-						foreground: Color red;
+						foreground: color;
 						fontSize: 12) ]
 ]
 

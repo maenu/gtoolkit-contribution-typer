@@ -11,6 +11,10 @@ RBBlockNode >> typTypeForArgumentAt: anInteger [
 			parent_ := self parent.	"typCastAs RBMessageNode"
 			i := parent_ arguments detectIndex: [ :e | e == self ].
 			type_ := parent_ typTypeForArgumentAt: i.
+			type_ isUnion
+				ifTrue: [ type_ := TypUnionType new
+						types: (type_ types select: [ :e | e asNonParametricType name = 'BlockClosure' ]);
+						yourself ].
 			type_ isParametric
 				ifTrue: [ ^ type_ parameters at: anInteger ] ].
 	(type isParametric and: [ anInteger < type parameters size ])

@@ -58,7 +58,7 @@ TypGtMethodCoder >> browseToTypeWithShadow: anEditorElement [
 { #category : #'initialize-release' }
 TypGtMethodCoder >> initializeAddOns [
 	super initializeAddOns.
-	addOns addStyler: TypGtMethodCommentBodyStyler new.
+	"addOns addStyler: TypGtMethodCommentBodyStyler new."
 	addOns addStyler: TypGtTypeDeclarationBodyStyler new.
 	addOns addStyler: TypGtCheckBodyStyler new.
 	self flag: 'for some weird reason check styler needs to be removed and added (concurrent non-synchronized on accesses on node type?, but monitor does not seem to help)'.

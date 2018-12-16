@@ -18,6 +18,28 @@ TypShaPhaBoolean >> ___and: _a [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaBoolean >> ___ifFalse: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ];
+		resultType: [ :a :s :r | 
+			(a argumentTypes at: 1) result copy
+				nullable: true;
+				yourself ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaBoolean >> ___ifTrue: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ];
+		resultType: [ :a :s :r | 
+			(a argumentTypes at: 1) result copy
+				nullable: true;
+				yourself ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaBoolean >> ___ifTrue: _a ifFalse: _b [
 	^ TypMethodResolver new

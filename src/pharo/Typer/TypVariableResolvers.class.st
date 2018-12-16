@@ -5,7 +5,20 @@ Class {
 }
 
 { #category : #accessing }
+TypVariableResolvers class >> global [
+	<typTypeResultAs: 'TypVariableResolvers'>
+	^ super global
+]
+
+{ #category : #accessing }
+TypVariableResolvers class >> initialize [
+	<typTypeVariable: 'global' as: 'TypVariableResolvers'>
+	
+]
+
+{ #category : #accessing }
 TypVariableResolvers class >> initializeGlobal [
+	<typTypeResultAs: 'TypVariableResolvers'>
 	^ super initializeGlobal
 		defaultResolver: TypDefaultVariableResolver new;
 		yourself

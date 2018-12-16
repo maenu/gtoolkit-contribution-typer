@@ -13,11 +13,19 @@ Class {
 
 { #category : #accessing }
 TypResolvers class >> global [
+	<typTypeResultAs: 'TypResolvers'>
 	^ global ifNil: [ self initializeGlobal ]
 ]
 
 { #category : #accessing }
+TypResolvers class >> initialize [
+	<typTypeVariable: 'global' as: 'TypResolvers'>
+	
+]
+
+{ #category : #accessing }
 TypResolvers class >> initializeGlobal [
+	<typTypeResultAs: 'TypResolvers'>
 	^ global := self new
 ]
 

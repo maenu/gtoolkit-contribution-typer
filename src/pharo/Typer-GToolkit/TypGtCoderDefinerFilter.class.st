@@ -21,7 +21,7 @@ TypGtCoderDefinerFilter >> includeMethod: aCompiledMethod [
 	<typTypeArgument: 1 as: 'CompiledMethod<Integer>'>
 	<typTypeResultAs: 'Boolean'>
 	^ (aCompiledMethod methodClass hasInstVarNamed: name)
-		or: [ aCompiledMethod methodClass hasClassVarNamed: name ]
+		or: [ aCompiledMethod methodClass instanceSide hasClassVarNamed: name ]
 ]
 
 { #category : #accessing }
