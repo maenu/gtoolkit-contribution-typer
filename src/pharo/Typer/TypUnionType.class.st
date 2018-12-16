@@ -139,16 +139,18 @@ TypUnionType >> superType [
 	remains ifEmpty: [ ^ TypNilType instance ].
 	remains remove: TypUnknownType instance ifAbsent: [  ].
 	remains ifEmpty: [ ^ TypUnknownType instance ].
+	remains := remains asOrderedCollection sort: [ :a :b | a >= b ].
 	current := remains anyOne.
 	remains remove: current.
 	[ remains isEmpty ]
 		whileFalse: [ | next common |
 			next := remains anyOne.
 			remains remove: next.
-			common := current withAllSuperTypes detect: [ :e | next <= e ].
+			common := current withAllSuperTypes detect: [ :e | e >= next ].
 			common == current
 				ifFalse: [ current := common.
-					remains add: current ] ].
+					remains add: current.
+					remains := remains sort: [ :a :b | a >= b ] ] ].
 	nullable_
 		ifTrue: [ current := current copy.
 			current nullable: true ].

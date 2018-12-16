@@ -10,6 +10,14 @@ TypShaPhaString class >> shadowedClass [
 ]
 
 { #category : #accessing }
+TypShaPhaString >> ___join: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | SequenceableCollection typAsType asParametricType: {String typAsType} ];
+		resultType: [ :a :s :r | String typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaString >> ___keywords [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

@@ -46,7 +46,7 @@ TypShaPhaBlockClosure >> ___on: _a do: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
-				ifTrue: [ Class typAsType ]
+				ifTrue: [ Exception class typAsType ]
 				ifFalse: [ BlockClosure typAsType asFunctionType: {Exception typAsType} result: TypUnknownType instance optionalParameters: true ] ];
 		resultType: [ :a :s :r | 
 			{a receiverType result.

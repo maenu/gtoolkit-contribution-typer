@@ -57,16 +57,6 @@ TypShaPhaSequenceableCollection >> ___isEmpty [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> ___join: _a [
-	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | 
-			SequenceableCollection typAsType
-				asParametricType: {(a receiverType parameters at: 1)} ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
-]
-
 { #category : #'as yet unclassified' }
 TypShaPhaSequenceableCollection >> ___last [
 	^ TypMethodResolver new
