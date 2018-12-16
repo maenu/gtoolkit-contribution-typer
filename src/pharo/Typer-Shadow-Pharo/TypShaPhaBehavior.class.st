@@ -62,7 +62,7 @@ TypShaPhaBehavior >> ___selectors [
 TypShaPhaBehavior >> ___whichClassDefinesClassVar: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | Behavior typAsType ];
+		resultType: [ :a :s :r | Class typAsType ];
 		yourself
 ]
 
@@ -70,7 +70,7 @@ TypShaPhaBehavior >> ___whichClassDefinesClassVar: _a [
 TypShaPhaBehavior >> ___whichClassDefinesInstVar: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | Behavior typAsType ];
+		resultType: [ :a :s :r | ClassDescription typAsType ];
 		yourself
 ]
 

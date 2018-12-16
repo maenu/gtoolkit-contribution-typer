@@ -39,6 +39,8 @@ TypShaPhaNumber >> ___to: _a do: _b [
 TypShaPhaNumber >> ~~~- _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];
-		resultType: [ :a :s :r | Number typAsType ];
+		resultType: [ :a :s :r | 
+			{a receiverType.
+			(a argumentTypes at: 1)} typAsType ];
 		yourself
 ]

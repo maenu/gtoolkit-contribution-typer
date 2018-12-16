@@ -61,16 +61,19 @@ TypGtMethodCoder >> initializeAddOns [
 	addOns addStyler: TypGtMethodCommentBodyStyler new.
 	addOns addStyler: TypGtTypeDeclarationBodyStyler new.
 	addOns addStyler: TypGtCheckBodyStyler new.
+	self flag: 'for some weird reason check styler needs to be removed and added (concurrent non-synchronized on accesses on node type?, but monitor does not seem to help)'.
 	addOns
 		addMainAction: 'Types' translated
 		icon: BrGlamorousIcons inspect
 		action: [ | declaration |
 			declaration := addOns stylers anySatisfy: [ :e | e isKindOf: TypGtTypeDeclarationBodyStyler ].
+			addOns removeStylerOfType: TypGtCheckBodyStyler.
 			declaration
 				ifTrue: [ addOns removeStylerOfType: TypGtTypeDeclarationBodyStyler.
 					addOns addStyler: TypGtTypeValueBodyStyler new ]
 				ifFalse: [ addOns removeStylerOfType: TypGtTypeValueBodyStyler.
 					addOns addStyler: TypGtTypeDeclarationBodyStyler new ].
+			addOns addStyler: TypGtCheckBodyStyler new.
 			self refreshForChanges ]
 ]
 
