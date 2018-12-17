@@ -103,6 +103,6 @@ TypShaPhaBehavior >> ___whichClassDefinesInstVar: _a [
 TypShaPhaBehavior >> ___withAllSuperclasses [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | SequenceableCollection typAsType asParametricType: {Behavior typAsType} ];
+		resultType: [ :a :s :r | SequenceableCollection typAsType asParametricType: {ClassDescription typAsType} ];
 		yourself
 ]

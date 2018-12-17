@@ -4,7 +4,7 @@ Class {
 	#category : #'Typer-Shadow-Pharo'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaSequenceableCollection class >> ___ofSize: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ Integer typAsType ];
@@ -54,6 +54,14 @@ TypShaPhaSequenceableCollection >> ___first [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | a receiverType parameters at: 1 ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaSequenceableCollection >> ___indexOf: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | a receiverType parameters at: 1 ];
+		resultType: [ :a :s :r | Integer typAsType ];
 		yourself
 ]
 
@@ -109,7 +117,7 @@ TypShaPhaSequenceableCollection >> ___withIndexDo: _a [
 				asFunctionType:
 					{(a receiverType parameters at: 1).
 					Integer typAsType}
-				result: a receiverType
+				result: TypUnknownType instance
 				optionalParameters: false ];
 		resultType: [ :a | a receiverType ];
 		yourself

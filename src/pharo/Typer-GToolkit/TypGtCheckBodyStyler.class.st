@@ -93,8 +93,10 @@ TypGtCheckBodyStyler >> visitMethodNode: aNode [
 			{(BrTextAdornmentDynamicAttribute new
 				beAppend;
 				stencil: [ BlElement new
-						"pattern styler only gets pruned AST, use original for icon"
-						background: aNode method ast typCheColor;
+						background:
+							([ aNode method ast typCheColor ]
+								on: Error
+								do: [ Halt now ]);
 						constraintsDo: [ :c | 
 							c horizontal exact: 16.
 							c vertical exact: 16 ];
@@ -103,7 +105,8 @@ TypGtCheckBodyStyler >> visitMethodNode: aNode [
 								top: 0
 								right: 2
 								bottom: 0
-								left: 2) ];
+								left: 2)
+					"pattern styler only gets pruned AST, use original for icon" ];
 				yourself)}
 ]
 

@@ -25,7 +25,8 @@ TypFunctionType >> = anObject [
 TypFunctionType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
 	| copy parameters_ |
 	copy := self copy.
-	parameters_ := OrderedCollection ofSize: (parameters size max: someTypes size).	"typParameters TypType"
+	parameters_ := (OrderedCollection
+		ofSize: (parameters size max: someTypes size)) "typParameters TypType".
 	parameters withIndexDo: [ :e :i | parameters_ at: i put: e ].
 	someTypes withIndexDo: [ :e :i | parameters_ at: i put: e ].
 	copy parameters: parameters_.
@@ -92,6 +93,7 @@ TypFunctionType >> optionalParameters [
 
 { #category : #accessing }
 TypFunctionType >> optionalParameters: anObject [
+	<typTypeArgument: 1 as: 'Boolean'>
 	optionalParameters := anObject
 ]
 
@@ -120,6 +122,7 @@ TypFunctionType >> result [
 
 { #category : #accessing }
 TypFunctionType >> result: anObject [
+	<typTypeArgument: 1 as: 'TypType'>
 	result := anObject
 ]
 
