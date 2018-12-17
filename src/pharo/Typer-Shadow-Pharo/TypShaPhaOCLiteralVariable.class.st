@@ -60,3 +60,11 @@ TypShaPhaOCLiteralVariable >> ___scope [
 		resultType: [ :a :s :r | OCAbstractScope typAsType ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaPhaOCLiteralVariable >> ___value [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Object typAsType ];
+		yourself
+]

@@ -53,6 +53,7 @@ TypMethodLookup >> argumentNodes [
 
 { #category : #accessing }
 TypMethodLookup >> argumentNodes: anObject [
+	<typTypeArgument: 1 as: 'SequenceableCollection<RBValueNode>'>
 	argumentNodes := anObject
 ]
 

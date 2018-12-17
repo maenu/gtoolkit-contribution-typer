@@ -76,6 +76,14 @@ TypShaPhaBehavior >> ___selectors [
 ]
 
 { #category : #accessing }
+TypShaPhaBehavior >> ___superclass [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | ClassDescription typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaBehavior >> ___whichClassDefinesClassVar: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | String typAsType ];

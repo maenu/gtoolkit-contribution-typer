@@ -13,7 +13,8 @@ TypDefaultVariableResolver >> initialize [
 			clazz := a receiverType asClass.
 			clazzes := a selector first isUppercase
 				ifTrue: [ | definer |
-					definer := clazz instanceSide whichClassDefinesClassVar: a selector.
+					definer := clazz instanceSide
+						whichClassDefinesClassVar: a selector.
 					(self withAllSuperclassesOf: clazz instanceSide until: definer)
 						flatCollect: [ :e | 
 							{e instanceSide.
@@ -21,10 +22,15 @@ TypDefaultVariableResolver >> initialize [
 				ifFalse: [ | definer |
 					definer := clazz whichClassDefinesInstVar: a selector.
 					self withAllSuperclassesOf: clazz until: definer ].
-			self flag: 'this might also catch overridden methods, making it not completely sound'.
+			self
+				flag:
+					'this might also catch overridden methods, making it not completely sound'.
 			(clazzes
-				flatCollect:
-					[ :e | e methods flatCollect: [ :f | (f assignmentNodes select: [ :g | g variable name = a selector ]) collect: [ :g | g value typType ] ] ]) typAsType ]
+				flatCollect: [ :e | 
+					e methods
+						flatCollect: [ :f | 
+							(f assignmentNodes select: [ :g | g variable name = a selector ])
+								collect: [ :g | g value typType ] ] ]) typAsType ]
 ]
 
 { #category : #accessing }

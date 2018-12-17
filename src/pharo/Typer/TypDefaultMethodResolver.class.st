@@ -13,10 +13,10 @@ TypDefaultMethodResolver >> initialize [
 			"assume self return if no explicit return"
 			| method |
 			method := a receiverType asClass lookupSelector: a selector.
-			((method ast allChildren select: #isReturn) reject: [ :e | e value isSelf ]) ifEmpty: [ a receiverType ] ifNotEmpty: [ TypUnknownType instance ] ]
+			((method ast allChildren select: #isReturn) reject: [ :e | (e "typCastAs RBReturnNode") value isSelf ]) ifEmpty: [ a receiverType ] ifNotEmpty: [ TypUnknownType instance ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypDefaultMethodResolver >> resolves: aLookup [
 	^ aLookup receiverType hasClass
 		and: [ | method |

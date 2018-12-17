@@ -274,6 +274,14 @@ TypShaPhaCollection >> ___inject: _a into: _b [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaCollection >> ___isNotEmpty [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___max [
 	^ TypMethodResolver new

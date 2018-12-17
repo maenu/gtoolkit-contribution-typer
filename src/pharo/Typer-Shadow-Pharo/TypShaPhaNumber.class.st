@@ -36,6 +36,16 @@ TypShaPhaNumber >> ___to: _a do: _b [
 ]
 
 { #category : #accessing }
+TypShaPhaNumber >> ~~~+ _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | Number typAsType ];
+		resultType: [ :a :s :r | 
+			{a receiverType.
+			(a argumentTypes at: 1)} typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaNumber >> ~~~- _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];

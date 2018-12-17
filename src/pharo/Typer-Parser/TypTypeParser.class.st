@@ -43,6 +43,13 @@ Nullable
 	;"
 ]
 
+{ #category : #accessing }
+TypTypeParser class >> parse: aString [
+	<typTypeArgument: 1 as: 'String<Character>'>
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
+	^ super parse: aString
+]
+
 { #category : #generated }
 TypTypeParser class >> reduceTable [
 ^#(

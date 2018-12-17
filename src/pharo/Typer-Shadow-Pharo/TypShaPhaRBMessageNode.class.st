@@ -32,3 +32,11 @@ TypShaPhaRBMessageNode >> ___receiver [
 		resultType: [ :a :s :r | RBValueNode typAsType ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaPhaRBMessageNode >> ___selector [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Symbol typAsType ];
+		yourself
+]

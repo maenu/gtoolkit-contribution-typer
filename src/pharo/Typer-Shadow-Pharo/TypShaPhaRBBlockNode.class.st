@@ -16,3 +16,11 @@ TypShaPhaRBBlockNode >> ___arguments [
 		resultType: [ OrderedCollection typAsType asParametricType: {RBArgumentNode typAsType} ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaPhaRBBlockNode >> ___body [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | RBSequenceNode typAsType ];
+		yourself
+]

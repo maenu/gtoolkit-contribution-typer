@@ -8,7 +8,7 @@ RBBlockNode >> typTypeForArgumentAt: anInteger [
 	type := self typType.
 	(self parent isMessage and: [ (self parent "typCastAs RBMessageNode") receiver ~~ self ])
 		ifTrue: [ | i parent_ type_ |
-			parent_ := self parent.	"typCastAs RBMessageNode"
+			parent_ := self parent "typCastAs RBMessageNode".
 			i := parent_ arguments detectIndex: [ :e | e == self ].
 			type_ := parent_ typTypeForArgumentAt: i.
 			type_ isUnion

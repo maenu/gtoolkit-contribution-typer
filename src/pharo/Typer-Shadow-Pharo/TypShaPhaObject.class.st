@@ -98,6 +98,14 @@ TypShaPhaObject >> ___isKindOf: _a [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaObject >> ___isNotNil [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaObject >> ___printString [
 	^ TypMethodResolver new

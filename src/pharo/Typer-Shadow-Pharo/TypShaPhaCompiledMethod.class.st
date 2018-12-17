@@ -26,6 +26,22 @@ TypShaPhaCompiledMethod >> ___ast [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaCompiledMethod >> ___isAbstract [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaCompiledMethod >> ___methodClass [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | ClassDescription typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaCompiledMethod >> ___numArgs [
 	^ TypMethodResolver new

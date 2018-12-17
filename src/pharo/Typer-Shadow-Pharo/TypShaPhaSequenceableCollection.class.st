@@ -25,6 +25,14 @@ TypShaPhaSequenceableCollection >> ___at: _a [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaSequenceableCollection >> ___beginsWith: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | a receiverType ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaSequenceableCollection >> ___copyFrom: _a to: _b [
 	^ TypMethodResolver new

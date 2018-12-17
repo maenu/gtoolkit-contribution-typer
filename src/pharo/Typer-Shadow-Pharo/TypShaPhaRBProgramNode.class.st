@@ -17,6 +17,16 @@ TypShaPhaRBProgramNode >> ___assignmentNodes [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaRBProgramNode >> ___children [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType: {RBProgramNode typAsType} ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaRBProgramNode >> ___comments [
 	^ TypMethodResolver new
@@ -36,6 +46,14 @@ TypShaPhaRBProgramNode >> ___instanceVariableWriteNodes [
 
 { #category : #accessing }
 TypShaPhaRBProgramNode >> ___isMessage [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaRBProgramNode >> ___isTemp [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
@@ -102,6 +120,34 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifPresent: _b ifAbsent: _c [
 						ifFalse: [ TypUnknownType instance ] ].
 			{elementType.
 			(a argumentTypes at: 3) result} typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaRBProgramNode >> ___propertyAt: _a put: _b [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			i = 1
+				ifTrue: [ String typAsType ]
+				ifFalse: [ {TypUnknownType instance.
+					TypNilType instance} typAsType ] ];
+		resultType: [ :a :s :r | a argumentTypes at: 1 ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaRBProgramNode >> ___removeProperty: _a ifAbsent: _b [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			i = 1
+				ifTrue: [ String typAsType ]
+				ifFalse: [ BlockClosure typAsType
+						asFunctionType: {}
+						result: TypUnknownType instance
+						optionalParameters: false ] ];
+		resultType: [ :a :s :r | 
+			{TypUnknownType instance.
+			(a argumentTypes at: 2) result} typAsType ];
 		yourself
 ]
 

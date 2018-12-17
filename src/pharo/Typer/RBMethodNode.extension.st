@@ -4,7 +4,7 @@ Extension { #name : #RBMethodNode }
 RBMethodNode >> typIsReturnSelf [
 	<typTypeResultAs: 'Boolean'>
 	^ ((self allChildren select: #isReturn)
-		reject: [ :e | e value isSelf ]) isEmpty
+		reject: [ :e | (e "typCastAs RBReturnNode") value isSelf ]) isEmpty
 ]
 
 { #category : #'*Typer' }
