@@ -5,7 +5,7 @@ Class {
 	#classTraits : 'TTypGtCoderMethodsFilter classTrait',
 	#instVars : [
 		'type',
-		'clazz'
+		'clazzes'
 	],
 	#category : #'Typer-GToolkit-Filter'
 }
@@ -14,8 +14,8 @@ Class {
 TypGtCoderTypeFilter >> includeMethod: aCompiledMethod [
 	<typTypeArgument: 1 as: 'CompiledMethod<Integer>'>
 	<typTypeResultAs: 'Boolean'>
-	clazz ifNil: [ ^ true ].
-	^ aCompiledMethod methodClass == clazz or: [ clazz inheritsFrom: aCompiledMethod methodClass ]
+	clazzes ifEmpty: [ ^ true ].
+	^ clazzes includes: aCompiledMethod methodClass
 ]
 
 { #category : #initialization }
@@ -34,7 +34,7 @@ TypGtCoderTypeFilter >> type [
 TypGtCoderTypeFilter >> type: anObject [
 	<typTypeArgument: 1 as: 'TypType'>
 	type := anObject.
-	clazz := type hasClass
-		ifTrue: [ type asClass ]
-		ifFalse: [ nil ]
+	clazzes := (((type isUnion
+		ifTrue: [ type types ]
+		ifFalse: [ {type} ]) select: #hasClass) flatCollect: [ :e | e asClass withAllSuperclasses ]) asSet
 ]

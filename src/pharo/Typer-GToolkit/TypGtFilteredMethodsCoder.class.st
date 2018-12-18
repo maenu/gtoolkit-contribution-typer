@@ -1,11 +1,11 @@
 Class {
-	#name : #TypGtMethodsCoder,
-	#superclass : #GtMethodsCoder,
+	#name : #TypGtFilteredMethodsCoder,
+	#superclass : #GtFilteredMethodsCoder,
 	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #'initialize-release' }
-TypGtMethodsCoder >> methodAdded: aValueAdded [
+TypGtFilteredMethodsCoder >> methodAdded: aValueAdded [
 	<typTypeArgument: 1 as: 'ValueAdded'>
 	| coder |
 	coder := TypGtMethodCoder forMethod: aValueAdded newValue.
@@ -14,7 +14,7 @@ TypGtMethodsCoder >> methodAdded: aValueAdded [
 ]
 
 { #category : #'initialize-release' }
-TypGtMethodsCoder >> newMethodCoderFor: aMethod [
+TypGtFilteredMethodsCoder >> newMethodCoderFor: aMethod [
 	| coder |
 	coder := TypGtMethodCoder forMethod: aMethod.
 	coder methodsCoder: self.
