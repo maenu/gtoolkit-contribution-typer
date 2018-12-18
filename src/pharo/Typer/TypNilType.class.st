@@ -33,6 +33,11 @@ TypNilType >> canBeParametricType [
 	^ false
 ]
 
+{ #category : #copying }
+TypNilType >> copy [
+	^ self
+]
+
 { #category : #accessing }
 TypNilType >> hasSuperType [
 	^ false

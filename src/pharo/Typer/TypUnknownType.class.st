@@ -39,6 +39,11 @@ TypUnknownType >> asSourceString [
 	^ '?'
 ]
 
+{ #category : #copying }
+TypUnknownType >> copy [
+	^ self
+]
+
 { #category : #accessing }
 TypUnknownType >> hasSuperType [
 	^ false

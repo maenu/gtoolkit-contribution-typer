@@ -42,8 +42,8 @@ TypMethodLookup >> = anObject [
 					object := anObject "typCastAs TypMethodLookup".
 					selector = object selector
 						and: [ receiverType = object receiverType
-								and: [ argumentTypes = object argumentTypes
-										and: [ argumentNodes = object argumentNodes ] ] ] ] ]
+								and: [ argumentTypes asOrderedCollection = object argumentTypes asOrderedCollection
+										and: [ argumentNodes asOrderedCollection = object argumentNodes asOrderedCollection ] ] ] ] ]
 ]
 
 { #category : #accessing }

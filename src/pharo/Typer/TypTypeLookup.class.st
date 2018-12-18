@@ -38,7 +38,7 @@ TypTypeLookup >> copyWithSuperType [
 
 { #category : #testing }
 TypTypeLookup >> hasSuperType [
-	^ clazz superclass isNotNil
+	^ clazz superclass isNotNil and: [ clazz superclass ~= clazz and: [ (clazz superclass inheritsFrom: clazz) not ] ]
 ]
 
 { #category : #comparing }

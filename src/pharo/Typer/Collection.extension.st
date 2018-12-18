@@ -27,5 +27,6 @@ Collection >> typAsType [
 			^ current ].
 	^ TypUnionType new
 		types: remains;
+		nullable: nullable_;
 		yourself
 ]

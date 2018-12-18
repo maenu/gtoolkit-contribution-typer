@@ -4,7 +4,8 @@ Class {
 	#traits : 'TTypGtCoderMethodsFilter',
 	#classTraits : 'TTypGtCoderMethodsFilter classTrait',
 	#instVars : [
-		'type'
+		'type',
+		'clazz'
 	],
 	#category : #'Typer-GToolkit-Filter'
 }
@@ -13,10 +14,7 @@ Class {
 TypGtCoderTypeFilter >> includeMethod: aCompiledMethod [
 	<typTypeArgument: 1 as: 'CompiledMethod<Integer>'>
 	<typTypeResultAs: 'Boolean'>
-	| clazz |
-	type hasClass
-		ifFalse: [ ^ true ].
-	clazz := type asClass.
+	clazz ifNil: [ ^ true ].
 	^ aCompiledMethod methodClass == clazz or: [ clazz inheritsFrom: aCompiledMethod methodClass ]
 ]
 
@@ -35,5 +33,8 @@ TypGtCoderTypeFilter >> type [
 { #category : #accessing }
 TypGtCoderTypeFilter >> type: anObject [
 	<typTypeArgument: 1 as: 'TypType'>
-	type := anObject
+	type := anObject.
+	clazz := type hasClass
+		ifTrue: [ type asClass ]
+		ifFalse: [ nil ]
 ]
