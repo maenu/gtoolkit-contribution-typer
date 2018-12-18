@@ -85,7 +85,9 @@ TypResolvers >> typeFor: aLookup using: aBlock [
 			type isUnknown
 				ifFalse: [ ^ type ] ].
 	lookup hasSuperType
-		ifTrue: [ lookup := lookup copyWithSuperType ] ] doWhileTrue: [ lookup hasSuperType ].
+		ifTrue: [ lookup := lookup copyWithSuperType.
+			true ]
+		ifFalse: [ false ] ] whileTrue.
 	(defaultResolver isNotNil and: [ defaultResolver resolves: aLookup ])
 		ifTrue: [ ^ aBlock cull: defaultResolver cull: aLookup ].
 	^ TypUnknownType instance

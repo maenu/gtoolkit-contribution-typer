@@ -67,6 +67,14 @@ TypShaPhaBehavior >> ___name [
 ]
 
 { #category : #accessing }
+TypShaPhaBehavior >> ___new [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | a receiverType asClass instanceSide typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaBehavior >> ___selectors [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

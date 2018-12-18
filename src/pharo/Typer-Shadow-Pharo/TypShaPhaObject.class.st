@@ -5,16 +5,16 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypShaPhaObject class >> ___new [
-	^ TypMethodResolver new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a | a receiverType asClass instanceSide typAsType ];
-		yourself
-]
-
-{ #category : #'as yet unclassified' }
 TypShaPhaObject class >> shadowedClass [
 	^ Object class
+]
+
+{ #category : #accessing }
+TypShaPhaObject >> ___asString [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | String typAsType ];
+		yourself
 ]
 
 { #category : #'as yet unclassified' }

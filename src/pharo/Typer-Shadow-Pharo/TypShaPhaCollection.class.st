@@ -27,6 +27,16 @@ TypShaPhaCollection >> ___anySatisfy: _a [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaCollection >> ___asOrderedCollection [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | 
+			OrderedCollection typAsType
+				asParametricType: {(a receiverType parameters at: 1)} ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___asSet [
 	^ TypMethodResolver new
