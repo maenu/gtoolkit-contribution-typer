@@ -97,6 +97,12 @@ TypFunctionType >> optionalParameters: anObject [
 	optionalParameters := anObject
 ]
 
+{ #category : #copying }
+TypFunctionType >> postCopy [
+	super postCopy.
+	result := result copy
+]
+
 { #category : #accessing }
 TypFunctionType >> printOn: aStream [
 	type printOn: aStream.
