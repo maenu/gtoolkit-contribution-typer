@@ -118,7 +118,7 @@ TypParametricType >> parameters: anObject [
 TypParametricType >> postCopy [
 	super postCopy.
 	type := type copy.
-	parameters := parameters copy
+	parameters := parameters collect: #copy
 ]
 
 { #category : #printing }

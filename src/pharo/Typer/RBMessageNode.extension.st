@@ -4,17 +4,30 @@ Extension { #name : #RBMessageNode }
 RBMessageNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>
-	| receiverType |
+	| receiverType argumentTypes |
 	receiverType := self typTypeForReceiver.
-	^ TypMethodResolvers global
-		typeForArgumentAt: anInteger
-		ofMethod:
-			(TypMethodLookup new
-				receiverType: receiverType;
-				selector: self selector asSymbol;
-				argumentTypes: self typTypesForArguments;
-				argumentNodes: (self arguments);
-				yourself)
+	argumentTypes := self typTypesForArguments.
+	^ receiverType isUnion
+		ifTrue: [ (((receiverType "typCastAs TypUnionType") types reject: #isNil)
+				collect: [ :e | 
+					TypMethodResolvers global
+						typeForArgumentAt: anInteger
+						ofMethod:
+							(TypMethodLookup new
+								receiverType: e;
+								selector: self selector asSymbol;
+								argumentTypes: argumentTypes;
+								argumentNodes: self arguments;
+								yourself) ]) typAsType ]
+		ifFalse: [ TypMethodResolvers global
+				typeForArgumentAt: anInteger
+				ofMethod:
+					(TypMethodLookup new
+						receiverType: receiverType;
+						selector: self selector asSymbol;
+						argumentTypes: argumentTypes;
+						argumentNodes: self arguments;
+						yourself) ]
 ]
 
 { #category : #'*Typer' }
@@ -26,16 +39,28 @@ RBMessageNode >> typTypeForReceiver [
 { #category : #'*Typer' }
 RBMessageNode >> typTypeForResult [
 	<typTypeResultAs: 'TypType'>
-	| receiverType |
+	| receiverType argumentTypes |
 	receiverType := self typTypeForReceiver.
-	^ TypMethodResolvers global
-		typeForResultOfMethod:
-			(TypMethodLookup new
-				receiverType: receiverType;
-				selector: self selector asSymbol;
-				argumentTypes: (self typTypesForArguments);
-				argumentNodes: (self arguments);
-				yourself)
+	argumentTypes := self typTypesForArguments.
+	^ receiverType isUnion
+		ifTrue: [ (((receiverType "typCastAs TypUnionType") types reject: #isNil)
+				collect: [ :e | 
+					TypMethodResolvers global
+						typeForResultOfMethod:
+							(TypMethodLookup new
+								receiverType: e;
+								selector: self selector asSymbol;
+								argumentTypes: argumentTypes;
+								argumentNodes: self arguments;
+								yourself) ]) typAsType ]
+		ifFalse: [ TypMethodResolvers global
+				typeForResultOfMethod:
+					(TypMethodLookup new
+						receiverType: receiverType;
+						selector: self selector asSymbol;
+						argumentTypes: argumentTypes;
+						argumentNodes: self arguments;
+						yourself) ]
 ]
 
 { #category : #'*Typer' }

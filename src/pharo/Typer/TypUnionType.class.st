@@ -133,7 +133,7 @@ TypUnionType >> parameters [
 { #category : #'as yet unclassified' }
 TypUnionType >> postCopy [
 	super postCopy.
-	types := types copy
+	types := types collect: #copy
 ]
 
 { #category : #printing }
