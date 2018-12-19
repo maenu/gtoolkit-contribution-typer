@@ -205,7 +205,6 @@ TypType >> nullable: anObject [
 
 { #category : #printing }
 TypType >> printOn: aStream [
-	<typTypeArgument: 1 as: 'Stream'>
 	nullable
 		ifTrue: [ aStream << '!' ]
 ]

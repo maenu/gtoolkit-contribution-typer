@@ -123,6 +123,20 @@ TypShaPhaSequenceableCollection >> ___withIndexDo: _a [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaSequenceableCollection >> ___withIndexSelect: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			BlockClosure typAsType
+				asFunctionType:
+					{(a receiverType parameters at: 1).
+					Integer typAsType}
+				result: TypUnknownType instance
+				optionalParameters: false ];
+		resultType: [ :a :s :r | a receiverType asParametricType: {(a argumentTypes at: 1) result} ];
+		yourself
+]
+
 { #category : #converting }
 TypShaPhaSequenceableCollection >> asType: aClass [
 	^ aClass typAsNamedType asParametricType: {TypUnknownType instance}

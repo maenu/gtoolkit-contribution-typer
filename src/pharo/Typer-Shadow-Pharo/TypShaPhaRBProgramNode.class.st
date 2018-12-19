@@ -9,11 +9,11 @@ TypShaPhaRBProgramNode class >> shadowedClass [
 	^ RBProgramNode class
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaRBProgramNode >> ___assignmentNodes [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ OrderedCollection typAsType asParametricType: {RBAssignmentNode typAsType} ];
+		resultType: [ SequenceableCollection typAsType asParametricType: {RBAssignmentNode typAsType} ];
 		yourself
 ]
 
@@ -41,6 +41,14 @@ TypShaPhaRBProgramNode >> ___instanceVariableWriteNodes [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType:
 				[ :a :s :r | Collection typAsType asParametricType: {RBAssignmentNode typAsType} ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaRBProgramNode >> ___isArgument [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 

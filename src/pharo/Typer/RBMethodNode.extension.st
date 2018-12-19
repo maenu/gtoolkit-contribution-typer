@@ -2,6 +2,7 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer' }
 RBMethodNode >> typAssignmentProfile [
+	<typTypeResultAs: 'Set<Association<RBAssignmentNode,TypType>>'>
 	^ self typTemporaryAssignments collect: [ :e | e -> e typType ]
 ]
 
@@ -14,16 +15,20 @@ RBMethodNode >> typIsReturnSelf [
 
 { #category : #'*Typer' }
 RBMethodNode >> typTemporaries [
-	^ self allChildren select: [ :e | e isTemp and: [ e isArgument not ] ]
+	<typTypeResultAs: 'Collection<RBTemporaryNode>'>
+	^ (self allChildren
+		select: [ :e | e isTemp and: [ e isArgument not ] ]) "typParameters RBTemporaryNode"
 ]
 
 { #category : #'*Typer' }
 RBMethodNode >> typTemporaryAssignments [
+	<typTypeResultAs: 'Set<RBAssignmentNode>'>
 	^ (self typTemporaries flatCollect: #typAssignments) asSet
 ]
 
 { #category : #'*Typer' }
 RBMethodNode >> typType [
+	<typTypeResultAs: 'TypType'>
 	| oldProfile newProfile |
 	self typTypeReset.
 	[ oldProfile := self typAssignmentProfile.
@@ -36,7 +41,10 @@ RBMethodNode >> typType [
 	self typTypeReset.
 	newProfile do: [ :e | e key propertyAt: #typType put: e value ].
 	self body typType.
-	^ BlockClosure typAsType asFunctionType: self typTypesForArguments result: self typTypeForResult optionalParameters: false
+	^ BlockClosure typAsType
+		asFunctionType: self typTypesForArguments
+		result: self typTypeForResult
+		optionalParameters: false
 ]
 
 { #category : #'*Typer' }

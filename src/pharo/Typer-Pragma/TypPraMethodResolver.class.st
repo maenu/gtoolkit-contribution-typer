@@ -4,6 +4,12 @@ Class {
 	#category : #'Typer-Pragma-Core'
 }
 
+{ #category : #initialization }
+TypPraMethodResolver >> initialize [
+	<typTypeParametersAs: 'TypMethodLookup'>
+	super initialize
+]
+
 { #category : #accessing }
 TypPraMethodResolver >> resolversFor: aLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>

@@ -38,6 +38,14 @@ TypShaPhaObject >> ___assert: _a [
 ]
 
 { #category : #accessing }
+TypShaPhaObject >> ___at: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | Integer typAsType ];
+		resultType: [ :a :s :r | a receiverType parameters at: 1 ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaObject >> ___class [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
@@ -91,6 +99,14 @@ TypShaPhaObject >> ___ifNil: _a ifNotNil: _b [
 ]
 
 { #category : #accessing }
+TypShaPhaObject >> ___isBlock [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaObject >> ___isKindOf: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | {ClassDescription typAsType} at: i ];
@@ -103,6 +119,14 @@ TypShaPhaObject >> ___isNotNil [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaObject >> ___printOn: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | Stream typAsType asParametricType: {Character typAsType} ];
+		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 

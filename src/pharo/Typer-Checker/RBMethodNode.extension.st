@@ -7,7 +7,7 @@ RBMethodNode >> typCheColor [
 	self typCheHasMissingMethods
 		ifTrue: [ ^ Color orange ].
 	self typCheHasNullableReceivers
-		ifTrue: [ ^ Color yellow ].
+		ifTrue: [ ^ Color purple ].
 	self typCheHasUnknowns
 		ifTrue: [ ^ Color blue ].
 	^ Color green

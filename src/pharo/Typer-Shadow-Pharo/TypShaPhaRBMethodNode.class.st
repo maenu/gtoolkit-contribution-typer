@@ -36,6 +36,14 @@ TypShaPhaRBMethodNode >> ___bestNodeFor: _a [
 ]
 
 { #category : #accessing }
+TypShaPhaRBMethodNode >> ___body [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | RBSequenceNode typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaRBMethodNode >> ___method [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

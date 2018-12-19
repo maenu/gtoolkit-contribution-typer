@@ -2,9 +2,14 @@ Extension { #name : #RBProgramNode }
 
 { #category : #'*Typer' }
 RBProgramNode >> typAnnotateType: aType [
+	<typTypeArgument: 1 as: 'TypType'>
+	<typTypeResultAs: 'TypType'>
 	| type |
 	type := aType.
-	self comments detect: #typIsCastAs ifFound: [ :e | type := e typCastAs ] ifNone: [  ].
+	self comments
+		detect: #typIsCastAs
+		ifFound: [ :e | type := e typCastAs ]
+		ifNone: [  ].
 	self comments
 		detect: #typIsParameters
 		ifFound: [ :f | 
@@ -28,6 +33,7 @@ RBProgramNode >> typType [
 
 { #category : #'*Typer' }
 RBProgramNode >> typTypeRecursive [
+	<typTypeResultAs: 'TypType'>
 	self subclassResponsibility
 ]
 

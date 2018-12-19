@@ -65,7 +65,7 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 	super visitMessageNode: aNode.
 	[ aNode typCheCheckMethod.
 	aNode receiver typType nullable
-		ifTrue: [ self styleSelectorOf: aNode color: Color yellow ].
+		ifTrue: [ self styleSelectorOf: aNode color: Color purple ].
 	aNode receiver typType isUnknown
 		ifTrue: [ self styleSelectorOf: aNode color: Color blue ] ]
 		on: TypCheNoMethodError

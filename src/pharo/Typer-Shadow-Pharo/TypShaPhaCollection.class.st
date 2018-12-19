@@ -9,6 +9,14 @@ TypShaPhaCollection class >> shadowedClass [
 	^ Collection class
 ]
 
+{ #category : #accessing }
+TypShaPhaCollection >> ___add: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | a receiverType parameters at: 1 ];
+		resultType: [ :a :s :r | a argumentTypes at: 1 ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___anyOne [
 	^ TypMethodResolver new
@@ -127,12 +135,12 @@ TypShaPhaCollection >> ___detect: _a ifNone: _b [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaCollection >> ___do: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | 
 			{String typAsType.
-			(BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: a receiverType optionalParameters: false)} typAsType ];
+			(BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: TypUnknownType instance optionalParameters: false)} typAsType ];
 		resultType: [ :a | a receiverType ];
 		yourself
 ]

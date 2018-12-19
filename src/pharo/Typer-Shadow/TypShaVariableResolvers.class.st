@@ -6,6 +6,7 @@ Class {
 
 { #category : #initialization }
 TypShaVariableResolvers >> initialize [
+	<typTypeParametersAs: 'TypVariableLookup'>
 	super initialize.
 	resolvers := #asVariableResolvers
 ]

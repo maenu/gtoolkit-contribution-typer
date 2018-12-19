@@ -62,6 +62,9 @@ TypFunctionType >> hash [
 
 { #category : #accessing }
 TypFunctionType >> initialize [
+	<typTypeResultAs: 'TypFunctionType'>
+	<typTypeVariable: 'optionalParameters' as: 'Boolean'>
+	<typTypeVariable: 'result' as: 'TypType'>
 	super initialize.
 	optionalParameters := false
 ]
@@ -69,15 +72,20 @@ TypFunctionType >> initialize [
 { #category : #comparing }
 TypFunctionType >> isCompatibleWith: aType [
 	^ aType isFunction
-		ifTrue: [ type >= aType type
-				and: [ result >= aType result
+		ifTrue: [ | type_ |
+			type_ := aType "typCastAs TypFunctionType".
+			type >= type_ type
+				and: [ result >= type_ result
 						and: [ | size |
 							size := optionalParameters
-								ifTrue: [ aType parameters size ]
+								ifTrue: [ type_ parameters size ]
 								ifFalse: [ parameters size ].
 							size = 0
 								or: [ size <= parameters size
-										and: [ size <= aType parameters size and: [ ((parameters copyFrom: 1 to: size) withIndexSelect: [ :e :i | e >= (aType parameters at: i) ]) size = size ] ] ] ] ] ]
+										and: [ size <= type_ parameters size
+												and: [ ((parameters copyFrom: 1 to: size)
+														withIndexSelect: [ :e :i | e >= (type_ parameters at: i) ])
+														size = size ] ] ] ] ] ]
 		ifFalse: [ super isCompatibleWith: aType ]
 ]
 
@@ -123,6 +131,7 @@ TypFunctionType >> printOn: aStream [
 
 { #category : #accessing }
 TypFunctionType >> result [
+	<typTypeResultAs: 'TypType'>
 	^ result
 ]
 

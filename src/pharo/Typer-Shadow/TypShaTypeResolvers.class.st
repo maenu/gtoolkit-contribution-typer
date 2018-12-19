@@ -6,6 +6,7 @@ Class {
 
 { #category : #'as yet unclassified' }
 TypShaTypeResolvers >> initialize [
+	<typTypeParametersAs: 'TypTypeLookup'>
 	super initialize.
 	resolvers := #asTypeResolvers
 ]

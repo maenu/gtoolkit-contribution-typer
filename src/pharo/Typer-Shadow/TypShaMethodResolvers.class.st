@@ -6,6 +6,7 @@ Class {
 
 { #category : #initialization }
 TypShaMethodResolvers >> initialize [
+	<typTypeParametersAs: 'TypMethodLookup'>
 	super initialize.
 	resolvers := #asMethodResolvers
 ]
