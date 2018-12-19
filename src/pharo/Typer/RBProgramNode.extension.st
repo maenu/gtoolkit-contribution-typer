@@ -1,24 +1,29 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*Typer' }
+RBProgramNode >> typAnnotateType: aType [
+	| type |
+	type := aType.
+	self comments detect: #typIsCastAs ifFound: [ :e | type := e typCastAs ] ifNone: [  ].
+	self comments
+		detect: #typIsParameters
+		ifFound: [ :f | 
+			| parameters |
+			parameters := f typParameters.
+			(type canBeParametricType and: [ parameters isNotEmpty ])
+				ifTrue: [ type := type asParametricType: parameters ] ]
+		ifNone: [  ].
+	^ type
+]
+
+{ #category : #'*Typer' }
 RBProgramNode >> typType [
 	<typTypeResultAs: 'TypType'>
 	^ self
 		propertyAt: #typType
-		ifAbsentPut: [ | type |
-			"need to set property to default to unknown on recursive calls"
+		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
 			self propertyAt: #typType put: TypUnknownType instance.
-			type := self typTypeRecursive.
-			self comments detect: #typIsCastAs ifFound: [ :e | type := e typCastAs ] ifNone: [  ].
-			self comments
-				detect: #typIsParameters
-				ifFound: [ :e | 
-					| parameters |
-					parameters := e typParameters.
-					(type canBeParametricType and: [ parameters isNotEmpty ])
-						ifTrue: [ type := type asParametricType: parameters ] ]
-				ifNone: [  ].
-			type ]
+			self typAnnotateType: self typTypeRecursive ]
 ]
 
 { #category : #'*Typer' }

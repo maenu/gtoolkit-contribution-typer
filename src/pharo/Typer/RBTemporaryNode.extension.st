@@ -7,5 +7,5 @@ RBTemporaryNode >> typAssignments [
 
 { #category : #'*Typer' }
 RBTemporaryNode >> typType [
-	^ (self typAssignments collect: #typType) typAsType
+	^ self typAnnotateType: (self typAssignments collect: #typType) typAsType
 ]

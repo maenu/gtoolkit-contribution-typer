@@ -95,7 +95,9 @@ TypGtCheckBodyStyler >> visitMethodNode: aNode [
 				beAppend;
 				stencil: [ BlElement new
 						background:
-							([ aNode method ast typCheColor ]
+							([ aNode method ast
+								typType;
+								typCheColor ]
 								on: Error
 								do: [ Halt now ]);
 						constraintsDo: [ :c | 
