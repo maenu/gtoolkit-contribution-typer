@@ -74,16 +74,21 @@ TypParametricType >> hash [
 { #category : #initialization }
 TypParametricType >> initialize [
 	<typTypeVariable: 'type' as: 'TypType'>
-	<typTypeVariable: 'parameters' as: 'OrderedCollection<TypType>'>
+	<typTypeVariable: 'parameters' as: 'SequenceableCollection<TypType>'>
 	super initialize.
-	parameters := OrderedCollection new
+	parameters := OrderedCollection new "typParameters TypType"
 ]
 
 { #category : #comparing }
 TypParametricType >> isCompatibleWith: aType [
 	^ aType isParametric
-		ifTrue: [ type >= aType type
-				and: [ parameters size = aType parameters size and: [ (parameters withIndexSelect: [ :e :i | e >= (aType parameters at: i) ]) size = parameters size ] ] ]
+		ifTrue: [ | type_ |
+			type_ := aType "typCastAs TypParametricType".
+			type >= type_ type
+				and: [ parameters size = type_ parameters size
+						and: [ (parameters
+								withIndexSelect: [ :e :i | e >= (type_ parameters at: i) ])
+								size = parameters size ] ] ]
 		ifFalse: [ super isCompatibleWith: aType ]
 ]
 
@@ -143,7 +148,7 @@ TypParametricType >> superType [
 				yourself ]
 		ifFalse: [ | superType |
 			superType := type superType.
-			(superType isParametric and: [ parameters size = superType parameters size ])
+			(superType isParametric and: [ parameters size = (superType "typCastAs TypParametricType") parameters size ])
 				ifTrue: [ self copy
 						type: superType asNonParametricType;
 						yourself ]

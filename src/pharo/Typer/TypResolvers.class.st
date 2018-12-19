@@ -43,10 +43,11 @@ TypResolvers >> defaultResolver: anObject [
 
 { #category : #initialization }
 TypResolvers >> initialize [
+	<typTypeParametersAs: 'TypLookup,TypResolver'>
 	<typTypeVariable: 'resolvers' as: 'SequenceableCollection<TypResolver<TypLookup>>'>
 	<typTypeVariable: 'defaultResolver' as: 'TypResolver<TypLookup>'>
 	super initialize.
-	resolvers := OrderedCollection new
+	resolvers := OrderedCollection new "typParameters TypResolver<TypLookup>"
 ]
 
 { #category : #accessing }
@@ -73,9 +74,6 @@ TypResolvers >> resolves: aLookup [
 
 { #category : #accessing }
 TypResolvers >> typeFor: aLookup using: aBlock [
-	<typTypeArgument: 1 as: 'TypLookup'>
-	<typTypeArgument: 2 as: 'BlockClosure(TypResolver<TypLookup>,TypLookup)->TypType'>
-	<typTypeResultAs: 'TypType'>
 	| lookup |
 	lookup := aLookup.
 	[ (self resolversFor: lookup)

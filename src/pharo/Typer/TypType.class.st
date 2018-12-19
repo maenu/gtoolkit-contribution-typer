@@ -49,10 +49,10 @@ TypType >> allSuperTypes [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	^ self hasSuperType
 		ifTrue: [ | temp |
-			temp := self superType allSuperTypes.
+			temp := self superType allSuperTypes asOrderedCollection.
 			temp addFirst: self superType.
 			temp ]
-		ifFalse: [ OrderedCollection new ]
+		ifFalse: [ OrderedCollection new "typParameters TypType" ]
 ]
 
 { #category : #converting }

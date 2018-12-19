@@ -49,6 +49,14 @@ TypShaPhaSequenceableCollection >> ___detectIndex: _a [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaSequenceableCollection >> ___endsWith: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | a receiverType ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaSequenceableCollection >> ___first [
 	^ TypMethodResolver new
