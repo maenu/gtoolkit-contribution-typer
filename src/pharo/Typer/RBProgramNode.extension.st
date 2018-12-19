@@ -23,8 +23,7 @@ RBProgramNode >> typType [
 
 { #category : #'*Typer' }
 RBProgramNode >> typTypeRecursive [
-	<typTypeResultAs: 'TypType'>
-	^ TypUnknownType instance
+	self subclassResponsibility
 ]
 
 { #category : #'*Typer' }

@@ -1,10 +1,46 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer' }
+RBMethodNode >> typAssignmentProfile [
+	^ self typTemporaryAssignments collect: [ :e | e -> e typType ]
+]
+
+{ #category : #'*Typer' }
 RBMethodNode >> typIsReturnSelf [
 	<typTypeResultAs: 'Boolean'>
 	^ ((self allChildren select: #isReturn)
 		reject: [ :e | (e "typCastAs RBReturnNode") value isSelf ]) isEmpty
+]
+
+{ #category : #'*Typer' }
+RBMethodNode >> typTemporaries [
+	^ self allChildren select: #isTemp
+]
+
+{ #category : #'*Typer' }
+RBMethodNode >> typTemporaryAssignments [
+	^ (self typTemporaries collect: #typAssignments) asSet
+]
+
+{ #category : #'*Typer' }
+RBMethodNode >> typType [
+	| i oldProfile newProfile |
+	Halt now.
+	i := 0.
+	[ oldProfile := self typAssignmentProfile.
+	self typTypeReset.
+	oldProfile do: [ :e | e key propertyAt: #typType put: e value ].
+	self body typType.
+	newProfile := self typAssignmentProfile.
+	[ i = 10 ]
+		ifTrue: [ Halt now ].
+	i := i + 1.
+	oldProfile = newProfile ] whileFalse.
+	"one last time for good measure"
+	self typTypeReset.
+	newProfile do: [ :e | e key propertyAt: #typType put: e value ].
+	self body typType.
+	^ BlockClosure typAsType asFunctionType: self typTypesForArguments result: self typTypeForResult optionalParameters: false
 ]
 
 { #category : #'*Typer' }

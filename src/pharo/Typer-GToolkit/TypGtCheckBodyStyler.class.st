@@ -82,6 +82,7 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 { #category : #visiting }
 TypGtCheckBodyStyler >> visitMethodNode: aNode [
 	| position |
+	aNode typType.
 	super visitMethodNode: aNode.
 	position := aNode arguments isEmpty
 		ifTrue: [ aNode selector size ]
