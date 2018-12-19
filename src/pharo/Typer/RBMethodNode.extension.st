@@ -14,27 +14,23 @@ RBMethodNode >> typIsReturnSelf [
 
 { #category : #'*Typer' }
 RBMethodNode >> typTemporaries [
-	^ self allChildren select: #isTemp
+	^ self allChildren select: [ :e | e isTemp and: [ e isArgument not ] ]
 ]
 
 { #category : #'*Typer' }
 RBMethodNode >> typTemporaryAssignments [
-	^ (self typTemporaries collect: #typAssignments) asSet
+	^ (self typTemporaries flatCollect: #typAssignments) asSet
 ]
 
 { #category : #'*Typer' }
 RBMethodNode >> typType [
-	| i oldProfile newProfile |
-	Halt now.
-	i := 0.
+	| oldProfile newProfile |
+	self typTypeReset.
 	[ oldProfile := self typAssignmentProfile.
 	self typTypeReset.
 	oldProfile do: [ :e | e key propertyAt: #typType put: e value ].
 	self body typType.
 	newProfile := self typAssignmentProfile.
-	[ i = 10 ]
-		ifTrue: [ Halt now ].
-	i := i + 1.
 	oldProfile = newProfile ] whileFalse.
 	"one last time for good measure"
 	self typTypeReset.
