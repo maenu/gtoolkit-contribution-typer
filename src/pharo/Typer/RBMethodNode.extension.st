@@ -22,8 +22,8 @@ RBMethodNode >> typTemporaries [
 
 { #category : #'*Typer' }
 RBMethodNode >> typTemporaryAssignments [
-	<typTypeResultAs: 'Set<RBAssignmentNode>'>
-	^ (self typTemporaries flatCollect: #typAssignments) asSet
+	<typTypeResultAs: 'IdentitySet<RBAssignmentNode>'>
+	^ (self typTemporaries flatCollect: #typAssignments) asIdentitySet
 ]
 
 { #category : #'*Typer' }

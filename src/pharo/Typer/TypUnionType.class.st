@@ -98,7 +98,7 @@ TypUnionType >> initialize [
 { #category : #comparing }
 TypUnionType >> isCompatibleWith: aType [
 	^ aType isUnion
-		ifTrue: [ aType types allSatisfy: [ :e | self >= e ] ]
+		ifTrue: [ (aType "typCastAs TypUnionType") types allSatisfy: [ :e | self >= e ] ]
 		ifFalse: [ (types anySatisfy: [ :e | e >= aType ]) or: [ super isCompatibleWith: aType ] ]
 ]
 
@@ -127,7 +127,7 @@ TypUnionType >> nullable: aBoolean [
 { #category : #generated }
 TypUnionType >> parameters [
 	self assert: [ (self isParametric) and: [ self superType isParametric ] ].
-	^ self superType parameters
+	^ (self superType "typCastAs TypParametricType") parameters
 ]
 
 { #category : #'as yet unclassified' }
@@ -139,7 +139,11 @@ TypUnionType >> postCopy [
 { #category : #printing }
 TypUnionType >> printOn: aStream [
 	super printOn: aStream.
-	aStream << 'U '
+	aStream << 'U'
+		<<
+			((types includes: TypUnknownType instance)
+				ifTrue: [ TypUnknownType instance printString ]
+				ifFalse: [ '' ]) << ' '
 		<<
 			(self superType isUnion
 				ifTrue: [ '...' ]
@@ -149,20 +153,22 @@ TypUnionType >> printOn: aStream [
 { #category : #accessing }
 TypUnionType >> superType [
 	| remains nullable_ current |
-	remains := types copy.
+	remains := types copy asOrderedCollection.
 	nullable_ := remains includes: TypNilType instance.
 	remains remove: TypNilType instance ifAbsent: [  ].
 	remains ifEmpty: [ ^ TypNilType instance ].
 	remains remove: TypUnknownType instance ifAbsent: [  ].
 	remains ifEmpty: [ ^ TypUnknownType instance ].
-	remains := remains asOrderedCollection sort: [ :a :b | a >= b ].
+	remains := remains sort: [ :a :b | a >= b ].
 	current := remains first.
 	remains remove: current.
 	[ remains isEmpty ]
 		whileFalse: [ | next common |
 			next := remains first.
 			remains remove: next.
-			common := current withAllSuperTypes detect: [ :e | e >= next ] ifNone: [ ^ TypUnknownType instance ].
+			common := current withAllSuperTypes
+				detect: [ :e | e >= next ]
+				ifNone: [ ^ TypUnknownType instance ].
 			common = current
 				ifFalse: [ current := common.
 					remains add: current.

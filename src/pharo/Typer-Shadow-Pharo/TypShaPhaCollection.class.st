@@ -17,6 +17,19 @@ TypShaPhaCollection >> ___add: _a [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaCollection >> ___allSatisfy: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a | 
+			{String typAsType.
+			(BlockClosure typAsType
+				asFunctionType: {(a receiverType parameters at: 1)}
+				result: Boolean typAsType
+				optionalParameters: false)} typAsType ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___anyOne [
 	^ TypMethodResolver new
@@ -323,6 +336,22 @@ TypShaPhaCollection >> ___remove: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | a receiverType parameters at: 1 ];
 		resultType: [ :a :s :r | a receiverType parameters at: 1 ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaCollection >> ___remove: _a ifAbsent: _b [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			i = 1
+				ifTrue: [ a receiverType parameters at: 1 ]
+				ifFalse: [ BlockClosure typAsType
+						asFunctionType: {}
+						result: TypUnknownType instance
+						optionalParameters: false ] ];
+		resultType: [ :a :s :r | 
+			{(a argumentTypes at: 1).
+			(a argumentTypes at: 2) result} typAsType ];
 		yourself
 ]
 

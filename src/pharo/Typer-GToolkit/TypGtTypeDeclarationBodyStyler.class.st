@@ -14,7 +14,9 @@ TypGtTypeDeclarationBodyStyler >> visitArgumentNode: aNode [
 { #category : #visiting }
 TypGtTypeDeclarationBodyStyler >> visitMethodNode: aNode [
 	| position |
-	aNode typType.
+	[ aNode typType ]
+		on: Error
+		do: [ Halt now ].
 	super visitMethodNode: aNode.
 	position := aNode arguments isEmpty
 		ifTrue: [ aNode selector size ]

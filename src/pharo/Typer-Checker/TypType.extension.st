@@ -2,5 +2,8 @@ Extension { #name : #TypType }
 
 { #category : #'*Typer-Checker' }
 TypType >> typCheHasMethod: aSymbol [
-	^ self hasClass and: [ (self asClass lookupSelector: aSymbol) isNotNil ]
+	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeResultAs: 'Boolean'>
+	^ self hasClass
+		and: [ (self asClass lookupSelector: aSymbol) isNotNil ]
 ]

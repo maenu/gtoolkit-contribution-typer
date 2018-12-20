@@ -93,10 +93,14 @@ TypShaPhaSequenceableCollection >> ___last [
 TypShaPhaSequenceableCollection >> ___sort: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | 
+			| type |
+			type := a receiverType isParametric
+				ifTrue: [ a receiverType parameters at: 1 ]
+				ifFalse: [ TypUnknownType instance ].
 			BlockClosure typAsType
 				asFunctionType:
-					{(a receiverType parameters at: 1).
-					(a receiverType parameters at: 1)}
+					{type.
+					type}
 				result: Boolean typAsType
 				optionalParameters: false ];
 		resultType: [ :a | a receiverType ];

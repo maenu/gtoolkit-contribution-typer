@@ -35,6 +35,14 @@ TypShaPhaBehavior >> ___compiledMethodAt: _a [
 ]
 
 { #category : #accessing }
+TypShaPhaBehavior >> ___inheritsFrom: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | ClassDescription typAsType ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaBehavior >> ___instVarNames [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

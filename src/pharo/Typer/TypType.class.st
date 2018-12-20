@@ -46,10 +46,10 @@ TypType >> >= aType [
 
 { #category : #accessing }
 TypType >> allSuperTypes [
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
+	<typTypeResultAs: 'OrderedCollection<TypType>'>
 	^ self hasSuperType
 		ifTrue: [ | temp |
-			temp := self superType allSuperTypes asOrderedCollection.
+			temp := self superType allSuperTypes.
 			temp addFirst: self superType.
 			temp ]
 		ifFalse: [ OrderedCollection new "typParameters TypType" ]
@@ -217,7 +217,7 @@ TypType >> superType [
 
 { #category : #accessing }
 TypType >> withAllSuperTypes [
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
+	<typTypeResultAs: 'OrderedCollection<TypType>'>
 	| superTypes |
 	superTypes := self allSuperTypes.
 	superTypes addFirst: self.

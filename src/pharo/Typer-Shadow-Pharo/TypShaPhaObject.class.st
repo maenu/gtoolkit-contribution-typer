@@ -165,3 +165,13 @@ TypShaPhaObject >> ~~~= _a [
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaPhaObject >> ~~~~= _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			{TypUnknownType instance.
+			TypNilType instance} typAsType ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]

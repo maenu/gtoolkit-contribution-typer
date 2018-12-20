@@ -95,6 +95,13 @@ TypFunctionType >> isFunction [
 ]
 
 { #category : #accessing }
+TypFunctionType >> nullable: anObject [
+	"do nothing"
+
+	
+]
+
+{ #category : #accessing }
 TypFunctionType >> optionalParameters [
 	^ optionalParameters
 ]
