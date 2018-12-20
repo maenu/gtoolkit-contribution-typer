@@ -2,7 +2,7 @@ Extension { #name : #RBArgumentNode }
 
 { #category : #'*Typer' }
 RBArgumentNode >> typType [
-	^ (self whoDefines: self name) isBlock
+	^ self isBlockVar
 		ifTrue: [ self typTypeRecursive ]
 		ifFalse: [ super typType ]
 ]

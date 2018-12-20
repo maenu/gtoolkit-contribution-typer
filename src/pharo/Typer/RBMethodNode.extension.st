@@ -2,8 +2,8 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer' }
 RBMethodNode >> typAssignmentProfile [
-	<typTypeResultAs: 'Set<Association<RBAssignmentNode,TypType>>'>
-	^ self typTemporaryAssignments collect: [ :e | e -> e typType ]
+	<typTypeResultAs: 'SequenceableCollection<Association<RBAssignmentNode,TypType>>'>
+	^ (self typTemporaries flatCollect: #typAssignments) collect: [ :e | e -> e typType ]
 ]
 
 { #category : #'*Typer' }
@@ -15,15 +15,8 @@ RBMethodNode >> typIsReturnSelf [
 
 { #category : #'*Typer' }
 RBMethodNode >> typTemporaries [
-	<typTypeResultAs: 'Collection<RBTemporaryNode>'>
-	^ (self allChildren
-		select: [ :e | e isTemp and: [ e isArgument not ] ]) "typParameters RBTemporaryNode"
-]
-
-{ #category : #'*Typer' }
-RBMethodNode >> typTemporaryAssignments [
-	<typTypeResultAs: 'IdentitySet<RBAssignmentNode>'>
-	^ (self typTemporaries flatCollect: #typAssignments) asIdentitySet
+	<typTypeResultAs: 'SequenceableCollection<RBTemporaryNode>'>
+	^ (self allChildren select: [ :e | e isKindOf: RBTemporaryNode ]) "typParameters RBTemporaryNode"
 ]
 
 { #category : #'*Typer' }
