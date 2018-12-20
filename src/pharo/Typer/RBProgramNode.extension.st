@@ -1,10 +1,27 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*Typer' }
-RBProgramNode >> typAllChildrenBefore: aNode [
-	^ aNode == self
-		ifTrue: [ {} ]
-		ifFalse: [ (self parent ifNil: [ {} ] ifNotNil: [ :e | e typAllChildrenBefore: self ]) , {self} , (self typChildrenBefore: aNode) ]
+RBProgramNode >> typAllReachableChildrenAfter: aNode [
+	^ (IdentitySet with: self)
+		,
+			(aNode == self
+				ifTrue: [ IdentitySet new ]
+				ifFalse: [ (self typReachableChildrenAfter: aNode) flatCollect: [ :e | e typAllReachableChildrenAfter: aNode ] ])
+]
+
+{ #category : #'*Typer' }
+RBProgramNode >> typAllReachableChildrenBefore: aNode [
+	^ (aNode == self or: [ (self allChildren asIdentitySet includes: aNode) not ])
+		ifTrue: [ IdentitySet new ]
+		ifFalse: [ (self parent ifNil: [ IdentitySet new ] ifNotNil: [ :e | e typAllReachableChildrenBefore: self ])
+				,
+					((self typReachableChildrenBefore: aNode)
+						flatCollect: [ :e | 
+							{e}
+								,
+									(e isBlock
+										ifTrue: [ {} ]
+										ifFalse: [ e allChildren ]) ]) ]
 ]
 
 { #category : #'*Typer' }
@@ -29,15 +46,29 @@ RBProgramNode >> typAnnotateType: aType [
 ]
 
 { #category : #'*Typer' }
-RBProgramNode >> typChildrenBefore: aNode [
+RBProgramNode >> typReachableChildrenAfter: aNode [
 	| children i |
 	children := self children.
 	i := children indexOf: aNode.
 	i = 0
 		ifTrue: [ ^ children ].
-	i = 1
+	i = children size
 		ifTrue: [ ^ {} ].
-	^ children copyFrom: 1 to: i - 1
+	^ (children copyFrom: i + 1 to: children size) asIdentitySet
+]
+
+{ #category : #'*Typer' }
+RBProgramNode >> typReachableChildrenBefore: aNode [
+	^ aNode parents
+		detect: [ :e | e parent == self ]
+		ifFound: [ :e | 
+			| children i |
+			children := self children.
+			i := children indexOf: e.
+			i = children size
+				ifTrue: [ IdentitySet new ]
+				ifFalse: [ (children copyFrom: 1 to: i - 1) asIdentitySet ] ]
+		ifNone: [ IdentitySet new ]
 ]
 
 { #category : #'*Typer' }
