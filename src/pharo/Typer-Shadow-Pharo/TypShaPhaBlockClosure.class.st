@@ -86,6 +86,18 @@ TypShaPhaBlockClosure >> ___value: _a value: _b value: _c value: _d [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaBlockClosure >> ___whileFalse: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			BlockClosure typAsType
+				asFunctionType: {}
+				result: TypUnknownType instance
+				optionalParameters: false ];
+		resultType: [ :a :s :r | a receiverType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaBlockClosure >> asType: aClass [
 	^ aClass typAsNamedType asFunctionType: {} result: TypUnknownType instance optionalParameters: false

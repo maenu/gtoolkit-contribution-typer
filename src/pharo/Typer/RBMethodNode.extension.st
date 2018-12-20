@@ -1,12 +1,6 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer' }
-RBMethodNode >> typAssignmentProfile [
-	<typTypeResultAs: 'SequenceableCollection<Association<RBAssignmentNode,TypType>>'>
-	^ (self typTemporaries flatCollect: #typAssignments) collect: [ :e | e -> e typType ]
-]
-
-{ #category : #'*Typer' }
 RBMethodNode >> typIsReturnSelf [
 	<typTypeResultAs: 'Boolean'>
 	^ ((self allChildren select: #isReturn)
@@ -14,9 +8,9 @@ RBMethodNode >> typIsReturnSelf [
 ]
 
 { #category : #'*Typer' }
-RBMethodNode >> typTemporaries [
-	<typTypeResultAs: 'SequenceableCollection<RBTemporaryNode>'>
-	^ (self allChildren select: [ :e | e isKindOf: RBTemporaryNode ]) "typParameters RBTemporaryNode"
+RBMethodNode >> typTemporaryProfile [
+	<typTypeResultAs: 'SequenceableCollection<Association<RBTemporaryNode,TypType>>'>
+	^ ((self allChildren select: [ :e | e isKindOf: RBTemporaryNode ]) "typParameters RBTemporaryNode") collect: [ :e | e -> e typType ]
 ]
 
 { #category : #'*Typer' }
@@ -24,20 +18,17 @@ RBMethodNode >> typType [
 	<typTypeResultAs: 'TypType'>
 	| oldProfile newProfile |
 	self typTypeReset.
-	[ oldProfile := self typAssignmentProfile.
+	[ oldProfile := self typTemporaryProfile.
 	self typTypeReset.
 	oldProfile do: [ :e | e key propertyAt: #typType put: e value ].
 	self body typType.
-	newProfile := self typAssignmentProfile.
+	newProfile := self typTemporaryProfile.
 	oldProfile = newProfile ] whileFalse.
 	"one last time for good measure"
 	self typTypeReset.
 	newProfile do: [ :e | e key propertyAt: #typType put: e value ].
 	self body typType.
-	^ BlockClosure typAsType
-		asFunctionType: self typTypesForArguments
-		result: self typTypeForResult
-		optionalParameters: false
+	^ BlockClosure typAsType asFunctionType: self typTypesForArguments result: self typTypeForResult optionalParameters: false
 ]
 
 { #category : #'*Typer' }

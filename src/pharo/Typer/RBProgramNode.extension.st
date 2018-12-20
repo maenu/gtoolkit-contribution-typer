@@ -1,6 +1,13 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*Typer' }
+RBProgramNode >> typAllChildrenBefore: aNode [
+	^ aNode == self
+		ifTrue: [ {} ]
+		ifFalse: [ (self parent ifNil: [ {} ] ifNotNil: [ :e | e typAllChildrenBefore: self ]) , {self} , (self typChildrenBefore: aNode) ]
+]
+
+{ #category : #'*Typer' }
 RBProgramNode >> typAnnotateType: aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'TypType'>
@@ -22,6 +29,18 @@ RBProgramNode >> typAnnotateType: aType [
 ]
 
 { #category : #'*Typer' }
+RBProgramNode >> typChildrenBefore: aNode [
+	| children i |
+	children := self children.
+	i := children indexOf: aNode.
+	i = 0
+		ifTrue: [ ^ children ].
+	i = 1
+		ifTrue: [ ^ {} ].
+	^ children copyFrom: 1 to: i - 1
+]
+
+{ #category : #'*Typer' }
 RBProgramNode >> typType [
 	<typTypeResultAs: 'TypType'>
 	^ self
@@ -34,7 +53,7 @@ RBProgramNode >> typType [
 { #category : #'*Typer' }
 RBProgramNode >> typTypeRecursive [
 	<typTypeResultAs: 'TypType'>
-	self subclassResponsibility
+	^ TypUnknownType instance
 ]
 
 { #category : #'*Typer' }
