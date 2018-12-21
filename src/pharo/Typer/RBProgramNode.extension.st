@@ -23,23 +23,27 @@ RBProgramNode >> typAnnotateType: aType [
 
 { #category : #'*Typer' }
 RBProgramNode >> typPrevious [
-	| i |
+	| i previous |
 	self parent ifNil: [ ^ nil ].
 	i := self parent children detectIndex: [ :e | e == self ].
 	i = 1
 		ifTrue: [ ^ nil ].
-	^ self parent children at: i - 1
+	previous := self parent children at: i - 1.
+	"skip temporary declarations"
+	^ (self parent isSequence and: [ self parent temporaries anySatisfy: [ :e | e == previous ] ])
+		ifTrue: [ nil ]
+		ifFalse: [ previous ]
 ]
 
 { #category : #'*Typer' }
-RBProgramNode >> typReachableTypeFor: aString until: aMethodOrBlockNode [
+RBProgramNode >> typReachableTypeFor: aString until: aSequenceNode [
 	| previous |
-	self == aMethodOrBlockNode
+	self == aSequenceNode
 		ifTrue: [ ^ TypNilType instance ].
-	previous := self typPrevious ifNil: [ ^ self parent typReachableTypeFor: aString until: aMethodOrBlockNode ].
+	previous := self typPrevious ifNil: [ ^ self parent typReachableTypeFor: aString until: aSequenceNode ].
 	(previous isAssignment and: [ previous variable name = aString ])
 		ifTrue: [ ^ previous typType ].
-	^ previous typReachableTypeFor: aString until: aMethodOrBlockNode
+	^ previous typReachableTypeFor: aString until: aSequenceNode
 ]
 
 { #category : #'*Typer' }

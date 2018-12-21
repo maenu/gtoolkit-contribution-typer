@@ -9,9 +9,9 @@ RBTemporaryNode >> typAssignments [
 
 { #category : #'*Typer' }
 RBTemporaryNode >> typTypeRecursive [
-	^ (self parent isAssignment and: [ self parent variable == self	"typCastAs RBAssignmentNode" ])
-		ifTrue: [ self parent value typType	"typCastAs RBAssignmentNode" ]
-		ifFalse: [ (self parent isSequence and: [ self parent parent isBlock or: [ self parent parent isMethod ] ])
+	^ (self parent isAssignment and: [ self parent "typCastAs RBAssignmentNode" variable == self ])
+		ifTrue: [ self parent "typCastAs RBAssignmentNode" value typType ]
+		ifFalse: [ (self parent isSequence and: [ self parent temporaries contains: [ :e | e == self ] ])
 				ifTrue: [ (self typAssignments collect: #typType) typAsType ]
 				ifFalse: [ self typReachableTypeFor: self name until: (self whoDefines: self name) ] ]
 ]

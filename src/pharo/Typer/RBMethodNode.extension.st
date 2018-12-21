@@ -16,9 +16,13 @@ RBMethodNode >> typTemporaryProfile [
 { #category : #'*Typer' }
 RBMethodNode >> typType [
 	<typTypeResultAs: 'TypType'>
-	| oldProfile newProfile |
+	| i oldProfile newProfile |
+	i := 0.
 	self typTypeReset.
-	[ oldProfile := self typTemporaryProfile.
+	[ i > 0
+		ifTrue: [ i asString logCr ].
+	i := i + 1.
+	oldProfile := self typTemporaryProfile.
 	self typTypeReset.
 	oldProfile do: [ :e | e key propertyAt: #typType put: e value ].
 	self body typType.
