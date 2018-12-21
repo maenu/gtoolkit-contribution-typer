@@ -30,6 +30,14 @@ TypShaPhaCollection >> ___add: _a [
 ]
 
 { #category : #accessing }
+TypShaPhaCollection >> ___addAll: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | Collection typAsType asParametricType: {a receiverType parameters at: 1} ];
+		resultType: [ :a :s :r | a argumentTypes at: 1 ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaCollection >> ___allSatisfy: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a | 

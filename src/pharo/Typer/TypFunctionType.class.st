@@ -50,7 +50,7 @@ TypFunctionType >> canBeFunctionType [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypFunctionType >> compatibleWith: aType [
 	| compatibleType compatibleResult |
 	compatibleType := super compatibleWith: aType.
@@ -58,10 +58,10 @@ TypFunctionType >> compatibleWith: aType [
 		ifFalse: [ ^ compatibleType ].
 	aType isFunction
 		ifFalse: [ ^ compatibleType ].
-	compatibleResult := result compatibleWith: aType result.
+	compatibleResult := result compatibleWith: (aType "typCastAs TypFunctionType") result.
 	^ TypFunctionType new
-		type: compatibleType type;
-		parameters: compatibleType parameters;
+		type: (compatibleType "typCastAs TypFunctionType") type;
+		parameters: (compatibleType "typCastAs TypFunctionType") parameters;
 		result: compatibleResult;
 		yourself
 ]
@@ -119,6 +119,7 @@ TypFunctionType >> nullable: anObject [
 
 { #category : #accessing }
 TypFunctionType >> optionalParameters [
+	<typTypeResultAs: 'Boolean'>
 	^ optionalParameters
 ]
 

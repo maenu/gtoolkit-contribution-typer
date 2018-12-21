@@ -25,7 +25,6 @@ TypUnknownType >> asFunctionType: someTypes result: aType optionalParameters: aB
 
 { #category : #converting }
 TypUnknownType >> asNonParametricType [
-	<typTypeResultAs: 'TypNamedType'>
 	^ TypUnknownType instance
 ]
 
@@ -82,6 +81,7 @@ TypUnknownType >> nullable: anObject [
 
 { #category : #generated }
 TypUnknownType >> parameters [
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	self flag: 'this is very hackish'.
 	^ {self.
 	self.

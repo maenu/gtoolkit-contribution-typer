@@ -15,7 +15,7 @@ TypShaPhaSmalltalkImage >> ___globals [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SystemDictionary typAsType
-				asParametericType:
+				asParametricType:
 					{String typAsType.
 					Class typAsType} ];
 		yourself

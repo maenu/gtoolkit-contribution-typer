@@ -78,6 +78,7 @@ TypMethodLookup >> hash [
 { #category : #initialization }
 TypMethodLookup >> initialize [
 	<typTypeVariable: 'argumentTypes' as: 'SequenceableCollection<TypType>'>
+	<typTypeVariable: 'argumentNodes' as: 'SequenceableCollection<RBValueNode>'>
 	super initialize
 ]
 

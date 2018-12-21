@@ -123,8 +123,10 @@ TypType >> canBeParametricType [
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypType >> compatibleWith: aType [
+	<typTypeArgument: 1 as: 'TypType'>
+	<typTypeResultAs: 'TypType'>
 	self subclassResponsibility
 ]
 

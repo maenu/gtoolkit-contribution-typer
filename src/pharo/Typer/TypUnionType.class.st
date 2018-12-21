@@ -38,7 +38,6 @@ TypUnionType >> asFunctionType: someTypes result: aType optionalParameters: aBoo
 
 { #category : #converting }
 TypUnionType >> asNonParametricType [
-	<typTypeResultAs: 'TypNamedType'>
 	^ self superType asNonParametricType
 ]
 
@@ -72,7 +71,7 @@ TypUnionType >> canBeParametricType [
 	^ types anySatisfy: #canBeParametricType
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypUnionType >> compatibleWith: aType [
 	| remains nullable_ current |
 	aType isUnknown
@@ -98,7 +97,7 @@ TypUnionType >> compatibleWith: aType [
 			common = current
 				ifFalse: [ current := common.
 					current isUnion
-						ifTrue: [ remains addAll: current types ]
+						ifTrue: [ remains addAll: (current "typCastAs TypUnionType") types ]
 						ifFalse: [ remains add: current ].
 					remains := remains asSet asOrderedCollection sort: [ :a :b | a >= b ] ] ].
 	nullable_
@@ -160,8 +159,10 @@ TypUnionType >> nullable: aBoolean [
 
 { #category : #generated }
 TypUnionType >> parameters [
-	self assert: [ (self isParametric) and: [ self superType isParametric ] ].
-	^ (self superType "typCastAs TypParametricType") parameters
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
+	self
+		assert: [ self isParametric and: [ self superType isParametric ] ].
+	^ (self superType "typCastAs TypUnionType") parameters
 ]
 
 { #category : #'as yet unclassified' }
