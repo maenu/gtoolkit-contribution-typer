@@ -169,10 +169,11 @@ TypUnionType >> superType [
 			common := current withAllSuperTypes
 				detect: [ :e | e >= next ]
 				ifNone: [ ^ TypUnknownType instance ].
+				self flag: 'parametric types supertypes are multidimensional...'.
 			common = current
 				ifFalse: [ current := common.
 					remains add: current.
-					remains := remains sort: [ :a :b | a >= b ] ] ].
+					remains := remains asSet asOrderedCollection sort: [ :a :b | a >= b ] ] ].
 	nullable_
 		ifTrue: [ current := current copy.
 			current nullable: true ].

@@ -1,41 +1,6 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*Typer' }
-RBProgramNode >> typAllReachableChildrenAfter: aNode [
-	<typTypeArgument: 1 as: 'RBProgramNode'>
-	<typTypeResultAs: 'IdentitySet<RBProgramNode>'>
-	^ (IdentitySet with: self)
-		,
-			(aNode == self
-				ifTrue: [ IdentitySet new "typParameters RBProgramNode" ]
-				ifFalse: [ (self typReachableChildrenAfter: aNode)
-						flatCollect: [ :e | e typAllReachableChildrenAfter: aNode ] ])
-]
-
-{ #category : #'*Typer' }
-RBProgramNode >> typAllReachableChildrenBefore [
-	<typTypeResultAs: 'Collection<RBProgramNode>'>
-	^ self children
-		, (self children flatCollect: #typAllReachableChildrenBefore)
-]
-
-{ #category : #'*Typer' }
-RBProgramNode >> typAllReachableChildrenBefore: aNode [
-	<typTypeArgument: 1 as: 'RBProgramNode'>
-	<typTypeResultAs: 'Collection<RBProgramNode>'>
-	^ (aNode == self
-		or: [ (aNode parents asIdentitySet includes: self) not ])
-		ifTrue: [ IdentitySet new "typParameters RBProgramNode" ]
-		ifFalse: [ | node children i |
-			node := aNode parents reversed detect: [ :e | e parent == self ].
-			children := self children.
-			i := children detectIndex: [ :e | e == node ].
-			children := (children copyFrom: 1 to: i) asOrderedCollection copy.
-			(children removeLast typAllReachableChildrenBefore: aNode)
-				, (children flatCollect: [ :e | e typAllReachableChildrenBefore , {e} ]) ]
-]
-
-{ #category : #'*Typer' }
 RBProgramNode >> typAnnotateType: aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'TypType'>
@@ -57,33 +22,24 @@ RBProgramNode >> typAnnotateType: aType [
 ]
 
 { #category : #'*Typer' }
-RBProgramNode >> typReachableChildrenAfter: aNode [
-	<typTypeArgument: 1 as: 'RBProgramNode'>
-	<typTypeResultAs: 'Collection<RBProgramNode>'>
-	| children i |
-	children := self children.
-	i := children detectIndex: [ :e | e == aNode ] ifNone: 0.
-	i = 0
-		ifTrue: [ ^ children ].
-	i = children size
-		ifTrue: [ ^ {} ].
-	^ (children copyFrom: i + 1 to: children size) asIdentitySet
+RBProgramNode >> typPrevious [
+	| i |
+	self parent ifNil: [ ^ nil ].
+	i := self parent children detectIndex: [ :e | e == self ].
+	i = 1
+		ifTrue: [ ^ nil ].
+	^ self parent children at: i - 1
 ]
 
 { #category : #'*Typer' }
-RBProgramNode >> typReachableChildrenBefore: aNode [
-	<typTypeArgument: 1 as: 'RBProgramNode'>
-	<typTypeResultAs: 'Collection<RBProgramNode>'>
-	^ aNode parents reversed
-		detect: [ :e | e parent == self ]
-		ifFound: [ :e | 
-			| children i |
-			children := self children.
-			i := children detectIndex: [ :f | f == e ].
-			i = 1
-				ifTrue: [ IdentitySet new ]
-				ifFalse: [ (children copyFrom: 1 to: i - 1) asIdentitySet ] ]
-		ifNone: [ IdentitySet new ]
+RBProgramNode >> typReachableTypeFor: aString until: aMethodOrBlockNode [
+	| previous |
+	self == aMethodOrBlockNode
+		ifTrue: [ ^ TypNilType instance ].
+	previous := self typPrevious ifNil: [ ^ self parent typReachableTypeFor: aString until: aMethodOrBlockNode ].
+	(previous isAssignment and: [ previous variable name = aString ])
+		ifTrue: [ ^ previous typType ].
+	^ previous typReachableTypeFor: aString until: aMethodOrBlockNode
 ]
 
 { #category : #'*Typer' }
