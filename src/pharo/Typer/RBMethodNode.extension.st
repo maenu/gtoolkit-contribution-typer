@@ -8,31 +8,14 @@ RBMethodNode >> typIsReturnSelf [
 ]
 
 { #category : #'*Typer' }
-RBMethodNode >> typTemporaryProfile [
-	<typTypeResultAs: 'SequenceableCollection<Association<RBTemporaryNode,TypType>>'>
-	^ ((self allChildren select: [ :e | e isKindOf: RBTemporaryNode ]) "typParameters RBTemporaryNode") collect: [ :e | e -> e typType ]
-]
-
-{ #category : #'*Typer' }
 RBMethodNode >> typType [
 	<typTypeResultAs: 'TypType'>
-	| i oldProfile newProfile |
-	i := 0.
+	| profile |
 	self typTypeReset.
-	[ i > 0
-		ifTrue: [ i asString logCr ].
-	i := i + 1.
-	oldProfile := self typTemporaryProfile.
+	profile := (self allChildren select: [ :e | e isKindOf: RBTemporaryNode ]) "typParameters RBTemporaryNode" collect: [ :e | e -> e typType ].
 	self typTypeReset.
-	oldProfile do: [ :e | e key propertyAt: #typType put: e value ].
-	self body typType.
-	newProfile := self typTemporaryProfile.
-	oldProfile = newProfile ] whileFalse.
-	"one last time for good measure"
-	self typTypeReset.
-	newProfile := self typTemporaryProfile.
-	newProfile do: [ :e | e key propertyAt: #typType put: e value ].
-	(self allChildren copyWithoutAll: (newProfile collect: #key) , {self}) do: #typType.
+	profile do: [ :e | e key propertyAt: #typType put: e value ].
+	(self allChildren copyWithoutAll: (profile collect: #key) , {self}) do: #typType.
 	^ BlockClosure typAsType asFunctionType: self typTypesForArguments result: self typTypeForResult optionalParameters: false
 ]
 
