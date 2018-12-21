@@ -9,7 +9,7 @@ RBGlobalNode >> typDefiningClass [
 	"lookup pool in defining class"
 	self binding typIsFromSharedPool
 		ifTrue: [ clazz := (self binding scope "typCastAs OCClassScope") getClass instanceSide sharedPools
-				detect: [ :e | e classVarNames includes: name ] ].
+				detect: [ :e | e classVarNames includes: self name ] ].
 	^ clazz classSide
 ]
 
