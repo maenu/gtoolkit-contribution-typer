@@ -10,18 +10,21 @@ RBProgramNode >> typAllReachableChildrenAfter: aNode [
 ]
 
 { #category : #'*Typer' }
+RBProgramNode >> typAllReachableChildrenBefore [
+	^ self children , (self children flatCollect: #typAllReachableChildrenBefore)
+]
+
+{ #category : #'*Typer' }
 RBProgramNode >> typAllReachableChildrenBefore: aNode [
-	^ (aNode == self or: [ (self allChildren asIdentitySet includes: aNode) not ])
+	^ (aNode == self or: [ (aNode parents asIdentitySet includes: self) not ])
 		ifTrue: [ IdentitySet new ]
-		ifFalse: [ (self parent ifNil: [ IdentitySet new ] ifNotNil: [ :e | e typAllReachableChildrenBefore: self ])
-				,
-					((self typReachableChildrenBefore: aNode)
-						flatCollect: [ :e | 
-							{e}
-								,
-									(e isBlock
-										ifTrue: [ {} ]
-										ifFalse: [ e allChildren ]) ]) ]
+		ifFalse: [ | node children i |
+			node := aNode parents reversed detect: [ :e | e parent == self ].
+			children := self children.
+			i := children detectIndex: [ :e | e == node ].
+			children := (children copyFrom: 1 to: i) asOrderedCollection copy.
+			(children removeLast typAllReachableChildrenBefore: aNode)
+				, (children flatCollect: [ :e | e typAllReachableChildrenBefore , {e} ]) ]
 ]
 
 { #category : #'*Typer' }
@@ -49,7 +52,7 @@ RBProgramNode >> typAnnotateType: aType [
 RBProgramNode >> typReachableChildrenAfter: aNode [
 	| children i |
 	children := self children.
-	i := children indexOf: aNode.
+	i := children detectIndex: [ :e | e == aNode ] ifNone: 0.
 	i = 0
 		ifTrue: [ ^ children ].
 	i = children size
@@ -59,13 +62,13 @@ RBProgramNode >> typReachableChildrenAfter: aNode [
 
 { #category : #'*Typer' }
 RBProgramNode >> typReachableChildrenBefore: aNode [
-	^ aNode parents
+	^ aNode parents reversed
 		detect: [ :e | e parent == self ]
 		ifFound: [ :e | 
 			| children i |
 			children := self children.
-			i := children indexOf: e.
-			i = children size
+			i := children detectIndex: [ :f | f == e ].
+			i = 1
 				ifTrue: [ IdentitySet new ]
 				ifFalse: [ (children copyFrom: 1 to: i - 1) asIdentitySet ] ]
 		ifNone: [ IdentitySet new ]

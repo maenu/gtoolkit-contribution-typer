@@ -1,6 +1,11 @@
 Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer' }
+RBBlockNode >> typAllReachableChildrenBefore [
+	^ {}
+]
+
+{ #category : #'*Typer' }
 RBBlockNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>
