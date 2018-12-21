@@ -16,3 +16,13 @@ TypShaPhaRBSequenceNode >> ___statements [
 		resultType: [ OrderedCollection typAsType asParametricType: {RBProgramNode typAsType} ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaPhaRBSequenceNode >> ___temporaries [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType: {RBTemporaryNode typAsType} ];
+		yourself
+]

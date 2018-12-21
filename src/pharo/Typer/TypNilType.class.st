@@ -54,6 +54,11 @@ TypNilType >> initialize [
 	name := 'UndefinedObject'
 ]
 
+{ #category : #comparing }
+TypNilType >> isCompatibleWith: aType [
+	^ aType nullable
+]
+
 { #category : #testing }
 TypNilType >> isNil [
 	^ true

@@ -9,7 +9,9 @@ RBMethodNode >> typIsReturnSelf [
 
 { #category : #'*Typer' }
 RBMethodNode >> typTemporaryProfile [
-	^ (self allChildren select: [ :e | e isKindOf: RBTemporaryNode ]) "typParameters RBTemporaryNode" collect: [ :e | e -> e typType ].
+	<typTypeResultAs: 'SequenceableCollection<Association<RBTemporaryNode,TypType>>'>
+	^ (self allChildren select: [ :e | e isKindOf: RBTemporaryNode ]) "typParameters RBTemporaryNode"
+		collect: [ :e | e -> e typType ]
 ]
 
 { #category : #'*Typer' }

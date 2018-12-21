@@ -184,11 +184,11 @@ TypUnionType >> printOn: aStream [
 	aStream << 'U'
 		<<
 			((types includes: TypNilType instance)
-				ifTrue: [ TypNilType instance printString ]
+				ifTrue: [ '!' ]
 				ifFalse: [ '' ])
 		<<
 			((types includes: TypUnknownType instance)
-				ifTrue: [ TypUnknownType instance printString ]
+				ifTrue: [ '?' ]
 				ifFalse: [ '' ]) << ' '
 		<<
 			(superType isUnion

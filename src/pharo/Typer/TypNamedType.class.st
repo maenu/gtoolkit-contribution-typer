@@ -79,7 +79,7 @@ TypNamedType >> compatibleWith: aType [
 	(aType isUnion or: [ aType isParametric ])
 		ifTrue: [ ^ aType compatibleWith: self ].
 	superTypes := self withAllSuperTypes.
-	^ aType asNonParametricType withAllSuperTypes detect: [ :e | superTypes anySatisfy: [ :f | f isCompatibleWith: e ] ]
+	^ aType asNonParametricType withAllSuperTypes detect: [ :e | superTypes anySatisfy: [ :f | f isCompatibleWith: e ] ] ifNone: [ TypUnknownType instance ]
 ]
 
 { #category : #testing }

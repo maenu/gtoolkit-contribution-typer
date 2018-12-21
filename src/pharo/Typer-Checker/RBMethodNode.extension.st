@@ -6,7 +6,7 @@ RBMethodNode >> typCheColor [
 		ifTrue: [ ^ Color red ].
 	self typCheHasMissingMethods
 		ifTrue: [ ^ Color orange ].
-	self typCheHasNullableReceivers
+	self typCheHasNullables
 		ifTrue: [ ^ Color purple ].
 	self typCheHasUnknowns
 		ifTrue: [ ^ Color blue ].
@@ -24,7 +24,9 @@ RBMethodNode >> typCheHasIncompatibleArguments [
 		do: [ :e | 
 			e arguments
 				withIndexDo: [ :f :i | 
-					[ e typCheCheckArgumentCompatibilityAt: i ]
+					[ [ e typCheCheckArgumentCompatibilityAt: i ]
+						on: TypCheNullableTypeError
+						do: [  ] ]
 						on: TypCheIncompatibleTypeError
 						do: [ ^ true ] ] ].
 	^ false
@@ -61,8 +63,24 @@ RBMethodNode >> typCheHasMissingMethods [
 ]
 
 { #category : #'*Typer-Checker' }
+RBMethodNode >> typCheHasNullableArguments [
+	^ ((((self allChildren select: #isMessage) reject: #isCascade) flatCollect: #arguments) select: [ :e | e typType nullable ])
+		anySatisfy: [ :e | 
+			| i expected actual |
+			i := e parent arguments detectIndex: [ :f | f == e ].
+			expected := e parent typTypeForArgumentAt: i.
+			actual := e receiver typType.
+			(expected >= actual) not and: [ expected >= actual asNonNullableType ] ]
+]
+
+{ #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasNullableReceivers [
 	^ ((self allChildren select: #isMessage) reject: #isCascade) anySatisfy: [ :e | e receiver typType nullable ]
+]
+
+{ #category : #'*Typer-Checker' }
+RBMethodNode >> typCheHasNullables [
+	^ self typCheHasNullableReceivers or: [ self typCheHasNullableArguments ]
 ]
 
 { #category : #'*Typer-Checker' }

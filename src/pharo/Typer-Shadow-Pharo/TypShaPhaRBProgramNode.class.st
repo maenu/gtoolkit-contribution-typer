@@ -207,11 +207,10 @@ TypShaPhaRBProgramNode >> ___variableWriteNodes [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaRBProgramNode >> ___whoDefines: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ String typAsType ];
-		resultType: [ {RBMethodNode typAsType.
-			RBBlockNode typAsType} typAsType asNullableType ];
+		resultType: [ RBSequenceNode typAsType asNullableType ];
 		yourself
 ]

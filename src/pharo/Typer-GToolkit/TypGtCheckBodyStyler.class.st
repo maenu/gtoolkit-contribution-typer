@@ -64,19 +64,22 @@ TypGtCheckBodyStyler >> visitAssignmentNode: aNode [
 TypGtCheckBodyStyler >> visitMessageNode: aNode [
 	super visitMessageNode: aNode.
 	[ aNode typCheCheckMethod.
-	aNode receiver typType nullable
-		ifTrue: [ self styleSelectorOf: aNode color: Color purple ].
+	[ aNode typCheCheckReceiver ]
+		on: TypCheNullableTypeError
+		do: [ self styleSelectorOf: aNode color: Color purple ].
 	aNode receiver typType isUnknown
 		ifTrue: [ self styleSelectorOf: aNode color: Color blue ] ]
 		on: TypCheNoMethodError
 		do: [ :e | self styleSelectorOf: aNode text: 'method ' , e selector asString , ' not found in ' , e type asString color: Color orange ].
 	aNode arguments
 		withIndexDo: [ :e :i | 
-			[ aNode typCheCheckArgumentCompatibilityAt: i.
+			[ [ aNode typCheCheckArgumentCompatibilityAt: i.
 			(aNode typTypeForArgumentAt: i) isUnknown
 				ifTrue: [ self styleNode: e color: Color blue ] ]
 				on: TypCheIncompatibleTypeError
 				do: [ :f | self styleNode: e text: 'expected ' , f expected asString , ', got ' , f actual asString color: Color red ] ]
+				on: TypCheNullableTypeError
+				do: [ self styleNode: e color: Color purple ] ]
 ]
 
 { #category : #visiting }

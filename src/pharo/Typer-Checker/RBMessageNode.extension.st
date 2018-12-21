@@ -5,7 +5,11 @@ RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 	| expected actual |
 	expected := self typTypeForArgumentAt: anInteger.
 	actual := (self arguments at: anInteger) typType.
-	expected >= actual
+	expected >= actual asNonNullableType
+		ifTrue: [ expected >= actual
+				ifFalse: [ TypCheNullableTypeError new
+						type: actual;
+						signal ] ]
 		ifFalse: [ TypCheIncompatibleTypeError new
 				expected: expected;
 				actual: actual;
@@ -20,5 +24,15 @@ RBMessageNode >> typCheCheckMethod [
 		ifFalse: [ TypCheNoMethodError new
 				type: receiverType;
 				selector: self selector;
+				signal ]
+]
+
+{ #category : #'*Typer-Checker' }
+RBMessageNode >> typCheCheckReceiver [
+	| actual |
+	actual := self typTypeForReceiver.
+	self typTypeForReceiver nullable
+		ifTrue: [ TypCheNullableTypeError new
+				type: actual;
 				signal ]
 ]
