@@ -13,14 +13,7 @@ RBBlockNode >> typTypeForArgumentAt: anInteger [
 			type_ := parent_ typTypeForArgumentAt: i.
 			type_ isUnion
 				ifTrue: [ type_ := TypUnionType new
-						types:
-							(type_ "typCastAs TypUnionType" types
-								select: [ :e | 
-									| type__ |
-									type__ := e asNonParametricType.
-									(type__ isKindOf: TypNamedType)
-										ifTrue: [ type__ name = 'BlockClosure' ]
-										ifFalse: [ false ] ]);
+						types: (type_ "typCastAs TypUnionType" types select: [ :e | e asNonParametricType name = 'BlockClosure' ]);
 						yourself ].
 			type_ isParametric
 				ifTrue: [ ^ (type_ "typCastAs TypParametricType") parameters at: anInteger ] ].

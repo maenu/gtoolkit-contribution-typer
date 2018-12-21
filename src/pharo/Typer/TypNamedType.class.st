@@ -69,6 +69,19 @@ TypNamedType >> canBeParametricType [
 	^ true
 ]
 
+{ #category : #'as yet unclassified' }
+TypNamedType >> compatibleWith: aType [
+	| superTypes |
+	aType isUnknown
+		ifTrue: [ ^ aType ].
+	aType isNil
+		ifTrue: [ ^ self asNullableType ].
+	(aType isUnion or: [ aType isParametric ])
+		ifTrue: [ ^ aType compatibleWith: self ].
+	superTypes := self withAllSuperTypes.
+	^ aType asNonParametricType withAllSuperTypes detect: [ :e | superTypes anySatisfy: [ :f | f isCompatibleWith: e ] ]
+]
+
 { #category : #testing }
 TypNamedType >> hasClass [
 	| clazz_ |

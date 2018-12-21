@@ -72,6 +72,40 @@ TypUnionType >> canBeParametricType [
 	^ types anySatisfy: #canBeParametricType
 ]
 
+{ #category : #'as yet unclassified' }
+TypUnionType >> compatibleWith: aType [
+	| remains nullable_ current |
+	aType isUnknown
+		ifTrue: [ ^ aType ].
+	aType isNil
+		ifTrue: [ ^ self asNullableType ].
+	remains := types copy asOrderedCollection.
+	nullable_ := remains includes: TypNilType instance.
+	remains remove: TypNilType instance ifAbsent: [  ].
+	remains ifEmpty: [ ^ aType asNullableType ].
+	remains remove: TypUnknownType instance ifAbsent: [  ].
+	remains ifEmpty: [ ^ TypUnknownType instance ].
+	remains := remains sort: [ :a :b | a >= b ].
+	current := remains first.
+	remains remove: current.
+	[ remains isEmpty ]
+		whileFalse: [ | next common |
+			next := remains first.
+			remains remove: next.
+			common := current compatibleWith: next.
+			common isUnknown
+				ifTrue: [ ^ common ].
+			common = current
+				ifFalse: [ current := common.
+					current isUnion
+						ifTrue: [ remains addAll: current types ]
+						ifFalse: [ remains add: current ].
+					remains := remains asSet asOrderedCollection sort: [ :a :b | a >= b ] ] ].
+	nullable_
+		ifTrue: [ ^ current asNullableType ].
+	^ current
+]
+
 { #category : #testing }
 TypUnionType >> hasClass [
 	^ self superType hasClass
@@ -138,45 +172,48 @@ TypUnionType >> postCopy [
 
 { #category : #printing }
 TypUnionType >> printOn: aStream [
+	| superType |
+	superType := (TypUnionType new
+		types:
+			(types
+				copyWithoutAll:
+					{TypUnknownType instance.
+					TypNilType instance});
+		yourself) superType.
 	super printOn: aStream.
 	aStream << 'U'
+		<<
+			((types includes: TypNilType instance)
+				ifTrue: [ TypNilType instance printString ]
+				ifFalse: [ '' ])
 		<<
 			((types includes: TypUnknownType instance)
 				ifTrue: [ TypUnknownType instance printString ]
 				ifFalse: [ '' ]) << ' '
 		<<
-			(self superType isUnion
+			(superType isUnion
 				ifTrue: [ '...' ]
-				ifFalse: [ self superType printString ])
+				ifFalse: [ superType printString ])
 ]
 
 { #category : #accessing }
 TypUnionType >> superType [
-	| remains nullable_ current |
-	remains := types copy asOrderedCollection.
-	nullable_ := remains includes: TypNilType instance.
-	remains remove: TypNilType instance ifAbsent: [  ].
-	remains ifEmpty: [ ^ TypNilType instance ].
-	remains remove: TypUnknownType instance ifAbsent: [  ].
-	remains ifEmpty: [ ^ TypUnknownType instance ].
-	remains := remains sort: [ :a :b | a >= b ].
-	current := remains first.
+	| remains current |
+	remains := types copy.
+	current := remains anyOne.
 	remains remove: current.
 	[ remains isEmpty ]
 		whileFalse: [ | next common |
-			next := remains first.
+			next := remains anyOne.
 			remains remove: next.
-			common := current withAllSuperTypes
-				detect: [ :e | e >= next ]
-				ifNone: [ ^ TypUnknownType instance ].
-				self flag: 'parametric types supertypes are multidimensional...'.
+			common := current compatibleWith: next.
+			common isUnknown
+				ifTrue: [ ^ (remains includes: TypNilType instance)
+						ifTrue: [ common asNullableType ]
+						ifFalse: [ common ] ].
 			common = current
 				ifFalse: [ current := common.
-					remains add: current.
-					remains := remains asSet asOrderedCollection sort: [ :a :b | a >= b ] ] ].
-	nullable_
-		ifTrue: [ current := current copy.
-			current nullable: true ].
+					remains add: current ] ].
 	^ current
 ]
 

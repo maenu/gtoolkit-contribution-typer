@@ -82,7 +82,7 @@ TypType >> asNonNullableType [
 
 { #category : #converting }
 TypType >> asNonParametricType [
-	<typTypeResultAs: 'TypNamedType'>
+	<typTypeResultAs: 'TypType'>
 	self subclassResponsibility
 ]
 
@@ -121,6 +121,11 @@ TypType >> canBeFunctionType [
 TypType >> canBeParametricType [
 	<typTypeResultAs: 'Boolean'>
 	^ false
+]
+
+{ #category : #'as yet unclassified' }
+TypType >> compatibleWith: aType [
+	self subclassResponsibility
 ]
 
 { #category : #testing }

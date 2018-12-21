@@ -30,6 +30,12 @@ TypUnknownType >> asNonParametricType [
 ]
 
 { #category : #converting }
+TypUnknownType >> asNullableType [
+	^ {self.
+	TypNilType instance} typAsType
+]
+
+{ #category : #converting }
 TypUnknownType >> asParametricType: someTypes [
 	TypNoTypeError signal
 ]
@@ -37,6 +43,14 @@ TypUnknownType >> asParametricType: someTypes [
 { #category : #accessing }
 TypUnknownType >> asSourceString [
 	^ '?'
+]
+
+{ #category : #'as yet unclassified' }
+TypUnknownType >> compatibleWith: aType [
+	aType isNil
+		ifTrue: [ ^ {self.
+			aType} typAsType ].
+	^ self
 ]
 
 { #category : #copying }

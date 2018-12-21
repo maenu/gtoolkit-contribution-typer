@@ -96,10 +96,7 @@ TypShaPhaRBProgramNode >> ___methodNode [
 TypShaPhaRBProgramNode >> ___parent [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			RBProgramNode typAsType copy
-				nullable: true;
-				yourself ];
+		resultType: [ :a :s :r | RBProgramNode typAsType asNullableType ];
 		yourself
 ]
 
@@ -215,8 +212,6 @@ TypShaPhaRBProgramNode >> ___whoDefines: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ String typAsType ];
 		resultType: [ {RBMethodNode typAsType.
-			RBBlockNode typAsType} typAsType
-				nullable: true;
-				yourself ];
+			RBBlockNode typAsType} typAsType asNullableType ];
 		yourself
 ]

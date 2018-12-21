@@ -56,6 +56,19 @@ TypParametricType >> canBeParametricType [
 	^ true
 ]
 
+{ #category : #'as yet unclassified' }
+TypParametricType >> compatibleWith: aType [
+	| compatibleType compatibleParameters |
+	compatibleType := type compatibleWith: aType.
+	(aType isParametric not or: [ parameters size ~= aType parameters size ])
+		ifTrue: [ ^ compatibleType ].
+	compatibleParameters := parameters size timesCollect: [ :i | (parameters at: i) compatibleWith: (aType parameters at: i) ].
+	^ TypParametricType new
+		type: compatibleType;
+		parameters: compatibleParameters;
+		yourself
+]
+
 { #category : #converting }
 TypParametricType >> hasClass [
 	^ type hasClass

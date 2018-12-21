@@ -50,6 +50,22 @@ TypFunctionType >> canBeFunctionType [
 	^ true
 ]
 
+{ #category : #'as yet unclassified' }
+TypFunctionType >> compatibleWith: aType [
+	| compatibleType compatibleResult |
+	compatibleType := super compatibleWith: aType.
+	compatibleType isParametric
+		ifFalse: [ ^ compatibleType ].
+	aType isFunction
+		ifFalse: [ ^ compatibleType ].
+	compatibleResult := result compatibleWith: aType result.
+	^ TypFunctionType new
+		type: compatibleType type;
+		parameters: compatibleType parameters;
+		result: compatibleResult;
+		yourself
+]
+
 { #category : #testing }
 TypFunctionType >> hasSuperType [
 	^ result isUnion or: [ (parameters anySatisfy: [ :e | e isUnion ]) or: [ type hasSuperType ] ]

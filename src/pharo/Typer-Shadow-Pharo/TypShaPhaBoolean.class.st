@@ -22,10 +22,7 @@ TypShaPhaBoolean >> ___and: _a [
 TypShaPhaBoolean >> ___ifFalse: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ];
-		resultType: [ :a :s :r | 
-			(a argumentTypes at: 1) result copy
-				nullable: true;
-				yourself ];
+		resultType: [ :a :s :r | (a argumentTypes at: 1) result asNullableType ];
 		yourself
 ]
 
@@ -33,10 +30,7 @@ TypShaPhaBoolean >> ___ifFalse: _a [
 TypShaPhaBoolean >> ___ifTrue: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ];
-		resultType: [ :a :s :r | 
-			(a argumentTypes at: 1) result copy
-				nullable: true;
-				yourself ];
+		resultType: [ :a :s :r | (a argumentTypes at: 1) result asNullableType ];
 		yourself
 ]
 

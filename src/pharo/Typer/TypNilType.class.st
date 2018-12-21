@@ -14,6 +14,11 @@ TypNilType class >> instance [
 ]
 
 { #category : #converting }
+TypNilType >> asNullableType [
+	^ self
+]
+
+{ #category : #converting }
 TypNilType >> asParametricType: someTypes [
 	TypNoParametricTypeError signal
 ]
@@ -52,6 +57,13 @@ TypNilType >> initialize [
 { #category : #testing }
 TypNilType >> isNil [
 	^ true
+]
+
+{ #category : #accessing }
+TypNilType >> nullable: anObject [
+	"do nothing"
+
+	
 ]
 
 { #category : #printing }

@@ -4,10 +4,10 @@ Extension { #name : #Collection }
 Collection >> typAsType [
 	<typTypeResultAs: 'TypType'>
 	| remains current nullable_ unknown |
-	remains := ((self "typParameters TypType")
+	remains := (self "typParameters TypType"
 		flatCollect: [ :e | 
 			e isUnion
-				ifTrue: [ (e "typCastAs TypUnionType") types ]
+				ifTrue: [ e "typCastAs TypUnionType" types ]
 				ifFalse: [ {e} ] ]) asSet.
 	remains ifEmpty: [ ^ TypUnknownType instance ].
 	unknown := remains includes: TypUnknownType instance.
@@ -23,11 +23,12 @@ Collection >> typAsType [
 	remains size = 1
 		ifTrue: [ current := remains anyOne.
 			nullable_
-				ifTrue: [ current := current copy.
-					current nullable: true ].
+				ifTrue: [ ^ current asNullableType ].
 			^ current ].
-	^ TypUnionType new
+	current := TypUnionType new
 		types: remains;
-		nullable: nullable_;
-		yourself
+		yourself.
+	nullable_
+		ifTrue: [ ^ current asNullableType ].
+	^ current
 ]
