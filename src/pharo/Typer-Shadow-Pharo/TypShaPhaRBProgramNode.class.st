@@ -53,7 +53,23 @@ TypShaPhaRBProgramNode >> ___isArgument [
 ]
 
 { #category : #accessing }
+TypShaPhaRBProgramNode >> ___isAssignment [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaRBProgramNode >> ___isMessage [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaRBProgramNode >> ___isSequence [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
@@ -84,6 +100,16 @@ TypShaPhaRBProgramNode >> ___parent [
 			RBProgramNode typAsType copy
 				nullable: true;
 				yourself ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaRBProgramNode >> ___parents [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType: {RBProgramNode typAsType} ];
 		yourself
 ]
 

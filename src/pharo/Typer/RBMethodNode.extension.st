@@ -26,6 +26,7 @@ RBMethodNode >> typType [
 	oldProfile = newProfile ] whileFalse.
 	"one last time for good measure"
 	self typTypeReset.
+	newProfile := self typTemporaryProfile.
 	newProfile do: [ :e | e key propertyAt: #typType put: e value ].
 	(self allChildren copyWithoutAll: (newProfile collect: #key) , {self}) do: #typType.
 	^ BlockClosure typAsType asFunctionType: self typTypesForArguments result: self typTypeForResult optionalParameters: false

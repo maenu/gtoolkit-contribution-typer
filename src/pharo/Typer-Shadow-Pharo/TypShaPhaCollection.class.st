@@ -4,6 +4,18 @@ Class {
 	#category : #'Typer-Shadow-Pharo'
 }
 
+{ #category : #accessing }
+TypShaPhaCollection class >> ___with: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			{TypUnknownType instance.
+			TypNilType instance} typAsType ];
+		resultType: [ :a :s :r | 
+			a receiverType asClass instanceSide typAsType
+				asParametricType: {(a argumentTypes at: 1)} ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaCollection class >> shadowedClass [
 	^ Collection class
@@ -49,6 +61,14 @@ TypShaPhaCollection >> ___anySatisfy: _a [
 ]
 
 { #category : #accessing }
+TypShaPhaCollection >> ___asIdentitySet [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | IdentitySet typAsType asParametricType: {(a receiverType parameters at: 1)} ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaCollection >> ___asOrderedCollection [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
@@ -89,6 +109,15 @@ TypShaPhaCollection >> ___collect: _a [
 										yourself) ]
 						ifFalse: [ TypUnknownType instance ] ].
 			a receiverType asParametricType: {elementType} ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaCollection >> ___copyWithoutAll: _a [
+	^ TypMethodResolver new
+		argumentTypes:
+				[ :i :a :s :r | Collection typAsType asParametricType: {TypUnknownType instance} ];
+		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 
@@ -382,7 +411,11 @@ TypShaPhaCollection >> asType: aClass [
 TypShaPhaCollection >> ~~~, _a [
 	^ TypMethodResolver new
 		argumentTypes:
-				[ :i :a :s :r | Collection typAsType asParametricType: a receiverType parameters ];
-		resultType: [ :a :s :r | a receiverType ];
+				[ :i :a :s :r | Collection typAsType asParametricType: {TypUnknownType instance} ];
+		resultType: [ :a :s :r | 
+			a receiverType
+				asParametricType:
+					{{(a receiverType parameters at: 1).
+					((a argumentTypes at: 1) parameters at: 1)} typAsType} ];
 		yourself
 ]

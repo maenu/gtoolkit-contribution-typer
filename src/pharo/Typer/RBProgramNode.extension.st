@@ -2,22 +2,30 @@ Extension { #name : #RBProgramNode }
 
 { #category : #'*Typer' }
 RBProgramNode >> typAllReachableChildrenAfter: aNode [
+	<typTypeArgument: 1 as: 'RBProgramNode'>
+	<typTypeResultAs: 'IdentitySet<RBProgramNode>'>
 	^ (IdentitySet with: self)
 		,
 			(aNode == self
-				ifTrue: [ IdentitySet new ]
-				ifFalse: [ (self typReachableChildrenAfter: aNode) flatCollect: [ :e | e typAllReachableChildrenAfter: aNode ] ])
+				ifTrue: [ IdentitySet new "typParameters RBProgramNode" ]
+				ifFalse: [ (self typReachableChildrenAfter: aNode)
+						flatCollect: [ :e | e typAllReachableChildrenAfter: aNode ] ])
 ]
 
 { #category : #'*Typer' }
 RBProgramNode >> typAllReachableChildrenBefore [
-	^ self children , (self children flatCollect: #typAllReachableChildrenBefore)
+	<typTypeResultAs: 'Collection<RBProgramNode>'>
+	^ self children
+		, (self children flatCollect: #typAllReachableChildrenBefore)
 ]
 
 { #category : #'*Typer' }
 RBProgramNode >> typAllReachableChildrenBefore: aNode [
-	^ (aNode == self or: [ (aNode parents asIdentitySet includes: self) not ])
-		ifTrue: [ IdentitySet new ]
+	<typTypeArgument: 1 as: 'RBProgramNode'>
+	<typTypeResultAs: 'Collection<RBProgramNode>'>
+	^ (aNode == self
+		or: [ (aNode parents asIdentitySet includes: self) not ])
+		ifTrue: [ IdentitySet new "typParameters RBProgramNode" ]
 		ifFalse: [ | node children i |
 			node := aNode parents reversed detect: [ :e | e parent == self ].
 			children := self children.
@@ -50,6 +58,8 @@ RBProgramNode >> typAnnotateType: aType [
 
 { #category : #'*Typer' }
 RBProgramNode >> typReachableChildrenAfter: aNode [
+	<typTypeArgument: 1 as: 'RBProgramNode'>
+	<typTypeResultAs: 'Collection<RBProgramNode>'>
 	| children i |
 	children := self children.
 	i := children detectIndex: [ :e | e == aNode ] ifNone: 0.
@@ -62,6 +72,8 @@ RBProgramNode >> typReachableChildrenAfter: aNode [
 
 { #category : #'*Typer' }
 RBProgramNode >> typReachableChildrenBefore: aNode [
+	<typTypeArgument: 1 as: 'RBProgramNode'>
+	<typTypeResultAs: 'Collection<RBProgramNode>'>
 	^ aNode parents reversed
 		detect: [ :e | e parent == self ]
 		ifFound: [ :e | 

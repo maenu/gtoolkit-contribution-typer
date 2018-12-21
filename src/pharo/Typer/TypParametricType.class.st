@@ -81,7 +81,7 @@ TypParametricType >> initialize [
 
 { #category : #comparing }
 TypParametricType >> isCompatibleWith: aType [
-	^ aType isParametric
+	^ (aType isKindOf: TypParametricType)
 		ifTrue: [ | type_ |
 			type_ := aType "typCastAs TypParametricType".
 			type >= type_ type

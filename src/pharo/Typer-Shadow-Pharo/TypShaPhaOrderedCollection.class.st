@@ -27,3 +27,11 @@ TypShaPhaOrderedCollection >> ___at: _a put: _b [
 		resultType: [ :a :s :r | a receiverType parameters at: 1 ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaPhaOrderedCollection >> ___removeLast [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | a receiverType parameters at: 1 ];
+		yourself
+]

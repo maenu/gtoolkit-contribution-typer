@@ -49,6 +49,24 @@ TypShaPhaSequenceableCollection >> ___detectIndex: _a [
 		yourself
 ]
 
+{ #category : #'as yet unclassified' }
+TypShaPhaSequenceableCollection >> ___detectIndex: _a ifNone: _b [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a | 
+			i = 1
+				ifTrue: [ BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: Boolean typAsType optionalParameters: false ]
+				ifFalse: [ {TypUnknownType instance.
+					(BlockClosure typAsType asFunctionType: {} result: Boolean typAsType optionalParameters: false)} typAsType ] ];
+		resultType: [ :a | 
+			| none |
+			none := a argumentTypes at: 2.
+			{Integer typAsType.
+			((none hasClass and: [ none asClass == BlockClosure ])
+				ifTrue: [ none result ]
+				ifFalse: [ none ])} typAsType ];
+		yourself
+]
+
 { #category : #accessing }
 TypShaPhaSequenceableCollection >> ___endsWith: _a [
 	^ TypMethodResolver new
@@ -86,6 +104,14 @@ TypShaPhaSequenceableCollection >> ___last [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | a receiverType parameters at: 1 ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaSequenceableCollection >> ___reversed [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 

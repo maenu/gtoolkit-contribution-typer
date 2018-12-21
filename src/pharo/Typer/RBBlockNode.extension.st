@@ -11,26 +11,26 @@ RBBlockNode >> typTypeForArgumentAt: anInteger [
 	<typTypeResultAs: 'TypType'>
 	| type |
 	type := self typType.
-	(self parent isMessage and: [ self parent receiver ~~ self	"typCastAs RBMessageNode" ])
+	(self parent isMessage and: [ (self parent "typCastAs RBMessageNode") receiver ~~ self ])
 		ifTrue: [ | i parent_ type_ |
-			parent_ := self parent.	"typCastAs RBMessageNode"
+			parent_ := self parent "typCastAs RBMessageNode".
 			i := parent_ arguments detectIndex: [ :e | e == self ].
 			type_ := parent_ typTypeForArgumentAt: i.
 			type_ isUnion
 				ifTrue: [ type_ := TypUnionType new
 						types:
-							(type_ types
+							(type_ "typCastAs TypUnionType" types
 								select: [ :e | 
 									| type__ |
 									type__ := e asNonParametricType.
 									(type__ isKindOf: TypNamedType)
 										ifTrue: [ type__ name = 'BlockClosure' ]
 										ifFalse: [ false ] ]);
-						yourself	"typCastAs TypUnionType" ].
+						yourself ].
 			type_ isParametric
-				ifTrue: [ ^ type_ parameters at: anInteger	"typCastAs TypParametricType" ] ].
-	(type isParametric and: [ anInteger < type parameters size	"typCastAs TypParametricType" ])
-		ifTrue: [ ^ type parameters at: anInteger	"typCastAs TypParametricType" ].
+				ifTrue: [ ^ (type_ "typCastAs TypParametricType") parameters at: anInteger ] ].
+	(type isParametric and: [ anInteger < (type "typCastAs TypParametricType") parameters size ])
+		ifTrue: [ ^ (type "typCastAs TypParametricType") parameters at: anInteger].
 	^ TypUnknownType instance
 ]
 
