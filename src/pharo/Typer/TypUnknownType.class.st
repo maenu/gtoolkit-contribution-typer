@@ -59,6 +59,13 @@ TypUnknownType >> isUnknown [
 	^ true
 ]
 
+{ #category : #accessing }
+TypUnknownType >> nullable: anObject [
+	"do nothing"
+
+	
+]
+
 { #category : #generated }
 TypUnknownType >> parameters [
 	self flag: 'this is very hackish'.

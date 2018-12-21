@@ -4,11 +4,11 @@ Extension { #name : #Collection }
 Collection >> typAsType [
 	<typTypeResultAs: 'TypType'>
 	| remains current nullable_ unknown |
-	remains := (self
+	remains := ((self "typParameters TypType")
 		flatCollect: [ :e | 
 			e isUnion
-				ifTrue: [ e types	"typCastAs TypUnionType" ]
-				ifFalse: [ {e} ] ]) asSet.	"typParameters TypType"
+				ifTrue: [ (e "typCastAs TypUnionType") types ]
+				ifFalse: [ {e} ] ]) asSet.
 	remains ifEmpty: [ ^ TypUnknownType instance ].
 	unknown := remains includes: TypUnknownType instance.
 	nullable_ := remains includes: TypNilType instance.

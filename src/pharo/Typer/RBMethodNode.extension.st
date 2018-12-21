@@ -27,7 +27,7 @@ RBMethodNode >> typType [
 	"one last time for good measure"
 	self typTypeReset.
 	newProfile do: [ :e | e key propertyAt: #typType put: e value ].
-	self body typType.
+	(self allChildren copyWithoutAll: (newProfile collect: #key)) do: #typType.
 	^ BlockClosure typAsType asFunctionType: self typTypesForArguments result: self typTypeForResult optionalParameters: false
 ]
 

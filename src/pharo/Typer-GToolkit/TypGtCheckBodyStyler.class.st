@@ -12,7 +12,7 @@ TypGtCheckBodyStyler >> styleFrom: anInteger to: anotherInteger color: aColor [
 		to: anotherInteger
 		with:
 			{(BlTextUnderlineAttribute new
-				paint: (aColor alpha: 0.3);
+				paint: (aColor alpha: 0.5);
 				yourself)}
 ]
 
