@@ -59,11 +59,11 @@ TypGtMethodCoder >> browseToTypeWithShadow: anEditorElement [
 TypGtMethodCoder >> initializeAddOns [
 	super initializeAddOns.
 	"addOns addStyler: TypGtMethodCommentBodyStyler new."
-	addOns
+	"addOns
 		addStyler:
 			(TypGtTypeCursorBodyStyler new
 				coder: self;
-				yourself).
+				yourself)."
 	addOns addStyler: TypGtTypeDeclarationBodyStyler new.
 	addOns addStyler: TypGtCheckBodyStyler new.
 	addOns

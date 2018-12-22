@@ -32,6 +32,12 @@ RBBlockNode >> typTypeForArgumentNamed: aString [
 ]
 
 { #category : #'*Typer' }
+RBBlockNode >> typTypeForResult [
+	<typTypeResultAs: 'TypType'>
+	^ self typType result
+]
+
+{ #category : #'*Typer' }
 RBBlockNode >> typTypeRecursive [
 	^ BlockClosure typAsType asFunctionType: (self arguments collect: #typType) result: self body typType optionalParameters: false
 ]

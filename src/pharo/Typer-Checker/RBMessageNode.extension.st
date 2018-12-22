@@ -20,7 +20,7 @@ RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 RBMessageNode >> typCheCheckMethod [
 	| receiverType |
 	receiverType := self receiver typType.
-	(receiverType typCheHasMethod: self selector)
+	(receiverType asNonNullableType typCheHasMethod: self selector)
 		ifFalse: [ TypCheNoMethodError new
 				type: receiverType;
 				selector: self selector;

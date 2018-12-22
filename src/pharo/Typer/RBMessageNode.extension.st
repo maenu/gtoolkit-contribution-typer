@@ -4,30 +4,35 @@ Extension { #name : #RBMessageNode }
 RBMessageNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>
-	| receiverType argumentTypes |
-	receiverType := self typTypeForReceiver.
-	argumentTypes := self typTypesForArguments.
-	^ receiverType isUnion
-		ifTrue: [ (((receiverType "typCastAs TypUnionType") types reject: #isNil)
-				collect: [ :e | 
-					TypMethodResolvers global
+	^ (self
+		propertyAt: #typTypeForArgument , anInteger asString
+		ifAbsentPut: [
+			| receiverType argumentTypes |
+			"need to set property to default to unknown on recursive calls"
+			self propertyAt: #typTypeForArgument , anInteger asString put: TypUnknownType instance.
+			receiverType := self typTypeForReceiver.
+			argumentTypes := self typTypesForArguments.
+			receiverType isUnion
+				ifTrue: [ (((receiverType "typCastAs TypUnionType") types reject: #isNil)
+						collect: [ :e | 
+							TypMethodResolvers global
+								typeForArgumentAt: anInteger
+								ofMethod:
+									(TypMethodLookup new
+										receiverType: e;
+										selector: self selector asSymbol;
+										argumentTypes: argumentTypes;
+										argumentNodes: self arguments;
+										yourself) ]) typAsType ]
+				ifFalse: [ TypMethodResolvers global
 						typeForArgumentAt: anInteger
 						ofMethod:
 							(TypMethodLookup new
-								receiverType: e;
+								receiverType: receiverType;
 								selector: self selector asSymbol;
 								argumentTypes: argumentTypes;
 								argumentNodes: self arguments;
-								yourself) ]) typAsType ]
-		ifFalse: [ TypMethodResolvers global
-				typeForArgumentAt: anInteger
-				ofMethod:
-					(TypMethodLookup new
-						receiverType: receiverType;
-						selector: self selector asSymbol;
-						argumentTypes: argumentTypes;
-						argumentNodes: self arguments;
-						yourself) ]
+								yourself) ] ]) "typCastAs TypType"
 ]
 
 { #category : #'*Typer' }
@@ -39,33 +44,44 @@ RBMessageNode >> typTypeForReceiver [
 { #category : #'*Typer' }
 RBMessageNode >> typTypeForResult [
 	<typTypeResultAs: 'TypType'>
-	| receiverType argumentTypes |
-	receiverType := self typTypeForReceiver.
-	argumentTypes := self typTypesForArguments.
-	^ receiverType isUnion
-		ifTrue: [ (((receiverType "typCastAs TypUnionType") types reject: #isNil)
-				collect: [ :e | 
-					TypMethodResolvers global
+	^ (self
+		propertyAt: #typTypesForResult
+		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
+			| receiverType argumentTypes |
+			self propertyAt: #typTypesForResult put: TypUnknownType instance.
+			receiverType := self typTypeForReceiver.
+			argumentTypes := self typTypesForArguments.
+			receiverType isUnion
+				ifTrue: [ (((receiverType "typCastAs TypUnionType") types reject: #isNil)
+						collect: [ :e | 
+							TypMethodResolvers global
+								typeForResultOfMethod:
+									(TypMethodLookup new
+										receiverType: e;
+										selector: self selector asSymbol;
+										argumentTypes: argumentTypes;
+										argumentNodes: self arguments;
+										yourself) ]) typAsType ]
+				ifFalse: [ TypMethodResolvers global
 						typeForResultOfMethod:
 							(TypMethodLookup new
-								receiverType: e;
+								receiverType: receiverType;
 								selector: self selector asSymbol;
 								argumentTypes: argumentTypes;
 								argumentNodes: self arguments;
-								yourself) ]) typAsType ]
-		ifFalse: [ TypMethodResolvers global
-				typeForResultOfMethod:
-					(TypMethodLookup new
-						receiverType: receiverType;
-						selector: self selector asSymbol;
-						argumentTypes: argumentTypes;
-						argumentNodes: self arguments;
-						yourself) ]
+								yourself) ] ]) "typCastAs TypType"
 ]
 
 { #category : #'*Typer' }
 RBMessageNode >> typTypeRecursive [
 	^ self typTypeForResult
+]
+
+{ #category : #'*Typer' }
+RBMessageNode >> typTypeReset [
+	self removeProperty: #typTypeForResult ifAbsent: [  ].
+	self arguments size timesCollect: [ :i | self removeProperty: #typTypeForArgument , i asString ifAbsent: [  ] ].
+	super typTypeReset
 ]
 
 { #category : #'*Typer' }

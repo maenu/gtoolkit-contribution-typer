@@ -211,6 +211,8 @@ TypShaPhaRBProgramNode >> ___variableWriteNodes [
 TypShaPhaRBProgramNode >> ___whoDefines: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ String typAsType ];
-		resultType: [ RBSequenceNode typAsType asNullableType ];
+		resultType: [ {RBSequenceNode typAsType.
+			RBMethodNode typAsType.
+			RBBlockNode typAsType} typAsType asNullableType ];
 		yourself
 ]
