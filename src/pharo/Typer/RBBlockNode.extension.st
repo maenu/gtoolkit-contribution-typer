@@ -34,7 +34,7 @@ RBBlockNode >> typTypeForArgumentNamed: aString [
 { #category : #'*Typer' }
 RBBlockNode >> typTypeForResult [
 	<typTypeResultAs: 'TypType'>
-	^ self typType result
+	^ (self typType "typCastAs TypFunctionType") result
 ]
 
 { #category : #'*Typer' }

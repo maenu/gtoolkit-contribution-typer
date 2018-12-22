@@ -56,8 +56,8 @@ TypFunctionType >> compatibleWith: aType [
 	aType isFunction
 		ifFalse: [ ^ TypUnknownType instance ].
 	compatibleType := super compatibleWith: (TypParametricType new
-		type: aType type;
-		parameters: aType parameters;
+		type: (aType "typCastAs TypFunctionType") type;
+		parameters: (aType "typCastAs TypFunctionType") parameters;
 		yourself).
 	compatibleType isParametric
 		ifFalse: [ ^ compatibleType ].
