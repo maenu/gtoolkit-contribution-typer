@@ -2,6 +2,7 @@ Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer-Checker' }
 RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
+	<typTypeArgument: 1 as: 'Integer'>
 	| expected actual |
 	expected := self typTypeForArgumentAt: anInteger.
 	actual := (self arguments at: anInteger) typType.
