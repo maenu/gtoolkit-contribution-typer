@@ -173,14 +173,6 @@ TypUnionType >> postCopy [
 
 { #category : #printing }
 TypUnionType >> printOn: aStream [
-	| superType |
-	superType := (TypUnionType new
-		types:
-			(types
-				copyWithoutAll:
-					{TypUnknownType instance.
-					TypNilType instance});
-		yourself) superType.
 	super printOn: aStream.
 	aStream << 'U'
 		<<
@@ -190,11 +182,21 @@ TypUnionType >> printOn: aStream [
 		<<
 			((types includes: TypUnknownType instance)
 				ifTrue: [ '?' ]
-				ifFalse: [ '' ]) << ' '
-		<<
-			(superType isUnion
-				ifTrue: [ '...' ]
-				ifFalse: [ superType printString ])
+				ifFalse: [ '' ]).
+	(types
+		copyWithoutAll:
+			{TypUnknownType instance.
+			TypNilType instance})
+		ifNotEmpty: [ :e | 
+			| superType |
+			superType := (TypUnionType new
+				types: e;
+				yourself) superType.
+			aStream << ' '
+				<<
+					(superType isUnion
+						ifTrue: [ '...' ]
+						ifFalse: [ superType printString ]) ]
 ]
 
 { #category : #accessing }

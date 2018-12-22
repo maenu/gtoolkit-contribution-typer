@@ -53,15 +53,15 @@ TypFunctionType >> canBeFunctionType [
 { #category : #accessing }
 TypFunctionType >> compatibleWith: aType [
 	| compatibleType compatibleResult |
+	aType isFunction
+		ifFalse: [ ^ TypUnknownType instance ].
 	compatibleType := super compatibleWith: aType.
 	compatibleType isParametric
 		ifFalse: [ ^ compatibleType ].
-	aType isFunction
-		ifFalse: [ ^ compatibleType ].
 	compatibleResult := result compatibleWith: (aType "typCastAs TypFunctionType") result.
 	^ TypFunctionType new
-		type: (compatibleType "typCastAs TypFunctionType") type;
-		parameters: (compatibleType "typCastAs TypFunctionType") parameters;
+		type: (compatibleType "typCastAs TypParametricType") type;
+		parameters: (compatibleType "typCastAs TypParametricType") parameters;
 		result: compatibleResult;
 		yourself
 ]

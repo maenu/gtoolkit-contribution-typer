@@ -59,6 +59,7 @@ TypParametricType >> canBeParametricType [
 { #category : #accessing }
 TypParametricType >> compatibleWith: aType [
 	| compatibleType compatibleParameters |
+	aType isFunction ifTrue: [ ^ aType compatibleWith: self ].
 	compatibleType := type compatibleWith: aType.
 	(aType isParametric not
 		or:
@@ -98,7 +99,7 @@ TypParametricType >> initialize [
 
 { #category : #comparing }
 TypParametricType >> isCompatibleWith: aType [
-	^ (aType isKindOf: TypParametricType)
+	^ (aType class == TypParametricType)
 		ifTrue: [ | type_ |
 			type_ := aType "typCastAs TypParametricType".
 			type >= type_ type
