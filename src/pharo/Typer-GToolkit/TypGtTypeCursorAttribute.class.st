@@ -2,6 +2,7 @@ Class {
 	#name : #TypGtTypeCursorAttribute,
 	#superclass : #BrTextCursorAttribute,
 	#instVars : [
+		'coder',
 		'attribute'
 	],
 	#category : #'Typer-GToolkit-Core'
@@ -19,20 +20,32 @@ TypGtTypeCursorAttribute >> attribute: anObject [
 	attribute := anObject
 ]
 
+{ #category : #accessing }
+TypGtTypeCursorAttribute >> coder [
+	^ coder
+]
+
+{ #category : #accessing }
+TypGtTypeCursorAttribute >> coder: anObject [
+	coder := anObject
+]
+
 { #category : #initialization }
 TypGtTypeCursorAttribute >> initialize [
 	<typTypeVariable: 'attribute' as: 'BrTextAdornmentAttribute'>
 	super initialize.
 	self
 		enterAction: [ :aTextEditor :anEvent | 
-			| position |
-			position := anEvent cursor position.
-			(aTextEditor text from: position to: position) attribute: attribute.
-			aTextEditor invalidate: position to: position ];
+			| node |
+			node := coder  rbAST bestNodeFor: (anEvent cursor position  to: anEvent cursor position).
+			(aTextEditor text from: node stop to: node stop) attribute: attribute.
+			aTextEditor invalidate: node stop to: node stop.
+			aTextEditor update: node stop to: node stop ];
 		leaveAction: [ :aTextEditor :anEvent | 
-			| position |
-			position := anEvent cursor position.
-			(aTextEditor text from: position to: position)
+			| node |
+			node := coder  rbAST bestNodeFor: (anEvent cursor position  to: anEvent cursor position).
+			(aTextEditor text from: node stop to: node stop)
 				clearAttributes: [ :e | e == attribute ].
-			aTextEditor invalidate: position to: position ]
+			aTextEditor invalidate: node stop to: node stop.
+			aTextEditor update: node stop to: node stop ]
 ]
