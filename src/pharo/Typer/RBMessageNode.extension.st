@@ -45,10 +45,10 @@ RBMessageNode >> typTypeForReceiver [
 RBMessageNode >> typTypeForResult [
 	<typTypeResultAs: 'TypType'>
 	^ (self
-		propertyAt: #typTypesForResult
+		propertyAt: #typTypeForResult
 		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
 			| receiverType argumentTypes |
-			self propertyAt: #typTypesForResult put: TypUnknownType instance.
+			self propertyAt: #typTypeForResult put: TypUnknownType instance.
 			receiverType := self typTypeForReceiver.
 			argumentTypes := self typTypesForArguments.
 			receiverType isUnion

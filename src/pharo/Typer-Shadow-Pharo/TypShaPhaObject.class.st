@@ -38,14 +38,6 @@ TypShaPhaObject >> ___assert: _a [
 ]
 
 { #category : #accessing }
-TypShaPhaObject >> ___at: _a [
-	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | Integer typAsType ];
-		resultType: [ :a :s :r | a receiverType parameters at: 1 ];
-		yourself
-]
-
-{ #category : #accessing }
 TypShaPhaObject >> ___class [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

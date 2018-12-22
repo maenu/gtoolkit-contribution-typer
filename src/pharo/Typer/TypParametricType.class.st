@@ -59,7 +59,7 @@ TypParametricType >> canBeParametricType [
 { #category : #accessing }
 TypParametricType >> compatibleWith: aType [
 	| compatibleType compatibleParameters |
-	aType isFunction ifTrue: [ ^ aType compatibleWith: self ].
+	aType isFunction ifTrue: [ ^ TypUnknownType instance  ].
 	compatibleType := type compatibleWith: aType.
 	(aType isParametric not
 		or:

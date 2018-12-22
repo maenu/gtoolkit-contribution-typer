@@ -94,6 +94,14 @@ TypShaPhaCollection >> ___asSet [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaCollection >> ___at: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | Integer typAsType ];
+		resultType: [ :a :s :r | a receiverType parameters at: 1 ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___collect: _a [
 	^ TypMethodResolver new
