@@ -9,8 +9,8 @@ Class {
 
 { #category : #accessing }
 TypPraExamples >> comment: aThing [
-	<typTypeArgument: 1 as: 'String'>
-	<typTypeResultAs: 'String'>
+	<typTypeArgument: 1 as: 'String<Character>'>
+	<typTypeResultAs: 'String<Character>'>
 	| i s x |
 	i := thing.	"thing is instance variable"
 	s := self.

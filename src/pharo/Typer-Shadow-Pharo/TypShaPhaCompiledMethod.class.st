@@ -58,6 +58,14 @@ TypShaPhaCompiledMethod >> ___pragmas [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaCompiledMethod >> ___selector [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Symbol typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaCompiledMethod >> asType: aClass [
 	^ aClass typAsNamedType asParametricType: {Integer typAsType}

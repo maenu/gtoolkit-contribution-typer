@@ -59,6 +59,14 @@ TypShaPhaBehavior >> ___lookupSelector: _a [
 ]
 
 { #category : #accessing }
+TypShaPhaBehavior >> ___methodNamed: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
+		resultType: [ :a :s :r | CompiledMethod typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaBehavior >> ___methods [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

@@ -17,3 +17,11 @@ TypShaPhaPragma >> ___arguments [
 				[ :a :s :r | SequenceableCollection typAsType asParametricType: {Symbol typAsType} ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaPhaPragma >> ___selector [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Symbol typAsType ];
+		yourself
+]
