@@ -11,13 +11,17 @@ TypShaTypeResolvers >> initialize [
 	resolvers := #asTypeResolvers
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaTypeResolvers >> resolversFor: aLookup [
+	<typTypeArgument: 1 as: 'TypTypeLookup'>
+	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypLookup>>'>
 	self assert: [ self resolves: aLookup ].
 	^ self resolversFor: aLookup shadowing: aLookup clazz
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaTypeResolvers >> resolves: aLookup [
+	<typTypeArgument: 1 as: 'TypTypeLookup'>
+	<typTypeResultAs: 'Boolean'>
 	^ self resolves: aLookup shadowing: aLookup clazz
 ]

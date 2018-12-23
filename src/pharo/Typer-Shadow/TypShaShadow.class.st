@@ -67,7 +67,7 @@ TypShaShadow >> asType: aClass [
 	^ aClass typAsNamedType
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaShadow >> shadowedClass [
 	<typTypeResultAs: 'ClassDescription'>
 	^ self class shadowedClass instanceSide

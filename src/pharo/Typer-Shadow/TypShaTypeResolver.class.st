@@ -11,5 +11,7 @@ TypShaTypeResolver >> resolversFor: aLookup [
 
 { #category : #accessing }
 TypShaTypeResolver >> resolves: aLookup [
+	<typTypeArgument: 1 as: 'TypTypeLookup'>
+	<typTypeResultAs: 'Boolean'>
 	^ aLookup clazz == shadow shadowedClass
 ]

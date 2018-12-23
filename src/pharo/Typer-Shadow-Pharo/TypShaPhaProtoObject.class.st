@@ -10,6 +10,14 @@ TypShaPhaProtoObject class >> shadowedClass [
 ]
 
 { #category : #accessing }
+TypShaPhaProtoObject >> ___class [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | a receiverType asClass class typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaProtoObject >> ___flag: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | String typAsType ];

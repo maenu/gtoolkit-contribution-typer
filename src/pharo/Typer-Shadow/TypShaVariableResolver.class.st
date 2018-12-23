@@ -6,6 +6,8 @@ Class {
 
 { #category : #accessing }
 TypShaVariableResolver >> resolversFor: aLookup [
+	<typTypeArgument: 1 as: 'TypVariableLookup'>
+	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypLookup>>'>
 	| name |
 	name := '___' , aLookup selector.
 	^ name first isUppercase
@@ -15,6 +17,8 @@ TypShaVariableResolver >> resolversFor: aLookup [
 
 { #category : #accessing }
 TypShaVariableResolver >> resolves: aLookup [
+	<typTypeArgument: 1 as: 'TypVariableLookup'>
+	<typTypeResultAs: 'Boolean'>
 	^ aLookup receiverType hasClass
 		and: [ aLookup receiverType asClass == shadow shadowedClass
 				and: [ | name |

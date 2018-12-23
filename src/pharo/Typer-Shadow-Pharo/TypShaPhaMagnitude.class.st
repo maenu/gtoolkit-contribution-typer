@@ -34,3 +34,11 @@ TypShaPhaMagnitude >> ~~~<= _a [
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaPhaMagnitude >> ~~~> _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | Magnitude typAsType ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]

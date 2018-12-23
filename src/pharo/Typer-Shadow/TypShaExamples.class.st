@@ -19,7 +19,7 @@ TypShaExamples >> playground [
 	o := 10 atRandom > 5
 		ifTrue: [ Object new ]
 		ifFalse: [ Dictionary new ].
-	c := OrderedCollection new.	"typParameters Point"
+	c := OrderedCollection new "typParameters Point".
 	s := self.
 	d := (c select: [ :e | e abs > 1 ]) collect: [ :e | 4 ].
 	o.

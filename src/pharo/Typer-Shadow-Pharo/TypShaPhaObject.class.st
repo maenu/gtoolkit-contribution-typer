@@ -37,14 +37,6 @@ TypShaPhaObject >> ___assert: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaObject >> ___class [
-	^ TypMethodResolver new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | ClassDescription typAsType ];
-		yourself
-]
-
 { #category : #'as yet unclassified' }
 TypShaPhaObject >> ___copy [
 	^ TypMethodResolver new
@@ -91,6 +83,14 @@ TypShaPhaObject >> ___ifNil: _a ifNotNil: _b [
 ]
 
 { #category : #accessing }
+TypShaPhaObject >> ___instVarNamed: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | String typAsType ];
+		resultType: [ :a :s :r | TypUnknownType instance ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaObject >> ___isBlock [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
@@ -111,6 +111,17 @@ TypShaPhaObject >> ___isNotNil [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaObject >> ___perform: _a withEnoughArguments: _b [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			i = 1
+				ifTrue: [ Symbol typAsType ]
+				ifFalse: [ SequenceableCollection typAsType ] ];
+		resultType: [ :a :s :r | TypUnknownType instance ];
 		yourself
 ]
 

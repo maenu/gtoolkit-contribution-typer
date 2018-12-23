@@ -13,12 +13,16 @@ TypShaMethodResolvers >> initialize [
 
 { #category : #accessing }
 TypShaMethodResolvers >> resolversFor: aLookup [
+	<typTypeArgument: 1 as: 'TypMethodLookup'>
+	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypLookup>>'>
 	self assert: [ self resolves: aLookup ].
 	^ self resolversFor: aLookup shadowing: aLookup receiverType asClass
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaMethodResolvers >> resolves: aLookup [
+	<typTypeArgument: 1 as: 'TypMethodLookup'>
+	<typTypeResultAs: 'Boolean'>
 	aLookup receiverType hasClass
 		ifFalse: [ ^ false ].
 	^ self resolves: aLookup shadowing: aLookup receiverType asClass

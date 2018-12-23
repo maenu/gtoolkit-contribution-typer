@@ -26,6 +26,14 @@ TypShaPhaClassDescription >> ___classSide [
 ]
 
 { #category : #accessing }
+TypShaPhaClassDescription >> ___hasInstVarNamed: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | String typAsType ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaClassDescription >> ___instanceSide [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
