@@ -13,7 +13,7 @@ TypUnionType >> = anObject [
 		or: [ self class = anObject class
 				and: [ | object |
 					object := anObject "typCastAs TypUnionType".
-					nullable = object nullable and: [ types = object types ] ] ]
+					self nullable = object nullable and: [ types = object types ] ] ]
 ]
 
 { #category : #converting }

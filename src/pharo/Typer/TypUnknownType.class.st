@@ -79,15 +79,6 @@ TypUnknownType >> nullable: anObject [
 	
 ]
 
-{ #category : #generated }
-TypUnknownType >> parameters [
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	self flag: 'this is very hackish'.
-	^ {self.
-	self.
-	self}
-]
-
 { #category : #accessing }
 TypUnknownType >> printOn: aStream [
 	super printOn: aStream.

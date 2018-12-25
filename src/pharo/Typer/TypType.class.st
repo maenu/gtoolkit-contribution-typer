@@ -212,6 +212,17 @@ TypType >> nullable: anObject [
 	nullable := anObject
 ]
 
+{ #category : #generated }
+TypType >> parameters [
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
+	self flag: 'this is very hackish'.
+	^ {TypUnknownType instance.
+	TypUnknownType instance.
+	TypUnknownType instance.
+	TypUnknownType instance.
+	TypUnknownType instance}
+]
+
 { #category : #printing }
 TypType >> printOn: aStream [
 	nullable

@@ -16,10 +16,10 @@ RBBlockNode >> typTypeForArgumentAt: anInteger [
 						types: (type_ "typCastAs TypUnionType" types select: [ :e | (e asNonParametricType "typCastAs TypNamedType") name = 'BlockClosure' ]);
 						yourself ].
 			type_ isParametric
-				ifTrue: [ ^ (type_ "typCastAs TypParametricType") parameters at: anInteger ] ].
+				ifTrue: [ ^ self typAnnotateType: ((type_ "typCastAs TypParametricType") parameters at: anInteger) ] ].
 	(type isParametric and: [ anInteger < (type "typCastAs TypParametricType") parameters size ])
-		ifTrue: [ ^ (type "typCastAs TypParametricType") parameters at: anInteger].
-	^ TypUnknownType instance
+		ifTrue: [ ^ self typAnnotateType: ((type "typCastAs TypParametricType") parameters at: anInteger)].
+	^ self typAnnotateType: TypUnknownType instance
 ]
 
 { #category : #'*Typer' }
