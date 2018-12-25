@@ -58,7 +58,7 @@ TypUnionType >> asParametricType: someTypes [
 
 { #category : #accessing }
 TypUnionType >> asSourceString [
-	^ super asSourceString , self superType asSourceString
+	^ '{' , (',' join: (types collect: #asSourceString)) , '}'
 ]
 
 { #category : #converting }
@@ -174,14 +174,14 @@ TypUnionType >> postCopy [
 { #category : #printing }
 TypUnionType >> printOn: aStream [
 	super printOn: aStream.
-	aStream << 'U'
+	aStream << '{'
 		<<
 			((types includes: TypNilType instance)
-				ifTrue: [ '!' ]
+				ifTrue: [ '!,' ]
 				ifFalse: [ '' ])
 		<<
 			((types includes: TypUnknownType instance)
-				ifTrue: [ '?' ]
+				ifTrue: [ '?,' ]
 				ifFalse: [ '' ]).
 	(types
 		copyWithoutAll:
@@ -192,11 +192,8 @@ TypUnionType >> printOn: aStream [
 			superType := (TypUnionType new
 				types: e;
 				yourself) superType.
-			aStream << ' '
-				<<
-					(superType isUnion
-						ifTrue: [ '...' ]
-						ifFalse: [ superType printString ]) ]
+			aStream << superType printString ].
+	aStream << '}'
 ]
 
 { #category : #accessing }

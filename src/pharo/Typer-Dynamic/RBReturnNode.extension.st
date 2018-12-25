@@ -30,7 +30,7 @@ RBReturnNode >> typDynReturn: anObject [
 
 { #category : #'*Typer-Dynamic' }
 RBReturnNode >> typDynReturns [
-	<typTypeResultAs: 'TypUnionType<TypType>'>
+	<typTypeResultAs: 'TypDynUnionType<TypType>'>
 	^ self propertyAt: #typDynReturns
 ]
 
@@ -40,7 +40,7 @@ RBReturnNode >> typDynUninstall [
 	self removeProperty: #typDynReturns ifAbsent: [  ].
 	self
 		propertyAt: #typDynLink
-		ifPresent: [ :e | 
+		ifPresent: [ :e "typCastAs MetaLink" | 
 			self removeProperty: #typDynLink ifAbsent: [  ].
 			self removeLink: e ]
 		ifAbsent: [  ]

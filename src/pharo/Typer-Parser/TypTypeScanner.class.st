@@ -4,25 +4,14 @@ Class {
 	#category : #'Typer-Parser'
 }
 
-{ #category : #'generated-initialization' }
-TypTypeScanner class >> initializeKeywordMap [
-	keywordMap := Dictionary new.
-	#(#(13 'nil' 12))
-		do: [ :each | 
-			(keywordMap at: each first ifAbsentPut: [ Dictionary new ])
-				at: (each at: 2)
-				put: each last ].
-	^ keywordMap
-]
-
 { #category : #generated }
 TypTypeScanner >> emptySymbolTokenId [
-	^ 21
+	^ 27
 ]
 
 { #category : #generated }
 TypTypeScanner >> errorTokenId [
-	^ 22
+	^ 28
 ]
 
 { #category : #generated }
@@ -37,12 +26,17 @@ TypTypeScanner >> scanForToken [
 		ifTrue: [ ^ self recordAndReportMatch: #(3) ].
 	currentCharacter == $)
 		ifTrue: [ ^ self recordAndReportMatch: #(4) ].
+	currentCharacter == $,
+		ifTrue: [ ^ self recordAndReportMatch: #(5) ].
+	currentCharacter == $-
+		ifTrue:
+			[ ^ self scanForTokenX2 ].
 	^ self scanForTokenX4
 ]
 
 { #category : #generated }
 TypTypeScanner >> scanForTokenX1 [
-	[ self recordMatch: #(13).
+	[ self recordMatch: #(14).
 	self step.
 	(currentCharacter between: $0 and: $9)
 		or: [ (currentCharacter between: $A and: $Z)
@@ -67,21 +61,20 @@ TypTypeScanner >> scanForTokenX3 [
 
 { #category : #generated }
 TypTypeScanner >> scanForTokenX4 [
-	currentCharacter == $,
-		ifTrue: [ ^ self recordAndReportMatch: #(5) ].
-	currentCharacter == $-
-		ifTrue:
-			[ ^ self scanForTokenX2 ].
 	currentCharacter == $<
 		ifTrue: [ ^ self recordAndReportMatch: #(7) ].
 	currentCharacter == $>
 		ifTrue: [ ^ self recordAndReportMatch: #(8) ].
 	currentCharacter == $?
-		ifTrue: [ ^ self recordAndReportMatch: #(9 13) ].
+		ifTrue: [ ^ self recordAndReportMatch: #(9 14) ].
 	currentCharacter == $[
 		ifTrue: [ ^ self recordAndReportMatch: #(10) ].
 	currentCharacter == $]
 		ifTrue: [ ^ self recordAndReportMatch: #(11) ].
+	currentCharacter == ${
+		ifTrue: [ ^ self recordAndReportMatch: #(12) ].
+	currentCharacter == $}
+		ifTrue: [ ^ self recordAndReportMatch: #(13) ].
 	((currentCharacter between: $0 and: $9)
 		or: [ (currentCharacter between: $A and: $Z)
 				or: [ currentCharacter == $_ or: [ currentCharacter between: $a and: $z ] ] ])

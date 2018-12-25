@@ -11,7 +11,13 @@ Class {
 
 { #category : #comparing }
 TypDynMessage >> = anObject [
-	^ self == anObject or: [ self class = anObject class and: [ selector = anObject selector and: [ argumentTypes = anObject argumentTypes and: [ receiverType = anObject receiverType ] ] ] ]
+	^ self == anObject
+		or: [ self class = anObject class
+				and: [ | object |
+					object := anObject "typCastAs TypDynMessage".
+					selector = object selector
+						and: [ argumentTypes = object argumentTypes
+								and: [ receiverType = object receiverType ] ] ] ]
 ]
 
 { #category : #accessing }

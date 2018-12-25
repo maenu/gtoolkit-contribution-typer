@@ -21,7 +21,11 @@ TypDynUnionType >> , aType [
 TypDynUnionType >> = anObject [
 	^ self == anObject
 		or: [ self class = anObject class
-				and: [ nullable = anObject nullable and: [ types asSet = anObject types asSet and: [ weights keys = anObject weights keys ] ] ] ]
+				and: [ | object |
+					object := anObject "typCastAs TypDynUnionType<TypType>".
+					nullable = object nullable
+						and: [ types asSet = object types asSet
+								and: [ weights keys = object weights keys ] ] ] ]
 ]
 
 { #category : #enumerating }
@@ -71,9 +75,9 @@ TypDynUnionType >> hash [
 { #category : #accessing }
 TypDynUnionType >> increment: anObject [
 	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeResultAs: 'Integer'>
+	<typTypeResultAs: 'TypType'>
 	^ (anObject isKindOf: TypDynUnionType)
-		ifTrue: [ self addAll: anObject ]
+		ifTrue: [ self addAll: anObject "typCastAs TypDynUnionType<TypType>" ]
 		ifFalse: [ | n type |
 			type := anObject nullable
 				ifTrue: [ n := weights at: TypNilType instance ifAbsentPut: [ 0 ].
@@ -109,7 +113,7 @@ TypDynUnionType >> postCopy [
 { #category : #enumerating }
 TypDynUnionType >> select: aBlock [
 	<typTypeArgument: 1 as: 'BlockClosure(Association<TypType,Integer>)->Boolean'>
-	<typTypeResultAs: 'TypDynUnionType'>
+	<typTypeResultAs: 'TypDynUnionType<TypType>'>
 	| copy |
 	copy := TypDynUnionType new.
 	weights

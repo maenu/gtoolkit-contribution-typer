@@ -260,6 +260,14 @@ TypShaPhaCollection >> ___groupedBy: _a [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaCollection >> ___gtItemsFor: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | GtPhlowView typAsType ];
+		resultType: [ :a :s :r | GtPhlowView typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___ifEmpty: _a [
 	^ TypMethodResolver new

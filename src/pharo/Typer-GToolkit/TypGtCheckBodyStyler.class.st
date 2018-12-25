@@ -72,8 +72,10 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 		on: TypCheNoMethodError
 		do: [ :e | self styleSelectorOf: aNode text: 'method ' , e selector asString , ' not found in ' , e type asString color: Color orange ].
 	aNode arguments
-		withIndexDo: [ :e :i | 
+		withIndexDo: [ :e :i |
 			[ [ aNode typCheCheckArgumentCompatibilityAt: i.
+			e typType isUnknown
+				ifTrue: [ self styleNode: e color: Color blue ].
 			(aNode typTypeForArgumentAt: i) isUnknown
 				ifTrue: [ self styleNode: e color: Color blue ] ]
 				on: TypCheIncompatibleTypeError

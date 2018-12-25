@@ -25,7 +25,7 @@ TypNilType >> asParametricType: someTypes [
 
 { #category : #accessing }
 TypNilType >> asSourceString [
-	^ 'nil'
+	^ '!'
 ]
 
 { #category : #converting }
@@ -74,7 +74,7 @@ TypNilType >> nullable: anObject [
 
 { #category : #printing }
 TypNilType >> printOn: aStream [
-	aStream << 'nil'
+	aStream << '!'
 ]
 
 { #category : #accessing }

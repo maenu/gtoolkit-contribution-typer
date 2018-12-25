@@ -11,7 +11,7 @@ Class {
 TypDynCollector >> collectIn: aCollection doing: aBlock [
 	<typTypeArgument: 1 as: 'Collection<CompiledMethod<Integer>>'>
 	<typTypeArgument: 2 as: 'BlockClosure()->?'>
-	<typTypeResultAs: 'Association<Association<?,TypDynResolver>,TypDynResolver>'>
+	<typTypeResultAs: 'Association<Association<?,TypDynResolver<TypLookup>>,TypDynResolver<TypLookup>>'>
 	| methodResolvers variableResolvers result asts |
 	methodResolvers := Dictionary new "typParameters Association<ClassDescription,Symbol<Character>>,TypMethodResolver<TypMethodLookup>".
 	variableResolvers := Dictionary new "typParameters Association<ClassDescription,Symbol<Character>>,TypVariableResolver<TypVariableLookup>".

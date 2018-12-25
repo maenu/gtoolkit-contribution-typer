@@ -29,12 +29,12 @@ TypShaPhaDictionary >> ___asOrderedDictionary [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaDictionary >> ___associations [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
-			Collection typAsType
+			Array typAsType
 				asParametricType:
 					{(Association typAsType
 						asParametricType:
@@ -56,6 +56,14 @@ TypShaPhaDictionary >> ___associationsDo: _a [
 				result: TypUnknownType instance
 				optionalParameters: false ];
 		resultType: [ :a :s | a receiverType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaDictionary >> ___at: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | a receiverType parameters at: 1 ];
+		resultType: [ :a :s :r | a receiverType parameters at: 2 ];
 		yourself
 ]
 

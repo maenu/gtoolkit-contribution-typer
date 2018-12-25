@@ -41,7 +41,7 @@ RBMethodNode >> typDynInstall [
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynInvocations [
-	<typTypeResultAs: 'TypUnionType<TypDynMessage>'>
+	<typTypeResultAs: 'TypDynUnionType<TypDynMessage>'>
 	^ self propertyAt: #typDynInvocations
 ]
 
@@ -73,21 +73,21 @@ RBMethodNode >> typDynMonitor [
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynReturnNodes [
 	<typTypeResultAs: 'SequenceableCollection<RBReturnNode>'>
-	^ self allChildren select: #isReturn
+	^ (self allChildren select: #isReturn) "typParameters RBReturnNode"
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
-	<typTypeResultAs: 'TypUnionType<TypType>'>
+	<typTypeResultAs: 'TypDynUnionType<TypType>'>
 	^ self typDynInvocations
-		collect: [ :f | (f key argumentTypes at: anInteger) -> f value ]
+		collect: [ :f | ((f key "typCastAs TypDynMessage") argumentTypes at: anInteger) -> f value ]
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypeForResult [
 	<typTypeResultAs: 'TypUnionType<TypType>'>
-	^ (self typDynReturnNodes collect: #typDynReturns)
+	^ (self typDynReturnNodes collect: #typDynReturns) "typParameters TypDynUnionType<TypType>"
 		inject: TypDynUnionType new
 		into: [ :a :b | a , b ]
 ]
@@ -122,7 +122,7 @@ RBMethodNode >> typDynTypesForVariables [
 	"keys are unique as defining class and name are unique accross different variable kinds, concat dictionaries is fine"
 
 	<typTypeResultAs:
-		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypUnionType<TypType>>'>
+		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypDynUnionType<TypType>>'>
 	^ self typDynTypesForPoolVariables
 		, self typDynTypesForInstanceVariables
 		, self typDynTypesForClassVariables
@@ -131,9 +131,9 @@ RBMethodNode >> typDynTypesForVariables [
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForVariablesSelectedWith: aBlock definedBy: anotherBlock [
 	<typTypeArgument: 1 as: 'BlockClosure(RBAssignmentNode)->Boolean'>
-	<typTypeArgument: 2 as: 'BlockClosure(RBVariableNode)->ClassDescription'>
+	<typTypeArgument: 2 as: 'BlockClosure[RBVariableNode]->ClassDescription'>
 	<typTypeResultAs: 'Dictionary<Association<ClassDescription,Symbol<Character>>,TypDynUnionType<TypType>>'>
-	^ ((((self typDynAssignNodes select: aBlock) collect: [ :e | (anotherBlock cull: e variable) -> e variable name -> e typDynAssigns ]) groupedBy: #key)
+	^ ((((self typDynAssignNodes select: aBlock) collect: [ :e | (anotherBlock cull: e variable) -> e variable name asSymbol -> e typDynAssigns ]) groupedBy: #key)
 		collect: [ :e | e collect: #value ]) collect: [ :e | e inject: TypDynUnionType new into: [ :a :b | a , b ] ]
 ]
 
@@ -144,7 +144,7 @@ RBMethodNode >> typDynUninstall [
 	self removeProperty: #typDynInvocations ifAbsent: [  ].
 	self
 		propertyAt: #typDynLink
-		ifPresent: [ :e | 
+		ifPresent: [ :e "typCastAs MetaLink" | 
 			self removeProperty: #typDynLink ifAbsent: [  ].
 			self removeLink: e ]
 		ifAbsent: [  ].

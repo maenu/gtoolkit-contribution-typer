@@ -11,7 +11,7 @@ RBAssignmentNode >> typDynAssign: anObject [
 { #category : #'*Typer-Dynamic' }
 RBAssignmentNode >> typDynAssigns [
 	<typTypeResultAs: 'TypDynUnionType<TypType>'>
-	^ self propertyAt: #typDynAssigns ifAbsentPut: [ TypDynUnionType new ]
+	^ (self propertyAt: #typDynAssigns ifAbsentPut: [ TypDynUnionType new ]) "typCastAs TypDynUnionType<TypType>"
 ]
 
 { #category : #'*Typer-Dynamic' }
@@ -41,7 +41,7 @@ RBAssignmentNode >> typDynUninstall [
 	self removeProperty: #typDynAssigns ifAbsent: [  ].
 	self
 		propertyAt: #typDynLink
-		ifPresent: [ :e | 
+		ifPresent: [ :e "typCastAs MetaLink" | 
 			self removeProperty: #typDynLink ifAbsent: [  ].
 			self removeLink: e ]
 		ifAbsent: [  ]
