@@ -53,7 +53,7 @@ TypShaPhaString >> ___asPackage [
 { #category : #accessing }
 TypShaPhaString >> ___join: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | SequenceableCollection typAsType asParametricType: {String typAsType} ];
+		argumentTypes: [ :i :a :s :r | Collection typAsType asParametricType: {String typAsType} ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself
 ]

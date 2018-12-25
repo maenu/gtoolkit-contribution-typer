@@ -36,7 +36,7 @@ TypUnknownType >> asNullableType [
 
 { #category : #converting }
 TypUnknownType >> asParametricType: someTypes [
-	TypNoTypeError signal
+	TypNoParametricTypeError signal
 ]
 
 { #category : #accessing }
