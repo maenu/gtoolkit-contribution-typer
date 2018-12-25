@@ -40,3 +40,11 @@ TypShaPhaClassDescription >> ___instanceSide [
 		resultType: [ :a :s :r | Class typAsType ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaPhaClassDescription >> ___isTestCase [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]

@@ -51,6 +51,7 @@ TypNilType >> hasSuperType [
 { #category : #initialization }
 TypNilType >> initialize [
 	super initialize.
+	nullable := true.
 	name := 'UndefinedObject'
 ]
 

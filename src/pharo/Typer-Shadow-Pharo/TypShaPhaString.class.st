@@ -43,6 +43,14 @@ TypShaPhaString >> ___asClassInEnvironment: _a ifAbsent: _b [
 ]
 
 { #category : #accessing }
+TypShaPhaString >> ___asPackage [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | RPackage typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaString >> ___join: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | SequenceableCollection typAsType asParametricType: {String typAsType} ];

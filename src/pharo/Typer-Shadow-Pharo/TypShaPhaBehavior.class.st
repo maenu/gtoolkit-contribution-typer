@@ -58,6 +58,14 @@ TypShaPhaBehavior >> ___instVarNames [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaBehavior >> ___isAbstract [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaBehavior >> ___lookupSelector: _a [
 	^ TypMethodResolver new

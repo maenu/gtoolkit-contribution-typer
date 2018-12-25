@@ -138,3 +138,21 @@ TypShaPhaDictionary >> asType: aClass [
 			{TypUnknownType instance.
 			TypUnknownType instance}
 ]
+
+{ #category : #accessing }
+TypShaPhaDictionary >> ~~~, _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			Dictionary typAsType
+				asParametricType:
+					{(Association typType
+						asParametricType:
+							{TypUnknownType instance.
+							TypUnknownType instance})} ];
+		resultType: [ :a :s :r | 
+			a receiverType
+				asParametricType:
+					{{(a receiverType parameters at: 1).
+					((a argumentTypes at: 1) parameters at: 1)} typAsType} ];
+		yourself
+]

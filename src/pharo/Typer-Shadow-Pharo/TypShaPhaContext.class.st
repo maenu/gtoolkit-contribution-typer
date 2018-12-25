@@ -17,3 +17,19 @@ TypShaPhaContext >> ___arguments [
 				[ :a :s :r | SequenceableCollection typAsType asParametricType: {Object typAsType} ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaPhaContext >> ___method [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | CompiledMethod typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaContext >> ___receiver [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Object typAsType ];
+		yourself
+]

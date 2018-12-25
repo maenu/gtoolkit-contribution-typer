@@ -59,6 +59,14 @@ TypShaPhaCompiledMethod >> ___pragmas [
 ]
 
 { #category : #accessing }
+TypShaPhaCompiledMethod >> ___reflectiveMethod [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | ReflectiveMethod typAsType asNullableType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaCompiledMethod >> ___selector [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

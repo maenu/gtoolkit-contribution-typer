@@ -26,6 +26,22 @@ TypShaPhaSequenceableCollection >> ___at: _a [
 ]
 
 { #category : #accessing }
+TypShaPhaSequenceableCollection >> ___at: _a ifAbsent: _b [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			i = 1
+				ifTrue: [ Integer typAsType ]
+				ifFalse: [ BlockClosure typAsType
+						asFunctionType: {}
+						result: TypUnknownType instance
+						optionalParameters: false ] ];
+		resultType: [ :a :s :r | 
+			{(a receiverType parameters at: 1).
+			(a argumentTypes at: 2) result} typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaSequenceableCollection >> ___beginsWith: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | a receiverType ];

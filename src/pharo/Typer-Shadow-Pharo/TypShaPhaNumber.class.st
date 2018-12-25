@@ -30,7 +30,12 @@ TypShaPhaNumber >> ___to: _a do: _b [
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ Number typAsType ]
-				ifFalse: [ BlockClosure typAsType asFunctionType: {Number typAsType} result: TypUnknownType instance optionalParameters: false ] ];
+				ifFalse: [ BlockClosure typAsType
+						asFunctionType:
+							{{a receiverType.
+							(a argumentTypes at: 1)} typAsType}
+						result: TypUnknownType instance
+						optionalParameters: false ] ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
