@@ -174,6 +174,12 @@ TypUnionType >> postCopy [
 { #category : #printing }
 TypUnionType >> printOn: aStream [
 	super printOn: aStream.
+	types
+		=
+			{TypNilType instance.
+			TypUnknownType instance} asSet
+		ifTrue: [ aStream << '{!,?}'.
+			^ self ].
 	aStream << '{'
 		<<
 			((types includes: TypNilType instance)

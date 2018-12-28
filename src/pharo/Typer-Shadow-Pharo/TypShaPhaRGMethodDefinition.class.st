@@ -13,6 +13,6 @@ TypShaPhaRGMethodDefinition class >> shadowedClass [
 TypShaPhaRGMethodDefinition >> ___compiledMethod [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | CompiledMethod typAsType ];
+		resultType: [ :a :s :r | CompiledMethod typAsType asNullableType ];
 		yourself
 ]

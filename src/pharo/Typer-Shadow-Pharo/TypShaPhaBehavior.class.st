@@ -27,6 +27,14 @@ TypShaPhaBehavior >> ___classVarNames [
 ]
 
 { #category : #accessing }
+TypShaPhaBehavior >> ___compile: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | String typAsType ];
+		resultType: [ :a :s :r | Symbol typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaBehavior >> ___compiledMethodAt: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];

@@ -13,9 +13,7 @@ TypShaSmaSmaCCToken class >> shadowedClass [
 TypShaSmaSmaCCToken >> ___stopPosition [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			{TypNilType instance.
-			Integer typAsType} typAsType ];
+		resultType: [ :a :s :r | Integer typAsType asNullableType ];
 		yourself
 ]
 
