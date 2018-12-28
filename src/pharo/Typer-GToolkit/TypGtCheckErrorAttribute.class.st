@@ -10,16 +10,20 @@ Class {
 
 { #category : #accessing }
 TypGtCheckErrorAttribute >> color [
+	<typTypeResultAs: 'Color'>
 	^ color
 ]
 
 { #category : #accessing }
 TypGtCheckErrorAttribute >> color: anObject [
+	<typTypeArgument: 1 as: 'Color'>
 	color := anObject
 ]
 
 { #category : #initialization }
 TypGtCheckErrorAttribute >> initialize [
+	<typTypeVariable: 'text' as: 'String<Character>'>
+	<typTypeVariable: 'color' as: 'Color'>
 	super initialize.
 	self
 		beAppend;
@@ -39,10 +43,12 @@ TypGtCheckErrorAttribute >> initialize [
 
 { #category : #accessing }
 TypGtCheckErrorAttribute >> text [
+	<typTypeResultAs: 'String<Character>'>
 	^ text
 ]
 
 { #category : #accessing }
 TypGtCheckErrorAttribute >> text: anObject [
+	<typTypeArgument: 1 as: 'String<Character>'>
 	text := anObject
 ]

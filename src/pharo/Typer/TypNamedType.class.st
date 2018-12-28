@@ -108,6 +108,11 @@ TypNamedType >> initialize [
 	super initialize
 ]
 
+{ #category : #testing }
+TypNamedType >> isNamed [
+	^ true
+]
+
 { #category : #accessing }
 TypNamedType >> name [
 	<typTypeResultAs: 'String<Character>'>

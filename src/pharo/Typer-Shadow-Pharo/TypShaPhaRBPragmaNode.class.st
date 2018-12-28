@@ -20,3 +20,11 @@ TypShaPhaRBPragmaNode class >> ___selector: _a arguments: _b [
 TypShaPhaRBPragmaNode class >> shadowedClass [
 	^ RBPragmaNode class
 ]
+
+{ #category : #accessing }
+TypShaPhaRBPragmaNode >> ___selector [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Symbol typAsType ];
+		yourself
+]

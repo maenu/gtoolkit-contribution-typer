@@ -3,7 +3,7 @@ Extension { #name : #GtPharoUnaryMessageNode }
 { #category : #'*Typer-GToolkit' }
 GtPharoUnaryMessageNode >> typGtCompletionActionsFor: aStrategy in: anRbNode [
 	<typTypeArgument: 1 as: 'TypGtPharoCompletionStrategy'>
-	<typTypeArgument: 2 as: 'RbProgramNode'>
+	<typTypeArgument: 2 as: 'RBMessageNode'>
 	<typTypeResultAs: 'SequenceableCollection<String<Character>>'>
 	| startingText index type clazz |
 	index := aStrategy index.

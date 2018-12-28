@@ -33,8 +33,8 @@ RBInstanceVariableNode >> typGtFiltersToTypeWithShadow [
 		ifFalse: [ shadows anyOne ].
 	variableType := self typType.
 	method := (clazz isClassSide
-		ifTrue: [ shadow typGtShadowClassInstanceVariable: self name type: variableType ]
-		ifFalse: [ shadow typGtShadowInstanceVariable: self name type: variableType ]) "typCastAs CompiledMethod<Integer>".
+		ifTrue: [ shadow typGtShadowClassInstanceVariable: self name asSymbol type: variableType ]
+		ifFalse: [ shadow typGtShadowInstanceVariable: self name asSymbol type: variableType ]) "typCastAs CompiledMethod<Integer>".
 	^ (TypGtCoderTypeFilter new
 		type: method methodClass typAsType;
 		yourself) & (GtCoderImplementorsFilter selector: method selector)

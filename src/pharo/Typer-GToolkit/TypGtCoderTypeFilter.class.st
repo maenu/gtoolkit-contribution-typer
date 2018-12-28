@@ -35,6 +35,6 @@ TypGtCoderTypeFilter >> type: anObject [
 	<typTypeArgument: 1 as: 'TypType'>
 	type := anObject.
 	clazzes := (((type isUnion
-		ifTrue: [ type types ]
+		ifTrue: [ (type "typCastAs TypUnionType") types ]
 		ifFalse: [ {type} ]) select: #hasClass) flatCollect: [ :e | e asClass withAllSuperclasses ]) asSet
 ]

@@ -10,6 +10,14 @@ TypShaPhaInteger class >> shadowedClass [
 ]
 
 { #category : #accessing }
+TypShaPhaInteger >> ___asCharacter [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Character typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaInteger >> ___atRandom [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

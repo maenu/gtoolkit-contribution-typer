@@ -18,8 +18,8 @@ TypGtMethodCoder >> browseImplementors: anEditorElement [
 			(GtPhlowObjectToSpawn new
 				object:
 					(TypGtCoderTypeFilter new
-						type: node receiver typType;
-						yourself) & (GtCoderImplementorsFilter selector: node selector);
+						type: (node "typCastAs RBMessageNode") receiver typType;
+						yourself) & (GtCoderImplementorsFilter selector: (node "typCastAs RBMessageNode") selector);
 				sourceElement: anEditorElement)
 ]
 
@@ -141,7 +141,8 @@ TypGtMethodCoder >> rbNodeAtCursor [
 { #category : #actions }
 TypGtMethodCoder >> save [
 	^ super save
-		ifTrue: [ self updateMethod: self compiledMethod ]
+		ifTrue: [ self updateMethod: self compiledMethod.
+			true ]
 		ifFalse: [ false ]
 ]
 

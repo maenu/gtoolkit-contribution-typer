@@ -61,7 +61,7 @@ RBMethodNode >> typGtTypeWithPragma [
 								selector: #typTypeVariable:as:
 								arguments:
 									{(RBLiteralValueNode value: e asString).
-									(RBLiteralValueNode value: (self methodClass typTypeForVariable: e) asSourceString)} ] ] ].
+									(RBLiteralValueNode value: (self methodClass typTypeForVariable: e asSymbol) asSourceString)} ] ] ].
 	arguments_ do: [ :e | self addPragma: e ].
 	self addPragma: result_.
 	variables_ do: [ :e | self addPragma: e ].

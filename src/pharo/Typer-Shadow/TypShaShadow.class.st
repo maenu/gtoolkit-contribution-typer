@@ -42,8 +42,8 @@ TypShaShadow class >> asVariableResolvers [
 { #category : #accessing }
 TypShaShadow class >> shadowClassesFor: aClass [
 	<typTypeArgument: 1 as: 'ClassDescription'>
-	<typTypeResultAs: 'SequenceableCollection<ClassDescription>'>
-	^ self allSubclasses
+	<typTypeResultAs: 'SequenceableCollection<TypShaShadow class>'>
+	^ self allSubclasses "typParameters TypShaShadow class"
 		select: [ :e | e shadowedClass == aClass classSide ]
 ]
 

@@ -10,6 +10,16 @@ TypShaSmaSmaCCToken class >> shadowedClass [
 ]
 
 { #category : #accessing }
+TypShaSmaSmaCCToken >> ___stopPosition [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | 
+			{TypNilType instance.
+			Integer typAsType} typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaSmaSmaCCToken >> ___value [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

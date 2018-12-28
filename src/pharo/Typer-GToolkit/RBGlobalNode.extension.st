@@ -32,7 +32,9 @@ RBGlobalNode >> typGtFiltersToTypeWithShadow [
 		ifTrue: [ TypShaShadow typGtNewShadowFor: clazz ]
 		ifFalse: [ shadows anyOne ].
 	variableType := self typType.
-	method := (shadow typGtShadowClassVariable: self name type: variableType) "typCastAs CompiledMethod<Integer>".
+	method := shadow
+		typGtShadowClassVariable: self name asSymbol
+		type: variableType.
 	^ (TypGtCoderTypeFilter new
 		type: method methodClass typAsType;
 		yourself) & (GtCoderImplementorsFilter selector: method selector)

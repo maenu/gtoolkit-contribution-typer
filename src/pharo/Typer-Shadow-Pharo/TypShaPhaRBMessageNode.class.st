@@ -18,6 +18,16 @@ TypShaPhaRBMessageNode >> ___arguments [
 ]
 
 { #category : #accessing }
+TypShaPhaRBMessageNode >> ___keywordsIntervals [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType: {(Interval typAsType asParametricType: {Integer typAsType})} ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaRBMessageNode >> ___numArgs [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

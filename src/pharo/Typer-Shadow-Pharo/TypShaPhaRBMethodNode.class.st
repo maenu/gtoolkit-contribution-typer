@@ -10,6 +10,14 @@ TypShaPhaRBMethodNode class >> shadowedClass [
 ]
 
 { #category : #accessing }
+TypShaPhaRBMethodNode >> ___addPragma: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | RBPragmaNode typAsType ];
+		resultType: [ :a :s :r | a receiverType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaRBMethodNode >> ___allChildren [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
@@ -73,6 +81,14 @@ TypShaPhaRBMethodNode >> ___pragmas [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType:
 				[ :a :s :r | SequenceableCollection typAsType asParametricType: {RBPragmaNode typAsType} ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaRBMethodNode >> ___removePragma: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | RBPragmaNode typAsType ];
+		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 

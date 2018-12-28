@@ -3,7 +3,7 @@ Extension { #name : #TypShaShadow }
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtNewShadowFor: aClass [
 	<typTypeArgument: 1 as: 'ClassDescription'>
-	<typTypeResultAs: 'ClassDescription'>
+	<typTypeResultAs: 'TypShaShadow class'>
 	| shadow |
 	shadow := TypShaShadow
 		subclass: 'Sha_' , aClass instanceSide name
@@ -182,7 +182,7 @@ TypShaShadow class >> typGtShadowInstanceVariable: aSymbol type: aType [
 	super initialize' ].
 	method := self compiledMethodAt: #initialize.
 	(method ast instanceVariableWriteNodes
-		anySatisfy: [ :e | e name = name_ ])
+		anySatisfy: [ :e | e variable name = name_ ])
 		ifFalse: [ self
 				compile:
 					method sourceCode
