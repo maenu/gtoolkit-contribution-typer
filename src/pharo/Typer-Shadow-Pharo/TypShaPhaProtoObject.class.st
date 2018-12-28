@@ -45,6 +45,14 @@ TypShaPhaProtoObject >> ___ifNil: _a [
 ]
 
 { #category : #accessing }
+TypShaPhaProtoObject >> ___isNil [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaProtoObject >> ~~~== _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 

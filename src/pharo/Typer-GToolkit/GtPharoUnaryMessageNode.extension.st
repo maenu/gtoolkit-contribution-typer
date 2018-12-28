@@ -3,7 +3,7 @@ Extension { #name : #GtPharoUnaryMessageNode }
 { #category : #'*Typer-GToolkit' }
 GtPharoUnaryMessageNode >> typGtCompletionActionsFor: aStrategy in: anRbNode [
 	<typTypeArgument: 1 as: 'TypGtPharoCompletionStrategy'>
-	<typTypeArgument: 2 as: 'RbProgramNode'>
+	<typTypeArgument: 2 as: 'RBProgramNode'>
 	<typTypeResultAs: 'SequenceableCollection<String<Character>>'>
 	| startingText index type clazz |
 	index := aStrategy index.
@@ -12,7 +12,7 @@ GtPharoUnaryMessageNode >> typGtCompletionActionsFor: aStrategy in: anRbNode [
 	startingText := self selectorPart value.
 	type := self parent receiver
 		typGtGuessType: aStrategy
-		in: anRbNode receiver.
+		in: (anRbNode "typCastAs RBMessageNode") receiver.
 	clazz := type hasClass
 		ifTrue: [ type asClass ]
 		ifFalse: [ Object ].

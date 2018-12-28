@@ -77,6 +77,14 @@ TypShaPhaString >> ___split: _a [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaString >> ___translated [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | String typAsType ];
+		yourself
+]
+
 { #category : #converting }
 TypShaPhaString >> asType: aClass [
 	^ aClass typAsNamedType asParametricType: {Character typAsType}

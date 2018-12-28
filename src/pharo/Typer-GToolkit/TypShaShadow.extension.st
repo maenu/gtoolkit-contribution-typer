@@ -3,7 +3,7 @@ Extension { #name : #TypShaShadow }
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtNewShadowFor: aClass [
 	<typTypeArgument: 1 as: 'ClassDescription'>
-	<typTypeResultAs: 'ClassDescription'>
+	<typTypeResultAs: 'TypShaShadow class'>
 	| shadow |
 	shadow := TypShaShadow
 		subclass: 'Sha_' , aClass instanceSide name

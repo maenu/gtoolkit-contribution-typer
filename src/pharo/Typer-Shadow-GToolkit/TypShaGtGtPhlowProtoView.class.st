@@ -16,3 +16,19 @@ TypShaGtGtPhlowProtoView >> ___explicit [
 		resultType: [ :a :s :r | GtPhlowExplicitView typAsType ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaGtGtPhlowProtoView >> ___priority: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | Number typAsType ];
+		resultType: [ :a :s :r | a receiverType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaGtGtPhlowProtoView >> ___title: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | String typAsType ];
+		resultType: [ :a :s :r | a receiverType ];
+		yourself
+]

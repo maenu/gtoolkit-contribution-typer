@@ -37,6 +37,6 @@ TypShaPhaClass >> ___sharedPools [
 TypShaPhaClass >> ___subclass: _a instanceVariableNames: _b classVariableNames: _c package: _d [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | Class typAsType ];
+		resultType: [ :a :s :r | a receiverType asClass classSide typAsType ];
 		yourself
 ]
