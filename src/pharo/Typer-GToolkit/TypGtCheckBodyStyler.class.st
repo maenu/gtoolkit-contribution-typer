@@ -6,7 +6,13 @@ Class {
 
 { #category : #visiting }
 TypGtCheckBodyStyler >> styleFrom: anInteger to: anotherInteger color: aColor [
-	(text attributesAt: anotherInteger) detect: [ :e | e isKindOf: BlTextUnderlineAttribute ] ifFound: [ "do not layer underlines" ^ self ] ifNone: [  ].
+	<typTypeArgument: 1 as: 'Integer'>
+	<typTypeArgument: 2 as: 'Integer'>
+	<typTypeArgument: 3 as: 'Color'>
+	(text attributesAt: anotherInteger)
+		detect: [ :e | e isKindOf: BlTextUnderlineAttribute ]
+		ifFound: [ "do not layer underlines" ^ self ]
+		ifNone: [  ].
 	self
 		styleFrom: anInteger
 		to: anotherInteger
@@ -18,11 +24,16 @@ TypGtCheckBodyStyler >> styleFrom: anInteger to: anotherInteger color: aColor [
 
 { #category : #visiting }
 TypGtCheckBodyStyler >> styleNode: aNode color: aColor [
+	<typTypeArgument: 1 as: 'RBProgramNode'>
+	<typTypeArgument: 2 as: 'Color'>
 	self styleFrom: aNode start to: aNode stop color: aColor
 ]
 
 { #category : #visiting }
 TypGtCheckBodyStyler >> styleNode: aNode text: aString color: aColor [
+	<typTypeArgument: 1 as: 'RBProgramNode'>
+	<typTypeArgument: 2 as: 'String<Character>'>
+	<typTypeArgument: 3 as: 'Color'>
 	self styleNode: aNode color: aColor.
 	self
 		styleFrom: aNode start
@@ -34,13 +45,19 @@ TypGtCheckBodyStyler >> styleNode: aNode text: aString color: aColor [
 				yourself)}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypGtCheckBodyStyler >> styleSelectorOf: aMessageNode color: aColor [
-	aMessageNode keywordsIntervals do: [ :e | self styleFrom: e first to: e last color: aColor ]
+	<typTypeArgument: 1 as: 'RBMessageNode'>
+	<typTypeArgument: 2 as: 'Color'>
+	aMessageNode keywordsIntervals
+		do: [ :e | self styleFrom: e first to: e last color: aColor ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypGtCheckBodyStyler >> styleSelectorOf: aMessageNode text: aString color: aColor [
+	<typTypeArgument: 1 as: 'RBMessageNode'>
+	<typTypeArgument: 2 as: 'String<Character>'>
+	<typTypeArgument: 3 as: 'Color'>
 	self styleSelectorOf: aMessageNode color: aColor.
 	self
 		styleFrom: aMessageNode receiver stop
