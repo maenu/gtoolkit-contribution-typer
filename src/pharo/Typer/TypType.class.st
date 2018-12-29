@@ -171,6 +171,7 @@ TypType >> isFunction [
 
 { #category : #testing }
 TypType >> isNamed [
+	<typTypeResultAs: 'Boolean'>
 	^ false
 ]
 

@@ -108,9 +108,6 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 { #category : #visiting }
 TypGtCheckBodyStyler >> visitMethodNode: aNode [
 	| position |
-	[ aNode typType ]
-		on: Error
-		do: [ Halt now ].
 	super visitMethodNode: aNode.
 	position := aNode arguments isEmpty
 		ifTrue: [ aNode selector size ]

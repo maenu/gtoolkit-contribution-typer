@@ -24,6 +24,7 @@ TypUnionType >> asClass [
 { #category : #converting }
 TypUnionType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
 	| type |
+	self flag: 'TODO this is inconsistent with asNonParametricType and not a function type'.
 	type := self copy.
 	type types
 		removeAll;
@@ -38,12 +39,14 @@ TypUnionType >> asFunctionType: someTypes result: aType optionalParameters: aBoo
 
 { #category : #converting }
 TypUnionType >> asNonParametricType [
+	self flag: 'TODO this is inconsistent with asNonParametricType and not a function type'.
 	^ self superType asNonParametricType
 ]
 
 { #category : #converting }
 TypUnionType >> asParametricType: someTypes [
 	| type |
+	self flag: 'TODO this is inconsistent with asNonParametricType and not a function type'.
 	type := self copy.
 	type types
 		removeAll;

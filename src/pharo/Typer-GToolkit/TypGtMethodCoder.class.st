@@ -1,6 +1,9 @@
 Class {
 	#name : #TypGtMethodCoder,
 	#superclass : #GtMethodCoder,
+	#instVars : [
+		'rbAst'
+	],
 	#category : #'Typer-GToolkit-Core'
 }
 
@@ -121,10 +124,20 @@ TypGtMethodCoder >> initializeShortcuts [
 
 { #category : #'instance creation' }
 TypGtMethodCoder >> newCompletionStrategy [
-	| completionStrategy |
-	completionStrategy := TypGtPharoCompletionStrategy new.
-	completionStrategy classOrMetaClass: self classOrMetaClass.
-	^ completionStrategy
+	^ TypGtPharoCompletionStrategy new
+		coder: self;
+		classOrMetaClass: self classOrMetaClass;
+		yourself
+]
+
+{ #category : #styling }
+TypGtMethodCoder >> newSourceStyler [
+	^ TypGtCoderTextStyler forCoder: self
+]
+
+{ #category : #updating }
+TypGtMethodCoder >> rbAST [
+	^ rbAst ifNil: [ rbAst := super rbAST ] ifNotNil: [ rbAst ]
 ]
 
 { #category : #'initialize-release' }
@@ -146,14 +159,21 @@ TypGtMethodCoder >> save [
 		ifFalse: [ false ]
 ]
 
+{ #category : #updating }
+TypGtMethodCoder >> sourceChanged [
+	rbAst := nil.
+	self rbAST ifNotNil: #typType.
+	super sourceChanged
+]
+
 { #category : #'initialize-release' }
 TypGtMethodCoder >> typeWithPragma: anEditorElement [
 	<typTypeArgument: 1 as: 'BrTextEditor'>
-	| rbAst |
-	rbAst := self rbAST ifNil: [ ^ self ].
-	rbAst typGtTypeWithPragma.
-	methodSource := rbAst formattedCode.
-	self buildSource
+	self rbAST
+		ifNotNil: [ :e | 
+			e typGtTypeWithPragma.
+			methodSource := e formattedCode.
+			self buildSource ]
 ]
 
 { #category : #'initialize-release' }

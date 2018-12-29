@@ -1,27 +1,29 @@
 Class {
 	#name : #TypGtPharoCompletionStrategy,
 	#superclass : #GtPharoCompletionStrategy,
+	#instVars : [
+		'coder'
+	],
 	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #private }
 TypGtPharoCompletionStrategy >> actionsFor: aGtAst at: anInteger [
-	| gtNode rbAst rbPosition rbNode |
+	| gtNode rbPosition rbNode |
 	gtNode := self nodeFor: anInteger in: aGtAst.
 	rbPosition := anInteger - gtNode source size.
-	rbAst := RBParser parseFaultyMethod: aGtAst source.
-	rbAst methodNode
-		compilationContext:
-			(CompilationContext new
-				class: (class ifNil: [ UndefinedObject ]);
-				forSyntaxHighlighting: true;
-				bindings: Dictionary new;
-				requestor: nil).
-	rbAst doSemanticAnalysis.
-	rbNode := rbAst bestNodeFor: (rbPosition to: rbPosition).
-	^ gtNode
-		ifNil: [ #() ]
-		ifNotNil: [ :node | node typGtCompletionActionsFor: self in: rbNode ]
+	rbNode := coder rbAST bestNodeFor: (rbPosition to: rbPosition).
+	^ gtNode ifNil: [ #() ] ifNotNil: [ :node | node typGtCompletionActionsFor: self in: rbNode ]
+]
+
+{ #category : #accessing }
+TypGtPharoCompletionStrategy >> coder [
+	^ coder
+]
+
+{ #category : #accessing }
+TypGtPharoCompletionStrategy >> coder: anObject [
+	coder := anObject
 ]
 
 { #category : #'private-selector' }
