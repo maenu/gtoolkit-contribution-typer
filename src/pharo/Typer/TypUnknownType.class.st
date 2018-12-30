@@ -34,11 +34,7 @@ TypUnknownType >> asNullableType [
 { #category : #'as yet unclassified' }
 TypUnknownType >> asTypeCompatibleWith: aType [
 	aType isNil
-		ifTrue: [ ^ TypUnionType new
-				types:
-					{self.
-					aType};
-				yourself ].
+		ifTrue: [ ^ self asNullableType ].
 	^ self
 ]
 

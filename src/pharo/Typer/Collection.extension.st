@@ -12,6 +12,8 @@ Collection >> typAsType [
 	remains ifEmpty: [ ^ TypUnknownType instance ].
 	remains size = 1
 		ifTrue: [ ^ remains anyOne ].
+	(remains includes: TypUnknownType instance) ifTrue: [ ^ TypUnknownType instance ].
+	remains := remains reject: [ :e | (remains copyWithout: e) anySatisfy: [ :f | f >= e ] ].
 	^ TypUnionType new
 		types: remains;
 		yourself.
