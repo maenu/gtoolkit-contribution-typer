@@ -18,7 +18,7 @@ TypNamedType >> = anObject [
 
 { #category : #comparing }
 TypNamedType >> > aType [
-	^ self ~= aType and: [ aType isNamed and: [ self representsClass and: [ aType representsClass and: [ aType asClass inheritsFrom: self asClass ] ] ] ]
+	^ self ~= aType and: [ aType isNamed and: [ self representsClass and: [ aType representsClass and: [ aType asClass includesBehavior: self asClass ] ] ] ]
 ]
 
 { #category : #converting }

@@ -162,7 +162,9 @@ TypGtMethodCoder >> save [
 { #category : #updating }
 TypGtMethodCoder >> sourceChanged [
 	rbAst := nil.
-	self rbAST ifNotNil: #typType.
+	[ self rbAST ifNotNil: #typType ]
+		on: Error
+		do: [ Halt now ].
 	super sourceChanged
 ]
 

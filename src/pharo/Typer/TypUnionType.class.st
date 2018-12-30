@@ -102,6 +102,11 @@ TypUnionType >> isFunction [
 ]
 
 { #category : #converting }
+TypUnionType >> isNamed [
+	^ self superType isNamed
+]
+
+{ #category : #converting }
 TypUnionType >> isParametric [
 	^ self superType isParametric
 ]

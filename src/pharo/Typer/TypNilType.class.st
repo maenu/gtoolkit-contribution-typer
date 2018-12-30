@@ -43,6 +43,11 @@ TypNilType >> copy [
 	^ self
 ]
 
+{ #category : #'as yet unclassified' }
+TypNilType >> hasSuperType [
+	^ false
+]
+
 { #category : #initialization }
 TypNilType >> initialize [
 	super initialize.
@@ -60,4 +65,9 @@ TypNilType >> nullable: anObject [
 	"do nothing"
 
 	
+]
+
+{ #category : #'as yet unclassified' }
+TypNilType >> superType [
+	TypNoTypeError signal
 ]

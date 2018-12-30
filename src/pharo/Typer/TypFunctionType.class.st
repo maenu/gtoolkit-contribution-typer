@@ -36,18 +36,15 @@ TypFunctionType >> > aType [
 
 { #category : #accessing }
 TypFunctionType >> asTypeCompatibleWith: aType [
-	| compatibleType compatibleResult |
-	aType isFunction
-		ifFalse: [ ^ TypUnknownType instance ].
-	compatibleType := (self asParametricType: parameters) asTypeCompatibleWith: aType.
-	compatibleType isParametric
+	| compatibleType |
+	compatibleType := super asTypeCompatibleWith: aType.
+	(compatibleType isParametric and: [ aType isFunction ])
 		ifFalse: [ ^ compatibleType ].
-	compatibleResult := result asTypeCompatibleWith: aType result.
 	^ TypFunctionType new
 		nullable: compatibleType nullable;
 		name: compatibleType name;
 		parameters: compatibleType parameters;
-		result: compatibleResult;
+		result: (result asTypeCompatibleWith: aType result);
 		optionalParameters: (optionalParameters and: aType optionalParameters);
 		yourself
 ]

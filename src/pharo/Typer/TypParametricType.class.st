@@ -20,20 +20,19 @@ TypParametricType >> = anObject [
 
 { #category : #comparing }
 TypParametricType >> > aType [
-	^ self ~= aType
-		and: [ aType isParametric
-				ifTrue: [ | type_ |
-					type_ := aType 	"typCastAs TypParametricType".
-					self asNamedType >= type_ asNamedType
-						and: [ parameters size = type_ parameters size and: [ (parameters withIndexSelect: [ :e :i | e >= (type_ parameters at: i) ]) size = parameters size ] ] ]
-				ifFalse: [ super > aType ] ]
+	^ aType isParametric
+		and: [ super > aType
+				and: [ | type_ |
+					type_ := aType "typCastAs TypParametricType".
+					parameters size = type_ parameters size
+						and: [ (parameters withIndexSelect: [ :e :i | e >= (type_ parameters at: i) ]) size = parameters size ] ] ]
 ]
 
 { #category : #accessing }
 TypParametricType >> asTypeCompatibleWith: aType [
 	| compatibleType |
 	compatibleType := super asTypeCompatibleWith: aType.
-	(compatibleType isParametric and: [ compatibleType parameters size = parameters size ])
+	(compatibleType isNamed and: [ aType isParametric and: [ aType parameters size = parameters size ] ])
 		ifFalse: [ ^ compatibleType ].
 	^ TypParametricType new
 		nullable: compatibleType nullable;
