@@ -7,17 +7,32 @@ RBMessageNode >> typTypeForArgumentAt: anInteger [
 	^ (self
 		propertyAt: #typTypeForArgument , anInteger asString
 		ifAbsentPut: [
+			| receiverType argumentTypes |
 			"need to set property to default to unknown on recursive calls"
 			self propertyAt: #typTypeForArgument , anInteger asString put: TypUnknownType instance.
-			TypMethodResolvers global
-				typeForArgumentAt: anInteger
-				ofMethod:
-					(TypMethodLookup new
-						receiverType: self typTypeForReceiver;
-						selector: self selector asSymbol;
-						argumentTypes: self typTypesForArguments;
-						argumentNodes: self arguments;
-						yourself) ]) "typCastAs TypType"
+			receiverType := self typTypeForReceiver.
+			argumentTypes := self typTypesForArguments.
+			receiverType isUnion
+				ifTrue: [ ((receiverType "typCastAs TypUnionType") types
+						collect: [ :e | 
+							TypMethodResolvers global
+								typeForArgumentAt: anInteger
+								ofMethod:
+									(TypMethodLookup new
+										receiverType: e;
+										selector: self selector asSymbol;
+										argumentTypes: argumentTypes;
+										argumentNodes: self arguments;
+										yourself) ]) typAsType ]
+				ifFalse: [ TypMethodResolvers global
+						typeForArgumentAt: anInteger
+						ofMethod:
+							(TypMethodLookup new
+								receiverType: receiverType;
+								selector: self selector asSymbol;
+								argumentTypes: argumentTypes;
+								argumentNodes: self arguments;
+								yourself) ] ]) "typCastAs TypType"
 ]
 
 { #category : #'*Typer' }
@@ -32,15 +47,29 @@ RBMessageNode >> typTypeForResult [
 	^ (self
 		propertyAt: #typTypeForResult
 		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
+			| receiverType argumentTypes |
 			self propertyAt: #typTypeForResult put: TypUnknownType instance.
-			TypMethodResolvers global
-				typeForResultOfMethod:
-					(TypMethodLookup new
-						receiverType: self typTypeForReceiver;
-						selector: self selector asSymbol;
-						argumentTypes: self typTypesForArguments;
-						argumentNodes: self arguments;
-						yourself) ]) "typCastAs TypType"
+			receiverType := self typTypeForReceiver.
+			argumentTypes := self typTypesForArguments.
+			receiverType isUnion
+				ifTrue: [ ((receiverType "typCastAs TypUnionType") types
+						collect: [ :e | 
+							TypMethodResolvers global
+								typeForResultOfMethod:
+									(TypMethodLookup new
+										receiverType: e;
+										selector: self selector asSymbol;
+										argumentTypes: argumentTypes;
+										argumentNodes: self arguments;
+										yourself) ]) typAsType ]
+				ifFalse: [ TypMethodResolvers global
+						typeForResultOfMethod:
+							(TypMethodLookup new
+								receiverType: receiverType;
+								selector: self selector asSymbol;
+								argumentTypes: argumentTypes;
+								argumentNodes: self arguments;
+								yourself) ] ]) "typCastAs TypType"
 ]
 
 { #category : #'*Typer' }
