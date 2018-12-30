@@ -4,25 +4,14 @@ Class {
 	#category : #'Typer-Parser'
 }
 
-{ #category : #'generated-initialization' }
-TypTypeScanner class >> initializeKeywordMap [
-	keywordMap := Dictionary new.
-	#(#(14 'BlockClosure' 9))
-		do: [ :each | 
-			(keywordMap at: each first ifAbsentPut: [ Dictionary new ])
-				at: (each at: 2)
-				put: each last ].
-	^ keywordMap
-]
-
 { #category : #generated }
 TypTypeScanner >> emptySymbolTokenId [
-	^ 29
+	^ 28
 ]
 
 { #category : #generated }
 TypTypeScanner >> errorTokenId [
-	^ 30
+	^ 29
 ]
 
 { #category : #generated }
@@ -32,7 +21,7 @@ TypTypeScanner >> scan1 [
 			((currentCharacter between: $0 and: $9)
 				or: [ (currentCharacter between: $A and: $Z)
 						or: [ currentCharacter == $_ or: [ currentCharacter between: $a and: $z ] ] ])
-				ifTrue: [ [ self recordMatch: #(15).
+				ifTrue: [ [ self recordMatch: #(14).
 					self step.
 					currentCharacter == $:
 						ifTrue: [ ^ self scan2 ].
@@ -42,7 +31,7 @@ TypTypeScanner >> scan1 [
 						whileTrue.
 					^ self reportLastMatch ].
 			currentCharacter isSpecial
-				ifTrue: [ [ self recordMatch: #(15).
+				ifTrue: [ [ self recordMatch: #(14).
 					self step.
 					currentCharacter isSpecial ] whileTrue ] ].
 	^ self reportLastMatch
@@ -50,7 +39,7 @@ TypTypeScanner >> scan1 [
 
 { #category : #generated }
 TypTypeScanner >> scan2 [
-	self recordMatch: #(15).
+	self recordMatch: #(14).
 	self step.
 	((currentCharacter between: $0 and: $9)
 		or: [ (currentCharacter between: $A and: $Z)
@@ -90,8 +79,8 @@ TypTypeScanner >> scanForToken [
 
 { #category : #generated }
 TypTypeScanner >> scanForTokenX1 [
-	(self scanForString: 'class"')
-		ifTrue: [ self recordMatch: #(14).
+	(self scanForString: 'class')
+		ifTrue: [ self recordMatch: #(13).
 			self step.
 			currentCharacter == $>
 				ifTrue: [ ^ self scan1 ] ].
@@ -109,19 +98,19 @@ TypTypeScanner >> scanForTokenX2 [
 { #category : #generated }
 TypTypeScanner >> scanForTokenX3 [
 	currentCharacter == $[
-		ifTrue: [ ^ self recordAndReportMatch: #(10) ].
+		ifTrue: [ ^ self recordAndReportMatch: #(9) ].
 	currentCharacter == $]
-		ifTrue: [ ^ self recordAndReportMatch: #(11) ].
+		ifTrue: [ ^ self recordAndReportMatch: #(10) ].
 	currentCharacter == ${
-		ifTrue: [ ^ self recordAndReportMatch: #(12) ].
+		ifTrue: [ ^ self recordAndReportMatch: #(11) ].
 	currentCharacter == $}
-		ifTrue: [ ^ self recordAndReportMatch: #(13) ].
+		ifTrue: [ ^ self recordAndReportMatch: #(12) ].
 	((currentCharacter between: $0 and: $9)
 		or: [ (currentCharacter between: $A and: $Z)
 				or: [ currentCharacter == $_ or: [ currentCharacter between: $a and: $z ] ] ])
-		ifTrue: [ [ self recordMatch: #(14).
+		ifTrue: [ [ self recordMatch: #(13).
 			self step.
-			currentCharacter == $"
+			currentCharacter == Character space
 				ifTrue:
 					[ ^ self scanForTokenX1 ].
 			currentCharacter == $>

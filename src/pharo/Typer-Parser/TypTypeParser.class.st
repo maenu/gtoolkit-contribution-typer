@@ -6,25 +6,25 @@ Class {
 
 { #category : #'generated-accessing' }
 TypTypeParser class >> cacheId [
-	^'2018-12-30T01:57:53.148059+01:00'
+	^'2018-12-30T02:21:58.930716+01:00'
 ]
 
 { #category : #generated }
 TypTypeParser class >> definitionComment [
 "%prefix Typ;
-%start Types ;
+%start Types;
 
 <name>
 	: [A-Za-z0-9_]+
 	;
 <selector>
 	: [\~\-\!\@\%\&\*\+\=\\\|\?\/\>\<\,]+
-	| <name>
 	| (<name> :)+
+	| <name>
 	;
 <className>
-	: <name>
-	| <name> "" class""
+	: <name> [ ] class
+	| <name>
 	;
 <methodName>
 	: <className> >>\# <selector>
@@ -56,8 +56,8 @@ ParametricType
 	;
 FunctionType
 	: Nullable 'nullable' MethodName 'name' ""("" EmptyTypes 'parameters' "")"" ""->"" Type 'result' { TypFunctionType new nullable: nullable; name: name;  parameters: parameters; result: result; optionalParameters: false; yourself }
-	| Nullable 'nullable' ""BlockClosure"" 'name' ""["" EmptyTypes 'parameters' ""]"" ""->"" Type 'result' { TypFunctionType new nullable: nullable; name: name; parameters: parameters; result: result; optionalParameters: true; yourself }
-	| Nullable 'nullable' ""BlockClosure"" 'name' ""("" EmptyTypes 'parameters' "")"" ""->"" Type 'result' { TypFunctionType new nullable: nullable; name: name; parameters: parameters; result: result; optionalParameters: false; yourself }
+	| Nullable 'nullable' ClassName 'name' ""["" EmptyTypes 'parameters' ""]"" ""->"" Type 'result' { TypFunctionType new nullable: nullable; name: name; parameters: parameters; result: result; optionalParameters: true; yourself }
+	| Nullable 'nullable' ClassName 'name' ""("" EmptyTypes 'parameters' "")"" ""->"" Type 'result' { TypFunctionType new nullable: nullable; name: name; parameters: parameters; result: result; optionalParameters: false; yourself }
 	;
 UnionType
 	: ""{"" Types 'types' ""}"" {  TypUnionType new types: types; yourself  }
@@ -88,22 +88,22 @@ TypTypeParser class >> parse: aString [
 { #category : #generated }
 TypTypeParser class >> reduceTable [
 ^#(
-	#(26 0 #reduceActionForNullable2:) 
-	#(19 1 #reduceActionForNilType1:) 
-	#(26 1 #reduceActionForNullable1:) 
-	#(20 1 #reduceActionForUnknownType1:) 
-	#(17 1 #reduceActionForTypes1:) 
-	#(18 1 #liftFirstValue:) 
+	#(25 0 #reduceActionForNullable2:) 
+	#(18 1 #reduceActionForNilType1:) 
+	#(25 1 #reduceActionForNullable1:) 
+	#(19 1 #reduceActionForUnknownType1:) 
+	#(16 1 #reduceActionForTypes1:) 
+	#(17 1 #liftFirstValue:) 
+	#(26 1 #reduceActionForClassName1:) 
 	#(27 1 #reduceActionForClassName1:) 
-	#(28 1 #reduceActionForClassName1:) 
-	#(21 2 #reduceActionForNamedType1:) 
-	#(24 3 #reduceActionForUnionType1:) 
-	#(17 3 #reduceActionForTypes2:) 
-	#(25 0 #reduceActionForEmptyTypes2:) 
-	#(22 4 #reduceActionForParametricType1:) 
-	#(25 1 #liftFirstValue:) 
-	#(23 7 #reduceActionForFunctionType3:) 
-	#(23 7 #reduceActionForFunctionType2:)
+	#(20 2 #reduceActionForNamedType1:) 
+	#(23 3 #reduceActionForUnionType1:) 
+	#(16 3 #reduceActionForTypes2:) 
+	#(24 0 #reduceActionForEmptyTypes2:) 
+	#(21 4 #reduceActionForParametricType1:) 
+	#(24 1 #liftFirstValue:) 
+	#(22 7 #reduceActionForFunctionType3:) 
+	#(22 7 #reduceActionForFunctionType2:)
 	).
 ]
 
@@ -119,53 +119,52 @@ TypTypeParser class >> startingStateForTypes [
 
 { #category : #generated }
 TypTypeParser class >> symbolNames [
-	^ #('"!"' '"("' '")"' '","' '"->"' '"<"' '">"' '"?"' '"BlockClosure"' '"["' '"]"' '"{"' '"}"' '<className>' '<methodName>' 'B e g i n' 'Types' 'Type' 'NilType' 'UnknownType' 'NamedType' 'ParametricType' 'FunctionType' 'UnionType' 'EmptyTypes' 'Nullable' 'ClassName' 'MethodName' 'E O F' 'error')
+	^ #('"!"' '"("' '")"' '","' '"->"' '"<"' '">"' '"?"' '"["' '"]"' '"{"' '"}"' '<className>' '<methodName>' 'B e g i n' 'Types' 'Type' 'NilType' 'UnknownType' 'NamedType' 'ParametricType' 'FunctionType' 'UnionType' 'EmptyTypes' 'Nullable' 'ClassName' 'MethodName' 'E O F' 'error')
 ]
 
 { #category : #generated }
 TypTypeParser class >> transitionTable [
 ^#(
-#[1 0 9 0 1 0 13 0 8 0 6 0 9 0 17 0 12 0 6 0 14 0 6 0 15 0 21 0 17 0 25 0 18 0 25 0 19 0 25 0 20 0 37 0 21 0 25 0 22 0 25 0 23 0 25 0 24 0 53 0 26] 
-#[1 0 10 0 3 0 10 0 4 0 10 0 7 0 14 0 9 0 10 0 11 0 10 0 13 0 14 0 14 0 14 0 15 0 10 0 29] 
-#[0 0 18 0 3 0 4 0 7 0 11 0 13 0 29] 
-#[1 0 9 0 1 0 13 0 8 0 6 0 9 0 17 0 12 0 6 0 14 0 6 0 15 0 57 0 17 0 25 0 18 0 25 0 19 0 25 0 20 0 37 0 21 0 25 0 22 0 25 0 23 0 25 0 24 0 53 0 26] 
-#[1 0 61 0 4 0 0 0 29] 
-#[0 0 22 0 3 0 4 0 7 0 11 0 13 0 29] 
-#[0 0 26 0 3 0 4 0 7 0 11 0 13 0 29] 
-#[0 0 26 0 3 0 4 0 7 0 11 0 13 0 29] 
-#[1 0 26 0 3 0 26 0 4 0 65 0 6 0 26 0 7 0 26 0 11 0 26 0 13 0 26 0 29] 
-#[0 0 26 0 3 0 4 0 7 0 11 0 13 0 29] 
-#[0 0 26 0 3 0 4 0 7 0 11 0 13 0 29] 
-#[0 0 26 0 3 0 4 0 7 0 11 0 13 0 29] 
-#[1 0 69 0 9 0 73 0 14 0 77 0 15 0 81 0 27 0 85 0 28] 
-#[1 0 61 0 4 0 89 0 13] 
-#[1 0 9 0 1 0 13 0 8 0 6 0 9 0 17 0 12 0 6 0 14 0 6 0 15 0 93 0 18 0 93 0 19 0 93 0 20 0 37 0 21 0 93 0 22 0 93 0 23 0 93 0 24 0 53 0 26] 
-#[1 0 9 0 1 0 13 0 8 0 6 0 9 0 17 0 12 0 6 0 14 0 6 0 15 0 97 0 17 0 25 0 18 0 25 0 19 0 25 0 20 0 37 0 21 0 25 0 22 0 25 0 23 0 25 0 24 0 53 0 26] 
-#[1 0 101 0 2 0 105 0 10] 
-#[0 0 30 0 3 0 4 0 6 0 7 0 11 0 13 0 29] 
+#[1 0 9 0 1 0 13 0 8 0 17 0 11 0 6 0 13 0 6 0 14 0 21 0 16 0 25 0 17 0 25 0 18 0 25 0 19 0 37 0 20 0 25 0 21 0 25 0 22 0 25 0 23 0 53 0 25] 
+#[1 0 10 0 3 0 10 0 4 0 10 0 7 0 10 0 10 0 10 0 12 0 14 0 13 0 14 0 14 0 10 0 28] 
+#[0 0 18 0 3 0 4 0 7 0 10 0 12 0 28] 
+#[1 0 9 0 1 0 13 0 8 0 17 0 11 0 6 0 13 0 6 0 14 0 57 0 16 0 25 0 17 0 25 0 18 0 25 0 19 0 37 0 20 0 25 0 21 0 25 0 22 0 25 0 23 0 53 0 25] 
+#[1 0 61 0 4 0 0 0 28] 
+#[0 0 22 0 3 0 4 0 7 0 10 0 12 0 28] 
+#[0 0 26 0 3 0 4 0 7 0 10 0 12 0 28] 
+#[0 0 26 0 3 0 4 0 7 0 10 0 12 0 28] 
+#[1 0 26 0 3 0 26 0 4 0 65 0 6 0 26 0 7 0 26 0 10 0 26 0 12 0 26 0 28] 
+#[0 0 26 0 3 0 4 0 7 0 10 0 12 0 28] 
+#[0 0 26 0 3 0 4 0 7 0 10 0 12 0 28] 
+#[0 0 26 0 3 0 4 0 7 0 10 0 12 0 28] 
+#[1 0 69 0 13 0 73 0 14 0 77 0 26 0 81 0 27] 
+#[1 0 61 0 4 0 85 0 12] 
+#[1 0 9 0 1 0 13 0 8 0 17 0 11 0 6 0 13 0 6 0 14 0 89 0 17 0 89 0 18 0 89 0 19 0 37 0 20 0 89 0 21 0 89 0 22 0 89 0 23 0 53 0 25] 
+#[1 0 9 0 1 0 13 0 8 0 17 0 11 0 6 0 13 0 6 0 14 0 93 0 16 0 25 0 17 0 25 0 18 0 25 0 19 0 37 0 20 0 25 0 21 0 25 0 22 0 25 0 23 0 53 0 25] 
+#[0 0 30 0 2 0 3 0 4 0 6 0 7 0 9 0 10 0 12 0 28] 
 #[0 0 34 0 2] 
-#[0 0 38 0 3 0 4 0 6 0 7 0 11 0 13 0 29] 
-#[0 0 109 0 2] 
-#[0 0 42 0 3 0 4 0 7 0 11 0 13 0 29] 
-#[0 0 46 0 3 0 4 0 7 0 11 0 13 0 29] 
-#[1 0 61 0 4 0 113 0 7] 
-#[1 0 9 0 1 0 50 0 3 0 13 0 8 0 6 0 9 0 17 0 12 0 6 0 14 0 6 0 15 0 117 0 17 0 25 0 18 0 25 0 19 0 25 0 20 0 37 0 21 0 25 0 22 0 25 0 23 0 25 0 24 0 121 0 25 0 53 0 26] 
-#[1 0 9 0 1 0 13 0 8 0 6 0 9 0 50 0 11 0 17 0 12 0 6 0 14 0 6 0 15 0 117 0 17 0 25 0 18 0 25 0 19 0 25 0 20 0 37 0 21 0 25 0 22 0 25 0 23 0 25 0 24 0 125 0 25 0 53 0 26] 
-#[1 0 9 0 1 0 50 0 3 0 13 0 8 0 6 0 9 0 17 0 12 0 6 0 14 0 6 0 15 0 117 0 17 0 25 0 18 0 25 0 19 0 25 0 20 0 37 0 21 0 25 0 22 0 25 0 23 0 25 0 24 0 129 0 25 0 53 0 26] 
-#[0 0 54 0 3 0 4 0 7 0 11 0 13 0 29] 
-#[1 0 58 0 3 0 61 0 4 0 58 0 11] 
-#[0 0 133 0 3] 
-#[0 0 137 0 11] 
-#[0 0 141 0 3] 
+#[1 0 97 0 2 0 38 0 3 0 38 0 4 0 38 0 6 0 38 0 7 0 101 0 9 0 38 0 10 0 38 0 12 0 38 0 28] 
+#[0 0 105 0 2] 
+#[0 0 42 0 3 0 4 0 7 0 10 0 12 0 28] 
+#[0 0 46 0 3 0 4 0 7 0 10 0 12 0 28] 
+#[1 0 61 0 4 0 109 0 7] 
+#[1 0 9 0 1 0 50 0 3 0 13 0 8 0 17 0 11 0 6 0 13 0 6 0 14 0 113 0 16 0 25 0 17 0 25 0 18 0 25 0 19 0 37 0 20 0 25 0 21 0 25 0 22 0 25 0 23 0 117 0 24 0 53 0 25] 
+#[1 0 9 0 1 0 13 0 8 0 50 0 10 0 17 0 11 0 6 0 13 0 6 0 14 0 113 0 16 0 25 0 17 0 25 0 18 0 25 0 19 0 37 0 20 0 25 0 21 0 25 0 22 0 25 0 23 0 121 0 24 0 53 0 25] 
+#[1 0 9 0 1 0 50 0 3 0 13 0 8 0 17 0 11 0 6 0 13 0 6 0 14 0 113 0 16 0 25 0 17 0 25 0 18 0 25 0 19 0 37 0 20 0 25 0 21 0 25 0 22 0 25 0 23 0 125 0 24 0 53 0 25] 
+#[0 0 54 0 3 0 4 0 7 0 10 0 12 0 28] 
+#[1 0 58 0 3 0 61 0 4 0 58 0 10] 
+#[0 0 129 0 3] 
+#[0 0 133 0 10] 
+#[0 0 137 0 3] 
+#[0 0 141 0 5] 
 #[0 0 145 0 5] 
 #[0 0 149 0 5] 
-#[0 0 153 0 5] 
-#[1 0 9 0 1 0 13 0 8 0 6 0 9 0 17 0 12 0 6 0 14 0 6 0 15 0 157 0 18 0 157 0 19 0 157 0 20 0 37 0 21 0 157 0 22 0 157 0 23 0 157 0 24 0 53 0 26] 
-#[1 0 9 0 1 0 13 0 8 0 6 0 9 0 17 0 12 0 6 0 14 0 6 0 15 0 161 0 18 0 161 0 19 0 161 0 20 0 37 0 21 0 161 0 22 0 161 0 23 0 161 0 24 0 53 0 26] 
-#[1 0 9 0 1 0 13 0 8 0 6 0 9 0 17 0 12 0 6 0 14 0 6 0 15 0 165 0 18 0 165 0 19 0 165 0 20 0 37 0 21 0 165 0 22 0 165 0 23 0 165 0 24 0 53 0 26] 
-#[0 0 62 0 3 0 4 0 7 0 11 0 13 0 29] 
-#[0 0 66 0 3 0 4 0 7 0 11 0 13 0 29] 
-#[0 0 62 0 3 0 4 0 7 0 11 0 13 0 29]
+#[1 0 9 0 1 0 13 0 8 0 17 0 11 0 6 0 13 0 6 0 14 0 153 0 17 0 153 0 18 0 153 0 19 0 37 0 20 0 153 0 21 0 153 0 22 0 153 0 23 0 53 0 25] 
+#[1 0 9 0 1 0 13 0 8 0 17 0 11 0 6 0 13 0 6 0 14 0 157 0 17 0 157 0 18 0 157 0 19 0 37 0 20 0 157 0 21 0 157 0 22 0 157 0 23 0 53 0 25] 
+#[1 0 9 0 1 0 13 0 8 0 17 0 11 0 6 0 13 0 6 0 14 0 161 0 17 0 161 0 18 0 161 0 19 0 37 0 20 0 161 0 21 0 161 0 22 0 161 0 23 0 53 0 25] 
+#[0 0 62 0 3 0 4 0 7 0 10 0 12 0 28] 
+#[0 0 66 0 3 0 4 0 7 0 10 0 12 0 28] 
+#[0 0 62 0 3 0 4 0 7 0 10 0 12 0 28]
 	).
 ]
 
