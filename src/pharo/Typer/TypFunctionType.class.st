@@ -35,41 +35,23 @@ TypFunctionType >> > aType [
 ]
 
 { #category : #accessing }
-TypFunctionType >> asCompatibleType: aType [
+TypFunctionType >> asTypeCompatibleWith: aType [
 	| compatibleType compatibleResult |
 	self flag: 'not sure...'.
 	aType isFunction
 		ifFalse: [ ^ TypUnknownType instance ].
-	compatibleType := super asCompatibleType: (TypParametricType new
+	compatibleType := super asTypeCompatibleWith: (TypParametricType new
 		type: (aType "typCastAs TypFunctionType") type;
 		parameters: (aType "typCastAs TypFunctionType") parameters;
 		yourself).
 	compatibleType isParametric
 		ifFalse: [ ^ compatibleType ].
-	compatibleResult := result asCompatibleType: (aType "typCastAs TypFunctionType") result.
+	compatibleResult := result asTypeCompatibleWith: (aType "typCastAs TypFunctionType") result.
 	^ TypFunctionType new
 		type: (compatibleType "typCastAs TypParametricType") type;
 		parameters: (compatibleType "typCastAs TypParametricType") parameters;
 		result: compatibleResult;
 		yourself
-]
-
-{ #category : #testing }
-TypFunctionType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
-	| copy |
-	someTypes size ~= parameters size
-		ifTrue: [ TypNoTypeError signal ].
-	copy := self copy.
-	someTypes withIndexDo: [ :e :i | copy parameters at: i put: e ].
-	copy
-		result: aType;
-		optionalParameters: aBoolean.
-	^ copy
-]
-
-{ #category : #testing }
-TypFunctionType >> asParametricType: someTypes [
-	TypNoTypeError signal
 ]
 
 { #category : #comparing }

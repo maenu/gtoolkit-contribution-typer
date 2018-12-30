@@ -18,11 +18,6 @@ TypNilType >> > aType [
 	^ aType nullable and: [ self ~= aType ]
 ]
 
-{ #category : #'as yet unclassified' }
-TypNilType >> asCompatibleType: aType [
-	^ aType asNullableType
-]
-
 { #category : #converting }
 TypNilType >> asNamedType [
 	^ self
@@ -36,6 +31,11 @@ TypNilType >> asNonNullableType [
 { #category : #converting }
 TypNilType >> asNullableType [
 	^ self
+]
+
+{ #category : #'as yet unclassified' }
+TypNilType >> asTypeCompatibleWith: aType [
+	^ aType asNullableType
 ]
 
 { #category : #copying }

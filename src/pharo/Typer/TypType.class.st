@@ -62,19 +62,6 @@ TypType >> asClass [
 	TypNoClassError signal
 ]
 
-{ #category : #accessing }
-TypType >> asCompatibleType: aType [
-	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeResultAs: 'TypType'>
-	| superTypes |
-	aType isUnknown
-		ifTrue: [ ^ aType ].
-	aType isNil
-		ifTrue: [ ^ self asNullableType ].
-	superTypes := self withAllSuperTypes.
-	^ aType withAllSuperTypes detect: [ :e | superTypes anySatisfy: [ :f | e >= f ] ] ifNone: [ TypUnknownType instance ]
-]
-
 { #category : #converting }
 TypType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
 	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
@@ -115,6 +102,19 @@ TypType >> asParametricType: someTypes [
 	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
 	<typTypeResultAs: 'TypParametricType'>
 	TypNoTypeError signal
+]
+
+{ #category : #accessing }
+TypType >> asTypeCompatibleWith: aType [
+	<typTypeArgument: 1 as: 'TypType'>
+	<typTypeResultAs: 'TypType'>
+	| superTypes |
+	aType isUnknown
+		ifTrue: [ ^ aType ].
+	aType isNil
+		ifTrue: [ ^ self asNullableType ].
+	superTypes := self withAllSuperTypes.
+	^ aType withAllSuperTypes detect: [ :e | superTypes anySatisfy: [ :f | e >= f ] ] ifNone: [ TypUnknownType instance ]
 ]
 
 { #category : #testing }

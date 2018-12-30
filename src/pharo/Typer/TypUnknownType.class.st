@@ -18,22 +18,6 @@ TypUnknownType >> > aType [
 	^ self ~= aType
 ]
 
-{ #category : #'as yet unclassified' }
-TypUnknownType >> asCompatibleType: aType [
-	aType isNil
-		ifTrue: [ ^ TypUnionType new
-				types:
-					{self.
-					aType};
-				yourself ].
-	^ self
-]
-
-{ #category : #converting }
-TypUnknownType >> asNamedType [
-	^ self
-]
-
 { #category : #converting }
 TypUnknownType >> asNonNullableType [
 	^ self
@@ -46,6 +30,17 @@ TypUnknownType >> asNullableType [
 			{self.
 			TypNilType instance};
 		yourself
+]
+
+{ #category : #'as yet unclassified' }
+TypUnknownType >> asTypeCompatibleWith: aType [
+	aType isNil
+		ifTrue: [ ^ TypUnionType new
+				types:
+					{self.
+					aType};
+				yourself ].
+	^ self
 ]
 
 { #category : #copying }

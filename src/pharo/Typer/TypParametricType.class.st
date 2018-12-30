@@ -30,37 +30,14 @@ TypParametricType >> > aType [
 ]
 
 { #category : #accessing }
-TypParametricType >> asCompatibleType: aType [
+TypParametricType >> asTypeCompatibleWith: aType [
 	self flag: 'not sure...'.
 	(aType isParametric and: [ aType parameters size = parameters size ])
-		ifFalse: [ ^ super asCompatibleType: aType ].
+		ifFalse: [ ^ super asTypeCompatibleWith: aType ].
 	^ TypParametricType new
-		name: (self asNamedType asCompatibleType: aType asNamedType) name;
-		parameters: (parameters size timesCollect: [ :i | (parameters at: i) asCompatibleType: (aType parameters at: i) ]);
+		name: (self asNamedType asTypeCompatibleWith: aType asNamedType) name;
+		parameters: (parameters size timesCollect: [ :i | (parameters at: i) asTypeCompatibleWith: (aType parameters at: i) ]);
 		yourself
-]
-
-{ #category : #converting }
-TypParametricType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
-	TypNoTypeError signal
-]
-
-{ #category : #testing }
-TypParametricType >> asNamedType [
-	^ TypNamedType new
-		name: name;
-		nullable: nullable;
-		yourself
-]
-
-{ #category : #testing }
-TypParametricType >> asParametricType: someTypes [
-	| copy |
-	someTypes size == parameters size
-		ifFalse: [ TypNoTypeError signal ].
-	copy := self copy.
-	someTypes withIndexDo: [ :e :i | copy parameters at: i put: e ].
-	^ copy
 ]
 
 { #category : #comparing }

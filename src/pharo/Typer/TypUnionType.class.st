@@ -29,8 +29,23 @@ TypUnionType >> asClass [
 	^ self superType asClass
 ]
 
+{ #category : #converting }
+TypUnionType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
+	^ self superType asFunctionType: someTypes result: aType optionalParameters: aBoolean
+]
+
+{ #category : #converting }
+TypUnionType >> asNamedType [
+	^ self superType asNamedType
+]
+
+{ #category : #converting }
+TypUnionType >> asParametricType: someTypes [
+	^ self superType asParametricType: someTypes
+]
+
 { #category : #accessing }
-TypUnionType >> asCompatibleType: aType [
+TypUnionType >> asTypeCompatibleWith: aType [
 	| remains nullable_ current |
 	aType isUnknown
 		ifTrue: [ ^ aType ].
@@ -49,7 +64,7 @@ TypUnionType >> asCompatibleType: aType [
 		whileFalse: [ | next common |
 			next := remains first.
 			remains remove: next.
-			common := current asCompatibleType: next.
+			common := current asTypeCompatibleWith: next.
 			common isUnknown
 				ifTrue: [ ^ common ].
 			common = current
@@ -61,21 +76,6 @@ TypUnionType >> asCompatibleType: aType [
 	nullable_
 		ifTrue: [ ^ current asNullableType ].
 	^ current
-]
-
-{ #category : #converting }
-TypUnionType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
-	^ self superType asFunctionType: someTypes result: aType optionalParameters: aBoolean
-]
-
-{ #category : #converting }
-TypUnionType >> asNamedType [
-	^ self superType asNamedType
-]
-
-{ #category : #converting }
-TypUnionType >> asParametricType: someTypes [
-	^ self superType asParametricType: someTypes
 ]
 
 { #category : #testing }
@@ -181,7 +181,7 @@ TypUnionType >> superType [
 		whileFalse: [ | next common |
 			next := remains anyOne.
 			remains remove: next.
-			common := current asCompatibleType: next.
+			common := current asTypeCompatibleWith: next.
 			common isUnknown
 				ifTrue: [ ^ (remains includes: TypNilType instance)
 						ifTrue: [ common asNullableType ]

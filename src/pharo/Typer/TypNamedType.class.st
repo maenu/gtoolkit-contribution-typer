@@ -27,7 +27,7 @@ TypNamedType >> asClass [
 { #category : #converting }
 TypNamedType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
 	^ TypFunctionType new
-		type: self;
+		name: name;
 		parameters: someTypes;
 		result: aType;
 		optionalParameters: aBoolean;
@@ -36,13 +36,16 @@ TypNamedType >> asFunctionType: someTypes result: aType optionalParameters: aBoo
 
 { #category : #converting }
 TypNamedType >> asNamedType [
-	^ self
+	^ TypNamedType new
+		name: name;
+		nullable: nullable;
+		yourself
 ]
 
 { #category : #converting }
 TypNamedType >> asParametricType: someTypes [
 	^ TypParametricType new
-		type: self copy;
+		name: name;
 		nullable: nullable;
 		parameters: someTypes;
 		yourself
