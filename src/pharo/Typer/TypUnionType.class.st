@@ -46,15 +46,12 @@ TypUnionType >> asParametricType: someTypes [
 
 { #category : #accessing }
 TypUnionType >> asTypeCompatibleWith: aType [
-	| remains nullable_ current |
+	| remains current |
 	aType isUnknown
 		ifTrue: [ ^ aType ].
 	aType isNil
 		ifTrue: [ ^ self asNullableType ].
 	remains := types copy asOrderedCollection.
-	nullable_ := remains includes: TypNilType instance.
-	remains remove: TypNilType instance ifAbsent: [  ].
-	remains ifEmpty: [ ^ aType asNullableType ].
 	remains remove: TypUnknownType instance ifAbsent: [  ].
 	remains ifEmpty: [ ^ TypUnknownType instance ].
 	remains := remains sort: [ :a :b | a >= b ].
@@ -73,7 +70,7 @@ TypUnionType >> asTypeCompatibleWith: aType [
 						ifTrue: [ remains addAll: (current "typCastAs TypUnionType") types ]
 						ifFalse: [ remains add: current ].
 					remains := remains asSet asOrderedCollection sort: [ :a :b | a >= b ] ] ].
-	nullable_
+	nullable
 		ifTrue: [ ^ current asNullableType ].
 	^ current
 ]
@@ -116,18 +113,6 @@ TypUnionType >> isUnion [
 	^ true
 ]
 
-{ #category : #accessing }
-TypUnionType >> nullable [
-	^ types includes: TypNilType instance
-]
-
-{ #category : #accessing }
-TypUnionType >> nullable: aBoolean [
-	aBoolean
-		ifTrue: [ types add: TypNilType instance ]
-		ifFalse: [ types remove: TypNilType instance ifAbsent: [  ] ]
-]
-
 { #category : #generated }
 TypUnionType >> parameters [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
@@ -143,25 +128,16 @@ TypUnionType >> postCopy [
 
 { #category : #printing }
 TypUnionType >> printOn: aStream [
-	types
-		=
-			{TypNilType instance.
-			TypUnknownType instance} asSet
-		ifTrue: [ aStream << '{!,?}'.
+	super printOn: aStream.
+	types = {TypUnknownType instance} asSet
+		ifTrue: [ aStream << '{?}'.
 			^ self ].
 	aStream << '{'
-		<<
-			((types includes: TypNilType instance)
-				ifTrue: [ '!,' ]
-				ifFalse: [ '' ])
 		<<
 			((types includes: TypUnknownType instance)
 				ifTrue: [ '?,' ]
 				ifFalse: [ '' ]).
-	(types
-		copyWithoutAll:
-			{TypUnknownType instance.
-			TypNilType instance})
+	(types copyWithout: TypUnknownType instance)
 		ifNotEmpty: [ :e | 
 			| superType |
 			superType := (TypUnionType new
@@ -188,7 +164,7 @@ TypUnionType >> superType [
 			remains remove: next.
 			common := current asTypeCompatibleWith: next.
 			common isUnknown
-				ifTrue: [ ^ (remains includes: TypNilType instance)
+				ifTrue: [ ^ nullable
 						ifTrue: [ common asNullableType ]
 						ifFalse: [ common ] ].
 			common = current

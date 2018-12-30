@@ -32,17 +32,10 @@ TypDynUnionType >> = anObject [
 TypDynUnionType >> add: anAssociation [
 	<typTypeArgument: 1 as: 'Association<TypType,Integer>'>
 	<typTypeResultAs: 'Integer'>
-	| n association |
-	association := anAssociation key nullable
-		ifTrue: [ n := weights at: TypNilType instance ifAbsentPut: [ 0 ].
-			weights at: TypNilType instance put: n + anAssociation value.
-			(anAssociation key copy
-				nullable: false;
-				yourself) -> anAssociation value ]
-		ifFalse: [ anAssociation ].
-	types add: association key.
-	n := weights at: association key ifAbsentPut: [ 0 ].
-	^ weights at: association key put: n + association value
+	| n |
+	types add: anAssociation key.
+	n := weights at: anAssociation key ifAbsentPut: [ 0 ].
+	^ weights at: anAssociation key put: n + anAssociation value
 ]
 
 { #category : #enumerating }
@@ -78,17 +71,10 @@ TypDynUnionType >> increment: anObject [
 	<typTypeResultAs: 'TypType'>
 	^ (anObject isKindOf: TypDynUnionType)
 		ifTrue: [ self addAll: anObject "typCastAs TypDynUnionType<TypType>" ]
-		ifFalse: [ | n type |
-			type := anObject nullable
-				ifTrue: [ n := weights at: TypNilType instance ifAbsentPut: [ 0 ].
-					weights at: TypNilType instance put: n + 1.
-					anObject copy
-						nullable: false;
-						yourself ]
-				ifFalse: [ anObject ].
-			n := weights at: type ifAbsentPut: [ 0 ].
-			weights at: type put: n + 1.
-			types add: type ]
+		ifFalse: [ | n |
+			n := weights at: anObject ifAbsentPut: [ 0 ].
+			weights at: anObject put: n + 1.
+			types add: anObject ]
 ]
 
 { #category : #accessing }

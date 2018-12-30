@@ -164,7 +164,7 @@ TypGtMethodCoder >> sourceChanged [
 	rbAst := nil.
 	[ self rbAST ifNotNil: #typType ]
 		on: Error
-		do: [ Halt now ].
+		do: [ :e | e debug.Halt now ].
 	super sourceChanged
 ]
 

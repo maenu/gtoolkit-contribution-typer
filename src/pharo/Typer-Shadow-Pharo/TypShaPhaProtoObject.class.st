@@ -55,9 +55,7 @@ TypShaPhaProtoObject >> ___isNil [
 { #category : #accessing }
 TypShaPhaProtoObject >> ~~~== _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | 
-			{TypUnknownType instance.
-			TypNilType instance} typAsType ];
+		argumentTypes: [ :i :a :s :r | TypUnknownType instance asNullableType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
@@ -65,9 +63,7 @@ TypShaPhaProtoObject >> ~~~== _a [
 { #category : #'as yet unclassified' }
 TypShaPhaProtoObject >> ~~~~~ _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | 
-			{TypUnknownType instance.
-			TypNilType instance} typAsType ];
+		argumentTypes: [ :i :a :s :r | TypUnknownType instance asNullableType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]

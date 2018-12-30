@@ -7,12 +7,9 @@ Class {
 { #category : #accessing }
 TypShaPhaCollection class >> ___with: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | 
-			{TypUnknownType instance.
-			TypNilType instance} typAsType ];
-		resultType: [ :a :s :r | 
-			a receiverType asClass instanceSide typAsType
-				asParametricType: {(a argumentTypes at: 1)} ];
+		argumentTypes: [ :i :a :s :r | TypUnknownType instance asNullableType ];
+		resultType:
+				[ :a :s :r | a receiverType asClass instanceSide typAsType asParametricType: {(a argumentTypes at: 1)} ];
 		yourself
 ]
 

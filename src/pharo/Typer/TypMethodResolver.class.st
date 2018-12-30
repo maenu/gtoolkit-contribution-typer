@@ -64,6 +64,14 @@ TypMethodResolver >> resultTypeFor: aLookup resolvedBy: anotherLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
 	<typTypeArgument: 2 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'TypType'>
-	aLookup argumentTypes withIndexDo: [ :e :i | (e <= (self argumentTypeAt: i for: aLookup resolvedBy: anotherLookup)) ifFalse: [ ^ TypUnknownType instance ] ].
+	aLookup argumentTypes
+		withIndexDo: [ :e :i | 
+			| argumentType |
+			argumentType := self argumentTypeAt: i for: aLookup resolvedBy: anotherLookup.
+			argumentType isUnion
+				ifTrue: [ (argumentType types anySatisfy: [ :f | e <= f ])
+						ifFalse: [ ^ TypUnknownType instance ] ]
+				ifFalse: [ e <= argumentType
+						ifFalse: [ ^ TypUnknownType instance ] ] ].
 	^ resultType cull: aLookup cull: anotherLookup cull: self
 ]

@@ -200,8 +200,7 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a put: _b [
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ String typAsType ]
-				ifFalse: [ {TypUnknownType instance.
-					TypNilType instance} typAsType ] ];
+				ifFalse: [ TypUnknownType instance asNullableType ] ];
 		resultType: [ :a :s :r | a argumentTypes at: 1 ];
 		yourself
 ]

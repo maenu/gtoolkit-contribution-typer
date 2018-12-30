@@ -26,9 +26,8 @@ TypUnknownType >> asNonNullableType [
 { #category : #converting }
 TypUnknownType >> asNullableType [
 	^ TypUnionType new
-		types:
-			{self.
-			TypNilType instance};
+		nullable: true;
+		types: {self};
 		yourself
 ]
 
