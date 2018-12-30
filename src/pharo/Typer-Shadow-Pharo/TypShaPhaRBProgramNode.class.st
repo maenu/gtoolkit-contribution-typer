@@ -77,6 +77,22 @@ TypShaPhaRBProgramNode >> ___isMessage [
 ]
 
 { #category : #accessing }
+TypShaPhaRBProgramNode >> ___isMethod [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaRBProgramNode >> ___isSelf [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaRBProgramNode >> ___isSequence [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

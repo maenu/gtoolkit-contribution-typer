@@ -67,6 +67,11 @@ TypNilType >> nullable: anObject [
 	
 ]
 
+{ #category : #printing }
+TypNilType >> printOn: aStream [
+	aStream << '!'
+]
+
 { #category : #'as yet unclassified' }
 TypNilType >> superType [
 	TypNoTypeError signal

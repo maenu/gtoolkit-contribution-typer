@@ -21,7 +21,7 @@ TypUnionType >> > aType [
 	^ self ~= aType
 		and: [ aType isUnion
 				ifTrue: [ (aType "typCastAs TypUnionType") types allSatisfy: [ :e | self >= e ] ]
-				ifFalse: [ (types anySatisfy: [ :e | e >= aType ]) or: [ super > aType ] ] ]
+				ifFalse: [ types anySatisfy: [ :e | e >= aType ] ] ]
 ]
 
 { #category : #converting }
