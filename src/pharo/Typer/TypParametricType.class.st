@@ -88,3 +88,14 @@ TypParametricType >> printOn: aStream [
 			ifTrue: [ aStream << ',' ] ].
 	aStream << '>'
 ]
+
+{ #category : #'as yet unclassified' }
+TypParametricType >> superType [
+	| superType |
+	superType := super superType.
+	(superType isParametric and: [ superType parameters size = parameters size ])
+		ifTrue: [ superType := superType copy
+				parameters: parameters copy;
+				yourself ].
+	^ superType
+]

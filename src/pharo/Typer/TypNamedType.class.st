@@ -16,6 +16,11 @@ TypNamedType >> = anObject [
 					self nullable = type nullable and: [ self name = type name ] ] ]
 ]
 
+{ #category : #comparing }
+TypNamedType >> > aType [
+	^ self ~= aType and: [ aType isNamed and: [ self representsClass and: [ aType representsClass and: [ aType asClass inheritsFrom: self asClass ] ] ] ]
+]
+
 { #category : #converting }
 TypNamedType >> asClass [
 	self assert: [ self representsClass ].

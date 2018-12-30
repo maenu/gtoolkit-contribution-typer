@@ -39,7 +39,7 @@ TypFunctionType >> asTypeCompatibleWith: aType [
 	| compatibleType compatibleResult |
 	aType isFunction
 		ifFalse: [ ^ TypUnknownType instance ].
-	compatibleType := (self asParametricType: parameters) asTypeCompatibleWith: (aType asParametricType: aType parameters).
+	compatibleType := (self asParametricType: parameters) asTypeCompatibleWith: aType.
 	compatibleType isParametric
 		ifFalse: [ ^ compatibleType ].
 	compatibleResult := result asTypeCompatibleWith: aType result.
@@ -48,7 +48,7 @@ TypFunctionType >> asTypeCompatibleWith: aType [
 		name: compatibleType name;
 		parameters: compatibleType parameters;
 		result: compatibleResult;
-		optionalParameters: (optionalParameters and: aType optionalParameters)
+		optionalParameters: (optionalParameters and: aType optionalParameters);
 		yourself
 ]
 
@@ -121,4 +121,15 @@ TypFunctionType >> result [
 TypFunctionType >> result: anObject [
 	<typTypeArgument: 1 as: 'TypType'>
 	result := anObject
+]
+
+{ #category : #'as yet unclassified' }
+TypFunctionType >> superType [
+	| superType |
+	superType := super superType.
+	superType isFunction
+		ifTrue: [ superType := superType copy
+				result: result copy;
+				yourself ].
+	^ superType
 ]

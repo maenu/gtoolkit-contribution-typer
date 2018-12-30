@@ -15,7 +15,7 @@ TypNilType class >> instance [
 
 { #category : #comparing }
 TypNilType >> > aType [
-	^ aType nullable and: [ self ~= aType ]
+	^ self ~= aType and: [ aType nullable ]
 ]
 
 { #category : #converting }

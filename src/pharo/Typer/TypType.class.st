@@ -34,7 +34,7 @@ TypType >> = anObject [
 TypType >> > aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'Boolean'>
-	^ self isSuperTypeOf: aType
+	self subclassResponsibility
 ]
 
 { #category : #comparing }
@@ -42,16 +42,6 @@ TypType >> >= aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'Boolean'>
 	^ self = aType or: [ self > aType ]
-]
-
-{ #category : #accessing }
-TypType >> allSuperTypes [
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	^ self hasSuperType
-		ifTrue: [ self superType allSuperTypes
-				addFirst: self superType;
-				yourself ]
-		ifFalse: [ OrderedCollection new "typParameters TypType" ]
 ]
 
 { #category : #converting }
@@ -112,13 +102,15 @@ TypType >> asParametricType: someTypes [
 TypType >> asTypeCompatibleWith: aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'TypType'>
-	| superTypes |
 	aType isUnknown
 		ifTrue: [ ^ aType ].
 	aType isNil
 		ifTrue: [ ^ self asNullableType ].
-	superTypes := self withAllSuperTypes.
-	^ aType withAllSuperTypes detect: [ :e | superTypes anySatisfy: [ :f | e >= f ] ] ifNone: [ TypUnknownType instance ]
+	self >= aType
+		ifTrue: [ ^ self ].
+	self hasSuperType
+		ifTrue: [ ^ self superType asTypeCompatibleWith: aType ].
+	^ TypUnknownType instance
 ]
 
 { #category : #testing }
@@ -161,13 +153,6 @@ TypType >> isNil [
 TypType >> isParametric [
 	<typTypeResultAs: 'Boolean'>
 	^ false
-]
-
-{ #category : #comparing }
-TypType >> isSuperTypeOf: aType [
-	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeResultAs: 'Boolean'>
-	^ aType allSuperTypes includes: self
 ]
 
 { #category : #testing }
@@ -216,13 +201,4 @@ TypType >> representsMethod [
 TypType >> superType [
 	<typTypeResultAs: 'TypType'>
 	TypNoTypeError signal
-]
-
-{ #category : #accessing }
-TypType >> withAllSuperTypes [
-	<typTypeResultAs: 'OrderedCollection<TypType>'>
-	| superTypes |
-	superTypes := self allSuperTypes.
-	superTypes addFirst: self.
-	^ superTypes
 ]

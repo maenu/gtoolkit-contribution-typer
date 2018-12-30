@@ -4,7 +4,7 @@ Extension { #name : #ClassDescription }
 ClassDescription >> typAsNamedType [
 	<typTypeResultAs: 'TypNamedType'>
 	^ TypNamedType new
-		name: self name asSymbol;
+		name: self name;
 		yourself
 ]
 
