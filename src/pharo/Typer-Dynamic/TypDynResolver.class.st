@@ -38,7 +38,7 @@ TypDynResolver >> resolversFor: aLookup [
 TypDynResolver >> resolves: aLookup [
 	<typTypeArgument: 1 as: 'TypObjectLookup'>
 	<typTypeResultAs: 'Boolean'>
-	aLookup receiverType hasClass
+	aLookup receiverType representsClass
 		ifFalse: [ ^ false ].
 	^ resolvers
 		includesKey: aLookup receiverType asClass -> aLookup selector

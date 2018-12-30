@@ -49,7 +49,7 @@ TypShaPhaBlockClosure >> ___on: _a do: _b [
 				ifTrue: [ Exception class typAsType ]
 				ifFalse: [ | first type |
 					first := a argumentTypes at: 1.
-					type := first hasClass
+					type := first representsClass
 						ifTrue: [ first asClass instanceSide typAsType ]
 						ifFalse: [ Exception class typAsType ].
 					BlockClosure typAsType

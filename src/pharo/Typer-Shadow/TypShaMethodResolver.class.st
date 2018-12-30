@@ -23,5 +23,5 @@ TypShaMethodResolver >> resolves: aLookup [
 	name := (aLookup selector isBinary
 		ifTrue: [ '~~~' , aLookup selector ]
 		ifFalse: [ '___' , aLookup selector ]) asSymbol.
-	^ aLookup receiverType hasClass and: [ aLookup receiverType asClass == shadow shadowedClass and: [ shadow class includesSelector: name ] ]
+	^ aLookup receiverType representsClass and: [ aLookup receiverType asClass == shadow shadowedClass and: [ shadow class includesSelector: name ] ]
 ]

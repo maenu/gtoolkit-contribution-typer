@@ -44,7 +44,7 @@ TypPraMethodResolver >> resolves: aLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'Boolean'>
 	| clazz |
-	aLookup receiverType hasClass
+	aLookup receiverType representsClass
 		ifFalse: [ ^ false ].
 	clazz := aLookup receiverType asClass.
 	^ clazz methods

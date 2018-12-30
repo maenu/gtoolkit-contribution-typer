@@ -31,11 +31,13 @@ TypParametricType >> > aType [
 
 { #category : #accessing }
 TypParametricType >> asTypeCompatibleWith: aType [
-	self flag: 'not sure...'.
-	(aType isParametric and: [ aType parameters size = parameters size ])
-		ifFalse: [ ^ super asTypeCompatibleWith: aType ].
+	| compatibleType |
+	compatibleType := super asTypeCompatibleWith: aType.
+	(compatibleType isParametric and: [ compatibleType parameters size = parameters size ])
+		ifFalse: [ ^ compatibleType ].
 	^ TypParametricType new
-		name: (self asNamedType asTypeCompatibleWith: aType asNamedType) name;
+		nullable: compatibleType nullable;
+		name: compatibleType name;
 		parameters: (parameters size timesCollect: [ :i | (parameters at: i) asTypeCompatibleWith: (aType parameters at: i) ]);
 		yourself
 ]

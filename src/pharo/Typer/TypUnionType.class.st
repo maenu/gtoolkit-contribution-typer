@@ -79,11 +79,6 @@ TypUnionType >> asTypeCompatibleWith: aType [
 ]
 
 { #category : #testing }
-TypUnionType >> hasClass [
-	^ self superType hasClass
-]
-
-{ #category : #testing }
 TypUnionType >> hasSuperType [
 	^ self superType ~= self
 ]
@@ -169,6 +164,11 @@ TypUnionType >> printOn: aStream [
 				yourself) superType.
 			aStream << superType printString ].
 	aStream << '}'
+]
+
+{ #category : #testing }
+TypUnionType >> representsClass [
+	^ self superType representsClass
 ]
 
 { #category : #accessing }

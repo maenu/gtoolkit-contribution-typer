@@ -22,7 +22,7 @@ RBInstanceVariableNode >> typGtFiltersToTypeWithShadow [
 	<typTypeResultAs: 'GtCoderMethodsFilter'>
 	| type clazz shadows shadow variableType method |
 	type := self methodNode methodClass typAsType.
-	clazz := type hasClass
+	clazz := type representsClass
 		ifTrue: [ type asClass ]
 		ifFalse: [ Object ].
 	shadows := TypShaShadow shadowClassesFor: clazz.

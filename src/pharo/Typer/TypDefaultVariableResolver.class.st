@@ -35,7 +35,7 @@ TypDefaultVariableResolver >> initialize [
 
 { #category : #accessing }
 TypDefaultVariableResolver >> resolves: aLookup [
-	^ aLookup receiverType hasClass
+	^ aLookup receiverType representsClass
 ]
 
 { #category : #initialization }

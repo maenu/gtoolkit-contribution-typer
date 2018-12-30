@@ -77,7 +77,7 @@ TypShaPhaSequenceableCollection >> ___detectIndex: _a ifNone: _b [
 			| none |
 			none := a argumentTypes at: 2.
 			{Integer typAsType.
-			((none hasClass and: [ none asClass == BlockClosure ])
+			((none representsClass and: [ none asClass == BlockClosure ])
 				ifTrue: [ none result ]
 				ifFalse: [ none ])} typAsType ];
 		yourself

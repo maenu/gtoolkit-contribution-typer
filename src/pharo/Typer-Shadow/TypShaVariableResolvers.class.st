@@ -23,7 +23,7 @@ TypShaVariableResolvers >> resolversFor: aLookup [
 TypShaVariableResolvers >> resolves: aLookup [
 	<typTypeArgument: 1 as: 'TypVariableLookup'>
 	<typTypeResultAs: 'Boolean'>
-	aLookup receiverType hasClass
+	aLookup receiverType representsClass
 		ifFalse: [ ^ false ].
 	^ self resolves: aLookup shadowing: aLookup receiverType asClass
 ]

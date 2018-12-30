@@ -4,6 +4,6 @@ Extension { #name : #TypType }
 TypType >> typCheHasMethod: aSymbol [
 	<typTypeArgument: 1 as: 'Symbol<Character>'>
 	<typTypeResultAs: 'Boolean'>
-	^ self hasClass
+	^ self representsClass
 		and: [ (self asClass lookupSelector: aSymbol) isNotNil ]
 ]

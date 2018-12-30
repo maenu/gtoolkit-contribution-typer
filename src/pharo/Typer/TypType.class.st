@@ -34,8 +34,6 @@ TypType >> = anObject [
 TypType >> > aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'Boolean'>
-	(aType isNil or: aType isUnknown)
-		ifTrue: [ ^ aType > self ].
 	^ self isSuperTypeOf: aType
 ]
 
@@ -69,6 +67,12 @@ TypType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean 
 	<typTypeArgument: 3 as: 'Boolean'>
 	<typTypeResultAs: 'TypFunctionType'>
 	TypNoTypeError signal
+]
+
+{ #category : #converting }
+TypType >> asMethod [
+	<typTypeResultAs: 'CompiledMethod<Integer>'>
+	TypNoMethodError signal
 ]
 
 { #category : #converting }
@@ -115,12 +119,6 @@ TypType >> asTypeCompatibleWith: aType [
 		ifTrue: [ ^ self asNullableType ].
 	superTypes := self withAllSuperTypes.
 	^ aType withAllSuperTypes detect: [ :e | superTypes anySatisfy: [ :f | e >= f ] ] ifNone: [ TypUnknownType instance ]
-]
-
-{ #category : #testing }
-TypType >> hasClass [
-	<typTypeResultAs: 'Boolean'>
-	^ false
 ]
 
 { #category : #testing }
@@ -200,6 +198,18 @@ TypType >> nullable: anObject [
 TypType >> printOn: aStream [
 	nullable
 		ifTrue: [ aStream << '!' ]
+]
+
+{ #category : #testing }
+TypType >> representsClass [
+	<typTypeResultAs: 'Boolean'>
+	^ false
+]
+
+{ #category : #testing }
+TypType >> representsMethod [
+	<typTypeResultAs: 'Boolean'>
+	^ false
 ]
 
 { #category : #accessing }

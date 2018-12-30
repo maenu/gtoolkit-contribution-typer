@@ -18,7 +18,7 @@ TypNamedType >> = anObject [
 
 { #category : #converting }
 TypNamedType >> asClass [
-	self assert: [ self hasClass ].
+	self assert: [ self representsClass ].
 	(name endsWith: ' class')
 		ifFalse: [ ^ name asClass ].
 	^ (name copyFrom: 1 to: name size - ' class' size) asClass classSide
@@ -32,6 +32,19 @@ TypNamedType >> asFunctionType: someTypes result: aType optionalParameters: aBoo
 		result: aType;
 		optionalParameters: aBoolean;
 		yourself
+]
+
+{ #category : #converting }
+TypNamedType >> asMethod [
+	| parts clazz selector |
+	self assert: [ self representsMethod ].
+	parts := '>>#' split: name.
+	clazz := ((parts at: 1) endsWith: ' class')
+		ifTrue: [ ((parts at: 1) copyFrom: 1 to: (parts at: 1) size - ' class' size) asClass classSide ]
+		ifFalse: [ (parts at: 1) asClass ].
+	selector := (parts at: 2) asSymbol.
+	self flag: 'should it do a lookup?'.
+	^ clazz >> selector
 ]
 
 { #category : #converting }
@@ -51,19 +64,9 @@ TypNamedType >> asParametricType: someTypes [
 		yourself
 ]
 
-{ #category : #testing }
-TypNamedType >> hasClass [
-	| clazz_ |
-	clazz_ := name.
-	(clazz_ endsWith: ' class')
-		ifTrue: [ clazz_ := name copyFrom: 1 to: name size - ' class' size ].
-	clazz_ asClassInEnvironment: Smalltalk globals ifAbsent: [ ^ false ].
-	^ true
-]
-
 { #category : #'as yet unclassified' }
 TypNamedType >> hasSuperType [
-	^ nullable or: [ self hasClass and: [ self asClass superclass isNotNil ] ]
+	^ nullable or: [ self representsClass and: [ self asClass superclass isNotNil ] ]
 ]
 
 { #category : #comparing }
@@ -100,10 +103,25 @@ TypNamedType >> printOn: aStream [
 	aStream << name asString
 ]
 
+{ #category : #testing }
+TypNamedType >> representsClass [
+	| clazz_ |
+	clazz_ := name.
+	(clazz_ endsWith: ' class')
+		ifTrue: [ clazz_ := name copyFrom: 1 to: name size - ' class' size ].
+	clazz_ asClassInEnvironment: Smalltalk globals ifAbsent: [ ^ false ].
+	^ true
+]
+
+{ #category : #testing }
+TypNamedType >> representsMethod [
+	^ name includesSubstring: '>>#'
+]
+
 { #category : #'as yet unclassified' }
 TypNamedType >> superType [
 	self assert: [ self hasSuperType ].
-	(self hasClass not or: [ self asClass superclass isNil ])
+	(self representsClass not or: [ self asClass superclass isNil ])
 		ifTrue: [ "must be nullable" ^ TypNilType instance ].
 	^ self asClass superclass typAsType copy
 		nullable: nullable;

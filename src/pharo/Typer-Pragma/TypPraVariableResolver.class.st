@@ -30,7 +30,7 @@ TypPraVariableResolver >> resolversFor: aLookup [
 TypPraVariableResolver >> resolves: aLookup [
 	<typTypeArgument: 1 as: 'TypVariableLookup'>
 	<typTypeResultAs: 'Boolean'>
-	aLookup receiverType hasClass
+	aLookup receiverType representsClass
 		ifFalse: [ ^ false ].
 	^ aLookup receiverType asClass methods anySatisfy: [ :e | e selector = #initialize and: [ e pragmas anySatisfy: [ :f | f selector = #typTypeVariable:as: and: [ f arguments first = aLookup selector ] ] ] ]
 ]

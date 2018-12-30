@@ -18,7 +18,7 @@ RBMessageNode >> typGtFiltersToTypeWithShadow [
 	<typTypeResultAs: 'GtCoderMethodsFilter'>
 	| type clazz shadows shadow argumentTypes resultType method |
 	type := self receiver typType.
-	clazz := type hasClass
+	clazz := type representsClass
 		ifTrue: [ type asClass ]
 		ifFalse: [ Object ].
 	shadows := TypShaShadow shadowClassesFor: clazz.
