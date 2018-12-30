@@ -17,7 +17,7 @@ RBBlockNode >> typTypeForArgumentAt: anInteger [
 							((type_ "typCastAs TypUnionType") types
 								select: [ :e | 
 									| named |
-									named := e asNonParametricType.
+									named := e asNamedType.
 									named isNamed and: [ (named "typCastAs TypNamedType") name = 'BlockClosure' ] ]);
 						yourself ].
 			type_ isParametric

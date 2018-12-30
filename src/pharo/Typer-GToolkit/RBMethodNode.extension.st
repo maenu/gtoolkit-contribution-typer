@@ -41,13 +41,13 @@ RBMethodNode >> typGtTypeWithPragma [
 						selector: #typTypeArgument:as:
 						arguments:
 							{(RBLiteralValueNode value: i).
-							(RBLiteralValueNode value: (self typTypeForArgumentAt: i) asSourceString)} ] ].
+							(RBLiteralValueNode value: (self typTypeForArgumentAt: i) asString)} ] ].
 	result_ := self pragmas
 		detect: [ :e | e selector = #typTypeResultAs: ]
 		ifFound: [ :e | 
 			self removePragma: e.
 			e ]
-		ifNone: [ RBPragmaNode selector: #typTypeResultAs: arguments: {(RBLiteralValueNode value: self typTypeForResult asSourceString)} ].
+		ifNone: [ RBPragmaNode selector: #typTypeResultAs: arguments: {(RBLiteralValueNode value: self typTypeForResult asString)} ].
 	variables_ := {} "typCastAs SequenceableCollection<RBPragmaNode>".
 	self selector = #initialize
 		ifTrue: [ variables_ := self methodClass instVarNames
@@ -61,7 +61,7 @@ RBMethodNode >> typGtTypeWithPragma [
 								selector: #typTypeVariable:as:
 								arguments:
 									{(RBLiteralValueNode value: e asString).
-									(RBLiteralValueNode value: (self methodClass typTypeForVariable: e asSymbol) asSourceString)} ] ] ].
+									(RBLiteralValueNode value: (self methodClass typTypeForVariable: e asSymbol) asString)} ] ] ].
 	arguments_ do: [ :e | self addPragma: e ].
 	self addPragma: result_.
 	variables_ do: [ :e | self addPragma: e ].

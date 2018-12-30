@@ -13,7 +13,15 @@ TypUnionType >> = anObject [
 		or: [ self class = anObject class
 				and: [ | object |
 					object := anObject "typCastAs TypUnionType".
-					self nullable = object nullable and: [ types = object types ] ] ]
+					self nullable = object nullable and: [ self types asSet = object types asSet ] ] ]
+]
+
+{ #category : #comparing }
+TypUnionType >> > aType [
+	^ self ~= aType
+		and: [ aType isUnion
+				ifTrue: [ (aType "typCastAs TypUnionType") types allSatisfy: [ :e | self >= e ] ]
+				ifFalse: [ (types anySatisfy: [ :e | e >= aType ]) or: [ super > aType ] ] ]
 ]
 
 { #category : #converting }
@@ -21,61 +29,8 @@ TypUnionType >> asClass [
 	^ self superType asClass
 ]
 
-{ #category : #converting }
-TypUnionType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
-	| type |
-	self flag: 'TODO this is inconsistent with asNonParametricType and not a function type'.
-	type := self copy.
-	type types
-		removeAll;
-		addAll:
-			(types
-				collect: [ :e | 
-					e canBeFunctionType
-						ifTrue: [ e asFunctionType: someTypes result: aType optionalParameters: aBoolean ]
-						ifFalse: [ e ] ]).
-	^ type
-]
-
-{ #category : #converting }
-TypUnionType >> asNonParametricType [
-	self flag: 'TODO this is inconsistent with asNonParametricType and not a function type'.
-	^ self superType asNonParametricType
-]
-
-{ #category : #converting }
-TypUnionType >> asParametricType: someTypes [
-	| type |
-	self flag: 'TODO this is inconsistent with asNonParametricType and not a function type'.
-	type := self copy.
-	type types
-		removeAll;
-		addAll:
-			(types
-				collect: [ :e | 
-					e canBeParametricType
-						ifTrue: [ e asParametricType: someTypes ]
-						ifFalse: [ e ] ]).
-	^ type
-]
-
 { #category : #accessing }
-TypUnionType >> asSourceString [
-	^ '{' , (',' join: (types collect: #asSourceString)) , '}'
-]
-
-{ #category : #converting }
-TypUnionType >> canBeFunctionType [
-	^ types anySatisfy: #canBeFunctionType
-]
-
-{ #category : #converting }
-TypUnionType >> canBeParametricType [
-	^ types anySatisfy: #canBeParametricType
-]
-
-{ #category : #accessing }
-TypUnionType >> compatibleWith: aType [
+TypUnionType >> asCompatibleType: aType [
 	| remains nullable_ current |
 	aType isUnknown
 		ifTrue: [ ^ aType ].
@@ -94,7 +49,7 @@ TypUnionType >> compatibleWith: aType [
 		whileFalse: [ | next common |
 			next := remains first.
 			remains remove: next.
-			common := current compatibleWith: next.
+			common := current asCompatibleType: next.
 			common isUnknown
 				ifTrue: [ ^ common ].
 			common = current
@@ -106,6 +61,21 @@ TypUnionType >> compatibleWith: aType [
 	nullable_
 		ifTrue: [ ^ current asNullableType ].
 	^ current
+]
+
+{ #category : #converting }
+TypUnionType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
+	^ self superType asFunctionType: someTypes result: aType optionalParameters: aBoolean
+]
+
+{ #category : #converting }
+TypUnionType >> asNamedType [
+	^ self superType asNamedType
+]
+
+{ #category : #converting }
+TypUnionType >> asParametricType: someTypes [
+	^ self superType asParametricType: someTypes
 ]
 
 { #category : #testing }
@@ -131,16 +101,14 @@ TypUnionType >> initialize [
 	types := Set new
 ]
 
-{ #category : #comparing }
-TypUnionType >> isCompatibleWith: aType [
-	^ aType isUnion
-		ifTrue: [ (aType "typCastAs TypUnionType") types allSatisfy: [ :e | self >= e ] ]
-		ifFalse: [ (types anySatisfy: [ :e | e >= aType ]) or: [ super isCompatibleWith: aType ] ]
+{ #category : #converting }
+TypUnionType >> isFunction [
+	^ self superType isFunction
 ]
 
 { #category : #converting }
 TypUnionType >> isParametric [
-	^ types allSatisfy: #isParametric
+	^ self superType isParametric
 ]
 
 { #category : #testing }
@@ -163,8 +131,7 @@ TypUnionType >> nullable: aBoolean [
 { #category : #generated }
 TypUnionType >> parameters [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	self
-		assert: [ self isParametric and: [ self superType isParametric ] ].
+	self assert: [ self isParametric ].
 	^ (self superType "typCastAs TypUnionType") parameters
 ]
 
@@ -176,7 +143,6 @@ TypUnionType >> postCopy [
 
 { #category : #printing }
 TypUnionType >> printOn: aStream [
-	super printOn: aStream.
 	types
 		=
 			{TypNilType instance.
@@ -215,7 +181,7 @@ TypUnionType >> superType [
 		whileFalse: [ | next common |
 			next := remains anyOne.
 			remains remove: next.
-			common := current compatibleWith: next.
+			common := current asCompatibleType: next.
 			common isUnknown
 				ifTrue: [ ^ (remains includes: TypNilType instance)
 						ifTrue: [ common asNullableType ]
@@ -234,6 +200,6 @@ TypUnionType >> types [
 
 { #category : #accessing }
 TypUnionType >> types: anObject [
-	<typTypeArgument: 1 as: 'Set<TypType>'>
-	types := anObject
+	<typTypeArgument: 1 as: 'Collection<TypType>'>
+	types := anObject asSet
 ]

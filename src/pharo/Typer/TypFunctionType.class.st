@@ -12,56 +12,41 @@ Class {
 TypFunctionType >> = anObject [
 	^ self == anObject
 		or: [ self class = anObject class
-				and: [ | object |
-					object := anObject "typCastAs TypFunctionType".
-					nullable = object nullable
-						and: [ type = object type
-								and: [ parameters asOrderedCollection
-										= object parameters asOrderedCollection
-										and: [ result = object result ] ] ] ] ]
+				and: [ | type |
+					type := anObject "typCastAs TypFunctionType".
+					self nullable = type nullable and: [ self name = type name and: [ self parameters = type parameters and: [ self optionalParameters = type optionalParameters and: [ result = type result ] ] ] ] ] ]
 ]
 
-{ #category : #testing }
-TypFunctionType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
-	| copy parameters_ |
-	copy := self copy.
-	parameters_ := (OrderedCollection
-		ofSize: (parameters size max: someTypes size)) "typParameters TypType".
-	parameters withIndexDo: [ :e :i | parameters_ at: i put: e ].
-	someTypes withIndexDo: [ :e :i | parameters_ at: i put: e ].
-	copy parameters: parameters_.
-	copy result: aType.
-	copy optionalParameters: aBoolean.
-	^ copy
-]
-
-{ #category : #accessing }
-TypFunctionType >> asSourceString [
-	| parameters_ |
-	parameters_ := ',' join: (parameters collect: #asSourceString).
-	optionalParameters
-		ifTrue: [ parameters_ := '[' , parameters_ , ']' ]
-		ifFalse: [ parameters_ := '(' , parameters_ , ')' ].
-	^ super asSourceString , type asSourceString , parameters_ , '->' , result asSourceString
-]
-
-{ #category : #testing }
-TypFunctionType >> canBeFunctionType [
-	^ true
+{ #category : #comparing }
+TypFunctionType >> > aType [
+	^ self ~= aType
+		and: [ aType isFunction
+				ifTrue: [ | type |
+					type := aType "typCastAs TypFunctionType".
+					result >= type result
+						and: [ | size |
+							size := optionalParameters
+								ifTrue: [ type parameters size ]
+								ifFalse: [ parameters size ].
+							size = 0
+								or: [ size <= parameters size
+										and: [ size <= type parameters size and: [ ((parameters copyFrom: 1 to: size) withIndexSelect: [ :e :i | e >= (type parameters at: i) ]) size = size ] ] ] ] ]
+				ifFalse: [ super > aType ] ]
 ]
 
 { #category : #accessing }
-TypFunctionType >> compatibleWith: aType [
+TypFunctionType >> asCompatibleType: aType [
 	| compatibleType compatibleResult |
+	self flag: 'not sure...'.
 	aType isFunction
 		ifFalse: [ ^ TypUnknownType instance ].
-	compatibleType := super compatibleWith: (TypParametricType new
+	compatibleType := super asCompatibleType: (TypParametricType new
 		type: (aType "typCastAs TypFunctionType") type;
 		parameters: (aType "typCastAs TypFunctionType") parameters;
 		yourself).
 	compatibleType isParametric
 		ifFalse: [ ^ compatibleType ].
-	compatibleResult := result compatibleWith: (aType "typCastAs TypFunctionType") result.
+	compatibleResult := result asCompatibleType: (aType "typCastAs TypFunctionType") result.
 	^ TypFunctionType new
 		type: (compatibleType "typCastAs TypParametricType") type;
 		parameters: (compatibleType "typCastAs TypParametricType") parameters;
@@ -70,54 +55,39 @@ TypFunctionType >> compatibleWith: aType [
 ]
 
 { #category : #testing }
-TypFunctionType >> hasSuperType [
-	^ result isUnion or: [ (parameters anySatisfy: [ :e | e isUnion ]) or: [ type hasSuperType ] ]
+TypFunctionType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
+	| copy |
+	someTypes size ~= parameters size
+		ifTrue: [ TypNoTypeError signal ].
+	copy := self copy.
+	someTypes withIndexDo: [ :e :i | copy parameters at: i put: e ].
+	copy
+		result: aType;
+		optionalParameters: aBoolean.
+	^ copy
+]
+
+{ #category : #testing }
+TypFunctionType >> asParametricType: someTypes [
+	TypNoTypeError signal
 ]
 
 { #category : #comparing }
 TypFunctionType >> hash [
-	^ super hash bitXor: result hash
+	^ (super hash bitXor: optionalParameters hash) bitXor: result hash
 ]
 
 { #category : #accessing }
 TypFunctionType >> initialize [
-	<typTypeResultAs: 'TypFunctionType'>
 	<typTypeVariable: 'optionalParameters' as: 'Boolean'>
 	<typTypeVariable: 'result' as: 'TypType'>
 	super initialize.
 	optionalParameters := false
 ]
 
-{ #category : #comparing }
-TypFunctionType >> isCompatibleWith: aType [
-	^ aType isFunction
-		ifTrue: [ | type_ |
-			type_ := aType "typCastAs TypFunctionType".
-			type >= type_ type
-				and: [ result >= type_ result
-						and: [ | size |
-							size := optionalParameters
-								ifTrue: [ type_ parameters size ]
-								ifFalse: [ parameters size ].
-							size = 0
-								or: [ size <= parameters size
-										and: [ size <= type_ parameters size
-												and: [ ((parameters copyFrom: 1 to: size)
-														withIndexSelect: [ :e :i | e >= (type_ parameters at: i) ])
-														size = size ] ] ] ] ] ]
-		ifFalse: [ super isCompatibleWith: aType ]
-]
-
 { #category : #testing }
 TypFunctionType >> isFunction [
 	^ true
-]
-
-{ #category : #accessing }
-TypFunctionType >> nullable: anObject [
-	"do nothing"
-
-	
 ]
 
 { #category : #accessing }
@@ -135,18 +105,23 @@ TypFunctionType >> optionalParameters: anObject [
 { #category : #copying }
 TypFunctionType >> postCopy [
 	super postCopy.
-	result := result copy
+	result := result copy.
 ]
 
 { #category : #accessing }
 TypFunctionType >> printOn: aStream [
-	type printOn: aStream.
+	nullable
+		ifTrue: [ aStream << '!' ].
+	aStream << name asString.
 	aStream
 		<<
 			(optionalParameters
 				ifTrue: [ '[' ]
 				ifFalse: [ '(' ]).
-	aStream << (',' join: (parameters collect: #printString)).
+	1 to: parameters size do: [ :i | 
+		(parameters at: i) printOn: aStream.
+		i < parameters size
+			ifTrue: [ aStream << ',' ] ].
 	aStream
 		<<
 			(optionalParameters
@@ -166,29 +141,4 @@ TypFunctionType >> result [
 TypFunctionType >> result: anObject [
 	<typTypeArgument: 1 as: 'TypType'>
 	result := anObject
-]
-
-{ #category : #accessing }
-TypFunctionType >> superType [
-	self assert: [ self hasSuperType ].
-	^ result isUnion
-		ifTrue: [ self copy
-				result: result superType;
-				yourself ]
-		ifFalse: [ (parameters anySatisfy: [ :e | e isUnion ])
-				ifTrue: [ self copy
-						parameters:
-							(parameters
-								collect: [ :e | 
-									e isUnion
-										ifTrue: [ e superType ]
-										ifFalse: [ e ] ]);
-						yourself ]
-				ifFalse: [ | superType |
-					superType := type superType.
-					superType isParametric
-						ifTrue: [ self copy
-								type: superType asNonParametricType;
-								yourself ]
-						ifFalse: [ superType ] ] ]
 ]

@@ -6,17 +6,13 @@ RBProgramNode >> typAnnotateType: aType [
 	<typTypeResultAs: 'TypType'>
 	| type |
 	type := aType.
-	self comments
-		detect: #typIsCastAs
-		ifFound: [ :e | type := e typCastAs ]
-		ifNone: [  ].
+	self comments detect: #typIsCastAs ifFound: [ :e | type := e typCastAs ] ifNone: [  ].
 	self comments
 		detect: #typIsParameters
-		ifFound: [ :f | 
-			| parameters |
-			parameters := f typParameters.
-			(type canBeParametricType and: [ parameters isNotEmpty ])
-				ifTrue: [ type := type asParametricType: parameters ] ]
+		ifFound: [ :e | 
+			[ type := type asParametricType: e typParameters ]
+				on: TypNoTypeError
+				do: [ self flag: 'log or do nothing?' ] ]
 		ifNone: [  ].
 	^ type
 ]

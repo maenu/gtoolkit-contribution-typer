@@ -11,14 +11,14 @@ Class {
 TypType >> < aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'Boolean'>
-	^ aType isCompatibleWith: self
+	^ aType > self
 ]
 
 { #category : #comparing }
 TypType >> <= aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'Boolean'>
-	^ self = aType or: [ self < aType ]
+	^ aType >= self
 ]
 
 { #category : #comparing }
@@ -27,14 +27,16 @@ TypType >> = anObject [
 		or: [ self class = anObject class
 				and: [ | object |
 					object := anObject "typCastAs TypType".
-					nullable = object nullable ] ]
+					self nullable = object nullable ] ]
 ]
 
 { #category : #comparing }
 TypType >> > aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'Boolean'>
-	^ self isCompatibleWith: aType
+	(aType isNil or: aType isUnknown)
+		ifTrue: [ ^ aType > self ].
+	^ self isSuperTypeOf: aType
 ]
 
 { #category : #comparing }
@@ -46,19 +48,31 @@ TypType >> >= aType [
 
 { #category : #accessing }
 TypType >> allSuperTypes [
-	<typTypeResultAs: 'OrderedCollection<TypType>'>
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	^ self hasSuperType
-		ifTrue: [ | temp |
-			temp := self superType allSuperTypes.
-			temp addFirst: self superType.
-			temp ]
+		ifTrue: [ self superType allSuperTypes
+				addFirst: self superType;
+				yourself ]
 		ifFalse: [ OrderedCollection new "typParameters TypType" ]
 ]
 
 { #category : #converting }
 TypType >> asClass [
 	<typTypeResultAs: 'ClassDescription'>
-	self subclassResponsibility
+	TypNoClassError signal
+]
+
+{ #category : #accessing }
+TypType >> asCompatibleType: aType [
+	<typTypeArgument: 1 as: 'TypType'>
+	<typTypeResultAs: 'TypType'>
+	| superTypes |
+	aType isUnknown
+		ifTrue: [ ^ aType ].
+	aType isNil
+		ifTrue: [ ^ self asNullableType ].
+	superTypes := self withAllSuperTypes.
+	^ aType withAllSuperTypes detect: [ :e | superTypes anySatisfy: [ :f | e >= f ] ] ifNone: [ TypUnknownType instance ]
 ]
 
 { #category : #converting }
@@ -67,7 +81,13 @@ TypType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean 
 	<typTypeArgument: 2 as: 'TypType'>
 	<typTypeArgument: 3 as: 'Boolean'>
 	<typTypeResultAs: 'TypFunctionType'>
-	self subclassResponsibility
+	TypNoTypeError signal
+]
+
+{ #category : #converting }
+TypType >> asNamedType [
+	<typTypeResultAs: 'TypNamedType'>
+	TypNoTypeError signal
 ]
 
 { #category : #converting }
@@ -78,12 +98,6 @@ TypType >> asNonNullableType [
 				nullable: false;
 				yourself ]
 		ifFalse: [ self ]
-]
-
-{ #category : #converting }
-TypType >> asNonParametricType [
-	<typTypeResultAs: 'TypType'>
-	self subclassResponsibility
 ]
 
 { #category : #converting }
@@ -100,34 +114,7 @@ TypType >> asNullableType [
 TypType >> asParametricType: someTypes [
 	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
 	<typTypeResultAs: 'TypParametricType'>
-	self subclassResponsibility
-]
-
-{ #category : #accessing }
-TypType >> asSourceString [
-	<typTypeResultAs: 'String<Character>'>
-	^ nullable
-		ifTrue: [ '!' ]
-		ifFalse: [ '' ]
-]
-
-{ #category : #converting }
-TypType >> canBeFunctionType [
-	<typTypeResultAs: 'Boolean'>
-	^ false
-]
-
-{ #category : #converting }
-TypType >> canBeParametricType [
-	<typTypeResultAs: 'Boolean'>
-	^ false
-]
-
-{ #category : #accessing }
-TypType >> compatibleWith: aType [
-	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeResultAs: 'TypType'>
-	self subclassResponsibility
+	TypNoTypeError signal
 ]
 
 { #category : #testing }
@@ -139,7 +126,7 @@ TypType >> hasClass [
 { #category : #testing }
 TypType >> hasSuperType [
 	<typTypeResultAs: 'Boolean'>
-	^ true
+	^ false
 ]
 
 { #category : #comparing }
@@ -152,15 +139,6 @@ TypType >> initialize [
 	<typTypeVariable: 'nullable' as: 'Boolean'>
 	super initialize.
 	nullable := false
-]
-
-{ #category : #comparing }
-TypType >> isCompatibleWith: aType [
-	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeResultAs: 'Boolean'>
-	(aType isNil or: aType isUnknown)
-		ifTrue: [ ^ aType isCompatibleWith: self ].
-	^ aType = self or: [ self isSuperTypeOf: aType ]
 ]
 
 { #category : #testing }
@@ -218,17 +196,6 @@ TypType >> nullable: anObject [
 	nullable := anObject
 ]
 
-{ #category : #generated }
-TypType >> parameters [
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	self flag: 'this is very hackish'.
-	^ {TypUnknownType instance.
-	TypUnknownType instance.
-	TypUnknownType instance.
-	TypUnknownType instance.
-	TypUnknownType instance}
-]
-
 { #category : #printing }
 TypType >> printOn: aStream [
 	nullable
@@ -238,7 +205,7 @@ TypType >> printOn: aStream [
 { #category : #accessing }
 TypType >> superType [
 	<typTypeResultAs: 'TypType'>
-	self subclassResponsibility
+	TypNoTypeError signal
 ]
 
 { #category : #accessing }

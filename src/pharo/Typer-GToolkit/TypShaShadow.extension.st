@@ -42,7 +42,7 @@ TypShaShadow class >> typGtShadowClassInstanceMethod: aSymbol arguments: someTyp
 							(' . '
 								join:
 									(someTypes
-										withIndexCollect: [ :e :i | '''' , aType asSourceString , ''' typAsType' ]))
+										withIndexCollect: [ :e :i | '''' , aType asString , ''' typAsType' ]))
 						, '} at: i' ].
 			self class
 				compile:
@@ -53,7 +53,7 @@ TypShaShadow class >> typGtShadowClassInstanceMethod: aSymbol arguments: someTyp
 		argumentTypes: [ ' , argumentBody
 						,
 							' ];
-		resultType: [ :a :s :r | ''' , aType asSourceString
+		resultType: [ :a :s :r | ''' , aType asString
 						,
 							''' typAsType ];
 		yourself' ].
@@ -85,7 +85,7 @@ TypShaShadow class >> typGtShadowClassInstanceVariable: aSymbol type: aType [
 	' , name_
 						,
 							' := TypVariableResolver new
-		type: [ :a :s :r | ''' , aType asSourceString
+		type: [ :a :s :r | ''' , aType asString
 						,
 							''' typAsType ];
 		yourself' ].
@@ -116,7 +116,7 @@ TypShaShadow class >> typGtShadowClassVariable: aSymbol type: aType [
 	' , name_
 						,
 							' := TypVariableResolver new
-		type: [ :a :s :r | ''' , aType asSourceString
+		type: [ :a :s :r | ''' , aType asString
 						,
 							''' typAsType ];
 		yourself' ].
@@ -148,7 +148,7 @@ TypShaShadow class >> typGtShadowInstanceMethod: aSymbol arguments: someTypes re
 							(' . '
 								join:
 									(someTypes
-										withIndexCollect: [ :e :i | '''' , aType asSourceString , ''' typAsType' ]))
+										withIndexCollect: [ :e :i | '''' , aType asString , ''' typAsType' ]))
 						, '} at: i' ].
 			self
 				compile:
@@ -159,7 +159,7 @@ TypShaShadow class >> typGtShadowInstanceMethod: aSymbol arguments: someTypes re
 		argumentTypes: [ ' , argumentBody
 						,
 							' ];
-		resultType: [ :a :s :r | ''' , aType asSourceString
+		resultType: [ :a :s :r | ''' , aType asString
 						,
 							''' typAsType ];
 		yourself' ].
@@ -191,7 +191,7 @@ TypShaShadow class >> typGtShadowInstanceVariable: aSymbol type: aType [
 	' , name_
 						,
 							' := TypVariableResolver new
-		type: [ :a :s :r | ''' , aType asSourceString
+		type: [ :a :s :r | ''' , aType asString
 						,
 							''' typAsType ];
 		yourself' ].

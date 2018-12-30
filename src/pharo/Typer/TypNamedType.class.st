@@ -11,14 +11,9 @@ Class {
 TypNamedType >> = anObject [
 	^ self == anObject
 		or: [ self class = anObject class
-				and: [ | object |
-					object := anObject "typCastAs TypNamedType".
-					nullable = object nullable and: [ name = object name ] ] ]
-]
-
-{ #category : #accessing }
-TypNamedType >> allSuperTypes [
-	^ super allSuperTypes collect: #asNonParametricType
+				and: [ | type |
+					type := anObject "typCastAs TypNamedType".
+					self nullable = type nullable and: [ self name = type name ] ] ]
 ]
 
 { #category : #converting }
@@ -40,8 +35,7 @@ TypNamedType >> asFunctionType: someTypes result: aType optionalParameters: aBoo
 ]
 
 { #category : #converting }
-TypNamedType >> asNonParametricType [
-	<typTypeResultAs: 'TypNamedType'>
+TypNamedType >> asNamedType [
 	^ self
 ]
 
@@ -52,34 +46,6 @@ TypNamedType >> asParametricType: someTypes [
 		nullable: nullable;
 		parameters: someTypes;
 		yourself
-]
-
-{ #category : #accessing }
-TypNamedType >> asSourceString [
-	^ super asSourceString , name asString
-]
-
-{ #category : #converting }
-TypNamedType >> canBeFunctionType [
-	^ true
-]
-
-{ #category : #converting }
-TypNamedType >> canBeParametricType [
-	^ true
-]
-
-{ #category : #'as yet unclassified' }
-TypNamedType >> compatibleWith: aType [
-	| superTypes |
-	aType isUnknown
-		ifTrue: [ ^ aType ].
-	aType isNil
-		ifTrue: [ ^ self asNullableType ].
-	(aType isUnion or: [ aType isParametric ])
-		ifTrue: [ ^ aType compatibleWith: self ].
-	superTypes := self withAllSuperTypes.
-	^ aType withAllSuperTypes detect: [ :e | superTypes anySatisfy: [ :f | e isCompatibleWith: f ] ] ifNone: [ TypUnknownType instance ]
 ]
 
 { #category : #testing }
@@ -99,7 +65,7 @@ TypNamedType >> hasSuperType [
 
 { #category : #comparing }
 TypNamedType >> hash [
-	^ super hash bitXor: self name hash
+	^ super hash bitXor: name hash
 ]
 
 { #category : #initialization }

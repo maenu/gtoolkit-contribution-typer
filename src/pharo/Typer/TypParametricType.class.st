@@ -1,8 +1,7 @@
 Class {
 	#name : #TypParametricType,
-	#superclass : #TypType,
+	#superclass : #TypNamedType,
 	#instVars : [
-		'type',
 		'parameters'
 	],
 	#category : #'Typer-Core'
@@ -14,15 +13,31 @@ TypParametricType >> = anObject [
 		or: [ self class = anObject class
 				and: [ | object |
 					object := anObject "typCastAs TypParametricType".
-					nullable = object nullable
-						and: [ type = object type
-								and: [ parameters asOrderedCollection
-										= object parameters asOrderedCollection ] ] ] ]
+					self nullable = object nullable
+						and: [ self name = object name
+								and: [ self parameters = object parameters ] ] ] ]
 ]
 
-{ #category : #converting }
-TypParametricType >> asClass [
-	^ type asClass
+{ #category : #comparing }
+TypParametricType >> > aType [
+	^ self ~= aType
+		and: [ aType isParametric
+				ifTrue: [ | type_ |
+					type_ := aType 	"typCastAs TypParametricType".
+					self asNamedType >= type_ asNamedType
+						and: [ parameters size = type_ parameters size and: [ (parameters withIndexSelect: [ :e :i | e >= (type_ parameters at: i) ]) size = parameters size ] ] ]
+				ifFalse: [ super > aType ] ]
+]
+
+{ #category : #accessing }
+TypParametricType >> asCompatibleType: aType [
+	self flag: 'not sure...'.
+	(aType isParametric and: [ aType parameters size = parameters size ])
+		ifFalse: [ ^ super asCompatibleType: aType ].
+	^ TypParametricType new
+		name: (self asNamedType asCompatibleType: aType asNamedType) name;
+		parameters: (parameters size timesCollect: [ :i | (parameters at: i) asCompatibleType: (aType parameters at: i) ]);
+		yourself
 ]
 
 { #category : #converting }
@@ -31,83 +46,34 @@ TypParametricType >> asFunctionType: someTypes result: aType optionalParameters:
 ]
 
 { #category : #testing }
-TypParametricType >> asNonParametricType [
-	^ type asNonParametricType
+TypParametricType >> asNamedType [
+	^ TypNamedType new
+		name: name;
+		nullable: nullable;
+		yourself
 ]
 
 { #category : #testing }
 TypParametricType >> asParametricType: someTypes [
-	| copy parameters_ |
+	| copy |
+	someTypes size == parameters size
+		ifFalse: [ TypNoTypeError signal ].
 	copy := self copy.
-	parameters_ := (OrderedCollection ofSize: (parameters size max: someTypes size)) "typParameters TypType".
-	parameters withIndexDo: [ :e :i | parameters_ at: i put: e ].
-	someTypes withIndexDo: [ :e :i | parameters_ at: i put: e ].
-	copy parameters: parameters_.
+	someTypes withIndexDo: [ :e :i | copy parameters at: i put: e ].
 	^ copy
-]
-
-{ #category : #accessing }
-TypParametricType >> asSourceString [
-	^ type asSourceString , '<' , (',' join: (parameters collect: #asSourceString)) , '>'
-]
-
-{ #category : #comparing }
-TypParametricType >> canBeParametricType [
-	^ true
-]
-
-{ #category : #accessing }
-TypParametricType >> compatibleWith: aType [
-	| compatibleType compatibleParameters |
-	aType isFunction ifTrue: [ ^ TypUnknownType instance  ].
-	compatibleType := type compatibleWith: aType.
-	(aType isParametric not
-		or:
-			[ parameters size ~= (aType "typCastAs TypParametricType") parameters size ])
-		ifTrue: [ ^ compatibleType ].
-	compatibleParameters := parameters size
-		timesCollect:
-			[ :i | (parameters at: i) compatibleWith: ((aType "typCastAs TypParametricType") parameters at: i) ].
-	^ TypParametricType new
-		type: compatibleType;
-		parameters: compatibleParameters;
-		yourself
-]
-
-{ #category : #converting }
-TypParametricType >> hasClass [
-	^ type hasClass
-]
-
-{ #category : #testing }
-TypParametricType >> hasSuperType [
-	^ (parameters anySatisfy: [ :e | e isUnion ]) or: [ type hasSuperType ]
 ]
 
 { #category : #comparing }
 TypParametricType >> hash [
-	^ (super hash bitXor: type hash) bitXor: parameters asOrderedCollection hash
+	^ super hash bitXor: parameters hash
 ]
 
 { #category : #initialization }
 TypParametricType >> initialize [
 	<typTypeVariable: 'type' as: 'TypType'>
-	<typTypeVariable: 'parameters' as: 'SequenceableCollection<TypType>'>
+	<typTypeVariable: 'parameters' as: 'OrderedCollection<TypType>'>
 	super initialize.
 	parameters := OrderedCollection new "typParameters TypType"
-]
-
-{ #category : #comparing }
-TypParametricType >> isCompatibleWith: aType [
-	^ (aType class == TypParametricType)
-		ifTrue: [ | type_ |
-			type_ := aType "typCastAs TypParametricType".
-			type >= type_ type
-				and: [ parameters size = type_ parameters size
-						and: [ (parameters
-								withIndexSelect: [ :e :i | e >= (type_ parameters at: i) ])
-								size = parameters size ] ] ]
-		ifFalse: [ super isCompatibleWith: aType ]
 ]
 
 { #category : #testing }
@@ -116,71 +82,30 @@ TypParametricType >> isParametric [
 ]
 
 { #category : #accessing }
-TypParametricType >> nullable [
-	^ type nullable
-]
-
-{ #category : #accessing }
-TypParametricType >> nullable: anObject [
-	type nullable: anObject
-]
-
-{ #category : #accessing }
 TypParametricType >> parameters [
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
+	<typTypeResultAs: 'OrderedCollection<TypType>'>
 	^ parameters
 ]
 
 { #category : #accessing }
 TypParametricType >> parameters: anObject [
 	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
-	parameters := anObject
+	parameters := anObject asOrderedCollection
 ]
 
 { #category : #copying }
 TypParametricType >> postCopy [
 	super postCopy.
-	type := type copy.
 	parameters := parameters collect: #copy
 ]
 
 { #category : #printing }
 TypParametricType >> printOn: aStream [
-	type printOn: aStream.
+	super printOn: aStream.
 	aStream << '<'.
-	aStream << (',' join: (parameters collect: #printString)).
+	1 to: parameters size do: [ :i | 
+		(parameters at: i) printOn: aStream.
+		i < parameters size
+			ifTrue: [ aStream << ',' ] ].
 	aStream << '>'
-]
-
-{ #category : #accessing }
-TypParametricType >> superType [
-	self assert: [ self hasSuperType ].
-	^ (parameters anySatisfy: [ :e | e isUnion ])
-		ifTrue: [ self copy
-				parameters:
-					(parameters
-						collect: [ :e | 
-							e isUnion
-								ifTrue: [ e superType ]
-								ifFalse: [ e ] ]);
-				yourself ]
-		ifFalse: [ | superType |
-			superType := type superType.
-			(superType isParametric and: [ parameters size = (superType "typCastAs TypParametricType") parameters size ])
-				ifTrue: [ self copy
-						type: superType asNonParametricType;
-						yourself ]
-				ifFalse: [ superType ] ]
-]
-
-{ #category : #accessing }
-TypParametricType >> type [
-	<typTypeResultAs: 'TypType'>
-	^ type
-]
-
-{ #category : #accessing }
-TypParametricType >> type: anObject [
-	<typTypeArgument: 1 as: 'TypType'>
-	type := anObject
 ]

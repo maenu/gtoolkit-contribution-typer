@@ -13,29 +13,29 @@ TypNilType class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
+{ #category : #comparing }
+TypNilType >> > aType [
+	^ aType nullable and: [ self ~= aType ]
+]
+
+{ #category : #'as yet unclassified' }
+TypNilType >> asCompatibleType: aType [
+	^ aType asNullableType
+]
+
 { #category : #converting }
-TypNilType >> asNullableType [
+TypNilType >> asNamedType [
 	^ self
 ]
 
 { #category : #converting }
-TypNilType >> asParametricType: someTypes [
-	TypNoParametricTypeError signal
-]
-
-{ #category : #accessing }
-TypNilType >> asSourceString [
-	^ '!'
+TypNilType >> asNonNullableType [
+	^ TypUnknownType instance
 ]
 
 { #category : #converting }
-TypNilType >> canBeFunctionType [
-	^ false
-]
-
-{ #category : #converting }
-TypNilType >> canBeParametricType [
-	^ false
+TypNilType >> asNullableType [
+	^ self
 ]
 
 { #category : #copying }
@@ -43,21 +43,11 @@ TypNilType >> copy [
 	^ self
 ]
 
-{ #category : #accessing }
-TypNilType >> hasSuperType [
-	^ false
-]
-
 { #category : #initialization }
 TypNilType >> initialize [
 	super initialize.
 	nullable := true.
-	name := 'UndefinedObject'
-]
-
-{ #category : #comparing }
-TypNilType >> isCompatibleWith: aType [
-	^ aType nullable
+	name := UndefinedObject name
 ]
 
 { #category : #testing }
@@ -70,14 +60,4 @@ TypNilType >> nullable: anObject [
 	"do nothing"
 
 	
-]
-
-{ #category : #printing }
-TypNilType >> printOn: aStream [
-	aStream << '!'
-]
-
-{ #category : #accessing }
-TypNilType >> superType [
-	TypNoSuperTypeError signal
 ]

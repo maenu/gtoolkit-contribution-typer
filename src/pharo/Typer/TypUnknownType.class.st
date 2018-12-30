@@ -13,58 +13,44 @@ TypUnknownType class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
-{ #category : #converting }
-TypUnknownType >> asClass [
-	TypNoClassError signal
+{ #category : #comparing }
+TypUnknownType >> > aType [
+	^ self ~= aType
+]
+
+{ #category : #'as yet unclassified' }
+TypUnknownType >> asCompatibleType: aType [
+	aType isNil
+		ifTrue: [ ^ TypUnionType new
+				types:
+					{self.
+					aType};
+				yourself ].
+	^ self
 ]
 
 { #category : #converting }
-TypUnknownType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
-	TypNoTypeError signal
+TypUnknownType >> asNamedType [
+	^ self
 ]
 
 { #category : #converting }
-TypUnknownType >> asNonParametricType [
-	^ TypUnknownType instance
+TypUnknownType >> asNonNullableType [
+	^ self
 ]
 
 { #category : #converting }
 TypUnknownType >> asNullableType [
-	^ {self.
-	TypNilType instance} typAsType
-]
-
-{ #category : #converting }
-TypUnknownType >> asParametricType: someTypes [
-	TypNoParametricTypeError signal
-]
-
-{ #category : #accessing }
-TypUnknownType >> asSourceString [
-	^ '?'
-]
-
-{ #category : #'as yet unclassified' }
-TypUnknownType >> compatibleWith: aType [
-	aType isNil
-		ifTrue: [ ^ {self.
-			aType} typAsType ].
-	^ self
+	^ TypUnionType new
+		types:
+			{self.
+			TypNilType instance};
+		yourself
 ]
 
 { #category : #copying }
 TypUnknownType >> copy [
 	^ self
-]
-
-{ #category : #accessing }
-TypUnknownType >> hasSuperType [
-	^ false
-]
-
-{ #category : #comparing }
-TypUnknownType >> isCompatibleWith: aType [
-	^ true
 ]
 
 { #category : #testing }
@@ -81,11 +67,5 @@ TypUnknownType >> nullable: anObject [
 
 { #category : #accessing }
 TypUnknownType >> printOn: aStream [
-	super printOn: aStream.
 	aStream << '?'
-]
-
-{ #category : #accessing }
-TypUnknownType >> superType [
-	TypNoSuperTypeError signal
 ]

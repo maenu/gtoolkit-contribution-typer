@@ -5,7 +5,7 @@ RBAssignmentNode >> typCheCheckCompatibility [
 	| expected actual |
 	expected := self variable typType.
 	actual := self value typType.
-	(expected isCompatibleWith: actual)
+	(expected >= actual)
 		ifFalse: [ TypCheIncompatibleTypeError new
 				expected: expected;
 				actual: actual;
