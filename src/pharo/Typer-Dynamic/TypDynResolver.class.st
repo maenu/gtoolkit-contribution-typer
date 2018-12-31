@@ -12,7 +12,7 @@ TypDynResolver >> initialize [
 	<typTypeParametersAs: 'TypLookup'>
 	<typTypeVariable: 'resolvers' as: 'Dictionary<Association<ClassDescription,Symbol<Character>>,TypResolver<TypObjectLookup>>'>
 	super initialize.
-	resolvers := Dictionary new "typParameters Dictionary<Association<ClassDescription,Symbol<Character>>,TypResolver<TypObjectLookup>"
+	resolvers := Dictionary new "typParameters Association<ClassDescription,Symbol<Character>>,TypResolver<TypObjectLookup>"
 ]
 
 { #category : #accessing }

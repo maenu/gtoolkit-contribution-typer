@@ -101,6 +101,23 @@ TypShaPhaCollection >> ___asOrderedCollection [
 ]
 
 { #category : #'as yet unclassified' }
+TypShaPhaCollection >> ___asOrderedDictionary [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | 
+			| elementType |
+			elementType := a receiverType parameters at: 1.
+			OrderedDictionary typAsType
+				asParametricType:
+					(Association typAsType >= elementType
+						ifTrue: [ {(elementType parameters at: 1).
+							(elementType parameters at: 2)} ]
+						ifFalse: [ {TypUnknownType instance.
+							TypUnknownType instance} ]) ];
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___asSet [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
@@ -377,6 +394,14 @@ TypShaPhaCollection >> ___inject: _a into: _b [
 						result: TypUnknownType instance
 						optionalParameters: false ] ];
 		resultType: [ :a :s :r | a argumentTypes at: 1 ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaCollection >> ___isEmpty [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 

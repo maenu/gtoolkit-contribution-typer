@@ -46,7 +46,7 @@ TypDynUnionType >> addAll: aTypes [
 
 { #category : #enumerating }
 TypDynUnionType >> collect: aBlock [
-	<typTypeArgument: 1 as: 'BlockClosure(Association<TypType,Integer>)->?'>
+	<typTypeArgument: 1 as: 'BlockClosure[Association<TypType,Integer>]->Association<TypType,Integer>'>
 	<typTypeResultAs: 'TypDynUnionType<TypType>'>
 	| copy |
 	copy := TypDynUnionType new.
@@ -81,7 +81,7 @@ TypDynUnionType >> increment: anObject [
 TypDynUnionType >> initialize [
 	<typTypeVariable: 'weights' as: 'Dictionary<TypType,Integer>'>
 	super initialize.
-	weights := Dictionary new
+	weights := Dictionary new "typParameters TypType,Integer"
 ]
 
 { #category : #testing }

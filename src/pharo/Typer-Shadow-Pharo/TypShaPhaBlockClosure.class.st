@@ -12,7 +12,7 @@ TypShaPhaBlockClosure class >> shadowedClass [
 { #category : #'as yet unclassified' }
 TypShaPhaBlockClosure >> ___cull: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a | a receiverType parameters at: i ];
+		argumentTypes: [ :i :a | a receiverType parameters at: i ifAbsent: [ TypUnknownType instance ] ];
 		resultType: [ :a | a receiverType result ];
 		yourself
 ]
@@ -81,7 +81,7 @@ TypShaPhaBlockClosure >> ___value [
 { #category : #'as yet unclassified' }
 TypShaPhaBlockClosure >> ___value: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a | a receiverType parameters at: i ];
+		argumentTypes: [ :i :a | a receiverType parameters at: i ifAbsent: [ TypUnknownType instance ] ];
 		resultType: [ :a | a receiverType result ];
 		yourself
 ]
