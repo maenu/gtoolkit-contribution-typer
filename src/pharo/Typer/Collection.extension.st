@@ -13,7 +13,7 @@ Collection >> typAsType [
 	nil_ := remains includes: TypNilType instance.
 	nil_ ifTrue: [ remains remove: TypNilType instance ].
 	remains ifEmpty: [ ^ TypNilType instance ].
-	remains size = 1 ifTrue: [ ^ remains anyOne asNullableType ].
+	remains size = 1 ifTrue: [ ^ nil_ ifTrue: [ remains anyOne asNullableType ] ifFalse: [ remains anyOne ] ].
 	unknown := remains includes: TypUnknownType instance.
 	unknown ifTrue: [ remains remove: TypUnknownType instance ].
 	remains ifEmpty: [ ^ TypUnknownType instance ].

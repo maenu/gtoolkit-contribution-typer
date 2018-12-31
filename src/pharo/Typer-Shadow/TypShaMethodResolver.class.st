@@ -12,7 +12,7 @@ TypShaMethodResolver >> resolversFor: aLookup [
 	name := (aLookup selector isBinary
 		ifTrue: [ '~~~' , aLookup selector ]
 		ifFalse: [ '___' , aLookup selector ]) asSymbol.
-	^ {(shadow perform: name asSymbol withEnoughArguments: {})}
+	^ {(shadow perform: name asSymbol withEnoughArguments: {})} "typParameters TypResolver<TypMethodLookup>"
 ]
 
 { #category : #accessing }

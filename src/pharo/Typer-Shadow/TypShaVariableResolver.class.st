@@ -7,12 +7,12 @@ Class {
 { #category : #accessing }
 TypShaVariableResolver >> resolversFor: aLookup [
 	<typTypeArgument: 1 as: 'TypVariableLookup'>
-	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypLookup>>'>
+	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypVariableLookup>>'>
 	| name |
 	name := '___' , aLookup selector.
-	^ name first isUppercase
+	^ (name first isUppercase
 		ifTrue: [ {(shadow class instanceSide classVarNamed: name)} ]
-		ifFalse: [ {(shadow instVarNamed: name)} ]
+		ifFalse: [ {(shadow instVarNamed: name)} ]) "typParameters TypResolver<TypVariableLookup>"
 ]
 
 { #category : #accessing }

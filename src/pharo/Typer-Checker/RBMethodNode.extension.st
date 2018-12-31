@@ -96,6 +96,12 @@ RBMethodNode >> typCheHasNullables [
 ]
 
 { #category : #'*Typer-Checker' }
+RBMethodNode >> typCheHasUnknownArguments [
+	<typTypeResultAs: 'Boolean'>
+	^ (self allChildren select: #isArgument) anySatisfy: [ :e | e typType isUnknown ]
+]
+
+{ #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasUnknownArgumentsPassed [
 	<typTypeResultAs: 'Boolean'>
 	((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode"
@@ -114,7 +120,19 @@ RBMethodNode >> typCheHasUnknownReceivers [
 ]
 
 { #category : #'*Typer-Checker' }
+RBMethodNode >> typCheHasUnknownReturn [
+	<typTypeResultAs: 'Boolean'>
+	^ self typTypeForResult isUnknown
+]
+
+{ #category : #'*Typer-Checker' }
+RBMethodNode >> typCheHasUnknownTemporaries [
+	<typTypeResultAs: 'Boolean'>
+	^ (self allChildren select: [ :e | e isTemp and: [ e isArgument not and: [ e typIsDeclaration ] ] ]) anySatisfy: [ :e | e typType isUnknown ]
+]
+
+{ #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasUnknowns [
 	<typTypeResultAs: 'Boolean'>
-	^ self typCheHasUnknownArgumentsPassed or: [ self typCheHasUnknownReceivers ]
+	^ self typCheHasUnknownArgumentsPassed or: [ self typCheHasUnknownReceivers or: [ self typCheHasUnknownReturn or: [ self typCheHasUnknownArguments or: [ self typCheHasUnknownTemporaries ] ] ] ]
 ]

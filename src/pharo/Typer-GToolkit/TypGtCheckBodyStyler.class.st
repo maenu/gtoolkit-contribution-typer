@@ -70,6 +70,13 @@ TypGtCheckBodyStyler >> styleSelectorOf: aMessageNode text: aString color: aColo
 ]
 
 { #category : #visiting }
+TypGtCheckBodyStyler >> visitArgumentNode: aNode [
+	super visitArgumentNode: aNode.
+	aNode typType isUnknown
+		ifTrue: [ self styleNode: aNode color: Color blue ]
+]
+
+{ #category : #visiting }
 TypGtCheckBodyStyler >> visitAssignmentNode: aNode [
 	super visitAssignmentNode: aNode.
 	[ aNode typCheCheckCompatibility ]
@@ -95,8 +102,6 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 	aNode arguments
 		withIndexDo: [ :e :i |
 			[ [ aNode typCheCheckArgumentCompatibilityAt: i.
-			e typType isUnknown
-				ifTrue: [ self styleNode: e color: Color blue ].
 			(aNode typTypeForArgumentAt: i) isUnknown
 				ifTrue: [ self styleNode: e color: Color blue ] ]
 				on: TypCheIncompatibleTypeError
@@ -109,6 +114,7 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 TypGtCheckBodyStyler >> visitMethodNode: aNode [
 	| position |
 	super visitMethodNode: aNode.
+	aNode typCheHasUnknownReturn ifTrue: [ self styleSelectorOf: aNode color: Color blue ].
 	position := aNode arguments isEmpty
 		ifTrue: [ aNode selector size ]
 		ifFalse: [ aNode arguments last stop ].
@@ -144,4 +150,11 @@ TypGtCheckBodyStyler >> visitReturnNode: aNode [
 	[ aNode typCheCheckCompatibility ]
 		on: TypCheIncompatibleTypeError
 		do: [ :e | self styleNode: aNode text: 'expected ' , e expected asString , ', got ' , e actual asString color: Color red ]
+]
+
+{ #category : #visiting }
+TypGtCheckBodyStyler >> visitTemporaryNode: aNode [
+	super visitTemporaryNode: aNode.
+	(aNode typIsDeclaration and: [ aNode typType isUnknown ])
+		ifTrue: [ self styleNode: aNode color: Color blue ]
 ]
