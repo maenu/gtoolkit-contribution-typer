@@ -165,6 +165,12 @@ TypGtMethodCoder >> save [
 		ifFalse: [ false ]
 ]
 
+{ #category : #'event handling' }
+TypGtMethodCoder >> sourceChanged [
+	self refreshRbAst.
+	super sourceChanged
+]
+
 { #category : #'initialize-release' }
 TypGtMethodCoder >> typeWithPragma: anEditorElement [
 	<typTypeArgument: 1 as: 'BrTextEditor'>

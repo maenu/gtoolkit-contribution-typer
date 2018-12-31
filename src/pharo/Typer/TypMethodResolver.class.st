@@ -69,7 +69,7 @@ TypMethodResolver >> resultTypeFor: aLookup resolvedBy: anotherLookup [
 			| argumentType |
 			argumentType := self argumentTypeAt: i for: aLookup resolvedBy: anotherLookup.
 			argumentType isUnion
-				ifTrue: [ (argumentType types anySatisfy: [ :f | e <= f ])
+				ifTrue: [ ((argumentType "typCastAs TypUnionType") types anySatisfy: [ :f | e <= f ])
 						ifFalse: [ ^ TypUnknownType instance ] ]
 				ifFalse: [ e <= argumentType
 						ifFalse: [ ^ TypUnknownType instance ] ] ].

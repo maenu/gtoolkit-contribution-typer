@@ -43,6 +43,14 @@ TypShaPhaBehavior >> ___compiledMethodAt: _a [
 ]
 
 { #category : #accessing }
+TypShaPhaBehavior >> ___includesBehavior: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | Behavior typAsType ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaBehavior >> ___includesSelector: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
@@ -152,5 +160,13 @@ TypShaPhaBehavior >> ___withAllSuperclasses [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | SequenceableCollection typAsType asParametricType: {ClassDescription typAsType} ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaBehavior >> ~~~>> _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
+		resultType: [ :a :s :r | CompiledMethod typAsType ];
 		yourself
 ]

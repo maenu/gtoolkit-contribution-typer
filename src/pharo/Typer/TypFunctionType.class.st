@@ -46,18 +46,18 @@ TypFunctionType >> asTypeCompatibleWith: aType [
 			(aType isParametric
 				ifTrue: [ TypParametricType new
 						nullable: aType nullable;
-						name: aType name;
-						parameters: aType parameters;
+						name: (aType "typCastAs TypParametricType") name;
+						parameters:  (aType "typCastAs TypParametricType") parameters;
 						yourself ]
 				ifFalse: [ aType ]).
 	(compatibleType isParametric and: [ aType isFunction ])
 		ifFalse: [ ^ compatibleType ].
 	^ TypFunctionType new
 		nullable: compatibleType nullable;
-		name: compatibleType name;
-		parameters: compatibleType parameters;
-		result: (result asTypeCompatibleWith: aType result);
-		optionalParameters: (optionalParameters and: aType optionalParameters);
+		name: (compatibleType "typCastAs TypParametricType") name;
+		parameters: (compatibleType "typCastAs TypParametricType") parameters;
+		result: (result asTypeCompatibleWith: (aType "typCastAs TypFunctionType") result);
+		optionalParameters: (optionalParameters and: (aType "typCastAs TypFunctionType") optionalParameters);
 		yourself
 ]
 
@@ -132,12 +132,12 @@ TypFunctionType >> result: anObject [
 	result := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypFunctionType >> superType [
 	| superType |
 	superType := super superType.
 	superType isFunction
-		ifTrue: [ superType := superType copy
+		ifTrue: [ superType := (superType copy "typCastAs TypFunctionType")
 				result: result copy;
 				yourself ].
 	^ superType

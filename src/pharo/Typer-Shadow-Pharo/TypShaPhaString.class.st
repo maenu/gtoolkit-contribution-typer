@@ -51,6 +51,14 @@ TypShaPhaString >> ___asPackage [
 ]
 
 { #category : #accessing }
+TypShaPhaString >> ___includesSubstring: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | String typAsType ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaString >> ___join: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | Collection typAsType asParametricType: {String typAsType} ];
