@@ -126,6 +126,14 @@ TypShaPhaCollection >> ___collect: _a [
 ]
 
 { #category : #accessing }
+TypShaPhaCollection >> ___copyWithout: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | a receiverType parameters at: 1 ];
+		resultType: [ :a :s :r | a receiverType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaCollection >> ___copyWithoutAll: _a [
 	^ TypMethodResolver new
 		argumentTypes:

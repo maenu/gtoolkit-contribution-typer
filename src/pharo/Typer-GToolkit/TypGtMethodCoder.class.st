@@ -154,10 +154,7 @@ TypGtMethodCoder >> rbNodeAtCursor [
 { #category : #'as yet unclassified' }
 TypGtMethodCoder >> refreshRbAst [
 	rbAst := nil.
-	[ self rbAST ifNotNil: #typType ]
-		on: Error
-		do: [ Halt now ].
-	^ rbAst
+	^ self rbAST
 ]
 
 { #category : #actions }
