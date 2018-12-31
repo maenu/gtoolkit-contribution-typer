@@ -90,7 +90,7 @@ TypUnionType >> initialize [
 	<typTypeParametersAs: 'TypType'>
 	<typTypeVariable: 'types' as: 'Set<TypType>'>
 	super initialize.
-	types := Set new
+	types := Set new "typParameters TypType"
 ]
 
 { #category : #converting }

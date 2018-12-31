@@ -39,15 +39,15 @@ TypParametricType >> asTypeCompatibleWith: aType [
 			(aType isNamed
 				ifTrue: [ TypNamedType new
 						nullable: aType nullable;
-						name: aType name;
+						name: (aType "typCastAs TypNamedType") name;
 						yourself ]
 				ifFalse: [ aType ]).
-	(compatibleType isNamed and: [ aType isParametric and: [ aType parameters size = parameters size ] ])
+	(compatibleType isNamed and: [ aType isParametric and: [ (aType "typCastAs TypParametricType") parameters size = parameters size ] ])
 		ifFalse: [ ^ compatibleType ].
 	^ TypParametricType new
 		nullable: compatibleType nullable;
-		name: compatibleType name;
-		parameters: (parameters size timesCollect: [ :i | (parameters at: i) asTypeCompatibleWith: (aType parameters at: i) ]);
+		name: (compatibleType "typCastAs TypNamedType") name;
+		parameters: (parameters size timesCollect: [ :i | (parameters at: i) asTypeCompatibleWith: ((aType "typCastAs TypParametricType") parameters at: i) ]);
 		yourself
 ]
 
@@ -98,12 +98,12 @@ TypParametricType >> printOn: aStream [
 	aStream << '>'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypParametricType >> superType [
 	| superType |
 	superType := super superType.
-	(superType isParametric and: [ superType parameters size = parameters size ])
-		ifTrue: [ superType := superType copy
+	(superType isParametric and: [ (superType "typCastAs TypParametricType") parameters size = parameters size ])
+		ifTrue: [ superType := (superType "typCastAs TypParametricType") copy
 				parameters: parameters copy;
 				yourself ].
 	^ superType
