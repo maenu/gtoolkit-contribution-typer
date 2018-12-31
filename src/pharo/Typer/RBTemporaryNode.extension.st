@@ -9,7 +9,10 @@ RBTemporaryNode >> typAssignments [
 
 { #category : #'*Typer' }
 RBTemporaryNode >> typIsDeclaration [
-^ (self parent isSequence and: [ (self parent "typCastAs RBSequenceNode") temporaries anySatisfy: [ :e | e == self ] ])
+	<typTypeResultAs: 'Boolean'>
+	^ self parent isSequence
+		and:
+			[ (self parent "typCastAs RBSequenceNode") temporaries anySatisfy: [ :e | e == self ] ]
 ]
 
 { #category : #'*Typer' }

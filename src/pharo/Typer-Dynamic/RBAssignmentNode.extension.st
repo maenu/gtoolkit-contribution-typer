@@ -32,7 +32,7 @@ RBAssignmentNode >> typDynInstall [
 { #category : #'*Typer-Dynamic' }
 RBAssignmentNode >> typDynMonitor [
 	<typTypeResultAs: 'Monitor'>
-	^ self propertyAt: #typDynMonitor
+	^ (self propertyAt: #typDynMonitor) "typCastAs Monitor"
 ]
 
 { #category : #'*Typer-Dynamic' }

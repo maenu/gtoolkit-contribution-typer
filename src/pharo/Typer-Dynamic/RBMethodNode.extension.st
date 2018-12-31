@@ -42,7 +42,7 @@ RBMethodNode >> typDynInstall [
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynInvocations [
 	<typTypeResultAs: 'TypDynUnionType<TypDynMessage>'>
-	^ self propertyAt: #typDynInvocations
+	^ (self propertyAt: #typDynInvocations) "typCastAs TypDynUnionType<TypDynMessage>"
 ]
 
 { #category : #'*Typer-Dynamic' }
@@ -67,7 +67,7 @@ RBMethodNode >> typDynIsCovered [
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynMonitor [
 	<typTypeResultAs: 'Monitor'>
-	^ self propertyAt: #typDynMonitor
+	^ (self propertyAt: #typDynMonitor) "typCastAs Monitor"
 ]
 
 { #category : #'*Typer-Dynamic' }
@@ -95,7 +95,7 @@ RBMethodNode >> typDynTypeForResult [
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForClassVariables [
 	<typTypeResultAs:
-		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypUnionType<TypType>>'>
+		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypDynUnionType<TypType>>'>
 	^ self
 		typDynTypesForVariablesSelectedWith: [ :e | e variable binding isClassVariable ]
 		definedBy: [ self methodClass classSide ]
@@ -104,14 +104,14 @@ RBMethodNode >> typDynTypesForClassVariables [
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForInstanceVariables [
 	<typTypeResultAs:
-		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypUnionType<TypType>>'>
+		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypDynUnionType<TypType>>'>
 	^ self typDynTypesForVariablesSelectedWith: [ :e | e variable isInstance ] definedBy: [ self methodClass ]
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForPoolVariables [
 	<typTypeResultAs:
-		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypUnionType<TypType>>'>
+		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypDynUnionType<TypType>>'>
 	^ self
 		typDynTypesForVariablesSelectedWith: [ :e | e variable binding typIsFromSharedPool ]
 		definedBy: [ :e | e binding typSharedPool ]

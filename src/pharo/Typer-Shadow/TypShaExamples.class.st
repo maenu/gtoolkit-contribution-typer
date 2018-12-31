@@ -7,15 +7,19 @@ Class {
 { #category : #accessing }
 TypShaExamples >> pharo [
 	<gtExample>
-	TypTypeResolvers initializeGlobal resolvers add: TypShaTypeResolvers new.
-	TypMethodResolvers initializeGlobal resolvers add: TypShaMethodResolvers new.
-	TypVariableResolvers initializeGlobal resolvers add: TypShaVariableResolvers new.
+	<typTypeResultAs: 'CompiledMethod<Integer>'>
+	TypTypeResolvers initializeGlobal resolvers
+		add: TypShaTypeResolvers new.
+	TypMethodResolvers initializeGlobal resolvers
+		add: TypShaMethodResolvers new.
+	TypVariableResolvers initializeGlobal resolvers
+		add: TypShaVariableResolvers new.
 	^ self class methodNamed: #playground
 ]
 
 { #category : #accessing }
 TypShaExamples >> playground [
-	| o c i s d |
+	| o c s d |
 	o := 10 atRandom > 5
 		ifTrue: [ Object new ]
 		ifFalse: [ Dictionary new ].
@@ -24,6 +28,5 @@ TypShaExamples >> playground [
 	d := (c select: [ :e | e abs > 1 ]) collect: [ :e | 4 ].
 	o.
 	c.
-	i.
 	s
 ]

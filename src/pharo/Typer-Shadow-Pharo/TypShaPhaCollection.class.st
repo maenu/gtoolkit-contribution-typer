@@ -66,6 +66,23 @@ TypShaPhaCollection >> ___anySatisfy: _a [
 ]
 
 { #category : #accessing }
+TypShaPhaCollection >> ___asDictionary [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | 
+			| elementType |
+			elementType := a receiverType parameters at: 1.
+			Dictionary typAsType
+				asParametricType:
+					(Association typAsType >= elementType
+						ifTrue: [ {(elementType parameters at: 1).
+							(elementType parameters at: 2)} ]
+						ifFalse: [ {TypUnknownType instance.
+							TypUnknownType instance} ]) ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaCollection >> ___asIdentitySet [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

@@ -10,12 +10,12 @@ Class {
 { #category : #accessing }
 TypDynCollector >> collectIn: aCollection doing: aBlock [
 	<typTypeArgument: 1 as: 'Collection<CompiledMethod<Integer>>'>
-	<typTypeArgument: 2 as: 'BlockClosure()->?'>
-	<typTypeResultAs: 'Association<Association<?,TypDynResolver<TypLookup>>,TypDynResolver<TypLookup>>'>
+	<typTypeArgument: 2 as: 'BlockClosure()->Object'>
+	<typTypeResultAs: 'Association<Association<Object,TypDynResolver<TypLookup>>,TypDynResolver<TypLookup>>'>
 	| methodResolvers variableResolvers result asts |
+	result := nil "typCastAs !Object".
 	methodResolvers := Dictionary new "typParameters Association<ClassDescription,Symbol<Character>>,TypMethodResolver<TypMethodLookup>".
 	variableResolvers := Dictionary new "typParameters Association<ClassDescription,Symbol<Character>>,TypVariableResolver<TypVariableLookup>".
-	result := nil.
 	asts := aCollection collect: [ :e | e ast typDynInstall ].
 	[ result := aBlock value.
 	methodResolvers := self collectMethodResolversIn: asts.

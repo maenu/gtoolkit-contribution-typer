@@ -155,6 +155,8 @@ TypGtMethodCoder >> rbNodeAtCursor [
 TypGtMethodCoder >> refreshRbAst [
 	rbAst := nil.
 	^ self rbAST
+		typType;
+		yourself
 ]
 
 { #category : #actions }

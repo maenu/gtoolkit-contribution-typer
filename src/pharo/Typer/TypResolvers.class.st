@@ -79,7 +79,7 @@ TypResolvers >> typeFor: aLookup using: aBlock [
 	[ (self resolversFor: lookup)
 		do: [ :e | 
 			| type |
-			type := aBlock cull: e cull: lookup.
+			type := [ aBlock cull: e cull: lookup ] on: TypNoCompatibleTypeError do: [ ^ TypUnknownType instance ].
 			type isUnknown
 				ifFalse: [ ^ type ] ].
 	lookup hasSuperType

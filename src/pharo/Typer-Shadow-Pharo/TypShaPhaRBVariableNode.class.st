@@ -18,6 +18,14 @@ TypShaPhaRBVariableNode >> ___binding [
 ]
 
 { #category : #accessing }
+TypShaPhaRBVariableNode >> ___isInstance [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaRBVariableNode >> ___name [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

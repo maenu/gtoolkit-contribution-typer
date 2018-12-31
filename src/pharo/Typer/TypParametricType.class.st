@@ -78,6 +78,7 @@ TypParametricType >> parameters [
 { #category : #accessing }
 TypParametricType >> parameters: anObject [
 	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
+	Halt if: [ name = 'Dictionary' and: [ anObject size = 1 ] ].
 	parameters := anObject asOrderedCollection
 ]
 

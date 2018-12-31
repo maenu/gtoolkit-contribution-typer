@@ -42,6 +42,14 @@ TypShaPhaBlockClosure >> ___cull: _a cull: _b cull: _c cull: _d [
 ]
 
 { #category : #accessing }
+TypShaPhaBlockClosure >> ___ensure: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ];
+		resultType: [ :a :s :r | a receiverType result ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaBlockClosure >> ___on: _a do: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
@@ -59,6 +67,14 @@ TypShaPhaBlockClosure >> ___on: _a do: _b [
 		resultType: [ :a :s :r | 
 			{a receiverType result.
 			(a argumentTypes at: 2) result} typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaBlockClosure >> ___value [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | a receiverType result ];
 		yourself
 ]
 

@@ -7,10 +7,10 @@ RBMethodNode >> typCheColor [
 		ifTrue: [ ^ Color red ].
 	self typCheHasMissingMethods
 		ifTrue: [ ^ Color orange ].
-	self typCheHasNullables
-		ifTrue: [ ^ Color purple ].
 	self typCheHasUnknowns
 		ifTrue: [ ^ Color blue ].
+	self typCheHasNullables
+		ifTrue: [ ^ Color purple ].
 	^ Color green
 ]
 
@@ -128,7 +128,7 @@ RBMethodNode >> typCheHasUnknownReturn [
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasUnknownTemporaries [
 	<typTypeResultAs: 'Boolean'>
-	^ (self allChildren select: [ :e | e isTemp and: [ e isArgument not and: [ e typIsDeclaration ] ] ]) anySatisfy: [ :e | e typType isUnknown ]
+	^ (self allChildren select: [ :e | e isTemp and: [ e isArgument not and: [ (e "typCastAs RBTemporaryNode") typIsDeclaration ] ] ]) anySatisfy: [ :e | e typType isUnknown ]
 ]
 
 { #category : #'*Typer-Checker' }

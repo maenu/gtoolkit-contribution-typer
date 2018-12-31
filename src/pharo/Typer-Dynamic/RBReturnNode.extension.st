@@ -17,7 +17,7 @@ RBReturnNode >> typDynInstall [
 { #category : #'*Typer-Dynamic' }
 RBReturnNode >> typDynMonitor [
 	<typTypeResultAs: 'Monitor'>
-	^ self propertyAt: #typDynMonitor
+	^ (self propertyAt: #typDynMonitor) "typCastAs Monitor"
 ]
 
 { #category : #'*Typer-Dynamic' }
@@ -31,7 +31,7 @@ RBReturnNode >> typDynReturn: anObject [
 { #category : #'*Typer-Dynamic' }
 RBReturnNode >> typDynReturns [
 	<typTypeResultAs: 'TypDynUnionType<TypType>'>
-	^ self propertyAt: #typDynReturns
+	^ (self propertyAt: #typDynReturns) "typCastAs TypDynUnionType<TypType>"
 ]
 
 { #category : #'*Typer-Dynamic' }

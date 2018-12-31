@@ -114,7 +114,8 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 TypGtCheckBodyStyler >> visitMethodNode: aNode [
 	| position |
 	super visitMethodNode: aNode.
-	aNode typCheHasUnknownReturn ifTrue: [ self styleSelectorOf: aNode color: Color blue ].
+	aNode typCheHasUnknownReturn
+		ifTrue: [ self styleSelectorOf: aNode color: Color blue ].
 	position := aNode arguments isEmpty
 		ifTrue: [ aNode selector size ]
 		ifFalse: [ aNode arguments last stop ].
@@ -125,12 +126,7 @@ TypGtCheckBodyStyler >> visitMethodNode: aNode [
 			{(BrTextAdornmentDynamicAttribute new
 				beAppend;
 				stencil: [ BlElement new
-						background:
-							([ aNode method ast
-								typType;
-								typCheColor ]
-								on: Error
-								do: [ Halt now ]);
+						background: aNode typCheColor;
 						constraintsDo: [ :c | 
 							c horizontal exact: 16.
 							c vertical exact: 16 ];
@@ -139,8 +135,7 @@ TypGtCheckBodyStyler >> visitMethodNode: aNode [
 								top: 0
 								right: 2
 								bottom: 0
-								left: 2)
-					"pattern styler only gets pruned AST, use original for icon" ];
+								left: 2) ];
 				yourself)}
 ]
 
