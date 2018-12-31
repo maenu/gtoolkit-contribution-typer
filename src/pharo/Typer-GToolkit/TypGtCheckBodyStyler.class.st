@@ -47,7 +47,7 @@ TypGtCheckBodyStyler >> styleNode: aNode text: aString color: aColor [
 
 { #category : #accessing }
 TypGtCheckBodyStyler >> styleSelectorOf: aMessageNode color: aColor [
-	<typTypeArgument: 1 as: 'RBMessageNode'>
+	<typTypeArgument: 1 as: '{RBMethodNode,RBMessageNode}'>
 	<typTypeArgument: 2 as: 'Color'>
 	aMessageNode keywordsIntervals
 		do: [ :e | self styleFrom: e first to: e last color: aColor ]
@@ -135,7 +135,8 @@ TypGtCheckBodyStyler >> visitMethodNode: aNode [
 								top: 0
 								right: 2
 								bottom: 0
-								left: 2) ];
+								left: 2);
+						yourself ];
 				yourself)}
 ]
 
