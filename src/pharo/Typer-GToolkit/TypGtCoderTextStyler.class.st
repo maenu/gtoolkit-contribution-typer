@@ -8,7 +8,7 @@ Class {
 TypGtCoderTextStyler >> privateStyle: aText [
 	self assert: [ aText asString = coder source or: [ aText asString = coder collapsedEditor text text asString ] ].
 	[ | ast |
-	ast := coder rbAST.
+	ast := coder refreshRbAst.
 	self style: aText ast: ast.
 	self extraStyle: aText ast: ast ]
 		on: Error

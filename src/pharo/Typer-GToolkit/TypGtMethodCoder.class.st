@@ -137,7 +137,7 @@ TypGtMethodCoder >> newSourceStyler [
 
 { #category : #updating }
 TypGtMethodCoder >> rbAST [
-	^ rbAst ifNil: [ rbAst := super rbAST ] ifNotNil: [ rbAst ]
+	^ rbAst ifNil: [ rbAst := super rbAST ]
 ]
 
 { #category : #'initialize-release' }
@@ -151,21 +151,21 @@ TypGtMethodCoder >> rbNodeAtCursor [
 	^ nil
 ]
 
+{ #category : #'as yet unclassified' }
+TypGtMethodCoder >> refreshRbAst [
+	rbAst := nil.
+	[ self rbAST ifNotNil: #typType ]
+		on: Error
+		do: [ Halt now ].
+	^ rbAst
+]
+
 { #category : #actions }
 TypGtMethodCoder >> save [
 	^ super save
 		ifTrue: [ self updateMethod: self compiledMethod.
 			true ]
 		ifFalse: [ false ]
-]
-
-{ #category : #updating }
-TypGtMethodCoder >> sourceChanged [
-	rbAst := nil.
-	[ self rbAST ifNotNil: #typType ]
-		on: Error
-		do: [ :e | e debug.Halt now ].
-	super sourceChanged
 ]
 
 { #category : #'initialize-release' }
