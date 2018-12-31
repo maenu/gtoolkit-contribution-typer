@@ -18,7 +18,7 @@ TypShaGtGtPharoProgramNode >> ___actionForSelector: _a startingWith: _b at: _c [
 				ifFalse: [ i = 2
 						ifTrue: [ String typAsType ]
 						ifFalse: [ Integer typAsType ] ] ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | GtCompletionAction typAsType ];
 		yourself
 ]
 

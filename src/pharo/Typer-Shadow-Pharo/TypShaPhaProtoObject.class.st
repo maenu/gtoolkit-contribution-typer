@@ -45,6 +45,20 @@ TypShaPhaProtoObject >> ___ifNil: _a [
 ]
 
 { #category : #accessing }
+TypShaPhaProtoObject >> ___ifNotNil: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			BlockClosure typAsType
+				asFunctionType: {a receiverType}
+				result: TypUnknownType instance
+				optionalParameters: true ];
+		resultType: [ :a :s :r | 
+			{a receiverType.
+			(a argumentTypes at: 1) result} typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaProtoObject >> ___isNil [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

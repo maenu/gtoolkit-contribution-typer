@@ -1,6 +1,9 @@
 Class {
 	#name : #TypShaGtGtCoderBodyStyler,
 	#superclass : #TypShaShadow,
+	#instVars : [
+		'___text'
+	],
 	#category : #'Typer-Shadow-GToolkit'
 }
 
@@ -138,5 +141,13 @@ TypShaGtGtCoderBodyStyler >> ___visitThisContextNode: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | {'?' typAsType} at: i ];
 		resultType: [ :a :s :r | TypUnknownType instance ];
+		yourself
+]
+
+{ #category : #initialization }
+TypShaGtGtCoderBodyStyler >> initialize [
+	super initialize.
+	___text := TypVariableResolver new
+		type: [ :a :s :r | BlText typAsType ];
 		yourself
 ]

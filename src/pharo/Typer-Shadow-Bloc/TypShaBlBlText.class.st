@@ -10,6 +10,14 @@ TypShaBlBlText class >> shadowedClass [
 ]
 
 { #category : #accessing }
+TypShaBlBlText >> ___attributesAt: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | Integer typAsType ];
+		resultType: [ :a :s :r | SequenceableCollection typAsType asParametricType: {BlTextAttribute typAsType} ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaBlBlText >> ___clearAttributes: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {BlTextAttribute typAsType} result: TypUnknownType instance optionalParameters: false ];

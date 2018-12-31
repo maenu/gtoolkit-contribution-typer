@@ -4,7 +4,7 @@ Extension { #name : #GtPharoUnaryMessageNode }
 GtPharoUnaryMessageNode >> typGtCompletionActionsFor: aStrategy in: anRbNode [
 	<typTypeArgument: 1 as: 'TypGtPharoCompletionStrategy'>
 	<typTypeArgument: 2 as: 'RBMessageNode'>
-	<typTypeResultAs: 'SequenceableCollection<String<Character>>'>
+	<typTypeResultAs: 'SequenceableCollection<GtCompletionAction>'>
 	| startingText index type clazz |
 	index := aStrategy index.
 	self selectorPart stopPosition = index

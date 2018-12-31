@@ -18,6 +18,14 @@ TypShaGtGtMethodCoder class >> shadowedClass [
 ]
 
 { #category : #accessing }
+TypShaGtGtMethodCoder >> ___asElement [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | GtCoderMethodElement typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaGtGtMethodCoder >> ___cursorPositionDo: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {Integer typAsType} result: TypUnknownType instance optionalParameters: false ];

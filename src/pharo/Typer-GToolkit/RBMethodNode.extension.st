@@ -28,7 +28,6 @@ RBMethodNode >> typGtFiltersToTypeWithShadow [
 
 { #category : #'*Typer-GToolkit' }
 RBMethodNode >> typGtTypeWithPragma [
-	<typTypeResultAs: 'GtCoderMethodsFilter'>
 	| arguments_ result_ variables_ |
 	arguments_ := self numArgs
 		timesCollect: [ :i | 
@@ -64,6 +63,5 @@ RBMethodNode >> typGtTypeWithPragma [
 									(RBLiteralValueNode value: (self methodClass typTypeForVariable: e asSymbol) asString)} ] ] ].
 	arguments_ do: [ :e | self addPragma: e ].
 	self addPragma: result_.
-	variables_ do: [ :e | self addPragma: e ].
-	^ self
+	variables_ do: [ :e | self addPragma: e ]
 ]

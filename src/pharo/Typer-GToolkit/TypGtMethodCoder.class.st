@@ -179,7 +179,7 @@ TypGtMethodCoder >> typeWithPragma: anEditorElement [
 	self rbAST
 		ifNotNil: [ :e | 
 			e typGtTypeWithPragma.
-			methodSource := e formattedCode.
+			methodSource := e source.
 			self buildSource ]
 ]
 

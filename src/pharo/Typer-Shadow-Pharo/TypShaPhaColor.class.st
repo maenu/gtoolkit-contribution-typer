@@ -48,3 +48,11 @@ TypShaPhaColor class >> ___red [
 TypShaPhaColor class >> shadowedClass [
 	^ Color class
 ]
+
+{ #category : #accessing }
+TypShaPhaColor >> ___alpha: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | Number typAsType ];
+		resultType: [ :a :s :r | a receiverType ];
+		yourself
+]
