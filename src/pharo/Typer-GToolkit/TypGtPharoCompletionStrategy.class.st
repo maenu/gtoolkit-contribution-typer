@@ -18,6 +18,7 @@ TypGtPharoCompletionStrategy >> actionsFor: aGtAst at: anInteger [
 
 { #category : #accessing }
 TypGtPharoCompletionStrategy >> coder [
+	<typTypeResultAs: 'TypGtMethodCoder'>
 	^ coder
 ]
 

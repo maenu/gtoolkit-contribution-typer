@@ -9,11 +9,13 @@ Class {
 
 { #category : #accessing }
 TypGtTypeCursorBodyStyler >> coder [
+	<typTypeResultAs: 'TypGtMethodCoder'>
 	^ coder
 ]
 
 { #category : #accessing }
 TypGtTypeCursorBodyStyler >> coder: anObject [
+	<typTypeArgument: 1 as: 'TypGtMethodCoder'>
 	coder := anObject
 ]
 
@@ -28,10 +30,7 @@ TypGtTypeCursorBodyStyler >> styleValueNode: aNode [
 				coder: coder;
 				attribute:
 					(TypGtTypeAttribute new
-						type:
-							([ aNode typType ]
-								on: Error
-								do: [ Halt now ]);
+						type: aNode typType;
 						yourself);
 				yourself)}
 ]

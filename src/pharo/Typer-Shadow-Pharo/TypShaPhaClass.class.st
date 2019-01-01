@@ -10,6 +10,14 @@ TypShaPhaClass class >> shadowedClass [
 ]
 
 { #category : #accessing }
+TypShaPhaClass >> ___addClassVarNamed: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | String typAsType ];
+		resultType: [ :a :s :r | a receiverType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaClass >> ___classVarNamed: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | String typAsType ];

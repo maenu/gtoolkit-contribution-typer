@@ -24,9 +24,7 @@ TypGtCoderTextStyler >> parseAndTypeRbAst: aString [
 				bindings: Dictionary new;
 				requestor: nil).
 	ast doSemanticAnalysis.
-	[ ast ifNotNil: #typType ]
-		on: Error
-		do: [ Halt now ].
+	ast typType.
 	^ ast
 ]
 

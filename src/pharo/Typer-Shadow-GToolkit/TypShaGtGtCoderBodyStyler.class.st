@@ -139,7 +139,7 @@ TypShaGtGtCoderBodyStyler >> ___visitTemporaryNode: _a [
 { #category : #accessing }
 TypShaGtGtCoderBodyStyler >> ___visitThisContextNode: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | {'?' typAsType} at: i ];
+		argumentTypes: [ :i :a :s :r | RBThisContextNode typAsType ];
 		resultType: [ :a :s :r | TypUnknownType instance ];
 		yourself
 ]
