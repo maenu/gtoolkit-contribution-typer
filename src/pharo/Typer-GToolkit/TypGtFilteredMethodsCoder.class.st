@@ -6,9 +6,8 @@ Class {
 
 { #category : #'initialize-release' }
 TypGtFilteredMethodsCoder >> methodAdded: aValueAdded [
-	<typTypeArgument: 1 as: 'ValueAdded'>
 	| coder |
-	coder := TypGtMethodCoder forMethod: aValueAdded newValue.
+	coder := TypGtMethodCoder forMethod: (aValueAdded newValue "typCastAs CompiledMethod<Integer>").
 	methodCoders add: coder.
 	self announce: (GtMethodCoderAdded new coder: self; methodCoder: coder)
 ]

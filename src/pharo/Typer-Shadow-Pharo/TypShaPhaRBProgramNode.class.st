@@ -18,6 +18,15 @@ TypShaPhaRBProgramNode >> ___assignmentNodes [
 ]
 
 { #category : #accessing }
+TypShaPhaRBProgramNode >> ___bestNodeFor: _a [
+	^ TypMethodResolver new
+		argumentTypes:
+				[ :i :a :s :r | Interval typAsType asParametricType: {Integer typAsType} ];
+		resultType: [ :a :s :r | RBProgramNode typAsType asNullableType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaRBProgramNode >> ___children [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

@@ -23,6 +23,14 @@ TypShaGtGtPharoCompletionStrategy >> ___actionsFor: _a at: _b [
 ]
 
 { #category : #accessing }
+TypShaGtGtPharoCompletionStrategy >> ___classOrMetaClass: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | ClassDescription typAsType ];
+		resultType: [ :a :s :r | a receiverType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaGtGtPharoCompletionStrategy >> ___index [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

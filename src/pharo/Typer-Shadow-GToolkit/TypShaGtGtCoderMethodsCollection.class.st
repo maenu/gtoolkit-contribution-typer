@@ -16,3 +16,8 @@ TypShaGtGtCoderMethodsCollection class >> ___forFilter: _a [
 TypShaGtGtCoderMethodsCollection class >> shadowedClass [
 	^ GtCoderMethodsCollection class
 ]
+
+{ #category : #converting }
+TypShaGtGtCoderMethodsCollection >> asType: aClass [
+	^ aClass typAsNamedType asParametricType: {CompiledMethod typAsType}
+]

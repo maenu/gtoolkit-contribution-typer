@@ -46,10 +46,10 @@ TypGtCheckBodyStyler >> styleNode: aNode text: aString color: aColor [
 ]
 
 { #category : #accessing }
-TypGtCheckBodyStyler >> styleSelectorOf: aMessageNode color: aColor [
+TypGtCheckBodyStyler >> styleSelectorOf: aNode color: aColor [
 	<typTypeArgument: 1 as: '{RBMethodNode,RBMessageNode}'>
 	<typTypeArgument: 2 as: 'Color'>
-	aMessageNode keywordsIntervals
+	aNode keywordsIntervals
 		do: [ :e | self styleFrom: e first to: e last color: aColor ]
 ]
 
@@ -128,8 +128,8 @@ TypGtCheckBodyStyler >> visitMethodNode: aNode [
 				stencil: [ BlElement new
 						background: aNode typCheColor;
 						constraintsDo: [ :c | 
-							c horizontal exact: 16.
-							c vertical exact: 16 ];
+							(c horizontal "typCastAs BlLayoutCommonConstraintsAxis") exact: 16.
+							(c vertical "typCastAs BlLayoutCommonConstraintsAxis") exact: 16 ];
 						margin:
 							(BlInsets
 								top: 0

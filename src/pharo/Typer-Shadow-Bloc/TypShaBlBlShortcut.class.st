@@ -16,3 +16,11 @@ TypShaBlBlShortcut >> ___action: _a [
 		resultType: [ :a :s :r | BlShortcut typAsType ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaBlBlShortcut >> ___combination: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | BlKeyCombination typAsType ];
+		resultType: [ :a :s :r | a receiverType ];
+		yourself
+]

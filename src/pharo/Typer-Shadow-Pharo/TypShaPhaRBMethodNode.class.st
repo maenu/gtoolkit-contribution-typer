@@ -36,18 +36,18 @@ TypShaPhaRBMethodNode >> ___arguments [
 ]
 
 { #category : #accessing }
-TypShaPhaRBMethodNode >> ___bestNodeFor: _a [
-	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | Integer typAsType ];
-		resultType: [ :a :s :r | RBProgramNode typAsType asNullableType ];
-		yourself
-]
-
-{ #category : #accessing }
 TypShaPhaRBMethodNode >> ___body [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RBSequenceNode typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaRBMethodNode >> ___compilationContext: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | CompilationContext typAsType ];
+		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 

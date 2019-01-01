@@ -6,6 +6,7 @@ Class {
 
 { #category : #visiting }
 TypGtMethodCommentBodyStyler >> styleComment: aComment [
+	<typTypeArgument: 1 as: 'RBComment'>
 	self flag: 'does not store yet'.
 	self
 		styleFrom: aComment start
@@ -16,7 +17,10 @@ TypGtMethodCommentBodyStyler >> styleComment: aComment [
 				stencil: [ self flag: 'replacing replaces multiple times'.
 					(Gt2Document new
 						strategy: Gt2NoStorageStrategy uniqueInstance;
-						text: (aComment contents ifEmpty: [ 'what does this method do?' ] ifNotEmpty: #yourself);
+						text:
+							(aComment contents
+								ifEmpty: [ 'what does this method do?' ]
+								ifNotEmpty: #yourself);
 						read;
 						asElement)
 						constraintsDo: [ :c | 

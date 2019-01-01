@@ -32,6 +32,14 @@ TypShaBlBlElement >> ___constraintsDo: _a [
 ]
 
 { #category : #accessing }
+TypShaBlBlElement >> ___fireEvent: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | BlEvent typAsType ];
+		resultType: [ :a :s :r | a receiverType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaBlBlElement >> ___look: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 

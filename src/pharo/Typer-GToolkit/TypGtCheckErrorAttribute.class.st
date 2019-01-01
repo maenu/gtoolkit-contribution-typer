@@ -38,7 +38,9 @@ TypGtCheckErrorAttribute >> initialize [
 				look:
 					(BrGlamorousLabelLook new
 						foreground: color;
-						fontSize: 12) ]
+						fontSize: 12;
+						yourself);
+				yourself ]
 ]
 
 { #category : #accessing }

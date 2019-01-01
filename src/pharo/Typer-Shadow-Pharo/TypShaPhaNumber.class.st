@@ -25,6 +25,18 @@ TypShaPhaNumber >> ___timesCollect: _a [
 ]
 
 { #category : #accessing }
+TypShaPhaNumber >> ___to: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | Number typAsType ];
+		resultType: [ :a :s :r | 
+			Interval typAsType
+				asParametricType:
+					{{a receiverType.
+					(a argumentTypes at: 1)} typAsType} ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaNumber >> ___to: _a do: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 

@@ -6,11 +6,7 @@ RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 	| expected actual |
 	expected := self typTypeForArgumentAt: anInteger.
 	actual := (self arguments at: anInteger) typType.
-	expected >= actual asNonNullableType
-		ifTrue: [ expected >= actual
-				ifFalse: [ TypCheNullableTypeError new
-						type: actual;
-						signal ] ]
+	expected >= actual
 		ifFalse: [ TypCheIncompatibleTypeError new
 				expected: expected;
 				actual: actual;

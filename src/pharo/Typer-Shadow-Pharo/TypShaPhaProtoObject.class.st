@@ -48,13 +48,26 @@ TypShaPhaProtoObject >> ___ifNil: _a [
 TypShaPhaProtoObject >> ___ifNotNil: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
-			BlockClosure typAsType
-				asFunctionType: {a receiverType}
-				result: TypUnknownType instance
-				optionalParameters: true ];
+			{String typAsType.
+			(BlockClosure typAsType asFunctionType: {a receiverType} result: TypUnknownType instance optionalParameters: true)} typAsType ];
 		resultType: [ :a :s :r | 
+			| argumentType argumentNode elementType |
+			argumentType := a argumentTypes at: 1.
+			argumentNode := a argumentNodes at: 1.
+			elementType := argumentType isFunction
+				ifTrue: [ argumentType result ]
+				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
+						ifTrue: [ TypMethodResolvers global
+								typeForResultOfMethod:
+									(TypMethodLookup new
+										receiverType: (a receiverType parameters at: 1);
+										selector: argumentNode value asSymbol;
+										argumentTypes: {};
+										argumentNodes: {};
+										yourself) ]
+						ifFalse: [ TypUnknownType instance ] ].
 			{a receiverType.
-			(a argumentTypes at: 1) result} typAsType ];
+			elementType} typAsType ];
 		yourself
 ]
 

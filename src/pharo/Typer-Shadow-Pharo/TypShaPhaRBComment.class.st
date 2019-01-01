@@ -16,3 +16,19 @@ TypShaPhaRBComment >> ___contents [
 		resultType: [ :a :s :r | String typAsType ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaPhaRBComment >> ___start [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Integer typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaRBComment >> ___stop [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Integer typAsType ];
+		yourself
+]

@@ -12,6 +12,14 @@ TypShaBrBrGlamorousIcons class >> ___browse [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaBrBrGlamorousIcons class >> ___inspect [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Form typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaBrBrGlamorousIcons class >> shadowedClass [
 	^ BrGlamorousIcons class

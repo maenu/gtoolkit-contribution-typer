@@ -27,35 +27,35 @@ TypGtMethodCoder >> browseImplementors: anEditorElement [
 ]
 
 { #category : #'initialize-release' }
-TypGtMethodCoder >> browseToTypeWithPragma: anEditorElement [
-	<typTypeArgument: 1 as: 'BrTextEditor'>
+TypGtMethodCoder >> browseToTypeWithPragma: anElement [
+	<typTypeArgument: 1 as: 'BlElement'>
 	| node |
 	node := self rbNodeAtCursor.
 	node isNil
 		ifTrue: [ ^ self ].
 	node typGtCanType
 		ifFalse: [ ^ self ].
-	anEditorElement
+	anElement
 		fireEvent:
 			(GtPhlowObjectToSpawn new
-				object: node typGtFiltersToTypeWithPragma;
-				sourceElement: anEditorElement)
+				object: (node "typCastAs {RBMessageNode,RBInstanceVariableNode,RBGlobalNode}") typGtFiltersToTypeWithPragma;
+				sourceElement: anElement)
 ]
 
 { #category : #'initialize-release' }
-TypGtMethodCoder >> browseToTypeWithShadow: anEditorElement [
-	<typTypeArgument: 1 as: 'BrTextEditor'>
+TypGtMethodCoder >> browseToTypeWithShadow: anElement [
+	<typTypeArgument: 1 as: 'BlElement'>
 	| node |
 	node := self rbNodeAtCursor.
 	node isNil
 		ifTrue: [ ^ self ].
 	node typGtCanType
 		ifFalse: [ ^ self ].
-	anEditorElement
+	anElement
 		fireEvent:
 			(GtPhlowObjectToSpawn new
-				object: node typGtFiltersToTypeWithShadow;
-				sourceElement: anEditorElement)
+				object: (node "typCastAs {RBMessageNode,RBInstanceVariableNode,RBGlobalNode}")  typGtFiltersToTypeWithShadow;
+				sourceElement: anElement)
 ]
 
 { #category : #'initialize-release' }
@@ -151,8 +151,9 @@ TypGtMethodCoder >> rbNodeAtCursor [
 	^ nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypGtMethodCoder >> refreshRbAst [
+	<typTypeResultAs: 'RBMethodNode'>
 	rbAst := nil.
 	^ self rbAST
 		typType;
@@ -174,27 +175,27 @@ TypGtMethodCoder >> sourceChanged [
 ]
 
 { #category : #'initialize-release' }
-TypGtMethodCoder >> typeWithPragma: anEditorElement [
-	<typTypeArgument: 1 as: 'BrTextEditor'>
+TypGtMethodCoder >> typeWithPragma: anElement [
+	<typTypeArgument: 1 as: 'BlElement'>
 	self rbAST
 		ifNotNil: [ :e | 
 			e typGtTypeWithPragma.
-			methodSource := e source.
+			methodSource := e formattedCode.
 			self buildSource ]
 ]
 
 { #category : #'initialize-release' }
-TypGtMethodCoder >> typeWithShadow: anEditorElement [
-	<typTypeArgument: 1 as: 'BrTextEditor'>
+TypGtMethodCoder >> typeWithShadow: anElement [
+	<typTypeArgument: 1 as: 'BlElement'>
 	| node |
 	node := self rbNodeAtCursor.
 	node isNil
 		ifTrue: [ ^ self ].
 	node typGtCanType
 		ifFalse: [ ^ self ].
-	anEditorElement
+	anElement
 		fireEvent:
 			(GtPhlowObjectToSpawn new
-				object: node typGtFiltersToTypeWithShadow;
-				sourceElement: anEditorElement)
+				object: (node "typCastAs {RBMessageNode,RBInstanceVariableNode,RBGlobalNode}") typGtFiltersToTypeWithShadow;
+				sourceElement: anElement)
 ]

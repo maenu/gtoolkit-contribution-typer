@@ -29,9 +29,7 @@ RBMethodNode >> typCheHasIncompatibleArguments [
 		do: [ :e | 
 			(e "typCastAs RBMessageNode") arguments
 				withIndexDo: [ :f :i | 
-					[ [ (e "typCastAs RBMessageNode") typCheCheckArgumentCompatibilityAt: i ]
-						on: TypCheNullableTypeError
-						do: [  ] ]
+					[ (e "typCastAs RBMessageNode") typCheCheckArgumentCompatibilityAt: i ]
 						on: TypCheIncompatibleTypeError
 						do: [ ^ true ] ] ].
 	^ false

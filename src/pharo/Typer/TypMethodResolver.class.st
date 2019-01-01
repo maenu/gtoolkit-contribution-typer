@@ -14,11 +14,16 @@ TypMethodResolver >> argumentTypeAt: anInteger for: aLookup resolvedBy: anotherL
 	<typTypeArgument: 2 as: 'TypMethodLookup'>
 	<typTypeArgument: 3 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'TypType'>
-	^ argumentTypes
+	^ [ argumentTypes
 		cull: anInteger
 		cull: aLookup
 		cull: anotherLookup
-		cull: self
+		cull: self ]
+		on: Error
+		do: [ :e | 
+			TypNoCompatibleTypeError new
+				cause: e;
+				signal ]
 ]
 
 { #category : #accessing }
@@ -64,14 +69,10 @@ TypMethodResolver >> resultTypeFor: aLookup resolvedBy: anotherLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
 	<typTypeArgument: 2 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'TypType'>
-	aLookup argumentTypes
-		withIndexDo: [ :e :i | 
-			| argumentType |
-			argumentType := self argumentTypeAt: i for: aLookup resolvedBy: anotherLookup.
-			argumentType isUnion
-				ifTrue: [ ((argumentType "typCastAs TypUnionType") types anySatisfy: [ :f | e <= f ])
-						ifFalse: [ TypNoCompatibleTypeError signal ] ]
-				ifFalse: [ e <= argumentType
-						ifFalse: [ TypNoCompatibleTypeError signal ] ] ].
-	^ resultType cull: aLookup cull: anotherLookup cull: self
+	^ [ resultType cull: aLookup cull: anotherLookup cull: self ]
+		on: Error
+		do: [ :e | 
+			TypNoCompatibleTypeError new
+				cause: e;
+				signal ]
 ]
