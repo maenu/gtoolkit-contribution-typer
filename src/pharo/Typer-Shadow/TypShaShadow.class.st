@@ -6,6 +6,7 @@ Class {
 
 { #category : #converting }
 TypShaShadow class >> asMethodResolvers [
+	<typTypeResultAs: 'SequenceableCollection<TypShaMethodResolver<TypMethodLookup>>'>
 	^ {(TypShaMethodResolver new
 		shadow: self;
 		yourself).
@@ -16,11 +17,14 @@ TypShaShadow class >> asMethodResolvers [
 
 { #category : #accessing }
 TypShaShadow class >> asType: aClass [
+	<typTypeArgument: 1 as: 'ClassDescription'>
+	<typTypeResultAs: 'TypNamedType'>
 	^ aClass typAsNamedType
 ]
 
 { #category : #converting }
 TypShaShadow class >> asTypeResolvers [
+	<typTypeResultAs: 'SequenceableCollection<TypShaTypeResolver<TypTypeLookup>>'>
 	^ {(TypShaTypeResolver new
 		shadow: self;
 		yourself).
@@ -31,6 +35,7 @@ TypShaShadow class >> asTypeResolvers [
 
 { #category : #converting }
 TypShaShadow class >> asVariableResolvers [
+	<typTypeResultAs: 'SequenceableCollection<TypShaVariableResolver<TypVariableLookup>>'>
 	^ {(TypShaVariableResolver new
 		shadow: self;
 		yourself).
@@ -55,6 +60,7 @@ TypShaShadow class >> shadowedClass [
 
 { #category : #accessing }
 TypShaShadow class >> typeResolver [
+	<typTypeResultAs: 'TypTypeResolver<TypTypeLookup>'>
 	^ TypTypeResolver new
 		type: [ :a | self asType: a clazz ];
 		yourself

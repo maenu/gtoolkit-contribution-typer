@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #accessing }
+TypShaVariableResolver >> initialize [
+	<typTypeParametersAs: 'TypVariableLookup'>
+	super initialize
+]
+
+{ #category : #accessing }
 TypShaVariableResolver >> resolversFor: aLookup [
 	<typTypeArgument: 1 as: 'TypVariableLookup'>
 	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypVariableLookup>>'>

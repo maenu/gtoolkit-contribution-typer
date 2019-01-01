@@ -4,6 +4,12 @@ Class {
 	#category : #'Typer-Shadow-Core'
 }
 
+{ #category : #initialization }
+TypShaMethodResolver >> initialize [
+	<typTypeParametersAs: 'TypMethodLookup'>
+	super initialize
+]
+
 { #category : #accessing }
 TypShaMethodResolver >> resolversFor: aLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
