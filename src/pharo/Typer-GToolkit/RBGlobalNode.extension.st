@@ -22,20 +22,21 @@ RBGlobalNode >> typGtFiltersToTypeWithPragma [
 { #category : #'*Typer-GToolkit' }
 RBGlobalNode >> typGtFiltersToTypeWithShadow [
 	<typTypeResultAs: 'GtCoderMethodsFilter'>
-	| clazz shadows shadow variableType method |
+	| clazz variableType shadows |
 	self assert: [ self typGtCanType ].
 	clazz := self typDefiningClass.
-	shadows := TypShaShadow shadowClassesFor: clazz.
-	shadows size > 1
-		ifTrue: [ ^ shadows ].
-	shadow := shadows isEmpty
-		ifTrue: [ TypShaShadow typGtNewShadowFor: clazz ]
-		ifFalse: [ shadows anyOne ].
 	variableType := self typType.
-	method := shadow
-		typGtShadowClassVariable: self name asSymbol
-		type: variableType.
-	^ (TypGtCoderTypeFilter new
-		type: method methodClass typAsType;
-		yourself) & (GtCoderImplementorsFilter selector: method selector)
+	shadows := (TypShaShadow shadowClassesFor: clazz)
+		ifEmpty: [ {(TypShaShadow typGtNewShadowFor: clazz)} ]
+		ifNotEmpty: #yourself.
+	^ (shadows
+		collect: [ :e | 
+			| method |
+			method := e
+				typGtShadowClassVariable: self name asSymbol
+				type: variableType.
+			(TypGtCoderTypeFilter new
+				type: method methodClass typAsType;
+				yourself) & (GtCoderImplementorsFilter selector: method selector) ])
+		reduce: [ :a :b | a | b ]
 ]

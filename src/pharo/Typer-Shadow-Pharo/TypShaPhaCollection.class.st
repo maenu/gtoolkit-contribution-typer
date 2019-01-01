@@ -421,6 +421,20 @@ TypShaPhaCollection >> ___max [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaCollection >> ___reduce: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | 
+			BlockClosure typAsType
+				asFunctionType:
+					{(a receiverType parameters at: 1).
+					(a receiverType parameters at: 1)}
+				result: TypUnknownType instance
+				optionalParameters: false ];
+		resultType: [ :a :s :r | (a argumentTypes at: 1) result ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___reject: _a [
 	^ TypMethodResolver new

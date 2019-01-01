@@ -20,22 +20,26 @@ RBInstanceVariableNode >> typGtFiltersToTypeWithPragma [
 { #category : #'*Typer-GToolkit' }
 RBInstanceVariableNode >> typGtFiltersToTypeWithShadow [
 	<typTypeResultAs: 'GtCoderMethodsFilter'>
-	| type clazz shadows shadow variableType method |
+	| type clazz shadows variableType |
 	type := self methodNode methodClass typAsType.
 	clazz := type representsClass
 		ifTrue: [ type asClass ]
 		ifFalse: [ Object ].
-	shadows := TypShaShadow shadowClassesFor: clazz.
-	shadows size > 1
-		ifTrue: [ ^ shadows ].
-	shadow := shadows isEmpty
-		ifTrue: [ TypShaShadow typGtNewShadowFor: clazz ]
-		ifFalse: [ shadows anyOne ].
 	variableType := self typType.
-	method := (clazz isClassSide
-		ifTrue: [ shadow typGtShadowClassInstanceVariable: self name asSymbol type: variableType ]
-		ifFalse: [ shadow typGtShadowInstanceVariable: self name asSymbol type: variableType ]) "typCastAs CompiledMethod<Integer>".
-	^ (TypGtCoderTypeFilter new
-		type: method methodClass typAsType;
-		yourself) & (GtCoderImplementorsFilter selector: method selector)
+	shadows := (TypShaShadow shadowClassesFor: clazz)
+		ifEmpty: [ {(TypShaShadow typGtNewShadowFor: clazz)} ]
+		ifNotEmpty: #yourself.
+	^ (shadows
+		collect: [ :e | 
+			| method |
+			method := clazz isClassSide
+				ifTrue: [ e
+						typGtShadowClassInstanceVariable: self name asSymbol
+						type: variableType ]
+				ifFalse:
+					[ e typGtShadowInstanceVariable: self name asSymbol type: variableType ].
+			^ (TypGtCoderTypeFilter new
+				type: method methodClass typAsType;
+				yourself) & (GtCoderImplementorsFilter selector: method selector) ])
+		reduce: [ :a :b | a | b ]
 ]

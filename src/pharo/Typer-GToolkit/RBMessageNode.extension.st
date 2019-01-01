@@ -16,23 +16,31 @@ RBMessageNode >> typGtFiltersToTypeWithPragma [
 { #category : #'*Typer-GToolkit' }
 RBMessageNode >> typGtFiltersToTypeWithShadow [
 	<typTypeResultAs: 'GtCoderMethodsFilter'>
-	| type clazz shadows shadow argumentTypes resultType method |
+	| type clazz shadows argumentTypes resultType |
 	type := self receiver typType.
 	clazz := type representsClass
 		ifTrue: [ type asClass ]
 		ifFalse: [ Object ].
-	shadows := TypShaShadow shadowClassesFor: clazz.
-	shadows size > 1
-		ifTrue: [ ^ shadows ].
-	shadow := shadows isEmpty
-		ifTrue: [ TypShaShadow typGtNewShadowFor: clazz ]
-		ifFalse: [ shadows anyOne ].
-	argumentTypes := self numArgs timesCollect: [ :i | self typTypeForArgumentAt: i ].
+	argumentTypes := self numArgs
+		timesCollect: [ :i | self typTypeForArgumentAt: i ].
 	resultType := self typTypeForResult.
-	method := (clazz isClassSide
-		ifTrue: [ shadow typGtShadowClassInstanceMethod: self selector arguments: argumentTypes result: resultType ]
-		ifFalse: [ shadow typGtShadowInstanceMethod: self selector arguments: argumentTypes result: resultType ]) "typCastAs CompiledMethod<Integer>".
-	^ (TypGtCoderTypeFilter new
-		type: method methodClass typAsType;
-		yourself) & (GtCoderImplementorsFilter selector: method selector)
+	shadows := (TypShaShadow shadowClassesFor: clazz)
+		ifEmpty: [ {(TypShaShadow typGtNewShadowFor: clazz)} ]
+		ifNotEmpty: #yourself.
+	^ (shadows
+		collect: [ :e | 
+			| method |
+			method := clazz isClassSide
+				ifTrue: [ e
+						typGtShadowClassInstanceMethod: self selector
+						arguments: argumentTypes
+						result: resultType ]
+				ifFalse: [ e
+						typGtShadowInstanceMethod: self selector
+						arguments: argumentTypes
+						result: resultType ].
+			^ (TypGtCoderTypeFilter new
+				type: method methodClass typAsType;
+				yourself) & (GtCoderImplementorsFilter selector: method selector) ])
+		reduce: [ :a :b | a | b ]
 ]
