@@ -8,7 +8,7 @@ GtPharoUnaryMessageNode >> typGtCompletionActionsFor: aStrategy in: anRbNode [
 	| startingText index type clazz |
 	index := aStrategy index.
 	self selectorPart stopPosition = index
-		ifFalse: [ ^ #() ].
+		ifFalse: [ ^ #() "typParameters GtCompletionAction" ].
 	startingText := self selectorPart value.
 	type := self parent receiver
 		typGtGuessType: aStrategy

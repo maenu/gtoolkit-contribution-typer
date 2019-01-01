@@ -44,6 +44,14 @@ TypShaPhaColor class >> ___red [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaColor class >> ___veryLightGray [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Color typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaColor class >> shadowedClass [
 	^ Color class

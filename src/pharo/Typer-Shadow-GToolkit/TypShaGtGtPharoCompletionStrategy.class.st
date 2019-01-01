@@ -1,6 +1,9 @@
 Class {
 	#name : #TypShaGtGtPharoCompletionStrategy,
 	#superclass : #TypShaShadow,
+	#instVars : [
+		'___maxItems'
+	],
 	#category : #'Typer-Shadow-GToolkit'
 }
 
@@ -57,5 +60,13 @@ TypShaGtGtPharoCompletionStrategy >> ___selectorsForReceiver: _a matching: _b [
 				ifTrue: [ Behavior typAsType ]
 				ifFalse: [ String typAsType ] ];
 		resultType: [ :a :s :r | SequenceableCollection typAsType asParametricType: {String typAsType} ];
+		yourself
+]
+
+{ #category : #initialization }
+TypShaGtGtPharoCompletionStrategy >> initialize [
+	super initialize.
+	___maxItems := TypVariableResolver new
+		type: [ :a :s :r | Integer typAsType ];
 		yourself
 ]

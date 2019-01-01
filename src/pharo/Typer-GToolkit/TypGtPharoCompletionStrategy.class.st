@@ -31,14 +31,14 @@ TypGtPharoCompletionStrategy >> coder: anObject [
 { #category : #'private-selector' }
 TypGtPharoCompletionStrategy >> selectorsForReceiver: aBehavior matching: aString [
 	| tree |
-	tree := aBehavior notNil
-		ifTrue: [ tree := GtPrefixTree new.
+	tree := aBehavior
+		ifNil: [ SelectorCache ]
+		ifNotNil: [ tree := GtPrefixTree new.
 			aBehavior withAllSuperclasses
 				withIndexDo: [ :e :i | 
 					e selectors
 						do:
 							[ :f | tree add: f weight: 999 - i	"this is an incredible stupid trick to get an inverse order while being above zero, which is apparently required. never do 999 superclasses" ] ].
-			tree ]
-		ifFalse: [ SelectorCache ].
+			tree ].
 	^ tree weightedFirst: maxItems startingWith: aString
 ]

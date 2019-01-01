@@ -8,22 +8,22 @@ Class {
 }
 
 { #category : #actions }
-TypGtMethodCoder >> browseImplementors: anEditorElement [
-	<typTypeArgument: 1 as: 'BrTextEditor'>
+TypGtMethodCoder >> browseImplementors: anElement [
+	<typTypeArgument: 1 as: 'BlElement'>
 	| node |
 	node := self rbNodeAtCursor.
 	node isNil
 		ifTrue: [ ^ self ].
 	node isMessage
 		ifFalse: [ ^ self ].
-	anEditorElement
+	anElement
 		fireEvent:
 			(GtPhlowObjectToSpawn new
 				object:
 					(TypGtCoderTypeFilter new
 						type: (node "typCastAs RBMessageNode") receiver typType;
 						yourself) & (GtCoderImplementorsFilter selector: (node "typCastAs RBMessageNode") selector);
-				sourceElement: anEditorElement)
+				sourceElement: anElement)
 ]
 
 { #category : #'initialize-release' }

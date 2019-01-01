@@ -24,8 +24,8 @@ TypGtMethodCommentBodyStyler >> styleComment: aComment [
 						read;
 						asElement)
 						constraintsDo: [ :c | 
-									c horizontal matchParent.
-									c vertical exact: 200 ];
+							(c horizontal "typCastAs BlLayoutCommonConstraintsAxis") matchParent.
+							(c vertical "typCastAs BlLayoutCommonConstraintsAxis") exact: 200 ];
 						yourself ]).
 			(TypGtCheckErrorAttribute new
 				text: 'does not store yet';
