@@ -52,6 +52,14 @@ TypShaPhaRBMethodNode >> ___compilationContext: _a [
 ]
 
 { #category : #accessing }
+TypShaPhaRBMethodNode >> ___isPrimitive [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaRBMethodNode >> ___method [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

@@ -21,5 +21,5 @@ TypDefaultMethodResolver >> resolves: aLookup [
 	^ aLookup receiverType representsClass
 		and: [ | method |
 			method := aLookup receiverType asClass lookupSelector: aLookup selector.
-			method isNotNil and: [ method isAbstract not and: [ method isPrimitive not ] ] ]
+			method isNotNil and: [ method isAbstract not and: [ method ast isPrimitive not ] ] ]
 ]

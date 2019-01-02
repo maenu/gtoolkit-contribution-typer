@@ -9,10 +9,12 @@ Class {
 
 { #category : #accessing }
 TypNoCompatibleTypeError >> cause [
+	<typTypeResultAs: 'Error'>
 	^ cause
 ]
 
 { #category : #accessing }
 TypNoCompatibleTypeError >> cause: anObject [
+	<typTypeArgument: 1 as: 'Error'>
 	cause := anObject
 ]

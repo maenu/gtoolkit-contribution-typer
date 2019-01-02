@@ -6,20 +6,20 @@ Class {
 
 { #category : #accessing }
 TypMethodResolvers class >> global [
-	<typTypeResultAs: 'TypMethodResolvers'>
-	^ super global
+	<typTypeResultAs: 'TypMethodResolvers<TypMethodLookup,TypMethodResolver<TypMethodLookup>>'>
+	^ super global "typCastAs TypMethodResolvers<TypMethodLookup,TypMethodResolver<TypMethodLookup>>"
 ]
 
 { #category : #accessing }
 TypMethodResolvers class >> initialize [
-	<typTypeVariable: 'global' as: 'TypMethodResolvers'>
+	<typTypeVariable: 'global' as: 'TypMethodResolvers<TypMethodLookup,TypMethodResolver<TypMethodLookup>>'>
 	
 ]
 
 { #category : #accessing }
 TypMethodResolvers class >> initializeGlobal [
-	<typTypeResultAs: 'TypMethodResolvers'>
-	^ super initializeGlobal
+	<typTypeResultAs: 'TypMethodResolvers<TypMethodLookup,TypMethodResolver<TypMethodLookup>>'>
+	^ (super initializeGlobal "typCastAs TypMethodResolvers<TypMethodLookup,TypMethodResolver<TypMethodLookup>>")
 		defaultResolver: TypDefaultMethodResolver new;
 		yourself
 ]

@@ -13,19 +13,19 @@ Class {
 
 { #category : #accessing }
 TypResolvers class >> global [
-	<typTypeResultAs: 'TypResolvers'>
+	<typTypeResultAs: 'TypResolvers<TypLookup,TypResolver<TypLookup>>'>
 	^ global ifNil: [ self initializeGlobal ]
 ]
 
 { #category : #accessing }
 TypResolvers class >> initialize [
-	<typTypeVariable: 'global' as: 'TypResolvers'>
+	<typTypeVariable: 'global' as: 'TypResolvers<TypLookup,TypResolver<TypLookup>>'>
 	
 ]
 
 { #category : #accessing }
 TypResolvers class >> initializeGlobal [
-	<typTypeResultAs: 'TypResolvers'>
+	<typTypeResultAs: 'TypResolvers<TypLookup,TypResolver<TypLookup>>'>
 	^ global := self new
 ]
 
@@ -43,7 +43,7 @@ TypResolvers >> defaultResolver: anObject [
 
 { #category : #initialization }
 TypResolvers >> initialize [
-	<typTypeParametersAs: 'TypLookup,TypResolver'>
+	<typTypeParametersAs: 'TypLookup,TypResolver<TypLookup>'>
 	<typTypeVariable: 'resolvers' as: 'SequenceableCollection<TypResolver<TypLookup>>'>
 	<typTypeVariable: 'defaultResolver' as: 'TypResolver<TypLookup>'>
 	super initialize.

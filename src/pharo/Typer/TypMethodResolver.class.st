@@ -14,7 +14,7 @@ TypMethodResolver >> argumentTypeAt: anInteger for: aLookup resolvedBy: anotherL
 	<typTypeArgument: 2 as: 'TypMethodLookup'>
 	<typTypeArgument: 3 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'TypType'>
-	^ [ argumentTypes
+	[ ^ argumentTypes
 		cull: anInteger
 		cull: aLookup
 		cull: anotherLookup
@@ -69,7 +69,7 @@ TypMethodResolver >> resultTypeFor: aLookup resolvedBy: anotherLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
 	<typTypeArgument: 2 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'TypType'>
-	^ [ resultType cull: aLookup cull: anotherLookup cull: self ]
+	[ ^ resultType cull: aLookup cull: anotherLookup cull: self ]
 		on: Error
 		do: [ :e | 
 			TypNoCompatibleTypeError new
