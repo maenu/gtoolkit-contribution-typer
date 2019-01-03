@@ -18,6 +18,14 @@ TypShaGtGtPhlowProtoView >> ___explicit [
 ]
 
 { #category : #accessing }
+TypShaGtGtPhlowProtoView >> ___mondrian [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | GtPhlowMondrianView typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaGtGtPhlowProtoView >> ___priority: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];

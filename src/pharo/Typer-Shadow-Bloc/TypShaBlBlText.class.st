@@ -10,6 +10,14 @@ TypShaBlBlText class >> shadowedClass [
 ]
 
 { #category : #accessing }
+TypShaBlBlText >> ___attribute: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | BlTextAttribute typAsType ];
+		resultType: [ :a :s :r | a receiverType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaBlBlText >> ___attributesAt: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | Integer typAsType ];

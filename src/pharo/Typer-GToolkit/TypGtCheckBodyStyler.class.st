@@ -9,10 +9,6 @@ TypGtCheckBodyStyler >> styleFrom: anInteger to: anotherInteger color: aColor [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeArgument: 2 as: 'Integer'>
 	<typTypeArgument: 3 as: 'Color'>
-	(text attributesAt: anotherInteger)
-		detect: [ :e | e isKindOf: BlTextUnderlineAttribute ]
-		ifFound: [ "do not layer underlines" ^ self ]
-		ifNone: [  ].
 	self
 		styleFrom: anInteger
 		to: anotherInteger
@@ -92,13 +88,13 @@ TypGtCheckBodyStyler >> visitAssignmentNode: aNode [
 TypGtCheckBodyStyler >> visitMessageNode: aNode [
 	super visitMessageNode: aNode.
 	[ aNode typCheCheckMethod.
-	[ aNode typCheCheckReceiver ]
-		on: TypCheNullableTypeError
-		do: [ self styleSelectorOf: aNode color: Color purple ].
 	aNode receiver typType isUnknown
 		ifTrue: [ self styleSelectorOf: aNode color: Color blue ] ]
 		on: TypCheNoMethodError
 		do: [ :e | self styleSelectorOf: aNode text: 'method ' , e selector asString , ' not found in ' , e type asString color: Color orange ].
+	[ aNode typCheCheckReceiver ]
+		on: TypCheNullableTypeError
+		do: [ self styleSelectorOf: aNode color: Color purple ].
 	aNode arguments
 		withIndexDo: [ :e :i |
 			[ [ aNode typCheCheckArgumentCompatibilityAt: i.

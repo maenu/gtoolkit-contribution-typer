@@ -40,6 +40,14 @@ TypShaBlBlElement >> ___fireEvent: _a [
 ]
 
 { #category : #accessing }
+TypShaBlBlElement >> ___geometry: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | BlGeometry typAsType ];
+		resultType: [ :a :s :r | a receiverType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaBlBlElement >> ___look: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
