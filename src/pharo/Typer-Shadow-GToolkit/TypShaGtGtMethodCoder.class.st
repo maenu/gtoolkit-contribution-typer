@@ -74,6 +74,14 @@ TypShaGtGtMethodCoder >> ___save [
 ]
 
 { #category : #accessing }
+TypShaGtGtMethodCoder >> ___selector [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Symbol typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaGtGtMethodCoder >> ___updateMethod: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | CompiledMethod typAsType ];

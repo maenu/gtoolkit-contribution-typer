@@ -14,16 +14,28 @@ TypGtMethodCoder >> browseImplementors: anElement [
 	node := self rbNodeAtCursor.
 	node isNil
 		ifTrue: [ ^ self ].
-	node isMessage
+	(node isMessage or: [ node isMethod ])
 		ifFalse: [ ^ self ].
-	anElement
-		fireEvent:
-			(GtPhlowObjectToSpawn new
-				object:
-					(TypGtCoderTypeFilter new
-						type: (node "typCastAs RBMessageNode") receiver typType;
-						yourself) & (GtCoderImplementorsFilter selector: (node "typCastAs RBMessageNode") selector);
-				sourceElement: anElement)
+	node isMessage
+		ifTrue: [ 
+			anElement
+				fireEvent:
+					(GtPhlowObjectToSpawn new
+						object:
+							(TypGtCoderTypeFilter new
+								type: (node "typCastAs RBMessageNode") receiver typType;
+								yourself) & (GtCoderImplementorsFilter selector: (node "typCastAs RBMessageNode") selector);
+						sourceElement: anElement) ].
+	node isMethod
+		ifTrue: [ 
+			anElement
+				fireEvent:
+					(GtPhlowObjectToSpawn new
+						object:
+							(TypGtCoderTypeFilter new
+								type: self classOrMetaClass typAsType;
+								yourself) & (GtCoderImplementorsFilter selector: self selector);
+						sourceElement: anElement) ]
 ]
 
 { #category : #'initialize-release' }

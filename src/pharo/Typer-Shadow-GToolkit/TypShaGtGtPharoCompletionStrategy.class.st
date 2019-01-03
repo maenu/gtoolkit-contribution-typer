@@ -21,7 +21,7 @@ TypShaGtGtPharoCompletionStrategy >> ___actionsFor: _a at: _b [
 				ifFalse: [ Integer typAsType ] ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				asParametricType: {TypUnknownType instance} ];
+				asParametricType: {GtCompletionAction typAsType} ];
 		yourself
 ]
 

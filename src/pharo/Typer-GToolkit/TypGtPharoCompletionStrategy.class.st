@@ -13,7 +13,7 @@ TypGtPharoCompletionStrategy >> actionsFor: aGtAst at: anInteger [
 	gtNode := self nodeFor: anInteger in: aGtAst.
 	rbPosition := anInteger - gtNode source size.
 	rbNode := coder rbAST bestNodeFor: (rbPosition to: rbPosition).
-	^ gtNode ifNil: [ #() ] ifNotNil: [ :node | node typGtCompletionActionsFor: self in: rbNode ]
+	^ gtNode ifNil: [ #() "typParameters GtCompletionAction" ] ifNotNil: [ :node | node typGtCompletionActionsFor: self in: rbNode ]
 ]
 
 { #category : #accessing }

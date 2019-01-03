@@ -25,44 +25,12 @@ TypGtCheckBodyStyler >> styleNode: aNode color: aColor [
 	self styleFrom: aNode start to: aNode stop color: aColor
 ]
 
-{ #category : #visiting }
-TypGtCheckBodyStyler >> styleNode: aNode text: aString color: aColor [
-	<typTypeArgument: 1 as: 'RBProgramNode'>
-	<typTypeArgument: 2 as: 'String<Character>'>
-	<typTypeArgument: 3 as: 'Color'>
-	self styleNode: aNode color: aColor.
-	self
-		styleFrom: aNode start
-		to: aNode stop
-		with:
-			{(TypGtCheckErrorAttribute new
-				text: aString;
-				color: aColor;
-				yourself)}
-]
-
 { #category : #accessing }
 TypGtCheckBodyStyler >> styleSelectorOf: aNode color: aColor [
 	<typTypeArgument: 1 as: '{RBMethodNode,RBMessageNode}'>
 	<typTypeArgument: 2 as: 'Color'>
 	aNode keywordsIntervals
 		do: [ :e | self styleFrom: e first to: e last color: aColor ]
-]
-
-{ #category : #accessing }
-TypGtCheckBodyStyler >> styleSelectorOf: aMessageNode text: aString color: aColor [
-	<typTypeArgument: 1 as: 'RBMessageNode'>
-	<typTypeArgument: 2 as: 'String<Character>'>
-	<typTypeArgument: 3 as: 'Color'>
-	self styleSelectorOf: aMessageNode color: aColor.
-	self
-		styleFrom: aMessageNode receiver stop
-		to: aMessageNode receiver stop
-		with:
-			{(TypGtCheckErrorAttribute new
-				text: aString;
-				color: aColor;
-				yourself)}
 ]
 
 { #category : #visiting }
@@ -77,11 +45,7 @@ TypGtCheckBodyStyler >> visitAssignmentNode: aNode [
 	super visitAssignmentNode: aNode.
 	[ aNode typCheCheckCompatibility ]
 		on: TypCheIncompatibleTypeError
-		do: [ :e | 
-			self
-				styleNode: aNode
-				text: 'expected ' , e expected asString , ', got ' , e actual asString
-				color: Color red ]
+		do: [ :e | self styleNode: aNode color: Color red ]
 ]
 
 { #category : #visiting }
@@ -91,7 +55,7 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 	aNode receiver typType isUnknown
 		ifTrue: [ self styleSelectorOf: aNode color: Color blue ] ]
 		on: TypCheNoMethodError
-		do: [ :e | self styleSelectorOf: aNode text: 'method ' , e selector asString , ' not found in ' , e type asString color: Color orange ].
+		do: [ :e | self styleSelectorOf: aNode color: Color orange ].
 	[ aNode typCheCheckReceiver ]
 		on: TypCheNullableTypeError
 		do: [ self styleSelectorOf: aNode color: Color purple ].
@@ -101,7 +65,7 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 			(aNode typTypeForArgumentAt: i) isUnknown
 				ifTrue: [ self styleNode: e color: Color blue ] ]
 				on: TypCheIncompatibleTypeError
-				do: [ :f | self styleNode: e text: 'expected ' , f expected asString , ', got ' , f actual asString color: Color red ] ]
+				do: [ :f | self styleNode: e color: Color red ] ]
 				on: TypCheNullableTypeError
 				do: [ self styleNode: e color: Color purple ] ]
 ]
@@ -141,7 +105,7 @@ TypGtCheckBodyStyler >> visitReturnNode: aNode [
 	super visitReturnNode: aNode.
 	[ aNode typCheCheckCompatibility ]
 		on: TypCheIncompatibleTypeError
-		do: [ :e | self styleNode: aNode text: 'expected ' , e expected asString , ', got ' , e actual asString color: Color red ]
+		do: [ :e | self styleNode: aNode color: Color red ]
 ]
 
 { #category : #visiting }
