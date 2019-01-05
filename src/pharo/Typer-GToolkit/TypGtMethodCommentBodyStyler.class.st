@@ -13,7 +13,7 @@ TypGtMethodCommentBodyStyler >> styleComment: aComment [
 		to: aComment stop
 		with:
 			{(BrTextAdornmentDynamicAttribute new
-				beAppend;
+				beReplace;
 				stencil: [ self flag: 'replacing replaces multiple times'.
 					(Gt2Document new
 						strategy: Gt2NoStorageStrategy uniqueInstance;
@@ -26,10 +26,7 @@ TypGtMethodCommentBodyStyler >> styleComment: aComment [
 						constraintsDo: [ :c | 
 							(c horizontal "typCastAs BlLayoutCommonConstraintsAxis") matchParent.
 							(c vertical "typCastAs BlLayoutCommonConstraintsAxis") exact: 200 ];
-						yourself ]).
-			(TypGtCheckErrorAttribute new
-				text: 'does not store yet';
-				yourself)}
+						yourself ])}
 ]
 
 { #category : #visiting }
