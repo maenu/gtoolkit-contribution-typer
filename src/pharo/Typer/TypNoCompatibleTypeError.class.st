@@ -18,3 +18,9 @@ TypNoCompatibleTypeError >> cause: anObject [
 	<typTypeArgument: 1 as: 'Error'>
 	cause := anObject
 ]
+
+{ #category : #initialization }
+TypNoCompatibleTypeError >> initialize [
+	<typTypeVariable: 'cause' as: 'Error'>
+	super initialize
+]

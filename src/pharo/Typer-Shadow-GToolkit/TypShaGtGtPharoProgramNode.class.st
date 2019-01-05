@@ -23,6 +23,16 @@ TypShaGtGtPharoProgramNode >> ___actionForSelector: _a startingWith: _b at: _c [
 ]
 
 { #category : #accessing }
+TypShaGtGtPharoProgramNode >> ___completionActionsFor: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | GtPharoCompletionStrategy typAsType ];
+		resultType: [ :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType: {GtCompletionAction typAsType} ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaGtGtPharoProgramNode >> ___source [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
