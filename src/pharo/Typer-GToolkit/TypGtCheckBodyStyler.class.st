@@ -43,31 +43,33 @@ TypGtCheckBodyStyler >> visitArgumentNode: aNode [
 { #category : #visiting }
 TypGtCheckBodyStyler >> visitAssignmentNode: aNode [
 	super visitAssignmentNode: aNode.
-	[ aNode typCheCheckCompatibility ]
-		on: TypCheIncompatibleTypeError
-		do: [ :e | self styleNode: aNode color: Color red ]
+	aNode value typType isUnknown
+		ifTrue: [ self styleNode: aNode value color: Color blue ]
+		ifFalse: [ [ aNode typCheCheckCompatibility ]
+				on: TypCheIncompatibleTypeError
+				do: [ self styleNode: aNode value color: Color red ] ]
 ]
 
 { #category : #visiting }
 TypGtCheckBodyStyler >> visitMessageNode: aNode [
 	super visitMessageNode: aNode.
-	[ aNode typCheCheckMethod.
 	aNode receiver typType isUnknown
-		ifTrue: [ self styleSelectorOf: aNode color: Color blue ] ]
-		on: TypCheNoMethodError
-		do: [ :e | self styleSelectorOf: aNode color: Color orange ].
-	[ aNode typCheCheckReceiver ]
-		on: TypCheNullableTypeError
-		do: [ self styleSelectorOf: aNode color: Color purple ].
-	aNode arguments
-		withIndexDo: [ :e :i |
-			[ [ aNode typCheCheckArgumentCompatibilityAt: i.
-			(aNode typTypeForArgumentAt: i) isUnknown
-				ifTrue: [ self styleNode: e color: Color blue ] ]
-				on: TypCheIncompatibleTypeError
-				do: [ :f | self styleNode: e color: Color red ] ]
+		ifTrue: [ self styleNode: aNode color: Color blue ]
+		ifFalse: [ [ [ aNode typCheCheckMethod.
+			aNode typCheCheckReceiver ]
+				on: TypCheNoMethodError
+				do: [ self styleSelectorOf: aNode color: Color orange ] ]
 				on: TypCheNullableTypeError
-				do: [ self styleNode: e color: Color purple ] ]
+				do: [ self styleSelectorOf: aNode color: Color purple ] ].
+	aNode arguments
+		withIndexDo: [ :e :i | 
+			e typType isUnknown
+				ifTrue: [ self styleNode: e color: Color blue ]
+				ifFalse: [ [ [ aNode typCheCheckArgumentCompatibilityAt: i ]
+						on: TypCheIncompatibleTypeError
+						do: [ self styleNode: e color: Color red ] ]
+						on: TypCheNullableTypeError
+						do: [ self styleNode: e color: Color purple ] ] ]
 ]
 
 { #category : #visiting }
@@ -103,9 +105,11 @@ TypGtCheckBodyStyler >> visitMethodNode: aNode [
 { #category : #visiting }
 TypGtCheckBodyStyler >> visitReturnNode: aNode [
 	super visitReturnNode: aNode.
-	[ aNode typCheCheckCompatibility ]
-		on: TypCheIncompatibleTypeError
-		do: [ :e | self styleNode: aNode color: Color red ]
+	aNode typType isUnknown
+		ifTrue: [ self styleNode: aNode color: Color blue ]
+		ifFalse: [ [ aNode typCheCheckCompatibility ]
+				on: TypCheIncompatibleTypeError
+				do: [ self styleNode: aNode color: Color red ] ]
 ]
 
 { #category : #visiting }

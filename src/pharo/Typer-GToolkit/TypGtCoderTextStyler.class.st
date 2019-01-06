@@ -37,7 +37,7 @@ TypGtCoderTextStyler >> privateStyle: aText [
 		assert: [ aText asString = coder source
 				or: [ aText asString = coder collapsedEditor text asString ] ].
 	ast := aText asString = coder source
-		ifTrue: [ coder refreshRbAst ]
+		ifTrue: [ coder rbAST ]
 		ifFalse: [ self parseAndTypeRbAst: aText asString ].
 	[ self style: aText ast: ast.
 	self extraStyle: aText ast: ast ]

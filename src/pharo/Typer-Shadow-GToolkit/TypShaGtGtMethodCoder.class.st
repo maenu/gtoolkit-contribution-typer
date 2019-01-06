@@ -1,6 +1,9 @@
 Class {
 	#name : #TypShaGtGtMethodCoder,
 	#superclass : #TypShaShadow,
+	#instVars : [
+		'___astCache'
+	],
 	#category : #'Typer-Shadow-GToolkit'
 }
 
@@ -86,5 +89,17 @@ TypShaGtGtMethodCoder >> ___updateMethod: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | CompiledMethod typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
+		yourself
+]
+
+{ #category : #initialization }
+TypShaGtGtMethodCoder >> initialize [
+	super initialize.
+	___astCache := TypVariableResolver new
+		type: [ :a :s :r | 
+			Association typAsType
+				asParametricType:
+					{String typAsType.
+					RBMethodNode typAsType} ];
 		yourself
 ]

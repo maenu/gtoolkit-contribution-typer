@@ -21,7 +21,7 @@ RPackage >> typGtViewFor: aView [
 							(c horizontal "typCastAs BlLayoutCommonConstraintsAxis") exact: 16.
 							(c vertical "typCastAs BlLayoutCommonConstraintsAxis") exact: 16 ];
 						yourself ];
-				with: self methods.
+				with: (self methods collect: #asRingDefinition).
 			e layout grid ];
 		yourself
 ]

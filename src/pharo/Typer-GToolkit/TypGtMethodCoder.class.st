@@ -1,9 +1,6 @@
 Class {
 	#name : #TypGtMethodCoder,
 	#superclass : #GtMethodCoder,
-	#instVars : [
-		'rbAst'
-	],
 	#category : #'Typer-GToolkit-Core'
 }
 
@@ -105,7 +102,7 @@ TypGtMethodCoder >> initializeShortcuts [
 						primary;
 						key: Key t;
 						build);
-				action: [ :e | self typeWithPragma: e ]);
+				action: [ self typeWithPragma ]);
 		addShortcut:
 			(BlShortcut new
 				combination:
@@ -149,7 +146,11 @@ TypGtMethodCoder >> newSourceStyler [
 
 { #category : #updating }
 TypGtMethodCoder >> rbAST [
-	^ rbAst ifNil: [ rbAst := super rbAST ]
+	astCache key = self newMethodSource
+		ifTrue: [ ^ super rbAST ].
+	^ super rbAST
+		typType;
+		yourself
 ]
 
 { #category : #'initialize-release' }
@@ -163,15 +164,6 @@ TypGtMethodCoder >> rbNodeAtCursor [
 	^ nil
 ]
 
-{ #category : #accessing }
-TypGtMethodCoder >> refreshRbAst [
-	<typTypeResultAs: 'RBMethodNode'>
-	rbAst := nil.
-	^ self rbAST
-		typType;
-		yourself
-]
-
 { #category : #actions }
 TypGtMethodCoder >> save [
 	^ super save
@@ -180,20 +172,12 @@ TypGtMethodCoder >> save [
 		ifFalse: [ false ]
 ]
 
-{ #category : #'event handling' }
-TypGtMethodCoder >> sourceChanged [
-	self refreshRbAst.
-	super sourceChanged
-]
-
 { #category : #'initialize-release' }
-TypGtMethodCoder >> typeWithPragma: anElement [
-	<typTypeArgument: 1 as: 'BlElement'>
-	self rbAST
-		ifNotNil: [ :e | 
-			e typGtTypeWithPragma.
-			methodSource := e formattedCode.
-			self buildSource ]
+TypGtMethodCoder >> typeWithPragma [
+	methodSource := self rbAST
+		typGtTypeWithPragma;
+		formattedCode.
+	self buildSource
 ]
 
 { #category : #'initialize-release' }
