@@ -73,7 +73,7 @@ TypGtMethodCoder >> browseToTypeWithShadow: anElement [
 { #category : #'initialize-release' }
 TypGtMethodCoder >> initializeAddOns [
 	super initializeAddOns.
-	"addOns addStyler: TypGtMethodCommentBodyStyler new."
+	self flag: 'currently dead code'.
 	"addOns
 		addStyler:
 			(TypGtTypeCursorBodyStyler new
