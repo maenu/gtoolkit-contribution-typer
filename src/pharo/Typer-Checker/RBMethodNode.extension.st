@@ -25,11 +25,11 @@ RBMethodNode >> typCheHasIncompatibilities [
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasIncompatibleArguments [
 	<typTypeResultAs: 'Boolean'>
-	((self allChildren select: #isMessage) reject: #isCascade)
+	((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode"
 		do: [ :e | 
-			(e "typCastAs RBMessageNode") arguments
+			e arguments
 				withIndexDo: [ :f :i | 
-					[ (e "typCastAs RBMessageNode") typCheCheckArgumentCompatibilityAt: i ]
+					[ e typCheCheckArgumentCompatibilityAt: i ]
 						on: TypCheIncompatibleTypeError
 						do: [ ^ true ] ] ].
 	^ false
@@ -38,9 +38,9 @@ RBMethodNode >> typCheHasIncompatibleArguments [
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasIncompatibleAssignments [
 	<typTypeResultAs: 'Boolean'>
-	(self allChildren select: #isAssignment)
+	(self allChildren select: #isAssignment) "typParameters RBAssignmentNode"
 		do: [ :e | 
-			[ (e "typCastAs RBAssignmentNode") typCheCheckCompatibility ]
+			[ e typCheCheckCompatibility ]
 				on: TypCheIncompatibleTypeError
 				do: [ ^ true ] ].
 	^ false
@@ -49,9 +49,9 @@ RBMethodNode >> typCheHasIncompatibleAssignments [
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasIncompatibleReturns [
 	<typTypeResultAs: 'Boolean'>
-	(self allChildren select: #isReturn)
+	(self allChildren select: #isReturn) "typParameters RBReturnNode"
 		do: [ :e | 
-			[ (e "typCastAs RBReturnNode") typCheCheckCompatibility ]
+			[ e typCheCheckCompatibility ]
 				on: TypCheIncompatibleTypeError
 				do: [ ^ true ] ].
 	^ false
@@ -60,9 +60,9 @@ RBMethodNode >> typCheHasIncompatibleReturns [
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasMissingMethods [
 	<typTypeResultAs: 'Boolean'>
-	((self allChildren select: #isMessage) reject: #isCascade)
+	((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode"
 		do: [ :e | 
-			[ (e "typCastAs RBMessageNode") typCheCheckMethod ]
+			[ e typCheCheckMethod ]
 				on: TypCheNoMethodError
 				do: [ ^ true ] ].
 	^ false
