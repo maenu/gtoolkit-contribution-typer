@@ -1,8 +1,8 @@
 Extension { #name : #RBAssignmentNode }
 
 { #category : #'*Typer' }
-RBAssignmentNode >> typIsSignal [
-	^ self value typIsSignal
+RBAssignmentNode >> typSignalsAlways [
+	^ self value typSignalsAlways
 ]
 
 { #category : #'*Typer' }

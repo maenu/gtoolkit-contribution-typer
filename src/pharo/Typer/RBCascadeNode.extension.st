@@ -1,8 +1,8 @@
 Extension { #name : #RBCascadeNode }
 
 { #category : #'*Typer' }
-RBCascadeNode >> typIsSignal [
-	^ self messages last typIsSignal
+RBCascadeNode >> typSignalsAlways [
+	^ self messages anySatisfy: #typSignalsAlways
 ]
 
 { #category : #'*Typer' }

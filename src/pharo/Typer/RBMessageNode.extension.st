@@ -1,10 +1,34 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer' }
-RBMessageNode >> typIsSignal [
-	| receiverType |
-	receiverType := self typTypeForReceiver.
-	^ Exception typAsType >= receiverType or: [ Exception class typAsType >= receiverType and: [ (receiverType >> self selector) isSignal ] ]
+RBMessageNode >> typSignalsAlways [
+	<typTypeResultAs: 'Boolean'>
+	^ (self
+		propertyAt: #typSignalsAlways
+		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
+			| receiverType argumentTypes |
+			self propertyAt: #typSignalsAlways put: false.
+			receiverType := self typTypeForReceiver.
+			argumentTypes := self typTypesForArguments.
+			receiverType isUnion
+				ifTrue: [ (receiverType "typCastAs TypUnionType") types
+						inject: true into: [ :b :e | 
+							b and: [ TypMethodResolvers global
+								signalsAlways:
+									(TypMethodLookup new
+										receiverType: e;
+										selector: self selector asSymbol;
+										argumentTypes: argumentTypes;
+										argumentNodes: self arguments;
+										yourself) ] ] ]
+				ifFalse: [ TypMethodResolvers global
+						signalsAlways:
+							(TypMethodLookup new
+								receiverType: receiverType;
+								selector: self selector asSymbol;
+								argumentTypes: argumentTypes;
+								argumentNodes: self arguments;
+								yourself) ] ])
 ]
 
 { #category : #'*Typer' }
@@ -76,7 +100,7 @@ RBMessageNode >> typTypeForResult [
 								selector: self selector asSymbol;
 								argumentTypes: argumentTypes;
 								argumentNodes: self arguments;
-								yourself) ] ]) "typCastAs TypType"
+								yourself) ] ])
 ]
 
 { #category : #'*Typer' }

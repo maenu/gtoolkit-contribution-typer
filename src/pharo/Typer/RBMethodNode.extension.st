@@ -1,8 +1,8 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer' }
-RBMethodNode >> typIsReturnOnly [
-	^ self body typIsReturnOnly
+RBMethodNode >> typIsReturnLast [
+	^ self body statements isNotEmpty and: [ self body statements last isReturn ]
 ]
 
 { #category : #'*Typer' }
@@ -13,8 +13,8 @@ RBMethodNode >> typIsReturnSelf [
 ]
 
 { #category : #'*Typer' }
-RBMethodNode >> typIsSignal [
-	^ self body typIsSignal
+RBMethodNode >> typSignalsAlways [
+	^ self body statements anySatisfy: #typSignalsAlways
 ]
 
 { #category : #'*Typer' }

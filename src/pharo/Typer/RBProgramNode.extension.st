@@ -18,16 +18,6 @@ RBProgramNode >> typAnnotateType: aType [
 ]
 
 { #category : #'*Typer' }
-RBProgramNode >> typIsReturnOnly [
-	^ false
-]
-
-{ #category : #'*Typer' }
-RBProgramNode >> typIsSignal [
-	^ false
-]
-
-{ #category : #'*Typer' }
 RBProgramNode >> typPrevious [
 	<typTypeResultAs: '!RBProgramNode'>
 	| i previous |
@@ -58,6 +48,11 @@ RBProgramNode >> typReachableTypeFor: aString until: aSequenceNode [
 		and: [ (previous "typCastAs RBAssignmentNode") variable name = aString ])
 		ifTrue: [ ^ previous typType ].
 	^ previous typReachableTypeFor: aString until: aSequenceNode
+]
+
+{ #category : #'*Typer' }
+RBProgramNode >> typSignalsAlways [
+	^ false
 ]
 
 { #category : #'*Typer' }

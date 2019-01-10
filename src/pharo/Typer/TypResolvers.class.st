@@ -51,6 +51,18 @@ TypResolvers >> initialize [
 ]
 
 { #category : #accessing }
+TypResolvers >> resolve: aLookup using: aBlock [
+	| lookup |
+	lookup := aLookup.
+	[ (self resolversFor: lookup)
+		do: [ :r | aBlock cull: r cull: lookup ].
+	lookup hasSuperType
+		ifTrue: [ lookup := lookup copyWithSuperType.
+			true ]
+		ifFalse: [ false ] ] whileTrue
+]
+
+{ #category : #accessing }
 TypResolvers >> resolvers [
 	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypLookup>>'>
 	^ resolvers
@@ -74,19 +86,18 @@ TypResolvers >> resolves: aLookup [
 
 { #category : #accessing }
 TypResolvers >> typeFor: aLookup using: aBlock [
-	| lookup |
-	lookup := aLookup.
-	[ (self resolversFor: lookup)
-		do: [ :e | 
+	self
+		resolve: aLookup
+		using: [ :r :a | 
 			| type |
-			type := [ aBlock cull: e cull: lookup ] on: TypNoCompatibleTypeError do: [ ^ TypUnknownType instance ].
+			type := [ aBlock cull: r cull: a ]
+				on: TypNoCompatibleTypeError
+				do: [ ^ TypUnknownType instance ].
 			type isUnknown
 				ifFalse: [ ^ type ] ].
-	lookup hasSuperType
-		ifTrue: [ lookup := lookup copyWithSuperType.
-			true ]
-		ifFalse: [ false ] ] whileTrue.
 	(defaultResolver isNotNil and: [ defaultResolver resolves: aLookup ])
-		ifTrue: [ ^ aBlock cull: defaultResolver cull: aLookup ].
+		ifTrue: [ ^ [ aBlock cull: defaultResolver cull: aLookup ]
+				on: TypNoCompatibleTypeError
+				do: [ ^ TypUnknownType instance ] ].
 	^ TypUnknownType instance
 ]

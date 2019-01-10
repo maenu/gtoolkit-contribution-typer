@@ -1,13 +1,13 @@
 Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer' }
-RBBlockNode >> typIsReturnOnly [
-	^ self body typIsReturnOnly
+RBBlockNode >> typIsReturnLast [
+	^ self body statements isNotEmpty and: [ self body statements last isReturn ]
 ]
 
 { #category : #'*Typer' }
-RBBlockNode >> typIsSignal [
-	^ self body typIsSignal
+RBBlockNode >> typSignalsAlways [
+	^ self body statements anySatisfy: #typSignalsAlways
 ]
 
 { #category : #'*Typer' }

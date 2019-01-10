@@ -1,13 +1,8 @@
 Extension { #name : #RBReturnNode }
 
 { #category : #'*Typer' }
-RBReturnNode >> typIsReturnOnly [
-	^ true
-]
-
-{ #category : #'*Typer' }
-RBReturnNode >> typIsSignal [
-	^ self value typIsSignal
+RBReturnNode >> typSignalsAlways [
+	^ self value typSignalsAlways
 ]
 
 { #category : #'*Typer' }

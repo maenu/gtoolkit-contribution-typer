@@ -32,6 +32,23 @@ TypMethodResolvers >> initialize [
 	super initialize
 ]
 
+{ #category : #'as yet unclassified' }
+TypMethodResolvers >> signalsAlways: aLookup [
+	self
+		resolve: aLookup
+		using: [ :r :a | 
+			| signalsAlways |
+			signalsAlways := [ r signalsAlwaysFor: aLookup resolvedBy: a ]
+				on: TypNoCompatibleTypeError
+				do: [ ^ nil ].
+			signalsAlways ifNotNil: [ ^ signalsAlways ] ].
+	(defaultResolver isNotNil and: [ defaultResolver resolves: aLookup ])
+		ifTrue: [ ^ [ defaultResolver signalsAlwaysFor: aLookup resolvedBy: aLookup ]
+				on: TypNoCompatibleTypeError
+				do: [ ^ nil ] ].
+	^ nil
+]
+
 { #category : #accessing }
 TypMethodResolvers >> typeForArgumentAt: anInteger ofMethod: aLookup [
 	<typTypeArgument: 1 as: 'Integer'>

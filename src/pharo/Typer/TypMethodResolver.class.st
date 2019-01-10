@@ -3,7 +3,8 @@ Class {
 	#superclass : #TypResolver,
 	#instVars : [
 		'argumentTypes',
-		'resultType'
+		'resultType',
+		'signalsAlways'
 	],
 	#category : #'Typer-Core'
 }
@@ -43,7 +44,8 @@ TypMethodResolver >> initialize [
 	<typTypeParametersAs: 'TypMethodLookup'>
 	<typTypeVariable: 'argumentTypes' as: 'BlockClosure[Integer,TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->TypType'>
 	<typTypeVariable: 'resultType' as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->TypType'>
-	super initialize
+	super initialize.
+	signalsAlways := [ nil ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -70,6 +72,26 @@ TypMethodResolver >> resultTypeFor: aLookup resolvedBy: anotherLookup [
 	<typTypeArgument: 2 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'TypType'>
 	[ ^ resultType cull: aLookup cull: anotherLookup cull: self ]
+		on: Error
+		do: [ :e | 
+			TypNoCompatibleTypeError new
+				cause: e;
+				signal ]
+]
+
+{ #category : #accessing }
+TypMethodResolver >> signalsAlways [
+	^ signalsAlways
+]
+
+{ #category : #accessing }
+TypMethodResolver >> signalsAlways: anObject [
+	signalsAlways := anObject
+]
+
+{ #category : #'as yet unclassified' }
+TypMethodResolver >> signalsAlwaysFor: aLookup resolvedBy: anotherLookup [
+	[ ^ signalsAlways cull: aLookup cull: anotherLookup cull: self ]
 		on: Error
 		do: [ :e | 
 			TypNoCompatibleTypeError new

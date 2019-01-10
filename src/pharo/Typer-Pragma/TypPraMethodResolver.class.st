@@ -14,7 +14,7 @@ TypPraMethodResolver >> initialize [
 TypPraMethodResolver >> resolversFor: aLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'SequenceableCollection<TypMethodResolver<TypMethodLookup>>'>
-	| clazz method argumentPragmas resultPragma argumentTypes resultType |
+	| clazz method argumentPragmas resultPragma signalsAlwaysPragma argumentTypes resultType signalsAlways |
 	self assert: [ self resolves: aLookup ].
 	clazz := aLookup receiverType asClass.
 	method := clazz methods
@@ -23,6 +23,9 @@ TypPraMethodResolver >> resolversFor: aLookup [
 		select: [ :e | e selector = #typTypeArgument:as: ].
 	resultPragma := method pragmas
 		detect: [ :e | e selector = #typTypeResultAs: ]
+		ifNone: [ nil ].
+	signalsAlwaysPragma := method pragmas
+		detect: [ :e | e selector = #typSignalsAlways: ]
 		ifNone: [ nil ].
 	argumentTypes := method numArgs
 		timesCollect: [ :i | 
@@ -33,9 +36,12 @@ TypPraMethodResolver >> resolversFor: aLookup [
 	resultType := resultPragma
 		ifNil: [ TypUnknownType instance ]
 		ifNotNil: [ resultPragma arguments first typAsType ].
+	signalsAlways := signalsAlwaysPragma
+		ifNotNil: [ signalsAlwaysPragma arguments first ].
 	^ {(TypMethodResolver new
 		argumentTypes: [ :i | argumentTypes at: i ];
 		resultType: [ resultType ];
+		signalsAlways: [ signalsAlways ];
 		yourself)}
 ]
 
@@ -53,5 +59,6 @@ TypPraMethodResolver >> resolves: aLookup [
 				and: [ e pragmas
 						anySatisfy: [ :f | 
 							f selector = #typTypeArgument:as:
-								or: [ f selector = #typTypeResultAs: ] ] ] ]
+								or: [ f selector = #typTypeResultAs:
+										or: [ f selector = #typSignalsAlways: ] ] ] ] ]
 ]
