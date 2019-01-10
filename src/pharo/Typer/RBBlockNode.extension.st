@@ -1,6 +1,16 @@
 Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer' }
+RBBlockNode >> typIsReturnOnly [
+	^ self body typIsReturnOnly
+]
+
+{ #category : #'*Typer' }
+RBBlockNode >> typIsSignal [
+	^ self body typIsSignal
+]
+
+{ #category : #'*Typer' }
 RBBlockNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>

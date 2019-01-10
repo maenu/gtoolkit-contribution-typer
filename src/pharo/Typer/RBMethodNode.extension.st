@@ -1,10 +1,20 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer' }
+RBMethodNode >> typIsReturnOnly [
+	^ self body typIsReturnOnly
+]
+
+{ #category : #'*Typer' }
 RBMethodNode >> typIsReturnSelf [
 	<typTypeResultAs: 'Boolean'>
 	^ ((self allChildren select: #isReturn)
 		reject: [ :e | (e "typCastAs RBReturnNode") value isSelf ]) isEmpty
+]
+
+{ #category : #'*Typer' }
+RBMethodNode >> typIsSignal [
+	^ self body typIsSignal
 ]
 
 { #category : #'*Typer' }

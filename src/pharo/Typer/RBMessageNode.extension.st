@@ -1,6 +1,13 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer' }
+RBMessageNode >> typIsSignal [
+	| receiverType |
+	receiverType := self typTypeForReceiver.
+	^ Exception typAsType >= receiverType or: [ Exception class typAsType >= receiverType and: [ (receiverType >> self selector) isSignal ] ]
+]
+
+{ #category : #'*Typer' }
 RBMessageNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>

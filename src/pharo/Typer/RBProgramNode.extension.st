@@ -18,6 +18,16 @@ RBProgramNode >> typAnnotateType: aType [
 ]
 
 { #category : #'*Typer' }
+RBProgramNode >> typIsReturnOnly [
+	^ false
+]
+
+{ #category : #'*Typer' }
+RBProgramNode >> typIsSignal [
+	^ false
+]
+
+{ #category : #'*Typer' }
 RBProgramNode >> typPrevious [
 	<typTypeResultAs: '!RBProgramNode'>
 	| i previous |
