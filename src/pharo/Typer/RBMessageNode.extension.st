@@ -2,25 +2,28 @@ Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer' }
 RBMessageNode >> typSignalsAlways [
-	<typTypeResultAs: 'Boolean'>
+	<typTypeResultAs: '!Boolean'>
 	^ (self
 		propertyAt: #typSignalsAlways
 		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
 			| receiverType argumentTypes |
-			self propertyAt: #typSignalsAlways put: false.
+			self propertyAt: #typSignalsAlways put: nil.
 			receiverType := self typTypeForReceiver.
 			argumentTypes := self typTypesForArguments.
 			receiverType isUnion
-				ifTrue: [ (receiverType "typCastAs TypUnionType") types
-						inject: true into: [ :b :e | 
-							b and: [ TypMethodResolvers global
+				ifTrue: [ | signalsAlways |
+					signalsAlways := (receiverType "typCastAs TypUnionType") types
+						collect: [ :e | TypMethodResolvers global
 								signalsAlways:
 									(TypMethodLookup new
 										receiverType: e;
 										selector: self selector asSymbol;
 										argumentTypes: argumentTypes;
 										argumentNodes: self arguments;
-										yourself) ] ] ]
+										yourself) ].
+					(signalsAlways anySatisfy: #isNil)
+						ifTrue: [ nil ]
+						ifFalse: [ signalsAlways inject: true into: [ :a :b | a and: b ] ] ]
 				ifFalse: [ TypMethodResolvers global
 						signalsAlways:
 							(TypMethodLookup new
@@ -112,6 +115,7 @@ RBMessageNode >> typTypeRecursive [
 RBMessageNode >> typTypeReset [
 	self removeProperty: #typTypeForResult ifAbsent: [  ].
 	self arguments size timesCollect: [ :i | self removeProperty: #typTypeForArgument , i asString ifAbsent: [  ] ].
+	self removeProperty: #typSignalsAlways ifAbsent: [  ].
 	super typTypeReset
 ]
 
