@@ -44,6 +44,7 @@ TypMethodResolver >> initialize [
 	<typTypeParametersAs: 'TypMethodLookup'>
 	<typTypeVariable: 'argumentTypes' as: 'BlockClosure[Integer,TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->TypType'>
 	<typTypeVariable: 'resultType' as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->TypType'>
+	<typTypeVariable: 'signalsAlways' as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->!Boolean'>
 	super initialize.
 	signalsAlways := [ nil ]
 ]
@@ -81,16 +82,21 @@ TypMethodResolver >> resultTypeFor: aLookup resolvedBy: anotherLookup [
 
 { #category : #accessing }
 TypMethodResolver >> signalsAlways [
+	<typTypeResultAs: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->!Boolean'>
 	^ signalsAlways
 ]
 
 { #category : #accessing }
 TypMethodResolver >> signalsAlways: anObject [
+	<typTypeArgument: 1 as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->!Boolean'>
 	signalsAlways := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypMethodResolver >> signalsAlwaysFor: aLookup resolvedBy: anotherLookup [
+	<typTypeArgument: 1 as: 'TypMethodLookup'>
+	<typTypeArgument: 2 as: 'TypMethodLookup'>
+	<typTypeResultAs: '!Boolean'>
 	[ ^ signalsAlways cull: aLookup cull: anotherLookup cull: self ]
 		on: Error
 		do: [ :e | 

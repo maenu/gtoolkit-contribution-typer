@@ -3,12 +3,18 @@ Extension { #name : #RBMessageNode }
 { #category : #'*Typer-Checker' }
 RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
-	| expected actual |
+	| argument expected actual |
+	argument := self arguments at: anInteger.
 	expected := self typTypeForArgumentAt: anInteger.
-	actual := (self arguments at: anInteger) typType.
+	actual := argument typType.
 	(expected isUnknown or: [ actual isUnknown ])
 		ifTrue: [ ^ self ].
 	expected >= actual
+		ifTrue: [ ^ self ].
+	(actual isFunction
+		and: [ argument isBlock
+				and: [ (argument body typSignalsAlways = true or: [ argument body lastIsReturn ])
+						and: [ expected hasParamatersCompatibleWithThoseOf: actual ] ] ])
 		ifTrue: [ ^ self ].
 	TypCheIncompatibleTypeError new
 		expected: expected;

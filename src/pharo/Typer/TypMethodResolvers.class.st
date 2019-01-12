@@ -28,12 +28,14 @@ TypMethodResolvers class >> initializeGlobal [
 TypMethodResolvers >> initialize [
 	<typTypeParametersAs: 'TypMethodLookup,TypMethodResolver<TypMethodLookup>'>
 	<typTypeVariable: 'resolvers' as: 'SequenceableCollection<TypResolver<TypMethodLookup>>'>
-	<typTypeVariable: 'defaultResolver' as: 'TypResolver<TypMethodLookup>'>
+	<typTypeVariable: 'defaultResolver' as: 'TypMethodResolver<TypMethodLookup>'>
 	super initialize
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypMethodResolvers >> signalsAlways: aLookup [
+	<typTypeArgument: 1 as: 'TypMethodLookup'>
+	<typTypeResultAs: '!Boolean'>
 	self
 		resolve: aLookup
 		using: [ :r :a | 

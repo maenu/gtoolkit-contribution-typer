@@ -29,7 +29,7 @@ TypVariableResolvers >> initialize [
 	<typTypeParametersAs: 'TypVariableLookup,TypVariableResolver<TypVariableLookup>'>
 	<typTypeParametersAs: 'TypVariableLookup'>
 	<typTypeVariable: 'resolvers' as: 'SequenceableCollection<TypResolver<TypVariableLookup>>'>
-	<typTypeVariable: 'defaultResolver' as: 'TypResolver<TypVariableLookup>'>
+	<typTypeVariable: 'defaultResolver' as: 'TypVariableResolver<TypVariableLookup>'>
 	super initialize
 ]
 

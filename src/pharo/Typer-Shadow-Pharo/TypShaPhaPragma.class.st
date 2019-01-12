@@ -13,8 +13,13 @@ TypShaPhaPragma class >> shadowedClass [
 TypShaPhaPragma >> ___arguments [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType:
-				[ :a :s :r | SequenceableCollection typAsType asParametricType: {Symbol typAsType} ];
+		resultType: [ :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType:
+					{{String typAsType.
+					Symbol typAsType.
+					Number typAsType.
+					Boolean typAsType} typAsType} ];
 		yourself
 ]
 

@@ -2,7 +2,6 @@ Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer' }
 RBMessageNode >> typSignalsAlways [
-	<typTypeResultAs: '!Boolean'>
 	^ (self
 		propertyAt: #typSignalsAlways
 		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
@@ -31,7 +30,7 @@ RBMessageNode >> typSignalsAlways [
 								selector: self selector asSymbol;
 								argumentTypes: argumentTypes;
 								argumentNodes: self arguments;
-								yourself) ] ])
+								yourself) ] ]) "typCastAs !Boolean"
 ]
 
 { #category : #'*Typer' }
@@ -103,7 +102,7 @@ RBMessageNode >> typTypeForResult [
 								selector: self selector asSymbol;
 								argumentTypes: argumentTypes;
 								argumentNodes: self arguments;
-								yourself) ] ])
+								yourself) ] ]) "typCastAs TypType"
 ]
 
 { #category : #'*Typer' }

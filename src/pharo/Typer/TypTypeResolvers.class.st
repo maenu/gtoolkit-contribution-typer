@@ -28,7 +28,7 @@ TypTypeResolvers class >> initializeGlobal [
 TypTypeResolvers >> initialize [
 	<typTypeParametersAs: 'TypTypeLookup,TypTypeResolver<TypTypeLookup>'>
 	<typTypeVariable: 'resolvers' as: 'SequenceableCollection<TypResolver<TypTypeLookup>>'>
-	<typTypeVariable: 'defaultResolver' as: 'TypResolver<TypTypeLookup>'>
+	<typTypeVariable: 'defaultResolver' as: 'TypTypeResolver<TypTypeLookup>'>
 	super initialize
 ]
 

@@ -1,16 +1,6 @@
 Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer' }
-RBBlockNode >> typIsReturnLast [
-	^ self body statements isNotEmpty and: [ self body statements last isReturn ]
-]
-
-{ #category : #'*Typer' }
-RBBlockNode >> typSignalsAlways [
-	^ self body statements anySatisfy: #typSignalsAlways
-]
-
-{ #category : #'*Typer' }
 RBBlockNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>

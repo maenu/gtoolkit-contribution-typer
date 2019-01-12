@@ -24,13 +24,7 @@ TypFunctionType >> > aType [
 				ifTrue: [ | type |
 					type := aType "typCastAs TypFunctionType".
 					result >= type result
-						and: [ | size |
-							size := optionalParameters
-								ifTrue: [ type parameters size ]
-								ifFalse: [ parameters size ].
-							size = 0
-								or: [ size <= parameters size
-										and: [ size <= type parameters size and: [ ((parameters copyFrom: 1 to: size) withIndexSelect: [ :e :i | e >= (type parameters at: i) ]) size = size ] ] ] ] ]
+						and: [ self hasParamatersCompatibleWithThoseOf: type ] ]
 				ifFalse: [ super > aType ] ]
 ]
 
@@ -59,6 +53,22 @@ TypFunctionType >> asTypeCompatibleWith: aType [
 		result: (result asTypeCompatibleWith: (aType "typCastAs TypFunctionType") result);
 		optionalParameters: (optionalParameters and: (aType "typCastAs TypFunctionType") optionalParameters);
 		yourself
+]
+
+{ #category : #comparing }
+TypFunctionType >> hasParamatersCompatibleWithThoseOf: aType [
+	<typTypeArgument: 1 as: 'TypFunctionType'>
+	<typTypeResultAs: 'Boolean'>
+	| size |
+	size := optionalParameters
+		ifTrue: [ aType parameters size ]
+		ifFalse: [ parameters size ].
+	^ size = 0
+		or: [ size <= parameters size
+				and: [ size <= aType parameters size
+						and: [ ((parameters copyFrom: 1 to: size)
+								withIndexSelect: [ :e :i | e >= (aType parameters at: i) ])
+								size = size ] ] ]
 ]
 
 { #category : #comparing }

@@ -52,6 +52,7 @@ RBProgramNode >> typReachableTypeFor: aString until: aSequenceNode [
 
 { #category : #'*Typer' }
 RBProgramNode >> typSignalsAlways [
+	<typTypeResultAs: '!Boolean'>
 	^ false
 ]
 

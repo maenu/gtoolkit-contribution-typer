@@ -1,11 +1,6 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer' }
-RBMethodNode >> typIsReturnLast [
-	^ self body statements isNotEmpty and: [ self body statements last isReturn ]
-]
-
-{ #category : #'*Typer' }
 RBMethodNode >> typIsReturnSelf [
 	<typTypeResultAs: 'Boolean'>
 	^ ((self allChildren select: #isReturn)
@@ -14,7 +9,7 @@ RBMethodNode >> typIsReturnSelf [
 
 { #category : #'*Typer' }
 RBMethodNode >> typSignalsAlways [
-	^ self body statements anySatisfy: #typSignalsAlways
+	^ self body typSignalsAlways
 ]
 
 { #category : #'*Typer' }
