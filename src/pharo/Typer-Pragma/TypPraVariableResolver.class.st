@@ -22,7 +22,7 @@ TypPraVariableResolver >> resolversFor: aLookup [
 			e selector = #typTypeVariable:as:
 				and: [ e arguments first = aLookup selector ] ].
 	^ {(TypVariableResolver new
-		type: [ (pragma arguments at: 2) typAsType ];
+		type: [ ((pragma arguments at: 2) "typCastAs String<Character>") typAsType ];
 		yourself)}
 ]
 

@@ -118,6 +118,14 @@ TypShaPhaRBProgramNode >> ___isTemp [
 ]
 
 { #category : #accessing }
+TypShaPhaRBProgramNode >> ___lastIsReturn [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaRBProgramNode >> ___link: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | MetaLink typAsType ];

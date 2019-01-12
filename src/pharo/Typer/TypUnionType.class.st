@@ -76,6 +76,14 @@ TypUnionType >> asTypeCompatibleWith: aType [
 ]
 
 { #category : #testing }
+TypUnionType >> hasParamatersCompatibleWithThoseOf: aType [
+	<typTypeArgument: 1 as: 'TypFunctionType'>
+	<typTypeResultAs: 'Boolean'>
+	self assert: [ self isFunction ].
+	^ (self superType "typCastAs TypFunctionType") hasParamatersCompatibleWithThoseOf: aType
+]
+
+{ #category : #testing }
 TypUnionType >> hasSuperType [
 	^ self superType ~= self
 ]
@@ -117,7 +125,7 @@ TypUnionType >> isUnion [
 TypUnionType >> parameters [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	self assert: [ self isParametric ].
-	^ (self superType "typCastAs TypUnionType") parameters
+	^ (self superType "typCastAs TypParametricType") parameters
 ]
 
 { #category : #'as yet unclassified' }

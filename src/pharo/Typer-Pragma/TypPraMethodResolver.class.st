@@ -31,13 +31,14 @@ TypPraMethodResolver >> resolversFor: aLookup [
 		timesCollect: [ :i | 
 			argumentPragmas
 				detect: [ :e | (e arguments at: 1) = i ]
-				ifFound: [ :e | (e arguments at: 2) typAsType ]
+				ifFound: [ :e | ((e arguments at: 2) "typCastAs String<Character>") typAsType ]
 				ifNone: [ TypUnknownType instance ] ].
 	resultType := resultPragma
 		ifNil: [ TypUnknownType instance ]
-		ifNotNil: [ resultPragma arguments first typAsType ].
+		ifNotNil: [ (resultPragma arguments first "typCastAs String<Character>") typAsType ].
 	signalsAlways := signalsAlwaysPragma
-		ifNotNil: [ signalsAlwaysPragma arguments first ].
+		ifNil: [ nil ]
+		ifNotNil: [ signalsAlwaysPragma arguments first "typCastAs Boolean" ].
 	^ {(TypMethodResolver new
 		argumentTypes: [ :i | argumentTypes at: i ];
 		resultType: [ resultType ];

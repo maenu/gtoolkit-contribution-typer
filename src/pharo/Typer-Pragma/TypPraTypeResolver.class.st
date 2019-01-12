@@ -18,7 +18,7 @@ TypPraTypeResolver >> resolversFor: aLookup [
 	self assert: [ self resolves: aLookup ].
 	pragma := (aLookup clazz methods detect: [ :e | e selector = #initialize ]) pragmas detect: [ :e | e selector = #typTypeParametersAs: ].
 	^ {(TypTypeResolver new
-		type: [ :a | a clazz typAsNamedType asParametricType: (pragma arguments at: 1) typAsTypes ];
+		type: [ :a | a clazz typAsNamedType asParametricType: ((pragma arguments at: 1) "typCastAs String<Character>") typAsTypes ];
 		yourself)}
 ]
 

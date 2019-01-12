@@ -11,8 +11,18 @@ RBAssignmentNode >> typCheCheckCompatibility [
 		ifTrue: [ ^ self ].
 	(actual isFunction
 		and: [ self value isBlock
-				and: [ (self value body typSignalsAlways = true or: [ self value body lastIsReturn ])
-						and: [ expected hasParamatersCompatibleWithThoseOf: actual ] ] ])
+				and: [ | block |
+					block := self value "typCastAs RBBlockNode".
+					(block body typSignalsAlways = true
+						or: [ block body lastIsReturn ])
+						and: [ | functions |
+							functions := expected isUnion
+								ifTrue:
+									[ ((expected "typCastAs TypUnionType") types select: [ :e | e isFunction ]) "typParameters TypFunctionType" ]
+								ifFalse: [ expected isFunction
+										ifTrue: [ {expected "typCastAs TypFunctionType"} ]
+										ifFalse: [ {} "typParameters TypFunctionType" ] ].
+							functions anySatisfy: [ :e | e hasParamatersCompatibleWithThoseOf: (actual "typCastAs TypFunctionType") ] ] ] ])
 		ifTrue: [ ^ self ].
 	TypCheIncompatibleTypeError new
 		expected: expected;
