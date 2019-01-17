@@ -1,20 +1,11 @@
 Class {
 	#name : #TypGtCoderDefinerFilter,
 	#superclass : #GtCoderMethodsFilter,
-	#traits : 'TTypGtCoderMethodsFilter',
-	#classTraits : 'TTypGtCoderMethodsFilter classTrait',
 	#instVars : [
 		'name'
 	],
-	#category : #'Typer-GToolkit-Filter'
+	#category : #'Typer-GToolkit-Core'
 }
-
-{ #category : #'logical operations' }
-TypGtCoderDefinerFilter >> & aFilter [
-	<typTypeArgument: 1 as: 'GtCoderMethodsFilter'>
-	<typTypeResultAs: 'TypGtCoderIntersectionFilter'>
-	^ TypGtCoderIntersectionFilter forFilter: self filter: aFilter
-]
 
 { #category : #testing }
 TypGtCoderDefinerFilter >> includeMethod: aCompiledMethod [

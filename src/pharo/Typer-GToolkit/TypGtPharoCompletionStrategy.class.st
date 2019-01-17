@@ -42,3 +42,10 @@ TypGtPharoCompletionStrategy >> selectorsForReceiver: aBehavior matching: aStrin
 			tree ].
 	^ tree weightedFirst: maxItems startingWith: aString
 ]
+
+{ #category : #'as yet unclassified' }
+TypGtPharoCompletionStrategy >> typGtAsTypGtPharoCompletionStrategyFor: aCoder [
+	^ self
+		coder: aCoder;
+		yourself
+]

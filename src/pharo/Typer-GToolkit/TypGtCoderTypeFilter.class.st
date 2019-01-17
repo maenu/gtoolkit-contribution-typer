@@ -1,13 +1,11 @@
 Class {
 	#name : #TypGtCoderTypeFilter,
 	#superclass : #GtCoderMethodsFilter,
-	#traits : 'TTypGtCoderMethodsFilter',
-	#classTraits : 'TTypGtCoderMethodsFilter classTrait',
 	#instVars : [
 		'type',
 		'clazzes'
 	],
-	#category : #'Typer-GToolkit-Filter'
+	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #testing }

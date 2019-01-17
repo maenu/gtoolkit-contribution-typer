@@ -19,27 +19,6 @@ RBMethodNode >> typTemporaryProfile [
 ]
 
 { #category : #'*Typer' }
-RBMethodNode >> typType [
-	<typTypeResultAs: 'TypType'>
-	| newProfile |
-	self typTypeReset.
-	newProfile := self typTemporaryProfile.
-	[ | oldProfile |
-	self typTypeReset.
-	newProfile do: [ :e | e key propertyAt: #typType put: e value ].
-	(self allChildren copyWithoutAll: (newProfile collect: #key) , {self}) do: #typType.
-	(newProfile collect: #key)
-		do: [ :e | 
-			e
-				typTypeReset;
-				typType ].
-	oldProfile := newProfile.
-	newProfile := self typTemporaryProfile.
-	newProfile = oldProfile ] whileFalse.
-	^ BlockClosure typAsType asFunctionType: self typTypesForArguments result: self typTypeForResult optionalParameters: false
-]
-
-{ #category : #'*Typer' }
 RBMethodNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>
@@ -74,6 +53,27 @@ RBMethodNode >> typTypeForResult [
 				argumentTypes: self typTypesForArguments;
 				argumentNodes: (self arguments);
 				yourself)
+]
+
+{ #category : #'*Typer' }
+RBMethodNode >> typTypeRecursive [
+	<typTypeResultAs: 'TypType'>
+	| newProfile |
+	self typTypeReset.
+	newProfile := self typTemporaryProfile.
+	[ | oldProfile |
+	self typTypeReset.
+	newProfile do: [ :e | e key propertyAt: #typType put: e value ].
+	(self allChildren copyWithoutAll: (newProfile collect: #key) , {self}) do: #typType.
+	(newProfile collect: #key)
+		do: [ :e | 
+			e
+				typTypeReset;
+				typType ].
+	oldProfile := newProfile.
+	newProfile := self typTemporaryProfile.
+	newProfile = oldProfile ] whileFalse.
+	^ BlockClosure typAsType asFunctionType: self typTypesForArguments result: self typTypeForResult optionalParameters: false
 ]
 
 { #category : #'*Typer' }
