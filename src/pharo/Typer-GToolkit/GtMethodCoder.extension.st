@@ -20,9 +20,8 @@ GtMethodCoder >> typGtBrowseImplementors: anElement [
 ]
 
 { #category : #'*Typer-GToolkit' }
-GtMethodCoder >> typGtInitializeAddOnsFor: anAst [
-	<gtAstCoderAddOns: 10>
-	super typGtInitializeAddOnsFor: anAst.
+GtMethodCoder >> typGtInitializeMethodAddOnsFor: anAst [
+	<gtAstCoderAddOns: 11>
 	addOns
 		addShortcut:
 			(BlShortcut new

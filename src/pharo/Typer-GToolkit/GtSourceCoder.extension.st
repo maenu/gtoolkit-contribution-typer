@@ -52,7 +52,7 @@ GtSourceCoder >> typGtBrowseToTypeWithShadow: anElement [
 ]
 
 { #category : #'*Typer-GToolkit' }
-GtSourceCoder >> typGtInitializeAddOnsFor: anAst [
+GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst [
 	<gtAstCoderAddOns: 10>
 	completionStrategy := self newCompletionStrategy.
 	(completionStrategy isKindOf: GtPharoCompletionStrategy)
