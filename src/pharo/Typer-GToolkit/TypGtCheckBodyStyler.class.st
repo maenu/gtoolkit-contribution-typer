@@ -4,6 +4,13 @@ Class {
 	#category : #'Typer-GToolkit-Core'
 }
 
+{ #category : #styling }
+TypGtCheckBodyStyler >> style: aText ast: anAst [
+	anAst typIsTyped
+		ifFalse: [ ^ self ].
+	super style: aText ast: anAst
+]
+
 { #category : #visiting }
 TypGtCheckBodyStyler >> styleFrom: anInteger to: anotherInteger color: aColor [
 	<typTypeArgument: 1 as: 'Integer'>

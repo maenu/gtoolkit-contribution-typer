@@ -59,11 +59,11 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst [
 		ifTrue: [ completionStrategy := completionStrategy
 				typGtAsTypGtPharoCompletionStrategyFor: self ].
 	self flag: 'currently dead code'.
-	"addOns
+	addOns
 		addStyler:
 			(TypGtTypeCursorBodyStyler new
 				coder: self;
-				yourself)."
+				yourself).
 	addOns
 		addShortcut:
 			(BlShortcut new
@@ -91,6 +91,10 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst [
 						key: Key h;
 						build);
 				action: [ :e | self typGtBrowseToTypeWithShadow: e ]);
+		addStyler:
+			(TypGtTyperStyler new
+				coder: self;
+				yourself);
 		addStyler: TypGtTypeDeclarationBodyStyler new;
 		addStyler: TypGtCheckBodyStyler new;
 		addMainAction: 'Types' translated

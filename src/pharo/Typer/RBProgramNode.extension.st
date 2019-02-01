@@ -18,6 +18,12 @@ RBProgramNode >> typAnnotateType: aType [
 ]
 
 { #category : #'*Typer' }
+RBProgramNode >> typIsTyped [
+	<typTypeResultAs: 'Boolean'>
+	^ self hasProperty: #typType
+]
+
+{ #category : #'*Typer' }
 RBProgramNode >> typPrevious [
 	<typTypeResultAs: '!RBProgramNode'>
 	| i previous |
