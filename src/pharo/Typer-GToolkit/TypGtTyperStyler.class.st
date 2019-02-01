@@ -2,11 +2,32 @@ Class {
 	#name : #TypGtTyperStyler,
 	#superclass : #GtCoderBodyStyler,
 	#instVars : [
-		'worker',
 		'coder'
+	],
+	#classInstVars : [
+		'pool'
 	],
 	#category : #'Typer-GToolkit-Core'
 }
+
+{ #category : #finalization }
+TypGtTyperStyler class >> finalize [
+	pool stop.
+	super finalize
+]
+
+{ #category : #'class initialization' }
+TypGtTyperStyler class >> initialize [
+	pool := TKTCommonQueueWorkerPool new
+		poolMaxSize: 5;
+		start;
+		yourself
+]
+
+{ #category : #accessing }
+TypGtTyperStyler class >> pool [
+	^ pool
+]
 
 { #category : #accessing }
 TypGtTyperStyler >> coder [
@@ -18,28 +39,12 @@ TypGtTyperStyler >> coder: anObject [
 	coder := anObject
 ]
 
-{ #category : #initialization }
-TypGtTyperStyler >> initialize [
-	super initialize.
-	worker := TKTWorker new
-		start;
-		yourself
-]
-
 { #category : #private }
 TypGtTyperStyler >> style: aText ast: anAst [
-	| string |
 	anAst typIsTyped
 		ifTrue: [ ^ self ].
-	string := aText asString.
-	worker
-		schedule: [ 1 second wait.
-			(coder source = string or: [ coder collapsedSource = string ])
-				ifTrue: [ coder rbAST
-						typTypeReset;
-						typType.
-					coder
-						styleText;
-						styleCollapsedText ] ]
+	self class pool
+		schedule: [ coder rbAST typType.
+			coder styleText ]
 		timeout: 5 seconds
 ]
