@@ -41,10 +41,11 @@ TypGtTyperStyler >> coder: anObject [
 
 { #category : #private }
 TypGtTyperStyler >> style: aText ast: anAst [
+	self flag: 'handle timeout?'.
 	anAst typIsTyped
 		ifTrue: [ ^ self ].
 	self class pool
 		schedule: [ coder rbAST typType.
 			coder styleText ]
-		timeout: 5 seconds
+		"timeout: 5 seconds"
 ]
