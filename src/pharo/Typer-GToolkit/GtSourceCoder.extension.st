@@ -59,11 +59,11 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst [
 		ifTrue: [ completionStrategy := completionStrategy
 				typGtAsTypGtPharoCompletionStrategyFor: self ].
 	self flag: 'currently dead code'.
-	addOns
+	"addOns
 		addStyler:
 			(TypGtTypeCursorBodyStyler new
 				coder: self;
-				yourself).
+				yourself)."
 	addOns
 		addShortcut:
 			(BlShortcut new
@@ -107,7 +107,14 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst [
 					addOns addStyler: TypGtTypeValueBodyStyler new ]
 				ifFalse: [ addOns typGtRemoveStylerOfType: TypGtTypeValueBodyStyler.
 					addOns addStyler: TypGtTypeDeclarationBodyStyler new ].
-			self refreshForChanges ]
+			self refreshForChanges ];
+		addMainAction: 'Unknowns' translated
+			icon: BrGlamorousIcons minimize
+			action: [ | checker |
+			checker := addOns stylers
+				detect: [ :e | e class == TypGtCheckBodyStyler ].
+			checker markUnknowns: checker markUnknowns not.
+			self styleText  ]
 ]
 
 { #category : #'*Typer-GToolkit' }

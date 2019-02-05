@@ -1,8 +1,27 @@
 Class {
 	#name : #TypGtCheckBodyStyler,
 	#superclass : #GtCoderBodyStyler,
+	#instVars : [
+		'markUnknowns'
+	],
 	#category : #'Typer-GToolkit-Core'
 }
+
+{ #category : #initialization }
+TypGtCheckBodyStyler >> initialize [
+	super initialize.
+	markUnknowns := false
+]
+
+{ #category : #accessing }
+TypGtCheckBodyStyler >> markUnknowns [
+	^ markUnknowns
+]
+
+{ #category : #accessing }
+TypGtCheckBodyStyler >> markUnknowns: anObject [
+	markUnknowns := anObject
+]
 
 { #category : #styling }
 TypGtCheckBodyStyler >> style: aText ast: anAst [
@@ -44,14 +63,14 @@ TypGtCheckBodyStyler >> styleSelectorOf: aNode color: aColor [
 TypGtCheckBodyStyler >> visitArgumentNode: aNode [
 	super visitArgumentNode: aNode.
 	aNode typType isUnknown
-		ifTrue: [ self styleNode: aNode color: Color blue ]
+		ifTrue: [ markUnknowns ifTrue: [ self styleNode: aNode color: Color blue ] ]
 ]
 
 { #category : #visiting }
 TypGtCheckBodyStyler >> visitAssignmentNode: aNode [
 	super visitAssignmentNode: aNode.
 	aNode value typType isUnknown
-		ifTrue: [ self styleNode: aNode value color: Color blue ]
+		ifTrue: [ markUnknowns ifTrue: [ self styleNode: aNode value color: Color blue ] ]
 		ifFalse: [ [ aNode typCheCheckCompatibility ]
 				on: TypCheIncompatibleTypeError
 				do: [ self styleNode: aNode value color: Color red ] ]
@@ -61,7 +80,7 @@ TypGtCheckBodyStyler >> visitAssignmentNode: aNode [
 TypGtCheckBodyStyler >> visitMessageNode: aNode [
 	super visitMessageNode: aNode.
 	aNode receiver typType isUnknown
-		ifTrue: [ self styleNode: aNode color: Color blue ]
+		ifTrue: [ markUnknowns ifTrue: [ self styleNode: aNode color: Color blue ] ]
 		ifFalse: [ [ [ aNode typCheCheckMethod.
 			aNode typCheCheckReceiver ]
 				on: TypCheNoMethodError
@@ -71,7 +90,7 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 	aNode arguments
 		withIndexDo: [ :e :i | 
 			e typType isUnknown
-				ifTrue: [ self styleNode: e color: Color blue ]
+				ifTrue: [ markUnknowns ifTrue: [ self styleNode: e color: Color blue ] ]
 				ifFalse: [ [ [ aNode typCheCheckArgumentCompatibilityAt: i ]
 						on: TypCheIncompatibleTypeError
 						do: [ self styleNode: e color: Color red ] ]
@@ -84,7 +103,7 @@ TypGtCheckBodyStyler >> visitMethodNode: aNode [
 	| position |
 	super visitMethodNode: aNode.
 	aNode typCheHasUnknownReturn
-		ifTrue: [ self styleSelectorOf: aNode color: Color blue ].
+		ifTrue: [ markUnknowns ifTrue: [ self styleSelectorOf: aNode color: Color blue ] ].
 	position := aNode arguments isEmpty
 		ifTrue: [ aNode selector size ]
 		ifFalse: [ aNode arguments last stop ].
@@ -113,7 +132,7 @@ TypGtCheckBodyStyler >> visitMethodNode: aNode [
 TypGtCheckBodyStyler >> visitReturnNode: aNode [
 	super visitReturnNode: aNode.
 	aNode typType isUnknown
-		ifTrue: [ self styleNode: aNode color: Color blue ]
+		ifTrue: [ markUnknowns ifTrue: [ self styleNode: aNode color: Color blue ] ]
 		ifFalse: [ [ aNode typCheCheckCompatibility ]
 				on: TypCheIncompatibleTypeError
 				do: [ self styleNode: aNode color: Color red ] ]
@@ -123,5 +142,5 @@ TypGtCheckBodyStyler >> visitReturnNode: aNode [
 TypGtCheckBodyStyler >> visitTemporaryNode: aNode [
 	super visitTemporaryNode: aNode.
 	(aNode typIsDeclaration and: [ aNode typType isUnknown ])
-		ifTrue: [ self styleNode: aNode color: Color blue ]
+		ifTrue: [ markUnknowns ifTrue: [ self styleNode: aNode color: Color blue ] ]
 ]
