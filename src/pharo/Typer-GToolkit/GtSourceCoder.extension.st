@@ -70,7 +70,8 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst [
 				combination:
 					(BlKeyCombination builder
 						primary;
-						key: Key m;
+						shift;
+						key: BlKeyboardKey m;
 						build);
 				action: [ :e | self typGtBrowseImplementors: e ]);
 		addShortcut:
@@ -79,7 +80,7 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst [
 					(BlKeyCombination builder
 						primary;
 						shift;
-						key: Key t;
+						key: BlKeyboardKey t;
 						build);
 				action: [ :e | self typGtBrowseToTypeWithPragma: e ]);
 		addShortcut:
@@ -88,7 +89,7 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst [
 					(BlKeyCombination builder
 						primary;
 						shift;
-						key: Key h;
+						key: BlKeyboardKey h;
 						build);
 				action: [ :e | self typGtBrowseToTypeWithShadow: e ]);
 		addStyler:

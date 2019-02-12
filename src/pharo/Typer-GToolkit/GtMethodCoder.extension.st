@@ -28,7 +28,7 @@ GtMethodCoder >> typGtInitializeMethodAddOnsFor: anAst [
 				combination:
 					(BlKeyCombination builder
 						primary;
-						key: Key t;
+						key: BlKeyboardKey t;
 						build);
 				action: [ self typGtTypeWithPragma ])
 ]
