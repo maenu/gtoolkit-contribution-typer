@@ -86,6 +86,22 @@ TypShaPhaObject >> ___isNotNil [
 ]
 
 { #category : #accessing }
+TypShaPhaObject >> ___perform: _a [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
+		resultType: [ :a :s :r | 
+			TypMethodResolvers global
+				typeForResultOfMethod:
+					(TypMethodLookup new
+						receiverType: a receiverType;
+						selector: (a argumentNodes at: 1) value;
+						argumentTypes: #();
+						argumentNodes: #();
+						yourself) ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaObject >> ___perform: _a withEnoughArguments: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 

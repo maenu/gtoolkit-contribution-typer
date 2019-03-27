@@ -18,3 +18,10 @@ TypExamples >> example [
 		add: TypShaVariableResolvers new.
 	^ self
 ]
+
+{ #category : #example }
+TypExamples >> example2 [
+	<gtExample>
+	self perform: #asString.
+	^ self class lookupSelector: #example2
+]
