@@ -78,6 +78,14 @@ TypShaPhaRBProgramNode >> ___isAssignment [
 ]
 
 { #category : #accessing }
+TypShaPhaRBProgramNode >> ___isLiteralNode [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaRBProgramNode >> ___isMessage [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

@@ -90,14 +90,18 @@ TypShaPhaObject >> ___perform: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | 
-			TypMethodResolvers global
-				typeForResultOfMethod:
-					(TypMethodLookup new
-						receiverType: a receiverType;
-						selector: (a argumentNodes at: 1) value;
-						argumentTypes: #();
-						argumentNodes: #();
-						yourself) ];
+			| argument |
+			argument := a argumentNodes at: 1.
+			(argument isLiteralNode and: [ argument value isSymbol ])
+				ifTrue: [ TypMethodResolvers global
+						typeForResultOfMethod:
+							(TypMethodLookup new
+								receiverType: a receiverType;
+								selector: argument value;
+								argumentTypes: #();
+								argumentNodes: #();
+								yourself) ]
+				ifFalse: [ TypUnknownType instance ] ];
 		yourself
 ]
 
