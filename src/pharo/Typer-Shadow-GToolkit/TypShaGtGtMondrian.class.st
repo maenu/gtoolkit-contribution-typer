@@ -10,6 +10,14 @@ TypShaGtGtMondrian class >> shadowedClass [
 ]
 
 { #category : #accessing }
+TypShaGtGtMondrian >> ___edges [
+	^ TypMethodResolver new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | GtMondrianEdgeBuilder typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaGtGtMondrian >> ___layout [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];

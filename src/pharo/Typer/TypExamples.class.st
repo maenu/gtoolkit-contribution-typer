@@ -25,3 +25,10 @@ TypExamples >> example2 [
 	self perform: #asString.
 	^ self class lookupSelector: #example2
 ]
+
+{ #category : #example }
+TypExamples >> example2: x [
+	<gtExample>
+	<typTypeArgument: 1 as: 'Integer'>
+	x
+]
