@@ -19,11 +19,9 @@ TypObjectLookup >> = anObject [
 ]
 
 { #category : #copying }
-TypObjectLookup >> copyWithSuperType [
+TypObjectLookup >> adaptWithSuperType [
 	self assert: [ self hasSuperType ].
-	^ self copy
-		receiverType: receiverType superType;
-		yourself
+	self receiverType: receiverType superType
 ]
 
 { #category : #testing }

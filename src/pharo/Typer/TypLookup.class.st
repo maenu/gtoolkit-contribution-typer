@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #copying }
-TypLookup >> copyWithSuperType [
+TypLookup >> adaptWithSuperType [
 	<typTypeResultAs: 'TypLookup'>
 	self subclassResponsibility
 ]

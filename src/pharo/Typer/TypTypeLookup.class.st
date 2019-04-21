@@ -16,6 +16,12 @@ TypTypeLookup >> = anObject [
 					clazz = object clazz ] ]
 ]
 
+{ #category : #copying }
+TypTypeLookup >> adaptWithSuperType [
+	self assert: [ self hasSuperType ].
+	self clazz: clazz superclass
+]
+
 { #category : #accessing }
 TypTypeLookup >> clazz [
 	<typTypeResultAs: 'ClassDescription'>
@@ -26,14 +32,6 @@ TypTypeLookup >> clazz [
 TypTypeLookup >> clazz: anObject [
 	<typTypeArgument: 1 as: 'ClassDescription'>
 	clazz := anObject
-]
-
-{ #category : #copying }
-TypTypeLookup >> copyWithSuperType [
-	self assert: [ self hasSuperType ].
-	^ self copy
-		clazz: clazz superclass;
-		yourself
 ]
 
 { #category : #testing }

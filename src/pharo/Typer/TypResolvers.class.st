@@ -53,11 +53,11 @@ TypResolvers >> initialize [
 { #category : #accessing }
 TypResolvers >> resolve: aLookup using: aBlock [
 	| lookup |
-	lookup := aLookup.
+	lookup := aLookup copy.
 	[ (self resolversFor: lookup)
 		do: [ :r | aBlock cull: r cull: lookup ].
 	lookup hasSuperType
-		ifTrue: [ lookup := lookup copyWithSuperType.
+		ifTrue: [ lookup adaptWithSuperType.
 			true ]
 		ifFalse: [ false ] ] whileTrue
 ]
