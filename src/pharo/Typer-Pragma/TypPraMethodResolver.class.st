@@ -1,11 +1,11 @@
 Class {
-	#name : #TypPraMethodResolvers,
-	#superclass : #TypCachingResolvers,
+	#name : #TypPraMethodResolver,
+	#superclass : #TypCachingResolver,
 	#category : #'Typer-Pragma-Core'
 }
 
 { #category : #accessing }
-TypPraMethodResolvers >> cachedResolversFor: aLookup [
+TypPraMethodResolver >> cachedResolversFor: aLookup [
 	aLookup receiverType representsClass
 		ifFalse: [ ^ #() ].
 	^ cache
@@ -14,6 +14,6 @@ TypPraMethodResolvers >> cachedResolversFor: aLookup [
 ]
 
 { #category : #initialization }
-TypPraMethodResolvers >> selector [
+TypPraMethodResolver >> selector [
 	^ #typPraMethodResolverIndex
 ]

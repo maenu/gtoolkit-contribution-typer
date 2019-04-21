@@ -1,9 +1,9 @@
 Class {
-	#name : #TypResolvers,
+	#name : #TypChainableResolvers,
 	#superclass : #TypResolver,
 	#instVars : [
 		'resolvers',
-		'defaultResolver'
+		'next'
 	],
 	#classInstVars : [
 		'instance'
@@ -12,36 +12,30 @@ Class {
 }
 
 { #category : #accessing }
-TypResolvers class >> initialize [
+TypChainableResolvers class >> initialize [
 	<typTypeVariable: 'global' as: 'TypResolvers<TypLookup,TypResolver<TypLookup>>'>
 	
 ]
 
 { #category : #accessing }
-TypResolvers class >> instance [
+TypChainableResolvers class >> instance [
 	<typTypeResultAs: 'TypResolvers<TypLookup,TypResolver<TypLookup>>'>
 	^ instance ifNil: [ instance := self new ]
 ]
 
 { #category : #accessing }
-TypResolvers class >> reset [
+TypChainableResolvers class >> reset [
 	instance := nil
 ]
 
-{ #category : #accessing }
-TypResolvers >> defaultResolver [
-	<typTypeResultAs: 'TypResolver<TypLookup>'>
-	^ defaultResolver
-]
-
-{ #category : #accessing }
-TypResolvers >> defaultResolver: anObject [
-	<typTypeArgument: 1 as: 'TypResolver<TypLookup>'>
-	defaultResolver := anObject
+{ #category : #adding }
+TypChainableResolvers >> add: aResolver [
+	<typTypeArgumentAt: 1 as: 'TypResolver<TypLookup>'>
+	resolvers add: aResolver
 ]
 
 { #category : #initialization }
-TypResolvers >> initialize [
+TypChainableResolvers >> initialize [
 	<typTypeParametersAs: 'TypLookup,TypResolver<TypLookup>'>
 	<typTypeVariable: 'resolvers' as: 'SequenceableCollection<TypResolver<TypLookup>>'>
 	<typTypeVariable: 'defaultResolver' as: 'TypResolver<TypLookup>'>
@@ -50,7 +44,19 @@ TypResolvers >> initialize [
 ]
 
 { #category : #accessing }
-TypResolvers >> resolve: aLookup using: aBlock [
+TypChainableResolvers >> next [
+	<typTypeResultAs: 'TypResolver<TypLookup>'>
+	^ next
+]
+
+{ #category : #accessing }
+TypChainableResolvers >> next: anObject [
+	<typTypeArgument: 1 as: 'TypResolver<TypLookup>'>
+	next := anObject
+]
+
+{ #category : #accessing }
+TypChainableResolvers >> resolve: aLookup using: aBlock [
 	| lookup |
 	lookup := aLookup copy.
 	[ (self resolversFor: lookup)
@@ -62,29 +68,29 @@ TypResolvers >> resolve: aLookup using: aBlock [
 ]
 
 { #category : #accessing }
-TypResolvers >> resolvers [
+TypChainableResolvers >> resolvers [
 	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypLookup>>'>
 	^ resolvers
 ]
 
 { #category : #accessing }
-TypResolvers >> resolvers: anObject [
+TypChainableResolvers >> resolvers: anObject [
 	<typTypeArgument: 1 as: 'SequenceableCollection<TypResolver<TypLookup>>'>
 	resolvers := anObject
 ]
 
 { #category : #'as yet unclassified' }
-TypResolvers >> resolversFor: aLookup [
+TypChainableResolvers >> resolversFor: aLookup [
 	^ (resolvers select: [ :e | e resolves: aLookup ]) flatCollect: [ :e | e resolversFor: aLookup ]
 ]
 
 { #category : #accessing }
-TypResolvers >> resolves: aLookup [
+TypChainableResolvers >> resolves: aLookup [
 	^ resolvers anySatisfy: [ :e | e resolves: aLookup ]
 ]
 
 { #category : #accessing }
-TypResolvers >> typeFor: aLookup using: aBlock [
+TypChainableResolvers >> typeFor: aLookup using: aBlock [
 	self
 		resolve: aLookup
 		using: [ :r :a | 
@@ -94,8 +100,8 @@ TypResolvers >> typeFor: aLookup using: aBlock [
 				do: [ ^ TypUnknownType instance ].
 			type isUnknown
 				ifFalse: [ ^ type ] ].
-	(defaultResolver isNotNil and: [ defaultResolver resolves: aLookup ])
-		ifTrue: [ ^ [ aBlock cull: defaultResolver cull: aLookup ]
+	(next isNotNil and: [ next resolves: aLookup ])
+		ifTrue: [ ^ [ aBlock cull: next cull: aLookup ]
 				on: TypNoCompatibleTypeError
 				do: [ ^ TypUnknownType instance ] ].
 	^ TypUnknownType instance

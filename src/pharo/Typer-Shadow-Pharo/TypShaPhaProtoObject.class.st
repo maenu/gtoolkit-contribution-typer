@@ -59,7 +59,7 @@ TypShaPhaProtoObject >> ___ifNil: _a ifNotNil: _b [
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ TypMethodResolvers global
+						ifTrue: [ TypChainableMethodResolvers instance
 								typeForResultOfMethod:
 									(TypMethodLookup new
 										receiverType: (a receiverType parameters at: 1);
@@ -86,7 +86,7 @@ TypShaPhaProtoObject >> ___ifNotNil: _a [
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ TypMethodResolvers global
+						ifTrue: [ TypChainableMethodResolvers instance
 								typeForResultOfMethod:
 									(TypMethodLookup new
 										receiverType: (a receiverType parameters at: 1);

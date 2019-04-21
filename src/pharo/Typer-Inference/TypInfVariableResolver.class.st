@@ -1,49 +1,19 @@
 Class {
 	#name : #TypInfVariableResolver,
-	#superclass : #TypVariableResolver,
+	#superclass : #TypCachingResolver,
 	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #initialization }
-TypInfVariableResolver >> initialize [
-	super initialize.
-	self
-		type: [ :a | 
-			| clazz clazzes |
-			clazz := a receiverType asClass.
-			clazzes := a selector first isUppercase
-				ifTrue: [ | definer |
-					definer := clazz instanceSide
-						whichClassDefinesClassVar: a selector.
-					(self withAllSuperclassesOf: clazz instanceSide until: definer)
-						flatCollect: [ :e | 
-							{e instanceSide.
-							e classSide} ] ]
-				ifFalse: [ | definer |
-					definer := clazz whichClassDefinesInstVar: a selector.
-					self withAllSuperclassesOf: clazz until: definer ].
-			self
-				flag:
-					'this might also catch overridden methods, making it not completely sound'.
-			(clazzes
-				flatCollect: [ :e | 
-					e methods
-						flatCollect: [ :f | 
-							(f assignmentNodes select: [ :g | g variable name = a selector ])
-								collect: [ :g | g value typType ] ] ]) typAsType ]
+{ #category : #accessing }
+TypInfVariableResolver >> cachedResolversFor: aLookup [
+	aLookup receiverType representsClass
+		ifFalse: [ ^ #() ].
+	^ cache
+		at: aLookup receiverType asClass name -> aLookup selector
+		ifAbsent: [ #() ]
 ]
 
 { #category : #accessing }
-TypInfVariableResolver >> resolves: aLookup [
-	^ aLookup receiverType representsClass
-]
-
-{ #category : #initialization }
-TypInfVariableResolver >> withAllSuperclassesOf: aClass until: anotherClass [
-	<typTypeArgument: 1 as: 'ClassDescription'>
-	<typTypeArgument: 2 as: 'ClassDescription'>
-	<typTypeResultAs: 'SequenceableCollection<ClassDescription>'>
-	| clazzes |
-	clazzes := aClass withAllSuperclasses.
-	^ clazzes copyFrom: 1 to: (clazzes indexOf: anotherClass)
+TypInfVariableResolver >> selector [
+	^ #typInfVariableResolverIndex
 ]

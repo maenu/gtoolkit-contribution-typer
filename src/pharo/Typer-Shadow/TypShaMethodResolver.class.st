@@ -1,11 +1,11 @@
 Class {
-	#name : #TypShaVariableResolvers,
-	#superclass : #TypCachingResolvers,
+	#name : #TypShaMethodResolver,
+	#superclass : #TypCachingResolver,
 	#category : #'Typer-Shadow-Core'
 }
 
 { #category : #accessing }
-TypShaVariableResolvers >> cachedResolversFor: aLookup [
+TypShaMethodResolver >> cachedResolversFor: aLookup [
 	aLookup receiverType representsClass
 		ifFalse: [ ^ #() ].
 	^ cache
@@ -14,6 +14,6 @@ TypShaVariableResolvers >> cachedResolversFor: aLookup [
 ]
 
 { #category : #accessing }
-TypShaVariableResolvers >> selector [
-	^ #typShaVariableResolverIndex
+TypShaMethodResolver >> selector [
+	^ #typShaMethodResolverIndex
 ]

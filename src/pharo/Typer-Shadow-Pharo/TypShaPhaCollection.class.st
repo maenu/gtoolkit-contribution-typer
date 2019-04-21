@@ -146,7 +146,7 @@ TypShaPhaCollection >> ___collect: _a [
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ TypMethodResolvers global
+						ifTrue: [ TypChainableMethodResolvers instance
 								typeForResultOfMethod:
 									(TypMethodLookup new
 										receiverType: (a receiverType parameters at: 1);
@@ -204,7 +204,7 @@ TypShaPhaCollection >> ___detect: _a ifFound: _b ifNone: _c [
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ TypMethodResolvers global
+						ifTrue: [ TypChainableMethodResolvers instance
 								typeForResultOfMethod:
 									(TypMethodLookup new
 										receiverType: (a receiverType parameters at: 1);
@@ -257,7 +257,7 @@ TypShaPhaCollection >> ___flatCollect: _a [
 						ifTrue: [ argumentType result parameters at: 1 ]
 						ifFalse: [ TypUnknownType instance ] ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ (TypMethodResolvers global
+						ifTrue: [ (TypChainableMethodResolvers instance
 								typeForResultOfMethod:
 									(TypMethodLookup new
 										receiverType: (a receiverType parameters at: 1);
@@ -283,7 +283,7 @@ TypShaPhaCollection >> ___groupedBy: _a [
 			keyType := argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ TypMethodResolvers global
+						ifTrue: [ TypChainableMethodResolvers instance
 								typeForResultOfMethod:
 									(TypMethodLookup new
 										receiverType: (a receiverType parameters at: 1);
@@ -332,7 +332,7 @@ TypShaPhaCollection >> ___ifEmpty: _a ifNotEmpty: _b [
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ TypMethodResolvers global
+						ifTrue: [ TypChainableMethodResolvers instance
 								typeForResultOfMethod:
 									(TypMethodLookup new
 										receiverType: a receiverType;
@@ -359,7 +359,7 @@ TypShaPhaCollection >> ___ifNotEmpty: _a [
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ TypMethodResolvers global
+						ifTrue: [ TypChainableMethodResolvers instance
 								typeForResultOfMethod:
 									(TypMethodLookup new
 										receiverType: a receiverType;

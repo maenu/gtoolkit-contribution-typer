@@ -1,16 +1,16 @@
 Class {
-	#name : #TypShaTypTypResolvers,
+	#name : #TypShaTypTypChainableResolvers,
 	#superclass : #TypShaShadow,
 	#category : #'Typer-Shadow-Typer'
 }
 
 { #category : #'as yet unclassified' }
-TypShaTypTypResolvers class >> shadowedClass [
-	^ TypResolvers class
+TypShaTypTypChainableResolvers class >> shadowedClass [
+	^ TypChainableResolvers class
 ]
 
 { #category : #accessing }
-TypShaTypTypResolvers >> ___resolve: _a using: _b [
+TypShaTypTypChainableResolvers >> ___resolve: _a using: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -27,7 +27,7 @@ TypShaTypTypResolvers >> ___resolve: _a using: _b [
 ]
 
 { #category : #accessing }
-TypShaTypTypResolvers >> ___typeFor: _a using: _b [
+TypShaTypTypChainableResolvers >> ___typeFor: _a using: _b [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1

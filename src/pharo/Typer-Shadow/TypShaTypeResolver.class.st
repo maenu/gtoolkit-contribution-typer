@@ -1,15 +1,15 @@
 Class {
-	#name : #TypShaTypeResolvers,
-	#superclass : #TypCachingResolvers,
+	#name : #TypShaTypeResolver,
+	#superclass : #TypCachingResolver,
 	#category : #'Typer-Shadow-Core'
 }
 
 { #category : #accessing }
-TypShaTypeResolvers >> cachedResolversFor: aLookup [
+TypShaTypeResolver >> cachedResolversFor: aLookup [
 	^ cache at: aLookup clazz name ifAbsent: [ #() ]
 ]
 
 { #category : #accessing }
-TypShaTypeResolvers >> selector [
+TypShaTypeResolver >> selector [
 	^ #typShaTypeResolverIndex
 ]

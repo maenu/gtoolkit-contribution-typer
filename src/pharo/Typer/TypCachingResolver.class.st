@@ -1,5 +1,5 @@
 Class {
-	#name : #TypCachingResolvers,
+	#name : #TypCachingResolver,
 	#superclass : #TypResolver,
 	#instVars : [
 		'cache'
@@ -8,19 +8,19 @@ Class {
 }
 
 { #category : #accessing }
-TypCachingResolvers >> cachedResolversFor: aLookup [
+TypCachingResolver >> cachedResolversFor: aLookup [
 	self subclassResponsibility
 ]
 
 { #category : #initialization }
-TypCachingResolvers >> initialize [
+TypCachingResolver >> initialize [
 	super initialize.
 	self flag: 'FIXME invalidate on class add/remove'.
 	self invalidate
 ]
 
 { #category : #initialization }
-TypCachingResolvers >> invalidate [
+TypCachingResolver >> invalidate [
 	cache := ((Smalltalk allClasses
 		flatCollect: [ :e | 
 			{e.
@@ -28,18 +28,18 @@ TypCachingResolvers >> invalidate [
 ]
 
 { #category : #accessing }
-TypCachingResolvers >> resolversFor: aLookup [
+TypCachingResolver >> resolversFor: aLookup [
 	^ ((self cachedResolversFor: aLookup)
 		select: [ :e | e resolves: aLookup ])
 		flatCollect: [ :e | e resolversFor: aLookup ]
 ]
 
 { #category : #accessing }
-TypCachingResolvers >> resolves: aLookup [
+TypCachingResolver >> resolves: aLookup [
 	^ (self resolversFor: aLookup) isNotEmpty
 ]
 
 { #category : #accessing }
-TypCachingResolvers >> selector [
+TypCachingResolver >> selector [
 	self subclassResponsibility
 ]

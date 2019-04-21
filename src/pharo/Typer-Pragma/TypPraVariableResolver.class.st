@@ -1,11 +1,11 @@
 Class {
-	#name : #TypPraVariableResolvers,
-	#superclass : #TypCachingResolvers,
+	#name : #TypPraVariableResolver,
+	#superclass : #TypCachingResolver,
 	#category : #'Typer-Pragma-Core'
 }
 
 { #category : #accessing }
-TypPraVariableResolvers >> cachedResolversFor: aLookup [
+TypPraVariableResolver >> cachedResolversFor: aLookup [
 	aLookup receiverType representsClass
 		ifFalse: [ ^ #() ].
 	^ cache
@@ -14,7 +14,7 @@ TypPraVariableResolvers >> cachedResolversFor: aLookup [
 ]
 
 { #category : #initialization }
-TypPraVariableResolvers >> invalidate [
+TypPraVariableResolver >> invalidate [
 	cache := ((Smalltalk allClasses
 		flatCollect: [ :e | 
 			{e.
@@ -22,6 +22,6 @@ TypPraVariableResolvers >> invalidate [
 ]
 
 { #category : #initialization }
-TypPraVariableResolvers >> selector [
+TypPraVariableResolver >> selector [
 	^ #typPraVariableResolverIndex
 ]

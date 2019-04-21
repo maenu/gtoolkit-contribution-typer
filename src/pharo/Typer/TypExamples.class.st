@@ -7,21 +7,24 @@ Class {
 { #category : #example }
 TypExamples >> example [
 	<gtExample>
-	((TypTypeResolvers
+	((TypChainableTypeResolvers
 		reset;
-		instance) defaultResolver: TypInfTypeResolver new) resolvers
-		add: TypPraTypeResolvers new;
-		add: TypShaTypeResolvers new.
-	((TypMethodResolvers
+		instance)
+		next: (TypChainableTypeResolvers new add: TypInfTypeResolver new))
+		add: TypPraTypeResolver new;
+		add: TypShaTypeResolver new.
+	((TypChainableMethodResolvers
 		reset;
-		instance) defaultResolver: TypInfMethodResolver new) resolvers
-		add: TypPraMethodResolvers new;
-		add: TypShaMethodResolvers new.
-	((TypVariableResolvers
+		instance)
+		next: (TypChainableTypeResolvers new add: TypInfMethodResolver new))
+		add: TypPraMethodResolver new;
+		add: TypShaMethodResolver new.
+	((TypChainableVariableResolvers
 		reset;
-		instance) defaultResolver: TypInfVariableResolver new) resolvers
-		add: TypPraVariableResolvers new;
-		add: TypShaVariableResolvers new.
+		instance)
+		next: (TypChainableTypeResolvers new add: TypInfVariableResolver new))
+		add: TypPraVariableResolver new;
+		add: TypShaVariableResolver new.
 	^ self
 ]
 

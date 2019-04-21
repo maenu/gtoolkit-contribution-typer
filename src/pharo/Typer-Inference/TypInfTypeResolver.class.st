@@ -1,11 +1,15 @@
 Class {
 	#name : #TypInfTypeResolver,
-	#superclass : #TypTypeResolver,
+	#superclass : #TypCachingResolver,
 	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #initialization }
-TypInfTypeResolver >> initialize [
-	super initialize.
-	self type: [ :a | a clazz typAsNamedType ]
+{ #category : #accessing }
+TypInfTypeResolver >> cachedResolversFor: aLookup [
+	^ cache at: aLookup clazz name ifAbsent: [ #() ]
+]
+
+{ #category : #accessing }
+TypInfTypeResolver >> selector [
+	^ #typInfTypeResolverIndex
 ]

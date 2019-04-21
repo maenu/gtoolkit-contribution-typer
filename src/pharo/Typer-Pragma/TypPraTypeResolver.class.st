@@ -1,15 +1,15 @@
 Class {
-	#name : #TypPraTypeResolvers,
-	#superclass : #TypCachingResolvers,
+	#name : #TypPraTypeResolver,
+	#superclass : #TypCachingResolver,
 	#category : #'Typer-Pragma-Core'
 }
 
 { #category : #accessing }
-TypPraTypeResolvers >> cachedResolversFor: aLookup [
+TypPraTypeResolver >> cachedResolversFor: aLookup [
 	^ cache at: aLookup clazz name ifAbsent: [ #() ]
 ]
 
 { #category : #initialization }
-TypPraTypeResolvers >> selector [
+TypPraTypeResolver >> selector [
 	^ #typPraTypeResolverIndex
 ]
