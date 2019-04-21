@@ -113,7 +113,7 @@ TypUnionType >> isNamed [
 
 { #category : #converting }
 TypUnionType >> isParametric [
-	^ self superType isParametric
+	^ self hasSuperType and: [ self superType isParametric ]
 ]
 
 { #category : #testing }
@@ -163,6 +163,7 @@ TypUnionType >> representsClass [
 { #category : #accessing }
 TypUnionType >> superType [
 	| remains current |
+	types ifEmpty: [ ^ self ].
 	remains := types copy.
 	current := remains anyOne.
 	remains remove: current.

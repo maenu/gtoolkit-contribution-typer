@@ -101,7 +101,7 @@ TypChainableResolvers >> typeFor: aLookup using: aBlock [
 			type isUnknown
 				ifFalse: [ ^ type ] ].
 	(next isNotNil and: [ next resolves: aLookup ])
-		ifTrue: [ ^ [ aBlock cull: next cull: aLookup ]
+		ifTrue: [ ^ [ next typeFor: aLookup using: aBlock ]
 				on: TypNoCompatibleTypeError
 				do: [ ^ TypUnknownType instance ] ].
 	^ TypUnknownType instance
