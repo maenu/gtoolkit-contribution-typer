@@ -20,7 +20,7 @@ TypMethodResolvers class >> initialize [
 TypMethodResolvers class >> initializeGlobal [
 	<typTypeResultAs: 'TypMethodResolvers<TypMethodLookup,TypMethodResolver<TypMethodLookup>>'>
 	^ (super initializeGlobal "typCastAs TypMethodResolvers<TypMethodLookup,TypMethodResolver<TypMethodLookup>>")
-		defaultResolver: TypDefaultMethodResolver new;
+		defaultResolver: TypMethodResolver new;
 		yourself
 ]
 

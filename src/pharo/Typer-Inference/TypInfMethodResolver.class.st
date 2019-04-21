@@ -1,11 +1,11 @@
 Class {
-	#name : #TypDefaultMethodResolver,
+	#name : #TypInfMethodResolver,
 	#superclass : #TypMethodResolver,
-	#category : #'Typer-Core'
+	#category : #'Typer-Inference-Core'
 }
 
 { #category : #initialization }
-TypDefaultMethodResolver >> initialize [
+TypInfMethodResolver >> initialize [
 	super initialize.
 	self
 		argumentTypes: [ TypUnknownType instance ];
@@ -19,7 +19,7 @@ TypDefaultMethodResolver >> initialize [
 ]
 
 { #category : #accessing }
-TypDefaultMethodResolver >> resolves: aLookup [
+TypInfMethodResolver >> resolves: aLookup [
 	^ aLookup receiverType representsClass
 		and: [ | method |
 			method := aLookup receiverType asClass lookupSelector: aLookup selector.

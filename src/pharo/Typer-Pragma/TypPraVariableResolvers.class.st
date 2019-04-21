@@ -1,6 +1,6 @@
 Class {
 	#name : #TypPraVariableResolvers,
-	#superclass : #TypPraResolvers,
+	#superclass : #TypCachingResolvers,
 	#category : #'Typer-Pragma-Core'
 }
 

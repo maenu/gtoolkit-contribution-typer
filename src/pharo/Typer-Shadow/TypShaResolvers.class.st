@@ -3,7 +3,7 @@ Class {
 	#superclass : #TypResolver,
 	#instVars : [
 		'resolvers',
-		'resolversChache'
+		'cache'
 	],
 	#category : #'Typer-Shadow-Core'
 }
@@ -14,7 +14,7 @@ TypShaResolvers >> initialize [
 	<typTypeVariable: 'resolversChache' as: 'Dictionary<String<Character>,SequenceableCollection<TypResolver<TypLookup>>>'>
 	super initialize.
 	self flag: 'FIXME invalidate on class add/remove'.
-	resolversChache := Dictionary new
+	cache := Dictionary new
 ]
 
 { #category : #accessing }
@@ -29,7 +29,7 @@ TypShaResolvers >> resolversFor: aLookup shadowing: aClass [
 
 { #category : #accessing }
 TypShaResolvers >> resolversForShadowing: aClass [
-	^ resolversChache
+	^ cache
 		at: aClass name
 		ifAbsentPut:
 			[ (TypShaShadow shadowClassesFor: aClass) flatCollect: resolvers	"typParameters TypResolver<TypLookup>" ]

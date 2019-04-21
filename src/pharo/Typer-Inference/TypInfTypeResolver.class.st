@@ -1,11 +1,11 @@
 Class {
-	#name : #TypDefaultTypeResolver,
+	#name : #TypInfTypeResolver,
 	#superclass : #TypTypeResolver,
-	#category : #'Typer-Core'
+	#category : #'Typer-Inference-Core'
 }
 
 { #category : #initialization }
-TypDefaultTypeResolver >> initialize [
+TypInfTypeResolver >> initialize [
 	super initialize.
 	self type: [ :a | a clazz typAsNamedType ]
 ]

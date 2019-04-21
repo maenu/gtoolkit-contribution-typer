@@ -42,10 +42,15 @@ TypMethodResolver >> argumentTypes: anObject [
 { #category : #initialization }
 TypMethodResolver >> initialize [
 	<typTypeParametersAs: 'TypMethodLookup'>
-	<typTypeVariable: 'argumentTypes' as: 'BlockClosure[Integer,TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->TypType'>
-	<typTypeVariable: 'resultType' as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->TypType'>
-	<typTypeVariable: 'signalsAlways' as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->!Boolean'>
+	<typTypeVariable: 'argumentTypes' as:
+		'BlockClosure[Integer,TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->TypType'>
+	<typTypeVariable: 'resultType' as:
+		'BlockClosure[TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->TypType'>
+	<typTypeVariable: 'signalsAlways' as:
+		'BlockClosure[TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->!Boolean'>
 	super initialize.
+	argumentTypes := [ TypNoCompatibleTypeError new signal ].
+	resultType := [ TypNoCompatibleTypeError new signal ].
 	signalsAlways := [ nil ]
 ]
 

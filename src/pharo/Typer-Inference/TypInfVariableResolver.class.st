@@ -1,11 +1,11 @@
 Class {
-	#name : #TypDefaultVariableResolver,
+	#name : #TypInfVariableResolver,
 	#superclass : #TypVariableResolver,
-	#category : #'Typer-Core'
+	#category : #'Typer-Inference-Core'
 }
 
 { #category : #initialization }
-TypDefaultVariableResolver >> initialize [
+TypInfVariableResolver >> initialize [
 	super initialize.
 	self
 		type: [ :a | 
@@ -34,12 +34,12 @@ TypDefaultVariableResolver >> initialize [
 ]
 
 { #category : #accessing }
-TypDefaultVariableResolver >> resolves: aLookup [
+TypInfVariableResolver >> resolves: aLookup [
 	^ aLookup receiverType representsClass
 ]
 
 { #category : #initialization }
-TypDefaultVariableResolver >> withAllSuperclassesOf: aClass until: anotherClass [
+TypInfVariableResolver >> withAllSuperclassesOf: aClass until: anotherClass [
 	<typTypeArgument: 1 as: 'ClassDescription'>
 	<typTypeArgument: 2 as: 'ClassDescription'>
 	<typTypeResultAs: 'SequenceableCollection<ClassDescription>'>
