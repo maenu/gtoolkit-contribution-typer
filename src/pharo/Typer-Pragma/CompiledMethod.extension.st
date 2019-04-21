@@ -25,9 +25,9 @@ CompiledMethod >> typPraMethodResolverIndex [
 		ifNotNil: [ signalsAlwaysPragma arguments first ].
 	^ {(self methodClass name -> self selector
 		->
-			(TypMethodResolver new
+			{(TypMethodResolver new
 				argumentTypes: [ :i | argumentTypes at: i ];
 				resultType: [ resultType ];
 				signalsAlways: [ signalsAlways ];
-				yourself))}
+				yourself)})}
 ]

@@ -6,9 +6,7 @@ Class {
 
 { #category : #accessing }
 TypPraTypeResolvers >> cachedResolversFor: aLookup [
-	aLookup clazz
-		ifFalse: [ ^ #() ].
-	^ cache at: aLookup clazz name
+	^ cache at: aLookup clazz name ifAbsent: [ #() ]
 ]
 
 { #category : #initialization }

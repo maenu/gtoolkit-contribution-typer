@@ -16,9 +16,9 @@ ClassDescription >> typPraTypeResolverIndex [
 	types := (pragma arguments at: 1) typAsTypes.
 	^ {(self name
 		->
-			(TypTypeResolver new
+			{(TypTypeResolver new
 				type: [ :a | a clazz typAsNamedType asParametricType: types ];
-				yourself))}
+				yourself)})}
 ]
 
 { #category : #'*Typer-Pragma' }
@@ -35,7 +35,7 @@ ClassDescription >> typPraVariableResolverIndex [
 			type := (e arguments at: 2) typAsType.
 			self name -> variable
 				->
-					(TypVariableResolver new
+					{(TypVariableResolver new
 						type: [ type ];
-						yourself) ]
+						yourself)} ]
 ]
