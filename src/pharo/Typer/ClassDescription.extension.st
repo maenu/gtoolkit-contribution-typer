@@ -11,7 +11,7 @@ ClassDescription >> typAsNamedType [
 { #category : #'*Typer' }
 ClassDescription >> typAsType [
 	<typTypeResultAs: 'TypType'>
-	^ TypTypeResolvers global
+	^ TypTypeResolvers instance
 		typForClass:
 			(TypTypeLookup new
 				clazz: self;
@@ -24,7 +24,7 @@ ClassDescription >> typTypeForVariable: aSymbol [
 	<typTypeResultAs: 'TypType'>
 	| type |
 	type := self typAsType.
-	^ TypVariableResolvers global
+	^ TypVariableResolvers instance
 		typeForVariable:
 			(TypVariableLookup new
 				receiverType: type;

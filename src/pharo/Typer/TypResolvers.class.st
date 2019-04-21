@@ -6,16 +6,10 @@ Class {
 		'defaultResolver'
 	],
 	#classInstVars : [
-		'global'
+		'instance'
 	],
 	#category : #'Typer-Core'
 }
-
-{ #category : #accessing }
-TypResolvers class >> global [
-	<typTypeResultAs: 'TypResolvers<TypLookup,TypResolver<TypLookup>>'>
-	^ global ifNil: [ self initializeGlobal ]
-]
 
 { #category : #accessing }
 TypResolvers class >> initialize [
@@ -24,9 +18,14 @@ TypResolvers class >> initialize [
 ]
 
 { #category : #accessing }
-TypResolvers class >> initializeGlobal [
+TypResolvers class >> instance [
 	<typTypeResultAs: 'TypResolvers<TypLookup,TypResolver<TypLookup>>'>
-	^ global := self new
+	^ instance ifNil: [ instance := self new ]
+]
+
+{ #category : #accessing }
+TypResolvers class >> reset [
+	instance := nil
 ]
 
 { #category : #accessing }

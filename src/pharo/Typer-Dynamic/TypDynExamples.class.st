@@ -18,9 +18,9 @@ TypDynExamples >> neoJsonCore [
 				select: [ :e | e isTestCase and: e isAbstract not ])
 				do: [ :e"typCastAs TestCase class"
 					 | e suite run: testResult ] ].
-	TypMethodResolvers initializeGlobal resolvers
+	TypMethodResolvers reset resolvers
 		add: association key value.
-	TypVariableResolvers initializeGlobal resolvers
+	TypVariableResolvers reset resolvers
 		add: association value.
 	^ testResult -> #'Neo-JSON-Core' asPackage methods
 ]

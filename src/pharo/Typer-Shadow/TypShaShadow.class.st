@@ -21,13 +21,13 @@ TypShaShadow class >> instance [
 
 { #category : #'as yet unclassified' }
 TypShaShadow class >> methodResolverIndex [
-	^ (self selectors
+	^ (self class selectors
 		select: [ :e | (e beginsWith: '___') or: [ e beginsWith: '~~~' ] ])
 		collect: [ :e | 
 			| name_ |
 			name_ := e copyFrom: 4 to: e size.
 			self shadowedClass name -> name_
-				-> {(self perform: name_ asSymbol withEnoughArguments: {})} ]
+				-> {(self perform: e asSymbol withEnoughArguments: {})} ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -47,7 +47,7 @@ TypShaShadow class >> typeResolverIndex [
 
 { #category : #'as yet unclassified' }
 TypShaShadow class >> variableResolverIndex [
-	^ (self instVarNames select: [ :e | e beginsWith: '___' ])
+	^ (self class instVarNames select: [ :e | e beginsWith: '___' ])
 		collect: [ :e | 
 			self shadowedClass name -> (e copyFrom: 4 to: e size)
 				-> {(self instVarNamed: e)} ]
@@ -62,13 +62,13 @@ TypShaShadow >> asType: aClass [
 
 { #category : #'as yet unclassified' }
 TypShaShadow >> methodResolverIndex [
-	^ (self selectors
+	^ (self class selectors
 		select: [ :e | (e beginsWith: '___') or: [ e beginsWith: '~~~' ] ])
 		collect: [ :e | 
 			| name |
 			name := e copyFrom: 4 to: e size.
 			self shadowedClass name -> name
-				-> {(self perform: name asSymbol withEnoughArguments: {})} ]
+				-> {(self perform: e asSymbol withEnoughArguments: {})} ]
 ]
 
 { #category : #accessing }
@@ -88,13 +88,16 @@ TypShaShadow >> typeResolverIndex [
 
 { #category : #'as yet unclassified' }
 TypShaShadow >> variableResolverIndex [
-	^ (self instVarNames select: [ :e | e beginsWith: '___' ])
+	^ ((self class instVarNames select: [ :e | e beginsWith: '___' ])
 		collect: [ :e | 
 			| name |
 			name := e copyFrom: 4 to: e size.
-			self shadowedClass name -> name
-				->
-					{(name first isUppercase
-						ifTrue: [ self class instanceSide classVarNamed: name ]
-						ifFalse: [ self instVarNamed: name ])} ]
+			self shadowedClass name -> name -> {(self instVarNamed: e)} ])
+		,
+			((self class classVarNames select: [ :e | e beginsWith: '___' ])
+				collect: [ :e | 
+					| name |
+					name := e copyFrom: 4 to: e size.
+					self shadowedClass name -> name
+						-> {(self class instanceSide classVarNamed: e)} ])
 ]

@@ -8,11 +8,11 @@ Class {
 TypShaExamples >> pharo [
 	<gtExample>
 	<typTypeResultAs: 'CompiledMethod<Integer>'>
-	TypTypeResolvers initializeGlobal resolvers
+	TypTypeResolvers reset resolvers
 		add: TypShaTypeResolvers new.
-	TypMethodResolvers initializeGlobal resolvers
+	TypMethodResolvers reset resolvers
 		add: TypShaMethodResolvers new.
-	TypVariableResolvers initializeGlobal resolvers
+	TypVariableResolvers reset resolvers
 		add: TypShaVariableResolvers new.
 	^ self class methodNamed: #playground
 ]

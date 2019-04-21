@@ -5,23 +5,15 @@ Class {
 }
 
 { #category : #accessing }
-TypVariableResolvers class >> global [
-	<typTypeResultAs: 'TypVariableResolvers<TypVariableLookup,TypVariableResolver<TypVariableLookup>>'>
-	^ super global "typCastAs TypVariableResolvers<TypVariableLookup,TypVariableResolver<TypVariableLookup>>"
-]
-
-{ #category : #accessing }
 TypVariableResolvers class >> initialize [
 	<typTypeVariable: 'global' as: 'TypVariableResolvers<TypVariableLookup,TypVariableResolver<TypVariableLookup>>'>
 	
 ]
 
 { #category : #accessing }
-TypVariableResolvers class >> initializeGlobal [
+TypVariableResolvers class >> instance [
 	<typTypeResultAs: 'TypVariableResolvers<TypVariableLookup,TypVariableResolver<TypVariableLookup>>'>
-	^ (super initializeGlobal "typCastAs TypVariableResolvers<TypVariableLookup,TypVariableResolver<TypVariableLookup>>")
-		defaultResolver: TypVariableResolver new;
-		yourself
+	^ super instance "typCastAs TypVariableResolvers<TypVariableLookup,TypVariableResolver<TypVariableLookup>>"
 ]
 
 { #category : #initialization }

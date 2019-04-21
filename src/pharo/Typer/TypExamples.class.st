@@ -7,13 +7,19 @@ Class {
 { #category : #example }
 TypExamples >> example [
 	<gtExample>
-	TypTypeResolvers initializeGlobal resolvers
+	((TypTypeResolvers
+		reset;
+		instance) defaultResolver: TypInfTypeResolver new) resolvers
 		add: TypPraTypeResolvers new;
 		add: TypShaTypeResolvers new.
-	TypMethodResolvers initializeGlobal resolvers
+	((TypMethodResolvers
+		reset;
+		instance) defaultResolver: TypInfMethodResolver new) resolvers
 		add: TypPraMethodResolvers new;
 		add: TypShaMethodResolvers new.
-	TypVariableResolvers initializeGlobal resolvers
+	((TypVariableResolvers
+		reset;
+		instance) defaultResolver: TypInfVariableResolver new) resolvers
 		add: TypPraVariableResolvers new;
 		add: TypShaVariableResolvers new.
 	^ self

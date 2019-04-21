@@ -12,7 +12,7 @@ RBMessageNode >> typSignalsAlways [
 			receiverType isUnion
 				ifTrue: [ | signalsAlways |
 					signalsAlways := (receiverType "typCastAs TypUnionType") types
-						collect: [ :e | TypMethodResolvers global
+						collect: [ :e | TypMethodResolvers instance
 								signalsAlways:
 									(TypMethodLookup new
 										receiverType: e;
@@ -23,7 +23,7 @@ RBMessageNode >> typSignalsAlways [
 					(signalsAlways anySatisfy: #isNil)
 						ifTrue: [ nil ]
 						ifFalse: [ signalsAlways inject: true into: [ :a :b | a and: b ] ] ]
-				ifFalse: [ TypMethodResolvers global
+				ifFalse: [ TypMethodResolvers instance
 						signalsAlways:
 							(TypMethodLookup new
 								receiverType: receiverType;
@@ -48,7 +48,7 @@ RBMessageNode >> typTypeForArgumentAt: anInteger [
 			receiverType isUnion
 				ifTrue: [ ((receiverType "typCastAs TypUnionType") types
 						collect: [ :e | 
-							TypMethodResolvers global
+							TypMethodResolvers instance
 								typeForArgumentAt: anInteger
 								ofMethod:
 									(TypMethodLookup new
@@ -57,7 +57,7 @@ RBMessageNode >> typTypeForArgumentAt: anInteger [
 										argumentTypes: argumentTypes;
 										argumentNodes: self arguments;
 										yourself) ]) typAsType ]
-				ifFalse: [ TypMethodResolvers global
+				ifFalse: [ TypMethodResolvers instance
 						typeForArgumentAt: anInteger
 						ofMethod:
 							(TypMethodLookup new
@@ -87,7 +87,7 @@ RBMessageNode >> typTypeForResult [
 			receiverType isUnion
 				ifTrue: [ ((receiverType "typCastAs TypUnionType") types
 						collect: [ :e | 
-							TypMethodResolvers global
+							TypMethodResolvers instance
 								typeForResultOfMethod:
 									(TypMethodLookup new
 										receiverType: e;
@@ -95,7 +95,7 @@ RBMessageNode >> typTypeForResult [
 										argumentTypes: argumentTypes;
 										argumentNodes: self arguments;
 										yourself) ]) typAsType ]
-				ifFalse: [ TypMethodResolvers global
+				ifFalse: [ TypMethodResolvers instance
 						typeForResultOfMethod:
 							(TypMethodLookup new
 								receiverType: receiverType;
