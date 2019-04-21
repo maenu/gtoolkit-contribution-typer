@@ -23,11 +23,11 @@ TypPraExamples >> example [
 	<gtExample>
 	<typTypeResultAs: 'CompiledMethod<Integer>'>
 	TypTypeResolvers initializeGlobal resolvers
-		add: TypPraTypeResolver new.
+		add: TypPraTypeResolvers new.
 	TypMethodResolvers initializeGlobal resolvers
-		add: TypPraMethodResolver new.
+		add: TypPraMethodResolvers new.
 	TypVariableResolvers initializeGlobal resolvers
-		add: TypPraVariableResolver new.
+		add: TypPraVariableResolvers new.
 	^ self class methodNamed: #comment:
 ]
 

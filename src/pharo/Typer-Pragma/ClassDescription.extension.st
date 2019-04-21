@@ -1,6 +1,11 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Pragma' }
+ClassDescription >> typPraMethodResolverIndex [
+	^ self methods flatCollect: #typPraMethodResolverIndex
+]
+
+{ #category : #'*Typer-Pragma' }
 ClassDescription >> typPraTypeResolverIndex [
 	| pragma types |
 	pragma := (self methods
@@ -13,7 +18,7 @@ ClassDescription >> typPraTypeResolverIndex [
 		->
 			(TypTypeResolver new
 				type: [ :a | a clazz typAsNamedType asParametricType: types ];
-				yourself))} asDictionary
+				yourself))}
 ]
 
 { #category : #'*Typer-Pragma' }
@@ -23,7 +28,7 @@ ClassDescription >> typPraVariableResolverIndex [
 		detect: [ :e | e selector = #initialize ]
 		ifNone: [ ^ #() ]) pragmas
 		select: [ :e | e selector = #typTypeVariable:as: ].
-	^ (pragmas
+	^ pragmas
 		collect: [ :e | 
 			| variable type |
 			variable := (e arguments at: 1) typAsType.
@@ -32,5 +37,5 @@ ClassDescription >> typPraVariableResolverIndex [
 				->
 					(TypVariableResolver new
 						type: [ type ];
-						yourself) ]) asDictionary
+						yourself) ]
 ]

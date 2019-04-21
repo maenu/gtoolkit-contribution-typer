@@ -8,13 +8,13 @@ Class {
 TypExamples >> example [
 	<gtExample>
 	TypTypeResolvers initializeGlobal resolvers
-		add: TypPraTypeResolver new;
+		add: TypPraTypeResolvers new;
 		add: TypShaTypeResolvers new.
 	TypMethodResolvers initializeGlobal resolvers
-		add: TypPraMethodResolver new;
+		add: TypPraMethodResolvers new;
 		add: TypShaMethodResolvers new.
 	TypVariableResolvers initializeGlobal resolvers
-		add: TypPraVariableResolver new;
+		add: TypPraVariableResolvers new;
 		add: TypShaVariableResolvers new.
 	^ self
 ]
