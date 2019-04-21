@@ -124,6 +124,14 @@ TypShaShadow class >> typGtShadowClassVariable: aSymbol type: aType [
 ]
 
 { #category : #'*Typer-GToolkit' }
+TypShaShadow class >> typGtShadowFor: aClass [
+	<typTypeArgument: 1 as: 'ClassDescription'>
+	<typTypeResultAs: 'SequenceableCollection<TypShaShadow class>'>
+	^ self allSubclasses "typParameters TypShaShadow class"
+		select: [ :e | e shadowedClass == aClass classSide ]
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowInstanceMethod: aSymbol arguments: someTypes result: aType [
 	<typTypeArgument: 1 as: 'Symbol<Character>'>
 	<typTypeArgument: 2 as: 'SequenceableCollection<TypType>'>

@@ -1,19 +1,11 @@
 Class {
 	#name : #TypShaShadow,
 	#superclass : #TypResolver,
+	#classInstVars : [
+		'instance'
+	],
 	#category : #'Typer-Shadow-Core'
 }
-
-{ #category : #converting }
-TypShaShadow class >> asMethodResolvers [
-	<typTypeResultAs: 'SequenceableCollection<TypShaMethodResolver<TypMethodLookup>>'>
-	^ {(TypShaMethodResolver new
-		shadow: self;
-		yourself).
-	(TypShaMethodResolver new
-		shadow: self new;
-		yourself)}
-]
 
 { #category : #accessing }
 TypShaShadow class >> asType: aClass [
@@ -22,34 +14,20 @@ TypShaShadow class >> asType: aClass [
 	^ aClass typAsNamedType
 ]
 
-{ #category : #converting }
-TypShaShadow class >> asTypeResolvers [
-	<typTypeResultAs: 'SequenceableCollection<TypShaTypeResolver<TypTypeLookup>>'>
-	^ {(TypShaTypeResolver new
-		shadow: self;
-		yourself).
-	(TypShaTypeResolver new
-		shadow: self new;
-		yourself)}
+{ #category : #'class initialization' }
+TypShaShadow class >> instance [
+	^ instance ifNil: [ instance := self new ]
 ]
 
-{ #category : #converting }
-TypShaShadow class >> asVariableResolvers [
-	<typTypeResultAs: 'SequenceableCollection<TypShaVariableResolver<TypVariableLookup>>'>
-	^ {(TypShaVariableResolver new
-		shadow: self;
-		yourself).
-	(TypShaVariableResolver new
-		shadow: self new;
-		yourself)}
-]
-
-{ #category : #accessing }
-TypShaShadow class >> shadowClassesFor: aClass [
-	<typTypeArgument: 1 as: 'ClassDescription'>
-	<typTypeResultAs: 'SequenceableCollection<TypShaShadow class>'>
-	^ self allSubclasses "typParameters TypShaShadow class"
-		select: [ :e | e shadowedClass == aClass classSide ]
+{ #category : #'as yet unclassified' }
+TypShaShadow class >> methodResolverIndex [
+	^ (self selectors
+		select: [ :e | (e beginsWith: '___') or: [ e beginsWith: '~~~' ] ])
+		collect: [ :e | 
+			| name_ |
+			name_ := e copyFrom: 4 to: e size.
+			self shadowedClass name -> name_
+				-> {(self perform: name_ asSymbol withEnoughArguments: {})} ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -58,12 +36,21 @@ TypShaShadow class >> shadowedClass [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
-TypShaShadow class >> typeResolver [
-	<typTypeResultAs: 'TypTypeResolver<TypTypeLookup>'>
-	^ TypTypeResolver new
-		type: [ :a | self asType: a clazz ];
-		yourself
+{ #category : #converting }
+TypShaShadow class >> typeResolverIndex [
+	^ {(self shadowedClass name
+		->
+			{(TypTypeResolver new
+				type: [ :a | self asType: a clazz ];
+				yourself)})}
+]
+
+{ #category : #'as yet unclassified' }
+TypShaShadow class >> variableResolverIndex [
+	^ (self instVarNames select: [ :e | e beginsWith: '___' ])
+		collect: [ :e | 
+			self shadowedClass name -> (e copyFrom: 4 to: e size)
+				-> {(self instVarNamed: e)} ]
 ]
 
 { #category : #converting }
@@ -73,16 +60,41 @@ TypShaShadow >> asType: aClass [
 	^ aClass typAsNamedType
 ]
 
+{ #category : #'as yet unclassified' }
+TypShaShadow >> methodResolverIndex [
+	^ (self selectors
+		select: [ :e | (e beginsWith: '___') or: [ e beginsWith: '~~~' ] ])
+		collect: [ :e | 
+			| name |
+			name := e copyFrom: 4 to: e size.
+			self shadowedClass name -> name
+				-> {(self perform: name asSymbol withEnoughArguments: {})} ]
+]
+
 { #category : #accessing }
 TypShaShadow >> shadowedClass [
 	<typTypeResultAs: 'ClassDescription'>
 	^ self class shadowedClass instanceSide
 ]
 
-{ #category : #accessing }
-TypShaShadow >> typeResolver [
-	<typTypeResultAs: 'TypTypeResolver<TypTypeLookup>'>
-	^ TypTypeResolver new
-		type: [ :a | self asType: a clazz ];
-		yourself
+{ #category : #converting }
+TypShaShadow >> typeResolverIndex [
+	^ {(self shadowedClass name
+		->
+			{(TypTypeResolver new
+				type: [ :a | self asType: a clazz ];
+				yourself)})}
+]
+
+{ #category : #'as yet unclassified' }
+TypShaShadow >> variableResolverIndex [
+	^ (self instVarNames select: [ :e | e beginsWith: '___' ])
+		collect: [ :e | 
+			| name |
+			name := e copyFrom: 4 to: e size.
+			self shadowedClass name -> name
+				->
+					{(name first isUppercase
+						ifTrue: [ self class instanceSide classVarNamed: name ]
+						ifFalse: [ self instVarNamed: name ])} ]
 ]

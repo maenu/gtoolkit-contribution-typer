@@ -1,27 +1,15 @@
 Class {
 	#name : #TypShaTypeResolvers,
-	#superclass : #TypShaResolvers,
+	#superclass : #TypCachingResolvers,
 	#category : #'Typer-Shadow-Core'
 }
 
-{ #category : #'as yet unclassified' }
-TypShaTypeResolvers >> initialize [
-	<typTypeParametersAs: 'TypTypeLookup'>
-	super initialize.
-	resolvers := #asTypeResolvers
+{ #category : #accessing }
+TypShaTypeResolvers >> cachedResolversFor: aLookup [
+	^ cache at: aLookup clazz name ifAbsent: [ #() ]
 ]
 
 { #category : #accessing }
-TypShaTypeResolvers >> resolversFor: aLookup [
-	<typTypeArgument: 1 as: 'TypTypeLookup'>
-	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypLookup>>'>
-	self assert: [ self resolves: aLookup ].
-	^ self resolversFor: aLookup shadowing: aLookup clazz
-]
-
-{ #category : #accessing }
-TypShaTypeResolvers >> resolves: aLookup [
-	<typTypeArgument: 1 as: 'TypTypeLookup'>
-	<typTypeResultAs: 'Boolean'>
-	^ self resolves: aLookup shadowing: aLookup clazz
+TypShaTypeResolvers >> selector [
+	^ #typShaTypeResolverIndex
 ]

@@ -26,7 +26,7 @@ RBGlobalNode >> typGtFiltersToTypeWithShadow [
 	self assert: [ self typGtCanType ].
 	clazz := self typDefiningClass.
 	variableType := self typType.
-	shadows := (TypShaShadow shadowClassesFor: clazz)
+	shadows := (TypShaShadow typGtShadowFor: clazz)
 		ifEmpty: [ {(TypShaShadow typGtNewShadowFor: clazz)} ]
 		ifNotEmpty: #yourself.
 	^ (shadows

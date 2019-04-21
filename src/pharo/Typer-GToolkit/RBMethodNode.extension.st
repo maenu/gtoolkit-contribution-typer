@@ -13,7 +13,7 @@ RBMethodNode >> typGtFiltersToTypeWithShadow [
 	argumentTypes := self numArgs
 		timesCollect: [ :i | self typTypeForArgumentAt: i ].
 	resultType := self typTypeForResult.
-	shadows := (TypShaShadow shadowClassesFor: clazz)
+	shadows := (TypShaShadow typGtShadowFor: clazz)
 		ifEmpty: [ {(TypShaShadow typGtNewShadowFor: clazz)} ]
 		ifNotEmpty: #yourself.
 	^ (shadows
