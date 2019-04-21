@@ -2,7 +2,8 @@ Class {
 	#name : #TypNamedType,
 	#superclass : #TypType,
 	#instVars : [
-		'name'
+		'name',
+		'representsClass'
 	],
 	#category : #'Typer-Core'
 }
@@ -82,7 +83,9 @@ TypNamedType >> hash [
 { #category : #initialization }
 TypNamedType >> initialize [
 	<typTypeVariable: 'name' as: 'String<Character>'>
-	super initialize
+	<typTypeVariable: 'representsClass' as: '!Boolean'>
+	super initialize.
+	representsClass := nil
 ]
 
 { #category : #testing }
@@ -99,7 +102,8 @@ TypNamedType >> name [
 { #category : #accessing }
 TypNamedType >> name: anObject [
 	<typTypeArgument: 1 as: 'String<Character>'>
-	name := anObject
+	name := anObject.
+	representsClass := nil
 ]
 
 { #category : #printing }
@@ -110,12 +114,17 @@ TypNamedType >> printOn: aStream [
 
 { #category : #testing }
 TypNamedType >> representsClass [
-	| clazz_ |
-	clazz_ := name.
-	(clazz_ endsWith: ' class')
-		ifTrue: [ clazz_ := name copyFrom: 1 to: name size - ' class' size ].
-	clazz_ asClassInEnvironment: Smalltalk globals ifAbsent: [ ^ false ].
-	^ true
+	self flag: 'FIXME invalidate?'.
+	representsClass
+		ifNil: [ | clazz_ |
+			clazz_ := name.
+			(clazz_ endsWith: ' class')
+				ifTrue: [ clazz_ := name copyFrom: 1 to: name size - ' class' size ].
+			representsClass := true.
+			[ clazz_ asClass ]
+				on: NotFound
+				do: [ representsClass := false ] ].
+	^ representsClass
 ]
 
 { #category : #testing }
