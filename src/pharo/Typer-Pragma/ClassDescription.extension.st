@@ -12,9 +12,9 @@ ClassDescription >> typPraTypeResolverIndex [
 	| pragma types |
 	pragma := (self methods
 		detect: [ :e | e selector = #initialize ]
-		ifNone: [ ^ #() ]) pragmas
+		ifNone: [ ^ IdentityDictionary new ]) pragmas
 		detect: [ :e | e selector = #typTypeParametersAs: ]
-		ifNone: [ ^ #() ].
+		ifNone: [ ^ IdentityDictionary new ].
 	types := (pragma arguments at: 1) typAsTypes.
 	^ {(TypTypeResolver new
 		type: [ :a | a clazz typAsNamedType asParametricType: types ];
@@ -26,7 +26,7 @@ ClassDescription >> typPraVariableResolverIndex [
 	| pragmas |
 	pragmas := (self methods
 		detect: [ :e | e selector = #initialize ]
-		ifNone: [ ^ #() ]) pragmas
+		ifNone: [ ^ IdentityDictionary new ]) pragmas
 		select: [ :e | e selector = #typTypeVariable:as: ].
 	^ (pragmas
 		collect: [ :e | 

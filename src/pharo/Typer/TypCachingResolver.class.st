@@ -2,7 +2,8 @@ Class {
 	#name : #TypCachingResolver,
 	#superclass : #TypResolver,
 	#instVars : [
-		'cache'
+		'cache',
+		'selector'
 	],
 	#category : #'Typer-Core'
 }
@@ -13,19 +14,13 @@ TypCachingResolver >> cachedResolversFor: aLookup [
 ]
 
 { #category : #initialization }
-TypCachingResolver >> initialize [
-	super initialize.
-	self flag: 'FIXME invalidate on class add/remove'.
-	self invalidate
-]
-
-{ #category : #initialization }
 TypCachingResolver >> invalidate [
+	self flag: 'FIXME invalidate on class add/remove'.
 	cache := ((Smalltalk allClasses
 		flatCollect: [ :e | 
 			{e.
 			e class} ])
-		collect: [ :e | e name asSymbol -> (e perform: self selector) ])
+		collect: [ :e | e name asSymbol -> (e perform: selector) ])
 		as: IdentityDictionary
 ]
 
@@ -43,5 +38,11 @@ TypCachingResolver >> resolves: aLookup [
 
 { #category : #accessing }
 TypCachingResolver >> selector [
-	self subclassResponsibility
+	^ selector
+]
+
+{ #category : #accessing }
+TypCachingResolver >> selector: anObject [
+	selector := anObject.
+	self invalidate
 ]
