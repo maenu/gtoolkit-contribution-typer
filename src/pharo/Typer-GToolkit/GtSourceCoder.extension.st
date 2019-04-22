@@ -54,8 +54,7 @@ GtSourceCoder >> typGtBrowseToTypeWithShadow: anElement [
 { #category : #'*Typer-GToolkit' }
 GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst [
 	<gtAstCoderAddOns: 10>
-	completionStrategy := self newCompletionStrategy.
-	(completionStrategy isKindOf: GtPharoCompletionStrategy)
+	(self completionStrategy class == GtPharoCompletionStrategy)
 		ifTrue: [ completionStrategy := completionStrategy
 				typGtAsTypGtPharoCompletionStrategyFor: self ].
 	self flag: 'currently dead code'.
