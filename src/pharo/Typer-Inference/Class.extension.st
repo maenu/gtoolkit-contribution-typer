@@ -4,7 +4,7 @@ Extension { #name : #Class }
 Class >> typInfVariableResolverIndex [
 	^ super typInfVariableResolverIndex
 		,
-			(self class classVarNames
+			((self class classVarNames
 				collect: [ :e | 
 					| definer clazzes type |
 					definer := self class whichClassDefinesClassVar: e.
@@ -21,9 +21,9 @@ Class >> typInfVariableResolverIndex [
 								flatCollect: [ :g | 
 									(g assignmentNodes select: [ :h | h variable name = e ])
 										collect: [ :h | h value typType ] ] ]) typAsType.
-					self name -> e
+					e asSymbol
 						->
 							{(TypVariableResolver new
 								type: [ type ];
-								yourself)} ])
+								yourself)} ]) as: IdentityDictionary)
 ]

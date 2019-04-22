@@ -2,23 +2,22 @@ Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Inference' }
 ClassDescription >> typInfMethodResolverIndex [
-	^ (self methods
+	^ ((self methods
 		select: [ :e | e isAbstract not and: [ e ast isPrimitive not ] ])
-		flatCollect: #typInfMethodResolverIndex
+		collect: [ :e | e selector asSymbol -> e typInfMethodResolverIndex ])
+		as: IdentityDictionary
 ]
 
 { #category : #'*Typer-Inference' }
 ClassDescription >> typInfTypeResolverIndex [
-	^ {(self name
-		->
-			{(TypTypeResolver new
-				type: [ :a | a clazz typAsNamedType ];
-				yourself)})}
+	^ {(TypTypeResolver new
+		type: [ :a | a clazz typAsNamedType ];
+		yourself)}
 ]
 
 { #category : #'*Typer-Inference' }
 ClassDescription >> typInfVariableResolverIndex [
-	^ self class instVarNames
+	^ (self class instVarNames
 		collect: [ :e | 
 			| definer clazzes type |
 			definer := self class whichClassDefinesInstVar: e.
@@ -32,11 +31,11 @@ ClassDescription >> typInfVariableResolverIndex [
 						flatCollect: [ :g | 
 							(g assignmentNodes select: [ :h | h variable name = e ])
 								collect: [ :h | h value typType ] ] ]) typAsType.
-			self name -> e
+			e asSymbol
 				->
 					{(TypVariableResolver new
 						type: [ type ];
-						yourself)} ]
+						yourself)} ]) as: IdentityDictionary
 ]
 
 { #category : #'*Typer-Inference' }

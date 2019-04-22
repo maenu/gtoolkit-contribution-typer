@@ -24,7 +24,9 @@ TypCachingResolver >> invalidate [
 	cache := ((Smalltalk allClasses
 		flatCollect: [ :e | 
 			{e.
-			e class} ]) flatCollect: self selector) asDictionary
+			e class} ])
+		collect: [ :e | e name asSymbol -> (e perform: self selector) ])
+		as: IdentityDictionary
 ]
 
 { #category : #accessing }

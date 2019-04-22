@@ -1,13 +1,8 @@
 Class {
 	#name : #TypInfTypeResolver,
-	#superclass : #TypCachingResolver,
+	#superclass : #TypCachingTypeResolver,
 	#category : #'Typer-Inference-Core'
 }
-
-{ #category : #accessing }
-TypInfTypeResolver >> cachedResolversFor: aLookup [
-	^ cache at: aLookup clazz name ifAbsent: [ #() ]
-]
 
 { #category : #accessing }
 TypInfTypeResolver >> selector [

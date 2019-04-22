@@ -2,7 +2,8 @@ Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Shadow' }
 ClassDescription >> typShaMethodResolverIndex [
-	^ self typShaShadows flatCollect: #methodResolverIndex
+	self flag: 'FIXME need to merge in case of multiple'.
+	^ (self typShaShadows collect: #methodResolverIndex) first
 ]
 
 { #category : #'*Typer-Shadow' }
@@ -12,10 +13,12 @@ ClassDescription >> typShaShadows [
 
 { #category : #'*Typer-Shadow' }
 ClassDescription >> typShaTypeResolverIndex [
-	^ self typShaShadows flatCollect: #typeResolverIndex
+	self flag: 'FIXME need to merge in case of multiple'.
+	^ (self typShaShadows collect: #typeResolverIndex) first
 ]
 
 { #category : #'*Typer-Shadow' }
 ClassDescription >> typShaVariableResolverIndex [
-	^ self typShaShadows flatCollect: #variableResolverIndex
+	self flag: 'FIXME need to merge in case of multiple'.
+	^ (self typShaShadows collect: #variableResolverIndex) first
 ]

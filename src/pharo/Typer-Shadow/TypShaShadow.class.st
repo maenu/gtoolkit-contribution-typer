@@ -21,13 +21,14 @@ TypShaShadow class >> instance [
 
 { #category : #'as yet unclassified' }
 TypShaShadow class >> methodResolverIndex [
-	^ (self class selectors
+	^ ((self class selectors
 		select: [ :e | (e beginsWith: '___') or: [ e beginsWith: '~~~' ] ])
 		collect: [ :e | 
 			| name_ |
 			name_ := e copyFrom: 4 to: e size.
-			self shadowedClass name -> name_
-				-> {(self perform: e asSymbol withEnoughArguments: {})} ]
+			name_ asSymbol
+				-> {(self perform: e asSymbol withEnoughArguments: {})} ])
+		as: IdentityDictionary
 ]
 
 { #category : #'as yet unclassified' }
@@ -38,19 +39,17 @@ TypShaShadow class >> shadowedClass [
 
 { #category : #converting }
 TypShaShadow class >> typeResolverIndex [
-	^ {(self shadowedClass name
-		->
-			{(TypTypeResolver new
-				type: [ :a | self asType: a clazz ];
-				yourself)})}
+	^ {(TypTypeResolver new
+		type: [ :a | self asType: a clazz ];
+		yourself)}
 ]
 
 { #category : #'as yet unclassified' }
 TypShaShadow class >> variableResolverIndex [
-	^ (self class instVarNames select: [ :e | e beginsWith: '___' ])
-		collect: [ :e | 
-			self shadowedClass name -> (e copyFrom: 4 to: e size)
-				-> {(self instVarNamed: e)} ]
+	^ ((self class instVarNames select: [ :e | e beginsWith: '___' ])
+		collect:
+			[ :e | (e copyFrom: 4 to: e size) asSymbol -> {(self instVarNamed: e)} ])
+		as: IdentityDictionary
 ]
 
 { #category : #converting }
@@ -62,13 +61,14 @@ TypShaShadow >> asType: aClass [
 
 { #category : #'as yet unclassified' }
 TypShaShadow >> methodResolverIndex [
-	^ (self class selectors
+	^ ((self class selectors
 		select: [ :e | (e beginsWith: '___') or: [ e beginsWith: '~~~' ] ])
 		collect: [ :e | 
 			| name |
 			name := e copyFrom: 4 to: e size.
-			self shadowedClass name -> name
-				-> {(self perform: e asSymbol withEnoughArguments: {})} ]
+			name asSymbol
+				-> {(self perform: e asSymbol withEnoughArguments: {})} ])
+		as: IdentityDictionary
 ]
 
 { #category : #accessing }
@@ -79,11 +79,9 @@ TypShaShadow >> shadowedClass [
 
 { #category : #converting }
 TypShaShadow >> typeResolverIndex [
-	^ {(self shadowedClass name
-		->
-			{(TypTypeResolver new
-				type: [ :a | self asType: a clazz ];
-				yourself)})}
+	^ {(TypTypeResolver new
+		type: [ :a | self asType: a clazz ];
+		yourself)}
 ]
 
 { #category : #'as yet unclassified' }
@@ -92,12 +90,12 @@ TypShaShadow >> variableResolverIndex [
 		collect: [ :e | 
 			| name |
 			name := e copyFrom: 4 to: e size.
-			self shadowedClass name -> name -> {(self instVarNamed: e)} ])
+			name asSymbol -> {(self instVarNamed: e)} ])
 		,
 			((self class classVarNames select: [ :e | e beginsWith: '___' ])
 				collect: [ :e | 
 					| name |
 					name := e copyFrom: 4 to: e size.
-					self shadowedClass name -> name
-						-> {(self class instanceSide classVarNamed: e)} ])
+					name asSymbol -> {(self class instanceSide classVarNamed: e)} ])
+		as: IdentityDictionary
 ]
