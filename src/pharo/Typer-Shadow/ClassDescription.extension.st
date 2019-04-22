@@ -3,7 +3,7 @@ Extension { #name : #ClassDescription }
 { #category : #'*Typer-Shadow' }
 ClassDescription >> typShaMethodResolverIndex [
 	self flag: 'FIXME need to merge in case of multiple'.
-	^ (self typShaShadows collect: #methodResolverIndex) first
+	^ (self typShaShadows collect: #methodResolverIndex) ifEmpty: [ IdentityDictionary new ] ifNotEmpty: #first
 ]
 
 { #category : #'*Typer-Shadow' }
@@ -14,11 +14,11 @@ ClassDescription >> typShaShadows [
 { #category : #'*Typer-Shadow' }
 ClassDescription >> typShaTypeResolverIndex [
 	self flag: 'FIXME need to merge in case of multiple'.
-	^ (self typShaShadows collect: #typeResolverIndex) first
+	^ (self typShaShadows collect: #typeResolverIndex) ifEmpty: [ #() ] ifNotEmpty: #first
 ]
 
 { #category : #'*Typer-Shadow' }
 ClassDescription >> typShaVariableResolverIndex [
 	self flag: 'FIXME need to merge in case of multiple'.
-	^ (self typShaShadows collect: #variableResolverIndex) first
+	^ (self typShaShadows collect: #variableResolverIndex) ifEmpty: [ IdentityDictionary new ] ifNotEmpty: #first
 ]

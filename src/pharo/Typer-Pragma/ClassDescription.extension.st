@@ -18,7 +18,7 @@ ClassDescription >> typPraTypeResolverIndex [
 	types := (pragma arguments at: 1) typAsTypes.
 	^ {(TypTypeResolver new
 		type: [ :a | a clazz typAsNamedType asParametricType: types ];
-		yourself)} as: IdentityDictionary
+		yourself)}
 ]
 
 { #category : #'*Typer-Pragma' }
