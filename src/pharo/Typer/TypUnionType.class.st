@@ -163,7 +163,7 @@ TypUnionType >> representsClass [
 { #category : #accessing }
 TypUnionType >> superType [
 	| remains current |
-	types ifEmpty: [ ^ self ].
+	types ifEmpty: [ ^ TypUnknownType instance ].
 	remains := types copy.
 	current := remains anyOne.
 	remains remove: current.
