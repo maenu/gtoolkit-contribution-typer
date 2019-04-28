@@ -1,23 +1,23 @@
 Class {
-	#name : #TypShaGtGtCoderMethodsCollection,
+	#name : #TypShaGtGtSearchMethodGroupResult,
 	#superclass : #TypShaShadow,
 	#category : #'Typer-Shadow-GToolkit'
 }
 
 { #category : #accessing }
-TypShaGtGtCoderMethodsCollection class >> ___forFilter: _a [
+TypShaGtGtSearchMethodGroupResult class >> ___forFilter: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | GtCoderMethodsFilter typAsType ];
+		argumentTypes: [ :i :a :s :r | GtSearchMethodsFilter typAsType ];
 		resultType: [ :a :s :r | a receiverType asClass instanceSide typAsType ];
 		yourself
 ]
 
 { #category : #'as yet unclassified' }
-TypShaGtGtCoderMethodsCollection class >> shadowedClass [
-	^ GtCoderMethodsCollection class
+TypShaGtGtSearchMethodGroupResult class >> shadowedClass [
+	^ GtSearchMethodGroupResult class
 ]
 
 { #category : #converting }
-TypShaGtGtCoderMethodsCollection >> asType: aClass [
+TypShaGtGtSearchMethodGroupResult >> asType: aClass [
 	^ aClass typAsNamedType asParametricType: {CompiledMethod typAsType}
 ]

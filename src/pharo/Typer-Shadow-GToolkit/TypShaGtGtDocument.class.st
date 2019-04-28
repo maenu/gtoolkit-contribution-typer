@@ -1,16 +1,16 @@
 Class {
-	#name : #TypShaGtGt2Document,
+	#name : #TypShaGtGtDocument,
 	#superclass : #TypShaShadow,
 	#category : #'Typer-Shadow-GToolkit'
 }
 
 { #category : #'as yet unclassified' }
-TypShaGtGt2Document class >> shadowedClass [
-	^ Gt2Document class
+TypShaGtGtDocument class >> shadowedClass [
+	^ GtDocument class
 ]
 
 { #category : #accessing }
-TypShaGtGt2Document >> ___asElement [
+TypShaGtGtDocument >> ___asElement [
 	^ TypMethodResolver new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | BlElement typAsType ];
@@ -18,7 +18,7 @@ TypShaGtGt2Document >> ___asElement [
 ]
 
 { #category : #accessing }
-TypShaGtGt2Document >> ___strategy: _a [
+TypShaGtGtDocument >> ___strategy: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | Gt2StorageStrategy typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
@@ -26,7 +26,7 @@ TypShaGtGt2Document >> ___strategy: _a [
 ]
 
 { #category : #accessing }
-TypShaGtGt2Document >> ___text: _a [
+TypShaGtGtDocument >> ___text: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | 
 			{String typAsType.

@@ -1,18 +1,18 @@
 Class {
-	#name : #TypShaGtGt2NoStorageStrategy,
+	#name : #TypShaGtGtSearchImplementorsFilter,
 	#superclass : #TypShaShadow,
 	#category : #'Typer-Shadow-GToolkit'
 }
 
 { #category : #accessing }
-TypShaGtGt2NoStorageStrategy class >> ___uniqueInstance [
+TypShaGtGtSearchImplementorsFilter class >> ___selector: _a [
 	^ TypMethodResolver new
-		argumentTypes: [ TypNoTypeError signal ];
+		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | a receiverType asClass instanceSide typAsType ];
 		yourself
 ]
 
 { #category : #'as yet unclassified' }
-TypShaGtGt2NoStorageStrategy class >> shadowedClass [
-	^ Gt2NoStorageStrategy class
+TypShaGtGtSearchImplementorsFilter class >> shadowedClass [
+	^ GtSearchImplementorsFilter class
 ]

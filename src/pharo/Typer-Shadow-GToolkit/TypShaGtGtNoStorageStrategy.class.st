@@ -1,18 +1,18 @@
 Class {
-	#name : #TypShaGtGtCoderBinaryFilter,
+	#name : #TypShaGtGtNoStorageStrategy,
 	#superclass : #TypShaShadow,
 	#category : #'Typer-Shadow-GToolkit'
 }
 
 { #category : #accessing }
-TypShaGtGtCoderBinaryFilter class >> ___forFilter: _a filter: _b [
+TypShaGtGtNoStorageStrategy class >> ___uniqueInstance [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | GtCoderMethodsFilter typAsType ];
+		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | a receiverType asClass instanceSide typAsType ];
 		yourself
 ]
 
 { #category : #'as yet unclassified' }
-TypShaGtGtCoderBinaryFilter class >> shadowedClass [
-	^ GtCoderBinaryFilter class
+TypShaGtGtNoStorageStrategy class >> shadowedClass [
+	^ GtNoStorageStrategy class
 ]

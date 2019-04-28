@@ -1,16 +1,16 @@
 Class {
-	#name : #TypShaGtGtCoderNegationFilter,
+	#name : #TypShaGtGtSearchNegationFilter,
 	#superclass : #TypShaShadow,
 	#category : #'Typer-Shadow-GToolkit'
 }
 
 { #category : #'as yet unclassified' }
-TypShaGtGtCoderNegationFilter class >> shadowedClass [
-	^ GtCoderNegationFilter class
+TypShaGtGtSearchNegationFilter class >> shadowedClass [
+	^ GtSearchNegationFilter class
 ]
 
 { #category : #accessing }
-TypShaGtGtCoderNegationFilter >> ___originalFilter: _a [
+TypShaGtGtSearchNegationFilter >> ___originalFilter: _a [
 	^ TypMethodResolver new
 		argumentTypes: [ :i :a :s :r | GtCoderMethodsFilter typAsType ];
 		resultType: [ :a :s :r | a receiverType ];

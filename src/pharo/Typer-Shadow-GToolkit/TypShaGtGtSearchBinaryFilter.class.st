@@ -1,18 +1,18 @@
 Class {
-	#name : #TypShaGtGtCoderImplementorsFilter,
+	#name : #TypShaGtGtSearchBinaryFilter,
 	#superclass : #TypShaShadow,
 	#category : #'Typer-Shadow-GToolkit'
 }
 
 { #category : #accessing }
-TypShaGtGtCoderImplementorsFilter class >> ___selector: _a [
+TypShaGtGtSearchBinaryFilter class >> ___forFilter: _a filter: _b [
 	^ TypMethodResolver new
-		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
+		argumentTypes: [ :i :a :s :r | GtCoderMethodsFilter typAsType ];
 		resultType: [ :a :s :r | a receiverType asClass instanceSide typAsType ];
 		yourself
 ]
 
 { #category : #'as yet unclassified' }
-TypShaGtGtCoderImplementorsFilter class >> shadowedClass [
-	^ GtCoderImplementorsFilter class
+TypShaGtGtSearchBinaryFilter class >> shadowedClass [
+	^ GtSearchBinaryFilter class
 ]
