@@ -14,7 +14,7 @@ RBInstanceVariableNode >> typGtFiltersToTypeWithPragma [
 		&
 			(TypGtCoderDefinerFilter new
 				name: self name;
-				yourself) & (GtCoderImplementorsFilter selector: #initialize)
+				yourself) & (GtSearchImplementorsFilter selector: #initialize)
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -40,6 +40,6 @@ RBInstanceVariableNode >> typGtFiltersToTypeWithShadow [
 					[ e typGtShadowInstanceVariable: self name asSymbol type: variableType ].
 			^ (TypGtCoderTypeFilter new
 				type: method methodClass typAsType;
-				yourself) & (GtCoderImplementorsFilter selector: method selector) ])
+				yourself) & (GtSearchImplementorsFilter selector: method selector) ])
 		reduce: [ :a :b | a | b ]
 ]

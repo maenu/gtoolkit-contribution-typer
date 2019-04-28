@@ -15,7 +15,7 @@ GtSourceCoder >> typGtBrowseImplementors: anElement [
 				object:
 					(TypGtCoderTypeFilter new
 						type: (node "typCastAs RBMessageNode") receiver typType;
-						yourself) & (GtCoderImplementorsFilter selector: (node "typCastAs RBMessageNode") selector);
+						yourself) & (GtSearchImplementorsFilter selector: (node "typCastAs RBMessageNode") selector);
 				sourceElement: anElement)
 ]
 

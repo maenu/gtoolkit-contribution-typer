@@ -15,7 +15,7 @@ GtMethodCoder >> typGtBrowseImplementors: anElement [
 				object:
 					(TypGtCoderTypeFilter new
 						type: self classOrMetaClass typAsType;
-						yourself) & (GtCoderImplementorsFilter selector: self selector);
+						yourself) & (GtSearchImplementorsFilter selector: self selector);
 				sourceElement: anElement)
 ]
 

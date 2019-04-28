@@ -30,7 +30,7 @@ RBMethodNode >> typGtFiltersToTypeWithShadow [
 						result: resultType ].
 			^ (TypGtCoderTypeFilter new
 				type: method methodClass typAsType;
-				yourself) & (GtCoderImplementorsFilter selector: method selector) ])
+				yourself) & (GtSearchImplementorsFilter selector: method selector) ])
 		reduce: [ :a :b | a | b ]
 ]
 

@@ -10,7 +10,7 @@ RBMessageNode >> typGtFiltersToTypeWithPragma [
 	<typTypeResultAs: 'GtCoderMethodsFilter'>
 	^ (TypGtCoderTypeFilter new
 		type: self receiver typType;
-		yourself) & (GtCoderImplementorsFilter selector: self selector)
+		yourself) & (GtSearchImplementorsFilter selector: self selector)
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -41,6 +41,6 @@ RBMessageNode >> typGtFiltersToTypeWithShadow [
 						result: resultType ].
 			^ (TypGtCoderTypeFilter new
 				type: method methodClass typAsType;
-				yourself) & (GtCoderImplementorsFilter selector: method selector) ])
+				yourself) & (GtSearchImplementorsFilter selector: method selector) ])
 		reduce: [ :a :b | a | b ]
 ]
