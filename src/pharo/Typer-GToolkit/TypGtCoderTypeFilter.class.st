@@ -1,6 +1,6 @@
 Class {
 	#name : #TypGtCoderTypeFilter,
-	#superclass : #GtCoderMethodsFilter,
+	#superclass : #GtSearchMethodsFilter,
 	#instVars : [
 		'type',
 		'clazzes'
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #testing }
-TypGtCoderTypeFilter >> includeMethod: aCompiledMethod [
+TypGtCoderTypeFilter >> includesMethod: aCompiledMethod [
 	<typTypeArgument: 1 as: 'CompiledMethod<Integer>'>
 	<typTypeResultAs: 'Boolean'>
 	clazzes ifEmpty: [ ^ true ].

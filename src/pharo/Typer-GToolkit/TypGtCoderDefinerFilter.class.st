@@ -1,6 +1,6 @@
 Class {
 	#name : #TypGtCoderDefinerFilter,
-	#superclass : #GtCoderMethodsFilter,
+	#superclass : #GtSearchMethodsFilter,
 	#instVars : [
 		'name'
 	],
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #testing }
-TypGtCoderDefinerFilter >> includeMethod: aCompiledMethod [
+TypGtCoderDefinerFilter >> includesMethod: aCompiledMethod [
 	<typTypeArgument: 1 as: 'CompiledMethod<Integer>'>
 	<typTypeResultAs: 'Boolean'>
 	^ (aCompiledMethod methodClass hasInstVarNamed: name)
