@@ -16,16 +16,17 @@ TypGtTypeAttribute >> initialize [
 		stencil: [ | s |
 			s := type printString.
 			BrLabel new
-				text: ': ' , s;
+				text: s;
 				margin:
 					(BlInsets
-						top: 4
-						right: 2
+						top: 1
+						right: 0
 						bottom: 0
-						left: 2);
+						left: 5);
 				look:
 					(BrGlamorousLabelLook new
-						foreground: Color veryLightGray;
+						foreground: Color gray;
+						fontName: 'Courier New';
 						fontSize: 12) ]
 ]
 
