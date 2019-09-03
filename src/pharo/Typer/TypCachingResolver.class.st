@@ -26,14 +26,8 @@ TypCachingResolver >> invalidate [
 
 { #category : #accessing }
 TypCachingResolver >> resolversFor: aLookup [
-	^ ((self cachedResolversFor: aLookup)
-		select: [ :e | e resolves: aLookup ])
+	^ (self cachedResolversFor: aLookup)
 		flatCollect: [ :e | e resolversFor: aLookup ]
-]
-
-{ #category : #accessing }
-TypCachingResolver >> resolves: aLookup [
-	^ (self resolversFor: aLookup) isNotEmpty
 ]
 
 { #category : #accessing }

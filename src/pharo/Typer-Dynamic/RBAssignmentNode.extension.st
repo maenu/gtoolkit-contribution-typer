@@ -4,7 +4,7 @@ Extension { #name : #RBAssignmentNode }
 RBAssignmentNode >> typDynAssign: anObject [
 	<typTypeArgument: 1 as: 'Object'>
 	| value_ |
-	value_ := anObject class typAsType.
+	value_ := anObject typSelfType.
 	self typDynMonitor critical: [ self typDynAssigns increment: value_ ]
 ]
 

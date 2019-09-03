@@ -17,14 +17,10 @@ TypDynExamples >> neoJsonCore [
 		doing: [ (#'Neo-JSON-Tests' asPackage definedClasses
 				select: [ :e | e isTestCase and: e isAbstract not ])
 				do: [ :e"typCastAs TestCase class"
-					 | e suite run: testResult ] ].
-	(TypChainableMethodResolvers
-		reset;
-		instance) add: association key value.
-	(TypChainableVariableResolvers
-		reset;
-		instance) add: association value.
-	^ testResult -> #'Neo-JSON-Core' asPackage methods
+					 | e suite run: testResult ]
+				displayingProgress: 'Running test case' ].
+	^ testResult -> association key value -> association value
+		-> #'Neo-JSON-Core' asPackage methods
 ]
 
 { #category : #accessing }
@@ -40,10 +36,10 @@ TypDynExamples >> refactoringCore [
 		doing: [ (#'Refactoring-Tests-Core' asPackage definedClasses
 				select: [ :e | e isTestCase and: e isAbstract not ])
 				do: [ :e"typCastAs TestCase class"
-					 | e suite run: testResult ] ].
-	TypChainableMethodResolvers instance add: association key value.
-	TypChainableVariableResolvers instance add: association value.
-	^ testResult -> #'Refactoring-Core' asPackage methods
+					 | e suite run: testResult ]
+				displayingProgress: 'Running test case'  ].
+	^ testResult -> association key value -> association value
+		-> #'Refactoring-Core' asPackage methods
 ]
 
 { #category : #accessing }
@@ -59,8 +55,8 @@ TypDynExamples >> refactoringCoreSmall [
 		doing: [ ({RBAddClassTest}
 				select: [ :e | e isTestCase and: e isAbstract not ])
 				do: [ :e"typCastAs TestCase class"
-					 | e suite run: testResult ] ].
-	TypChainableMethodResolvers instance add: association key value.
-	TypChainableVariableResolvers instance add: association value.
-	^ testResult -> #'Refactoring-Core' asPackage methods
+					 | e suite run: testResult ]
+				displayingProgress: 'Running test case'  ].
+	^ testResult -> association key value -> association value
+		-> #'Refactoring-Core' asPackage methods
 ]

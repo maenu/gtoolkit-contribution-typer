@@ -15,12 +15,6 @@ TypTypeResolver >> initialize [
 ]
 
 { #category : #accessing }
-TypTypeResolver >> resolves: aLookup [
-	<typTypeArgument: 1 as: 'TypTypeLookup'>
-	^ true
-]
-
-{ #category : #accessing }
 TypTypeResolver >> type [
 	<typTypeResultAs: 'BlockClosure[TypTypeLookup,TypTypeLookup,TypResolver<TypLookup>]->TypType'>
 	^ type

@@ -31,15 +31,7 @@ TypDynResolver >> resolvers: anObject [
 TypDynResolver >> resolversFor: aLookup [
 	<typTypeArgument: 1 as: 'TypObjectLookup'>
 	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypLookup>>'>
-	^ {(resolvers at: aLookup receiverType asClass -> aLookup selector)}
-]
-
-{ #category : #accessing }
-TypDynResolver >> resolves: aLookup [
-	<typTypeArgument: 1 as: 'TypObjectLookup'>
-	<typTypeResultAs: 'Boolean'>
 	aLookup receiverType representsClass
-		ifFalse: [ ^ false ].
-	^ resolvers
-		includesKey: aLookup receiverType asClass -> aLookup selector
+		ifFalse: [ ^ #() ].
+	^ {(resolvers at: aLookup receiverType asClass -> aLookup selector)}
 ]

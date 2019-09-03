@@ -24,7 +24,7 @@ RBReturnNode >> typDynMonitor [
 RBReturnNode >> typDynReturn: anObject [
 	<typTypeArgument: 1 as: 'Object'>
 	| value_ |
-	value_ := anObject class typAsType.
+	value_ := anObject typSelfType.
 	self typDynMonitor critical: [ self typDynReturns increment: value_ ]
 ]
 

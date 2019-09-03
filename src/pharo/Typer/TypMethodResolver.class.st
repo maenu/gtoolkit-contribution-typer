@@ -54,12 +54,6 @@ TypMethodResolver >> initialize [
 	signalsAlways := [ nil ]
 ]
 
-{ #category : #'as yet unclassified' }
-TypMethodResolver >> resolves: aLookup [
-	<typTypeArgument: 1 as: 'TypMethodLookup'>
-	^ true
-]
-
 { #category : #accessing }
 TypMethodResolver >> resultType [
 	<typTypeResultAs: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->TypType'>

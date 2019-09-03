@@ -16,10 +16,3 @@ TypResolver >> resolversFor: aLookup [
 	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypLookup>>'>
 	^ {self}
 ]
-
-{ #category : #accessing }
-TypResolver >> resolves: aLookup [
-	<typTypeArgument: 1 as: 'TypLookup'>
-	<typTypeResultAs: 'Boolean'>
-	^ false
-]

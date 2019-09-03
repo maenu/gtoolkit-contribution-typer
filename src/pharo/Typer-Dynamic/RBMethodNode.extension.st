@@ -50,9 +50,9 @@ RBMethodNode >> typDynInvokeIn: aContext [
 	<typTypeArgument: 1 as: 'Context'>
 	| invocation |
 	invocation := TypDynMessage new
-		receiverType: aContext receiver class typAsType;
+		receiverType: aContext receiver typSelfType;
 		selector: aContext method selector;
-		argumentTypes: (aContext arguments collect: [ :e | e class typAsType ]);
+		argumentTypes: (aContext arguments collect: #typSelfType);
 		yourself.
 	self typDynMonitor
 		critical: [ self typDynInvocations increment: invocation ]

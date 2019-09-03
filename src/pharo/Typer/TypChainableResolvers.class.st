@@ -81,12 +81,7 @@ TypChainableResolvers >> resolvers: anObject [
 
 { #category : #'as yet unclassified' }
 TypChainableResolvers >> resolversFor: aLookup [
-	^ (resolvers select: [ :e | e resolves: aLookup ]) flatCollect: [ :e | e resolversFor: aLookup ]
-]
-
-{ #category : #accessing }
-TypChainableResolvers >> resolves: aLookup [
-	^ resolvers anySatisfy: [ :e | e resolves: aLookup ]
+	^ resolvers flatCollect: [ :e | e resolversFor: aLookup ]
 ]
 
 { #category : #accessing }
@@ -100,8 +95,8 @@ TypChainableResolvers >> typeFor: aLookup using: aBlock [
 				do: [ ^ TypUnknownType instance ].
 			type isUnknown
 				ifFalse: [ ^ type ] ].
-	(next isNotNil and: [ next resolves: aLookup ])
-		ifTrue: [ ^ [ next typeFor: aLookup using: aBlock ]
+	next
+		ifNotNil: [ ^ [ next typeFor: aLookup using: aBlock ]
 				on: TypNoCompatibleTypeError
 				do: [ ^ TypUnknownType instance ] ].
 	^ TypUnknownType instance
