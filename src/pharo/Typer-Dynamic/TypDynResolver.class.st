@@ -31,7 +31,10 @@ TypDynResolver >> resolvers: anObject [
 TypDynResolver >> resolversFor: aLookup [
 	<typTypeArgument: 1 as: 'TypObjectLookup'>
 	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypLookup>>'>
-	aLookup receiverType representsClass
-		ifFalse: [ ^ #() ].
-	^ {(resolvers at: aLookup receiverType asClass -> aLookup selector)}
+	^ aLookup receiverType representsClass
+		ifTrue: [ resolvers
+				at: aLookup receiverType asClass -> aLookup selector
+				ifPresent: [ :e | {e} ]
+				ifAbsent: [ #() ] ]
+		ifFalse: [ #() ]
 ]

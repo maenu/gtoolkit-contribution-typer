@@ -24,6 +24,33 @@ TypDynExamples >> neoJsonCore [
 ]
 
 { #category : #accessing }
+TypDynExamples >> refactoring2Transformations [
+	<gtExample>
+	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod<Integer>>>'>
+	| methods collector testResult association |
+	(TypChainableMethodResolvers instance resolvers last
+		isKindOf: TypDynResolver)
+		ifTrue: [ TypChainableMethodResolvers instance resolvers removeLast ].
+	(TypChainableVariableResolvers instance resolvers last
+		isKindOf: TypDynResolver)
+		ifTrue: [ TypChainableVariableResolvers instance resolvers removeLast ].
+	methods := #'Refactoring2-Transformations' asPackage methods.
+	collector := TypDynCollector new.
+	testResult := TestResult new.
+	association := collector
+		collectIn: methods
+		doing: [ (#'Refactoring2-Transformations-Tests' asPackage definedClasses
+				select: [ :e | e isTestCase and: e isAbstract not ])
+				do: [ :e"typCastAs TestCase class"
+					 | e suite run: testResult ]
+				displayingProgress: 'Running test case' ].
+	TypChainableMethodResolvers instance add: association key value.
+	TypChainableVariableResolvers instance add: association value.
+	^ testResult -> association key value -> association value
+		-> #'Refactoring2-Transformations' asPackage methods
+]
+
+{ #category : #accessing }
 TypDynExamples >> refactoringCore [
 	<gtExample>
 	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod<Integer>>>'>

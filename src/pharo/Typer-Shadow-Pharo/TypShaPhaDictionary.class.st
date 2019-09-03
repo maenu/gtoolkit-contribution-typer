@@ -78,6 +78,25 @@ TypShaPhaDictionary >> ___at: _a ifAbsentPut: _b [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaDictionary >> ___at: _a ifPresent: _b ifAbsent: _c [
+	^ TypMethodResolver new
+		argumentTypes: [ :i :a | 
+			{(a receiverType parameters at: 1).
+			(BlockClosure typAsType
+				asFunctionType: {(a receiverType parameters at: 1)}
+				result: TypUnknownType instance
+				optionalParameters: true).
+			(BlockClosure typAsType
+				asFunctionType: {}
+				result: TypUnknownType instance
+				optionalParameters: false)} ];
+		resultType: [ :a :s | 
+			{a argumentTypes second result.
+			a argumentTypes third result} typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaDictionary >> ___at: _a put: _b [
 	^ TypMethodResolver new

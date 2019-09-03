@@ -4,9 +4,9 @@ Extension { #name : #RBMethodNode }
 RBMethodNode >> typDynAsMethodResolver [
 	<typTypeResultAs: 'TypMethodResolver<TypMethodLookup>'>
 	| arguments_ result |
-	arguments_ := self method numArgs
-		timesCollect: [ :i | self typDynTypeForArgumentAt: i ].
-	result := self typDynTypeForResult.
+	arguments_ := (self method numArgs
+		timesCollect: [ :i | self typDynTypeForArgumentAt: i ]) collect: #asNonDynType.
+	result := self typDynTypeForResult asNonDynType.
 	^ TypMethodResolver new
 		argumentTypes: [ :i | arguments_ at: i ];
 		resultType: [ result ];

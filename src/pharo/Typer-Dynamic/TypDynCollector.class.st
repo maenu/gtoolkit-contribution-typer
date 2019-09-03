@@ -52,9 +52,9 @@ TypDynCollector >> collectVariableResolversIn: aCollection [
 		groupedBy: #key)
 		collect: [ :e | 
 			| type |
-			type := (e collect: #value)
+			type := ((e collect: #value)
 				inject: TypDynUnionType new
-				into: [ :a :b | a , b ].
+				into: [ :a :b | a , b ]) asNonDynType.
 			TypVariableResolver new
 				type: [ type ];
 				yourself ]

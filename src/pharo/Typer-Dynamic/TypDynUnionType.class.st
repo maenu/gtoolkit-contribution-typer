@@ -44,6 +44,15 @@ TypDynUnionType >> addAll: aTypes [
 	aTypes do: [ :e | self add: e ]
 ]
 
+{ #category : #converting }
+TypDynUnionType >> asNonDynType [
+	| type |
+	type := types typAsType.
+	^ nullable
+		ifTrue: [ type asNullableType ]
+		ifFalse: [ type ]
+]
+
 { #category : #enumerating }
 TypDynUnionType >> collect: aBlock [
 	<typTypeArgument: 1 as: 'BlockClosure[Association<TypType,Integer>]->Association<TypType,Integer>'>
