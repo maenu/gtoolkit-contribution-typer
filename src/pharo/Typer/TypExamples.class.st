@@ -10,19 +10,25 @@ TypExamples >> example [
 	(TypChainableTypeResolvers
 		reset;
 		instance)
-		next: (TypChainableTypeResolvers new add: TypCachingTypeResolver typInfResolver);
+		next:
+				(TypChainableTypeResolvers new
+						add: TypCachingTypeResolver typInfResolver);
 		add: TypCachingTypeResolver typPraResolver;
 		add: TypCachingTypeResolver typShaResolver.
 	(TypChainableMethodResolvers
 		reset;
 		instance)
-		next: (TypChainableMethodResolvers new add: TypCachingMethodResolver typInfResolver);
+		next:
+				(TypChainableMethodResolvers new
+						add: TypCachingMethodResolver typInfResolver);
 		add: TypCachingMethodResolver typPraResolver;
 		add: TypCachingMethodResolver typShaResolver.
 	(TypChainableVariableResolvers
 		reset;
 		instance)
-		next: (TypChainableVariableResolvers new add: TypCachingVariableResolver typInfResolver);
+		next:
+				(TypChainableVariableResolvers new
+						add: TypCachingVariableResolver typInfResolver);
 		add: TypCachingVariableResolver typPraResolver;
 		add: TypCachingVariableResolver typShaResolver.
 	^ self
