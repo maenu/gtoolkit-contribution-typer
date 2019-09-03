@@ -1,7 +1,7 @@
-Extension { #name : #GtMethodCoderAddOns }
+Extension { #name : #GtSourceCoderAddOns }
 
 { #category : #'*Typer-GToolkit' }
-GtMethodCoderAddOns >> typGtRemoveStylerOfType: aClass [
+GtSourceCoderAddOns >> typGtRemoveStylerOfType: aClass [
 	<typTypeArgument: 1 as: 'GtCoderBodyStyler class'>
 	| styler |
 	styler := stylers detect: [ :e | e class == aClass ] ifNone: [  ].
