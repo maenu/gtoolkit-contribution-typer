@@ -13,6 +13,6 @@ TypResolver >> initialize [
 { #category : #accessing }
 TypResolver >> resolversFor: aLookup [
 	<typTypeArgument: 1 as: 'TypLookup'>
-	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypLookup>>'>
-	^ {self}
+	<typTypeResultAs: 'TypIterator<TypResolver<TypLookup>>'>
+	^ {self} typAsIterator
 ]

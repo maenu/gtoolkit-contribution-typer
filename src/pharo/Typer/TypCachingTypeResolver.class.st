@@ -5,6 +5,9 @@ Class {
 }
 
 { #category : #accessing }
-TypCachingTypeResolver >> cachedResolversFor: aLookup [
-	^ cache at: aLookup clazz name asSymbol ifAbsent: [ #() ]
+TypCachingTypeResolver >> resolversFor: aLookup [
+	^ cache
+		at: aLookup clazz name asSymbol
+		ifPresent: [ :f | f resolversFor: aLookup ]
+		ifAbsent: [ #() typAsIterator ]
 ]

@@ -8,11 +8,6 @@ Class {
 	#category : #'Typer-Core'
 }
 
-{ #category : #accessing }
-TypCachingResolver >> cachedResolversFor: aLookup [
-	self subclassResponsibility
-]
-
 { #category : #initialization }
 TypCachingResolver >> invalidate [
 	self flag: 'FIXME invalidate on class add/remove'.
@@ -22,12 +17,6 @@ TypCachingResolver >> invalidate [
 			e class} ])
 		collect: [ :e | e name asSymbol -> (e perform: selector) ])
 		as: IdentityDictionary
-]
-
-{ #category : #accessing }
-TypCachingResolver >> resolversFor: aLookup [
-	^ (self cachedResolversFor: aLookup)
-		flatCollect: [ :e | e resolversFor: aLookup ]
 ]
 
 { #category : #accessing }

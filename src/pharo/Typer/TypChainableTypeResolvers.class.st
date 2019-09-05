@@ -25,7 +25,7 @@ TypChainableTypeResolvers >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
-TypChainableTypeResolvers >> typForClass: aLookup [
+TypChainableTypeResolvers >> typeForClass: aLookup [
 	<typTypeArgument: 1 as: 'TypTypeLookup'>
 	<typTypeResultAs: 'TypType'>
 	^ self typeFor: aLookup using: [ :r :a | r typeFor: aLookup resolvedBy: a ]

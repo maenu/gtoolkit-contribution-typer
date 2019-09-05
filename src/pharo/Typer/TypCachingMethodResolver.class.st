@@ -5,11 +5,15 @@ Class {
 }
 
 { #category : #accessing }
-TypCachingMethodResolver >> cachedResolversFor: aLookup [
+TypCachingMethodResolver >> resolversFor: aLookup [
 	aLookup receiverType representsClass
-		ifFalse: [ ^ #() ].
+		ifFalse: [ ^ #() typAsIterator ].
 	^ cache
 		at: aLookup receiverType asClass name asSymbol
-		ifPresent: [ :e | e at: aLookup selector asSymbol ifAbsent: [ #() ] ]
-		ifAbsent: [ #() ]
+		ifPresent: [ :e | 
+			e
+				at: aLookup selector asSymbol
+				ifPresent: [ :f | f resolversFor: aLookup ]
+				ifAbsent: [ #() typAsIterator ] ]
+		ifAbsent: [ #() typAsIterator ]
 ]

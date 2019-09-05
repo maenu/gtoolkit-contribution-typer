@@ -12,7 +12,7 @@ ClassDescription >> typAsNamedType [
 ClassDescription >> typAsType [
 	<typTypeResultAs: 'TypType'>
 	^ TypChainableTypeResolvers instance
-		typForClass:
+		typeForClass:
 			(TypTypeLookup new
 				clazz: self;
 				yourself)

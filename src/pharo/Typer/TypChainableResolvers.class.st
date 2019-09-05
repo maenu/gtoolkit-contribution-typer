@@ -28,6 +28,13 @@ TypChainableResolvers class >> reset [
 	instance := nil
 ]
 
+{ #category : #initialization }
+TypChainableResolvers class >> resetAll [
+	<script>
+	self allSubclassesDo: #reset.
+	Smalltalk garbageCollect
+]
+
 { #category : #adding }
 TypChainableResolvers >> add: aResolver [
 	<typTypeArgumentAt: 1 as: 'TypResolver<TypLookup>'>
@@ -58,11 +65,13 @@ TypChainableResolvers >> next: anObject [
 { #category : #accessing }
 TypChainableResolvers >> resolve: aLookup using: aBlock [
 	| lookup |
-	lookup := aLookup copy.
+	lookup := aLookup.
 	[ (self resolversFor: lookup)
-		do: [ :r | aBlock cull: r cull: lookup ].
+		whileHasNext: [ :r | aBlock cull: r cull: lookup ].
 	lookup hasSuperType
-		ifTrue: [ lookup adaptWithSuperType.
+		ifTrue: [ lookup == aLookup
+				ifTrue: [ "copy as late as possible" lookup := aLookup copy ].
+			lookup adaptWithSuperType.
 			true ]
 		ifFalse: [ false ] ] whileTrue
 ]
@@ -81,7 +90,9 @@ TypChainableResolvers >> resolvers: anObject [
 
 { #category : #'as yet unclassified' }
 TypChainableResolvers >> resolversFor: aLookup [
-	^ resolvers flatCollect: [ :e | e resolversFor: aLookup ]
+	^ TypIteratorIterator new
+		iterators: (resolvers flatCollect: [ :e | e resolversFor: aLookup ]);
+		yourself
 ]
 
 { #category : #accessing }
@@ -92,12 +103,12 @@ TypChainableResolvers >> typeFor: aLookup using: aBlock [
 			| type |
 			type := [ aBlock cull: r cull: a ]
 				on: TypNoCompatibleTypeError
-				do: [ ^ TypUnknownType instance ].
+				do: [ TypUnknownType instance ].
 			type isUnknown
 				ifFalse: [ ^ type ] ].
-	next
-		ifNotNil: [ ^ [ next typeFor: aLookup using: aBlock ]
+	^ next
+		ifNil: [ TypUnknownType instance ]
+		ifNotNil: [ [ next typeFor: aLookup using: aBlock ]
 				on: TypNoCompatibleTypeError
-				do: [ ^ TypUnknownType instance ] ].
-	^ TypUnknownType instance
+				do: [ TypUnknownType instance ] ]
 ]

@@ -24,6 +24,33 @@ TypDynExamples >> neoJsonCore [
 ]
 
 { #category : #accessing }
+TypDynExamples >> refactoring [
+	<gtExample>
+	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod<Integer>>>'>
+	| methods collector testResult association |
+	(TypChainableMethodResolvers instance resolvers last
+		isKindOf: TypDynResolver)
+		ifTrue: [ TypChainableMethodResolvers instance resolvers removeLast ].
+	(TypChainableVariableResolvers instance resolvers last
+		isKindOf: TypDynResolver)
+		ifTrue: [ TypChainableVariableResolvers instance resolvers removeLast ].
+	methods := self refactoringNonTestPackages flatCollect: #methods.
+	collector := TypDynCollector new.
+	testResult := TestResult new.
+	association := collector
+		collectIn: methods
+		doing: [ ((self refactoringTestPackages flatCollect: #definedClasses)
+				select: [ :e | e isTestCase and: e isAbstract not ])
+				do: [ :e"typCastAs TestCase class"
+					 | e suite run: testResult ]
+				displayingProgress: 'Running test case' ].
+	TypChainableMethodResolvers instance add: association key value.
+	TypChainableVariableResolvers instance add: association value.
+	^ testResult -> association key value -> association value
+		-> (self refactoringNonTestPackages flatCollect: #methods)
+]
+
+{ #category : #accessing }
 TypDynExamples >> refactoring2Transformations [
 	<gtExample>
 	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod<Integer>>>'>
@@ -86,4 +113,26 @@ TypDynExamples >> refactoringCoreSmall [
 				displayingProgress: 'Running test case'  ].
 	^ testResult -> association key value -> association value
 		-> #'Refactoring-Core' asPackage methods
+]
+
+{ #category : #'as yet unclassified' }
+TypDynExamples >> refactoringNonTestPackages [
+	^ (RPackage organizer packages
+		select: [ :e | 
+			e class = RPackage
+				and: [ e name ~= 'RefactoringNew'
+						and: [ (e name beginsWith: 'Refactoring')
+								and: [ (e name includesSubstring: 'Test') not ] ] ] ])
+		asSortedCollection: [ :a :b | a name <= b name ]
+]
+
+{ #category : #'as yet unclassified' }
+TypDynExamples >> refactoringTestPackages [
+	^ (RPackage organizer packages
+		select: [ :e | 
+			e class = RPackage
+				and: [ e name ~= 'RefactoringNew'
+						and: [ (e name beginsWith: 'Refactoring')
+								and: [ e name includesSubstring: 'Test' ] ] ] ])
+		asSortedCollection: [ :a :b | a name <= b name ]
 ]
