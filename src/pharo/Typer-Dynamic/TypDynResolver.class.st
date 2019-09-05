@@ -34,7 +34,7 @@ TypDynResolver >> resolversFor: aLookup [
 	^ aLookup receiverType representsClass
 		ifTrue: [ resolvers
 				at: aLookup receiverType asClass -> aLookup selector
-				ifPresent: [ :e | {e} ]
-				ifAbsent: [ #() ] ]
-		ifFalse: [ #() ]
+				ifPresent: [ :e | e resolversFor: aLookup ]
+				ifAbsent: [ #() typAsIterator ] ]
+		ifFalse: [ #() typAsIterator ]
 ]

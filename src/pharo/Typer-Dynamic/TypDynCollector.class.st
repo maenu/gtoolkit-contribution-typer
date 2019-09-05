@@ -16,7 +16,9 @@ TypDynCollector >> collectIn: aCollection doing: aBlock [
 	result := nil "typCastAs !Object".
 	methodResolvers := Dictionary new "typParameters Association<ClassDescription,Symbol<Character>>,TypMethodResolver<TypMethodLookup>".
 	variableResolvers := Dictionary new "typParameters Association<ClassDescription,Symbol<Character>>,TypVariableResolver<TypVariableLookup>".
-	asts := aCollection collect: [ :e | e ast typDynInstall ].
+	asts := aCollection collect: [ :e | e ast
+		doSemanticAnalysis;
+		typDynInstall ].
 	[ result := aBlock value.
 	methodResolvers := self collectMethodResolversIn: asts.
 	variableResolvers := self collectVariableResolversIn: asts ]
