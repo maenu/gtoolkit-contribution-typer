@@ -36,11 +36,11 @@ TypChainableMethodResolvers >> signalsAlways: aLookup [
 				on: TypNoCompatibleTypeError
 				do: [ ^ nil ].
 			signalsAlways ifNotNil: [ ^ signalsAlways ] ].
-	next
-		ifNotNil: [ ^ [ next signalsAlways: aLookup ]
+	^ next
+		ifNil: [ nil ]
+		ifNotNil: [ [ next signalsAlways: aLookup ]
 				on: TypNoCompatibleTypeError
-				do: [ ^ nil ] ].
-	^ nil
+				do: [ nil ] ]
 ]
 
 { #category : #accessing }
