@@ -64,7 +64,7 @@ TypGtTypeValueBodyStyler >> visitMethodNode: aNode [
 		to: position
 		with:
 			{(TypGtTypeAttribute new
-				type: aNode typTypeForResult;
+				type_: aNode typTypeForResult;
 				yourself)}
 ]
 

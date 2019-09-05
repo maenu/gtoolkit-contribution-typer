@@ -19,6 +19,6 @@ TypGtTypeBodyStyler >> styleValueNode: aNode [
 		to: aNode stop
 		with:
 			{(TypGtTypeAttribute new
-				type: aNode typType;
+				type_: aNode typType;
 				yourself)}
 ]

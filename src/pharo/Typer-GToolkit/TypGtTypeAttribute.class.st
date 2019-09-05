@@ -13,10 +13,8 @@ TypGtTypeAttribute >> initialize [
 	super initialize.
 	self
 		beAppend;
-		stencil: [ | s |
-			s := type printString.
-			BrLabel new
-				text: s;
+		stencil: [ BrLabel new
+				text: type printString;
 				margin:
 					(BlInsets
 						top: 1
@@ -27,17 +25,19 @@ TypGtTypeAttribute >> initialize [
 					(BrGlamorousLabelLook new
 						foreground: Color gray;
 						fontName: 'Courier New';
-						fontSize: 12) ]
+						fontSize: 12);
+				when: BlClickEvent do: [ :e | e target phlow spawnObject: type ];
+				yourself ]
 ]
 
 { #category : #accessing }
-TypGtTypeAttribute >> type [
+TypGtTypeAttribute >> type_ [
 	<typTypeResultAs: 'TypType'>
 	^ type
 ]
 
 { #category : #accessing }
-TypGtTypeAttribute >> type: anObject [
+TypGtTypeAttribute >> type_: anObject [
 	<typTypeArgument: 1 as: 'TypType'>
 	type := anObject
 ]

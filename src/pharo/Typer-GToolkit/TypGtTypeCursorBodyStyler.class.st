@@ -30,7 +30,7 @@ TypGtTypeCursorBodyStyler >> styleValueNode: aNode [
 				coder: coder;
 				attribute:
 					(TypGtTypeAttribute new
-						type: aNode typType;
+						type_: aNode typType;
 						yourself);
 				yourself)}
 ]
