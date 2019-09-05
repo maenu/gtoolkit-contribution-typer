@@ -91,7 +91,7 @@ TypChainableResolvers >> resolvers: anObject [
 { #category : #'as yet unclassified' }
 TypChainableResolvers >> resolversFor: aLookup [
 	^ TypIteratorIterator new
-		iterators: (resolvers flatCollect: [ :e | e resolversFor: aLookup ]);
+		iterators: (resolvers collect: [ :e | e resolversFor: aLookup ]);
 		yourself
 ]
 

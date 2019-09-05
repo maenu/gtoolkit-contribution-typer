@@ -16,5 +16,5 @@ TypIterator >> next [
 
 { #category : #'as yet unclassified' }
 TypIterator >> whileHasNext: aBlock [
-	self hasNext whileTrue: [ aBlock cull: self next ]
+	[ self hasNext ] whileTrue: [ aBlock cull: self next ]
 ]
