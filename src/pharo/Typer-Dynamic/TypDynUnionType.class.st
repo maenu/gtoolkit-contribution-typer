@@ -48,8 +48,16 @@ TypDynUnionType >> addAll: aTypes [
 TypDynUnionType >> asNonDynType [
 	| type |
 	type := types typAsType.
-	^ nullable
-		ifTrue: [ type asNullableType ]
+	nullable
+		ifTrue: [ type := type asNullableType ].
+	^ type isUnion
+		ifTrue: [ | superType |
+			superType := type superType.
+			(superType isUnion not
+				and: [ superType ~= Object typAsType
+						and: [ superType ~= TypUnknownType instance ] ])
+				ifTrue: [ superType ]
+				ifFalse: [ type ] ]
 		ifFalse: [ type ]
 ]
 

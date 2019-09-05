@@ -18,6 +18,7 @@ TypDynCollector >> collectIn: aCollection doing: aBlock [
 	variableResolvers := Dictionary new "typParameters Association<ClassDescription,Symbol<Character>>,TypVariableResolver<TypVariableLookup>".
 	asts := aCollection collect: [ :e | e ast
 		doSemanticAnalysis;
+		typTypeReset;
 		typDynInstall ].
 	[ result := aBlock value.
 	methodResolvers := self collectMethodResolversIn: asts.
