@@ -23,7 +23,7 @@ Class >> typInfVariableResolverIndex [
 										collect: [ :h | h value typType ] ] ]) typAsType.
 					e asSymbol
 						->
-							{(TypVariableResolver new
+							(TypVariableResolver new
 								type: [ type ];
-								yourself)} ]) as: IdentityDictionary)
+								yourself) ]) as: IdentityDictionary)
 ]

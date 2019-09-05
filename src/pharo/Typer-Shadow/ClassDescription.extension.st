@@ -14,7 +14,11 @@ ClassDescription >> typShaShadows [
 { #category : #'*Typer-Shadow' }
 ClassDescription >> typShaTypeResolverIndex [
 	self flag: 'FIXME need to merge in case of multiple'.
-	^ (self typShaShadows collect: #typeResolverIndex) ifEmpty: [ #() ] ifNotEmpty: #first
+	^ (self typShaShadows collect: #typeResolverIndex)
+		ifEmpty: [ TypTypeResolver new
+				type: [ TypUnknownType instance ];
+				yourself ]
+		ifNotEmpty: #first
 ]
 
 { #category : #'*Typer-Shadow' }

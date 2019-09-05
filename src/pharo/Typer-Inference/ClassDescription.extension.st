@@ -10,9 +10,9 @@ ClassDescription >> typInfMethodResolverIndex [
 
 { #category : #'*Typer-Inference' }
 ClassDescription >> typInfTypeResolverIndex [
-	^ {(TypTypeResolver new
+	^ (TypTypeResolver new
 		type: [ :a | a clazz typAsNamedType ];
-		yourself)}
+		yourself)
 ]
 
 { #category : #'*Typer-Inference' }
@@ -33,9 +33,9 @@ ClassDescription >> typInfVariableResolverIndex [
 								collect: [ :h | h value typType ] ] ]) typAsType.
 			e asSymbol
 				->
-					{(TypVariableResolver new
+					(TypVariableResolver new
 						type: [ type ];
-						yourself)} ]) as: IdentityDictionary
+						yourself) ]) as: IdentityDictionary
 ]
 
 { #category : #'*Typer-Inference' }

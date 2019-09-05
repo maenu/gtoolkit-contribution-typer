@@ -12,13 +12,17 @@ ClassDescription >> typPraTypeResolverIndex [
 	| pragma types |
 	pragma := (self methods
 		detect: [ :e | e selector = #initialize ]
-		ifNone: [ ^ IdentityDictionary new ]) pragmas
+		ifNone: [ ^ TypTypeResolver new
+				type: [ TypUnknownType instance ];
+				yourself ]) pragmas
 		detect: [ :e | e selector = #typTypeParametersAs: ]
-		ifNone: [ ^ IdentityDictionary new ].
+		ifNone: [ ^ TypTypeResolver new
+				type: [ TypUnknownType instance ];
+				yourself ].
 	types := (pragma arguments at: 1) typAsTypes.
-	^ {(TypTypeResolver new
+	^ TypTypeResolver new
 		type: [ :a | a clazz typAsNamedType asParametricType: types ];
-		yourself)}
+		yourself
 ]
 
 { #category : #'*Typer-Pragma' }
@@ -35,7 +39,7 @@ ClassDescription >> typPraVariableResolverIndex [
 			type := (e arguments at: 2) typAsType.
 			variable asSymbol
 				->
-					{(TypVariableResolver new
+					(TypVariableResolver new
 						type: [ type ];
-						yourself)} ]) as: IdentityDictionary
+						yourself) ]) as: IdentityDictionary
 ]
