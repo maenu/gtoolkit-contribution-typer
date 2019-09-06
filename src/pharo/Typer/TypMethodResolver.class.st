@@ -14,13 +14,19 @@ TypMethodResolver >> argumentTypeAt: anInteger for: aLookup resolvedBy: anotherL
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeArgument: 2 as: 'TypMethodLookup'>
 	<typTypeArgument: 3 as: 'TypMethodLookup'>
-	<typTypeResultAs: 'TypType'>
+	<typTypeResultAs: 'TypLookupTypeResult'>
 	self flag: 'FIXME no pokemon catching'.
-	[ ^ argumentTypes
-		cull: anInteger
-		cull: aLookup
-		cull: anotherLookup
-		cull: self ]
+	[ ^ TypLookupTypeResult new
+		type:
+			(argumentTypes
+				cull: anInteger
+				cull: aLookup
+				cull: anotherLookup
+				cull: self);
+		lookup: aLookup;
+		resolvedBy: anotherLookup;
+		resolver: self;
+		yourself ]
 		on: Error
 		do: [ :e | 
 			TypNoCompatibleTypeError new
@@ -50,8 +56,8 @@ TypMethodResolver >> initialize [
 	<typTypeVariable: 'signalsAlways' as:
 		'BlockClosure[TypMethodLookup,TypMethodLookup,TypResolver<TypMethodLookup>]->!Boolean'>
 	super initialize.
-	argumentTypes := [ TypNoCompatibleTypeError new signal ].
-	resultType := [ TypNoCompatibleTypeError new signal ].
+	argumentTypes := [ TypUnknownType instance ].
+	resultType := [ TypUnknownType instance ].
 	signalsAlways := [ nil ]
 ]
 
@@ -71,9 +77,14 @@ TypMethodResolver >> resultType: anObject [
 TypMethodResolver >> resultTypeFor: aLookup resolvedBy: anotherLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
 	<typTypeArgument: 2 as: 'TypMethodLookup'>
-	<typTypeResultAs: 'TypType'>
+	<typTypeResultAs: 'TypLookupTypeResult'>
 	self flag: 'FIXME no pokemon catching'.
-	[ ^ resultType cull: aLookup cull: anotherLookup cull: self ]
+	[ ^ TypLookupTypeResult new
+		type: (resultType cull: aLookup cull: anotherLookup cull: self);
+		lookup: aLookup;
+		resolvedBy: anotherLookup;
+		resolver: self;
+		yourself ]
 		on: Error
 		do: [ :e | 
 			TypNoCompatibleTypeError new
@@ -97,9 +108,14 @@ TypMethodResolver >> signalsAlways: anObject [
 TypMethodResolver >> signalsAlwaysFor: aLookup resolvedBy: anotherLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
 	<typTypeArgument: 2 as: 'TypMethodLookup'>
-	<typTypeResultAs: '!Boolean'>
+	<typTypeResultAs: 'TypLookupSignalsAlwaysResult'>
 	self flag: 'FIXME no pokemon catching'.
-	[ ^ signalsAlways cull: aLookup cull: anotherLookup cull: self ]
+	[ ^ TypLookupSignalsAlwaysResult new
+		signalsAlways: (signalsAlways cull: aLookup cull: anotherLookup cull: self);
+		lookup: aLookup;
+		resolvedBy: anotherLookup;
+		resolver: self;
+		yourself ]
 		on: Error
 		do: [ :e | 
 			TypNoCompatibleTypeError new

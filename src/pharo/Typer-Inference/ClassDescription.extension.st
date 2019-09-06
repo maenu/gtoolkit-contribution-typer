@@ -1,26 +1,25 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Inference' }
-ClassDescription >> typInfMethodResolverIndex [
-	^ ((self methods
-		select: [ :e | e isAbstract not and: [ e ast isPrimitive not ] ])
-		collect: [ :e | e selector asSymbol -> e typInfMethodResolverIndex ])
-		as: IdentityDictionary
+ClassDescription >> typInfAsMethodResolverFor: aSymbol [
+	^ self methodDict
+		at: aSymbol
+		ifPresent: #typInfAsMethodResolver
+		ifAbsent: [ TypMethodResolver new ]
 ]
 
 { #category : #'*Typer-Inference' }
-ClassDescription >> typInfTypeResolverIndex [
-	^ (TypTypeResolver new
+ClassDescription >> typInfAsTypeResolver [
+	^ TypTypeResolver new
 		type: [ :a | a clazz typAsNamedType ];
-		yourself)
+		yourself
 ]
 
 { #category : #'*Typer-Inference' }
-ClassDescription >> typInfVariableResolverIndex [
-	^ (self class instVarNames
-		collect: [ :e | 
-			| definer clazzes type |
-			definer := self class whichClassDefinesInstVar: e.
+ClassDescription >> typInfAsVariableResolverFor: aSymbol [
+	^ (self class allInstVarNames includes: aSymbol)
+		ifTrue: [ | definer clazzes type |
+			definer := self class whichClassDefinesInstVar: aSymbol.
 			clazzes := self class typInfWithAllSuperclassesUntil: definer.
 			self
 				flag:
@@ -29,13 +28,12 @@ ClassDescription >> typInfVariableResolverIndex [
 				flatCollect: [ :f | 
 					f methods
 						flatCollect: [ :g | 
-							(g assignmentNodes select: [ :h | h variable name = e ])
+							(g assignmentNodes select: [ :h | h variable name = aSymbol ])
 								collect: [ :h | h value typType ] ] ]) typAsType.
-			e asSymbol
-				->
-					(TypVariableResolver new
-						type: [ type ];
-						yourself) ]) as: IdentityDictionary
+			TypVariableResolver new
+				type: [ type ];
+				yourself ]
+		ifFalse: [ TypVariableResolver new ]
 ]
 
 { #category : #'*Typer-Inference' }

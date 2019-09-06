@@ -1,24 +1,21 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Pragma' }
-ClassDescription >> typPraMethodResolverIndex [
-	^ (self methods
-		collect: [ :e | e selector asSymbol -> e typPraMethodResolverIndex ])
-		as: IdentityDictionary
+ClassDescription >> typPraAsMethodResolverFor: aSymbol [
+	^ self methodDict
+		at: aSymbol
+		ifPresent: #typPraAsMethodResolver
+		ifAbsent: [ TypMethodResolver new ]
 ]
 
 { #category : #'*Typer-Pragma' }
-ClassDescription >> typPraTypeResolverIndex [
+ClassDescription >> typPraAsTypeResolver [
 	| pragma types |
 	pragma := (self methods
 		detect: [ :e | e selector = #initialize ]
-		ifNone: [ ^ TypTypeResolver new
-				type: [ TypUnknownType instance ];
-				yourself ]) pragmas
+		ifNone: [ ^ TypTypeResolver new ]) pragmas
 		detect: [ :e | e selector = #typTypeParametersAs: ]
-		ifNone: [ ^ TypTypeResolver new
-				type: [ TypUnknownType instance ];
-				yourself ].
+		ifNone: [ ^ TypTypeResolver new ].
 	types := (pragma arguments at: 1) typAsTypes.
 	^ TypTypeResolver new
 		type: [ :a | a clazz typAsNamedType asParametricType: types ];
@@ -26,20 +23,16 @@ ClassDescription >> typPraTypeResolverIndex [
 ]
 
 { #category : #'*Typer-Pragma' }
-ClassDescription >> typPraVariableResolverIndex [
-	| pragmas |
-	pragmas := (self methods
+ClassDescription >> typPraAsVariableResolverFor: aSymbol [
+	| pragma |
+	pragma := (self methods
 		detect: [ :e | e selector = #initialize ]
-		ifNone: [ ^ IdentityDictionary new ]) pragmas
-		select: [ :e | e selector = #typTypeVariable:as: ].
-	^ (pragmas
-		collect: [ :e | 
-			| variable type |
-			variable := e arguments at: 1.
-			type := (e arguments at: 2) typAsType.
-			variable asSymbol
-				->
-					(TypVariableResolver new
-						type: [ type ];
-						yourself) ]) as: IdentityDictionary
+		ifNone: [ ^ TypVariableResolver new ]) pragmas
+		detect: [ :e | 
+			e selector = #typTypeVariable:as:
+				and: [ (e arguments at: 1) = aSymbol ] ]
+		ifNone: [ ^ TypVariableResolver new ].
+	^ TypTypeResolver new
+		type: [ (pragma arguments at: 2) typAsType ];
+		yourself
 ]

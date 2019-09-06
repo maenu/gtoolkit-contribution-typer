@@ -1,11 +1,27 @@
 Class {
 	#name : #TypShaShadow,
-	#superclass : #TypResolver,
+	#superclass : #Object,
+	#instVars : [
+		'priority'
+	],
 	#classInstVars : [
+		'priority',
 		'instance'
 	],
 	#category : #'Typer-Shadow-Core'
 }
+
+{ #category : #converting }
+TypShaShadow class >> asMethodResolverFor: aSymbol [
+	^ self class selectors
+		detect: [ :e | e = ('___' , aSymbol) or: [ e = ('~~~' , aSymbol) ] ]
+		ifFound: [ :e | self perform: e asSymbol withEnoughArguments: {} ]
+		ifNone: [ TypMethodResolver new
+				argumentTypes: [ TypUnknownType instance ];
+				resultType: [ TypUnknownType instance ];
+				signalsAlways: [ nil ];
+				yourself ]
+]
 
 { #category : #accessing }
 TypShaShadow class >> asType: aClass [
@@ -14,21 +30,42 @@ TypShaShadow class >> asType: aClass [
 	^ aClass typAsNamedType
 ]
 
+{ #category : #converting }
+TypShaShadow class >> asTypeResolver [
+	^ TypTypeResolver new
+		type: [ :a | self asType: a clazz ];
+		yourself
+]
+
+{ #category : #converting }
+TypShaShadow class >> asVariableResolverFor: aSymbol [
+	^ self class instVarNames
+		detect: [ :e | e = ('___' , aSymbol) ]
+		ifFound: [ :e | self instVarNamed: e ]
+		ifNone: [ TypVariableResolver new
+				type: [ TypUnknownType instance ];
+				yourself ]
+]
+
+{ #category : #'class initialization' }
+TypShaShadow class >> initialize [
+	super initialize.
+	priority := 0
+]
+
 { #category : #'class initialization' }
 TypShaShadow class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaShadow class >> methodResolverIndex [
-	^ ((self class selectors
-		select: [ :e | (e beginsWith: '___') or: [ e beginsWith: '~~~' ] ])
-		collect: [ :e | 
-			| name_ |
-			name_ := e copyFrom: 4 to: e size.
-			name_ asSymbol
-				-> (self perform: e asSymbol withEnoughArguments: {}) ])
-		as: IdentityDictionary
+{ #category : #accessing }
+TypShaShadow class >> priority [
+	^ priority
+]
+
+{ #category : #accessing }
+TypShaShadow class >> priority: anObject [
+	priority := anObject
 ]
 
 { #category : #'as yet unclassified' }
@@ -37,19 +74,12 @@ TypShaShadow class >> shadowedClass [
 	self subclassResponsibility
 ]
 
-{ #category : #converting }
-TypShaShadow class >> typeResolverIndex [
-	^ (TypTypeResolver new
-		type: [ :a | self asType: a clazz ];
-		yourself)
-]
-
 { #category : #'as yet unclassified' }
-TypShaShadow class >> variableResolverIndex [
-	^ ((self class instVarNames select: [ :e | e beginsWith: '___' ])
-		collect:
-			[ :e | (e copyFrom: 4 to: e size) asSymbol -> (self instVarNamed: e) ])
-		as: IdentityDictionary
+TypShaShadow >> asMethodResolverFor: aSymbol [
+	^ self class selectors
+		detect: [ :e | e = ('___' , aSymbol) or: [ e = ('~~~' , aSymbol) ] ]
+		ifFound: [ :e | self perform: e asSymbol withEnoughArguments: {} ]
+		ifNone: [ TypMethodResolver new ]
 ]
 
 { #category : #converting }
@@ -59,43 +89,44 @@ TypShaShadow >> asType: aClass [
 	^ aClass typAsNamedType
 ]
 
+{ #category : #converting }
+TypShaShadow >> asTypeResolver [
+	^ TypTypeResolver new
+		type: [ :a | self asType: a clazz ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
-TypShaShadow >> methodResolverIndex [
-	^ ((self class selectors
-		select: [ :e | (e beginsWith: '___') or: [ e beginsWith: '~~~' ] ])
-		collect: [ :e | 
-			| name |
-			name := e copyFrom: 4 to: e size.
-			name asSymbol
-				-> (self perform: e asSymbol withEnoughArguments: {}) ])
-		as: IdentityDictionary
+TypShaShadow >> asVariableResolverFor: aSymbol [
+	^ aSymbol first isUppercase
+		ifTrue: [ self class classVarNames
+				detect: [ :e | e = ('___' , aSymbol) ]
+				ifFound: [ :e | self class instanceSide classVarNamed: e ]
+				ifNone: [ TypVariableResolver new ] ]
+		ifFalse: [ self class instVarNames
+				detect: [ :e | e = ('___' , aSymbol) ]
+				ifFound: [ :e | self instVarNamed: e ]
+				ifNone: [ TypVariableResolver new ] ]
+]
+
+{ #category : #initialization }
+TypShaShadow >> initialize [
+	super initialize.
+	priority := 0
+]
+
+{ #category : #accessing }
+TypShaShadow >> priority [
+	^ priority
+]
+
+{ #category : #accessing }
+TypShaShadow >> priority: anObject [
+	priority := anObject
 ]
 
 { #category : #accessing }
 TypShaShadow >> shadowedClass [
 	<typTypeResultAs: 'ClassDescription'>
 	^ self class shadowedClass instanceSide
-]
-
-{ #category : #converting }
-TypShaShadow >> typeResolverIndex [
-	^ (TypTypeResolver new
-		type: [ :a | self asType: a clazz ];
-		yourself)
-]
-
-{ #category : #'as yet unclassified' }
-TypShaShadow >> variableResolverIndex [
-	^ ((self class instVarNames select: [ :e | e beginsWith: '___' ])
-		collect: [ :e | 
-			| name |
-			name := e copyFrom: 4 to: e size.
-			name asSymbol -> (self instVarNamed: e) ])
-		,
-			((self class classVarNames select: [ :e | e beginsWith: '___' ])
-				collect: [ :e | 
-					| name |
-					name := e copyFrom: 4 to: e size.
-					name asSymbol -> (self class instanceSide classVarNamed: e) ])
-		as: IdentityDictionary
 ]

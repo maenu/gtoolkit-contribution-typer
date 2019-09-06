@@ -1,8 +1,8 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*Typer-Inference' }
-CompiledMethod >> typInfMethodResolverIndex [
-	^ (self ast typIsReturnSelf
+CompiledMethod >> typInfAsMethodResolver [
+	^ self ast typIsReturnSelf
 		ifTrue: [ TypMethodResolver new
 				argumentTypes: [ TypUnknownType instance ];
 				resultType: [ :r :a | a receiverType ];
@@ -12,5 +12,5 @@ CompiledMethod >> typInfMethodResolverIndex [
 				argumentTypes: [ TypUnknownType instance ];
 				resultType: [ TypUnknownType instance ];
 				signalsAlways: [ nil ];
-				yourself ])
+				yourself ]
 ]

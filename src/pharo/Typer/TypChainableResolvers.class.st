@@ -5,40 +5,15 @@ Class {
 		'resolvers',
 		'next'
 	],
-	#classInstVars : [
-		'instance'
-	],
 	#category : #'Typer-Core'
 }
 
-{ #category : #accessing }
-TypChainableResolvers class >> initialize [
-	<typTypeVariable: 'global' as: 'TypResolvers<TypLookup,TypResolver<TypLookup>>'>
-	
-]
-
-{ #category : #accessing }
-TypChainableResolvers class >> instance [
-	<typTypeResultAs: 'TypResolvers<TypLookup,TypResolver<TypLookup>>'>
-	^ instance ifNil: [ instance := self new ]
-]
-
-{ #category : #accessing }
-TypChainableResolvers class >> reset [
-	instance := nil
-]
-
-{ #category : #initialization }
-TypChainableResolvers class >> resetAll [
-	<script>
-	self allSubclassesDo: #reset.
-	Smalltalk garbageCollect
-]
-
-{ #category : #adding }
-TypChainableResolvers >> add: aResolver [
-	<typTypeArgumentAt: 1 as: 'TypResolver<TypLookup>'>
-	resolvers add: aResolver
+{ #category : #'instance creation' }
+TypChainableResolvers class >> withAll: aCollection [
+	| instance |
+	instance := self new.
+	instance resolvers addAll: aCollection.
+	^ instance
 ]
 
 { #category : #initialization }
@@ -100,15 +75,26 @@ TypChainableResolvers >> typeFor: aLookup using: aBlock [
 	self
 		resolve: aLookup
 		using: [ :r :a | 
-			| type |
-			type := [ aBlock cull: r cull: a ]
+			| result |
+			result := [ aBlock cull: r cull: a ]
 				on: TypNoCompatibleTypeError
-				do: [ TypUnknownType instance ].
-			type isUnknown
-				ifFalse: [ ^ type ] ].
+				do: [ TypLookupTypeResult new
+						type: TypUnknownType instance;
+						lookup: aLookup;
+						resolvedBy: a;
+						resolver: r;
+						yourself ].
+			result type isUnknown
+				ifFalse: [ ^ result ] ].
 	^ next
-		ifNil: [ TypUnknownType instance ]
+		ifNil: [ TypLookupTypeResult new
+				type: TypUnknownType instance;
+				lookup: aLookup;
+				yourself ]
 		ifNotNil: [ [ next typeFor: aLookup using: aBlock ]
 				on: TypNoCompatibleTypeError
-				do: [ TypUnknownType instance ] ]
+				do: [ TypLookupTypeResult new
+						type: TypUnknownType instance;
+						lookup: aLookup;
+						yourself ] ]
 ]

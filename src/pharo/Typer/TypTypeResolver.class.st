@@ -11,7 +11,8 @@ Class {
 TypTypeResolver >> initialize [
 	<typTypeParametersAs: 'TypTypeLookup'>
 	<typTypeVariable: 'type' as: 'BlockClosure[TypTypeLookup,TypTypeLookup,TypResolver<TypLookup>]->TypType'>
-	super initialize
+	super initialize.
+	type := [ TypUnknownType instance ].
 ]
 
 { #category : #accessing }
@@ -30,6 +31,11 @@ TypTypeResolver >> type: anObject [
 TypTypeResolver >> typeFor: aLookup resolvedBy: anotherLookup [
 	<typTypeArgument: 1 as: 'TypTypeLookup'>
 	<typTypeArgument: 2 as: 'TypTypeLookup'>
-	<typTypeResultAs: 'TypType'>
-	^ type cull: aLookup cull: anotherLookup cull: self
+	<typTypeResultAs: 'TypLookupTypeResult'>
+	^ TypLookupTypeResult new
+		type: (type cull: aLookup cull: anotherLookup cull: self);
+		lookup: aLookup;
+		resolvedBy: anotherLookup;
+		resolver: self;
+		yourself
 ]

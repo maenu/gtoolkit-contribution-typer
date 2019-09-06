@@ -1,6 +1,6 @@
 Extension { #name : #Object }
 
-{ #category : #'*Typer-Dynamic' }
+{ #category : #'*Typer' }
 Object >> typSelfType [
 	^ self class typAsType
 ]

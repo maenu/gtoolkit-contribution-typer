@@ -1,13 +1,11 @@
 Extension { #name : #Class }
 
 { #category : #'*Typer-Inference' }
-Class >> typInfVariableResolverIndex [
-	^ super typInfVariableResolverIndex
-		,
-			((self class classVarNames
-				collect: [ :e | 
-					| definer clazzes type |
-					definer := self class whichClassDefinesClassVar: e.
+Class >> typInfAsVariableResolverFor: aSymbol [
+	^ aSymbol first isUppercase
+		ifTrue: [ (self class classVarNames includes: aSymbol)
+				ifTrue: [ | definer clazzes type |
+					definer := self class whichClassDefinesClassVar: aSymbol.
 					clazzes := (self typInfWithAllSuperclassesUntil: definer)
 						flatCollect: [ :f | 
 							{f.
@@ -19,11 +17,13 @@ Class >> typInfVariableResolverIndex [
 						flatCollect: [ :f | 
 							f methods
 								flatCollect: [ :g | 
-									(g assignmentNodes select: [ :h | h variable name = e ])
+									(g assignmentNodes select: [ :h | h variable name = aSymbol ])
 										collect: [ :h | h value typType ] ] ]) typAsType.
-					e asSymbol
-						->
-							(TypVariableResolver new
-								type: [ type ];
-								yourself) ]) as: IdentityDictionary)
+					TypVariableResolver new
+						type: [ type ];
+						yourself ]
+				ifFalse: [ TypVariableResolver new
+						type: [ TypUnknownType instance ];
+						yourself ] ]
+		ifFalse: [ self typInfAsVariableResolverFor: aSymbol ]
 ]

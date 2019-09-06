@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 TypSequenceableCollectionIterator >> collection: aSequenceableCollection [
-	queue := aSequenceableCollection asOrderedCollection
+	queue := aSequenceableCollection copy asOrderedCollection
 ]
 
 { #category : #accessing }

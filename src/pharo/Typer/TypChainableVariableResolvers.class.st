@@ -4,18 +4,6 @@ Class {
 	#category : #'Typer-Core'
 }
 
-{ #category : #accessing }
-TypChainableVariableResolvers class >> initialize [
-	<typTypeVariable: 'global' as: 'TypVariableResolvers<TypVariableLookup,TypVariableResolver<TypVariableLookup>>'>
-	
-]
-
-{ #category : #accessing }
-TypChainableVariableResolvers class >> instance [
-	<typTypeResultAs: 'TypVariableResolvers<TypVariableLookup,TypVariableResolver<TypVariableLookup>>'>
-	^ super instance "typCastAs TypVariableResolvers<TypVariableLookup,TypVariableResolver<TypVariableLookup>>"
-]
-
 { #category : #initialization }
 TypChainableVariableResolvers >> initialize [
 	<typTypeParametersAs: 'TypVariableLookup,TypVariableResolver<TypVariableLookup>'>
@@ -27,6 +15,6 @@ TypChainableVariableResolvers >> initialize [
 { #category : #accessing }
 TypChainableVariableResolvers >> typeForVariable: aLookup [
 	<typTypeArgument: 1 as: 'TypVariableLookup'>
-	<typTypeResultAs: 'TypType'>
+	<typTypeResultAs: 'TypLookupTypeResult'>
 	^ self typeFor: aLookup using: [ :r :a | r typeFor: aLookup resolvedBy: a ]
 ]

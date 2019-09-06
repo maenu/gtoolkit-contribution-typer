@@ -1,7 +1,7 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*Typer-Pragma' }
-CompiledMethod >> typPraMethodResolverIndex [
+CompiledMethod >> typPraAsMethodResolver [
 	| argumentPragmas resultPragma signalsAlwaysPragma argumentTypes resultType signalsAlways |
 	argumentPragmas := self pragmas
 		select: [ :e | e selector = #typTypeArgument:as: ].
@@ -23,9 +23,9 @@ CompiledMethod >> typPraMethodResolverIndex [
 	signalsAlways := signalsAlwaysPragma
 		ifNil: [ nil ]
 		ifNotNil: [ signalsAlwaysPragma arguments first ].
-	^ (TypMethodResolver new
+	^ TypMethodResolver new
 		argumentTypes: [ :i | argumentTypes at: i ];
 		resultType: [ resultType ];
 		signalsAlways: [ signalsAlways ];
-		yourself)
+		yourself
 ]

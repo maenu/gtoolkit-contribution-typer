@@ -4,18 +4,6 @@ Class {
 	#category : #'Typer-Core'
 }
 
-{ #category : #accessing }
-TypChainableMethodResolvers class >> initialize [
-	<typTypeVariable: 'global' as: 'TypMethodResolvers<TypMethodLookup,TypMethodResolver<TypMethodLookup>>'>
-	
-]
-
-{ #category : #accessing }
-TypChainableMethodResolvers class >> instance [
-	<typTypeResultAs: 'TypMethodResolvers<TypMethodLookup,TypMethodResolver<TypMethodLookup>>'>
-	^ super instance "typCastAs TypMethodResolvers<TypMethodLookup,TypMethodResolver<TypMethodLookup>>"
-]
-
 { #category : #initialization }
 TypChainableMethodResolvers >> initialize [
 	<typTypeParametersAs: 'TypMethodLookup,TypMethodResolver<TypMethodLookup>'>
@@ -27,33 +15,41 @@ TypChainableMethodResolvers >> initialize [
 { #category : #accessing }
 TypChainableMethodResolvers >> signalsAlways: aLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
-	<typTypeResultAs: '!Boolean'>
+	<typTypeResultAs: 'TypLookupSignalsAlwaysResult'>
 	self
 		resolve: aLookup
 		using: [ :r :a | 
-			| signalsAlways |
-			signalsAlways := [ r signalsAlwaysFor: aLookup resolvedBy: a ]
+			| result |
+			result := [ r signalsAlwaysFor: aLookup resolvedBy: a ]
 				on: TypNoCompatibleTypeError
-				do: [ ^ nil ].
-			signalsAlways ifNotNil: [ ^ signalsAlways ] ].
+				do: [ TypLookupSignalsAlwaysResult new
+						lookup: aLookup;
+						resolvedBy: a;
+						resolver: r;
+						yourself ].
+			result signalsAlways ifNotNil: [ ^ result ] ].
 	^ next
-		ifNil: [ nil ]
+		ifNil: [ TypLookupSignalsAlwaysResult new
+				lookup: aLookup;
+				yourself ]
 		ifNotNil: [ [ next signalsAlways: aLookup ]
 				on: TypNoCompatibleTypeError
-				do: [ nil ] ]
+				do: [ TypLookupSignalsAlwaysResult new
+						lookup: aLookup;
+						yourself ] ]
 ]
 
 { #category : #accessing }
 TypChainableMethodResolvers >> typeForArgumentAt: anInteger ofMethod: aLookup [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeArgument: 2 as: 'TypMethodLookup'>
-	<typTypeResultAs: 'TypType'>
+	<typTypeResultAs: 'TypLookupTypeResult'>
 	^ self typeFor: aLookup using: [ :r :a | r argumentTypeAt: anInteger for: aLookup resolvedBy: a ]
 ]
 
 { #category : #accessing }
 TypChainableMethodResolvers >> typeForResultOfMethod: aLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
-	<typTypeResultAs: 'TypType'>
+	<typTypeResultAs: 'TypLookupTypeResult'>
 	^ self typeFor: aLookup using: [ :r :a | r resultTypeFor: aLookup resolvedBy: a ]
 ]
