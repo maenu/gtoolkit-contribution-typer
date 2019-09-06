@@ -30,11 +30,11 @@ TypDynResolver >> resolvers: anObject [
 { #category : #accessing }
 TypDynResolver >> resolversFor: aLookup [
 	<typTypeArgument: 1 as: 'TypObjectLookup'>
-	<typTypeResultAs: 'TypIterator<TypResolver<TypObjectLookup>>'>
+	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypObjectLookup>>'>
 	^ aLookup receiverType representsClass
 		ifTrue: [ resolvers
 				at: aLookup receiverType asClass -> aLookup selector
-				ifPresent: [ :e | {e} typAsIterator ]
-				ifAbsent: [ #() typAsIterator ] ]
-		ifFalse: [ #() typAsIterator ]
+				ifPresent: [ :e | {e} ]
+				ifAbsent: [ #() ] ]
+		ifFalse: [ #() ]
 ]

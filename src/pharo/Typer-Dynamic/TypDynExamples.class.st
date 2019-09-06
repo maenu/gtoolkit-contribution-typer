@@ -9,12 +9,12 @@ TypDynExamples >> neoJsonCore [
 	<gtExample>
 	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod<Integer>>>'>
 	| methods collector testResult association |
-	(TypChainableMethodResolvers instance resolvers last
+	(TypMethodResultTypeRepository instance resolvers last
 		isKindOf: TypDynResolver)
-		ifTrue: [ TypChainableMethodResolvers instance resolvers removeLast ].
-	(TypChainableVariableResolvers instance resolvers last
+		ifTrue: [ TypMethodResultTypeRepository instance resolvers removeLast ].
+	(TypVariableTypeRepository instance resolvers last
 		isKindOf: TypDynResolver)
-		ifTrue: [ TypChainableVariableResolvers instance resolvers removeLast ].
+		ifTrue: [ TypVariableTypeRepository instance resolvers removeLast ].
 	methods := #'Neo-JSON-Core' asPackage methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
@@ -25,8 +25,8 @@ TypDynExamples >> neoJsonCore [
 				do: [ :e"typCastAs TestCase class"
 					 | e suite run: testResult ]
 				displayingProgress: 'Running test case' ].
-	TypChainableMethodResolvers instance add: association key value.
-	TypChainableVariableResolvers instance add: association value.
+	TypMethodResultTypeRepository instance add: association key value.
+	TypVariableTypeRepository instance add: association value.
 	^ testResult -> association key value -> association value
 		-> #'Neo-JSON-Core' asPackage methods
 ]
@@ -36,12 +36,12 @@ TypDynExamples >> refactoring [
 	<gtExample>
 	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod<Integer>>>'>
 	| methods collector testResult association |
-	(TypChainableMethodResolvers instance resolvers last
+	(TypMethodResultTypeRepository instance resolvers last
 		isKindOf: TypDynResolver)
-		ifTrue: [ TypChainableMethodResolvers instance resolvers removeLast ].
-	(TypChainableVariableResolvers instance resolvers last
+		ifTrue: [ TypMethodResultTypeRepository instance resolvers removeLast ].
+	(TypVariableTypeRepository instance resolvers last
 		isKindOf: TypDynResolver)
-		ifTrue: [ TypChainableVariableResolvers instance resolvers removeLast ].
+		ifTrue: [ TypVariableTypeRepository instance resolvers removeLast ].
 	methods := self refactoringNonTestPackages flatCollect: #methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
@@ -52,8 +52,8 @@ TypDynExamples >> refactoring [
 				do: [ :e"typCastAs TestCase class"
 					 | e suite run: testResult ]
 				displayingProgress: 'Running test case' ].
-	TypChainableMethodResolvers instance add: association key value.
-	TypChainableVariableResolvers instance add: association value.
+	TypMethodResultTypeRepository instance add: association key value.
+	TypVariableTypeRepository instance add: association value.
 	^ testResult -> association key value -> association value
 		-> (self refactoringNonTestPackages flatCollect: #methods)
 ]
@@ -63,12 +63,12 @@ TypDynExamples >> refactoring2Transformations [
 	<gtExample>
 	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod<Integer>>>'>
 	| methods collector testResult association |
-	(TypChainableMethodResolvers instance resolvers last
+	(TypMethodResultTypeRepository instance resolvers last
 		isKindOf: TypDynResolver)
-		ifTrue: [ TypChainableMethodResolvers instance resolvers removeLast ].
-	(TypChainableVariableResolvers instance resolvers last
+		ifTrue: [ TypMethodResultTypeRepository instance resolvers removeLast ].
+	(TypVariableTypeRepository instance resolvers last
 		isKindOf: TypDynResolver)
-		ifTrue: [ TypChainableVariableResolvers instance resolvers removeLast ].
+		ifTrue: [ TypVariableTypeRepository instance resolvers removeLast ].
 	methods := #'Refactoring2-Transformations' asPackage methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
@@ -79,8 +79,8 @@ TypDynExamples >> refactoring2Transformations [
 				do: [ :e"typCastAs TestCase class"
 					 | e suite run: testResult ]
 				displayingProgress: 'Running test case' ].
-	TypChainableMethodResolvers instance add: association key value.
-	TypChainableVariableResolvers instance add: association value.
+	TypMethodResultTypeRepository instance add: association key value.
+	TypVariableTypeRepository instance add: association value.
 	^ testResult -> association key value -> association value
 		-> #'Refactoring2-Transformations' asPackage methods
 ]

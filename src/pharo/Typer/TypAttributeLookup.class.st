@@ -1,5 +1,5 @@
 Class {
-	#name : #TypObjectLookup,
+	#name : #TypAttributeLookup,
 	#superclass : #TypLookup,
 	#instVars : [
 		'selector',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #comparing }
-TypObjectLookup >> = anObject [
+TypAttributeLookup >> = anObject [
 	^ self == anObject
 		or: [ self class == anObject class
 				and: [ | object |
@@ -19,48 +19,48 @@ TypObjectLookup >> = anObject [
 ]
 
 { #category : #copying }
-TypObjectLookup >> adaptWithSuperType [
+TypAttributeLookup >> adaptWithSuperType [
 	self assert: [ self hasSuperType ].
 	self receiverType: receiverType superType
 ]
 
 { #category : #testing }
-TypObjectLookup >> hasSuperType [
+TypAttributeLookup >> hasSuperType [
 	^ receiverType hasSuperType
 ]
 
 { #category : #comparing }
-TypObjectLookup >> hash [
+TypAttributeLookup >> hash [
 	^ selector hash bitXor: receiverType hash
 ]
 
 { #category : #initialization }
-TypObjectLookup >> initialize [
+TypAttributeLookup >> initialize [
 	<typTypeVariable: 'receiverType' as: 'TypType'>
 	<typTypeVariable: 'selector' as:  'Symbol<Character>'>
 	super initialize
 ]
 
 { #category : #accessing }
-TypObjectLookup >> receiverType [
+TypAttributeLookup >> receiverType [
 	<typTypeResultAs: 'TypType'>
 	^ receiverType
 ]
 
 { #category : #accessing }
-TypObjectLookup >> receiverType: anObject [
+TypAttributeLookup >> receiverType: anObject [
 	<typTypeArgument: 1 as: 'TypType'>
 	receiverType := anObject
 ]
 
 { #category : #accessing }
-TypObjectLookup >> selector [
+TypAttributeLookup >> selector [
 	<typTypeResultAs:  'Symbol<Character>'>
 	^ selector
 ]
 
 { #category : #accessing }
-TypObjectLookup >> selector: anObject [
+TypAttributeLookup >> selector: anObject [
 	<typTypeArgument: 1 as:  'Symbol<Character>'>
 	selector := anObject
 ]

@@ -6,7 +6,7 @@ Class {
 
 { #category : #'as yet unclassified' }
 TypShaTypTypChainableResolvers class >> shadowedClass [
-	^ TypChainableResolvers class
+	^ TypRepository class
 ]
 
 { #category : #accessing }

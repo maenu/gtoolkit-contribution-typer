@@ -118,7 +118,7 @@ TypShaPhaDictionary >> ___collect: _a [
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ TypChainableMethodResolvers instance
+						ifTrue: [ TypMethodResultTypeRepository instance
 								typeForResultOfMethod:
 									(TypMethodLookup new
 										receiverType: (a receiverType parameters at: 2);

@@ -205,7 +205,7 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifPresent: _b ifAbsent: _c [
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ TypChainableMethodResolvers instance
+						ifTrue: [ TypMethodResultTypeRepository instance
 								typeForResultOfMethod:
 									(TypMethodLookup new
 										receiverType: a receiverType;

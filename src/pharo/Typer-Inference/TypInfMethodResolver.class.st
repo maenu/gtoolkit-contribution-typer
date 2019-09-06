@@ -7,9 +7,9 @@ Class {
 { #category : #accessing }
 TypInfMethodResolver >> resolversFor: aLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
-	<typTypeResultAs: 'TypIterator<TypResolver<TypMethodLookup>>'>
+	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypMethodLookup>>'>
 	^ aLookup receiverType representsClass
 		ifTrue: [ {(aLookup receiverType asClass
-				typInfAsMethodResolverFor: aLookup selector)} typAsIterator ]
-		ifFalse: [ #() typAsIterator ]
+				typInfAsMethodResolverFor: aLookup selector)} ]
+		ifFalse: [ #() ]
 ]

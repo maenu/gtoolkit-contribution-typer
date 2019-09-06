@@ -25,7 +25,7 @@ RBMethodNode >> typTemporaryProfile [
 RBMethodNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>
-	^ TypChainableMethodResolvers instance
+	^ TypMethodResultTypeRepository instance
 		typeForArgumentAt: anInteger
 		ofMethod:
 			(TypMethodLookup new
@@ -48,7 +48,7 @@ RBMethodNode >> typTypeForArgumentNamed: aString [
 { #category : #'*Typer' }
 RBMethodNode >> typTypeForResult [
 	<typTypeResultAs: 'TypType'>
-	^ TypChainableMethodResolvers instance
+	^ TypMethodResultTypeRepository instance
 		typeForResultOfMethod:
 			(TypMethodLookup new
 				receiverType: self methodClass typAsType;

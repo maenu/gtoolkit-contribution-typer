@@ -7,27 +7,27 @@ Class {
 { #category : #example }
 TypExamples >> example [
 	<gtExample>
-	(TypChainableTypeResolvers
+	(TypClassTypeRepository
 		reset;
 		instance)
 		next:
-				(TypChainableTypeResolvers new
+				(TypClassTypeRepository new
 						add: TypCachingTypeResolver typInfResolver);
 		add: TypCachingTypeResolver typPraResolver;
 		add: TypCachingTypeResolver typShaResolver.
-	(TypChainableMethodResolvers
+	(TypMethodResultTypeRepository
 		reset;
 		instance)
 		next:
-				(TypChainableMethodResolvers new
+				(TypMethodResultTypeRepository new
 						add: TypCachingMethodResolver typInfResolver);
 		add: TypCachingMethodResolver typPraResolver;
 		add: TypCachingMethodResolver typShaResolver.
-	(TypChainableVariableResolvers
+	(TypVariableTypeRepository
 		reset;
 		instance)
 		next:
-				(TypChainableVariableResolvers new
+				(TypVariableTypeRepository new
 						add: TypCachingVariableResolver typInfResolver);
 		add: TypCachingVariableResolver typPraResolver;
 		add: TypCachingVariableResolver typShaResolver.

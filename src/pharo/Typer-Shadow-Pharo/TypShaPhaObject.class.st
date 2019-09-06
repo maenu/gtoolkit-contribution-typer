@@ -93,7 +93,7 @@ TypShaPhaObject >> ___perform: _a [
 			| argument |
 			argument := a argumentNodes at: 1.
 			(argument isLiteralNode and: [ argument value isSymbol ])
-				ifTrue: [ TypChainableMethodResolvers instance
+				ifTrue: [ TypMethodResultTypeRepository instance
 						typeForResultOfMethod:
 							(TypMethodLookup new
 								receiverType: a receiverType;

@@ -7,9 +7,9 @@ Class {
 { #category : #accessing }
 TypPraVariableResolver >> resolversFor: aLookup [
 	<typTypeArgument: 1 as: 'TypVariableLookup'>
-	<typTypeResultAs: 'TypIterator<TypResolver<TypVariableLookup>>'>
+	<typTypeResultAs: 'SequenceableCollection<TypResolver<TypVariableLookup>>'>
 	^ aLookup receiverType representsClass
 		ifTrue: [ {(aLookup receiverType asClass
-				typPraAsVariableResolverFor: aLookup selector)} typAsIterator ]
-		ifFalse: [ #() typAsIterator ]
+				typPraAsVariableResolverFor: aLookup selector)} ]
+		ifFalse: [ #() ]
 ]

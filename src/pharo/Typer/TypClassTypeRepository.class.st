@@ -1,11 +1,11 @@
 Class {
-	#name : #TypChainableTypeResolvers,
-	#superclass : #TypChainableResolvers,
+	#name : #TypClassTypeRepository,
+	#superclass : #TypTypeRepository,
 	#category : #'Typer-Core'
 }
 
 { #category : #initialization }
-TypChainableTypeResolvers >> initialize [
+TypClassTypeRepository >> initialize [
 	<typTypeParametersAs: 'TypTypeLookup,TypTypeResolver<TypTypeLookup>'>
 	<typTypeVariable: 'resolvers' as: 'SequenceableCollection<TypResolver<TypTypeLookup>>'>
 	<typTypeVariable: 'next' as: 'TypTypeResolver<TypTypeLookup>'>
@@ -13,7 +13,7 @@ TypChainableTypeResolvers >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
-TypChainableTypeResolvers >> typeForClass: aLookup [
+TypClassTypeRepository >> typeFor: aLookup [
 	<typTypeArgument: 1 as: 'TypTypeLookup'>
 	<typTypeResultAs: 'TypLookupTypeResult'>
 	^ self typeFor: aLookup using: [ :r :a | r typeFor: aLookup resolvedBy: a ]
