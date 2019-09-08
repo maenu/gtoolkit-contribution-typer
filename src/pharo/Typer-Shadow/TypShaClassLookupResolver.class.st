@@ -7,12 +7,11 @@ Class {
 { #category : #accessing }
 TypShaClassLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypClassLookup'>
-	<typTypeResultAs: '!TypClassLookupResult'>
+	<typTypeResultAs: 'SequenceableCollection<TypClassLookupResult>'>
 	^ ((aLookup clazz typShaShadows collect: #asClassLookupResult)
 		reject: #isNil)
-		ifEmpty: [ nil ]
-		ifNotEmpty: [ :f | 
-			f first
+		do: [ :e | 
+			e
 				lookup: aLookup;
 				resolvedBy: aLookup;
 				resolver: self;

@@ -24,6 +24,6 @@ TypLookupResolver >> initialize [
 { #category : #accessing }
 TypLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypLookup'>
-	<typTypeResultAs: '!TypLookupResult'>
+	<typTypeResultAs: 'SequenceableCollection<TypLookupResult>'>
 	self subclassResponsibility
 ]

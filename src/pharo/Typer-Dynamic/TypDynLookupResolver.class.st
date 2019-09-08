@@ -10,18 +10,18 @@ Class {
 { #category : #accessing }
 TypDynLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypObjectLookup'>
-	<typTypeResultAs: '!TypLookupResult'>
+	<typTypeResultAs: 'SequenceableCollection<TypLookupResult>'>
 	^ aLookup receiverType representsClass
 		ifTrue: [ results
 				at: aLookup receiverType asClass -> aLookup selector
 				ifPresent: [ :e | 
-					e copy
+					{(e copy
 						lookup: aLookup;
 						resolvedBy: aLookup;
 						resolver: self;
-						yourself ]
-				ifAbsent: [ nil ] ]
-		ifFalse: [ nil ]
+						yourself)} ]
+				ifAbsent: [ #() ] ]
+		ifFalse: [ #() ]
 ]
 
 { #category : #accessing }

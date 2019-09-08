@@ -7,12 +7,13 @@ Class {
 { #category : #accessing }
 TypInfClassLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypClassLookup'>
-	<typTypeResultAs: '!TypClassLookupResult'>
+	<typTypeResultAs: 'SequenceableCollection<TypClassLookupResult>'>
 	^ aLookup clazz typInfAsClassLookupResult
+		ifNil: [ #() ]
 		ifNotNil: [ :e | 
-			e
+			{(e
 				lookup: aLookup;
 				resolvedBy: aLookup;
 				resolver: self;
-				yourself ]
+				yourself)} ]
 ]

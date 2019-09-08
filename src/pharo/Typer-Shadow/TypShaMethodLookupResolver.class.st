@@ -7,17 +7,16 @@ Class {
 { #category : #accessing }
 TypShaMethodLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
-	<typTypeResultAs: '!TypMethodLookupResult'>
+	<typTypeResultAs: 'SequenceableCollection<TypMethodLookupResult>'>
 	^ aLookup receiverType representsClass
 		ifTrue: [ ((aLookup receiverType asClass typShaShadows
 				collect: [ :e | e asMethodLookupResultFor: aLookup selector ])
 				reject: #isNil)
-				ifEmpty: [ nil ]
-				ifNotEmpty: [ :f | 
-					f first
+				do: [ :e | 
+					e
 						lookup: aLookup;
 						resolvedBy: aLookup;
 						resolver: self;
 						yourself ] ]
-		ifFalse: [ nil ]
+		ifFalse: [ #() ]
 ]

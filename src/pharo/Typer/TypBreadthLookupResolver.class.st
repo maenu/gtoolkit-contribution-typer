@@ -9,9 +9,7 @@ Class {
 
 { #category : #accessing }
 TypBreadthLookupResolver >> resolve: aLookup [
-	^ ((resolvers collect: [ :e | e resolve: aLookup ]) reject: #isNil)
-		ifEmpty: [ nil ]
-		ifNotEmpty: #first
+	^ resolvers flatCollect: [ :e | e resolve: aLookup ]
 ]
 
 { #category : #accessing }

@@ -9,15 +9,15 @@ Class {
 
 { #category : #resolving }
 TypDepthLookupResolver >> resolve: aLookup [
-	^ (resolver resolve: aLookup)
-		ifNil: [ aLookup hasSuperType
-				ifTrue: [ (self resolve: aLookup copy adaptWithSuperType)
-						ifNotNil: [ :e | 
-							e
-								lookup: aLookup;
-								yourself ] ]
-				ifFalse: [ nil ] ]
-		ifNotNil: #yourself
+	| results |
+	results := OrderedCollection new.
+	results addAll: (resolver resolve: aLookup).
+	aLookup hasSuperType
+		ifTrue: [ results
+				addAll:
+					((self resolve: aLookup copy adaptWithSuperType)
+						do: [ :e | e lookup: aLookup ]) ].
+	^ results
 ]
 
 { #category : #accessing }

@@ -6,10 +6,15 @@ Class {
 
 { #category : #accessing }
 TypClassLookupIndex >> typeFor: aLookup [
-	^ (resolver resolve: aLookup)
-		ifNil: [ TypUnknownType instance ]
-		ifNotNil: [ :e | 
-			[ e type ]
+	(resolver resolve: aLookup)
+		do: [ :e | 
+			[ | type |
+			type := e type.
+			type isUnknown
+				ifFalse: [ ^ type ] ]
 				on: Error
-				do: [ TypUnknownType instance ] ]
+				do: [ :f | 
+					f logCr.
+					self flag: 'FIXME signal?' ] ].
+	^ TypUnknownType instance
 ]

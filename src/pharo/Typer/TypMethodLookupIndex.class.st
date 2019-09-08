@@ -6,29 +6,44 @@ Class {
 
 { #category : #accessing }
 TypMethodLookupIndex >> argumentTypeFor: aLookup at: anInteger [
-	^ (resolver resolve: aLookup)
-		ifNil: [ TypUnknownType instance ]
-		ifNotNil: [ :e | 
-			[ e argumentTypeAt: anInteger ]
+	(resolver resolve: aLookup)
+		do: [ :e | 
+			[ | type |
+			type := e argumentTypeAt: anInteger.
+			type isUnknown
+				ifFalse: [ ^ type ] ]
 				on: Error
-				do: [ TypUnknownType instance ] ]
+				do: [ :f | 
+					f logCr.
+					self flag: 'FIXME signal?' ] ].
+	^ TypUnknownType instance
 ]
 
 { #category : #accessing }
 TypMethodLookupIndex >> resultTypeFor: aLookup [
-	^ (resolver resolve: aLookup)
-		ifNil: [ TypUnknownType instance ]
-		ifNotNil: [ :e | 
-			[ e resultType ]
+	(resolver resolve: aLookup)
+		do: [ :e | 
+			[ | type |
+			type := e resultType.
+			type isUnknown
+				ifFalse: [ ^ type ] ]
 				on: Error
-				do: [ TypUnknownType instance ] ]
+				do: [ :f | 
+					f logCr.
+					self flag: 'FIXME signal?' ] ].
+	^ TypUnknownType instance
 ]
 
 { #category : #accessing }
 TypMethodLookupIndex >> signalsAlwaysFor: aLookup [
-	^ (resolver resolve: aLookup)
-		ifNotNil: [ :e | 
-			[ e signalsAlways ]
+	(resolver resolve: aLookup)
+		do: [ :e | 
+			[ | signalsAlways |
+			signalsAlways := e signalsAlways.
+			signalsAlways ifNotNil: [ ^ signalsAlways ] ]
 				on: Error
-				do: [ nil ] ]
+				do: [ :f | 
+					f logCr.
+					self flag: 'FIXME signal?' ] ].
+	^ nil
 ]

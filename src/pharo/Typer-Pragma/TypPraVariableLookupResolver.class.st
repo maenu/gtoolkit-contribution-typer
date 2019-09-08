@@ -7,15 +7,16 @@ Class {
 { #category : #accessing }
 TypPraVariableLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypVariableLookup'>
-	<typTypeResultAs: '!TypVariableLookupResult'>
+	<typTypeResultAs: 'SequenceableCollection<TypVariableLookupResult>'>
 	^ aLookup receiverType representsClass
 		ifTrue: [ (aLookup receiverType asClass
 				typPraAsVariableLookupResultFor: aLookup selector)
+				ifNil: [ #() ]
 				ifNotNil: [ :e | 
-					e
+					{(e
 						lookup: aLookup;
 						resolvedBy: aLookup;
 						resolver: self;
-						yourself ] ]
+						yourself)} ] ]
 		ifFalse: [ nil ]
 ]

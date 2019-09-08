@@ -7,15 +7,16 @@ Class {
 { #category : #accessing }
 TypPraMethodLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
-	<typTypeResultAs: '!TypMethodLookupResult'>
+	<typTypeResultAs: 'SequenceableCollection<TypMethodLookupResult>'>
 	^ aLookup receiverType representsClass
 		ifTrue: [ (aLookup receiverType asClass
 				typPraAsMethodLookupResultFor: aLookup selector)
+				ifNil: [ #() ]
 				ifNotNil: [ :e | 
-					e
+					{(e
 						lookup: aLookup;
 						resolvedBy: aLookup;
 						resolver: self;
-						yourself ] ]
-		ifFalse: [ nil ]
+						yourself)} ] ]
+		ifFalse: [ #() ]
 ]

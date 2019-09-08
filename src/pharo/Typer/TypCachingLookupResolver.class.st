@@ -21,8 +21,6 @@ TypCachingLookupResolver >> reset [
 
 { #category : #accessing }
 TypCachingLookupResolver >> resolve: aLookup [
-	<typTypeArgument: 1 as: 'TypLookup'>
-	<typTypeResultAs: '!TypLookupResult'>
 	^ cache at: aLookup ifAbsentPut: [ resolver resolve: aLookup ]
 ]
 
