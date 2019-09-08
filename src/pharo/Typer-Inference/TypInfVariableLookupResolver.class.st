@@ -7,10 +7,15 @@ Class {
 { #category : #accessing }
 TypInfVariableLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypVariableLookup'>
-	<typTypeResultAs: '!TypVariableResolver<TypVariableLookup>'>
+	<typTypeResultAs: '!TypVariableLookupResult'>
 	^ aLookup receiverType representsClass
 		ifTrue: [ (aLookup receiverType asClass
-				typInfAsVariableResolverFor: aLookup selector)
-				resolve: aLookup ]
+				typInfAsVariableLookupResultFor: aLookup selector)
+				ifNotNil: [ :e | 
+					e copy
+						lookup: aLookup;
+						resolvedBy: aLookup;
+						resolver: self;
+						yourself ] ]
 		ifFalse: [ nil ]
 ]

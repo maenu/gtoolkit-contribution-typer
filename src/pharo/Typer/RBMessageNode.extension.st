@@ -2,6 +2,7 @@ Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer' }
 RBMessageNode >> typSignalsAlways [
+	self flag: 'FIXME'.
 	^ (self
 		propertyAt: #typSignalsAlways
 		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
@@ -13,7 +14,7 @@ RBMessageNode >> typSignalsAlways [
 				ifTrue: [ | signalsAlways |
 					signalsAlways := (receiverType "typCastAs TypUnionType") types
 						collect: [ :e | TypMethodLookupIndex instance
-								signalsAlways:
+								signalsAlwaysFor:
 									(TypMethodLookup new
 										receiverType: e;
 										selector: self selector asSymbol;
@@ -24,7 +25,7 @@ RBMessageNode >> typSignalsAlways [
 						ifTrue: [ nil ]
 						ifFalse: [ signalsAlways inject: true into: [ :a :b | a and: b ] ] ]
 				ifFalse: [ TypMethodLookupIndex instance
-						signalsAlways:
+						signalsAlwaysFor:
 							(TypMethodLookup new
 								receiverType: receiverType;
 								selector: self selector asSymbol;
@@ -37,35 +38,37 @@ RBMessageNode >> typSignalsAlways [
 RBMessageNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>
-	^ (self
+	self flag: 'FIXME'.
+	^ self
 		propertyAt: #typTypeForArgument , anInteger asString
-		ifAbsentPut: [
-			| receiverType argumentTypes |
+		ifAbsentPut: [ | receiverType argumentTypes |
 			"need to set property to default to unknown on recursive calls"
-			self propertyAt: #typTypeForArgument , anInteger asString put: TypUnknownType instance.
+			self
+				propertyAt: #typTypeForArgument , anInteger asString
+				put: TypUnknownType instance.
 			receiverType := self typTypeForReceiver.
 			argumentTypes := self typTypesForArguments.
 			receiverType isUnion
-				ifTrue: [ ((receiverType "typCastAs TypUnionType") types
+				ifTrue: [ (receiverType types
 						collect: [ :e | 
 							TypMethodLookupIndex instance
-								typeForArgumentAt: anInteger
-								ofMethod:
+								argumentTypeFor:
 									(TypMethodLookup new
 										receiverType: e;
 										selector: self selector asSymbol;
 										argumentTypes: argumentTypes;
 										argumentNodes: self arguments;
-										yourself) ]) typAsType ]
+										yourself)
+								at: anInteger ]) typAsType	"typCastAs TypUnionType" ]
 				ifFalse: [ TypMethodLookupIndex instance
-						typeForArgumentAt: anInteger
-						ofMethod:
+						argumentTypeFor:
 							(TypMethodLookup new
 								receiverType: receiverType;
 								selector: self selector asSymbol;
 								argumentTypes: argumentTypes;
 								argumentNodes: self arguments;
-								yourself) ] ]) "typCastAs TypType"
+								yourself)
+						at: anInteger ] ]	"typCastAs TypType"
 ]
 
 { #category : #'*Typer' }
@@ -77,6 +80,7 @@ RBMessageNode >> typTypeForReceiver [
 { #category : #'*Typer' }
 RBMessageNode >> typTypeForResult [
 	<typTypeResultAs: 'TypType'>
+	self flag: 'FIXME'.
 	^ (self
 		propertyAt: #typTypeForResult
 		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
@@ -88,7 +92,7 @@ RBMessageNode >> typTypeForResult [
 				ifTrue: [ ((receiverType "typCastAs TypUnionType") types
 						collect: [ :e | 
 							TypMethodLookupIndex instance
-								typeForResultOfMethod:
+								resultTypeFor:
 									(TypMethodLookup new
 										receiverType: e;
 										selector: self selector asSymbol;
@@ -96,7 +100,7 @@ RBMessageNode >> typTypeForResult [
 										argumentNodes: self arguments;
 										yourself) ]) typAsType ]
 				ifFalse: [ TypMethodLookupIndex instance
-						typeForResultOfMethod:
+						resultTypeFor:
 							(TypMethodLookup new
 								receiverType: receiverType;
 								selector: self selector asSymbol;

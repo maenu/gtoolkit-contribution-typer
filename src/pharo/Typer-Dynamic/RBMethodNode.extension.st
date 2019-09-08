@@ -1,16 +1,19 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Dynamic' }
-RBMethodNode >> typDynAsMethodResolver [
-	<typTypeResultAs: 'TypMethodResolver<TypMethodLookup>'>
+RBMethodNode >> typDynAsMethodLookupResult [
+	<typTypeResultAs: '!TypMethodLookupResult'>
 	| arguments_ result |
 	arguments_ := (self method numArgs
-		timesCollect: [ :i | self typDynTypeForArgumentAt: i ]) collect: #asNonDynType.
+		timesCollect: [ :i | self typDynTypeForArgumentAt: i ])
+		collect: #asNonDynType.
 	result := self typDynTypeForResult asNonDynType.
-	^ TypMethodLookupResult new
-		argumentTypes: [ :i | arguments_ at: i ];
-		resultType: [ result ];
-		yourself
+	^ result isUnknown
+		ifTrue: [ nil ]
+		ifFalse: [ TypMethodLookupResult new
+				argumentTypes: [ :i | arguments_ at: i ];
+				resultType: [ result ];
+				yourself ]
 ]
 
 { #category : #'*Typer-Dynamic' }

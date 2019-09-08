@@ -9,8 +9,7 @@ Class {
 
 { #category : #initialization }
 TypVariableLookupResult >> initialize [
-	<typTypeParametersAs: 'TypVariableLookup'>
-	<typTypeVariable: 'type' as: 'BlockClosure[TypVariableLookup,TypVariableLookup,TypResolver<TypLookup>]->TypType'>
+	<typTypeVariable: 'type' as: 'BlockClosure[TypVariableLookup,TypVariableLookup,TypVariableLookupResult]->TypType'>
 	super initialize.
 	type := [ TypUnknownType instance ].
 ]
@@ -23,6 +22,6 @@ TypVariableLookupResult >> type [
 
 { #category : #accessing }
 TypVariableLookupResult >> type: anObject [
-	<typTypeArgument: 1 as: 'BlockClosure[TypVariableLookup,TypVariableLookup,TypResolver<TypLookup>]->TypType'>
+	<typTypeArgument: 1 as: 'BlockClosure[TypVariableLookup,TypVariableLookup,TypVariableLookupResult]->TypType'>
 	type := anObject
 ]

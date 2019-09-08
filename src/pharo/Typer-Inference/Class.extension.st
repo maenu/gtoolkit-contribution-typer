@@ -1,7 +1,7 @@
 Extension { #name : #Class }
 
 { #category : #'*Typer-Inference' }
-Class >> typInfAsVariableResolverFor: aSymbol [
+Class >> typInfAsVariableLookupResultFor: aSymbol [
 	^ aSymbol first isUppercase
 		ifTrue: [ (self class classVarNames includes: aSymbol)
 				ifTrue: [ | definer clazzes type |
@@ -21,7 +21,6 @@ Class >> typInfAsVariableResolverFor: aSymbol [
 										collect: [ :h | h value typType ] ] ]) typAsType.
 					TypVariableLookupResult new
 						type: [ type ];
-						yourself ]
-				ifFalse: [ TypVariableLookupResult empty ] ]
-		ifFalse: [ super typInfAsVariableResolverFor: aSymbol ]
+						yourself ] ]
+		ifFalse: [ super typInfAsVariableLookupResultFor: aSymbol ]
 ]

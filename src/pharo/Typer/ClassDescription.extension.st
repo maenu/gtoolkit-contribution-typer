@@ -12,7 +12,7 @@ ClassDescription >> typAsNamedType [
 ClassDescription >> typAsType [
 	<typTypeResultAs: 'TypType'>
 	^ TypClassLookupIndex instance
-		typeForClass:
+		typeFor:
 			(TypClassLookup new
 				clazz: self;
 				yourself)
@@ -25,7 +25,7 @@ ClassDescription >> typTypeForVariable: aSymbol [
 	| type |
 	type := self typAsType.
 	^ TypVariableLookupIndex instance
-		typeForVariable:
+		typeFor:
 			(TypVariableLookup new
 				receiverType: type;
 				selector: aSymbol asSymbol;

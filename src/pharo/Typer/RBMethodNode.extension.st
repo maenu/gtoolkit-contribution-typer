@@ -25,15 +25,16 @@ RBMethodNode >> typTemporaryProfile [
 RBMethodNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>
+	self flag: 'FIXME'.
 	^ TypMethodLookupIndex instance
-		typeForArgumentAt: anInteger
-		ofMethod:
+		argumentTypeFor:
 			(TypMethodLookup new
 				receiverType: self methodClass typAsType;
 				selector: self selector asSymbol;
 				argumentTypes: self typTypesForArguments;
-				argumentNodes: (self arguments);
+				argumentNodes: self arguments;
 				yourself)
+		at: anInteger
 ]
 
 { #category : #'*Typer' }
@@ -48,8 +49,9 @@ RBMethodNode >> typTypeForArgumentNamed: aString [
 { #category : #'*Typer' }
 RBMethodNode >> typTypeForResult [
 	<typTypeResultAs: 'TypType'>
+	self flag: 'FIXME'.
 	^ TypMethodLookupIndex instance
-		typeForResultOfMethod:
+		resultTypeFor:
 			(TypMethodLookup new
 				receiverType: self methodClass typAsType;
 				selector: self selector asSymbol;

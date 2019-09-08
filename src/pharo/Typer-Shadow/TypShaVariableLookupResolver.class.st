@@ -11,7 +11,13 @@ TypShaVariableLookupResolver >> resolve: aLookup [
 	^ aLookup receiverType representsClass
 		ifTrue: [ aLookup receiverType asClass typShaShadows
 				ifEmpty: [ nil ]
-				ifNotEmpty:
-					[ :f | (f first asVariableResolverFor: aLookup selector) resolve: aLookup ] ]
+				ifNotEmpty: [ :f | 
+					(f first asVariableLookupResultFor: aLookup selector)
+						ifNotNil: [ :g | 
+							g copy
+								lookup: aLookup;
+								resolvedBy: aLookup;
+								resolver: self;
+								yourself ] ] ]
 		ifFalse: [ nil ]
 ]

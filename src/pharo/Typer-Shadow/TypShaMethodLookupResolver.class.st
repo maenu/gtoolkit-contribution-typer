@@ -7,11 +7,10 @@ Class {
 { #category : #accessing }
 TypShaMethodLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
-	<typTypeResultAs: '!TypMethodResolver<TypMethodLookup>'>
+	<typTypeResultAs: '!TypMethodLookupResult'>
 	^ aLookup receiverType representsClass
 		ifTrue: [ aLookup receiverType asClass typShaShadows
 				ifEmpty: [ nil ]
-				ifNotEmpty:
-					[ :f | (f first asMethodResolverFor: aLookup selector) resolve: aLookup ] ]
+				ifNotEmpty: [ :f | f first asMethodLookupResultFor: aLookup selector ] ]
 		ifFalse: [ nil ]
 ]

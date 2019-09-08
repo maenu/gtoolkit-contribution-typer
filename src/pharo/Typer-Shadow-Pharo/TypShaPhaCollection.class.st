@@ -147,7 +147,7 @@ TypShaPhaCollection >> ___collect: _a [
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
-								typeForResultOfMethod:
+								resultTypeFor:
 									(TypMethodLookup new
 										receiverType: (a receiverType parameters at: 1);
 										selector: argumentNode value asSymbol;
@@ -205,7 +205,7 @@ TypShaPhaCollection >> ___detect: _a ifFound: _b ifNone: _c [
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
-								typeForResultOfMethod:
+								resultTypeFor:
 									(TypMethodLookup new
 										receiverType: (a receiverType parameters at: 1);
 										selector: argumentNode value asSymbol;
@@ -258,7 +258,7 @@ TypShaPhaCollection >> ___flatCollect: _a [
 						ifFalse: [ TypUnknownType instance ] ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ (TypMethodLookupIndex instance
-								typeForResultOfMethod:
+								resultTypeFor:
 									(TypMethodLookup new
 										receiverType: (a receiverType parameters at: 1);
 										selector: argumentNode value asSymbol;
@@ -284,7 +284,7 @@ TypShaPhaCollection >> ___groupedBy: _a [
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
-								typeForResultOfMethod:
+								resultTypeFor:
 									(TypMethodLookup new
 										receiverType: (a receiverType parameters at: 1);
 										selector: argumentNode value asSymbol;
@@ -333,7 +333,7 @@ TypShaPhaCollection >> ___ifEmpty: _a ifNotEmpty: _b [
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
-								typeForResultOfMethod:
+								resultTypeFor:
 									(TypMethodLookup new
 										receiverType: a receiverType;
 										selector: argumentNode value asSymbol;
@@ -360,7 +360,7 @@ TypShaPhaCollection >> ___ifNotEmpty: _a [
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
-								typeForResultOfMethod:
+								resultTypeFor:
 									(TypMethodLookup new
 										receiverType: a receiverType;
 										selector: argumentNode value asSymbol;

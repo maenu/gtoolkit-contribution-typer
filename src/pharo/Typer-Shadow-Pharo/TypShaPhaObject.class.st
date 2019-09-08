@@ -94,7 +94,7 @@ TypShaPhaObject >> ___perform: _a [
 			argument := a argumentNodes at: 1.
 			(argument isLiteralNode and: [ argument value isSymbol ])
 				ifTrue: [ TypMethodLookupIndex instance
-						typeForResultOfMethod:
+						resultTypeFor:
 							(TypMethodLookup new
 								receiverType: a receiverType;
 								selector: argument value;

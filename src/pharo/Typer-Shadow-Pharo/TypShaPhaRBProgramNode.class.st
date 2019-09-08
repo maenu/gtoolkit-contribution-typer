@@ -206,7 +206,7 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifPresent: _b ifAbsent: _c [
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
-								typeForResultOfMethod:
+								resultTypeFor:
 									(TypMethodLookup new
 										receiverType: a receiverType;
 										selector: argumentNode value asSymbol;

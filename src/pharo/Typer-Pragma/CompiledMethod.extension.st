@@ -1,8 +1,9 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*Typer-Pragma' }
-CompiledMethod >> typPraAsMethodResolver [
+CompiledMethod >> typPraAsMethodLookupResult [
 	| argumentPragmas resultPragma signalsAlwaysPragma argumentTypes resultType signalsAlways |
+	self flag: 'FIXME lookup overriden method chain'.
 	argumentPragmas := self pragmas
 		select: [ :e | e selector = #typTypeArgument:as: ].
 	resultPragma := self pragmas
@@ -11,6 +12,9 @@ CompiledMethod >> typPraAsMethodResolver [
 	signalsAlwaysPragma := self pragmas
 		detect: [ :e | e selector = #typSignalsAlways: ]
 		ifNone: [ nil ].
+	(argumentPragmas isEmpty
+		and: [ resultPragma isNil and: [ signalsAlwaysPragma isNil ] ])
+		ifTrue: [ ^ nil ].
 	argumentTypes := self numArgs
 		timesCollect: [ :i | 
 			argumentPragmas

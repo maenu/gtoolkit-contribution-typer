@@ -1,22 +1,22 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Inference' }
-ClassDescription >> typInfAsClassResolver [
+ClassDescription >> typInfAsClassLookupResult [
 	^ TypClassLookupResult new
 		type: [ :a | a clazz typAsNamedType ];
 		yourself
 ]
 
 { #category : #'*Typer-Inference' }
-ClassDescription >> typInfAsMethodResolverFor: aSymbol [
+ClassDescription >> typInfAsMethodLookupResultFor: aSymbol [
 	^ self methodDict
 		at: aSymbol
-		ifPresent: #typInfAsMethodResolver
-		ifAbsent: [ TypMethodLookupResult empty ]
+		ifPresent: #typInfAsMethodLookupResult
+		ifAbsent: [ nil ]
 ]
 
 { #category : #'*Typer-Inference' }
-ClassDescription >> typInfAsVariableResolverFor: aSymbol [
+ClassDescription >> typInfAsVariableLookupResultFor: aSymbol [
 	^ (self class allInstVarNames includes: aSymbol)
 		ifTrue: [ | definer clazzes type |
 			definer := self class whichClassDefinesInstVar: aSymbol.
@@ -33,7 +33,7 @@ ClassDescription >> typInfAsVariableResolverFor: aSymbol [
 			TypVariableLookupResult new
 				type: [ type ];
 				yourself ]
-		ifFalse: [ TypVariableLookupResult empty ]
+		ifFalse: [ nil ]
 ]
 
 { #category : #'*Typer-Inference' }

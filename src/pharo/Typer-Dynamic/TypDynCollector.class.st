@@ -39,18 +39,18 @@ TypDynCollector >> collectIn: aCollection doing: aBlock [
 TypDynCollector >> collectMethodResolversIn: aCollection [
 	<typTypeArgument: 1 as: 'Collection<RBMethodNode>'>
 	<typTypeResultAs:
-		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypMethodResolver<TypMethodLookup>>'>
-	^ (aCollection
-		collect: [ :e | e methodClass -> e selector -> e typDynAsMethodResolver ])
-		asDictionary
+		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypMethodLookupResult>'>
+	^ ((aCollection
+		collect: [ :e | e methodClass -> e selector -> e typDynAsMethodLookupResult ])
+		reject: [ :e | e value isNil ]) asDictionary
 ]
 
 { #category : #accessing }
 TypDynCollector >> collectVariableResolversIn: aCollection [
 	<typTypeArgument: 1 as: 'Collection<RBMethodNode>'>
 	<typTypeResultAs:
-		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypVariableResolver<TypVariableLookup>>'>
-	^ ((aCollection
+		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypVariableLookupResult>'>
+	^ (((aCollection
 		flatCollect: [ :e | e typDynTypesForVariables associations ])
 		groupedBy: #key)
 		collect: [ :e | 
@@ -58,7 +58,9 @@ TypDynCollector >> collectVariableResolversIn: aCollection [
 			type := ((e collect: #value)
 				inject: TypDynUnionType new
 				into: [ :a :b | a , b ]) asNonDynType.
-			TypVariableLookupResult new
-				type: [ type ];
-				yourself ]
+			type isUnknown
+				ifTrue: [ nil ]
+				ifFalse: [ TypVariableLookupResult new
+						type: [ type ];
+						yourself ] ]) reject: [ :e | e value isNil ]
 ]

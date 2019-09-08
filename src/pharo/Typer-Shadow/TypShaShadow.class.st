@@ -12,14 +12,14 @@ Class {
 }
 
 { #category : #converting }
-TypShaShadow class >> asClassResolver [
+TypShaShadow class >> asClassLookupResult [
 	^ TypClassLookupResult new
 		type: [ :a | self asType: a clazz ];
 		yourself
 ]
 
 { #category : #converting }
-TypShaShadow class >> asMethodResolverFor: aSymbol [
+TypShaShadow class >> asMethodLookupResultFor: aSymbol [
 	^ self class selectors
 		detect: [ :e | e = ('___' , aSymbol) or: [ e = ('~~~' , aSymbol) ] ]
 		ifFound: [ :e | self perform: e asSymbol withEnoughArguments: {} ]
@@ -38,7 +38,7 @@ TypShaShadow class >> asType: aClass [
 ]
 
 { #category : #converting }
-TypShaShadow class >> asVariableResolverFor: aSymbol [
+TypShaShadow class >> asVariableLookupResultFor: aSymbol [
 	^ self class instVarNames
 		detect: [ :e | e = ('___' , aSymbol) ]
 		ifFound: [ :e | self instVarNamed: e ]
@@ -75,18 +75,18 @@ TypShaShadow class >> shadowedClass [
 ]
 
 { #category : #converting }
-TypShaShadow >> asClassResolver [
+TypShaShadow >> asClassLookupResult [
 	^ TypClassLookupResult new
 		type: [ :a | self asType: a clazz ];
 		yourself
 ]
 
 { #category : #'as yet unclassified' }
-TypShaShadow >> asMethodResolverFor: aSymbol [
+TypShaShadow >> asMethodLookupResultFor: aSymbol [
 	^ self class selectors
 		detect: [ :e | e = ('___' , aSymbol) or: [ e = ('~~~' , aSymbol) ] ]
 		ifFound: [ :e | self perform: e asSymbol withEnoughArguments: {} ]
-		ifNone: [ TypMethodLookupResult empty ]
+		ifNone: [ nil ]
 ]
 
 { #category : #converting }
@@ -97,16 +97,16 @@ TypShaShadow >> asType: aClass [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaShadow >> asVariableResolverFor: aSymbol [
+TypShaShadow >> asVariableLookupResultFor: aSymbol [
 	^ aSymbol first isUppercase
 		ifTrue: [ self class classVarNames
 				detect: [ :e | e = ('___' , aSymbol) ]
 				ifFound: [ :e | self class instanceSide classVarNamed: e ]
-				ifNone: [ TypVariableLookupResult empty ] ]
+				ifNone: [ nil ] ]
 		ifFalse: [ self class instVarNames
 				detect: [ :e | e = ('___' , aSymbol) ]
 				ifFound: [ :e | self instVarNamed: e ]
-				ifNone: [ TypVariableLookupResult empty ] ]
+				ifNone: [ nil ] ]
 ]
 
 { #category : #initialization }

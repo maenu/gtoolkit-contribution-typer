@@ -60,7 +60,7 @@ TypShaPhaProtoObject >> ___ifNil: _a ifNotNil: _b [
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
-								typeForResultOfMethod:
+								resultTypeFor:
 									(TypMethodLookup new
 										receiverType: (a receiverType parameters at: 1);
 										selector: argumentNode value asSymbol;
@@ -87,7 +87,7 @@ TypShaPhaProtoObject >> ___ifNotNil: _a [
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
-								typeForResultOfMethod:
+								resultTypeFor:
 									(TypMethodLookup new
 										receiverType: (a receiverType parameters at: 1);
 										selector: argumentNode value asSymbol;

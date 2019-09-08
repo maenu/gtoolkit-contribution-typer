@@ -1,13 +1,14 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Pragma' }
-ClassDescription >> typPraAsClassResolver [
+ClassDescription >> typPraAsClassLookupResult [
 	| pragma types |
+	self flag: 'FIXME lookup overriden method chain'.
 	pragma := (self methods
 		detect: [ :e | e selector = #initialize ]
-		ifNone: [ ^ TypClassLookupResult empty ]) pragmas
+		ifNone: [ ^ nil ]) pragmas
 		detect: [ :e | e selector = #typTypeParametersAs: ]
-		ifNone: [ ^ TypClassLookupResult empty ].
+		ifNone: [ ^ nil ].
 	types := (pragma arguments at: 1) typAsTypes.
 	^ TypClassLookupResult new
 		type: [ :a | a clazz typAsNamedType asParametricType: types ];
@@ -15,23 +16,24 @@ ClassDescription >> typPraAsClassResolver [
 ]
 
 { #category : #'*Typer-Pragma' }
-ClassDescription >> typPraAsMethodResolverFor: aSymbol [
+ClassDescription >> typPraAsMethodLookupResultFor: aSymbol [
 	^ self methodDict
 		at: aSymbol
-		ifPresent: #typPraAsMethodResolver
-		ifAbsent: [ TypMethodLookupResult empty ]
+		ifPresent: #typPraAsMethodLookupResult
+		ifAbsent: [ nil ]
 ]
 
 { #category : #'*Typer-Pragma' }
-ClassDescription >> typPraAsVariableResolverFor: aSymbol [
+ClassDescription >> typPraAsVariableLookupResultFor: aSymbol [
 	| pragma |
+	self flag: 'FIXME lookup overriden method chain'.
 	pragma := (self methods
 		detect: [ :e | e selector = #initialize ]
-		ifNone: [ ^ TypVariableLookupResult empty ]) pragmas
+		ifNone: [ ^ nil ]) pragmas
 		detect: [ :e | 
 			e selector = #typTypeVariable:as:
 				and: [ (e arguments at: 1) = aSymbol ] ]
-		ifNone: [ ^ TypVariableLookupResult empty ].
+		ifNone: [ ^ nil ].
 	^ TypClassLookupResult new
 		type: [ (pragma arguments at: 2) typAsType ];
 		yourself
