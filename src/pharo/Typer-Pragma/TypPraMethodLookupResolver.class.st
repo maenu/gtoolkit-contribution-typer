@@ -12,7 +12,7 @@ TypPraMethodLookupResolver >> resolve: aLookup [
 		ifTrue: [ (aLookup receiverType asClass
 				typPraAsMethodLookupResultFor: aLookup selector)
 				ifNotNil: [ :e | 
-					e copy
+					e
 						lookup: aLookup;
 						resolvedBy: aLookup;
 						resolver: self;

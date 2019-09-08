@@ -9,7 +9,7 @@ TypVariableLookupIndex >> typeFor: aLookup [
 	^ (resolver resolve: aLookup)
 		ifNil: [ TypUnknownType instance ]
 		ifNotNil: [ :e | 
-			[ :f | f type ]
+			[ e type ]
 				on: Error
 				do: [ TypUnknownType instance ] ]
 ]

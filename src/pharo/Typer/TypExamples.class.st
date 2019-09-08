@@ -10,27 +10,66 @@ TypExamples >> example [
 	(TypClassLookupIndex
 		reset;
 		instance)
-		next:
-				(TypClassLookupIndex new
-						add: TypCachingTypeResolver typInfResolver);
-		add: TypCachingTypeResolver typPraResolver;
-		add: TypCachingTypeResolver typShaResolver.
+		resolver:
+			(TypCachingLookupResolver new
+				resolver:
+					(TypBreadthLookupResolver new
+						resolvers:
+							{(TypDepthLookupResolver new
+								resolver:
+									(TypBreadthLookupResolver new
+										resolvers:
+											{TypPraClassLookupResolver new.
+											TypShaClassLookupResolver new};
+										yourself);
+								yourself).
+							(TypDepthLookupResolver new
+								resolver: TypInfClassLookupResolver new;
+								yourself)};
+						yourself);
+				yourself).
 	(TypMethodLookupIndex
 		reset;
 		instance)
-		next:
-				(TypMethodLookupIndex new
-						add: TypCachingMethodResolver typInfResolver);
-		add: TypCachingMethodResolver typPraResolver;
-		add: TypCachingMethodResolver typShaResolver.
+		resolver:
+			(TypCachingLookupResolver new
+				resolver:
+					(TypBreadthLookupResolver new
+						resolvers:
+							{(TypDepthLookupResolver new
+								resolver:
+									(TypBreadthLookupResolver new
+										resolvers:
+											{TypPraMethodLookupResolver new.
+											TypShaMethodLookupResolver new};
+										yourself);
+								yourself).
+							(TypDepthLookupResolver new
+								resolver: TypInfMethodLookupResolver new;
+								yourself)};
+						yourself);
+				yourself).
 	(TypVariableLookupIndex
 		reset;
 		instance)
-		next:
-				(TypVariableLookupIndex new
-						add: TypCachingVariableResolver typInfResolver);
-		add: TypCachingVariableResolver typPraResolver;
-		add: TypCachingVariableResolver typShaResolver.
+		resolver:
+			(TypCachingLookupResolver new
+				resolver:
+					(TypBreadthLookupResolver new
+						resolvers:
+							{(TypDepthLookupResolver new
+								resolver:
+									(TypBreadthLookupResolver new
+										resolvers:
+											{TypPraVariableLookupResolver new.
+											TypShaVariableLookupResolver new};
+										yourself);
+								yourself).
+							(TypDepthLookupResolver new
+								resolver: TypInfVariableLookupResolver new;
+								yourself)};
+						yourself);
+				yourself).
 	^ self
 ]
 

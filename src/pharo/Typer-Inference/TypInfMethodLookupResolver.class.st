@@ -12,7 +12,7 @@ TypInfMethodLookupResolver >> resolve: aLookup [
 		ifTrue: [ (aLookup receiverType asClass
 				typInfAsMethodLookupResultFor: aLookup selector)
 				ifNotNil: [ :e | 
-					e copy
+					e
 						lookup: aLookup;
 						resolvedBy: aLookup;
 						resolver: self;

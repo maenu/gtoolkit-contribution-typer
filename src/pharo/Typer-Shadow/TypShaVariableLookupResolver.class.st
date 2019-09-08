@@ -9,15 +9,15 @@ TypShaVariableLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypVariableLookup'>
 	<typTypeResultAs: '!TypVariableResolver<TypVariableLookup>'>
 	^ aLookup receiverType representsClass
-		ifTrue: [ aLookup receiverType asClass typShaShadows
+		ifTrue: [ ((aLookup receiverType asClass typShaShadows
+				collect: [ :e | e asVariableLookupResultFor: aLookup selector ])
+				reject: #isNil)
 				ifEmpty: [ nil ]
 				ifNotEmpty: [ :f | 
-					(f first asVariableLookupResultFor: aLookup selector)
-						ifNotNil: [ :g | 
-							g copy
-								lookup: aLookup;
-								resolvedBy: aLookup;
-								resolver: self;
-								yourself ] ] ]
+					f first copy
+						lookup: aLookup;
+						resolvedBy: aLookup;
+						resolver: self;
+						yourself ] ]
 		ifFalse: [ nil ]
 ]

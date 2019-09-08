@@ -8,13 +8,11 @@ Class {
 TypInfClassLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypClassLookup'>
 	<typTypeResultAs: '!TypClassLookupResult'>
-	^ aLookup receiverType representsClass
-		ifTrue: [ aLookup receiverType asClass typInfAsClassLookupResult
-				ifNotNil: [ :e | 
-					e copy
-						lookup: aLookup;
-						resolvedBy: aLookup;
-						resolver: self;
-						yourself ] ]
-		ifFalse: [ nil ]
+	^ aLookup clazz typInfAsClassLookupResult
+		ifNotNil: [ :e | 
+			e
+				lookup: aLookup;
+				resolvedBy: aLookup;
+				resolver: self;
+				yourself ]
 ]

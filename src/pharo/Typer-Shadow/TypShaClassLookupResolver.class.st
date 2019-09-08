@@ -8,9 +8,13 @@ Class {
 TypShaClassLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypClassLookup'>
 	<typTypeResultAs: '!TypClassLookupResult'>
-	^ aLookup receiverType representsClass
-		ifTrue: [ aLookup receiverType asClass typShaShadows
-				ifEmpty: [ nil ]
-				ifNotEmpty: [ :f | f first asClassLookupResult ] ]
-		ifFalse: [ nil ]
+	^ ((aLookup clazz typShaShadows collect: #asClassLookupResult)
+		reject: #isNil)
+		ifEmpty: [ nil ]
+		ifNotEmpty: [ :f | 
+			f first
+				lookup: aLookup;
+				resolvedBy: aLookup;
+				resolver: self;
+				yourself ]
 ]

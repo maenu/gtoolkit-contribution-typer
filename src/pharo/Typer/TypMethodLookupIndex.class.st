@@ -9,7 +9,7 @@ TypMethodLookupIndex >> argumentTypeFor: aLookup at: anInteger [
 	^ (resolver resolve: aLookup)
 		ifNil: [ TypUnknownType instance ]
 		ifNotNil: [ :e | 
-			[ :f | f argumentTypeAt: anInteger ]
+			[ e argumentTypeAt: anInteger ]
 				on: Error
 				do: [ TypUnknownType instance ] ]
 ]
@@ -19,7 +19,7 @@ TypMethodLookupIndex >> resultTypeFor: aLookup [
 	^ (resolver resolve: aLookup)
 		ifNil: [ TypUnknownType instance ]
 		ifNotNil: [ :e | 
-			[ :f | f resultType ]
+			[ e resultType ]
 				on: Error
 				do: [ TypUnknownType instance ] ]
 ]
@@ -28,7 +28,7 @@ TypMethodLookupIndex >> resultTypeFor: aLookup [
 TypMethodLookupIndex >> signalsAlwaysFor: aLookup [
 	^ (resolver resolve: aLookup)
 		ifNotNil: [ :e | 
-			[ :f | f signalsAlways ]
+			[ e signalsAlways ]
 				on: Error
 				do: [ nil ] ]
 ]
