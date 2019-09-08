@@ -2,7 +2,6 @@ Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer' }
 RBMessageNode >> typSignalsAlways [
-	self flag: 'FIXME'.
 	^ (self
 		propertyAt: #typSignalsAlways
 		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
@@ -38,7 +37,6 @@ RBMessageNode >> typSignalsAlways [
 RBMessageNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>
-	self flag: 'FIXME'.
 	^ self
 		propertyAt: #typTypeForArgument , anInteger asString
 		ifAbsentPut: [ | receiverType argumentTypes |
@@ -80,7 +78,6 @@ RBMessageNode >> typTypeForReceiver [
 { #category : #'*Typer' }
 RBMessageNode >> typTypeForResult [
 	<typTypeResultAs: 'TypType'>
-	self flag: 'FIXME'.
 	^ (self
 		propertyAt: #typTypeForResult
 		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"

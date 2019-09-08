@@ -25,7 +25,6 @@ RBMethodNode >> typTemporaryProfile [
 RBMethodNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>
-	self flag: 'FIXME'.
 	^ TypMethodLookupIndex instance
 		argumentTypeFor:
 			(TypMethodLookup new
@@ -49,7 +48,6 @@ RBMethodNode >> typTypeForArgumentNamed: aString [
 { #category : #'*Typer' }
 RBMethodNode >> typTypeForResult [
 	<typTypeResultAs: 'TypType'>
-	self flag: 'FIXME'.
 	^ TypMethodLookupIndex instance
 		resultTypeFor:
 			(TypMethodLookup new
@@ -64,12 +62,15 @@ RBMethodNode >> typTypeForResult [
 RBMethodNode >> typTypeRecursive [
 	<typTypeResultAs: 'TypType'>
 	| newProfile |
-	self typTypeReset.
+	self
+		typTypeReset;
+		doSemanticAnalysis.
 	newProfile := self typTemporaryProfile.
 	[ | oldProfile |
 	self typTypeReset.
 	newProfile do: [ :e | e key propertyAt: #typType put: e value ].
-	(self allChildren copyWithoutAll: (newProfile collect: #key) , {self}) do: #typType.
+	(self allChildren copyWithoutAll: (newProfile collect: #key) , {self})
+		do: #typType.
 	(newProfile collect: #key)
 		do: [ :e | 
 			e
@@ -78,7 +79,10 @@ RBMethodNode >> typTypeRecursive [
 	oldProfile := newProfile.
 	newProfile := self typTemporaryProfile.
 	newProfile = oldProfile ] whileFalse.
-	^ BlockClosure typAsType asFunctionType: self typTypesForArguments result: self typTypeForResult optionalParameters: false
+	^ BlockClosure typAsType
+		asFunctionType: self typTypesForArguments
+		result: self typTypeForResult
+		optionalParameters: false
 ]
 
 { #category : #'*Typer' }
