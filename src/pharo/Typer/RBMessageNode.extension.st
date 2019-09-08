@@ -37,7 +37,7 @@ RBMessageNode >> typSignalsAlways [
 RBMessageNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>
-	^ self
+	^ (self
 		propertyAt: #typTypeForArgument , anInteger asString
 		ifAbsentPut: [ | receiverType argumentTypes |
 			"need to set property to default to unknown on recursive calls"
@@ -47,7 +47,7 @@ RBMessageNode >> typTypeForArgumentAt: anInteger [
 			receiverType := self typTypeForReceiver.
 			argumentTypes := self typTypesForArguments.
 			receiverType isUnion
-				ifTrue: [ (receiverType types
+				ifTrue: [ ((receiverType "typCastAs TypUnionType") types
 						collect: [ :e | 
 							TypMethodLookupIndex instance
 								argumentTypeFor:
@@ -57,7 +57,7 @@ RBMessageNode >> typTypeForArgumentAt: anInteger [
 										argumentTypes: argumentTypes;
 										argumentNodes: self arguments;
 										yourself)
-								at: anInteger ]) typAsType	"typCastAs TypUnionType" ]
+								at: anInteger ]) typAsType ]
 				ifFalse: [ TypMethodLookupIndex instance
 						argumentTypeFor:
 							(TypMethodLookup new
@@ -66,7 +66,7 @@ RBMessageNode >> typTypeForArgumentAt: anInteger [
 								argumentTypes: argumentTypes;
 								argumentNodes: self arguments;
 								yourself)
-						at: anInteger ] ]	"typCastAs TypType"
+						at: anInteger ] ]) "typCastAs TypType"
 ]
 
 { #category : #'*Typer' }

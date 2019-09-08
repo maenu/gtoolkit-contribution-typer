@@ -48,24 +48,31 @@ TypShaShadow class >> asVariableLookupResultFor: aSymbol [
 ]
 
 { #category : #'class initialization' }
-TypShaShadow class >> initialize [
-	super initialize.
-	priority := 0
-]
-
-{ #category : #'class initialization' }
 TypShaShadow class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
 { #category : #accessing }
 TypShaShadow class >> priority [
-	^ priority
+	^ priority ifNil: [ priority := 0 ]
 ]
 
 { #category : #accessing }
 TypShaShadow class >> priority: anObject [
 	priority := anObject
+]
+
+{ #category : #initialization }
+TypShaShadow class >> reset [
+	<script>
+	instance := nil.
+	priority := nil
+]
+
+{ #category : #initialization }
+TypShaShadow class >> resetAll [
+	<script>
+	self allSubclassesDo: #reset
 ]
 
 { #category : #'as yet unclassified' }
