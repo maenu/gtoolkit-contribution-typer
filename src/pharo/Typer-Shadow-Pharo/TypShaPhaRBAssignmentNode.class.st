@@ -11,7 +11,7 @@ TypShaPhaRBAssignmentNode class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaRBAssignmentNode >> ___value [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RBValueNode typAsType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaPhaRBAssignmentNode >> ___value [
 
 { #category : #accessing }
 TypShaPhaRBAssignmentNode >> ___variable [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RBVariableNode typAsType ];
 		yourself

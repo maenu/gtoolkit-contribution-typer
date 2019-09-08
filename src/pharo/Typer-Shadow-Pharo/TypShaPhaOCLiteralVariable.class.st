@@ -11,7 +11,7 @@ TypShaPhaOCLiteralVariable class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaOCLiteralVariable >> ___assoc [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Association typAsType
@@ -23,7 +23,7 @@ TypShaPhaOCLiteralVariable >> ___assoc [
 
 { #category : #'as yet unclassified' }
 TypShaPhaOCLiteralVariable >> ___isClassVariable [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Boolean typAsType ];
 		yourself
@@ -31,7 +31,7 @@ TypShaPhaOCLiteralVariable >> ___isClassVariable [
 
 { #category : #'as yet unclassified' }
 TypShaPhaOCLiteralVariable >> ___isFromSharedPool [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Boolean typAsType ];
 		yourself
@@ -39,7 +39,7 @@ TypShaPhaOCLiteralVariable >> ___isFromSharedPool [
 
 { #category : #'as yet unclassified' }
 TypShaPhaOCLiteralVariable >> ___isGlobalClassNameBinding [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Boolean typAsType ];
 		yourself
@@ -47,7 +47,7 @@ TypShaPhaOCLiteralVariable >> ___isGlobalClassNameBinding [
 
 { #category : #'as yet unclassified' }
 TypShaPhaOCLiteralVariable >> ___isGlobalVariable [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Boolean typAsType ];
 		yourself
@@ -55,7 +55,7 @@ TypShaPhaOCLiteralVariable >> ___isGlobalVariable [
 
 { #category : #accessing }
 TypShaPhaOCLiteralVariable >> ___scope [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | OCAbstractScope typAsType ];
 		yourself
@@ -63,7 +63,7 @@ TypShaPhaOCLiteralVariable >> ___scope [
 
 { #category : #accessing }
 TypShaPhaOCLiteralVariable >> ___value [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Object typAsType ];
 		yourself

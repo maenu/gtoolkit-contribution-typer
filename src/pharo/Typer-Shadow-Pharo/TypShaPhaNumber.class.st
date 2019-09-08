@@ -11,7 +11,7 @@ TypShaPhaNumber class >> shadowedClass [
 
 { #category : #'as yet unclassified' }
 TypShaPhaNumber >> ___timesCollect: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ BlockClosure typAsType asFunctionType: {Integer typAsType} result: TypUnknownType instance optionalParameters: true ];
 		resultType: [ :a | 
 			OrderedCollection typAsType
@@ -26,7 +26,7 @@ TypShaPhaNumber >> ___timesCollect: _a [
 
 { #category : #accessing }
 TypShaPhaNumber >> ___to: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];
 		resultType: [ :a :s :r | 
 			Interval typAsType
@@ -38,7 +38,7 @@ TypShaPhaNumber >> ___to: _a [
 
 { #category : #accessing }
 TypShaPhaNumber >> ___to: _a do: _b [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ Number typAsType ]
@@ -54,7 +54,7 @@ TypShaPhaNumber >> ___to: _a do: _b [
 
 { #category : #accessing }
 TypShaPhaNumber >> ~~~+ _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];
 		resultType: [ :a :s :r | 
 			{a receiverType.
@@ -64,7 +64,7 @@ TypShaPhaNumber >> ~~~+ _a [
 
 { #category : #accessing }
 TypShaPhaNumber >> ~~~- _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];
 		resultType: [ :a :s :r | 
 			{a receiverType.

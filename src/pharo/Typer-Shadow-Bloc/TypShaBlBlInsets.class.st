@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaBlBlInsets class >> ___top: _a right: _b bottom: _c left: _d [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];
 		resultType: [ :a :s :r | a receiverType asClass instanceSide typAsType ];
 		yourself

@@ -11,7 +11,7 @@ TypShaPhaString class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaString >> ___asClass [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Class typAsType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaPhaString >> ___asClass [
 
 { #category : #accessing }
 TypShaPhaString >> ___asClassInEnvironment: _a ifAbsent: _b [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ SystemDictionary typAsType
@@ -44,7 +44,7 @@ TypShaPhaString >> ___asClassInEnvironment: _a ifAbsent: _b [
 
 { #category : #accessing }
 TypShaPhaString >> ___asPackage [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RPackage typAsType ];
 		yourself
@@ -52,7 +52,7 @@ TypShaPhaString >> ___asPackage [
 
 { #category : #accessing }
 TypShaPhaString >> ___includesSubstring: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -60,7 +60,7 @@ TypShaPhaString >> ___includesSubstring: _a [
 
 { #category : #accessing }
 TypShaPhaString >> ___join: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Collection typAsType asParametricType: {String typAsType} ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself
@@ -68,7 +68,7 @@ TypShaPhaString >> ___join: _a [
 
 { #category : #accessing }
 TypShaPhaString >> ___keywords [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType:
 				[ :a :s :r | SequenceableCollection typAsType asParametricType: {String typAsType} ];
@@ -77,7 +77,7 @@ TypShaPhaString >> ___keywords [
 
 { #category : #converting }
 TypShaPhaString >> ___split: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | SequenceableCollection typAsType ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
@@ -87,7 +87,7 @@ TypShaPhaString >> ___split: _a [
 
 { #category : #accessing }
 TypShaPhaString >> ___translated [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself

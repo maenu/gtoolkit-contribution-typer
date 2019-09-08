@@ -11,7 +11,7 @@ TypShaPhaRPackage class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaRPackage >> ___definedClasses [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType:
 				[ :a :s :r | Collection typAsType asParametricType: {Class typAsType} ];
@@ -20,7 +20,7 @@ TypShaPhaRPackage >> ___definedClasses [
 
 { #category : #accessing }
 TypShaPhaRPackage >> ___methods [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType:
 				[ :a :s :r | Collection typAsType asParametricType: {CompiledMethod typAsType} ];

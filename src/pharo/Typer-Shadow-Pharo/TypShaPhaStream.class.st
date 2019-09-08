@@ -16,7 +16,7 @@ TypShaPhaStream >> asType: aClass [
 
 { #category : #accessing }
 TypShaPhaStream >> ~~~<< _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | (Collection typAsType asParametricType: {(a receiverType parameters at: 1)}) ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself

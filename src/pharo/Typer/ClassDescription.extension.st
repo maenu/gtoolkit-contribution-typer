@@ -11,9 +11,9 @@ ClassDescription >> typAsNamedType [
 { #category : #'*Typer' }
 ClassDescription >> typAsType [
 	<typTypeResultAs: 'TypType'>
-	^ TypClassTypeRepository instance
+	^ TypClassLookupIndex instance
 		typeForClass:
-			(TypTypeLookup new
+			(TypClassLookup new
 				clazz: self;
 				yourself)
 ]
@@ -24,7 +24,7 @@ ClassDescription >> typTypeForVariable: aSymbol [
 	<typTypeResultAs: 'TypType'>
 	| type |
 	type := self typAsType.
-	^ TypVariableTypeRepository instance
+	^ TypVariableLookupIndex instance
 		typeForVariable:
 			(TypVariableLookup new
 				receiverType: type;

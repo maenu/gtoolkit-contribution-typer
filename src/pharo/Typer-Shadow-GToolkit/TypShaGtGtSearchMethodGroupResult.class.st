@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaGtGtSearchMethodGroupResult class >> ___forFilter: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | GtSearchMethodsFilter typAsType ];
 		resultType: [ :a :s :r | a receiverType asClass instanceSide typAsType ];
 		yourself

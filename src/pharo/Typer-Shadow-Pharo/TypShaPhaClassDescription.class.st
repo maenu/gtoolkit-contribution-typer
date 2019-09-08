@@ -11,7 +11,7 @@ TypShaPhaClassDescription class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaClassDescription >> ___addInstVarNamed: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaPhaClassDescription >> ___addInstVarNamed: _a [
 
 { #category : #accessing }
 TypShaPhaClassDescription >> ___classSide [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Metaclass typAsType ];
 		yourself
@@ -27,7 +27,7 @@ TypShaPhaClassDescription >> ___classSide [
 
 { #category : #accessing }
 TypShaPhaClassDescription >> ___hasInstVarNamed: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -35,7 +35,7 @@ TypShaPhaClassDescription >> ___hasInstVarNamed: _a [
 
 { #category : #accessing }
 TypShaPhaClassDescription >> ___instanceSide [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Class typAsType ];
 		yourself
@@ -43,7 +43,7 @@ TypShaPhaClassDescription >> ___instanceSide [
 
 { #category : #accessing }
 TypShaPhaClassDescription >> ___isClassSide [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -51,7 +51,7 @@ TypShaPhaClassDescription >> ___isClassSide [
 
 { #category : #accessing }
 TypShaPhaClassDescription >> ___isTestCase [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself

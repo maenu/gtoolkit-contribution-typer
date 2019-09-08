@@ -26,11 +26,11 @@ TypDynCollector >> collectIn: aCollection doing: aBlock [
 		ensure: [ asts do: #typDynUninstall ].
 	^ result
 		->
-			(TypDynResolver new
+			(TypDynLookupResolver new
 				resolvers: methodResolvers;
 				yourself)
 		->
-			(TypDynResolver new
+			(TypDynLookupResolver new
 				resolvers: variableResolvers;
 				yourself)
 ]
@@ -58,7 +58,7 @@ TypDynCollector >> collectVariableResolversIn: aCollection [
 			type := ((e collect: #value)
 				inject: TypDynUnionType new
 				into: [ :a :b | a , b ]) asNonDynType.
-			TypVariableResolver new
+			TypVariableLookupResult new
 				type: [ type ];
 				yourself ]
 ]

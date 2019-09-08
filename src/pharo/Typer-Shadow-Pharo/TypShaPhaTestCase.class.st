@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaPhaTestCase class >> ___suite [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | TestSuite typAsType ];
 		yourself

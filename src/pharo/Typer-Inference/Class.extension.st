@@ -19,11 +19,9 @@ Class >> typInfAsVariableResolverFor: aSymbol [
 								flatCollect: [ :g | 
 									(g assignmentNodes select: [ :h | h variable name = aSymbol ])
 										collect: [ :h | h value typType ] ] ]) typAsType.
-					TypVariableResolver new
+					TypVariableLookupResult new
 						type: [ type ];
 						yourself ]
-				ifFalse: [ TypVariableResolver new
-						type: [ TypUnknownType instance ];
-						yourself ] ]
-		ifFalse: [ self typInfAsVariableResolverFor: aSymbol ]
+				ifFalse: [ TypVariableLookupResult empty ] ]
+		ifFalse: [ super typInfAsVariableResolverFor: aSymbol ]
 ]

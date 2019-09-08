@@ -11,7 +11,7 @@ TypShaBrBrTextAdornmentDynamicAttribute class >> shadowedClass [
 
 { #category : #accessing }
 TypShaBrBrTextAdornmentDynamicAttribute >> ___stencil: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {} result: BlElement typAsType optionalParameters: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself

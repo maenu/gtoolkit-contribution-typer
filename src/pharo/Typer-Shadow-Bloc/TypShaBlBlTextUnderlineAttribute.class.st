@@ -11,7 +11,7 @@ TypShaBlBlTextUnderlineAttribute class >> shadowedClass [
 
 { #category : #accessing }
 TypShaBlBlTextUnderlineAttribute >> ___paint: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			{Color typAsType.
 			BlPaint typAsType} typAsType ];

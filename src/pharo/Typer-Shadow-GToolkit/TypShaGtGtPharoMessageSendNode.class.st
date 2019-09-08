@@ -11,7 +11,7 @@ TypShaGtGtPharoMessageSendNode class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtPharoMessageSendNode >> ___receiver [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | GtPharoValueNode typAsType ];
 		yourself

@@ -11,7 +11,7 @@ TypShaPhaRBArrayNode class >> shadowedClass [
 
 { #category : #generated }
 TypShaPhaRBArrayNode >> ___statements [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType asParametricType: {RBProgramNode typAsType} ];
 		yourself

@@ -11,7 +11,7 @@ TypShaBrBrLabel class >> shadowedClass [
 
 { #category : #accessing }
 TypShaBrBrLabel >> ___text: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			{String typAsType.
 			BlText typAsType} typAsType ];

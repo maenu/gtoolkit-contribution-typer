@@ -11,7 +11,7 @@ TypShaGtGtPhlowMondrianView class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtPhlowMondrianView >> ___painting: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure typAsType
 				asFunctionType: {GtMondrian typAsType}

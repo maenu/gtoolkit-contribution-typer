@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaGtGtSearchImplementorsFilter class >> ___selector: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | a receiverType asClass instanceSide typAsType ];
 		yourself

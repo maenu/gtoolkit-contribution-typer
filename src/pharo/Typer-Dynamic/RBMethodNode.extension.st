@@ -7,7 +7,7 @@ RBMethodNode >> typDynAsMethodResolver [
 	arguments_ := (self method numArgs
 		timesCollect: [ :i | self typDynTypeForArgumentAt: i ]) collect: #asNonDynType.
 	result := self typDynTypeForResult asNonDynType.
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i | arguments_ at: i ];
 		resultType: [ result ];
 		yourself

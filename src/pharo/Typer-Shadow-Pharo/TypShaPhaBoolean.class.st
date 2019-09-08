@@ -11,7 +11,7 @@ TypShaPhaBoolean class >> shadowedClass [
 
 { #category : #'as yet unclassified' }
 TypShaPhaBoolean >> ___and: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ {Boolean typAsType.
 			(BlockClosure typAsType asFunctionType: {} result: Boolean typAsType optionalParameters: false)} typAsType ];
 		resultType: [ Boolean typAsType ];
@@ -20,7 +20,7 @@ TypShaPhaBoolean >> ___and: _a [
 
 { #category : #accessing }
 TypShaPhaBoolean >> ___ifFalse: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ];
 		resultType: [ :a :s :r | (a argumentTypes at: 1) result asNullableType ];
 		yourself
@@ -28,7 +28,7 @@ TypShaPhaBoolean >> ___ifFalse: _a [
 
 { #category : #accessing }
 TypShaPhaBoolean >> ___ifTrue: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ];
 		resultType: [ :a :s :r | (a argumentTypes at: 1) result asNullableType ];
 		yourself
@@ -36,7 +36,7 @@ TypShaPhaBoolean >> ___ifTrue: _a [
 
 { #category : #'as yet unclassified' }
 TypShaPhaBoolean >> ___ifTrue: _a ifFalse: _b [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ];
 		resultType: [ :a | 
 			(a argumentTypes
@@ -49,7 +49,7 @@ TypShaPhaBoolean >> ___ifTrue: _a ifFalse: _b [
 
 { #category : #'as yet unclassified' }
 TypShaPhaBoolean >> ___not [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Boolean typAsType ];
 		yourself
@@ -57,7 +57,7 @@ TypShaPhaBoolean >> ___not [
 
 { #category : #'as yet unclassified' }
 TypShaPhaBoolean >> ___or: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ {Boolean typAsType.
 			(BlockClosure typAsType asFunctionType: {} result: Boolean typAsType optionalParameters: false)} typAsType ];
 		resultType: [ Boolean typAsType ];

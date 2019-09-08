@@ -11,7 +11,7 @@ TypShaPhaInteger class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaInteger >> ___asCharacter [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Character typAsType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaPhaInteger >> ___asCharacter [
 
 { #category : #accessing }
 TypShaPhaInteger >> ___atRandom [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Integer typAsType ];
 		yourself
@@ -27,7 +27,7 @@ TypShaPhaInteger >> ___atRandom [
 
 { #category : #accessing }
 TypShaPhaInteger >> ___bitXor: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Integer typAsType ];
 		resultType: [ :a :s :r | Integer typAsType ];
 		yourself

@@ -12,11 +12,18 @@ Class {
 }
 
 { #category : #converting }
+TypShaShadow class >> asClassResolver [
+	^ TypClassLookupResult new
+		type: [ :a | self asType: a clazz ];
+		yourself
+]
+
+{ #category : #converting }
 TypShaShadow class >> asMethodResolverFor: aSymbol [
 	^ self class selectors
 		detect: [ :e | e = ('___' , aSymbol) or: [ e = ('~~~' , aSymbol) ] ]
 		ifFound: [ :e | self perform: e asSymbol withEnoughArguments: {} ]
-		ifNone: [ TypMethodResolver new
+		ifNone: [ TypMethodLookupResult new
 				argumentTypes: [ TypUnknownType instance ];
 				resultType: [ TypUnknownType instance ];
 				signalsAlways: [ nil ];
@@ -31,18 +38,11 @@ TypShaShadow class >> asType: aClass [
 ]
 
 { #category : #converting }
-TypShaShadow class >> asTypeResolver [
-	^ TypTypeResolver new
-		type: [ :a | self asType: a clazz ];
-		yourself
-]
-
-{ #category : #converting }
 TypShaShadow class >> asVariableResolverFor: aSymbol [
 	^ self class instVarNames
 		detect: [ :e | e = ('___' , aSymbol) ]
 		ifFound: [ :e | self instVarNamed: e ]
-		ifNone: [ TypVariableResolver new
+		ifNone: [ TypVariableLookupResult new
 				type: [ TypUnknownType instance ];
 				yourself ]
 ]
@@ -74,12 +74,19 @@ TypShaShadow class >> shadowedClass [
 	self subclassResponsibility
 ]
 
+{ #category : #converting }
+TypShaShadow >> asClassResolver [
+	^ TypClassLookupResult new
+		type: [ :a | self asType: a clazz ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaShadow >> asMethodResolverFor: aSymbol [
 	^ self class selectors
 		detect: [ :e | e = ('___' , aSymbol) or: [ e = ('~~~' , aSymbol) ] ]
 		ifFound: [ :e | self perform: e asSymbol withEnoughArguments: {} ]
-		ifNone: [ TypMethodResolver new ]
+		ifNone: [ TypMethodLookupResult empty ]
 ]
 
 { #category : #converting }
@@ -89,24 +96,17 @@ TypShaShadow >> asType: aClass [
 	^ aClass typAsNamedType
 ]
 
-{ #category : #converting }
-TypShaShadow >> asTypeResolver [
-	^ TypTypeResolver new
-		type: [ :a | self asType: a clazz ];
-		yourself
-]
-
 { #category : #'as yet unclassified' }
 TypShaShadow >> asVariableResolverFor: aSymbol [
 	^ aSymbol first isUppercase
 		ifTrue: [ self class classVarNames
 				detect: [ :e | e = ('___' , aSymbol) ]
 				ifFound: [ :e | self class instanceSide classVarNamed: e ]
-				ifNone: [ TypVariableResolver new ] ]
+				ifNone: [ TypVariableLookupResult empty ] ]
 		ifFalse: [ self class instVarNames
 				detect: [ :e | e = ('___' , aSymbol) ]
 				ifFound: [ :e | self instVarNamed: e ]
-				ifNone: [ TypVariableResolver new ] ]
+				ifNone: [ TypVariableLookupResult empty ] ]
 ]
 
 { #category : #initialization }

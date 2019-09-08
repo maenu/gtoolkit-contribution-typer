@@ -6,12 +6,12 @@ Class {
 
 { #category : #'as yet unclassified' }
 TypShaTypTypChainableResolvers class >> shadowedClass [
-	^ TypRepository class
+	^ TypLookupIndex class
 ]
 
 { #category : #accessing }
 TypShaTypTypChainableResolvers >> ___resolve: _a using: _b [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ TypLookup typAsType ]
@@ -28,7 +28,7 @@ TypShaTypTypChainableResolvers >> ___resolve: _a using: _b [
 
 { #category : #accessing }
 TypShaTypTypChainableResolvers >> ___typeFor: _a using: _b [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ TypLookup typAsType ]

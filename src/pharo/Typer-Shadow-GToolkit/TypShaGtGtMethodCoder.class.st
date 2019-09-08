@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 TypShaGtGtMethodCoder class >> ___forMethod: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | CompiledMethod typAsType ];
 		resultType: [ :a :s :r | a receiverType asClass instanceSide typAsType ];
 		yourself
@@ -22,7 +22,7 @@ TypShaGtGtMethodCoder class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtMethodCoder >> ___asElement [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | GtCoderMethodElement typAsType ];
 		yourself
@@ -30,7 +30,7 @@ TypShaGtGtMethodCoder >> ___asElement [
 
 { #category : #accessing }
 TypShaGtGtMethodCoder >> ___compiledMethod [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | CompiledMethod typAsType ];
 		yourself
@@ -38,7 +38,7 @@ TypShaGtGtMethodCoder >> ___compiledMethod [
 
 { #category : #accessing }
 TypShaGtGtMethodCoder >> ___cursorPositionDo: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {Integer typAsType} result: TypUnknownType instance optionalParameters: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -46,7 +46,7 @@ TypShaGtGtMethodCoder >> ___cursorPositionDo: _a [
 
 { #category : #accessing }
 TypShaGtGtMethodCoder >> ___newCompletionStrategy [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | GtCompletionStrategy typAsType ];
 		yourself
@@ -54,7 +54,7 @@ TypShaGtGtMethodCoder >> ___newCompletionStrategy [
 
 { #category : #accessing }
 TypShaGtGtMethodCoder >> ___newSourceStyler [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | GtCoderTextStyler typAsType ];
 		yourself
@@ -62,7 +62,7 @@ TypShaGtGtMethodCoder >> ___newSourceStyler [
 
 { #category : #accessing }
 TypShaGtGtMethodCoder >> ___rbAST [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RBMethodNode typAsType ];
 		yourself
@@ -70,7 +70,7 @@ TypShaGtGtMethodCoder >> ___rbAST [
 
 { #category : #accessing }
 TypShaGtGtMethodCoder >> ___save [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -78,7 +78,7 @@ TypShaGtGtMethodCoder >> ___save [
 
 { #category : #accessing }
 TypShaGtGtMethodCoder >> ___selector [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Symbol typAsType ];
 		yourself
@@ -86,7 +86,7 @@ TypShaGtGtMethodCoder >> ___selector [
 
 { #category : #accessing }
 TypShaGtGtMethodCoder >> ___updateMethod: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | CompiledMethod typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -95,7 +95,7 @@ TypShaGtGtMethodCoder >> ___updateMethod: _a [
 { #category : #initialization }
 TypShaGtGtMethodCoder >> initialize [
 	super initialize.
-	___astCache := TypVariableResolver new
+	___astCache := TypVariableLookupResult new
 		type: [ :a :s :r | 
 			Association typAsType
 				asParametricType:

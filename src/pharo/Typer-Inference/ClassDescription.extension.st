@@ -1,18 +1,18 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Inference' }
+ClassDescription >> typInfAsClassResolver [
+	^ TypClassLookupResult new
+		type: [ :a | a clazz typAsNamedType ];
+		yourself
+]
+
+{ #category : #'*Typer-Inference' }
 ClassDescription >> typInfAsMethodResolverFor: aSymbol [
 	^ self methodDict
 		at: aSymbol
 		ifPresent: #typInfAsMethodResolver
-		ifAbsent: [ TypMethodResolver new ]
-]
-
-{ #category : #'*Typer-Inference' }
-ClassDescription >> typInfAsTypeResolver [
-	^ TypTypeResolver new
-		type: [ :a | a clazz typAsNamedType ];
-		yourself
+		ifAbsent: [ TypMethodLookupResult empty ]
 ]
 
 { #category : #'*Typer-Inference' }
@@ -30,10 +30,10 @@ ClassDescription >> typInfAsVariableResolverFor: aSymbol [
 						flatCollect: [ :g | 
 							(g assignmentNodes select: [ :h | h variable name = aSymbol ])
 								collect: [ :h | h value typType ] ] ]) typAsType.
-			TypVariableResolver new
+			TypVariableLookupResult new
 				type: [ type ];
 				yourself ]
-		ifFalse: [ TypVariableResolver new ]
+		ifFalse: [ TypVariableLookupResult empty ]
 ]
 
 { #category : #'*Typer-Inference' }

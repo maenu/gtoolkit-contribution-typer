@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaGtGtNoStorageStrategy class >> ___uniqueInstance [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | a receiverType asClass instanceSide typAsType ];
 		yourself

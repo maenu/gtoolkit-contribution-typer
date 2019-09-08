@@ -11,7 +11,7 @@ TypShaPhaRBComment class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaRBComment >> ___contents [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaPhaRBComment >> ___contents [
 
 { #category : #accessing }
 TypShaPhaRBComment >> ___start [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Integer typAsType ];
 		yourself
@@ -27,7 +27,7 @@ TypShaPhaRBComment >> ___start [
 
 { #category : #accessing }
 TypShaPhaRBComment >> ___stop [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Integer typAsType ];
 		yourself

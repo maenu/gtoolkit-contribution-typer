@@ -11,7 +11,7 @@ TypShaPhaRGMethodDefinition class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaRGMethodDefinition >> ___compiledMethod [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | CompiledMethod typAsType asNullableType ];
 		yourself

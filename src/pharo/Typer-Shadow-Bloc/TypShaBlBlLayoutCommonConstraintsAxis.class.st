@@ -11,7 +11,7 @@ TypShaBlBlLayoutCommonConstraintsAxis class >> shadowedClass [
 
 { #category : #accessing }
 TypShaBlBlLayoutCommonConstraintsAxis >> ___exact: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself

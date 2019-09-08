@@ -11,7 +11,7 @@ TypShaGtGtSearchNegationFilter class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtSearchNegationFilter >> ___originalFilter: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | GtCoderMethodsFilter typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself

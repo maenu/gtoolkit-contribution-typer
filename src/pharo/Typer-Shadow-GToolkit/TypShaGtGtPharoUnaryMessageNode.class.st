@@ -11,7 +11,7 @@ TypShaGtGtPharoUnaryMessageNode class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtPharoUnaryMessageNode >> ___parent [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | GtPharoMessageSendNode typAsType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaGtGtPharoUnaryMessageNode >> ___parent [
 
 { #category : #accessing }
 TypShaGtGtPharoUnaryMessageNode >> ___selectorPart [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | SmaCCToken typAsType ];
 		yourself

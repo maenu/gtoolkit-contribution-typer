@@ -11,7 +11,7 @@ TypShaPhaDictionary class >> shadowedClass [
 
 { #category : #'as yet unclassified' }
 TypShaPhaDictionary >> ___anyOne [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | a receiverType parameters at: 2 ];
 		yourself
@@ -19,7 +19,7 @@ TypShaPhaDictionary >> ___anyOne [
 
 { #category : #'as yet unclassified' }
 TypShaPhaDictionary >> ___asOrderedDictionary [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
 			OrderedDictionary typAsType
@@ -31,7 +31,7 @@ TypShaPhaDictionary >> ___asOrderedDictionary [
 
 { #category : #accessing }
 TypShaPhaDictionary >> ___associations [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
 			Array typAsType
@@ -45,7 +45,7 @@ TypShaPhaDictionary >> ___associations [
 
 { #category : #'as yet unclassified' }
 TypShaPhaDictionary >> ___associationsDo: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			BlockClosure typAsType
 				asFunctionType:
@@ -61,7 +61,7 @@ TypShaPhaDictionary >> ___associationsDo: _a [
 
 { #category : #accessing }
 TypShaPhaDictionary >> ___at: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | a receiverType parameters at: 1 ];
 		resultType: [ :a :s :r | a receiverType parameters at: 2 ];
 		yourself
@@ -69,7 +69,7 @@ TypShaPhaDictionary >> ___at: _a [
 
 { #category : #'as yet unclassified' }
 TypShaPhaDictionary >> ___at: _a ifAbsentPut: _b [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			i = 1
 				ifTrue: [ a receiverType parameters at: 1 ]
@@ -80,7 +80,7 @@ TypShaPhaDictionary >> ___at: _a ifAbsentPut: _b [
 
 { #category : #accessing }
 TypShaPhaDictionary >> ___at: _a ifPresent: _b ifAbsent: _c [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			{(a receiverType parameters at: 1).
 			(BlockClosure typAsType
@@ -99,7 +99,7 @@ TypShaPhaDictionary >> ___at: _a ifPresent: _b ifAbsent: _c [
 
 { #category : #'as yet unclassified' }
 TypShaPhaDictionary >> ___at: _a put: _b [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | a receiverType parameters at: i ];
 		resultType: [ :a | a receiverType parameters at: 2 ];
 		yourself
@@ -107,7 +107,7 @@ TypShaPhaDictionary >> ___at: _a put: _b [
 
 { #category : #accessing }
 TypShaPhaDictionary >> ___collect: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			{String typAsType.
 			(BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 2)} result: TypUnknownType instance optionalParameters: false)} typAsType ];
@@ -118,7 +118,7 @@ TypShaPhaDictionary >> ___collect: _a [
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ TypMethodResultTypeRepository instance
+						ifTrue: [ TypMethodLookupIndex instance
 								typeForResultOfMethod:
 									(TypMethodLookup new
 										receiverType: (a receiverType parameters at: 2);
@@ -136,7 +136,7 @@ TypShaPhaDictionary >> ___collect: _a [
 
 { #category : #'as yet unclassified' }
 TypShaPhaDictionary >> ___includes: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | a receiverType parameters at: 2 ];
 		resultType: [ Boolean typAsType ];
 		yourself
@@ -144,7 +144,7 @@ TypShaPhaDictionary >> ___includes: _a [
 
 { #category : #'as yet unclassified' }
 TypShaPhaDictionary >> ___includesKey: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | a receiverType parameters at: 1 ];
 		resultType: [ Boolean typAsType ];
 		yourself
@@ -152,7 +152,7 @@ TypShaPhaDictionary >> ___includesKey: _a [
 
 { #category : #'as yet unclassified' }
 TypShaPhaDictionary >> ___keys [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | Collection typAsType asParametricType: {(a receiverType parameters at: 1)} ];
 		yourself
@@ -168,7 +168,7 @@ TypShaPhaDictionary >> asType: aClass [
 
 { #category : #accessing }
 TypShaPhaDictionary >> ~~~, _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			Dictionary typAsType
 				asParametricType:

@@ -11,7 +11,7 @@ TypShaPhaRBMethodNode class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaRBMethodNode >> ___addPragma: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | RBPragmaNode typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaPhaRBMethodNode >> ___addPragma: _a [
 
 { #category : #accessing }
 TypShaPhaRBMethodNode >> ___allChildren [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
@@ -29,7 +29,7 @@ TypShaPhaRBMethodNode >> ___allChildren [
 
 { #category : #'as yet unclassified' }
 TypShaPhaRBMethodNode >> ___arguments [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType asParametricType: {RBArgumentNode typAsType} ];
 		yourself
@@ -37,7 +37,7 @@ TypShaPhaRBMethodNode >> ___arguments [
 
 { #category : #accessing }
 TypShaPhaRBMethodNode >> ___body [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RBSequenceNode typAsType ];
 		yourself
@@ -45,7 +45,7 @@ TypShaPhaRBMethodNode >> ___body [
 
 { #category : #accessing }
 TypShaPhaRBMethodNode >> ___compilationContext: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | CompilationContext typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -53,7 +53,7 @@ TypShaPhaRBMethodNode >> ___compilationContext: _a [
 
 { #category : #accessing }
 TypShaPhaRBMethodNode >> ___isPrimitive [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -61,7 +61,7 @@ TypShaPhaRBMethodNode >> ___isPrimitive [
 
 { #category : #accessing }
 TypShaPhaRBMethodNode >> ___method [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | CompiledMethod typAsType ];
 		yourself
@@ -69,7 +69,7 @@ TypShaPhaRBMethodNode >> ___method [
 
 { #category : #'as yet unclassified' }
 TypShaPhaRBMethodNode >> ___methodClass [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ ClassDescription typAsType ];
 		yourself
@@ -77,7 +77,7 @@ TypShaPhaRBMethodNode >> ___methodClass [
 
 { #category : #accessing }
 TypShaPhaRBMethodNode >> ___numArgs [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Integer typAsType ];
 		yourself
@@ -85,7 +85,7 @@ TypShaPhaRBMethodNode >> ___numArgs [
 
 { #category : #accessing }
 TypShaPhaRBMethodNode >> ___pragmas [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType:
 				[ :a :s :r | SequenceableCollection typAsType asParametricType: {RBPragmaNode typAsType} ];
@@ -94,7 +94,7 @@ TypShaPhaRBMethodNode >> ___pragmas [
 
 { #category : #accessing }
 TypShaPhaRBMethodNode >> ___removePragma: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | RBPragmaNode typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -102,7 +102,7 @@ TypShaPhaRBMethodNode >> ___removePragma: _a [
 
 { #category : #accessing }
 TypShaPhaRBMethodNode >> ___selector [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Symbol typAsType ];
 		yourself

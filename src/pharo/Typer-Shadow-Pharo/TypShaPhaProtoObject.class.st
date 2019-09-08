@@ -11,7 +11,7 @@ TypShaPhaProtoObject class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaProtoObject >> ___class [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | a receiverType asClass class typAsType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaPhaProtoObject >> ___class [
 
 { #category : #accessing }
 TypShaPhaProtoObject >> ___flag: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -27,7 +27,7 @@ TypShaPhaProtoObject >> ___flag: _a [
 
 { #category : #accessing }
 TypShaPhaProtoObject >> ___ifNil: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure typAsType
 				asFunctionType: {}
@@ -46,7 +46,7 @@ TypShaPhaProtoObject >> ___ifNil: _a [
 
 { #category : #'as yet unclassified' }
 TypShaPhaProtoObject >> ___ifNil: _a ifNotNil: _b [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ]
@@ -59,7 +59,7 @@ TypShaPhaProtoObject >> ___ifNil: _a ifNotNil: _b [
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ TypMethodResultTypeRepository instance
+						ifTrue: [ TypMethodLookupIndex instance
 								typeForResultOfMethod:
 									(TypMethodLookup new
 										receiverType: (a receiverType parameters at: 1);
@@ -75,7 +75,7 @@ TypShaPhaProtoObject >> ___ifNil: _a ifNotNil: _b [
 
 { #category : #accessing }
 TypShaPhaProtoObject >> ___ifNotNil: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			{String typAsType.
 			(BlockClosure typAsType asFunctionType: {a receiverType asNonNullableType} result: TypUnknownType instance optionalParameters: true)} typAsType ];
@@ -86,7 +86,7 @@ TypShaPhaProtoObject >> ___ifNotNil: _a [
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ TypMethodResultTypeRepository instance
+						ifTrue: [ TypMethodLookupIndex instance
 								typeForResultOfMethod:
 									(TypMethodLookup new
 										receiverType: (a receiverType parameters at: 1);
@@ -102,7 +102,7 @@ TypShaPhaProtoObject >> ___ifNotNil: _a [
 
 { #category : #accessing }
 TypShaPhaProtoObject >> ___isNil [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -110,7 +110,7 @@ TypShaPhaProtoObject >> ___isNil [
 
 { #category : #accessing }
 TypShaPhaProtoObject >> ~~~== _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | TypUnknownType instance asNullableType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -118,7 +118,7 @@ TypShaPhaProtoObject >> ~~~== _a [
 
 { #category : #'as yet unclassified' }
 TypShaPhaProtoObject >> ~~~~~ _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | TypUnknownType instance asNullableType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself

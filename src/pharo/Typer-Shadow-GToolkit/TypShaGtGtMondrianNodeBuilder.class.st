@@ -11,7 +11,7 @@ TypShaGtGtMondrianNodeBuilder class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtMondrianNodeBuilder >> ___with: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Collection typAsType ];
 		resultType:
 				[ :a :s :r | (a argumentTypes at: 1) asParametricType: {BlElement typAsType} ];

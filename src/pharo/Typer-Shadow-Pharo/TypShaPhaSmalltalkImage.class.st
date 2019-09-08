@@ -11,7 +11,7 @@ TypShaPhaSmalltalkImage class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaSmalltalkImage >> ___globals [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SystemDictionary typAsType

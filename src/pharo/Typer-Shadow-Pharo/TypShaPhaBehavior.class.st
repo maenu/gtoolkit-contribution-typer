@@ -11,7 +11,7 @@ TypShaPhaBehavior class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___allSubclasses [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | SequenceableCollection typAsType asParametricType: {Behavior typAsType} ];
 		yourself
@@ -19,7 +19,7 @@ TypShaPhaBehavior >> ___allSubclasses [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___classVarNames [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType:
 				[ :a :s :r | Set typAsType asParametricType: {String typAsType} ];
@@ -28,7 +28,7 @@ TypShaPhaBehavior >> ___classVarNames [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___compile: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | Symbol typAsType ];
 		yourself
@@ -36,7 +36,7 @@ TypShaPhaBehavior >> ___compile: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___compiledMethodAt: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | CompiledMethod typAsType ];
 		yourself
@@ -44,7 +44,7 @@ TypShaPhaBehavior >> ___compiledMethodAt: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___includesBehavior: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Behavior typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -52,7 +52,7 @@ TypShaPhaBehavior >> ___includesBehavior: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___includesSelector: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -60,7 +60,7 @@ TypShaPhaBehavior >> ___includesSelector: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___inheritsFrom: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | ClassDescription typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -68,7 +68,7 @@ TypShaPhaBehavior >> ___inheritsFrom: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___instVarNames [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | SequenceableCollection typAsType asParametricType: {String typAsType} ];
 		yourself
@@ -76,7 +76,7 @@ TypShaPhaBehavior >> ___instVarNames [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___isAbstract [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -84,7 +84,7 @@ TypShaPhaBehavior >> ___isAbstract [
 
 { #category : #'as yet unclassified' }
 TypShaPhaBehavior >> ___lookupSelector: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ Symbol typAsType ];
 		resultType: [ CompiledMethod typAsType ];
 		yourself
@@ -92,7 +92,7 @@ TypShaPhaBehavior >> ___lookupSelector: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___methodNamed: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | CompiledMethod typAsType ];
 		yourself
@@ -100,7 +100,7 @@ TypShaPhaBehavior >> ___methodNamed: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___methods [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Collection typAsType asParametricType: {CompiledMethod typAsType} ];
 		yourself
@@ -108,7 +108,7 @@ TypShaPhaBehavior >> ___methods [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___name [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself
@@ -116,7 +116,7 @@ TypShaPhaBehavior >> ___name [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___new [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | a receiverType asClass instanceSide typAsType ];
 		yourself
@@ -124,7 +124,7 @@ TypShaPhaBehavior >> ___new [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___selectors [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType:
 				[ :a :s :r | Collection typAsType asParametricType: {Symbol typAsType} ];
@@ -133,7 +133,7 @@ TypShaPhaBehavior >> ___selectors [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___superclass [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | ClassDescription typAsType ];
 		yourself
@@ -141,7 +141,7 @@ TypShaPhaBehavior >> ___superclass [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___whichClassDefinesClassVar: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | Class typAsType ];
 		yourself
@@ -149,7 +149,7 @@ TypShaPhaBehavior >> ___whichClassDefinesClassVar: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___whichClassDefinesInstVar: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | ClassDescription typAsType ];
 		yourself
@@ -157,7 +157,7 @@ TypShaPhaBehavior >> ___whichClassDefinesInstVar: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___withAllSuperclasses [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | SequenceableCollection typAsType asParametricType: {ClassDescription typAsType} ];
 		yourself
@@ -165,7 +165,7 @@ TypShaPhaBehavior >> ___withAllSuperclasses [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ~~~>> _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | CompiledMethod typAsType ];
 		yourself

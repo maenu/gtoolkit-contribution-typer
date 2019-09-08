@@ -11,7 +11,7 @@ TypShaPhaTestSuite class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaTestSuite >> ___run: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | TestResult typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself

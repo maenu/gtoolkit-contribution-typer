@@ -11,7 +11,7 @@ TypShaPhaContext class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaContext >> ___arguments [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType:
 				[ :a :s :r | SequenceableCollection typAsType asParametricType: {Object typAsType} ];
@@ -20,7 +20,7 @@ TypShaPhaContext >> ___arguments [
 
 { #category : #accessing }
 TypShaPhaContext >> ___method [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | CompiledMethod typAsType ];
 		yourself
@@ -28,7 +28,7 @@ TypShaPhaContext >> ___method [
 
 { #category : #accessing }
 TypShaPhaContext >> ___receiver [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Object typAsType ];
 		yourself

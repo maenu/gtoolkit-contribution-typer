@@ -11,7 +11,7 @@ TypShaGtGtPhlowExplicitView class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtPhlowExplicitView >> ___stencil: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure typAsType
 				asFunctionType: {}

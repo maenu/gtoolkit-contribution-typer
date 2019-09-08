@@ -11,7 +11,7 @@ TypShaPhaPoint class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaPoint >> ___abs [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Number typAsType ];
 		yourself

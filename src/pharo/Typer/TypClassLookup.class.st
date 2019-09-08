@@ -1,5 +1,5 @@
 Class {
-	#name : #TypTypeLookup,
+	#name : #TypClassLookup,
 	#superclass : #TypLookup,
 	#instVars : [
 		'clazz'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #comparing }
-TypTypeLookup >> = anObject [
+TypClassLookup >> = anObject [
 	^ self == anObject
 		or: [ self class == anObject class
 				and: [ | object |
@@ -17,35 +17,35 @@ TypTypeLookup >> = anObject [
 ]
 
 { #category : #copying }
-TypTypeLookup >> adaptWithSuperType [
+TypClassLookup >> adaptWithSuperType [
 	self assert: [ self hasSuperType ].
 	self clazz: clazz superclass
 ]
 
 { #category : #accessing }
-TypTypeLookup >> clazz [
+TypClassLookup >> clazz [
 	<typTypeResultAs: 'ClassDescription'>
 	^ clazz
 ]
 
 { #category : #accessing }
-TypTypeLookup >> clazz: anObject [
+TypClassLookup >> clazz: anObject [
 	<typTypeArgument: 1 as: 'ClassDescription'>
 	clazz := anObject
 ]
 
 { #category : #testing }
-TypTypeLookup >> hasSuperType [
+TypClassLookup >> hasSuperType [
 	^ clazz superclass isNotNil and: [ clazz superclass ~= clazz and: [ (clazz superclass inheritsFrom: clazz) not ] ]
 ]
 
 { #category : #comparing }
-TypTypeLookup >> hash [
+TypClassLookup >> hash [
 	^ clazz hash
 ]
 
 { #category : #initialization }
-TypTypeLookup >> initialize [
+TypClassLookup >> initialize [
 	<typTypeVariable: 'clazz' as: 'ClassDescription'>
 	super initialize
 ]

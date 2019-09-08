@@ -23,7 +23,7 @@ CompiledMethod >> typPraAsMethodResolver [
 	signalsAlways := signalsAlwaysPragma
 		ifNil: [ nil ]
 		ifNotNil: [ signalsAlwaysPragma arguments first ].
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i | argumentTypes at: i ];
 		resultType: [ resultType ];
 		signalsAlways: [ signalsAlways ];

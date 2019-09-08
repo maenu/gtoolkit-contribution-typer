@@ -11,7 +11,7 @@ TypShaBlBlText class >> shadowedClass [
 
 { #category : #accessing }
 TypShaBlBlText >> ___attribute: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | BlTextAttribute typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaBlBlText >> ___attribute: _a [
 
 { #category : #accessing }
 TypShaBlBlText >> ___attributesAt: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Integer typAsType ];
 		resultType: [ :a :s :r | SequenceableCollection typAsType asParametricType: {BlTextAttribute typAsType} ];
 		yourself
@@ -27,7 +27,7 @@ TypShaBlBlText >> ___attributesAt: _a [
 
 { #category : #accessing }
 TypShaBlBlText >> ___clearAttributes: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {BlTextAttribute typAsType} result: TypUnknownType instance optionalParameters: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -35,7 +35,7 @@ TypShaBlBlText >> ___clearAttributes: _a [
 
 { #category : #accessing }
 TypShaBlBlText >> ___from: _a to: _b [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Integer typAsType ];
 		resultType: [ :a :s :r | BlText typAsType ];
 		yourself

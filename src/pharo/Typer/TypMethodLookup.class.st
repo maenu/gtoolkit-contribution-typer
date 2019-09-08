@@ -26,7 +26,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : #TypMethodLookup,
-	#superclass : #TypAttributeLookup,
+	#superclass : #TypObjectLookup,
 	#instVars : [
 		'argumentTypes',
 		'argumentNodes'

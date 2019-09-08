@@ -7,27 +7,27 @@ Class {
 { #category : #example }
 TypExamples >> example [
 	<gtExample>
-	(TypClassTypeRepository
+	(TypClassLookupIndex
 		reset;
 		instance)
 		next:
-				(TypClassTypeRepository new
+				(TypClassLookupIndex new
 						add: TypCachingTypeResolver typInfResolver);
 		add: TypCachingTypeResolver typPraResolver;
 		add: TypCachingTypeResolver typShaResolver.
-	(TypMethodResultTypeRepository
+	(TypMethodLookupIndex
 		reset;
 		instance)
 		next:
-				(TypMethodResultTypeRepository new
+				(TypMethodLookupIndex new
 						add: TypCachingMethodResolver typInfResolver);
 		add: TypCachingMethodResolver typPraResolver;
 		add: TypCachingMethodResolver typShaResolver.
-	(TypVariableTypeRepository
+	(TypVariableLookupIndex
 		reset;
 		instance)
 		next:
-				(TypVariableTypeRepository new
+				(TypVariableLookupIndex new
 						add: TypCachingVariableResolver typInfResolver);
 		add: TypCachingVariableResolver typPraResolver;
 		add: TypCachingVariableResolver typShaResolver.

@@ -10,7 +10,7 @@ Class {
 
 { #category : #accessing }
 TypShaGtGtMethodsCoder class >> ___forMethods: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes:
 				[ :i :a :s :r | Collection typAsType asParametricType: {CompiledMethod typAsType} ];
 		resultType: [ :a :s :r | a receiverType asClass instanceSide typAsType ];
@@ -24,7 +24,7 @@ TypShaGtGtMethodsCoder class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtMethodsCoder >> ___announce: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Announcement typAsType ];
 		resultType: [ :a :s :r | TypUnknownType instance ];
 		yourself
@@ -33,12 +33,12 @@ TypShaGtGtMethodsCoder >> ___announce: _a [
 { #category : #accessing }
 TypShaGtGtMethodsCoder >> initialize [
 	super initialize.
-	___methods := TypVariableResolver new
+	___methods := TypVariableLookupResult new
 		type: [ :a :s :r | 
 			SequenceableCollection typAsType
 				asParametricType: {CompiledMethod typAsType} ];
 		yourself.
-	___methodCoders := TypVariableResolver new
+	___methodCoders := TypVariableLookupResult new
 		type: [ :a :s :r | 
 			SequenceableCollection typAsType
 				asParametricType: {GtMethodCoder typAsType} ];

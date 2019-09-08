@@ -11,7 +11,7 @@ TypShaPhaOCClassScope class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaOCClassScope >> ___getClass [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | ClassDescription typAsType ];
 		yourself

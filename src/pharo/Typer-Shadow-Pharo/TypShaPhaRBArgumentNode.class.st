@@ -11,7 +11,7 @@ TypShaPhaRBArgumentNode class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaRBArgumentNode >> ___whoDefines: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ String typAsType ];
 		resultType: [ {RBMethodNode typAsType.
 			RBBlockNode typAsType} typAsType asNullableType ];

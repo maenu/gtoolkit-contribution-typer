@@ -11,7 +11,7 @@ TypShaBrBrButton class >> shadowedClass [
 
 { #category : #accessing }
 TypShaBrBrButton >> ___action: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure typAsType
 				asFunctionType: {}
@@ -23,7 +23,7 @@ TypShaBrBrButton >> ___action: _a [
 
 { #category : #accessing }
 TypShaBrBrButton >> ___icon: _a [
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | BlElement typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
