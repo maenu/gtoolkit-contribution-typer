@@ -41,12 +41,14 @@ TypDynExamples >> refactoring [
 	<gtExample>
 	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod<Integer>>>'>
 	| methods collector testResult association |
-	(TypMethodLookupIndex instance resolvers last
+	TypMethodLookupIndex instance resolver reset.
+	TypVariableLookupIndex instance resolver reset.
+	(TypMethodLookupIndex instance resolver resolver resolvers first resolver resolvers last
 		isKindOf: TypDynLookupResolver)
-		ifTrue: [ TypMethodLookupIndex instance resolvers removeLast ].
-	(TypVariableLookupIndex instance resolvers last
+		ifTrue: [ TypMethodLookupIndex instance resolver resolver resolvers first resolver resolvers removeLast ].
+	(TypVariableLookupIndex instance resolver resolver resolvers first resolver resolvers last
 		isKindOf: TypDynLookupResolver)
-		ifTrue: [ TypVariableLookupIndex instance resolvers removeLast ].
+		ifTrue: [ TypVariableLookupIndex instance resolver resolver resolvers first resolver resolvers removeLast ].
 	methods := self refactoringNonTestPackages flatCollect: #methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
@@ -59,6 +61,11 @@ TypDynExamples >> refactoring [
 				displayingProgress: 'Running test case' ].
 	TypMethodLookupIndex instance add: association key value.
 	TypVariableLookupIndex instance add: association value.
+	TypMethodLookupIndex instance resolver resolver resolvers first resolver resolvers add: association key value.
+	TypVariableLookupIndex instance resolver resolver resolvers first resolver resolvers add: association value.
+	TypMethodLookupIndex instance resolver reset.
+	TypVariableLookupIndex instance resolver reset.
+	ASTCache reset.
 	^ testResult -> association key value -> association value
 		-> (self refactoringNonTestPackages flatCollect: #methods)
 ]
@@ -95,6 +102,14 @@ TypDynExamples >> refactoringCore [
 	<gtExample>
 	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod<Integer>>>'>
 	| methods collector testResult association |
+	TypMethodLookupIndex instance resolver reset.
+	TypVariableLookupIndex instance resolver reset.
+	(TypMethodLookupIndex instance resolver resolver resolvers first resolver resolvers last
+		isKindOf: TypDynLookupResolver)
+		ifTrue: [ TypMethodLookupIndex instance resolver resolver resolvers first resolver resolvers removeLast ].
+	(TypVariableLookupIndex instance resolver resolver resolvers first resolver resolvers last
+		isKindOf: TypDynLookupResolver)
+		ifTrue: [ TypVariableLookupIndex instance resolver resolver resolvers first resolver resolvers removeLast ].
 	methods := #'Refactoring-Core' asPackage methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
@@ -105,6 +120,11 @@ TypDynExamples >> refactoringCore [
 				do: [ :e"typCastAs TestCase class"
 					 | e suite run: testResult ]
 				displayingProgress: 'Running test case'  ].
+	TypMethodLookupIndex instance resolver resolver resolvers first resolver resolvers add: association key value.
+	TypVariableLookupIndex instance resolver resolver resolvers first resolver resolvers add: association value.
+	TypMethodLookupIndex instance resolver reset.
+	TypVariableLookupIndex instance resolver reset.
+	ASTCache reset.
 	^ testResult -> association key value -> association value
 		-> #'Refactoring-Core' asPackage methods
 ]

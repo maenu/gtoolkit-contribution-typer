@@ -58,7 +58,7 @@ RBMethodNode >> typDynInvokeIn: aContext [
 		argumentTypes: (aContext arguments collect: #typSelfType);
 		yourself.
 	self typDynMonitor
-		critical: [ self typDynInvocations increment: invocation ]
+		critical: [ self typDynInvocations add: invocation ]
 ]
 
 { #category : #'*Typer-Dynamic' }
@@ -84,7 +84,7 @@ RBMethodNode >> typDynTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypDynUnionType<TypType>'>
 	^ self typDynInvocations
-		collect: [ :f | ((f key "typCastAs TypDynMessage") argumentTypes at: anInteger) -> f value ]
+		collect: [ :f | (f "typCastAs TypDynMessage") argumentTypes at: anInteger ]
 ]
 
 { #category : #'*Typer-Dynamic' }

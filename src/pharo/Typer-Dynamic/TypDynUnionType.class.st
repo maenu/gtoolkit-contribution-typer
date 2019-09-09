@@ -13,35 +13,25 @@ TypDynUnionType >> , aType [
 	<typTypeResultAs: 'TypDynUnionType<TypType>'>
 	| copy |
 	copy := self copy.
-	aType do: [ :e | copy add: e ].
+	copy addAll: aType.
 	^ copy
 ]
 
-{ #category : #comparing }
-TypDynUnionType >> = anObject [
-	^ self == anObject
-		or: [ self class = anObject class
-				and: [ | object |
-					object := anObject "typCastAs TypDynUnionType<TypType>".
-					nullable = object nullable
-						and: [ types asSet = object types asSet
-								and: [ weights keys = object weights keys ] ] ] ]
-]
-
-{ #category : #enumerating }
-TypDynUnionType >> add: anAssociation [
-	<typTypeArgument: 1 as: 'Association<TypType,Integer>'>
-	<typTypeResultAs: 'Integer'>
-	| n |
-	types add: anAssociation key.
-	n := weights at: anAssociation key ifAbsentPut: [ 0 ].
-	^ weights at: anAssociation key put: n + anAssociation value
+{ #category : #accessing }
+TypDynUnionType >> add: anObject [
+	<typTypeArgument: 1 as: 'TypType'>
+	<typTypeResultAs: 'TypType'>
+	weights add: anObject.
+	types add: anObject.
+	^ anObject
 ]
 
 { #category : #enumerating }
 TypDynUnionType >> addAll: aTypes [
 	<typTypeArgument: 1 as: 'TypDynUnionType<TypType>'>
-	aTypes do: [ :e | self add: e ]
+	types addAll: aTypes types.
+	weights addAll: aTypes weights.
+	^ aTypes
 ]
 
 { #category : #converting }
@@ -63,48 +53,17 @@ TypDynUnionType >> asNonDynType [
 
 { #category : #enumerating }
 TypDynUnionType >> collect: aBlock [
-	<typTypeArgument: 1 as: 'BlockClosure[Association<TypType,Integer>]->Association<TypType,Integer>'>
-	<typTypeResultAs: 'TypDynUnionType<TypType>'>
-	| copy |
-	copy := TypDynUnionType new.
-	self do: [ :e | copy add: (aBlock cull: e) ].
-	^ copy
-]
-
-{ #category : #enumerating }
-TypDynUnionType >> do: aBlock [
-	<typTypeArgument: 1 as: 'BlockClosure(Association<TypType,Integer>)->?'>
-	weights associationsDo: aBlock
-]
-
-{ #category : #comparing }
-TypDynUnionType >> hash [
-	^ super hash bitXor: weights keys hash
-]
-
-{ #category : #accessing }
-TypDynUnionType >> increment: anObject [
-	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeResultAs: 'TypType'>
-	^ (anObject isKindOf: TypDynUnionType)
-		ifTrue: [ self addAll: anObject "typCastAs TypDynUnionType<TypType>" ]
-		ifFalse: [ | n |
-			n := weights at: anObject ifAbsentPut: [ 0 ].
-			weights at: anObject put: n + 1.
-			types add: anObject ]
+	^ self class new
+		types: (types collect: aBlock);
+		weights: (weights collect: aBlock);
+		yourself
 ]
 
 { #category : #accessing }
 TypDynUnionType >> initialize [
-	<typTypeVariable: 'weights' as: 'Dictionary<TypType,Integer>'>
+	<typTypeVariable: 'weights' as: 'SequenceableCollection<TypType>'>
 	super initialize.
-	weights := Dictionary new "typParameters TypType,Integer"
-]
-
-{ #category : #testing }
-TypDynUnionType >> isEmpty [
-	<typTypeResultAs: 'Boolean'>
-	^ weights isEmpty
+	weights := OrderedCollection new "typParameters TypType"
 ]
 
 { #category : #'as yet unclassified' }
@@ -113,26 +72,11 @@ TypDynUnionType >> postCopy [
 	weights := weights copy
 ]
 
-{ #category : #enumerating }
-TypDynUnionType >> select: aBlock [
-	<typTypeArgument: 1 as: 'BlockClosure(Association<TypType,Integer>)->Boolean'>
-	<typTypeResultAs: 'TypDynUnionType<TypType>'>
-	| copy |
-	copy := TypDynUnionType new.
-	weights
-		associationsDo: [ :e | 
-			(aBlock cull: e)
-				ifTrue: [ copy add: e ] ].
-	^ copy
-]
-
 { #category : #initialization }
 TypDynUnionType >> summary [
 	<typTypeResultAs: 'OrderedDictionary<TypType,Integer>'>
-	| summary |
-	summary := weights associations copy.
-	summary sort: [ :a :b | a value > b value ].
-	^ summary asOrderedDictionary
+	^ (((weights groupedBy: #yourself) collect: #size) associations
+		sorted: [ :a :b | a value > b value ]) asOrderedDictionary
 ]
 
 { #category : #accessing }
@@ -145,12 +89,12 @@ TypDynUnionType >> typGtItemsFor: aView [
 
 { #category : #accessing }
 TypDynUnionType >> weights [
-	<typTypeResultAs: 'Dictionary<TypType,Integer>'>
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	^ weights
 ]
 
 { #category : #accessing }
 TypDynUnionType >> weights: anObject [
-	<typTypeArgument: 1 as: 'Dictionary<TypType,Integer>'>
+	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
 	weights := anObject
 ]

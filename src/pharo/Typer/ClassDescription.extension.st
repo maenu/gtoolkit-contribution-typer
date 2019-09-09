@@ -5,6 +5,7 @@ ClassDescription >> typAsNamedType [
 	<typTypeResultAs: 'TypNamedType'>
 	^ TypNamedType new
 		name: self name;
+		clazz: self;
 		yourself
 ]
 

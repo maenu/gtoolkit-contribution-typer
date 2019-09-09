@@ -25,7 +25,7 @@ RBReturnNode >> typDynReturn: anObject [
 	<typTypeArgument: 1 as: 'Object'>
 	| value_ |
 	value_ := anObject typSelfType.
-	self typDynMonitor critical: [ self typDynReturns increment: value_ ]
+	self typDynMonitor critical: [ self typDynReturns add: value_ ]
 ]
 
 { #category : #'*Typer-Dynamic' }

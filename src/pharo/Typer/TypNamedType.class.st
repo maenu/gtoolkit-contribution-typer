@@ -3,7 +3,8 @@ Class {
 	#superclass : #TypType,
 	#instVars : [
 		'name',
-		'representsClass'
+		'representsClass',
+		'clazz'
 	],
 	#category : #'Typer-Core'
 }
@@ -25,9 +26,10 @@ TypNamedType >> > aType [
 { #category : #converting }
 TypNamedType >> asClass [
 	self assert: [ self representsClass ].
-	(name endsWith: ' class')
-		ifFalse: [ ^ name asClass ].
-	^ (name copyFrom: 1 to: name size - ' class' size) asClass classSide
+	^ clazz
+		ifNil: [ clazz := (name endsWith: ' class')
+				ifTrue: [ (name copyFrom: 1 to: name size - ' class' size) asClass classSide ]
+				ifFalse: [ name asClass ] ]
 ]
 
 { #category : #converting }
@@ -68,6 +70,12 @@ TypNamedType >> asParametricType: someTypes [
 		nullable: nullable;
 		parameters: someTypes;
 		yourself
+]
+
+{ #category : #accessing }
+TypNamedType >> clazz: aClassDescription [
+	clazz := aClassDescription.
+	representsClass := true
 ]
 
 { #category : #'as yet unclassified' }
