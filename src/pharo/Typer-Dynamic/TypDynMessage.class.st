@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'selector',
 		'argumentTypes',
-		'receiverType'
+		'receiverType',
+		'hash'
 	],
 	#category : #'Typer-Dynamic-Core'
 }
@@ -34,7 +35,9 @@ TypDynMessage >> argumentTypes: anObject [
 
 { #category : #comparing }
 TypDynMessage >> hash [
-	^ selector hash bitXor: (argumentTypes hash bitXor: receiverType hash)
+	^ hash
+		ifNil: [ hash := selector hash
+				bitXor: (argumentTypes hash bitXor: receiverType hash) ]
 ]
 
 { #category : #accessing }

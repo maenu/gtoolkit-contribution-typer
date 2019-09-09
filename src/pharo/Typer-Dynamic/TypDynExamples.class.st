@@ -9,14 +9,8 @@ TypDynExamples >> neoJsonCore [
 	<gtExample>
 	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod<Integer>>>'>
 	| methods collector testResult association |
-	TypMethodLookupIndex instance resolver reset.
-	TypVariableLookupIndex instance resolver reset.
-	(TypMethodLookupIndex instance resolver resolver resolvers first resolver resolvers last
-		isKindOf: TypDynLookupResolver)
-		ifTrue: [ TypMethodLookupIndex instance resolver resolver resolvers first resolver resolvers removeLast ].
-	(TypVariableLookupIndex instance resolver resolver resolvers first resolver resolvers last
-		isKindOf: TypDynLookupResolver)
-		ifTrue: [ TypVariableLookupIndex instance resolver resolver resolvers first resolver resolvers removeLast ].
+	TypLookupIndex resetAll.
+	TypExamples new example.
 	methods := #'Neo-JSON-Core' asPackage methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.

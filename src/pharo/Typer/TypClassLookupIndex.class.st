@@ -16,12 +16,12 @@ TypClassLookupIndex >> initialize [
 { #category : #accessing }
 TypClassLookupIndex >> typeFor: aLookup [
 	^ index
-		at: aLookup clazz
+		at: aLookup clazz name asSymbol
 		ifAbsentPut: [ (resolver resolve: aLookup)
 				detect: [ :e | 
 					[ | type |
 					type := e type.
-					type isUnknown ]
+					type isUnknown not ]
 						on: Error
 						do: [ :f | 
 							f logCr.
