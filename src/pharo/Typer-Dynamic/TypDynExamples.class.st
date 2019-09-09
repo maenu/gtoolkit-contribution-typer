@@ -9,12 +9,12 @@ TypDynExamples >> neoJsonCore [
 	<gtExample>
 	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod<Integer>>>'>
 	| methods collector testResult association |
-	(TypMethodLookupIndex instance resolvers last
+	(TypMethodLookupIndex instance resolver resolver resolvers first resolver resolvers last
 		isKindOf: TypDynLookupResolver)
-		ifTrue: [ TypMethodLookupIndex instance resolvers removeLast ].
-	(TypVariableLookupIndex instance resolvers last
+		ifTrue: [ TypMethodLookupIndex instance resolver resolver resolvers first resolver resolvers removeLast ].
+	(TypVariableLookupIndex instance resolver resolver resolvers first resolver resolvers last
 		isKindOf: TypDynLookupResolver)
-		ifTrue: [ TypVariableLookupIndex instance resolvers removeLast ].
+		ifTrue: [ TypVariableLookupIndex instance resolver resolver resolvers first resolver resolvers removeLast ].
 	methods := #'Neo-JSON-Core' asPackage methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
@@ -25,8 +25,8 @@ TypDynExamples >> neoJsonCore [
 				do: [ :e"typCastAs TestCase class"
 					 | e suite run: testResult ]
 				displayingProgress: 'Running test case' ].
-	TypMethodLookupIndex instance add: association key value.
-	TypVariableLookupIndex instance add: association value.
+	TypVariableLookupIndex instance resolver resolver resolvers first resolver resolvers add: association key value.
+	TypVariableLookupIndex instance resolver resolver resolvers first resolver resolvers add: association value.
 	^ testResult -> association key value -> association value
 		-> #'Neo-JSON-Core' asPackage methods
 ]

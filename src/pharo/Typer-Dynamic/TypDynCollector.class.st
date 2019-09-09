@@ -12,31 +12,31 @@ TypDynCollector >> collectIn: aCollection doing: aBlock [
 	<typTypeArgument: 1 as: 'Collection<CompiledMethod<Integer>>'>
 	<typTypeArgument: 2 as: 'BlockClosure()->Object'>
 	<typTypeResultAs: 'Association<Association<Object,TypDynResolver<TypLookup>>,TypDynResolver<TypLookup>>'>
-	| methodResolvers variableResolvers result asts |
+	| methodResults variableResults result asts |
 	result := nil "typCastAs !Object".
-	methodResolvers := Dictionary new "typParameters Association<ClassDescription,Symbol<Character>>,TypMethodResolver<TypMethodLookup>".
-	variableResolvers := Dictionary new "typParameters Association<ClassDescription,Symbol<Character>>,TypVariableResolver<TypVariableLookup>".
+	methodResults := Dictionary new "typParameters Association<ClassDescription,Symbol<Character>>,TypMethodResolver<TypMethodLookup>".
+	variableResults := Dictionary new "typParameters Association<ClassDescription,Symbol<Character>>,TypVariableResolver<TypVariableLookup>".
 	asts := aCollection collect: [ :e | e ast
 		doSemanticAnalysis;
 		typTypeReset;
 		typDynInstall ].
 	[ result := aBlock value.
-	methodResolvers := self collectMethodResolversIn: asts.
-	variableResolvers := self collectVariableResolversIn: asts ]
+	methodResults := self collectMethodResultsIn: asts.
+	variableResults := self collectVariableResultsIn: asts ]
 		ensure: [ asts do: #typDynUninstall ].
 	^ result
 		->
 			(TypDynLookupResolver new
-				resolvers: methodResolvers;
+				results: methodResults;
 				yourself)
 		->
 			(TypDynLookupResolver new
-				resolvers: variableResolvers;
+				results: variableResults;
 				yourself)
 ]
 
 { #category : #accessing }
-TypDynCollector >> collectMethodResolversIn: aCollection [
+TypDynCollector >> collectMethodResultsIn: aCollection [
 	<typTypeArgument: 1 as: 'Collection<RBMethodNode>'>
 	<typTypeResultAs:
 		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypMethodLookupResult>'>
@@ -46,7 +46,7 @@ TypDynCollector >> collectMethodResolversIn: aCollection [
 ]
 
 { #category : #accessing }
-TypDynCollector >> collectVariableResolversIn: aCollection [
+TypDynCollector >> collectVariableResultsIn: aCollection [
 	<typTypeArgument: 1 as: 'Collection<RBMethodNode>'>
 	<typTypeResultAs:
 		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypVariableLookupResult>'>

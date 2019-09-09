@@ -14,6 +14,7 @@ TypMethodLookupIndex >> argumentTypeFor: aLookup at: anInteger [
 				ifFalse: [ ^ type ] ]
 				on: Error
 				do: [ :f | 
+					Halt once.
 					f logCr.
 					self flag: 'FIXME signal?' ] ].
 	^ TypUnknownType instance
@@ -29,6 +30,7 @@ TypMethodLookupIndex >> resultTypeFor: aLookup [
 				ifFalse: [ ^ type ] ]
 				on: Error
 				do: [ :f | 
+					Halt once.
 					f logCr.
 					self flag: 'FIXME signal?' ] ].
 	^ TypUnknownType instance
@@ -43,6 +45,7 @@ TypMethodLookupIndex >> signalsAlwaysFor: aLookup [
 			signalsAlways ifNotNil: [ ^ signalsAlways ] ]
 				on: Error
 				do: [ :f | 
+					Halt once.
 					f logCr.
 					self flag: 'FIXME signal?' ] ].
 	^ nil

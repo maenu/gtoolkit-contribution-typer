@@ -19,5 +19,5 @@ TypBreadthLookupResolver >> resolvers [
 
 { #category : #accessing }
 TypBreadthLookupResolver >> resolvers: anObject [
-	resolvers := anObject
+	resolvers := anObject asOrderedCollection
 ]
