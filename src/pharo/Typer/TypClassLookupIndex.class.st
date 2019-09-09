@@ -14,7 +14,6 @@ TypClassLookupIndex >> typeFor: aLookup [
 				ifFalse: [ ^ type ] ]
 				on: Error
 				do: [ :f | 
-					Halt once.
 					f logCr.
 					self flag: 'FIXME signal?' ] ].
 	^ TypUnknownType instance
