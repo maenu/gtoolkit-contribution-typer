@@ -7,7 +7,7 @@ CompiledMethod >> typPraAllPragmas [
 
 { #category : #'*Typer-Pragma' }
 CompiledMethod >> typPraAsMethodLookupResult [
-	| pragmas argumentPragmas resultPragma signalsAlwaysPragma argumentTypes resultType isReturnSelf signalsAlways |
+	| pragmas argumentPragmas resultPragma signalsAlwaysPragma argumentTypes resultType signalsAlways |
 	pragmas := self typPraAllPragmas.
 	argumentPragmas := ((pragmas
 		select: [ :e | e selector = #typTypeArgument:as: ])
@@ -30,16 +30,12 @@ CompiledMethod >> typPraAsMethodLookupResult [
 	resultType := resultPragma
 		ifNil: [ TypUnknownType instance ]
 		ifNotNil: [ (resultPragma arguments at: 1) typAsType ].
-	isReturnSelf := self ast typIsReturnSelf.
 	signalsAlways := signalsAlwaysPragma
 		ifNil: [ nil ]
 		ifNotNil: [ signalsAlwaysPragma arguments at: 1 ].
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i | argumentTypes at: i ];
-		resultType: [ :a | 
-			(resultType isUnknown and: [ isReturnSelf ])
-				ifTrue: [ a receiverType ]
-				ifFalse: [ resultType ] ];
+		resultType: [ resultType ];
 		signalsAlways: [ signalsAlways ];
 		yourself
 ]

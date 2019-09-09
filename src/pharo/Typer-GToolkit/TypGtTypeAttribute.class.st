@@ -14,18 +14,17 @@ TypGtTypeAttribute >> initialize [
 	self
 		beAppend;
 		stencil: [ BrLabel new
-				text: type printString;
+				text: type printString asRopedText glamorousCodeFontAndSize;
 				margin:
 					(BlInsets
-						top: 1
+						top: -1
 						right: 0
 						bottom: 0
 						left: 5);
 				look:
 					(BrGlamorousLabelLook new
 						foreground: Color gray;
-						fontName: 'Courier New';
-						fontSize: 12);
+						yourself);
 				when: BlClickEvent do: [ :e | e target phlow spawnObject: type ];
 				yourself ]
 ]

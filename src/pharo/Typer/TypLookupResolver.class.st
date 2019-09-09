@@ -7,14 +7,6 @@ Class {
 	#category : #'Typer-Core'
 }
 
-{ #category : #accessing }
-TypLookupResolver class >> empty [
-	^ empty
-		ifNil: [ empty := self new
-				precondition: [ false ];
-				yourself ]
-]
-
 { #category : #initialization }
 TypLookupResolver >> initialize [
 	<typTypeParametersAs: 'TypLookup'>

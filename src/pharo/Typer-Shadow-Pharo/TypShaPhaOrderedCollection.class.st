@@ -35,3 +35,8 @@ TypShaPhaOrderedCollection >> ___removeLast [
 		resultType: [ :a :s :r | a receiverType parameters at: 1 ];
 		yourself
 ]
+
+{ #category : #converting }
+TypShaPhaOrderedCollection >> asType: aClass [
+	^ aClass typAsNamedType asParametricType: {TypUnknownType instance}
+]
