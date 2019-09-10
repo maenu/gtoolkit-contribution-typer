@@ -21,5 +21,5 @@ RBTemporaryNode >> typTypeRecursive [
 		ifTrue: [ (self parent "typCastAs RBAssignmentNode") value typType ]
 		ifFalse: [ self typIsDeclaration
 				ifTrue: [ (self typAssignments collect: #typType) typAsType ]
-				ifFalse: [ self typReachableTypeFor: self name until: (self whoDefines: self name) ] ]
+				ifFalse: [ TypTemporaryTypeVisitor typeFor: self ] ]
 ]
