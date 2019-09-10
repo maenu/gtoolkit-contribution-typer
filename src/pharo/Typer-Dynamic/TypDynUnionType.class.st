@@ -36,19 +36,9 @@ TypDynUnionType >> addAll: aTypes [
 
 { #category : #converting }
 TypDynUnionType >> asNonDynType [
-	| type |
-	type := types typAsType.
-	nullable
-		ifTrue: [ type := type asNullableType ].
-	^ type isUnion
-		ifTrue: [ | superType |
-			superType := type superType.
-			(superType isUnion not
-				and: [ superType ~= Object typAsType
-						and: [ superType ~= TypUnknownType instance ] ])
-				ifTrue: [ superType ]
-				ifFalse: [ type ] ]
-		ifFalse: [ type ]
+	^ nullable
+		ifTrue: [ types typAsType asNullableType ]
+		ifFalse: [ types typAsType ]
 ]
 
 { #category : #enumerating }

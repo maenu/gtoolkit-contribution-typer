@@ -96,14 +96,9 @@ TypDynExamples >> refactoringCore [
 	<gtExample>
 	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod<Integer>>>'>
 	| methods collector testResult association |
-	TypMethodLookupIndex instance resolver reset.
-	TypVariableLookupIndex instance resolver reset.
-	(TypMethodLookupIndex instance resolver resolver resolvers first resolver resolvers last
-		isKindOf: TypDynLookupResolver)
-		ifTrue: [ TypMethodLookupIndex instance resolver resolver resolvers first resolver resolvers removeLast ].
-	(TypVariableLookupIndex instance resolver resolver resolvers first resolver resolvers last
-		isKindOf: TypDynLookupResolver)
-		ifTrue: [ TypVariableLookupIndex instance resolver resolver resolvers first resolver resolvers removeLast ].
+	TypLookupIndex resetAll.
+	TypExamples new example.
+	ASTCache reset.
 	methods := #'Refactoring-Core' asPackage methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
@@ -118,7 +113,6 @@ TypDynExamples >> refactoringCore [
 	TypVariableLookupIndex instance resolver resolver resolvers first resolver resolvers add: association value.
 	TypMethodLookupIndex instance resolver reset.
 	TypVariableLookupIndex instance resolver reset.
-	ASTCache reset.
 	^ testResult -> association key value -> association value
 		-> #'Refactoring-Core' asPackage methods
 ]
