@@ -381,7 +381,7 @@ TypShaPhaCollection >> ___includes: _a [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaCollection >> ___inject: _a into: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
@@ -393,7 +393,9 @@ TypShaPhaCollection >> ___inject: _a into: _b [
 							(a receiverType parameters at: 1)}
 						result: TypUnknownType instance
 						optionalParameters: false ] ];
-		resultType: [ :a :s :r | a argumentTypes at: 1 ];
+		resultType: [ :a :s :r | 
+			{(a argumentTypes at: 1).
+			(a argumentTypes at: 2) result} typAsType ];
 		yourself
 ]
 
