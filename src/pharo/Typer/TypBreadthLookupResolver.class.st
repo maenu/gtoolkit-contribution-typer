@@ -7,6 +7,11 @@ Class {
 	#category : #'Typer-Core'
 }
 
+{ #category : #initialization }
+TypBreadthLookupResolver >> reset [
+	resolvers do: #reset
+]
+
 { #category : #accessing }
 TypBreadthLookupResolver >> resolve: aLookup [
 	^ resolvers flatCollect: [ :e | e resolve: aLookup ]

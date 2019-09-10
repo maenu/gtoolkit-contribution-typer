@@ -7,10 +7,40 @@ Class {
 	#category : #'Typer-Core'
 }
 
+{ #category : #accessing }
+TypClassLookupIndex class >> newDefault [
+	^ self new
+		resolver:
+			(TypCachingLookupResolver new
+				resolver:
+					(TypBreadthLookupResolver new
+						resolvers:
+							{(TypDepthLookupResolver new
+								resolver:
+									(TypBreadthLookupResolver new
+										resolvers:
+											{TypPraClassLookupResolver new.
+											TypShaClassLookupResolver new};
+										yourself);
+								yourself).
+							(TypDepthLookupResolver new
+								resolver: TypInfClassLookupResolver new;
+								yourself)};
+						yourself);
+				yourself);
+		yourself
+]
+
 { #category : #initialization }
 TypClassLookupIndex >> initialize [
 	super initialize.
 	index := IdentityDictionary new
+]
+
+{ #category : #initialization }
+TypClassLookupIndex >> reset [
+	super reset.
+	index removeAll
 ]
 
 { #category : #accessing }

@@ -13,6 +13,11 @@ TypLookupResolver >> initialize [
 	super initialize
 ]
 
+{ #category : #initialization }
+TypLookupResolver >> reset [
+	
+]
+
 { #category : #accessing }
 TypLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypLookup'>

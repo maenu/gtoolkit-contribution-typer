@@ -7,6 +7,11 @@ Class {
 	#category : #'Typer-Core'
 }
 
+{ #category : #initialization }
+TypDepthLookupResolver >> reset [
+	resolver reset
+]
+
 { #category : #resolving }
 TypDepthLookupResolver >> resolve: aLookup [
 	| results |

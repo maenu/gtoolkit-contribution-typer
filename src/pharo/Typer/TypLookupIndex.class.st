@@ -12,7 +12,12 @@ Class {
 
 { #category : #accessing }
 TypLookupIndex class >> instance [
-	^ instance ifNil: [ instance := self new ]
+	^ instance ifNil: [ instance := self newDefault ]
+]
+
+{ #category : #accessing }
+TypLookupIndex class >> newDefault [
+	self subclassResponsibility
 ]
 
 { #category : #initialization }
@@ -26,6 +31,20 @@ TypLookupIndex class >> resetAll [
 	<script>
 	self allSubclassesDo: #reset.
 	Smalltalk garbageCollect
+]
+
+{ #category : #initialization }
+TypLookupIndex >> initialize [
+	super initialize.
+	SystemAnnouncer uniqueInstance weak
+		when: ClassAnnouncement , MethodAnnouncement
+		send: #reset
+		to: self
+]
+
+{ #category : #initialization }
+TypLookupIndex >> reset [
+	resolver reset
 ]
 
 { #category : #accessing }

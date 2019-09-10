@@ -10,7 +10,6 @@ TypDynExamples >> neoJsonCore [
 	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod<Integer>>>'>
 	| methods collector testResult association |
 	TypLookupIndex resetAll.
-	TypExamples new example.
 	methods := #'Neo-JSON-Core' asPackage methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
@@ -21,11 +20,12 @@ TypDynExamples >> neoJsonCore [
 				do: [ :e"typCastAs TestCase class"
 					 | e suite run: testResult ]
 				displayingProgress: 'Running test case' ].
-	TypMethodLookupIndex instance resolver resolver resolvers first resolver resolvers add: association key value.
-	TypVariableLookupIndex instance resolver resolver resolvers first resolver resolvers add: association value.
-	TypMethodLookupIndex instance resolver reset.
-	TypVariableLookupIndex instance resolver reset.
-	ASTCache reset.
+	TypMethodLookupIndex instance resolver resolver resolvers first
+		resolver resolvers add: association key value.
+	TypVariableLookupIndex instance resolver resolver resolvers first
+		resolver resolvers add: association value.
+	TypMethodLookupIndex instance reset.
+	TypVariableLookupIndex instance reset.
 	^ testResult -> association key value -> association value
 		-> #'Neo-JSON-Core' asPackage methods
 ]
