@@ -6,5 +6,15 @@ CompiledMethod >> typInfAsMethodLookupResult [
 		ifTrue: [ TypMethodLookupResult new
 				resultType: [ :r :a | a receiverType ];
 				yourself ]
-		ifFalse: [ nil ]
+		ifFalse: [ (self method isAbstract or: [ self isPrimitive ])
+				ifTrue: [ nil ]
+				ifFalse: [ | lastIsReturn types |
+					lastIsReturn := self ast lastIsReturn.
+					types := self ast typReturnNodes collect: #typType.
+					TypMethodLookupResult new
+						resultType: [ :r :a | 
+							lastIsReturn
+								ifTrue: [ types typAsType ]
+								ifFalse: [ (types , {a receiverType}) typAsType ] ];
+						yourself ] ]
 ]

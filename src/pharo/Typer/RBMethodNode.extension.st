@@ -5,9 +5,14 @@ RBMethodNode >> typIsReturnSelf [
 	<typTypeResultAs: 'Boolean'>
 	^ self method isAbstract not
 		and: [ self isPrimitive not
-				and: [ ((self allChildren select: #isReturn)
-						reject: [ :e "typCastAs RBReturnNode" | e value isSelf ])
-						isEmpty ] ]
+				and:
+					[ (self typReturnNodes reject: [ :e | e value isSelf ]) isEmpty ] ]
+]
+
+{ #category : #'*Typer' }
+RBMethodNode >> typReturnNodes [
+	<typTypeResultAs: 'SequenceableCollection<RBReturnNode>'>
+	^ (self allChildren select: #isReturn) "typParameters RBReturnNode"
 ]
 
 { #category : #'*Typer' }

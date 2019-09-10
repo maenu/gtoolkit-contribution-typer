@@ -37,7 +37,7 @@ RBMethodNode >> typDynInstall [
 	self propertyAt: #typDynLink put: link.
 	self link: link.
 	self typDynAssignNodes do: #typDynInstall.
-	self typDynReturnNodes do: #typDynInstall.
+	self typReturnNodes do: #typDynInstall.
 	self method reflectiveMethod compileAndInstallCompiledMethod.
 	^ self method ast
 ]
@@ -74,12 +74,6 @@ RBMethodNode >> typDynMonitor [
 ]
 
 { #category : #'*Typer-Dynamic' }
-RBMethodNode >> typDynReturnNodes [
-	<typTypeResultAs: 'SequenceableCollection<RBReturnNode>'>
-	^ (self allChildren select: #isReturn) "typParameters RBReturnNode"
-]
-
-{ #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypDynUnionType<TypType>'>
@@ -90,7 +84,7 @@ RBMethodNode >> typDynTypeForArgumentAt: anInteger [
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypeForResult [
 	<typTypeResultAs: 'TypUnionType<TypType>'>
-	^ (self typDynReturnNodes collect: #typDynReturns) "typParameters TypDynUnionType<TypType>"
+	^ (self typReturnNodes collect: #typDynReturns) "typParameters TypDynUnionType<TypType>"
 		inject: TypDynUnionType new
 		into: [ :a :b | a , b ]
 ]
@@ -152,5 +146,5 @@ RBMethodNode >> typDynUninstall [
 			self removeLink: e ]
 		ifAbsent: [  ].
 	self typDynAssignNodes do: #typDynUninstall.
-	self typDynReturnNodes do: #typDynUninstall
+	self typReturnNodes do: #typDynUninstall
 ]
