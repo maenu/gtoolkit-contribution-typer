@@ -51,14 +51,17 @@ RBMethodNode >> typDynInvocations [
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynInvokeIn: aContext [
 	<typTypeArgument: 1 as: 'Context'>
-	| invocation |
-	invocation := TypDynMessage new
-		receiverType: aContext receiver typSelfType;
-		selector: aContext method selector;
-		argumentTypes: (aContext arguments collect: #typSelfType);
-		yourself.
-	self typDynMonitor
-		critical: [ self typDynInvocations add: invocation ]
+	(self typDynMonitor
+		critical: [ SharedRandom globalGenerator next
+				< (1 - (self typDynInvocations weights size / 1000) max: 0.001) ])
+		ifTrue: [ | invocation |
+			invocation := TypDynMessage new
+				receiverType: aContext receiver typSelfType;
+				selector: aContext method selector;
+				argumentTypes: (aContext arguments collect: #typSelfType);
+				yourself.
+			self typDynMonitor
+				critical: [ self typDynInvocations add: invocation ] ]
 ]
 
 { #category : #'*Typer-Dynamic' }

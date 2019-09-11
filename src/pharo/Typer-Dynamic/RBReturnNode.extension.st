@@ -23,9 +23,12 @@ RBReturnNode >> typDynMonitor [
 { #category : #'*Typer-Dynamic' }
 RBReturnNode >> typDynReturn: anObject [
 	<typTypeArgument: 1 as: 'Object'>
-	| value_ |
-	value_ := anObject typSelfType.
-	self typDynMonitor critical: [ self typDynReturns add: value_ ]
+	(self typDynMonitor
+		critical: [ SharedRandom globalGenerator next
+				< (1 - (self typDynReturns weights size / 1000) max: 0.001) ])
+		ifTrue: [ | value_ |
+			value_ := anObject typSelfType.
+			self typDynMonitor critical: [ self typDynReturns add: value_ ] ]
 ]
 
 { #category : #'*Typer-Dynamic' }

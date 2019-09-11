@@ -3,9 +3,12 @@ Extension { #name : #RBAssignmentNode }
 { #category : #'*Typer-Dynamic' }
 RBAssignmentNode >> typDynAssign: anObject [
 	<typTypeArgument: 1 as: 'Object'>
-	| value_ |
-	value_ := anObject typSelfType.
-	self typDynMonitor critical: [ self typDynAssigns add: value_ ]
+	(self typDynMonitor
+		critical: [ SharedRandom globalGenerator next
+				< (1 - (self typDynAssigns weights size / 1000) max: 0.001) ])
+		ifTrue: [ | value_ |
+			value_ := anObject typSelfType.
+			self typDynMonitor critical: [ self typDynAssigns add: value_ ] ]
 ]
 
 { #category : #'*Typer-Dynamic' }
