@@ -3,12 +3,14 @@ Extension { #name : #RBAssignmentNode }
 { #category : #'*Typer-Dynamic' }
 RBAssignmentNode >> typDynAssign: anObject [
 	<typTypeArgument: 1 as: 'Object'>
-	(self typDynMonitor
+	self typDynMonitor
 		critical: [ SharedRandom globalGenerator next
-				< (1 - (self typDynAssigns weights size / 1000) max: 0.001) ])
-		ifTrue: [ | value_ |
-			value_ := anObject typSelfType.
-			self typDynMonitor critical: [ self typDynAssigns add: value_ ] ]
+				< (1 - (self typDynAssigns weights size / 100) max: 0.01)
+				ifTrue: [ | value_ |
+					value_ := anObject typSelfType.
+					self typDynAssigns add: value_ ].
+			self typDynAssigns weights size >= 100
+				ifTrue: [ self typDynRemoveLink ] ]
 ]
 
 { #category : #'*Typer-Dynamic' }
@@ -39,13 +41,19 @@ RBAssignmentNode >> typDynMonitor [
 ]
 
 { #category : #'*Typer-Dynamic' }
-RBAssignmentNode >> typDynUninstall [
-	self removeProperty: #typDynMonitor ifAbsent: [  ].
-	self removeProperty: #typDynAssigns ifAbsent: [  ].
+RBAssignmentNode >> typDynRemoveLink [
 	self
 		propertyAt: #typDynLink
-		ifPresent: [ :e "typCastAs MetaLink" | 
+		ifPresent: [ :e "typCastAs MetaLink"
+			 | 
 			self removeProperty: #typDynLink ifAbsent: [  ].
 			self removeLink: e ]
 		ifAbsent: [  ]
+]
+
+{ #category : #'*Typer-Dynamic' }
+RBAssignmentNode >> typDynUninstall [
+	self removeProperty: #typDynMonitor ifAbsent: [  ].
+	self removeProperty: #typDynAssigns ifAbsent: [  ].
+	self typDynRemoveLink
 ]

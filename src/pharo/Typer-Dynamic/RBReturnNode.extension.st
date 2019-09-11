@@ -21,14 +21,27 @@ RBReturnNode >> typDynMonitor [
 ]
 
 { #category : #'*Typer-Dynamic' }
+RBReturnNode >> typDynRemoveLink [
+	self
+		propertyAt: #typDynLink
+		ifPresent: [ :e "typCastAs MetaLink"
+			 | 
+			self removeProperty: #typDynLink ifAbsent: [  ].
+			self removeLink: e ]
+		ifAbsent: [  ]
+]
+
+{ #category : #'*Typer-Dynamic' }
 RBReturnNode >> typDynReturn: anObject [
 	<typTypeArgument: 1 as: 'Object'>
-	(self typDynMonitor
+	self typDynMonitor
 		critical: [ SharedRandom globalGenerator next
-				< (1 - (self typDynReturns weights size / 1000) max: 0.001) ])
-		ifTrue: [ | value_ |
-			value_ := anObject typSelfType.
-			self typDynMonitor critical: [ self typDynReturns add: value_ ] ]
+				< (1 - (self typDynReturns weights size / 100) max: 0.01)
+				ifTrue: [ | value_ |
+					value_ := anObject typSelfType.
+					self typDynReturns add: value_ ].
+			self typDynReturns weights size >= 100
+				ifTrue: [ self typDynRemoveLink ] ]
 ]
 
 { #category : #'*Typer-Dynamic' }
@@ -41,10 +54,5 @@ RBReturnNode >> typDynReturns [
 RBReturnNode >> typDynUninstall [
 	self removeProperty: #typDynMonitor ifAbsent: [  ].
 	self removeProperty: #typDynReturns ifAbsent: [  ].
-	self
-		propertyAt: #typDynLink
-		ifPresent: [ :e "typCastAs MetaLink" | 
-			self removeProperty: #typDynLink ifAbsent: [  ].
-			self removeLink: e ]
-		ifAbsent: [  ]
+	self typDynRemoveLink
 ]
