@@ -18,6 +18,16 @@ RBProgramNode >> typAnnotateType: aType [
 ]
 
 { #category : #'*Typer' }
+RBProgramNode >> typInvokedMethods [
+	^ self children
+		inject: Set new
+		into: [ :s :e | 
+			s
+				addAll: e typInvokedMethods;
+				yourself ]
+]
+
+{ #category : #'*Typer' }
 RBProgramNode >> typIsTyped [
 	<typTypeResultAs: 'Boolean'>
 	^ self hasProperty: #typType
@@ -54,16 +64,6 @@ RBProgramNode >> typReachableTypeFor: aString until: aSequenceNode [
 		and: [ (previous "typCastAs RBAssignmentNode") variable name = aString ])
 		ifTrue: [ ^ previous typType ].
 	^ previous typReachableTypeFor: aString until: aSequenceNode
-]
-
-{ #category : #'*Typer' }
-RBProgramNode >> typSentMessages [
-	^ self children
-		inject: Set new
-		into: [ :messages :each | 
-			messages
-				addAll: each typSentMessages;
-				yourself ]
 ]
 
 { #category : #'*Typer' }

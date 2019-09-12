@@ -1,9 +1,9 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer' }
-RBMessageNode >> typSentMessages [
-	^ super typSentMessages
-		add: self typTypeForReceiver -> self selector;
+RBMessageNode >> typInvokedMethods [
+	^ super typInvokedMethods
+		addAll: (self typTypeForReceiver lookupMessage: self selector);
 		yourself
 ]
 
