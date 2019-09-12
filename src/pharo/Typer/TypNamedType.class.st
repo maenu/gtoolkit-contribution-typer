@@ -47,15 +47,19 @@ TypNamedType >> asFunctionType: someTypes result: aType optionalParameters: aBoo
 
 { #category : #converting }
 TypNamedType >> asMethod [
-	| parts clazz selector |
+	| parts clazz_ selector |
 	self assert: [ self representsMethod ].
 	parts := '>>#' split: name.
-	clazz := ((parts at: 1) endsWith: ' class')
-		ifTrue: [ ((parts at: 1) copyFrom: 1 to: (parts at: 1) size - ' class' size) asClass classSide ]
-		ifFalse: [ (parts at: 1) asClass ].
+	clazz_ := ((parts at: 1) endsWith: ' class')
+		ifTrue: [ ((parts at: 1) copyFrom: 1 to: (parts at: 1) size - ' class' size)
+				asClass classSide ]
+		ifFalse: [ ((parts at: 1) endsWith: ' classTrait')
+				ifTrue: [ ((parts at: 1)
+						copyFrom: 1
+						to: (parts at: 1) size - ' classTrait' size) asClass classSide ]
+				ifFalse: [ (parts at: 1) asClass ] ].
 	selector := (parts at: 2) asSymbol.
-	self flag: 'should it do a lookup?'.
-	^ clazz >> selector
+	^ (clazz_ lookupSelector: selector) ifNil: [ super asMethod ]
 ]
 
 { #category : #converting }

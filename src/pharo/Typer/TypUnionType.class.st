@@ -193,3 +193,8 @@ TypUnionType >> types: anObject [
 	<typTypeArgument: 1 as: 'Collection<TypType>'>
 	types := anObject asSet
 ]
+
+{ #category : #'as yet unclassified' }
+TypUnionType >> understandsMessage: aSymbol [
+	^ types allSatisfy: [ :e | e understandsMessage: aSymbol ]
+]

@@ -59,3 +59,8 @@ TypUnknownType >> nullable: anObject [
 TypUnknownType >> printOn: aStream [
 	aStream << '?'
 ]
+
+{ #category : #'as yet unclassified' }
+TypUnknownType >> understandsMessage: aSymbol [
+	^ true
+]

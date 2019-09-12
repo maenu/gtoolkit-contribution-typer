@@ -167,6 +167,16 @@ TypType >> isUnknown [
 	^ false
 ]
 
+{ #category : #'as yet unclassified' }
+TypType >> lookupMessage: aSymbol [
+	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeResultAs: 'CompiledMethod<Integer>'>
+	self representsClass
+		ifFalse: [ TypNoMethodError signal ].
+	^ (self asClass lookupSelector: aSymbol)
+		ifNil: [ TypNoMethodError signal ]
+]
+
 { #category : #accessing }
 TypType >> nullable [
 	<typTypeResultAs: 'Boolean'>
@@ -201,4 +211,14 @@ TypType >> representsMethod [
 TypType >> superType [
 	<typTypeResultAs: 'TypType'>
 	TypNoTypeError signal
+]
+
+{ #category : #'as yet unclassified' }
+TypType >> understandsMessage: aSymbol [
+	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeResultAs: 'Boolean'>
+	^ [ self lookupMessage: aSymbol.
+	true ]
+		on: TypNoMethodError
+		do: [ false ]
 ]
