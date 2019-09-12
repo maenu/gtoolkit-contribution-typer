@@ -96,7 +96,10 @@ RBMethodNode >> typCheHasNullables [
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasUnknownArguments [
 	<typTypeResultAs: 'Boolean'>
-	^ (self allChildren select: #isArgument) anySatisfy: [ :e | e typType isUnknown ]
+	1 to: self numArgs do: [ :e | 
+		(self typTypeForArgumentAt: e) isUnknown
+			ifTrue: [ ^ true ] ].
+	^ false
 ]
 
 { #category : #'*Typer-Checker' }
@@ -118,7 +121,7 @@ RBMethodNode >> typCheHasUnknownReceivers [
 ]
 
 { #category : #'*Typer-Checker' }
-RBMethodNode >> typCheHasUnknownReturn [
+RBMethodNode >> typCheHasUnknownResult [
 	<typTypeResultAs: 'Boolean'>
 	^ self typTypeForResult isUnknown
 ]
@@ -132,5 +135,5 @@ RBMethodNode >> typCheHasUnknownTemporaries [
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasUnknowns [
 	<typTypeResultAs: 'Boolean'>
-	^ self typCheHasUnknownArgumentsPassed or: [ self typCheHasUnknownReceivers or: [ self typCheHasUnknownReturn or: [ self typCheHasUnknownArguments or: [ self typCheHasUnknownTemporaries ] ] ] ]
+	^ self typCheHasUnknownArgumentsPassed or: [ self typCheHasUnknownReceivers or: [ self typCheHasUnknownResult or: [ self typCheHasUnknownArguments or: [ self typCheHasUnknownTemporaries ] ] ] ]
 ]

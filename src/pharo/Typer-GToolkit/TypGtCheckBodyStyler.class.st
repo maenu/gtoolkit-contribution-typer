@@ -102,7 +102,7 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 TypGtCheckBodyStyler >> visitMethodNode: aNode [
 	| position |
 	super visitMethodNode: aNode.
-	aNode typCheHasUnknownReturn
+	aNode typCheHasUnknownResult
 		ifTrue: [ markUnknowns ifTrue: [ self styleSelectorOf: aNode color: Color blue ] ].
 	position := aNode arguments isEmpty
 		ifTrue: [ aNode selector size ]
