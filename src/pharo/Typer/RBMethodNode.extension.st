@@ -66,24 +66,26 @@ RBMethodNode >> typTypeForResult [
 { #category : #'*Typer' }
 RBMethodNode >> typTypeRecursive [
 	<typTypeResultAs: 'TypType'>
-	| newProfile |
+	| newTemporaryProfile |
 	self
 		typTypeReset;
 		doSemanticAnalysis.
-	newProfile := self typTemporaryProfile.
-	[ | oldProfile |
+	newTemporaryProfile := self typTemporaryProfile.
+	[ | oldTemporaryProfile oldReturnProfile oldSignalsAlwaysProfile |
 	self typTypeReset.
-	newProfile do: [ :e | e key propertyAt: #typType put: e value ].
-	(self allChildren copyWithoutAll: (newProfile collect: #key) , {self})
+	newTemporaryProfile
+		do: [ :e | e key propertyAt: #typType put: e value ].
+	(self allChildren
+		copyWithoutAll: (newTemporaryProfile collect: #key) , {self})
 		do: #typType.
-	(newProfile collect: #key)
+	(newTemporaryProfile collect: #key)
 		do: [ :e | 
 			e
 				typTypeReset;
 				typType ].
-	oldProfile := newProfile.
-	newProfile := self typTemporaryProfile.
-	newProfile = oldProfile ] whileFalse.
+	oldTemporaryProfile := newTemporaryProfile.
+	newTemporaryProfile := self typTemporaryProfile.
+	newTemporaryProfile = oldTemporaryProfile ] whileFalse.
 	^ BlockClosure typAsType
 		asFunctionType: self typTypesForArguments
 		result: self typTypeForResult

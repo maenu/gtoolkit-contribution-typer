@@ -2,5 +2,5 @@ Extension { #name : #RBLiteralValueNode }
 
 { #category : #'*Typer' }
 RBLiteralValueNode >> typTypeRecursive [
-	^ (self value "typCastAs Object") class typAsType
+	^ (self value "typCastAs Object") typSelfType
 ]

@@ -31,8 +31,6 @@ RBMethodNode >> typDynInstall [
 		metaObject: #node;
 		selector: #typDynInvokeIn:;
 		arguments: #(context).
-	self propertyAt: #typDyn put: true.
-	self propertyAt: #typDynMonitor put: Monitor new.
 	self propertyAt: #typDynStashed put: TypDynUnionType new.
 	self propertyAt: #typDynInvocations put: TypDynUnionType new.
 	self propertyAt: #typDynLink put: link.
@@ -52,30 +50,17 @@ RBMethodNode >> typDynInvocations [
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynInvokeIn: aContext [
 	<typTypeArgument: 1 as: 'Context'>
-	self typDynMonitor
-		critical: [ SharedRandom globalGenerator next
-				< (1 - (self typDynInvocations weights size / 100) max: 0.01)
-				ifTrue: [ | invocation |
-					invocation := TypDynMessage new
+	SharedRandom globalGenerator next
+		< (1 - (self typDynInvocations weights size / 200))
+		ifTrue: [ self typDynInvocations
+				add:
+					(TypDynMessage new
 						receiverType: aContext receiver typSelfType;
 						selector: aContext method selector;
 						argumentTypes: (aContext arguments collect: #typSelfType);
-						yourself.
-					self typDynInvocations add: invocation ].
-			self typDynInvocations weights size >= 100
-				ifTrue: [ self typDynRemoveLink ] ]
-]
-
-{ #category : #'*Typer-Dynamic' }
-RBMethodNode >> typDynIsCovered [
-	<typTypeResultAs: 'Boolean'>
-	^ self hasProperty: #typDyn
-]
-
-{ #category : #'*Typer-Dynamic' }
-RBMethodNode >> typDynMonitor [
-	<typTypeResultAs: 'Monitor'>
-	^ (self propertyAt: #typDynMonitor) "typCastAs Monitor"
+						yourself) ].
+	self typDynInvocations weights size >= 100
+		ifTrue: [ self typDynRemoveLink ]
 ]
 
 { #category : #'*Typer-Dynamic' }
@@ -165,8 +150,6 @@ RBMethodNode >> typDynTypesForVariablesSelectedWith: aBlock definedBy: anotherBl
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynUninstall [
-	self removeProperty: #typDyn ifAbsent: [  ].
-	self removeProperty: #typDynMonitor ifAbsent: [  ].
 	self removeProperty: #typDynStashed ifAbsent: [  ].
 	self removeProperty: #typDynInvocations ifAbsent: [  ].
 	self typDynRemoveLink.
