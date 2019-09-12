@@ -57,6 +57,16 @@ RBProgramNode >> typReachableTypeFor: aString until: aSequenceNode [
 ]
 
 { #category : #'*Typer' }
+RBProgramNode >> typSentMessages [
+	^ self children
+		inject: Set new
+		into: [ :messages :each | 
+			messages
+				addAll: each typSentMessages;
+				yourself ]
+]
+
+{ #category : #'*Typer' }
 RBProgramNode >> typSignalsAlways [
 	<typTypeResultAs: '!Boolean'>
 	^ false

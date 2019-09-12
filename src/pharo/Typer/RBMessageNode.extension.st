@@ -1,6 +1,13 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer' }
+RBMessageNode >> typSentMessages [
+	^ super typSentMessages
+		add: self typTypeForReceiver -> self selector;
+		yourself
+]
+
+{ #category : #'*Typer' }
 RBMessageNode >> typSignalsAlways [
 	^ (self
 		propertyAt: #typSignalsAlways

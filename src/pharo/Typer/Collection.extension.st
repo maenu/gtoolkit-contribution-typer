@@ -9,6 +9,7 @@ Collection >> typAsType [
 			e isUnion
 				ifTrue: [ e "typCastAs TypUnionType" types ]
 				ifFalse: [ {e} ] ]) asSet.
+	remains := remains reject: [ :e | (remains copyWithout: e) anySatisfy: [ :f | f >= e ] ].
 	remains ifEmpty: [ ^ TypUnknownType instance ].
 	nil_ := remains includes: TypNilType instance.
 	nil_ ifTrue: [ remains remove: TypNilType instance ].
@@ -17,7 +18,6 @@ Collection >> typAsType [
 	unknown := remains includes: TypUnknownType instance.
 	unknown ifTrue: [ remains remove: TypUnknownType instance ].
 	remains ifEmpty: [ ^ TypUnknownType instance ].
-	remains := remains reject: [ :e | (remains copyWithout: e) anySatisfy: [ :f | f >= e ] ].
 	unknown ifTrue: [ remains add: TypUnknownType instance ].
 	^ TypUnionType new
 		nullable: nil_;
