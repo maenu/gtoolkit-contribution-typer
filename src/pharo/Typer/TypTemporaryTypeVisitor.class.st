@@ -35,7 +35,7 @@ TypTemporaryTypeVisitor class >> typesFor: aTemporaryNode in: aSequenceNode [
 { #category : #visiting }
 TypTemporaryTypeVisitor >> initialize [
 	super initialize.
-	types := OrderedCollection with: TypNilType instance.
+	types := OrderedCollection new.
 	stopped := false
 ]
 
@@ -95,6 +95,15 @@ TypTemporaryTypeVisitor >> visitMessageNode: aMessageNode [
 		ifTrue: [ self visitNode: aMessageNode receiver ].
 	(aMessageNode arguments select: #isBlock)
 		do: [ :each | self visitNode: each ]
+]
+
+{ #category : #visiting }
+TypTemporaryTypeVisitor >> visitSequenceNode: aSequenceNode [
+	aSequenceNode == definer
+		ifTrue: [ types
+				removeAll;
+				add: TypNilType instance ].
+	super visitSequenceNode: aSequenceNode
 ]
 
 { #category : #visiting }
