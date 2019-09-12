@@ -108,6 +108,15 @@ TypNamedType >> isNamed [
 	^ true
 ]
 
+{ #category : #'as yet unclassified' }
+TypNamedType >> lookupMessage: aSymbol [
+	^ self representsClass
+		ifTrue: [ (self asClass lookupSelector: aSymbol)
+				ifNil: [ Set new ]
+				ifNotNil: [ :e | Set with: e ] ]
+		ifFalse: [ Set new ]
+]
+
 { #category : #accessing }
 TypNamedType >> name [
 	<typTypeResultAs: 'String<Character>'>

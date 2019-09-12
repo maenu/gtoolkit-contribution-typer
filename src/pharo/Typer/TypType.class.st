@@ -170,11 +170,8 @@ TypType >> isUnknown [
 { #category : #'as yet unclassified' }
 TypType >> lookupMessage: aSymbol [
 	<typTypeArgument: 1 as: 'Symbol<Character>'>
-	<typTypeResultAs: 'CompiledMethod<Integer>'>
-	self representsClass
-		ifFalse: [ TypNoMethodError signal ].
-	^ (self asClass lookupSelector: aSymbol)
-		ifNil: [ TypNoMethodError signal ]
+	<typTypeResultAs: 'Set<CompiledMethod<Integer>>'>
+	^ Set new
 ]
 
 { #category : #accessing }
@@ -217,8 +214,5 @@ TypType >> superType [
 TypType >> understandsMessage: aSymbol [
 	<typTypeArgument: 1 as: 'Symbol<Character>'>
 	<typTypeResultAs: 'Boolean'>
-	^ [ self lookupMessage: aSymbol.
-	true ]
-		on: TypNoMethodError
-		do: [ false ]
+	^ (self lookupMessage: aSymbol) isNotEmpty
 ]

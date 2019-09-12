@@ -121,6 +121,24 @@ TypUnionType >> isUnion [
 	^ true
 ]
 
+{ #category : #'as yet unclassified' }
+TypUnionType >> lookupMessage: aSymbol [
+	| superType methods |
+	superType := self superType.
+	(superType isUnknown not
+		and: [ superType understandsMessage: aSymbol ])
+		ifTrue: [ ^ superType lookupMessage: aSymbol ].
+	methods := Set new.
+	types
+		do: [ :e | 
+			methods
+				addAll:
+					([ e lookupMessage: aSymbol ]
+						on: TypNoMethodError
+						do: [ Set new ]) ].
+	^ methods
+]
+
 { #category : #generated }
 TypUnionType >> parameters [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
