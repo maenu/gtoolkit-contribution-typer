@@ -20,7 +20,7 @@ TypNamedType >> = anObject [
 
 { #category : #comparing }
 TypNamedType >> > aType [
-	^ self ~= aType and: [ (aType isNil and: [ nullable ]) or: [ aType isNamed and: [ self representsClass and: [ aType representsClass and: [ aType asClass includesBehavior: self asClass ] ] ] ] ]
+	^ self ~= aType and: [ (aType isNil and: [ nullable ]) or: [ aType isNamed and: [ self representsClass and: [ aType representsClass and: [ aType asClass typIncludesBehavior: self asClass ] ] ] ] ]
 ]
 
 { #category : #converting }
@@ -29,7 +29,10 @@ TypNamedType >> asClass [
 	^ clazz
 		ifNil: [ clazz := (name endsWith: ' class')
 				ifTrue: [ (name copyFrom: 1 to: name size - ' class' size) asClass classSide ]
-				ifFalse: [ name asClass ] ]
+				ifFalse: [ (name endsWith: ' classTrait')
+						ifTrue: [ (name copyFrom: 1 to: name size - ' classTrait' size) asClass
+								classSide ]
+						ifFalse: [ name asClass ] ] ]
 ]
 
 { #category : #converting }
@@ -128,6 +131,8 @@ TypNamedType >> representsClass [
 			clazz_ := name.
 			(clazz_ endsWith: ' class')
 				ifTrue: [ clazz_ := name copyFrom: 1 to: name size - ' class' size ].
+			(clazz_ endsWith: ' classTrait')
+				ifTrue: [ clazz_ := name copyFrom: 1 to: name size - ' classTrait' size ].
 			representsClass := true.
 			[ clazz_ asClass ]
 				on: NotFound

@@ -70,14 +70,6 @@ TypDynUnionType >> summary [
 ]
 
 { #category : #accessing }
-TypDynUnionType >> typGtItemsFor: aView [
-	<typTypeArgument: 1 as: 'GtPhlowView'>
-	<typTypeResultAs: 'GtPhlowView'>
-	<gtView>
-	^ self summary gtItemsFor: aView
-]
-
-{ #category : #accessing }
 TypDynUnionType >> weights [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	^ weights
