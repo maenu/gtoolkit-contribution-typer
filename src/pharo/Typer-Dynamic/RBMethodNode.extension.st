@@ -33,6 +33,7 @@ RBMethodNode >> typDynInstall [
 		arguments: #(context).
 	self propertyAt: #typDyn put: true.
 	self propertyAt: #typDynMonitor put: Monitor new.
+	self propertyAt: #typDynStashed put: TypDynUnionType new.
 	self propertyAt: #typDynInvocations put: TypDynUnionType new.
 	self propertyAt: #typDynLink put: link.
 	self link: link.
@@ -89,17 +90,30 @@ RBMethodNode >> typDynRemoveLink [
 ]
 
 { #category : #'*Typer-Dynamic' }
+RBMethodNode >> typDynStash [
+	self typDynStashed addAll: self typDynInvocations.
+	self propertyAt: #typDynInvocations put: TypDynUnionType new.
+	self typDynAssignNodes do: #typDynStash.
+	self typReturnNodes do: #typDynStash
+]
+
+{ #category : #'*Typer-Dynamic' }
+RBMethodNode >> typDynStashed [
+	^ self propertyAt: #typDynStashed
+]
+
+{ #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypDynUnionType<TypType>'>
-	^ self typDynInvocations
+	^ (self typDynInvocations , self typDynStashed)
 		collect: [ :f | (f "typCastAs TypDynMessage") argumentTypes at: anInteger ]
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypeForResult [
 	<typTypeResultAs: 'TypUnionType<TypType>'>
-	^ (self typReturnNodes collect: #typDynReturns) "typParameters TypDynUnionType<TypType>"
+	^ (self typReturnNodes collect: [ :e | e typDynReturns , e typDynStashed ]) "typParameters TypDynUnionType<TypType>"
 		inject: TypDynUnionType new
 		into: [ :a :b | a , b ]
 ]
@@ -145,7 +159,7 @@ RBMethodNode >> typDynTypesForVariablesSelectedWith: aBlock definedBy: anotherBl
 	<typTypeArgument: 1 as: 'BlockClosure(RBAssignmentNode)->Boolean'>
 	<typTypeArgument: 2 as: 'BlockClosure[RBVariableNode]->ClassDescription'>
 	<typTypeResultAs: 'Dictionary<Association<ClassDescription,Symbol<Character>>,TypDynUnionType<TypType>>'>
-	^ ((((self typDynAssignNodes select: aBlock) collect: [ :e | (anotherBlock cull: e variable) -> e variable name asSymbol -> e typDynAssigns ]) groupedBy: #key)
+	^ ((((self typDynAssignNodes select: aBlock) collect: [ :e | (anotherBlock cull: e variable) -> e variable name asSymbol -> (e typDynAssigns , e typDynStashed)]) groupedBy: #key)
 		collect: [ :e | e collect: #value ]) collect: [ :e | e inject: TypDynUnionType new into: [ :a :b | a , b ] ]
 ]
 
@@ -153,6 +167,7 @@ RBMethodNode >> typDynTypesForVariablesSelectedWith: aBlock definedBy: anotherBl
 RBMethodNode >> typDynUninstall [
 	self removeProperty: #typDyn ifAbsent: [  ].
 	self removeProperty: #typDynMonitor ifAbsent: [  ].
+	self removeProperty: #typDynStashed ifAbsent: [  ].
 	self removeProperty: #typDynInvocations ifAbsent: [  ].
 	self typDynRemoveLink.
 	self typDynAssignNodes do: #typDynUninstall.

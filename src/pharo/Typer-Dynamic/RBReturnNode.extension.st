@@ -9,6 +9,7 @@ RBReturnNode >> typDynInstall [
 		selector: #typDynReturn:;
 		arguments: #(value).
 	self propertyAt: #typDynMonitor put: Monitor new.
+	self propertyAt: #typDynStashed put: TypDynUnionType new.
 	self propertyAt: #typDynReturns put: TypDynUnionType new.
 	self propertyAt: #typDynLink put: link.
 	self link: link
@@ -51,8 +52,20 @@ RBReturnNode >> typDynReturns [
 ]
 
 { #category : #'*Typer-Dynamic' }
+RBReturnNode >> typDynStash [
+	self typDynStashed addAll: self typDynReturns.
+	self propertyAt: #typDynReturns put: TypDynUnionType new
+]
+
+{ #category : #'*Typer-Dynamic' }
+RBReturnNode >> typDynStashed [
+	^ self propertyAt: #typDynStashed
+]
+
+{ #category : #'*Typer-Dynamic' }
 RBReturnNode >> typDynUninstall [
 	self removeProperty: #typDynMonitor ifAbsent: [  ].
+	self removeProperty: #typDynStashed ifAbsent: [  ].
 	self removeProperty: #typDynReturns ifAbsent: [  ].
 	self typDynRemoveLink
 ]

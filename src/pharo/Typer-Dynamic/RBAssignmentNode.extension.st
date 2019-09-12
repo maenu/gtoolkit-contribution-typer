@@ -29,6 +29,7 @@ RBAssignmentNode >> typDynInstall [
 		control: #after;
 		arguments: #(value).
 	self propertyAt: #typDynMonitor put: Monitor new.
+	self propertyAt: #typDynStashed put: TypDynUnionType new.
 	self propertyAt: #typDynAssigns put: TypDynUnionType new.
 	self propertyAt: #typDynLink put: link.
 	self link: link
@@ -52,8 +53,20 @@ RBAssignmentNode >> typDynRemoveLink [
 ]
 
 { #category : #'*Typer-Dynamic' }
+RBAssignmentNode >> typDynStash [
+	self typDynStashed addAll: self typDynAssigns.
+	self propertyAt: #typDynAssigns put: TypDynUnionType new
+]
+
+{ #category : #'*Typer-Dynamic' }
+RBAssignmentNode >> typDynStashed [
+	^ self propertyAt: #typDynStashed
+]
+
+{ #category : #'*Typer-Dynamic' }
 RBAssignmentNode >> typDynUninstall [
 	self removeProperty: #typDynMonitor ifAbsent: [  ].
+	self removeProperty: #typDynStashed ifAbsent: [  ].
 	self removeProperty: #typDynAssigns ifAbsent: [  ].
 	self typDynRemoveLink
 ]

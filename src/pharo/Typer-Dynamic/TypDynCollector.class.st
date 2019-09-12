@@ -1,6 +1,9 @@
 Class {
 	#name : #TypDynCollector,
 	#superclass : #Object,
+	#instVars : [
+		'asts'
+	],
 	#classInstVars : [
 		'instance'
 	],
@@ -23,7 +26,44 @@ TypDynCollector >> collectIn: aCollection doing: aBlock [
 	[ result := aBlock value.
 	methodResults := self collectMethodResultsIn: asts.
 	variableResults := self collectVariableResultsIn: asts ]
-		ensure: [ asts do: #typDynUninstall ].
+		ensure: [ "asts do: #typDynUninstall" ].
+	^ result
+		->
+			(TypDynLookupResolver new
+				results: methodResults;
+				yourself)
+		->
+			(TypDynLookupResolver new
+				results: variableResults;
+				yourself)
+]
+
+{ #category : #accessing }
+TypDynCollector >> collectIn: aCollection running: someTestCases [
+	<typTypeArgument: 1 as: 'Collection<CompiledMethod<Integer>>'>
+	<typTypeArgument: 2 as: 'Collection<TestCase class>'>
+	<typTypeResultAs:
+		'Association<Association<Object,TypDynResolver<TypLookup>>,TypDynResolver<TypLookup>>'>
+	| methodResults variableResults result |
+	result := TestResult new.
+	methodResults := Dictionary new.	"typParameters Association<ClassDescription,Symbol<Character>>,TypMethodResolver<TypMethodLookup>"
+	variableResults := Dictionary new.	"typParameters Association<ClassDescription,Symbol<Character>>,TypVariableResolver<TypVariableLookup>"
+	asts := aCollection
+		collect: [ :e | 
+			e ast
+				doSemanticAnalysis;
+				typTypeReset;
+				typDynInstall ].
+	TestCase class announcer when: TestCaseEnded send: #stash to: self.
+	[ someTestCases
+		do: [ :e"typCastAs TestCase class"
+			 | e suite run: result ]
+		displayingProgress: 'Running test case'.
+	methodResults := self collectMethodResultsIn: asts.
+	variableResults := self collectVariableResultsIn: asts ]
+		ensure: [ TestCase class announcer unsubscribe: self.
+			asts do: #typDynUninstall.
+			asts := nil ].
 	^ result
 		->
 			(TypDynLookupResolver new
@@ -63,4 +103,9 @@ TypDynCollector >> collectVariableResultsIn: aCollection [
 				ifFalse: [ TypVariableLookupResult new
 						type: [ type ];
 						yourself ] ]) reject: [ :e | e value isNil ]
+]
+
+{ #category : #'as yet unclassified' }
+TypDynCollector >> stash [
+	asts do: #typDynStash
 ]
