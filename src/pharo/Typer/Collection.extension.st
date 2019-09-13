@@ -35,6 +35,13 @@ Collection >> typSelfType [
 	"infer parametric type from elements, using only generic types to avoid infinite loop"
 	^ type
 		asParametricType:
-			{(self asOrderedCollection collect: [ :e | e class typAsType ])
+			{(self typSelfTypeSamples collect: [ :e | e class typAsType ])
 				typAsType}
+]
+
+{ #category : #'*Typer' }
+Collection >> typSelfTypeSamples [
+	^ self size > 100
+		ifTrue: [ self asOrderedCollection copyFrom: 1 to: 100 ]
+		ifFalse: [ self ]
 ]

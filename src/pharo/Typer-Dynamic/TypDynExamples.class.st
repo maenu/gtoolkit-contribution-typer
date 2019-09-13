@@ -119,7 +119,7 @@ TypDynExamples >> refactoringCoreSmall [
 	testResult := TestResult new.
 	association := collector
 		collectIn: methods
-		doing: [ ({RBBrowserEnvironmentTest}
+		doing: [ ({RBRenameMethodTest}
 				select: [ :e | e isTestCase and: e isAbstract not ])
 				do: [ :e"typCastAs TestCase class"
 					 | e suite run: testResult ]
