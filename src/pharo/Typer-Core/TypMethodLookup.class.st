@@ -31,7 +31,7 @@ Class {
 		'argumentTypes',
 		'argumentNodes'
 	],
-	#category : #'Typer-Core-Typer-Core'
+	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #comparing }

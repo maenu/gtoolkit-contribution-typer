@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'clazz'
 	],
-	#category : #'Typer-Core-Typer-Core'
+	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #comparing }

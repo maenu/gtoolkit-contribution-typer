@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'parameters'
 	],
-	#category : #'Typer-Core-Typer-Core'
+	#category : #'Typer-Core-Type'
 }
 
 { #category : #comparing }

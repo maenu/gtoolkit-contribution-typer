@@ -4,7 +4,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'Typer-Core-Typer-Core'
+	#category : #'Typer-Core-Type'
 }
 
 { #category : #accessing }
