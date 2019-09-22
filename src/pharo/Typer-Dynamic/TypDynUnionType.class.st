@@ -68,6 +68,13 @@ TypDynUnionType >> summary [
 ]
 
 { #category : #accessing }
+TypDynUnionType >> types: anObject [
+	| types_ |
+	types_ := self class asTypes: anObject.
+	types := types_
+]
+
+{ #category : #accessing }
 TypDynUnionType >> weights [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	^ weights

@@ -43,7 +43,7 @@ TypTypeExamples >> asNullableType [
 	nullableType := type asNullableType.
 	self assert: nullableType nullable.
 	self assert: nullableType ~~ type.
-	self assert: nullableType <= type.
+	self assert: nullableType >= type.
 	self assert: nullableType asNonNullableType = type.
 	^ nullableType
 ]
@@ -81,7 +81,7 @@ TypTypeExamples >> classDescription [
 	^ type
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypTypeExamples >> equality [
 	<gtExample>
 	| type other |
@@ -179,6 +179,15 @@ TypTypeExamples >> monotony [
 	self assert: type <= type.
 	self assert: type <= superType.
 	self assert: type < superType.
+	^ type
+]
+
+{ #category : #testing }
+TypTypeExamples >> nullable [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type nullable not.
 	^ type
 ]
 

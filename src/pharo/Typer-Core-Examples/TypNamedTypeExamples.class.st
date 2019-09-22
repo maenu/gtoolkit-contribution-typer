@@ -72,13 +72,13 @@ TypNamedTypeExamples >> isNamed [
 	^ type
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypNamedTypeExamples >> printOn [
 	<gtExample>
 	| type |
 	type := self type.
 	self assert: type asString = 'Object'.
-	self assert: type asNullableType asString = '!Object'.
+	self assert: type asNullableType asString = '{!Object}'.
 	^ type
 ]
 
