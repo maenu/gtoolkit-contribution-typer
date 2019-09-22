@@ -68,7 +68,7 @@ TypTypeExamples >> canUnderstand [
 	<gtExample>
 	| type |
 	type := self type.
-	self assert: (type canUnderstand: nil) not.
+	self assert: (type canUnderstand: #notThere) not.
 	^ type
 ]
 
@@ -158,12 +158,14 @@ TypTypeExamples >> isUnknown [
 	^ type
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypTypeExamples >> lookupSelector [
 	<gtExample>
 	| type |
 	type := self type.
-	self assert: (type lookupSelector: nil) isEmpty.
+	self
+		assert: [ type lookupSelector: #notThere ]
+		signals: TypNoMethodError.
 	^ type
 ]
 
@@ -219,4 +221,52 @@ TypTypeExamples >> superType [
 TypTypeExamples >> type [
 	<gtExample>
 	self subclassResponsibility
+]
+
+{ #category : #'as yet unclassified' }
+TypTypeExamples >> typeInteger [
+	<gtExample>
+	^ TypNamedType named: 'Integer'
+]
+
+{ #category : #'as yet unclassified' }
+TypTypeExamples >> typeNotAClass [
+	<gtExample>
+	^ TypNamedType named: 'notaclass'
+]
+
+{ #category : #'as yet unclassified' }
+TypTypeExamples >> typeObject [
+	<gtExample>
+	^ TypNamedType named: 'Object'
+]
+
+{ #category : #'as yet unclassified' }
+TypTypeExamples >> typeObjectClass [
+	<gtExample>
+	^ TypNamedType named: 'Object class'
+]
+
+{ #category : #'as yet unclassified' }
+TypTypeExamples >> typeProtoObject [
+	<gtExample>
+	^ TypNamedType named: 'ProtoObject'
+]
+
+{ #category : #'as yet unclassified' }
+TypTypeExamples >> typeProtoObjectClass [
+	<gtExample>
+	^ TypNamedType named: 'ProtoObject class'
+]
+
+{ #category : #'as yet unclassified' }
+TypTypeExamples >> typeTAssertable [
+	<gtExample>
+	^ TypNamedType named: 'TAssertable'
+]
+
+{ #category : #'as yet unclassified' }
+TypTypeExamples >> typeTAssertableClassTrait [
+	<gtExample>
+	^ TypNamedType named: 'TAssertable classTrait'
 ]

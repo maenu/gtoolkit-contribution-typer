@@ -146,11 +146,7 @@ TypUnionType >> isUnion [
 
 { #category : #'as yet unclassified' }
 TypUnionType >> lookupSelector: aSymbol [
-	| superType methods |
-	superType := self superType.
-	(superType isUnknown not
-		and: [ superType canUnderstand: aSymbol ])
-		ifTrue: [ ^ superType lookupSelector: aSymbol ].
+	| methods |
 	methods := Set new.
 	types
 		do: [ :e | 
@@ -159,7 +155,7 @@ TypUnionType >> lookupSelector: aSymbol [
 					([ e lookupSelector: aSymbol ]
 						on: TypNoMethodError
 						do: [ Set new ]) ].
-	^ methods
+	^ methods ifEmpty: [ super lookupSelector: aSymbol ]
 ]
 
 { #category : #'as yet unclassified' }

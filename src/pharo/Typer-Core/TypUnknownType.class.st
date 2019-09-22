@@ -30,11 +30,6 @@ TypUnknownType >> asTypeCompatibleWith: aType [
 	^ self
 ]
 
-{ #category : #'as yet unclassified' }
-TypUnknownType >> canUnderstand: aSymbol [
-	^ true
-]
-
 { #category : #copying }
 TypUnknownType >> copy [
 	^ self
@@ -43,6 +38,12 @@ TypUnknownType >> copy [
 { #category : #testing }
 TypUnknownType >> isUnknown [
 	^ true
+]
+
+{ #category : #'as yet unclassified' }
+TypUnknownType >> lookupSelector: aSymbol [
+	^ aSymbol implementors asSet
+		ifEmpty: [ super lookupSelector: aSymbol ]
 ]
 
 { #category : #accessing }

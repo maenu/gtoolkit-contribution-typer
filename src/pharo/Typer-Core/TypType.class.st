@@ -86,7 +86,10 @@ TypType >> asTypeCompatibleWith: aType [
 TypType >> canUnderstand: aSymbol [
 	<typTypeArgument: 1 as: 'Symbol<Character>'>
 	<typTypeResultAs: 'Boolean'>
-	^ (self lookupSelector: aSymbol) isNotEmpty
+	^ [ self lookupSelector: aSymbol.
+	true ]
+		on: TypNoMethodError
+		do: [ false ]
 ]
 
 { #category : #converting }
@@ -141,7 +144,7 @@ TypType >> isUnknown [
 TypType >> lookupSelector: aSymbol [
 	<typTypeArgument: 1 as: 'Symbol<Character>'>
 	<typTypeResultAs: 'Set<CompiledMethod<Integer>>'>
-	^ Set new
+	TypNoMethodError signal
 ]
 
 { #category : #'as yet unclassified' }

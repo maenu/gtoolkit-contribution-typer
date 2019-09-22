@@ -111,9 +111,9 @@ TypNamedType >> isNamed [
 TypNamedType >> lookupSelector: aSymbol [
 	^ self representsClassDescription
 		ifTrue: [ (self classDescription lookupSelector: aSymbol)
-				ifNil: [ Set new ]
+				ifNil: [ super lookupSelector: aSymbol ]
 				ifNotNil: [ :e | Set with: e ] ]
-		ifFalse: [ Set new ]
+		ifFalse: [ super lookupSelector: aSymbol ]
 ]
 
 { #category : #accessing }
