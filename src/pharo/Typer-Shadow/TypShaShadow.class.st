@@ -8,7 +8,7 @@ Class {
 		'priority',
 		'instance'
 	],
-	#category : #'Typer-Shadow-Core'
+	#category : #'Typer-Shadow'
 }
 
 { #category : #converting }

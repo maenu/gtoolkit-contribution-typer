@@ -1,7 +1,7 @@
 Class {
 	#name : #TypTypeParser,
 	#superclass : #SmaCCParser,
-	#category : #'Typer-Parser'
+	#category : #'Typer-Core'
 }
 
 { #category : #'generated-accessing' }

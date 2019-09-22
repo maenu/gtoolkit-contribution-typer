@@ -1,7 +1,7 @@
 Class {
 	#name : #TypMethodLookupIndex,
 	#superclass : #TypLookupIndex,
-	#category : #'Typer-Core'
+	#category : #'Typer-Core-Typer-Core'
 }
 
 { #category : #accessing }

@@ -7,7 +7,7 @@ Class {
 		'receiverType',
 		'hash'
 	],
-	#category : #'Typer-Dynamic-Core'
+	#category : #'Typer-Dynamic'
 }
 
 { #category : #comparing }

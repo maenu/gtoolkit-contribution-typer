@@ -5,7 +5,7 @@ Class {
 		'expected',
 		'actual'
 	],
-	#category : #'Typer-Checker-Core'
+	#category : #'Typer-Checker'
 }
 
 { #category : #accessing }

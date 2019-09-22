@@ -1,7 +1,7 @@
 Class {
 	#name : #TypGtTypeBodyStyler,
 	#superclass : #GtCoderBodyStyler,
-	#category : #'Typer-GToolkit-Core'
+	#category : #'Typer-GToolkit'
 }
 
 { #category : #styling }

@@ -6,7 +6,7 @@ Class {
 		'resultType',
 		'signalsAlways'
 	],
-	#category : #'Typer-Core'
+	#category : #'Typer-Core-Typer-Core'
 }
 
 { #category : #accessing }

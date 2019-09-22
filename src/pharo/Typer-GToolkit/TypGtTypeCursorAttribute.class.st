@@ -5,7 +5,7 @@ Class {
 		'coder',
 		'attribute'
 	],
-	#category : #'Typer-GToolkit-Core'
+	#category : #'Typer-GToolkit'
 }
 
 { #category : #accessing }

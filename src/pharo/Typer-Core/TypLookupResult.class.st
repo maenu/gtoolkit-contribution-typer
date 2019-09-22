@@ -6,7 +6,7 @@ Class {
 		'resolvedBy',
 		'resolver'
 	],
-	#category : #'Typer-Core'
+	#category : #'Typer-Core-Typer-Core'
 }
 
 { #category : #accessing }

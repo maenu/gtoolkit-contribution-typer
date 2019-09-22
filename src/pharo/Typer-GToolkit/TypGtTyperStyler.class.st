@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'coder'
 	],
-	#category : #'Typer-GToolkit-Core'
+	#category : #'Typer-GToolkit'
 }
 
 { #category : #accessing }

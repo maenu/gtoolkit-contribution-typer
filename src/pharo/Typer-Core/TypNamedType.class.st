@@ -6,7 +6,7 @@ Class {
 		'representsClass',
 		'clazz'
 	],
-	#category : #'Typer-Core'
+	#category : #'Typer-Core-Typer-Core'
 }
 
 { #category : #comparing }

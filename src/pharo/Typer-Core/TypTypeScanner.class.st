@@ -1,7 +1,7 @@
 Class {
 	#name : #TypTypeScanner,
 	#superclass : #SmaCCScanner,
-	#category : #'Typer-Parser'
+	#category : #'Typer-Core'
 }
 
 { #category : #generated }

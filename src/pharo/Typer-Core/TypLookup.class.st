@@ -1,7 +1,7 @@
 Class {
 	#name : #TypLookup,
 	#superclass : #Object,
-	#category : #'Typer-Core'
+	#category : #'Typer-Core-Typer-Core'
 }
 
 { #category : #copying }

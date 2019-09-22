@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'markUnknowns'
 	],
-	#category : #'Typer-GToolkit-Core'
+	#category : #'Typer-GToolkit'
 }
 
 { #category : #initialization }

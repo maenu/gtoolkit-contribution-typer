@@ -1,7 +1,7 @@
 Class {
 	#name : #TypShaMethodLookupResolver,
 	#superclass : #TypLookupResolver,
-	#category : #'Typer-Shadow-Core'
+	#category : #'Typer-Shadow'
 }
 
 { #category : #accessing }

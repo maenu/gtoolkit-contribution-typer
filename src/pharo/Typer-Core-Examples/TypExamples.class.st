@@ -1,7 +1,7 @@
 Class {
 	#name : #TypExamples,
 	#superclass : #Object,
-	#category : #'Typer-Examples'
+	#category : #'Typer-Core-Examples'
 }
 
 { #category : #example }

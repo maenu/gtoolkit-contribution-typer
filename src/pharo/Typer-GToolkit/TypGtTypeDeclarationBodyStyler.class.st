@@ -1,7 +1,7 @@
 Class {
 	#name : #TypGtTypeDeclarationBodyStyler,
 	#superclass : #TypGtTypeBodyStyler,
-	#category : #'Typer-GToolkit-Core'
+	#category : #'Typer-GToolkit'
 }
 
 { #category : #visiting }

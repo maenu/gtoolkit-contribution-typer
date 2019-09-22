@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'resolvers'
 	],
-	#category : #'Typer-Core'
+	#category : #'Typer-Core-Typer-Core'
 }
 
 { #category : #initialization }

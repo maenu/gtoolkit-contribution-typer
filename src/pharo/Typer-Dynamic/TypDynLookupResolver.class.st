@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'results'
 	],
-	#category : #'Typer-Dynamic-Core'
+	#category : #'Typer-Dynamic'
 }
 
 { #category : #accessing }

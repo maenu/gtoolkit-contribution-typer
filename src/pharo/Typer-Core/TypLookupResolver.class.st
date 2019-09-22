@@ -4,7 +4,7 @@ Class {
 	#classInstVars : [
 		'empty'
 	],
-	#category : #'Typer-Core'
+	#category : #'Typer-Core-Typer-Core'
 }
 
 { #category : #initialization }

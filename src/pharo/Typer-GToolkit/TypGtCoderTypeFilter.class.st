@@ -5,7 +5,7 @@ Class {
 		'type',
 		'clazzes'
 	],
-	#category : #'Typer-GToolkit-Core'
+	#category : #'Typer-GToolkit'
 }
 
 { #category : #testing }

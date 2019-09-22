@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'Typer-Dynamic-Core'
+	#category : #'Typer-Dynamic'
 }
 
 { #category : #accessing }

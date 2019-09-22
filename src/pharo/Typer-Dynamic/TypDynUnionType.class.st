@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'weights'
 	],
-	#category : #'Typer-Dynamic-Core'
+	#category : #'Typer-Dynamic'
 }
 
 { #category : #copying }
