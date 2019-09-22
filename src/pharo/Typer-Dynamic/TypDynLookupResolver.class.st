@@ -13,7 +13,7 @@ TypDynLookupResolver >> resolve: aLookup [
 	<typTypeResultAs: 'SequenceableCollection<TypLookupResult>'>
 	^ aLookup receiverType representsClassDescription
 		ifTrue: [ results
-				at: aLookup receiverType asClassDescription -> aLookup selector
+				at: aLookup receiverType classDescription -> aLookup selector
 				ifPresent: [ :e | 
 					{(e copy
 						lookup: aLookup;

@@ -19,7 +19,7 @@ RBMessageNode >> typGtFiltersToTypeWithShadow [
 	| type clazz shadows argumentTypes resultType |
 	type := self receiver typType.
 	clazz := type representsClassDescription
-		ifTrue: [ type asClassDescription ]
+		ifTrue: [ type classDescription ]
 		ifFalse: [ Object ].
 	argumentTypes := self numArgs
 		timesCollect: [ :i | self typTypeForArgumentAt: i ].

@@ -8,7 +8,7 @@ Class {
 TypPraClassLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypClassLookup'>
 	<typTypeResultAs: 'SequenceableCollection<TypClassLookupResult>'>
-	^ aLookup clazz typPraAsClassLookupResult
+	^ aLookup classDescription typPraAsClassLookupResult
 		ifNil: [ #() ]
 		ifNotNil: [ :e | 
 			{(e

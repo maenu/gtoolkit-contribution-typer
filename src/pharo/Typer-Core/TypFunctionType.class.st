@@ -14,7 +14,7 @@ TypFunctionType >> = anObject [
 		or: [ self class = anObject class
 				and: [ | type |
 					type := anObject "typCastAs TypFunctionType".
-					self nullable = type nullable and: [ self name = type name and: [ self parameters = type parameters and: [ self optionalParameters = type optionalParameters and: [ result = type result ] ] ] ] ] ]
+					self name = type name and: [ self parameters = type parameters and: [ self optionalParameters = type optionalParameters and: [ result = type result ] ] ] ] ]
 ]
 
 { #category : #comparing }
@@ -32,14 +32,12 @@ TypFunctionType >> > aType [
 TypFunctionType >> asTypeCompatibleWith: aType [
 	| compatibleType |
 	compatibleType := (TypParametricType new
-		nullable: nullable;
 		name: name;
 		parameters: parameters;
 		yourself)
 		asTypeCompatibleWith:
 			(aType isParametric
 				ifTrue: [ TypParametricType new
-						nullable: aType nullable;
 						name: (aType "typCastAs TypParametricType") name;
 						parameters:  (aType "typCastAs TypParametricType") parameters;
 						yourself ]
@@ -47,7 +45,6 @@ TypFunctionType >> asTypeCompatibleWith: aType [
 	(compatibleType isParametric and: [ aType isFunction ])
 		ifFalse: [ ^ compatibleType ].
 	^ TypFunctionType new
-		nullable: compatibleType nullable;
 		name: (compatibleType "typCastAs TypParametricType") name;
 		parameters: (compatibleType "typCastAs TypParametricType") parameters;
 		result: (result asTypeCompatibleWith: (aType "typCastAs TypFunctionType") result);
@@ -109,8 +106,6 @@ TypFunctionType >> postCopy [
 
 { #category : #accessing }
 TypFunctionType >> printOn: aStream [
-	nullable
-		ifTrue: [ aStream << '!' ].
 	aStream << name asString.
 	aStream
 		<<

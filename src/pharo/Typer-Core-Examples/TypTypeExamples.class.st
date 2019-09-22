@@ -5,15 +5,6 @@ Class {
 }
 
 { #category : #converting }
-TypTypeExamples >> asClassDescription [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: [ type asClassDescription ] signals: TypNoClassDescriptionError.
-	^ type
-]
-
-{ #category : #converting }
 TypTypeExamples >> asFunctionTypeResultOptionalParameters [
 	<gtExample>
 	| type |
@@ -40,8 +31,7 @@ TypTypeExamples >> asNonNullableType [
 	type := self type.
 	nonNullableType := type asNonNullableType.
 	self assert: nonNullableType nullable not.
-	self assert: nonNullableType ~~ type.
-	self assert: nonNullableType = type.
+	self assert: nonNullableType == type.
 	^ nonNullableType
 ]
 
@@ -53,6 +43,7 @@ TypTypeExamples >> asNullableType [
 	nullableType := type asNullableType.
 	self assert: nullableType nullable.
 	self assert: nullableType ~~ type.
+	self assert: nullableType <= type.
 	self assert: nullableType asNonNullableType = type.
 	^ nullableType
 ]
@@ -78,6 +69,15 @@ TypTypeExamples >> canUnderstand [
 	| type |
 	type := self type.
 	self assert: (type canUnderstand: nil) not.
+	^ type
+]
+
+{ #category : #converting }
+TypTypeExamples >> classDescription [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: [ type classDescription ] signals: TypNoClassDescriptionError.
 	^ type
 ]
 
@@ -167,29 +167,18 @@ TypTypeExamples >> lookupSelector [
 	^ type
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypTypeExamples >> monotony [
 	<gtExample>
 	| type superType |
 	type := self type.
 	superType := type superType.
-	self assert: type > superType.
-	self assert: type >= superType.
+	self assert: superType > type.
+	self assert: superType >= type.
 	self assert: type >= type.
 	self assert: type <= type.
-	self assert: superType <= type.
-	self assert: superType < type.
-	^ type
-]
-
-{ #category : #'as yet unclassified' }
-TypTypeExamples >> nullable [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type nullable not.
-	type nullable: true.
-	self assert: type nullable.
+	self assert: type <= superType.
+	self assert: type < superType.
 	^ type
 ]
 

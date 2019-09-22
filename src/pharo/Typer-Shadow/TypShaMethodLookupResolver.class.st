@@ -9,7 +9,7 @@ TypShaMethodLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'SequenceableCollection<TypMethodLookupResult>'>
 	^ aLookup receiverType representsClassDescription
-		ifTrue: [ ((aLookup receiverType asClassDescription typShaShadows
+		ifTrue: [ ((aLookup receiverType classDescription typShaShadows
 				collect: [ :e | e asMethodLookupResultFor: aLookup selector ])
 				reject: #isNil)
 				do: [ :e | 

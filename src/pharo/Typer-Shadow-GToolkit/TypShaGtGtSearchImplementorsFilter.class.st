@@ -8,7 +8,7 @@ Class {
 TypShaGtGtSearchImplementorsFilter class >> ___selector: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
-		resultType: [ :a :s :r | a receiverType asClassDescription instanceSide typAsType ];
+		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
 		yourself
 ]
 

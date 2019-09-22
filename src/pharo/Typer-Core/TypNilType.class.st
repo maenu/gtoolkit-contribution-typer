@@ -13,16 +13,6 @@ TypNilType class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
-{ #category : #comparing }
-TypNilType >> > aType [
-	^ self ~= aType and: [ aType nullable ]
-]
-
-{ #category : #converting }
-TypNilType >> asNamedType [
-	^ self
-]
-
 { #category : #converting }
 TypNilType >> asNonNullableType [
 	^ TypUnknownType instance
@@ -43,16 +33,10 @@ TypNilType >> copy [
 	^ self
 ]
 
-{ #category : #'as yet unclassified' }
-TypNilType >> hasSuperType [
-	^ false
-]
-
 { #category : #initialization }
 TypNilType >> initialize [
 	super initialize.
-	nullable := true.
-	name := UndefinedObject name
+	self classDescription: UndefinedObject
 ]
 
 { #category : #testing }
@@ -60,19 +44,7 @@ TypNilType >> isNil [
 	^ true
 ]
 
-{ #category : #accessing }
-TypNilType >> nullable: anObject [
-	"do nothing"
-
-	
-]
-
 { #category : #printing }
 TypNilType >> printOn: aStream [
 	aStream << '!'
-]
-
-{ #category : #'as yet unclassified' }
-TypNilType >> superType [
-	TypNoTypeError signal
 ]

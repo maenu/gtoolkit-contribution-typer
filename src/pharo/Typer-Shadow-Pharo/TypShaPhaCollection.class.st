@@ -9,7 +9,7 @@ TypShaPhaCollection class >> ___with: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | TypUnknownType instance asNullableType ];
 		resultType:
-				[ :a :s :r | a receiverType asClassDescription instanceSide typAsType asParametricType: {(a argumentTypes at: 1)} ];
+				[ :a :s :r | a receiverType classDescription instanceSide typAsType asParametricType: {(a argumentTypes at: 1)} ];
 		yourself
 ]
 

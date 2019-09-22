@@ -8,7 +8,7 @@ Class {
 TypShaBlBlInsets class >> ___top: _a right: _b bottom: _c left: _d [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];
-		resultType: [ :a :s :r | a receiverType asClassDescription instanceSide typAsType ];
+		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
 		yourself
 ]
 

@@ -58,7 +58,7 @@ TypShaPhaBlockClosure >> ___on: _a do: _b [
 				ifFalse: [ | first type |
 					first := a argumentTypes at: 1.
 					type := first representsClassDescription
-						ifTrue: [ first asClassDescription instanceSide typAsType ]
+						ifTrue: [ first classDescription instanceSide typAsType ]
 						ifFalse: [ Exception class typAsType ].
 					BlockClosure typAsType
 						asFunctionType: {type}

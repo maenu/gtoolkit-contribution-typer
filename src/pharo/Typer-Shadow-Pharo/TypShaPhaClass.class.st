@@ -45,6 +45,6 @@ TypShaPhaClass >> ___sharedPools [
 TypShaPhaClass >> ___subclass: _a instanceVariableNames: _b classVariableNames: _c package: _d [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | a receiverType asClassDescription typAsType ];
+		resultType: [ :a :s :r | a receiverType classDescription typAsType ];
 		yourself
 ]

@@ -36,9 +36,7 @@ TypDynUnionType >> addAll: aTypes [
 
 { #category : #converting }
 TypDynUnionType >> asNonDynType [
-	^ nullable
-		ifTrue: [ types typAsType asNullableType ]
-		ifFalse: [ types typAsType ]
+	^ types typAsType
 ]
 
 { #category : #enumerating }

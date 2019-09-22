@@ -11,7 +11,7 @@ ClassDescription >> typPraAsClassLookupResult [
 		ifNone: [ ^ nil ].
 	types := (pragma arguments at: 1) typAsTypes.
 	^ TypClassLookupResult new
-		type: [ :a | a clazz typAsNamedType asParametricType: types ];
+		type: [ :a | a classDescription typAsNamedType asParametricType: types ];
 		yourself
 ]
 

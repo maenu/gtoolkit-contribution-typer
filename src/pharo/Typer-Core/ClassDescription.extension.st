@@ -3,9 +3,7 @@ Extension { #name : #ClassDescription }
 { #category : #'*Typer-Core' }
 ClassDescription >> typAsNamedType [
 	<typTypeResultAs: 'TypNamedType'>
-	^ (TypNamedType named: self name)
-		clazz: self;
-		yourself
+	^ TypNamedType classDescription: self
 ]
 
 { #category : #'*Typer-Core' }
@@ -13,8 +11,8 @@ ClassDescription >> typAsType [
 	<typTypeResultAs: 'TypType'>
 	^ TypClassLookupIndex instance
 		typeFor:
-			(TypClassLookup new
-				clazz: self;
+			(TypClassDescriptionLookup new
+				classDescription: self;
 				yourself)
 ]
 

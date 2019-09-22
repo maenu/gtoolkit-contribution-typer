@@ -8,7 +8,7 @@ Class {
 TypShaGtGtNoStorageStrategy class >> ___uniqueInstance [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | a receiverType asClassDescription instanceSide typAsType ];
+		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
 		yourself
 ]
 

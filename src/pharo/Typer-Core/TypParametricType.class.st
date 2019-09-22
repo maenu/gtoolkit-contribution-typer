@@ -13,9 +13,7 @@ TypParametricType >> = anObject [
 		or: [ self class = anObject class
 				and: [ | object |
 					object := anObject "typCastAs TypParametricType".
-					self nullable = object nullable
-						and: [ self name = object name
-								and: [ self parameters = object parameters ] ] ] ]
+					self name = object name and: [ self parameters = object parameters ] ] ]
 ]
 
 { #category : #comparing }
@@ -32,18 +30,14 @@ TypParametricType >> > aType [
 TypParametricType >> asTypeCompatibleWith: aType [
 	| compatibleType |
 	compatibleType := ((TypNamedType named: name)
-		nullable: nullable;
 		yourself)
 		asTypeCompatibleWith:
 			(aType isNamed
-				ifTrue: [ (TypNamedType named: (aType "typCastAs TypNamedType") name)
-						nullable: aType nullable;
-						yourself ]
+				ifTrue: [ TypNamedType named: (aType "typCastAs TypNamedType") name]
 				ifFalse: [ aType ]).
 	(compatibleType isNamed and: [ aType isParametric and: [ (aType "typCastAs TypParametricType") parameters size = parameters size ] ])
 		ifFalse: [ ^ compatibleType ].
 	^ TypParametricType new
-		nullable: compatibleType nullable;
 		name: (compatibleType "typCastAs TypNamedType") name;
 		parameters: (parameters size timesCollect: [ :i | (parameters at: i) asTypeCompatibleWith: ((aType "typCastAs TypParametricType") parameters at: i) ]);
 		yourself

@@ -6,52 +6,12 @@ Class {
 
 { #category : #generated }
 TypTypeScanner >> emptySymbolTokenId [
-	^ 28
+	^ 25
 ]
 
 { #category : #generated }
 TypTypeScanner >> errorTokenId [
-	^ 29
-]
-
-{ #category : #generated }
-TypTypeScanner >> scan1 [
-	(self scanForString: '>#')
-		ifTrue: [ self step.
-			((currentCharacter between: $0 and: $9)
-				or: [ (currentCharacter between: $A and: $Z)
-						or: [ currentCharacter == $_ or: [ currentCharacter between: $a and: $z ] ] ])
-				ifTrue: [ [ self recordMatch: #(14).
-					self step.
-					currentCharacter == $:
-						ifTrue: [ ^ self scan2 ].
-					(currentCharacter between: $0 and: $9)
-						or: [ (currentCharacter between: $A and: $Z)
-								or: [ currentCharacter == $_ or: [ currentCharacter between: $a and: $z ] ] ] ]
-						whileTrue.
-					^ self reportLastMatch ].
-			currentCharacter isSpecial
-				ifTrue: [ [ self recordMatch: #(14).
-					self step.
-					currentCharacter isSpecial ] whileTrue ] ].
-	^ self reportLastMatch
-]
-
-{ #category : #generated }
-TypTypeScanner >> scan2 [
-	self recordMatch: #(14).
-	self step.
-	((currentCharacter between: $0 and: $9)
-		or: [ (currentCharacter between: $A and: $Z)
-				or: [ currentCharacter == $_ or: [ currentCharacter between: $a and: $z ] ] ])
-		ifTrue: [ [ self step.
-			currentCharacter == $:
-				ifTrue: [ ^ self scan2 ].
-			(currentCharacter between: $0 and: $9)
-				or: [ (currentCharacter between: $A and: $Z)
-						or: [ currentCharacter == $_ or: [ currentCharacter between: $a and: $z ] ] ] ]
-				whileTrue ].
-	^ self reportLastMatch
+	^ 26
 ]
 
 { #category : #generated }
@@ -72,8 +32,6 @@ TypTypeScanner >> scanForToken [
 		ifTrue: [ ^ self recordAndReportMatch: #(6) ].
 	currentCharacter == $>
 		ifTrue: [ ^ self recordAndReportMatch: #(7) ].
-	currentCharacter == $?
-		ifTrue: [ ^ self recordAndReportMatch: #(8) ].
 	^ self scanForTokenX3
 ]
 
@@ -82,8 +40,9 @@ TypTypeScanner >> scanForTokenX1 [
 	(self scanForString: 'class')
 		ifTrue: [ self recordMatch: #(13).
 			self step.
-			currentCharacter == $>
-				ifTrue: [ ^ self scan1 ] ].
+			currentCharacter == $T
+				ifTrue: [ (self scanForString: 'rait')
+						ifTrue: [ ^ self recordAndReportMatch: #(13) ] ] ].
 	^ self reportLastMatch
 ]
 
@@ -97,6 +56,8 @@ TypTypeScanner >> scanForTokenX2 [
 
 { #category : #generated }
 TypTypeScanner >> scanForTokenX3 [
+	currentCharacter == $?
+		ifTrue: [ ^ self recordAndReportMatch: #(8) ].
 	currentCharacter == $[
 		ifTrue: [ ^ self recordAndReportMatch: #(9) ].
 	currentCharacter == $]
@@ -113,8 +74,6 @@ TypTypeScanner >> scanForTokenX3 [
 			currentCharacter == Character space
 				ifTrue:
 					[ ^ self scanForTokenX1 ].
-			currentCharacter == $>
-				ifTrue: [ ^ self scan1 ].
 			(currentCharacter between: $0 and: $9)
 				or: [ (currentCharacter between: $A and: $Z)
 						or: [ currentCharacter == $_ or: [ currentCharacter between: $a and: $z ] ] ] ]

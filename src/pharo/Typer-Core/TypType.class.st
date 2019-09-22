@@ -1,9 +1,6 @@
 Class {
 	#name : #TypType,
 	#superclass : #Object,
-	#instVars : [
-		'nullable'
-	],
 	#category : #'Typer-Core-Type'
 }
 
@@ -22,15 +19,6 @@ TypType >> <= aType [
 ]
 
 { #category : #comparing }
-TypType >> = anObject [
-	^ self == anObject
-		or: [ self class = anObject class
-				and: [ | object |
-					object := anObject "typCastAs TypType".
-					self nullable = object nullable ] ]
-]
-
-{ #category : #comparing }
 TypType >> > aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'Boolean'>
@@ -42,12 +30,6 @@ TypType >> >= aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'Boolean'>
 	^ self = aType or: [ self > aType ]
-]
-
-{ #category : #converting }
-TypType >> asClassDescription [
-	<typTypeResultAs: 'ClassDescription'>
-	TypNoClassDescriptionError signal
 ]
 
 { #category : #converting }
@@ -68,21 +50,14 @@ TypType >> asNamedType [
 { #category : #converting }
 TypType >> asNonNullableType [
 	<typTypeResultAs: 'TypType'>
-	^ nullable
-		ifTrue: [ self copy
-				nullable: false;
-				yourself ]
-		ifFalse: [ self ]
+	^ self
 ]
 
 { #category : #converting }
 TypType >> asNullableType [
 	<typTypeResultAs: 'TypType'>
-	^ nullable
-		ifTrue: [ self ]
-		ifFalse: [ self copy
-				nullable: true;
-				yourself ]
+	^ {TypNilType instance.
+	self} typAsType
 ]
 
 { #category : #converting }
@@ -114,22 +89,16 @@ TypType >> canUnderstand: aSymbol [
 	^ (self lookupSelector: aSymbol) isNotEmpty
 ]
 
+{ #category : #converting }
+TypType >> classDescription [
+	<typTypeResultAs: 'ClassDescription'>
+	TypNoClassDescriptionError signal
+]
+
 { #category : #testing }
 TypType >> hasSuperType [
 	<typTypeResultAs: 'Boolean'>
 	^ false
-]
-
-{ #category : #comparing }
-TypType >> hash [
-	^ nullable hash
-]
-
-{ #category : #initialization }
-TypType >> initialize [
-	<typTypeVariable: 'nullable' as: 'Boolean'>
-	super initialize.
-	nullable := false
 ]
 
 { #category : #testing }
@@ -175,22 +144,9 @@ TypType >> lookupSelector: aSymbol [
 	^ Set new
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 TypType >> nullable [
-	<typTypeResultAs: 'Boolean'>
-	^ nullable
-]
-
-{ #category : #accessing }
-TypType >> nullable: anObject [
-	<typTypeArgument: 1 as: 'Boolean'>
-	nullable := anObject
-]
-
-{ #category : #printing }
-TypType >> printOn: aStream [
-	nullable
-		ifTrue: [ aStream << '!' ]
+	^ self isNil
 ]
 
 { #category : #testing }

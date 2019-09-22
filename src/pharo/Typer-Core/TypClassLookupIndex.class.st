@@ -46,7 +46,7 @@ TypClassLookupIndex >> reset [
 { #category : #accessing }
 TypClassLookupIndex >> typeFor: aLookup [
 	^ index
-		at: aLookup clazz name asSymbol
+		at: aLookup classDescription name asSymbol
 		ifAbsentPut: [ (resolver resolve: aLookup)
 				detect: [ :e | 
 					[ | type |

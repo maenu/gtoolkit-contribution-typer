@@ -13,7 +13,7 @@ TypShaPhaProtoObject class >> shadowedClass [
 TypShaPhaProtoObject >> ___class [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | a receiverType asClassDescription class typAsType ];
+		resultType: [ :a :s :r | a receiverType classDescription class typAsType ];
 		yourself
 ]
 

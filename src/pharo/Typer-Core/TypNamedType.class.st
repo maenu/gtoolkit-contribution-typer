@@ -4,10 +4,17 @@ Class {
 	#instVars : [
 		'name',
 		'representsClass',
-		'clazz'
+		'classDescription'
 	],
 	#category : #'Typer-Core-Type'
 }
+
+{ #category : #'instance creation' }
+TypNamedType class >> classDescription: aClassDescription [
+	^ self new
+		classDescription: aClassDescription;
+		yourself
+]
 
 { #category : #'instance creation' }
 TypNamedType class >> named: aString [
@@ -22,30 +29,19 @@ TypNamedType >> = anObject [
 		or: [ self class = anObject class
 				and: [ | type |
 					type := anObject "typCastAs TypNamedType".
-					self nullable = type nullable and: [ self name = type name ] ] ]
+					self name = type name ] ]
 ]
 
 { #category : #comparing }
 TypNamedType >> > aType [
-	^ self ~= aType and: [ (aType isNil and: [ nullable ]) or: [ aType isNamed and: [ self representsClassDescription and: [ aType representsClassDescription and: [ aType asClassDescription typIncludesBehavior: self asClassDescription ] ] ] ] ]
-]
-
-{ #category : #converting }
-TypNamedType >> asClassDescription [
-	self assert: [ self representsClassDescription ].
-	^ clazz
-		ifNil: [ clazz := (name endsWith: ' class')
-				ifTrue: [ (name copyFrom: 1 to: name size - ' class' size) asClass classSide ]
-				ifFalse: [ (name endsWith: ' classTrait')
-						ifTrue: [ (name copyFrom: 1 to: name size - ' classTrait' size) asClass
-								classSide ]
-						ifFalse: [ name asClass ] ] ]
+	^ self ~= aType and: [ aType isNamed and: [ self representsClassDescription and: [ aType representsClassDescription and: [ aType classDescription typIncludesBehavior: self classDescription ] ] ] ]
 ]
 
 { #category : #converting }
 TypNamedType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
 	^ TypFunctionType new
 		name: name;
+		classDescription: classDescription;
 		parameters: someTypes;
 		result: aType;
 		optionalParameters: aBoolean;
@@ -54,34 +50,48 @@ TypNamedType >> asFunctionType: someTypes result: aType optionalParameters: aBoo
 
 { #category : #converting }
 TypNamedType >> asNamedType [
-	^ (TypNamedType named: name)
-		nullable: nullable;
-		yourself
+	^ self
 ]
 
 { #category : #converting }
 TypNamedType >> asParametricType: someTypes [
 	^ TypParametricType new
 		name: name;
-		nullable: nullable;
+		classDescription: classDescription;
 		parameters: someTypes;
 		yourself
 ]
 
+{ #category : #converting }
+TypNamedType >> classDescription [
+	self flag: 'FIXME invalidate?'.
+	self assert: [ self representsClassDescription ].
+	^ classDescription
+		ifNil: [ classDescription := (name endsWith: ' class')
+				ifTrue: [ (name copyFrom: 1 to: name size - ' class' size) asClass classSide ]
+				ifFalse: [ (name endsWith: ' classTrait')
+						ifTrue: [ (name copyFrom: 1 to: name size - ' classTrait' size) asClass
+								classSide ]
+						ifFalse: [ name asClass ] ] ]
+]
+
 { #category : #accessing }
-TypNamedType >> clazz: aClassDescription [
-	clazz := aClassDescription.
-	representsClass := true
+TypNamedType >> classDescription: aClassDescription [
+	classDescription := aClassDescription.
+	classDescription
+		ifNil: [ representsClass := nil ]
+		ifNotNil: [ name := classDescription name.
+			representsClass := true ]
 ]
 
 { #category : #'as yet unclassified' }
 TypNamedType >> hasSuperType [
-	^ nullable or: [ self representsClassDescription and: [ self asClassDescription superclass isNotNil ] ]
+	^ self representsClassDescription and: [ self classDescription superclass isNotNil ]
 ]
 
 { #category : #comparing }
 TypNamedType >> hash [
-	^ super hash bitXor: name hash
+	^ name hash
 ]
 
 { #category : #initialization }
@@ -100,7 +110,7 @@ TypNamedType >> isNamed [
 { #category : #'as yet unclassified' }
 TypNamedType >> lookupSelector: aSymbol [
 	^ self representsClassDescription
-		ifTrue: [ (self asClassDescription lookupSelector: aSymbol)
+		ifTrue: [ (self classDescription lookupSelector: aSymbol)
 				ifNil: [ Set new ]
 				ifNotNil: [ :e | Set with: e ] ]
 		ifFalse: [ Set new ]
@@ -121,33 +131,27 @@ TypNamedType >> name: anObject [
 
 { #category : #printing }
 TypNamedType >> printOn: aStream [
-	super printOn: aStream.
 	aStream << name asString
 ]
 
 { #category : #testing }
 TypNamedType >> representsClassDescription [
 	self flag: 'FIXME invalidate?'.
-	representsClass
+	^ representsClass
 		ifNil: [ | clazz_ |
 			clazz_ := name.
 			(clazz_ endsWith: ' class')
 				ifTrue: [ clazz_ := name copyFrom: 1 to: name size - ' class' size ].
 			(clazz_ endsWith: ' classTrait')
 				ifTrue: [ clazz_ := name copyFrom: 1 to: name size - ' classTrait' size ].
-			representsClass := true.
-			[ clazz_ asClass ]
+			representsClass := [ clazz_ asClass.
+			true ]
 				on: NotFound
-				do: [ representsClass := false ] ].
-	^ representsClass
+				do: [ false ] ]
 ]
 
 { #category : #'as yet unclassified' }
 TypNamedType >> superType [
 	self assert: [ self hasSuperType ].
-	(self representsClassDescription not or: [ self asClassDescription superclass isNil ])
-		ifTrue: [ "must be nullable" ^ TypNilType instance ].
-	^ self asClassDescription superclass typAsType copy
-		nullable: nullable;
-		yourself
+	^ self classDescription superclass typAsType
 ]

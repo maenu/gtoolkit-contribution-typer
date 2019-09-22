@@ -9,7 +9,7 @@ TypInfVariableLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypVariableLookup'>
 	<typTypeResultAs: 'SequenceableCollection<TypVariableLookupResult>'>
 	^ aLookup receiverType representsClassDescription
-		ifTrue: [ (aLookup receiverType asClassDescription
+		ifTrue: [ (aLookup receiverType classDescription
 				typInfAsVariableLookupResultFor: aLookup selector)
 				ifNil: [ #() ]
 				ifNotNil: [ :e | 

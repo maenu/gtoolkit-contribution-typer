@@ -8,7 +8,7 @@ Class {
 TypInfClassLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypClassLookup'>
 	<typTypeResultAs: 'SequenceableCollection<TypClassLookupResult>'>
-	^ aLookup clazz typInfAsClassLookupResult
+	^ aLookup classDescription typInfAsClassLookupResult
 		ifNil: [ #() ]
 		ifNotNil: [ :e | 
 			{(e

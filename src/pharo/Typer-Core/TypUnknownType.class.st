@@ -23,14 +23,6 @@ TypUnknownType >> asNonNullableType [
 	^ self
 ]
 
-{ #category : #converting }
-TypUnknownType >> asNullableType [
-	^ TypUnionType new
-		nullable: true;
-		types: {self};
-		yourself
-]
-
 { #category : #'as yet unclassified' }
 TypUnknownType >> asTypeCompatibleWith: aType [
 	aType isNil
@@ -51,13 +43,6 @@ TypUnknownType >> copy [
 { #category : #testing }
 TypUnknownType >> isUnknown [
 	^ true
-]
-
-{ #category : #accessing }
-TypUnknownType >> nullable: anObject [
-	"do nothing"
-
-	
 ]
 
 { #category : #accessing }

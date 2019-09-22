@@ -7,13 +7,42 @@ Class {
 	#category : #'Typer-Core-Type'
 }
 
+{ #category : #converting }
+TypUnionType class >> asTypes: aCollection [
+	<typTypeResultAs: 'TypType'>
+	| remains nil_ |
+	remains := (aCollection
+		flatCollect: [ :e "typParameters TypType"
+			 | 
+			e isUnion
+				ifTrue: [ e "typCastAs TypUnionType" types ]
+				ifFalse: [ {e} ] ]) asSet.
+	nil_ := (remains includes: TypNilType instance).
+	nil_ ifTrue: [ remains remove: TypNilType instance ].
+	remains := remains
+		reject: [ :e | 
+			(remains
+				copyWithoutAll:
+					{e.
+					TypUnknownType instance}) anySatisfy: [ :f | f >= e ] ].
+	nil_ ifTrue: [ remains add: TypNilType instance ].
+	^ remains
+]
+
+{ #category : #generated }
+TypUnionType class >> types: aCollection [
+	^ self new
+		types: aCollection;
+		yourself
+]
+
 { #category : #comparing }
 TypUnionType >> = anObject [
 	^ self == anObject
 		or: [ self class = anObject class
 				and: [ | object |
 					object := anObject "typCastAs TypUnionType".
-					self nullable = object nullable and: [ self types asSet = object types asSet ] ] ]
+					self types = object types ] ]
 ]
 
 { #category : #comparing }
@@ -22,11 +51,6 @@ TypUnionType >> > aType [
 		and: [ aType isUnion
 				ifTrue: [ (aType "typCastAs TypUnionType") types allSatisfy: [ :e | self >= e ] ]
 				ifFalse: [ types anySatisfy: [ :e | e >= aType ] ] ]
-]
-
-{ #category : #converting }
-TypUnionType >> asClassDescription [
-	^ self superType asClassDescription
 ]
 
 { #category : #converting }
@@ -40,44 +64,34 @@ TypUnionType >> asNamedType [
 ]
 
 { #category : #converting }
+TypUnionType >> asNonNullableType [
+	^ (types includes: TypNilType instance)
+		ifTrue: [ (types copyWithout: TypNilType instance) typAsType ]
+		ifFalse: [ self ]
+]
+
+{ #category : #converting }
 TypUnionType >> asParametricType: someTypes [
 	^ self superType asParametricType: someTypes
 ]
 
 { #category : #accessing }
 TypUnionType >> asTypeCompatibleWith: aType [
-	| remains current |
-	aType isUnknown
-		ifTrue: [ ^ aType ].
-	aType isNil
-		ifTrue: [ ^ self asNullableType ].
-	remains := types copy asOrderedCollection.
-	remains remove: TypUnknownType instance ifAbsent: [  ].
-	remains ifEmpty: [ ^ TypUnknownType instance ].
-	remains := remains sort: [ :a :b | a >= b ].
-	current := remains first.
-	remains remove: current.
-	[ remains isEmpty ]
-		whileFalse: [ | next common |
-			next := remains first.
-			remains remove: next.
-			common := current asTypeCompatibleWith: next.
-			common isUnknown
-				ifTrue: [ ^ common ].
-			common = current
-				ifFalse: [ current := common.
-					current isUnion
-						ifTrue: [ remains addAll: (current "typCastAs TypUnionType") types ]
-						ifFalse: [ remains add: current ].
-					remains := remains asSet asOrderedCollection sort: [ :a :b | a >= b ] ] ].
-	nullable
-		ifTrue: [ ^ current asNullableType ].
-	^ current
+	| types_ |
+	types_ := self class asTypes: types , {aType}.
+	^ types_ size = 1
+		ifTrue: [ types_ anyOne ]
+		ifFalse: [ self class types: types_ ]
 ]
 
 { #category : #'as yet unclassified' }
 TypUnionType >> canUnderstand: aSymbol [
 	^ types allSatisfy: [ :e | e canUnderstand: aSymbol ]
+]
+
+{ #category : #converting }
+TypUnionType >> classDescription [
+	^ self superType classDescription
 ]
 
 { #category : #testing }
@@ -95,7 +109,7 @@ TypUnionType >> hasSuperType [
 
 { #category : #comparing }
 TypUnionType >> hash [
-	^ super hash bitXor: types hash
+	^ types hash
 ]
 
 { #category : #accessing }
@@ -144,6 +158,11 @@ TypUnionType >> lookupSelector: aSymbol [
 	^ methods
 ]
 
+{ #category : #'as yet unclassified' }
+TypUnionType >> nullable [
+	^ types includes: TypNilType instance
+]
+
 { #category : #generated }
 TypUnionType >> parameters [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
@@ -159,22 +178,26 @@ TypUnionType >> postCopy [
 
 { #category : #printing }
 TypUnionType >> printOn: aStream [
-	super printOn: aStream.
-	types = {TypUnknownType instance} asSet
-		ifTrue: [ aStream << '{?}'.
-			^ self ].
-	aStream << '{'
+	aStream
+		<< '{';
+		<<
+			((types includes: TypNilType instance)
+				ifTrue: [ '!' ]
+				ifFalse: [ '' ]);
 		<<
 			((types includes: TypUnknownType instance)
-				ifTrue: [ '?,' ]
+				ifTrue: [ '?' ]
 				ifFalse: [ '' ]).
-	(types copyWithout: TypUnknownType instance)
+	(types
+		copyWithoutAll:
+			{TypNilType instance.
+			TypUnknownType instance})
 		ifNotEmpty: [ :e | 
-			| superType |
-			superType := (TypUnionType new
-				types: e;
-				yourself) superType.
-			aStream << superType printString ].
+			| type |
+			type := e typAsType.
+			type isUnion
+				ifTrue: [ type := type superType ].
+			aStream << type printString ].
 	aStream << '}'
 ]
 
@@ -185,24 +208,33 @@ TypUnionType >> representsClassDescription [
 
 { #category : #accessing }
 TypUnionType >> superType [
-	| remains current |
-	types ifEmpty: [ ^ TypUnknownType instance ].
+	| remains nil_ unknown current |
 	remains := types copy.
-	current := remains anyOne.
-	remains remove: current.
+	nil_ := remains includes: TypNilType instance.
+	unknown := remains includes: TypUnknownType instance.
+	nil_
+		ifTrue: [ remains remove: TypNilType instance ].
+	unknown
+		ifTrue: [ remains remove: TypUnknownType instance ].
+	remains ifEmpty: [ ^ self ].
+	current := remains remove: remains anyOne.
 	[ remains isEmpty ]
 		whileFalse: [ | next common |
-			next := remains anyOne.
-			remains remove: next.
+			next := remains remove: remains anyOne.
 			common := current asTypeCompatibleWith: next.
-			common isUnknown
-				ifTrue: [ ^ nullable
-						ifTrue: [ common asNullableType ]
-						ifFalse: [ common ] ].
-			common = current
-				ifFalse: [ current := common.
-					remains add: current ] ].
-	^ current
+			common isNil
+				ifTrue: [ nil_ := true ]
+				ifFalse: [ common isUnknown
+						ifTrue: [ unknown := true ]
+						ifFalse: [ common = current
+								ifFalse: [ current := common.
+									remains add: current ] ] ] ].
+	remains := Set with: current.
+	nil_
+		ifTrue: [ remains add: TypNilType instance ].
+	unknown
+		ifTrue: [ remains add: TypUnknownType instance ].
+	^ remains typAsType
 ]
 
 { #category : #accessing }
@@ -214,5 +246,8 @@ TypUnionType >> types [
 { #category : #accessing }
 TypUnionType >> types: anObject [
 	<typTypeArgument: 1 as: 'Collection<TypType>'>
-	types := anObject asSet
+	| types_ |
+	types_ := self class asTypes: anObject.
+	self assert: [ types_ size > 1 ].
+	types := types_
 ]
