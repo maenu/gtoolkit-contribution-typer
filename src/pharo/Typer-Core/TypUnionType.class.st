@@ -127,7 +127,11 @@ TypUnionType >> isFunction [
 
 { #category : #converting }
 TypUnionType >> isNamed [
-	^ self superType isNamed
+	| superType |
+	superType := self superType.
+	^ superType isUnion
+		ifTrue: [ false ]
+		ifFalse: [ superType isNamed ]
 ]
 
 { #category : #converting }
@@ -211,9 +215,9 @@ TypUnionType >> superType [
 	| remains nil_ unknown current |
 	remains := types copy.
 	nil_ := remains includes: TypNilType instance.
-	unknown := remains includes: TypUnknownType instance.
 	nil_
 		ifTrue: [ remains remove: TypNilType instance ].
+	unknown := remains includes: TypUnknownType instance.
 	unknown
 		ifTrue: [ remains remove: TypUnknownType instance ].
 	remains ifEmpty: [ ^ self ].
