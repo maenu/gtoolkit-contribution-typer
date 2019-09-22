@@ -45,9 +45,9 @@ TypType >> >= aType [
 ]
 
 { #category : #converting }
-TypType >> asClass [
+TypType >> asClassDescription [
 	<typTypeResultAs: 'ClassDescription'>
-	TypNoClassError signal
+	TypNoClassDescriptionError signal
 ]
 
 { #category : #converting }
@@ -57,12 +57,6 @@ TypType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean 
 	<typTypeArgument: 3 as: 'Boolean'>
 	<typTypeResultAs: 'TypFunctionType'>
 	TypNoTypeError signal
-]
-
-{ #category : #converting }
-TypType >> asMethod [
-	<typTypeResultAs: 'CompiledMethod<Integer>'>
-	TypNoMethodError signal
 ]
 
 { #category : #converting }
@@ -111,6 +105,13 @@ TypType >> asTypeCompatibleWith: aType [
 	self hasSuperType
 		ifTrue: [ ^ self superType asTypeCompatibleWith: aType ].
 	^ TypUnknownType instance
+]
+
+{ #category : #'as yet unclassified' }
+TypType >> canUnderstand: aSymbol [
+	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeResultAs: 'Boolean'>
+	^ (self lookupSelector: aSymbol) isNotEmpty
 ]
 
 { #category : #testing }
@@ -168,7 +169,7 @@ TypType >> isUnknown [
 ]
 
 { #category : #'as yet unclassified' }
-TypType >> lookupMessage: aSymbol [
+TypType >> lookupSelector: aSymbol [
 	<typTypeArgument: 1 as: 'Symbol<Character>'>
 	<typTypeResultAs: 'Set<CompiledMethod<Integer>>'>
 	^ Set new
@@ -193,13 +194,7 @@ TypType >> printOn: aStream [
 ]
 
 { #category : #testing }
-TypType >> representsClass [
-	<typTypeResultAs: 'Boolean'>
-	^ false
-]
-
-{ #category : #testing }
-TypType >> representsMethod [
+TypType >> representsClassDescription [
 	<typTypeResultAs: 'Boolean'>
 	^ false
 ]
@@ -208,11 +203,4 @@ TypType >> representsMethod [
 TypType >> superType [
 	<typTypeResultAs: 'TypType'>
 	TypNoTypeError signal
-]
-
-{ #category : #'as yet unclassified' }
-TypType >> understandsMessage: aSymbol [
-	<typTypeArgument: 1 as: 'Symbol<Character>'>
-	<typTypeResultAs: 'Boolean'>
-	^ (self lookupMessage: aSymbol) isNotEmpty
 ]

@@ -25,8 +25,8 @@ TypUnionType >> > aType [
 ]
 
 { #category : #converting }
-TypUnionType >> asClass [
-	^ self superType asClass
+TypUnionType >> asClassDescription [
+	^ self superType asClassDescription
 ]
 
 { #category : #converting }
@@ -73,6 +73,11 @@ TypUnionType >> asTypeCompatibleWith: aType [
 	nullable
 		ifTrue: [ ^ current asNullableType ].
 	^ current
+]
+
+{ #category : #'as yet unclassified' }
+TypUnionType >> canUnderstand: aSymbol [
+	^ types allSatisfy: [ :e | e canUnderstand: aSymbol ]
 ]
 
 { #category : #testing }
@@ -122,18 +127,18 @@ TypUnionType >> isUnion [
 ]
 
 { #category : #'as yet unclassified' }
-TypUnionType >> lookupMessage: aSymbol [
+TypUnionType >> lookupSelector: aSymbol [
 	| superType methods |
 	superType := self superType.
 	(superType isUnknown not
-		and: [ superType understandsMessage: aSymbol ])
-		ifTrue: [ ^ superType lookupMessage: aSymbol ].
+		and: [ superType canUnderstand: aSymbol ])
+		ifTrue: [ ^ superType lookupSelector: aSymbol ].
 	methods := Set new.
 	types
 		do: [ :e | 
 			methods
 				addAll:
-					([ e lookupMessage: aSymbol ]
+					([ e lookupSelector: aSymbol ]
 						on: TypNoMethodError
 						do: [ Set new ]) ].
 	^ methods
@@ -174,8 +179,8 @@ TypUnionType >> printOn: aStream [
 ]
 
 { #category : #testing }
-TypUnionType >> representsClass [
-	^ self superType representsClass
+TypUnionType >> representsClassDescription [
+	^ self superType representsClassDescription
 ]
 
 { #category : #accessing }
@@ -210,9 +215,4 @@ TypUnionType >> types [
 TypUnionType >> types: anObject [
 	<typTypeArgument: 1 as: 'Collection<TypType>'>
 	types := anObject asSet
-]
-
-{ #category : #'as yet unclassified' }
-TypUnionType >> understandsMessage: aSymbol [
-	^ types allSatisfy: [ :e | e understandsMessage: aSymbol ]
 ]

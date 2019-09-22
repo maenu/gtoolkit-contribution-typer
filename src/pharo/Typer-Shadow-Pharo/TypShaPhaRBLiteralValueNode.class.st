@@ -10,7 +10,7 @@ TypShaPhaRBLiteralValueNode class >> ___value: _a [
 		argumentTypes: [ :i :a :s :r | 
 			{Number typAsType.
 			String typAsType} typAsType ];
-		resultType: [ :a :s :r | a receiverType asClass instanceSide typAsType ];
+		resultType: [ :a :s :r | a receiverType asClassDescription instanceSide typAsType ];
 		yourself
 ]
 

@@ -11,7 +11,7 @@ Class {
 TypShaGtGtMethodCoder class >> ___forMethod: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | CompiledMethod typAsType ];
-		resultType: [ :a :s :r | a receiverType asClass instanceSide typAsType ];
+		resultType: [ :a :s :r | a receiverType asClassDescription instanceSide typAsType ];
 		yourself
 ]
 

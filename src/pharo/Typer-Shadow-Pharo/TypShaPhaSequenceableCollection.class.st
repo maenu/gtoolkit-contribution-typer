@@ -8,7 +8,7 @@ Class {
 TypShaPhaSequenceableCollection class >> ___ofSize: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ Integer typAsType ];
-		resultType: [ :a | a receiverType asClass instanceSide typAsType ];
+		resultType: [ :a | a receiverType asClassDescription instanceSide typAsType ];
 		yourself
 ]
 
@@ -77,7 +77,7 @@ TypShaPhaSequenceableCollection >> ___detectIndex: _a ifNone: _b [
 			| none |
 			none := a argumentTypes at: 2.
 			{Integer typAsType.
-			((none representsClass and: [ none asClass == BlockClosure ])
+			((none representsClassDescription and: [ none asClassDescription == BlockClosure ])
 				ifTrue: [ none result ]
 				ifFalse: [ none ])} typAsType ];
 		yourself

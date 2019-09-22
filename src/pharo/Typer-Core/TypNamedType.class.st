@@ -9,6 +9,13 @@ Class {
 	#category : #'Typer-Core-Type'
 }
 
+{ #category : #'instance creation' }
+TypNamedType class >> named: aString [
+	^ self new
+		name: aString;
+		yourself
+]
+
 { #category : #comparing }
 TypNamedType >> = anObject [
 	^ self == anObject
@@ -20,12 +27,12 @@ TypNamedType >> = anObject [
 
 { #category : #comparing }
 TypNamedType >> > aType [
-	^ self ~= aType and: [ (aType isNil and: [ nullable ]) or: [ aType isNamed and: [ self representsClass and: [ aType representsClass and: [ aType asClass typIncludesBehavior: self asClass ] ] ] ] ]
+	^ self ~= aType and: [ (aType isNil and: [ nullable ]) or: [ aType isNamed and: [ self representsClassDescription and: [ aType representsClassDescription and: [ aType asClassDescription typIncludesBehavior: self asClassDescription ] ] ] ] ]
 ]
 
 { #category : #converting }
-TypNamedType >> asClass [
-	self assert: [ self representsClass ].
+TypNamedType >> asClassDescription [
+	self assert: [ self representsClassDescription ].
 	^ clazz
 		ifNil: [ clazz := (name endsWith: ' class')
 				ifTrue: [ (name copyFrom: 1 to: name size - ' class' size) asClass classSide ]
@@ -46,26 +53,8 @@ TypNamedType >> asFunctionType: someTypes result: aType optionalParameters: aBoo
 ]
 
 { #category : #converting }
-TypNamedType >> asMethod [
-	| parts clazz_ selector |
-	self assert: [ self representsMethod ].
-	parts := '>>#' split: name.
-	clazz_ := ((parts at: 1) endsWith: ' class')
-		ifTrue: [ ((parts at: 1) copyFrom: 1 to: (parts at: 1) size - ' class' size)
-				asClass classSide ]
-		ifFalse: [ ((parts at: 1) endsWith: ' classTrait')
-				ifTrue: [ ((parts at: 1)
-						copyFrom: 1
-						to: (parts at: 1) size - ' classTrait' size) asClass classSide ]
-				ifFalse: [ (parts at: 1) asClass ] ].
-	selector := (parts at: 2) asSymbol.
-	^ (clazz_ lookupSelector: selector) ifNil: [ super asMethod ]
-]
-
-{ #category : #converting }
 TypNamedType >> asNamedType [
-	^ TypNamedType new
-		name: name;
+	^ (TypNamedType named: name)
 		nullable: nullable;
 		yourself
 ]
@@ -87,7 +76,7 @@ TypNamedType >> clazz: aClassDescription [
 
 { #category : #'as yet unclassified' }
 TypNamedType >> hasSuperType [
-	^ nullable or: [ self representsClass and: [ self asClass superclass isNotNil ] ]
+	^ nullable or: [ self representsClassDescription and: [ self asClassDescription superclass isNotNil ] ]
 ]
 
 { #category : #comparing }
@@ -109,9 +98,9 @@ TypNamedType >> isNamed [
 ]
 
 { #category : #'as yet unclassified' }
-TypNamedType >> lookupMessage: aSymbol [
-	^ self representsClass
-		ifTrue: [ (self asClass lookupSelector: aSymbol)
+TypNamedType >> lookupSelector: aSymbol [
+	^ self representsClassDescription
+		ifTrue: [ (self asClassDescription lookupSelector: aSymbol)
 				ifNil: [ Set new ]
 				ifNotNil: [ :e | Set with: e ] ]
 		ifFalse: [ Set new ]
@@ -137,7 +126,7 @@ TypNamedType >> printOn: aStream [
 ]
 
 { #category : #testing }
-TypNamedType >> representsClass [
+TypNamedType >> representsClassDescription [
 	self flag: 'FIXME invalidate?'.
 	representsClass
 		ifNil: [ | clazz_ |
@@ -153,17 +142,12 @@ TypNamedType >> representsClass [
 	^ representsClass
 ]
 
-{ #category : #testing }
-TypNamedType >> representsMethod [
-	^ name includesSubstring: '>>#'
-]
-
 { #category : #'as yet unclassified' }
 TypNamedType >> superType [
 	self assert: [ self hasSuperType ].
-	(self representsClass not or: [ self asClass superclass isNil ])
+	(self representsClassDescription not or: [ self asClassDescription superclass isNil ])
 		ifTrue: [ "must be nullable" ^ TypNilType instance ].
-	^ self asClass superclass typAsType copy
+	^ self asClassDescription superclass typAsType copy
 		nullable: nullable;
 		yourself
 ]

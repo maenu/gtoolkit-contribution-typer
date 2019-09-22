@@ -31,15 +31,13 @@ TypParametricType >> > aType [
 { #category : #accessing }
 TypParametricType >> asTypeCompatibleWith: aType [
 	| compatibleType |
-	compatibleType := (TypNamedType new
+	compatibleType := ((TypNamedType named: name)
 		nullable: nullable;
-		name: name;
 		yourself)
 		asTypeCompatibleWith:
 			(aType isNamed
-				ifTrue: [ TypNamedType new
+				ifTrue: [ (TypNamedType named: (aType "typCastAs TypNamedType") name)
 						nullable: aType nullable;
-						name: (aType "typCastAs TypNamedType") name;
 						yourself ]
 				ifFalse: [ aType ]).
 	(compatibleType isNamed and: [ aType isParametric and: [ (aType "typCastAs TypParametricType") parameters size = parameters size ] ])

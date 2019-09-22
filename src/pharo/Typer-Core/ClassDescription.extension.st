@@ -3,8 +3,7 @@ Extension { #name : #ClassDescription }
 { #category : #'*Typer-Core' }
 ClassDescription >> typAsNamedType [
 	<typTypeResultAs: 'TypNamedType'>
-	^ TypNamedType new
-		name: self name;
+	^ (TypNamedType named: self name)
 		clazz: self;
 		yourself
 ]

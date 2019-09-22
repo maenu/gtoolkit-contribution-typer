@@ -3,7 +3,7 @@ Extension { #name : #RBMessageNode }
 { #category : #'*Typer-Core' }
 RBMessageNode >> typInvokedMethods [
 	^ super typInvokedMethods
-		addAll: (self typTypeForReceiver lookupMessage: self selector);
+		addAll: (self typTypeForReceiver lookupSelector: self selector);
 		yourself
 ]
 

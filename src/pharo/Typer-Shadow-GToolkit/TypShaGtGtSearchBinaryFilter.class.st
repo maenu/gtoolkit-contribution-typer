@@ -8,7 +8,7 @@ Class {
 TypShaGtGtSearchBinaryFilter class >> ___forFilter: _a filter: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | GtCoderMethodsFilter typAsType ];
-		resultType: [ :a :s :r | a receiverType asClass instanceSide typAsType ];
+		resultType: [ :a :s :r | a receiverType asClassDescription instanceSide typAsType ];
 		yourself
 ]
 
