@@ -42,6 +42,7 @@ TypNamedTypeExamples >> classDescription [
 	| type |
 	type := self type.
 	self assert: type classDescription = Object.
+	self assert: [ self typeNotAClass classDescription ] signals: TypNoClassDescriptionError.
 	self assert: self typeObjectClass classDescription = Object class.
 	self assert: self typeTAssertable classDescription = TAssertable.
 	self

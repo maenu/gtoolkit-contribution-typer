@@ -94,9 +94,11 @@ TypParametricType >> printOn: aStream [
 TypParametricType >> superType [
 	| superType |
 	superType := super superType.
-	(superType isParametric and: [ (superType "typCastAs TypParametricType") parameters size = parameters size ])
-		ifTrue: [ superType := (superType "typCastAs TypParametricType") copy
+	^ (superType isParametric
+		and:
+			[ (superType "typCastAs TypParametricType") parameters size = parameters size ])
+		ifTrue: [ (superType "typCastAs TypParametricType") copy
 				parameters: parameters copy;
-				yourself ].
-	^ superType
+				yourself ]
+		ifFalse: [ superType ]
 ]

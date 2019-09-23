@@ -30,6 +30,15 @@ TypUnknownTypeExamples >> asTypeCompatibleWith [
 	^ type
 ]
 
+{ #category : #'as yet unclassified' }
+TypUnknownTypeExamples >> copy_ [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type copy == type.
+	^ type
+]
+
 { #category : #accessing }
 TypUnknownTypeExamples >> equality [
 	<gtExample>

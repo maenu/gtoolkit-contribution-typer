@@ -141,9 +141,9 @@ TypFunctionType >> result: anObject [
 TypFunctionType >> superType [
 	| superType |
 	superType := super superType.
-	superType isFunction
-		ifTrue: [ superType := (superType copy "typCastAs TypFunctionType")
+	^ superType isFunction
+		ifTrue: [ (superType "typCastAs TypFunctionType") copy
 				result: result copy;
-				yourself ].
-	^ superType
+				yourself ]
+		ifFalse: [ superType ]
 ]

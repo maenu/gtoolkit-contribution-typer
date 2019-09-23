@@ -70,6 +70,15 @@ TypNilTypeExamples >> classDescription [
 	^ type
 ]
 
+{ #category : #copying }
+TypNilTypeExamples >> copy_ [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type copy == type.
+	^ type
+]
+
 { #category : #accessing }
 TypNilTypeExamples >> equality [
 	<gtExample>

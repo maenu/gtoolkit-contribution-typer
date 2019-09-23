@@ -9,7 +9,6 @@ Class {
 
 { #category : #converting }
 TypUnionType class >> asTypes: aCollection [
-	<typTypeResultAs: 'TypType'>
 	| remains nil_ |
 	remains := (aCollection
 		flatCollect: [ :e "typParameters TypType"
@@ -32,7 +31,7 @@ TypUnionType class >> asTypes: aCollection [
 { #category : #generated }
 TypUnionType class >> types: aCollection [
 	^ self new
-		types: aCollection;
+		types: (self asTypes: aCollection);
 		yourself
 ]
 
@@ -55,12 +54,20 @@ TypUnionType >> > aType [
 
 { #category : #converting }
 TypUnionType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
-	^ self superType asFunctionType: someTypes result: aType optionalParameters: aBoolean
+	| superType |
+	superType := self superType.
+	superType isUnion
+		ifTrue: [ TypNoTypeError signal ].
+	^ superType asFunctionType: someTypes result: aType optionalParameters: aBoolean
 ]
 
 { #category : #converting }
 TypUnionType >> asNamedType [
-	^ self superType asNamedType
+	| superType |
+	superType := self superType.
+	superType isUnion
+		ifTrue: [ TypNoTypeError signal ].
+	^ superType
 ]
 
 { #category : #converting }
@@ -72,7 +79,11 @@ TypUnionType >> asNonNullableType [
 
 { #category : #converting }
 TypUnionType >> asParametricType: someTypes [
-	^ self superType asParametricType: someTypes
+	| superType |
+	superType := self superType.
+	superType isUnion
+		ifTrue: [ TypNoTypeError signal ].
+	^ superType asParametricType: someTypes
 ]
 
 { #category : #accessing }
@@ -91,7 +102,11 @@ TypUnionType >> canUnderstand: aSymbol [
 
 { #category : #converting }
 TypUnionType >> classDescription [
-	^ self superType classDescription
+	| superType |
+	superType := self superType.
+	superType isUnion
+		ifTrue: [ TypNoClassDescriptionError signal ].
+	^ superType classDescription
 ]
 
 { #category : #testing }
@@ -104,7 +119,7 @@ TypUnionType >> hasParamatersCompatibleWithThoseOf: aType [
 
 { #category : #testing }
 TypUnionType >> hasSuperType [
-	^ self superType ~= self
+	^ self superType_ ~= self
 ]
 
 { #category : #comparing }
@@ -122,7 +137,11 @@ TypUnionType >> initialize [
 
 { #category : #converting }
 TypUnionType >> isFunction [
-	^ self superType isFunction
+	| superType |
+	superType := self superType.
+	^ superType isUnion
+		ifTrue: [ false ]
+		ifFalse: [ superType isFunction ]
 ]
 
 { #category : #converting }
@@ -136,7 +155,11 @@ TypUnionType >> isNamed [
 
 { #category : #converting }
 TypUnionType >> isParametric [
-	^ self hasSuperType and: [ self superType isParametric ]
+	| superType |
+	superType := self superType.
+	^ superType isUnion
+		ifTrue: [ false ]
+		ifFalse: [ superType isParametric ]
 ]
 
 { #category : #testing }
@@ -208,6 +231,13 @@ TypUnionType >> representsClassDescription [
 
 { #category : #accessing }
 TypUnionType >> superType [
+	self hasSuperType
+		ifFalse: [ TypNoTypeError signal ].
+	^ self superType_
+]
+
+{ #category : #accessing }
+TypUnionType >> superType_ [
 	| remains nil_ unknown current |
 	remains := types copy.
 	nil_ := remains includes: TypNilType instance.
@@ -245,9 +275,10 @@ TypUnionType >> types [
 
 { #category : #accessing }
 TypUnionType >> types: anObject [
-	<typTypeArgument: 1 as: 'Collection<TypType>'>
-	| types_ |
-	types_ := self class asTypes: anObject.
-	self assert: [ types_ size > 1 ].
-	types := types_
+	<typTypeArgument: 1 as: 'Set<TypType>'>
+	self
+		assert: [ | types_ |
+			types_ := self class asTypes: anObject.
+			types_ size > 1 and: [ types_ = anObject ] ].
+	types := anObject
 ]

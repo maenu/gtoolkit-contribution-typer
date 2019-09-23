@@ -65,7 +65,8 @@ TypNamedType >> asParametricType: someTypes [
 { #category : #converting }
 TypNamedType >> classDescription [
 	self flag: 'FIXME invalidate?'.
-	self assert: [ self representsClassDescription ].
+	self representsClassDescription
+		ifFalse: [ TypNoClassDescriptionError signal ].
 	^ classDescription
 		ifNil: [ classDescription := (name endsWith: ' class')
 				ifTrue: [ (name copyFrom: 1 to: name size - ' class' size) asClass classSide ]
@@ -152,6 +153,7 @@ TypNamedType >> representsClassDescription [
 
 { #category : #'as yet unclassified' }
 TypNamedType >> superType [
-	self assert: [ self hasSuperType ].
+	self hasSuperType
+		ifFalse: [ TypNoTypeError signal ].
 	^ self classDescription superclass typAsType
 ]
