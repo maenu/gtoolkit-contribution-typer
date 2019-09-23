@@ -22,7 +22,7 @@ RBReturnNode >> typCheCheckCompatibility [
 								ifFalse: [ expected isFunction
 										ifTrue: [ {expected "typCastAs TypFunctionType"} ]
 										ifFalse: [ {} "typParameters TypFunctionType" ] ].
-							functions anySatisfy: [ :e | e hasParamatersCompatibleWithThoseOf: (actual "typCastAs TypFunctionType") ] ] ] ])
+							functions anySatisfy: [ :e | e hasParametersCompatibleWithThoseOf: (actual "typCastAs TypFunctionType") ] ] ] ])
 		ifTrue: [ ^ self ].
 	TypCheIncompatibleTypeError new
 		expected: expected;

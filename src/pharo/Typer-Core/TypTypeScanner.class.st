@@ -6,12 +6,12 @@ Class {
 
 { #category : #generated }
 TypTypeScanner >> emptySymbolTokenId [
-	^ 25
+	^ 27
 ]
 
 { #category : #generated }
 TypTypeScanner >> errorTokenId [
-	^ 26
+	^ 28
 ]
 
 { #category : #generated }
@@ -32,17 +32,19 @@ TypTypeScanner >> scanForToken [
 		ifTrue: [ ^ self recordAndReportMatch: #(6) ].
 	currentCharacter == $>
 		ifTrue: [ ^ self recordAndReportMatch: #(7) ].
+	currentCharacter == $?
+		ifTrue: [ ^ self recordAndReportMatch: #(8) ].
 	^ self scanForTokenX3
 ]
 
 { #category : #generated }
 TypTypeScanner >> scanForTokenX1 [
 	(self scanForString: 'class')
-		ifTrue: [ self recordMatch: #(13).
+		ifTrue: [ self recordMatch: #(14).
 			self step.
 			currentCharacter == $T
 				ifTrue: [ (self scanForString: 'rait')
-						ifTrue: [ ^ self recordAndReportMatch: #(13) ] ] ].
+						ifTrue: [ ^ self recordAndReportMatch: #(14) ] ] ].
 	^ self reportLastMatch
 ]
 
@@ -56,20 +58,20 @@ TypTypeScanner >> scanForTokenX2 [
 
 { #category : #generated }
 TypTypeScanner >> scanForTokenX3 [
-	currentCharacter == $?
-		ifTrue: [ ^ self recordAndReportMatch: #(8) ].
-	currentCharacter == $[
+	currentCharacter == $@
 		ifTrue: [ ^ self recordAndReportMatch: #(9) ].
-	currentCharacter == $]
+	currentCharacter == $[
 		ifTrue: [ ^ self recordAndReportMatch: #(10) ].
-	currentCharacter == ${
+	currentCharacter == $]
 		ifTrue: [ ^ self recordAndReportMatch: #(11) ].
-	currentCharacter == $}
+	currentCharacter == ${
 		ifTrue: [ ^ self recordAndReportMatch: #(12) ].
+	currentCharacter == $}
+		ifTrue: [ ^ self recordAndReportMatch: #(13) ].
 	((currentCharacter between: $0 and: $9)
 		or: [ (currentCharacter between: $A and: $Z)
 				or: [ currentCharacter == $_ or: [ currentCharacter between: $a and: $z ] ] ])
-		ifTrue: [ [ self recordMatch: #(13).
+		ifTrue: [ [ self recordMatch: #(14).
 			self step.
 			currentCharacter == Character space
 				ifTrue:

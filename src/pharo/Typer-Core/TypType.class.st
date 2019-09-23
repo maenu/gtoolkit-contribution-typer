@@ -140,6 +140,12 @@ TypType >> isUnknown [
 	^ false
 ]
 
+{ #category : #testing }
+TypType >> isVariable [
+	<typTypeResultAs: 'Boolean'>
+	^ false
+]
+
 { #category : #'as yet unclassified' }
 TypType >> lookupSelector: aSymbol [
 	<typTypeArgument: 1 as: 'Symbol<Character>'>

@@ -24,8 +24,15 @@ TypFunctionType >> > aType [
 				ifTrue: [ | type |
 					type := aType "typCastAs TypFunctionType".
 					result >= type result
-						and: [ self hasParamatersCompatibleWithThoseOf: type ] ]
+						and: [ self hasParametersCompatibleWithThoseOf: type ] ]
 				ifFalse: [ super > aType ] ]
+]
+
+{ #category : #generated }
+TypFunctionType >> allVariables [
+	^ result isParametric
+		ifTrue: [ super allVariables , result allVariables ]
+		ifFalse: [ super allVariables ]
 ]
 
 { #category : #accessing }
@@ -53,7 +60,7 @@ TypFunctionType >> asTypeCompatibleWith: aType [
 ]
 
 { #category : #comparing }
-TypFunctionType >> hasParamatersCompatibleWithThoseOf: aType [
+TypFunctionType >> hasParametersCompatibleWithThoseOf: aType [
 	<typTypeArgument: 1 as: 'TypFunctionType'>
 	<typTypeResultAs: 'Boolean'>
 	| size |
@@ -125,6 +132,15 @@ TypFunctionType >> printOn: aStream [
 	result printOn: aStream
 ]
 
+{ #category : #'as yet unclassified' }
+TypFunctionType >> replaceVariable: aVariable with: aType [
+	super replaceVariable: aVariable with: aType.
+	result = aVariable
+		ifTrue: [ result := aType ]
+		ifFalse: [ result isParametric
+				ifTrue: [ result replaceVariable: aVariable with: aType ] ]
+]
+
 { #category : #accessing }
 TypFunctionType >> result [
 	<typTypeResultAs: 'TypType'>
@@ -146,4 +162,11 @@ TypFunctionType >> superType [
 				result: result copy;
 				yourself ]
 		ifFalse: [ superType ]
+]
+
+{ #category : #generated }
+TypFunctionType >> variables [
+	^ result isVariable
+		ifTrue: [ super variables , {result} ]
+		ifFalse: [ super variables ]
 ]

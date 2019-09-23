@@ -110,11 +110,11 @@ TypUnionType >> classDescription [
 ]
 
 { #category : #testing }
-TypUnionType >> hasParamatersCompatibleWithThoseOf: aType [
+TypUnionType >> hasParametersCompatibleWithThoseOf: aType [
 	<typTypeArgument: 1 as: 'TypFunctionType'>
 	<typTypeResultAs: 'Boolean'>
 	self assert: [ self isFunction ].
-	^ (self superType "typCastAs TypFunctionType") hasParamatersCompatibleWithThoseOf: aType
+	^ (self superType "typCastAs TypFunctionType") hasParametersCompatibleWithThoseOf: aType
 ]
 
 { #category : #testing }
@@ -138,6 +138,7 @@ TypUnionType >> initialize [
 { #category : #converting }
 TypUnionType >> isFunction [
 	| superType |
+	self flag: 'FIXME ignore ? and ! for this'.
 	superType := self superType.
 	^ superType isUnion
 		ifTrue: [ false ]
@@ -147,6 +148,7 @@ TypUnionType >> isFunction [
 { #category : #converting }
 TypUnionType >> isNamed [
 	| superType |
+	self flag: 'FIXME ignore ? and ! for this'.
 	superType := self superType.
 	^ superType isUnion
 		ifTrue: [ false ]
@@ -156,6 +158,7 @@ TypUnionType >> isNamed [
 { #category : #converting }
 TypUnionType >> isParametric [
 	| superType |
+	self flag: 'FIXME ignore ? and ! for this'.
 	superType := self superType.
 	^ superType isUnion
 		ifTrue: [ false ]

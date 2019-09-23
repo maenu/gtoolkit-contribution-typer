@@ -26,6 +26,12 @@ TypParametricType >> > aType [
 						and: [ (parameters withIndexSelect: [ :e :i | e >= (type_ parameters at: i) ]) size = parameters size ] ] ]
 ]
 
+{ #category : #generated }
+TypParametricType >> allVariables [
+	^ self variables
+		, ((parameters select: #isParametric) flatCollect: #allVariables)
+]
+
 { #category : #accessing }
 TypParametricType >> asTypeCompatibleWith: aType [
 	| compatibleType |
@@ -41,6 +47,31 @@ TypParametricType >> asTypeCompatibleWith: aType [
 		name: (compatibleType "typCastAs TypNamedType") name;
 		parameters: (parameters size timesCollect: [ :i | (parameters at: i) asTypeCompatibleWith: ((aType "typCastAs TypParametricType") parameters at: i) ]);
 		yourself
+]
+
+{ #category : #'as yet unclassified' }
+TypParametricType >> ensureNoVariables [
+	self allVariables
+		do: [ :e | self replaceVariable: e with: TypUnknownType instance ]
+]
+
+{ #category : #'as yet unclassified' }
+TypParametricType >> ensureNoVariablesClashingWith: aCollection [
+	| variables intersection union |
+	variables := self allVariables.
+	intersection := (variables intersection: aCollection) copy.
+	union := (variables , aCollection) copy.
+	[ intersection isEmpty ]
+		whileFalse: [ | old new |
+			old := intersection remove: intersection anyOne.
+			new := TypVariableType
+				named:
+					((union
+						inject: 0
+						into: [ :m :e | e name asInteger ifNil: [ m ] ifNotNil: [ :f | m max: f ] ])
+						+ 1) asString.
+			union add: new.
+			self replaceVariable: old with: new ]
 ]
 
 { #category : #comparing }
@@ -90,6 +121,16 @@ TypParametricType >> printOn: aStream [
 	aStream << '>'
 ]
 
+{ #category : #'as yet unclassified' }
+TypParametricType >> replaceVariable: aVariable with: aType [
+	parameters
+		withIndexDo: [ :e :i | 
+			e = aVariable
+				ifTrue: [ parameters at: i put: aType ]
+				ifFalse: [ e isParametric
+						ifTrue: [ e replaceVariable: aVariable with: aType ] ] ]
+]
+
 { #category : #accessing }
 TypParametricType >> superType [
 	| superType |
@@ -101,4 +142,9 @@ TypParametricType >> superType [
 				parameters: parameters copy;
 				yourself ]
 		ifFalse: [ superType ]
+]
+
+{ #category : #generated }
+TypParametricType >> variables [
+	^ (parameters select: #isVariable) asSet
 ]
