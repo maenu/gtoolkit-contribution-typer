@@ -107,11 +107,11 @@ TypNamedTypeExamples >> superType [
 		assert: self typeObjectClass superType = self typeProtoObjectClass.
 	self
 		assert: self typeProtoObjectClass superType = (TypNamedType named: 'Class').
+	self assert: [ self typeNotAClass superType ] signals: TypNoTypeError.
 	^ type
 ]
 
 { #category : #'as yet unclassified' }
 TypNamedTypeExamples >> type [
-	<gtExample>
 	^ self typeObject
 ]

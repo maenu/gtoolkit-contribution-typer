@@ -86,6 +86,5 @@ TypUnknownTypeExamples >> printOn [
 
 { #category : #'as yet unclassified' }
 TypUnknownTypeExamples >> type [
-	<gtExample>
 	^ TypUnknownType instance
 ]

@@ -12,8 +12,8 @@ TypParametricType >> = anObject [
 	^ self == anObject
 		or: [ self class = anObject class
 				and: [ | object |
-					object := anObject "typCastAs TypParametricType".
-					self name = object name and: [ self parameters = object parameters ] ] ]
+					object := anObject "typCastAs TypGenericType".
+					name = object name and: [ parameters = object parameters ] ] ]
 ]
 
 { #category : #comparing }
@@ -21,57 +21,31 @@ TypParametricType >> > aType [
 	^ aType isParametric
 		and: [ super > aType
 				and: [ | type_ |
-					type_ := aType "typCastAs TypParametricType".
+					type_ := aType "typCastAs TypGenericType".
 					parameters size = type_ parameters size
 						and: [ (parameters withIndexSelect: [ :e :i | e >= (type_ parameters at: i) ]) size = parameters size ] ] ]
 ]
 
-{ #category : #generated }
-TypParametricType >> allVariables [
-	^ self variables
-		, ((parameters select: #isParametric) flatCollect: #allVariables)
-]
-
 { #category : #accessing }
 TypParametricType >> asTypeCompatibleWith: aType [
-	| compatibleType |
-	compatibleType := ((TypNamedType named: name)
-		yourself)
-		asTypeCompatibleWith:
-			(aType isNamed
-				ifTrue: [ TypNamedType named: (aType "typCastAs TypNamedType") name]
-				ifFalse: [ aType ]).
-	(compatibleType isNamed and: [ aType isParametric and: [ (aType "typCastAs TypParametricType") parameters size = parameters size ] ])
-		ifFalse: [ ^ compatibleType ].
-	^ TypParametricType new
-		name: (compatibleType "typCastAs TypNamedType") name;
-		parameters: (parameters size timesCollect: [ :i | (parameters at: i) asTypeCompatibleWith: ((aType "typCastAs TypParametricType") parameters at: i) ]);
-		yourself
-]
+	"Assume parameters map with parameters of super type."
 
-{ #category : #'as yet unclassified' }
-TypParametricType >> ensureNoVariables [
-	self allVariables
-		do: [ :e | self replaceVariable: e with: TypUnknownType instance ]
-]
-
-{ #category : #'as yet unclassified' }
-TypParametricType >> ensureNoVariablesClashingWith: aCollection [
-	| variables intersection union |
-	variables := self allVariables.
-	intersection := (variables intersection: aCollection) copy.
-	union := (variables , aCollection) copy.
-	[ intersection isEmpty ]
-		whileFalse: [ | old new |
-			old := intersection remove: intersection anyOne.
-			new := TypVariableType
-				named:
-					((union
-						inject: 0
-						into: [ :m :e | e name asInteger ifNil: [ m ] ifNotNil: [ :f | m max: f ] ])
-						+ 1) asString.
-			union add: new.
-			self replaceVariable: old with: new ]
+	^ aType isParametric
+		ifTrue: [ | type_ minSize parameters_ |
+			type_ := aType "typCastAs TypGenericType".
+			minSize := parameters size min: type_ parameters size.
+			parameters_ := (minSize
+				timesCollect: [ :i | 
+					(parameters at: i)
+						asTypeCompatibleWith: (type_ parameters at: i) ])
+				,
+					(type_ parameters
+						copyFrom: minSize + 1
+						to: type_ parameters size).
+			type_ copy
+				parameters: parameters_;
+				yourself ]
+		ifFalse: [ super asTypeCompatibleWith: aType ]
 ]
 
 { #category : #comparing }
@@ -81,7 +55,6 @@ TypParametricType >> hash [
 
 { #category : #initialization }
 TypParametricType >> initialize [
-	<typTypeVariable: 'type' as: 'TypType'>
 	<typTypeVariable: 'parameters' as: 'OrderedCollection<TypType>'>
 	super initialize.
 	parameters := OrderedCollection new "typParameters TypType"
@@ -100,7 +73,7 @@ TypParametricType >> parameters [
 
 { #category : #accessing }
 TypParametricType >> parameters: anObject [
-	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
+	<typTypeArgument: 1 as: 'Collection<TypType>'>
 	parameters := anObject asOrderedCollection
 ]
 
@@ -115,36 +88,43 @@ TypParametricType >> printOn: aStream [
 	super printOn: aStream.
 	aStream << '<'.
 	1 to: parameters size do: [ :i | 
-		(parameters at: i) printOn: aStream.
+		((parameters at: i) resolveIn: self scope) printOn: aStream.
 		i < parameters size
 			ifTrue: [ aStream << ',' ] ].
 	aStream << '>'
 ]
 
-{ #category : #'as yet unclassified' }
-TypParametricType >> replaceVariable: aVariable with: aType [
-	parameters
-		withIndexDo: [ :e :i | 
-			e = aVariable
-				ifTrue: [ parameters at: i put: aType ]
-				ifFalse: [ e isParametric
-						ifTrue: [ e replaceVariable: aVariable with: aType ] ] ]
-]
-
 { #category : #accessing }
 TypParametricType >> superType [
+	"Assume parameters map with parameters of super type."
+
 	| superType |
 	superType := super superType.
-	^ (superType isParametric
-		and:
-			[ (superType "typCastAs TypParametricType") parameters size = parameters size ])
-		ifTrue: [ (superType "typCastAs TypParametricType") copy
-				parameters: parameters copy;
+	^ superType isParametric
+		ifTrue: [ | superType_ minSize parameters_ |
+			superType_ := superType "typCastAs TypParametricType".
+			minSize := parameters size min: superType_ parameters size.
+			parameters_ := (parameters copyFrom: 1 to: minSize)
+				,
+					(superType parameters
+						copyFrom: minSize + 1
+						to: superType parameters size).
+			superType_ copy
+				parameters: parameters_;
 				yourself ]
 		ifFalse: [ superType ]
 ]
 
-{ #category : #generated }
-TypParametricType >> variables [
-	^ (parameters select: #isVariable) asSet
+{ #category : #testing }
+TypParametricType >> validateAsSuperTypeOf: aType [
+	^ aType isParametric
+		ifTrue: [ parameters
+				do: [ :e | 
+					((aType parameters includes: e)
+						or: [ (e resolveIn: self scope) isTypeVariable not ])
+						ifFalse: [ self scope at: e put: TypUnknownType instance ] ] ]
+		ifFalse: [ parameters
+				do: [ :e | 
+					(e resolveIn: self scope) isTypeVariable not
+						ifFalse: [ self scope at: e put: TypUnknownType instance ] ] ]
 ]

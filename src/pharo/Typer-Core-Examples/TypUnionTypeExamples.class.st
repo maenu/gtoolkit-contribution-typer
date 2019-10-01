@@ -194,19 +194,16 @@ TypUnionTypeExamples >> superType [
 
 { #category : #'as yet unclassified' }
 TypUnionTypeExamples >> type [
-	<gtExample>
 	^ self typeLargePositiveIntegerAndSmallInteger
 ]
 
 { #category : #'as yet unclassified' }
 TypUnionTypeExamples >> typeLargePositiveInteger [
-	<gtExample>
 	^ TypNamedType named: 'LargePositiveInteger'
 ]
 
 { #category : #'as yet unclassified' }
 TypUnionTypeExamples >> typeLargePositiveIntegerAndSmallInteger [
-	<gtExample>
 	^ TypUnionType
 		types:
 			{self typeLargePositiveInteger.
@@ -215,13 +212,11 @@ TypUnionTypeExamples >> typeLargePositiveIntegerAndSmallInteger [
 
 { #category : #'as yet unclassified' }
 TypUnionTypeExamples >> typeSmallInteger [
-	<gtExample>
 	^ TypNamedType named: 'SmallInteger'
 ]
 
 { #category : #'as yet unclassified' }
 TypUnionTypeExamples >> typeSmallIntegerAndTrue [
-	<gtExample>
 	^ TypUnionType
 		types:
 			{self typeSmallInteger.
@@ -230,13 +225,11 @@ TypUnionTypeExamples >> typeSmallIntegerAndTrue [
 
 { #category : #'as yet unclassified' }
 TypUnionTypeExamples >> typeTrue [
-	<gtExample>
 	^ TypNamedType named: 'True'
 ]
 
 { #category : #'as yet unclassified' }
 TypUnionTypeExamples >> typeWithNil [
-	<gtExample>
 	^ TypUnionType
 		types:
 			{TypNilType instance.
@@ -246,7 +239,6 @@ TypUnionTypeExamples >> typeWithNil [
 
 { #category : #'as yet unclassified' }
 TypUnionTypeExamples >> typeWithUnknown [
-	<gtExample>
 	^ TypUnionType
 		types:
 			{TypUnknownType instance.
@@ -256,7 +248,6 @@ TypUnionTypeExamples >> typeWithUnknown [
 
 { #category : #'as yet unclassified' }
 TypUnionTypeExamples >> typeWithUnknownAndNil [
-	<gtExample>
 	^ TypUnionType
 		types:
 			{TypNilType instance.

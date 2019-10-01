@@ -18,7 +18,7 @@ Collection >> typSelfType [
 	| type |
 	type := super typSelfType.
 	(type isParametric
-		and: [ type parameters size = 1 and: [ type parameters first isUnknown ] ])
+		and: [ type parameters size = 1 and: [ type parameters first isTypeVariable ] ])
 		ifFalse: [ ^ type ].
 	"infer parametric type from elements, using only generic types to avoid infinite loop"
 	^ type

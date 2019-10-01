@@ -44,7 +44,7 @@ TypNamedType >> asFunctionType: someTypes result: aType optionalParameters: aBoo
 		classDescription: classDescription;
 		parameters: someTypes;
 		result: aType;
-		optionalParameters: aBoolean;
+		optionalArguments: aBoolean;
 		yourself
 ]
 
@@ -56,6 +56,7 @@ TypNamedType >> asNamedType [
 { #category : #converting }
 TypNamedType >> asParametricType: someTypes [
 	^ TypParametricType new
+		scope: self scope;
 		name: name;
 		classDescription: classDescription;
 		parameters: someTypes;
@@ -153,7 +154,11 @@ TypNamedType >> representsClassDescription [
 
 { #category : #'as yet unclassified' }
 TypNamedType >> superType [
+	| superType |
 	self hasSuperType
 		ifFalse: [ TypNoTypeError signal ].
-	^ self classDescription superclass typAsType
+	superType := self classDescription superclass typAsType copy.
+	scope ifNotNil: [ superType scope adopt: scope parent ].
+	superType validateAsSuperTypeOf: self.
+	^ superType
 ]

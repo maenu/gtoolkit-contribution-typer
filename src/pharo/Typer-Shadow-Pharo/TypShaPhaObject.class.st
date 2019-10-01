@@ -29,10 +29,11 @@ TypShaPhaObject >> ___asSymbol [
 TypShaPhaObject >> ___assert: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
-			BlockClosure typAsType
+			{Boolean typAsType.
+			(BlockClosure typAsType
 				asFunctionType: {}
 				result: Boolean typAsType
-				optionalParameters: false ];
+				optionalParameters: false)} typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

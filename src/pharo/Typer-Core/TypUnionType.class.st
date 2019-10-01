@@ -110,11 +110,11 @@ TypUnionType >> classDescription [
 ]
 
 { #category : #testing }
-TypUnionType >> hasParametersCompatibleWithThoseOf: aType [
+TypUnionType >> hasArgumentsCompatibleWithThoseOf: aType [
 	<typTypeArgument: 1 as: 'TypFunctionType'>
 	<typTypeResultAs: 'Boolean'>
 	self assert: [ self isFunction ].
-	^ (self superType "typCastAs TypFunctionType") hasParametersCompatibleWithThoseOf: aType
+	^ (self superType "typCastAs TypFunctionType") hasArgumentsCompatibleWithThoseOf: aType
 ]
 
 { #category : #testing }

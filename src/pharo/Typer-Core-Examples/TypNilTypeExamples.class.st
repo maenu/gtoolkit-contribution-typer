@@ -150,6 +150,5 @@ TypNilTypeExamples >> superType [
 
 { #category : #'as yet unclassified' }
 TypNilTypeExamples >> type [
-	<gtExample>
 	^ TypNilType instance
 ]

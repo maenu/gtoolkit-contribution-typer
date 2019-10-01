@@ -16,6 +16,15 @@ TypTypeExamples >> asFunctionTypeResultOptionalParameters [
 ]
 
 { #category : #converting }
+TypTypeExamples >> asGenericType [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: [ type asParametricType: nil ] signals: TypNoTypeError.
+	^ type
+]
+
+{ #category : #converting }
 TypTypeExamples >> asNamedType [
 	<gtExample>
 	| type |
@@ -46,15 +55,6 @@ TypTypeExamples >> asNullableType [
 	self assert: nullableType >= type.
 	self assert: nullableType asNonNullableType = type.
 	^ nullableType
-]
-
-{ #category : #converting }
-TypTypeExamples >> asParametricType [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: [ type asParametricType: nil ] signals: TypNoTypeError.
-	^ type
 ]
 
 { #category : #'as yet unclassified' }
@@ -219,54 +219,50 @@ TypTypeExamples >> superType [
 
 { #category : #'as yet unclassified' }
 TypTypeExamples >> type [
-	<gtExample>
 	self subclassResponsibility
 ]
 
 { #category : #'as yet unclassified' }
 TypTypeExamples >> typeInteger [
-	<gtExample>
 	^ TypNamedType named: 'Integer'
 ]
 
 { #category : #'as yet unclassified' }
 TypTypeExamples >> typeNotAClass [
-	<gtExample>
 	^ TypNamedType named: 'notaclass'
 ]
 
 { #category : #'as yet unclassified' }
 TypTypeExamples >> typeObject [
-	<gtExample>
 	^ TypNamedType named: 'Object'
 ]
 
 { #category : #'as yet unclassified' }
 TypTypeExamples >> typeObjectClass [
-	<gtExample>
 	^ TypNamedType named: 'Object class'
 ]
 
 { #category : #'as yet unclassified' }
 TypTypeExamples >> typeProtoObject [
-	<gtExample>
 	^ TypNamedType named: 'ProtoObject'
 ]
 
 { #category : #'as yet unclassified' }
 TypTypeExamples >> typeProtoObjectClass [
-	<gtExample>
 	^ TypNamedType named: 'ProtoObject class'
 ]
 
 { #category : #'as yet unclassified' }
+TypTypeExamples >> typeString [
+	^ TypNamedType named: 'String'
+]
+
+{ #category : #'as yet unclassified' }
 TypTypeExamples >> typeTAssertable [
-	<gtExample>
 	^ TypNamedType named: 'TAssertable'
 ]
 
 { #category : #'as yet unclassified' }
 TypTypeExamples >> typeTAssertableClassTrait [
-	<gtExample>
 	^ TypNamedType named: 'TAssertable classTrait'
 ]

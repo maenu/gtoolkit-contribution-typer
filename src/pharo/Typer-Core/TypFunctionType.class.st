@@ -1,9 +1,10 @@
 Class {
 	#name : #TypFunctionType,
-	#superclass : #TypParametricType,
+	#superclass : #TypType,
 	#instVars : [
-		'optionalParameters',
-		'result'
+		'result',
+		'arguments',
+		'optionalArguments'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -14,7 +15,7 @@ TypFunctionType >> = anObject [
 		or: [ self class = anObject class
 				and: [ | type |
 					type := anObject "typCastAs TypFunctionType".
-					self name = type name and: [ self parameters = type parameters and: [ self optionalParameters = type optionalParameters and: [ result = type result ] ] ] ] ]
+					arguments = type arguments and: [ optionalArguments = type optionalArguments and: [ result = type result ] ] ] ]
 ]
 
 { #category : #comparing }
@@ -24,15 +25,20 @@ TypFunctionType >> > aType [
 				ifTrue: [ | type |
 					type := aType "typCastAs TypFunctionType".
 					result >= type result
-						and: [ self hasParametersCompatibleWithThoseOf: type ] ]
+						and: [ self hasArgumentsCompatibleWithThoseOf: type ] ]
 				ifFalse: [ super > aType ] ]
 ]
 
-{ #category : #generated }
-TypFunctionType >> allVariables [
-	^ result isParametric
-		ifTrue: [ super allVariables , result allVariables ]
-		ifFalse: [ super allVariables ]
+{ #category : #accessing }
+TypFunctionType >> arguments [
+	<typTypeResultAs: 'OrderedCollection<TypType>'>
+	^ arguments
+]
+
+{ #category : #accessing }
+TypFunctionType >> arguments: anObject [
+	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
+	arguments := anObject asOrderedCollection
 ]
 
 { #category : #accessing }
@@ -40,7 +46,7 @@ TypFunctionType >> asTypeCompatibleWith: aType [
 	| compatibleType |
 	compatibleType := (TypParametricType new
 		name: name;
-		parameters: parameters;
+		parameters: arguments;
 		yourself)
 		asTypeCompatibleWith:
 			(aType isParametric
@@ -55,29 +61,29 @@ TypFunctionType >> asTypeCompatibleWith: aType [
 		name: (compatibleType "typCastAs TypParametricType") name;
 		parameters: (compatibleType "typCastAs TypParametricType") parameters;
 		result: (result asTypeCompatibleWith: (aType "typCastAs TypFunctionType") result);
-		optionalParameters: (optionalParameters and: (aType "typCastAs TypFunctionType") optionalParameters);
+		optionalArguments: (optionalArguments and: (aType "typCastAs TypFunctionType") optionalArguments);
 		yourself
 ]
 
 { #category : #comparing }
-TypFunctionType >> hasParametersCompatibleWithThoseOf: aType [
+TypFunctionType >> hasArgumentsCompatibleWithThoseOf: aType [
 	<typTypeArgument: 1 as: 'TypFunctionType'>
 	<typTypeResultAs: 'Boolean'>
 	| size |
-	size := optionalParameters
-		ifTrue: [ aType parameters size ]
-		ifFalse: [ parameters size ].
+	size := optionalArguments
+		ifTrue: [ aType arguments size ]
+		ifFalse: [ arguments size ].
 	^ size = 0
-		or: [ size <= parameters size
-				and: [ size <= aType parameters size
-						and: [ ((parameters copyFrom: 1 to: size)
-								withIndexSelect: [ :e :i | e >= (aType parameters at: i) ])
+		or: [ size <= arguments size
+				and: [ size <= aType arguments size
+						and: [ ((arguments copyFrom: 1 to: size)
+								withIndexSelect: [ :e :i | e >= (aType arguments at: i) ])
 								size = size ] ] ]
 ]
 
 { #category : #comparing }
 TypFunctionType >> hash [
-	^ (super hash bitXor: optionalParameters hash) bitXor: result hash
+	^ (super hash bitXor: optionalArguments hash) bitXor: result hash
 ]
 
 { #category : #accessing }
@@ -85,7 +91,7 @@ TypFunctionType >> initialize [
 	<typTypeVariable: 'optionalParameters' as: 'Boolean'>
 	<typTypeVariable: 'result' as: 'TypType'>
 	super initialize.
-	optionalParameters := false
+	optionalArguments := false
 ]
 
 { #category : #testing }
@@ -94,15 +100,15 @@ TypFunctionType >> isFunction [
 ]
 
 { #category : #accessing }
-TypFunctionType >> optionalParameters [
+TypFunctionType >> optionalArguments [
 	<typTypeResultAs: 'Boolean'>
-	^ optionalParameters
+	^ optionalArguments
 ]
 
 { #category : #accessing }
-TypFunctionType >> optionalParameters: anObject [
+TypFunctionType >> optionalArguments: anObject [
 	<typTypeArgument: 1 as: 'Boolean'>
-	optionalParameters := anObject
+	optionalArguments := anObject
 ]
 
 { #category : #copying }
@@ -116,29 +122,20 @@ TypFunctionType >> printOn: aStream [
 	aStream << name asString.
 	aStream
 		<<
-			(optionalParameters
+			(optionalArguments
 				ifTrue: [ '[' ]
 				ifFalse: [ '(' ]).
-	1 to: parameters size do: [ :i | 
-		(parameters at: i) printOn: aStream.
-		i < parameters size
+	1 to: arguments size do: [ :i | 
+		(arguments at: i) printOn: aStream.
+		i < arguments size
 			ifTrue: [ aStream << ',' ] ].
 	aStream
 		<<
-			(optionalParameters
+			(optionalArguments
 				ifTrue: [ ']' ]
 				ifFalse: [ ')' ]).
 	aStream << '->'.
 	result printOn: aStream
-]
-
-{ #category : #'as yet unclassified' }
-TypFunctionType >> replaceVariable: aVariable with: aType [
-	super replaceVariable: aVariable with: aType.
-	result = aVariable
-		ifTrue: [ result := aType ]
-		ifFalse: [ result isParametric
-				ifTrue: [ result replaceVariable: aVariable with: aType ] ]
 ]
 
 { #category : #accessing }
@@ -162,11 +159,4 @@ TypFunctionType >> superType [
 				result: result copy;
 				yourself ]
 		ifFalse: [ superType ]
-]
-
-{ #category : #generated }
-TypFunctionType >> variables [
-	^ result isVariable
-		ifTrue: [ super variables , {result} ]
-		ifFalse: [ super variables ]
 ]

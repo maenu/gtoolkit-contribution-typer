@@ -21,7 +21,7 @@ TypShaPhaSequenceableCollection class >> shadowedClass [
 TypShaPhaSequenceableCollection >> ___at: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ Integer typAsType ];
-		resultType: [ :a | a receiverType parameters at: 1 ];
+		resultType: [ :a | a receiverType scope at: '@E' ];
 		yourself
 ]
 
@@ -193,5 +193,6 @@ TypShaPhaSequenceableCollection >> ___withIndexSelect: _a [
 
 { #category : #converting }
 TypShaPhaSequenceableCollection >> asType: aClass [
-	^ aClass typAsNamedType asParametricType: {TypUnknownType instance}
+	^ aClass typAsNamedType
+		asParametricType: {(TypTypeVariableType named: '@E')}
 ]

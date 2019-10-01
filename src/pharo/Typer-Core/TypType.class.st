@@ -1,6 +1,9 @@
 Class {
 	#name : #TypType,
 	#superclass : #Object,
+	#instVars : [
+		'scope'
+	],
 	#category : #'Typer-Core-Type'
 }
 
@@ -63,11 +66,11 @@ TypType >> asNullableType [
 { #category : #converting }
 TypType >> asParametricType: someTypes [
 	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
-	<typTypeResultAs: 'TypParametricType'>
+	<typTypeResultAs: 'TypGenericType'>
 	TypNoTypeError signal
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 TypType >> asTypeCompatibleWith: aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'TypType'>
@@ -129,6 +132,12 @@ TypType >> isParametric [
 ]
 
 { #category : #testing }
+TypType >> isTypeVariable [
+	<typTypeResultAs: 'Boolean'>
+	^ false
+]
+
+{ #category : #testing }
 TypType >> isUnion [
 	<typTypeResultAs: 'Boolean'>
 	^ false
@@ -136,12 +145,6 @@ TypType >> isUnion [
 
 { #category : #testing }
 TypType >> isUnknown [
-	<typTypeResultAs: 'Boolean'>
-	^ false
-]
-
-{ #category : #testing }
-TypType >> isVariable [
 	<typTypeResultAs: 'Boolean'>
 	^ false
 ]
@@ -158,14 +161,40 @@ TypType >> nullable [
 	^ self isNil
 ]
 
+{ #category : #copying }
+TypType >> postCopy [
+	super postCopy.
+	scope := scope copy
+]
+
 { #category : #testing }
 TypType >> representsClassDescription [
 	<typTypeResultAs: 'Boolean'>
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
+TypType >> resolveIn: aScope [
+	^ self
+]
+
+{ #category : #'as yet unclassified' }
+TypType >> scope [
+	^ scope ifNil: [ scope := TypScope new ]
+]
+
+{ #category : #'as yet unclassified' }
+TypType >> scope: aScope [
+	scope := aScope
+]
+
+{ #category : #'as yet unclassified' }
 TypType >> superType [
 	<typTypeResultAs: 'TypType'>
 	TypNoTypeError signal
+]
+
+{ #category : #'as yet unclassified' }
+TypType >> validateAsSuperTypeOf: aType [
+	
 ]
