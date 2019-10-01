@@ -107,6 +107,12 @@ TypType >> hasSuperType [
 	^ false
 ]
 
+{ #category : #initialization }
+TypType >> initialize [
+	super initialize.
+	scope := TypScope new
+]
+
 { #category : #testing }
 TypType >> isFunction [
 	<typTypeResultAs: 'Boolean'>
@@ -180,7 +186,7 @@ TypType >> resolveIn: aScope [
 
 { #category : #'as yet unclassified' }
 TypType >> scope [
-	^ scope ifNil: [ scope := TypScope new ]
+	^ scope
 ]
 
 { #category : #'as yet unclassified' }

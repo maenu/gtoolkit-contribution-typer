@@ -88,7 +88,7 @@ TypParametricType >> printOn: aStream [
 	super printOn: aStream.
 	aStream << '<'.
 	1 to: parameters size do: [ :i | 
-		((parameters at: i) resolveIn: self scope) printOn: aStream.
+		((parameters at: i) resolveIn: scope) printOn: aStream.
 		i < parameters size
 			ifTrue: [ aStream << ',' ] ].
 	aStream << '>'
@@ -121,10 +121,10 @@ TypParametricType >> validateAsSuperTypeOf: aType [
 		ifTrue: [ parameters
 				do: [ :e | 
 					((aType parameters includes: e)
-						or: [ (e resolveIn: self scope) isTypeVariable not ])
-						ifFalse: [ self scope at: e put: TypUnknownType instance ] ] ]
+						or: [ (e resolveIn: scope) isTypeVariable not ])
+						ifFalse: [ scope at: e put: TypUnknownType instance ] ] ]
 		ifFalse: [ parameters
 				do: [ :e | 
-					(e resolveIn: self scope) isTypeVariable not
-						ifFalse: [ self scope at: e put: TypUnknownType instance ] ] ]
+					(e resolveIn: scope) isTypeVariable not
+						ifFalse: [ scope at: e put: TypUnknownType instance ] ] ]
 ]

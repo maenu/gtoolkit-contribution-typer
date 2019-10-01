@@ -56,7 +56,7 @@ TypNamedType >> asNamedType [
 { #category : #converting }
 TypNamedType >> asParametricType: someTypes [
 	^ TypParametricType new
-		scope: self scope;
+		scope: scope copy;
 		name: name;
 		classDescription: classDescription;
 		parameters: someTypes;
