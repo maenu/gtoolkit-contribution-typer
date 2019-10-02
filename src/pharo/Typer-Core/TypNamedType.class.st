@@ -65,7 +65,6 @@ TypNamedType >> asParametricType: someTypes [
 
 { #category : #converting }
 TypNamedType >> classDescription [
-	self flag: 'FIXME invalidate?'.
 	self representsClassDescription
 		ifFalse: [ TypNoClassDescriptionError signal ].
 	^ classDescription
@@ -88,7 +87,9 @@ TypNamedType >> classDescription: aClassDescription [
 
 { #category : #'as yet unclassified' }
 TypNamedType >> hasSuperType [
-	^ self representsClassDescription and: [ self classDescription superclass isNotNil ]
+	^ superType isNotNil
+		or: [ self representsClassDescription
+				and: [ self classDescription superclass isNotNil ] ]
 ]
 
 { #category : #comparing }
@@ -138,7 +139,6 @@ TypNamedType >> printOn: aStream [
 
 { #category : #testing }
 TypNamedType >> representsClassDescription [
-	self flag: 'FIXME invalidate?'.
 	^ representsClass
 		ifNil: [ | clazz_ |
 			clazz_ := name.
@@ -154,11 +154,9 @@ TypNamedType >> representsClassDescription [
 
 { #category : #'as yet unclassified' }
 TypNamedType >> superType [
-	| superType |
 	self hasSuperType
 		ifFalse: [ TypNoTypeError signal ].
-	superType := self classDescription superclass typAsType copy.
-	scope ifNotNil: [ superType scope adopt: scope parent ].
-	superType validateAsSuperTypeOf: self.
+	superType ifNotNil: [ ^ superType ].
+	superType := self classDescription superclass typAsType.
 	^ superType
 ]

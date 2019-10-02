@@ -2,7 +2,7 @@ Class {
 	#name : #TypType,
 	#superclass : #Object,
 	#instVars : [
-		'scope'
+		'superType'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -104,13 +104,7 @@ TypType >> classDescription [
 { #category : #testing }
 TypType >> hasSuperType [
 	<typTypeResultAs: 'Boolean'>
-	^ false
-]
-
-{ #category : #initialization }
-TypType >> initialize [
-	super initialize.
-	scope := TypScope new
+	^ superType isNotNil
 ]
 
 { #category : #testing }
@@ -170,7 +164,7 @@ TypType >> nullable [
 { #category : #copying }
 TypType >> postCopy [
 	super postCopy.
-	scope := scope copy
+	superType := superType copy
 ]
 
 { #category : #testing }
@@ -185,22 +179,7 @@ TypType >> resolveIn: aScope [
 ]
 
 { #category : #'as yet unclassified' }
-TypType >> scope [
-	^ scope
-]
-
-{ #category : #'as yet unclassified' }
-TypType >> scope: aScope [
-	scope := aScope
-]
-
-{ #category : #'as yet unclassified' }
 TypType >> superType [
 	<typTypeResultAs: 'TypType'>
-	TypNoTypeError signal
-]
-
-{ #category : #'as yet unclassified' }
-TypType >> validateAsSuperTypeOf: aType [
-	
+	^ superType ifNil: [ TypNoTypeError signal ]
 ]

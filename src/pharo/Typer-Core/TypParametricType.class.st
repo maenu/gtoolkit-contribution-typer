@@ -2,6 +2,7 @@ Class {
 	#name : #TypParametricType,
 	#superclass : #TypNamedType,
 	#instVars : [
+		'scope',
 		'parameters'
 	],
 	#category : #'Typer-Core-Type'
@@ -12,8 +13,8 @@ TypParametricType >> = anObject [
 	^ self == anObject
 		or: [ self class = anObject class
 				and: [ | object |
-					object := anObject "typCastAs TypGenericType".
-					name = object name and: [ parameters = object parameters ] ] ]
+					object := anObject "typCastAs TypParametricType".
+					name = object name and: [ scope = object scope and: [ parameters = object parameters ] ] ] ]
 ]
 
 { #category : #comparing }
@@ -50,13 +51,15 @@ self flag: 'TODO rewrite with new scope logic'.
 
 { #category : #comparing }
 TypParametricType >> hash [
-	^ super hash bitXor: parameters hash
+	^ (super hash bitXor: scope hash) bitXor: parameters hash
 ]
 
 { #category : #initialization }
 TypParametricType >> initialize [
+	<typTypeVariable: 'scope' as: 'TypScope'>
 	<typTypeVariable: 'parameters' as: 'OrderedCollection<TypType>'>
 	super initialize.
+	scope := TypScope new.
 	parameters := OrderedCollection new "typParameters TypType"
 ]
 
@@ -95,6 +98,7 @@ TypParametricType >> parameters: anObject [
 { #category : #copying }
 TypParametricType >> postCopy [
 	super postCopy.
+	scope := scope copy.
 	parameters := parameters collect: #copy
 ]
 
@@ -107,6 +111,16 @@ TypParametricType >> printOn: aStream [
 		i < parameters size
 			ifTrue: [ aStream << ',' ] ].
 	aStream << '>'
+]
+
+{ #category : #accessing }
+TypParametricType >> scope [
+	^ scope
+]
+
+{ #category : #accessing }
+TypParametricType >> scope: anObject [
+	scope := anObject
 ]
 
 { #category : #accessing }
@@ -129,18 +143,4 @@ TypParametricType >> superType [
 				parameters: parameters_;
 				yourself ]
 		ifFalse: [ superType ]
-]
-
-{ #category : #testing }
-TypParametricType >> validateAsSuperTypeOf: aType [
-	^ aType isParametric
-		ifTrue: [ parameters
-				do: [ :e | 
-					((aType parameters includes: e)
-						or: [ (e resolveIn: scope) isTypeVariable not ])
-						ifFalse: [ scope at: e put: TypUnknownType instance ] ] ]
-		ifFalse: [ parameters
-				do: [ :e | 
-					(e resolveIn: scope) isTypeVariable not
-						ifFalse: [ scope at: e put: TypUnknownType instance ] ] ]
 ]
