@@ -23,13 +23,6 @@ TypUnknownType >> asNonNullableType [
 	^ self
 ]
 
-{ #category : #'as yet unclassified' }
-TypUnknownType >> asTypeCompatibleWith: aType [
-	aType isNil
-		ifTrue: [ ^ self asNullableType ].
-	^ self
-]
-
 { #category : #copying }
 TypUnknownType >> copy [
 	^ self

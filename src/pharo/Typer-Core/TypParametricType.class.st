@@ -18,45 +18,25 @@ TypParametricType >> = anObject [
 
 { #category : #comparing }
 TypParametricType >> > aType [
-	^ aType isParametric
-		and: [ | typeDifferent |
-			typeDifferent := (self = aType) not.
-			super >= aType
-				and: [ | type_ |
-					type_ := aType.	"typCastAs TypParametricType"
-					(type_ bindings keys includesAll: bindings keys)
-						and: [ | bindingsDifferent |
-							bindingsDifferent := bindings keys
-								inject: false
-								into: [ :r :e | 
-									| a b |
-									a := bindings at: e.
-									b := type_ bindings at: e.
-									a >= b
-										ifFalse: [ ^ false ].
-									r or: [ (a = b) not ] ].
-							typeDifferent or: bindingsDifferent ] ] ]
+	^ (aType isParametric and: [ name = aType name ])
+		ifTrue: [ self assert: [ bindings keys = aType bindings keys ].
+			(bindings keys
+				allSatisfy: [ :e | (bindings at: e) >= (aType bindings at: e) ])
+				and: [ bindings keys
+						anySatisfy: [ :e | (bindings at: e) > (aType bindings at: e) ] ] ]
+		ifFalse: [ super > aType ]
 ]
 
 { #category : #accessing }
 TypParametricType >> asTypeCompatibleWith: aType [
-	"Assume parameters map with parameters of super type."
-self flag: 'TODO rewrite with new scope logic'.
-	^ aType isParametric
-		ifTrue: [ | type_ minSize parameters_ |
-			type_ := aType "typCastAs TypGenericType".
-			minSize := parameters size min: type_ parameters size.
-			parameters_ := (minSize
-				timesCollect: [ :i | 
-					(parameters at: i)
-						asTypeCompatibleWith: (type_ parameters at: i) ])
-				,
-					(type_ parameters
-						copyFrom: minSize + 1
-						to: type_ parameters size).
-			type_ copy
-				parameters: parameters_;
-				yourself ]
+	^ (aType isParametric and: [ name = aType name ])
+		ifTrue: [ self assert: [ bindings keys = aType bindings keys ].
+			self copy
+				bindings:
+					(bindings associations
+						collect:
+							[ :e | e key -> (e value asTypeCompatibleWith: (aType bindings at: e key)) ])
+						asOrderedDictionary ]
 		ifFalse: [ super asTypeCompatibleWith: aType ]
 ]
 
@@ -107,9 +87,10 @@ TypParametricType >> printOn: aStream [
 TypParametricType >> superType [
 	superType := super superType.
 	superType isParametric
-		ifTrue: [ bindings
+		ifTrue: [ superType := superType copy.
+			bindings
 				keysAndValuesDo: [ :s :t | 
 					(superType bindings includesKey: s)
-						ifTrue: [ superType at: s put: t ] ] ].
+						ifTrue: [ superType bindings at: s put: t ] ] ].
 	^ superType
 ]

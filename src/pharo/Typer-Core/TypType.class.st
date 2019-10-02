@@ -64,9 +64,7 @@ TypType >> asNullableType [
 ]
 
 { #category : #converting }
-TypType >> asParametricType: someTypes [
-	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
-	<typTypeResultAs: 'TypGenericType'>
+TypType >> asParametricType: someBindings [
 	TypNoTypeError signal
 ]
 
@@ -74,6 +72,8 @@ TypType >> asParametricType: someTypes [
 TypType >> asTypeCompatibleWith: aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'TypType'>
+	aType isTypeVariable
+		ifTrue: [ ^ aType ].
 	aType isUnknown
 		ifTrue: [ ^ aType ].
 	aType isNil

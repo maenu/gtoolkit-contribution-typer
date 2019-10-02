@@ -34,7 +34,8 @@ TypNamedType >> = anObject [
 
 { #category : #comparing }
 TypNamedType >> > aType [
-	^ self ~= aType and: [ aType isNamed and: [ self representsClassDescription and: [ aType representsClassDescription and: [ aType classDescription typIncludesBehavior: self classDescription ] ] ] ]
+	^ self ~= aType
+		and: [ aType hasSuperType and: [ self >= aType superType ] ]
 ]
 
 { #category : #converting }

@@ -25,6 +25,14 @@ TypTypeVariableType >> > aType [
 	^ true
 ]
 
+{ #category : #'as yet unclassified' }
+TypTypeVariableType >> asTypeCompatibleWith: aType [
+	^ aType isTypeVariable
+		ifTrue: [ self assert: [ self = aType ].
+			self ]
+		ifFalse: [ super asTypeCompatibleWith: aType ]
+]
+
 { #category : #comparing }
 TypTypeVariableType >> hash [
 	^ name hash
