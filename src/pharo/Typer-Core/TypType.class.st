@@ -174,12 +174,12 @@ TypType >> representsClassDescription [
 ]
 
 { #category : #'as yet unclassified' }
-TypType >> resolveIn: aScope [
-	^ self
+TypType >> superType [
+	<typTypeResultAs: 'TypType'>
+	^ superType ifNil: [ TypNoTypeError signal ] ifNotNil: #yourself
 ]
 
 { #category : #'as yet unclassified' }
-TypType >> superType [
-	<typTypeResultAs: 'TypType'>
-	^ superType ifNil: [ TypNoTypeError signal ]
+TypType >> superType: aType [
+	superType := aType
 ]

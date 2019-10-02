@@ -54,12 +54,11 @@ TypNamedType >> asNamedType [
 ]
 
 { #category : #converting }
-TypNamedType >> asParametricType: someTypes [
+TypNamedType >> asParametricType: someBindings [
 	^ TypParametricType new
-		scope: scope copy;
 		name: name;
 		classDescription: classDescription;
-		parameters: someTypes;
+		bindings: someBindings;
 		yourself
 ]
 
@@ -87,7 +86,7 @@ TypNamedType >> classDescription: aClassDescription [
 
 { #category : #'as yet unclassified' }
 TypNamedType >> hasSuperType [
-	^ superType isNotNil
+	^ super hasSuperType
 		or: [ self representsClassDescription
 				and: [ self classDescription superclass isNotNil ] ]
 ]

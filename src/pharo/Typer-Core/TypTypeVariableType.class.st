@@ -50,8 +50,3 @@ TypTypeVariableType >> name: aString [
 TypTypeVariableType >> printOn: aStream [
 	aStream nextPutAll: name asString
 ]
-
-{ #category : #'as yet unclassified' }
-TypTypeVariableType >> resolveIn: aScope [
-	^ aScope at: name
-]

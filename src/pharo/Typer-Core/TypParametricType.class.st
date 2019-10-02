@@ -2,8 +2,7 @@ Class {
 	#name : #TypParametricType,
 	#superclass : #TypNamedType,
 	#instVars : [
-		'scope',
-		'parameters'
+		'bindings'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -14,17 +13,29 @@ TypParametricType >> = anObject [
 		or: [ self class = anObject class
 				and: [ | object |
 					object := anObject "typCastAs TypParametricType".
-					name = object name and: [ scope = object scope and: [ parameters = object parameters ] ] ] ]
+					name = object name and: [ bindings = object bindings ] ] ]
 ]
 
 { #category : #comparing }
 TypParametricType >> > aType [
 	^ aType isParametric
-		and: [ super > aType
+		and: [ | typeDifferent |
+			typeDifferent := (self = aType) not.
+			super >= aType
 				and: [ | type_ |
-					type_ := aType "typCastAs TypGenericType".
-					parameters size = type_ parameters size
-						and: [ (parameters withIndexSelect: [ :e :i | e >= (type_ parameters at: i) ]) size = parameters size ] ] ]
+					type_ := aType.	"typCastAs TypParametricType"
+					(type_ bindings keys includesAll: bindings keys)
+						and: [ | bindingsDifferent |
+							bindingsDifferent := bindings keys
+								inject: false
+								into: [ :r :e | 
+									| a b |
+									a := bindings at: e.
+									b := type_ bindings at: e.
+									a >= b
+										ifFalse: [ ^ false ].
+									r or: [ (a = b) not ] ].
+							typeDifferent or: bindingsDifferent ] ] ]
 ]
 
 { #category : #accessing }
@@ -49,18 +60,25 @@ self flag: 'TODO rewrite with new scope logic'.
 		ifFalse: [ super asTypeCompatibleWith: aType ]
 ]
 
+{ #category : #accessing }
+TypParametricType >> bindings [
+	^ bindings
+]
+
+{ #category : #accessing }
+TypParametricType >> bindings: anObject [
+	bindings := anObject
+]
+
 { #category : #comparing }
 TypParametricType >> hash [
-	^ (super hash bitXor: scope hash) bitXor: parameters hash
+	^ super hash bitXor: bindings hash
 ]
 
 { #category : #initialization }
 TypParametricType >> initialize [
-	<typTypeVariable: 'scope' as: 'TypScope'>
-	<typTypeVariable: 'parameters' as: 'OrderedCollection<TypType>'>
 	super initialize.
-	scope := TypScope new.
-	parameters := OrderedCollection new "typParameters TypType"
+	bindings := OrderedDictionary new
 ]
 
 { #category : #testing }
@@ -68,79 +86,30 @@ TypParametricType >> isParametric [
 	^ true
 ]
 
-{ #category : #accessing }
-TypParametricType >> parameters [
-	<typTypeResultAs: 'OrderedCollection<TypType>'>
-	^ parameters
-]
-
-{ #category : #accessing }
-TypParametricType >> parameters: anObject [
-	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
-	(anObject allSatisfy: #isTypeVariable)
-		ifTrue: [ parameters := anObject asOrderedCollection ]
-		ifFalse: [ | template |
-			template := self classDescription typAsType.
-			self
-				assert: [ template isParametric
-						and: [ anObject size = template parameters size
-								and: [ template parameters allSatisfy: #isTypeVariable ] ] ].
-			parameters := template parameters collect: #copy.
-			template parameters
-				withIndexDo: [ :e :i | 
-					| parameter |
-					parameter := anObject at: i.
-					parameter isTypeVariable
-						ifTrue: [ self assert: [ parameter = e ] ]
-						ifFalse: [ scope at: e name put: parameter ] ] ]
-]
-
 { #category : #copying }
 TypParametricType >> postCopy [
 	super postCopy.
-	scope := scope copy.
-	parameters := parameters collect: #copy
+	bindings := bindings collect: #copy
 ]
 
 { #category : #printing }
 TypParametricType >> printOn: aStream [
 	super printOn: aStream.
 	aStream << '<'.
-	1 to: parameters size do: [ :i | 
-		((parameters at: i) resolveIn: scope) printOn: aStream.
-		i < parameters size
+	1 to: bindings size do: [ :i | 
+		(bindings at: (bindings keys at: i)) printOn: aStream.
+		i < bindings size
 			ifTrue: [ aStream << ',' ] ].
 	aStream << '>'
 ]
 
 { #category : #accessing }
-TypParametricType >> scope [
-	^ scope
-]
-
-{ #category : #accessing }
-TypParametricType >> scope: anObject [
-	scope := anObject
-]
-
-{ #category : #accessing }
 TypParametricType >> superType [
-	"Assume parameters map with parameters of super type."
-
-	| superType |
-	self flag: 'TODO rewrite with new scope logic'.
 	superType := super superType.
-	^ superType isParametric
-		ifTrue: [ | superType_ minSize parameters_ |
-			superType_ := superType "typCastAs TypParametricType".
-			minSize := parameters size min: superType_ parameters size.
-			parameters_ := (parameters copyFrom: 1 to: minSize)
-				,
-					(superType parameters
-						copyFrom: minSize + 1
-						to: superType parameters size).
-			superType_ copy
-				parameters: parameters_;
-				yourself ]
-		ifFalse: [ superType ]
+	superType isParametric
+		ifTrue: [ bindings
+				keysAndValuesDo: [ :s :t | 
+					(superType bindings includesKey: s)
+						ifTrue: [ superType at: s put: t ] ] ].
+	^ superType
 ]

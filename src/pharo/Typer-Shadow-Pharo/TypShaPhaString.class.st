@@ -95,5 +95,8 @@ TypShaPhaString >> ___translated [
 
 { #category : #converting }
 TypShaPhaString >> asType: aClass [
-	^ aClass typAsNamedType asParametricType: {Character typAsType}
+	| type |
+	type := aClass typAsNamedType.
+	type superType bindings at: '@A' put: Character typAsType.
+	^ type
 ]

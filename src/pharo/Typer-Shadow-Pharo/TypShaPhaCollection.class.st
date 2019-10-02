@@ -491,7 +491,7 @@ TypShaPhaCollection >> ___size [
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> asType: aClass [
 	^ aClass typAsNamedType
-		asParametricType: {(TypTypeVariableType named: '@A')}
+		asParametricType: {('@A' -> (TypTypeVariableType named: '@A'))} asOrderedDictionary
 ]
 
 { #category : #accessing }
