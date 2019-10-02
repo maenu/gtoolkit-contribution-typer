@@ -39,5 +39,5 @@ TypShaPhaOrderedCollection >> ___removeLast [
 { #category : #converting }
 TypShaPhaOrderedCollection >> asType: aClass [
 	^ aClass typAsNamedType
-		asParametricType: {(TypTypeVariableType named: '@E')}
+		asParametricType: {(TypTypeVariableType named: '@A')}
 ]

@@ -29,6 +29,6 @@ TypShaPhaAssociation >> ___value [
 TypShaPhaAssociation >> asType: aClass [
 	^ aClass typAsNamedType
 		asParametricType:
-			{TypUnknownType instance.
-			TypUnknownType instance}
+			{(TypTypeVariableType named: '@A').
+			(TypTypeVariableType named: '@B')}
 ]

@@ -29,7 +29,7 @@ TypParametricType >> > aType [
 { #category : #accessing }
 TypParametricType >> asTypeCompatibleWith: aType [
 	"Assume parameters map with parameters of super type."
-
+self flag: 'TODO rewrite with new scope logic'.
 	^ aType isParametric
 		ifTrue: [ | type_ minSize parameters_ |
 			type_ := aType "typCastAs TypGenericType".
@@ -73,8 +73,23 @@ TypParametricType >> parameters [
 
 { #category : #accessing }
 TypParametricType >> parameters: anObject [
-	<typTypeArgument: 1 as: 'Collection<TypType>'>
-	parameters := anObject asOrderedCollection
+	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
+	(anObject allSatisfy: #isTypeVariable)
+		ifTrue: [ parameters := anObject asOrderedCollection ]
+		ifFalse: [ | template |
+			template := self classDescription typAsType.
+			self
+				assert: [ template isParametric
+						and: [ anObject size = template parameters size
+								and: [ template parameters allSatisfy: #isTypeVariable ] ] ].
+			parameters := template parameters collect: #copy.
+			template parameters
+				withIndexDo: [ :e :i | 
+					| parameter |
+					parameter := anObject at: i.
+					parameter isTypeVariable
+						ifTrue: [ self assert: [ parameter = e ] ]
+						ifFalse: [ scope at: e name put: parameter ] ] ]
 ]
 
 { #category : #copying }
@@ -99,6 +114,7 @@ TypParametricType >> superType [
 	"Assume parameters map with parameters of super type."
 
 	| superType |
+	self flag: 'TODO rewrite with new scope logic'.
 	superType := super superType.
 	^ superType isParametric
 		ifTrue: [ | superType_ minSize parameters_ |

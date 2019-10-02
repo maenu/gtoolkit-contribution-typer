@@ -70,15 +70,15 @@ TypShaPhaCollection >> ___asDictionary [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
-			| elementType |
+			| elementType type |
 			elementType := a receiverType parameters at: 1.
-			Dictionary typAsType
-				asParametricType:
-					(Association typAsType >= elementType
-						ifTrue: [ {(elementType parameters at: 1).
-							(elementType parameters at: 2)} ]
-						ifFalse: [ {TypUnknownType instance.
-							TypUnknownType instance} ]) ];
+			type := Dictionary typAsType.
+			Association typAsType >= elementType
+				ifTrue: [ type := type
+						asParametricType:
+							{(elementType parameters at: 1).
+							(elementType parameters at: 2)} ].
+			type ];
 		yourself
 ]
 
@@ -105,15 +105,15 @@ TypShaPhaCollection >> ___asOrderedDictionary [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
-			| elementType |
+			| elementType type |
 			elementType := a receiverType parameters at: 1.
-			OrderedDictionary typAsType
-				asParametricType:
-					(Association typAsType >= elementType
-						ifTrue: [ {(elementType parameters at: 1).
-							(elementType parameters at: 2)} ]
-						ifFalse: [ {TypUnknownType instance.
-							TypUnknownType instance} ]) ];
+			type := OrderedDictionary typAsType.
+			Association typAsType >= elementType
+				ifTrue: [ type := type
+						asParametricType:
+							{(elementType parameters at: 1).
+							(elementType parameters at: 2)} ].
+			type ];
 		yourself
 ]
 
@@ -170,8 +170,7 @@ TypShaPhaCollection >> ___copyWithout: _a [
 { #category : #accessing }
 TypShaPhaCollection >> ___copyWithoutAll: _a [
 	^ TypMethodLookupResult new
-		argumentTypes:
-				[ :i :a :s :r | Collection typAsType asParametricType: {TypUnknownType instance} ];
+		argumentTypes: [ :i :a :s :r | Collection typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
@@ -491,14 +490,15 @@ TypShaPhaCollection >> ___size [
 
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> asType: aClass [
-	^ aClass typAsNamedType asParametricType: {TypUnknownType instance}
+	^ aClass typAsNamedType
+		asParametricType: {(TypTypeVariableType named: '@A')}
 ]
 
 { #category : #accessing }
 TypShaPhaCollection >> ~~~, _a [
 	^ TypMethodLookupResult new
 		argumentTypes:
-				[ :i :a :s :r | Collection typAsType asParametricType: {TypUnknownType instance} ];
+				[ :i :a :s :r | Collection typAsType ];
 		resultType: [ :a :s :r | 
 			a receiverType
 				asParametricType:

@@ -162,18 +162,14 @@ TypShaPhaDictionary >> ___keys [
 TypShaPhaDictionary >> asType: aClass [
 	^ aClass typAsNamedType
 		asParametricType:
-			{TypUnknownType instance.
-			TypUnknownType instance}
+			{(TypTypeVariableType named: '@A').
+			(TypTypeVariableType named: '@B')}
 ]
 
 { #category : #accessing }
 TypShaPhaDictionary >> ~~~, _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | 
-			Dictionary typAsType
-				asParametricType:
-					{TypUnknownType instance.
-					TypUnknownType instance} ];
+		argumentTypes: [ :i :a :s :r | Dictionary typAsType ];
 		resultType: [ :a :s :r | 
 			a receiverType
 				asParametricType:

@@ -5,7 +5,7 @@ Class {
 		'parent',
 		'mappings'
 	],
-	#category : #'Typer-Core-Type'
+	#category : #'Typer-Core'
 }
 
 { #category : #operations }

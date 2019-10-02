@@ -13,8 +13,7 @@ TypShaPhaContext class >> shadowedClass [
 TypShaPhaContext >> ___arguments [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType:
-				[ :a :s :r | SequenceableCollection typAsType asParametricType: {Object typAsType} ];
+		resultType: [ :a :s :r | SequenceableCollection typAsType ];
 		yourself
 ]
 

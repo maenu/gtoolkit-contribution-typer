@@ -6,7 +6,7 @@ Class {
 
 { #category : #'generated-accessing' }
 TypTypeParser class >> cacheId [
-	^'2019-10-01T14:21:01.57428+02:00'
+	^'2019-10-01T15:21:21.569837+02:00'
 ]
 
 { #category : #generated }
@@ -29,46 +29,65 @@ TypTypeParser class >> definitionComment [
 	;
 
 Types
-	: Type 'type' { {type} }
-	| Types 'types' "","" Type 'type' { types , {type} }
+	: Type 'type'
+		{ {type} }
+	| Types 'types' "","" Type 'type'
+		{ types , {type} }
 	;
 Type
-	: UnknownType 'type' { type }
-	| NilType 'type' { type }
-	| TypeVariableType 'type' { type }
-	| UnionType 'type' { type }
-	| FunctionType 'type' { type }
-	| ParametricType 'type' { type }
-	| NamedType 'type' { type }
+	: UnknownType 'type'
+		{ type }
+	| NilType 'type'
+		{ type }
+	| TypeVariableType 'type'
+		{ type }
+	| UnionType 'type'
+		{ type }
+	| FunctionType 'type'
+		{ type }
+	| ParametricType 'type' 
+		{ type }
+	| NamedType 'type'
+		{ type }
 	;
 UnknownType
-	: ""?"" { TypUnknownType instance }
+	: ""?""
+		{ TypUnknownType instance }
 	;
 NilType
-	: ""!"" { TypNilType instance }
+	: ""!""
+		{ TypNilType instance }
 	;
 TypeVariableType
-	: ""@"" Name 'name' { TypTypeVariableType named: '@' , name }
+	: ""@"" Name 'name'
+		{ TypTypeVariableType named: '@' , name }
 	;
 NamedType
-	: Name 'name'  { TypNamedType named: name }
+	: Name 'name' 
+		{ TypNamedType named: name }
 	;
 ParametricType
-	: Name 'name' ""<"" Types 'parameters' "">""  { TypParametricType new name: name; parameters: parameters; yourself }
+	: Name 'name' ""<"" Types 'parameters' "">"" 
+		{ TypParametricType new name: name; parameters: parameters; yourself }
 	;
 FunctionType
-	: ""["" EmptyTypes 'arguments' ""]"" ""->"" Type 'result' { TypFunctionType new arguments: arguments; result: result; optionalArguments: true; yourself }
-	| ""("" EmptyTypes 'arguments' "")"" ""->"" Type 'result' { TypFunctionType new arguments: arguments; result: result; optionalArguments: false; yourself }
+	: ""["" EmptyTypes 'arguments' ""]"" ""->"" Type 'result'
+		 { TypFunctionType new optionalArguments: true; arguments: arguments; result: result; yourself }
+	| ""("" EmptyTypes 'arguments' "")"" ""->"" Type 'result'
+		{ TypFunctionType new optionalArguments: false; arguments: arguments; result: result; yourself }
 	;
 UnionType
-	: ""{"" Types 'types' ""}"" {  TypUnionType types: types  }
+	: ""{"" Types 'types' ""}""
+		{  TypUnionType types: types  }
 	;
 EmptyTypes
-	: Types 'types' { types }
+	: Types 'types'
+		{ types }
 	| { {} }
 	;
 Name
-	: <name> 'name' { name value }
+	: <name> 'name'
+		{ name value }
 	;"
 ]
 
@@ -82,26 +101,26 @@ TypTypeParser class >> parse: aString [
 { #category : #generated }
 TypTypeParser class >> reduceTable [
 ^#(
-	#(19 1 #reduceActionForNilType1: 613377 false ) 
-	#(25 0 #reduceActionForEmptyTypes2: 1328130 false ) 
-	#(18 1 #reduceActionForUnknownType1: 562177 false ) 
-	#(26 1 #reduceActionForName1: 1380353 false ) 
+	#(19 1 #reduceActionForNilType1: 634881 false ) 
+	#(25 0 #reduceActionForEmptyTypes2: 1364994 false ) 
+	#(18 1 #reduceActionForUnknownType1: 581633 false ) 
+	#(26 1 #reduceActionForName1: 1419265 false ) 
 	#(16 1 #reduceActionForTypes1: 241665 false ) 
-	#(17 1 #liftFirstValue: 330753 false ) 
-	#(17 1 #liftFirstValue: 330754 false ) 
-	#(17 1 #liftFirstValue: 330755 false ) 
-	#(17 1 #liftFirstValue: 330759 false ) 
-	#(17 1 #liftFirstValue: 330758 false ) 
-	#(17 1 #liftFirstValue: 330757 false ) 
-	#(17 1 #liftFirstValue: 330756 false ) 
-	#(21 1 #reduceActionForNamedType1: 739329 false ) 
-	#(25 1 #liftFirstValue: 1328129 false ) 
-	#(20 2 #reduceActionForTypeVariableType1: 656385 false ) 
-	#(24 3 #reduceActionForUnionType1: 1256449 false ) 
+	#(17 1 #liftFirstValue: 334849 false ) 
+	#(17 1 #liftFirstValue: 334850 false ) 
+	#(17 1 #liftFirstValue: 334851 false ) 
+	#(17 1 #liftFirstValue: 334855 false ) 
+	#(17 1 #liftFirstValue: 334854 false ) 
+	#(17 1 #liftFirstValue: 334853 false ) 
+	#(17 1 #liftFirstValue: 334852 false ) 
+	#(21 1 #reduceActionForNamedType1: 764929 false ) 
+	#(25 1 #liftFirstValue: 1364993 false ) 
+	#(20 2 #reduceActionForTypeVariableType1: 679937 false ) 
+	#(24 3 #reduceActionForUnionType1: 1291265 false ) 
 	#(16 3 #reduceActionForTypes2: 241666 false ) 
-	#(22 4 #reduceActionForParametricType1: 798721 false ) 
-	#(23 5 #reduceActionForFunctionType2: 933890 false ) 
-	#(23 5 #reduceActionForFunctionType1: 933889 false )
+	#(22 4 #reduceActionForParametricType1: 826369 false ) 
+	#(23 5 #reduceActionForFunctionType2: 963586 false ) 
+	#(23 5 #reduceActionForFunctionType1: 963585 false )
 	).
 ]
 
@@ -169,18 +188,18 @@ TypTypeParser >> reduceActionForEmptyTypes2: nodes [
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForFunctionType1: nodes [
 	^ TypFunctionType new
+		optionalArguments: true;
 		arguments: (nodes at: 2);
 		result: (nodes at: 5);
-		optionalArguments: true;
 		yourself
 ]
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForFunctionType2: nodes [
 	^ TypFunctionType new
+		optionalArguments: false;
 		arguments: (nodes at: 2);
 		result: (nodes at: 5);
-		optionalArguments: false;
 		yourself
 ]
 
