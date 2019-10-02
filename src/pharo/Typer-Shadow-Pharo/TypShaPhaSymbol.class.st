@@ -32,8 +32,3 @@ TypShaPhaSymbol >> ___isUnary [
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
-
-{ #category : #converting }
-TypShaPhaSymbol >> asType: aClass [
-	^ aClass typAsNamedType asParametricType: {Character typAsType}
-]

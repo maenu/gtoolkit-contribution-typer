@@ -84,5 +84,8 @@ TypShaPhaCompiledMethod >> ___sourceCode [
 
 { #category : #'as yet unclassified' }
 TypShaPhaCompiledMethod >> asType: aClass [
-	^ aClass typAsNamedType asParametricType: {Integer typAsType}
+	| type |
+	type := (super asType: aClass).
+	type superType bindings at: '@A' put: Integer typAsType.
+	^ type
 ]

@@ -193,6 +193,6 @@ TypShaPhaSequenceableCollection >> ___withIndexSelect: _a [
 
 { #category : #converting }
 TypShaPhaSequenceableCollection >> asType: aClass [
-	^ aClass typAsNamedType
+	^ (super asType: aClass)
 		asParametricType: {('@A' -> (TypTypeVariableType named: '@A'))} asOrderedDictionary
 ]

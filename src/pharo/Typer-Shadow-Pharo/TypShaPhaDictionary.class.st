@@ -160,10 +160,10 @@ TypShaPhaDictionary >> ___keys [
 
 { #category : #'as yet unclassified' }
 TypShaPhaDictionary >> asType: aClass [
-	^ aClass typAsNamedType
+	^ (super asType: aClass)
 		asParametricType:
-			{(TypTypeVariableType named: '@A').
-			(TypTypeVariableType named: '@B')}
+			{('@B' -> (TypTypeVariableType named: '@B')).
+			('@A' -> (TypTypeVariableType named: '@A'))} asOrderedDictionary
 ]
 
 { #category : #accessing }

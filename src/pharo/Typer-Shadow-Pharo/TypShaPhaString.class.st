@@ -96,7 +96,7 @@ TypShaPhaString >> ___translated [
 { #category : #converting }
 TypShaPhaString >> asType: aClass [
 	| type |
-	type := aClass typAsNamedType.
+	type := (super asType: aClass).
 	type superType bindings at: '@A' put: Character typAsType.
 	^ type
 ]

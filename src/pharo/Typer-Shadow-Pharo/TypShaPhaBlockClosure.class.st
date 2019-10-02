@@ -124,5 +124,5 @@ TypShaPhaBlockClosure >> ___whileFalse: _a [
 
 { #category : #'as yet unclassified' }
 TypShaPhaBlockClosure >> asType: aClass [
-	^ aClass typAsNamedType asFunctionType: {} result: TypUnknownType instance optionalParameters: false
+	^ (super asType: aClass) asFunctionType: {} result: TypUnknownType instance optionalParameters: false
 ]
