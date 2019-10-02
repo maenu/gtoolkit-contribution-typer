@@ -17,14 +17,14 @@ Collection >> typAsType [
 Collection >> typSelfType [
 	| type |
 	type := super typSelfType.
-	(type isParametric
-		and: [ type parameters size = 1 and: [ type parameters first isTypeVariable ] ])
-		ifFalse: [ ^ type ].
-	"infer parametric type from elements, using only generic types to avoid infinite loop"
+	(type isParametric and: [ type bindings size = 1 ])
+		ifTrue: [ type := type copy.
+			type bindings
+				at: type bindings keys first
+				put:
+					(self typSelfTypeSamples collect: [ :e | e class typAsType ])
+						typAsType ].
 	^ type
-		asParametricType:
-			{(self typSelfTypeSamples collect: [ :e | e class typAsType ])
-				typAsType}
 ]
 
 { #category : #'*Typer-Core' }

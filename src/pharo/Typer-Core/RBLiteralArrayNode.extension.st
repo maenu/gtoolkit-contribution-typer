@@ -2,6 +2,12 @@ Extension { #name : #RBLiteralArrayNode }
 
 { #category : #'*Typer-Core' }
 RBLiteralArrayNode >> typTypeRecursive [
-	^ Array typAsType
-		asParametricType: {(self contents collect: #typType) typAsType}
+	| type |
+	type := Array typAsType.
+	(type isParametric and: [ type bindings size = 1 ])
+		ifTrue: [ type := type copy.
+			type bindings
+				at: type bindings keys first
+				put: (self contents collect: #typType) typAsType ].
+	^ type
 ]

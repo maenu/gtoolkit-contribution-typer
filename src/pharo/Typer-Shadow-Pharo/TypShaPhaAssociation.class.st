@@ -29,6 +29,6 @@ TypShaPhaAssociation >> ___value [
 TypShaPhaAssociation >> asType: aClass [
 	^ (super asType: aClass)
 		asParametricType:
-			{('@B' -> (TypTypeVariableType named: '@B')).
-			('@A' -> (TypTypeVariableType named: '@A'))} asOrderedDictionary
+			{('@A' -> (TypTypeVariableType named: '@A')).
+			('@B' -> (TypTypeVariableType named: '@B'))} asOrderedDictionary
 ]
