@@ -16,10 +16,12 @@ TypShaPhaPragma >> ___arguments [
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
 				asParametricType:
-					{{String typAsType.
-					Symbol typAsType.
-					Number typAsType.
-					Boolean typAsType} typAsType} ];
+					{('@A'
+						->
+							{String typAsType.
+							Symbol typAsType.
+							Number typAsType.
+							Boolean typAsType} typAsType)} asOrderedDictionary ];
 		yourself
 ]
 

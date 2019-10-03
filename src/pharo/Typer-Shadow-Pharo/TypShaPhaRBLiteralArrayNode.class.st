@@ -13,6 +13,7 @@ TypShaPhaRBLiteralArrayNode class >> shadowedClass [
 TypShaPhaRBLiteralArrayNode >> ___contents [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ OrderedCollection typAsType asParametricType: {RBLiteralNode typAsType} ];
+		resultType: [ OrderedCollection typAsType
+				asParametricType: {('@A' -> RBLiteralNode typAsType)} asOrderedDictionary ];
 		yourself
 ]

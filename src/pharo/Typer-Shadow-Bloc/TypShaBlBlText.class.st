@@ -21,7 +21,9 @@ TypShaBlBlText >> ___attribute: _a [
 TypShaBlBlText >> ___attributesAt: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Integer typAsType ];
-		resultType: [ :a :s :r | SequenceableCollection typAsType asParametricType: {BlTextAttribute typAsType} ];
+		resultType: [ :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType: {('@A' -> BlTextAttribute typAsType)} asOrderedDictionary ];
 		yourself
 ]
 

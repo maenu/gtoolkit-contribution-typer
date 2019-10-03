@@ -16,8 +16,8 @@ TypShaPhaOCLiteralVariable >> ___assoc [
 		resultType: [ :a :s :r | 
 			Association typAsType
 				asParametricType:
-					{String typAsType.
-					TypUnknownType instance} ];
+					{('@A' -> String typAsType).
+					('@B' -> TypUnknownType instance)} asOrderedDictionary ];
 		yourself
 ]
 

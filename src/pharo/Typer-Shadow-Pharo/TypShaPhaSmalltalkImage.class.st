@@ -13,10 +13,6 @@ TypShaPhaSmalltalkImage class >> shadowedClass [
 TypShaPhaSmalltalkImage >> ___globals [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			SystemDictionary typAsType
-				asParametricType:
-					{String typAsType.
-					Class typAsType} ];
+		resultType: [ :a :s :r | SystemDictionary typAsType ];
 		yourself
 ]

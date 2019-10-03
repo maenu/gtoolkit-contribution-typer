@@ -99,7 +99,7 @@ TypShaGtGtMethodCoder >> initialize [
 		type: [ :a :s :r | 
 			Association typAsType
 				asParametricType:
-					{String typAsType.
-					RBMethodNode typAsType} ];
+					{('@A' -> String typAsType).
+					('@B' -> RBMethodNode typAsType)} asOrderedDictionary ];
 		yourself
 ]

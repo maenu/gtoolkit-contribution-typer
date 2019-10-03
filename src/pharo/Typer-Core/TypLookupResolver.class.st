@@ -8,12 +8,6 @@ Class {
 }
 
 { #category : #initialization }
-TypLookupResolver >> initialize [
-	<typTypeParametersAs: 'TypLookup'>
-	super initialize
-]
-
-{ #category : #initialization }
 TypLookupResolver >> reset [
 	
 ]

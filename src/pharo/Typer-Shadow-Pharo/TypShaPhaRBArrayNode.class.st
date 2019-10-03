@@ -13,6 +13,7 @@ TypShaPhaRBArrayNode class >> shadowedClass [
 TypShaPhaRBArrayNode >> ___statements [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ OrderedCollection typAsType asParametricType: {RBProgramNode typAsType} ];
+		resultType: [ OrderedCollection typAsType
+				asParametricType: {('@A' -> RBProgramNode typAsType)} asOrderedDictionary ];
 		yourself
 ]

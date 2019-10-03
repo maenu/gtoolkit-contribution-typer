@@ -13,7 +13,8 @@ TypShaPhaRBSequenceNode class >> shadowedClass [
 TypShaPhaRBSequenceNode >> ___statements [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ OrderedCollection typAsType asParametricType: {RBProgramNode typAsType} ];
+		resultType: [ OrderedCollection typAsType
+				asParametricType: {('@A' -> RBProgramNode typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -23,6 +24,6 @@ TypShaPhaRBSequenceNode >> ___temporaries [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				asParametricType: {RBTemporaryNode typAsType} ];
+				asParametricType: {('@A' -> RBTemporaryNode typAsType)} asOrderedDictionary ];
 		yourself
 ]

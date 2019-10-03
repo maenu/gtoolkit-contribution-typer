@@ -22,10 +22,7 @@ TypShaPhaString >> ___asClassInEnvironment: _a ifAbsent: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
-				ifTrue: [ SystemDictionary typAsType
-						asParametricType:
-							{String typAsType.
-							Class typAsType} ]
+				ifTrue: [ SystemDictionary typAsType ]
 				ifFalse: [ BlockClosure typAsType
 						asFunctionType: {}
 						result: TypUnknownType instance
@@ -61,7 +58,9 @@ TypShaPhaString >> ___includesSubstring: _a [
 { #category : #accessing }
 TypShaPhaString >> ___join: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | Collection typAsType asParametricType: {String typAsType} ];
+		argumentTypes: [ :i :a :s :r | 
+			Collection typAsType
+				asParametricType: {('@A' -> String typAsType)} asOrderedDictionary ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself
 ]
@@ -70,8 +69,9 @@ TypShaPhaString >> ___join: _a [
 TypShaPhaString >> ___keywords [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType:
-				[ :a :s :r | SequenceableCollection typAsType asParametricType: {String typAsType} ];
+		resultType: [ :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType: {('@A' -> String typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -81,7 +81,7 @@ TypShaPhaString >> ___split: _a [
 		argumentTypes: [ :i :a :s :r | SequenceableCollection typAsType ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				asParametricType: {(a argumentTypes at: 1)} ];
+				asParametricType: {('@A' -> (a argumentTypes at: 1))} asOrderedDictionary ];
 		yourself
 ]
 

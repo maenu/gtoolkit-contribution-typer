@@ -37,7 +37,9 @@ TypShaPhaClass >> ___hasClassVarNamed: _a [
 TypShaPhaClass >> ___sharedPools [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Collection typAsType asParametricType: { Class typAsType } ];
+		resultType: [ :a :s :r | 
+			Collection typAsType
+				asParametricType: {('@A' -> Class typAsType)} asOrderedDictionary ];
 		yourself
 ]
 

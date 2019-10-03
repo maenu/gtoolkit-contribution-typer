@@ -11,8 +11,9 @@ Class {
 { #category : #accessing }
 TypShaGtGtMethodsCoder class >> ___forMethods: _a [
 	^ TypMethodLookupResult new
-		argumentTypes:
-				[ :i :a :s :r | Collection typAsType asParametricType: {CompiledMethod typAsType} ];
+		argumentTypes: [ :i :a :s :r | 
+			Collection typAsType
+				asParametricType: {('@A' -> CompiledMethod typAsType)} asOrderedDictionary ];
 		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
 		yourself
 ]
@@ -36,11 +37,11 @@ TypShaGtGtMethodsCoder >> initialize [
 	___methods := TypVariableLookupResult new
 		type: [ :a :s :r | 
 			SequenceableCollection typAsType
-				asParametricType: {CompiledMethod typAsType} ];
+				asParametricType: {('@A' -> CompiledMethod typAsType)} asOrderedDictionary ];
 		yourself.
 	___methodCoders := TypVariableLookupResult new
 		type: [ :a :s :r | 
 			SequenceableCollection typAsType
-				asParametricType: {GtMethodCoder typAsType} ];
+				asParametricType: {('@A' -> GtMethodCoder typAsType)} asOrderedDictionary ];
 		yourself
 ]

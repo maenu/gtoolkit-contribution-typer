@@ -36,7 +36,7 @@ TypShaPhaSequenceableCollection >> ___at: _a ifAbsent: _b [
 						result: TypUnknownType instance
 						optionalParameters: false ] ];
 		resultType: [ :a :s :r | 
-			{(a receiverType parameters at: 1).
+			{(a receiverType bindings at: '@A').
 			(a argumentTypes at: 2) result} typAsType ];
 		yourself
 ]
@@ -60,7 +60,7 @@ TypShaPhaSequenceableCollection >> ___copyFrom: _a to: _b [
 { #category : #'as yet unclassified' }
 TypShaPhaSequenceableCollection >> ___detectIndex: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a | BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: Boolean typAsType optionalParameters: false ];
+		argumentTypes: [ :i :a | BlockClosure typAsType asFunctionType: {(a receiverType bindings at: '@A')} result: Boolean typAsType optionalParameters: false ];
 		resultType: [ Integer typAsType ];
 		yourself
 ]
@@ -70,7 +70,7 @@ TypShaPhaSequenceableCollection >> ___detectIndex: _a ifNone: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			i = 1
-				ifTrue: [ BlockClosure typAsType asFunctionType: {(a receiverType parameters at: 1)} result: Boolean typAsType optionalParameters: false ]
+				ifTrue: [ BlockClosure typAsType asFunctionType: {(a receiverType bindings at: '@A')} result: Boolean typAsType optionalParameters: false ]
 				ifFalse: [ {TypUnknownType instance.
 					(BlockClosure typAsType asFunctionType: {} result: Boolean typAsType optionalParameters: false)} typAsType ] ];
 		resultType: [ :a | 
@@ -95,14 +95,14 @@ TypShaPhaSequenceableCollection >> ___endsWith: _a [
 TypShaPhaSequenceableCollection >> ___first [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | a receiverType parameters at: 1 ];
+		resultType: [ :a :s :r | a receiverType bindings at: '@A' ];
 		yourself
 ]
 
 { #category : #accessing }
 TypShaPhaSequenceableCollection >> ___indexOf: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | a receiverType parameters at: 1 ];
+		argumentTypes: [ :i :a :s :r | a receiverType bindings at: '@A' ];
 		resultType: [ :a :s :r | Integer typAsType ];
 		yourself
 ]
@@ -119,7 +119,7 @@ TypShaPhaSequenceableCollection >> ___isEmpty [
 TypShaPhaSequenceableCollection >> ___last [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a | a receiverType parameters at: 1 ];
+		resultType: [ :a | a receiverType bindings at: '@A' ];
 		yourself
 ]
 
@@ -137,7 +137,7 @@ TypShaPhaSequenceableCollection >> ___sort: _a [
 		argumentTypes: [ :i :a | 
 			| type |
 			type := a receiverType isParametric
-				ifTrue: [ a receiverType parameters at: 1 ]
+				ifTrue: [ a receiverType bindings at: '@A' ]
 				ifFalse: [ TypUnknownType instance ].
 			BlockClosure typAsType
 				asFunctionType:
@@ -155,11 +155,13 @@ TypShaPhaSequenceableCollection >> ___withIndexCollect: _a [
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure typAsType
 				asFunctionType:
-					{(a receiverType parameters at: 1).
+					{(a receiverType bindings at: '@A').
 					Integer typAsType}
 				result: TypUnknownType instance
 				optionalParameters: false ];
-		resultType: [ :a :s :r | a receiverType asParametricType: {(a argumentTypes at: 1) result} ];
+		resultType: [ :a :s :r | 
+			a receiverType
+				asParametricType: {('@A' -> (a argumentTypes at: 1) result)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -169,7 +171,7 @@ TypShaPhaSequenceableCollection >> ___withIndexDo: _a [
 		argumentTypes: [ :i :a | 
 			BlockClosure typAsType
 				asFunctionType:
-					{(a receiverType parameters at: 1).
+					{(a receiverType bindings at: '@A').
 					Integer typAsType}
 				result: TypUnknownType instance
 				optionalParameters: false ];
@@ -183,11 +185,13 @@ TypShaPhaSequenceableCollection >> ___withIndexSelect: _a [
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure typAsType
 				asFunctionType:
-					{(a receiverType parameters at: 1).
+					{(a receiverType bindings at: '@A').
 					Integer typAsType}
 				result: TypUnknownType instance
 				optionalParameters: false ];
-		resultType: [ :a :s :r | a receiverType asParametricType: {(a argumentTypes at: 1) result} ];
+		resultType: [ :a :s :r | 
+			a receiverType
+				asParametricType: {('@A' -> (a argumentTypes at: 1) result)} ];
 		yourself
 ]
 

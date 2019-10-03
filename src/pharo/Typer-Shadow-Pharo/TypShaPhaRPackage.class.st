@@ -13,8 +13,9 @@ TypShaPhaRPackage class >> shadowedClass [
 TypShaPhaRPackage >> ___definedClasses [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType:
-				[ :a :s :r | Collection typAsType asParametricType: {Class typAsType} ];
+		resultType: [ :a :s :r | 
+			Collection typAsType
+				asParametricType: {('@A' -> Class typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -22,7 +23,8 @@ TypShaPhaRPackage >> ___definedClasses [
 TypShaPhaRPackage >> ___methods [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType:
-				[ :a :s :r | Collection typAsType asParametricType: {CompiledMethod typAsType} ];
+		resultType: [ :a :s :r | 
+			Collection typAsType
+				asParametricType: {('@A' -> CompiledMethod typAsType)} asOrderedDictionary ];
 		yourself
 ]

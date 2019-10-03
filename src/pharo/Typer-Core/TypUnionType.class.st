@@ -129,7 +129,6 @@ TypUnionType >> hash [
 
 { #category : #accessing }
 TypUnionType >> initialize [
-	<typTypeParametersAs: 'TypType'>
 	<typTypeVariable: 'types' as: 'Set<TypType>'>
 	super initialize.
 	types := Set new "typParameters TypType"

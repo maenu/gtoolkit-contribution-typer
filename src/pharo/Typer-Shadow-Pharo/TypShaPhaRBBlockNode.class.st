@@ -13,7 +13,8 @@ TypShaPhaRBBlockNode class >> shadowedClass [
 TypShaPhaRBBlockNode >> ___arguments [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ OrderedCollection typAsType asParametricType: {RBArgumentNode typAsType} ];
+		resultType: [ OrderedCollection typAsType
+				asParametricType: {('@A' -> RBArgumentNode typAsType)} asOrderedDictionary ];
 		yourself
 ]
 

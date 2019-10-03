@@ -13,7 +13,9 @@ TypShaPhaBehavior class >> shadowedClass [
 TypShaPhaBehavior >> ___allSubclasses [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | SequenceableCollection typAsType asParametricType: {Behavior typAsType} ];
+		resultType: [ :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType: {('@A' -> Behavior typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -21,8 +23,9 @@ TypShaPhaBehavior >> ___allSubclasses [
 TypShaPhaBehavior >> ___classVarNames [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType:
-				[ :a :s :r | Set typAsType asParametricType: {String typAsType} ];
+		resultType: [ :a :s :r | 
+			Set typAsType
+				asParametricType: {('@A' -> String typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -70,7 +73,9 @@ TypShaPhaBehavior >> ___inheritsFrom: _a [
 TypShaPhaBehavior >> ___instVarNames [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | SequenceableCollection typAsType asParametricType: {String typAsType} ];
+		resultType: [ :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType: {('@A' -> String typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -102,7 +107,8 @@ TypShaPhaBehavior >> ___methodNamed: _a [
 TypShaPhaBehavior >> ___methods [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ Collection typAsType asParametricType: {CompiledMethod typAsType} ];
+		resultType: [ Collection typAsType
+				asParametricType: {('@A' -> CompiledMethod typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -126,8 +132,9 @@ TypShaPhaBehavior >> ___new [
 TypShaPhaBehavior >> ___selectors [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType:
-				[ :a :s :r | Collection typAsType asParametricType: {Symbol typAsType} ];
+		resultType: [ :a :s :r | 
+			Collection typAsType
+				asParametricType: {('@A' -> Symbol typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -159,7 +166,9 @@ TypShaPhaBehavior >> ___whichClassDefinesInstVar: _a [
 TypShaPhaBehavior >> ___withAllSuperclasses [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | SequenceableCollection typAsType asParametricType: {ClassDescription typAsType} ];
+		resultType: [ :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType: {('@A' -> ClassDescription typAsType)} asOrderedDictionary ];
 		yourself
 ]
 

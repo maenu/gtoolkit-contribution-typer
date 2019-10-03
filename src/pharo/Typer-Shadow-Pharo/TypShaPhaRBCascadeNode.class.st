@@ -13,6 +13,8 @@ TypShaPhaRBCascadeNode class >> shadowedClass [
 TypShaPhaRBCascadeNode >> ___messages [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | SequenceableCollection typAsType asParametricType: {RBMessageNode typAsType} ];
+		resultType: [ :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType: {('@A' -> RBMessageNode typAsType)} asOrderedDictionary ];
 		yourself
 ]

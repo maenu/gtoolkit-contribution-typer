@@ -13,7 +13,8 @@ TypShaPhaRBMessageNode class >> shadowedClass [
 TypShaPhaRBMessageNode >> ___arguments [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ OrderedCollection typAsType asParametricType: {RBValueNode typAsType} ];
+		resultType: [ OrderedCollection typAsType
+				asParametricType: {('@A' -> RBValueNode typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -23,7 +24,12 @@ TypShaPhaRBMessageNode >> ___keywordsIntervals [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				asParametricType: {(Interval typAsType asParametricType: {Integer typAsType})} ];
+				asParametricType:
+					{('@A'
+						->
+							(Interval typAsType
+								asParametricType: {('@A' -> Integer typAsType)} asOrderedDictionary))}
+						asOrderedDictionary ];
 		yourself
 ]
 

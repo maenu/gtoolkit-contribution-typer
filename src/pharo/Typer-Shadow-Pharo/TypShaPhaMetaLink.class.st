@@ -12,8 +12,9 @@ TypShaPhaMetaLink class >> shadowedClass [
 { #category : #accessing }
 TypShaPhaMetaLink >> ___arguments: _a [
 	^ TypMethodLookupResult new
-		argumentTypes:
-				[ :i :a :s :r | SequenceableCollection typAsType asParametricType: {Symbol typAsType} ];
+		argumentTypes: [ :i :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType: {('@A' -> Symbol typAsType)} asOrderedDictionary ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

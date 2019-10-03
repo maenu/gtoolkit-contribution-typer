@@ -13,15 +13,17 @@ TypShaPhaRBProgramNode class >> shadowedClass [
 TypShaPhaRBProgramNode >> ___assignmentNodes [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ SequenceableCollection typAsType asParametricType: {RBAssignmentNode typAsType} ];
+		resultType: [ SequenceableCollection typAsType
+				asParametricType: {('@A' -> RBAssignmentNode typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
 { #category : #accessing }
 TypShaPhaRBProgramNode >> ___bestNodeFor: _a [
 	^ TypMethodLookupResult new
-		argumentTypes:
-				[ :i :a :s :r | Interval typAsType asParametricType: {Integer typAsType} ];
+		argumentTypes: [ :i :a :s :r | 
+			Interval typAsType
+				asParametricType: {('@A' -> Integer typAsType)} asOrderedDictionary ];
 		resultType: [ :a :s :r | RBProgramNode typAsType asNullableType ];
 		yourself
 ]
@@ -32,7 +34,7 @@ TypShaPhaRBProgramNode >> ___children [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				asParametricType: {RBProgramNode typAsType} ];
+				asParametricType: {('@A' -> RBProgramNode typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -40,7 +42,8 @@ TypShaPhaRBProgramNode >> ___children [
 TypShaPhaRBProgramNode >> ___comments [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ OrderedCollection typAsType asParametricType: {RBComment typAsType} ];
+		resultType: [ OrderedCollection typAsType
+				asParametricType: {('@A' -> RBComment typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -56,8 +59,9 @@ TypShaPhaRBProgramNode >> ___hasProperty: _a [
 TypShaPhaRBProgramNode >> ___instanceVariableWriteNodes [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType:
-				[ :a :s :r | Collection typAsType asParametricType: {RBAssignmentNode typAsType} ];
+		resultType: [ :a :s :r | 
+			Collection typAsType
+				asParametricType: {('@A' -> RBAssignmentNode typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -163,7 +167,7 @@ TypShaPhaRBProgramNode >> ___parents [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				asParametricType: {RBProgramNode typAsType} ];
+				asParametricType: {('@A' -> RBProgramNode typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -274,8 +278,9 @@ TypShaPhaRBProgramNode >> ___stop [
 TypShaPhaRBProgramNode >> ___variableWriteNodes [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType:
-				[ :a :s :r | Collection typAsType asParametricType: {RBAssignmentNode typAsType} ];
+		resultType: [ :a :s :r | 
+			Collection typAsType
+				asParametricType: {('@A' -> RBAssignmentNode typAsType)} asOrderedDictionary ];
 		yourself
 ]
 

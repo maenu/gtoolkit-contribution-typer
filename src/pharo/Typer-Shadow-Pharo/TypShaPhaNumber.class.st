@@ -12,15 +12,21 @@ TypShaPhaNumber class >> shadowedClass [
 { #category : #'as yet unclassified' }
 TypShaPhaNumber >> ___timesCollect: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ BlockClosure typAsType asFunctionType: {Integer typAsType} result: TypUnknownType instance optionalParameters: true ];
+		argumentTypes: [ BlockClosure typAsType
+				asFunctionType: {Integer typAsType}
+				result: TypUnknownType instance
+				optionalParameters: true ];
 		resultType: [ :a | 
 			OrderedCollection typAsType
 				asParametricType:
-					{(a argumentTypes
-						collect: [ :e | 
-							e isFunction
-								ifTrue: [ e result ]
-								ifFalse: [ TypUnknownType instance ] ]) typAsType} ];
+					{('@A'
+						->
+							(a argumentTypes
+								collect: [ :e | 
+									e isFunction
+										ifTrue: [ e result ]
+										ifFalse: [ TypUnknownType instance ] ]) typAsType)}
+						asOrderedDictionary ];
 		yourself
 ]
 
@@ -31,8 +37,10 @@ TypShaPhaNumber >> ___to: _a [
 		resultType: [ :a :s :r | 
 			Interval typAsType
 				asParametricType:
-					{{a receiverType.
-					(a argumentTypes at: 1)} typAsType} ];
+					{('@A'
+						->
+							{a receiverType.
+							(a argumentTypes at: 1)} typAsType)} asOrderedDictionary ];
 		yourself
 ]
 

@@ -23,7 +23,7 @@ TypShaPhaRBMethodNode >> ___allChildren [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				asParametricType: {RBProgramNode typAsType} ];
+				asParametricType: {('@A' -> RBProgramNode typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -31,7 +31,8 @@ TypShaPhaRBMethodNode >> ___allChildren [
 TypShaPhaRBMethodNode >> ___arguments [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ OrderedCollection typAsType asParametricType: {RBArgumentNode typAsType} ];
+		resultType: [ OrderedCollection typAsType
+				asParametricType: {('@A' -> RBArgumentNode typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -87,8 +88,9 @@ TypShaPhaRBMethodNode >> ___numArgs [
 TypShaPhaRBMethodNode >> ___pragmas [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType:
-				[ :a :s :r | SequenceableCollection typAsType asParametricType: {RBPragmaNode typAsType} ];
+		resultType: [ :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType: {('@A' -> RBPragmaNode typAsType)} asOrderedDictionary ];
 		yourself
 ]
 

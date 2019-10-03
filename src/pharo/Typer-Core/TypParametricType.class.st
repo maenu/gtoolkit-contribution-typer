@@ -27,6 +27,15 @@ TypParametricType >> > aType [
 		ifFalse: [ super > aType ]
 ]
 
+{ #category : #converting }
+TypParametricType >> asParametricType: someTypes [
+	| type |
+	self assert: [ someTypes keys = bindings keys ].
+	type := self copy.
+	someTypes keysAndValuesDo: [ :n :t | type bindings at: n put: t ].
+	^ type
+]
+
 { #category : #accessing }
 TypParametricType >> asTypeCompatibleWith: aType [
 	^ (aType isParametric and: [ name = aType name ])

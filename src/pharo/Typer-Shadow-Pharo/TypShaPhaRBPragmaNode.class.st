@@ -11,7 +11,7 @@ TypShaPhaRBPragmaNode class >> ___selector: _a arguments: _b [
 			i = 1
 				ifTrue: [ Symbol typAsType ]
 				ifFalse: [ SequenceableCollection typAsType
-						asParametricType: {RBLiteralValueNode typAsType} ] ];
+						asParametricType: {('@A' -> RBLiteralValueNode typAsType)} asOrderedDictionary ] ];
 		resultType: [ :a :s :r | RBPragmaNode typAsType ];
 		yourself
 ]

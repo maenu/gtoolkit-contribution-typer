@@ -13,7 +13,8 @@ TypShaGtGtMondrianNodeBuilder class >> shadowedClass [
 TypShaGtGtMondrianNodeBuilder >> ___with: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Collection typAsType ];
-		resultType:
-				[ :a :s :r | (a argumentTypes at: 1) asParametricType: {BlElement typAsType} ];
+		resultType: [ :a :s :r | 
+			(a argumentTypes at: 1)
+				asParametricType: {('@A' -> BlElement typAsType)} asOrderedDictionary ];
 		yourself
 ]

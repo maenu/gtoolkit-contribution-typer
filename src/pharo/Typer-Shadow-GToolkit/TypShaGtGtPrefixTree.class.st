@@ -27,7 +27,8 @@ TypShaGtGtPrefixTree >> ___weightedFirst: _a startingWith: _b [
 			i = 1
 				ifTrue: [ Integer typAsType ]
 				ifFalse: [ String typAsType ] ];
-		resultType:
-				[ :a :s :r | SequenceableCollection typAsType asParametricType: {String typAsType} ];
+		resultType: [ :a :s :r | 
+			SequenceableCollection typAsType
+				asParametricType: {('@A' -> String typAsType)} asOrderedDictionary ];
 		yourself
 ]
