@@ -1,6 +1,13 @@
 Extension { #name : #RBComment }
 
 { #category : #'*Typer-Core' }
+RBComment >> typBindings [
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
+	self assert: [ self typIsBindings ].
+	^ (self contents copyFrom: 'typBindings ' size + 1 to: self contents size) typAsTypes
+]
+
+{ #category : #'*Typer-Core' }
 RBComment >> typCastAs [
 	<typTypeResultAs: 'TypType'>
 	self assert: [ self typIsCastAs ].
@@ -8,20 +15,13 @@ RBComment >> typCastAs [
 ]
 
 { #category : #'*Typer-Core' }
+RBComment >> typIsBindings [
+	<typTypeResultAs: 'Boolean'>
+	^ self contents beginsWith: 'typBindings '
+]
+
+{ #category : #'*Typer-Core' }
 RBComment >> typIsCastAs [
 	<typTypeResultAs: 'Boolean'>
 	^ self contents beginsWith: 'typCastAs '
-]
-
-{ #category : #'*Typer-Core' }
-RBComment >> typIsParameters [
-	<typTypeResultAs: 'Boolean'>
-	^ self contents beginsWith: 'typParameters '
-]
-
-{ #category : #'*Typer-Core' }
-RBComment >> typParameters [
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	self assert: [ self typIsParameters ].
-	^ (self contents copyFrom: 'typParameters ' size + 1 to: self contents size) typAsTypes
 ]

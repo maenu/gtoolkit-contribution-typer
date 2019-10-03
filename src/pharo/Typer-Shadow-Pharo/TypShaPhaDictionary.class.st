@@ -13,7 +13,7 @@ TypShaPhaDictionary class >> shadowedClass [
 TypShaPhaDictionary >> ___anyOne [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a | a receiverType bindings at: '@A' ];
+		resultType: [ :a | a receiverType bindingAt: '@A' ];
 		yourself
 ]
 
@@ -24,8 +24,8 @@ TypShaPhaDictionary >> ___asOrderedDictionary [
 		resultType: [ :a | 
 			OrderedDictionary typAsType
 				asParametricType:
-					{('@B' -> (a receiverType bindings at: '@B')).
-					('@A' -> (a receiverType bindings at: '@A'))} asOrderedDictionary ];
+					{('@B' -> (a receiverType bindingAt: '@B')).
+					('@A' -> (a receiverType bindingAt: '@A'))} asOrderedDictionary ];
 		yourself
 ]
 
@@ -40,8 +40,8 @@ TypShaPhaDictionary >> ___associations [
 						->
 							(Association typAsType
 								asParametricType:
-									{('@A' -> (a receiverType bindings at: '@B')).
-									('@B' -> (a receiverType bindings at: '@A'))}
+									{('@A' -> (a receiverType bindingAt: '@B')).
+									('@B' -> (a receiverType bindingAt: '@A'))}
 										asOrderedDictionary))} asOrderedDictionary ];
 		yourself
 ]
@@ -54,8 +54,8 @@ TypShaPhaDictionary >> ___associationsDo: _a [
 				asFunctionType:
 					{(Association typAsType
 						asParametricType:
-							{('@A' -> (a receiverType bindings at: '@B')).
-							('@B' -> (a receiverType bindings at: '@A'))}
+							{('@A' -> (a receiverType bindingAt: '@B')).
+							('@B' -> (a receiverType bindingAt: '@A'))}
 								asOrderedDictionary)}
 				result: TypUnknownType instance
 				optionalParameters: false ];
@@ -66,8 +66,8 @@ TypShaPhaDictionary >> ___associationsDo: _a [
 { #category : #accessing }
 TypShaPhaDictionary >> ___at: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | a receiverType bindings at: '@B' ];
-		resultType: [ :a :s :r | a receiverType bindings at: '@A' ];
+		argumentTypes: [ :i :a :s :r | a receiverType bindingAt: '@B' ];
+		resultType: [ :a :s :r | a receiverType bindingAt: '@A' ];
 		yourself
 ]
 
@@ -76,9 +76,9 @@ TypShaPhaDictionary >> ___at: _a ifAbsentPut: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			i = 1
-				ifTrue: [ a receiverType bindings at: '@B' ]
-				ifFalse: [ BlockClosure typAsType asFunctionType: {} result: (a receiverType bindings at: '@A') optionalParameters: false ] ];
-		resultType: [ :a | a receiverType bindings at: '@A' ];
+				ifTrue: [ a receiverType bindingAt: '@B' ]
+				ifFalse: [ BlockClosure typAsType asFunctionType: {} result: (a receiverType bindingAt: '@A') optionalParameters: false ] ];
+		resultType: [ :a | a receiverType bindingAt: '@A' ];
 		yourself
 ]
 
@@ -86,9 +86,9 @@ TypShaPhaDictionary >> ___at: _a ifAbsentPut: _b [
 TypShaPhaDictionary >> ___at: _a ifPresent: _b ifAbsent: _c [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
-			{(a receiverType bindings at: '@B').
+			{(a receiverType bindingAt: '@B').
 			(BlockClosure typAsType
-				asFunctionType: {(a receiverType bindings at: '@A')}
+				asFunctionType: {(a receiverType bindingAt: '@A')}
 				result: TypUnknownType instance
 				optionalParameters: true).
 			(BlockClosure typAsType
@@ -106,9 +106,9 @@ TypShaPhaDictionary >> ___at: _a put: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			i = 1
-				ifTrue: [ a receiverType bindings at: '@B' ]
-				ifFalse: [ a receiverType bindings at: '@A' ] ];
-		resultType: [ :a | a receiverType bindings at: '@A' ];
+				ifTrue: [ a receiverType bindingAt: '@B' ]
+				ifFalse: [ a receiverType bindingAt: '@A' ] ];
+		resultType: [ :a | a receiverType bindingAt: '@A' ];
 		yourself
 ]
 
@@ -118,7 +118,7 @@ TypShaPhaDictionary >> ___collect: _a [
 		argumentTypes: [ :i :a :s :r | 
 			{String typAsType.
 			(BlockClosure typAsType
-				asFunctionType: {(a receiverType bindings at: '@A')}
+				asFunctionType: {(a receiverType bindingAt: '@A')}
 				result: TypUnknownType instance
 				optionalParameters: false)} typAsType ];
 		resultType: [ :a :s :r | 
@@ -133,7 +133,7 @@ TypShaPhaDictionary >> ___collect: _a [
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new
-										receiverType: (a receiverType bindings at: '@A');
+										receiverType: (a receiverType bindingAt: '@A');
 										selector: argumentNode value asSymbol;
 										argumentTypes: {};
 										argumentNodes: {};
@@ -141,7 +141,7 @@ TypShaPhaDictionary >> ___collect: _a [
 						ifFalse: [ TypUnknownType instance ] ].
 			a receiverType
 				asParametricType:
-					{('@B' -> (a receiverType bindings at: '@B')).
+					{('@B' -> (a receiverType bindingAt: '@B')).
 					('@A' -> elementType)} asOrderedDictionary ];
 		yourself
 ]
@@ -149,7 +149,7 @@ TypShaPhaDictionary >> ___collect: _a [
 { #category : #'as yet unclassified' }
 TypShaPhaDictionary >> ___includes: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a | a receiverType bindings at: '@A' ];
+		argumentTypes: [ :i :a | a receiverType bindingAt: '@A' ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
@@ -157,7 +157,7 @@ TypShaPhaDictionary >> ___includes: _a [
 { #category : #'as yet unclassified' }
 TypShaPhaDictionary >> ___includesKey: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a | a receiverType bindings at: '@B' ];
+		argumentTypes: [ :i :a | a receiverType bindingAt: '@B' ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
@@ -168,7 +168,7 @@ TypShaPhaDictionary >> ___keys [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
 			Collection typAsType
-				asParametricType: {('@A' -> (a receiverType bindings at: '@B'))} asOrderedDictionary ];
+				asParametricType: {('@A' -> (a receiverType bindingAt: '@B'))} asOrderedDictionary ];
 		yourself
 ]
 
@@ -189,12 +189,12 @@ TypShaPhaDictionary >> ~~~, _a [
 				asParametricType:
 					{('@B'
 						->
-							{(a receiverType bindings at: '@B').
-							((a argumentTypes at: 1) bindings at: '@B')} typAsType).
+							{(a receiverType bindingAt: '@B').
+							((a argumentTypes at: 1) bindingAt: '@B')} typAsType).
 					('@A'
 						->
-							{(a receiverType bindings at: '@A').
-							((a argumentTypes at: 1) bindings at: '@A')} typAsType)}
+							{(a receiverType bindingAt: '@A').
+							((a argumentTypes at: 1) bindingAt: '@A')} typAsType)}
 						asOrderedDictionary ];
 		yourself
 ]

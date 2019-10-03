@@ -7,56 +7,93 @@ Class {
 	#category : #'Typer-Core-Type'
 }
 
+{ #category : #'instance creation' }
+TypParametricType class >> classDescription: aClassDescription [
+	self shouldNotImplement
+]
+
+{ #category : #'as yet unclassified' }
+TypParametricType class >> classDescription: aClassDescription bindings: anOrderedDictionary [
+	^ self new
+		initializeWithClassDescription: aClassDescription
+			bindings: anOrderedDictionary;
+		yourself
+]
+
+{ #category : #'instance creation' }
+TypParametricType class >> named: aString [
+	self shouldNotImplement
+]
+
+{ #category : #'as yet unclassified' }
+TypParametricType class >> named: aString bindings: anOrderedDictionary [
+	^ self new
+		initializeWithName: aString bindings: anOrderedDictionary;
+		yourself
+]
+
 { #category : #comparing }
 TypParametricType >> = anObject [
 	^ self == anObject
 		or: [ self class = anObject class
 				and: [ | object |
 					object := anObject "typCastAs TypParametricType".
-					name = object name and: [ bindings = object bindings ] ] ]
+					name = object name and: [ self parameters = object parameters and: [ self parameters allSatisfy: [ :e | (self bindingAt: e) = (object bindingAt: e) ] ] ] ] ]
 ]
 
 { #category : #comparing }
 TypParametricType >> > aType [
 	^ (aType isParametric and: [ name = aType name ])
-		ifTrue: [ self assert: [ bindings keys = aType bindings keys ].
-			(bindings keys
-				allSatisfy: [ :e | (bindings at: e) >= (aType bindings at: e) ])
-				and: [ bindings keys
-						anySatisfy: [ :e | (bindings at: e) > (aType bindings at: e) ] ] ]
+		ifTrue: [ self assert: [ self parameters = aType parameters ].
+			(self parameters
+				allSatisfy: [ :e | (self bindingAt: e) >= (aType bindingAt: e) ])
+				and: [ self parameters
+						anySatisfy: [ :e | (self bindingAt: e) > (aType bindingAt: e) ] ] ]
 		ifFalse: [ super > aType ]
 ]
 
 { #category : #converting }
-TypParametricType >> asParametricType: someTypes [
-	| type |
-	self assert: [ someTypes keys = bindings keys ].
-	type := self copy.
-	someTypes keysAndValuesDo: [ :n :t | type bindings at: n put: t ].
-	^ type
+TypParametricType >> asParametricType: anOrderedDictionary [
+	^ self copyWithBindings: anOrderedDictionary
 ]
 
 { #category : #accessing }
 TypParametricType >> asTypeCompatibleWith: aType [
 	^ (aType isParametric and: [ name = aType name ])
-		ifTrue: [ self assert: [ bindings keys = aType bindings keys ].
-			self copy
-				bindings:
+		ifTrue: [ self
+				copyWithBindings:
 					(bindings associations
 						collect:
-							[ :e | e key -> (e value asTypeCompatibleWith: (aType bindings at: e key)) ])
+							[ :e | e key -> (e value asTypeCompatibleWith: (aType bindingAt: e key)) ])
 						asOrderedDictionary ]
 		ifFalse: [ super asTypeCompatibleWith: aType ]
 ]
 
 { #category : #accessing }
-TypParametricType >> bindings [
-	^ bindings
+TypParametricType >> bindingAt: aString [
+	^ bindings at: aString
 ]
 
-{ #category : #accessing }
-TypParametricType >> bindings: anObject [
-	bindings := anObject
+{ #category : #copying }
+TypParametricType >> copyWithBindings: anOrderedDictionary [
+	self assert: [ bindings keys = anOrderedDictionary keys ].
+	^ classDescription
+		ifNil: [ self copy
+				initializeWithClassDescription: classDescription
+					bindings: anOrderedDictionary;
+				yourself ]
+		ifNotNil: [ self copy
+				initializeWithName: name bindings: anOrderedDictionary;
+				yourself ]
+]
+
+{ #category : #copying }
+TypParametricType >> copyWithSomeBindings: aDictionary [
+	| bindings_ |
+	self assert: [ bindings keys includesAll: aDictionary keys ].
+	bindings_ := bindings copy.
+	aDictionary keysAndValuesDo: [ :n :t | bindings_ at: n put: t ].
+	^ self copyWithBindings: bindings_
 ]
 
 { #category : #comparing }
@@ -64,15 +101,30 @@ TypParametricType >> hash [
 	^ super hash bitXor: bindings hash
 ]
 
-{ #category : #initialization }
-TypParametricType >> initialize [
-	super initialize.
-	bindings := OrderedDictionary new
+{ #category : #accessing }
+TypParametricType >> initializeWithClassDescription: aClassDescription bindings: anOrderedDictionary [
+	self
+		assert: [ aClassDescription isNotNil and: [ anOrderedDictionary isNotEmpty ] ].
+	self initializeWithClassDescription: aClassDescription.
+	bindings := anOrderedDictionary copy
+]
+
+{ #category : #accessing }
+TypParametricType >> initializeWithName: aString bindings: anOrderedDictionary [
+	self
+		assert: [ aString isNotEmpty and: [ anOrderedDictionary isNotEmpty ] ].
+	self initializeWithName: aString.
+	bindings := anOrderedDictionary
 ]
 
 { #category : #testing }
 TypParametricType >> isParametric [
 	^ true
+]
+
+{ #category : #accessing }
+TypParametricType >> parameters [
+	^ bindings keys
 ]
 
 { #category : #copying }
@@ -96,10 +148,9 @@ TypParametricType >> printOn: aStream [
 TypParametricType >> superType [
 	superType := super superType.
 	superType isParametric
-		ifTrue: [ superType := superType copy.
-			bindings
-				keysAndValuesDo: [ :s :t | 
-					(superType bindings includesKey: s)
-						ifTrue: [ superType bindings at: s put: t ] ] ].
+		ifTrue: [ superType := superType
+				copyWithSomeBindings:
+					((self parameters select: [ :e | superType parameters includes: e ])
+						collect: [ :e | e -> (self bindingAt: e) ]) asOrderedDictionary ].
 	^ superType
 ]

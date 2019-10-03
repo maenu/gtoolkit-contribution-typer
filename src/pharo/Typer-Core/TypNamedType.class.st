@@ -12,14 +12,14 @@ Class {
 { #category : #'instance creation' }
 TypNamedType class >> classDescription: aClassDescription [
 	^ self new
-		classDescription: aClassDescription;
+		initializeWithClassDescription: aClassDescription;
 		yourself
 ]
 
 { #category : #'instance creation' }
 TypNamedType class >> named: aString [
 	^ self new
-		name: aString;
+		initializeWithName: aString;
 		yourself
 ]
 
@@ -56,11 +56,11 @@ TypNamedType >> asNamedType [
 
 { #category : #converting }
 TypNamedType >> asParametricType: someBindings [
-	^ TypParametricType new
-		name: name;
-		classDescription: classDescription;
-		bindings: someBindings;
-		yourself
+	^ classDescription
+		ifNil: [ TypParametricType named: name bindings: someBindings ]
+		ifNotNil: [ TypParametricType
+				classDescription: classDescription
+				bindings: someBindings ]
 ]
 
 { #category : #converting }
@@ -74,15 +74,6 @@ TypNamedType >> classDescription [
 						ifTrue: [ (name copyFrom: 1 to: name size - ' classTrait' size) asClass
 								classSide ]
 						ifFalse: [ name asClass ] ] ]
-]
-
-{ #category : #accessing }
-TypNamedType >> classDescription: aClassDescription [
-	classDescription := aClassDescription.
-	classDescription
-		ifNil: [ representsClass := nil ]
-		ifNotNil: [ name := classDescription name.
-			representsClass := true ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -101,7 +92,21 @@ TypNamedType >> hash [
 TypNamedType >> initialize [
 	<typTypeVariable: 'name' as: 'String<Character>'>
 	<typTypeVariable: 'representsClass' as: '!Boolean'>
-	super initialize.
+	super initialize
+]
+
+{ #category : #accessing }
+TypNamedType >> initializeWithClassDescription: aClassDescription [
+	self assert: [ aClassDescription isNotNil ].
+	classDescription := aClassDescription.
+	name := classDescription name.
+	representsClass := true
+]
+
+{ #category : #accessing }
+TypNamedType >> initializeWithName: anObject [
+	<typTypeArgument: 1 as: 'String<Character>'>
+	name := anObject.
 	representsClass := nil
 ]
 
@@ -123,13 +128,6 @@ TypNamedType >> lookupSelector: aSymbol [
 TypNamedType >> name [
 	<typTypeResultAs: 'String<Character>'>
 	^ name
-]
-
-{ #category : #accessing }
-TypNamedType >> name: anObject [
-	<typTypeArgument: 1 as: 'String<Character>'>
-	name := anObject.
-	representsClass := nil
 ]
 
 { #category : #printing }

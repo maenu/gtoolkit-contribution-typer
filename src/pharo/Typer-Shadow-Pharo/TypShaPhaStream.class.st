@@ -20,7 +20,7 @@ TypShaPhaStream >> ~~~<< _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			Collection typAsType
-				asParametricType: {('@A' -> (a receiverType bindings at: '@A'))} asOrderedDictionary ];
+				asParametricType: {('@A' -> (a receiverType bindingAt: '@A'))} asOrderedDictionary ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

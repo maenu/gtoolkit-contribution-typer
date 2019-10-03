@@ -17,13 +17,13 @@ Collection >> typAsType [
 Collection >> typSelfType [
 	| type |
 	type := super typSelfType.
-	(type isParametric and: [ type bindings size = 1 ])
-		ifTrue: [ type := type copy.
-			type bindings
-				at: type bindings keys first
-				put:
-					(self typSelfTypeSamples collect: [ :e | e class typAsType ])
-						typAsType ].
+	(type isParametric and: [ type parameters size = 1 ])
+		ifTrue: [ type := type
+				copyWithBindings:
+					{((type parameters at: 1)
+						->
+							(self typSelfTypeSamples collect: [ :e | e class typAsType ])
+								typAsType)} asOrderedDictionary ].
 	^ type
 ]
 

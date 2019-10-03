@@ -11,15 +11,16 @@ RBProgramNode >> typAnnotateType: aType [
 		ifFound: [ :e | type := e typCastAs ]
 		ifNone: [  ].
 	self comments
-		detect: #typIsParameters
+		detect: #typIsBindings
 		ifFound: [ :e | 
 			type isParametric
-				ifTrue: [ [ | parameters |
-					parameters := e typParameters.
-					parameters size = type bindings size
-						ifTrue: [ type := type copy.
-							type bindings keys
-								withIndexDo: [ :f :i | type bindings at: f put: (parameters at: i) ] ]
+				ifTrue: [ [ | bindings |
+					bindings := e typBindings.
+					bindings size = type parameters size
+						ifTrue: [ type := type
+								copyWithBindings:
+									(type parameters withIndexCollect: [ :f :i | f -> (bindings at: i) ])
+										asOrderedDictionary ]
 						ifFalse: [ self flag: 'log or do nothing?' ] ]
 						on: TypNoTypeError
 						do: [ self flag: 'log or do nothing?' ] ]

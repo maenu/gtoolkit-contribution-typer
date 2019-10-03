@@ -7,10 +7,20 @@ Class {
 	#category : #'Typer-Core-Type'
 }
 
+{ #category : #'instance creation' }
+TypNilType class >> classDescription: aClassDescription [
+	self shouldNotImplement
+]
+
 { #category : #accessing }
 TypNilType class >> instance [
 	<typTypeResultAs: 'TypNilType'>
 	^ instance ifNil: [ instance := self new ]
+]
+
+{ #category : #'instance creation' }
+TypNilType class >> named: aString [
+	self shouldNotImplement
 ]
 
 { #category : #converting }
@@ -36,7 +46,7 @@ TypNilType >> copy [
 { #category : #initialization }
 TypNilType >> initialize [
 	super initialize.
-	self classDescription: UndefinedObject
+	self initializeWithClassDescription: UndefinedObject
 ]
 
 { #category : #testing }

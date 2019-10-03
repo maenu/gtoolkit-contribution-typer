@@ -9,9 +9,7 @@ Class {
 
 { #category : #'instance creation' }
 TypTypeVariableType class >> named: aString [
-	^ self new
-		name: aString;
-		yourself
+	^ self initializeWithName: aString
 ]
 
 { #category : #comparing }
@@ -38,6 +36,12 @@ TypTypeVariableType >> hash [
 	^ name hash
 ]
 
+{ #category : #accessing }
+TypTypeVariableType >> initializeWithName: aString [
+	self assert: [ aString first = $@ ].
+	name := aString
+]
+
 { #category : #testing }
 TypTypeVariableType >> isTypeVariable [
 	^ true
@@ -46,12 +50,6 @@ TypTypeVariableType >> isTypeVariable [
 { #category : #accessing }
 TypTypeVariableType >> name [
 	^ name
-]
-
-{ #category : #accessing }
-TypTypeVariableType >> name: aString [
-	self assert: [ aString first = $@ ].
-	name := aString
 ]
 
 { #category : #printing }

@@ -13,7 +13,7 @@ TypShaPhaAssociation class >> shadowedClass [
 TypShaPhaAssociation >> ___key [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a | a receiverType bindings at: '@A' ];
+		resultType: [ :a | a receiverType bindingAt: '@A' ];
 		yourself
 ]
 
@@ -21,7 +21,7 @@ TypShaPhaAssociation >> ___key [
 TypShaPhaAssociation >> ___value [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a | a receiverType bindings at: '@B' ];
+		resultType: [ :a | a receiverType bindingAt: '@B' ];
 		yourself
 ]
 
