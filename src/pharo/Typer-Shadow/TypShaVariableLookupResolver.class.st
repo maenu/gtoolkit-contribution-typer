@@ -8,7 +8,7 @@ Class {
 TypShaVariableLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypVariableLookup'>
 	<typTypeResultAs: 'SequenceableCollection<TypVariableLookup>'>
-	^ aLookup receiverType representsClassDescription
+	^ (aLookup receiverType isNamed and: [ aLookup receiverType representsClassDescription ])
 		ifTrue: [ ((aLookup receiverType classDescription typShaShadows
 				collect: [ :e | e asVariableLookupResultFor: aLookup selector ])
 				reject: #isNil)

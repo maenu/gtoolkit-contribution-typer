@@ -23,6 +23,11 @@ TypUnknownType >> asNonNullableType [
 	^ self
 ]
 
+{ #category : #'as yet unclassified' }
+TypUnknownType >> canUnderstand: aSymbol [
+	^ aSymbol implementors isNotEmpty
+]
+
 { #category : #copying }
 TypUnknownType >> copy [
 	^ self
@@ -35,8 +40,8 @@ TypUnknownType >> isUnknown [
 
 { #category : #'as yet unclassified' }
 TypUnknownType >> lookupSelector: aSymbol [
+	self assert: [ self canUnderstand: aSymbol ].
 	^ aSymbol implementors asSet
-		ifEmpty: [ super lookupSelector: aSymbol ]
 ]
 
 { #category : #accessing }

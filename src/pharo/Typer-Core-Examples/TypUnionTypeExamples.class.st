@@ -5,24 +5,6 @@ Class {
 }
 
 { #category : #testing }
-TypUnionTypeExamples >> classDescription [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type classDescription = Integer.
-	self
-		assert: [ self typeWithNil classDescription ]
-		signals: TypNoClassDescriptionError.
-	self
-		assert: [ self typeWithUnknown classDescription ]
-		signals: TypNoClassDescriptionError.
-	self
-		assert: [ self typeWithUnknownAndNil classDescription ]
-		signals: TypNoClassDescriptionError.
-	^ type
-]
-
-{ #category : #testing }
 TypUnionTypeExamples >> hasSuperType [
 	<gtExample>
 	| type |
@@ -94,20 +76,6 @@ TypUnionTypeExamples >> printOn [
 	self assert: self typeWithNil asString = '{!Integer}'.
 	self assert: self typeWithUnknown asString = '{?Integer}'.
 	self assert: self typeWithUnknownAndNil asString = '{!?Integer}'.
-	^ type
-]
-
-{ #category : #testing }
-TypUnionTypeExamples >> representsClassDescription [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type representsClassDescription.
-	self assert: self typeNotAClass representsClassDescription not.
-	self assert: self typeObjectClass representsClassDescription.
-	self assert: self typeTAssertable representsClassDescription.
-	self
-		assert: self typeTAssertableClassTrait representsClassDescription.
 	^ type
 ]
 

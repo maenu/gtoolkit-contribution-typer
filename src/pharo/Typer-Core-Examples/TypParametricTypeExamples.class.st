@@ -10,7 +10,7 @@ TypParametricTypeExamples >> classDescription [
 	| type |
 	type := self type.
 	self assert: type classDescription = OrderedCollection.
-	self assert: [ self typeNotAClass classDescription ] signals: TypNoClassDescriptionError.
+	self assert: [ self typeNotAClass classDescription ] signals: AssertionFailure.
 	^ type
 ]
 

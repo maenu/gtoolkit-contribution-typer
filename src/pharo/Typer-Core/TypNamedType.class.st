@@ -38,10 +38,15 @@ TypNamedType >> > aType [
 		and: [ aType hasSuperType and: [ self >= aType superType ] ]
 ]
 
+{ #category : #'as yet unclassified' }
+TypNamedType >> canUnderstand: aSymbol [
+	^ self representsClassDescription
+		and: [ self classDescription canUnderstand: aSymbol ]
+]
+
 { #category : #converting }
 TypNamedType >> classDescription [
-	self representsClassDescription
-		ifFalse: [ TypNoClassDescriptionError signal ].
+	self assert: [ self representsClassDescription ].
 	^ classDescription
 		ifNil: [ classDescription := (name endsWith: ' class')
 				ifTrue: [ (name copyFrom: 1 to: name size - ' class' size) asClass classSide ]
@@ -92,11 +97,8 @@ TypNamedType >> isNamed [
 
 { #category : #'as yet unclassified' }
 TypNamedType >> lookupSelector: aSymbol [
-	^ self representsClassDescription
-		ifTrue: [ (self classDescription lookupSelector: aSymbol)
-				ifNil: [ super lookupSelector: aSymbol ]
-				ifNotNil: [ :e | Set with: e ] ]
-		ifFalse: [ super lookupSelector: aSymbol ]
+	self assert: [ self canUnderstand: aSymbol ].
+	^ Set with: (self classDescription lookupSelector: aSymbol)
 ]
 
 { #category : #accessing }

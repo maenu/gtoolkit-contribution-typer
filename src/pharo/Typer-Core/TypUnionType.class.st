@@ -64,23 +64,6 @@ TypUnionType >> canUnderstand: aSymbol [
 	^ types allSatisfy: [ :e | e canUnderstand: aSymbol ]
 ]
 
-{ #category : #converting }
-TypUnionType >> classDescription [
-	| superType |
-	superType := self superType.
-	superType isUnion
-		ifTrue: [ TypNoClassDescriptionError signal ].
-	^ superType classDescription
-]
-
-{ #category : #testing }
-TypUnionType >> hasArgumentsCompatibleWithThoseOf: aType [
-	<typTypeArgument: 1 as: 'TypFunctionType'>
-	<typTypeResultAs: 'Boolean'>
-	self assert: [ self isFunction ].
-	^ (self superType "typCastAs TypFunctionType") hasArgumentsCompatibleWithThoseOf: aType
-]
-
 { #category : #testing }
 TypUnionType >> hasSuperType [
 	^ self superType_ ~= self
@@ -135,16 +118,8 @@ TypUnionType >> isUnion [
 
 { #category : #'as yet unclassified' }
 TypUnionType >> lookupSelector: aSymbol [
-	| methods |
-	methods := Set new.
-	types
-		do: [ :e | 
-			methods
-				addAll:
-					([ e lookupSelector: aSymbol ]
-						on: TypNoMethodError
-						do: [ Set new ]) ].
-	^ methods ifEmpty: [ super lookupSelector: aSymbol ]
+	self assert: [ self canUnderstand: aSymbol ].
+	^ types flatCollect: [ :e | e lookupSelector: aSymbol ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -190,16 +165,16 @@ TypUnionType >> printOn: aStream [
 	aStream << '}'
 ]
 
-{ #category : #testing }
-TypUnionType >> representsClassDescription [
-	^ self superType representsClassDescription
+{ #category : #accessing }
+TypUnionType >> superType [
+	self hasSuperType
+		ifFalse: [ TypNoTypeError signal ].
+	^ self superType_
 ]
 
 { #category : #accessing }
-TypUnionType >> superType [
+TypUnionType >> superType_ [
 	| remains nil_ unknown current |
-	self hasSuperType
-		ifFalse: [ TypNoTypeError signal ].
 	remains := types copy.
 	nil_ := remains includes: TypNilType instance.
 	nil_

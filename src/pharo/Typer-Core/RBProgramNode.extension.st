@@ -14,7 +14,7 @@ RBProgramNode >> typAnnotateType: aType [
 		detect: #typIsBindings
 		ifFound: [ :e | 
 			type isParametric
-				ifTrue: [ [ | bindings |
+				ifTrue: [ | bindings |
 					bindings := e typBindings.
 					bindings size = type parameters size
 						ifTrue: [ type := type
@@ -22,8 +22,6 @@ RBProgramNode >> typAnnotateType: aType [
 									(type parameters withIndexCollect: [ :f :i | f -> (bindings at: i) ])
 										asOrderedDictionary ]
 						ifFalse: [ self flag: 'log or do nothing?' ] ]
-						on: TypNoTypeError
-						do: [ self flag: 'log or do nothing?' ] ]
 				ifFalse: [ self flag: 'log or do nothing?' ] ]
 		ifNone: [  ].
 	^ type

@@ -25,6 +25,11 @@ TypTypeVariableType >> > aType [
 	^ true
 ]
 
+{ #category : #'as yet unclassified' }
+TypTypeVariableType >> canUnderstand: aSymbol [
+	^ false
+]
+
 { #category : #comparing }
 TypTypeVariableType >> hash [
 	^ name hash
@@ -39,6 +44,11 @@ TypTypeVariableType >> initializeWithName: aString [
 { #category : #testing }
 TypTypeVariableType >> isTypeVariable [
 	^ true
+]
+
+{ #category : #'as yet unclassified' }
+TypTypeVariableType >> lookupSelector: aSymbol [
+	self shouldNotImplement
 ]
 
 { #category : #accessing }

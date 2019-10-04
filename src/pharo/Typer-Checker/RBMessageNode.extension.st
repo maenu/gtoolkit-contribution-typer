@@ -24,7 +24,7 @@ RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 								ifFalse: [ expected isFunction
 										ifTrue: [ {expected "typCastAs TypFunctionType"} ]
 										ifFalse: [ {} "typParameters TypFunctionType" ] ].
-							functions anySatisfy: [ :e | e hasArgumentsCompatibleWithThoseOf: (actual "typCastAs TypFunctionType") ] ] ] ])
+							functions anySatisfy: [ :e | e typCheHasArgumentsCompatibleWithThoseOf: (actual "typCastAs TypFunctionType") ] ] ] ])
 		ifTrue: [ ^ self ].
 	TypCheIncompatibleTypeError new
 		expected: expected;

@@ -8,8 +8,6 @@ String >> typAsType [
 
 { #category : #'*Typer-Core' }
 String >> typAsTypes [
-	<typTypeResultAs: 'SequenceableCollection<TypType>'> 
-	^ [ TypTypeParser parse: self ]
-		on: SmaCCParserError
-		do: [ {TypUnknownType instance} ]
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
+	^ TypTypeParser parse: self
 ]

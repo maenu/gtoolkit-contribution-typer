@@ -34,5 +34,5 @@ TypGtCoderTypeFilter >> type: anObject [
 	type := anObject.
 	clazzes := (((type isUnion
 		ifTrue: [ (type "typCastAs TypUnionType") types ]
-		ifFalse: [ {type} ]) select: #representsClassDescription) flatCollect: [ :e | e classDescription withAllSuperclasses ]) asSet
+		ifFalse: [ {type} ]) select: [ :e | e isNamed and: [ e representsClassDescription ] ]) flatCollect: [ :e | e classDescription withAllSuperclasses ]) asSet
 ]

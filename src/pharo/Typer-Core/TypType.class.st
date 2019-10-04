@@ -52,16 +52,7 @@ TypType >> asNullableType [
 TypType >> canUnderstand: aSymbol [
 	<typTypeArgument: 1 as: 'Symbol<Character>'>
 	<typTypeResultAs: 'Boolean'>
-	^ [ self lookupSelector: aSymbol.
-	true ]
-		on: TypNoMethodError
-		do: [ false ]
-]
-
-{ #category : #converting }
-TypType >> classDescription [
-	<typTypeResultAs: 'ClassDescription'>
-	TypNoClassDescriptionError signal
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -116,7 +107,7 @@ TypType >> isUnknown [
 TypType >> lookupSelector: aSymbol [
 	<typTypeArgument: 1 as: 'Symbol<Character>'>
 	<typTypeResultAs: 'Set<CompiledMethod<Integer>>'>
-	TypNoMethodError signal
+	self subclassResponsibility
 ]
 
 { #category : #'as yet unclassified' }
@@ -128,12 +119,6 @@ TypType >> nullable [
 TypType >> postCopy [
 	super postCopy.
 	superType := superType copy
-]
-
-{ #category : #testing }
-TypType >> representsClassDescription [
-	<typTypeResultAs: 'Boolean'>
-	^ false
 ]
 
 { #category : #'as yet unclassified' }

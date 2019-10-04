@@ -20,13 +20,7 @@ TypFunctionType >> = anObject [
 
 { #category : #comparing }
 TypFunctionType >> > aType [
-	^ self ~= aType
-		and: [ aType isFunction
-				ifTrue: [ | type |
-					type := aType "typCastAs TypFunctionType".
-					result >= type result
-						and: [ self hasArgumentsCompatibleWithThoseOf: type ] ]
-				ifFalse: [ super > aType ] ]
+	^ false
 ]
 
 { #category : #accessing }
@@ -41,20 +35,9 @@ TypFunctionType >> arguments: anObject [
 	arguments := anObject asOrderedCollection
 ]
 
-{ #category : #comparing }
-TypFunctionType >> hasArgumentsCompatibleWithThoseOf: aType [
-	<typTypeArgument: 1 as: 'TypFunctionType'>
-	<typTypeResultAs: 'Boolean'>
-	| size |
-	size := optionalArguments
-		ifTrue: [ aType arguments size ]
-		ifFalse: [ arguments size ].
-	^ size = 0
-		or: [ size <= arguments size
-				and: [ size <= aType arguments size
-						and: [ ((arguments copyFrom: 1 to: size)
-								withIndexSelect: [ :e :i | e >= (aType arguments at: i) ])
-								size = size ] ] ]
+{ #category : #'as yet unclassified' }
+TypFunctionType >> canUnderstand: aSymbol [
+	^ false
 ]
 
 { #category : #comparing }
@@ -73,6 +56,11 @@ TypFunctionType >> initialize [
 { #category : #testing }
 TypFunctionType >> isFunction [
 	^ true
+]
+
+{ #category : #'as yet unclassified' }
+TypFunctionType >> lookupSelector: aSymbol [
+	self shouldNotImplement
 ]
 
 { #category : #accessing }
@@ -95,7 +83,6 @@ TypFunctionType >> postCopy [
 
 { #category : #accessing }
 TypFunctionType >> printOn: aStream [
-	aStream << name asString.
 	aStream
 		<<
 			(optionalArguments

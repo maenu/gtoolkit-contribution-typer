@@ -37,15 +37,6 @@ TypTypeExamples >> canUnderstand [
 	^ type
 ]
 
-{ #category : #converting }
-TypTypeExamples >> classDescription [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: [ type classDescription ] signals: TypNoClassDescriptionError.
-	^ type
-]
-
 { #category : #accessing }
 TypTypeExamples >> equality [
 	<gtExample>
@@ -130,7 +121,7 @@ TypTypeExamples >> lookupSelector [
 	type := self type.
 	self
 		assert: [ type lookupSelector: #notThere ]
-		signals: TypNoMethodError.
+		signals: AssertionFailure.
 	^ type
 ]
 
@@ -162,15 +153,6 @@ TypTypeExamples >> nullable [
 TypTypeExamples >> printOn [
 	<gtExample>
 	self subclassResponsibility
-]
-
-{ #category : #testing }
-TypTypeExamples >> representsClassDescription [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type representsClassDescription not.
-	^ type
 ]
 
 { #category : #'as yet unclassified' }

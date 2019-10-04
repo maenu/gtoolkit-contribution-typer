@@ -13,7 +13,7 @@ GtPharoUnaryMessageNode >> typGtCompletionActionsFor: aStrategy in: anRbNode [
 	type := self parent receiver
 		typGtGuessType: aStrategy
 		in: anRbNode receiver.
-	clazz := type representsClassDescription
+	clazz := (type isNamed and: [ type representsClassDescription ])
 		ifTrue: [ type classDescription ]
 		ifFalse: [ Object ].
 	^ (aStrategy selectorsForReceiver: clazz matching: startingText)
