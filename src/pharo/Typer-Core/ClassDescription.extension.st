@@ -7,6 +7,11 @@ ClassDescription >> typAsNamedType [
 ]
 
 { #category : #'*Typer-Core' }
+ClassDescription >> typAsParametricType: someBindings [
+	^ TypParametricType classDescription: self bindings: someBindings
+]
+
+{ #category : #'*Typer-Core' }
 ClassDescription >> typAsType [
 	<typTypeResultAs: 'TypType'>
 	^ TypClassLookupIndex instance

@@ -5,26 +5,6 @@ Class {
 }
 
 { #category : #converting }
-TypTypeExamples >> asFunctionTypeResultOptionalParameters [
-	<gtExample>
-	| type |
-	type := self type.
-	self
-		assert: [ type asFunctionType: nil result: nil optionalParameters: nil ]
-		signals: TypNoTypeError.
-	^ type
-]
-
-{ #category : #converting }
-TypTypeExamples >> asNamedType [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: [ type asNamedType ] signals: TypNoTypeError.
-	^ type
-]
-
-{ #category : #converting }
 TypTypeExamples >> asNonNullableType [ 
 	<gtExample>
 	| type nonNullableType |
@@ -46,21 +26,6 @@ TypTypeExamples >> asNullableType [
 	self assert: nullableType >= type.
 	self assert: nullableType asNonNullableType = type.
 	^ nullableType
-]
-
-{ #category : #converting }
-TypTypeExamples >> asParametricType [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: [ type asParametricType: OrderedDictionary new ] signals: TypNoTypeError.
-	^ type
-]
-
-{ #category : #'as yet unclassified' }
-TypTypeExamples >> asTypeCompatibleWith [
-	<gtExample>
-	self subclassResponsibility
 ]
 
 { #category : #'as yet unclassified' }

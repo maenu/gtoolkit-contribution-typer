@@ -28,39 +28,6 @@ TypNilTypeExamples >> asNullableType [
 	^ nullableType
 ]
 
-{ #category : #'as yet unclassified' }
-TypNilTypeExamples >> asTypeCompatibleWith [
-	<gtExample>
-	| type |
-	type := self type.
-	self
-		assert:
-			(type asTypeCompatibleWith: TypUnknownType instance)
-				=
-					{TypNilType instance.
-					TypUnknownType instance} typAsType.
-	self assert: (type asTypeCompatibleWith: TypNilType instance) = type.
-	self
-		assert:
-			(type asTypeCompatibleWith: self typeInteger)
-				=
-					{TypNilType instance.
-					self typeInteger} typAsType.
-	self
-		assert:
-			(type asTypeCompatibleWith: self typeProtoObject)
-				=
-					{TypNilType instance.
-					self typeProtoObject} typAsType.
-	self
-		assert:
-			(type asTypeCompatibleWith: self typeNotAClass)
-				=
-					{TypNilType instance.
-					self typeNotAClass} typAsType.
-	^ type
-]
-
 { #category : #testing }
 TypNilTypeExamples >> classDescription [
 	<gtExample>

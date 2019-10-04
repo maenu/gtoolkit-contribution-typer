@@ -161,7 +161,7 @@ TypShaPhaSequenceableCollection >> ___withIndexCollect: _a [
 				optionalParameters: false ];
 		resultType: [ :a :s :r | 
 			a receiverType
-				asParametricType: {('@A' -> (a argumentTypes at: 1) result)} asOrderedDictionary ];
+				copyWithBindings: {('@A' -> (a argumentTypes at: 1) result)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -191,12 +191,11 @@ TypShaPhaSequenceableCollection >> ___withIndexSelect: _a [
 				optionalParameters: false ];
 		resultType: [ :a :s :r | 
 			a receiverType
-				asParametricType: {('@A' -> (a argumentTypes at: 1) result)} ];
+				copyWithBindings: {('@A' -> (a argumentTypes at: 1) result)} ];
 		yourself
 ]
 
 { #category : #converting }
 TypShaPhaSequenceableCollection >> asType: aClass [
-	^ (super asType: aClass)
-		asParametricType: {('@A' -> (TypTypeVariableType named: '@A'))} asOrderedDictionary
+	^ aClass typAsParametricType: {('@A' -> (TypTypeVariableType named: '@A'))} asOrderedDictionary
 ]

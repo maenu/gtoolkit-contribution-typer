@@ -23,7 +23,7 @@ TypShaPhaDictionary >> ___asOrderedDictionary [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
 			OrderedDictionary typAsType
-				asParametricType:
+				copyWithBindings:
 					{('@B' -> (a receiverType bindingAt: '@B')).
 					('@A' -> (a receiverType bindingAt: '@A'))} asOrderedDictionary ];
 		yourself
@@ -35,11 +35,11 @@ TypShaPhaDictionary >> ___associations [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
 			Array typAsType
-				asParametricType:
+				copyWithBindings:
 					{('@A'
 						->
 							(Association typAsType
-								asParametricType:
+								copyWithBindings:
 									{('@A' -> (a receiverType bindingAt: '@B')).
 									('@B' -> (a receiverType bindingAt: '@A'))}
 										asOrderedDictionary))} asOrderedDictionary ];
@@ -53,7 +53,7 @@ TypShaPhaDictionary >> ___associationsDo: _a [
 			BlockClosure typAsType
 				asFunctionType:
 					{(Association typAsType
-						asParametricType:
+						copyWithBindings:
 							{('@A' -> (a receiverType bindingAt: '@B')).
 							('@B' -> (a receiverType bindingAt: '@A'))}
 								asOrderedDictionary)}
@@ -140,7 +140,7 @@ TypShaPhaDictionary >> ___collect: _a [
 										yourself) ]
 						ifFalse: [ TypUnknownType instance ] ].
 			a receiverType
-				asParametricType:
+				copyWithBindings:
 					{('@B' -> (a receiverType bindingAt: '@B')).
 					('@A' -> elementType)} asOrderedDictionary ];
 		yourself
@@ -168,14 +168,13 @@ TypShaPhaDictionary >> ___keys [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
 			Collection typAsType
-				asParametricType: {('@A' -> (a receiverType bindingAt: '@B'))} asOrderedDictionary ];
+				copyWithBindings: {('@A' -> (a receiverType bindingAt: '@B'))} asOrderedDictionary ];
 		yourself
 ]
 
 { #category : #'as yet unclassified' }
 TypShaPhaDictionary >> asType: aClass [
-	^ (super asType: aClass)
-		asParametricType:
+	^ aClass typAsParametricType:
 			{('@B' -> (TypTypeVariableType named: '@B')).
 			('@A' -> (TypTypeVariableType named: '@A'))} asOrderedDictionary
 ]
@@ -186,7 +185,7 @@ TypShaPhaDictionary >> ~~~, _a [
 		argumentTypes: [ :i :a :s :r | Dictionary typAsType ];
 		resultType: [ :a :s :r | 
 			a receiverType
-				asParametricType:
+				copyWithBindings:
 					{('@B'
 						->
 							{(a receiverType bindingAt: '@B').

@@ -27,8 +27,7 @@ TypShaPhaAssociation >> ___value [
 
 { #category : #'as yet unclassified' }
 TypShaPhaAssociation >> asType: aClass [
-	^ (super asType: aClass)
-		asParametricType:
+	^ aClass typAsParametricType:
 			{('@A' -> (TypTypeVariableType named: '@A')).
 			('@B' -> (TypTypeVariableType named: '@B'))} asOrderedDictionary
 ]

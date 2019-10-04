@@ -9,7 +9,9 @@ Class {
 
 { #category : #'instance creation' }
 TypTypeVariableType class >> named: aString [
-	^ self initializeWithName: aString
+	^ self new
+		initializeWithName: aString;
+		yourself
 ]
 
 { #category : #comparing }
@@ -21,14 +23,6 @@ TypTypeVariableType >> = anObject [
 { #category : #comparing }
 TypTypeVariableType >> > aType [
 	^ true
-]
-
-{ #category : #'as yet unclassified' }
-TypTypeVariableType >> asTypeCompatibleWith: aType [
-	^ aType isTypeVariable
-		ifTrue: [ self assert: [ self = aType ].
-			self ]
-		ifFalse: [ super asTypeCompatibleWith: aType ]
 ]
 
 { #category : #comparing }

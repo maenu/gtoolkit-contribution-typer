@@ -53,46 +53,10 @@ TypUnionType >> > aType [
 ]
 
 { #category : #converting }
-TypUnionType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
-	| superType |
-	superType := self superType.
-	superType isUnion
-		ifTrue: [ TypNoTypeError signal ].
-	^ superType asFunctionType: someTypes result: aType optionalParameters: aBoolean
-]
-
-{ #category : #converting }
-TypUnionType >> asNamedType [
-	| superType |
-	superType := self superType.
-	superType isUnion
-		ifTrue: [ TypNoTypeError signal ].
-	^ superType
-]
-
-{ #category : #converting }
 TypUnionType >> asNonNullableType [
 	^ (types includes: TypNilType instance)
 		ifTrue: [ (types copyWithout: TypNilType instance) typAsType ]
 		ifFalse: [ self ]
-]
-
-{ #category : #converting }
-TypUnionType >> asParametricType: someTypes [
-	| superType |
-	superType := self superType.
-	superType isUnion
-		ifTrue: [ TypNoTypeError signal ].
-	^ superType asParametricType: someTypes
-]
-
-{ #category : #accessing }
-TypUnionType >> asTypeCompatibleWith: aType [
-	| types_ |
-	types_ := self class asTypes: types , {aType}.
-	^ types_ size = 1
-		ifTrue: [ types_ anyOne ]
-		ifFalse: [ self class types: types_ ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -233,14 +197,9 @@ TypUnionType >> representsClassDescription [
 
 { #category : #accessing }
 TypUnionType >> superType [
+	| remains nil_ unknown current |
 	self hasSuperType
 		ifFalse: [ TypNoTypeError signal ].
-	^ self superType_
-]
-
-{ #category : #accessing }
-TypUnionType >> superType_ [
-	| remains nil_ unknown current |
 	remains := types copy.
 	nil_ := remains includes: TypNilType instance.
 	nil_
@@ -253,7 +212,8 @@ TypUnionType >> superType_ [
 	[ remains isEmpty ]
 		whileFalse: [ | next common |
 			next := remains remove: remains anyOne.
-			common := current asTypeCompatibleWith: next.
+			common := {current.
+			next} typAsType.
 			common isNil
 				ifTrue: [ nil_ := true ]
 				ifFalse: [ common isUnknown

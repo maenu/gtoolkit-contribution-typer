@@ -15,7 +15,7 @@ TypShaPhaBehavior >> ___allSubclasses [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				asParametricType: {('@A' -> Behavior typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' -> Behavior typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -25,7 +25,7 @@ TypShaPhaBehavior >> ___classVarNames [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Set typAsType
-				asParametricType: {('@A' -> String typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' -> String typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -75,7 +75,7 @@ TypShaPhaBehavior >> ___instVarNames [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				asParametricType: {('@A' -> String typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' -> String typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -108,7 +108,7 @@ TypShaPhaBehavior >> ___methods [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Collection typAsType
-				asParametricType: {('@A' -> CompiledMethod typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' -> CompiledMethod typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -134,7 +134,7 @@ TypShaPhaBehavior >> ___selectors [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Collection typAsType
-				asParametricType: {('@A' -> Symbol typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' -> Symbol typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -168,7 +168,7 @@ TypShaPhaBehavior >> ___withAllSuperclasses [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				asParametricType: {('@A' -> ClassDescription typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' -> ClassDescription typAsType)} asOrderedDictionary ];
 		yourself
 ]
 

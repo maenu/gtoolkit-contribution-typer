@@ -23,7 +23,7 @@ TypShaBlBlText >> ___attributesAt: _a [
 		argumentTypes: [ :i :a :s :r | Integer typAsType ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				asParametricType: {('@A' -> BlTextAttribute typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' -> BlTextAttribute typAsType)} asOrderedDictionary ];
 		yourself
 ]
 

@@ -4,49 +4,6 @@ Class {
 	#category : #'Typer-Core-Examples-Type'
 }
 
-{ #category : #converting }
-TypUnionTypeExamples >> asNamedType [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type asNamedType = self typeInteger.
-	self assert: self typeSmallIntegerAndTrue asNamedType = self typeObject.
-	self
-		assert: [ self typeWithUnknown asNamedType ]
-		signals: TypNoTypeError.
-	self assert: [ self typeWithNil asNamedType ] signals: TypNoTypeError.
-	self
-		assert: [ self typeWithUnknownAndNil asNamedType ]
-		signals: TypNoTypeError.
-	^ type
-]
-
-{ #category : #'as yet unclassified' }
-TypUnionTypeExamples >> asTypeCompatibleWith [
-	<gtExample>
-	| type |
-	type := self type.
-	self
-		assert:
-			(type asTypeCompatibleWith: TypUnknownType instance)
-				= self typeWithUnknown.
-	self
-		assert: (type asTypeCompatibleWith: TypNilType instance) = type asNullableType.
-	self
-		assert: (type asTypeCompatibleWith: TypNilType instance) = self typeWithNil.
-	self
-		assert: (type asTypeCompatibleWith: self typeInteger) = self typeInteger.
-	self
-		assert:
-			(type asTypeCompatibleWith: self typeProtoObject)
-				= self typeProtoObject.
-	self
-		assert:
-			(type asTypeCompatibleWith: self typeNotAClass)
-				= (type types , {self typeNotAClass}) typAsType.
-	^ type
-]
-
 { #category : #testing }
 TypUnionTypeExamples >> classDescription [
 	<gtExample>

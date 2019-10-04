@@ -15,7 +15,7 @@ TypShaPhaRPackage >> ___definedClasses [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Collection typAsType
-				asParametricType: {('@A' -> Class typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' -> Class typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -25,6 +25,6 @@ TypShaPhaRPackage >> ___methods [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Collection typAsType
-				asParametricType: {('@A' -> CompiledMethod typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' -> CompiledMethod typAsType)} asOrderedDictionary ];
 		yourself
 ]

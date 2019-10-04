@@ -124,5 +124,6 @@ TypShaPhaBlockClosure >> ___whileFalse: _a [
 
 { #category : #'as yet unclassified' }
 TypShaPhaBlockClosure >> asType: aClass [
+	self flag: 'FIXME use proper function and parametric types'.
 	^ (super asType: aClass) asFunctionType: {} result: TypUnknownType instance optionalParameters: false
 ]

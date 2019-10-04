@@ -41,30 +41,6 @@ TypFunctionType >> arguments: anObject [
 	arguments := anObject asOrderedCollection
 ]
 
-{ #category : #accessing }
-TypFunctionType >> asTypeCompatibleWith: aType [
-	| compatibleType |
-	compatibleType := (TypParametricType new
-		name: name;
-		parameters: arguments;
-		yourself)
-		asTypeCompatibleWith:
-			(aType isParametric
-				ifTrue: [ TypParametricType new
-						name: (aType "typCastAs TypParametricType") name;
-						parameters:  (aType "typCastAs TypParametricType") parameters;
-						yourself ]
-				ifFalse: [ aType ]).
-	(compatibleType isParametric and: [ aType isFunction ])
-		ifFalse: [ ^ compatibleType ].
-	^ TypFunctionType new
-		name: (compatibleType "typCastAs TypParametricType") name;
-		parameters: (compatibleType "typCastAs TypParametricType") parameters;
-		result: (result asTypeCompatibleWith: (aType "typCastAs TypFunctionType") result);
-		optionalArguments: (optionalArguments and: (aType "typCastAs TypFunctionType") optionalArguments);
-		yourself
-]
-
 { #category : #comparing }
 TypFunctionType >> hasArgumentsCompatibleWithThoseOf: aType [
 	<typTypeArgument: 1 as: 'TypFunctionType'>

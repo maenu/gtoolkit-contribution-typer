@@ -19,7 +19,7 @@ ClassDescription >> typPraAsClassLookupResult [
 				-> e arguments second typAsType ]) asOrderedDictionary.
 	^ TypClassLookupResult new
 		type:
-				[ :a | a classDescription typAsNamedType asParametricType: parameters ];
+				[ :a | a classDescription typAsParametricType: parameters ];
 		yourself
 ]
 

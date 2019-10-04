@@ -14,6 +14,6 @@ TypShaPhaRBArrayNode >> ___statements [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
-				asParametricType: {('@A' -> RBProgramNode typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' -> RBProgramNode typAsType)} asOrderedDictionary ];
 		yourself
 ]

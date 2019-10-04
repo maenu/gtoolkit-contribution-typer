@@ -43,30 +43,18 @@ TypParametricType >> = anObject [
 
 { #category : #comparing }
 TypParametricType >> > aType [
-	^ (aType isParametric and: [ name = aType name ])
-		ifTrue: [ self assert: [ self parameters = aType parameters ].
-			(self parameters
-				allSatisfy: [ :e | (self bindingAt: e) >= (aType bindingAt: e) ])
+	^ super > aType
+		and: [ self parameters = aType parameters
 				and: [ self parameters
-						anySatisfy: [ :e | (self bindingAt: e) > (aType bindingAt: e) ] ] ]
-		ifFalse: [ super > aType ]
-]
-
-{ #category : #converting }
-TypParametricType >> asParametricType: anOrderedDictionary [
-	^ self copyWithBindings: anOrderedDictionary
-]
-
-{ #category : #accessing }
-TypParametricType >> asTypeCompatibleWith: aType [
-	^ (aType isParametric and: [ name = aType name ])
-		ifTrue: [ self
-				copyWithBindings:
-					(bindings associations
-						collect:
-							[ :e | e key -> (e value asTypeCompatibleWith: (aType bindingAt: e key)) ])
-						asOrderedDictionary ]
-		ifFalse: [ super asTypeCompatibleWith: aType ]
+						allSatisfy: [ :e | 
+							| a b |
+							a := self bindingAt: e.
+							b := aType bindingAt: e.
+							a isTypeVariable
+								ifTrue: [ b isTypeVariable
+										ifTrue: [ a = b ]
+										ifFalse: [ true ] ]
+								ifFalse: [ a = b ] ] ] ]
 ]
 
 { #category : #accessing }
@@ -79,11 +67,11 @@ TypParametricType >> copyWithBindings: anOrderedDictionary [
 	self assert: [ bindings keys = anOrderedDictionary keys ].
 	^ classDescription
 		ifNil: [ self copy
-				initializeWithClassDescription: classDescription
-					bindings: anOrderedDictionary;
+				initializeWithName: name bindings: anOrderedDictionary;
 				yourself ]
 		ifNotNil: [ self copy
-				initializeWithName: name bindings: anOrderedDictionary;
+				initializeWithClassDescription: classDescription
+					bindings: anOrderedDictionary;
 				yourself ]
 ]
 

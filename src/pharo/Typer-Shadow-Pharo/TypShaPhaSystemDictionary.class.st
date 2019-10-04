@@ -12,7 +12,7 @@ TypShaPhaSystemDictionary class >> shadowedClass [
 { #category : #accessing }
 TypShaPhaSystemDictionary >> asType: aClass [
 	| type |
-	type := super asType: aClass.
+	type := aClass typAsNamedType.
 	type
 		superType:
 			(type superType

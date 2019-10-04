@@ -14,7 +14,7 @@ TypShaPhaRBMessageNode >> ___arguments [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
-				asParametricType: {('@A' -> RBValueNode typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' -> RBValueNode typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -24,11 +24,11 @@ TypShaPhaRBMessageNode >> ___keywordsIntervals [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				asParametricType:
+				copyWithBindings:
 					{('@A'
 						->
 							(Interval typAsType
-								asParametricType: {('@A' -> Integer typAsType)} asOrderedDictionary))}
+								copyWithBindings: {('@A' -> Integer typAsType)} asOrderedDictionary))}
 						asOrderedDictionary ];
 		yourself
 ]

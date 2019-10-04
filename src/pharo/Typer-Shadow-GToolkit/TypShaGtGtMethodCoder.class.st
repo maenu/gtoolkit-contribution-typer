@@ -98,7 +98,7 @@ TypShaGtGtMethodCoder >> initialize [
 	___astCache := TypVariableLookupResult new
 		type: [ :a :s :r | 
 			Association typAsType
-				asParametricType:
+				copyWithBindings:
 					{('@A' -> String typAsType).
 					('@B' -> RBMethodNode typAsType)} asOrderedDictionary ];
 		yourself

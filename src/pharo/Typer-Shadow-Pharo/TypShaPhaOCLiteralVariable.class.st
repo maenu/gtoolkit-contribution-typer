@@ -15,7 +15,7 @@ TypShaPhaOCLiteralVariable >> ___assoc [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Association typAsType
-				asParametricType:
+				copyWithBindings:
 					{('@A' -> String typAsType).
 					('@B' -> TypUnknownType instance)} asOrderedDictionary ];
 		yourself

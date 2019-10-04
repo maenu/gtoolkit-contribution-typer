@@ -14,7 +14,7 @@ TypShaPhaMetaLink >> ___arguments: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			SequenceableCollection typAsType
-				asParametricType: {('@A' -> Symbol typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' -> Symbol typAsType)} asOrderedDictionary ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

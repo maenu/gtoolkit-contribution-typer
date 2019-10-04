@@ -4,34 +4,6 @@ Class {
 	#category : #'Typer-Core-Examples-Type'
 }
 
-{ #category : #'as yet unclassified' }
-TypParametricTypeExamples >> asTypeCompatibleWith [
-	<gtExample>
-	| type |
-	type := self type.
-	self
-		assert:
-			(type asTypeCompatibleWith: TypUnknownType instance)
-				= TypUnknownType instance.
-	self
-		assert: (type asTypeCompatibleWith: TypNilType instance) = type asNullableType.
-	self assert: (type asTypeCompatibleWith: self typeOrderedCollectionE) = type.
-	self assert: (self typeOrderedCollectionE asTypeCompatibleWith: type) = type.
-	self
-		assert:
-			(type asTypeCompatibleWith: self typeSequenceableCollectionInteger)
-				= self typeSequenceableCollectionInteger.
-	self
-		assert:
-			(type asTypeCompatibleWith: self typeSequenceableCollectionString)
-				= self typeSequenceableCollectionObject.
-	self
-		assert:
-			(type asTypeCompatibleWith: self typeNotAClass)
-				= TypUnknownType instance.
-	^ type
-]
-
 { #category : #testing }
 TypParametricTypeExamples >> classDescription [
 	<gtExample>
@@ -48,7 +20,7 @@ TypParametricTypeExamples >> hasSuperType [
 	| type |
 	type := self type.
 	self assert: type hasSuperType.
-	self assert: self typeOrderedCollectionE hasSuperType.
+	self assert: self typeOrderedCollectionA hasSuperType.
 	self assert: self typeNotAClass hasSuperType not.
 	^ type
 ]
@@ -90,8 +62,8 @@ TypParametricTypeExamples >> superType [
 	self assert: type superType = self typeSequenceableCollectionInteger.
 	self
 		assert:
-			self typeOrderedCollectionE superType
-				= self typeSequenceableCollectionE.
+			self typeOrderedCollectionA superType
+				= self typeSequenceableCollectionA.
 	self assert: [ self typeNotAClass superType ] signals: TypNoTypeError.
 	^ type
 ]
@@ -102,78 +74,69 @@ TypParametricTypeExamples >> type [
 ]
 
 { #category : #'as yet unclassified' }
-TypParametricTypeExamples >> typeE [
-	^ TypTypeVariableType named: '$E'
+TypParametricTypeExamples >> typeA [
+	^ TypTypeVariableType named: '@A'
 ]
 
 { #category : #'as yet unclassified' }
 TypParametricTypeExamples >> typeNotAClass [
-	^ TypParametricType new
-		name: 'notaclass';
-		parameters: { self typeInteger };
-		yourself
+	^ TypParametricType
+		named: 'notaclass'
+		bindings: {('@A' -> self typeInteger)} asOrderedDictionary
 ]
 
 { #category : #'as yet unclassified' }
-TypParametricTypeExamples >> typeNotAClassE [
-	^ TypParametricType new
-		name: 'notaclass';
-		parameters: { self typeE };
-		yourself
+TypParametricTypeExamples >> typeNotAClassA [
+	^ TypParametricType
+		named: 'notaclass'
+		bindings: {('@A' -> self typeA)} asOrderedDictionary
 ]
 
 { #category : #'as yet unclassified' }
-TypParametricTypeExamples >> typeOrderedCollectionE [
-	^ TypParametricType new
-		name: 'OrderedCollection';
-		parameters: { self typeE };
-		yourself
+TypParametricTypeExamples >> typeOrderedCollectionA [
+	^ TypParametricType
+		named: 'OrderedCollection'
+		bindings: {('@A' -> self typeA)} asOrderedDictionary
 ]
 
 { #category : #'as yet unclassified' }
 TypParametricTypeExamples >> typeOrderedCollectionInteger [
-	^ TypParametricType new
-		name: 'OrderedCollection';
-		parameters: { self typeInteger };
-		yourself
+	^ TypParametricType
+		named: 'OrderedCollection'
+		bindings: {('@A' -> self typeInteger)} asOrderedDictionary
 ]
 
 { #category : #'as yet unclassified' }
 TypParametricTypeExamples >> typeOrderedCollectionObject [
-	^ TypParametricType new
-		name: 'OrderedCollection';
-		parameters: { self typeObject };
-		yourself
+	^ TypParametricType
+		named: 'OrderedCollection'
+		bindings: {('@A' -> self typeObject)} asOrderedDictionary
 ]
 
 { #category : #'as yet unclassified' }
-TypParametricTypeExamples >> typeSequenceableCollectionE [
-	^ TypParametricType new
-		name: 'SequenceableCollection';
-		parameters: { self typeE };
-		yourself
+TypParametricTypeExamples >> typeSequenceableCollectionA [
+	^ TypParametricType
+		named: 'SequenceableCollection'
+		bindings: {('@A' -> self typeA)} asOrderedDictionary
 ]
 
 { #category : #'as yet unclassified' }
 TypParametricTypeExamples >> typeSequenceableCollectionInteger [
-	^ TypParametricType new
-		name: 'SequenceableCollection';
-		parameters: { self typeInteger };
-		yourself
+	^ TypParametricType
+		named: 'SequenceableCollection'
+		bindings: {('@A' -> self typeInteger)} asOrderedDictionary
 ]
 
 { #category : #'as yet unclassified' }
 TypParametricTypeExamples >> typeSequenceableCollectionObject [
-	^ TypParametricType new
-		name: 'SequenceableCollection';
-		parameters: { self typeObject };
-		yourself
+	^ TypParametricType
+		named: 'SequenceableCollection'
+		bindings: {('@A' -> self typeObject)} asOrderedDictionary
 ]
 
 { #category : #'as yet unclassified' }
 TypParametricTypeExamples >> typeSequenceableCollectionString [
-	^ TypParametricType new
-		name: 'SequenceableCollection';
-		parameters: { self typeString };
-		yourself
+	^ TypParametricType
+		named: 'SequenceableCollection'
+		bindings: {('@A' -> self typeString)} asOrderedDictionary
 ]

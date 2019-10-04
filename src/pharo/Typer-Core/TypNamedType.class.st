@@ -39,31 +39,6 @@ TypNamedType >> > aType [
 ]
 
 { #category : #converting }
-TypNamedType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
-	^ TypFunctionType new
-		name: name;
-		classDescription: classDescription;
-		parameters: someTypes;
-		result: aType;
-		optionalArguments: aBoolean;
-		yourself
-]
-
-{ #category : #converting }
-TypNamedType >> asNamedType [
-	^ self
-]
-
-{ #category : #converting }
-TypNamedType >> asParametricType: someBindings [
-	^ classDescription
-		ifNil: [ TypParametricType named: name bindings: someBindings ]
-		ifNotNil: [ TypParametricType
-				classDescription: classDescription
-				bindings: someBindings ]
-]
-
-{ #category : #converting }
 TypNamedType >> classDescription [
 	self representsClassDescription
 		ifFalse: [ TypNoClassDescriptionError signal ].

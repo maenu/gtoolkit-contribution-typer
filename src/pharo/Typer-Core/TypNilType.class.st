@@ -33,11 +33,6 @@ TypNilType >> asNullableType [
 	^ self
 ]
 
-{ #category : #'as yet unclassified' }
-TypNilType >> asTypeCompatibleWith: aType [
-	^ aType asNullableType
-]
-
 { #category : #copying }
 TypNilType >> copy [
 	^ self

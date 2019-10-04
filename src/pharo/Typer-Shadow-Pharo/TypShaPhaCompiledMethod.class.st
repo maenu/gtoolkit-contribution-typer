@@ -15,7 +15,7 @@ TypShaPhaCompiledMethod >> ___assignmentNodes [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Collection typAsType
-				asParametricType: {('@A' -> RBAssignmentNode typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' -> RBAssignmentNode typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -56,7 +56,7 @@ TypShaPhaCompiledMethod >> ___pragmas [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
-				asParametricType: {('@A' -> Pragma typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' -> Pragma typAsType)} asOrderedDictionary ];
 		yourself
 ]
 
@@ -87,7 +87,7 @@ TypShaPhaCompiledMethod >> ___sourceCode [
 { #category : #'as yet unclassified' }
 TypShaPhaCompiledMethod >> asType: aClass [
 	| type |
-	type := super asType: aClass.
+	type := aClass typAsNamedType.
 	type
 		superType:
 			(type superType

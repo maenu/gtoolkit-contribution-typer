@@ -36,21 +36,6 @@ TypType >> >= aType [
 ]
 
 { #category : #converting }
-TypType >> asFunctionType: someTypes result: aType optionalParameters: aBoolean [
-	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
-	<typTypeArgument: 2 as: 'TypType'>
-	<typTypeArgument: 3 as: 'Boolean'>
-	<typTypeResultAs: 'TypFunctionType'>
-	TypNoTypeError signal
-]
-
-{ #category : #converting }
-TypType >> asNamedType [
-	<typTypeResultAs: 'TypNamedType'>
-	TypNoTypeError signal
-]
-
-{ #category : #converting }
 TypType >> asNonNullableType [
 	<typTypeResultAs: 'TypType'>
 	^ self
@@ -61,28 +46,6 @@ TypType >> asNullableType [
 	<typTypeResultAs: 'TypType'>
 	^ {TypNilType instance.
 	self} typAsType
-]
-
-{ #category : #converting }
-TypType >> asParametricType: someBindings [
-	TypNoTypeError signal
-]
-
-{ #category : #'as yet unclassified' }
-TypType >> asTypeCompatibleWith: aType [
-	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeResultAs: 'TypType'>
-	aType isTypeVariable
-		ifTrue: [ ^ aType ].
-	aType isUnknown
-		ifTrue: [ ^ aType ].
-	aType isNil
-		ifTrue: [ ^ self asNullableType ].
-	self >= aType
-		ifTrue: [ ^ self ].
-	self hasSuperType
-		ifTrue: [ ^ self superType asTypeCompatibleWith: aType ].
-	^ TypUnknownType instance
 ]
 
 { #category : #'as yet unclassified' }

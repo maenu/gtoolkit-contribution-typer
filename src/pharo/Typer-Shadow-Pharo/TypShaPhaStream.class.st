@@ -11,8 +11,7 @@ TypShaPhaStream class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaStream >> asType: aClass [
-	^ (super asType: aClass)
-		asParametricType: {('@A' -> (TypTypeVariableType named: '@A'))} asOrderedDictionary
+	^ aClass typAsParametricType: {('@A' -> (TypTypeVariableType named: '@A'))} asOrderedDictionary
 ]
 
 { #category : #accessing }
@@ -20,7 +19,7 @@ TypShaPhaStream >> ~~~<< _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			Collection typAsType
-				asParametricType: {('@A' -> (a receiverType bindingAt: '@A'))} asOrderedDictionary ];
+				copyWithBindings: {('@A' -> (a receiverType bindingAt: '@A'))} asOrderedDictionary ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
