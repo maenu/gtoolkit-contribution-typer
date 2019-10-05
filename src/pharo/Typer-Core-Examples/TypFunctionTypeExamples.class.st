@@ -84,6 +84,7 @@ TypFunctionTypeExamples >> typeNonOptionalArguments [
 		arguments: {Integer typAsType}
 		result: Boolean typAsType
 		optionalArguments: false
+		bindings: {} typAsTypeVariableBindings
 ]
 
 { #category : #'as yet unclassified' }
@@ -92,4 +93,5 @@ TypFunctionTypeExamples >> typeOptionalArguments [
 		arguments: {Integer typAsType}
 		result: Boolean typAsType
 		optionalArguments: true
+		bindings: {} typAsTypeVariableBindings
 ]

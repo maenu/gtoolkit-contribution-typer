@@ -117,7 +117,7 @@ TypParametricType >> initializeWithClassDescription: aClassDescription parameter
 				and: [ aSequenceableCollection isNotEmpty
 						and: [ aSequenceableCollection asSet = aBindings variables asSet ] ] ].
 	self initializeWithClassDescription: aClassDescription.
-	parameters := aSequenceableCollection.
+	parameters := aSequenceableCollection asOrderedCollection.
 	bindings := aBindings
 ]
 
@@ -144,7 +144,7 @@ TypParametricType >> initializeWithName: aString parameters: aSequenceableCollec
 		assert: [ aSequenceableCollection isNotEmpty
 				and: [ aSequenceableCollection asSet = aBindings variables asSet ] ].
 	self initializeWithName: aString.
-	parameters := aSequenceableCollection.
+	parameters := aSequenceableCollection asOrderedCollection.
 	bindings := aBindings
 ]
 

@@ -2,20 +2,21 @@ Class {
 	#name : #TypFunctionType,
 	#superclass : #TypType,
 	#instVars : [
-		'bindings',
 		'result',
 		'arguments',
-		'optionalArguments'
+		'optionalArguments',
+		'bindings'
 	],
 	#category : #'Typer-Core-Type'
 }
 
 { #category : #'as yet unclassified' }
-TypFunctionType class >> arguments: aCollection result: aType optionalArguments: aBoolean [
+TypFunctionType class >> arguments: aSequenceableCollection result: aType optionalArguments: aBoolean bindings: aBindings [
 	^ self new
-		initializeWithArguments: aCollection
+		initializeWithArguments: aSequenceableCollection
 			result: aType
-			optionalArguments: aBoolean;
+			optionalArguments: aBoolean
+			bindings: aBindings;
 		yourself
 ]
 
@@ -51,7 +52,8 @@ TypFunctionType >> asCompatibleWith: aType [
 		ifTrue: [ self class
 				arguments: arguments copy
 				result: (result asCompatibleWith: aType result)
-				optionalArguments: (optionalArguments and: aType optionalArguments) ]
+				optionalArguments: (optionalArguments and: aType optionalArguments)
+				bindings: bindings copy ]
 		ifFalse: [ super asCompatibleWith: aType ]
 ]
 
@@ -65,7 +67,8 @@ TypFunctionType >> copyWithResult: aType [
 	^ self copy
 		initializeWithArguments: (arguments collect: #copy)
 			result: aType
-			optionalArguments: optionalArguments;
+			optionalArguments: optionalArguments
+			bindings: bindings copy;
 		yourself
 ]
 
@@ -88,10 +91,11 @@ TypFunctionType >> initialize [
 ]
 
 { #category : #initialization }
-TypFunctionType >> initializeWithArguments: aCollection result: aType optionalArguments: aBoolean [
-	arguments := aCollection.
+TypFunctionType >> initializeWithArguments: aSequenceableCollection result: aType optionalArguments: aBoolean bindings: aBindings [
+	arguments := aSequenceableCollection asOrderedCollection.
 	result := aType.
-	optionalArguments := aBoolean
+	optionalArguments := aBoolean.
+	bindings := aBindings
 ]
 
 { #category : #testing }
