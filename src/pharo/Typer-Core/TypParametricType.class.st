@@ -115,7 +115,7 @@ TypParametricType >> initializeWithClassDescription: aClassDescription parameter
 	self
 		assert: [ aClassDescription isNotNil
 				and: [ aSequenceableCollection isNotEmpty
-						and: [ parameters asSet = aBindings variables ] ] ].
+						and: [ aSequenceableCollection asSet = aBindings variables asSet ] ] ].
 	self initializeWithClassDescription: aClassDescription.
 	parameters := aSequenceableCollection.
 	bindings := aBindings
