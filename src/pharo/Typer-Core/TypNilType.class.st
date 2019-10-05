@@ -12,6 +12,11 @@ TypNilType class >> classDescription: aClassDescription [
 	self shouldNotImplement
 ]
 
+{ #category : #'as yet unclassified' }
+TypNilType class >> classDescription: aClassDescription superTypeBindings: anOrderedDictionary [
+	self shouldNotImplement
+]
+
 { #category : #accessing }
 TypNilType class >> instance [
 	<typTypeResultAs: 'TypNilType'>
@@ -42,6 +47,16 @@ TypNilType >> copy [
 TypNilType >> initialize [
 	super initialize.
 	self initializeWithClassDescription: UndefinedObject
+]
+
+{ #category : #initialization }
+TypNilType >> initializeWithClassDescription: aClassDescription superTypeBindings: anOrderedDictionary [
+	self shouldNotImplement
+]
+
+{ #category : #accessing }
+TypNilType >> initializeWithName: anObject [
+	self shouldNotImplement
 ]
 
 { #category : #testing }

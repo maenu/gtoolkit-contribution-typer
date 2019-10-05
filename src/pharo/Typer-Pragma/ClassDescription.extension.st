@@ -2,7 +2,7 @@ Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Pragma' }
 ClassDescription >> typPraAsClassLookupResult [
-	| pragmas parameters |
+	| pragmas bindings |
 	pragmas := (self lookupSelector: #initialize)
 		ifNil: [ ^ nil ]
 		ifNotNil: #pragmas.
@@ -13,13 +13,13 @@ ClassDescription >> typPraAsClassLookupResult [
 		assert: [ | names |
 			names := pragmas collect: [ :e | e arguments first ].
 			names size = names asSet size ].
-	parameters := (pragmas
+	bindings := (pragmas
 		collect: [ :e | 
 			(TypTypeVariableType named: e arguments first)
 				-> e arguments second typAsType ]) asOrderedDictionary.
 	^ TypClassLookupResult new
 		type:
-				[ :a | a classDescription typAsParametricType: parameters ];
+				[ :a | a classDescription typAsParametricType: bindings ];
 		yourself
 ]
 

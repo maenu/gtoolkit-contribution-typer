@@ -95,11 +95,6 @@ TypShaPhaString >> ___translated [
 
 { #category : #converting }
 TypShaPhaString >> asType: aClass [
-	| type |
-	type := aClass typAsNamedType.
-	type
-		superType:
-			(type superType
-				copyWithBindings: {('@A' -> Character typAsType)} asOrderedDictionary).
-	^ type
+	^ aClass
+		typAsNamedTypeWithSuperTypeBindings: {('@A' -> Character typAsType)} asOrderedDictionary
 ]

@@ -11,16 +11,11 @@ TypShaPhaSystemDictionary class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaSystemDictionary >> asType: aClass [
-	| type |
-	type := aClass typAsNamedType.
-	type
-		superType:
-			(type superType
-				copyWithBindings:
-					{('@B' -> Symbol typAsType).
-					('@A'
-						->
-							{Class typAsType.
-							TypUnknownType instance} typAsType)} asOrderedDictionary).
-	^ type
+	^ aClass
+		typAsNamedTypeWithSuperTypeBindings:
+			{('@B' -> Symbol typAsType).
+			('@A'
+				->
+					{Class typAsType.
+					TypUnknownType instance} typAsType)} asOrderedDictionary
 ]

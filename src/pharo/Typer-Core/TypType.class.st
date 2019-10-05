@@ -58,7 +58,7 @@ TypType >> canUnderstand: aSymbol [
 { #category : #testing }
 TypType >> hasSuperType [
 	<typTypeResultAs: 'Boolean'>
-	^ superType isNotNil
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -124,7 +124,7 @@ TypType >> postCopy [
 { #category : #'as yet unclassified' }
 TypType >> superType [
 	<typTypeResultAs: 'TypType'>
-	^ superType ifNil: [ TypNoTypeError signal ] ifNotNil: #yourself
+	self subclassResponsibility
 ]
 
 { #category : #'as yet unclassified' }

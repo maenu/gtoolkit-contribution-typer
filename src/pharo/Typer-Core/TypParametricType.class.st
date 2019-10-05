@@ -20,6 +20,20 @@ TypParametricType class >> classDescription: aClassDescription bindings: anOrder
 		yourself
 ]
 
+{ #category : #'as yet unclassified' }
+TypParametricType class >> classDescription: aClassDescription bindings: anOrderedDictionary someSuperTypeBindings: anotherOrderedDictionary [
+	^ self new
+		initializeWithClassDescription: aClassDescription
+			bindings: anOrderedDictionary
+			someSuperTypeBindings: anotherOrderedDictionary;
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
+TypParametricType class >> classDescription: aClassDescription superTypeBindings: anOrderedDictionary [
+	self shouldNotImplement
+]
+
 { #category : #'instance creation' }
 TypParametricType class >> named: aString [
 	self shouldNotImplement
@@ -92,9 +106,27 @@ TypParametricType >> hash [
 { #category : #accessing }
 TypParametricType >> initializeWithClassDescription: aClassDescription bindings: anOrderedDictionary [
 	self
-		assert: [ aClassDescription isNotNil and: [ anOrderedDictionary isNotEmpty ] ].
+		assert:
+			[ aClassDescription isNotNil and: [ anOrderedDictionary isNotEmpty ] ].
 	self initializeWithClassDescription: aClassDescription.
-	bindings := anOrderedDictionary copy
+	bindings := anOrderedDictionary
+]
+
+{ #category : #initialization }
+TypParametricType >> initializeWithClassDescription: aClassDescription bindings: anOrderedDictionary someSuperTypeBindings: anotherOrderedDictionary [
+	self
+		assert: [ (anotherOrderedDictionary keys intersect: anOrderedDictionary keys)
+				allSatisfy: [ :e | e = (anOrderedDictionary at: e) ] ].
+	self
+		initializeWithClassDescription: aClassDescription
+		bindings: anOrderedDictionary.
+	superType := self superType
+		copyWithSomeBindings: anotherOrderedDictionary
+]
+
+{ #category : #initialization }
+TypParametricType >> initializeWithClassDescription: aClassDescription superTypeBindings: anOrderedDictionary [
+	self shouldNotImplement
 ]
 
 { #category : #accessing }

@@ -86,11 +86,6 @@ TypShaPhaCompiledMethod >> ___sourceCode [
 
 { #category : #'as yet unclassified' }
 TypShaPhaCompiledMethod >> asType: aClass [
-	| type |
-	type := aClass typAsNamedType.
-	type
-		superType:
-			(type superType
-				copyWithBindings: {('@A' -> Integer typAsType)} asOrderedDictionary).
-	^ type
+	^ aClass
+		typAsNamedTypeWithSuperTypeBindings: {('@A' -> Integer typAsType)} asOrderedDictionary
 ]

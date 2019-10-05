@@ -16,6 +16,14 @@ TypNamedType class >> classDescription: aClassDescription [
 		yourself
 ]
 
+{ #category : #'as yet unclassified' }
+TypNamedType class >> classDescription: aClassDescription superTypeBindings: anOrderedDictionary [
+	^ self new
+		initializeWithClassDescription: aClassDescription
+			superTypeBindings: anOrderedDictionary;
+		yourself
+]
+
 { #category : #'instance creation' }
 TypNamedType class >> named: aString [
 	^ self new
@@ -58,7 +66,7 @@ TypNamedType >> classDescription [
 
 { #category : #'as yet unclassified' }
 TypNamedType >> hasSuperType [
-	^ super hasSuperType
+	^ superType isNotNil
 		or: [ self representsClassDescription
 				and: [ self classDescription superclass isNotNil ] ]
 ]
@@ -81,6 +89,12 @@ TypNamedType >> initializeWithClassDescription: aClassDescription [
 	classDescription := aClassDescription.
 	name := classDescription name.
 	representsClass := true
+]
+
+{ #category : #initialization }
+TypNamedType >> initializeWithClassDescription: aClassDescription superTypeBindings: anOrderedDictionary [
+	self initializeWithClassDescription: aClassDescription.
+	superType := self superType copyWithBindings: anOrderedDictionary
 ]
 
 { #category : #accessing }
