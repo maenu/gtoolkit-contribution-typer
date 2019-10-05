@@ -52,7 +52,7 @@ RBMessageNode >> typCheCheckReceiver [
 	receiverType := self typTypeForReceiver.
 	receiverType isUnknown
 		ifTrue: [ ^ self ].
-	receiverType nullable
+	receiverType isNullable
 		ifFalse: [ ^ self ].
 	TypCheNullableTypeError new
 		type: receiverType;

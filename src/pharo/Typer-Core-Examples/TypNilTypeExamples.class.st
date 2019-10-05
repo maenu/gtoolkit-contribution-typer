@@ -10,7 +10,7 @@ TypNilTypeExamples >> asNonNullableType [
 	| type nonNullableType |
 	type := self type.
 	nonNullableType := type asNonNullableType.
-	self assert: nonNullableType nullable not.
+	self assert: nonNullableType isNullable not.
 	self assert: nonNullableType = TypUnknownType instance.
 	^ nonNullableType
 ]
@@ -21,7 +21,7 @@ TypNilTypeExamples >> asNullableType [
 	| type nullableType |
 	type := self type.
 	nullableType := type asNullableType.
-	self assert: nullableType nullable.
+	self assert: nullableType isNullable.
 	self assert: nullableType == type.
 	self assert: nullableType >= type.
 	self assert: nullableType asNonNullableType = TypUnknownType instance.
@@ -88,11 +88,11 @@ TypNilTypeExamples >> isNil [
 ]
 
 { #category : #testing }
-TypNilTypeExamples >> nullable [
+TypNilTypeExamples >> isNullable [
 	<gtExample>
 	| type |
 	type := self type.
-	self assert: type nullable.
+	self assert: type isNullable.
 	^ type
 ]
 

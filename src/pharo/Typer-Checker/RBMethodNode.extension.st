@@ -71,7 +71,7 @@ RBMethodNode >> typCheHasMissingMethods [
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasNullableArguments [
 	<typTypeResultAs: 'Boolean'>
-	^ ((((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode" flatCollect: #arguments) select: [ :e | e typType nullable ])
+	^ ((((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode" flatCollect: #arguments) select: [ :e | e typType isNullable ])
 		anySatisfy: [ :e | 
 			| e_ i expected actual |
 			e_ := (e parent) "typCastAs RBMessageNode".
@@ -84,7 +84,7 @@ RBMethodNode >> typCheHasNullableArguments [
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasNullableReceivers [
 	<typTypeResultAs: 'Boolean'>
-	^ ((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode" anySatisfy: [ :e | e receiver typType nullable ]
+	^ ((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode" anySatisfy: [ :e | e receiver typType isNullable ]
 ]
 
 { #category : #'*Typer-Checker' }

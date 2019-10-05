@@ -79,6 +79,11 @@ TypType >> isNil [
 	^ false
 ]
 
+{ #category : #'as yet unclassified' }
+TypType >> isNullable [
+	^ self isNil
+]
+
 { #category : #testing }
 TypType >> isParametric [
 	<typTypeResultAs: 'Boolean'>
@@ -108,11 +113,6 @@ TypType >> lookupSelector: aSymbol [
 	<typTypeArgument: 1 as: 'Symbol<Character>'>
 	<typTypeResultAs: 'Set<CompiledMethod<Integer>>'>
 	self subclassResponsibility
-]
-
-{ #category : #'as yet unclassified' }
-TypType >> nullable [
-	^ self isNil
 ]
 
 { #category : #copying }

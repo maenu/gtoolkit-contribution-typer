@@ -10,7 +10,7 @@ TypTypeExamples >> asNonNullableType [
 	| type nonNullableType |
 	type := self type.
 	nonNullableType := type asNonNullableType.
-	self assert: nonNullableType nullable not.
+	self assert: nonNullableType isNullable not.
 	self assert: nonNullableType == type.
 	^ nonNullableType
 ]
@@ -21,7 +21,7 @@ TypTypeExamples >> asNullableType [
 	| type nullableType |
 	type := self type.
 	nullableType := type asNullableType.
-	self assert: nullableType nullable.
+	self assert: nullableType isNullable.
 	self assert: nullableType ~~ type.
 	self assert: nullableType >= type.
 	self assert: nullableType asNonNullableType = type.
@@ -88,6 +88,15 @@ TypTypeExamples >> isNil [
 ]
 
 { #category : #testing }
+TypTypeExamples >> isNullable [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isNullable not.
+	^ type
+]
+
+{ #category : #testing }
 TypTypeExamples >> isParametric [
 	<gtExample>
 	| type |
@@ -137,15 +146,6 @@ TypTypeExamples >> monotony [
 	self assert: type <= type.
 	self assert: type <= superType.
 	self assert: type < superType.
-	^ type
-]
-
-{ #category : #testing }
-TypTypeExamples >> nullable [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type nullable not.
 	^ type
 ]
 

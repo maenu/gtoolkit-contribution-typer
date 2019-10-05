@@ -101,6 +101,11 @@ TypUnionType >> isNamed [
 		ifFalse: [ superType isNamed ]
 ]
 
+{ #category : #'as yet unclassified' }
+TypUnionType >> isNullable [
+	^ types includes: TypNilType instance
+]
+
 { #category : #converting }
 TypUnionType >> isParametric [
 	| superType |
@@ -120,11 +125,6 @@ TypUnionType >> isUnion [
 TypUnionType >> lookupSelector: aSymbol [
 	self assert: [ self canUnderstand: aSymbol ].
 	^ types flatCollect: [ :e | e lookupSelector: aSymbol ]
-]
-
-{ #category : #'as yet unclassified' }
-TypUnionType >> nullable [
-	^ types includes: TypNilType instance
 ]
 
 { #category : #generated }
