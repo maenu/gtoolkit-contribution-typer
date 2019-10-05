@@ -1,6 +1,14 @@
 Extension { #name : #Dictionary }
 
 { #category : #'*Typer-Core' }
+Dictionary >> typAsTypeVariableBindings [
+	| bindings |
+	bindings := TypTypeVariableBindings new.
+	self keysAndValuesDo: [ :k :v | bindings at: k put: v ].
+	^ bindings
+]
+
+{ #category : #'*Typer-Core' }
 Dictionary >> typSelfType [
 	| type |
 	type := super typSelfType.

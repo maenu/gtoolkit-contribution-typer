@@ -2,7 +2,8 @@ Class {
 	#name : #TypParametricType,
 	#superclass : #TypNamedType,
 	#instVars : [
-		'bindings'
+		'bindings',
+		'parameters'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -47,63 +48,50 @@ TypParametricType class >> named: aString bindings: anOrderedDictionary [
 ]
 
 { #category : #comparing }
-TypParametricType >> = anObject [
-	^ self == anObject
-		or: [ self class = anObject class
-				and: [ | object |
-					object := anObject "typCastAs TypParametricType".
-					name = object name and: [ self parameters = object parameters and: [ self parameters allSatisfy: [ :e | (self bindingAt: e) = (object bindingAt: e) ] ] ] ] ]
+TypParametricType >> = aType [
+	^ self == aType
+		or: [ self class = aType class
+				and: [ name = aType name
+						and:
+							[ parameters = aType parameters and: [ bindings = aType bindings ] ] ] ]
 ]
 
 { #category : #comparing }
 TypParametricType >> > aType [
-	^ super > aType
-		and: [ aType isParametric
-				and: [ self parameters = aType parameters
-						and: [ self parameters
-								allSatisfy: [ :e | 
-									| a b |
-									a := self bindingAt: e.
-									b := aType bindingAt: e.
-									a isTypeVariable
-										ifTrue: [ b isTypeVariable
-												ifTrue: [ a = b ]
-												ifFalse: [ true ] ]
-										ifFalse: [ a = b ] ] ] ] ]
+	^ (aType isParametric
+		and: [ name = aType name
+				and: [ parameters = aType parameters and: [ bindings > aType bindings ] ] ])
+		or: [ super > aType ]
 ]
 
 { #category : #converting }
 TypParametricType >> asCompatibleWith: aType [
-	^ (aType isParametric and: [ name = aType name ])
-		ifTrue: [ self
-				copyWithBindings:
-					(bindings associations
-						collect: [ :e | 
-							| binding |
-							binding := aType bindingAt: e key.
-							e key
-								->
-									(e value = binding
-										ifTrue: [ e value ]
-										ifFalse: [ e key typAsType ]) ]) asOrderedDictionary ]
+	^ (aType isParametric
+		and: [ name = aType name and: [ parameters = aType parameters ] ])
+		ifTrue: [ self copyWithBindings: (bindings asCompatibleWith: aType bindings) ]
 		ifFalse: [ super asCompatibleWith: aType ]
 ]
 
 { #category : #accessing }
 TypParametricType >> bindingAt: aString [
+	self flag: 'FIXME get rid of this'.
 	^ bindings at: aString
 ]
 
+{ #category : #accessing }
+TypParametricType >> bindings [
+	^ bindings
+]
+
 { #category : #copying }
-TypParametricType >> copyWithBindings: anOrderedDictionary [
-	self assert: [ bindings keys = anOrderedDictionary keys ].
+TypParametricType >> copyWithBindings: aBindings [
 	^ self hasClassDescription
 		ifTrue: [ self copy
 				initializeWithClassDescription: self classDescription
-					bindings: anOrderedDictionary;
+					bindings: aBindings;
 				yourself ]
 		ifFalse: [ self copy
-				initializeWithName: name bindings: anOrderedDictionary;
+				initializeWithName: name bindings: aBindings;
 				yourself ]
 ]
 
@@ -118,7 +106,7 @@ TypParametricType >> copyWithSomeBindings: aDictionary [
 
 { #category : #comparing }
 TypParametricType >> hash [
-	^ super hash bitXor: bindings hash
+	^ (super hash bitXor: bindings hash) bitXor: parameters hash
 ]
 
 { #category : #accessing }
@@ -131,15 +119,14 @@ TypParametricType >> initializeWithClassDescription: aClassDescription bindings:
 ]
 
 { #category : #initialization }
-TypParametricType >> initializeWithClassDescription: aClassDescription bindings: anOrderedDictionary someSuperTypeBindings: anotherOrderedDictionary [
+TypParametricType >> initializeWithClassDescription: aClassDescription bindings: aBindings someSuperTypeBindings: anotherBindings [
 	self
-		assert: [ (anotherOrderedDictionary keys intersect: anOrderedDictionary keys)
-				allSatisfy: [ :e | e = (anOrderedDictionary at: e) ] ].
+		assert: [ (anotherBindings variables intersect: aBindings variables)
+				allSatisfy: [ :e | e = (aBindings at: e) ] ].
 	self
 		initializeWithClassDescription: aClassDescription
-		bindings: anOrderedDictionary.
-	superType := self superType
-		copyWithSomeBindings: anotherOrderedDictionary
+		bindings: aBindings.
+	superType := self superType copyWithSomeBindings: anotherBindings
 ]
 
 { #category : #initialization }
@@ -162,23 +149,24 @@ TypParametricType >> isParametric [
 
 { #category : #accessing }
 TypParametricType >> parameters [
-	^ bindings keys
+	^ parameters
 ]
 
 { #category : #copying }
 TypParametricType >> postCopy [
 	super postCopy.
-	bindings := bindings collect: #copy
+	bindings := bindings copy
 ]
 
 { #category : #printing }
 TypParametricType >> printOn: aStream [
 	super printOn: aStream.
 	aStream << '<'.
-	1 to: bindings size do: [ :i | 
-		(bindings at: (bindings keys at: i)) printOn: aStream.
-		i < bindings size
-			ifTrue: [ aStream << ',' ] ].
+	parameters
+		withIndexDo: [ :e :i | 
+			(bindings at: e) printOn: aStream.
+			i < parameters size
+				ifTrue: [ aStream << ',' ] ].
 	aStream << '>'
 ]
 
@@ -189,7 +177,7 @@ TypParametricType >> superType [
 	superType isParametric
 		ifTrue: [ superType := superType
 				copyWithSomeBindings:
-					((self parameters select: [ :e | superType parameters includes: e ])
-						collect: [ :e | e -> (self bindingAt: e) ]) asOrderedDictionary ].
+					((parameters select: [ :e | superType parameters includes: e ])
+						collect: [ :e | e -> (bindings at: e) ]) typAsTypeVariableBindings ].
 	^ superType
 ]

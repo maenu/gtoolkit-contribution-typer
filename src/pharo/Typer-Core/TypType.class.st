@@ -108,6 +108,11 @@ TypType >> isParametric [
 ]
 
 { #category : #testing }
+TypType >> isType [
+	^ true
+]
+
+{ #category : #testing }
 TypType >> isTypeVariable [
 	<typTypeResultAs: 'Boolean'>
 	^ false

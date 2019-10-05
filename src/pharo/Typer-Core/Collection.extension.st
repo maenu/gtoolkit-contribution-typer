@@ -12,6 +12,11 @@ Collection >> typAsType [
 ]
 
 { #category : #'*Typer-Core' }
+Collection >> typAsTypeVariableBindings [
+	^ self asDictionary typAsTypeVariableBindings
+]
+
+{ #category : #'*Typer-Core' }
 Collection >> typSelfType [
 	| type |
 	type := super typSelfType.

@@ -41,7 +41,7 @@ TypUnionType >> = anObject [
 		or: [ self class = anObject class
 				and: [ | object |
 					object := anObject "typCastAs TypUnionType".
-					self types = object types ] ]
+					self types asSet = object types asSet ] ]
 ]
 
 { #category : #comparing }

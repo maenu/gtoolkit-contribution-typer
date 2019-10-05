@@ -2,6 +2,7 @@ Class {
 	#name : #TypFunctionType,
 	#superclass : #TypType,
 	#instVars : [
+		'bindings',
 		'result',
 		'arguments',
 		'optionalArguments'
@@ -24,7 +25,7 @@ TypFunctionType >> = anObject [
 		or: [ self class = anObject class
 				and: [ | type |
 					type := anObject "typCastAs TypFunctionType".
-					arguments = type arguments and: [ result = type result and: [ optionalArguments = type optionalArguments ] ] ] ]
+					arguments asOrderedCollection = type arguments asOrderedCollection and: [ result = type result and: [ optionalArguments = type optionalArguments ] ] ] ]
 ]
 
 { #category : #comparing }
@@ -46,7 +47,7 @@ TypFunctionType >> arguments [
 
 { #category : #converting }
 TypFunctionType >> asCompatibleWith: aType [
-	^ (self > aType or: [ aType > self ])
+	^ (aType isParametric and: [ self > aType or: [ aType > self ] ])
 		ifTrue: [ self class
 				arguments: arguments copy
 				result: (result asCompatibleWith: aType result)
