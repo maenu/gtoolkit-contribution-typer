@@ -7,6 +7,18 @@ Class {
 	#category : #'Typer-Dynamic'
 }
 
+{ #category : #'as yet unclassified' }
+TypDynUnionType class >> types: aCollection [
+	self shouldNotImplement
+]
+
+{ #category : #'as yet unclassified' }
+TypDynUnionType class >> types: aCollection weights: anotherCollection [
+	^ self new
+		initializeWithTypes: (self asTypes: aCollection) weights: anotherCollection;
+		yourself
+]
+
 { #category : #copying }
 TypDynUnionType >> , aType [
 	<typTypeArgument: 1 as: 'TypDynUnionType<TypType>'>
@@ -41,10 +53,9 @@ TypDynUnionType >> asNonDynType [
 
 { #category : #enumerating }
 TypDynUnionType >> collect: aBlock [
-	^ self class new
-		types: (types collect: aBlock);
-		weights: (weights collect: aBlock);
-		yourself
+	^ self class
+		types: (types collect: aBlock)
+		weights: (weights collect: aBlock)
 ]
 
 { #category : #accessing }
@@ -52,6 +63,13 @@ TypDynUnionType >> initialize [
 	<typTypeVariable: 'weights' as: 'SequenceableCollection<TypType>'>
 	super initialize.
 	weights := OrderedCollection new "typParameters TypType"
+]
+
+{ #category : #accessing }
+TypDynUnionType >> initializeWithTypes: anObject weights: anotherObject [
+	<typTypeArgument: 2 as: 'SequenceableCollection<TypType>'>
+	super initializeWithTypes: anObject.
+	weights := anotherObject
 ]
 
 { #category : #'as yet unclassified' }
@@ -68,20 +86,7 @@ TypDynUnionType >> summary [
 ]
 
 { #category : #accessing }
-TypDynUnionType >> types: anObject [
-	| types_ |
-	types_ := self class asTypes: anObject.
-	types := types_
-]
-
-{ #category : #accessing }
 TypDynUnionType >> weights [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	^ weights
-]
-
-{ #category : #accessing }
-TypDynUnionType >> weights: anObject [
-	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
-	weights := anObject
+	^ weights copy
 ]

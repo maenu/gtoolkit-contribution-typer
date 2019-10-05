@@ -8,9 +8,7 @@ Collection >> typAsType [
 	types ifEmpty: [ ^ TypUnknownType instance ].
 	types size = 1
 		ifTrue: [ ^ types anyOne ].
-	^ TypUnionType new
-		types: types;
-		yourself
+	^ TypUnionType types: types
 ]
 
 { #category : #'*Typer-Core' }

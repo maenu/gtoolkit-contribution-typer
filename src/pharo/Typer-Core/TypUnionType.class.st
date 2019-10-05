@@ -31,7 +31,7 @@ TypUnionType class >> asTypes: aCollection [
 { #category : #generated }
 TypUnionType class >> types: aCollection [
 	^ self new
-		types: (self asTypes: aCollection);
+		initializeWithTypes: (self asTypes: aCollection);
 		yourself
 ]
 
@@ -66,7 +66,35 @@ TypUnionType >> canUnderstand: aSymbol [
 
 { #category : #testing }
 TypUnionType >> hasSuperType [
-	^ self superType_ ~= self
+	superType
+		ifNil: [ | remains nil_ unknown current |
+			remains := types copy.
+			nil_ := remains includes: TypNilType instance.
+			nil_
+				ifTrue: [ remains remove: TypNilType instance ].
+			unknown := remains includes: TypUnknownType instance.
+			unknown
+				ifTrue: [ remains remove: TypUnknownType instance ].
+			remains ifEmpty: [ ^ self ].
+			current := remains remove: remains anyOne.
+			[ remains isEmpty ]
+				whileFalse: [ | next common |
+					next := remains remove: remains anyOne.
+					common := current asTypeCompatibleWith: next.
+					common isNil
+						ifTrue: [ nil_ := true ]
+						ifFalse: [ common isUnknown
+								ifTrue: [ unknown := true ]
+								ifFalse: [ common = current
+										ifFalse: [ current := common.
+											remains add: current ] ] ] ].
+			remains := Set with: current.
+			nil_
+				ifTrue: [ remains add: TypNilType instance ].
+			unknown
+				ifTrue: [ remains add: TypUnknownType instance ].
+			superType := remains typAsType ].
+	^ superType ~= self
 ]
 
 { #category : #comparing }
@@ -78,7 +106,16 @@ TypUnionType >> hash [
 TypUnionType >> initialize [
 	<typTypeVariable: 'types' as: 'Set<TypType>'>
 	super initialize.
-	types := Set new "typParameters TypType"
+]
+
+{ #category : #accessing }
+TypUnionType >> initializeWithTypes: anObject [
+	<typTypeArgument: 1 as: 'Set<TypType>'>
+	self
+		assert: [ | types_ |
+			types_ := self class asTypes: anObject.
+			types_ size > 1 and: [ types_ = anObject ] ].
+	types := anObject
 ]
 
 { #category : #converting }
@@ -168,52 +205,11 @@ TypUnionType >> printOn: aStream [
 { #category : #accessing }
 TypUnionType >> superType [
 	self assert: [ self hasSuperType ].
-	^ self superType_
-]
-
-{ #category : #accessing }
-TypUnionType >> superType_ [
-	| remains nil_ unknown current |
-	remains := types copy.
-	nil_ := remains includes: TypNilType instance.
-	nil_
-		ifTrue: [ remains remove: TypNilType instance ].
-	unknown := remains includes: TypUnknownType instance.
-	unknown
-		ifTrue: [ remains remove: TypUnknownType instance ].
-	remains ifEmpty: [ ^ self ].
-	current := remains remove: remains anyOne.
-	[ remains isEmpty ]
-		whileFalse: [ | next common |
-			next := remains remove: remains anyOne.
-			common := current asTypeCompatibleWith: next.
-			common isNil
-				ifTrue: [ nil_ := true ]
-				ifFalse: [ common isUnknown
-						ifTrue: [ unknown := true ]
-						ifFalse: [ common = current
-								ifFalse: [ current := common.
-									remains add: current ] ] ] ].
-	remains := Set with: current.
-	nil_
-		ifTrue: [ remains add: TypNilType instance ].
-	unknown
-		ifTrue: [ remains add: TypUnknownType instance ].
-	^ remains typAsType
+	^ superType
 ]
 
 { #category : #accessing }
 TypUnionType >> types [
 	<typTypeResultAs: 'Set<TypType>'>
-	^ types
-]
-
-{ #category : #accessing }
-TypUnionType >> types: anObject [
-	<typTypeArgument: 1 as: 'Set<TypType>'>
-	self
-		assert: [ | types_ |
-			types_ := self class asTypes: anObject.
-			types_ size > 1 and: [ types_ = anObject ] ].
-	types := anObject
+	^ types copy
 ]

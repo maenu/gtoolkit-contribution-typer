@@ -72,8 +72,7 @@ TypFunctionType >> hash [
 TypFunctionType >> initialize [
 	<typTypeVariable: 'optionalParameters' as: 'Boolean'>
 	<typTypeVariable: 'result' as: 'TypType'>
-	super initialize.
-	optionalArguments := false
+	super initialize
 ]
 
 { #category : #testing }

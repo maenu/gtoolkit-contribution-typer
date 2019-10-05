@@ -12,7 +12,7 @@ TypUnionTypeExamples >> asTypeCompatibleWith [
 	self
 		assert:
 			(type asTypeCompatibleWith: TypUnknownType instance)
-				= self typeWithUnknown.
+				= TypUnknownType instance.
 	self
 		assert: (type asTypeCompatibleWith: TypNilType instance) = type asNullableType.
 	self
@@ -26,7 +26,7 @@ TypUnionTypeExamples >> asTypeCompatibleWith [
 	self
 		assert:
 			(type asTypeCompatibleWith: self typeNotAClass)
-				= (type types , {self typeNotAClass}) typAsType.
+				= TypUnknownType instance.
 	^ type
 ]
 
