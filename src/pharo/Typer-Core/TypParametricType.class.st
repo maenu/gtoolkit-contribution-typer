@@ -77,12 +77,6 @@ TypParametricType >> asCompatibleWith: aType [
 ]
 
 { #category : #accessing }
-TypParametricType >> bindingAt: aString [
-	self flag: 'FIXME get rid of this'.
-	^ bindings at: aString
-]
-
-{ #category : #accessing }
 TypParametricType >> bindings [
 	^ bindings
 ]
@@ -148,7 +142,7 @@ TypParametricType >> initializeWithClassDescription: aClassDescription superType
 TypParametricType >> initializeWithName: aString parameters: aSequenceableCollection bindings: aBindings [
 	self
 		assert: [ aSequenceableCollection isNotEmpty
-				and: [ parameters asSet = aBindings variables ] ].
+				and: [ aSequenceableCollection asSet = aBindings variables asSet ] ].
 	self initializeWithName: aString.
 	parameters := aSequenceableCollection.
 	bindings := aBindings
