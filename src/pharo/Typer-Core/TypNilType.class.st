@@ -38,6 +38,11 @@ TypNilType >> asNullableType [
 	^ self
 ]
 
+{ #category : #converting }
+TypNilType >> asTypeCompatibleWith: aType [
+	^ aType asNullableType
+]
+
 { #category : #copying }
 TypNilType >> copy [
 	^ self

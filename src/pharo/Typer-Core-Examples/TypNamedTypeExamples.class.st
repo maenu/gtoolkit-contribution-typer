@@ -4,6 +4,29 @@ Class {
 	#category : #'Typer-Core-Examples-Type'
 }
 
+{ #category : #converting }
+TypNamedTypeExamples >> asTypeCompatibleWith [
+	<gtExample>
+	| type |
+	type := self type.
+	self
+		assert:
+			(type asTypeCompatibleWith: TypUnknownType instance)
+				= TypUnknownType instance.
+	self
+		assert: (type asTypeCompatibleWith: TypNilType instance) = type asNullableType.
+	self assert: (type asTypeCompatibleWith: self typeInteger) = type.
+	self
+		assert:
+			(type asTypeCompatibleWith: self typeProtoObject)
+				= self typeProtoObject.
+	self
+		assert:
+			(type asTypeCompatibleWith: self typeNotAClass)
+				= TypUnknownType instance.
+	^ type
+]
+
 { #category : #testing }
 TypNamedTypeExamples >> classDescription [
 	<gtExample>
@@ -75,7 +98,7 @@ TypNamedTypeExamples >> superType [
 		assert: self typeObjectClass superType = self typeProtoObjectClass.
 	self
 		assert: self typeProtoObjectClass superType = (TypNamedType named: 'Class').
-	self assert: [ self typeNotAClass superType ] signals: TypNoTypeError.
+	self assert: [ self typeNotAClass superType ] signals: AssertionFailure.
 	^ type
 ]
 

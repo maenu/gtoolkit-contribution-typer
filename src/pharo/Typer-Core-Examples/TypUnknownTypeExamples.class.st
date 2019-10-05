@@ -4,6 +4,32 @@ Class {
 	#category : #'Typer-Core-Examples-Type'
 }
 
+{ #category : #converting }
+TypUnknownTypeExamples >> asTypeCompatibleWith [
+	<gtExample>
+	| type |
+	type := self type.
+	self
+		assert:
+			(type asTypeCompatibleWith: TypUnknownType instance)
+				= TypUnknownType instance.
+	self
+		assert: (type asTypeCompatibleWith: TypNilType instance) = type asNullableType.
+	self
+		assert:
+			(type asTypeCompatibleWith: self typeInteger)
+				= TypUnknownType instance.
+	self
+		assert:
+			(type asTypeCompatibleWith: self typeProtoObject)
+				= TypUnknownType instance.
+	self
+		assert:
+			(type asTypeCompatibleWith: self typeNotAClass)
+				= TypUnknownType instance.
+	^ type
+]
+
 { #category : #'as yet unclassified' }
 TypUnknownTypeExamples >> copy_ [
 	<gtExample>

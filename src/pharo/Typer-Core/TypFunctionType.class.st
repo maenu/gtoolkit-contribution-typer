@@ -35,6 +35,29 @@ TypFunctionType >> arguments: anObject [
 	arguments := anObject asOrderedCollection
 ]
 
+{ #category : #converting }
+TypFunctionType >> asTypeCompatibleWith: aType [
+	| compatibleType |
+	compatibleType := (TypParametricType new
+		parameters: arguments;
+		yourself)
+		asTypeCompatibleWith:
+			(aType isParametric
+				ifTrue: [ TypParametricType new
+						name: aType name;
+						parameters: aType parameters;
+						yourself ]
+				ifFalse: [ aType ]).
+	(compatibleType isParametric and: [ aType isFunction ])
+		ifFalse: [ ^ compatibleType ].
+	^ TypFunctionType new
+		name: compatibleType name;
+		parameters: compatibleType parameters;
+		result: (result asTypeCompatibleWith: aType result);
+		optionalArguments: (optionalArguments and: aType optionalArguments);
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypFunctionType >> canUnderstand: aSymbol [
 	^ false

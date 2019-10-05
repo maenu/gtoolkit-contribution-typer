@@ -186,8 +186,7 @@ TypUnionType >> superType_ [
 	[ remains isEmpty ]
 		whileFalse: [ | next common |
 			next := remains remove: remains anyOne.
-			common := {current.
-			next} typAsType.
+			common := current asTypeCompatibleWith: next.
 			common isNil
 				ifTrue: [ nil_ := true ]
 				ifFalse: [ common isUnknown

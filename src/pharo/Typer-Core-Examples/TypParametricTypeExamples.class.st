@@ -4,6 +4,36 @@ Class {
 	#category : #'Typer-Core-Examples-Type'
 }
 
+{ #category : #converting }
+TypParametricTypeExamples >> asTypeCompatibleWith [
+	<gtExample>
+	| type |
+	type := self type.
+	self
+		assert:
+			(type asTypeCompatibleWith: TypUnknownType instance)
+				= TypUnknownType instance.
+	self
+		assert: (type asTypeCompatibleWith: TypNilType instance) = type asNullableType.
+	self
+		assert: (type asTypeCompatibleWith: self typeOrderedCollectionA) = self typeOrderedCollectionA.
+	self
+		assert: (self typeOrderedCollectionA asTypeCompatibleWith: type) = self typeOrderedCollectionA.
+	self
+		assert:
+			(type asTypeCompatibleWith: self typeSequenceableCollectionInteger)
+				= self typeSequenceableCollectionInteger.
+	self
+		assert:
+			(type asTypeCompatibleWith: self typeSequenceableCollectionString)
+				= self typeSequenceableCollectionA.
+	self
+		assert:
+			(type asTypeCompatibleWith: self typeNotAClass)
+				= TypUnknownType instance.
+	^ type
+]
+
 { #category : #testing }
 TypParametricTypeExamples >> classDescription [
 	<gtExample>
@@ -64,7 +94,7 @@ TypParametricTypeExamples >> superType [
 		assert:
 			self typeOrderedCollectionA superType
 				= self typeSequenceableCollectionA.
-	self assert: [ self typeNotAClass superType ] signals: TypNoTypeError.
+	self assert: [ self typeNotAClass superType ] signals: AssertionFailure.
 	^ type
 ]
 

@@ -71,6 +71,23 @@ TypParametricType >> > aType [
 								ifFalse: [ a = b ] ] ] ]
 ]
 
+{ #category : #converting }
+TypParametricType >> asTypeCompatibleWith: aType [
+	^ (aType isParametric and: [ name = aType name ])
+		ifTrue: [ self
+				copyWithBindings:
+					(bindings associations
+						collect: [ :e | 
+							| binding |
+							binding := aType bindingAt: e key.
+							e key
+								->
+									(e value = binding
+										ifTrue: [ e value ]
+										ifFalse: [ e key typAsType ]) ]) asOrderedDictionary ]
+		ifFalse: [ super asTypeCompatibleWith: aType ]
+]
+
 { #category : #accessing }
 TypParametricType >> bindingAt: aString [
 	^ bindings at: aString

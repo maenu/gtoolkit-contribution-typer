@@ -28,6 +28,12 @@ TypTypeExamples >> asNullableType [
 	^ nullableType
 ]
 
+{ #category : #converting }
+TypTypeExamples >> asTypeCompatibleWith [
+	<gtExample>
+	self subclassResponsibility
+]
+
 { #category : #'as yet unclassified' }
 TypTypeExamples >> canUnderstand [
 	<gtExample>
@@ -155,12 +161,12 @@ TypTypeExamples >> printOn [
 	self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypTypeExamples >> superType [
 	<gtExample>
 	| type |
 	type := self type.
-	self assert: [ type superType ] signals: TypNoTypeError.
+	self assert: [ type superType ] signals: ShouldNotImplement.
 	^ type
 ]
 

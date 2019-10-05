@@ -48,6 +48,23 @@ TypType >> asNullableType [
 	self} typAsType
 ]
 
+{ #category : #converting }
+TypType >> asTypeCompatibleWith: aType [
+	<typTypeArgument: 1 as: 'TypType'>
+	<typTypeResultAs: 'TypType'>
+	aType isTypeVariable
+		ifTrue: [ ^ aType ].
+	aType isUnknown
+		ifTrue: [ ^ aType ].
+	aType isNil
+		ifTrue: [ ^ self asNullableType ].
+	self >= aType
+		ifTrue: [ ^ self ].
+	self hasSuperType
+		ifTrue: [ ^ self superType asTypeCompatibleWith: aType ].
+	^ TypUnknownType instance
+]
+
 { #category : #'as yet unclassified' }
 TypType >> canUnderstand: aSymbol [
 	<typTypeArgument: 1 as: 'Symbol<Character>'>

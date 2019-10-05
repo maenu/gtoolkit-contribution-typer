@@ -4,6 +4,32 @@ Class {
 	#category : #'Typer-Core-Examples-Type'
 }
 
+{ #category : #converting }
+TypUnionTypeExamples >> asTypeCompatibleWith [
+	<gtExample>
+	| type |
+	type := self type.
+	self
+		assert:
+			(type asTypeCompatibleWith: TypUnknownType instance)
+				= self typeWithUnknown.
+	self
+		assert: (type asTypeCompatibleWith: TypNilType instance) = type asNullableType.
+	self
+		assert: (type asTypeCompatibleWith: TypNilType instance) = self typeWithNil.
+	self
+		assert: (type asTypeCompatibleWith: self typeInteger) = self typeInteger.
+	self
+		assert:
+			(type asTypeCompatibleWith: self typeProtoObject)
+				= self typeProtoObject.
+	self
+		assert:
+			(type asTypeCompatibleWith: self typeNotAClass)
+				= (type types , {self typeNotAClass}) typAsType.
+	^ type
+]
+
 { #category : #testing }
 TypUnionTypeExamples >> hasSuperType [
 	<gtExample>
@@ -107,13 +133,13 @@ TypUnionTypeExamples >> superType [
 	self assert: self typeSmallIntegerAndTrue superType = self typeObject.
 	self
 		assert: [ self typeWithNil superType superType ]
-		signals: TypNoTypeError.
+		signals: AssertionFailure.
 	self
 		assert: [ self typeWithUnknown superType superType ]
-		signals: TypNoTypeError.
+		signals: AssertionFailure.
 	self
 		assert: [ self typeWithUnknownAndNil superType superType ]
-		signals: TypNoTypeError.
+		signals: AssertionFailure.
 	^ type
 ]
 
