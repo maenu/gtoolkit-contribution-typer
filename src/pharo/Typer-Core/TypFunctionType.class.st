@@ -9,53 +9,49 @@ Class {
 	#category : #'Typer-Core-Type'
 }
 
+{ #category : #'as yet unclassified' }
+TypFunctionType class >> arguments: aCollection result: aType optionalArguments: aBoolean [
+	^ self new
+		initializeWithArguments: aCollection
+			result: aType
+			optionalArguments: aBoolean;
+		yourself
+]
+
 { #category : #comparing }
 TypFunctionType >> = anObject [
 	^ self == anObject
 		or: [ self class = anObject class
 				and: [ | type |
 					type := anObject "typCastAs TypFunctionType".
-					arguments = type arguments and: [ optionalArguments = type optionalArguments and: [ result = type result ] ] ] ]
+					arguments = type arguments and: [ result = type result and: [ optionalArguments = type optionalArguments ] ] ] ]
 ]
 
 { #category : #comparing }
 TypFunctionType >> > aType [
-	^ false
+	^ self ~= aType
+		and: [ aType isFunction
+				and: [ (optionalArguments not or: [ aType optionalArguments ])
+						and: [ arguments = aType arguments
+								and: [ result >= aType result
+										and: [ optionalArguments ~= aType optionalArguments
+												or: [ result > aType result ] ] ] ] ] ]
 ]
 
 { #category : #accessing }
 TypFunctionType >> arguments [
 	<typTypeResultAs: 'OrderedCollection<TypType>'>
-	^ arguments
-]
-
-{ #category : #accessing }
-TypFunctionType >> arguments: anObject [
-	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
-	arguments := anObject asOrderedCollection
+	^ arguments copy
 ]
 
 { #category : #converting }
-TypFunctionType >> asTypeCompatibleWith: aType [
-	| compatibleType |
-	compatibleType := (TypParametricType new
-		parameters: arguments;
-		yourself)
-		asTypeCompatibleWith:
-			(aType isParametric
-				ifTrue: [ TypParametricType new
-						name: aType name;
-						parameters: aType parameters;
-						yourself ]
-				ifFalse: [ aType ]).
-	(compatibleType isParametric and: [ aType isFunction ])
-		ifFalse: [ ^ compatibleType ].
-	^ TypFunctionType new
-		name: compatibleType name;
-		parameters: compatibleType parameters;
-		result: (result asTypeCompatibleWith: aType result);
-		optionalArguments: (optionalArguments and: aType optionalArguments);
-		yourself
+TypFunctionType >> asCompatibleWith: aType [
+	^ (self > aType or: [ aType > self ])
+		ifTrue: [ self class
+				arguments: arguments copy
+				result: (result asCompatibleWith: aType result)
+				optionalArguments: (optionalArguments and: aType optionalArguments) ]
+		ifFalse: [ super asCompatibleWith: aType ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -63,9 +59,24 @@ TypFunctionType >> canUnderstand: aSymbol [
 	^ false
 ]
 
+{ #category : #copying }
+TypFunctionType >> copyWithResult: aType [
+	^ self copy
+		initializeWithArguments: (arguments collect: #copy)
+			result: aType
+			optionalArguments: optionalArguments;
+		yourself
+]
+
+{ #category : #testing }
+TypFunctionType >> hasSuperType [
+	^ result hasSuperType
+]
+
 { #category : #comparing }
 TypFunctionType >> hash [
-	^ (super hash bitXor: optionalArguments hash) bitXor: result hash
+	^ ((super hash bitXor: arguments hash) bitXor: result hash)
+		bitXor: optionalArguments hash
 ]
 
 { #category : #accessing }
@@ -73,6 +84,13 @@ TypFunctionType >> initialize [
 	<typTypeVariable: 'optionalParameters' as: 'Boolean'>
 	<typTypeVariable: 'result' as: 'TypType'>
 	super initialize
+]
+
+{ #category : #initialization }
+TypFunctionType >> initializeWithArguments: aCollection result: aType optionalArguments: aBoolean [
+	arguments := aCollection.
+	result := aType.
+	optionalArguments := aBoolean
 ]
 
 { #category : #testing }
@@ -91,16 +109,11 @@ TypFunctionType >> optionalArguments [
 	^ optionalArguments
 ]
 
-{ #category : #accessing }
-TypFunctionType >> optionalArguments: anObject [
-	<typTypeArgument: 1 as: 'Boolean'>
-	optionalArguments := anObject
-]
-
 { #category : #copying }
 TypFunctionType >> postCopy [
 	super postCopy.
-	result := result copy.
+	arguments := arguments collect: #copy.
+	result := result copy
 ]
 
 { #category : #accessing }
@@ -130,18 +143,8 @@ TypFunctionType >> result [
 ]
 
 { #category : #accessing }
-TypFunctionType >> result: anObject [
-	<typTypeArgument: 1 as: 'TypType'>
-	result := anObject
-]
-
-{ #category : #accessing }
 TypFunctionType >> superType [
-	| superType |
-	superType := super superType.
-	^ superType isFunction
-		ifTrue: [ (superType "typCastAs TypFunctionType") copy
-				result: result copy;
-				yourself ]
-		ifFalse: [ superType ]
+	self assert: [ self hasSuperType ].
+	superType ifNotNil: [ ^ superType ].
+	^ superType := self copyWithResult: result superType
 ]

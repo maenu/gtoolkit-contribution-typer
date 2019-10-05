@@ -35,26 +35,26 @@ TypNilTypeExamples >> asTypeCompatibleWith [
 	type := self type.
 	self
 		assert:
-			(type asTypeCompatibleWith: TypUnknownType instance)
+			(type asCompatibleWith: TypUnknownType instance)
 				=
 					{TypNilType instance.
 					TypUnknownType instance} typAsType.
-	self assert: (type asTypeCompatibleWith: TypNilType instance) = type.
+	self assert: (type asCompatibleWith: TypNilType instance) = type.
 	self
 		assert:
-			(type asTypeCompatibleWith: self typeInteger)
+			(type asCompatibleWith: self typeInteger)
 				=
 					{TypNilType instance.
 					self typeInteger} typAsType.
 	self
 		assert:
-			(type asTypeCompatibleWith: self typeProtoObject)
+			(type asCompatibleWith: self typeProtoObject)
 				=
 					{TypNilType instance.
 					self typeProtoObject} typAsType.
 	self
 		assert:
-			(type asTypeCompatibleWith: self typeNotAClass)
+			(type asCompatibleWith: self typeNotAClass)
 				=
 					{TypNilType instance.
 					self typeNotAClass} typAsType.

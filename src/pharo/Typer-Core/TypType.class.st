@@ -36,20 +36,7 @@ TypType >> >= aType [
 ]
 
 { #category : #converting }
-TypType >> asNonNullableType [
-	<typTypeResultAs: 'TypType'>
-	^ self
-]
-
-{ #category : #converting }
-TypType >> asNullableType [
-	<typTypeResultAs: 'TypType'>
-	^ {TypNilType instance.
-	self} typAsType
-]
-
-{ #category : #converting }
-TypType >> asTypeCompatibleWith: aType [
+TypType >> asCompatibleWith: aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'TypType'>
 	aType isTypeVariable
@@ -61,8 +48,21 @@ TypType >> asTypeCompatibleWith: aType [
 	self >= aType
 		ifTrue: [ ^ self ].
 	self hasSuperType
-		ifTrue: [ ^ self superType asTypeCompatibleWith: aType ].
+		ifTrue: [ ^ self superType asCompatibleWith: aType ].
 	^ TypUnknownType instance
+]
+
+{ #category : #converting }
+TypType >> asNonNullableType [
+	<typTypeResultAs: 'TypType'>
+	^ self
+]
+
+{ #category : #converting }
+TypType >> asNullableType [
+	<typTypeResultAs: 'TypType'>
+	^ {TypNilType instance.
+	self} typAsType
 ]
 
 { #category : #'as yet unclassified' }

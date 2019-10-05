@@ -6,7 +6,7 @@ Class {
 
 { #category : #'generated-accessing' }
 TypTypeParser class >> cacheId [
-	^'2019-10-03T14:58:03.937404+02:00'
+	^'2019-10-05T14:41:57.701034+02:00'
 ]
 
 { #category : #generated }
@@ -76,9 +76,9 @@ ParametricType
 	;
 FunctionType
 	: ""["" EmptyTypes 'arguments' ""]"" ""->"" Type 'result'
-		 { TypFunctionType new optionalArguments: true; arguments: arguments; result: result; yourself }
+		{ TypFunctionType arguments: arguments result: result optionalArguments: true }
 	| ""("" EmptyTypes 'arguments' "")"" ""->"" Type 'result'
-		{ TypFunctionType new optionalArguments: false; arguments: arguments; result: result; yourself }
+		{ TypFunctionType arguments: arguments result: result optionalArguments: false }
 	;
 UnionType
 	: ""{"" Types 'types' ""}""
@@ -106,9 +106,9 @@ TypTypeParser class >> parse: aString [
 TypTypeParser class >> reduceTable [
 ^#(
 	#(19 1 #reduceActionForNilType1: 634881 false ) 
-	#(25 0 #reduceActionForEmptyTypes2: 1490946 false ) 
+	#(25 0 #reduceActionForEmptyTypes2: 1457154 false ) 
 	#(18 1 #reduceActionForUnknownType1: 581633 false ) 
-	#(26 1 #reduceActionForName1: 1545217 false ) 
+	#(26 1 #reduceActionForName1: 1511425 false ) 
 	#(16 1 #reduceActionForTypes1: 241665 false ) 
 	#(17 1 #liftFirstValue: 334849 false ) 
 	#(17 1 #liftFirstValue: 334850 false ) 
@@ -118,9 +118,9 @@ TypTypeParser class >> reduceTable [
 	#(17 1 #liftFirstValue: 334853 false ) 
 	#(17 1 #liftFirstValue: 334852 false ) 
 	#(21 1 #reduceActionForNamedType1: 764929 false ) 
-	#(25 1 #liftFirstValue: 1490945 false ) 
+	#(25 1 #liftFirstValue: 1457153 false ) 
 	#(20 2 #reduceActionForTypeVariableType1: 679937 false ) 
-	#(24 3 #reduceActionForUnionType1: 1417217 false ) 
+	#(24 3 #reduceActionForUnionType1: 1383425 false ) 
 	#(16 3 #reduceActionForTypes2: 241666 false ) 
 	#(22 4 #reduceActionForParametricType1: 826369 false ) 
 	#(23 5 #reduceActionForFunctionType2: 1089538 false ) 
@@ -191,20 +191,18 @@ TypTypeParser >> reduceActionForEmptyTypes2: nodes [
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForFunctionType1: nodes [
-	^ TypFunctionType new
-		optionalArguments: true;
-		arguments: (nodes at: 2);
-		result: (nodes at: 5);
-		yourself
+	^ TypFunctionType
+		arguments: (nodes at: 2)
+		result: (nodes at: 5)
+		optionalArguments: true
 ]
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForFunctionType2: nodes [
-	^ TypFunctionType new
-		optionalArguments: false;
-		arguments: (nodes at: 2);
-		result: (nodes at: 5);
-		yourself
+	^ TypFunctionType
+		arguments: (nodes at: 2)
+		result: (nodes at: 5)
+		optionalArguments: false
 ]
 
 { #category : #'generated-reduction actions' }

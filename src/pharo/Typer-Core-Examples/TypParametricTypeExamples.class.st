@@ -11,25 +11,25 @@ TypParametricTypeExamples >> asTypeCompatibleWith [
 	type := self type.
 	self
 		assert:
-			(type asTypeCompatibleWith: TypUnknownType instance)
+			(type asCompatibleWith: TypUnknownType instance)
 				= TypUnknownType instance.
 	self
-		assert: (type asTypeCompatibleWith: TypNilType instance) = type asNullableType.
+		assert: (type asCompatibleWith: TypNilType instance) = type asNullableType.
 	self
-		assert: (type asTypeCompatibleWith: self typeOrderedCollectionA) = self typeOrderedCollectionA.
+		assert: (type asCompatibleWith: self typeOrderedCollectionA) = self typeOrderedCollectionA.
 	self
-		assert: (self typeOrderedCollectionA asTypeCompatibleWith: type) = self typeOrderedCollectionA.
+		assert: (self typeOrderedCollectionA asCompatibleWith: type) = self typeOrderedCollectionA.
 	self
 		assert:
-			(type asTypeCompatibleWith: self typeSequenceableCollectionInteger)
+			(type asCompatibleWith: self typeSequenceableCollectionInteger)
 				= self typeSequenceableCollectionInteger.
 	self
 		assert:
-			(type asTypeCompatibleWith: self typeSequenceableCollectionString)
+			(type asCompatibleWith: self typeSequenceableCollectionString)
 				= self typeSequenceableCollectionA.
 	self
 		assert:
-			(type asTypeCompatibleWith: self typeNotAClass)
+			(type asCompatibleWith: self typeNotAClass)
 				= TypUnknownType instance.
 	^ type
 ]

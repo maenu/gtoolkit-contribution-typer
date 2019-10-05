@@ -29,6 +29,11 @@ TypNilType class >> named: aString [
 ]
 
 { #category : #converting }
+TypNilType >> asCompatibleWith: aType [
+	^ aType asNullableType
+]
+
+{ #category : #converting }
 TypNilType >> asNonNullableType [
 	^ TypUnknownType instance
 ]
@@ -36,11 +41,6 @@ TypNilType >> asNonNullableType [
 { #category : #converting }
 TypNilType >> asNullableType [
 	^ self
-]
-
-{ #category : #converting }
-TypNilType >> asTypeCompatibleWith: aType [
-	^ aType asNullableType
 ]
 
 { #category : #copying }

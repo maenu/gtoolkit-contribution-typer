@@ -58,21 +58,22 @@ TypParametricType >> = anObject [
 { #category : #comparing }
 TypParametricType >> > aType [
 	^ super > aType
-		and: [ self parameters = aType parameters
-				and: [ self parameters
-						allSatisfy: [ :e | 
-							| a b |
-							a := self bindingAt: e.
-							b := aType bindingAt: e.
-							a isTypeVariable
-								ifTrue: [ b isTypeVariable
-										ifTrue: [ a = b ]
-										ifFalse: [ true ] ]
-								ifFalse: [ a = b ] ] ] ]
+		and: [ aType isParametric
+				and: [ self parameters = aType parameters
+						and: [ self parameters
+								allSatisfy: [ :e | 
+									| a b |
+									a := self bindingAt: e.
+									b := aType bindingAt: e.
+									a isTypeVariable
+										ifTrue: [ b isTypeVariable
+												ifTrue: [ a = b ]
+												ifFalse: [ true ] ]
+										ifFalse: [ a = b ] ] ] ] ]
 ]
 
 { #category : #converting }
-TypParametricType >> asTypeCompatibleWith: aType [
+TypParametricType >> asCompatibleWith: aType [
 	^ (aType isParametric and: [ name = aType name ])
 		ifTrue: [ self
 				copyWithBindings:
@@ -85,7 +86,7 @@ TypParametricType >> asTypeCompatibleWith: aType [
 									(e value = binding
 										ifTrue: [ e value ]
 										ifFalse: [ e key typAsType ]) ]) asOrderedDictionary ]
-		ifFalse: [ super asTypeCompatibleWith: aType ]
+		ifFalse: [ super asCompatibleWith: aType ]
 ]
 
 { #category : #accessing }
@@ -183,6 +184,7 @@ TypParametricType >> printOn: aStream [
 
 { #category : #accessing }
 TypParametricType >> superType [
+	superType ifNotNil: [ ^ superType ].
 	superType := super superType.
 	superType isParametric
 		ifTrue: [ superType := superType

@@ -80,7 +80,7 @@ TypUnionType >> hasSuperType [
 			[ remains isEmpty ]
 				whileFalse: [ | next common |
 					next := remains remove: remains anyOne.
-					common := current asTypeCompatibleWith: next.
+					common := current asCompatibleWith: next.
 					common isNil
 						ifTrue: [ nil_ := true ]
 						ifFalse: [ common isUnknown

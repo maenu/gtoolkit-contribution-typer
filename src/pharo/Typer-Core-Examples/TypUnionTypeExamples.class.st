@@ -11,21 +11,21 @@ TypUnionTypeExamples >> asTypeCompatibleWith [
 	type := self type.
 	self
 		assert:
-			(type asTypeCompatibleWith: TypUnknownType instance)
+			(type asCompatibleWith: TypUnknownType instance)
 				= TypUnknownType instance.
 	self
-		assert: (type asTypeCompatibleWith: TypNilType instance) = type asNullableType.
+		assert: (type asCompatibleWith: TypNilType instance) = type asNullableType.
 	self
-		assert: (type asTypeCompatibleWith: TypNilType instance) = self typeWithNil.
+		assert: (type asCompatibleWith: TypNilType instance) = self typeWithNil.
 	self
-		assert: (type asTypeCompatibleWith: self typeInteger) = self typeInteger.
+		assert: (type asCompatibleWith: self typeInteger) = self typeInteger.
 	self
 		assert:
-			(type asTypeCompatibleWith: self typeProtoObject)
+			(type asCompatibleWith: self typeProtoObject)
 				= self typeProtoObject.
 	self
 		assert:
-			(type asTypeCompatibleWith: self typeNotAClass)
+			(type asCompatibleWith: self typeNotAClass)
 				= TypUnknownType instance.
 	^ type
 ]

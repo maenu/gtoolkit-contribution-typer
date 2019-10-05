@@ -11,21 +11,21 @@ TypUnknownTypeExamples >> asTypeCompatibleWith [
 	type := self type.
 	self
 		assert:
-			(type asTypeCompatibleWith: TypUnknownType instance)
+			(type asCompatibleWith: TypUnknownType instance)
 				= TypUnknownType instance.
 	self
-		assert: (type asTypeCompatibleWith: TypNilType instance) = type asNullableType.
+		assert: (type asCompatibleWith: TypNilType instance) = type asNullableType.
 	self
 		assert:
-			(type asTypeCompatibleWith: self typeInteger)
-				= TypUnknownType instance.
-	self
-		assert:
-			(type asTypeCompatibleWith: self typeProtoObject)
+			(type asCompatibleWith: self typeInteger)
 				= TypUnknownType instance.
 	self
 		assert:
-			(type asTypeCompatibleWith: self typeNotAClass)
+			(type asCompatibleWith: self typeProtoObject)
+				= TypUnknownType instance.
+	self
+		assert:
+			(type asCompatibleWith: self typeNotAClass)
 				= TypUnknownType instance.
 	^ type
 ]
