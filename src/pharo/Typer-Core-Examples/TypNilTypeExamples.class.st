@@ -61,6 +61,15 @@ TypNilTypeExamples >> equality [
 ]
 
 { #category : #testing }
+TypNilTypeExamples >> hasClassDescription [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type hasClassDescription.
+	^ type
+]
+
+{ #category : #testing }
 TypNilTypeExamples >> hasSuperType [
 	<gtExample>
 	| type |
@@ -94,15 +103,6 @@ TypNilTypeExamples >> printOn [
 	type := self type.
 	self assert: type asString = '!'.
 	self assert: type asNullableType asString = '!'.
-	^ type
-]
-
-{ #category : #testing }
-TypNilTypeExamples >> representsClassDescription [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type representsClassDescription.
 	^ type
 ]
 

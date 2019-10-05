@@ -167,8 +167,7 @@ TypUnionType >> printOn: aStream [
 
 { #category : #accessing }
 TypUnionType >> superType [
-	self hasSuperType
-		ifFalse: [ TypNoTypeError signal ].
+	self assert: [ self hasSuperType ].
 	^ self superType_
 ]
 

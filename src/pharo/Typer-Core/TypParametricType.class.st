@@ -79,13 +79,13 @@ TypParametricType >> bindingAt: aString [
 { #category : #copying }
 TypParametricType >> copyWithBindings: anOrderedDictionary [
 	self assert: [ bindings keys = anOrderedDictionary keys ].
-	^ classDescription
-		ifNil: [ self copy
-				initializeWithName: name bindings: anOrderedDictionary;
-				yourself ]
-		ifNotNil: [ self copy
-				initializeWithClassDescription: classDescription
+	^ self hasClassDescription
+		ifTrue: [ self copy
+				initializeWithClassDescription: self classDescription
 					bindings: anOrderedDictionary;
+				yourself ]
+		ifFalse: [ self copy
+				initializeWithName: name bindings: anOrderedDictionary;
 				yourself ]
 ]
 

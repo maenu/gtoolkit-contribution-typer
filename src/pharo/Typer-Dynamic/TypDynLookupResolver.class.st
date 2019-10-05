@@ -11,7 +11,7 @@ Class {
 TypDynLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypObjectLookup'>
 	<typTypeResultAs: 'SequenceableCollection<TypLookupResult>'>
-	^ (aLookup receiverType isNamed and: [ aLookup receiverType representsClassDescription ])
+	^ (aLookup receiverType isNamed and: [ aLookup receiverType hasClassDescription ])
 		ifTrue: [ results
 				at: aLookup receiverType classDescription -> aLookup selector
 				ifPresent: [ :e | 

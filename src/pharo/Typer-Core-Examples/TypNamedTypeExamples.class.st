@@ -20,6 +20,20 @@ TypNamedTypeExamples >> classDescription [
 ]
 
 { #category : #testing }
+TypNamedTypeExamples >> hasClassDescription [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type hasClassDescription.
+	self assert: self typeNotAClass hasClassDescription not.
+	self assert: self typeObjectClass hasClassDescription.
+	self assert: self typeTAssertable hasClassDescription.
+	self
+		assert: self typeTAssertableClassTrait hasClassDescription.
+	^ type
+]
+
+{ #category : #testing }
 TypNamedTypeExamples >> hasSuperType [
 	<gtExample>
 	| type |
@@ -48,20 +62,6 @@ TypNamedTypeExamples >> printOn [
 	type := self type.
 	self assert: type asString = 'Object'.
 	self assert: type asNullableType asString = '{!Object}'.
-	^ type
-]
-
-{ #category : #testing }
-TypNamedTypeExamples >> representsClassDescription [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type representsClassDescription.
-	self assert: self typeNotAClass representsClassDescription not.
-	self assert: self typeObjectClass representsClassDescription.
-	self assert: self typeTAssertable representsClassDescription.
-	self
-		assert: self typeTAssertableClassTrait representsClassDescription.
 	^ type
 ]
 

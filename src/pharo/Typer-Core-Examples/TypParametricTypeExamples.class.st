@@ -15,6 +15,16 @@ TypParametricTypeExamples >> classDescription [
 ]
 
 { #category : #testing }
+TypParametricTypeExamples >> hasClassDescription [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type hasClassDescription.
+	self assert: self typeNotAClass hasClassDescription not.
+	^ type
+]
+
+{ #category : #testing }
 TypParametricTypeExamples >> hasSuperType [
 	<gtExample>
 	| type |
@@ -41,16 +51,6 @@ TypParametricTypeExamples >> printOn [
 	type := self type.
 	self assert: type asString = 'OrderedCollection<Integer>'.
 	self assert: type asNullableType asString = '{!OrderedCollection<Integer>}'.
-	^ type
-]
-
-{ #category : #testing }
-TypParametricTypeExamples >> representsClassDescription [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type representsClassDescription.
-	self assert: self typeNotAClass representsClassDescription not.
 	^ type
 ]
 

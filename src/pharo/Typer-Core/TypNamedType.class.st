@@ -3,8 +3,8 @@ Class {
 	#superclass : #TypType,
 	#instVars : [
 		'name',
-		'representsClass',
-		'classDescription'
+		'classDescription',
+		'hasClassDescription'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -48,13 +48,13 @@ TypNamedType >> > aType [
 
 { #category : #'as yet unclassified' }
 TypNamedType >> canUnderstand: aSymbol [
-	^ self representsClassDescription
+	^ self hasClassDescription
 		and: [ self classDescription canUnderstand: aSymbol ]
 ]
 
 { #category : #converting }
 TypNamedType >> classDescription [
-	self assert: [ self representsClassDescription ].
+	self assert: [ self hasClassDescription ].
 	^ classDescription
 		ifNil: [ classDescription := (name endsWith: ' class')
 				ifTrue: [ (name copyFrom: 1 to: name size - ' class' size) asClass classSide ]
@@ -64,10 +64,25 @@ TypNamedType >> classDescription [
 						ifFalse: [ name asClass ] ] ]
 ]
 
+{ #category : #testing }
+TypNamedType >> hasClassDescription [
+	^ hasClassDescription
+		ifNil: [ | clazz_ |
+			clazz_ := name.
+			(clazz_ endsWith: ' class')
+				ifTrue: [ clazz_ := name copyFrom: 1 to: name size - ' class' size ].
+			(clazz_ endsWith: ' classTrait')
+				ifTrue: [ clazz_ := name copyFrom: 1 to: name size - ' classTrait' size ].
+			hasClassDescription := [ clazz_ asClass.
+			true ]
+				on: NotFound
+				do: [ false ] ]
+]
+
 { #category : #'as yet unclassified' }
 TypNamedType >> hasSuperType [
 	^ superType isNotNil
-		or: [ self representsClassDescription
+		or: [ self hasClassDescription
 				and: [ self classDescription superclass isNotNil ] ]
 ]
 
@@ -88,7 +103,7 @@ TypNamedType >> initializeWithClassDescription: aClassDescription [
 	self assert: [ aClassDescription isNotNil ].
 	classDescription := aClassDescription.
 	name := classDescription name.
-	representsClass := true
+	hasClassDescription := true
 ]
 
 { #category : #initialization }
@@ -101,7 +116,7 @@ TypNamedType >> initializeWithClassDescription: aClassDescription superTypeBindi
 TypNamedType >> initializeWithName: anObject [
 	<typTypeArgument: 1 as: 'String<Character>'>
 	name := anObject.
-	representsClass := nil
+	hasClassDescription := nil
 ]
 
 { #category : #testing }
@@ -126,25 +141,9 @@ TypNamedType >> printOn: aStream [
 	aStream << name asString
 ]
 
-{ #category : #testing }
-TypNamedType >> representsClassDescription [
-	^ representsClass
-		ifNil: [ | clazz_ |
-			clazz_ := name.
-			(clazz_ endsWith: ' class')
-				ifTrue: [ clazz_ := name copyFrom: 1 to: name size - ' class' size ].
-			(clazz_ endsWith: ' classTrait')
-				ifTrue: [ clazz_ := name copyFrom: 1 to: name size - ' classTrait' size ].
-			representsClass := [ clazz_ asClass.
-			true ]
-				on: NotFound
-				do: [ false ] ]
-]
-
 { #category : #'as yet unclassified' }
 TypNamedType >> superType [
-	self hasSuperType
-		ifFalse: [ TypNoTypeError signal ].
+	self assert: [ self hasSuperType ].
 	superType ifNotNil: [ ^ superType ].
 	superType := self classDescription superclass typAsType.
 	^ superType

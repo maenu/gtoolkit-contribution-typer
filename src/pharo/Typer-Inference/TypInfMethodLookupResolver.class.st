@@ -8,7 +8,7 @@ Class {
 TypInfMethodLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'SequenceableCollection<TypMethodLookupResult>'>
-	^ (aLookup receiverType isNamed and: [ aLookup receiverType representsClassDescription ])
+	^ (aLookup receiverType isNamed and: [ aLookup receiverType hasClassDescription ])
 		ifTrue: [ (aLookup receiverType classDescription
 				typInfAsMethodLookupResultFor: aLookup selector)
 				ifNil: [ #() ]

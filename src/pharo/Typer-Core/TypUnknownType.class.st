@@ -34,6 +34,11 @@ TypUnknownType >> copy [
 ]
 
 { #category : #testing }
+TypUnknownType >> hasSuperType [
+	^ false
+]
+
+{ #category : #testing }
 TypUnknownType >> isUnknown [
 	^ true
 ]
@@ -47,4 +52,9 @@ TypUnknownType >> lookupSelector: aSymbol [
 { #category : #accessing }
 TypUnknownType >> printOn: aStream [
 	aStream << '?'
+]
+
+{ #category : #'as yet unclassified' }
+TypUnknownType >> superType [
+	self shouldNotImplement
 ]

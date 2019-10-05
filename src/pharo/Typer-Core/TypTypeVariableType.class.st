@@ -30,6 +30,11 @@ TypTypeVariableType >> canUnderstand: aSymbol [
 	^ false
 ]
 
+{ #category : #testing }
+TypTypeVariableType >> hasSuperType [
+	^ false
+]
+
 { #category : #comparing }
 TypTypeVariableType >> hash [
 	^ name hash
@@ -59,4 +64,9 @@ TypTypeVariableType >> name [
 { #category : #printing }
 TypTypeVariableType >> printOn: aStream [
 	aStream nextPutAll: name asString
+]
+
+{ #category : #'as yet unclassified' }
+TypTypeVariableType >> superType [
+	self shouldNotImplement
 ]
