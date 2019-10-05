@@ -60,7 +60,7 @@ TypShaPhaString >> ___join: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			Collection typAsType
-				copyWithBindings: {('@A' -> String typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> String typAsType)} typAsTypeVariableBindings ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself
 ]
@@ -71,7 +71,7 @@ TypShaPhaString >> ___keywords [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> String typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> String typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]
 
@@ -81,7 +81,7 @@ TypShaPhaString >> ___split: _a [
 		argumentTypes: [ :i :a :s :r | SequenceableCollection typAsType ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> (a argumentTypes at: 1))} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> (a argumentTypes at: 1))} typAsTypeVariableBindings ];
 		yourself
 ]
 
@@ -96,5 +96,5 @@ TypShaPhaString >> ___translated [
 { #category : #converting }
 TypShaPhaString >> asType: aClass [
 	^ aClass
-		typAsNamedTypeWithSuperTypeBindings: {('@A' -> Character typAsType)} asOrderedDictionary
+		typAsNamedTypeWithSuperTypeBindings: {('@A' -> Character typAsType)} typAsTypeVariableBindings
 ]

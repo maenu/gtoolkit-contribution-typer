@@ -14,6 +14,6 @@ TypShaPhaRBLiteralArrayNode >> ___contents [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
-				copyWithBindings: {('@A' -> RBLiteralNode typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> RBLiteralNode typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]

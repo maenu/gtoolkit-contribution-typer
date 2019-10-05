@@ -9,6 +9,6 @@ RBLiteralArrayNode >> typTypeRecursive [
 				copyWithBindings:
 					{((type parameters at: 1)
 						-> (self contents collect: #typType) typAsType)}
-						asOrderedDictionary ].
+						typAsTypeVariableBindings ].
 	^ type
 ]

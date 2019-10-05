@@ -26,7 +26,7 @@ Collection >> typSelfType [
 					{((type parameters at: 1)
 						->
 							(self typSelfTypeSamples collect: [ :e | e class typAsType ])
-								typAsType)} asOrderedDictionary ].
+								typAsType)} typAsTypeVariableBindings ].
 	^ type
 ]
 

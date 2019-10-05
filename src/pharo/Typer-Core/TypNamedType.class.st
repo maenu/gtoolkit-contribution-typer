@@ -107,9 +107,9 @@ TypNamedType >> initializeWithClassDescription: aClassDescription [
 ]
 
 { #category : #initialization }
-TypNamedType >> initializeWithClassDescription: aClassDescription superTypeBindings: anOrderedDictionary [
+TypNamedType >> initializeWithClassDescription: aClassDescription superTypeBindings: aBindings [
 	self initializeWithClassDescription: aClassDescription.
-	superType := self superType copyWithBindings: anOrderedDictionary
+	superType := self superType copyWithBindings: aBindings
 ]
 
 { #category : #accessing }

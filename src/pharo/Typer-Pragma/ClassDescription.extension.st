@@ -2,7 +2,8 @@ Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Pragma' }
 ClassDescription >> typPraAsClassLookupResult [
-	| pragmas bindings |
+	| pragmas parameters bindings |
+	self flag: 'FIXME needs parameters'.
 	pragmas := (self lookupSelector: #initialize)
 		ifNil: [ ^ nil ]
 		ifNotNil: #pragmas.
@@ -16,10 +17,10 @@ ClassDescription >> typPraAsClassLookupResult [
 	bindings := (pragmas
 		collect: [ :e | 
 			(TypTypeVariableType named: e arguments first)
-				-> e arguments second typAsType ]) asOrderedDictionary.
+				-> e arguments second typAsType ]) typAsTypeVariableBindings.
 	^ TypClassLookupResult new
 		type:
-				[ :a | a classDescription typAsParametricType: bindings ];
+				[ :a | a classDescription typAsParametricType: parameters bindings: bindings ];
 		yourself
 ]
 

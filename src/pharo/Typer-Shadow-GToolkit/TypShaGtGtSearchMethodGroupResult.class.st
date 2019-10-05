@@ -19,5 +19,9 @@ TypShaGtGtSearchMethodGroupResult class >> shadowedClass [
 
 { #category : #converting }
 TypShaGtGtSearchMethodGroupResult >> asType: aClass [
-	^ aClass typAsParametricType: {('@A' -> CompiledMethod typAsType)} asOrderedDictionary
+	^ aClass
+		typAsParametricType: {'@A' typAsType}
+		bindings:
+			{('@A' typAsType -> CompiledMethod typAsType)}
+				typAsTypeVariableBindings
 ]

@@ -14,7 +14,7 @@ TypShaPhaRBSequenceNode >> ___statements [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
-				copyWithBindings: {('@A' -> RBProgramNode typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> RBProgramNode typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]
 
@@ -24,6 +24,6 @@ TypShaPhaRBSequenceNode >> ___temporaries [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> RBTemporaryNode typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> RBTemporaryNode typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]

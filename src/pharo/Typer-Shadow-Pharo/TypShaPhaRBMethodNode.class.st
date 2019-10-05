@@ -23,7 +23,7 @@ TypShaPhaRBMethodNode >> ___allChildren [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> RBProgramNode typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> RBProgramNode typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]
 
@@ -32,7 +32,7 @@ TypShaPhaRBMethodNode >> ___arguments [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
-				copyWithBindings: {('@A' -> RBArgumentNode typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> RBArgumentNode typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]
 
@@ -90,7 +90,7 @@ TypShaPhaRBMethodNode >> ___pragmas [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> RBPragmaNode typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> RBPragmaNode typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]
 

@@ -13,7 +13,7 @@ TypShaPhaAssociation class >> shadowedClass [
 TypShaPhaAssociation >> ___key [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a | a receiverType bindingAt: '@A' ];
+		resultType: [ :a | a receiverType bindings at: '@A' typAsType ];
 		yourself
 ]
 
@@ -21,13 +21,17 @@ TypShaPhaAssociation >> ___key [
 TypShaPhaAssociation >> ___value [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a | a receiverType bindingAt: '@B' ];
+		resultType: [ :a | a receiverType bindings at: '@B' typAsType ];
 		yourself
 ]
 
 { #category : #'as yet unclassified' }
 TypShaPhaAssociation >> asType: aClass [
-	^ aClass typAsParametricType:
-			{('@A' -> (TypTypeVariableType named: '@A')).
-			('@B' -> (TypTypeVariableType named: '@B'))} asOrderedDictionary
+	^ aClass
+		typAsParametricType:
+			{'@A' typAsType.
+			'@B' typAsType}
+		bindings:
+			{('@A' typAsType -> '@A' typAsType).
+			('@B' typAsType -> '@B' typAsType)} typAsTypeVariableBindings
 ]

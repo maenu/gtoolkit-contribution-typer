@@ -13,7 +13,7 @@ TypShaGtGtMethodsCoder class >> ___forMethods: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			Collection typAsType
-				copyWithBindings: {('@A' -> CompiledMethod typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> CompiledMethod typAsType)} typAsTypeVariableBindings ];
 		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
 		yourself
 ]
@@ -37,11 +37,11 @@ TypShaGtGtMethodsCoder >> initialize [
 	___methods := TypVariableLookupResult new
 		type: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> CompiledMethod typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> CompiledMethod typAsType)} typAsTypeVariableBindings ];
 		yourself.
 	___methodCoders := TypVariableLookupResult new
 		type: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> GtMethodCoder typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> GtMethodCoder typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]

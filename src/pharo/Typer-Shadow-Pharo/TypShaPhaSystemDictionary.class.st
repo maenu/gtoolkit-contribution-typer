@@ -17,5 +17,5 @@ TypShaPhaSystemDictionary >> asType: aClass [
 			('@A'
 				->
 					{Class typAsType.
-					TypUnknownType instance} typAsType)} asOrderedDictionary
+					TypUnknownType instance} typAsType)} typAsTypeVariableBindings
 ]

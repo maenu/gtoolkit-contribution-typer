@@ -51,7 +51,7 @@ TypShaGtGtMethodCoderAddOns >> ___stylers [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> GtCoderBodyStyler typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> GtCoderBodyStyler typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]
 
@@ -61,11 +61,11 @@ TypShaGtGtMethodCoderAddOns >> initialize [
 	___stylers := TypVariableLookupResult new
 		type: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> GtCoderBodyStyler typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> GtCoderBodyStyler typAsType)} typAsTypeVariableBindings ];
 		yourself.
 	___modified := TypVariableLookupResult new
 		type: [ :a :s :r | 
 			Set typAsType
-				copyWithBindings: {('@A' -> Symbol typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> Symbol typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]

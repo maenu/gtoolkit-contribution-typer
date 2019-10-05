@@ -99,7 +99,7 @@ TypShaGtGtMethodCoder >> initialize [
 		type: [ :a :s :r | 
 			Association typAsType
 				copyWithBindings:
-					{('@A' -> String typAsType).
-					('@B' -> RBMethodNode typAsType)} asOrderedDictionary ];
+					{('@A' typAsType -> String typAsType).
+					('@B' typAsType -> RBMethodNode typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]

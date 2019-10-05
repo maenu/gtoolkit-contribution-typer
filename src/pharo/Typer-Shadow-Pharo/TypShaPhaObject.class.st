@@ -122,7 +122,7 @@ TypShaPhaObject >> ___printOn: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			Stream typAsType
-				copyWithBindings: {('@A' -> Character typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> Character typAsType)} typAsTypeVariableBindings ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
@@ -150,8 +150,8 @@ TypShaPhaObject >> ~~~-> _a [
 		resultType: [ :a :s :r | 
 			Association typAsType
 				copyWithBindings:
-					{('@A' -> a receiverType).
-					('@B' -> (a argumentTypes at: 1))} asOrderedDictionary ];
+					{('@A' typAsType -> a receiverType).
+					('@B' typAsType -> (a argumentTypes at: 1))} typAsTypeVariableBindings ];
 		yourself
 ]
 

@@ -16,8 +16,8 @@ TypShaPhaOCLiteralVariable >> ___assoc [
 		resultType: [ :a :s :r | 
 			Association typAsType
 				copyWithBindings:
-					{('@A' -> String typAsType).
-					('@B' -> TypUnknownType instance)} asOrderedDictionary ];
+					{('@A' typAsType -> String typAsType).
+					('@B' typAsType -> TypUnknownType instance)} typAsTypeVariableBindings ];
 		yourself
 ]
 

@@ -6,7 +6,7 @@ Class {
 
 { #category : #'generated-accessing' }
 TypTypeParser class >> cacheId [
-	^'2019-10-05T14:41:57.701034+02:00'
+	^'2019-10-05T19:41:38.649518+02:00'
 ]
 
 { #category : #generated }
@@ -67,12 +67,12 @@ NamedType
 		{ TypNamedType named: name }
 	;
 ParametricType
-	: Name 'name' ""<"" Types 'bindings' "">"" 
+	: Name 'name' ""<"" Types 'parameters' "">"" 
 		{ | type |
 		type := name typAsType.
-		type copyWithBindings: (bindings withIndexCollect: [ :e :i | | parameter |
+		type copyWithBindings: (parameters withIndexCollect: [ :e :i | | parameter |
 			parameter := type parameters at: i.
-			parameter -> e ]) asOrderedDictionary }
+			parameter -> e ]) typAsTypeVariableBindings }
 	;
 FunctionType
 	: ""["" EmptyTypes 'arguments' ""]"" ""->"" Type 'result'
@@ -106,9 +106,9 @@ TypTypeParser class >> parse: aString [
 TypTypeParser class >> reduceTable [
 ^#(
 	#(19 1 #reduceActionForNilType1: 634881 false ) 
-	#(25 0 #reduceActionForEmptyTypes2: 1457154 false ) 
+	#(25 0 #reduceActionForEmptyTypes2: 1467394 false ) 
 	#(18 1 #reduceActionForUnknownType1: 581633 false ) 
-	#(26 1 #reduceActionForName1: 1511425 false ) 
+	#(26 1 #reduceActionForName1: 1521665 false ) 
 	#(16 1 #reduceActionForTypes1: 241665 false ) 
 	#(17 1 #liftFirstValue: 334849 false ) 
 	#(17 1 #liftFirstValue: 334850 false ) 
@@ -118,13 +118,13 @@ TypTypeParser class >> reduceTable [
 	#(17 1 #liftFirstValue: 334853 false ) 
 	#(17 1 #liftFirstValue: 334852 false ) 
 	#(21 1 #reduceActionForNamedType1: 764929 false ) 
-	#(25 1 #liftFirstValue: 1457153 false ) 
+	#(25 1 #liftFirstValue: 1467393 false ) 
 	#(20 2 #reduceActionForTypeVariableType1: 679937 false ) 
-	#(24 3 #reduceActionForUnionType1: 1383425 false ) 
+	#(24 3 #reduceActionForUnionType1: 1393665 false ) 
 	#(16 3 #reduceActionForTypes2: 241666 false ) 
 	#(22 4 #reduceActionForParametricType1: 826369 false ) 
-	#(23 5 #reduceActionForFunctionType2: 1089538 false ) 
-	#(23 5 #reduceActionForFunctionType1: 1089537 false )
+	#(23 5 #reduceActionForFunctionType2: 1099778 false ) 
+	#(23 5 #reduceActionForFunctionType1: 1099777 false )
 	).
 ]
 
@@ -230,7 +230,7 @@ TypTypeParser >> reduceActionForParametricType1: nodes [
 				withIndexCollect: [ :e :i | 
 					| parameter |
 					parameter := type parameters at: i.
-					parameter -> e ]) asOrderedDictionary
+					parameter -> e ]) typAsTypeVariableBindings
 ]
 
 { #category : #'generated-reduction actions' }

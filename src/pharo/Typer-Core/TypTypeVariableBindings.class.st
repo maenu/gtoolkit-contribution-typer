@@ -7,45 +7,6 @@ Class {
 	#category : #'Typer-Core-Type'
 }
 
-{ #category : #'instance creation' }
-TypTypeVariableBindings class >> classDescription: aClassDescription [
-	self shouldNotImplement
-]
-
-{ #category : #'as yet unclassified' }
-TypTypeVariableBindings class >> classDescription: aClassDescription bindings: anOrderedDictionary [
-	^ self new
-		initializeWithClassDescription: aClassDescription
-			bindings: anOrderedDictionary;
-		yourself
-]
-
-{ #category : #'as yet unclassified' }
-TypTypeVariableBindings class >> classDescription: aClassDescription bindings: anOrderedDictionary someSuperTypeBindings: anotherOrderedDictionary [
-	^ self new
-		initializeWithClassDescription: aClassDescription
-			bindings: anOrderedDictionary
-			someSuperTypeBindings: anotherOrderedDictionary;
-		yourself
-]
-
-{ #category : #'as yet unclassified' }
-TypTypeVariableBindings class >> classDescription: aClassDescription superTypeBindings: anOrderedDictionary [
-	self shouldNotImplement
-]
-
-{ #category : #'instance creation' }
-TypTypeVariableBindings class >> named: aString [
-	self shouldNotImplement
-]
-
-{ #category : #'as yet unclassified' }
-TypTypeVariableBindings class >> named: aString bindings: anOrderedDictionary [
-	^ self new
-		initializeWithName: aString bindings: anOrderedDictionary;
-		yourself
-]
-
 { #category : #comparing }
 TypTypeVariableBindings >> < anObject [
 	^ anObject > self
@@ -118,6 +79,21 @@ TypTypeVariableBindings >> hash [
 TypTypeVariableBindings >> initialize [
 	super initialize.
 	bindings := Dictionary new
+]
+
+{ #category : #testing }
+TypTypeVariableBindings >> isEmpty [
+	^ bindings isEmpty
+]
+
+{ #category : #testing }
+TypTypeVariableBindings >> isNotEmpty [
+	^ bindings isNotEmpty
+]
+
+{ #category : #enumerating }
+TypTypeVariableBindings >> keysAndValuesDo: aBlock [
+	^ bindings keysAndValuesDo: aBlock
 ]
 
 { #category : #copying }

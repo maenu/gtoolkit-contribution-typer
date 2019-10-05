@@ -9,6 +9,6 @@ RBArrayNode >> typTypeRecursive [
 				copyWithBindings:
 					{((type parameters at: 1)
 						-> (self statements collect: #typType) typAsType)}
-						asOrderedDictionary ].
+						typAsTypeVariableBindings ].
 	^ type
 ]

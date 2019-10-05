@@ -19,14 +19,14 @@ TypShaPhaNumber >> ___timesCollect: _a [
 		resultType: [ :a | 
 			OrderedCollection typAsType
 				copyWithBindings:
-					{('@A'
+					{('@A' typAsType
 						->
 							(a argumentTypes
 								collect: [ :e | 
 									e isFunction
 										ifTrue: [ e result ]
 										ifFalse: [ TypUnknownType instance ] ]) typAsType)}
-						asOrderedDictionary ];
+						typAsTypeVariableBindings ];
 		yourself
 ]
 
@@ -37,10 +37,10 @@ TypShaPhaNumber >> ___to: _a [
 		resultType: [ :a :s :r | 
 			Interval typAsType
 				copyWithBindings:
-					{('@A'
+					{('@A' typAsType
 						->
 							{a receiverType.
-							(a argumentTypes at: 1)} typAsType)} asOrderedDictionary ];
+							(a argumentTypes at: 1)} typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]
 

@@ -12,7 +12,7 @@ TypShaPhaOrderedCollection class >> shadowedClass [
 { #category : #accessing }
 TypShaPhaOrderedCollection >> ___addFirst: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | a receiverType bindingAt: '@A' ];
+		argumentTypes: [ :i :a :s :r | a receiverType bindings at: '@A' typAsType ];
 		resultType: [ :a :s :r | a argumentTypes at: 1 ];
 		yourself
 ]
@@ -23,8 +23,8 @@ TypShaPhaOrderedCollection >> ___at: _a put: _b [
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ Integer typAsType ]
-				ifFalse: [ a receiverType bindingAt: '@A' ] ];
-		resultType: [ :a :s :r | a receiverType bindingAt: '@A' ];
+				ifFalse: [ a receiverType bindings at: '@A' typAsType ] ];
+		resultType: [ :a :s :r | a receiverType bindings at: '@A' typAsType ];
 		yourself
 ]
 
@@ -32,11 +32,13 @@ TypShaPhaOrderedCollection >> ___at: _a put: _b [
 TypShaPhaOrderedCollection >> ___removeLast [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | a receiverType bindingAt: '@A' ];
+		resultType: [ :a :s :r | a receiverType bindings at: '@A' typAsType ];
 		yourself
 ]
 
 { #category : #converting }
 TypShaPhaOrderedCollection >> asType: aClass [
-	^ aClass typAsParametricType: {('@A' -> (TypTypeVariableType named: '@A'))} asOrderedDictionary
+	^ aClass
+		typAsParametricType: {'@A' typAsType}
+		bindings: {('@A' typAsType -> '@A' typAsType)} typAsTypeVariableBindings
 ]

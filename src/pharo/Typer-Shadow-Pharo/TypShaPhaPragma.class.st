@@ -16,12 +16,12 @@ TypShaPhaPragma >> ___arguments [
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
 				copyWithBindings:
-					{('@A'
+					{('@A' typAsType
 						->
 							{String typAsType.
 							Symbol typAsType.
 							Number typAsType.
-							Boolean typAsType} typAsType)} asOrderedDictionary ];
+							Boolean typAsType} typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]
 

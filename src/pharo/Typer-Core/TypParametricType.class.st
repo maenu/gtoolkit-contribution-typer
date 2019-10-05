@@ -14,19 +14,21 @@ TypParametricType class >> classDescription: aClassDescription [
 ]
 
 { #category : #'as yet unclassified' }
-TypParametricType class >> classDescription: aClassDescription bindings: anOrderedDictionary [
+TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection bindings: aBindings [
 	^ self new
 		initializeWithClassDescription: aClassDescription
-			bindings: anOrderedDictionary;
+			parameters: aSequenceableCollection
+			bindings: aBindings;
 		yourself
 ]
 
 { #category : #'as yet unclassified' }
-TypParametricType class >> classDescription: aClassDescription bindings: anOrderedDictionary someSuperTypeBindings: anotherOrderedDictionary [
+TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection bindings: aBindings someSuperTypeBindings: anotherBindings [
 	^ self new
 		initializeWithClassDescription: aClassDescription
-			bindings: anOrderedDictionary
-			someSuperTypeBindings: anotherOrderedDictionary;
+			parameters: aSequenceableCollection
+			bindings: aBindings
+			someSuperTypeBindings: anotherBindings;
 		yourself
 ]
 
@@ -41,9 +43,11 @@ TypParametricType class >> named: aString [
 ]
 
 { #category : #'as yet unclassified' }
-TypParametricType class >> named: aString bindings: anOrderedDictionary [
+TypParametricType class >> named: aString parameters: aSequenceableCollection bindings: aBindings [
 	^ self new
-		initializeWithName: aString bindings: anOrderedDictionary;
+		initializeWithName: aString
+			parameters: aSequenceableCollection
+			bindings: aBindings;
 		yourself
 ]
 
@@ -88,19 +92,22 @@ TypParametricType >> copyWithBindings: aBindings [
 	^ self hasClassDescription
 		ifTrue: [ self copy
 				initializeWithClassDescription: self classDescription
+					parameters: parameters
 					bindings: aBindings;
 				yourself ]
 		ifFalse: [ self copy
-				initializeWithName: name bindings: aBindings;
+				initializeWithName: name
+					parameters: parameters
+					bindings: aBindings;
 				yourself ]
 ]
 
 { #category : #copying }
-TypParametricType >> copyWithSomeBindings: aDictionary [
+TypParametricType >> copyWithSomeBindings: aBindings [
 	| bindings_ |
-	self assert: [ bindings keys includesAll: aDictionary keys ].
+	self assert: [ bindings variables includesAll: aBindings variables ].
 	bindings_ := bindings copy.
-	aDictionary keysAndValuesDo: [ :n :t | bindings_ at: n put: t ].
+	aBindings keysAndValuesDo: [ :k :v | bindings_ at: k put: v ].
 	^ self copyWithBindings: bindings_
 ]
 
@@ -110,36 +117,41 @@ TypParametricType >> hash [
 ]
 
 { #category : #accessing }
-TypParametricType >> initializeWithClassDescription: aClassDescription bindings: anOrderedDictionary [
+TypParametricType >> initializeWithClassDescription: aClassDescription parameters: aSequenceableCollection bindings: aBindings [
 	self
-		assert:
-			[ aClassDescription isNotNil and: [ anOrderedDictionary isNotEmpty ] ].
+		assert: [ aClassDescription isNotNil
+				and: [ aSequenceableCollection isNotEmpty
+						and: [ parameters asSet = aBindings variables ] ] ].
 	self initializeWithClassDescription: aClassDescription.
-	bindings := anOrderedDictionary
+	parameters := aSequenceableCollection.
+	bindings := aBindings
 ]
 
 { #category : #initialization }
-TypParametricType >> initializeWithClassDescription: aClassDescription bindings: aBindings someSuperTypeBindings: anotherBindings [
+TypParametricType >> initializeWithClassDescription: aClassDescription parameters: aSequenceableCollection bindings: aBindings someSuperTypeBindings: anotherBindings [
 	self
 		assert: [ (anotherBindings variables intersect: aBindings variables)
-				allSatisfy: [ :e | e = (aBindings at: e) ] ].
+				allSatisfy: [ :e | (aBindings at: e) isTypeVariable ] ].
 	self
 		initializeWithClassDescription: aClassDescription
+		parameters: aSequenceableCollection
 		bindings: aBindings.
 	superType := self superType copyWithSomeBindings: anotherBindings
 ]
 
 { #category : #initialization }
-TypParametricType >> initializeWithClassDescription: aClassDescription superTypeBindings: anOrderedDictionary [
+TypParametricType >> initializeWithClassDescription: aClassDescription superTypeBindings: aBindings [
 	self shouldNotImplement
 ]
 
 { #category : #accessing }
-TypParametricType >> initializeWithName: aString bindings: anOrderedDictionary [
+TypParametricType >> initializeWithName: aString parameters: aSequenceableCollection bindings: aBindings [
 	self
-		assert: [ aString isNotEmpty and: [ anOrderedDictionary isNotEmpty ] ].
+		assert: [ aSequenceableCollection isNotEmpty
+				and: [ parameters asSet = aBindings variables ] ].
 	self initializeWithName: aString.
-	bindings := anOrderedDictionary
+	parameters := aSequenceableCollection.
+	bindings := aBindings
 ]
 
 { #category : #testing }

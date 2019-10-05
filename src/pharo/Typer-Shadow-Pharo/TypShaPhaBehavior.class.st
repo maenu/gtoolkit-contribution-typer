@@ -15,7 +15,7 @@ TypShaPhaBehavior >> ___allSubclasses [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> Behavior typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> Behavior typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]
 
@@ -25,7 +25,7 @@ TypShaPhaBehavior >> ___classVarNames [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Set typAsType
-				copyWithBindings: {('@A' -> String typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> String typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]
 
@@ -75,7 +75,7 @@ TypShaPhaBehavior >> ___instVarNames [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> String typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> String typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]
 
@@ -108,7 +108,7 @@ TypShaPhaBehavior >> ___methods [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Collection typAsType
-				copyWithBindings: {('@A' -> CompiledMethod typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> CompiledMethod typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]
 
@@ -134,7 +134,7 @@ TypShaPhaBehavior >> ___selectors [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Collection typAsType
-				copyWithBindings: {('@A' -> Symbol typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> Symbol typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]
 
@@ -168,7 +168,7 @@ TypShaPhaBehavior >> ___withAllSuperclasses [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> ClassDescription typAsType)} asOrderedDictionary ];
+				copyWithBindings: {('@A' typAsType -> ClassDescription typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]
 
