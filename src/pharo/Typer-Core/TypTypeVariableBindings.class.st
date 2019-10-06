@@ -36,20 +36,26 @@ TypTypeVariableBindings >> = anObject [
 
 { #category : #comparing }
 TypTypeVariableBindings >> > anObject [
-	^ self variables = anObject variables
-		and: [ self variables
-				allSatisfy: [ :e | 
-					| a b |
-					a := self at: e.
-					b := anObject at: e.
-					a isTypeVariable
-						ifTrue: [ true ]
-						ifFalse: [ a = b ] ] ]
+	^ self ~= anObject
+		and: [ self variables = anObject variables
+				and: [ self variables
+						allSatisfy: [ :e | 
+							| a b |
+							a := self at: e.
+							b := anObject at: e.
+							a isTypeVariable
+								ifTrue: [ true ]
+								ifFalse: [ a = b ] ] ] ]
 ]
 
 { #category : #comparing }
 TypTypeVariableBindings >> >= anObject [
 	^ self = anObject or: [ self > anObject ]
+]
+
+{ #category : #enumerating }
+TypTypeVariableBindings >> addAll: aBindings [
+	aBindings variables do: [ :e | self at: e put: (aBindings at: e) ]
 ]
 
 { #category : #converting }
@@ -66,14 +72,21 @@ TypTypeVariableBindings >> asCompatibleWith: aBindings [
 
 { #category : #accessing }
 TypTypeVariableBindings >> at: aTypeVariable [
-	^ bindings at: aTypeVariable
+	| current discovered |
+	current := aTypeVariable.
+	discovered := OrderedCollection new.
+	[ current isTypeVariable and: [ (discovered includes: current) not ] ]
+		whileTrue: [ discovered add: current.
+			current := bindings at: current ].
+	^ current
 ]
 
 { #category : #accessing }
 TypTypeVariableBindings >> at: aTypeVariable put: aType [
 	self
 		assert: [ aTypeVariable isTypeVariable
-				and: [ (aType isTypeVariable and: [ aTypeVariable = aType ])
+				and: [ (aType isTypeVariable
+						and: [ aTypeVariable = aType or: [ self variables includes: aType ] ])
 						or: [ aType isTypeVariable not and: [ aType isType ] ] ] ].
 	^ bindings at: aTypeVariable put: aType
 ]
@@ -99,11 +112,6 @@ TypTypeVariableBindings >> isNotEmpty [
 	^ bindings isNotEmpty
 ]
 
-{ #category : #enumerating }
-TypTypeVariableBindings >> keysAndValuesDo: aBlock [
-	^ bindings keysAndValuesDo: aBlock
-]
-
 { #category : #copying }
 TypTypeVariableBindings >> postCopy [
 	super postCopy.
@@ -116,6 +124,6 @@ TypTypeVariableBindings >> size [
 ]
 
 { #category : #accessing }
-TypTypeVariableBindings >> variables [ 
-	^ bindings keys
+TypTypeVariableBindings >> variables [
+	^ bindings keys asSet
 ]

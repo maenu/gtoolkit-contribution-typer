@@ -126,7 +126,7 @@ TypParametricType >> copyWithSomeBindings: aBindings [
 	| bindings_ |
 	self assert: [ bindings variables includesAll: aBindings variables ].
 	bindings_ := bindings copy.
-	aBindings keysAndValuesDo: [ :k :v | bindings_ at: k put: v ].
+	bindings_ addAll: aBindings.
 	^ self copyWithBindings: bindings_
 ]
 
@@ -140,7 +140,7 @@ TypParametricType >> initializeWithClassDescription: aClassDescription parameter
 	self
 		assert: [ aClassDescription isNotNil
 				and: [ aSequenceableCollection isNotEmpty
-						and: [ aSequenceableCollection asSet = aBindings variables asSet ] ] ].
+						and: [ aSequenceableCollection asSet = aBindings variables ] ] ].
 	self initializeWithClassDescription: aClassDescription.
 	parameters := aSequenceableCollection asOrderedCollection.
 	bindings := aBindings
@@ -167,7 +167,7 @@ TypParametricType >> initializeWithClassDescription: aClassDescription superType
 TypParametricType >> initializeWithName: aString parameters: aSequenceableCollection bindings: aBindings [
 	self
 		assert: [ aSequenceableCollection isNotEmpty
-				and: [ aSequenceableCollection asSet = aBindings variables asSet ] ].
+				and: [ aSequenceableCollection asSet = aBindings variables ] ].
 	self initializeWithName: aString.
 	parameters := aSequenceableCollection asOrderedCollection.
 	bindings := aBindings
