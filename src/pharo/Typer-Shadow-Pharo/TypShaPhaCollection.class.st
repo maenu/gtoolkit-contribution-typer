@@ -519,9 +519,7 @@ TypShaPhaCollection >> ___size [
 
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> asType: aClass [
-	^ aClass
-		typAsParametricType: {'@A' typAsType}
-		bindings: {('@A' typAsType -> '@A' typAsType)} typAsTypeVariableBindings
+	^ aClass typAsParametricType: {'@A' typAsType}
 ]
 
 { #category : #accessing }

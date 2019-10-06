@@ -38,7 +38,5 @@ TypShaPhaOrderedCollection >> ___removeLast [
 
 { #category : #converting }
 TypShaPhaOrderedCollection >> asType: aClass [
-	^ aClass
-		typAsParametricType: {'@A' typAsType}
-		bindings: {('@A' typAsType -> '@A' typAsType)} typAsTypeVariableBindings
+	^ aClass typAsParametricType: {'@A' typAsType}
 ]

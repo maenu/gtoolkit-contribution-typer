@@ -7,6 +7,14 @@ Class {
 	#category : #'Typer-Core-Type'
 }
 
+{ #category : #generated }
+TypTypeVariableBindings class >> parameters: aSet [
+	| instance |
+	instance := self new.
+	aSet do: [ :e | instance at: e put: e ].
+	^ instance
+]
+
 { #category : #comparing }
 TypTypeVariableBindings >> < anObject [
 	^ anObject > self

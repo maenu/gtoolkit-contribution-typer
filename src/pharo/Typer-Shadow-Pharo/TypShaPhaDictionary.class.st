@@ -178,9 +178,6 @@ TypShaPhaDictionary >> asType: aClass [
 		typAsParametricType:
 			{'@B' typAsType.
 			'@A' typAsType}
-		bindings:
-			{('@B' typAsType -> '@B' typAsType).
-			('@A' typAsType -> '@A' typAsType)} typAsTypeVariableBindings
 ]
 
 { #category : #accessing }

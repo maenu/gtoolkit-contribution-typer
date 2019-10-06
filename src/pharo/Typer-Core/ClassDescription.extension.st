@@ -14,6 +14,13 @@ ClassDescription >> typAsNamedTypeWithSuperTypeBindings: anOrderedDictionary [
 ]
 
 { #category : #'*Typer-Core' }
+ClassDescription >> typAsParametricType: aSequenceableCollection [
+	^ TypParametricType
+		classDescription: self
+		parameters: aSequenceableCollection
+]
+
+{ #category : #'*Typer-Core' }
 ClassDescription >> typAsParametricType: aSequenceableCollection bindings: aBindings [
 	^ TypParametricType
 		classDescription: self

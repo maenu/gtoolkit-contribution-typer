@@ -31,7 +31,4 @@ TypShaPhaAssociation >> asType: aClass [
 		typAsParametricType:
 			{'@A' typAsType.
 			'@B' typAsType}
-		bindings:
-			{('@A' typAsType -> '@A' typAsType).
-			('@B' typAsType -> '@B' typAsType)} typAsTypeVariableBindings
 ]

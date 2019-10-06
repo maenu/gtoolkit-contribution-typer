@@ -14,6 +14,14 @@ TypParametricType class >> classDescription: aClassDescription [
 ]
 
 { #category : #'as yet unclassified' }
+TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection [
+	^ self
+		classDescription: aClassDescription
+		parameters: aSequenceableCollection
+		bindings: (TypTypeVariableBindings parameters: aSequenceableCollection asSet)
+]
+
+{ #category : #'as yet unclassified' }
 TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection bindings: aBindings [
 	^ self new
 		initializeWithClassDescription: aClassDescription
@@ -33,6 +41,15 @@ TypParametricType class >> classDescription: aClassDescription parameters: aSequ
 ]
 
 { #category : #'as yet unclassified' }
+TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection someSuperTypeBindings: anotherBindings [
+	^ self
+		classDescription: aClassDescription
+		parameters: aSequenceableCollection
+		bindings: (TypTypeVariableBindings parameters: aSequenceableCollection asSet)
+		someSuperTypeBindings: anotherBindings
+]
+
+{ #category : #'as yet unclassified' }
 TypParametricType class >> classDescription: aClassDescription superTypeBindings: anOrderedDictionary [
 	self shouldNotImplement
 ]
@@ -40,6 +57,14 @@ TypParametricType class >> classDescription: aClassDescription superTypeBindings
 { #category : #'instance creation' }
 TypParametricType class >> named: aString [
 	self shouldNotImplement
+]
+
+{ #category : #'as yet unclassified' }
+TypParametricType class >> named: aString parameters: aSequenceableCollection [
+	^ self
+		named: aString
+		parameters: aSequenceableCollection
+		bindings: (TypTypeVariableBindings parameters: aSequenceableCollection asSet)
 ]
 
 { #category : #'as yet unclassified' }
