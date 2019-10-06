@@ -96,5 +96,5 @@ TypShaPhaString >> ___translated [
 { #category : #converting }
 TypShaPhaString >> asType: aClass [
 	^ aClass
-		typAsNamedTypeWithSuperTypeBindings: {('@A' -> Character typAsType)} typAsTypeVariableBindings
+		typAsNamedTypeWithSuperTypeBindings: {('@A'typAsType -> Character typAsType)} typAsTypeVariableBindings
 ]
