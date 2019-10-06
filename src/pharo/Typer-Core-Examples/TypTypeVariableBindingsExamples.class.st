@@ -14,140 +14,8 @@ TypTypeVariableBindingsExamples >> assert: aBlock signals: aClass [
 	self assert: signaled
 ]
 
-{ #category : #accessing }
-TypTypeVariableBindingsExamples >> comparisonEmpty [
-	<gtExample>
-	| empty variable variableBackwardReference nonVariableBackwardReference |
-	empty := self empty.
-	variable := self variable.
-	variableBackwardReference := self variableBackwardReference.
-	nonVariableBackwardReference := self nonVariableBackwardReference.
-	self assert: [ (empty > empty) not ].
-	self assert: [ (empty > variable) not ].
-	self assert: [ (empty > variableBackwardReference) not ].
-	self assert: [ (empty > nonVariableBackwardReference) not ].
-	self assert: [ empty >= empty ].
-	self assert: [ (empty >= variable) not ].
-	self assert: [ (empty >= variableBackwardReference) not ].
-	self assert: [ (empty >= nonVariableBackwardReference) not ].
-	self assert: [ empty <= empty ].
-	self assert: [ (empty <= variable) not ].
-	self assert: [ (empty <= variableBackwardReference) not ].
-	self assert: [ (empty <= nonVariableBackwardReference) not ].
-	self assert: [ (empty < empty) not ].
-	self assert: [ (empty < variable) not ].
-	self assert: [ (empty < variableBackwardReference) not ].
-	self assert: [ (empty < nonVariableBackwardReference) not ].
-	^ empty
-]
-
-{ #category : #accessing }
-TypTypeVariableBindingsExamples >> comparisonNonVariableBackwardReference [
-	<gtExample>
-	| empty variable variableBackwardReference nonVariableBackwardReference |
-	empty := self empty.
-	variable := self variable.
-	variableBackwardReference := self variableBackwardReference.
-	nonVariableBackwardReference := self nonVariableBackwardReference.
-	self assert: [ (nonVariableBackwardReference > empty) not ].
-	self assert: [ (nonVariableBackwardReference > variable) not ].
-	self assert: [ (nonVariableBackwardReference > variableBackwardReference) not ].
-	self assert: [ (nonVariableBackwardReference > nonVariableBackwardReference) not ].
-	self assert: [ (nonVariableBackwardReference >= empty) not ].
-	self assert: [ (nonVariableBackwardReference >= variable) not ].
-	self assert: [ (nonVariableBackwardReference >= variableBackwardReference) not ].
-	self assert: [ nonVariableBackwardReference >= nonVariableBackwardReference ].
-	self assert: [ (nonVariableBackwardReference <= empty) not ].
-	self assert: [ (nonVariableBackwardReference <= variable) not ].
-	self assert: [ nonVariableBackwardReference <= variableBackwardReference ].
-	self assert: [ nonVariableBackwardReference <= nonVariableBackwardReference ].
-	self assert: [ (nonVariableBackwardReference < empty) not ].
-	self assert: [ (nonVariableBackwardReference < variable) not ].
-	self assert: [ nonVariableBackwardReference < variableBackwardReference ].
-	self assert: [ (nonVariableBackwardReference < nonVariableBackwardReference) not ].
-	^ nonVariableBackwardReference
-]
-
-{ #category : #accessing }
-TypTypeVariableBindingsExamples >> comparisonVariable [
-	<gtExample>
-	| empty variable variableBackwardReference nonVariableBackwardReference |
-	empty := self empty.
-	variable := self variable.
-	variableBackwardReference := self variableBackwardReference.
-	nonVariableBackwardReference := self nonVariableBackwardReference.
-	self assert: [ (variable > empty) not ].
-	self assert: [ (variable > variable) not ].
-	self assert: [ (variable > variableBackwardReference) not ].
-	self assert: [ (variable > nonVariableBackwardReference) not ].
-	self assert: [ (variable >= empty) not ].
-	self assert: [ variable >= variable ].
-	self assert: [ (variable >= variableBackwardReference) not ].
-	self assert: [ (variable >= nonVariableBackwardReference) not ].
-	self assert: [ (variable <= empty) not ].
-	self assert: [ variable <= variable ].
-	self assert: [ (variable <= variableBackwardReference) not ].
-	self assert: [ (variable <= nonVariableBackwardReference) not ].
-	self assert: [ (variable < empty) not ].
-	self assert: [ (variable < variable) not ].
-	self assert: [ (variable < variableBackwardReference) not ].
-	self assert: [ (variable < nonVariableBackwardReference) not ].
-	^ variable
-]
-
-{ #category : #accessing }
-TypTypeVariableBindingsExamples >> comparisonVariableBackwardReference [
-	<gtExample>
-	| empty variable variableBackwardReference nonVariableBackwardReference |
-	empty := self empty.
-	variable := self variable.
-	variableBackwardReference := self variableBackwardReference.
-	nonVariableBackwardReference := self nonVariableBackwardReference.
-	self assert: [ (variableBackwardReference > empty) not ].
-	self assert: [ (variableBackwardReference > variable) not ].
-	self assert: [ (variableBackwardReference > variableBackwardReference) not ].
-	self assert: [ variableBackwardReference > nonVariableBackwardReference ].
-	self assert: [ (variableBackwardReference >= empty) not ].
-	self assert: [ (variableBackwardReference >= variable) not ].
-	self assert: [ variableBackwardReference >= variableBackwardReference ].
-	self assert: [ variableBackwardReference >= nonVariableBackwardReference ].
-	self assert: [ (variableBackwardReference <= empty) not ].
-	self assert: [ (variableBackwardReference <= variable) not ].
-	self assert: [ variableBackwardReference <= variableBackwardReference ].
-	self assert: [ (variableBackwardReference <= nonVariableBackwardReference) not ].
-	self assert: [ (variableBackwardReference < empty) not ].
-	self assert: [ (variableBackwardReference < variable) not ].
-	self assert: [ (variableBackwardReference < variableBackwardReference) not ].
-	self assert: [ (variableBackwardReference < nonVariableBackwardReference) not ].
-	^ variableBackwardReference
-]
-
-{ #category : #requirements }
-TypTypeVariableBindingsExamples >> empty [
-	<gtExample>
-	| bindings |
-	bindings := TypTypeVariableBindings new.
-	self assert: [ bindings isEmpty ].
-	self assert: [ bindings isNotEmpty not ].
-	self assert: [ bindings size = 0 ].
-	^ bindings
-]
-
-{ #category : #accessing }
-TypTypeVariableBindingsExamples >> equality [
-	<gtExample>
-	self assert: [ self empty = self empty ].
-	self assert: [ self variable = self variable ].
-	self
-		assert: [ self variableBackwardReference = self variableBackwardReference ].
-	self
-		assert: [ self nonVariableBackwardReference
-				= self nonVariableBackwardReference ].
-	^ self empty
-]
-
 { #category : #'as yet unclassified' }
-TypTypeVariableBindingsExamples >> nonVariableBackwardReference [
+TypTypeVariableBindingsExamples >> bindNonVariableBackward [
 	<gtExample>
 	| bindings a b integer |
 	bindings := self empty.
@@ -169,23 +37,8 @@ TypTypeVariableBindingsExamples >> nonVariableBackwardReference [
 	^ bindings
 ]
 
-{ #category : #requirements }
-TypTypeVariableBindingsExamples >> typeA [
-	^ '@A' typAsType
-]
-
-{ #category : #requirements }
-TypTypeVariableBindingsExamples >> typeB [
-	^ '@B' typAsType
-]
-
-{ #category : #requirements }
-TypTypeVariableBindingsExamples >> typeInteger [
-	^ 'Integer' typAsType
-]
-
 { #category : #'as yet unclassified' }
-TypTypeVariableBindingsExamples >> variable [
+TypTypeVariableBindingsExamples >> bindVariable [
 	<gtExample>
 	| bindings a |
 	bindings := self empty.
@@ -200,7 +53,7 @@ TypTypeVariableBindingsExamples >> variable [
 ]
 
 { #category : #'as yet unclassified' }
-TypTypeVariableBindingsExamples >> variableBackwardReference [
+TypTypeVariableBindingsExamples >> bindVariableBackward [
 	<gtExample>
 	| bindings a b |
 	bindings := self empty.
@@ -222,7 +75,7 @@ TypTypeVariableBindingsExamples >> variableBackwardReference [
 ]
 
 { #category : #'as yet unclassified' }
-TypTypeVariableBindingsExamples >> variableForwardReference [
+TypTypeVariableBindingsExamples >> bindVariableForward [
 	<gtExample>
 	| bindings a b |
 	bindings := self empty.
@@ -233,4 +86,215 @@ TypTypeVariableBindingsExamples >> variableForwardReference [
 	self assert: [ bindings isNotEmpty not ].
 	self assert: [ bindings size = 0 ].
 	^ bindings
+]
+
+{ #category : #accessing }
+TypTypeVariableBindingsExamples >> comparisonEmpty [
+	<gtExample>
+	| empty bindVariable bindVariableBackward bindNonVariableBackward |
+	empty := self empty.
+	bindVariable := self bindVariable.
+	bindVariableBackward := self bindVariableBackward.
+	bindNonVariableBackward := self bindNonVariableBackward.
+	self assert: [ (empty > empty) not ].
+	self assert: [ (empty > bindVariable) not ].
+	self assert: [ (empty > bindVariableBackward) not ].
+	self assert: [ (empty > bindNonVariableBackward) not ].
+	self assert: [ empty >= empty ].
+	self assert: [ (empty >= bindVariable) not ].
+	self assert: [ (empty >= bindVariableBackward) not ].
+	self assert: [ (empty >= bindNonVariableBackward) not ].
+	self assert: [ empty = self empty ].
+	self assert: [ (empty = bindVariable) not ].
+	self assert: [ (empty = bindVariableBackward) not ].
+	self assert: [ (empty = bindNonVariableBackward) not ].
+	self assert: [ empty <= empty ].
+	self assert: [ (empty <= bindVariable) not ].
+	self assert: [ (empty <= bindVariableBackward) not ].
+	self assert: [ (empty <= bindNonVariableBackward) not ].
+	self assert: [ (empty < empty) not ].
+	self assert: [ (empty < bindVariable) not ].
+	self assert: [ (empty < bindVariableBackward) not ].
+	self assert: [ (empty < bindNonVariableBackward) not ].
+	^ empty
+]
+
+{ #category : #accessing }
+TypTypeVariableBindingsExamples >> comparisonNonVariableBackwardReference [
+	<gtExample>
+	| empty bindVariable bindVariableBackward bindNonVariableBackward |
+	empty := self empty.
+	bindVariable := self bindVariable.
+	bindVariableBackward := self bindVariableBackward.
+	bindNonVariableBackward := self bindNonVariableBackward.
+	self assert: [ (bindNonVariableBackward > empty) not ].
+	self assert: [ (bindNonVariableBackward > bindVariable) not ].
+	self assert: [ (bindNonVariableBackward > bindVariableBackward) not ].
+	self assert: [ (bindNonVariableBackward > bindNonVariableBackward) not ].
+	self assert: [ (bindNonVariableBackward >= empty) not ].
+	self assert: [ (bindNonVariableBackward >= bindVariable) not ].
+	self assert: [ (bindNonVariableBackward >= bindVariableBackward) not ].
+	self assert: [ bindNonVariableBackward >= bindNonVariableBackward ].
+	self assert: [ (bindNonVariableBackward = empty) not ].
+	self assert: [ (bindNonVariableBackward = bindVariable) not ].
+	self assert: [ (bindNonVariableBackward = bindVariableBackward) not ].
+	self assert: [ bindNonVariableBackward = self bindNonVariableBackward ].
+	self assert: [ (bindNonVariableBackward <= empty) not ].
+	self assert: [ (bindNonVariableBackward <= bindVariable) not ].
+	self assert: [ bindNonVariableBackward <= bindVariableBackward ].
+	self assert: [ bindNonVariableBackward <= bindNonVariableBackward ].
+	self assert: [ (bindNonVariableBackward < empty) not ].
+	self assert: [ (bindNonVariableBackward < bindVariable) not ].
+	self assert: [ bindNonVariableBackward < bindVariableBackward ].
+	self assert: [ (bindNonVariableBackward < bindNonVariableBackward) not ].
+	^ bindNonVariableBackward
+]
+
+{ #category : #accessing }
+TypTypeVariableBindingsExamples >> comparisonVariable [
+	<gtExample>
+	| empty bindVariable bindVariableBackward bindNonVariableBackward |
+	empty := self empty.
+	bindVariable := self bindVariable.
+	bindVariableBackward := self bindVariableBackward.
+	bindNonVariableBackward := self bindNonVariableBackward.
+	self assert: [ (bindVariable > empty) not ].
+	self assert: [ (bindVariable > bindVariable) not ].
+	self assert: [ (bindVariable > bindVariableBackward) not ].
+	self assert: [ (bindVariable > bindNonVariableBackward) not ].
+	self assert: [ (bindVariable >= empty) not ].
+	self assert: [ bindVariable >= bindVariable ].
+	self assert: [ (bindVariable >= bindVariableBackward) not ].
+	self assert: [ (bindVariable >= bindNonVariableBackward) not ].
+	self assert: [ (bindVariable = empty) not ].
+	self assert: [ bindVariable = self bindVariable ].
+	self assert: [ (bindVariable = bindVariableBackward) not ].
+	self assert: [ (bindVariable = bindNonVariableBackward) not ].
+	self assert: [ (bindVariable <= empty) not ].
+	self assert: [ bindVariable <= bindVariable ].
+	self assert: [ (bindVariable <= bindVariableBackward) not ].
+	self assert: [ (bindVariable <= bindNonVariableBackward) not ].
+	self assert: [ (bindVariable < empty) not ].
+	self assert: [ (bindVariable < bindVariable) not ].
+	self assert: [ (bindVariable < bindVariableBackward) not ].
+	self assert: [ (bindVariable < bindNonVariableBackward) not ].
+	^ bindVariable
+]
+
+{ #category : #accessing }
+TypTypeVariableBindingsExamples >> comparisonVariableBackwardReference [
+	<gtExample>
+	| empty bindVariable bindVariableBackward bindNonVariableBackward |
+	empty := self empty.
+	bindVariable := self bindVariable.
+	bindVariableBackward := self bindVariableBackward.
+	bindNonVariableBackward := self bindNonVariableBackward.
+	self assert: [ (bindVariableBackward > empty) not ].
+	self assert: [ (bindVariableBackward > bindVariable) not ].
+	self assert: [ (bindVariableBackward > bindVariableBackward) not ].
+	self assert: [ bindVariableBackward > bindNonVariableBackward ].
+	self assert: [ (bindVariableBackward >= empty) not ].
+	self assert: [ (bindVariableBackward >= bindVariable) not ].
+	self assert: [ bindVariableBackward >= bindVariableBackward ].
+	self assert: [ bindVariableBackward >= bindNonVariableBackward ].
+	self assert: [ (bindVariableBackward = empty) not ].
+	self assert: [ (bindVariableBackward = bindVariable) not ].
+	self assert: [ bindVariableBackward = self bindVariableBackward ].
+	self assert: [ (bindVariableBackward = bindNonVariableBackward) not ].
+	self assert: [ (bindVariableBackward <= empty) not ].
+	self assert: [ (bindVariableBackward <= bindVariable) not ].
+	self assert: [ bindVariableBackward <= bindVariableBackward ].
+	self assert: [ (bindVariableBackward <= bindNonVariableBackward) not ].
+	self assert: [ (bindVariableBackward < empty) not ].
+	self assert: [ (bindVariableBackward < bindVariable) not ].
+	self assert: [ (bindVariableBackward < bindVariableBackward) not ].
+	self assert: [ (bindVariableBackward < bindNonVariableBackward) not ].
+	^ bindVariableBackward
+]
+
+{ #category : #accessing }
+TypTypeVariableBindingsExamples >> copyBindNonVariableBackward [
+	<gtExample>
+	| bindNonVariableBackward copy c |
+	bindNonVariableBackward := self bindNonVariableBackward.
+	copy := bindNonVariableBackward copy.
+	c := self typeC.
+	self assert: [ bindNonVariableBackward = copy ].
+	self assert: [ bindNonVariableBackward ~~ copy ].
+	copy at: c put: c.
+	self assert: [ bindNonVariableBackward ~= copy ].
+	^ copy
+]
+
+{ #category : #accessing }
+TypTypeVariableBindingsExamples >> copyBindVariable [
+	<gtExample>
+	| bindVariable copy c |
+	bindVariable := self bindVariable.
+	copy := bindVariable copy.
+	c := self typeC.
+	self assert: [ bindVariable = copy ].
+	self assert: [ bindVariable ~~ copy ].
+	copy at: c put: c.
+	self assert: [ bindVariable ~= copy ].
+	^ copy
+]
+
+{ #category : #accessing }
+TypTypeVariableBindingsExamples >> copyBindVariableBackward [
+	<gtExample>
+	| bindVariableBackward copy c |
+	bindVariableBackward := self bindVariableBackward.
+	copy := bindVariableBackward copy.
+	c := self typeC.
+	self assert: [ bindVariableBackward = copy ].
+	self assert: [ bindVariableBackward ~~ copy ].
+	copy at: c put: c.
+	self assert: [ bindVariableBackward ~= copy ].
+	^ copy
+]
+
+{ #category : #accessing }
+TypTypeVariableBindingsExamples >> copyEmpty [
+	<gtExample>
+	| empty copy c |
+	empty := self empty.
+	copy := empty copy.
+	c := self typeC.
+	self assert: [ empty = copy ].
+	self assert: [ empty ~~ copy ].
+	copy at: c put: c.
+	self assert: [ empty ~= copy ].
+	^ copy
+]
+
+{ #category : #requirements }
+TypTypeVariableBindingsExamples >> empty [
+	<gtExample>
+	| bindings |
+	bindings := TypTypeVariableBindings new.
+	self assert: [ bindings isEmpty ].
+	self assert: [ bindings isNotEmpty not ].
+	self assert: [ bindings size = 0 ].
+	^ bindings
+]
+
+{ #category : #requirements }
+TypTypeVariableBindingsExamples >> typeA [
+	^ '@A' typAsType
+]
+
+{ #category : #requirements }
+TypTypeVariableBindingsExamples >> typeB [
+	^ '@B' typAsType
+]
+
+{ #category : #requirements }
+TypTypeVariableBindingsExamples >> typeC [
+	^ '@C' typAsType
+]
+
+{ #category : #requirements }
+TypTypeVariableBindingsExamples >> typeInteger [
+	^ 'Integer' typAsType
 ]
