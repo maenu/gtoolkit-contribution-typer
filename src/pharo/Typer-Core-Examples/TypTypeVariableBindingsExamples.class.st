@@ -4,6 +4,95 @@ Class {
 	#category : #'Typer-Core-Examples-Type'
 }
 
+{ #category : #accessing }
+TypTypeVariableBindingsExamples >> addAll [
+	<gtExample>
+	| empty |
+	empty := self empty.
+	empty addAll: self bindVariable.
+	self assert: [ empty = self bindVariable ].
+	empty addAll: self bindVariableBackward .
+	self assert: [ empty = self bindVariableBackward ].
+	empty addAll: self bindNonVariableBackward .
+	self assert: [ empty = self bindNonVariableBackward ].
+	^ empty
+]
+
+{ #category : #accessing }
+TypTypeVariableBindingsExamples >> asCompatibleWithBindNonVariableBackward [
+	<gtExample>
+	self
+		assert: [ self bindNonVariableBackward asCompatibleWith: self empty ]
+		signals: AssertionFailure.
+	self
+		assert: [ self bindNonVariableBackward asCompatibleWith: self bindVariable ]
+		signals: AssertionFailure.
+	self
+		assert: [ (self bindNonVariableBackward
+				asCompatibleWith: self bindVariableBackward)
+				= self bindVariableBackward ].
+	self
+		assert: [ (self bindNonVariableBackward
+				asCompatibleWith: self bindNonVariableBackward)
+				= self bindNonVariableBackward ].
+	^ self bindNonVariableBackward
+]
+
+{ #category : #accessing }
+TypTypeVariableBindingsExamples >> asCompatibleWithBindVariable [
+	<gtExample>
+	self
+		assert: [ self bindVariable asCompatibleWith: self empty ]
+		signals: AssertionFailure.
+	self
+		assert: [ (self bindVariable asCompatibleWith: self bindVariable)
+				= self bindVariable ].
+	self
+		assert: [ self bindVariable asCompatibleWith: self bindVariableBackward ]
+		signals: AssertionFailure.
+	self
+		assert: [ self bindVariable asCompatibleWith: self bindNonVariableBackward ]
+		signals: AssertionFailure.
+	^ self bindVariable
+]
+
+{ #category : #accessing }
+TypTypeVariableBindingsExamples >> asCompatibleWithBindVariableBackward [
+	<gtExample>
+	self
+		assert: [ self bindVariableBackward asCompatibleWith: self empty ]
+		signals: AssertionFailure.
+	self
+		assert: [ self bindVariableBackward asCompatibleWith: self bindVariable ]
+		signals: AssertionFailure.
+	self
+		assert: [ (self bindVariableBackward
+				asCompatibleWith: self bindVariableBackward)
+				= self bindVariableBackward ].
+	self
+		assert: [ (self bindVariableBackward
+				asCompatibleWith: self bindNonVariableBackward)
+				= self bindVariableBackward ].
+	^ self bindVariableBackward
+]
+
+{ #category : #accessing }
+TypTypeVariableBindingsExamples >> asCompatibleWithEmpty [
+	<gtExample>
+	self
+		assert: [ (self empty asCompatibleWith: self empty) = self empty ].
+	self
+		assert: [ self empty asCompatibleWith: self bindVariable ]
+		signals: AssertionFailure.
+	self
+		assert: [ self empty asCompatibleWith: self bindVariableBackward ]
+		signals: AssertionFailure.
+	self
+		assert: [ self empty asCompatibleWith: self bindNonVariableBackward ]
+		signals: AssertionFailure.
+	^ self empty
+]
+
 { #category : #asserting }
 TypTypeVariableBindingsExamples >> assert: aBlock signals: aClass [
 	| signaled |

@@ -61,12 +61,15 @@ TypTypeVariableBindings >> addAll: aBindings [
 { #category : #converting }
 TypTypeVariableBindings >> asCompatibleWith: aBindings [
 	| copy |
-	self assert: [ aBindings variables includesAll: self variables ].
+	self assert: [ aBindings variables = self variables ].
 	copy := self copy.
 	copy variables
 		do: [ :e | 
-			(copy at: e) = (aBindings at: e)
-				ifFalse: [ copy at: e put: e ] ].
+			| a b |
+			a := copy at: e.
+			b := aBindings at: e.
+			a = b
+				ifFalse: [ copy at: e put: (a asCompatibleWith: b) ] ].
 	^ copy
 ]
 
