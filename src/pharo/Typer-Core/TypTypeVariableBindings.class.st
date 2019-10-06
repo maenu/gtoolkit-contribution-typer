@@ -69,7 +69,10 @@ TypTypeVariableBindings >> asCompatibleWith: aBindings [
 			a := copy at: e.
 			b := aBindings at: e.
 			a = b
-				ifFalse: [ copy at: e put: (a asCompatibleWith: b) ] ].
+				ifFalse: [ self assert: [ (a isTypeVariable and: [ b isTypeVariable ]) not ].
+					(a isTypeVariable not and: [ b isTypeVariable not ])
+						ifTrue: [ copy at: e put: e ]
+						ifFalse: [ copy at: e put: (a asCompatibleWith: b) ] ] ].
 	^ copy
 ]
 
@@ -92,6 +95,13 @@ TypTypeVariableBindings >> at: aTypeVariable put: aType [
 						and: [ aTypeVariable = aType or: [ self variables includes: aType ] ])
 						or: [ aType isTypeVariable not and: [ aType isType ] ] ] ].
 	^ bindings at: aTypeVariable put: aType
+]
+
+{ #category : #copying }
+TypTypeVariableBindings >> copyWithout: aTypeVariable [
+	^ self copy
+		remove: aTypeVariable;
+		yourself
 ]
 
 { #category : #comparing }
@@ -119,6 +129,13 @@ TypTypeVariableBindings >> isNotEmpty [
 TypTypeVariableBindings >> postCopy [
 	super postCopy.
 	bindings := bindings collect: #copy
+]
+
+{ #category : #removing }
+TypTypeVariableBindings >> remove: aTypeVariable [
+	self
+		assert: [ bindings values allSatisfy: [ :e | e ~= aTypeVariable ] ].
+	bindings removeKey: aTypeVariable
 ]
 
 { #category : #accessing }

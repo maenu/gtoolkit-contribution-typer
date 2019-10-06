@@ -2,8 +2,8 @@ Class {
 	#name : #TypParametricType,
 	#superclass : #TypNamedType,
 	#instVars : [
-		'bindings',
-		'parameters'
+		'parameters',
+		'bindings'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -87,10 +87,11 @@ TypParametricType >> = aType [
 
 { #category : #comparing }
 TypParametricType >> > aType [
-	^ (aType isParametric
-		and: [ name = aType name
-				and: [ parameters = aType parameters and: [ bindings > aType bindings ] ] ])
-		or: [ super > aType ]
+	^ self ~= aType
+		and: [ (aType isParametric
+				and: [ name = aType name
+						and: [ parameters = aType parameters and: [ bindings > aType bindings ] ] ])
+				or: [ super > aType ] ]
 ]
 
 { #category : #converting }
@@ -186,6 +187,7 @@ TypParametricType >> parameters [
 { #category : #copying }
 TypParametricType >> postCopy [
 	super postCopy.
+	parameters := parameters copy.
 	bindings := bindings copy
 ]
 

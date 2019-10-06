@@ -5,13 +5,13 @@ TypFunctionType >> typCheHasArgumentsCompatibleWithThoseOf: aType [
 	<typTypeArgument: 1 as: 'TypFunctionType'>
 	<typTypeResultAs: 'Boolean'>
 	| size |
-	size := optionalArguments
-		ifTrue: [ aType arguments size ]
-		ifFalse: [ arguments size ].
+	size := argumentsOptional
+		ifTrue: [ aType argumentsSize ]
+		ifFalse: [ argumentsSize ].
 	^ size = 0
-		or: [ size <= arguments size
+		or: [ size <= argumentsSize
 				and: [ size <= aType arguments size
-						and: [ ((arguments copyFrom: 1 to: size)
+						and: [ ((self arguments copyFrom: 1 to: size)
 								withIndexSelect: [ :e :i | e >= (aType arguments at: i) ])
 								size = size ] ] ]
 ]

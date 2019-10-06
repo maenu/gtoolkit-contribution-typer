@@ -81,17 +81,19 @@ TypFunctionTypeExamples >> type [
 { #category : #'as yet unclassified' }
 TypFunctionTypeExamples >> typeNonOptionalArguments [
 	^ TypFunctionType
-		arguments: {Integer typAsType}
-		result: Boolean typAsType
-		optionalArguments: false
-		bindings: {} typAsTypeVariableBindings
+		argumentsSize: 1
+		argumentsOptional: false
+		bindings:
+			{('@0' typAsType -> Boolean typAsType).
+			('@1' typAsType -> Integer typAsType)} typAsTypeVariableBindings
 ]
 
 { #category : #'as yet unclassified' }
 TypFunctionTypeExamples >> typeOptionalArguments [
 	^ TypFunctionType
-		arguments: {Integer typAsType}
-		result: Boolean typAsType
-		optionalArguments: true
-		bindings: {} typAsTypeVariableBindings
+		argumentsSize: 1
+		argumentsOptional: true
+		bindings:
+			{('@0' typAsType -> Boolean typAsType).
+			('@1' typAsType -> Integer typAsType)} typAsTypeVariableBindings
 ]

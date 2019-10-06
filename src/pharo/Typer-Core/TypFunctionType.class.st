@@ -2,59 +2,72 @@ Class {
 	#name : #TypFunctionType,
 	#superclass : #TypType,
 	#instVars : [
-		'result',
-		'arguments',
-		'optionalArguments',
+		'argumentsSize',
+		'argumentsOptional',
 		'bindings'
 	],
 	#category : #'Typer-Core-Type'
 }
 
 { #category : #'as yet unclassified' }
-TypFunctionType class >> arguments: aSequenceableCollection result: aType optionalArguments: aBoolean bindings: aBindings [
+TypFunctionType class >> argumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
 	^ self new
-		initializeWithArguments: aSequenceableCollection
-			result: aType
-			optionalArguments: aBoolean
+		initializeWithArgumentsSize: anInteger
+			argumentsOptional: aBoolean
 			bindings: aBindings;
 		yourself
 ]
 
 { #category : #comparing }
-TypFunctionType >> = anObject [
-	^ self == anObject
-		or: [ self class = anObject class
-				and: [ | type |
-					type := anObject "typCastAs TypFunctionType".
-					arguments asOrderedCollection = type arguments asOrderedCollection and: [ result = type result and: [ optionalArguments = type optionalArguments ] ] ] ]
+TypFunctionType >> = aType [
+	^ self == aType
+		or: [ self class = aType class
+				and: [ argumentsSize = aType argumentsSize
+						and: [ argumentsOptional = aType argumentsOptional
+								and: [ bindings = aType bindings ] ] ] ]
 ]
 
 { #category : #comparing }
 TypFunctionType >> > aType [
 	^ self ~= aType
 		and: [ aType isFunction
-				and: [ (optionalArguments not or: [ aType optionalArguments ])
-						and: [ arguments = aType arguments
-								and: [ result >= aType result
-										and: [ optionalArguments ~= aType optionalArguments
-												or: [ result > aType result ] ] ] ] ] ]
+				and: [ argumentsSize = aType argumentsSize
+						and: [ argumentsOptional = aType argumentsOptional
+								and: [ (bindings copyWithout: '@0' typAsType)
+										>= (aType bindings copyWithout: '@0' typAsType)
+										and: [ self result <= aType result ] ] ] ] ]
 ]
 
 { #category : #accessing }
 TypFunctionType >> arguments [
-	<typTypeResultAs: 'OrderedCollection<TypType>'>
-	^ arguments copy
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
+	^ (1 to: argumentsSize)
+		withIndexCollect: [ :e :i | bindings at: ('@' , i asString) typAsType ]
+]
+
+{ #category : #accessing }
+TypFunctionType >> argumentsOptional [
+	^ argumentsOptional
+]
+
+{ #category : #accessing }
+TypFunctionType >> argumentsSize [
+	^ argumentsSize
 ]
 
 { #category : #converting }
 TypFunctionType >> asCompatibleWith: aType [
-	^ (aType isParametric and: [ self > aType or: [ aType > self ] ])
-		ifTrue: [ self class
-				arguments: arguments copy
-				result: (result asCompatibleWith: aType result)
-				optionalArguments: (optionalArguments and: aType optionalArguments)
-				bindings: bindings copy ]
+	^ (aType isFunction
+		and: [ argumentsSize = aType argumentsSize
+				and: [ argumentsOptional = aType argumentsOptional ] ])
+		ifTrue:
+			[ self copyWithBindings: (bindings asCompatibleWith: aType bindings) ]
 		ifFalse: [ super asCompatibleWith: aType ]
+]
+
+{ #category : #accessing }
+TypFunctionType >> bindings [
+	^ bindings
 ]
 
 { #category : #'as yet unclassified' }
@@ -63,38 +76,44 @@ TypFunctionType >> canUnderstand: aSymbol [
 ]
 
 { #category : #copying }
-TypFunctionType >> copyWithResult: aType [
+TypFunctionType >> copyWithBindings: aBindings [
 	^ self copy
-		initializeWithArguments: (arguments collect: #copy)
-			result: aType
-			optionalArguments: optionalArguments
-			bindings: bindings copy;
+		initializeWithArgumentsSize: argumentsSize
+			argumentsOptional: argumentsOptional
+			bindings: aBindings;
 		yourself
+]
+
+{ #category : #copying }
+TypFunctionType >> copyWithResult: aType [
+	^ self
+		copyWithBindings:
+			(bindings copy
+				at: '@0' typAsType put: aType;
+				yourself)
 ]
 
 { #category : #testing }
 TypFunctionType >> hasSuperType [
-	^ result hasSuperType
+	^ self result hasSuperType
 ]
 
 { #category : #comparing }
 TypFunctionType >> hash [
-	^ ((super hash bitXor: arguments hash) bitXor: result hash)
-		bitXor: optionalArguments hash
-]
-
-{ #category : #accessing }
-TypFunctionType >> initialize [
-	<typTypeVariable: 'optionalParameters' as: 'Boolean'>
-	<typTypeVariable: 'result' as: 'TypType'>
-	super initialize
+	^ ((super hash bitXor: argumentsSize hash)
+		bitXor: argumentsOptional hash) bitXor: bindings hash
 ]
 
 { #category : #initialization }
-TypFunctionType >> initializeWithArguments: aSequenceableCollection result: aType optionalArguments: aBoolean bindings: aBindings [
-	arguments := aSequenceableCollection asOrderedCollection.
-	result := aType.
-	optionalArguments := aBoolean.
+TypFunctionType >> initializeWithArgumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
+	self
+		assert: [ aBindings variables
+				includesAll: ((0 to: anInteger) collect: [ :i | ('@' , i asString) typAsType ]) ].
+	self
+		assert: [ aBindings variables
+				allSatisfy: [ :e | (aBindings at: e) ~= '@0' typAsType ] ].
+	argumentsSize := anInteger.
+	argumentsOptional := aBoolean.
 	bindings := aBindings
 ]
 
@@ -108,48 +127,42 @@ TypFunctionType >> lookupSelector: aSymbol [
 	self shouldNotImplement
 ]
 
-{ #category : #accessing }
-TypFunctionType >> optionalArguments [
-	<typTypeResultAs: 'Boolean'>
-	^ optionalArguments
-]
-
 { #category : #copying }
 TypFunctionType >> postCopy [
 	super postCopy.
-	arguments := arguments collect: #copy.
-	result := result copy
+	bindings := bindings copy
 ]
 
 { #category : #accessing }
 TypFunctionType >> printOn: aStream [
 	aStream
 		<<
-			(optionalArguments
+			(argumentsOptional
 				ifTrue: [ '[' ]
 				ifFalse: [ '(' ]).
-	1 to: arguments size do: [ :i | 
-		(arguments at: i) printOn: aStream.
-		i < arguments size
-			ifTrue: [ aStream << ',' ] ].
+	self arguments
+		withIndexDo: [ :e :i | 
+			e printOn: aStream.
+			i < argumentsSize
+				ifTrue: [ aStream << ',' ] ].
 	aStream
 		<<
-			(optionalArguments
+			(argumentsOptional
 				ifTrue: [ ']' ]
 				ifFalse: [ ')' ]).
 	aStream << '->'.
-	result printOn: aStream
+	self result printOn: aStream
 ]
 
 { #category : #accessing }
 TypFunctionType >> result [
 	<typTypeResultAs: 'TypType'>
-	^ result
+	^ bindings at: '@0' typAsType
 ]
 
 { #category : #accessing }
 TypFunctionType >> superType [
 	self assert: [ self hasSuperType ].
 	superType ifNotNil: [ ^ superType ].
-	^ superType := self copyWithResult: result superType
+	^ superType := self copyWithResult: self result superType
 ]
