@@ -11,7 +11,7 @@ CompiledMethod >> typPraAsMethodLookupResult [
 	pragmas := self typPraAllPragmas.
 	argumentPragmas := ((pragmas
 		select: [ :e | e selector = #typTypeArgument:as: ])
-		groupedBy: [ :e | e arguments at: 1 ]) collect: #first.
+		groupedBy: [ :e | e arguments first ]) collect: #first.
 	resultPragma := pragmas
 		detect: [ :e | e selector = #typTypeResultAs: ]
 		ifNone: [ nil ].
@@ -25,17 +25,17 @@ CompiledMethod >> typPraAsMethodLookupResult [
 		timesCollect: [ :i | 
 			argumentPragmas
 				at: i
-				ifPresent: [ :e | (e arguments at: 2) typAsType ]
+				ifPresent: [ :e | e arguments second typAsType ]
 				ifAbsent: [ TypUnknownType instance ] ].
 	resultType := resultPragma
 		ifNil: [ TypUnknownType instance ]
-		ifNotNil: [ (resultPragma arguments at: 1) typAsType ].
+		ifNotNil: [ resultPragma arguments first typAsType ].
 	signalsAlways := signalsAlwaysPragma
 		ifNil: [ nil ]
-		ifNotNil: [ signalsAlwaysPragma arguments at: 1 ].
+		ifNotNil: [ signalsAlwaysPragma arguments first ].
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i | argumentTypes at: i ];
-		resultType: [ resultType ];
+		argumentTypes: [ :i :r :a | (argumentTypes at: i) resolveIn: a receiverType ];
+		resultType: [ :r :a | resultType resolveIn: a receiverType ];
 		signalsAlways: [ signalsAlways ];
 		yourself
 ]

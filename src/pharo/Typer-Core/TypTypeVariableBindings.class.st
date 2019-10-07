@@ -109,6 +109,11 @@ TypTypeVariableBindings >> hash [
 	^ bindings hash
 ]
 
+{ #category : #removing }
+TypTypeVariableBindings >> includes: aTypeVariable [
+	^ bindings includesKey: aTypeVariable
+]
+
 { #category : #initialization }
 TypTypeVariableBindings >> initialize [
 	super initialize.

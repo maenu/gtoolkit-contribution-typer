@@ -144,6 +144,11 @@ TypType >> postCopy [
 ]
 
 { #category : #'as yet unclassified' }
+TypType >> resolveIn: aType [
+	^ self
+]
+
+{ #category : #'as yet unclassified' }
 TypType >> superType [
 	<typTypeResultAs: 'TypType'>
 	self subclassResponsibility

@@ -67,6 +67,16 @@ TypTypeVariableType >> printOn: aStream [
 ]
 
 { #category : #'as yet unclassified' }
+TypTypeVariableType >> resolveIn: aType [
+	((aType isParametric or: [ aType isFunction ])
+		and: [ aType bindings includes: self ])
+		ifTrue: [ ^ aType bindings at: self ].
+	^ aType hasSuperType
+		ifTrue: [ self resolveIn: aType superType ]
+		ifFalse: [ self ]
+]
+
+{ #category : #'as yet unclassified' }
 TypTypeVariableType >> superType [
 	self shouldNotImplement
 ]

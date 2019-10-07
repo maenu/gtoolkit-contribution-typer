@@ -3,21 +3,23 @@ Extension { #name : #ClassDescription }
 { #category : #'*Typer-Pragma' }
 ClassDescription >> typPraAsClassLookupResult [
 	| pragmas parameters bindings |
-	self flag: 'FIXME needs parameters'.
 	pragmas := (self lookupSelector: #initialize)
 		ifNil: [ ^ nil ]
 		ifNotNil: #pragmas.
-	pragmas := pragmas
-		select: [ :e | e selector = #typTypeParameter:as: ].
-	pragmas ifEmpty: [ ^ nil ].
-	self
-		assert: [ | names |
-			names := pragmas collect: [ :e | e arguments first ].
-			names size = names asSet size ].
-	bindings := (pragmas
-		collect: [ :e | 
-			(TypTypeVariableType named: e arguments first)
-				-> e arguments second typAsType ]) typAsTypeVariableBindings.
+	parameters := pragmas
+		detect: [ :e | e selector = #typParameters: ]
+		ifFound: [ :e | e first typAsTypes ]
+		ifNone: [ {} ].
+	bindings := ((pragmas select: [ :e | e selector = #typBind:to: ])
+		collect: [ :e | e arguments first typAsType -> e arguments second typAsType ])
+		typAsTypeVariableBindings.
+	(parameters isEmpty and: [ bindings isEmpty ])
+		ifTrue: [ ^ nil ].
+	parameters
+		ifEmpty: [ ^ TypClassLookupResult new
+				type:
+						[ :a | a classDescription typAsNamedTypeWithSuperTypeBindings: bindings ];
+				yourself ].
 	^ TypClassLookupResult new
 		type:
 				[ :a | a classDescription typAsParametricType: parameters bindings: bindings ];
@@ -38,12 +40,11 @@ ClassDescription >> typPraAsVariableLookupResultFor: aSymbol [
 		ifNil: [ ^ nil ]
 		ifNotNil: #typPraAllPragmas.
 	pragma := pragmas
-		detect: [ :e | 
-			e selector = #typTypeVariable:as:
-				and: [ (e arguments at: 1) = aSymbol ] ]
+		detect:
+			[ :e | e selector = #typTypeVariable:as: and: [ e arguments first = aSymbol ] ]
 		ifNone: [ ^ nil ].
-	type := (pragma arguments at: 2) typAsType.
+	type := pragma arguments second typAsType.
 	^ TypVariableLookupResult new
-		type: [ type ];
+		type: [ :r :a | type resolveIn: a receiverType ];
 		yourself
 ]
