@@ -150,7 +150,7 @@ TypParametricType >> initializeWithClassDescription: aClassDescription parameter
 { #category : #initialization }
 TypParametricType >> initializeWithClassDescription: aClassDescription parameters: aSequenceableCollection bindings: aBindings someSuperTypeBindings: anotherBindings [
 	self
-		assert: [ (anotherBindings variables intersect: aBindings variables)
+		assert: [ (anotherBindings variables intersection: aBindings variables)
 				allSatisfy: [ :e | (aBindings at: e) isTypeVariable ] ].
 	self
 		initializeWithClassDescription: aClassDescription

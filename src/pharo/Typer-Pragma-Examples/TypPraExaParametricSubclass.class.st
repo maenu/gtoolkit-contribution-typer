@@ -7,7 +7,7 @@ Class {
 { #category : #initialization }
 TypPraExaParametricSubclass >> initialize [
 	<typParameters: '@B'>
-	<typBind: '@A' to: 'Integer'>
+	<typBindSuper: '@A' to: 'Integer'>
 	super initialize
 ]
 

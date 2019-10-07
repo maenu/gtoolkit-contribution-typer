@@ -29,6 +29,15 @@ ClassDescription >> typAsParametricType: aSequenceableCollection bindings: aBind
 ]
 
 { #category : #'*Typer-Core' }
+ClassDescription >> typAsParametricType: aSequenceableCollection bindings: aBindings someSuperTypeBindings: anotherBindings [
+	^ TypParametricType
+		classDescription: self
+		parameters: aSequenceableCollection
+		bindings: aBindings
+		someSuperTypeBindings: anotherBindings
+]
+
+{ #category : #'*Typer-Core' }
 ClassDescription >> typAsType [
 	<typTypeResultAs: 'TypType'>
 	^ TypClassLookupIndex instance

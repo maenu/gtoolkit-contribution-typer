@@ -2,7 +2,7 @@ Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Pragma' }
 ClassDescription >> typPraAsClassLookupResult [
-	| pragmas parameters bindings |
+	| pragmas parameters bindings superTypeBindings |
 	pragmas := (self lookupSelector: #initialize)
 		ifNil: [ ^ nil ]
 		ifNotNil: #pragmas.
@@ -10,20 +10,39 @@ ClassDescription >> typPraAsClassLookupResult [
 		detect: [ :e | e selector = #typParameters: ]
 		ifFound: [ :e | e arguments first typAsTypes ]
 		ifNone: [ {} ].
-	bindings := ((pragmas select: [ :e | e selector = #typBind:to: ])
+	bindings := (parameters asSet collect: [ :e | e -> e ])
+		typAsTypeVariableBindings.
+	(pragmas select: [ :e | e selector = #typBind:to: ])
+		do: [ :e | 
+			bindings
+				at: e arguments first typAsType
+				put: e arguments second typAsType ].
+	superTypeBindings := ((pragmas
+		select: [ :e | e selector = #typBindSuper:to: ])
 		collect: [ :e | e arguments first typAsType -> e arguments second typAsType ])
 		typAsTypeVariableBindings.
-	(parameters isEmpty and: [ bindings isEmpty ])
+	(parameters isEmpty
+		and: [ bindings isEmpty and: [ superTypeBindings isEmpty ] ])
 		ifTrue: [ ^ nil ].
-	parameters
-		ifEmpty: [ ^ TypClassLookupResult new
-				type:
-						[ :a | a classDescription typAsNamedTypeWithSuperTypeBindings: bindings ];
+	(parameters isEmpty
+		and: [ bindings isEmpty and: [ superTypeBindings isNotEmpty ] ])
+		ifTrue: [ ^ TypClassLookupResult new
+				type: [ :a | 
+					a classDescription
+						typAsNamedTypeWithSuperTypeBindings: superTypeBindings ];
 				yourself ].
-	^ TypClassLookupResult new
-		type:
-				[ :a | a classDescription typAsParametricType: parameters bindings: bindings ];
-		yourself
+	^ superTypeBindings isEmpty
+		ifTrue: [ TypClassLookupResult new
+				type:
+						[ :a | a classDescription typAsParametricType: parameters bindings: bindings ];
+				yourself ]
+		ifFalse: [ Halt once. TypClassLookupResult new
+				type: [ :a | 
+					a classDescription
+						typAsParametricType: parameters
+						bindings: bindings
+						someSuperTypeBindings: superTypeBindings ];
+				yourself ]
 ]
 
 { #category : #'*Typer-Pragma' }

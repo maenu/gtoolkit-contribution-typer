@@ -6,6 +6,6 @@ Class {
 
 { #category : #initialization }
 TypPraExaNonParametricClass >> initialize [
-	<typBind: '@B' to: 'Boolean'>
+	<typBindSuper: '@B' to: 'Boolean'>
 	super initialize
 ]
