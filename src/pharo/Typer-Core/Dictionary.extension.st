@@ -4,6 +4,8 @@ Extension { #name : #Dictionary }
 Dictionary >> typAsTypeVariableBindings [
 	| bindings |
 	bindings := TypTypeVariableBindings new.
+	"ensure all variables known by initializing with unknown"
+	self keysDo: [ :k | bindings at: k put: k ].
 	self keysAndValuesDo: [ :k :v | bindings at: k put: v ].
 	^ bindings
 ]

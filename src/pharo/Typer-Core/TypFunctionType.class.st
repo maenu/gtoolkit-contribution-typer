@@ -35,7 +35,7 @@ TypFunctionType >> > aType [
 						and: [ argumentsOptional = aType argumentsOptional
 								and: [ (bindings copyWithout: '@0' typAsType)
 										>= (aType bindings copyWithout: '@0' typAsType)
-										and: [ self result <= aType result ] ] ] ] ]
+										and: [ self result >= aType result ] ] ] ] ]
 ]
 
 { #category : #accessing }
@@ -59,7 +59,7 @@ TypFunctionType >> argumentsSize [
 TypFunctionType >> asCompatibleWith: aType [
 	^ (aType isFunction
 		and: [ argumentsSize = aType argumentsSize
-				and: [ argumentsOptional = aType argumentsOptional ] ])
+				and: [ argumentsOptional = aType argumentsOptional and: [ bindings variables = aType bindings variables ] ] ])
 		ifTrue:
 			[ self copyWithBindings: (bindings asCompatibleWith: aType bindings) ]
 		ifFalse: [ super asCompatibleWith: aType ]
@@ -100,8 +100,8 @@ TypFunctionType >> hasSuperType [
 
 { #category : #comparing }
 TypFunctionType >> hash [
-	^ ((super hash bitXor: argumentsSize hash)
-		bitXor: argumentsOptional hash) bitXor: bindings hash
+	^ (argumentsSize hash bitXor: argumentsOptional hash)
+		bitXor: bindings hash
 ]
 
 { #category : #initialization }
