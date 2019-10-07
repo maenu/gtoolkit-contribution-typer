@@ -8,7 +8,7 @@ ClassDescription >> typPraAsClassLookupResult [
 		ifNotNil: #pragmas.
 	parameters := pragmas
 		detect: [ :e | e selector = #typParameters: ]
-		ifFound: [ :e | e first typAsTypes ]
+		ifFound: [ :e | e arguments first typAsTypes ]
 		ifNone: [ {} ].
 	bindings := ((pragmas select: [ :e | e selector = #typBind:to: ])
 		collect: [ :e | e arguments first typAsType -> e arguments second typAsType ])
