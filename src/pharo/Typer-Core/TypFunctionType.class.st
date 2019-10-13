@@ -127,11 +127,19 @@ TypFunctionType >> asCompatibleWith: aType [
 
 { #category : #copying }
 TypFunctionType >> copyWithBindings: aBindings [
-	^ self copy
-		initializeWithArgumentsSize: argumentsSize
-			argumentsOptional: argumentsOptional
-			bindings: aBindings;
-		yourself
+	^ self hasClassDescription
+		ifTrue: [ self copy
+				initializeWithClassDescription: self classDescription
+					argumentsSize: argumentsSize
+					argumentsOptional: argumentsOptional
+					bindings: aBindings;
+				yourself ]
+		ifFalse: [ self copy
+				initializeWithName: name
+					argumentsSize: argumentsSize
+					argumentsOptional: argumentsOptional
+					bindings: aBindings;
+				yourself ]
 ]
 
 { #category : #copying }

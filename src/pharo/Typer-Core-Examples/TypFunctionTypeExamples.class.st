@@ -18,35 +18,49 @@ TypFunctionTypeExamples >> asTypeCompatibleWith [
 	self
 		assert:
 			(type asCompatibleWith: self typeNonOptionalTwoArguments)
-				= TypUnknownType instance.
+				= Object typAsType.
 	self
 		assert:
 			(type asCompatibleWith: self typeOptionalArgumentVariableResult)
-				= TypUnknownType instance.
+				= Object typAsType.
 	self
 		assert:
 			(type asCompatibleWith: self typeNonOptionalArgumentVariableResult)
-				= TypUnknownType instance.
+				= Object typAsType.
 	self
 		assert:
 			(type asCompatibleWith: self typeNonOptionalTwoArguments)
-				= TypUnknownType instance.
+				= Object typAsType.
 	self
 		assert:
-			(self typeNonOptionalArgumentVariableResult asCompatibleWith: self typeNonOptionalArgumentVariableResultBound)
+			(self typeNonOptionalArgumentVariableResult
+				asCompatibleWith: self typeNonOptionalArgumentVariableResultBound)
 				= self typeNonOptionalArgumentVariableResult.
 	self
 		assert:
-			(self typeNonOptionalArgumentVariableResultBound asCompatibleWith: self typeNonOptionalArgumentVariableResult)
+			(self typeNonOptionalArgumentVariableResultBound
+				asCompatibleWith: self typeNonOptionalArgumentVariableResult)
 				= self typeNonOptionalArgumentVariableResult.
 	self
 		assert:
-			(self typeNonOptionalVariableArgument asCompatibleWith: self typeNonOptionalVariableArgumentBound)
+			(self typeNonOptionalVariableArgument
+				asCompatibleWith: self typeNonOptionalVariableArgumentBound)
 				= self typeNonOptionalVariableArgument.
 	self
 		assert:
-			(self typeNonOptionalVariableArgument asCompatibleWith: self typeNonOptionalVariableArgumentBound)
+			(self typeNonOptionalVariableArgument
+				asCompatibleWith: self typeNonOptionalVariableArgumentBound)
 				= self typeNonOptionalVariableArgument.
+	^ type
+]
+
+{ #category : #testing }
+TypFunctionTypeExamples >> classDescription [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type classDescription = BlockClosure.
+	self assert: [ self typeNotAClass classDescription ] signals: AssertionFailure.
 	^ type
 ]
 
@@ -58,7 +72,7 @@ TypFunctionTypeExamples >> hasSuperType [
 	self assert: type hasSuperType.
 	self assert: self typeNonOptionalTwoArguments hasSuperType.
 	self assert: self typeOptionalArgument hasSuperType.
-	self assert: self typeOptionalArgumentVariableResult hasSuperType not.
+	self assert: self typeNotAClass hasSuperType not.
 	^ type
 ]
 
@@ -72,24 +86,13 @@ TypFunctionTypeExamples >> isFunction [
 ]
 
 { #category : #accessing }
-TypFunctionTypeExamples >> lookupSelector [
-	<gtExample>
-	| type |
-	type := self type.
-	self
-		assert: [ type lookupSelector: #notThere ]
-		signals: ShouldNotImplement.
-	^ type
-]
-
-{ #category : #accessing }
 TypFunctionTypeExamples >> printOn [
 	<gtExample>
 	| type |
 	type := self type.
-	self assert: type asString = '(Integer)->Boolean'.
-	self assert: self typeOptionalArgument asString = '[Integer]->Boolean'.
-	self assert: self typeNonOptionalTwoArguments asString = '(Integer,Character)->Boolean'.
+	self assert: type asString = 'BlockClosure(Integer)->Boolean'.
+	self assert: self typeOptionalArgument asString = 'BlockClosure[Integer]->Boolean'.
+	self assert: self typeNonOptionalTwoArguments asString = 'BlockClosure(Integer,Character)->Boolean'.
 	^ type
 ]
 
@@ -98,23 +101,12 @@ TypFunctionTypeExamples >> superType [
 	<gtExample>
 	| type |
 	type := self type.
+	self assert: type superType = Object typAsType.
 	self
-		assert: type superType = (type copyWithResult: type result superType).
+		assert: self typeNonOptionalTwoArguments superType = Object typAsType.
+	self assert: self typeOptionalArgument superType = Object typAsType.
 	self
-		assert:
-			self typeNonOptionalTwoArguments superType
-				=
-					(self typeNonOptionalTwoArguments
-						copyWithResult: self typeNonOptionalTwoArguments result superType).
-	self
-		assert:
-			self typeOptionalArgument superType
-				=
-					(self typeOptionalArgument
-						copyWithResult: self typeOptionalArgument result superType).
-	self
-		assert: [ self typeOptionalArgumentVariableResult superType ]
-		signals: AssertionFailure.
+		assert: self typeOptionalArgumentVariableResult superType = Object typAsType.
 	^ type
 ]
 
@@ -214,6 +206,17 @@ TypFunctionTypeExamples >> typeNonOptionalVariableArgumentBound [
 			{('@A' typAsType -> Integer typAsType).
 			('@0' typAsType -> Boolean typAsType).
 			('@1' typAsType -> '@A' typAsType)} typAsTypeVariableBindings
+]
+
+{ #category : #'as yet unclassified' }
+TypFunctionTypeExamples >> typeNotAClass [
+	^ TypFunctionType
+		named: 'notaclass'
+		argumentsSize: 1
+		argumentsOptional: false
+		bindings:
+			{('@0' typAsType -> Boolean typAsType).
+			('@1' typAsType -> Integer typAsType)} typAsTypeVariableBindings
 ]
 
 { #category : #'as yet unclassified' }

@@ -73,7 +73,8 @@ TypParametricType >> > aType [
 { #category : #converting }
 TypParametricType >> asCompatibleWith: aType [
 	^ (aType isParametric
-		and: [ name = aType name and: [ parameters = aType parameters ] ])
+		and: [ name = aType name
+				and: [ bindings variables = aType bindings variables ] ])
 		ifTrue: [ self copyWithBindings: (bindings asCompatibleWith: aType bindings) ]
 		ifFalse: [ super asCompatibleWith: aType ]
 ]
@@ -121,6 +122,14 @@ TypParametricType >> initializeParameters: aSequenceableCollection bindings: aBi
 	bindings := aBindings
 ]
 
+{ #category : #accessing }
+TypParametricType >> initializeWithClassDescription: aClassDescription parameters: aSequenceableCollection bindings: aBindings [
+	self initializeWithClassDescription: aClassDescription.
+	self
+		initializeParameters: aSequenceableCollection
+		bindings: aBindings
+]
+
 { #category : #initialization }
 TypParametricType >> initializeWithClassDescription: aClassDescription parameters: aSequenceableCollection bindings: aBindings someSuperTypeBindings: anotherBindings [
 	self
@@ -131,14 +140,6 @@ TypParametricType >> initializeWithClassDescription: aClassDescription parameter
 		parameters: aSequenceableCollection
 		bindings: aBindings.
 	superType := self superType copyWithSomeBindings: anotherBindings
-]
-
-{ #category : #accessing }
-TypParametricType >> initializeWithClassDescription: aClassDescription parameters: aSequenceableCollection bindings: aBindings [
-	self initializeWithClassDescription: aClassDescription.
-	self
-		initializeParameters: aSequenceableCollection
-		bindings: aBindings
 ]
 
 { #category : #accessing }
