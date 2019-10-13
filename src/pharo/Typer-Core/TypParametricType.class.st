@@ -18,7 +18,7 @@ TypParametricType class >> classDescription: aClassDescription parameters: aSequ
 	^ self
 		classDescription: aClassDescription
 		parameters: aSequenceableCollection
-		bindings: (TypTypeVariableBindings parameters: aSequenceableCollection asSet)
+		bindings: (TypTypeVariableBindings variables: aSequenceableCollection asSet)
 ]
 
 { #category : #'as yet unclassified' }
@@ -28,30 +28,6 @@ TypParametricType class >> classDescription: aClassDescription parameters: aSequ
 			parameters: aSequenceableCollection
 			bindings: aBindings;
 		yourself
-]
-
-{ #category : #'as yet unclassified' }
-TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection bindings: aBindings someSuperTypeBindings: anotherBindings [
-	^ self new
-		initializeWithClassDescription: aClassDescription
-			parameters: aSequenceableCollection
-			bindings: aBindings
-			someSuperTypeBindings: anotherBindings;
-		yourself
-]
-
-{ #category : #'as yet unclassified' }
-TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection someSuperTypeBindings: anotherBindings [
-	^ self
-		classDescription: aClassDescription
-		parameters: aSequenceableCollection
-		bindings: (TypTypeVariableBindings parameters: aSequenceableCollection asSet)
-		someSuperTypeBindings: anotherBindings
-]
-
-{ #category : #'as yet unclassified' }
-TypParametricType class >> classDescription: aClassDescription superTypeBindings: anOrderedDictionary [
-	self shouldNotImplement
 ]
 
 { #category : #'instance creation' }
@@ -64,7 +40,7 @@ TypParametricType class >> named: aString parameters: aSequenceableCollection [
 	^ self
 		named: aString
 		parameters: aSequenceableCollection
-		bindings: (TypTypeVariableBindings parameters: aSequenceableCollection asSet)
+		bindings: (TypTypeVariableBindings variables: aSequenceableCollection asSet)
 ]
 
 { #category : #'as yet unclassified' }
@@ -137,12 +113,10 @@ TypParametricType >> hash [
 ]
 
 { #category : #accessing }
-TypParametricType >> initializeWithClassDescription: aClassDescription parameters: aSequenceableCollection bindings: aBindings [
+TypParametricType >> initializeParameters: aSequenceableCollection bindings: aBindings [
 	self
-		assert: [ aClassDescription isNotNil
-				and: [ aSequenceableCollection isNotEmpty
-						and: [ aSequenceableCollection asSet = aBindings variables ] ] ].
-	self initializeWithClassDescription: aClassDescription.
+		assert: [ aSequenceableCollection isNotEmpty
+				and: [ aBindings variables includesAll: aSequenceableCollection asSet ] ].
 	parameters := aSequenceableCollection asOrderedCollection.
 	bindings := aBindings
 ]
@@ -159,19 +133,20 @@ TypParametricType >> initializeWithClassDescription: aClassDescription parameter
 	superType := self superType copyWithSomeBindings: anotherBindings
 ]
 
-{ #category : #initialization }
-TypParametricType >> initializeWithClassDescription: aClassDescription superTypeBindings: aBindings [
-	self shouldNotImplement
+{ #category : #accessing }
+TypParametricType >> initializeWithClassDescription: aClassDescription parameters: aSequenceableCollection bindings: aBindings [
+	self initializeWithClassDescription: aClassDescription.
+	self
+		initializeParameters: aSequenceableCollection
+		bindings: aBindings
 ]
 
 { #category : #accessing }
 TypParametricType >> initializeWithName: aString parameters: aSequenceableCollection bindings: aBindings [
-	self
-		assert: [ aSequenceableCollection isNotEmpty
-				and: [ aSequenceableCollection asSet = aBindings variables ] ].
 	self initializeWithName: aString.
-	parameters := aSequenceableCollection asOrderedCollection.
-	bindings := aBindings
+	self
+		initializeParameters: aSequenceableCollection
+		bindings: aBindings
 ]
 
 { #category : #testing }

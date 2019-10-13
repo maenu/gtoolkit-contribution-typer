@@ -6,7 +6,7 @@ Class {
 
 { #category : #'generated-accessing' }
 TypTypeParser class >> cacheId [
-	^'2019-10-06T17:21:09.53658+02:00'
+	^'2019-10-13T22:12:08.531399+02:00'
 ]
 
 { #category : #generated }
@@ -75,18 +75,18 @@ ParametricType
 			parameter -> e ]) typAsTypeVariableBindings }
 	;
 FunctionType
-	: ""["" EmptyTypes 'arguments' ""]"" ""->"" Type 'result'
+	: Name 'name' ""["" EmptyTypes 'arguments' ""]"" ""->"" Type 'result'
 		{ | typeVariables bindings |
 		typeVariables := ({ '@0' typAsType } , (arguments size timesCollect: [ :i | ('@', i asString) typAsType ]), ({ result } , arguments select: #isTypeVariable)) asSet.
 		bindings := (typeVariables collect: [ :e | e -> e ]) typAsTypeVariableBindings.
 		{ result } , arguments withIndexDo: [ :e :i | bindings at: ('@', i asString) typAsType put: e ].
-		TypFunctionType argumentsSize: arguments size argumentsOptional: true bindings:  bindings }
-	| ""("" EmptyTypes 'arguments' "")"" ""->"" Type 'result'
+		TypFunctionType named: name argumentsSize: arguments size argumentsOptional: true bindings:  bindings }
+	| Name 'name' ""("" EmptyTypes 'arguments' "")"" ""->"" Type 'result'
 		{ | typeVariables bindings |
 		typeVariables := ({ '@0' typAsType } , (arguments size timesCollect: [ :i | ('@', i asString) typAsType ]), ({ result } , arguments select: #isTypeVariable)) asSet.
 		bindings := (typeVariables collect: [ :e | e -> e ]) typAsTypeVariableBindings.
 		{ result } , arguments withIndexDo: [ :e :i | bindings at: ('@', i asString) typAsType put: e ].
-		TypFunctionType argumentsSize: arguments size argumentsOptional: false bindings:  bindings }
+		TypFunctionType named: name argumentsSize: arguments size argumentsOptional: false bindings:  bindings }
 	;
 UnionType
 	: ""{"" Types 'types' ""}""
@@ -114,9 +114,8 @@ TypTypeParser class >> parse: aString [
 TypTypeParser class >> reduceTable [
 ^#(
 	#(19 1 #reduceActionForNilType1: 634881 false ) 
-	#(25 0 #reduceActionForEmptyTypes2: 2268162 false ) 
 	#(18 1 #reduceActionForUnknownType1: 581633 false ) 
-	#(26 1 #reduceActionForName1: 2322433 false ) 
+	#(26 1 #reduceActionForName1: 2371585 false ) 
 	#(16 1 #reduceActionForTypes1: 241665 false ) 
 	#(17 1 #liftFirstValue: 334849 false ) 
 	#(17 1 #liftFirstValue: 334850 false ) 
@@ -126,13 +125,14 @@ TypTypeParser class >> reduceTable [
 	#(17 1 #liftFirstValue: 334853 false ) 
 	#(17 1 #liftFirstValue: 334852 false ) 
 	#(21 1 #reduceActionForNamedType1: 764929 false ) 
-	#(25 1 #liftFirstValue: 2268161 false ) 
 	#(20 2 #reduceActionForTypeVariableType1: 679937 false ) 
-	#(24 3 #reduceActionForUnionType1: 2194433 false ) 
+	#(25 0 #reduceActionForEmptyTypes2: 2317314 false ) 
+	#(24 3 #reduceActionForUnionType1: 2243585 false ) 
 	#(16 3 #reduceActionForTypes2: 241666 false ) 
+	#(25 1 #liftFirstValue: 2317313 false ) 
 	#(22 4 #reduceActionForParametricType1: 826369 false ) 
-	#(23 5 #reduceActionForFunctionType2: 1099778 false ) 
-	#(23 5 #reduceActionForFunctionType1: 1099777 false )
+	#(23 6 #reduceActionForFunctionType2: 1099778 false ) 
+	#(23 6 #reduceActionForFunctionType1: 1099777 false )
 	).
 ]
 
@@ -154,15 +154,14 @@ TypTypeParser class >> symbolNames [
 { #category : #generated }
 TypTypeParser class >> transitionTable [
 ^#(
-#[1 0 9 0 1 0 13 0 2 0 17 0 8 0 21 0 9 0 25 0 10 0 29 0 12 0 33 0 14 0 37 0 16 0 41 0 17 0 41 0 18 0 41 0 19 0 41 0 20 0 41 0 21 0 41 0 22 0 41 0 23 0 41 0 24 0 73 0 26] 
+#[1 0 9 0 1 0 13 0 8 0 17 0 9 0 21 0 12 0 25 0 14 0 29 0 16 0 33 0 17 0 33 0 18 0 33 0 19 0 33 0 20 0 33 0 21 0 33 0 22 0 33 0 23 0 33 0 24 0 65 0 26] 
 #[0 0 6 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[1 0 9 0 1 0 13 0 2 0 10 0 3 0 17 0 8 0 21 0 9 0 25 0 10 0 29 0 12 0 33 0 14 0 77 0 16 0 41 0 17 0 41 0 18 0 41 0 19 0 41 0 20 0 41 0 21 0 41 0 22 0 41 0 23 0 41 0 24 0 81 0 25 0 73 0 26] 
-#[0 0 14 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[1 0 33 0 14 0 85 0 26] 
-#[1 0 9 0 1 0 13 0 2 0 17 0 8 0 21 0 9 0 25 0 10 0 10 0 11 0 29 0 12 0 33 0 14 0 77 0 16 0 41 0 17 0 41 0 18 0 41 0 19 0 41 0 20 0 41 0 21 0 41 0 22 0 41 0 23 0 41 0 24 0 89 0 25 0 73 0 26] 
-#[1 0 9 0 1 0 13 0 2 0 17 0 8 0 21 0 9 0 25 0 10 0 29 0 12 0 33 0 14 0 93 0 16 0 41 0 17 0 41 0 18 0 41 0 19 0 41 0 20 0 41 0 21 0 41 0 22 0 41 0 23 0 41 0 24 0 73 0 26] 
-#[0 0 18 0 3 0 4 0 6 0 7 0 11 0 13 0 27] 
-#[1 0 97 0 4 0 0 0 27] 
+#[0 0 10 0 3 0 4 0 7 0 11 0 13 0 27] 
+#[1 0 25 0 14 0 69 0 26] 
+#[1 0 9 0 1 0 13 0 8 0 17 0 9 0 21 0 12 0 25 0 14 0 73 0 16 0 33 0 17 0 33 0 18 0 33 0 19 0 33 0 20 0 33 0 21 0 33 0 22 0 33 0 23 0 33 0 24 0 65 0 26] 
+#[0 0 14 0 2 0 3 0 4 0 6 0 7 0 10 0 11 0 13 0 27] 
+#[1 0 77 0 4 0 0 0 27] 
+#[0 0 18 0 3 0 4 0 7 0 11 0 13 0 27] 
 #[0 0 22 0 3 0 4 0 7 0 11 0 13 0 27] 
 #[0 0 26 0 3 0 4 0 7 0 11 0 13 0 27] 
 #[0 0 30 0 3 0 4 0 7 0 11 0 13 0 27] 
@@ -170,23 +169,24 @@ TypTypeParser class >> transitionTable [
 #[0 0 38 0 3 0 4 0 7 0 11 0 13 0 27] 
 #[0 0 42 0 3 0 4 0 7 0 11 0 13 0 27] 
 #[0 0 46 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[0 0 50 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[1 0 54 0 3 0 54 0 4 0 101 0 6 0 54 0 7 0 54 0 11 0 54 0 13 0 54 0 27] 
-#[1 0 58 0 3 0 97 0 4 0 58 0 11] 
-#[0 0 105 0 3] 
+#[1 0 81 0 2 0 50 0 3 0 50 0 4 0 85 0 6 0 50 0 7 0 89 0 10 0 50 0 11 0 50 0 13 0 50 0 27] 
+#[0 0 54 0 3 0 4 0 7 0 11 0 13 0 27] 
+#[1 0 77 0 4 0 93 0 13] 
+#[1 0 9 0 1 0 13 0 8 0 17 0 9 0 21 0 12 0 25 0 14 0 97 0 17 0 97 0 18 0 97 0 19 0 97 0 20 0 97 0 21 0 97 0 22 0 97 0 23 0 97 0 24 0 65 0 26] 
+#[1 0 9 0 1 0 58 0 3 0 13 0 8 0 17 0 9 0 21 0 12 0 25 0 14 0 101 0 16 0 33 0 17 0 33 0 18 0 33 0 19 0 33 0 20 0 33 0 21 0 33 0 22 0 33 0 23 0 33 0 24 0 105 0 25 0 65 0 26] 
+#[1 0 9 0 1 0 13 0 8 0 17 0 9 0 21 0 12 0 25 0 14 0 109 0 16 0 33 0 17 0 33 0 18 0 33 0 19 0 33 0 20 0 33 0 21 0 33 0 22 0 33 0 23 0 33 0 24 0 65 0 26] 
+#[1 0 9 0 1 0 13 0 8 0 17 0 9 0 58 0 11 0 21 0 12 0 25 0 14 0 101 0 16 0 33 0 17 0 33 0 18 0 33 0 19 0 33 0 20 0 33 0 21 0 33 0 22 0 33 0 23 0 33 0 24 0 113 0 25 0 65 0 26] 
 #[0 0 62 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[0 0 109 0 11] 
-#[1 0 97 0 4 0 113 0 13] 
-#[1 0 9 0 1 0 13 0 2 0 17 0 8 0 21 0 9 0 25 0 10 0 29 0 12 0 33 0 14 0 117 0 17 0 117 0 18 0 117 0 19 0 117 0 20 0 117 0 21 0 117 0 22 0 117 0 23 0 117 0 24 0 73 0 26] 
-#[1 0 9 0 1 0 13 0 2 0 17 0 8 0 21 0 9 0 25 0 10 0 29 0 12 0 33 0 14 0 121 0 16 0 41 0 17 0 41 0 18 0 41 0 19 0 41 0 20 0 41 0 21 0 41 0 22 0 41 0 23 0 41 0 24 0 73 0 26] 
-#[0 0 125 0 5] 
-#[0 0 129 0 5] 
 #[0 0 66 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[0 0 70 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[1 0 97 0 4 0 133 0 7] 
-#[1 0 9 0 1 0 13 0 2 0 17 0 8 0 21 0 9 0 25 0 10 0 29 0 12 0 33 0 14 0 137 0 17 0 137 0 18 0 137 0 19 0 137 0 20 0 137 0 21 0 137 0 22 0 137 0 23 0 137 0 24 0 73 0 26] 
-#[1 0 9 0 1 0 13 0 2 0 17 0 8 0 21 0 9 0 25 0 10 0 29 0 12 0 33 0 14 0 141 0 17 0 141 0 18 0 141 0 19 0 141 0 20 0 141 0 21 0 141 0 22 0 141 0 23 0 141 0 24 0 73 0 26] 
+#[1 0 70 0 3 0 77 0 4 0 70 0 11] 
+#[0 0 117 0 3] 
+#[1 0 77 0 4 0 121 0 7] 
+#[0 0 125 0 11] 
+#[0 0 129 0 5] 
 #[0 0 74 0 3 0 4 0 7 0 11 0 13 0 27] 
+#[0 0 133 0 5] 
+#[1 0 9 0 1 0 13 0 8 0 17 0 9 0 21 0 12 0 25 0 14 0 137 0 17 0 137 0 18 0 137 0 19 0 137 0 20 0 137 0 21 0 137 0 22 0 137 0 23 0 137 0 24 0 65 0 26] 
+#[1 0 9 0 1 0 13 0 8 0 17 0 9 0 21 0 12 0 25 0 14 0 141 0 17 0 141 0 18 0 141 0 19 0 141 0 20 0 141 0 21 0 141 0 22 0 141 0 23 0 141 0 24 0 65 0 26] 
 #[0 0 78 0 3 0 4 0 7 0 11 0 13 0 27] 
 #[0 0 82 0 3 0 4 0 7 0 11 0 13 0 27]
 	).
@@ -202,16 +202,17 @@ TypTypeParser >> reduceActionForFunctionType1: nodes [
 	| typeVariables bindings |
 	typeVariables := ({'@0' typAsType}
 		,
-			((nodes at: 2) size
+			((nodes at: 3) size
 				timesCollect: [ :i | ('@' , i asString) typAsType ])
-		, ({(nodes at: 5)} , (nodes at: 2) select: #isTypeVariable)) asSet.
+		, ({(nodes at: 6)} , (nodes at: 3) select: #isTypeVariable)) asSet.
 	bindings := (typeVariables collect: [ :e | e -> e ])
 		typAsTypeVariableBindings.
-	{(nodes at: 5)} , (nodes at: 2)
+	{(nodes at: 6)} , (nodes at: 3)
 		withIndexDo: [ :e :i | bindings at: ('@' , i asString) typAsType put: e ].
 	^ TypFunctionType
+		named: (nodes at: 1)
 		argumentsSize:
-			(nodes at: 2) size
+			(nodes at: 3) size
 		argumentsOptional: true
 		bindings: bindings
 ]
@@ -221,16 +222,17 @@ TypTypeParser >> reduceActionForFunctionType2: nodes [
 	| typeVariables bindings |
 	typeVariables := ({'@0' typAsType}
 		,
-			((nodes at: 2) size
+			((nodes at: 3) size
 				timesCollect: [ :i | ('@' , i asString) typAsType ])
-		, ({(nodes at: 5)} , (nodes at: 2) select: #isTypeVariable)) asSet.
+		, ({(nodes at: 6)} , (nodes at: 3) select: #isTypeVariable)) asSet.
 	bindings := (typeVariables collect: [ :e | e -> e ])
 		typAsTypeVariableBindings.
-	{(nodes at: 5)} , (nodes at: 2)
+	{(nodes at: 6)} , (nodes at: 3)
 		withIndexDo: [ :e :i | bindings at: ('@' , i asString) typAsType put: e ].
 	^ TypFunctionType
+		named: (nodes at: 1)
 		argumentsSize:
-			(nodes at: 2) size
+			(nodes at: 3) size
 		argumentsOptional: false
 		bindings: bindings
 ]

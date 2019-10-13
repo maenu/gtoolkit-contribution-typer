@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #generated }
-TypTypeVariableBindings class >> parameters: aSet [
+TypTypeVariableBindings class >> variables: aSet [
 	| instance |
 	instance := self new.
 	aSet do: [ :e | instance at: e put: e ].

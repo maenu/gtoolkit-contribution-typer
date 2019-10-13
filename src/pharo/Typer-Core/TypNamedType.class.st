@@ -16,14 +16,6 @@ TypNamedType class >> classDescription: aClassDescription [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypNamedType class >> classDescription: aClassDescription superTypeBindings: anOrderedDictionary [
-	^ self new
-		initializeWithClassDescription: aClassDescription
-			superTypeBindings: anOrderedDictionary;
-		yourself
-]
-
 { #category : #'instance creation' }
 TypNamedType class >> named: aString [
 	^ self new
@@ -34,10 +26,7 @@ TypNamedType class >> named: aString [
 { #category : #comparing }
 TypNamedType >> = anObject [
 	^ self == anObject
-		or: [ self class = anObject class
-				and: [ | type |
-					type := anObject "typCastAs TypNamedType".
-					self name = type name ] ]
+		or: [ self class = anObject class and: [ name = anObject name ] ]
 ]
 
 { #category : #comparing }
@@ -98,18 +87,16 @@ TypNamedType >> initialize [
 	super initialize
 ]
 
+{ #category : #initialization }
+TypNamedType >> initializeSuperTypeWithBindings: aBindings [
+	superType := self superType copyWithBindings: aBindings
+]
+
 { #category : #accessing }
 TypNamedType >> initializeWithClassDescription: aClassDescription [
-	self assert: [ aClassDescription isNotNil ].
 	classDescription := aClassDescription.
 	name := classDescription name.
 	hasClassDescription := true
-]
-
-{ #category : #initialization }
-TypNamedType >> initializeWithClassDescription: aClassDescription superTypeBindings: aBindings [
-	self initializeWithClassDescription: aClassDescription.
-	superType := self superType copyWithBindings: aBindings
 ]
 
 { #category : #accessing }

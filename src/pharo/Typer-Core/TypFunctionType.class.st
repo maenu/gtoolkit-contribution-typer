@@ -1,41 +1,101 @@
 Class {
 	#name : #TypFunctionType,
-	#superclass : #TypType,
+	#superclass : #TypParametricType,
 	#instVars : [
 		'argumentsSize',
-		'argumentsOptional',
-		'bindings'
+		'argumentsOptional'
 	],
 	#category : #'Typer-Core-Type'
 }
 
 { #category : #'as yet unclassified' }
-TypFunctionType class >> argumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
+TypFunctionType class >> classDescription: aClassDescription argumentsSize: anInteger argumentsOptional: aBoolean [
+	^ self
+		classDescription: aClassDescription
+		argumentsSize: anInteger
+		argumentsOptional: aBoolean
+		bindings:
+			(TypTypeVariableBindings
+				variables: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsType ]))
+]
+
+{ #category : #'as yet unclassified' }
+TypFunctionType class >> classDescription: aClassDescription argumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
 	^ self new
-		initializeWithArgumentsSize: anInteger
+		initializeWithClassDescription: aClassDescription
+			argumentsSize: anInteger
 			argumentsOptional: aBoolean
 			bindings: aBindings;
 		yourself
+]
+
+{ #category : #'as yet unclassified' }
+TypFunctionType class >> classDescription: aClassDescription parameters: aSequenceableCollection [
+	self shouldNotImplement
+]
+
+{ #category : #'as yet unclassified' }
+TypFunctionType class >> classDescription: aClassDescription parameters: aSequenceableCollection bindings: aBindings [
+	self shouldNotImplement
+]
+
+{ #category : #'as yet unclassified' }
+TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOptional: aBoolean [
+	^ self
+		named: aString
+		argumentsSize: anInteger
+		argumentsOptional: aBoolean
+		bindings:
+			(TypTypeVariableBindings
+				variables: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsType ]))
+]
+
+{ #category : #'as yet unclassified' }
+TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
+	^ self new
+		initializeWithName: aString
+			argumentsSize: anInteger
+			argumentsOptional: aBoolean
+			bindings: aBindings;
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
+TypFunctionType class >> named: aString parameters: aSequenceableCollection [
+	self shouldNotImplement
+]
+
+{ #category : #'as yet unclassified' }
+TypFunctionType class >> named: aString parameters: aSequenceableCollection bindings: aBindings [
+	self shouldNotImplement
 ]
 
 { #category : #comparing }
 TypFunctionType >> = aType [
 	^ self == aType
 		or: [ self class = aType class
-				and: [ argumentsSize = aType argumentsSize
-						and: [ argumentsOptional = aType argumentsOptional
-								and: [ bindings = aType bindings ] ] ] ]
+				and: [ name = aType name
+						and: [ argumentsSize = aType argumentsSize
+								and: [ argumentsOptional = aType argumentsOptional
+										and:
+											[ parameters = aType parameters and: [ bindings = aType bindings ] ] ] ] ] ]
 ]
 
 { #category : #comparing }
 TypFunctionType >> > aType [
 	^ self ~= aType
-		and: [ aType isFunction
-				and: [ argumentsSize = aType argumentsSize
-						and: [ argumentsOptional = aType argumentsOptional
-								and: [ (bindings copyWithout: '@0' typAsType)
-										>= (aType bindings copyWithout: '@0' typAsType)
-										and: [ self result >= aType result ] ] ] ] ]
+		and: [ (aType isFunction
+				and: [ name = aType name
+						and: [ argumentsSize = aType argumentsSize
+								and: [ argumentsOptional = aType argumentsOptional
+										and: [ parameters = aType parameters
+												and: [ ((bindings copyWithout: '@0' typAsType)
+														> (aType bindings copyWithout: '@0' typAsType)
+														and: [ self result = aType result ])
+														or: [ (bindings copyWithout: '@0' typAsType)
+																= (aType bindings copyWithout: '@0' typAsType)
+																and: [ self result > aType result ] ] ] ] ] ] ])
+				or: [ super > aType ] ]
 ]
 
 { #category : #accessing }
@@ -65,16 +125,6 @@ TypFunctionType >> asCompatibleWith: aType [
 		ifFalse: [ super asCompatibleWith: aType ]
 ]
 
-{ #category : #accessing }
-TypFunctionType >> bindings [
-	^ bindings
-]
-
-{ #category : #'as yet unclassified' }
-TypFunctionType >> canUnderstand: aSymbol [
-	^ false
-]
-
 { #category : #copying }
 TypFunctionType >> copyWithBindings: aBindings [
 	^ self copy
@@ -93,28 +143,40 @@ TypFunctionType >> copyWithResult: aType [
 				yourself)
 ]
 
-{ #category : #testing }
-TypFunctionType >> hasSuperType [
-	^ self result hasSuperType
-]
-
 { #category : #comparing }
 TypFunctionType >> hash [
-	^ (argumentsSize hash bitXor: argumentsOptional hash)
-		bitXor: bindings hash
+	^ (super hash bitXor: argumentsSize hash)
+		bitXor: argumentsOptional hash
 ]
 
 { #category : #initialization }
-TypFunctionType >> initializeWithArgumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
-	self
-		assert: [ aBindings variables
-				includesAll: ((0 to: anInteger) collect: [ :i | ('@' , i asString) typAsType ]) ].
+TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean [
+	argumentsSize := anInteger.
+	argumentsOptional := aBoolean
+]
+
+{ #category : #initialization }
+TypFunctionType >> initializeWithClassDescription: aClassDescription argumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
 	self
 		assert: [ aBindings variables
 				allSatisfy: [ :e | (aBindings at: e) ~= '@0' typAsType ] ].
-	argumentsSize := anInteger.
-	argumentsOptional := aBoolean.
-	bindings := aBindings
+	self
+		initializeWithClassDescription: aClassDescription
+		parameters: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsType ])
+		bindings: aBindings.
+	self initializeArgumentsSize: anInteger argumentsOptional: aBoolean
+]
+
+{ #category : #initialization }
+TypFunctionType >> initializeWithName: aString argumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
+	self
+		assert: [ aBindings variables
+				allSatisfy: [ :e | (aBindings at: e) ~= '@0' typAsType ] ].
+	self
+		initializeWithName: aString
+		parameters: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsType ])
+		bindings: aBindings.
+	self initializeArgumentsSize: anInteger argumentsOptional: aBoolean
 ]
 
 { #category : #testing }
@@ -122,19 +184,9 @@ TypFunctionType >> isFunction [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
-TypFunctionType >> lookupSelector: aSymbol [
-	self shouldNotImplement
-]
-
-{ #category : #copying }
-TypFunctionType >> postCopy [
-	super postCopy.
-	bindings := bindings copy
-]
-
 { #category : #accessing }
 TypFunctionType >> printOn: aStream [
+	aStream << name asString.
 	aStream
 		<<
 			(argumentsOptional
@@ -158,11 +210,4 @@ TypFunctionType >> printOn: aStream [
 TypFunctionType >> result [
 	<typTypeResultAs: 'TypType'>
 	^ bindings at: '@0' typAsType
-]
-
-{ #category : #accessing }
-TypFunctionType >> superType [
-	self assert: [ self hasSuperType ].
-	superType ifNotNil: [ ^ superType ].
-	^ superType := self copyWithResult: self result superType
 ]
