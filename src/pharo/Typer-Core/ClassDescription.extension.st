@@ -7,10 +7,10 @@ ClassDescription >> typAsNamedType [
 ]
 
 { #category : #'*Typer-Core' }
-ClassDescription >> typAsNamedTypeWithSuperTypeBindings: anOrderedDictionary [
-	^ TypNamedType
-		classDescription: self
-		superTypeBindings: anOrderedDictionary
+ClassDescription >> typAsNamedTypeWithSuperTypeBindings: aBindings [
+	^ (TypNamedType classDescription: self)
+		initializeSuperTypeWithBindings: aBindings;
+		yourself
 ]
 
 { #category : #'*Typer-Core' }

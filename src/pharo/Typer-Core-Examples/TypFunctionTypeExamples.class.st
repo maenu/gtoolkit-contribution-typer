@@ -1,6 +1,6 @@
 Class {
 	#name : #TypFunctionTypeExamples,
-	#superclass : #TypTypeExamples,
+	#superclass : #TypParametricTypeExamples,
 	#category : #'Typer-Core-Examples-Type'
 }
 
@@ -126,6 +126,7 @@ TypFunctionTypeExamples >> type [
 { #category : #'as yet unclassified' }
 TypFunctionTypeExamples >> typeNonOptionalArgument [
 	^ TypFunctionType
+		classDescription: BlockClosure
 		argumentsSize: 1
 		argumentsOptional: false
 		bindings:
@@ -136,6 +137,7 @@ TypFunctionTypeExamples >> typeNonOptionalArgument [
 { #category : #'as yet unclassified' }
 TypFunctionTypeExamples >> typeNonOptionalArgumentObjectResult [
 	^ TypFunctionType
+		classDescription: BlockClosure
 		argumentsSize: 1
 		argumentsOptional: false
 		bindings:
@@ -146,6 +148,7 @@ TypFunctionTypeExamples >> typeNonOptionalArgumentObjectResult [
 { #category : #'as yet unclassified' }
 TypFunctionTypeExamples >> typeNonOptionalArgumentTrueResult [
 	^ TypFunctionType
+		classDescription: BlockClosure
 		argumentsSize: 1
 		argumentsOptional: false
 		bindings:
@@ -156,6 +159,7 @@ TypFunctionTypeExamples >> typeNonOptionalArgumentTrueResult [
 { #category : #'as yet unclassified' }
 TypFunctionTypeExamples >> typeNonOptionalArgumentVariableResult [
 	^ TypFunctionType
+		classDescription: BlockClosure
 		argumentsSize: 1
 		argumentsOptional: false
 		bindings:
@@ -167,6 +171,7 @@ TypFunctionTypeExamples >> typeNonOptionalArgumentVariableResult [
 { #category : #'as yet unclassified' }
 TypFunctionTypeExamples >> typeNonOptionalArgumentVariableResultBound [
 	^ TypFunctionType
+		classDescription: BlockClosure
 		argumentsSize: 1
 		argumentsOptional: false
 		bindings:
@@ -178,6 +183,7 @@ TypFunctionTypeExamples >> typeNonOptionalArgumentVariableResultBound [
 { #category : #'as yet unclassified' }
 TypFunctionTypeExamples >> typeNonOptionalTwoArguments [
 	^ TypFunctionType
+		classDescription: BlockClosure
 		argumentsSize: 2
 		argumentsOptional: false
 		bindings:
@@ -189,6 +195,7 @@ TypFunctionTypeExamples >> typeNonOptionalTwoArguments [
 { #category : #'as yet unclassified' }
 TypFunctionTypeExamples >> typeNonOptionalVariableArgument [
 	^ TypFunctionType
+		classDescription: BlockClosure
 		argumentsSize: 1
 		argumentsOptional: false
 		bindings:
@@ -200,6 +207,7 @@ TypFunctionTypeExamples >> typeNonOptionalVariableArgument [
 { #category : #'as yet unclassified' }
 TypFunctionTypeExamples >> typeNonOptionalVariableArgumentBound [
 	^ TypFunctionType
+		classDescription: BlockClosure
 		argumentsSize: 1
 		argumentsOptional: false
 		bindings:
@@ -211,6 +219,7 @@ TypFunctionTypeExamples >> typeNonOptionalVariableArgumentBound [
 { #category : #'as yet unclassified' }
 TypFunctionTypeExamples >> typeOptionalArgument [
 	^ TypFunctionType
+		classDescription: BlockClosure
 		argumentsSize: 1
 		argumentsOptional: true
 		bindings:
@@ -221,6 +230,7 @@ TypFunctionTypeExamples >> typeOptionalArgument [
 { #category : #'as yet unclassified' }
 TypFunctionTypeExamples >> typeOptionalArgumentVariableResult [
 	^ TypFunctionType
+		classDescription: BlockClosure
 		argumentsSize: 1
 		argumentsOptional: true
 		bindings:
@@ -232,6 +242,7 @@ TypFunctionTypeExamples >> typeOptionalArgumentVariableResult [
 { #category : #'as yet unclassified' }
 TypFunctionTypeExamples >> typeOptionalVariableArgument [
 	^ TypFunctionType
+		classDescription: BlockClosure
 		argumentsSize: 1
 		argumentsOptional: true
 		bindings:

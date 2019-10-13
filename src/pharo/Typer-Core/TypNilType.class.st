@@ -54,16 +54,6 @@ TypNilType >> initialize [
 	self initializeWithClassDescription: UndefinedObject
 ]
 
-{ #category : #initialization }
-TypNilType >> initializeWithClassDescription: aClassDescription superTypeBindings: anOrderedDictionary [
-	self shouldNotImplement
-]
-
-{ #category : #accessing }
-TypNilType >> initializeWithName: anObject [
-	self shouldNotImplement
-]
-
 { #category : #testing }
 TypNilType >> isNil [
 	^ true
