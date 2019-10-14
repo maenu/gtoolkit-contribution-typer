@@ -11,11 +11,11 @@ RBProgramNode >> typAnnotateType: aType [
 		ifFound: [ :e | type := e typCastAs ]
 		ifNone: [  ].
 	self comments
-		detect: #typIsBindings
+		detect: #typIsParameters
 		ifFound: [ :e | 
 			type isParametric
 				ifTrue: [ | bindings |
-					bindings := e typBindings.
+					bindings := e typParameters.
 					bindings size = type parameters size
 						ifTrue: [ type := type
 								copyWithBindings:

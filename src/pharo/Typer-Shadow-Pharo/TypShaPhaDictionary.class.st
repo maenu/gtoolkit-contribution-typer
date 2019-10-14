@@ -119,7 +119,7 @@ TypShaPhaDictionary >> ___at: _a put: _b [
 TypShaPhaDictionary >> ___collect: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
-			{String typAsType.
+			{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
 				result: TypUnknownType instance

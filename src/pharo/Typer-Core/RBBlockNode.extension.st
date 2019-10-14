@@ -7,17 +7,14 @@ RBBlockNode >> typTypeForArgumentAt: anInteger [
 	| type |
 	type := self typType.
 	(self parent isMessage and: [ (self parent "typCastAs RBMessageNode") receiver ~~ self ])
-		ifTrue: [ | i parent_ type_ |
+		ifTrue: [ | i parent_ |
 			parent_ := self parent "typCastAs RBMessageNode".
 			i := parent_ arguments detectIndex: [ :e | e == self ].
-			type_ := parent_ typTypeForArgumentAt: i.
-			type_ isUnion
-				ifTrue: [ type_ := ((type_ "typCastAs TypUnionType") types
-								select: [ :e | e isNamed and: [ (e "typCastAs TypNamedType") name = 'BlockClosure' ] ]) typAsType ].
-			(type_ isParametric and: [ anInteger <= (type_ "typCastAs TypParametricType") parameters size ])
-				ifTrue: [ ^ self typAnnotateType: ((type_ "typCastAs TypParametricType") parameters at: anInteger) ] ].
-	(type isParametric and: [ anInteger <= (type "typCastAs TypParametricType") parameters size ])
-		ifTrue: [ ^ self typAnnotateType: ((type "typCastAs TypParametricType") parameters at: anInteger) ].
+			type := parent_ typTypeForArgumentAt: i.
+			type isUnion
+				ifTrue: [ type := ((type "typCastAs TypUnionType") types select: #isFunction) typAsType ] ].
+	(type isFunction and: [ anInteger <= (type "typCastAs TypFunctionType") arguments size ])
+		ifTrue: [ ^ self typAnnotateType: ((type "typCastAs TypFunctionType") arguments at: anInteger) ].
 	^ self typAnnotateType: TypUnknownType instance
 ]
 

@@ -202,7 +202,7 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifPresent: _b ifAbsent: _c [
 			i = 1
 				ifTrue: [ String typAsType ]
 				ifFalse: [ i = 2
-						ifTrue: [ {String typAsType.
+						ifTrue: [ {Symbol typAsType.
 							(BlockClosure
 								typAsFunctionTypeWithArguments: {TypUnknownType instance}
 								result: TypUnknownType instance
@@ -218,7 +218,7 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifPresent: _b ifAbsent: _c [
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
-						and: [ (argumentNode value isKindOf: String)
+						and: [ (argumentNode value isKindOf: Symbol)
 								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:

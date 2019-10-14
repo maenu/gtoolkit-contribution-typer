@@ -88,7 +88,7 @@ RBMethodNode >> typTypeRecursive [
 	newTemporaryProfile = oldTemporaryProfile ] whileFalse.
 	^ CompiledMethod
 		typAsFunctionTypeWithArguments: self typTypesForArguments
-		result: self body typTypeForResult
+		result: self typTypeForResult
 		argumentsOptional: false
 ]
 

@@ -18,7 +18,7 @@ TypShaGtGtMethodCoderAddOns >> ___addMainAction: _a icon: _b action: _c [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
-				ifTrue: [ String typAsType ]
+				ifTrue: [ Symbol typAsType ]
 				ifFalse: [ i = 2
 						ifTrue: [ Form typAsType ]
 						ifFalse: [ BlockClosure

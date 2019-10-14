@@ -54,7 +54,7 @@ TypShaPhaProtoObject >> ___ifNil: _a ifNotNil: _b [
 						typAsFunctionTypeWithArguments: {}
 						result: TypUnknownType instance
 						argumentsOptional: false ]
-				ifFalse: [ {String typAsType.
+				ifFalse: [ {Symbol typAsType.
 					(BlockClosure
 						typAsFunctionTypeWithArguments: {a receiverType asNonNullableType}
 						result: TypUnknownType instance
@@ -66,7 +66,7 @@ TypShaPhaProtoObject >> ___ifNil: _a ifNotNil: _b [
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
-						and: [ (argumentNode value isKindOf: String)
+						and: [ (argumentNode value isKindOf: Symbol)
 								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
@@ -86,7 +86,7 @@ TypShaPhaProtoObject >> ___ifNil: _a ifNotNil: _b [
 TypShaPhaProtoObject >> ___ifNotNil: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
-			{String typAsType.
+			{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithArguments: {a receiverType asNonNullableType}
 				result: TypUnknownType instance
@@ -98,7 +98,7 @@ TypShaPhaProtoObject >> ___ifNotNil: _a [
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
-						and: [ (argumentNode value isKindOf: String)
+						and: [ (argumentNode value isKindOf: Symbol)
 								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:

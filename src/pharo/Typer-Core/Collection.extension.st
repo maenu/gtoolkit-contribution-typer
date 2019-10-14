@@ -34,5 +34,5 @@ Collection >> typSelfType [
 Collection >> typSelfTypeSamples [
 	^ self size > 100
 		ifTrue: [ self asOrderedCollection copyFrom: 1 to: 100 ]
-		ifFalse: [ self ]
+		ifFalse: [ self asOrderedCollection ]
 ]
