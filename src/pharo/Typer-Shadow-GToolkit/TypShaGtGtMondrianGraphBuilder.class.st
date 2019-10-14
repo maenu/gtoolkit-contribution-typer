@@ -13,10 +13,10 @@ TypShaGtGtMondrianGraphBuilder class >> shadowedClass [
 TypShaGtGtMondrianGraphBuilder >> ___stencil: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
-			BlockClosure typAsType
-				asFunctionType: {TypUnknownType instance}
+			BlockClosure
+				typAsFunctionTypeWithArguments: {TypUnknownType instance}
 				result: BlElement typAsType
-				optionalParameters: false ];
+				argumentsOptional: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

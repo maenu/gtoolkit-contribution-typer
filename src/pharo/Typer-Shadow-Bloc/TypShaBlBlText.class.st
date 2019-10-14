@@ -30,7 +30,11 @@ TypShaBlBlText >> ___attributesAt: _a [
 { #category : #accessing }
 TypShaBlBlText >> ___clearAttributes: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {BlTextAttribute typAsType} result: TypUnknownType instance optionalParameters: false ];
+		argumentTypes: [ :i :a :s :r | 
+			BlockClosure
+				typAsFunctionTypeWithArguments: {BlTextAttribute typAsType}
+				result: TypUnknownType instance
+				argumentsOptional: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

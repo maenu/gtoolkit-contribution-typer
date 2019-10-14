@@ -20,7 +20,7 @@ TypShaGtGtSearchMethodGroupResult class >> shadowedClass [
 { #category : #converting }
 TypShaGtGtSearchMethodGroupResult >> asType: aClass [
 	^ aClass
-		typAsParametricType: {'@A' typAsType}
+		typAsParametricTypeWithParameters: {'@A' typAsType}
 		bindings:
 			{('@A' typAsType -> CompiledMethod typAsType)}
 				typAsTypeVariableBindings

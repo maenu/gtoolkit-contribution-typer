@@ -28,20 +28,20 @@ ClassDescription >> typPraAsClassLookupResult [
 		and: [ bindings isEmpty and: [ superTypeBindings isNotEmpty ] ])
 		ifTrue: [ ^ TypClassLookupResult new
 				type: [ :a | 
-					a classDescription
-						typAsNamedTypeWithSuperTypeBindings: superTypeBindings ];
+					a classDescription typAsNamedType
+						initializeSuperTypeWithBindings: superTypeBindings;
+						yourself ];
 				yourself ].
 	^ superTypeBindings isEmpty
 		ifTrue: [ TypClassLookupResult new
 				type:
-						[ :a | a classDescription typAsParametricType: parameters bindings: bindings ];
+						[ :a | a classDescription typAsParametricTypeWithParameters: parameters bindings: bindings ];
 				yourself ]
-		ifFalse: [ Halt once. TypClassLookupResult new
+		ifFalse: [ TypClassLookupResult new
 				type: [ :a | 
-					a classDescription
-						typAsParametricType: parameters
-						bindings: bindings
-						someSuperTypeBindings: superTypeBindings ];
+					(a classDescription typAsParametricTypeWithParameters: parameters bindings: bindings)
+						initializeSuperTypeWithSomeBindings: superTypeBindings;
+						yourself ];
 				yourself ]
 ]
 

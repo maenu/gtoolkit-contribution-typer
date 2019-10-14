@@ -38,5 +38,5 @@ TypShaPhaOrderedCollection >> ___removeLast [
 
 { #category : #converting }
 TypShaPhaOrderedCollection >> asType: aClass [
-	^ aClass typAsParametricType: {'@A' typAsType}
+	^ aClass typAsParametricTypeWithParameters: {'@A' typAsType}
 ]

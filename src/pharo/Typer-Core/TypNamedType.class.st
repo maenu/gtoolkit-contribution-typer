@@ -92,6 +92,11 @@ TypNamedType >> initializeSuperTypeWithBindings: aBindings [
 	superType := self superType copyWithBindings: aBindings
 ]
 
+{ #category : #initialization }
+TypNamedType >> initializeSuperTypeWithSomeBindings: aBindings [
+	superType := self superType copyWithSomeBindings: aBindings
+]
+
 { #category : #accessing }
 TypNamedType >> initializeWithClassDescription: aClassDescription [
 	classDescription := aClassDescription.

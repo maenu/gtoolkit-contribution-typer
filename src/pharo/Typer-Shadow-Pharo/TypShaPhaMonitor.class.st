@@ -13,10 +13,10 @@ TypShaPhaMonitor class >> shadowedClass [
 TypShaPhaMonitor >> ___critical: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
-			BlockClosure typAsType
-				asFunctionType: {}
+			BlockClosure
+				typAsFunctionTypeWithArguments: {}
 				result: TypUnknownType instance
-				optionalParameters: false ];
+				argumentsOptional: false ];
 		resultType: [ :a :s :r | (a argumentTypes at: 1) result ];
 		yourself
 ]

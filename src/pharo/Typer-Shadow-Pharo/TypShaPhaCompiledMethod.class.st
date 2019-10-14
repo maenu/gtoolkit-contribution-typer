@@ -86,6 +86,10 @@ TypShaPhaCompiledMethod >> ___sourceCode [
 
 { #category : #'as yet unclassified' }
 TypShaPhaCompiledMethod >> asType: aClass [
-	^ aClass
-		typAsNamedTypeWithSuperTypeBindings: {('@A' typAsType -> Integer typAsType)} typAsTypeVariableBindings
+	^ (aClass
+		typAsFunctionTypeWithArguments: {}
+		result: TypUnknownType instance
+		argumentsOptional: false)
+		initializeSuperTypeWithBindings: {('@A' typAsType -> Integer typAsType)} typAsTypeVariableBindings;
+		yourself
 ]

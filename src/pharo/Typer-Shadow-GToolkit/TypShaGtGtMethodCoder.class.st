@@ -39,7 +39,11 @@ TypShaGtGtMethodCoder >> ___compiledMethod [
 { #category : #accessing }
 TypShaGtGtMethodCoder >> ___cursorPositionDo: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {Integer typAsType} result: TypUnknownType instance optionalParameters: false ];
+		argumentTypes: [ :i :a :s :r | 
+			BlockClosure
+				typAsFunctionTypeWithArguments: {Integer typAsType}
+				result: TypUnknownType instance
+				argumentsOptional: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

@@ -86,10 +86,10 @@ RBMethodNode >> typTypeRecursive [
 	oldTemporaryProfile := newTemporaryProfile.
 	newTemporaryProfile := self typTemporaryProfile.
 	newTemporaryProfile = oldTemporaryProfile ] whileFalse.
-	^ BlockClosure typAsType
-		asFunctionType: self typTypesForArguments
-		result: self typTypeForResult
-		optionalParameters: false
+	^ CompiledMethod
+		typAsFunctionTypeWithArguments: self typTypesForArguments
+		result: self body typTypeForResult
+		argumentsOptional: false
 ]
 
 { #category : #'*Typer-Core' }

@@ -42,10 +42,10 @@ TypShaPhaCollection >> ___allSatisfy: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			{String typAsType.
-			(BlockClosure typAsType
-				asFunctionType: {(a receiverType bindings at: '@A' typAsType)}
+			(BlockClosure
+				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
 				result: Boolean typAsType
-				optionalParameters: false)} typAsType ];
+				argumentsOptional: false)} typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
@@ -58,12 +58,15 @@ TypShaPhaCollection >> ___anyOne [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaCollection >> ___anySatisfy: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			{String typAsType.
-			(BlockClosure typAsType asFunctionType: {(a receiverType bindings at: '@A' typAsType)} result: Boolean typAsType optionalParameters: false)} typAsType ];
+			(BlockClosure
+				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+				result: Boolean typAsType
+				argumentsOptional: false)} typAsType ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
@@ -140,15 +143,15 @@ TypShaPhaCollection >> ___at: _a [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaCollection >> ___collect: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			{String typAsType.
-			(BlockClosure typAsType
-				asFunctionType: {(a receiverType bindings at: '@A' typAsType)}
+			(BlockClosure
+				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
 				result: TypUnknownType instance
-				optionalParameters: false)} typAsType ];
+				argumentsOptional: false)} typAsType ];
 		resultType: [ :a | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 1.
@@ -188,34 +191,48 @@ TypShaPhaCollection >> ___copyWithoutAll: _a [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaCollection >> ___detect: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			{String typAsType.
-			(BlockClosure typAsType asFunctionType: {(a receiverType bindings at: '@A' typAsType)} result: Boolean typAsType optionalParameters: false)} typAsType ];
+			(BlockClosure
+				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+				result: Boolean typAsType
+				argumentsOptional: false)} typAsType ];
 		resultType: [ :a | a receiverType bindings at: '@A' typAsType ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaCollection >> ___detect: _a ifFound: _b ifNone: _c [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			i = 1
 				ifTrue: [ {String typAsType.
-					(BlockClosure typAsType asFunctionType: {(a receiverType bindings at: '@A' typAsType)} result: Boolean typAsType optionalParameters: false)} typAsType ]
+					(BlockClosure
+						typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+						result: Boolean typAsType
+						argumentsOptional: false)} typAsType ]
 				ifFalse: [ i = 2
 						ifTrue: [ {String typAsType.
-							(BlockClosure typAsType asFunctionType: {(a receiverType bindings at: '@A' typAsType)} result: TypUnknownType instance optionalParameters: true)} typAsType ]
-						ifFalse: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ] ] ];
+							(BlockClosure
+								typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+								result: TypUnknownType instance
+								argumentsOptional: true)} typAsType ]
+						ifFalse: [ BlockClosure
+								typAsFunctionTypeWithArguments: {}
+								result: TypUnknownType instance
+								argumentsOptional: false ] ] ];
 		resultType: [ :a | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 2.
 			argumentNode := a argumentNodes at: 2.
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
-				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
+				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
+						and: [ (argumentNode value isKindOf: String)
+								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new
@@ -230,14 +247,20 @@ TypShaPhaCollection >> ___detect: _a ifFound: _b ifNone: _c [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaCollection >> ___detect: _a ifNone: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			i = 1
 				ifTrue: [ {String typAsType.
-					(BlockClosure typAsType asFunctionType: {(a receiverType bindings at: '@A' typAsType)} result: Boolean typAsType optionalParameters: false)} typAsType ]
-				ifFalse: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ] ];
+					(BlockClosure
+						typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+						result: Boolean typAsType
+						argumentsOptional: false)} typAsType ]
+				ifFalse: [ BlockClosure
+						typAsFunctionTypeWithArguments: {}
+						result: TypUnknownType instance
+						argumentsOptional: false ] ];
 		resultType: [ :a | 
 			{(a receiverType bindings at: '@A' typAsType).
 			(a argumentTypes at: 2) result} typAsType ];
@@ -249,7 +272,10 @@ TypShaPhaCollection >> ___do: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			{String typAsType.
-			(BlockClosure typAsType asFunctionType: {(a receiverType bindings at: '@A' typAsType)} result: TypUnknownType instance optionalParameters: false)} typAsType ];
+			(BlockClosure
+				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+				result: TypUnknownType instance
+				argumentsOptional: false)} typAsType ];
 		resultType: [ :a | a receiverType ];
 		yourself
 ]
@@ -259,10 +285,10 @@ TypShaPhaCollection >> ___flatCollect: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			{String typAsType.
-			(BlockClosure typAsType
-				asFunctionType: {(a receiverType bindings at: '@A' typAsType)}
+			(BlockClosure
+				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
 				result: TypUnknownType instance
-				optionalParameters: false)} typAsType ];
+				argumentsOptional: false)} typAsType ];
 		resultType: [ :a | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 1.
@@ -293,10 +319,10 @@ TypShaPhaCollection >> ___groupedBy: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			{String typAsType.
-			(BlockClosure typAsType
-				asFunctionType: {(a receiverType bindings at: '@A' typAsType)}
+			(BlockClosure
+				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
 				result: TypUnknownType instance
-				optionalParameters: false)} typAsType ];
+				argumentsOptional: false)} typAsType ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode keyType |
 			argumentType := a argumentTypes at: 1.
@@ -334,10 +360,14 @@ TypShaPhaCollection >> ___gtItemsFor: _a [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaCollection >> ___ifEmpty: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ];
+		argumentTypes: [ :i :a :s :r | 
+			BlockClosure
+				typAsFunctionTypeWithArguments: {}
+				result: TypUnknownType instance
+				argumentsOptional: false ];
 		resultType: [ :a :s :r | 
 			{a receiverType.
 			(a argumentTypes at: 1) result} typAsType ];
@@ -349,16 +379,24 @@ TypShaPhaCollection >> ___ifEmpty: _a ifNotEmpty: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
-				ifTrue: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ]
+				ifTrue: [ BlockClosure
+						typAsFunctionTypeWithArguments: {}
+						result: TypUnknownType instance
+						argumentsOptional: false ]
 				ifFalse: [ {String typAsType.
-					(BlockClosure typAsType asFunctionType: {a receiverType} result: TypUnknownType instance optionalParameters: true)} typAsType ] ];
+					(BlockClosure
+						typAsFunctionTypeWithArguments: {a receiverType}
+						result: TypUnknownType instance
+						argumentsOptional: true)} typAsType ] ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 2.
 			argumentNode := a argumentNodes at: 2.
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
-				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
+				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
+						and: [ (argumentNode value isKindOf: String)
+								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new
@@ -373,19 +411,24 @@ TypShaPhaCollection >> ___ifEmpty: _a ifNotEmpty: _b [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaCollection >> ___ifNotEmpty: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			{String typAsType.
-			(BlockClosure typAsType asFunctionType: {a receiverType} result: TypUnknownType instance optionalParameters: true)} typAsType ];
+			(BlockClosure
+				typAsFunctionTypeWithArguments: {a receiverType}
+				result: TypUnknownType instance
+				argumentsOptional: true)} typAsType ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 1.
 			argumentNode := a argumentNodes at: 1.
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
-				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
+				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
+						and: [ (argumentNode value isKindOf: String)
+								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new
@@ -414,12 +457,12 @@ TypShaPhaCollection >> ___inject: _a into: _b [
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ a argumentTypes at: 1 ]
-				ifFalse: [ BlockClosure typAsType
-						asFunctionType:
+				ifFalse: [ BlockClosure
+						typAsFunctionTypeWithArguments:
 							{(a argumentTypes at: 1).
 							(a receiverType bindings at: '@A' typAsType)}
 						result: TypUnknownType instance
-						optionalParameters: false ] ];
+						argumentsOptional: false ] ];
 		resultType: [ :a :s :r | 
 			{(a argumentTypes at: 1).
 			(a argumentTypes at: 2) result} typAsType ];
@@ -454,23 +497,26 @@ TypShaPhaCollection >> ___max [
 TypShaPhaCollection >> ___reduce: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
-			BlockClosure typAsType
-				asFunctionType:
+			BlockClosure
+				typAsFunctionTypeWithArguments:
 					{{(a receiverType bindings at: '@A' typAsType).
 					(a argumentTypes at: 1) result} typAsType.
 					(a receiverType bindings at: '@A' typAsType)}
 				result: TypUnknownType instance
-				optionalParameters: false ];
+				argumentsOptional: false ];
 		resultType: [ :a :s :r | (a argumentTypes at: 1) result ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaCollection >> ___reject: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			{String typAsType.
-			(BlockClosure typAsType asFunctionType: {(a receiverType bindings at: '@A' typAsType)} result: Boolean typAsType optionalParameters: false)} typAsType ];
+			(BlockClosure
+				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+				result: Boolean typAsType
+				argumentsOptional: false)} typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
@@ -489,22 +535,25 @@ TypShaPhaCollection >> ___remove: _a ifAbsent: _b [
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ a receiverType bindings at: '@A' typAsType ]
-				ifFalse: [ BlockClosure typAsType
-						asFunctionType: {}
+				ifFalse: [ BlockClosure
+						typAsFunctionTypeWithArguments: {}
 						result: TypUnknownType instance
-						optionalParameters: false ] ];
+						argumentsOptional: false ] ];
 		resultType: [ :a :s :r | 
 			{(a argumentTypes at: 1).
 			(a argumentTypes at: 2) result} typAsType ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaCollection >> ___select: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			{String typAsType.
-			(BlockClosure typAsType asFunctionType: {(a receiverType bindings at: '@A' typAsType)} result: Boolean typAsType optionalParameters: false)} typAsType ];
+			(BlockClosure
+				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+				result: Boolean typAsType
+				argumentsOptional: false)} typAsType ];
 		resultType: [ :a | a receiverType ];
 		yourself
 ]
@@ -519,7 +568,7 @@ TypShaPhaCollection >> ___size [
 
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> asType: aClass [
-	^ aClass typAsParametricType: {'@A' typAsType}
+	^ aClass typAsParametricTypeWithParameters: {'@A' typAsType}
 ]
 
 { #category : #accessing }

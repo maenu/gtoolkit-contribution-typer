@@ -185,7 +185,10 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifAbsentPut: _b [
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ String typAsType ]
-				ifFalse: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ] ];
+				ifFalse: [ BlockClosure
+						typAsFunctionTypeWithArguments: {}
+						result: TypUnknownType instance
+						argumentsOptional: false ] ];
 		resultType: [ :a :s :r | 
 			{TypUnknownType instance.
 			(a argumentTypes at: 2) result} typAsType ];
@@ -200,15 +203,23 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifPresent: _b ifAbsent: _c [
 				ifTrue: [ String typAsType ]
 				ifFalse: [ i = 2
 						ifTrue: [ {String typAsType.
-							(BlockClosure typAsType asFunctionType: {TypUnknownType instance} result: TypUnknownType instance optionalParameters: true)} typAsType ]
-						ifFalse: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ] ] ];
+							(BlockClosure
+								typAsFunctionTypeWithArguments: {TypUnknownType instance}
+								result: TypUnknownType instance
+								argumentsOptional: true)} typAsType ]
+						ifFalse: [ BlockClosure
+								typAsFunctionTypeWithArguments: {}
+								result: TypUnknownType instance
+								argumentsOptional: false ] ] ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 2.
 			argumentNode := a argumentNodes at: 2.
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
-				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
+				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
+						and: [ (argumentNode value isKindOf: String)
+								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new
@@ -248,10 +259,10 @@ TypShaPhaRBProgramNode >> ___removeProperty: _a ifAbsent: _b [
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ String typAsType ]
-				ifFalse: [ BlockClosure typAsType
-						asFunctionType: {}
+				ifFalse: [ BlockClosure
+						typAsFunctionTypeWithArguments: {}
 						result: TypUnknownType instance
-						optionalParameters: false ] ];
+						argumentsOptional: false ] ];
 		resultType: [ :a :s :r | 
 			{TypUnknownType instance.
 			(a argumentTypes at: 2) result} typAsType ];

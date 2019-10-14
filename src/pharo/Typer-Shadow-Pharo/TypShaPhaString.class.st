@@ -23,10 +23,10 @@ TypShaPhaString >> ___asClassInEnvironment: _a ifAbsent: _b [
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ SystemDictionary typAsType ]
-				ifFalse: [ BlockClosure typAsType
-						asFunctionType: {}
+				ifFalse: [ BlockClosure
+						typAsFunctionTypeWithArguments: {}
 						result: TypUnknownType instance
-						optionalParameters: false ] ];
+						argumentsOptional: false ] ];
 		resultType: [ :a :s :r | 
 			| node |
 			node := a argumentNodes at: 2.
@@ -95,6 +95,7 @@ TypShaPhaString >> ___translated [
 
 { #category : #converting }
 TypShaPhaString >> asType: aClass [
-	^ aClass
-		typAsNamedTypeWithSuperTypeBindings: {('@A'typAsType -> Character typAsType)} typAsTypeVariableBindings
+	^ aClass typAsNamedType
+		initializeSuperTypeWithBindings: {('@A' typAsType -> Character typAsType)} typAsTypeVariableBindings;
+		yourself
 ]

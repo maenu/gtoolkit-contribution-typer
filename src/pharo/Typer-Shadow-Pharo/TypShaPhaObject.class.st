@@ -30,10 +30,10 @@ TypShaPhaObject >> ___assert: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			{Boolean typAsType.
-			(BlockClosure typAsType
-				asFunctionType: {}
+			(BlockClosure
+				typAsFunctionTypeWithArguments: {}
 				result: Boolean typAsType
-				optionalParameters: false)} typAsType ];
+				argumentsOptional: false)} typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

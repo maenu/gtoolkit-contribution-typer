@@ -12,7 +12,11 @@ TypShaGtGtPhlowView class >> shadowedClass [
 { #category : #accessing }
 TypShaGtGtPhlowView >> ___actionStencil: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {} result: BlElement typAsType optionalParameters: false ];
+		argumentTypes: [ :i :a :s :r | 
+			BlockClosure
+				typAsFunctionTypeWithArguments: {}
+				result: BlElement typAsType
+				argumentsOptional: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

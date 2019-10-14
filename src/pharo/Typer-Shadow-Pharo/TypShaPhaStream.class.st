@@ -11,7 +11,7 @@ TypShaPhaStream class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaStream >> asType: aClass [
-	^ aClass typAsParametricType: {'@A' typAsType}
+	^ aClass typAsParametricTypeWithParameters: {'@A' typAsType}
 ]
 
 { #category : #accessing }

@@ -29,36 +29,45 @@ TypShaPhaProtoObject >> ___flag: _a [
 TypShaPhaProtoObject >> ___ifNil: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
-			BlockClosure typAsType
-				asFunctionType: {}
+			BlockClosure
+				typAsFunctionTypeWithArguments: {}
 				result: TypUnknownType instance
-				optionalParameters: false ];
+				argumentsOptional: false ];
 		resultType: [ :a :s :r | 
 			| node |
 			node := a argumentNodes at: 1.
 			(node isBlock
-				and: [ node body statements size > 0 and: [ node body statements last isReturn ] ])
+				and: [ node body statements size > 0
+						and: [ node body statements last isReturn ] ])
 				ifTrue: [ a receiverType asNonNullableType ]
 				ifFalse: [ {a receiverType.
 					(a argumentTypes at: 1) result} typAsType ] ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaProtoObject >> ___ifNil: _a ifNotNil: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
-				ifTrue: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ]
+				ifTrue: [ BlockClosure
+						typAsFunctionTypeWithArguments: {}
+						result: TypUnknownType instance
+						argumentsOptional: false ]
 				ifFalse: [ {String typAsType.
-					(BlockClosure typAsType asFunctionType: {a receiverType asNonNullableType} result: TypUnknownType instance optionalParameters: true)} typAsType ] ];
+					(BlockClosure
+						typAsFunctionTypeWithArguments: {a receiverType asNonNullableType}
+						result: TypUnknownType instance
+						argumentsOptional: true)} typAsType ] ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 2.
 			argumentNode := a argumentNodes at: 2.
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
-				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
+				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
+						and: [ (argumentNode value isKindOf: String)
+								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new
@@ -78,14 +87,19 @@ TypShaPhaProtoObject >> ___ifNotNil: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			{String typAsType.
-			(BlockClosure typAsType asFunctionType: {a receiverType asNonNullableType} result: TypUnknownType instance optionalParameters: true)} typAsType ];
+			(BlockClosure
+				typAsFunctionTypeWithArguments: {a receiverType asNonNullableType}
+				result: TypUnknownType instance
+				argumentsOptional: true)} typAsType ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 1.
 			argumentNode := a argumentNodes at: 1.
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
-				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode) and: [ (argumentNode value isKindOf: String) and: [ argumentNode value asSymbol isUnary ] ])
+				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
+						and: [ (argumentNode value isKindOf: String)
+								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new

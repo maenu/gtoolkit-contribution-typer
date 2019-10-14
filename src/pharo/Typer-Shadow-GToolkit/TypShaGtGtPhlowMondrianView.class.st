@@ -13,10 +13,10 @@ TypShaGtGtPhlowMondrianView class >> shadowedClass [
 TypShaGtGtPhlowMondrianView >> ___painting: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
-			BlockClosure typAsType
-				asFunctionType: {GtMondrian typAsType}
+			BlockClosure
+				typAsFunctionTypeWithArguments: {GtMondrian typAsType}
 				result: TypUnknownType instance
-				optionalParameters: false ];
+				argumentsOptional: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

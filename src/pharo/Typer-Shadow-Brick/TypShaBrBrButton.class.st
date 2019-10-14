@@ -13,10 +13,10 @@ TypShaBrBrButton class >> shadowedClass [
 TypShaBrBrButton >> ___action: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
-			BlockClosure typAsType
-				asFunctionType: {}
+			BlockClosure
+				typAsFunctionTypeWithArguments: {}
 				result: TypUnknownType instance
-				optionalParameters: false ];
+				argumentsOptional: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

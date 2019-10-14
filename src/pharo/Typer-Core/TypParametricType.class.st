@@ -130,18 +130,6 @@ TypParametricType >> initializeWithClassDescription: aClassDescription parameter
 		bindings: aBindings
 ]
 
-{ #category : #initialization }
-TypParametricType >> initializeWithClassDescription: aClassDescription parameters: aSequenceableCollection bindings: aBindings someSuperTypeBindings: anotherBindings [
-	self
-		assert: [ (anotherBindings variables intersection: aBindings variables)
-				allSatisfy: [ :e | (aBindings at: e) isTypeVariable ] ].
-	self
-		initializeWithClassDescription: aClassDescription
-		parameters: aSequenceableCollection
-		bindings: aBindings.
-	superType := self superType copyWithSomeBindings: anotherBindings
-]
-
 { #category : #accessing }
 TypParametricType >> initializeWithName: aString parameters: aSequenceableCollection bindings: aBindings [
 	self initializeWithName: aString.

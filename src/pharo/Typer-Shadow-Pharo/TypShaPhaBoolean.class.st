@@ -9,11 +9,14 @@ TypShaPhaBoolean class >> shadowedClass [
 	^ Boolean class
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaBoolean >> ___and: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ {Boolean typAsType.
-			(BlockClosure typAsType asFunctionType: {} result: Boolean typAsType optionalParameters: false)} typAsType ];
+			(BlockClosure
+				typAsFunctionTypeWithArguments: {}
+				result: Boolean typAsType
+				argumentsOptional: false)} typAsType ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
@@ -21,7 +24,11 @@ TypShaPhaBoolean >> ___and: _a [
 { #category : #accessing }
 TypShaPhaBoolean >> ___ifFalse: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ];
+		argumentTypes: [ :i :a :s :r | 
+			BlockClosure
+				typAsFunctionTypeWithArguments: {}
+				result: TypUnknownType instance
+				argumentsOptional: false ];
 		resultType: [ :a :s :r | (a argumentTypes at: 1) result asNullableType ];
 		yourself
 ]
@@ -29,15 +36,22 @@ TypShaPhaBoolean >> ___ifFalse: _a [
 { #category : #accessing }
 TypShaPhaBoolean >> ___ifTrue: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ];
+		argumentTypes: [ :i :a :s :r | 
+			BlockClosure
+				typAsFunctionTypeWithArguments: {}
+				result: TypUnknownType instance
+				argumentsOptional: false ];
 		resultType: [ :a :s :r | (a argumentTypes at: 1) result asNullableType ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaBoolean >> ___ifTrue: _a ifFalse: _b [
 	^ TypMethodLookupResult new
-		argumentTypes: [ BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ];
+		argumentTypes: [ BlockClosure
+				typAsFunctionTypeWithArguments: {}
+				result: TypUnknownType instance
+				argumentsOptional: false ];
 		resultType: [ :a | 
 			(a argumentTypes
 				collect: [ :e | 
@@ -55,11 +69,14 @@ TypShaPhaBoolean >> ___not [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaBoolean >> ___or: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ {Boolean typAsType.
-			(BlockClosure typAsType asFunctionType: {} result: Boolean typAsType optionalParameters: false)} typAsType ];
+			(BlockClosure
+				typAsFunctionTypeWithArguments: {}
+				result: Boolean typAsType
+				argumentsOptional: false)} typAsType ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]

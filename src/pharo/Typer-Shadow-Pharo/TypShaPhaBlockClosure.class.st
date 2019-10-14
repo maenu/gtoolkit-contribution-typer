@@ -44,7 +44,11 @@ TypShaPhaBlockClosure >> ___cull: _a cull: _b cull: _c cull: _d [
 { #category : #accessing }
 TypShaPhaBlockClosure >> ___ensure: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | BlockClosure typAsType asFunctionType: {} result: TypUnknownType instance optionalParameters: false ];
+		argumentTypes: [ :i :a :s :r | 
+			BlockClosure
+				typAsFunctionTypeWithArguments: {}
+				result: TypUnknownType instance
+				argumentsOptional: false ];
 		resultType: [ :a :s :r | a receiverType result ];
 		yourself
 ]
@@ -60,10 +64,10 @@ TypShaPhaBlockClosure >> ___on: _a do: _b [
 					type := (first isNamed and: [ first hasClassDescription ])
 						ifTrue: [ first classDescription instanceSide typAsType ]
 						ifFalse: [ Exception class typAsType ].
-					BlockClosure typAsType
-						asFunctionType: {type}
+					BlockClosure
+						typAsFunctionTypeWithArguments: {type}
 						result: TypUnknownType instance
-						optionalParameters: true ] ];
+						argumentsOptional: true ] ];
 		resultType: [ :a :s :r | 
 			{a receiverType result.
 			(a argumentTypes at: 2) result} typAsType ];
@@ -114,16 +118,18 @@ TypShaPhaBlockClosure >> ___value: _a value: _b value: _c value: _d [
 TypShaPhaBlockClosure >> ___whileFalse: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
-			BlockClosure typAsType
-				asFunctionType: {}
+			BlockClosure
+				typAsFunctionTypeWithArguments: {}
 				result: TypUnknownType instance
-				optionalParameters: false ];
+				argumentsOptional: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 
 { #category : #'as yet unclassified' }
 TypShaPhaBlockClosure >> asType: aClass [
-	self flag: 'FIXME use proper function and parametric types'.
-	^ (super asType: aClass) asFunctionType: {} result: TypUnknownType instance optionalParameters: false
+	^ aClass
+		typAsFunctionTypeWithArguments: {}
+		result: TypUnknownType instance
+		argumentsOptional: false
 ]

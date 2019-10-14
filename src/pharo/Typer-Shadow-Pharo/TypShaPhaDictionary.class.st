@@ -46,19 +46,19 @@ TypShaPhaDictionary >> ___associations [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaDictionary >> ___associationsDo: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
-			BlockClosure typAsType
-				asFunctionType:
+			BlockClosure
+				typAsFunctionTypeWithArguments:
 					{(Association typAsType
 						copyWithBindings:
 							{('@A' typAsType -> (a receiverType bindings at: '@B' typAsType)).
 							('@B' typAsType -> (a receiverType bindings at: '@A' typAsType))}
 								typAsTypeVariableBindings)}
 				result: TypUnknownType instance
-				optionalParameters: false ];
+				argumentsOptional: false ];
 		resultType: [ :a :s | a receiverType ];
 		yourself
 ]
@@ -71,13 +71,16 @@ TypShaPhaDictionary >> ___at: _a [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaDictionary >> ___at: _a ifAbsentPut: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			i = 1
 				ifTrue: [ a receiverType bindings at: '@B' typAsType ]
-				ifFalse: [ BlockClosure typAsType asFunctionType: {} result: (a receiverType bindings at: '@A' typAsType) optionalParameters: false ] ];
+				ifFalse: [ BlockClosure
+						typAsFunctionTypeWithArguments: {}
+						result: (a receiverType bindings at: '@A' typAsType)
+						argumentsOptional: false ] ];
 		resultType: [ :a | a receiverType bindings at: '@A' typAsType ];
 		yourself
 ]
@@ -87,14 +90,14 @@ TypShaPhaDictionary >> ___at: _a ifPresent: _b ifAbsent: _c [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			{(a receiverType bindings at: '@B' typAsType).
-			(BlockClosure typAsType
-				asFunctionType: {(a receiverType bindings at: '@A' typAsType)}
+			(BlockClosure
+				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
 				result: TypUnknownType instance
-				optionalParameters: true).
-			(BlockClosure typAsType
-				asFunctionType: {}
+				argumentsOptional: true).
+			(BlockClosure
+				typAsFunctionTypeWithArguments: {}
 				result: TypUnknownType instance
-				optionalParameters: false)} ];
+				argumentsOptional: false)} ];
 		resultType: [ :a :s | 
 			{(a argumentTypes at: 2) result.
 			(a argumentTypes at: 3) result} typAsType ];
@@ -117,10 +120,10 @@ TypShaPhaDictionary >> ___collect: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			{String typAsType.
-			(BlockClosure typAsType
-				asFunctionType: {(a receiverType bindings at: '@A' typAsType)}
+			(BlockClosure
+				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
 				result: TypUnknownType instance
-				optionalParameters: false)} typAsType ];
+				argumentsOptional: false)} typAsType ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 1.
@@ -175,7 +178,7 @@ TypShaPhaDictionary >> ___keys [
 { #category : #'as yet unclassified' }
 TypShaPhaDictionary >> asType: aClass [
 	^ aClass
-		typAsParametricType:
+		typAsParametricTypeWithParameters:
 			{'@B' typAsType.
 			'@A' typAsType}
 ]

@@ -23,10 +23,10 @@ TypShaBlBlElement >> ___background: _a [
 TypShaBlBlElement >> ___constraintsDo: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
-			BlockClosure typAsType
-				asFunctionType: {BlLayoutConstraints typAsType}
+			BlockClosure
+				typAsFunctionTypeWithArguments: {BlLayoutConstraints typAsType}
 				result: TypUnknownType instance
-				optionalParameters: false ];
+				argumentsOptional: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

@@ -9,13 +9,13 @@ TypShaPhaNumber class >> shadowedClass [
 	^ Number class
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaNumber >> ___timesCollect: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ BlockClosure typAsType
-				asFunctionType: {Integer typAsType}
+		argumentTypes: [ BlockClosure
+				typAsFunctionTypeWithArguments: {Integer typAsType}
 				result: TypUnknownType instance
-				optionalParameters: true ];
+				argumentsOptional: true ];
 		resultType: [ :a | 
 			OrderedCollection typAsType
 				copyWithBindings:
@@ -50,12 +50,12 @@ TypShaPhaNumber >> ___to: _a do: _b [
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ Number typAsType ]
-				ifFalse: [ BlockClosure typAsType
-						asFunctionType:
+				ifFalse: [ BlockClosure
+						typAsFunctionTypeWithArguments:
 							{{a receiverType.
 							(a argumentTypes at: 1)} typAsType}
 						result: TypUnknownType instance
-						optionalParameters: false ] ];
+						argumentsOptional: false ] ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

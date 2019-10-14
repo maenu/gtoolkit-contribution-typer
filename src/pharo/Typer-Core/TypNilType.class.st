@@ -12,11 +12,6 @@ TypNilType class >> classDescription: aClassDescription [
 	self shouldNotImplement
 ]
 
-{ #category : #'as yet unclassified' }
-TypNilType class >> classDescription: aClassDescription superTypeBindings: anOrderedDictionary [
-	self shouldNotImplement
-]
-
 { #category : #accessing }
 TypNilType class >> instance [
 	<typTypeResultAs: 'TypNilType'>

@@ -13,12 +13,12 @@ TypShaBrBrTextCursorAttribute class >> shadowedClass [
 TypShaBrBrTextCursorAttribute >> ___enterAction: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
-			BlockClosure typAsType
-				asFunctionType:
+			BlockClosure
+				typAsFunctionTypeWithArguments:
 					{BrTextEditor typAsType.
 					BrTextEditorCursorAddedEvent typAsType}
 				result: TypUnknownType instance
-				optionalParameters: true ];
+				argumentsOptional: true ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
@@ -27,12 +27,12 @@ TypShaBrBrTextCursorAttribute >> ___enterAction: _a [
 TypShaBrBrTextCursorAttribute >> ___leaveAction: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
-			BlockClosure typAsType
-				asFunctionType:
+			BlockClosure
+				typAsFunctionTypeWithArguments:
 					{BrTextEditor typAsType.
 					BrTextEditorCursorRemovedEvent typAsType}
 				result: TypUnknownType instance
-				optionalParameters: true ];
+				argumentsOptional: true ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

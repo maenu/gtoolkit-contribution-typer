@@ -13,10 +13,10 @@ TypShaGtGtPhlowExplicitView class >> shadowedClass [
 TypShaGtGtPhlowExplicitView >> ___stencil: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
-			BlockClosure typAsType
-				asFunctionType: {}
+			BlockClosure
+				typAsFunctionTypeWithArguments: {}
 				result: BlElement typAsType
-				optionalParameters: false ];
+				argumentsOptional: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

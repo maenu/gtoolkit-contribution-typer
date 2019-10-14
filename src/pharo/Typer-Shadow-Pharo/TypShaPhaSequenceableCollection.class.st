@@ -31,10 +31,10 @@ TypShaPhaSequenceableCollection >> ___at: _a ifAbsent: _b [
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ Integer typAsType ]
-				ifFalse: [ BlockClosure typAsType
-						asFunctionType: {}
+				ifFalse: [ BlockClosure
+						typAsFunctionTypeWithArguments: {}
 						result: TypUnknownType instance
-						optionalParameters: false ] ];
+						argumentsOptional: false ] ];
 		resultType: [ :a :s :r | 
 			{(a receiverType bindings at: '@A' typAsType).
 			(a argumentTypes at: 2) result} typAsType ];
@@ -57,27 +57,38 @@ TypShaPhaSequenceableCollection >> ___copyFrom: _a to: _b [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaSequenceableCollection >> ___detectIndex: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a | BlockClosure typAsType asFunctionType: {(a receiverType bindings at: '@A' typAsType)} result: Boolean typAsType optionalParameters: false ];
+		argumentTypes: [ :i :a | 
+			BlockClosure
+				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+				result: Boolean typAsType
+				argumentsOptional: false ];
 		resultType: [ Integer typAsType ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaSequenceableCollection >> ___detectIndex: _a ifNone: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			i = 1
-				ifTrue: [ BlockClosure typAsType asFunctionType: {(a receiverType bindings at: '@A' typAsType)} result: Boolean typAsType optionalParameters: false ]
+				ifTrue: [ BlockClosure
+						typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+						result: Boolean typAsType
+						argumentsOptional: false ]
 				ifFalse: [ {TypUnknownType instance.
-					(BlockClosure typAsType asFunctionType: {} result: Boolean typAsType optionalParameters: false)} typAsType ] ];
+					(BlockClosure
+						typAsFunctionTypeWithArguments: {}
+						result: Boolean typAsType
+						argumentsOptional: false)} typAsType ] ];
 		resultType: [ :a | 
 			| none |
 			none := a argumentTypes at: 2.
 			{Integer typAsType.
-			((none hasClassDescription and: [ none classDescription == BlockClosure ])
+			((none hasClassDescription
+				and: [ none classDescription == BlockClosure ])
 				ifTrue: [ none result ]
 				ifFalse: [ none ])} typAsType ];
 		yourself
@@ -131,7 +142,7 @@ TypShaPhaSequenceableCollection >> ___reversed [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaSequenceableCollection >> ___sort: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
@@ -139,12 +150,12 @@ TypShaPhaSequenceableCollection >> ___sort: _a [
 			type := a receiverType isParametric
 				ifTrue: [ a receiverType bindings at: '@A' typAsType ]
 				ifFalse: [ TypUnknownType instance ].
-			BlockClosure typAsType
-				asFunctionType:
+			BlockClosure
+				typAsFunctionTypeWithArguments:
 					{type.
 					type}
 				result: Boolean typAsType
-				optionalParameters: false ];
+				argumentsOptional: false ];
 		resultType: [ :a | a receiverType ];
 		yourself
 ]
@@ -153,15 +164,17 @@ TypShaPhaSequenceableCollection >> ___sort: _a [
 TypShaPhaSequenceableCollection >> ___withIndexCollect: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
-			BlockClosure typAsType
-				asFunctionType:
+			BlockClosure
+				typAsFunctionTypeWithArguments:
 					{(a receiverType bindings at: '@A' typAsType).
 					Integer typAsType}
 				result: TypUnknownType instance
-				optionalParameters: false ];
+				argumentsOptional: false ];
 		resultType: [ :a :s :r | 
 			a receiverType
-				copyWithBindings: {('@A' typAsType -> (a argumentTypes at: 1) result)} typAsTypeVariableBindings ];
+				copyWithBindings:
+					{('@A' typAsType -> (a argumentTypes at: 1) result)}
+						typAsTypeVariableBindings ];
 		yourself
 ]
 
@@ -169,12 +182,12 @@ TypShaPhaSequenceableCollection >> ___withIndexCollect: _a [
 TypShaPhaSequenceableCollection >> ___withIndexDo: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
-			BlockClosure typAsType
-				asFunctionType:
+			BlockClosure
+				typAsFunctionTypeWithArguments:
 					{(a receiverType bindings at: '@A' typAsType).
 					Integer typAsType}
 				result: TypUnknownType instance
-				optionalParameters: false ];
+				argumentsOptional: false ];
 		resultType: [ :a | a receiverType ];
 		yourself
 ]
@@ -183,12 +196,12 @@ TypShaPhaSequenceableCollection >> ___withIndexDo: _a [
 TypShaPhaSequenceableCollection >> ___withIndexSelect: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
-			BlockClosure typAsType
-				asFunctionType:
+			BlockClosure
+				typAsFunctionTypeWithArguments:
 					{(a receiverType bindings at: '@A' typAsType).
 					Integer typAsType}
 				result: TypUnknownType instance
-				optionalParameters: false ];
+				argumentsOptional: false ];
 		resultType: [ :a :s :r | 
 			a receiverType
 				copyWithBindings: {('@A' typAsType -> (a argumentTypes at: 1) result)} ];
@@ -197,5 +210,5 @@ TypShaPhaSequenceableCollection >> ___withIndexSelect: _a [
 
 { #category : #converting }
 TypShaPhaSequenceableCollection >> asType: aClass [
-	^ aClass typAsParametricType: {'@A' typAsType}
+	^ aClass typAsParametricTypeWithParameters: {'@A' typAsType}
 ]

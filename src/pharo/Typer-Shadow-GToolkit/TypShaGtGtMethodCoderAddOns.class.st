@@ -21,10 +21,10 @@ TypShaGtGtMethodCoderAddOns >> ___addMainAction: _a icon: _b action: _c [
 				ifTrue: [ String typAsType ]
 				ifFalse: [ i = 2
 						ifTrue: [ Form typAsType ]
-						ifFalse: [ BlockClosure typAsType
-								asFunctionType: {}
+						ifFalse: [ BlockClosure
+								typAsFunctionTypeWithArguments: {}
 								result: TypUnknownType instance
-								optionalParameters: false ] ] ];
+								argumentsOptional: false ] ] ];
 		resultType: [ :a :s :r | 'GtMethodCoderAddOns' typAsType ];
 		yourself
 ]
