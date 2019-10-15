@@ -340,15 +340,16 @@ TypShaPhaCollection >> ___groupedBy: _a [
 										argumentTypes: {};
 										argumentNodes: {};
 										yourself) ]
-						ifFalse: [ TypUnknownType instance ] ].
-			Dictionary typAsType
+						ifFalse: [ '@B' typAsType ] ].
+			OrderedDictionary typAsType
 				copyWithBindings:
 					{('@B' typAsType -> keyType).
 					('@A' typAsType
 						->
 							(Collection typAsType
-								copyWithBindings: {(a receiverType bindings at: '@A' typAsType)}))}
-						typAsTypeVariableBindings ];
+								copyWithBindings:
+									{('@A' typAsType -> (a receiverType bindings at: '@A' typAsType))}
+										typAsTypeVariableBindings))} typAsTypeVariableBindings ];
 		yourself
 ]
 
