@@ -61,9 +61,9 @@ TypUnionTypeExamples >> printOn [
 	| type |
 	type := self type.
 	self assert: type asString = '{Integer}'.
-	self assert: self typeWithNil asString = '{!Integer}'.
-	self assert: self typeWithUnknown asString = '{?Integer}'.
-	self assert: self typeWithUnknownAndNil asString = '{!?Integer}'.
+	self assert: self typeWithNil asString = '{!,Integer}'.
+	self assert: self typeWithUnknown asString = '{?,Integer}'.
+	self assert: self typeWithUnknownAndNil asString = '{!,?,Integer}'.
 	^ type
 ]
 

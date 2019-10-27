@@ -12,13 +12,13 @@ Class {
 
 { #category : #accessing }
 TypDynCollector >> collectIn: aCollection doing: aBlock [
-	<typTypeArgument: 1 as: 'Collection<CompiledMethod<Integer>>'>
+	<typTypeArgument: 1 as: 'Collection<CompiledMethod()->Object>'>
 	<typTypeArgument: 2 as: 'BlockClosure()->Object'>
 	<typTypeResultAs: 'Association<Association<Object,TypDynResolver<TypLookup>>,TypDynResolver<TypLookup>>'>
-	| methodResults variableResults result asts |
-	result := nil "typCastAs !Object".
-	methodResults := Dictionary new "typParameters Association<ClassDescription,Symbol<Character>>,TypMethodResolver<TypMethodLookup>".
-	variableResults := Dictionary new "typParameters Association<ClassDescription,Symbol<Character>>,TypVariableResolver<TypVariableLookup>".
+	| methodResults variableResults result |
+	result := nil "typCastAs {!,Object}".
+	methodResults := Dictionary new "typParameters Association<ClassDescription,Symbol>,TypMethodResolver<TypMethodLookup>".
+	variableResults := Dictionary new "typParameters Association<ClassDescription,Symbol>,TypVariableResolver<TypVariableLookup>".
 	asts := aCollection collect: [ :e | e ast
 		doSemanticAnalysis;
 		typTypeReset;
@@ -40,14 +40,14 @@ TypDynCollector >> collectIn: aCollection doing: aBlock [
 
 { #category : #accessing }
 TypDynCollector >> collectIn: aCollection running: someTestCases [
-	<typTypeArgument: 1 as: 'Collection<CompiledMethod<Integer>>'>
+	<typTypeArgument: 1 as: 'Collection<CompiledMethod()->Object>'>
 	<typTypeArgument: 2 as: 'Collection<TestCase class>'>
 	<typTypeResultAs:
 		'Association<Association<Object,TypDynResolver<TypLookup>>,TypDynResolver<TypLookup>>'>
 	| methodResults variableResults result |
 	result := TestResult new.
-	methodResults := Dictionary new.	"typParameters Association<ClassDescription,Symbol<Character>>,TypMethodResolver<TypMethodLookup>"
-	variableResults := Dictionary new.	"typParameters Association<ClassDescription,Symbol<Character>>,TypVariableResolver<TypVariableLookup>"
+	methodResults := Dictionary new.	"typParameters Association<ClassDescription,Symbol>,TypMethodResolver<TypMethodLookup>"
+	variableResults := Dictionary new.	"typParameters Association<ClassDescription,Symbol>,TypVariableResolver<TypVariableLookup>"
 	asts := aCollection
 		collect: [ :e | 
 			e ast
@@ -79,7 +79,7 @@ TypDynCollector >> collectIn: aCollection running: someTestCases [
 TypDynCollector >> collectMethodResultsIn: aCollection [
 	<typTypeArgument: 1 as: 'Collection<RBMethodNode>'>
 	<typTypeResultAs:
-		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypMethodLookupResult>'>
+		'Dictionary<Association<ClassDescription,Symbol>,TypMethodLookupResult>'>
 	^ ((aCollection
 		collect: [ :e | e methodClass -> e selector -> e typDynAsMethodLookupResult ])
 		reject: [ :e | e value isNil ]) asDictionary
@@ -89,7 +89,7 @@ TypDynCollector >> collectMethodResultsIn: aCollection [
 TypDynCollector >> collectVariableResultsIn: aCollection [
 	<typTypeArgument: 1 as: 'Collection<RBMethodNode>'>
 	<typTypeResultAs:
-		'Dictionary<Association<ClassDescription,Symbol<Character>>,TypVariableLookupResult>'>
+		'Dictionary<Association<ClassDescription,Symbol>,TypVariableLookupResult>'>
 	^ (((aCollection
 		flatCollect: [ :e | e typDynTypesForVariables associations ])
 		groupedBy: #key)

@@ -6,7 +6,7 @@ Class {
 
 { #category : #'generated-accessing' }
 TypTypeParser class >> cacheId [
-	^'2019-10-13T22:12:08.531399+02:00'
+	^'2019-10-27T14:17:28.255231+01:00'
 ]
 
 { #category : #generated }
@@ -69,7 +69,7 @@ NamedType
 ParametricType
 	: Name 'name' ""<"" Types 'parameters' "">"" 
 		{ | type |
-		type := name typAsType.
+		type := name asClass typAsType.
 		type copyWithBindings: (parameters withIndexCollect: [ :e :i | | parameter |
 			parameter := type parameters at: i.
 			parameter -> e ]) typAsTypeVariableBindings }
@@ -105,7 +105,7 @@ Name
 
 { #category : #accessing }
 TypTypeParser class >> parse: aString [
-	<typTypeArgument: 1 as: 'String<Character>'>
+	<typTypeArgument: 1 as: 'String'>
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	^ super parse: aString
 ]
@@ -115,7 +115,7 @@ TypTypeParser class >> reduceTable [
 ^#(
 	#(19 1 #reduceActionForNilType1: 634881 false ) 
 	#(18 1 #reduceActionForUnknownType1: 581633 false ) 
-	#(26 1 #reduceActionForName1: 2371585 false ) 
+	#(26 1 #reduceActionForName1: 2379777 false ) 
 	#(16 1 #reduceActionForTypes1: 241665 false ) 
 	#(17 1 #liftFirstValue: 334849 false ) 
 	#(17 1 #liftFirstValue: 334850 false ) 
@@ -126,13 +126,13 @@ TypTypeParser class >> reduceTable [
 	#(17 1 #liftFirstValue: 334852 false ) 
 	#(21 1 #reduceActionForNamedType1: 764929 false ) 
 	#(20 2 #reduceActionForTypeVariableType1: 679937 false ) 
-	#(25 0 #reduceActionForEmptyTypes2: 2317314 false ) 
-	#(24 3 #reduceActionForUnionType1: 2243585 false ) 
+	#(25 0 #reduceActionForEmptyTypes2: 2325506 false ) 
+	#(24 3 #reduceActionForUnionType1: 2251777 false ) 
 	#(16 3 #reduceActionForTypes2: 241666 false ) 
-	#(25 1 #liftFirstValue: 2317313 false ) 
+	#(25 1 #liftFirstValue: 2325505 false ) 
 	#(22 4 #reduceActionForParametricType1: 826369 false ) 
-	#(23 6 #reduceActionForFunctionType2: 1099778 false ) 
-	#(23 6 #reduceActionForFunctionType1: 1099777 false )
+	#(23 6 #reduceActionForFunctionType2: 1107970 false ) 
+	#(23 6 #reduceActionForFunctionType1: 1107969 false )
 	).
 ]
 
@@ -255,7 +255,7 @@ TypTypeParser >> reduceActionForNilType1: nodes [
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForParametricType1: nodes [
 	| type |
-	type := (nodes at: 1) typAsType.
+	type := (nodes at: 1) asClass typAsType.
 	^ type
 		copyWithBindings:
 			((nodes at: 3)

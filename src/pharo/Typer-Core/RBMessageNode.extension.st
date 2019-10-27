@@ -37,7 +37,7 @@ RBMessageNode >> typSignalsAlways [
 								selector: self selector asSymbol;
 								argumentTypes: argumentTypes;
 								argumentNodes: self arguments;
-								yourself) ] ]) "typCastAs !Boolean"
+								yourself) ] ]) "typCastAs {!,Boolean}"
 ]
 
 { #category : #'*Typer-Core' }

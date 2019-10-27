@@ -142,26 +142,27 @@ TypUnionType >> postCopy [
 
 { #category : #printing }
 TypUnionType >> printOn: aStream [
-	aStream
-		<< '{';
-		<<
-			((types includes: TypNilType instance)
-				ifTrue: [ '!' ]
-				ifFalse: [ '' ]);
-		<<
-			((types includes: TypUnknownType instance)
-				ifTrue: [ '?' ]
-				ifFalse: [ '' ]).
-	(types
-		copyWithoutAll:
-			{TypNilType instance.
-			TypUnknownType instance})
-		ifNotEmpty: [ :e | 
-			| type |
-			type := e typAsType.
-			type isUnion
-				ifTrue: [ type := type superType ].
-			aStream << type printString ].
+	| types_ |
+	types_ := types copy.
+	aStream << '{'.
+	types_
+		detect: [ :e | e = TypNilType instance ]
+		ifFound: [ :e | 
+			types_ remove: e.
+			e printOn: aStream.
+			types_ ifNotEmpty: [ aStream << ',' ] ]
+		ifNone: [  ].
+	types_
+		detect: [ :e | e = TypUnknownType instance ]
+		ifFound: [ :e | 
+			types_ remove: e.
+			e printOn: aStream.
+			types_ ifNotEmpty: [ aStream << ',' ] ]
+		ifNone: [  ].
+	types_
+		do: [ :e | 
+			e printOn: aStream.
+			types_ ifNotEmpty: [ aStream << ',' ] ].
 	aStream << '}'
 ]
 

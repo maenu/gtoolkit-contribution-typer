@@ -68,7 +68,7 @@ ClassDescription >> typAsType [
 
 { #category : #'*Typer-Core' }
 ClassDescription >> typTypeForVariable: aSymbol [
-	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeArgument: 1 as: 'Symbol'>
 	<typTypeResultAs: 'TypType'>
 	| type |
 	type := self typAsType.

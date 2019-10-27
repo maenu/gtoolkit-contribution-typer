@@ -80,7 +80,7 @@ TypParametricTypeExamples >> printOn [
 	| type |
 	type := self type.
 	self assert: type asString = 'OrderedCollection<Integer>'.
-	self assert: type asNullableType asString = '{!OrderedCollection<Integer>}'.
+	self assert: type asNullableType asString = '{!,OrderedCollection<Integer>}'.
 	^ type
 ]
 

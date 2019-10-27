@@ -45,7 +45,7 @@ RBProgramNode >> typIsTyped [
 
 { #category : #'*Typer-Core' }
 RBProgramNode >> typPrevious [
-	<typTypeResultAs: '!RBProgramNode'>
+	<typTypeResultAs: '{!,RBProgramNode}'>
 	| i previous |
 	self parent ifNil: [ ^ nil ].
 	i := self parent children detectIndex: [ :e | e == self ].
@@ -62,7 +62,7 @@ RBProgramNode >> typPrevious [
 
 { #category : #'*Typer-Core' }
 RBProgramNode >> typReachableTypeFor: aString until: aSequenceNode [
-	<typTypeArgument: 1 as: 'String<Character>'>
+	<typTypeArgument: 1 as: 'String'>
 	<typTypeArgument: 2 as: 'RBSequenceNode'>
 	<typTypeResultAs: 'TypType'>
 	| previous |
@@ -78,7 +78,7 @@ RBProgramNode >> typReachableTypeFor: aString until: aSequenceNode [
 
 { #category : #'*Typer-Core' }
 RBProgramNode >> typSignalsAlways [
-	<typTypeResultAs: '!Boolean'>
+	<typTypeResultAs: '{!,Boolean}'>
 	^ false
 ]
 

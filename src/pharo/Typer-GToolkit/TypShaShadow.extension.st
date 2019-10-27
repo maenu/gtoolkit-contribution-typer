@@ -19,10 +19,10 @@ TypShaShadow class >> typGtNewShadowFor: aClass [
 
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowClassInstanceMethod: aSymbol arguments: someTypes result: aType [
-	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeArgument: 1 as: 'Symbol'>
 	<typTypeArgument: 2 as: 'SequenceableCollection<TypType>'>
 	<typTypeArgument: 3 as: 'TypType'>
-	<typTypeResultAs: 'CompiledMethod<Integer>'>
+	<typTypeResultAs: 'CompiledMethod()->Object'>
 	| name_ |
 	name_ := (aSymbol isBinary
 		ifTrue: [ '~~~' , aSymbol ]
@@ -62,9 +62,9 @@ TypShaShadow class >> typGtShadowClassInstanceMethod: aSymbol arguments: someTyp
 
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowClassInstanceVariable: aSymbol type: aType [
-	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeArgument: 1 as: 'Symbol'>
 	<typTypeArgument: 2 as: 'TypType'>
-	<typTypeResultAs: 'CompiledMethod<Integer>'>
+	<typTypeResultAs: 'CompiledMethod()->Object'>
 	| name_ method |
 	name_ := '___' , aSymbol.
 	(self class hasInstVarNamed: name_)
@@ -94,9 +94,9 @@ TypShaShadow class >> typGtShadowClassInstanceVariable: aSymbol type: aType [
 
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowClassVariable: aSymbol type: aType [
-	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeArgument: 1 as: 'Symbol'>
 	<typTypeArgument: 2 as: 'TypType'>
-	<typTypeResultAs: 'CompiledMethod<Integer>'>
+	<typTypeResultAs: 'CompiledMethod()->Object'>
 	| name_ method |
 	name_ := '___' , aSymbol.
 	(self hasClassVarNamed: name_)
@@ -133,10 +133,10 @@ TypShaShadow class >> typGtShadowFor: aClass [
 
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowInstanceMethod: aSymbol arguments: someTypes result: aType [
-	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeArgument: 1 as: 'Symbol'>
 	<typTypeArgument: 2 as: 'SequenceableCollection<TypType>'>
 	<typTypeArgument: 3 as: 'TypType'>
-	<typTypeResultAs: 'CompiledMethod<Integer>'>
+	<typTypeResultAs: 'CompiledMethod()->Object'>
 	| name_ |
 	name_ := (aSymbol isBinary
 		ifTrue: [ '~~~' , aSymbol ]
@@ -176,9 +176,9 @@ TypShaShadow class >> typGtShadowInstanceMethod: aSymbol arguments: someTypes re
 
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowInstanceVariable: aSymbol type: aType [
-	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeArgument: 1 as: 'Symbol'>
 	<typTypeArgument: 2 as: 'TypType'>
-	<typTypeResultAs: 'CompiledMethod<Integer>'>
+	<typTypeResultAs: 'CompiledMethod()->Object'>
 	| name_ method |
 	name_ := '___' , aSymbol.
 	(self hasInstVarNamed: name_)

@@ -44,7 +44,7 @@ TypDynMessage >> hash [
 TypDynMessage >> initialize [
 	<typTypeVariable: 'argumentTypes' as: 'SequenceableCollection<TypType>'>
 	<typTypeVariable: 'receiverType' as: 'TypType'>
-	<typTypeVariable: 'selector' as: 'Symbol<Character>'>
+	<typTypeVariable: 'selector' as: 'Symbol'>
 	super initialize
 ]
 
@@ -75,12 +75,12 @@ TypDynMessage >> receiverType: anObject [
 
 { #category : #accessing }
 TypDynMessage >> selector [
-	<typTypeResultAs: 'Symbol<Character>'>
+	<typTypeResultAs: 'Symbol'>
 	^ selector
 ]
 
 { #category : #accessing }
 TypDynMessage >> selector: anObject [
-	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeArgument: 1 as: 'Symbol'>
 	selector := anObject
 ]

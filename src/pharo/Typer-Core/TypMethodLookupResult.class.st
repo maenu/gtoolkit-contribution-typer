@@ -30,7 +30,7 @@ TypMethodLookupResult >> argumentTypes: anObject [
 TypMethodLookupResult >> initialize [
 	<typTypeVariable: 'argumentTypes' as: 'BlockClosure[Integer,TypMethodLookup,TypMethodLookup,TypMethodLookupResult]->TypType'>
 	<typTypeVariable: 'resultType' as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypMethodLookupResult]->TypType'>
-	<typTypeVariable: 'signalsAlways' as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypMethodLookupResult]->!Boolean'>
+	<typTypeVariable: 'signalsAlways' as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypMethodLookupResult]->{!,Boolean}'>
 	super initialize.
 	argumentTypes := [ TypUnknownType instance ].
 	resultType := [ TypUnknownType instance ].
@@ -51,12 +51,12 @@ TypMethodLookupResult >> resultType: anObject [
 
 { #category : #accessing }
 TypMethodLookupResult >> signalsAlways [
-	<typTypeResultAs: '!Boolean'>
+	<typTypeResultAs: '{!,Boolean}'>
 	^ signalsAlways cull: lookup cull: resolvedBy cull: self
 ]
 
 { #category : #accessing }
 TypMethodLookupResult >> signalsAlways: anObject [
-	<typTypeArgument: 1 as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypMethodLookupResult]->!Boolean'>
+	<typTypeArgument: 1 as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypMethodLookupResult]->{!,Boolean}'>
 	signalsAlways := anObject
 ]

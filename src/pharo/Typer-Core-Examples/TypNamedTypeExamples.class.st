@@ -84,7 +84,7 @@ TypNamedTypeExamples >> printOn [
 	| type |
 	type := self type.
 	self assert: type asString = 'Object'.
-	self assert: type asNullableType asString = '{!Object}'.
+	self assert: type asNullableType asString = '{!,Object}'.
 	^ type
 ]
 

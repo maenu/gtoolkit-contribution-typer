@@ -80,7 +80,7 @@ TypUnknownTypeExamples >> printOn [
 	| type |
 	type := self type.
 	self assert: type asString = '?'.
-	self assert: type asNullableType asString = '{!?}'.
+	self assert: type asNullableType asString = '{!,?}'.
 	^ type
 ]
 

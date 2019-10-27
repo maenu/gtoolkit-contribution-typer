@@ -82,8 +82,8 @@ TypNamedType >> hash [
 
 { #category : #initialization }
 TypNamedType >> initialize [
-	<typTypeVariable: 'name' as: 'String<Character>'>
-	<typTypeVariable: 'representsClass' as: '!Boolean'>
+	<typTypeVariable: 'name' as: 'String'>
+	<typTypeVariable: 'representsClass' as: '{!,Boolean}'>
 	super initialize
 ]
 
@@ -106,7 +106,7 @@ TypNamedType >> initializeWithClassDescription: aClassDescription [
 
 { #category : #accessing }
 TypNamedType >> initializeWithName: anObject [
-	<typTypeArgument: 1 as: 'String<Character>'>
+	<typTypeArgument: 1 as: 'String'>
 	name := anObject.
 	hasClassDescription := nil
 ]
@@ -124,7 +124,7 @@ TypNamedType >> lookupSelector: aSymbol [
 
 { #category : #accessing }
 TypNamedType >> name [
-	<typTypeResultAs: 'String<Character>'>
+	<typTypeResultAs: 'String'>
 	^ name
 ]
 

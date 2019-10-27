@@ -119,7 +119,7 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst [
 
 { #category : #'*Typer-GToolkit' }
 GtSourceCoder >> typGtRbNodeAtCursor [
-	<typTypeResultAs: '!RBProgramNode'>
+	<typTypeResultAs: '{!,RBProgramNode}'>
 	self
 		cursorPositionDo: [ :e | 
 			[ ^ self rbAST bestNodeFor: (e to: e) ]

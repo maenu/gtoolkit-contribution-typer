@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 TypDynExamples >> neoJsonCore [
 	<gtExample>
-	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod<Integer>>>'>
+	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod()->Object>>'>
 	| methods collector testResult association |
 	TypLookupIndex resetAll.
 	methods := #'Neo-JSON-Core' asPackage methods.
@@ -33,7 +33,7 @@ TypDynExamples >> neoJsonCore [
 { #category : #accessing }
 TypDynExamples >> refactoring [
 	<gtExample>
-	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod<Integer>>>'>
+	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod()->Object>>'>
 	| methods collector testResult association |
 	TypLookupIndex resetAll.
 	methods := self refactoringNonTestPackages flatCollect: #methods.
@@ -59,7 +59,7 @@ TypDynExamples >> refactoring [
 { #category : #accessing }
 TypDynExamples >> refactoring2Transformations [
 	<gtExample>
-	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod<Integer>>>'>
+	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod()->Object>>'>
 	| methods collector testResult association |
 	TypLookupIndex resetAll.
 	methods := #'Refactoring2-Transformations' asPackage methods.
@@ -85,7 +85,7 @@ TypDynExamples >> refactoring2Transformations [
 { #category : #accessing }
 TypDynExamples >> refactoringCore [
 	<gtExample>
-	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod<Integer>>>'>
+	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod()->Object>>'>
 	| methods collector testResult association |
 	TypLookupIndex resetAll.
 	methods := #'Refactoring-Core' asPackage methods.
@@ -111,7 +111,7 @@ TypDynExamples >> refactoringCore [
 { #category : #accessing }
 TypDynExamples >> refactoringCoreSmall [
 	<gtExample>
-	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod<Integer>>>'>
+	<typTypeResultAs: 'Association<TestResult,Collection<CompiledMethod()->Object>>'>
 	| methods collector testResult association |
 	TypLookupIndex resetAll.
 	methods := #'Refactoring-Core' asPackage methods.

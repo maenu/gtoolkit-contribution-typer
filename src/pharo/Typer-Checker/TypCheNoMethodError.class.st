@@ -10,13 +10,13 @@ Class {
 
 { #category : #accessing }
 TypCheNoMethodError >> selector [
-	<typTypeResultAs: 'Symbol<Character>'>
+	<typTypeResultAs: 'Symbol'>
 	^ selector
 ]
 
 { #category : #accessing }
 TypCheNoMethodError >> selector: anObject [
-	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeArgument: 1 as: 'Symbol'>
 	selector := anObject
 ]
 

@@ -43,7 +43,7 @@ RBMethodNode >> typTypeForArgumentAt: anInteger [
 
 { #category : #'*Typer-Core' }
 RBMethodNode >> typTypeForArgumentNamed: aString [
-	<typTypeArgument: 1 as: 'String<Character>'>
+	<typTypeArgument: 1 as: 'String'>
 	<typTypeResultAs: 'TypType'>
 	| i |
 	i := self arguments detectIndex: [ :f | f name = aString ].

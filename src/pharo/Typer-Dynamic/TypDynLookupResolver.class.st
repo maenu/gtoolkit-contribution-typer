@@ -26,12 +26,12 @@ TypDynLookupResolver >> resolve: aLookup [
 
 { #category : #accessing }
 TypDynLookupResolver >> results [
-	<typTypeResultAs: 'Dictionary<Association<ClassDescription,Symbol<Character>>,TypLookupResult>'>
+	<typTypeResultAs: 'Dictionary<Association<ClassDescription,Symbol>,TypLookupResult>'>
 	^ results
 ]
 
 { #category : #accessing }
 TypDynLookupResolver >> results: anObject [
-	<typTypeArgument: 1 as: 'Dictionary<Association<ClassDescription,Symbol<Character>>,TypLookupResult>'>
+	<typTypeArgument: 1 as: 'Dictionary<Association<ClassDescription,Symbol>,TypLookupResult>'>
 	results := anObject
 ]

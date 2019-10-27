@@ -67,7 +67,7 @@ TypType >> asNullableType [
 
 { #category : #'as yet unclassified' }
 TypType >> canUnderstand: aSymbol [
-	<typTypeArgument: 1 as: 'Symbol<Character>'>
+	<typTypeArgument: 1 as: 'Symbol'>
 	<typTypeResultAs: 'Boolean'>
 	self subclassResponsibility
 ]
@@ -132,8 +132,8 @@ TypType >> isUnknown [
 
 { #category : #'as yet unclassified' }
 TypType >> lookupSelector: aSymbol [
-	<typTypeArgument: 1 as: 'Symbol<Character>'>
-	<typTypeResultAs: 'Set<CompiledMethod<Integer>>'>
+	<typTypeArgument: 1 as: 'Symbol'>
+	<typTypeResultAs: 'Set<CompiledMethod()->Object>'>
 	self subclassResponsibility
 ]
 

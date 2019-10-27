@@ -10,7 +10,7 @@ Class {
 
 { #category : #testing }
 TypGtCoderTypeFilter >> includesMethod: aCompiledMethod [
-	<typTypeArgument: 1 as: 'CompiledMethod<Integer>'>
+	<typTypeArgument: 1 as: 'CompiledMethod()->Object'>
 	<typTypeResultAs: 'Boolean'>
 	clazzes ifEmpty: [ ^ true ].
 	^ clazzes includes: aCompiledMethod methodClass
