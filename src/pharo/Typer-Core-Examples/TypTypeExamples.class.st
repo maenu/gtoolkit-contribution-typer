@@ -1,6 +1,6 @@
 Class {
 	#name : #TypTypeExamples,
-	#superclass : #TypExamples,
+	#superclass : #Object,
 	#category : #'Typer-Core-Examples-Type'
 }
 
@@ -32,6 +32,16 @@ TypTypeExamples >> asNullableType [
 TypTypeExamples >> asTypeCompatibleWith [
 	<gtExample>
 	self subclassResponsibility
+]
+
+{ #category : #asserting }
+TypTypeExamples >> assert: aBlock signals: aClass [
+	| signaled |
+	signaled := false.
+	aBlock
+		on: aClass
+		do: [ signaled := true ].
+	self assert: signaled
 ]
 
 { #category : #'as yet unclassified' }

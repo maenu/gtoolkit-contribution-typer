@@ -118,39 +118,9 @@ TypUnionType >> initializeWithTypes: anObject [
 	types := anObject
 ]
 
-{ #category : #converting }
-TypUnionType >> isFunction [
-	| superType |
-	self flag: 'FIXME ignore ? and ! for this'.
-	superType := self superType.
-	^ superType isUnion
-		ifTrue: [ false ]
-		ifFalse: [ superType isFunction ]
-]
-
-{ #category : #converting }
-TypUnionType >> isNamed [
-	| superType |
-	self flag: 'FIXME ignore ? and ! for this'.
-	superType := self superType.
-	^ superType isUnion
-		ifTrue: [ false ]
-		ifFalse: [ superType isNamed ]
-]
-
 { #category : #'as yet unclassified' }
 TypUnionType >> isNullable [
 	^ types includes: TypNilType instance
-]
-
-{ #category : #converting }
-TypUnionType >> isParametric [
-	| superType |
-	self flag: 'FIXME ignore ? and ! for this'.
-	superType := self superType.
-	^ superType isUnion
-		ifTrue: [ false ]
-		ifFalse: [ superType isParametric ]
 ]
 
 { #category : #testing }
@@ -162,13 +132,6 @@ TypUnionType >> isUnion [
 TypUnionType >> lookupSelector: aSymbol [
 	self assert: [ self canUnderstand: aSymbol ].
 	^ types flatCollect: [ :e | e lookupSelector: aSymbol ]
-]
-
-{ #category : #generated }
-TypUnionType >> parameters [
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	self assert: [ self isParametric ].
-	^ (self superType "typCastAs TypParametricType") parameters
 ]
 
 { #category : #'as yet unclassified' }

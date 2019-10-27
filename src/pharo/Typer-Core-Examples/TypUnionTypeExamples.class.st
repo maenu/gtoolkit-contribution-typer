@@ -47,44 +47,6 @@ TypUnionTypeExamples >> hasSuperType [
 ]
 
 { #category : #testing }
-TypUnionTypeExamples >> isFunction [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: false description: 'add positive assertion'.
-	self assert: type isFunction not.
-	self assert: self typeWithNil isFunction not.
-	self assert: self typeWithUnknown isFunction not.
-	self assert: self typeWithUnknownAndNil isFunction not.
-	^ type
-]
-
-{ #category : #testing }
-TypUnionTypeExamples >> isNamed [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isNamed.
-	self assert: self typeWithNil isNamed not.
-	self assert: self typeWithUnknown isNamed not.
-	self assert: self typeWithUnknownAndNil isNamed not.
-	^ type
-]
-
-{ #category : #testing }
-TypUnionTypeExamples >> isParametric [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: false description: 'add positive assertion'.
-	self assert: type isParametric not.
-	self assert: self typeWithNil isParametric not.
-	self assert: self typeWithUnknown isParametric not.
-	self assert: self typeWithUnknownAndNil isParametric not.
-	^ type
-]
-
-{ #category : #testing }
 TypUnionTypeExamples >> isUnion [
 	<gtExample>
 	| type |
