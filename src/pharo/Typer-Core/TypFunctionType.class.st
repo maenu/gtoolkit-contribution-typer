@@ -167,7 +167,7 @@ TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolea
 TypFunctionType >> initializeWithClassDescription: aClassDescription argumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
 	self
 		assert: [ aBindings variables
-				allSatisfy: [ :e | (aBindings at: e) ~= '@0' typAsType ] ].
+				allSatisfy: [ :e | e = '@0' typAsType or: [ (aBindings at: e) ~= '@0' typAsType ] ] ].
 	self
 		initializeWithClassDescription: aClassDescription
 		parameters: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsType ])
@@ -179,7 +179,7 @@ TypFunctionType >> initializeWithClassDescription: aClassDescription argumentsSi
 TypFunctionType >> initializeWithName: aString argumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
 	self
 		assert: [ aBindings variables
-				allSatisfy: [ :e | (aBindings at: e) ~= '@0' typAsType ] ].
+				allSatisfy: [ :e | e = '@0' typAsType or: [ (aBindings at: e) ~= '@0' typAsType ] ] ].
 	self
 		initializeWithName: aString
 		parameters: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsType ])
