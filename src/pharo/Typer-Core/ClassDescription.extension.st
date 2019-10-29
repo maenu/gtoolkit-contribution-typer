@@ -10,8 +10,8 @@ ClassDescription >> typAsFunctionTypeWithArguments: aCollection result: aType ar
 		argumentsOptional: aBoolean
 		bindings:
 			((({aType} , aCollection
-				select: [ :e | e isTypeVariable and: [ (indexedVariables includes: e) not and: [ e ~= aType ] ] ])
-				collect: [ :e | e -> e ]) , {('@0' typAsType -> aType)}
+				select: [ :e | e isTypeVariable and: [ (indexedVariables includes: e) not ] ])
+				asSet collect: [ :e | e -> e ]) , {('@0' typAsType -> aType)}
 				,
 					(aCollection
 						withIndexCollect: [ :e :i | ('@' , i asString) typAsType -> e ]))

@@ -14,8 +14,8 @@ Class >> typGtElementInPackage: aPackage [
 			c vertical fitContent ];
 		border: (BlBorder paint: BrGlamorousColors defaultButtonBorderColor width: 1);
 		addChildren:
-			{self instanceSide typGtVariablesElement.
-			self classSide typGtVariablesElement.
+			{self instanceSide typGtVariablesElementInPackage: aPackage.
+			self classSide typGtVariablesElementInPackage: aPackage.
 			(self instanceSide typGtMethodsElementInPackage: aPackage).
 			(self classSide typGtMethodsElementInPackage: aPackage)};
 		yourself

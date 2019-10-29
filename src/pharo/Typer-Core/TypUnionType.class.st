@@ -159,8 +159,9 @@ TypUnionType >> printOn: aStream [
 			e printOn: aStream.
 			types_ ifNotEmpty: [ aStream << ',' ] ]
 		ifNone: [  ].
-	types_
+	types_ copy
 		do: [ :e | 
+			types_ remove: e.
 			e printOn: aStream.
 			types_ ifNotEmpty: [ aStream << ',' ] ].
 	aStream << '}'

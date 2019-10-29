@@ -86,15 +86,19 @@ TypFunctionType >> > aType [
 	^ self ~= aType
 		and: [ (aType isFunction
 				and: [ name = aType name
-						and: [ argumentsSize = aType argumentsSize
-								and: [ argumentsOptional = aType argumentsOptional
-										and: [ parameters = aType parameters
-												and: [ ((bindings copyWithout: '@0' typAsType)
-														> (aType bindings copyWithout: '@0' typAsType)
-														and: [ self result = aType result ])
-														or: [ (bindings copyWithout: '@0' typAsType)
-																= (aType bindings copyWithout: '@0' typAsType)
-																and: [ self result > aType result ] ] ] ] ] ] ])
+						and: [ self result >= aType result
+								and: [ (argumentsOptional not
+										and: [ aType argumentsOptional not
+												and: [ argumentsSize = aType argumentsSize
+														and: [ (self arguments with: aType arguments collect: [ :a :b | a >= b ])
+																allSatisfy: #yourself ] ] ])
+										or: [ argumentsOptional
+												and: [ | size |
+													size := argumentsSize min: aType argumentsSize.
+													size = 0
+														or: [ ((self arguments copyFrom: 1 to: size)
+																with: (aType arguments copyFrom: 1 to: size)
+																collect: [ :a :b | a >= b ]) allSatisfy: #yourself ] ] ] ] ] ])
 				or: [ super > aType ] ]
 ]
 

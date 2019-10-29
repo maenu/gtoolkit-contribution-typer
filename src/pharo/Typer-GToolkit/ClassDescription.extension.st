@@ -68,9 +68,11 @@ ClassDescription >> typGtVariableNames [
 ]
 
 { #category : #'*Typer-GToolkit' }
-ClassDescription >> typGtVariablesElement [
+ClassDescription >> typGtVariablesElementInPackage: aPackage [
 	| variables width |
-	variables := self typGtVariableNames.
+	variables := (aPackage includesClass: self instanceSide)
+		ifTrue: [ self typGtVariableNames ]
+		ifFalse: [ #() ].
 	width := variables size sqrt ceiling.
 	^ BlElement new
 		layout:
