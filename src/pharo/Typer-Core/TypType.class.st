@@ -7,6 +7,12 @@ Class {
 	#category : #'Typer-Core-Type'
 }
 
+{ #category : #accessing }
+TypType class >> initialize [
+	<typTypeVariable: #superType as: '{!,TypType}'>
+	super initialize
+]
+
 { #category : #comparing }
 TypType >> < aType [
 	<typTypeArgument: 1 as: 'TypType'>
@@ -76,6 +82,12 @@ TypType >> canUnderstand: aSymbol [
 TypType >> hasSuperType [
 	<typTypeResultAs: 'Boolean'>
 	self subclassResponsibility
+]
+
+{ #category : #initialization }
+TypType >> initialize [
+	<typTypeVariable: #superType as: '{!,TypType}'>
+	super initialize
 ]
 
 { #category : #testing }
