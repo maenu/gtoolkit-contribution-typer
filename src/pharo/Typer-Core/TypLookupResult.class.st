@@ -9,6 +9,14 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
+{ #category : #initialization }
+TypLookupResult >> initialize [
+	<typTypeVariable: 'lookup' as: 'TypLookup'>
+	<typTypeVariable: 'resolvedBy' as: 'TypLookup'>
+	<typTypeVariable: 'resolver' as: 'TypLookupResolver'>
+	super initialize
+]
+
 { #category : #accessing }
 TypLookupResult >> lookup [
 	^ lookup

@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #initialization }
+TypBreadthLookupResolver >> initialize [
+	<typTypeVariable: 'resolvers' as: 'SequenceableCollection<TypLookupResolver>'>
+	super initialize
+]
+
+{ #category : #initialization }
 TypBreadthLookupResolver >> reset [
 	resolvers do: #reset
 ]

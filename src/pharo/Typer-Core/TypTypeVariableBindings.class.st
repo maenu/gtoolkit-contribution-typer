@@ -118,7 +118,7 @@ TypTypeVariableBindings >> includes: aTypeVariable [
 TypTypeVariableBindings >> initialize [
 	<typTypeVariable: #bindings as: 'Dictionary<TypeVariable,TypType>'>
 	super initialize.
-	bindings := Dictionary new
+	bindings := Dictionary new "typParameters TypeVariable,TypType"
 ]
 
 { #category : #testing }

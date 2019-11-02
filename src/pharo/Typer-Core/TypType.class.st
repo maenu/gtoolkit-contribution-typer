@@ -86,7 +86,7 @@ TypType >> hasSuperType [
 
 { #category : #initialization }
 TypType >> initialize [
-	<typTypeVariable: #superType as: '{!,TypType}'>
+	<typTypeVariable: 'superType' as: '{!,TypType}'>
 	super initialize
 ]
 

@@ -34,8 +34,12 @@ TypTemporaryTypeVisitor class >> typesFor: aTemporaryNode in: aSequenceNode [
 
 { #category : #visiting }
 TypTemporaryTypeVisitor >> initialize [
+	<typTypeVariable: 'node' as: 'RBTemporaryNode'>
+	<typTypeVariable: 'definer' as: '{!,RBMethodNode,RBBlockNode}'>
+	<typTypeVariable: 'types' as: 'OrderedCollection<TypType>'>
+	<typTypeVariable: 'stopped' as: 'Boolean'>
 	super initialize.
-	types := OrderedCollection new.
+	types := OrderedCollection new "typTypeParameters TypType".
 	stopped := false
 ]
 

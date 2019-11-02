@@ -33,6 +33,7 @@ TypClassLookupIndex class >> newDefault [
 
 { #category : #initialization }
 TypClassLookupIndex >> initialize [
+	<typTypeVariable: 'selector' as: 'IdentityDictionary<Symbol,TypType>'>
 	super initialize.
 	index := IdentityDictionary new
 ]

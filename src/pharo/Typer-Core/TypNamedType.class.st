@@ -83,7 +83,8 @@ TypNamedType >> hash [
 { #category : #initialization }
 TypNamedType >> initialize [
 	<typTypeVariable: 'name' as: 'String'>
-	<typTypeVariable: 'representsClass' as: '{!,Boolean}'>
+	<typTypeVariable: 'classDescription' as: 'ClassDescription'>
+	<typTypeVariable: 'hasClassDescription' as: '{!,Boolean}'>
 	super initialize
 ]
 

@@ -162,6 +162,13 @@ TypFunctionType >> hash [
 ]
 
 { #category : #initialization }
+TypFunctionType >> initialize [
+	<typTypeVariable: 'argumentsSize' as: 'Integer'>
+	<typTypeVariable: 'argumentsOptional' as: 'Boolean'>
+	super initialize
+]
+
+{ #category : #initialization }
 TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean [
 	argumentsSize := anInteger.
 	argumentsOptional := aBoolean

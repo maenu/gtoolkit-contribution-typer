@@ -75,7 +75,9 @@ TypUnionType >> hasSuperType [
 			unknown := remains includes: TypUnknownType instance.
 			unknown
 				ifTrue: [ remains remove: TypUnknownType instance ].
-			remains ifEmpty: [ ^ self ].
+			remains
+				ifEmpty: [ superType := self.
+					^ false ].
 			current := remains remove: remains anyOne.
 			[ remains isEmpty ]
 				whileFalse: [ | next common |

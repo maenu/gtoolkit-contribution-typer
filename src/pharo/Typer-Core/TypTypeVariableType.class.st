@@ -40,6 +40,12 @@ TypTypeVariableType >> hash [
 	^ name hash
 ]
 
+{ #category : #initialization }
+TypTypeVariableType >> initialize [
+	<typTypeVariable: 'name' as: 'String'>
+	super initialize
+]
+
 { #category : #accessing }
 TypTypeVariableType >> initializeWithName: aString [
 	self assert: [ aString first = $@ ].

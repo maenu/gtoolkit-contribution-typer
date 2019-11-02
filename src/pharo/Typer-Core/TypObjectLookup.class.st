@@ -36,8 +36,8 @@ TypObjectLookup >> hash [
 
 { #category : #initialization }
 TypObjectLookup >> initialize [
+	<typTypeVariable: 'selector' as: 'Symbol'>
 	<typTypeVariable: 'receiverType' as: 'TypType'>
-	<typTypeVariable: 'selector' as:  'Symbol'>
 	super initialize
 ]
 

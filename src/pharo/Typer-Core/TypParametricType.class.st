@@ -113,6 +113,13 @@ TypParametricType >> hash [
 	^ (super hash bitXor: bindings hash) bitXor: parameters hash
 ]
 
+{ #category : #initialization }
+TypParametricType >> initialize [
+	<typTypeVariable: 'parameters' as: 'SequenceableCollection<TypTypeVariableType>'>
+	<typTypeVariable: 'bindings' as: 'TypTypeVariableBindings'>
+	super initialize
+]
+
 { #category : #accessing }
 TypParametricType >> initializeParameters: aSequenceableCollection bindings: aBindings [
 	self

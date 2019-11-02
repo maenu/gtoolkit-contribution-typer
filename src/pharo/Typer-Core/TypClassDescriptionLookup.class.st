@@ -46,6 +46,6 @@ TypClassDescriptionLookup >> hash [
 
 { #category : #initialization }
 TypClassDescriptionLookup >> initialize [
-	<typTypeVariable: 'clazz' as: 'ClassDescription'>
+	<typTypeVariable: 'classDescription' as: 'ClassDescription'>
 	super initialize
 ]

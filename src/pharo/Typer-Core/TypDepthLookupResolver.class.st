@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #initialization }
+TypDepthLookupResolver >> initialize [
+	<typTypeVariable: 'resolver' as: 'TypLookupResolver'>
+	super initialize
+]
+
+{ #category : #initialization }
 TypDepthLookupResolver >> reset [
 	resolver reset
 ]

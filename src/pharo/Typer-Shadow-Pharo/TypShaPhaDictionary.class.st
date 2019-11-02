@@ -175,6 +175,18 @@ TypShaPhaDictionary >> ___keys [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaDictionary >> ___values [
+	^ TypMethodLookupResult new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | 
+			Collection typAsType
+				copyWithBindings:
+					{('@A' typAsType -> ((a receiverType "typCastAs TypParametricType") bindings at: '@A' typAsType))}
+						typAsTypeVariableBindings ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaDictionary >> asType: aClass [
 	^ aClass

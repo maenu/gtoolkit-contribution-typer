@@ -49,7 +49,7 @@ TypShaShadow class >> typGtShadowClassInstanceMethod: aSymbol arguments: someTyp
 					header
 						,
 							'
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ ' , argumentBody
 						,
 							' ];
@@ -84,7 +84,7 @@ TypShaShadow class >> typGtShadowClassInstanceVariable: aSymbol type: aType [
 							'.
 	' , name_
 						,
-							' := TypVariableResolver new
+							' := TypVariableLookupResult new
 		type: [ :a :s :r | ''' , aType asString
 						,
 							''' typAsType ];
@@ -115,7 +115,7 @@ TypShaShadow class >> typGtShadowClassVariable: aSymbol type: aType [
 							'.
 	' , name_
 						,
-							' := TypVariableResolver new
+							' := TypVariableLookupResult new
 		type: [ :a :s :r | ''' , aType asString
 						,
 							''' typAsType ];
@@ -163,7 +163,7 @@ TypShaShadow class >> typGtShadowInstanceMethod: aSymbol arguments: someTypes re
 					header
 						,
 							'
-	^ TypMethodResolver new
+	^ TypMethodLookupResult new
 		argumentTypes: [ ' , argumentBody
 						,
 							' ];
@@ -198,7 +198,7 @@ TypShaShadow class >> typGtShadowInstanceVariable: aSymbol type: aType [
 							'.
 	' , name_
 						,
-							' := TypVariableResolver new
+							' := TypVariableLookupResult new
 		type: [ :a :s :r | ''' , aType asString
 						,
 							''' typAsType ];

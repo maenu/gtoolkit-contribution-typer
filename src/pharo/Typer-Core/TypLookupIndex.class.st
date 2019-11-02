@@ -35,6 +35,7 @@ TypLookupIndex class >> resetAll [
 
 { #category : #initialization }
 TypLookupIndex >> initialize [
+	<typTypeVariable: 'resolver' as: 'TypLookupResolver'>
 	super initialize.
 	SystemAnnouncer uniqueInstance weak
 		when: ClassAnnouncement , MethodAnnouncement
