@@ -45,6 +45,7 @@ TypTypeVariableType >> hash [
 { #category : #initialization }
 TypTypeVariableType >> initialize [
 	<typTypeVariable: 'name' as: 'String'>
+	<typTypeVariable: 'superType' as:'TypType'>
 	super initialize.
 	superType := Object typAsType
 ]

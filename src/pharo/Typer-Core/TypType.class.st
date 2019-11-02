@@ -155,19 +155,21 @@ TypType >> postCopy [
 	superType := superType copy
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypType >> resolveIn: aType [
+	<typTypeArgument: 1 as: 'TypType'>
 	^ self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypType >> superType [
 	<typTypeResultAs: 'TypType'>
 	self assert: [ self hasSuperType ].
-	^ superType
+	^ superType "typCastAs TypType"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypType >> superType: aType [
+	<typTypeArgument: 1 as: 'TypType'>
 	superType := aType
 ]
