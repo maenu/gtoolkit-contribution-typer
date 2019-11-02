@@ -6,7 +6,7 @@ Class {
 
 { #category : #'generated-accessing' }
 TypTypeParser class >> cacheId [
-	^'2019-10-29T19:44:04.807883+01:00'
+	^'2019-11-02T16:15:37.415221+01:00'
 ]
 
 { #category : #generated }
@@ -61,6 +61,8 @@ NilType
 TypeVariableType
 	: ""@"" Name 'name'
 		{ TypTypeVariableType named: '@' , name }
+	| ""@"" Name 'name' ""<="" Type 'superType' 
+		{ TypTypeVariableType named: '@' , name superType: superType }
 	;
 NamedType
 	: Name 'name' 
@@ -113,26 +115,27 @@ TypTypeParser class >> parse: aString [
 { #category : #generated }
 TypTypeParser class >> reduceTable [
 ^#(
-	#(19 1 #reduceActionForNilType1: 634881 false ) 
-	#(18 1 #reduceActionForUnknownType1: 581633 false ) 
-	#(26 1 #reduceActionForName1: 2392065 false ) 
-	#(16 1 #reduceActionForTypes1: 241665 false ) 
-	#(17 1 #liftFirstValue: 334849 false ) 
-	#(17 1 #liftFirstValue: 334850 false ) 
-	#(17 1 #liftFirstValue: 334851 false ) 
-	#(17 1 #liftFirstValue: 334855 false ) 
-	#(17 1 #liftFirstValue: 334854 false ) 
-	#(17 1 #liftFirstValue: 334853 false ) 
-	#(17 1 #liftFirstValue: 334852 false ) 
-	#(21 1 #reduceActionForNamedType1: 764929 false ) 
-	#(20 2 #reduceActionForTypeVariableType1: 679937 false ) 
-	#(25 0 #reduceActionForEmptyTypes2: 2337794 false ) 
-	#(24 3 #reduceActionForUnionType1: 2264065 false ) 
-	#(16 3 #reduceActionForTypes2: 241666 false ) 
-	#(25 1 #liftFirstValue: 2337793 false ) 
-	#(22 4 #reduceActionForParametricType1: 826369 false ) 
-	#(23 6 #reduceActionForFunctionType2: 1107970 false ) 
-	#(23 6 #reduceActionForFunctionType1: 1107969 false )
+	#(20 1 #reduceActionForNilType1: 634881 false ) 
+	#(19 1 #reduceActionForUnknownType1: 581633 false ) 
+	#(27 1 #reduceActionForName1: 2501633 false ) 
+	#(17 1 #reduceActionForTypes1: 241665 false ) 
+	#(18 1 #liftFirstValue: 334849 false ) 
+	#(18 1 #liftFirstValue: 334850 false ) 
+	#(18 1 #liftFirstValue: 334851 false ) 
+	#(18 1 #liftFirstValue: 334855 false ) 
+	#(18 1 #liftFirstValue: 334854 false ) 
+	#(18 1 #liftFirstValue: 334853 false ) 
+	#(18 1 #liftFirstValue: 334852 false ) 
+	#(22 1 #reduceActionForNamedType1: 874497 false ) 
+	#(21 2 #reduceActionForTypeVariableType1: 679937 false ) 
+	#(26 0 #reduceActionForEmptyTypes2: 2447362 false ) 
+	#(25 3 #reduceActionForUnionType1: 2373633 false ) 
+	#(17 3 #reduceActionForTypes2: 241666 false ) 
+	#(26 1 #liftFirstValue: 2447361 false ) 
+	#(21 4 #reduceActionForTypeVariableType2: 679938 false ) 
+	#(23 4 #reduceActionForParametricType1: 935937 false ) 
+	#(24 6 #reduceActionForFunctionType2: 1217538 false ) 
+	#(24 6 #reduceActionForFunctionType1: 1217537 false )
 	).
 ]
 
@@ -148,47 +151,49 @@ TypTypeParser class >> startingStateForTypes [
 
 { #category : #generated }
 TypTypeParser class >> symbolNames [
-	^ #('"!"' '"("' '")"' '","' '"->"' '"<"' '">"' '"?"' '"@"' '"["' '"]"' '"{"' '"}"' '<name>' 'B e g i n' 'Types' 'Type' 'UnknownType' 'NilType' 'TypeVariableType' 'NamedType' 'ParametricType' 'FunctionType' 'UnionType' 'EmptyTypes' 'Name' 'E O F' 'error')
+	^ #('"!"' '"("' '")"' '","' '"->"' '"<"' '"<="' '">"' '"?"' '"@"' '"["' '"]"' '"{"' '"}"' '<name>' 'B e g i n' 'Types' 'Type' 'UnknownType' 'NilType' 'TypeVariableType' 'NamedType' 'ParametricType' 'FunctionType' 'UnionType' 'EmptyTypes' 'Name' 'E O F' 'error')
 ]
 
 { #category : #generated }
 TypTypeParser class >> transitionTable [
 ^#(
-#[1 0 9 0 1 0 13 0 8 0 17 0 9 0 21 0 12 0 25 0 14 0 29 0 16 0 33 0 17 0 33 0 18 0 33 0 19 0 33 0 20 0 33 0 21 0 33 0 22 0 33 0 23 0 33 0 24 0 65 0 26] 
-#[0 0 6 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[0 0 10 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[1 0 25 0 14 0 69 0 26] 
-#[1 0 9 0 1 0 13 0 8 0 17 0 9 0 21 0 12 0 25 0 14 0 73 0 16 0 33 0 17 0 33 0 18 0 33 0 19 0 33 0 20 0 33 0 21 0 33 0 22 0 33 0 23 0 33 0 24 0 65 0 26] 
-#[0 0 14 0 2 0 3 0 4 0 6 0 7 0 10 0 11 0 13 0 27] 
-#[1 0 77 0 4 0 0 0 27] 
-#[0 0 18 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[0 0 22 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[0 0 26 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[0 0 30 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[0 0 34 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[0 0 38 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[0 0 42 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[0 0 46 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[1 0 81 0 2 0 50 0 3 0 50 0 4 0 85 0 6 0 50 0 7 0 89 0 10 0 50 0 11 0 50 0 13 0 50 0 27] 
-#[0 0 54 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[1 0 77 0 4 0 93 0 13] 
-#[1 0 9 0 1 0 13 0 8 0 17 0 9 0 21 0 12 0 25 0 14 0 97 0 17 0 97 0 18 0 97 0 19 0 97 0 20 0 97 0 21 0 97 0 22 0 97 0 23 0 97 0 24 0 65 0 26] 
-#[1 0 9 0 1 0 58 0 3 0 13 0 8 0 17 0 9 0 21 0 12 0 25 0 14 0 101 0 16 0 33 0 17 0 33 0 18 0 33 0 19 0 33 0 20 0 33 0 21 0 33 0 22 0 33 0 23 0 33 0 24 0 105 0 25 0 65 0 26] 
-#[1 0 9 0 1 0 13 0 8 0 17 0 9 0 21 0 12 0 25 0 14 0 109 0 16 0 33 0 17 0 33 0 18 0 33 0 19 0 33 0 20 0 33 0 21 0 33 0 22 0 33 0 23 0 33 0 24 0 65 0 26] 
-#[1 0 9 0 1 0 13 0 8 0 17 0 9 0 58 0 11 0 21 0 12 0 25 0 14 0 101 0 16 0 33 0 17 0 33 0 18 0 33 0 19 0 33 0 20 0 33 0 21 0 33 0 22 0 33 0 23 0 33 0 24 0 113 0 25 0 65 0 26] 
-#[0 0 62 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[0 0 66 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[1 0 70 0 3 0 77 0 4 0 70 0 11] 
-#[0 0 117 0 3] 
-#[1 0 77 0 4 0 121 0 7] 
-#[0 0 125 0 11] 
-#[0 0 129 0 5] 
-#[0 0 74 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[0 0 133 0 5] 
-#[1 0 9 0 1 0 13 0 8 0 17 0 9 0 21 0 12 0 25 0 14 0 137 0 17 0 137 0 18 0 137 0 19 0 137 0 20 0 137 0 21 0 137 0 22 0 137 0 23 0 137 0 24 0 65 0 26] 
-#[1 0 9 0 1 0 13 0 8 0 17 0 9 0 21 0 12 0 25 0 14 0 141 0 17 0 141 0 18 0 141 0 19 0 141 0 20 0 141 0 21 0 141 0 22 0 141 0 23 0 141 0 24 0 65 0 26] 
-#[0 0 78 0 3 0 4 0 7 0 11 0 13 0 27] 
-#[0 0 82 0 3 0 4 0 7 0 11 0 13 0 27]
+#[1 0 9 0 1 0 13 0 9 0 17 0 10 0 21 0 13 0 25 0 15 0 29 0 17 0 33 0 18 0 33 0 19 0 33 0 20 0 33 0 21 0 33 0 22 0 33 0 23 0 33 0 24 0 33 0 25 0 65 0 27] 
+#[0 0 6 0 3 0 4 0 8 0 12 0 14 0 28] 
+#[0 0 10 0 3 0 4 0 8 0 12 0 14 0 28] 
+#[1 0 25 0 15 0 69 0 27] 
+#[1 0 9 0 1 0 13 0 9 0 17 0 10 0 21 0 13 0 25 0 15 0 73 0 17 0 33 0 18 0 33 0 19 0 33 0 20 0 33 0 21 0 33 0 22 0 33 0 23 0 33 0 24 0 33 0 25 0 65 0 27] 
+#[0 0 14 0 2 0 3 0 4 0 6 0 7 0 8 0 11 0 12 0 14 0 28] 
+#[1 0 77 0 4 0 0 0 28] 
+#[0 0 18 0 3 0 4 0 8 0 12 0 14 0 28] 
+#[0 0 22 0 3 0 4 0 8 0 12 0 14 0 28] 
+#[0 0 26 0 3 0 4 0 8 0 12 0 14 0 28] 
+#[0 0 30 0 3 0 4 0 8 0 12 0 14 0 28] 
+#[0 0 34 0 3 0 4 0 8 0 12 0 14 0 28] 
+#[0 0 38 0 3 0 4 0 8 0 12 0 14 0 28] 
+#[0 0 42 0 3 0 4 0 8 0 12 0 14 0 28] 
+#[0 0 46 0 3 0 4 0 8 0 12 0 14 0 28] 
+#[1 0 81 0 2 0 50 0 3 0 50 0 4 0 85 0 6 0 50 0 8 0 89 0 11 0 50 0 12 0 50 0 14 0 50 0 28] 
+#[1 0 54 0 3 0 54 0 4 0 93 0 7 0 54 0 8 0 54 0 12 0 54 0 14 0 54 0 28] 
+#[1 0 77 0 4 0 97 0 14] 
+#[1 0 9 0 1 0 13 0 9 0 17 0 10 0 21 0 13 0 25 0 15 0 101 0 18 0 101 0 19 0 101 0 20 0 101 0 21 0 101 0 22 0 101 0 23 0 101 0 24 0 101 0 25 0 65 0 27] 
+#[1 0 9 0 1 0 58 0 3 0 13 0 9 0 17 0 10 0 21 0 13 0 25 0 15 0 105 0 17 0 33 0 18 0 33 0 19 0 33 0 20 0 33 0 21 0 33 0 22 0 33 0 23 0 33 0 24 0 33 0 25 0 109 0 26 0 65 0 27] 
+#[1 0 9 0 1 0 13 0 9 0 17 0 10 0 21 0 13 0 25 0 15 0 113 0 17 0 33 0 18 0 33 0 19 0 33 0 20 0 33 0 21 0 33 0 22 0 33 0 23 0 33 0 24 0 33 0 25 0 65 0 27] 
+#[1 0 9 0 1 0 13 0 9 0 17 0 10 0 58 0 12 0 21 0 13 0 25 0 15 0 105 0 17 0 33 0 18 0 33 0 19 0 33 0 20 0 33 0 21 0 33 0 22 0 33 0 23 0 33 0 24 0 33 0 25 0 117 0 26 0 65 0 27] 
+#[1 0 9 0 1 0 13 0 9 0 17 0 10 0 21 0 13 0 25 0 15 0 121 0 18 0 121 0 19 0 121 0 20 0 121 0 21 0 121 0 22 0 121 0 23 0 121 0 24 0 121 0 25 0 65 0 27] 
+#[0 0 62 0 3 0 4 0 8 0 12 0 14 0 28] 
+#[0 0 66 0 3 0 4 0 8 0 12 0 14 0 28] 
+#[1 0 70 0 3 0 77 0 4 0 70 0 12] 
+#[0 0 125 0 3] 
+#[1 0 77 0 4 0 129 0 8] 
+#[0 0 133 0 12] 
+#[0 0 74 0 3 0 4 0 8 0 12 0 14 0 28] 
+#[0 0 137 0 5] 
+#[0 0 78 0 3 0 4 0 8 0 12 0 14 0 28] 
+#[0 0 141 0 5] 
+#[1 0 9 0 1 0 13 0 9 0 17 0 10 0 21 0 13 0 25 0 15 0 145 0 18 0 145 0 19 0 145 0 20 0 145 0 21 0 145 0 22 0 145 0 23 0 145 0 24 0 145 0 25 0 65 0 27] 
+#[1 0 9 0 1 0 13 0 9 0 17 0 10 0 21 0 13 0 25 0 15 0 149 0 18 0 149 0 19 0 149 0 20 0 149 0 21 0 149 0 22 0 149 0 23 0 149 0 24 0 149 0 25 0 65 0 27] 
+#[0 0 82 0 3 0 4 0 8 0 12 0 14 0 28] 
+#[0 0 86 0 3 0 4 0 8 0 12 0 14 0 28]
 	).
 ]
 
@@ -268,6 +273,13 @@ TypTypeParser >> reduceActionForParametricType1: nodes [
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForTypeVariableType1: nodes [
 	^ TypTypeVariableType named: '@' , (nodes at: 2)
+]
+
+{ #category : #'generated-reduction actions' }
+TypTypeParser >> reduceActionForTypeVariableType2: nodes [
+	^ TypTypeVariableType
+		named: '@' , (nodes at: 2)
+		superType: (nodes at: 4)
 ]
 
 { #category : #'generated-reduction actions' }

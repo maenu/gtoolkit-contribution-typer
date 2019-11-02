@@ -81,7 +81,7 @@ TypType >> canUnderstand: aSymbol [
 { #category : #testing }
 TypType >> hasSuperType [
 	<typTypeResultAs: 'Boolean'>
-	self subclassResponsibility
+	^ superType isNotNil
 ]
 
 { #category : #initialization }
@@ -163,7 +163,8 @@ TypType >> resolveIn: aType [
 { #category : #'as yet unclassified' }
 TypType >> superType [
 	<typTypeResultAs: 'TypType'>
-	self subclassResponsibility
+	self assert: [ self hasSuperType ].
+	^ superType
 ]
 
 { #category : #'as yet unclassified' }

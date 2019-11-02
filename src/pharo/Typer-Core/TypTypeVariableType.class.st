@@ -14,6 +14,13 @@ TypTypeVariableType class >> named: aString [
 		yourself
 ]
 
+{ #category : #'instance creation' }
+TypTypeVariableType class >> named: aString superType: aType [
+	^ (self named: aString)
+		superType: aType;
+		yourself
+]
+
 { #category : #comparing }
 TypTypeVariableType >> = anObject [
 	^ anObject == self
@@ -22,16 +29,11 @@ TypTypeVariableType >> = anObject [
 
 { #category : #comparing }
 TypTypeVariableType >> > aType [
-	^ true
+	^ superType >= aType
 ]
 
 { #category : #'as yet unclassified' }
 TypTypeVariableType >> canUnderstand: aSymbol [
-	^ false
-]
-
-{ #category : #testing }
-TypTypeVariableType >> hasSuperType [
 	^ false
 ]
 
@@ -43,7 +45,8 @@ TypTypeVariableType >> hash [
 { #category : #initialization }
 TypTypeVariableType >> initialize [
 	<typTypeVariable: 'name' as: 'String'>
-	super initialize
+	super initialize.
+	superType := Object typAsType
 ]
 
 { #category : #accessing }
@@ -69,7 +72,10 @@ TypTypeVariableType >> name [
 
 { #category : #printing }
 TypTypeVariableType >> printOn: aStream [
-	aStream nextPutAll: name asString
+	aStream nextPutAll: name asString.
+	superType = Object typAsType
+		ifFalse: [ aStream nextPutAll: '<='.
+			superType printOn: aStream ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -80,9 +86,4 @@ TypTypeVariableType >> resolveIn: aType [
 	^ aType hasSuperType
 		ifTrue: [ self resolveIn: aType superType ]
 		ifFalse: [ self ]
-]
-
-{ #category : #'as yet unclassified' }
-TypTypeVariableType >> superType [
-	self shouldNotImplement
 ]
