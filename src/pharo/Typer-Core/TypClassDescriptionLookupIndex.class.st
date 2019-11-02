@@ -1,5 +1,5 @@
 Class {
-	#name : #TypClassLookupIndex,
+	#name : #TypClassDescriptionLookupIndex,
 	#superclass : #TypLookupIndex,
 	#instVars : [
 		'index'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-TypClassLookupIndex class >> newDefault [
+TypClassDescriptionLookupIndex class >> newDefault [
 	^ self new
 		resolver:
 			(TypCachingLookupResolver new
@@ -19,12 +19,12 @@ TypClassLookupIndex class >> newDefault [
 								resolver:
 									(TypBreadthLookupResolver new
 										resolvers:
-											{TypPraClassLookupResolver new.
-											TypShaClassLookupResolver new};
+											{TypPraClassDescriptionLookupResolver new.
+											TypShaClassDescriptionLookupResolver new};
 										yourself);
 								yourself).
 							(TypDepthLookupResolver new
-								resolver: TypInfClassLookupResolver new;
+								resolver: TypInfClassDescriptionLookupResolver new;
 								yourself)};
 						yourself);
 				yourself);
@@ -32,20 +32,20 @@ TypClassLookupIndex class >> newDefault [
 ]
 
 { #category : #initialization }
-TypClassLookupIndex >> initialize [
+TypClassDescriptionLookupIndex >> initialize [
 	<typTypeVariable: 'selector' as: 'IdentityDictionary<Symbol,TypType>'>
 	super initialize.
 	index := IdentityDictionary new
 ]
 
 { #category : #initialization }
-TypClassLookupIndex >> reset [
+TypClassDescriptionLookupIndex >> reset [
 	super reset.
 	index removeAll
 ]
 
 { #category : #accessing }
-TypClassLookupIndex >> typeFor: aLookup [
+TypClassDescriptionLookupIndex >> typeFor: aLookup [
 	^ index
 		at: aLookup classDescription name asSymbol
 		ifAbsentPut: [ (resolver resolve: aLookup)

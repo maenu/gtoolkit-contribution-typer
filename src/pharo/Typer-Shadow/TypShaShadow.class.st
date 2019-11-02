@@ -12,8 +12,8 @@ Class {
 }
 
 { #category : #converting }
-TypShaShadow class >> asClassLookupResult [
-	^ TypClassLookupResult new
+TypShaShadow class >> asClassDescriptionLookupResult [
+	^ TypClassDescriptionLookupResult new
 		type: [ :a | self asType: a classDescription ];
 		yourself
 ]
@@ -82,8 +82,8 @@ TypShaShadow class >> shadowedClass [
 ]
 
 { #category : #converting }
-TypShaShadow >> asClassLookupResult [
-	^ TypClassLookupResult new
+TypShaShadow >> asClassDescriptionLookupResult [
+	^ TypClassDescriptionLookupResult new
 		type: [ :a | self asType: a classDescription ];
 		yourself
 ]

@@ -51,6 +51,7 @@ TypTypeVariableType >> initialize [
 
 { #category : #accessing }
 TypTypeVariableType >> initializeWithName: aString [
+	<typTypeArgument: 1 as: 'String'>
 	self assert: [ aString first = $@ ].
 	name := aString
 ]
@@ -82,7 +83,7 @@ TypTypeVariableType >> printOn: aStream [
 TypTypeVariableType >> resolveIn: aType [
 	((aType isParametric or: [ aType isFunction ])
 		and: [ aType bindings includes: self ])
-		ifTrue: [ ^ aType bindings at: self ].
+		ifTrue: [ ^ (aType bindings at: self) logCr;yourself ].
 	^ aType hasSuperType
 		ifTrue: [ self resolveIn: aType superType ]
 		ifFalse: [ self ]

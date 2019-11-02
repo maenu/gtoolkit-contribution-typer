@@ -11,9 +11,9 @@ Class {
 { #category : #initialization }
 TypCachingLookupResolver >> initialize [
 	<typTypeVariable: 'resolver' as: 'TypLookupResolver'>
-	<typTypeVariable: 'cache' as: 'Dictionary<TypLookup,TypLookupResult>'>
+	<typTypeVariable: 'cache' as: 'Dictionary<TypLookup,SequenceableCollection<TypLookupResult>>'>
 	super initialize.
-	cache := Dictionary new
+	cache := Dictionary new  "typParameters TypLookup,SequenceableCollection<TypLookupResult>"
 ]
 
 { #category : #initialization }

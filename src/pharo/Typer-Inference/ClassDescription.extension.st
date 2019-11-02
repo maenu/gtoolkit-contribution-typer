@@ -1,8 +1,8 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Inference' }
-ClassDescription >> typInfAsClassLookupResult [
-	^ TypClassLookupResult new
+ClassDescription >> typInfAsClassDescriptionLookupResult [
+	^ TypClassDescriptionLookupResult new
 		type: [ :a | a classDescription typAsNamedType ];
 		yourself
 ]
@@ -28,8 +28,12 @@ ClassDescription >> typInfAsVariableLookupResultFor: aSymbol [
 				flatCollect: [ :f | 
 					f methods
 						flatCollect: [ :g | 
-							(g assignmentNodes select: [ :h | h variable name = aSymbol ])
-								collect: [ :h | h value typType ] ] ]) typAsType.
+							| types |
+							types := (g assignmentNodes
+								select: [ :h | h variable name = aSymbol ])
+								collect: [ :h | h value typType ].
+							g ast typTypeReset.	"reset type, as it might impact other resolvers"
+							types ] ]) typAsType.
 			TypVariableLookupResult new
 				type: [ type ];
 				yourself ]

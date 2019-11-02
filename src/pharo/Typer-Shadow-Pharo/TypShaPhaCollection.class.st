@@ -14,6 +14,14 @@ TypShaPhaCollection class >> ___with: _a [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaCollection class >> ___withAll: _a [
+	^ TypMethodLookupResult new
+		argumentTypes: [ :i :a :s :r | Collection typAsType ];
+		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType copyWithBindings: {'@A' typAsType -> ((a argumentTypes first "typCastAs TypParametricType") bindings at: '@A' typAsType)} typAsTypeVariableBindings ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaCollection class >> shadowedClass [
 	^ Collection class

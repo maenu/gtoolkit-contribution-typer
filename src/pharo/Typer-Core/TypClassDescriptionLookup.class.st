@@ -12,7 +12,7 @@ TypClassDescriptionLookup >> = anObject [
 	^ self == anObject
 		or: [ self class == anObject class
 				and: [ | object |
-					object := anObject "typCastAs TypClassLookup".
+					object := anObject "typCastAs TypClassDescriptionLookup".
 					classDescription = object classDescription ] ]
 ]
 

@@ -102,11 +102,11 @@ TypShaPhaSequenceableCollection >> ___endsWith: _a [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaSequenceableCollection >> ___first [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | a receiverType bindings at: '@A' typAsType ];
+		resultType: [ :a :s :r | '@A' typAsType resolveIn: a receiverType ];
 		yourself
 ]
 

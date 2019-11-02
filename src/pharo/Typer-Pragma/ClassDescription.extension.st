@@ -1,7 +1,7 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Pragma' }
-ClassDescription >> typPraAsClassLookupResult [
+ClassDescription >> typPraAsClassDescriptionLookupResult [
 	| pragmas parameters bindings superTypeBindings |
 	pragmas := (self lookupSelector: #initialize)
 		ifNil: [ ^ nil ]
@@ -26,18 +26,18 @@ ClassDescription >> typPraAsClassLookupResult [
 		ifTrue: [ ^ nil ].
 	(parameters isEmpty
 		and: [ bindings isEmpty and: [ superTypeBindings isNotEmpty ] ])
-		ifTrue: [ ^ TypClassLookupResult new
+		ifTrue: [ ^ TypClassDescriptionLookupResult new
 				type: [ :a | 
 					a classDescription typAsNamedType
 						initializeSuperTypeWithBindings: superTypeBindings;
 						yourself ];
 				yourself ].
 	^ superTypeBindings isEmpty
-		ifTrue: [ TypClassLookupResult new
+		ifTrue: [ TypClassDescriptionLookupResult new
 				type:
 						[ :a | a classDescription typAsParametricTypeWithParameters: parameters bindings: bindings ];
 				yourself ]
-		ifFalse: [ TypClassLookupResult new
+		ifFalse: [ TypClassDescriptionLookupResult new
 				type: [ :a | 
 					(a classDescription typAsParametricTypeWithParameters: parameters bindings: bindings)
 						initializeSuperTypeWithSomeBindings: superTypeBindings;
