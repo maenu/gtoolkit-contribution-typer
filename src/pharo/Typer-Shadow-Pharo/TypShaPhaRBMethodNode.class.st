@@ -31,7 +31,7 @@ TypShaPhaRBMethodNode >> ___allChildren [
 TypShaPhaRBMethodNode >> ___arguments [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ OrderedCollection typAsType
+		resultType: [ SequenceableCollection typAsType
 				copyWithBindings: {('@A' typAsType -> RBArgumentNode typAsType)} typAsTypeVariableBindings ];
 		yourself
 ]

@@ -94,6 +94,5 @@ RBMethodNode >> typTypeRecursive [
 
 { #category : #'*Typer-Core' }
 RBMethodNode >> typTypesForArguments [
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	^ self arguments collect: #typType
 ]

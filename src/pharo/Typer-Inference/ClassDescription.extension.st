@@ -16,36 +16,15 @@ ClassDescription >> typInfAsMethodLookupResultFor: aSymbol [
 ]
 
 { #category : #'*Typer-Inference' }
-ClassDescription >> typInfAsVariableLookupResultFor: aSymbol [
-	^ (self class allInstVarNames includes: aSymbol)
-		ifTrue: [ | definer clazzes type |
-			definer := self class whichClassDefinesInstVar: aSymbol.
-			clazzes := self class typInfWithAllSuperclassesUntil: definer.
-			self
-				flag:
-					'this might also catch overridden methods, making it not completely sound'.
-			type := (clazzes
-				flatCollect: [ :f | 
-					f methods
-						flatCollect: [ :g | 
-							| types |
-							types := (g assignmentNodes
-								select: [ :h | h variable name = aSymbol ])
-								collect: [ :h | h value typType ].
-							g ast typTypeReset.	"reset type, as it might impact other resolvers"
-							types ] ]) typAsType.
-			TypVariableLookupResult new
-				type: [ type ];
-				yourself ]
-		ifFalse: [ nil ]
-]
-
-{ #category : #'*Typer-Inference' }
-ClassDescription >> typInfWithAllSuperclassesUntil: anotherClass [
-	<typTypeArgument: 1 as: 'ClassDescription'>
-	<typTypeArgument: 2 as: 'ClassDescription'>
-	<typTypeResultAs: 'SequenceableCollection<ClassDescription>'>
-	| clazzes |
-	clazzes := self withAllSuperclasses.
-	^ clazzes copyFrom: 1 to: (clazzes indexOf: anotherClass)
+ClassDescription >> typInfVariableAssignedTypeFor: aSymbol in: aCollection [
+	^ (aCollection
+		flatCollect: [ :f | 
+			| types |
+			types := (f assignmentNodes
+				select: [ :h | h variable name = aSymbol ])
+				collect: [ :h | h value typType ].
+			types
+				ifNotEmpty:
+					[ f ast typTypeReset	"reset type, as it might impact other resolvers" ].
+			types ]) typAsType
 ]

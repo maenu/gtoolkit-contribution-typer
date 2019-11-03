@@ -21,7 +21,7 @@ TypShaPhaSequenceableCollection class >> shadowedClass [
 TypShaPhaSequenceableCollection >> ___at: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ Integer typAsType ];
-		resultType: [ :a | a receiverType scope at: '@E' ];
+		resultType: [ :a | '@A' typAsType resolveIn: a receiverType ];
 		yourself
 ]
 

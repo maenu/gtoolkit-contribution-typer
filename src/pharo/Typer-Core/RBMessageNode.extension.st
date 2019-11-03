@@ -85,15 +85,23 @@ RBMessageNode >> typTypeForReceiver [
 { #category : #'*Typer-Core' }
 RBMessageNode >> typTypeForResult [
 	<typTypeResultAs: 'TypType'>
-	^ (self
+	^ self
 		propertyAt: #typTypeForResult
 		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
 			| receiverType argumentTypes |
 			self propertyAt: #typTypeForResult put: TypUnknownType instance.
 			receiverType := self typTypeForReceiver.
 			argumentTypes := self typTypesForArguments.
+			self selector asSymbol logCr.
+			receiverType logCr.
+			((receiverType canUnderstand: self selector asSymbol) not
+				and:
+					[ receiverType asNonNullableType canUnderstand: self selector asSymbol ])
+				ifTrue: [ receiverType asNonNullableType logCr.
+					self flag: 'TODO flag as nil error, or let checker deal with it?'.
+					receiverType := receiverType asNonNullableType ].
 			receiverType isUnion
-				ifTrue: [ ((receiverType "typCastAs TypUnionType") types
+				ifTrue: [ (receiverType types
 						collect: [ :e | 
 							TypMethodLookupIndex instance
 								resultTypeFor:
@@ -103,14 +111,16 @@ RBMessageNode >> typTypeForResult [
 										argumentTypes: argumentTypes;
 										argumentNodes: self arguments;
 										yourself) ]) typAsType ]
-				ifFalse: [ TypMethodLookupIndex instance
+				ifFalse: [ (TypMethodLookupIndex instance
 						resultTypeFor:
-							(TypMethodLookup new
-								receiverType: receiverType;
-								selector: self selector asSymbol;
-								argumentTypes: argumentTypes;
-								argumentNodes: self arguments;
-								yourself) ] ]) "typCastAs TypType"
+						(TypMethodLookup new
+						receiverType: receiverType;
+						selector: self selector asSymbol;
+						argumentTypes: argumentTypes;
+						argumentNodes: self arguments;
+						yourself))
+						logCr;
+						yourself ] ]
 ]
 
 { #category : #'*Typer-Core' }

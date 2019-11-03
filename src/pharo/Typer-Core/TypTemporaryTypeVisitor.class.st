@@ -39,7 +39,7 @@ TypTemporaryTypeVisitor >> initialize [
 	<typTypeVariable: 'types' as: 'OrderedCollection<TypType>'>
 	<typTypeVariable: 'stopped' as: 'Boolean'>
 	super initialize.
-	types := OrderedCollection new "typTypeParameters TypType".
+	types := OrderedCollection new "typParameters TypType".
 	stopped := false
 ]
 
