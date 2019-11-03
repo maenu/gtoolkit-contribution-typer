@@ -92,13 +92,10 @@ RBMessageNode >> typTypeForResult [
 			self propertyAt: #typTypeForResult put: TypUnknownType instance.
 			receiverType := self typTypeForReceiver.
 			argumentTypes := self typTypesForArguments.
-			self selector asSymbol logCr.
-			receiverType logCr.
 			((receiverType canUnderstand: self selector asSymbol) not
 				and:
 					[ receiverType asNonNullableType canUnderstand: self selector asSymbol ])
-				ifTrue: [ receiverType asNonNullableType logCr.
-					self flag: 'TODO flag as nil error, or let checker deal with it?'.
+				ifTrue: [ self flag: 'TODO flag as nil error, or let checker deal with it?'.
 					receiverType := receiverType asNonNullableType ].
 			receiverType isUnion
 				ifTrue: [ (receiverType types
@@ -111,16 +108,14 @@ RBMessageNode >> typTypeForResult [
 										argumentTypes: argumentTypes;
 										argumentNodes: self arguments;
 										yourself) ]) typAsType ]
-				ifFalse: [ (TypMethodLookupIndex instance
+				ifFalse: [ TypMethodLookupIndex instance
 						resultTypeFor:
-						(TypMethodLookup new
-						receiverType: receiverType;
-						selector: self selector asSymbol;
-						argumentTypes: argumentTypes;
-						argumentNodes: self arguments;
-						yourself))
-						logCr;
-						yourself ] ]
+							(TypMethodLookup new
+								receiverType: receiverType;
+								selector: self selector asSymbol;
+								argumentTypes: argumentTypes;
+								argumentNodes: self arguments;
+								yourself) ] ]
 ]
 
 { #category : #'*Typer-Core' }
