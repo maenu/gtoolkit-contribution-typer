@@ -33,15 +33,7 @@ TypShaPhaProtoObject >> ___ifNil: _a [
 				typAsFunctionTypeWithArguments: {}
 				result: TypUnknownType instance
 				argumentsOptional: false ];
-		resultType: [ :a :s :r | 
-			| node |
-			node := a argumentNodes at: 1.
-			(node isBlock
-				and: [ node body statements size > 0
-						and: [ node body statements last isReturn ] ])
-				ifTrue: [ a receiverType asNonNullableType ]
-				ifFalse: [ {a receiverType.
-					(a argumentTypes at: 1) result} typAsType ] ];
+		resultType: [ :a :s :r | a receiverType asNonNullableType ];
 		yourself
 ]
 

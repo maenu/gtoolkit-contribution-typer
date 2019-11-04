@@ -12,12 +12,7 @@ Class {
 
 { #category : #accessing }
 TypLookupIndex class >> instance [
-	^ instance ifNil: [ instance := self newDefault ]
-]
-
-{ #category : #accessing }
-TypLookupIndex class >> newDefault [
-	self subclassResponsibility
+	^ self subclassResponsibility
 ]
 
 { #category : #initialization }

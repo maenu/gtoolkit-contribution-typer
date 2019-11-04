@@ -8,27 +8,28 @@ Class {
 }
 
 { #category : #accessing }
-TypClassDescriptionLookupIndex class >> newDefault [
-	^ self new
-		resolver:
-			(TypCachingLookupResolver new
+TypClassDescriptionLookupIndex class >> instance [
+	^ instance
+		ifNil: [ instance := self new
 				resolver:
-					(TypBreadthLookupResolver new
-						resolvers:
-							{(TypDepthLookupResolver new
-								resolver:
-									(TypBreadthLookupResolver new
-										resolvers:
-											{TypPraClassDescriptionLookupResolver new.
-											TypShaClassDescriptionLookupResolver new};
-										yourself);
-								yourself).
-							(TypDepthLookupResolver new
-								resolver: TypInfClassDescriptionLookupResolver new;
-								yourself)};
+					(TypCachingLookupResolver new
+						resolver:
+							(TypBreadthLookupResolver new
+								resolvers:
+									{(TypDepthLookupResolver new
+										resolver:
+											(TypBreadthLookupResolver new
+												resolvers:
+													{TypPraClassDescriptionLookupResolver new.
+													TypShaClassDescriptionLookupResolver new};
+												yourself);
+										yourself).
+									(TypDepthLookupResolver new
+										resolver: TypInfClassDescriptionLookupResolver new;
+										yourself)};
+								yourself);
 						yourself);
-				yourself);
-		yourself
+				yourself ]
 ]
 
 { #category : #initialization }

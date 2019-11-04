@@ -14,12 +14,13 @@ RBProgramNode >> typAnnotateType: aType [
 		detect: #typIsParameters
 		ifFound: [ :e | 
 			type isParametric
-				ifTrue: [ | bindings |
+				ifTrue: [ | type_ bindings |
+					type_ := type "typCastAs TypParametricType".
 					bindings := e typParameters.
-					bindings size = type parameters size
-						ifTrue: [ type := type
+					bindings size = type_ parameters size
+						ifTrue: [ type := type_
 								copyWithBindings:
-									(type parameters withIndexCollect: [ :f :i | f -> (bindings at: i) ])
+									(type_ parameters withIndexCollect: [ :f :i | f -> (bindings at: i) ])
 										typAsTypeVariableBindings ]
 						ifFalse: [ self flag: 'log or do nothing?' ] ]
 				ifFalse: [ self flag: 'log or do nothing?' ] ]

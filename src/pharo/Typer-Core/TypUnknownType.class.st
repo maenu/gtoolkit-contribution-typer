@@ -25,7 +25,7 @@ TypUnknownType >> asNonNullableType [
 
 { #category : #'as yet unclassified' }
 TypUnknownType >> canUnderstand: aSymbol [
-	^ aSymbol implementors isNotEmpty
+	^ false
 ]
 
 { #category : #copying }
@@ -40,8 +40,7 @@ TypUnknownType >> isUnknown [
 
 { #category : #'as yet unclassified' }
 TypUnknownType >> lookupSelector: aSymbol [
-	self assert: [ self canUnderstand: aSymbol ].
-	^ aSymbol implementors asSet
+	self shouldNotImplement
 ]
 
 { #category : #accessing }

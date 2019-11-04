@@ -5,27 +5,28 @@ Class {
 }
 
 { #category : #accessing }
-TypVariableLookupIndex class >> newDefault [
-	^ self new
-		resolver:
-			(TypCachingLookupResolver new
+TypVariableLookupIndex class >> instance [
+	^ instance
+		ifNil: [ instance := self new
 				resolver:
-					(TypBreadthLookupResolver new
-						resolvers:
-							{(TypDepthLookupResolver new
-								resolver:
-									(TypBreadthLookupResolver new
-										resolvers:
-											{TypPraVariableLookupResolver new.
-											TypShaVariableLookupResolver new};
-										yourself);
-								yourself).
-							(TypDepthLookupResolver new
-								resolver: TypInfVariableLookupResolver new;
-								yourself)};
+					(TypCachingLookupResolver new
+						resolver:
+							(TypBreadthLookupResolver new
+								resolvers:
+									{(TypDepthLookupResolver new
+										resolver:
+											(TypBreadthLookupResolver new
+												resolvers:
+													{TypPraVariableLookupResolver new.
+													TypShaVariableLookupResolver new};
+												yourself);
+										yourself).
+									(TypDepthLookupResolver new
+										resolver: TypInfVariableLookupResolver new;
+										yourself)};
+								yourself);
 						yourself);
-				yourself);
-		yourself
+				yourself ]
 ]
 
 { #category : #accessing }
