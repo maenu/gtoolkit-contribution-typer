@@ -9,27 +9,31 @@ Class {
 
 { #category : #converting }
 TypUnionType class >> asTypes: aCollection [
+	<typTypeArgument: 1 as: 'Collection<TypType>'>
+	<typTypeResultAs: 'Set<TypType>'>
 	| remains nil_ |
 	remains := (aCollection
-		flatCollect: [ :e "typParameters TypType"
-			 | 
+		flatCollect: [ :e | 
 			e isUnion
-				ifTrue: [ e "typCastAs TypUnionType" types ]
-				ifFalse: [ {e} ] ]) asSet select: #isType.
-	nil_ := (remains includes: TypNilType instance).
-	nil_ ifTrue: [ remains remove: TypNilType instance ].
+				ifTrue: [ (e "typCastAs TypUnionType") types ]
+				ifFalse: [ {e} "typCastAs Collection<TypType>" ] ]) asSet select: #isType.
+	nil_ := remains includes: TypNilType instance.
+	nil_
+		ifTrue: [ remains remove: TypNilType instance ].
 	remains := remains
 		reject: [ :e | 
 			(remains
 				copyWithoutAll:
 					{e.
 					TypUnknownType instance}) anySatisfy: [ :f | f >= e ] ].
-	nil_ ifTrue: [ remains add: TypNilType instance ].
+	nil_
+		ifTrue: [ remains add: TypNilType instance ].
 	^ remains
 ]
 
 { #category : #generated }
 TypUnionType class >> types: aCollection [
+	<typTypeArgument: 1 as: 'Collection<TypType>'>
 	^ self new
 		initializeWithTypes: (self asTypes: aCollection);
 		yourself

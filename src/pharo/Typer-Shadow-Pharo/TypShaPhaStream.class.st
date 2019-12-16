@@ -10,6 +10,14 @@ TypShaPhaStream class >> shadowedClass [
 ]
 
 { #category : #accessing }
+TypShaPhaStream >> ___nextPutAll: _a [
+	^ TypMethodLookupResult new
+		argumentTypes: [ :i :a :s :r | Collection typAsType ];
+		resultType: [ :a :s :r | a argumentTypes first ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaStream >> asType: aClass [
 	^ aClass typAsParametricTypeWithParameters: {'@A' typAsType}
 ]

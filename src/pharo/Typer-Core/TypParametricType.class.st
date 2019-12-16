@@ -86,6 +86,7 @@ TypParametricType >> bindings [
 
 { #category : #copying }
 TypParametricType >> copyWithBindings: aBindings [
+	<typTypeArgument: 1 as: 'TypTypeVariableBindings'>
 	^ self hasClassDescription
 		ifTrue: [ self copy
 				initializeWithClassDescription: self classDescription
@@ -101,6 +102,7 @@ TypParametricType >> copyWithBindings: aBindings [
 
 { #category : #copying }
 TypParametricType >> copyWithSomeBindings: aBindings [
+	<typTypeArgument: 1 as: 'TypTypeVariableBindings'>
 	| bindings_ |
 	self assert: [ bindings variables includesAll: aBindings variables ].
 	bindings_ := bindings copy.

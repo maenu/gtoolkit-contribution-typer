@@ -11,6 +11,7 @@ Class {
 
 { #category : #'instance creation' }
 TypNamedType class >> classDescription: aClassDescription [
+	<typTypeArgument: 1 as: 'ClassDescription'>
 	^ self new
 		initializeWithClassDescription: aClassDescription;
 		yourself
@@ -18,6 +19,7 @@ TypNamedType class >> classDescription: aClassDescription [
 
 { #category : #'instance creation' }
 TypNamedType class >> named: aString [
+	<typTypeArgument: 1 as: 'String'>
 	^ self new
 		initializeWithName: aString;
 		yourself
@@ -26,7 +28,7 @@ TypNamedType class >> named: aString [
 { #category : #comparing }
 TypNamedType >> = anObject [
 	^ self == anObject
-		or: [ self class = anObject class and: [ name = anObject name ] ]
+		or: [ self class = anObject class and: [ name = (anObject "typCastAs TypNamedType") name ] ]
 ]
 
 { #category : #comparing }
@@ -35,7 +37,7 @@ TypNamedType >> > aType [
 		and: [ aType hasSuperType and: [ self >= aType superType ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypNamedType >> canUnderstand: aSymbol [
 	^ self hasClassDescription
 		and: [ self classDescription canUnderstand: aSymbol ]
@@ -55,6 +57,7 @@ TypNamedType >> classDescription [
 
 { #category : #testing }
 TypNamedType >> hasClassDescription [
+	<typTypeResultAs: 'Boolean'>
 	^ hasClassDescription
 		ifNil: [ | clazz_ |
 			clazz_ := name.
@@ -90,16 +93,19 @@ TypNamedType >> initialize [
 
 { #category : #initialization }
 TypNamedType >> initializeSuperTypeWithBindings: aBindings [
-	superType := self superType copyWithBindings: aBindings
+	<typTypeArgument: 1 as: 'TypTypeVariableBindings'>
+	superType := (self superType "typCastAs TypParametricType") copyWithBindings: aBindings
 ]
 
 { #category : #initialization }
 TypNamedType >> initializeSuperTypeWithSomeBindings: aBindings [
-	superType := self superType copyWithSomeBindings: aBindings
+	<typTypeArgument: 1 as: 'TypTypeVariableBindings'>
+	superType := (self superType "typCastAs TypParametricType") copyWithSomeBindings: aBindings
 ]
 
 { #category : #accessing }
 TypNamedType >> initializeWithClassDescription: aClassDescription [
+	<typTypeArgument: 1 as: 'ClassDescription'>
 	classDescription := aClassDescription.
 	name := classDescription name.
 	hasClassDescription := true

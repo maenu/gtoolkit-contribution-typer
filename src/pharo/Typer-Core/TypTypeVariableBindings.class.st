@@ -78,6 +78,7 @@ TypTypeVariableBindings >> asCompatibleWith: aBindings [
 
 { #category : #accessing }
 TypTypeVariableBindings >> at: aTypeVariable [
+	<typTypeArgument: 1 as: 'TypTypeVariableType'>
 	| current discovered |
 	current := aTypeVariable.
 	discovered := OrderedCollection new.

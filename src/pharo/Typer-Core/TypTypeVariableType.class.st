@@ -9,6 +9,7 @@ Class {
 
 { #category : #'instance creation' }
 TypTypeVariableType class >> named: aString [
+	<typTypeArgument: 1 as: 'String'>
 	^ self new
 		initializeWithName: aString;
 		yourself
@@ -16,6 +17,8 @@ TypTypeVariableType class >> named: aString [
 
 { #category : #'instance creation' }
 TypTypeVariableType class >> named: aString superType: aType [
+	<typTypeArgument: 1 as: 'String'>
+	<typTypeArgument: 2 as: 'TypType'>
 	^ (self named: aString)
 		superType: aType;
 		yourself
@@ -24,7 +27,7 @@ TypTypeVariableType class >> named: aString superType: aType [
 { #category : #comparing }
 TypTypeVariableType >> = anObject [
 	^ anObject == self
-		or: [ anObject class = self class and: [ anObject name = name ] ]
+		or: [ anObject class = self class and: [ (anObject "typCastAs TypTypeVariableType") name = name ] ]
 ]
 
 { #category : #comparing }
@@ -80,11 +83,11 @@ TypTypeVariableType >> printOn: aStream [
 			superType printOn: aStream ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypTypeVariableType >> resolveIn: aType [
-	((aType isParametric or: [ aType isFunction ])
-		and: [ aType bindings includes: self ])
-		ifTrue: [ ^ aType bindings at: self ].
+	(aType isParametric
+		and: [ (aType "typCastAs TypParametricType") bindings includes: self ])
+		ifTrue: [ ^ (aType "typCastAs TypParametricType") bindings at: self ].
 	^ aType hasSuperType
 		ifTrue: [ self resolveIn: aType superType ]
 		ifFalse: [ self ]

@@ -142,10 +142,10 @@ TypType >> isUnknown [
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypType >> lookupSelector: aSymbol [
 	<typTypeArgument: 1 as: 'Symbol'>
-	<typTypeResultAs: 'Set<CompiledMethod()->Object>'>
+	<typTypeResultAs: 'Set<CompiledMethod>'>
 	self subclassResponsibility
 ]
 
@@ -158,6 +158,7 @@ TypType >> postCopy [
 { #category : #accessing }
 TypType >> resolveIn: aType [
 	<typTypeArgument: 1 as: 'TypType'>
+	<typTypeResultAs: 'TypType'>
 	^ self
 ]
 
