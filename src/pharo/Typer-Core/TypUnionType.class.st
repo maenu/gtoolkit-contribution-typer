@@ -161,6 +161,15 @@ TypUnionType >> printOn: aStream [
 			e printOn: aStream.
 			types_ ifNotEmpty: [ aStream << ',' ] ]
 		ifNone: [  ].
+	types_ size > 1
+		ifTrue: [ | type_ |
+			type_ := types_ = types
+				ifTrue: [ self ]
+				ifFalse: [ types_ typAsType ].
+			(type_ isUnion
+				and: [ type_ hasSuperType and: [ type_ superType isUnion not ] ])
+				ifTrue: [ type_ superType printOn: aStream.
+					types_ removeAll ] ].
 	types_ copy
 		do: [ :e | 
 			types_ remove: e.

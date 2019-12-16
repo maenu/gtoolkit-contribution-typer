@@ -4,6 +4,11 @@ Class {
 	#category : #'Typer-Core-Examples-Type'
 }
 
+{ #category : #testing }
+TypTypeExamples class >> isAbstract [
+	^ self = TypTypeExamples
+]
+
 { #category : #converting }
 TypTypeExamples >> asNonNullableType [ 
 	<gtExample>
@@ -176,7 +181,7 @@ TypTypeExamples >> superType [
 	<gtExample>
 	| type |
 	type := self type.
-	self assert: [ type superType ] signals: ShouldNotImplement.
+	self assert: [ type superType ] signals: AssertionFailure.
 	^ type
 ]
 

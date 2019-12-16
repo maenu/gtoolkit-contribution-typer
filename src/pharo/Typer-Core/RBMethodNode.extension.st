@@ -23,7 +23,7 @@ RBMethodNode >> typSignalsAlways [
 { #category : #'*Typer-Core' }
 RBMethodNode >> typTemporaryProfile [
 	<typTypeResultAs: 'SequenceableCollection<Association<RBProgramNode,TypType>>'>
-	^ (self allChildren select: [ :e | e isTemp ]) collect: [ :e | e -> e typType ]
+	^ (self allChildren select: #isTemp) collect: [ :e | e -> e typType ]
 ]
 
 { #category : #'*Typer-Core' }
@@ -71,7 +71,7 @@ RBMethodNode >> typTypeRecursive [
 		typTypeReset;
 		doSemanticAnalysis.
 	newTemporaryProfile := self typTemporaryProfile.
-	[ | oldTemporaryProfile oldReturnProfile oldSignalsAlwaysProfile |
+	[ | oldTemporaryProfile   |
 	self typTypeReset.
 	newTemporaryProfile
 		do: [ :e | e key propertyAt: #typType put: e value ].

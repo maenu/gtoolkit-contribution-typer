@@ -63,6 +63,17 @@ TypUnknownTypeExamples >> isUnknown [
 ]
 
 { #category : #accessing }
+TypUnknownTypeExamples >> lookupSelector [
+	<gtExample>
+	| type |
+	type := self type.
+	self
+		assert: [ type lookupSelector: #notThere ]
+		signals: ShouldNotImplement.
+	^ type
+]
+
+{ #category : #accessing }
 TypUnknownTypeExamples >> monotony [
 	<gtExample>
 	| type |
