@@ -20,10 +20,10 @@ CompiledMethod >> typInfAsMethodLookupResult [
 						typAsType ]) asDictionary.
 	result
 		argumentTypes:
-			[ :i :a :s :r | argumentTypes at: i ifPresent: [ :e| Halt once.e ] ifAbsent: [ TypUnknownType instance ] ].
+			[ :i :a :s :r | argumentTypes at: i ifAbsent: [ TypUnknownType instance ] ].
 	method typIsReturnSelf
 		ifTrue: [ result resultType: [ :r :a | a receiverType ] ]
-		ifFalse: [ self isAbstract
+		ifFalse: [ (self isAbstract or: [ method isPrimitive ])
 				ifTrue: [ nil ]
 				ifFalse: [ | lastIsReturn types |
 					lastIsReturn := method lastIsReturn.
