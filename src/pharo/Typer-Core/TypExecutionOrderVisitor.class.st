@@ -81,8 +81,7 @@ TypExecutionOrderVisitor >> visitBlockNode: aBlockNode [
 	"can ignore stopping, must always consider type after, using the node which is not in there, as we start from sequence nodes."
 
 	stopped
-		ifFalse: [ self visitArgumentNodes: aBlockNode arguments.
-			types addAll: (node typTypesIn: aBlockNode body) ]
+		ifFalse: [ self visitArgumentNodes: aBlockNode arguments ]
 ]
 
 { #category : #visiting }

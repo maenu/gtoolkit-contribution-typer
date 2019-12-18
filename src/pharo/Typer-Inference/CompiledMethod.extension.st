@@ -5,25 +5,25 @@ CompiledMethod >> typInfAsMethodLookupResult [
 	| method result argumentTypes |
 	method := self ast.
 	result := TypMethodLookupResult new.
-	argumentTypes := ((method allChildren
+	argumentTypes := (((method allChildren
 		select: [ :e | 
 			e isArgument
 				and: [ e typIsDeclaration not
-						and: [ (method defines: e)
+						and: [ (method defines: e name)
 								and: [ e parent isMessage and: [ e parent arguments includes: e ] ] ] ] ])
-		groupedBy: [ :e | method arguments detectIndex: [ :f | f == e ] ])
+		groupedBy: [ :e | method arguments detectIndex: [ :f | f name == e name ] ])
 		associations
 		collect: [ :e | 
 			e key
 				->
 					(e value collect: [ :f | f parent typTypeForArgumentAt: e key ])
-						typAsType ].
+						typAsType ]) asDictionary.
 	result
 		argumentTypes:
-			[ :i :a :s :r | argumentTypes at: i ifAbsent: [ TypUnknownType instance ] ].
+			[ :i :a :s :r | argumentTypes at: i ifPresent: [ :e| Halt once.e ] ifAbsent: [ TypUnknownType instance ] ].
 	method typIsReturnSelf
 		ifTrue: [ result resultType: [ :r :a | a receiverType ] ]
-		ifFalse: [ method isAbstract
+		ifFalse: [ self isAbstract
 				ifTrue: [ nil ]
 				ifFalse: [ | lastIsReturn types |
 					lastIsReturn := method lastIsReturn.

@@ -3,9 +3,9 @@ Extension { #name : #RBArgumentNode }
 { #category : #'*Typer-Core' }
 RBArgumentNode >> typIsDeclaration [
 	<typTypeResultAs: 'Boolean'>
-	^ self parent isSequence
+	^ self parent isMethod
 		and:
-			[ (self parent "typCastAs RBSequenceNode") arguments anySatisfy: [ :e | e == self ] ]
+			[ (self parent "typCastAs RBMethodNode") arguments anySatisfy: [ :e | e == self ] ]
 ]
 
 { #category : #'*Typer-Core' }
