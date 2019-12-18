@@ -9,6 +9,7 @@ Class {
 
 { #category : #generated }
 TypTypeVariableBindings class >> variables: aSet [
+	<typTypeArgument: 1 as: 'Set<TypType>'>
 	| instance |
 	instance := self new.
 	aSet do: [ :e | instance at: e put: e ].

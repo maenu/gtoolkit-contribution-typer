@@ -1,6 +1,14 @@
 Extension { #name : #RBArgumentNode }
 
 { #category : #'*Typer-Core' }
+RBArgumentNode >> typIsDeclaration [
+	<typTypeResultAs: 'Boolean'>
+	^ self parent isSequence
+		and:
+			[ (self parent "typCastAs RBSequenceNode") arguments anySatisfy: [ :e | e == self ] ]
+]
+
+{ #category : #'*Typer-Core' }
 RBArgumentNode >> typTypeRecursive [
 	^ ((self parent isBlock or: [ (self parent "typCastAs RBProgramNode") isMethod ])
 		and: [ (self parent "typCastAs {RBBlockNode,RBMethodNode}") arguments

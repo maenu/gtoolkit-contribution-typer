@@ -1,5 +1,5 @@
 Class {
-	#name : #TypTemporaryTypeVisitor,
+	#name : #TypExecutionOrderVisitor,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'node',
@@ -11,29 +11,20 @@ Class {
 }
 
 { #category : #accessing }
-TypTemporaryTypeVisitor class >> typeFor: aTemporaryNode [
-	^ (self
-		typesFor: aTemporaryNode
-		in: (aTemporaryNode whoDefines: aTemporaryNode name)) typAsType
-]
-
-{ #category : #accessing }
-TypTemporaryTypeVisitor class >> typesFor: aTemporaryNode [
-	^ self
-		typesFor: aTemporaryNode
-		in: (aTemporaryNode whoDefines: aTemporaryNode name)
-]
-
-{ #category : #accessing }
-TypTemporaryTypeVisitor class >> typesFor: aTemporaryNode in: aSequenceNode [
-	^ self new
-		node: aTemporaryNode;
-		visitNode: aSequenceNode;
-		types
+TypExecutionOrderVisitor class >> typeForTemporary: aTemporaryNode [
+	| definer |
+	self
+		assert: [ (aTemporaryNode isKindOf: RBTemporaryNode)
+				and: [ aTemporaryNode typIsDeclaration not ] ].
+	definer := aTemporaryNode whoDefines: aTemporaryNode name.
+	^ (self new
+		initializeNode: aTemporaryNode definer: definer;
+		visitNode: definer;
+		types) typAsType
 ]
 
 { #category : #visiting }
-TypTemporaryTypeVisitor >> initialize [
+TypExecutionOrderVisitor >> initialize [
 	<typTypeVariable: 'node' as: 'RBTemporaryNode'>
 	<typTypeVariable: 'definer' as: '{!,RBMethodNode,RBBlockNode}'>
 	<typTypeVariable: 'types' as: 'OrderedCollection<TypType>'>
@@ -44,7 +35,15 @@ TypTemporaryTypeVisitor >> initialize [
 ]
 
 { #category : #accessing }
-TypTemporaryTypeVisitor >> node: aNode [
+TypExecutionOrderVisitor >> initializeNode: aNode definer: anotherNode [
+	self assert: [ aNode isKindOf: RBTemporaryNode ].
+	self assert: [ aNode typIsDeclaration not ].
+	node := aNode.
+	definer := anotherNode
+]
+
+{ #category : #accessing }
+TypExecutionOrderVisitor >> node: aNode [
 	self
 		assert: [ (aNode isKindOf: RBTemporaryNode)
 				and: [ aNode typIsDeclaration not ] ].
@@ -53,12 +52,12 @@ TypTemporaryTypeVisitor >> node: aNode [
 ]
 
 { #category : #generated }
-TypTemporaryTypeVisitor >> types [
+TypExecutionOrderVisitor >> types [
 	^ types
 ]
 
 { #category : #visiting }
-TypTemporaryTypeVisitor >> visitArrayNode: anArrayNode [
+TypExecutionOrderVisitor >> visitArrayNode: anArrayNode [
 	"blocks can at the earliest time be evaluated after the non-block children"
 
 	(anArrayNode children reject: #isBlock)
@@ -68,24 +67,26 @@ TypTemporaryTypeVisitor >> visitArrayNode: anArrayNode [
 ]
 
 { #category : #visiting }
-TypTemporaryTypeVisitor >> visitAssignmentNode: aNode [
+TypExecutionOrderVisitor >> visitAssignmentNode: aNode [
 	self visitNode: aNode value.
 	(stopped not and: [ aNode variable name = node name ])
 		ifTrue: [ (aNode parentSuchAs: #isSequence) == definer
 				ifTrue: [ types removeAll ].
-			types add: aNode value typType ]
+			types add: aNode value typType ].
+	self visitNode: aNode variable.
 ]
 
 { #category : #visiting }
-TypTemporaryTypeVisitor >> visitBlockNode: aBlockNode [
+TypExecutionOrderVisitor >> visitBlockNode: aBlockNode [
 	"can ignore stopping, must always consider type after, using the node which is not in there, as we start from sequence nodes."
 
 	stopped
-		ifFalse: [ types addAll: (self class typesFor: node in: aBlockNode body) ]
+		ifFalse: [ self visitArgumentNodes: aBlockNode arguments.
+			types addAll: (node typTypesIn: aBlockNode body) ]
 ]
 
 { #category : #visiting }
-TypTemporaryTypeVisitor >> visitMessageNode: aMessageNode [
+TypExecutionOrderVisitor >> visitMessageNode: aMessageNode [
 	"blocks can at the earliest time be evaluated after the receiver and non-block arguments"
 
 	| shouldVisitReceiver |
@@ -102,16 +103,17 @@ TypTemporaryTypeVisitor >> visitMessageNode: aMessageNode [
 ]
 
 { #category : #visiting }
-TypTemporaryTypeVisitor >> visitSequenceNode: aSequenceNode [
+TypExecutionOrderVisitor >> visitNode: aNode [
+	aNode == node
+		ifTrue: [ stopped := true ]
+		ifFalse: [ super visitNode: aNode ]
+]
+
+{ #category : #visiting }
+TypExecutionOrderVisitor >> visitSequenceNode: aSequenceNode [
 	aSequenceNode == definer
 		ifTrue: [ types
 				removeAll;
 				add: TypNilType instance ].
 	super visitSequenceNode: aSequenceNode
-]
-
-{ #category : #visiting }
-TypTemporaryTypeVisitor >> visitTemporaryNode: aNode [
-	aNode == node
-		ifTrue: [ stopped := true ]
 ]

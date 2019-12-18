@@ -13,16 +13,21 @@ TypParametricType class >> classDescription: aClassDescription [
 	self shouldNotImplement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection [
+	<typTypeArgument: 1 as: 'ClassDescription'>
+	<typTypeArgument: 2 as: 'SequenceableCollection<TypType>'>
 	^ self
 		classDescription: aClassDescription
 		parameters: aSequenceableCollection
 		bindings: (TypTypeVariableBindings variables: aSequenceableCollection asSet)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection bindings: aBindings [
+	<typTypeArgument: 1 as: 'ClassDescription'>
+	<typTypeArgument: 2 as: 'SequenceableCollection<TypType>'>
+	<typTypeArgument: 3 as: 'TypTypeVariableBindings'>
 	^ self new
 		initializeWithClassDescription: aClassDescription
 			parameters: aSequenceableCollection
@@ -43,8 +48,11 @@ TypParametricType class >> named: aString parameters: aSequenceableCollection [
 		bindings: (TypTypeVariableBindings variables: aSequenceableCollection asSet)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypParametricType class >> named: aString parameters: aSequenceableCollection bindings: aBindings [
+	<typTypeArgument: 1 as: 'String'>
+	<typTypeArgument: 2 as: 'SequenceableCollection<TypType>'>
+	<typTypeArgument: 3 as: 'TypTypeVariableBindings'>
 	^ self new
 		initializeWithName: aString
 			parameters: aSequenceableCollection
