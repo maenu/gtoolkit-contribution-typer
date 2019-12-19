@@ -71,7 +71,7 @@ TypParametricType >> > aType [
 	^ self ~= aType
 		and: [ (aType isParametric
 				and: [ name = aType name
-						and: [ parameters = aType parameters and: [ bindings > aType bindings ] ] ])
+						and: [ parameters = aType parameters and: [ bindings >= aType bindings ] ] ])
 				or: [ super > aType ] ]
 ]
 
