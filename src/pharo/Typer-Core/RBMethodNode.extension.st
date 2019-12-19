@@ -23,7 +23,8 @@ RBMethodNode >> typSignalsAlways [
 { #category : #'*Typer-Core' }
 RBMethodNode >> typTemporaryProfile [
 	<typTypeResultAs: 'SequenceableCollection<Association<RBProgramNode,TypType>>'>
-	^ (self allChildren select: #isTemp) collect: [ :e | e -> e typType ]
+	^ (self allChildren select: [ :e | e isVariable or: [ e isReturn ] ])
+		collect: [ :e | e -> e typType ]
 ]
 
 { #category : #'*Typer-Core' }

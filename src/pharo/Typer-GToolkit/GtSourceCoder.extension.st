@@ -54,7 +54,7 @@ GtSourceCoder >> typGtBrowseToTypeWithShadow: anElement [
 { #category : #'*Typer-GToolkit' }
 GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst [
 	<gtAstCoderAddOns: 10>
-	(self completionStrategy class == GtPharoCompletionStrategy)
+	self completionStrategy class == GtPharoCompletionStrategy
 		ifTrue: [ completionStrategy := completionStrategy
 				typGtAsTypGtPharoCompletionStrategyFor: self ].
 	self flag: 'currently dead code'.
@@ -92,11 +92,10 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst [
 						build);
 				action: [ :e | self typGtBrowseToTypeWithShadow: e ]);
 		addStyler:
-			(TypGtTyperStyler new
+			(TypGtCheckBodyStyler new
 				coder: self;
 				yourself);
 		addStyler: TypGtTypeDeclarationBodyStyler new;
-		addStyler: TypGtCheckBodyStyler new;
 		addMainAction: 'Types' translated
 			icon: BrGlamorousIcons inspect
 			action: [ | declaration |
@@ -114,7 +113,7 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst [
 			checker := addOns stylers
 				detect: [ :e | e class == TypGtCheckBodyStyler ].
 			checker markUnknowns: checker markUnknowns not.
-			self styleText  ]
+			self styleText ]
 ]
 
 { #category : #'*Typer-GToolkit' }

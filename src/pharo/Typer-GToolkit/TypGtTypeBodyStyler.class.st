@@ -6,9 +6,14 @@ Class {
 
 { #category : #styling }
 TypGtTypeBodyStyler >> style: aText ast: anAst [
-	anAst typIsTyped
-		ifFalse: [ ^ self ].
+	anAst typType.
 	super style: aText ast: anAst
+]
+
+{ #category : #private }
+TypGtTypeBodyStyler >> styleFrom: from to: to with: attributes [
+	(from <= text size and: [ to <= text size ])
+		ifTrue: [ super styleFrom: from to: to with: attributes ]
 ]
 
 { #category : #visiting }
@@ -21,4 +26,11 @@ TypGtTypeBodyStyler >> styleValueNode: aNode [
 			{(TypGtTypeAttribute new
 				type_: aNode typType;
 				yourself)}
+]
+
+{ #category : #visiting }
+TypGtTypeBodyStyler >> visitPragmaNode: aNode [
+	"Avoid annotating pragma arguments by empty implementation."
+
+	
 ]

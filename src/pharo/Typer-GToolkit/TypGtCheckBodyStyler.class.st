@@ -2,10 +2,21 @@ Class {
 	#name : #TypGtCheckBodyStyler,
 	#superclass : #GtCoderBodyStyler,
 	#instVars : [
+		'coder',
 		'markUnknowns'
 	],
 	#category : #'Typer-GToolkit'
 }
+
+{ #category : #accessing }
+TypGtCheckBodyStyler >> coder [
+	^ coder
+]
+
+{ #category : #accessing }
+TypGtCheckBodyStyler >> coder: anObject [
+	coder := anObject
+]
 
 { #category : #initialization }
 TypGtCheckBodyStyler >> initialize [
@@ -25,8 +36,7 @@ TypGtCheckBodyStyler >> markUnknowns: anObject [
 
 { #category : #styling }
 TypGtCheckBodyStyler >> style: aText ast: anAst [
-	anAst typIsTyped
-		ifFalse: [ ^ self ].
+	anAst typType.
 	super style: aText ast: anAst
 ]
 
@@ -100,13 +110,19 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 
 { #category : #visiting }
 TypGtCheckBodyStyler >> visitMethodNode: aNode [
-	| position |
+	| position node |
 	super visitMethodNode: aNode.
-	aNode typCheHasUnknownResult
-		ifTrue: [ markUnknowns ifTrue: [ self styleSelectorOf: aNode color: Color blue ] ].
-	position := aNode arguments isEmpty
-		ifTrue: [ aNode selector size ]
-		ifFalse: [ aNode arguments last stop ].
+	node := aNode == coder rbAST
+		ifTrue: [ aNode ]
+		ifFalse: [ coder rbAST
+				typType;
+				yourself ].
+	node typCheHasUnknownResult
+		ifTrue: [ markUnknowns
+				ifTrue: [ self styleSelectorOf: node color: Color blue ] ].
+	position := node arguments isEmpty
+		ifTrue: [ node selector size ]
+		ifFalse: [ node arguments last stop ].
 	self
 		styleFrom: position
 		to: position
@@ -114,10 +130,10 @@ TypGtCheckBodyStyler >> visitMethodNode: aNode [
 			{(BrTextAdornmentDynamicAttribute new
 				beAppend;
 				stencil: [ BlElement new
-						background: aNode typCheColor;
+						background: node typCheColor;
 						constraintsDo: [ :c | 
-							(c horizontal "typCastAs BlLayoutCommonConstraintsAxis") exact: 16.
-							(c vertical "typCastAs BlLayoutCommonConstraintsAxis") exact: 16 ];
+							c horizontal exact: 16.	"typCastAs BlLayoutCommonConstraintsAxis"
+							c vertical exact: 16	"typCastAs BlLayoutCommonConstraintsAxis" ];
 						margin:
 							(BlInsets
 								top: 0
