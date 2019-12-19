@@ -4,7 +4,7 @@ Extension { #name : #Collection }
 Collection >> typAsType [
 	<typTypeResultAs: 'TypType'>
 	| types |
-	types := TypUnionType asTypes: self.
+	types := TypUnionType asTypes: (self "typParameters TypType").
 	types ifEmpty: [ ^ TypUnknownType instance ].
 	types size = 1
 		ifTrue: [ ^ types anyOne ].

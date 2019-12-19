@@ -37,9 +37,14 @@ TypTypeVariableType >> > aType [
 
 { #category : #accessing }
 TypTypeVariableType >> assign: aType in: anotherType [
+	<typTypeArgument: 1 as: 'TypType'>
+	<typTypeArgument: 2 as: 'TypType'>
+	<typTypeResultAs: 'TypType'>
 	(anotherType isParametric
-		and: [ (anotherType "typCastAs TypParametricType") bindings includes: self ])
-		ifTrue: [ ^ (anotherType "typCastAs TypParametricType") bindings at: self put: aType ].
+		and:
+			[ (anotherType "typCastAs TypParametricType") bindings includes: self ])
+		ifTrue:
+			[ ^ (anotherType "typCastAs TypParametricType") bindings at: self put: aType ].
 	^ anotherType hasSuperType
 		ifTrue: [ self assign: aType in: anotherType superType ]
 		ifFalse: [ self ]

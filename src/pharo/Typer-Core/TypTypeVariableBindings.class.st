@@ -91,6 +91,8 @@ TypTypeVariableBindings >> at: aTypeVariable [
 
 { #category : #accessing }
 TypTypeVariableBindings >> at: aTypeVariable put: aType [
+	<typTypeArgument: 1 as: 'TypTypeVariableType'>
+	<typTypeArgument: 2 as: 'TypType'>
 	self
 		assert: [ aTypeVariable isTypeVariable
 				and: [ (aType isTypeVariable
