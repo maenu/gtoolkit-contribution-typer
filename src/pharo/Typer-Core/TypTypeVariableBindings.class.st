@@ -82,7 +82,7 @@ TypTypeVariableBindings >> at: aTypeVariable [
 	<typTypeArgument: 1 as: 'TypTypeVariableType'>
 	| current discovered |
 	current := aTypeVariable.
-	discovered := OrderedCollection new.
+	discovered := OrderedCollection new "typParameters TypType".
 	[ current isTypeVariable and: [ (discovered includes: current) not ] ]
 		whileTrue: [ discovered add: current.
 			current := bindings at: current ].

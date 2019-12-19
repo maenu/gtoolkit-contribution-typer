@@ -585,12 +585,13 @@ TypShaPhaCollection >> ~~~, _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Collection typAsType ];
 		resultType: [ :a :s :r | 
-			a receiverType
-				copyWithBindings:
-					{('@A' typAsType
-						->
-							{(a receiverType bindings at: '@A' typAsType).
-							((a argumentTypes at: 1) bindings at: '@A' typAsType)} typAsType)}
-						typAsTypeVariableBindings ];
+			| result |
+			result := a receiverType copy.
+			'@A' typAsType
+				assign:
+					{('@A' typAsType resolveIn: a receiverType).
+					('@A' typAsType resolveIn: (a argumentTypes at: 1))} typAsType
+				in: result.
+			result ];
 		yourself
 ]

@@ -35,6 +35,16 @@ TypTypeVariableType >> > aType [
 	^ superType >= aType
 ]
 
+{ #category : #accessing }
+TypTypeVariableType >> assign: aType in: anotherType [
+	(anotherType isParametric
+		and: [ (anotherType "typCastAs TypParametricType") bindings includes: self ])
+		ifTrue: [ ^ (anotherType "typCastAs TypParametricType") bindings at: self put: aType ].
+	^ anotherType hasSuperType
+		ifTrue: [ self assign: aType in: anotherType superType ]
+		ifFalse: [ self ]
+]
+
 { #category : #'as yet unclassified' }
 TypTypeVariableType >> canUnderstand: aSymbol [
 	^ false

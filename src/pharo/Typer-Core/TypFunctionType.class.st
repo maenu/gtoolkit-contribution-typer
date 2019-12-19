@@ -170,6 +170,8 @@ TypFunctionType >> initialize [
 
 { #category : #initialization }
 TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean [
+	<typTypeArgument: 1 as: 'Integer'>
+	<typTypeArgument: 2 as: 'Boolean'>
 	argumentsSize := anInteger.
 	argumentsOptional := aBoolean
 ]

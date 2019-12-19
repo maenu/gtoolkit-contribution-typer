@@ -17,10 +17,15 @@ TypExecutionOrderVisitor class >> typeForTemporary: aTemporaryNode [
 		assert: [ (aTemporaryNode isKindOf: RBTemporaryNode)
 				and: [ aTemporaryNode typIsDeclaration not ] ].
 	definer := aTemporaryNode whoDefines: aTemporaryNode name.
-	^ (self new
-		initializeNode: aTemporaryNode definer: definer;
-		visitNode: definer;
-		types) typAsType
+	^ (self typesFor: aTemporaryNode in: definer definer: definer) typAsType
+]
+
+{ #category : #accessing }
+TypExecutionOrderVisitor class >> typesFor: aNode in: anotherNode definer: yetAnotherNode [
+	^ self new
+		initializeNode: aNode definer: yetAnotherNode;
+		visitNode: anotherNode;
+		types
 ]
 
 { #category : #visiting }
@@ -81,7 +86,8 @@ TypExecutionOrderVisitor >> visitBlockNode: aBlockNode [
 	"can ignore stopping, must always consider type after, using the node which is not in there, as we start from sequence nodes."
 
 	stopped
-		ifFalse: [ self visitArgumentNodes: aBlockNode arguments ]
+		ifFalse: [ self visitArgumentNodes: aBlockNode arguments.
+			types addAll: (self class typesFor: node in: aBlockNode body definer: nil) ]
 ]
 
 { #category : #visiting }

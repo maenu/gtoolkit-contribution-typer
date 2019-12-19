@@ -16,7 +16,7 @@ CompiledMethod >> typInfAsMethodLookupResult [
 		collect: [ :e | 
 			e key
 				->
-					(e value collect: [ :f | f parent typTypeForArgumentAt: e key ])
+					(e value collect: [ :f | f parent typTypeForArgumentAt: (f parent arguments indexOf: f) ])
 						typAsType ]) asDictionary.
 	result
 		argumentTypes:

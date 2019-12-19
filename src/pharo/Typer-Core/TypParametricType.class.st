@@ -50,9 +50,6 @@ TypParametricType class >> named: aString parameters: aSequenceableCollection [
 
 { #category : #accessing }
 TypParametricType class >> named: aString parameters: aSequenceableCollection bindings: aBindings [
-	<typTypeArgument: 1 as: 'String'>
-	<typTypeArgument: 2 as: 'SequenceableCollection<TypType>'>
-	<typTypeArgument: 3 as: 'TypTypeVariableBindings'>
 	^ self new
 		initializeWithName: aString
 			parameters: aSequenceableCollection
@@ -132,6 +129,8 @@ TypParametricType >> initialize [
 
 { #category : #accessing }
 TypParametricType >> initializeParameters: aSequenceableCollection bindings: aBindings [
+	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
+	<typTypeArgument: 2 as: 'TypTypeVariableBindings'>
 	self
 		assert: [ aSequenceableCollection isNotEmpty
 				and: [ aBindings variables includesAll: aSequenceableCollection asSet ] ].
