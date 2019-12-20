@@ -8,7 +8,7 @@ RBArgumentNode >> typArguments [
 			e isArgument
 				and: [ e name = self name
 						and:
-							[ e parent isMessage and: [ e parent arguments includes: e ] ] ] ]
+							[ e parent isMessage and: [ e parent arguments anySatisfy: [ :f | f == e ] ] ] ] ]
 ]
 
 { #category : #'*Typer-Core' }

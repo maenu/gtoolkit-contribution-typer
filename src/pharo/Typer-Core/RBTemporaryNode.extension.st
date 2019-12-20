@@ -7,7 +7,7 @@ RBTemporaryNode >> typArguments [
 		select: [ :e | 
 			e isTemp
 				and: [ e name = self name
-						and: [ e parent isMessage and: [ e parent arguments includes: e ] ] ] ]
+						and: [ e parent isMessage and: [ e parent arguments anySatisfy: [ :f | f == e] ] ] ] ]
 ]
 
 { #category : #'*Typer-Core' }
