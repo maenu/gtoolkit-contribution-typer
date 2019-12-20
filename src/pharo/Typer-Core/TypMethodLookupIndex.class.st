@@ -45,6 +45,12 @@ TypMethodLookupIndex >> argumentTypeFor: aLookup at: anInteger [
 ]
 
 { #category : #accessing }
+TypMethodLookupIndex >> initialize [
+	<typTypeVariable: 'resolver' as: 'TypMethodLookupResolver'>
+	super initialize
+]
+
+{ #category : #accessing }
 TypMethodLookupIndex >> resultTypeFor: aLookup [
 	(resolver resolve: aLookup)
 		do: [ :e | 

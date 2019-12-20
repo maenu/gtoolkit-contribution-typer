@@ -2,19 +2,22 @@ Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Core' }
 ClassDescription >> typAsFunctionTypeWithArguments: aCollection result: aType argumentsOptional: aBoolean [
+	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
+	<typTypeArgument: 2 as: 'TypType'>
+	<typTypeArgument: 3 as: 'Boolean'>
 	| indexedVariables |
 	indexedVariables := (0 to: aCollection size)
-		collect: [ :e | ('@' , e asString) typAsType ].
+		collect: [ :e | ('@' , e asString) typAsTypeVariableType ].
 	^ self
 		typAsFunctionTypeWithArgumentsSize: aCollection size
 		argumentsOptional: aBoolean
 		bindings:
 			((({aType} , aCollection
-				select: [ :e | e isTypeVariable and: [ (indexedVariables includes: e) not ] ])
-				asSet collect: [ :e | e -> e ]) , {('@0' typAsType -> aType)}
+				select: [ :e | e isTypeVariable and: [ (indexedVariables includes: (e "typCastAs TypTypeVariableType")) not ] ])
+				asSet collect: [ :e | e -> e ]) , {('@0' typAsTypeVariableType -> aType)}
 				,
 					(aCollection
-						withIndexCollect: [ :e :i | ('@' , i asString) typAsType -> e ]))
+						withIndexCollect: [ :e :i | ('@' , i asString) typAsTypeVariableType -> e ]))
 				typAsTypeVariableBindings
 ]
 

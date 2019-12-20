@@ -50,7 +50,9 @@ RBTemporaryNode >> typTypeRecursive [
 							| i |
 							i := e parent arguments detectIndex: [ :f | f == e ].
 							e parent typTypeForArgumentAt: i ]) typAsType ].
-			type ]
+					type isUnknown
+						ifTrue: [ type := ((self typAssigned select: [ :e | e variable typHasDefiningClass ]) collect: [ :e | e variable typDefiningClass typTypeForVariable: e variable name asSymbol ]) typAsType ].
+						type ]
 		ifFalse: [ self typIsAssignmentVariable
 				ifTrue: [ (self parent "typCastAs RBAssignmentNode") value typType ]
 				ifFalse: [ TypExecutionOrderVisitor typeForTemporary: self ] ]

@@ -109,7 +109,7 @@ Name
 TypTypeParser class >> parse: aString [
 	<typTypeArgument: 1 as: 'String'>
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	^ super parse: aString
+	^ (super parse: aString) "typCastAs SequenceableCollection<TypType>"
 ]
 
 { #category : #generated }
