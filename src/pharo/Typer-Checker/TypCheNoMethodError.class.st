@@ -1,12 +1,17 @@
 Class {
 	#name : #TypCheNoMethodError,
-	#superclass : #Error,
+	#superclass : #TypCheError,
 	#instVars : [
 		'type',
 		'selector'
 	],
 	#category : #'Typer-Checker'
 }
+
+{ #category : #accessing }
+TypCheNoMethodError >> color [
+	^ Color orange darker
+]
 
 { #category : #accessing }
 TypCheNoMethodError >> selector [

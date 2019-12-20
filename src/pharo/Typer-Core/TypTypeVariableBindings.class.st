@@ -9,7 +9,7 @@ Class {
 
 { #category : #generated }
 TypTypeVariableBindings class >> variables: aSet [
-	<typTypeArgument: 1 as: 'Set<TypType>'>
+	<typTypeArgument: 1 as: 'Set<TypTypeVariableType>'>
 	| instance |
 	instance := self new.
 	aSet do: [ :e | instance at: e put: e ].
@@ -56,6 +56,7 @@ TypTypeVariableBindings >> >= anObject [
 
 { #category : #enumerating }
 TypTypeVariableBindings >> addAll: aBindings [
+	<typTypeArgument: 1 as: 'TypTypeVariableBindings'>
 	aBindings variables do: [ :e | self at: e put: (aBindings at: e) ]
 ]
 
@@ -143,6 +144,7 @@ TypTypeVariableBindings >> postCopy [
 
 { #category : #removing }
 TypTypeVariableBindings >> remove: aTypeVariable [
+	<typTypeArgument: 1 as: 'TypTypeVariableType'>
 	self
 		assert: [ bindings values allSatisfy: [ :e | e ~= aTypeVariable ] ].
 	bindings removeKey: aTypeVariable

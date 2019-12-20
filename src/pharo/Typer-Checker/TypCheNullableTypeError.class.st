@@ -1,11 +1,16 @@
 Class {
 	#name : #TypCheNullableTypeError,
-	#superclass : #Error,
+	#superclass : #TypCheError,
 	#instVars : [
 		'type'
 	],
 	#category : #'Typer-Checker'
 }
+
+{ #category : #accessing }
+TypCheNullableTypeError >> color [
+	^ Color purple
+]
 
 { #category : #accessing }
 TypCheNullableTypeError >> type [

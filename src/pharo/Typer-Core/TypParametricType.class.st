@@ -16,7 +16,7 @@ TypParametricType class >> classDescription: aClassDescription [
 { #category : #accessing }
 TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection [
 	<typTypeArgument: 1 as: 'ClassDescription'>
-	<typTypeArgument: 2 as: 'SequenceableCollection<TypType>'>
+	<typTypeArgument: 2 as: 'SequenceableCollection<TypTypeVariableType>'>
 	^ self
 		classDescription: aClassDescription
 		parameters: aSequenceableCollection
@@ -26,7 +26,7 @@ TypParametricType class >> classDescription: aClassDescription parameters: aSequ
 { #category : #accessing }
 TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection bindings: aBindings [
 	<typTypeArgument: 1 as: 'ClassDescription'>
-	<typTypeArgument: 2 as: 'SequenceableCollection<TypType>'>
+	<typTypeArgument: 2 as: 'SequenceableCollection<TypTypeVariableType>'>
 	<typTypeArgument: 3 as: 'TypTypeVariableBindings'>
 	^ self new
 		initializeWithClassDescription: aClassDescription
@@ -40,7 +40,7 @@ TypParametricType class >> named: aString [
 	self shouldNotImplement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypParametricType class >> named: aString parameters: aSequenceableCollection [
 	^ self
 		named: aString
@@ -129,13 +129,14 @@ TypParametricType >> initialize [
 
 { #category : #accessing }
 TypParametricType >> initializeParameters: aSequenceableCollection bindings: aBindings [
-	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
+	<typTypeArgument: 1 as: 'SequenceableCollection<TypTypeVariableType>'>
 	<typTypeArgument: 2 as: 'TypTypeVariableBindings'>
 	self
 		assert: [ aSequenceableCollection isNotEmpty
 				and: [ aBindings variables includesAll: aSequenceableCollection asSet ] ].
 	parameters := aSequenceableCollection asOrderedCollection.
-	bindings := aBindings
+	bindings := aBindings.
+	superType := nil
 ]
 
 { #category : #accessing }

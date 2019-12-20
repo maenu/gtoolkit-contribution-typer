@@ -9,7 +9,7 @@ RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 	actual := argument typType.
 	(expected isUnknown or: [ actual isUnknown ])
 		ifTrue: [ ^ self ].
-	expected >= actual
+	expected >= actual asNonNullableType
 		ifTrue: [ ^ self ].
 	(actual isFunction
 		and: [ argument isBlock

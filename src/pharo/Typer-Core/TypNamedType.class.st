@@ -140,7 +140,7 @@ TypNamedType >> printOn: aStream [
 	aStream << name asString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypNamedType >> superType [
 	self assert: [ self hasSuperType ].
 	superType ifNotNil: [ ^ superType ].

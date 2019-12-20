@@ -82,8 +82,8 @@ TypGtCheckBodyStyler >> visitAssignmentNode: aNode [
 	aNode value typType isUnknown
 		ifTrue: [ markUnknowns ifTrue: [ self styleNode: aNode value color: Color blue ] ]
 		ifFalse: [ [ aNode typCheCheckCompatibility ]
-				on: TypCheIncompatibleTypeError
-				do: [ self styleNode: aNode value color: Color red ] ]
+				on: TypCheError
+				do: [ :e | self styleNode: aNode value color: e color ] ]
 ]
 
 { #category : #visiting }
@@ -91,21 +91,17 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 	super visitMessageNode: aNode.
 	aNode receiver typType isUnknown
 		ifTrue: [ markUnknowns ifTrue: [ self styleNode: aNode color: Color blue ] ]
-		ifFalse: [ [ [ aNode typCheCheckMethod.
+		ifFalse: [ [ aNode typCheCheckMethod.
 			aNode typCheCheckReceiver ]
-				on: TypCheNoMethodError
-				do: [ self styleSelectorOf: aNode color: Color orange ] ]
-				on: TypCheNullableTypeError
-				do: [ self styleSelectorOf: aNode color: Color purple ] ].
+				on: TypCheError
+				do: [ :e | self styleSelectorOf: aNode color: e color ] ].
 	aNode arguments
 		withIndexDo: [ :e :i | 
-			e typType isUnknown
+			(e typType isUnknown or: [ (aNode typTypeForArgumentAt: i) isUnknown ])
 				ifTrue: [ markUnknowns ifTrue: [ self styleNode: e color: Color blue ] ]
-				ifFalse: [ [ [ aNode typCheCheckArgumentCompatibilityAt: i ]
-						on: TypCheIncompatibleTypeError
-						do: [ self styleNode: e color: Color red ] ]
-						on: TypCheNullableTypeError
-						do: [ self styleNode: e color: Color purple ] ] ]
+				ifFalse: [ [ aNode typCheCheckArgumentCompatibilityAt: i ]
+						on: TypCheError
+						do: [ :f | self styleNode: e color: f color ] ] ]
 ]
 
 { #category : #visiting }
@@ -148,10 +144,12 @@ TypGtCheckBodyStyler >> visitMethodNode: aNode [
 TypGtCheckBodyStyler >> visitReturnNode: aNode [
 	super visitReturnNode: aNode.
 	aNode typType isUnknown
-		ifTrue: [ markUnknowns ifTrue: [ self styleNode: aNode color: Color blue ] ]
-		ifFalse: [ [ aNode typCheCheckCompatibility ]
-				on: TypCheIncompatibleTypeError
-				do: [ self styleNode: aNode color: Color red ] ]
+		ifTrue: [ markUnknowns
+				ifTrue: [ self styleNode: aNode color: Color blue ] ]
+		ifFalse: [ [ aNode typCheCheckCompatibility.
+			aNode typCheCheckNullables ]
+				on: TypCheError
+				do: [ :e | self styleNode: aNode color: e color ] ]
 ]
 
 { #category : #visiting }

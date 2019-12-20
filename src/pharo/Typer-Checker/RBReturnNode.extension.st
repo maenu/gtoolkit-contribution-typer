@@ -7,7 +7,7 @@ RBReturnNode >> typCheCheckCompatibility [
 	actual := self value typType.
 	(expected isUnknown or: [ actual isUnknown ])
 		ifTrue: [ ^ self ].
-	expected >= actual
+	expected >= actual asNonNullableType
 		ifTrue: [ ^ self ].
 	(actual isFunction
 		and: [ self value isBlock
@@ -27,5 +27,19 @@ RBReturnNode >> typCheCheckCompatibility [
 	TypCheIncompatibleTypeError new
 		expected: expected;
 		actual: actual;
+		signal
+]
+
+{ #category : #'*Typer-Checker' }
+RBReturnNode >> typCheCheckNullables [
+	| expected actual |
+	expected := self methodNode typTypeForResult.
+	actual := self value typType.
+	(expected isUnknown
+		or: [ actual isUnknown
+				or: [ actual isNullable not or: [ expected >= actual ] ] ])
+		ifTrue: [ ^ self ].
+	TypCheNullableTypeError new
+		type: actual;
 		signal
 ]

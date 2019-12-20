@@ -88,9 +88,20 @@ RBMethodNode >> typCheHasNullableReceivers [
 ]
 
 { #category : #'*Typer-Checker' }
+RBMethodNode >> typCheHasNullableReturns [
+	<typTypeResultAs: 'Boolean'>
+	^ (self allChildren select: #isReturn)
+		anySatisfy: [ :e "typCastAs RBReturnNode" | 
+			[ e typCheCheckNullables.
+			false ]
+				on: TypCheNullableTypeError
+				do: [ true ] ]
+]
+
+{ #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasNullables [
 	<typTypeResultAs: 'Boolean'>
-	^ self typCheHasNullableReceivers or: [ self typCheHasNullableArguments ]
+	^ self typCheHasNullableReceivers or: [ self typCheHasNullableArguments  or: [ self typCheHasNullableReturns ] ]
 ]
 
 { #category : #'*Typer-Checker' }

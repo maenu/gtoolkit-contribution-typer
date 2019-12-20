@@ -91,21 +91,19 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst [
 						key: BlKeyboardKey h;
 						build);
 				action: [ :e | self typGtBrowseToTypeWithShadow: e ]);
+		addStyler: TypGtTypeDeclarationBodyStyler new;
 		addStyler:
 			(TypGtCheckBodyStyler new
 				coder: self;
 				yourself);
-		addStyler: TypGtTypeDeclarationBodyStyler new;
 		addMainAction: 'Types' translated
 			icon: BrGlamorousIcons inspect
 			action: [ | declaration |
 			declaration := addOns stylers
 				anySatisfy: [ :e | e class == TypGtTypeDeclarationBodyStyler ].
 			declaration
-				ifTrue: [ addOns typGtRemoveStylerOfType: TypGtTypeDeclarationBodyStyler.
-					addOns addStyler: TypGtTypeValueBodyStyler new ]
-				ifFalse: [ addOns typGtRemoveStylerOfType: TypGtTypeValueBodyStyler.
-					addOns addStyler: TypGtTypeDeclarationBodyStyler new ].
+				ifTrue: [ addOns typGtReplaceStylerOfType: TypGtTypeDeclarationBodyStyler with: TypGtTypeValueBodyStyler new ]
+				ifFalse: [ addOns typGtReplaceStylerOfType: TypGtTypeValueBodyStyler with: TypGtTypeDeclarationBodyStyler new ].
 			self refreshForChanges ];
 		addMainAction: 'Unknowns' translated
 			icon: BrGlamorousIcons minimize

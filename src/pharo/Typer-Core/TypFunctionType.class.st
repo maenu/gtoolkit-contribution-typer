@@ -8,18 +8,19 @@ Class {
 	#category : #'Typer-Core-Type'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypFunctionType class >> classDescription: aClassDescription argumentsSize: anInteger argumentsOptional: aBoolean [
+	<typTypeArgument: 2 as: 'Integer'>
 	^ self
 		classDescription: aClassDescription
 		argumentsSize: anInteger
 		argumentsOptional: aBoolean
 		bindings:
 			(TypTypeVariableBindings
-				variables: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsType ]))
+				variables: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsTypeVariableType ]) asSet)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypFunctionType class >> classDescription: aClassDescription argumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
 	^ self new
 		initializeWithClassDescription: aClassDescription
@@ -39,18 +40,19 @@ TypFunctionType class >> classDescription: aClassDescription parameters: aSequen
 	self shouldNotImplement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOptional: aBoolean [
+	<typTypeArgument: 2 as: 'Integer'>
 	^ self
 		named: aString
 		argumentsSize: anInteger
 		argumentsOptional: aBoolean
 		bindings:
 			(TypTypeVariableBindings
-				variables: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsType ]))
+				variables: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsTypeVariableType ]) asSet)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
 	^ self new
 		initializeWithName: aString
@@ -106,7 +108,7 @@ TypFunctionType >> > aType [
 TypFunctionType >> arguments [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	^ (1 to: argumentsSize)
-		withIndexCollect: [ :e :i | bindings at: ('@' , i asString) typAsType ]
+		withIndexCollect: [ :e :i | bindings at: ('@' , i asString) typAsTypeVariableType ]
 ]
 
 { #category : #accessing }
@@ -151,7 +153,7 @@ TypFunctionType >> copyWithResult: aType [
 	^ self
 		copyWithBindings:
 			(bindings copy
-				at: '@0' typAsType put: aType;
+				at: '@0' typAsTypeVariableType put: aType;
 				yourself)
 ]
 
@@ -178,24 +180,28 @@ TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolea
 
 { #category : #initialization }
 TypFunctionType >> initializeWithClassDescription: aClassDescription argumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
+	<typTypeArgument: 2 as: 'Integer'>
 	self
 		assert: [ aBindings variables
-				allSatisfy: [ :e | e = '@0' typAsType or: [ (aBindings at: e) ~= '@0' typAsType ] ] ].
+				allSatisfy:
+					[ :e | e = '@0' typAsTypeVariableType or: [ (aBindings at: e) ~= '@0' typAsTypeVariableType ] ] ].
 	self
 		initializeWithClassDescription: aClassDescription
-		parameters: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsType ])
+		parameters: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsTypeVariableType ])
 		bindings: aBindings.
 	self initializeArgumentsSize: anInteger argumentsOptional: aBoolean
 ]
 
 { #category : #initialization }
 TypFunctionType >> initializeWithName: aString argumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
+	<typTypeArgument: 2 as: 'Integer'>
 	self
 		assert: [ aBindings variables
-				allSatisfy: [ :e | e = '@0' typAsType or: [ (aBindings at: e) ~= '@0' typAsType ] ] ].
+				allSatisfy:
+					[ :e | e = '@0' typAsType or: [ (aBindings at: e) ~= '@0' typAsType ] ] ].
 	self
 		initializeWithName: aString
-		parameters: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsType ])
+		parameters: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsTypeVariableType ])
 		bindings: aBindings.
 	self initializeArgumentsSize: anInteger argumentsOptional: aBoolean
 ]
@@ -230,5 +236,5 @@ TypFunctionType >> printOn: aStream [
 { #category : #accessing }
 TypFunctionType >> result [
 	<typTypeResultAs: 'TypType'>
-	^ bindings at: '@0' typAsType
+	^ bindings at: '@0' typAsTypeVariableType
 ]

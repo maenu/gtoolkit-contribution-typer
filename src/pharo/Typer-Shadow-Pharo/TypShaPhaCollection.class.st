@@ -461,6 +461,14 @@ TypShaPhaCollection >> ___includes: _a [
 ]
 
 { #category : #accessing }
+TypShaPhaCollection >> ___includesAll: _a [
+	^ TypMethodLookupResult new
+		argumentTypes: [ :i :a :s :r | a receiverType ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaCollection >> ___inject: _a into: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 

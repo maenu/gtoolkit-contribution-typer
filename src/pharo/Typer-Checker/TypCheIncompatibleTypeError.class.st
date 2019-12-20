@@ -1,6 +1,6 @@
 Class {
 	#name : #TypCheIncompatibleTypeError,
-	#superclass : #Error,
+	#superclass : #TypCheError,
 	#instVars : [
 		'expected',
 		'actual'
@@ -18,6 +18,11 @@ TypCheIncompatibleTypeError >> actual [
 TypCheIncompatibleTypeError >> actual: anObject [
 	<typTypeArgument: 1 as: 'TypType'>
 	actual := anObject
+]
+
+{ #category : #accessing }
+TypCheIncompatibleTypeError >> color [
+	^ Color red
 ]
 
 { #category : #accessing }
