@@ -45,15 +45,9 @@ TypMethodLookupIndex >> argumentTypeFor: aLookup at: anInteger [
 ]
 
 { #category : #accessing }
-TypMethodLookupIndex >> initialize [
-	<typTypeVariable: 'resolver' as: 'TypMethodLookupResolver'>
-	super initialize
-]
-
-{ #category : #accessing }
 TypMethodLookupIndex >> resultTypeFor: aLookup [
 	(resolver resolve: aLookup)
-		do: [ :e | 
+		do: [ :e "typCastAs TypMethodLookupResult" | 
 			[ | type |
 			type := e resultType.
 			type isUnknown
@@ -68,7 +62,7 @@ TypMethodLookupIndex >> resultTypeFor: aLookup [
 { #category : #accessing }
 TypMethodLookupIndex >> signalsAlwaysFor: aLookup [
 	(resolver resolve: aLookup)
-		do: [ :e | 
+		do: [ :e "typCastAs TypMethodLookupResult" | 
 			[ | signalsAlways |
 			signalsAlways := e signalsAlways.
 			signalsAlways ifNotNil: [ ^ signalsAlways ] ]

@@ -15,7 +15,6 @@ RBGlobalNode >> typDefiningClass [
 
 { #category : #'*Typer-Core' }
 RBGlobalNode >> typHasDefiningClass [
-	<typTypeResultAs: 'Boolean'>
 	^ self binding isClassVariable
 		or: [ self binding typIsFromSharedPool ]
 ]

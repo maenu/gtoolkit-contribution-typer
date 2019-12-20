@@ -6,7 +6,7 @@ Class {
 
 { #category : #'generated-accessing' }
 TypTypeParser class >> cacheId [
-	^'2019-11-02T21:17:49.95596+01:00'
+	^'2019-12-20T22:35:23.472421+01:00'
 ]
 
 { #category : #generated }
@@ -66,7 +66,7 @@ TypeVariableType
 	;
 NamedType
 	: Name 'name' 
-		{ name asClass typAsType }
+		{ [ name asClass typAsType ] on: NotFound do: [ TypNamedType named: name ] }
 	;
 ParametricType
 	: Name 'name' ""<"" Types 'parameters' "">"" 
@@ -117,7 +117,7 @@ TypTypeParser class >> reduceTable [
 ^#(
 	#(20 1 #reduceActionForNilType1: 634881 false ) 
 	#(19 1 #reduceActionForUnknownType1: 581633 false ) 
-	#(27 1 #reduceActionForName1: 2499585 false ) 
+	#(27 1 #reduceActionForName1: 2550785 false ) 
 	#(17 1 #reduceActionForTypes1: 241665 false ) 
 	#(18 1 #liftFirstValue: 334849 false ) 
 	#(18 1 #liftFirstValue: 334850 false ) 
@@ -128,14 +128,14 @@ TypTypeParser class >> reduceTable [
 	#(18 1 #liftFirstValue: 334852 false ) 
 	#(22 1 #reduceActionForNamedType1: 874497 false ) 
 	#(21 2 #reduceActionForTypeVariableType1: 679937 false ) 
-	#(26 0 #reduceActionForEmptyTypes2: 2445314 false ) 
-	#(25 3 #reduceActionForUnionType1: 2371585 false ) 
+	#(26 0 #reduceActionForEmptyTypes2: 2496514 false ) 
+	#(25 3 #reduceActionForUnionType1: 2422785 false ) 
 	#(17 3 #reduceActionForTypes2: 241666 false ) 
-	#(26 1 #liftFirstValue: 2445313 false ) 
+	#(26 1 #liftFirstValue: 2496513 false ) 
 	#(21 4 #reduceActionForTypeVariableType2: 679938 false ) 
-	#(23 4 #reduceActionForParametricType1: 933889 false ) 
-	#(24 6 #reduceActionForFunctionType2: 1215490 false ) 
-	#(24 6 #reduceActionForFunctionType1: 1215489 false )
+	#(23 4 #reduceActionForParametricType1: 985089 false ) 
+	#(24 6 #reduceActionForFunctionType2: 1266690 false ) 
+	#(24 6 #reduceActionForFunctionType1: 1266689 false )
 	).
 ]
 
@@ -249,7 +249,9 @@ TypTypeParser >> reduceActionForName1: nodes [
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForNamedType1: nodes [
-	^ (nodes at: 1) asClass typAsType
+	^ [ (nodes at: 1) asClass typAsType ]
+		on: NotFound
+		do: [ TypNamedType named: (nodes at: 1) ]
 ]
 
 { #category : #'generated-reduction actions' }
