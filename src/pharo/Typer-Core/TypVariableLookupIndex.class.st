@@ -32,7 +32,7 @@ TypVariableLookupIndex class >> instance [
 { #category : #accessing }
 TypVariableLookupIndex >> typeFor: aLookup [
 	(resolver resolve: aLookup)
-		do: [ :e | 
+		do: [ :e "typCastAs TypVariableLookupResult" | 
 			[ | type |
 			type := e type.
 			type isUnknown

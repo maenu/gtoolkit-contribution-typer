@@ -47,15 +47,17 @@ TypClassDescriptionLookupIndex >> reset [
 
 { #category : #accessing }
 TypClassDescriptionLookupIndex >> typeFor: aLookup [
+	<typTypeArgument: 1 as: 'TypClassDescriptionLookup'>
 	^ index
 		at: aLookup classDescription name asSymbol
 		ifAbsentPut: [ (resolver resolve: aLookup)
-				detect: [ :e | 
+				detect: [ :e"typCastAs TypClassDescriptionLookupResult"
+					 | 
 					[ | type |
 					type := e type.
 					type isUnknown not ]
 						on: Error
-						do: [ :f | 
+						do: [ :f |
 							f logCr.
 							self flag: 'FIXME signal?'.
 							false ] ]

@@ -32,7 +32,7 @@ TypMethodLookupIndex class >> instance [
 { #category : #accessing }
 TypMethodLookupIndex >> argumentTypeFor: aLookup at: anInteger [
 	(resolver resolve: aLookup)
-		do: [ :e | 
+		do: [ :e "typCastAs TypMethodLookupResult" | 
 			[ | type |
 			type := e argumentTypeAt: anInteger.
 			type isUnknown
