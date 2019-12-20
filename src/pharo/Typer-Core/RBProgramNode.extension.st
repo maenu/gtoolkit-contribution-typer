@@ -45,39 +45,6 @@ RBProgramNode >> typIsTyped [
 ]
 
 { #category : #'*Typer-Core' }
-RBProgramNode >> typPrevious [
-	<typTypeResultAs: '{!,RBProgramNode}'>
-	| i previous |
-	self parent ifNil: [ ^ nil ].
-	i := self parent children detectIndex: [ :e | e == self ].
-	i = 1
-		ifTrue: [ ^ nil ].
-	previous := self parent children at: i - 1.
-	"skip temporary declarations"
-	^ (self parent isSequence
-		and:
-			[ (self parent "typCastAs RBSequenceNode") temporaries anySatisfy: [ :e | e == previous ] ])
-		ifTrue: [ nil ]
-		ifFalse: [ previous ]
-]
-
-{ #category : #'*Typer-Core' }
-RBProgramNode >> typReachableTypeFor: aString until: aSequenceNode [
-	<typTypeArgument: 1 as: 'String'>
-	<typTypeArgument: 2 as: 'RBSequenceNode'>
-	<typTypeResultAs: 'TypType'>
-	| previous |
-	self == aSequenceNode
-		ifTrue: [ ^ TypNilType instance ].
-	previous := self typPrevious
-		ifNil: [ ^ self parent typReachableTypeFor: aString until: aSequenceNode ].
-	(previous isAssignment
-		and: [ (previous "typCastAs RBAssignmentNode") variable name = aString ])
-		ifTrue: [ ^ previous typType ].
-	^ previous typReachableTypeFor: aString until: aSequenceNode
-]
-
-{ #category : #'*Typer-Core' }
 RBProgramNode >> typSignalsAlways [
 	<typTypeResultAs: '{!,Boolean}'>
 	^ false

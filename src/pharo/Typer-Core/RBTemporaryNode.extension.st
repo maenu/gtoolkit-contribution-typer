@@ -25,15 +25,19 @@ RBTemporaryNode >> typIsDeclaration [
 
 { #category : #'*Typer-Core' }
 RBTemporaryNode >> typTypeRecursive [
-	^ (self parent isAssignment and: [ (self parent "typCastAs RBAssignmentNode") variable == self ])
+	^ (self parent isAssignment
+		and: [ (self parent "typCastAs RBAssignmentNode") variable == self ])
 		ifTrue: [ (self parent "typCastAs RBAssignmentNode") value typType ]
 		ifFalse: [ self typIsDeclaration
-				ifTrue: [ ((self typAssignments collect: [ :e | e value typType ])
-						,
-							(self typArguments
+				ifTrue: [ | type |
+					type := (self typAssignments collect: [ :e | e value typType ])
+						typAsType.
+					type isUnknown
+						ifTrue: [ type := ({type} , self typArguments
 								collect: [ :e | 
 									| i |
 									i := e parent arguments detectIndex: [ :f | f == e ].
-									e parent typTypeForArgumentAt: i ])) typAsType ]
+									e parent typTypeForArgumentAt: i ]) typAsType ].
+					type ]
 				ifFalse: [ TypExecutionOrderVisitor typeForTemporary: self ] ]
 ]

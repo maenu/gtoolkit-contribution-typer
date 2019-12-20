@@ -84,7 +84,7 @@ RBMethodNode >> typCheHasNullableArguments [
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasNullableReceivers [
 	<typTypeResultAs: 'Boolean'>
-	^ ((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode" anySatisfy: [ :e | e receiver typType isNullable ]
+	^ ((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode" anySatisfy: [ :e | e receiver typType isNullable and: [ (e receiver typType canUnderstand: e selector) not ] ]
 ]
 
 { #category : #'*Typer-Checker' }
