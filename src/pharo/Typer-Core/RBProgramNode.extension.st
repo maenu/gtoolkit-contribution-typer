@@ -53,11 +53,13 @@ RBProgramNode >> typSignalsAlways [
 { #category : #'*Typer-Core' }
 RBProgramNode >> typType [
 	<typTypeResultAs: 'TypType'>
-	^ (self
+	^ self
 		propertyAt: #typType
-		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
-			self propertyAt: #typType put: TypUnknownType instance.
-			self typAnnotateType: self typTypeRecursive ]) "typCastAs TypType"
+		ifAbsent: [ "need to set property to default to unknown on recursive calls"
+			self
+				propertyAt: #typType put: TypUnknownType instance;
+				propertyAt: #typType
+					put: (self typAnnotateType: self typTypeRecursive) ]
 ]
 
 { #category : #'*Typer-Core' }
