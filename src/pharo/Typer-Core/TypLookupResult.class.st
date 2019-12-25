@@ -24,6 +24,7 @@ TypLookupResult >> lookup [
 
 { #category : #accessing }
 TypLookupResult >> lookup: anObject [
+	<typTypeArgument: 1 as: 'TypLookup'>
 	lookup := anObject
 ]
 
@@ -34,6 +35,7 @@ TypLookupResult >> resolvedBy [
 
 { #category : #accessing }
 TypLookupResult >> resolvedBy: anObject [
+	<typTypeArgument: 1 as: 'TypLookup'>
 	resolvedBy := anObject
 ]
 
@@ -44,5 +46,6 @@ TypLookupResult >> resolver [
 
 { #category : #accessing }
 TypLookupResult >> resolver: anObject [
+	<typTypeArgument: 1 as: 'TypLookupResolver'>
 	resolver := anObject
 ]

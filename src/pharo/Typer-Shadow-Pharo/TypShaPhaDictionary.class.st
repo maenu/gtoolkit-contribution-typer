@@ -176,6 +176,22 @@ TypShaPhaDictionary >> ___keys [
 ]
 
 { #category : #accessing }
+TypShaPhaDictionary >> ___removeKey: _a ifAbsent: _b [
+	^ TypMethodLookupResult new
+		argumentTypes: [ :i :a :s :r | 
+			i == 1
+				ifTrue: [ '@B' typAsTypeVariableType resolveIn: a receiverType ]
+				ifFalse: [ BlockClosure
+						typAsFunctionTypeWithArguments: #()
+						result: TypUnknownType instance
+						argumentsOptional: false ] ];
+		resultType: [ :a :s :r | 
+			{('@A' typAsTypeVariableType resolveIn: a receiverType).
+			a argumentTypes first result} typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaDictionary >> ___values [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];

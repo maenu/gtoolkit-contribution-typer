@@ -126,6 +126,14 @@ TypShaPhaBlockClosure >> ___whileFalse: _a [
 		yourself
 ]
 
+{ #category : #accessing }
+TypShaPhaBlockClosure >> ___whileTrue: _a [
+	^ TypMethodLookupResult new
+		argumentTypes: [ :i :a :s :r | BlockClosure typAsFunctionTypeWithArguments: #() result: TypUnknownType instance argumentsOptional: false ];
+		resultType: [ :a :s :r | TypNilType instance ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaBlockClosure >> asType: aClass [
 	^ aClass

@@ -50,5 +50,6 @@ TypLookupIndex >> resolver [
 
 { #category : #accessing }
 TypLookupIndex >> resolver: anObject [
+	<typTypeArgument: 1 as: 'TypLookupResolver'>
 	resolver := anObject
 ]

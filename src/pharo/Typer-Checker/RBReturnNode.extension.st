@@ -7,6 +7,8 @@ RBReturnNode >> typCheCheckCompatibility [
 	actual := self value typType.
 	(expected isUnknown or: [ actual isUnknown ])
 		ifTrue: [ ^ self ].
+	(expected isNullable and: [ actual isNil ])
+		ifTrue: [ ^ self ].
 	expected >= actual asNonNullableType
 		ifTrue: [ ^ self ].
 	(actual isFunction
