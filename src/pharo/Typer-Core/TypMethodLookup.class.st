@@ -70,6 +70,11 @@ TypMethodLookup >> argumentTypes: anObject [
 	argumentTypes := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+TypMethodLookup >> emptyResult [
+	^ TypMethodLookupResult new
+]
+
 { #category : #comparing }
 TypMethodLookup >> hash [
 	^ (super hash bitXor: argumentTypes hash) bitXor: argumentNodes hash

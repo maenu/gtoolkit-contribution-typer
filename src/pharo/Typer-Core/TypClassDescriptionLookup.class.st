@@ -34,6 +34,11 @@ TypClassDescriptionLookup >> classDescription: anObject [
 	classDescription := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+TypClassDescriptionLookup >> emptyResult [
+	^ TypClassDescriptionLookupResult new
+]
+
 { #category : #testing }
 TypClassDescriptionLookup >> hasSuperType [
 	^ classDescription superclass isNotNil and: [ classDescription superclass ~= classDescription and: [ (classDescription superclass inheritsFrom: classDescription) not ] ]

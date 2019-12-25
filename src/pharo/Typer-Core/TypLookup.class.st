@@ -10,6 +10,11 @@ TypLookup >> adaptWithSuperType [
 	self subclassResponsibility
 ]
 
+{ #category : #'as yet unclassified' }
+TypLookup >> emptyResult [
+	self subclassResponsibility
+]
+
 { #category : #testing }
 TypLookup >> hasSuperType [
 	<typTypeResultAs: 'Boolean'>
