@@ -37,8 +37,8 @@ RBReturnNode >> typDynReturn: anObject [
 
 { #category : #'*Typer-Dynamic' }
 RBReturnNode >> typDynReturns [
-	<typTypeResultAs: 'TypDynUnionType<TypType>'>
-	^ (self propertyAt: #typDynReturns) "typCastAs TypDynUnionType<TypType>"
+	<typTypeResultAs: 'TypDynUnionType'>
+	^ (self propertyAt: #typDynReturns) "typCastAs TypDynUnionType"
 ]
 
 { #category : #'*Typer-Dynamic' }

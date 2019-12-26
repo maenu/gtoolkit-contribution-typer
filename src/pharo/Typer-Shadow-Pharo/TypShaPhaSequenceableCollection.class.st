@@ -198,13 +198,11 @@ TypShaPhaSequenceableCollection >> ___withIndexSelect: _a [
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments:
-					{(a receiverType bindings at: '@A' typAsType).
+					{(a receiverType bindings at: '@A' typAsTypeVariableType).
 					Integer typAsType}
-				result: TypUnknownType instance
+				result: Boolean typAsType
 				argumentsOptional: false ];
-		resultType: [ :a :s :r | 
-			a receiverType
-				copyWithBindings: {('@A' typAsType -> (a argumentTypes at: 1) result)} ];
+		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 

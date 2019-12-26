@@ -12,8 +12,8 @@ RBAssignmentNode >> typDynAssign: anObject [
 
 { #category : #'*Typer-Dynamic' }
 RBAssignmentNode >> typDynAssigns [
-	<typTypeResultAs: 'TypDynUnionType<TypType>'>
-	^ (self propertyAt: #typDynAssigns ifAbsentPut: [ TypDynUnionType new ]) "typCastAs TypDynUnionType<TypType>"
+	<typTypeResultAs: 'TypDynUnionType'>
+	^ (self propertyAt: #typDynAssigns ifAbsentPut: [ TypDynUnionType new ]) "typCastAs TypDynUnionType"
 ]
 
 { #category : #'*Typer-Dynamic' }

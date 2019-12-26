@@ -6,7 +6,7 @@ Class {
 
 { #category : #'generated-accessing' }
 TypTypeParser class >> cacheId [
-	^'2019-12-20T22:35:23.472421+01:00'
+	^'2019-12-26T16:56:33.61067+01:00'
 ]
 
 { #category : #generated }
@@ -71,23 +71,25 @@ NamedType
 ParametricType
 	: Name 'name' ""<"" Types 'parameters' "">"" 
 		{ | type |
-		type := name asClass typAsType.
-		type copyWithBindings: (parameters withIndexCollect: [ :e :i | | parameter |
-			parameter := type parameters at: i.
-			parameter -> e ]) typAsTypeVariableBindings }
+		type := [ name asClass typAsType ] on: NotFound do: [ TypNamedType named: name ].
+		type isParametric
+			ifTrue: [ type copyWithBindings: (parameters withIndexCollect: [ :e :i | | parameter |
+				parameter := type parameters at: i.
+				parameter -> e ]) typAsTypeVariableBindings ]
+			ifFalse: [ type ] }
 	;
 FunctionType
 	: Name 'name' ""["" EmptyTypes 'arguments' ""]"" ""->"" Type 'result'
 		{ | typeVariables bindings |
-		typeVariables := ({ '@0' typAsType } , (arguments size timesCollect: [ :i | ('@', i asString) typAsType ]), ({ result } , arguments select: #isTypeVariable)) asSet.
+		typeVariables := ({ '@0' typAsTypeVariableType } , (arguments size timesCollect: [ :i | ('@', i asString) typAsTypeVariableType ]), ({ result } , arguments select: #isTypeVariable)) asSet.
 		bindings := (typeVariables collect: [ :e | e -> e ]) typAsTypeVariableBindings.
-		{ result } , arguments withIndexDo: [ :e :i | bindings at: ('@', (i - 1) asString) typAsType put: e ].
+		{ result } , arguments withIndexDo: [ :e :i | bindings at: ('@', (i - 1) asString) typAsTypeVariableType put: e ].
 		TypFunctionType named: name argumentsSize: arguments size argumentsOptional: true bindings:  bindings }
 	| Name 'name' ""("" EmptyTypes 'arguments' "")"" ""->"" Type 'result'
 		{ | typeVariables bindings |
-		typeVariables := ({ '@0' typAsType } , (arguments size timesCollect: [ :i | ('@', i asString) typAsType ]), ({ result } , arguments select: #isTypeVariable)) asSet.
+		typeVariables := ({ '@0' typAsTypeVariableType } , (arguments size timesCollect: [ :i | ('@', i asString) typAsTypeVariableType ]), ({ result } , arguments select: #isTypeVariable)) asSet.
 		bindings := (typeVariables collect: [ :e | e -> e ]) typAsTypeVariableBindings.
-		{ result } , arguments withIndexDo: [ :e :i | bindings at: ('@', (i - 1) asString) typAsType put: e ].
+		{ result } , arguments withIndexDo: [ :e :i | bindings at: ('@', (i - 1) asString) typAsTypeVariableType put: e ].
 		TypFunctionType named: name argumentsSize: arguments size argumentsOptional: false bindings:  bindings }
 	;
 UnionType
@@ -117,7 +119,7 @@ TypTypeParser class >> reduceTable [
 ^#(
 	#(20 1 #reduceActionForNilType1: 634881 false ) 
 	#(19 1 #reduceActionForUnknownType1: 581633 false ) 
-	#(27 1 #reduceActionForName1: 2550785 false ) 
+	#(27 1 #reduceActionForName1: 2733057 false ) 
 	#(17 1 #reduceActionForTypes1: 241665 false ) 
 	#(18 1 #liftFirstValue: 334849 false ) 
 	#(18 1 #liftFirstValue: 334850 false ) 
@@ -128,14 +130,14 @@ TypTypeParser class >> reduceTable [
 	#(18 1 #liftFirstValue: 334852 false ) 
 	#(22 1 #reduceActionForNamedType1: 874497 false ) 
 	#(21 2 #reduceActionForTypeVariableType1: 679937 false ) 
-	#(26 0 #reduceActionForEmptyTypes2: 2496514 false ) 
-	#(25 3 #reduceActionForUnionType1: 2422785 false ) 
+	#(26 0 #reduceActionForEmptyTypes2: 2678786 false ) 
+	#(25 3 #reduceActionForUnionType1: 2605057 false ) 
 	#(17 3 #reduceActionForTypes2: 241666 false ) 
-	#(26 1 #liftFirstValue: 2496513 false ) 
+	#(26 1 #liftFirstValue: 2678785 false ) 
 	#(21 4 #reduceActionForTypeVariableType2: 679938 false ) 
 	#(23 4 #reduceActionForParametricType1: 985089 false ) 
-	#(24 6 #reduceActionForFunctionType2: 1266690 false ) 
-	#(24 6 #reduceActionForFunctionType1: 1266689 false )
+	#(24 6 #reduceActionForFunctionType2: 1375234 false ) 
+	#(24 6 #reduceActionForFunctionType1: 1375233 false )
 	).
 ]
 
@@ -205,15 +207,16 @@ TypTypeParser >> reduceActionForEmptyTypes2: nodes [
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForFunctionType1: nodes [
 	| typeVariables bindings |
-	typeVariables := ({'@0' typAsType}
+	typeVariables := ({'@0' typAsTypeVariableType}
 		,
 			((nodes at: 3) size
-				timesCollect: [ :i | ('@' , i asString) typAsType ])
+				timesCollect: [ :i | ('@' , i asString) typAsTypeVariableType ])
 		, ({(nodes at: 6)} , (nodes at: 3) select: #isTypeVariable)) asSet.
 	bindings := (typeVariables collect: [ :e | e -> e ])
 		typAsTypeVariableBindings.
 	{(nodes at: 6)} , (nodes at: 3)
-		withIndexDo: [ :e :i | bindings at: ('@' , (i - 1) asString) typAsType put: e ].
+		withIndexDo:
+			[ :e :i | bindings at: ('@' , (i - 1) asString) typAsTypeVariableType put: e ].
 	^ TypFunctionType
 		named: (nodes at: 1)
 		argumentsSize:
@@ -225,15 +228,16 @@ TypTypeParser >> reduceActionForFunctionType1: nodes [
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForFunctionType2: nodes [
 	| typeVariables bindings |
-	typeVariables := ({'@0' typAsType}
+	typeVariables := ({'@0' typAsTypeVariableType}
 		,
 			((nodes at: 3) size
-				timesCollect: [ :i | ('@' , i asString) typAsType ])
+				timesCollect: [ :i | ('@' , i asString) typAsTypeVariableType ])
 		, ({(nodes at: 6)} , (nodes at: 3) select: #isTypeVariable)) asSet.
 	bindings := (typeVariables collect: [ :e | e -> e ])
 		typAsTypeVariableBindings.
 	{(nodes at: 6)} , (nodes at: 3)
-		withIndexDo: [ :e :i | bindings at: ('@' , (i - 1) asString) typAsType put: e ].
+		withIndexDo:
+			[ :e :i | bindings at: ('@' , (i - 1) asString) typAsTypeVariableType put: e ].
 	^ TypFunctionType
 		named: (nodes at: 1)
 		argumentsSize:
@@ -262,14 +266,18 @@ TypTypeParser >> reduceActionForNilType1: nodes [
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForParametricType1: nodes [
 	| type |
-	type := (nodes at: 1) asClass typAsType.
-	^ type
-		copyWithBindings:
-			((nodes at: 3)
-				withIndexCollect: [ :e :i | 
-					| parameter |
-					parameter := type parameters at: i.
-					parameter -> e ]) typAsTypeVariableBindings
+	type := [ (nodes at: 1) asClass typAsType ]
+		on: NotFound
+		do: [ TypNamedType named: (nodes at: 1) ].
+	^ type isParametric
+		ifTrue: [ type
+				copyWithBindings:
+					((nodes at: 3)
+						withIndexCollect: [ :e :i | 
+							| parameter |
+							parameter := type parameters at: i.
+							parameter -> e ]) typAsTypeVariableBindings ]
+		ifFalse: [ type ]
 ]
 
 { #category : #'generated-reduction actions' }

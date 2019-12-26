@@ -20,6 +20,14 @@ TypShaPhaBehavior >> ___allSubclasses [
 ]
 
 { #category : #accessing }
+TypShaPhaBehavior >> ___basicNew [
+	^ TypMethodLookupResult new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaBehavior >> ___canUnderstand: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];

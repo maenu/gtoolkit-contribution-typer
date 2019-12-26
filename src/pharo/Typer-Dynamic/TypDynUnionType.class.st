@@ -21,8 +21,8 @@ TypDynUnionType class >> types: aCollection weights: anotherCollection [
 
 { #category : #copying }
 TypDynUnionType >> , aType [
-	<typTypeArgument: 1 as: 'TypDynUnionType<TypType>'>
-	<typTypeResultAs: 'TypDynUnionType<TypType>'>
+	<typTypeArgument: 1 as: 'TypDynUnionType'>
+	<typTypeResultAs: 'TypDynUnionType'>
 	| copy |
 	copy := self copy.
 	copy addAll: aType.
@@ -40,7 +40,7 @@ TypDynUnionType >> add: anObject [
 
 { #category : #enumerating }
 TypDynUnionType >> addAll: aTypes [
-	<typTypeArgument: 1 as: 'TypDynUnionType<TypType>'>
+	<typTypeArgument: 1 as: 'TypDynUnionType'>
 	types addAll: aTypes types.
 	weights addAll: aTypes weights.
 	^ aTypes
