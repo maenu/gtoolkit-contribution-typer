@@ -46,7 +46,7 @@ TypTypeVariableBindings >> > anObject [
 							b := anObject at: e.
 							a isTypeVariable
 								ifTrue: [ true ]
-								ifFalse: [ a = b ] ] ] ]
+								ifFalse: [ a >= b ] ] ] ]
 ]
 
 { #category : #comparing }

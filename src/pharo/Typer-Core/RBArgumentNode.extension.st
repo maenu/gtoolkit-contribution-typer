@@ -2,13 +2,12 @@ Extension { #name : #RBArgumentNode }
 
 { #category : #'*Typer-Core' }
 RBArgumentNode >> typArguments [
-	<typTypeResultAs: 'Collection<RBArgumentNode>'>
-	^ (self whoDefines: self name) allChildren
+	^ ((self whoDefines: self name) allChildren
 		select: [ :e | 
 			e isArgument
 				and: [ e name = self name
 						and:
-							[ e parent isMessage and: [ e parent arguments anySatisfy: [ :f | f == e ] ] ] ] ]
+							[ e parent isMessage and: [ e parent arguments anySatisfy: [ :f | f == e ] ] ] ] ]) "typCastAs SequenceableCollection<RBArgumentNode>"
 ]
 
 { #category : #'*Typer-Core' }

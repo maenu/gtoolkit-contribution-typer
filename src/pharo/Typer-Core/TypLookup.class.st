@@ -10,8 +10,9 @@ TypLookup >> adaptWithSuperType [
 	self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypLookup >> emptyResult [
+	<typTypeResultAs: 'TypLookupResult'>
 	self subclassResponsibility
 ]
 

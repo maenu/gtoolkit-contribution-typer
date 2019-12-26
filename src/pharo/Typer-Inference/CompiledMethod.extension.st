@@ -10,13 +10,18 @@ CompiledMethod >> typInfAsMethodLookupResult [
 			e isArgument
 				and: [ e typIsDeclaration not
 						and: [ (method defines: e name)
-								and: [ e parent isMessage and: [ e parent arguments includes: e ] ] ] ] ])
+								and: [ e parent isAssignment
+										or: [ e parent isMessage and: [ e parent arguments includes: e ] ] ] ] ] ])
 		groupedBy: [ :e | method arguments detectIndex: [ :f | f name == e name ] ])
 		associations
 		collect: [ :e | 
 			e key
 				->
-					(e value collect: [ :f | f parent typTypeForArgumentAt: (f parent arguments indexOf: f) ])
+					(e value
+						collect: [ :f | 
+							f parent isAssignment
+								ifTrue: [ f parent variable typType ]
+								ifFalse: [ f parent typTypeForArgumentAt: (f parent arguments indexOf: f) ] ])
 						typAsType ]) asDictionary.
 	result
 		argumentTypes:

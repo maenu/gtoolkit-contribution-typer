@@ -10,6 +10,18 @@ TypShaPhaRBProgramNode class >> shadowedClass [
 ]
 
 { #category : #accessing }
+TypShaPhaRBProgramNode >> ___allChildren [
+	^ TypMethodLookupResult new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a :s :r | 
+			OrderedCollection typAsType
+				copyWithBindings:
+					{('@A' typAsTypeVariableType -> RBProgramNode typAsType)}
+						typAsTypeVariableBindings ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaRBProgramNode >> ___assignmentNodes [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
