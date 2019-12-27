@@ -14,7 +14,7 @@ RBTemporaryNode >> typArguments [
 RBTemporaryNode >> typAssigned [
 	<typTypeResultAs: 'Collection<RBAssignmentNode>'>
 	^ (self whoDefines: self name) assignmentNodes
-		select: [ :e | e value isTemp and: [ e name = self name ] ]
+		select: [ :e | e value isTemp and: [ e value name = self name ] ]
 ]
 
 { #category : #'*Typer-Core' }

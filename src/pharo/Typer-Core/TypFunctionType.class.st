@@ -198,7 +198,7 @@ TypFunctionType >> initializeWithName: aString argumentsSize: anInteger argument
 	self
 		assert: [ aBindings variables
 				allSatisfy:
-					[ :e | e = '@0' typAsType or: [ (aBindings at: e) ~= '@0' typAsType ] ] ].
+					[ :e | e = '@0' typAsTypeVariableType or: [ (aBindings at: e) ~= '@0' typAsTypeVariableType ] ] ].
 	self
 		initializeWithName: aString
 		parameters: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsTypeVariableType ])

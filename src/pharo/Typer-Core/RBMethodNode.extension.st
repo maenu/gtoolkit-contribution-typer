@@ -67,12 +67,15 @@ RBMethodNode >> typTypeForResult [
 { #category : #'*Typer-Core' }
 RBMethodNode >> typTypeRecursive [
 	<typTypeResultAs: 'TypType'>
-	| newTemporaryProfile |
+	| oldTemporaryProfiles newTemporaryProfile |
 	self
 		typTypeReset;
-		doSemanticAnalysis.
+		doSemanticAnalysis;
+		propertyAt: #typFixPoint put: false.
+	oldTemporaryProfiles := Set new.
 	newTemporaryProfile := self typTemporaryProfile.
-	[ | oldTemporaryProfile   |
+	[ | oldTemporaryProfile |
+	oldTemporaryProfiles add: newTemporaryProfile.
 	self typTypeReset.
 	newTemporaryProfile
 		do: [ :e | e key propertyAt: #typType put: e value ].
@@ -86,11 +89,19 @@ RBMethodNode >> typTypeRecursive [
 				typType ].
 	oldTemporaryProfile := newTemporaryProfile.
 	newTemporaryProfile := self typTemporaryProfile.
-	newTemporaryProfile = oldTemporaryProfile ] whileFalse.
+	oldTemporaryProfile = newTemporaryProfile
+		ifTrue: [ self propertyAt: #typFixPoint put: true ].
+	oldTemporaryProfiles includes: newTemporaryProfile ] whileFalse.
 	^ CompiledMethod
 		typAsFunctionTypeWithArguments: self typTypesForArguments
 		result: self typTypeForResult
 		argumentsOptional: false
+]
+
+{ #category : #'*Typer-Core' }
+RBMethodNode >> typTypeReset [
+	self removeProperty: #typFixPoint ifAbsent: [  ].
+	super typTypeReset
 ]
 
 { #category : #'*Typer-Core' }
