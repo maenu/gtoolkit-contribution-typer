@@ -39,13 +39,12 @@ TypTypeVariableType >> = anObject [
 	^ anObject == self
 		or: [ anObject class = self class
 				and: [ anObject name = name
-						and: [ anObject superType = superType and: [ anObject type = type ] ] ] ]
+						and: [ anObject superType = superType ] ] ]
 ]
 
 { #category : #comparing }
 TypTypeVariableType >> > aType [
 	^ superType >= aType
-		and: [ aType isTypeVariable not or: [ aType type >= type ] ]
 ]
 
 { #category : #accessing }
@@ -71,7 +70,7 @@ TypTypeVariableType >> canUnderstand: aSymbol [
 
 { #category : #comparing }
 TypTypeVariableType >> hash [
-	^ (name hash bitXor: superType hash) bitXor: type hash
+	^ name hash bitXor: superType hash
 ]
 
 { #category : #initialization }
