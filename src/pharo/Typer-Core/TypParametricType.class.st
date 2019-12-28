@@ -100,11 +100,6 @@ TypParametricType >> at: aString put: aType [
 	^ bindings at: aString put: aType
 ]
 
-{ #category : #accessing }
-TypParametricType >> bindings [
-	^ bindings
-]
-
 { #category : #copying }
 TypParametricType >> copyWithBindings: aDictionary [
 	<typTypeArgument: 1 as: 'Dictionary<String,TypType>'>
@@ -164,12 +159,16 @@ TypParametricType >> initializeParameters: aSequenceableCollection bindings: aDi
 	self assert: [ aSequenceableCollection isNotEmpty ].
 	self
 		assert: [ aSequenceableCollection asSet includesAll: aDictionary keys asSet ].
-	parameters := aSequenceableCollection asOrderedCollection.
-	bindings := aDictionary
+	parameters := aSequenceableCollection.
+	bindings := aDictionary.
+	parameters
+		do: [ :e | 
+			(bindings includesKey: e)
+				ifFalse: [ bindings at: e put: e typAsTypeVariableType ] ].
+	bindings
 		do: [ :e | 
 			(e isTypeVariable and: [ e type isNil ])
-				ifTrue: [ e type: self ] ];
-		yourself.
+				ifTrue: [ e type: self ] ].
 	superType := nil
 ]
 

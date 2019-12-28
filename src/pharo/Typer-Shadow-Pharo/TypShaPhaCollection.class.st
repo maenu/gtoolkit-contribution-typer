@@ -586,7 +586,7 @@ TypShaPhaCollection >> ___size [
 
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> asType: aClass [
-	^ aClass typAsParametricTypeWithParameters: {'@A' typAsType}
+	^ aClass typAsParametricTypeWithParameters: {'@A'}
 ]
 
 { #category : #accessing }

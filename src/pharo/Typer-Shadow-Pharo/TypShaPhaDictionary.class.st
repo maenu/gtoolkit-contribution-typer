@@ -204,10 +204,7 @@ TypShaPhaDictionary >> ___values [
 
 { #category : #'as yet unclassified' }
 TypShaPhaDictionary >> asType: aClass [
-	^ aClass
-		typAsParametricTypeWithParameters:
-			{'@B' typAsType.
-			'@A' typAsType}
+	^ aClass typAsParametricTypeWithParameters: {'@B' . '@A'}
 ]
 
 { #category : #accessing }

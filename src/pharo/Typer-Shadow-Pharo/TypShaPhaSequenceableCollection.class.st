@@ -206,5 +206,5 @@ TypShaPhaSequenceableCollection >> ___withIndexSelect: _a [
 
 { #category : #converting }
 TypShaPhaSequenceableCollection >> asType: aClass [
-	^ aClass typAsParametricTypeWithParameters: {'@A' typAsType}
+	^ aClass typAsParametricTypeWithParameters: {'@A'}
 ]

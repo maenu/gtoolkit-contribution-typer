@@ -92,9 +92,8 @@ TypNamedType >> initialize [
 ]
 
 { #category : #initialization }
-TypNamedType >> initializeSuperTypeWithBindings: aBindings [
-	<typTypeArgument: 1 as: 'TypTypeVariableBindings'>
-	superType := (self superType "typCastAs TypParametricType") copyWithBindings: aBindings
+TypNamedType >> initializeSuperTypeWithBindings: aDictionary [
+	superType := (self superType "typCastAs TypParametricType") copyWithBindings: aDictionary
 ]
 
 { #category : #initialization }

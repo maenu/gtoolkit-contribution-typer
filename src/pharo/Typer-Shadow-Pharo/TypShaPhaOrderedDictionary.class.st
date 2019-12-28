@@ -176,10 +176,7 @@ TypShaPhaOrderedDictionary >> ___keys [
 
 { #category : #'as yet unclassified' }
 TypShaPhaOrderedDictionary >> asType: aClass [
-	^ aClass
-		typAsParametricTypeWithParameters:
-			{'@B' typAsType.
-			'@A' typAsType}
+	^ aClass typAsParametricTypeWithParameters: {'@B' . '@A'}
 ]
 
 { #category : #accessing }

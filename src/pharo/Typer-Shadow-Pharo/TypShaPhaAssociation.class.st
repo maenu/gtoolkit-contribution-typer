@@ -27,8 +27,5 @@ TypShaPhaAssociation >> ___value [
 
 { #category : #'as yet unclassified' }
 TypShaPhaAssociation >> asType: aClass [
-	^ aClass
-		typAsParametricTypeWithParameters:
-			{'@A' typAsType.
-			'@B' typAsType}
+	^ aClass typAsParametricTypeWithParameters: {'@A' . '@B'}
 ]

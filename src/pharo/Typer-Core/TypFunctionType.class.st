@@ -108,7 +108,7 @@ TypFunctionType >> > aType [
 TypFunctionType >> arguments [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	^ (1 to: argumentsSize)
-		withIndexCollect: [ :e :i | bindings at: ('@' , i asString) typAsTypeVariableType ]
+		withIndexCollect: [ :e :i | self at: '@' , i asString ]
 ]
 
 { #category : #accessing }
@@ -153,11 +153,7 @@ TypFunctionType >> copyWithBindings: aBindings [
 
 { #category : #copying }
 TypFunctionType >> copyWithResult: aType [
-	^ self
-		copyWithBindings:
-			(bindings copy
-				at: '@0' typAsTypeVariableType put: aType;
-				yourself)
+	^ self copyWithSomeBindings: {('@0' -> aType)} asDictionary
 ]
 
 { #category : #comparing }
@@ -182,30 +178,32 @@ TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolea
 ]
 
 { #category : #initialization }
-TypFunctionType >> initializeWithClassDescription: aClassDescription argumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
+TypFunctionType >> initializeWithClassDescription: aClassDescription argumentsSize: anInteger argumentsOptional: aBoolean bindings: aDictionary [
 	<typTypeArgument: 2 as: 'Integer'>
 	self
-		assert: [ aBindings variables
-				allSatisfy:
-					[ :e | e = '@0' typAsTypeVariableType or: [ (aBindings at: e) ~= '@0' typAsTypeVariableType ] ] ].
+		assert: [ aDictionary associations
+				allSatisfy: [ :e | 
+					e key = '@0'
+						or: [ e value isTypeVariable not or: [ e value name ~= '@0' ] ] ] ].
 	self
 		initializeWithClassDescription: aClassDescription
-		parameters: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsTypeVariableType ])
-		bindings: aBindings.
+		parameters: ((0 to: anInteger) collect: [ :e | '@' , e asString ])
+		bindings: aDictionary.
 	self initializeArgumentsSize: anInteger argumentsOptional: aBoolean
 ]
 
 { #category : #initialization }
-TypFunctionType >> initializeWithName: aString argumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
+TypFunctionType >> initializeWithName: aString argumentsSize: anInteger argumentsOptional: aBoolean bindings: aDictionary [
 	<typTypeArgument: 2 as: 'Integer'>
 	self
-		assert: [ aBindings variables
-				allSatisfy:
-					[ :e | e = '@0' typAsTypeVariableType or: [ (aBindings at: e) ~= '@0' typAsTypeVariableType ] ] ].
+		assert: [ aDictionary associations
+				allSatisfy: [ :e | 
+					e key = '@0'
+						or: [ e value isTypeVariable not or: [ e value name ~= '@0' ] ] ] ].
 	self
 		initializeWithName: aString
-		parameters: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsTypeVariableType ])
-		bindings: aBindings.
+		parameters: ((0 to: anInteger) collect: [ :e | '@' , e asString ])
+		bindings: aDictionary.
 	self initializeArgumentsSize: anInteger argumentsOptional: aBoolean
 ]
 
@@ -239,5 +237,5 @@ TypFunctionType >> printOn: aStream [
 { #category : #accessing }
 TypFunctionType >> result [
 	<typTypeResultAs: 'TypType'>
-	^ bindings at: '@0' typAsTypeVariableType
+	^ self at: '@0'
 ]

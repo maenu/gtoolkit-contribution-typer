@@ -19,7 +19,7 @@ TypShaPhaStream >> ___nextPutAll: _a [
 
 { #category : #accessing }
 TypShaPhaStream >> asType: aClass [
-	^ aClass typAsParametricTypeWithParameters: {'@A' typAsType}
+	^ aClass typAsParametricTypeWithParameters: {'@A'}
 ]
 
 { #category : #accessing }
