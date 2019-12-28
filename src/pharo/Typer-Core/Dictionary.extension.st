@@ -1,16 +1,6 @@
 Extension { #name : #Dictionary }
 
 { #category : #'*Typer-Core' }
-Dictionary >> typAsTypeVariableBindings [
-	| bindings |
-	bindings := TypTypeVariableBindings new.
-	"ensure all variables known by initializing with unknown"
-	self keysDo: [ :k | bindings at: k put: k ].
-	self keysAndValuesDo: [ :k :v | bindings at: k put: v ].
-	^ bindings
-]
-
-{ #category : #'*Typer-Core' }
 Dictionary >> typSelfType [
 	| type |
 	type := super typSelfType.
@@ -30,7 +20,7 @@ Dictionary >> typSelfType [
 			type := type
 				copyWithBindings:
 					{((type parameters at: 1) -> (types at: 2)).
-					((type parameters at: 2) -> (types at: 1))} typAsTypeVariableBindings ].
+					((type parameters at: 2) -> (types at: 1))} asDictionary ].
 	^ type
 ]
 

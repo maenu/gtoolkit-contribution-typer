@@ -16,22 +16,22 @@ TypParametricType class >> classDescription: aClassDescription [
 { #category : #accessing }
 TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection [
 	<typTypeArgument: 1 as: 'ClassDescription'>
-	<typTypeArgument: 2 as: 'SequenceableCollection<TypTypeVariableType>'>
+	<typTypeArgument: 2 as: 'SequenceableCollection<String>'>
 	^ self
 		classDescription: aClassDescription
 		parameters: aSequenceableCollection
-		bindings: (TypTypeVariableBindings variables: aSequenceableCollection asSet)
+		bindings: Dictionary new
 ]
 
 { #category : #accessing }
-TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection bindings: aBindings [
+TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection bindings: aDictionary [
 	<typTypeArgument: 1 as: 'ClassDescription'>
-	<typTypeArgument: 2 as: 'SequenceableCollection<TypTypeVariableType>'>
-	<typTypeArgument: 3 as: 'TypTypeVariableBindings'>
+	<typTypeArgument: 2 as: 'SequenceableCollection<String>'>
+	<typTypeArgument: 3 as: 'Dictionary<String,TypType>'>
 	^ self new
 		initializeWithClassDescription: aClassDescription
 			parameters: aSequenceableCollection
-			bindings: aBindings;
+			bindings: aDictionary;
 		yourself
 ]
 
@@ -45,25 +45,23 @@ TypParametricType class >> named: aString parameters: aSequenceableCollection [
 	^ self
 		named: aString
 		parameters: aSequenceableCollection
-		bindings: (TypTypeVariableBindings variables: aSequenceableCollection asSet)
+		bindings: Dictionary new
 ]
 
 { #category : #accessing }
-TypParametricType class >> named: aString parameters: aSequenceableCollection bindings: aBindings [
+TypParametricType class >> named: aString parameters: aSequenceableCollection bindings: aDictionary [
 	^ self new
 		initializeWithName: aString
 			parameters: aSequenceableCollection
-			bindings: aBindings;
+			bindings: aDictionary;
 		yourself
 ]
 
 { #category : #comparing }
 TypParametricType >> = aType [
-	^ self == aType
-		or: [ self class = aType class
-				and: [ name = aType name
-						and:
-							[ parameters = aType parameters and: [ bindings = aType bindings ] ] ] ]
+	^ super = aType
+		and: [ parameters = aType parameters
+				and: [ parameters allSatisfy: [ :e | (self at: e) = (aType at: e) ] ] ]
 ]
 
 { #category : #comparing }
@@ -71,17 +69,35 @@ TypParametricType >> > aType [
 	^ self ~= aType
 		and: [ (aType isParametric
 				and: [ name = aType name
-						and: [ parameters = aType parameters and: [ bindings >= aType bindings ] ] ])
+						and: [ parameters = aType parameters
+								and:
+									[ parameters allSatisfy: [ :e | (self at: e) >= (aType at: e) ] ] ] ])
 				or: [ super > aType ] ]
 ]
 
 { #category : #converting }
 TypParametricType >> asCompatibleWith: aType [
-	^ (aType isParametric
-		and: [ name = aType name
-				and: [ bindings variables = aType bindings variables ] ])
-		ifTrue: [ self copyWithBindings: (bindings asCompatibleWith: aType bindings) ]
-		ifFalse: [ super asCompatibleWith: aType ]
+	| copy |
+	(aType isParametric
+		and: [ name = aType name and: [ parameters = aType parameters ] ])
+		ifFalse: [ ^ super asCompatibleWith: aType ].
+	copy := self copy.
+	bindings
+		keysAndValuesDo: [ :n :t | copy at: n put: (t asCompatibleWith: (aType at: n)) ].
+	^ copy
+]
+
+{ #category : #accessing }
+TypParametricType >> at: aString [
+	<typTypeArgument: 1 as: 'String'>
+	^ bindings at: aString
+]
+
+{ #category : #accessing }
+TypParametricType >> at: aString put: aType [
+	<typTypeArgument: 1 as: 'String'>
+	<typTypeArgument: 2 as: 'TypType'>
+	^ bindings at: aString put: aType
 ]
 
 { #category : #accessing }
@@ -90,28 +106,38 @@ TypParametricType >> bindings [
 ]
 
 { #category : #copying }
-TypParametricType >> copyWithBindings: aBindings [
-	<typTypeArgument: 1 as: 'TypTypeVariableBindings'>
+TypParametricType >> copyWithBindings: aDictionary [
+	<typTypeArgument: 1 as: 'Dictionary<String,TypType>'>
+	| bindings_ |
+	bindings_ := (aDictionary associations
+		collect: [ :e | 
+			e key
+				->
+					((e value isTypeVariable and: [ e value type == self ])
+						ifTrue: [ e value copy
+								type: nil;
+								yourself ]
+						ifFalse: [ e value ]) ]) asDictionary.
 	^ self hasClassDescription
 		ifTrue: [ self copy
 				initializeWithClassDescription: self classDescription
 					parameters: parameters
-					bindings: aBindings;
+					bindings: bindings_;
 				yourself ]
 		ifFalse: [ self copy
 				initializeWithName: name
 					parameters: parameters
-					bindings: aBindings;
+					bindings: bindings_;
 				yourself ]
 ]
 
 { #category : #copying }
-TypParametricType >> copyWithSomeBindings: aBindings [
-	<typTypeArgument: 1 as: 'TypTypeVariableBindings'>
+TypParametricType >> copyWithSomeBindings: aDictionary [
+	<typTypeArgument: 1 as: 'Dictionary<String,TypType>'>
 	| bindings_ |
-	self assert: [ bindings variables includesAll: aBindings variables ].
+	self assert: [ parameters includesAll: aDictionary keys ].
 	bindings_ := bindings copy.
-	bindings_ addAll: aBindings.
+	aDictionary keysAndValuesDo: [ :n :t | bindings_ at: n put: t ].
 	^ self copyWithBindings: bindings_
 ]
 
@@ -123,19 +149,27 @@ TypParametricType >> hash [
 { #category : #initialization }
 TypParametricType >> initialize [
 	<typTypeVariable: 'parameters' as: 'SequenceableCollection<TypTypeVariableType>'>
-	<typTypeVariable: 'bindings' as: 'TypTypeVariableBindings'>
-	super initialize
+	<typTypeVariable: 'bindings' as: 'Dictionary<String,TypType>'>
+	self flag: 'TODO how is shadowing of bindings handled?'.
+	super initialize.
+	bindings := Dictionary new "typParameters String,TypType".
 ]
 
 { #category : #accessing }
-TypParametricType >> initializeParameters: aSequenceableCollection bindings: aBindings [
-	<typTypeArgument: 1 as: 'SequenceableCollection<TypTypeVariableType>'>
-	<typTypeArgument: 2 as: 'TypTypeVariableBindings'>
+TypParametricType >> initializeParameters: aSequenceableCollection bindings: aDictionary [
+	"Sets type to self on variables without type."
+
+	<typTypeArgument: 2 as: 'SequenceableCollection<String>'>
+	<typTypeArgument: 3 as: 'Dictionary<String,TypType>'>
+	self assert: [ aSequenceableCollection isNotEmpty ].
 	self
-		assert: [ aSequenceableCollection isNotEmpty
-				and: [ aBindings variables includesAll: aSequenceableCollection asSet ] ].
+		assert: [ aSequenceableCollection asSet includesAll: aDictionary keys asSet ].
 	parameters := aSequenceableCollection asOrderedCollection.
-	bindings := aBindings.
+	bindings := aDictionary
+		do: [ :e | 
+			(e isTypeVariable and: [ e type isNil ])
+				ifTrue: [ e type: self ] ];
+		yourself.
 	superType := nil
 ]
 
@@ -178,7 +212,7 @@ TypParametricType >> printOn: aStream [
 	aStream << '<'.
 	parameters
 		withIndexDo: [ :e :i | 
-			(bindings at: e) printOn: aStream.
+			(self at: e) printOn: aStream.
 			i < parameters size
 				ifTrue: [ aStream << ',' ] ].
 	aStream << '>'
@@ -191,7 +225,7 @@ TypParametricType >> superType [
 	superType isParametric
 		ifTrue: [ superType := superType
 				copyWithSomeBindings:
-					((parameters select: [ :e | superType parameters includes: e ])
-						collect: [ :e | e -> (bindings at: e) ]) typAsTypeVariableBindings ].
+					((bindings keys select: [ :e | superType parameters includes: e ])
+						collect: [ :e | e -> (self at: e) ]) asDictionary ].
 	^ superType
 ]

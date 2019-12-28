@@ -122,8 +122,8 @@ TypFunctionTypeExamples >> typeNonOptionalArgument [
 		argumentsSize: 1
 		argumentsOptional: false
 		bindings:
-			{('@0' typAsType -> Boolean typAsType).
-			('@1' typAsType -> Integer typAsType)} typAsTypeVariableBindings
+			{('@0' -> Boolean typAsType).
+			('@1' -> Integer typAsType)} asDictionary
 ]
 
 { #category : #'as yet unclassified' }
@@ -133,8 +133,8 @@ TypFunctionTypeExamples >> typeNonOptionalArgumentObjectResult [
 		argumentsSize: 1
 		argumentsOptional: false
 		bindings:
-			{('@0' typAsType -> True typAsType).
-			('@1' typAsType -> Integer typAsType)} typAsTypeVariableBindings
+			{('@0' -> True typAsType).
+			('@1' -> Integer typAsType)} asDictionary
 ]
 
 { #category : #'as yet unclassified' }
@@ -144,8 +144,8 @@ TypFunctionTypeExamples >> typeNonOptionalArgumentTrueResult [
 		argumentsSize: 1
 		argumentsOptional: false
 		bindings:
-			{('@0' typAsType -> True typAsType).
-			('@1' typAsType -> Integer typAsType)} typAsTypeVariableBindings
+			{('@0' -> True typAsType).
+			('@1' -> Integer typAsType)} asDictionary
 ]
 
 { #category : #'as yet unclassified' }
@@ -155,9 +155,9 @@ TypFunctionTypeExamples >> typeNonOptionalArgumentVariableResult [
 		argumentsSize: 1
 		argumentsOptional: false
 		bindings:
-			{('@A' typAsType -> '@A' typAsType).
-			('@0' typAsType -> '@A' typAsType).
-			('@1' typAsType -> Integer typAsType)} typAsTypeVariableBindings
+			{('@A' -> '@A' typAsType).
+			('@0' -> '@A' typAsType).
+			('@1' -> Integer typAsType)} asDictionary
 ]
 
 { #category : #'as yet unclassified' }
@@ -167,9 +167,9 @@ TypFunctionTypeExamples >> typeNonOptionalArgumentVariableResultBound [
 		argumentsSize: 1
 		argumentsOptional: false
 		bindings:
-			{('@A' typAsType -> Boolean typAsType).
-			('@0' typAsType -> '@A' typAsType).
-			('@1' typAsType -> Integer typAsType)} typAsTypeVariableBindings
+			{('@A' -> Boolean typAsType).
+			('@0' -> '@A' typAsType).
+			('@1' -> Integer typAsType)} asDictionary
 ]
 
 { #category : #'as yet unclassified' }
@@ -179,9 +179,9 @@ TypFunctionTypeExamples >> typeNonOptionalTwoArguments [
 		argumentsSize: 2
 		argumentsOptional: false
 		bindings:
-			{('@0' typAsType -> Boolean typAsType).
-			('@1' typAsType -> Integer typAsType).
-			('@2' typAsType -> Character typAsType)} typAsTypeVariableBindings
+			{('@0' -> Boolean typAsType).
+			('@1' -> Integer typAsType).
+			('@2' -> Character typAsType)} asDictionary
 ]
 
 { #category : #'as yet unclassified' }
@@ -191,9 +191,9 @@ TypFunctionTypeExamples >> typeNonOptionalVariableArgument [
 		argumentsSize: 1
 		argumentsOptional: false
 		bindings:
-			{('@A' typAsType -> '@A' typAsType).
-			('@0' typAsType -> Boolean typAsType).
-			('@1' typAsType -> '@A' typAsType)} typAsTypeVariableBindings
+			{('@A' -> '@A' typAsType).
+			('@0' -> Boolean typAsType).
+			('@1' -> '@A' typAsType)} asDictionary
 ]
 
 { #category : #'as yet unclassified' }
@@ -203,9 +203,9 @@ TypFunctionTypeExamples >> typeNonOptionalVariableArgumentBound [
 		argumentsSize: 1
 		argumentsOptional: false
 		bindings:
-			{('@A' typAsType -> Integer typAsType).
-			('@0' typAsType -> Boolean typAsType).
-			('@1' typAsType -> '@A' typAsType)} typAsTypeVariableBindings
+			{('@A' -> Integer typAsType).
+			('@0' -> Boolean typAsType).
+			('@1' -> '@A' typAsType)} asDictionary
 ]
 
 { #category : #'as yet unclassified' }
@@ -215,8 +215,8 @@ TypFunctionTypeExamples >> typeNotAClass [
 		argumentsSize: 1
 		argumentsOptional: false
 		bindings:
-			{('@0' typAsType -> Boolean typAsType).
-			('@1' typAsType -> Integer typAsType)} typAsTypeVariableBindings
+			{('@0' -> Boolean typAsType).
+			('@1' -> Integer typAsType)} asDictionary
 ]
 
 { #category : #'as yet unclassified' }
@@ -226,8 +226,8 @@ TypFunctionTypeExamples >> typeOptionalArgument [
 		argumentsSize: 1
 		argumentsOptional: true
 		bindings:
-			{('@0' typAsType -> Boolean typAsType).
-			('@1' typAsType -> Integer typAsType)} typAsTypeVariableBindings
+			{('@0' -> Boolean typAsType).
+			('@1' -> Integer typAsType)} asDictionary
 ]
 
 { #category : #'as yet unclassified' }
@@ -237,9 +237,9 @@ TypFunctionTypeExamples >> typeOptionalArgumentVariableResult [
 		argumentsSize: 1
 		argumentsOptional: true
 		bindings:
-			{('@A' typAsType -> '@A' typAsType).
-			('@0' typAsType -> '@A' typAsType).
-			('@1' typAsType -> Integer typAsType)} typAsTypeVariableBindings
+			{('@A' -> '@A' typAsType).
+			('@0' -> '@A' typAsType).
+			('@1' -> Integer typAsType)} asDictionary
 ]
 
 { #category : #'as yet unclassified' }
@@ -249,7 +249,7 @@ TypFunctionTypeExamples >> typeOptionalVariableArgument [
 		argumentsSize: 1
 		argumentsOptional: true
 		bindings:
-			{('@A' typAsType -> '@A' typAsType).
-			('@0' typAsType -> Boolean typAsType).
-			('@1' typAsType -> '@A' typAsType)} typAsTypeVariableBindings
+			{('@A' -> '@A' typAsType).
+			('@0' -> Boolean typAsType).
+			('@1' -> '@A' typAsType)} asDictionary
 ]

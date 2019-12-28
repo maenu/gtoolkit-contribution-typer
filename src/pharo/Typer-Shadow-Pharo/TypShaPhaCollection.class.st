@@ -10,7 +10,7 @@ TypShaPhaCollection class >> ___with: _a [
 		argumentTypes: [ :i :a :s :r | TypUnknownType instance asNullableType ];
 		resultType: [ :a :s :r | 
 			a receiverType classDescription instanceSide typAsType
-				copyWithBindings: {('@A' typAsType -> (a argumentTypes at: 1))} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> (a argumentTypes at: 1))} asDictionary ];
 		yourself
 ]
 
@@ -18,7 +18,9 @@ TypShaPhaCollection class >> ___with: _a [
 TypShaPhaCollection class >> ___withAll: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Collection typAsType ];
-		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType copyWithBindings: {'@A' typAsType -> ((a argumentTypes first "typCastAs TypParametricType") bindings at: '@A' typAsType)} typAsTypeVariableBindings ];
+		resultType: [ :a :s :r | 
+			a receiverType classDescription instanceSide typAsType
+				copyWithBindings: {('@A' -> (a argumentTypes first at: '@A'))} asDictionary ];
 		yourself
 ]
 
@@ -30,7 +32,7 @@ TypShaPhaCollection class >> shadowedClass [
 { #category : #accessing }
 TypShaPhaCollection >> ___add: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | a receiverType bindings at: '@A' typAsType ];
+		argumentTypes: [ :i :a :s :r | a receiverType at: '@A' ];
 		resultType: [ :a :s :r | a argumentTypes at: 1 ];
 		yourself
 ]
@@ -40,7 +42,7 @@ TypShaPhaCollection >> ___addAll: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			Collection typAsType
-				copyWithBindings: {('@A' typAsType -> (a receiverType bindings at: '@A' typAsType))} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> (a receiverType at: '@A'))} asDictionary ];
 		resultType: [ :a :s :r | a argumentTypes at: 1 ];
 		yourself
 ]
@@ -51,7 +53,7 @@ TypShaPhaCollection >> ___allSatisfy: _a [
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+				typAsFunctionTypeWithArguments: {(a receiverType at: '@A')}
 				result: Boolean typAsType
 				argumentsOptional: false)} typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
@@ -62,7 +64,7 @@ TypShaPhaCollection >> ___allSatisfy: _a [
 TypShaPhaCollection >> ___anyOne [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a | a receiverType bindings at: '@A' typAsType ];
+		resultType: [ :a | a receiverType at: '@A' ];
 		yourself
 ]
 
@@ -72,7 +74,7 @@ TypShaPhaCollection >> ___anySatisfy: _a [
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+				typAsFunctionTypeWithArguments: {(a receiverType at: '@A')}
 				result: Boolean typAsType
 				argumentsOptional: false)} typAsType ];
 		resultType: [ Boolean typAsType ];
@@ -85,13 +87,13 @@ TypShaPhaCollection >> ___asDictionary [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			| elementType type |
-			elementType := a receiverType bindings at: '@A' typAsType.
+			elementType := a receiverType at: '@A'.
 			type := Dictionary typAsType.
 			Association typAsType >= elementType
 				ifTrue: [ type := type
 						copyWithBindings:
-							{('@B' typAsType -> (elementType bindings at: '@A' typAsType)).
-							('@A' typAsType -> (elementType bindings at: '@B' typAsType))} typAsTypeVariableBindings ].
+							{('@B' -> (elementType at: '@A')).
+							('@A' -> (elementType at: '@B'))} asDictionary ].
 			type ];
 		yourself
 ]
@@ -102,7 +104,7 @@ TypShaPhaCollection >> ___asIdentitySet [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			IdentitySet typAsType
-				copyWithBindings: {('@A' typAsType -> (a receiverType bindings at: '@A' typAsType))} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> (a receiverType at: '@A'))} asDictionary ];
 		yourself
 ]
 
@@ -112,7 +114,7 @@ TypShaPhaCollection >> ___asOrderedCollection [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			OrderedCollection typAsType
-				copyWithBindings: {('@A' typAsType -> (a receiverType bindings at: '@A' typAsType))} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> (a receiverType at: '@A'))} asDictionary ];
 		yourself
 ]
 
@@ -122,13 +124,13 @@ TypShaPhaCollection >> ___asOrderedDictionary [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			| elementType type |
-			elementType := a receiverType bindings at: '@A' typAsType.
+			elementType := a receiverType at: '@A'.
 			type := OrderedDictionary typAsType.
 			Association typAsType >= elementType
 				ifTrue: [ type := type
 						copyWithBindings:
-							{('@B' typAsType -> (elementType bindings at: '@A' typAsType)).
-							('@A' typAsType -> (elementType bindings at: '@B' typAsType))} typAsTypeVariableBindings ].
+							{('@B' -> (elementType at: '@A')).
+							('@A' -> (elementType at: '@B'))} asDictionary ].
 			type ];
 		yourself
 ]
@@ -139,7 +141,7 @@ TypShaPhaCollection >> ___asSet [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
 			Set typAsType
-				copyWithBindings: {('@A' typAsType -> (a receiverType bindings at: '@A' typAsType))} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> (a receiverType at: '@A'))} asDictionary ];
 		yourself
 ]
 
@@ -147,7 +149,7 @@ TypShaPhaCollection >> ___asSet [
 TypShaPhaCollection >> ___at: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Integer typAsType ];
-		resultType: [ :a :s :r | a receiverType bindings at: '@A' typAsType ];
+		resultType: [ :a :s :r | a receiverType at: '@A' ];
 		yourself
 ]
 
@@ -157,7 +159,7 @@ TypShaPhaCollection >> ___collect: _a [
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+				typAsFunctionTypeWithArguments: {(a receiverType at: '@A')}
 				result: TypUnknownType instance
 				argumentsOptional: false)} typAsType ];
 		resultType: [ :a | 
@@ -172,21 +174,21 @@ TypShaPhaCollection >> ___collect: _a [
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new
-										receiverType: (a receiverType bindings at: '@A' typAsType);
+										receiverType: (a receiverType at: '@A');
 										selector: argumentNode value asSymbol;
 										argumentTypes: {};
 										argumentNodes: {};
 										yourself) ]
 						ifFalse: [ TypUnknownType instance ] ].
 			a receiverType
-				copyWithBindings: {('@A' typAsType -> elementType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> elementType)} asDictionary ];
 		yourself
 ]
 
 { #category : #accessing }
 TypShaPhaCollection >> ___copyWithout: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | a receiverType bindings at: '@A' typAsType ];
+		argumentTypes: [ :i :a :s :r | a receiverType at: '@A' ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
@@ -205,10 +207,10 @@ TypShaPhaCollection >> ___detect: _a [
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+				typAsFunctionTypeWithArguments: {(a receiverType at: '@A')}
 				result: Boolean typAsType
 				argumentsOptional: false)} typAsType ];
-		resultType: [ :a | a receiverType bindings at: '@A' typAsType ];
+		resultType: [ :a | a receiverType at: '@A' ];
 		yourself
 ]
 
@@ -219,13 +221,13 @@ TypShaPhaCollection >> ___detect: _a ifFound: _b ifNone: _c [
 			i = 1
 				ifTrue: [ {Symbol typAsType.
 					(BlockClosure
-						typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+						typAsFunctionTypeWithArguments: {(a receiverType at: '@A')}
 						result: Boolean typAsType
 						argumentsOptional: false)} typAsType ]
 				ifFalse: [ i = 2
 						ifTrue: [ {Symbol typAsType.
 							(BlockClosure
-								typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+								typAsFunctionTypeWithArguments: {(a receiverType at: '@A')}
 								result: TypUnknownType instance
 								argumentsOptional: true)} typAsType ]
 						ifFalse: [ BlockClosure
@@ -244,7 +246,7 @@ TypShaPhaCollection >> ___detect: _a ifFound: _b ifNone: _c [
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new
-										receiverType: (a receiverType bindings at: '@A' typAsType);
+										receiverType: (a receiverType at: '@A');
 										selector: argumentNode value asSymbol;
 										argumentTypes: {};
 										argumentNodes: {};
@@ -262,7 +264,7 @@ TypShaPhaCollection >> ___detect: _a ifNone: _b [
 			i = 1
 				ifTrue: [ {Symbol typAsType.
 					(BlockClosure
-						typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+						typAsFunctionTypeWithArguments: {(a receiverType at: '@A')}
 						result: Boolean typAsType
 						argumentsOptional: false)} typAsType ]
 				ifFalse: [ BlockClosure
@@ -270,7 +272,7 @@ TypShaPhaCollection >> ___detect: _a ifNone: _b [
 						result: TypUnknownType instance
 						argumentsOptional: false ] ];
 		resultType: [ :a | 
-			{(a receiverType bindings at: '@A' typAsType).
+			{(a receiverType at: '@A').
 			(a argumentTypes at: 2) result} typAsType ];
 		yourself
 ]
@@ -281,7 +283,7 @@ TypShaPhaCollection >> ___do: _a [
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+				typAsFunctionTypeWithArguments: {(a receiverType at: '@A')}
 				result: TypUnknownType instance
 				argumentsOptional: false)} typAsType ];
 		resultType: [ :a | a receiverType ];
@@ -294,7 +296,7 @@ TypShaPhaCollection >> ___flatCollect: _a [
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+				typAsFunctionTypeWithArguments: {(a receiverType at: '@A')}
 				result: TypUnknownType instance
 				argumentsOptional: false)} typAsType ];
 		resultType: [ :a | 
@@ -303,7 +305,7 @@ TypShaPhaCollection >> ___flatCollect: _a [
 			argumentNode := a argumentNodes at: 1.
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result isParametric
-						ifTrue: [ argumentType result bindings at: '@A' typAsType ]
+						ifTrue: [ argumentType result at: '@A' ]
 						ifFalse: [ TypUnknownType instance ] ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
 						and: [ (argumentNode value isKindOf: Symbol)
@@ -311,14 +313,14 @@ TypShaPhaCollection >> ___flatCollect: _a [
 						ifTrue: [ (TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new
-										receiverType: (a receiverType bindings at: '@A' typAsType);
+										receiverType: (a receiverType at: '@A');
 										selector: argumentNode value asSymbol;
 										argumentTypes: {};
 										argumentNodes: {};
-										yourself)) bindings at: '@A' typAsType ]
+										yourself)) at: '@A' ]
 						ifFalse: [ TypUnknownType instance ] ].
 			a receiverType
-				copyWithBindings: {('@A' typAsType -> elementType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> elementType)} asDictionary ];
 		yourself
 ]
 
@@ -328,7 +330,7 @@ TypShaPhaCollection >> ___groupedBy: _a [
 		argumentTypes: [ :i :a :s :r | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+				typAsFunctionTypeWithArguments: {(a receiverType at: '@A')}
 				result: TypUnknownType instance
 				argumentsOptional: false)} typAsType ];
 		resultType: [ :a :s :r | 
@@ -343,7 +345,7 @@ TypShaPhaCollection >> ___groupedBy: _a [
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new
-										receiverType: (a receiverType bindings at: '@A' typAsType);
+										receiverType: (a receiverType at: '@A');
 										selector: argumentNode value asSymbol;
 										argumentTypes: {};
 										argumentNodes: {};
@@ -351,13 +353,12 @@ TypShaPhaCollection >> ___groupedBy: _a [
 						ifFalse: [ '@B' typAsType ] ].
 			OrderedDictionary typAsType
 				copyWithBindings:
-					{('@B' typAsType -> keyType).
-					('@A' typAsType
+					{('@B' -> keyType).
+					('@A'
 						->
 							(Collection typAsType
-								copyWithBindings:
-									{('@A' typAsType -> (a receiverType bindings at: '@A' typAsType))}
-										typAsTypeVariableBindings))} typAsTypeVariableBindings ];
+								copyWithBindings: {('@A' -> (a receiverType at: '@A'))} asDictionary))}
+						asDictionary ];
 		yourself
 ]
 
@@ -455,7 +456,7 @@ TypShaPhaCollection >> ___ifNotEmpty: _a [
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___includes: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a | a receiverType bindings at: '@A' typAsType ];
+		argumentTypes: [ :i :a | a receiverType at: '@A' ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
@@ -477,7 +478,7 @@ TypShaPhaCollection >> ___inject: _a into: _b [
 				ifFalse: [ BlockClosure
 						typAsFunctionTypeWithArguments:
 							{(a argumentTypes at: 1).
-							(a receiverType bindings at: '@A' typAsType)}
+							(a receiverType at: '@A')}
 						result: TypUnknownType instance
 						argumentsOptional: false ] ];
 		resultType: [ :a :s :r | 
@@ -516,9 +517,9 @@ TypShaPhaCollection >> ___reduce: _a [
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments:
-					{{(a receiverType bindings at: '@A' typAsType).
+					{{(a receiverType at: '@A').
 					(a argumentTypes at: 1) result} typAsType.
-					(a receiverType bindings at: '@A' typAsType)}
+					(a receiverType at: '@A')}
 				result: TypUnknownType instance
 				argumentsOptional: false ];
 		resultType: [ :a :s :r | (a argumentTypes at: 1) result ];
@@ -531,7 +532,7 @@ TypShaPhaCollection >> ___reject: _a [
 		argumentTypes: [ :i :a :s :r | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+				typAsFunctionTypeWithArguments: {(a receiverType at: '@A')}
 				result: Boolean typAsType
 				argumentsOptional: false)} typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
@@ -541,8 +542,8 @@ TypShaPhaCollection >> ___reject: _a [
 { #category : #accessing }
 TypShaPhaCollection >> ___remove: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | a receiverType bindings at: '@A' typAsType ];
-		resultType: [ :a :s :r | a receiverType bindings at: '@A' typAsType ];
+		argumentTypes: [ :i :a :s :r | a receiverType at: '@A' ];
+		resultType: [ :a :s :r | a receiverType at: '@A' ];
 		yourself
 ]
 
@@ -551,7 +552,7 @@ TypShaPhaCollection >> ___remove: _a ifAbsent: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
-				ifTrue: [ a receiverType bindings at: '@A' typAsType ]
+				ifTrue: [ a receiverType at: '@A' ]
 				ifFalse: [ BlockClosure
 						typAsFunctionTypeWithArguments: {}
 						result: TypUnknownType instance
@@ -568,7 +569,7 @@ TypShaPhaCollection >> ___select: _a [
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {(a receiverType bindings at: '@A' typAsType)}
+				typAsFunctionTypeWithArguments: {(a receiverType at: '@A')}
 				result: Boolean typAsType
 				argumentsOptional: false)} typAsType ];
 		resultType: [ :a | a receiverType ];
@@ -597,8 +598,8 @@ TypShaPhaCollection >> ~~~, _a [
 			result := a receiverType copy.
 			'@A' typAsType
 				assign:
-					{('@A' typAsType resolveIn: a receiverType).
-					('@A' typAsType resolveIn: (a argumentTypes at: 1))} typAsType
+					{('@A' typAsTypeVariableType resolveIn: a receiverType).
+					('@A' typAsTypeVariableType resolveIn: (a argumentTypes at: 1))} typAsType
 				in: result.
 			result ];
 		yourself

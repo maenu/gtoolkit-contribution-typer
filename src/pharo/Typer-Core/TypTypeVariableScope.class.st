@@ -1,5 +1,5 @@
 Class {
-	#name : #TypTypeVariableBindings,
+	#name : #TypTypeVariableScope,
 	#superclass : #Object,
 	#instVars : [
 		'bindings'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #generated }
-TypTypeVariableBindings class >> variables: aSet [
+TypTypeVariableScope class >> variables: aSet [
 	<typTypeArgument: 1 as: 'Set<TypTypeVariableType>'>
 	| instance |
 	instance := self new.
@@ -17,17 +17,17 @@ TypTypeVariableBindings class >> variables: aSet [
 ]
 
 { #category : #comparing }
-TypTypeVariableBindings >> < anObject [
+TypTypeVariableScope >> < anObject [
 	^ anObject > self
 ]
 
 { #category : #comparing }
-TypTypeVariableBindings >> <= anObject [
+TypTypeVariableScope >> <= anObject [
 	^ anObject >= self
 ]
 
 { #category : #comparing }
-TypTypeVariableBindings >> = anObject [
+TypTypeVariableScope >> = anObject [
 	^ self == anObject
 		or: [ self class = anObject class
 				and: [ self variables = anObject variables
@@ -36,7 +36,7 @@ TypTypeVariableBindings >> = anObject [
 ]
 
 { #category : #comparing }
-TypTypeVariableBindings >> > anObject [
+TypTypeVariableScope >> > anObject [
 	^ self ~= anObject
 		and: [ self variables = anObject variables
 				and: [ self variables
@@ -50,18 +50,18 @@ TypTypeVariableBindings >> > anObject [
 ]
 
 { #category : #comparing }
-TypTypeVariableBindings >> >= anObject [
+TypTypeVariableScope >> >= anObject [
 	^ self = anObject or: [ self > anObject ]
 ]
 
 { #category : #enumerating }
-TypTypeVariableBindings >> addAll: aBindings [
+TypTypeVariableScope >> addAll: aBindings [
 	<typTypeArgument: 1 as: 'TypTypeVariableBindings'>
 	aBindings variables do: [ :e | self at: e put: (aBindings at: e) ]
 ]
 
 { #category : #converting }
-TypTypeVariableBindings >> asCompatibleWith: aBindings [
+TypTypeVariableScope >> asCompatibleWith: aBindings [
 	| copy |
 	self assert: [ aBindings variables = self variables ].
 	copy := self copy.
@@ -79,7 +79,7 @@ TypTypeVariableBindings >> asCompatibleWith: aBindings [
 ]
 
 { #category : #accessing }
-TypTypeVariableBindings >> at: aTypeVariable [
+TypTypeVariableScope >> at: aTypeVariable [
 	<typTypeArgument: 1 as: 'TypTypeVariableType'>
 	| current discovered |
 	current := aTypeVariable.
@@ -91,7 +91,7 @@ TypTypeVariableBindings >> at: aTypeVariable [
 ]
 
 { #category : #accessing }
-TypTypeVariableBindings >> at: aTypeVariable put: aType [
+TypTypeVariableScope >> at: aTypeVariable put: aType [
 	<typTypeArgument: 1 as: 'TypTypeVariableType'>
 	<typTypeArgument: 2 as: 'TypType'>
 	self assert: [ aTypeVariable isTypeVariable ].
@@ -99,47 +99,47 @@ TypTypeVariableBindings >> at: aTypeVariable put: aType [
 ]
 
 { #category : #copying }
-TypTypeVariableBindings >> copyWithout: aTypeVariable [
+TypTypeVariableScope >> copyWithout: aTypeVariable [
 	^ self copy
 		remove: aTypeVariable;
 		yourself
 ]
 
 { #category : #comparing }
-TypTypeVariableBindings >> hash [
+TypTypeVariableScope >> hash [
 	^ bindings hash
 ]
 
 { #category : #removing }
-TypTypeVariableBindings >> includes: aTypeVariable [
+TypTypeVariableScope >> includes: aTypeVariable [
 	^ bindings includesKey: aTypeVariable
 ]
 
 { #category : #initialization }
-TypTypeVariableBindings >> initialize [
+TypTypeVariableScope >> initialize [
 	<typTypeVariable: #bindings as: 'Dictionary<TypTypeVariableType,TypType>'>
 	super initialize.
 	bindings := Dictionary new "typParameters TypTypeVariableType,TypType"
 ]
 
 { #category : #testing }
-TypTypeVariableBindings >> isEmpty [
+TypTypeVariableScope >> isEmpty [
 	^ bindings isEmpty
 ]
 
 { #category : #testing }
-TypTypeVariableBindings >> isNotEmpty [
+TypTypeVariableScope >> isNotEmpty [
 	^ bindings isNotEmpty
 ]
 
 { #category : #copying }
-TypTypeVariableBindings >> postCopy [
+TypTypeVariableScope >> postCopy [
 	super postCopy.
 	bindings := bindings collect: #copy
 ]
 
 { #category : #removing }
-TypTypeVariableBindings >> remove: aTypeVariable [
+TypTypeVariableScope >> remove: aTypeVariable [
 	<typTypeArgument: 1 as: 'TypTypeVariableType'>
 	self
 		assert: [ bindings values allSatisfy: [ :e | e ~= aTypeVariable ] ].
@@ -147,11 +147,11 @@ TypTypeVariableBindings >> remove: aTypeVariable [
 ]
 
 { #category : #accessing }
-TypTypeVariableBindings >> size [
+TypTypeVariableScope >> size [
 	^ bindings size
 ]
 
 { #category : #accessing }
-TypTypeVariableBindings >> variables [
+TypTypeVariableScope >> variables [
 	^ bindings keys asSet
 ]

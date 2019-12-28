@@ -13,10 +13,10 @@ TypShaPhaSystemDictionary class >> shadowedClass [
 TypShaPhaSystemDictionary >> asType: aClass [
 	^ aClass typAsNamedType
 		initializeSuperTypeWithBindings:
-			{('@B' typAsType -> Symbol typAsType).
-			('@A' typAsType
+			{('@B' -> Symbol typAsType).
+			('@A'
 				->
 					{Class typAsType.
-					TypUnknownType instance} typAsType)} typAsTypeVariableBindings;
+					TypUnknownType instance} typAsType)} asDictionary;
 		yourself
 ]

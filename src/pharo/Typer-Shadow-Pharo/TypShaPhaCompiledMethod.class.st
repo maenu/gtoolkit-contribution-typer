@@ -15,7 +15,7 @@ TypShaPhaCompiledMethod >> ___assignmentNodes [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Collection typAsType
-				copyWithBindings: {('@A' typAsType -> RBAssignmentNode typAsType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A'  -> RBAssignmentNode typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -56,7 +56,7 @@ TypShaPhaCompiledMethod >> ___pragmas [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
-				copyWithBindings: {('@A' typAsType -> Pragma typAsType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> Pragma typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -90,6 +90,6 @@ TypShaPhaCompiledMethod >> asType: aClass [
 		typAsFunctionTypeWithArguments: {}
 		result: TypUnknownType instance
 		argumentsOptional: false)
-		initializeSuperTypeWithBindings: {('@A' typAsType -> Integer typAsType)} typAsTypeVariableBindings;
+		initializeSuperTypeWithBindings: {('@A' -> Integer typAsType)} asDictionary;
 		yourself
 ]

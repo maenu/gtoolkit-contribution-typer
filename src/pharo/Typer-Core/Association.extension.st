@@ -12,6 +12,6 @@ Association >> typSelfType [
 						copyWithBindings:
 							{((type_ parameters at: 1) -> key typSelfType).
 							((type_ parameters at: 2) -> value typSelfType)}
-								typAsTypeVariableBindings ] ].
+								asDictionary. ] ].
 	^ type
 ]

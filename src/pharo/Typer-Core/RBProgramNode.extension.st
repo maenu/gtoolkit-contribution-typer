@@ -21,7 +21,7 @@ RBProgramNode >> typAnnotateType: aType [
 						ifTrue: [ type := type_
 								copyWithBindings:
 									(type_ parameters withIndexCollect: [ :f :i | f -> (bindings at: i) ])
-										typAsTypeVariableBindings ]
+										asDictionary ]
 						ifFalse: [ self flag: 'log or do nothing?' ] ]
 				ifFalse: [ self flag: 'log or do nothing?' ] ]
 		ifNone: [  ].

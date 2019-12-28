@@ -2,7 +2,8 @@ Class {
 	#name : #TypTypeVariableType,
 	#superclass : #TypType,
 	#instVars : [
-		'name'
+		'name',
+		'type'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -24,15 +25,27 @@ TypTypeVariableType class >> named: aString superType: aType [
 		yourself
 ]
 
+{ #category : #'instance creation' }
+TypTypeVariableType class >> named: aString type: aType [
+	<typTypeArgument: 1 as: 'String'>
+	<typTypeArgument: 2 as: 'TypType'>
+	^ (self named: aString)
+		type: aType;
+		yourself
+]
+
 { #category : #comparing }
 TypTypeVariableType >> = anObject [
 	^ anObject == self
-		or: [ anObject class = self class and: [ (anObject "typCastAs TypTypeVariableType") name = name ] ]
+		or: [ anObject class = self class
+				and: [ anObject name = name
+						and: [ anObject superType = superType and: [ anObject type = type ] ] ] ]
 ]
 
 { #category : #comparing }
 TypTypeVariableType >> > aType [
 	^ superType >= aType
+		and: [ aType isTypeVariable not or: [ aType type >= type ] ]
 ]
 
 { #category : #accessing }
@@ -40,6 +53,7 @@ TypTypeVariableType >> assign: aType in: anotherType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeArgument: 2 as: 'TypType'>
 	<typTypeResultAs: 'TypType'>
+	self flag: 'TODO get rid off it'.
 	(anotherType isParametric
 		and:
 			[ (anotherType "typCastAs TypParametricType") bindings includes: self ])
@@ -52,18 +66,19 @@ TypTypeVariableType >> assign: aType in: anotherType [
 
 { #category : #'as yet unclassified' }
 TypTypeVariableType >> canUnderstand: aSymbol [
-	^ false
+	^ self superType canUnderstand: aSymbol
 ]
 
 { #category : #comparing }
 TypTypeVariableType >> hash [
-	^ name hash
+	^ (name hash bitXor: superType hash) bitXor: type hash
 ]
 
 { #category : #initialization }
 TypTypeVariableType >> initialize [
 	<typTypeVariable: 'name' as: 'String'>
 	<typTypeVariable: 'superType' as:'TypType'>
+	<typTypeVariable: 'type' as:'TypType'>
 	super initialize.
 	superType := Object typAsType
 ]
@@ -71,6 +86,7 @@ TypTypeVariableType >> initialize [
 { #category : #accessing }
 TypTypeVariableType >> initializeWithName: aString [
 	<typTypeArgument: 1 as: 'String'>
+	self assert: [ aString size > 1 ].
 	self assert: [ aString first = $@ ].
 	name := aString
 ]
@@ -82,7 +98,7 @@ TypTypeVariableType >> isTypeVariable [
 
 { #category : #'as yet unclassified' }
 TypTypeVariableType >> lookupSelector: aSymbol [
-	self shouldNotImplement
+	^ self superType lookupSelector: aSymbol
 ]
 
 { #category : #accessing }
@@ -100,10 +116,21 @@ TypTypeVariableType >> printOn: aStream [
 
 { #category : #accessing }
 TypTypeVariableType >> resolveIn: aType [
+	self flag: 'TODO get rid off it'.
 	(aType isParametric
 		and: [ (aType "typCastAs TypParametricType") bindings includes: self ])
 		ifTrue: [ ^ (aType "typCastAs TypParametricType") bindings at: self ].
 	^ aType hasSuperType
 		ifTrue: [ self resolveIn: aType superType ]
 		ifFalse: [ self ]
+]
+
+{ #category : #accessing }
+TypTypeVariableType >> type [
+	^ type
+]
+
+{ #category : #accessing }
+TypTypeVariableType >> type: anObject [
+	type := anObject
 ]

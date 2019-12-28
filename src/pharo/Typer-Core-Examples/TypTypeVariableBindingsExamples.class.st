@@ -361,7 +361,8 @@ TypTypeVariableBindingsExamples >> copyEmpty [
 TypTypeVariableBindingsExamples >> empty [
 	<gtExample>
 	| bindings |
-	bindings := TypTypeVariableBindings new.
+	self flag: 'TODO remove and replace'.
+	bindings := Dictionary new.
 	self assert: [ bindings isEmpty ].
 	self assert: [ bindings isNotEmpty not ].
 	self assert: [ bindings size = 0 ].

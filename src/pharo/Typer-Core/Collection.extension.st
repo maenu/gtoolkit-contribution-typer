@@ -12,11 +12,6 @@ Collection >> typAsType [
 ]
 
 { #category : #'*Typer-Core' }
-Collection >> typAsTypeVariableBindings [
-	^ self asDictionary typAsTypeVariableBindings
-]
-
-{ #category : #'*Typer-Core' }
 Collection >> typSelfType [
 	| type |
 	type := super typSelfType.
@@ -26,7 +21,7 @@ Collection >> typSelfType [
 					{((type parameters at: 1)
 						->
 							(self typSelfTypeSamples collect: [ :e | e class typAsType ])
-								typAsType)} typAsTypeVariableBindings ].
+								typAsType)} asDictionary ].
 	^ type
 ]
 

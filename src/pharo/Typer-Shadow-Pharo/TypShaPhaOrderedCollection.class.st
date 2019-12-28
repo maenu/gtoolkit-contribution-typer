@@ -12,7 +12,7 @@ TypShaPhaOrderedCollection class >> shadowedClass [
 { #category : #accessing }
 TypShaPhaOrderedCollection >> ___addFirst: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | a receiverType bindings at: '@A' typAsType ];
+		argumentTypes: [ :i :a :s :r | a receiverType at: '@A' ];
 		resultType: [ :a :s :r | a argumentTypes at: 1 ];
 		yourself
 ]
@@ -23,8 +23,8 @@ TypShaPhaOrderedCollection >> ___at: _a put: _b [
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ Integer typAsType ]
-				ifFalse: [ a receiverType bindings at: '@A' typAsType ] ];
-		resultType: [ :a :s :r | a receiverType bindings at: '@A' typAsType ];
+				ifFalse: [ a receiverType at: '@A' ] ];
+		resultType: [ :a :s :r | a receiverType at: '@A' ];
 		yourself
 ]
 
@@ -32,7 +32,7 @@ TypShaPhaOrderedCollection >> ___at: _a put: _b [
 TypShaPhaOrderedCollection >> ___removeLast [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | a receiverType bindings at: '@A' typAsType ];
+		resultType: [ :a :s :r | a receiverType at: '@A' ];
 		yourself
 ]
 

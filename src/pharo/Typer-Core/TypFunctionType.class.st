@@ -16,8 +16,10 @@ TypFunctionType class >> classDescription: aClassDescription argumentsSize: anIn
 		argumentsSize: anInteger
 		argumentsOptional: aBoolean
 		bindings:
-			(TypTypeVariableBindings
-				variables: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsTypeVariableType ]) asSet)
+			((0 to: anInteger)
+				collect:
+					[ :e | ('@' , e asString) -> ('@' , e asString) typAsTypeVariableType ])
+				asDictionary
 ]
 
 { #category : #accessing }
@@ -48,8 +50,10 @@ TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOption
 		argumentsSize: anInteger
 		argumentsOptional: aBoolean
 		bindings:
-			(TypTypeVariableBindings
-				variables: ((0 to: anInteger) collect: [ :e | ('@' , e asString) typAsTypeVariableType ]) asSet)
+			((0 to: anInteger)
+				collect:
+					[ :e | ('@' , e asString) -> ('@' , e asString) typAsTypeVariableType ])
+				asDictionary
 ]
 
 { #category : #accessing }
@@ -74,13 +78,9 @@ TypFunctionType class >> named: aString parameters: aSequenceableCollection bind
 
 { #category : #comparing }
 TypFunctionType >> = aType [
-	^ self == aType
-		or: [ self class = aType class
-				and: [ name = aType name
-						and: [ argumentsSize = aType argumentsSize
-								and: [ argumentsOptional = aType argumentsOptional
-										and:
-											[ parameters = aType parameters and: [ bindings = aType bindings ] ] ] ] ] ]
+	^ super = aType
+		and: [ argumentsSize = aType argumentsSize
+				and: [ argumentsOptional = aType argumentsOptional ] ]
 ]
 
 { #category : #comparing }
@@ -123,12 +123,15 @@ TypFunctionType >> argumentsSize [
 
 { #category : #converting }
 TypFunctionType >> asCompatibleWith: aType [
-	^ (aType isFunction
+	| copy |
+	(aType isFunction
 		and: [ argumentsSize = aType argumentsSize
-				and: [ argumentsOptional = aType argumentsOptional and: [ bindings variables = aType bindings variables ] ] ])
-		ifTrue:
-			[ self copyWithBindings: (bindings asCompatibleWith: aType bindings) ]
-		ifFalse: [ super asCompatibleWith: aType ]
+				and: [ argumentsOptional = aType argumentsOptional ] ])
+		ifFalse: [ ^ super asCompatibleWith: aType ].
+	copy := self copy.
+	bindings
+		keysAndValuesDo: [ :n :t | copy at: n put: (t asCompatibleWith: (aType at: n)) ].
+	^ copy
 ]
 
 { #category : #copying }

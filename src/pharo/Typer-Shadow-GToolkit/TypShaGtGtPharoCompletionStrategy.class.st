@@ -21,7 +21,7 @@ TypShaGtGtPharoCompletionStrategy >> ___actionsFor: _a at: _b [
 				ifFalse: [ Integer typAsType ] ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' typAsType -> GtCompletionAction typAsType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> GtCompletionAction typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -61,7 +61,7 @@ TypShaGtGtPharoCompletionStrategy >> ___selectorsForReceiver: _a matching: _b [
 				ifFalse: [ String typAsType ] ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' typAsType -> String typAsType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> String typAsType)} asDictionary ];
 		yourself
 ]
 

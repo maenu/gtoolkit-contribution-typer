@@ -15,7 +15,7 @@ TypShaPhaBehavior >> ___allSubclasses [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' typAsType -> Behavior typAsType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> Behavior typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -41,7 +41,7 @@ TypShaPhaBehavior >> ___classVarNames [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Set typAsType
-				copyWithBindings: {('@A' typAsType -> String typAsType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> String typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -91,7 +91,7 @@ TypShaPhaBehavior >> ___instVarNames [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' typAsType -> String typAsType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> String typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -124,7 +124,7 @@ TypShaPhaBehavior >> ___methods [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Collection typAsType
-				copyWithBindings: {('@A' typAsType -> CompiledMethod typAsType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> CompiledMethod typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -150,7 +150,7 @@ TypShaPhaBehavior >> ___selectors [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Collection typAsType
-				copyWithBindings: {('@A' typAsType -> Symbol typAsType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> Symbol typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -184,7 +184,7 @@ TypShaPhaBehavior >> ___withAllSuperclasses [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' typAsType -> ClassDescription typAsType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> ClassDescription typAsType)} asDictionary ];
 		yourself
 ]
 

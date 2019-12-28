@@ -15,9 +15,7 @@ TypShaPhaRBProgramNode >> ___allChildren [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			OrderedCollection typAsType
-				copyWithBindings:
-					{('@A' typAsTypeVariableType -> RBProgramNode typAsType)}
-						typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> RBProgramNode typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -26,7 +24,7 @@ TypShaPhaRBProgramNode >> ___assignmentNodes [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ SequenceableCollection typAsType
-				copyWithBindings: {('@A' typAsType -> RBAssignmentNode typAsType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> RBAssignmentNode typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -35,7 +33,7 @@ TypShaPhaRBProgramNode >> ___bestNodeFor: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			Interval typAsType
-				copyWithBindings: {('@A' typAsType -> Integer typAsType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> Integer typAsType)} asDictionary ];
 		resultType: [ :a :s :r | RBProgramNode typAsType asNullableType ];
 		yourself
 ]
@@ -46,7 +44,7 @@ TypShaPhaRBProgramNode >> ___children [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' typAsType -> RBProgramNode typAsType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> RBProgramNode typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -55,7 +53,7 @@ TypShaPhaRBProgramNode >> ___comments [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
-				copyWithBindings: {('@A' typAsType -> RBComment typAsType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> RBComment typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -73,7 +71,7 @@ TypShaPhaRBProgramNode >> ___instanceVariableWriteNodes [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Collection typAsType
-				copyWithBindings: {('@A' typAsType -> RBAssignmentNode typAsType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> RBAssignmentNode typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -179,7 +177,7 @@ TypShaPhaRBProgramNode >> ___parents [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' typAsType -> RBProgramNode typAsType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> RBProgramNode typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -303,7 +301,7 @@ TypShaPhaRBProgramNode >> ___variableWriteNodes [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Collection typAsType
-				copyWithBindings: {('@A' typAsType -> RBAssignmentNode typAsType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> RBAssignmentNode typAsType)} asDictionary ];
 		yourself
 ]
 

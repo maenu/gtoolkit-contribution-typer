@@ -7,12 +7,6 @@ Class {
 	#category : #'Typer-Core-Type'
 }
 
-{ #category : #accessing }
-TypType class >> initialize [
-	<typTypeVariable: #superType as: '{!,TypType}'>
-	super initialize
-]
-
 { #category : #comparing }
 TypType >> < aType [
 	<typTypeArgument: 1 as: 'TypType'>

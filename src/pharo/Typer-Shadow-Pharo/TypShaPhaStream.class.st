@@ -27,7 +27,7 @@ TypShaPhaStream >> ~~~<< _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			Collection typAsType
-				copyWithBindings: {('@A' typAsType -> (a receiverType bindings at: '@A' typAsType))} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> (a receiverType at: '@A'))} asDictionary ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

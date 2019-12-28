@@ -28,7 +28,7 @@ TypShaGtGtPharoProgramNode >> ___completionActionsFor: _a [
 		argumentTypes: [ :i :a :s :r | GtPharoCompletionStrategy typAsType ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' typAsType -> GtCompletionAction typAsType)} typAsTypeVariableBindings ];
+				copyWithBindings: {('@A' -> GtCompletionAction typAsType)} asDictionary ];
 		yourself
 ]
 

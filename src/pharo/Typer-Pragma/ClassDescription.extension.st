@@ -10,17 +10,17 @@ ClassDescription >> typPraAsClassDescriptionLookupResult [
 		detect: [ :e | e selector = #typParameters: ]
 		ifFound: [ :e | e arguments first typAsTypes ]
 		ifNone: [ {} ].
-	bindings := (parameters asSet collect: [ :e | e -> e ])
-		typAsTypeVariableBindings.
+	bindings := (parameters asSet collect: [ :e | e name -> e ])
+		asDictionary.
 	(pragmas select: [ :e | e selector = #typBind:to: ])
 		do: [ :e | 
 			bindings
-				at: e arguments first typAsType
+				at: e arguments first
 				put: e arguments second typAsType ].
 	superTypeBindings := ((pragmas
 		select: [ :e | e selector = #typBindSuper:to: ])
-		collect: [ :e | e arguments first typAsType -> e arguments second typAsType ])
-		typAsTypeVariableBindings.
+		collect: [ :e | e arguments first -> e arguments second typAsType ])
+		asDictionary.
 	(parameters isEmpty
 		and: [ bindings isEmpty and: [ superTypeBindings isEmpty ] ])
 		ifTrue: [ ^ nil ].
