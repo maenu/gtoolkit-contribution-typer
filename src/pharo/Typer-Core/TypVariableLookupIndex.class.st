@@ -39,7 +39,9 @@ TypVariableLookupIndex >> typeFor: aLookup [
 				ifFalse: [ ^ type ] ]
 				on: Error
 				do: [ :f | 
-					f logCr.
+					'---' traceCr.
+					f traceCr.
+					(f signalerContext stackOfSize: 10) do: #traceCr.
 					self flag: 'FIXME signal?' ] ].
 	^ TypUnknownType instance
 ]

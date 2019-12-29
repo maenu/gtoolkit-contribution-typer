@@ -36,6 +36,12 @@ TypType >> >= aType [
 ]
 
 { #category : #converting }
+TypType >> asCollection [
+	<typTypeResultAs: 'Collection<TypType>'>
+	^ { self }
+]
+
+{ #category : #converting }
 TypType >> asCompatibleWith: aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'TypType'>
@@ -63,6 +69,12 @@ TypType >> asNullableType [
 	<typTypeResultAs: 'TypType'>
 	^ {TypNilType instance.
 	self} typAsType
+]
+
+{ #category : #converting }
+TypType >> asUnionType [
+	<typTypeResultAs: 'TypUnionType'>
+	^ TypUnionType types: {self}
 ]
 
 { #category : #'as yet unclassified' }

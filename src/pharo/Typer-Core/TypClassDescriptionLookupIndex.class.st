@@ -58,7 +58,9 @@ TypClassDescriptionLookupIndex >> typeFor: aLookup [
 					type isUnknown not ]
 						on: Error
 						do: [ :f |
-							f logCr.
+							'---' traceCr.
+							f traceCr.
+							(f signalerContext stackOfSize: 10) do: #traceCr.
 							self flag: 'FIXME signal?'.
 							false ] ]
 				ifFound: #type

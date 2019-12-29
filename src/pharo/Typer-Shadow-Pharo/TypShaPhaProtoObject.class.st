@@ -33,7 +33,9 @@ TypShaPhaProtoObject >> ___ifNil: _a [
 				typAsFunctionTypeWithArguments: {}
 				result: TypUnknownType instance
 				argumentsOptional: false ];
-		resultType: [ :a :s :r | a receiverType asNonNullableType ];
+		resultType: [ :a :s :r | 
+			{a receiverType asNonNullableType.
+			a argumentTypes first result} typAsType ];
 		yourself
 ]
 
@@ -84,10 +86,10 @@ TypShaPhaProtoObject >> ___ifNotNil: _a [
 				result: TypUnknownType instance
 				argumentsOptional: true)} typAsType ];
 		resultType: [ :a :s :r | 
-			| argumentType argumentNode elementType |
+			| argumentType argumentNode |
 			argumentType := a argumentTypes at: 1.
 			argumentNode := a argumentNodes at: 1.
-			elementType := argumentType isFunction
+			argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
 						and: [ (argumentNode value isKindOf: Symbol)
@@ -95,14 +97,12 @@ TypShaPhaProtoObject >> ___ifNotNil: _a [
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new
-										receiverType: (a receiverType at: '@A');
+										receiverType: a receiverType;
 										selector: argumentNode value asSymbol;
 										argumentTypes: {};
 										argumentNodes: {};
 										yourself) ]
-						ifFalse: [ TypUnknownType instance ] ].
-			{a receiverType.
-			elementType} typAsType ];
+						ifFalse: [ TypUnknownType instance ] ] ];
 		yourself
 ]
 

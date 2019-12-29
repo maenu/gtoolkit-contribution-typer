@@ -143,7 +143,7 @@ TypParametricType >> hash [
 
 { #category : #initialization }
 TypParametricType >> initialize [
-	<typTypeVariable: 'parameters' as: 'SequenceableCollection<TypTypeVariableType>'>
+	<typTypeVariable: 'parameters' as: 'SequenceableCollection<String>'>
 	<typTypeVariable: 'bindings' as: 'Dictionary<String,TypType>'>
 	self flag: 'TODO how is shadowing of bindings handled?'.
 	super initialize.
@@ -154,8 +154,8 @@ TypParametricType >> initialize [
 TypParametricType >> initializeParameters: aSequenceableCollection bindings: aDictionary [
 	"Sets type to self on variables without type."
 
-	<typTypeArgument: 2 as: 'SequenceableCollection<String>'>
-	<typTypeArgument: 3 as: 'Dictionary<String,TypType>'>
+	<typTypeArgument: 1 as: 'SequenceableCollection<String>'>
+	<typTypeArgument: 2 as: 'Dictionary<String,TypType>'>
 	self assert: [ aSequenceableCollection isNotEmpty ].
 	self
 		assert: [ aSequenceableCollection asSet includesAll: aDictionary keys asSet ].

@@ -57,6 +57,11 @@ TypUnionType >> > aType [
 ]
 
 { #category : #converting }
+TypUnionType >> asCollection [
+	^ self types
+]
+
+{ #category : #converting }
 TypUnionType >> asNonNullableType [
 	^ (types includes: TypNilType instance)
 		ifTrue: [ (types copyWithout: TypNilType instance) typAsType ]

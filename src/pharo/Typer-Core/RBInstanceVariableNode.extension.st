@@ -14,6 +14,7 @@ RBInstanceVariableNode >> typHasDefiningClass [
 
 { #category : #'*Typer-Core' }
 RBInstanceVariableNode >> typTypeRecursive [
-	^ self methodNode methodClass typTypeForVariable: self name asSymbol
-	
+	^ self typIsAssignmentVariable
+			ifTrue: [ (self parent "typCastAs RBAssignmentNode") value typType ]
+			ifFalse: [ self methodNode methodClass typTypeForVariable: self name asSymbol ]
 ]

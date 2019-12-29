@@ -8,15 +8,16 @@ Class {
 TypShaVariableLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypVariableLookup'>
 	<typTypeResultAs: 'SequenceableCollection<TypVariableLookup>'>
-	^ (aLookup receiverType isNamed and: [ aLookup receiverType hasClassDescription ])
-		ifTrue: [ ((aLookup receiverType classDescription typShaShadows
-				collect: [ :e | e asVariableLookupResultFor: aLookup selector ])
+	^ (aLookup receiverType asCollection
+		select: [ :e | e isNamed and: [ e hasClassDescription ] ])
+		flatCollect: [ :e | 
+			((e classDescription typShaShadows
+				collect: [ :f | f asVariableLookupResultFor: aLookup selector ])
 				reject: #isNil)
-				do: [ :e | 
-					e copy
+				do: [ :f | 
+					f copy
 						lookup: aLookup;
 						resolvedBy: aLookup;
 						resolver: self;
 						yourself ] ]
-		ifFalse: [ #() ]
 ]

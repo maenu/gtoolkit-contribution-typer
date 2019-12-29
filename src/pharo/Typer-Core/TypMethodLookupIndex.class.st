@@ -39,7 +39,9 @@ TypMethodLookupIndex >> argumentTypeFor: aLookup at: anInteger [
 				ifFalse: [ ^ type ] ]
 				on: Error
 				do: [ :f | 
-					f logCr.
+					'---' traceCr.
+					f traceCr.
+					(f signalerContext stackOfSize: 10) do: #traceCr.
 					self flag: 'FIXME signal?' ] ].
 	^ TypUnknownType instance
 ]
@@ -54,7 +56,9 @@ TypMethodLookupIndex >> resultTypeFor: aLookup [
 				ifFalse: [ ^ type ] ]
 				on: Error
 				do: [ :f | 
-					f logCr.
+					'---' traceCr.
+					f traceCr.
+					(f signalerContext stackOfSize: 10) do: #traceCr.
 					self flag: 'FIXME signal?' ] ].
 	^ TypUnknownType instance
 ]
@@ -68,7 +72,9 @@ TypMethodLookupIndex >> signalsAlwaysFor: aLookup [
 			signalsAlways ifNotNil: [ ^ signalsAlways ] ]
 				on: Error
 				do: [ :f | 
-					f logCr.
+					'---' traceCr.
+					f traceCr.
+					(f signalerContext stackOfSize: 10) do: #traceCr.
 					self flag: 'FIXME signal?' ] ].
 	^ nil
 ]

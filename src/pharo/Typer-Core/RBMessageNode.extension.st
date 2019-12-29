@@ -44,7 +44,7 @@ RBMessageNode >> typSignalsAlways [
 RBMessageNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>
-	^ (self
+	^ self
 		propertyAt: #typTypeForArgument , anInteger asString
 		ifAbsentPut: [ | receiverType argumentTypes |
 			"need to set property to default to unknown on recursive calls"
@@ -53,27 +53,15 @@ RBMessageNode >> typTypeForArgumentAt: anInteger [
 				put: TypUnknownType instance.
 			receiverType := self typTypeForReceiver.
 			argumentTypes := self typTypesForArguments.
-			receiverType isUnion
-				ifTrue: [ ((receiverType "typCastAs TypUnionType") types
-						collect: [ :e | 
-							TypMethodLookupIndex instance
-								argumentTypeFor:
-									(TypMethodLookup new
-										receiverType: e;
-										selector: self selector asSymbol;
-										argumentTypes: argumentTypes;
-										argumentNodes: self arguments;
-										yourself)
-								at: anInteger ]) typAsType ]
-				ifFalse: [ TypMethodLookupIndex instance
-						argumentTypeFor:
-							(TypMethodLookup new
-								receiverType: receiverType;
-								selector: self selector asSymbol;
-								argumentTypes: argumentTypes;
-								argumentNodes: self arguments;
-								yourself)
-						at: anInteger ] ]) "typCastAs TypType"
+			TypMethodLookupIndex instance
+				argumentTypeFor:
+					(TypMethodLookup new
+						receiverType: receiverType;
+						selector: self selector asSymbol;
+						argumentTypes: argumentTypes;
+						argumentNodes: self arguments;
+						yourself)
+				at: anInteger ]	"typCastAs TypType"
 ]
 
 { #category : #'*Typer-Core' }
@@ -85,7 +73,7 @@ RBMessageNode >> typTypeForReceiver [
 { #category : #'*Typer-Core' }
 RBMessageNode >> typTypeForResult [
 	<typTypeResultAs: 'TypType'>
-	^ (self
+	^ self
 		propertyAt: #typTypeForResult
 		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
 			| receiverType argumentTypes |
@@ -97,25 +85,14 @@ RBMessageNode >> typTypeForResult [
 					[ receiverType asNonNullableType canUnderstand: self selector asSymbol ])
 				ifTrue: [ self flag: 'TODO flag as nil error, or let checker deal with it?'.
 					receiverType := receiverType asNonNullableType ].
-			receiverType isUnion
-				ifTrue: [ ((receiverType "typCastAs TypUnionType") types
-						collect: [ :e | 
-							TypMethodLookupIndex instance
-								resultTypeFor:
-									(TypMethodLookup new
-										receiverType: e;
-										selector: self selector asSymbol;
-										argumentTypes: argumentTypes;
-										argumentNodes: self arguments;
-										yourself) ]) typAsType ]
-				ifFalse: [ TypMethodLookupIndex instance
-						resultTypeFor:
-							(TypMethodLookup new
-								receiverType: receiverType;
-								selector: self selector asSymbol;
-								argumentTypes: argumentTypes;
-								argumentNodes: self arguments;
-								yourself) ] ]) "typCastAs TypType"
+			TypMethodLookupIndex instance
+				resultTypeFor:
+					(TypMethodLookup new
+						receiverType: receiverType;
+						selector: self selector asSymbol;
+						argumentTypes: argumentTypes;
+						argumentNodes: self arguments;
+						yourself) ]	"typCastAs TypType"
 ]
 
 { #category : #'*Typer-Core' }

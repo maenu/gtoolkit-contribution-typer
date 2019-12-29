@@ -7,4 +7,7 @@ Class {
 { #category : #'as yet unclassified' }
 TypVariableLookup >> emptyResult [
 	^ TypVariableLookupResult new
+		lookup: self;
+		resolvedBy: self;
+		yourself
 ]

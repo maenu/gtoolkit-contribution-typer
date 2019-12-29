@@ -27,3 +27,16 @@ TypShaPhaUndefinedObject >> ___ifNil: _a [
 				ifFalse: [ (a argumentTypes at: 1) result ] ];
 		yourself
 ]
+
+{ #category : #accessing }
+TypShaPhaUndefinedObject >> ___ifNotNil: _a [
+	^ TypMethodLookupResult new
+		argumentTypes: [ :i :a :s :r | 
+			{Symbol typAsType.
+			(BlockClosure
+				typAsFunctionTypeWithArguments: {a receiverType asNonNullableType}
+				result: TypUnknownType instance
+				argumentsOptional: true)} typAsType ];
+		resultType: [ :a :s :r | a receiverType ];
+		yourself
+]

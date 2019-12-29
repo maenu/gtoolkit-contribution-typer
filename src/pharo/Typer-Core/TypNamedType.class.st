@@ -97,9 +97,9 @@ TypNamedType >> initializeSuperTypeWithBindings: aDictionary [
 ]
 
 { #category : #initialization }
-TypNamedType >> initializeSuperTypeWithSomeBindings: aBindings [
-	<typTypeArgument: 1 as: 'TypTypeVariableBindings'>
-	superType := (self superType "typCastAs TypParametricType") copyWithSomeBindings: aBindings
+TypNamedType >> initializeSuperTypeWithSomeBindings: aDictionary [
+	<typTypeArgument: 1 as: 'Dictionary<String,TypType>'>
+	superType := (self superType "typCastAs TypParametricType") copyWithSomeBindings: aDictionary
 ]
 
 { #category : #accessing }
@@ -142,7 +142,6 @@ TypNamedType >> printOn: aStream [
 { #category : #accessing }
 TypNamedType >> superType [
 	self assert: [ self hasSuperType ].
-	superType ifNotNil: [ ^ superType ].
-	superType := self classDescription superclass typAsType.
-	^ superType
+	superType ifNotNil: [ :f | ^ f ].
+	^ superType := self classDescription superclass typAsType
 ]

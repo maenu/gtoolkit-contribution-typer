@@ -37,6 +37,9 @@ TypClassDescriptionLookup >> classDescription: anObject [
 { #category : #'as yet unclassified' }
 TypClassDescriptionLookup >> emptyResult [
 	^ TypClassDescriptionLookupResult new
+		lookup: self;
+		resolvedBy: self;
+		yourself
 ]
 
 { #category : #testing }

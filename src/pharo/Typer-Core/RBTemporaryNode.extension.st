@@ -25,12 +25,6 @@ RBTemporaryNode >> typAssignments [
 ]
 
 { #category : #'*Typer-Core' }
-RBTemporaryNode >> typIsAssignmentVariable [
-	^ self parent isAssignment
-		and: [ (self parent"typCastAs RBAssignmentNode") variable == self ]
-]
-
-{ #category : #'*Typer-Core' }
 RBTemporaryNode >> typIsDeclaration [
 	<typTypeResultAs: 'Boolean'>
 	^ self parent isSequence
