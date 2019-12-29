@@ -464,7 +464,7 @@ TypShaPhaCollection >> ___includes: _a [
 { #category : #accessing }
 TypShaPhaCollection >> ___includesAll: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | Halt once.a receiverType ];
+		argumentTypes: [ :i :a :s :r | a receiverType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]

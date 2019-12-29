@@ -88,6 +88,8 @@ TypUnionType >> hasSuperType [
 				ifEmpty: [ superType := self.
 					^ false ].
 			current := remains remove: remains anyOne.
+			(remains isEmpty and: [ current hasSuperType ])
+				ifTrue: [ current := current superType ].
 			[ remains isEmpty ]
 				whileFalse: [ | next common |
 					next := remains remove: remains anyOne.
@@ -100,7 +102,7 @@ TypUnionType >> hasSuperType [
 										ifFalse: [ current := common.
 											remains add: current ] ] ] ].
 			remains := Set with: current.
-			nil_
+			(nil_ and: [ (current >= TypNilType instance) not ])
 				ifTrue: [ remains add: TypNilType instance ].
 			unknown
 				ifTrue: [ remains add: TypUnknownType instance ].

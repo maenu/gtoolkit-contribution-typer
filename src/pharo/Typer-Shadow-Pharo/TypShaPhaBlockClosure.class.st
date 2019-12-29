@@ -25,10 +25,10 @@ TypShaPhaBlockClosure >> ___cull: _a cull: _b [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaBlockClosure >> ___cull: _a cull: _b cull: _c [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a | a receiverType parameters at: i ];
+		argumentTypes: [ :i :a | a receiverType arguments at: i ];
 		resultType: [ :a | a receiverType result ];
 		yourself
 ]
