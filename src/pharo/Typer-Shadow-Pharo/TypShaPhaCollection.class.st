@@ -464,7 +464,7 @@ TypShaPhaCollection >> ___includes: _a [
 { #category : #accessing }
 TypShaPhaCollection >> ___includesAll: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | a receiverType ];
+		argumentTypes: [ :i :a :s :r | s receiverType copyWithBindings: {'@A' -> (s receiverType at: '@A')} asDictionary ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]

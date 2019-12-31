@@ -31,7 +31,7 @@ TypExecutionOrderVisitor class >> typesFor: aNode in: anotherNode definer: yetAn
 { #category : #visiting }
 TypExecutionOrderVisitor >> initialize [
 	<typTypeVariable: 'node' as: 'RBTemporaryNode'>
-	<typTypeVariable: 'definer' as: '{!,RBMethodNode,RBBlockNode}'>
+	<typTypeVariable: 'definer' as: '{!,RBSequenceNode}'>
 	<typTypeVariable: 'types' as: 'OrderedCollection<TypType>'>
 	<typTypeVariable: 'stopped' as: 'Boolean'>
 	super initialize.

@@ -1,9 +1,6 @@
 Class {
 	#name : #TypLookupResolver,
 	#superclass : #Object,
-	#classInstVars : [
-		'empty'
-	],
 	#category : #'Typer-Core-Lookup'
 }
 

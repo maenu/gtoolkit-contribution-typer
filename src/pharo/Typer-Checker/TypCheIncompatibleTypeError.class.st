@@ -36,3 +36,13 @@ TypCheIncompatibleTypeError >> expected: anObject [
 	<typTypeArgument: 1 as: 'TypType'>
 	expected := anObject
 ]
+
+{ #category : #printing }
+TypCheIncompatibleTypeError >> printOn: aStream [
+	super printOn: aStream.
+	aStream nextPutAll: ' expected '.
+	expected printOn: aStream.
+	aStream nextPutAll: ', actual '.
+	actual printOn: aStream.
+	
+]

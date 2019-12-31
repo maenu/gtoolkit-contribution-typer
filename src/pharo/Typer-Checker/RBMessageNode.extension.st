@@ -9,22 +9,11 @@ RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 	actual := argument typType.
 	(expected isUnknown or: [ actual isUnknown ])
 		ifTrue: [ ^ self ].
-	expected >= actual asNonNullableType
+	expected asNonNullableType >= actual asNonNullableType
 		ifTrue: [ ^ self ].
 	(actual isFunction
-		and: [ argument isBlock
-				and: [ | block |
-					block := argument "typCastAs RBBlockNode".
-					(block body typSignalsAlways = true
-						or: [ block body lastIsReturn ])
-						and: [ | functions |
-							functions := expected isUnion
-								ifTrue:
-									[ ((expected "typCastAs TypUnionType") types select: [ :e | e isFunction ]) "typParameters TypFunctionType" ]
-								ifFalse: [ expected isFunction
-										ifTrue: [ {expected "typCastAs TypFunctionType"} ]
-										ifFalse: [ {} "typParameters TypFunctionType" ] ].
-							functions anySatisfy: [ :e | e typCheHasArgumentsCompatibleWithThoseOf: (actual "typCastAs TypFunctionType") ] ] ] ])
+		and: [ actual result isUnknown
+			or: [ argument isBlock and: [ argument body typSignalsAlways = true or: [ argument body lastIsReturn ] ] ] ])
 		ifTrue: [ ^ self ].
 	TypCheIncompatibleTypeError new
 		expected: expected;

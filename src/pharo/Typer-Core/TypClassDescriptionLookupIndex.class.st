@@ -34,7 +34,7 @@ TypClassDescriptionLookupIndex class >> instance [
 
 { #category : #initialization }
 TypClassDescriptionLookupIndex >> initialize [
-	<typTypeVariable: 'selector' as: 'IdentityDictionary<Symbol,TypType>'>
+	<typTypeVariable: 'index' as: 'IdentityDictionary<Symbol,TypType>'>
 	super initialize.
 	index := IdentityDictionary new
 ]
@@ -58,9 +58,7 @@ TypClassDescriptionLookupIndex >> typeFor: aLookup [
 					type isUnknown not ]
 						on: Error
 						do: [ :f |
-							'---' traceCr.
-							f traceCr.
-							(f signalerContext stackOfSize: 10) do: #traceCr.
+							self log: f.
 							self flag: 'FIXME signal?'.
 							false ] ]
 				ifFound: #type

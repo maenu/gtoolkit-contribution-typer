@@ -71,6 +71,22 @@ TypShaPhaDictionary >> ___at: _a [
 ]
 
 { #category : #accessing }
+TypShaPhaDictionary >> ___at: _a ifAbsent: _b [
+	^ TypMethodLookupResult new
+		argumentTypes: [ :i :a | 
+			i = 1
+				ifTrue: [ a receiverType at: '@B' ]
+				ifFalse: [ BlockClosure
+						typAsFunctionTypeWithArguments: {}
+						result: TypUnknownType instance
+						argumentsOptional: false ] ];
+		resultType: [ :a | 
+			{(a receiverType at: '@A').
+			a argumentTypes second result} typAsType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaDictionary >> ___at: _a ifAbsentPut: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 

@@ -11,8 +11,6 @@ Class {
 
 { #category : #accessing }
 TypMethodLookupResult >> argumentTypeAt: anInteger [
-	<typTypeArgument: 1 as: 'Integer'>
-	<typTypeResultAs: 'TypType'>
 	^ argumentTypes
 		cull: anInteger
 		cull: lookup
@@ -22,7 +20,6 @@ TypMethodLookupResult >> argumentTypeAt: anInteger [
 
 { #category : #accessing }
 TypMethodLookupResult >> argumentTypes: anObject [
-	<typTypeArgument: 1 as: 'BlockClosure[Integer,TypMethodLookup,TypMethodLookup,TypMethodLookupResult]->TypType'>
 	argumentTypes := anObject
 ]
 
@@ -31,6 +28,8 @@ TypMethodLookupResult >> initialize [
 	<typTypeVariable: 'argumentTypes' as: 'BlockClosure[Integer,TypMethodLookup,TypMethodLookup,TypMethodLookupResult]->TypType'>
 	<typTypeVariable: 'resultType' as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypMethodLookupResult]->TypType'>
 	<typTypeVariable: 'signalsAlways' as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypMethodLookupResult]->{!,Boolean}'>
+	<typTypeVariable: 'lookup' as: 'TypMethodLookup'>
+	<typTypeVariable: 'resolvedBy' as: 'TypMethodLookup'>
 	super initialize.
 	argumentTypes := [ TypUnknownType instance ].
 	resultType := [ TypUnknownType instance ].
@@ -39,24 +38,20 @@ TypMethodLookupResult >> initialize [
 
 { #category : #accessing }
 TypMethodLookupResult >> resultType [
-	<typTypeResultAs: 'TypType'>
 	^ resultType cull: lookup cull: resolvedBy cull: self
 ]
 
 { #category : #accessing }
 TypMethodLookupResult >> resultType: anObject [
-	<typTypeArgument: 1 as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypMethodLookupResult]->TypType'>
 	resultType := anObject
 ]
 
 { #category : #accessing }
 TypMethodLookupResult >> signalsAlways [
-	<typTypeResultAs: '{!,Boolean}'>
 	^ signalsAlways cull: lookup cull: resolvedBy cull: self
 ]
 
 { #category : #accessing }
 TypMethodLookupResult >> signalsAlways: anObject [
-	<typTypeArgument: 1 as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypMethodLookupResult]->{!,Boolean}'>
 	signalsAlways := anObject
 ]

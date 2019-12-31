@@ -31,7 +31,7 @@ RBMethodNode >> typCheHasIncompatibleArguments [
 				withIndexDo: [ :f :i | 
 					[ e typCheCheckArgumentCompatibilityAt: i ]
 						on: TypCheIncompatibleTypeError
-						do: [ ^ true ] ] ].
+						do: [ :g | g traceCr.^ true ] ] ].
 	^ false
 ]
 
