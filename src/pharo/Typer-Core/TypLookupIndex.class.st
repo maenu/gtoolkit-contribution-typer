@@ -40,9 +40,12 @@ TypLookupIndex >> initialize [
 
 { #category : #'logging-Deprecated' }
 TypLookupIndex >> log: anError [
+	<typTypeArgument: 1 as: 'Error'>
+	'>>>>>>>>>>>>>>' traceCr.
 	self traceCr.
 	anError traceCr.
-	(anError signalerContext stackOfSize: 25) do: #traceCr
+	(anError signalerContext stackOfSize: 25) do: #traceCr.
+	'<<<<<<<<<<<<<<' traceCr
 ]
 
 { #category : #initialization }

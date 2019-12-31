@@ -54,7 +54,6 @@ ClassDescription >> typAsParametricTypeWithParameters: aSequenceableCollection b
 
 { #category : #'*Typer-Core' }
 ClassDescription >> typAsType [
-	<typTypeResultAs: 'TypType'>
 	^ TypClassDescriptionLookupIndex instance
 		typeFor:
 			(TypClassDescriptionLookup new

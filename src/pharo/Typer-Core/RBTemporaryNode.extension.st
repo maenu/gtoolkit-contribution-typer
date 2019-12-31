@@ -3,11 +3,11 @@ Extension { #name : #RBTemporaryNode }
 { #category : #'*Typer-Core' }
 RBTemporaryNode >> typArguments [
 	<typTypeResultAs: 'Collection<RBTemporaryNode>'>
-	^ (self whoDefines: self name) allChildren
+	^ ((self whoDefines: self name) allChildren
 		select: [ :e | 
 			e isTemp
 				and: [ e name = self name
-						and: [ e parent isMessage and: [ e parent arguments anySatisfy: [ :f | f == e] ] ] ] ]
+						and: [ e parent isMessage and: [ (e parent "typCastAs RBMessageNode") arguments anySatisfy: [ :f | f == e] ] ] ] ]) "typParameters RBTemporaryNode"
 ]
 
 { #category : #'*Typer-Core' }

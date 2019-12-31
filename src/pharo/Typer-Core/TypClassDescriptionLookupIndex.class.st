@@ -50,8 +50,8 @@ TypClassDescriptionLookupIndex >> typeFor: aLookup [
 	<typTypeArgument: 1 as: 'TypClassDescriptionLookup'>
 	^ (index
 		at: aLookup classDescription name asSymbol
-		ifAbsentPut: [ (resolver resolve: aLookup)
-				detect: [ :e"typCastAs TypClassDescriptionLookupResult"
+		ifAbsentPut: [ ((resolver resolve: aLookup) "typParameters TypClassDescriptionLookupResult")
+				detect: [ :e
 					 | 
 					[ | type |
 					type := e type.
@@ -62,5 +62,5 @@ TypClassDescriptionLookupIndex >> typeFor: aLookup [
 							self flag: 'FIXME signal?'.
 							false ] ]
 				ifFound: #type
-				ifNone: [ TypUnknownType instance ] ]) "typCastAs TypType"
+				ifNone: [ TypUnknownType instance ] ])
 ]
