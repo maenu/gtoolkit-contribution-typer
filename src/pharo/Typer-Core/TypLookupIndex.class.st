@@ -12,7 +12,8 @@ Class {
 
 { #category : #accessing }
 TypLookupIndex class >> instance [
-	^ self subclassResponsibility
+	<typTypeResultAs: 'TypLookupIndex'>
+	self subclassResponsibility
 ]
 
 { #category : #initialization }
@@ -39,11 +40,13 @@ TypLookupIndex >> initialize [
 ]
 
 { #category : #'logging-Deprecated' }
-TypLookupIndex >> log: anError [
+TypLookupIndex >> log: anError for: aLookup [
 	<typTypeArgument: 1 as: 'Error'>
+	<typTypeArgument: 2 as: 'TypLookup'>
 	'>>>>>>>>>>>>>>' traceCr.
 	self traceCr.
 	anError traceCr.
+	aLookup traceCr.
 	(anError signalerContext stackOfSize: 25) do: #traceCr.
 	'<<<<<<<<<<<<<<' traceCr
 ]

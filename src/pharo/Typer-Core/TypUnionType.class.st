@@ -192,7 +192,7 @@ TypUnionType >> printOn: aStream [
 { #category : #accessing }
 TypUnionType >> superType [
 	self assert: [ self hasSuperType ].
-	^ superType
+	^ superType "typCastAs TypType"
 ]
 
 { #category : #accessing }

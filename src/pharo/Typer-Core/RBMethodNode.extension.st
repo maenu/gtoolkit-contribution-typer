@@ -31,6 +31,7 @@ RBMethodNode >> typTemporaryProfile [
 RBMethodNode >> typTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>
+	self assert: [ compilationContext isNotNil ].
 	^ TypMethodLookupIndex instance
 		argumentTypeFor:
 			(TypMethodLookup new
@@ -54,13 +55,14 @@ RBMethodNode >> typTypeForArgumentNamed: aString [
 { #category : #'*Typer-Core' }
 RBMethodNode >> typTypeForResult [
 	<typTypeResultAs: 'TypType'>
+	self assert: [ compilationContext isNotNil ].
 	^ TypMethodLookupIndex instance
 		resultTypeFor:
 			(TypMethodLookup new
 				receiverType: self methodClass typAsType;
 				selector: self selector asSymbol;
 				argumentTypes: self typTypesForArguments;
-				argumentNodes: (self arguments);
+				argumentNodes: self arguments;
 				yourself)
 ]
 

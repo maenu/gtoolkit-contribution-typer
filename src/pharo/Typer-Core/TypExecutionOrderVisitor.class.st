@@ -87,7 +87,7 @@ TypExecutionOrderVisitor >> visitBlockNode: aBlockNode [
 
 	stopped
 		ifFalse: [ self visitArgumentNodes: aBlockNode arguments.
-			types addAll: (self class typesFor: node in: aBlockNode body definer: nil) ]
+			types addAll: (self class typesFor: node in: aBlockNode body definer: (node whoDefines: node name)) ]
 ]
 
 { #category : #visiting }

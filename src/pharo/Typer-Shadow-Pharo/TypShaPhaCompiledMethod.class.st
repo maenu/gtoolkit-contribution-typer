@@ -83,13 +83,3 @@ TypShaPhaCompiledMethod >> ___sourceCode [
 		resultType: [ :a :s :r | String typAsType ];
 		yourself
 ]
-
-{ #category : #'as yet unclassified' }
-TypShaPhaCompiledMethod >> asType: aClass [
-	^ (aClass
-		typAsFunctionTypeWithArguments: {}
-		result: TypUnknownType instance
-		argumentsOptional: false)
-		initializeSuperTypeWithBindings: {('@A' -> Integer typAsType)} asDictionary;
-		yourself
-]

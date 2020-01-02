@@ -31,6 +31,7 @@ TypMethodLookupIndex class >> instance [
 
 { #category : #accessing }
 TypMethodLookupIndex >> argumentTypeFor: aLookup at: anInteger [
+	<typTypeArgument: 1 as: 'TypLookup'>
 	(resolver resolve: aLookup)
 		do: [ :e "typCastAs TypMethodLookupResult" | 
 			[ | type |
@@ -39,13 +40,14 @@ TypMethodLookupIndex >> argumentTypeFor: aLookup at: anInteger [
 				ifFalse: [ ^ type ] ]
 				on: Error
 				do: [ :f | 
-					self log: f.
+					self log: f for: aLookup.
 					self flag: 'FIXME signal?' ] ].
 	^ TypUnknownType instance
 ]
 
 { #category : #accessing }
 TypMethodLookupIndex >> resultTypeFor: aLookup [
+	<typTypeArgument: 1 as: 'TypLookup'>
 	(resolver resolve: aLookup)
 		do: [ :e "typCastAs TypMethodLookupResult" | 
 			[ | type |
@@ -54,7 +56,7 @@ TypMethodLookupIndex >> resultTypeFor: aLookup [
 				ifFalse: [ ^ type ] ]
 				on: Error
 				do: [ :f | 
-					self log: f.
+					self log: f for: aLookup.
 					self flag: 'FIXME signal?' ] ].
 	^ TypUnknownType instance
 ]
@@ -68,7 +70,7 @@ TypMethodLookupIndex >> signalsAlwaysFor: aLookup [
 			signalsAlways ifNotNil: [ ^ signalsAlways ] ]
 				on: Error
 				do: [ :f | 
-					self log: f.
+					self log: f for: aLookup.
 					self flag: 'FIXME signal?' ] ].
 	^ nil
 ]
