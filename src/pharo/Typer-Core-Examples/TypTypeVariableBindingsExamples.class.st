@@ -5,20 +5,6 @@ Class {
 }
 
 { #category : #accessing }
-TypTypeVariableBindingsExamples >> addAll [
-	<gtExample>
-	| empty |
-	empty := self empty.
-	empty addAll: self bindVariable.
-	self assert: [ empty = self bindVariable ].
-	empty addAll: self bindVariableBackward .
-	self assert: [ empty = self bindVariableBackward ].
-	empty addAll: self bindNonVariableBackward .
-	self assert: [ empty = self bindNonVariableBackward ].
-	^ empty
-]
-
-{ #category : #accessing }
 TypTypeVariableBindingsExamples >> asCompatibleWithBindNonVariableBackward [
 	<gtExample>
 	self
@@ -91,16 +77,6 @@ TypTypeVariableBindingsExamples >> asCompatibleWithEmpty [
 		assert: [ self empty asCompatibleWith: self bindNonVariableBackward ]
 		signals: AssertionFailure.
 	^ self empty
-]
-
-{ #category : #asserting }
-TypTypeVariableBindingsExamples >> assert: aBlock signals: aClass [
-	| signaled |
-	signaled := false.
-	aBlock
-		on: aClass
-		do: [ signaled := true ].
-	self assert: signaled
 ]
 
 { #category : #'as yet unclassified' }

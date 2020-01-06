@@ -79,7 +79,7 @@ TypTypeVariableType >> initialize [
 	<typTypeVariable: 'superType' as:'TypType'>
 	<typTypeVariable: 'type' as:'TypType'>
 	super initialize.
-	superType := Object typAsType
+	superType := ProtoObject typAsType
 ]
 
 { #category : #accessing }
@@ -108,7 +108,7 @@ TypTypeVariableType >> name [
 { #category : #printing }
 TypTypeVariableType >> printOn: aStream [
 	aStream nextPutAll: name asString.
-	superType = Object typAsType
+	superType = ProtoObject typAsType
 		ifFalse: [ aStream nextPutAll: '<='.
 			superType printOn: aStream ]
 ]

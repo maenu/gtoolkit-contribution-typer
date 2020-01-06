@@ -127,6 +127,15 @@ TypTypeExamples >> isParametric [
 ]
 
 { #category : #testing }
+TypTypeExamples >> isTypeVariable [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isTypeVariable not.
+	^ type
+]
+
+{ #category : #testing }
 TypTypeExamples >> isUnion [
 	<gtExample>
 	| type |
