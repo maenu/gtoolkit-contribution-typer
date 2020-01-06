@@ -11,7 +11,7 @@ Class {
 TypTypeVariableType class >> named: aString [
 	<typTypeArgument: 1 as: 'String'>
 	^ self new
-		initializeWithName: aString;
+		initializeName: aString;
 		yourself
 ]
 
@@ -72,7 +72,7 @@ TypTypeVariableType >> initialize [
 ]
 
 { #category : #accessing }
-TypTypeVariableType >> initializeWithName: aString [
+TypTypeVariableType >> initializeName: aString [
 	<typTypeArgument: 1 as: 'String'>
 	self assert: [ aString size > 1 ].
 	self assert: [ aString first = $@ ].

@@ -35,7 +35,7 @@ TypUnionType class >> asTypes: aCollection [
 TypUnionType class >> types: aCollection [
 	<typTypeArgument: 1 as: 'Collection<TypType>'>
 	^ self new
-		initializeWithTypes: (self asTypes: aCollection);
+		initializeTypes: (self asTypes: aCollection);
 		yourself
 ]
 
@@ -122,7 +122,7 @@ TypUnionType >> initialize [
 ]
 
 { #category : #accessing }
-TypUnionType >> initializeWithTypes: anObject [
+TypUnionType >> initializeTypes: anObject [
 	<typTypeArgument: 1 as: 'Set<TypType>'>
 	self
 		assert: [ | types_ |

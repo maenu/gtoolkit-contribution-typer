@@ -21,7 +21,7 @@ TypNamedType class >> classDescription: aClassDescription [
 TypNamedType class >> named: aString [
 	<typTypeArgument: 1 as: 'String'>
 	^ self new
-		initializeWithName: aString;
+		initializeName: aString;
 		yourself
 ]
 
@@ -78,9 +78,16 @@ TypNamedType >> hash [
 { #category : #initialization }
 TypNamedType >> initialize [
 	<typTypeVariable: 'name' as: 'String'>
-	<typTypeVariable: 'classDescription' as: 'ClassDescription'>
+	<typTypeVariable: 'classDescription' as: '{!,ClassDescription}'>
 	<typTypeVariable: 'hasClassDescription' as: '{!,Boolean}'>
 	super initialize
+]
+
+{ #category : #accessing }
+TypNamedType >> initializeName: anObject [
+	<typTypeArgument: 1 as: 'String'>
+	name := anObject.
+	hasClassDescription := nil
 ]
 
 { #category : #accessing }
@@ -89,13 +96,6 @@ TypNamedType >> initializeWithClassDescription: aClassDescription [
 	classDescription := aClassDescription.
 	name := classDescription name.
 	hasClassDescription := true
-]
-
-{ #category : #accessing }
-TypNamedType >> initializeWithName: anObject [
-	<typTypeArgument: 1 as: 'String'>
-	name := anObject.
-	hasClassDescription := nil
 ]
 
 { #category : #testing }

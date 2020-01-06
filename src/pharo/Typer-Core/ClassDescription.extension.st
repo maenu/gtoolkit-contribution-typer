@@ -4,7 +4,6 @@ Extension { #name : #ClassDescription }
 ClassDescription >> typAsFunctionTypeWithArguments: aCollection result: aType argumentsOptional: aBoolean [
 	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
 	<typTypeArgument: 2 as: 'TypType'>
-	<typTypeArgument: 3 as: 'Boolean'>
 	^ self
 		typAsFunctionTypeWithArgumentsSize: aCollection size
 		argumentsOptional: aBoolean
@@ -12,14 +11,6 @@ ClassDescription >> typAsFunctionTypeWithArguments: aCollection result: aType ar
 			({('@0' -> aType)}
 				, (aCollection withIndexCollect: [ :e :i | ('@' , i asString) -> e ]))
 				asDictionary
-]
-
-{ #category : #'*Typer-Core' }
-ClassDescription >> typAsFunctionTypeWithArgumentsSize: anInteger argumentsOptional: aBoolean [
-	^ TypFunctionType
-		classDescription: self
-		argumentsSize: anInteger
-		argumentsOptional: aBoolean
 ]
 
 { #category : #'*Typer-Core' }
@@ -33,7 +24,6 @@ ClassDescription >> typAsFunctionTypeWithArgumentsSize: anInteger argumentsOptio
 
 { #category : #'*Typer-Core' }
 ClassDescription >> typAsNamedType [
-	<typTypeResultAs: 'TypNamedType'>
 	^ TypNamedType classDescription: self
 ]
 
@@ -81,14 +71,12 @@ ClassDescription >> typAsType [
 
 { #category : #'*Typer-Core' }
 ClassDescription >> typTypeForVariable: aSymbol [
-	<typTypeArgument: 1 as: 'Symbol'>
-	<typTypeResultAs: 'TypType'>
 	| type |
 	type := self typAsType.
 	^ TypVariableLookupIndex instance
 		typeFor:
 			(TypVariableLookup new
 				receiverType: type;
-				selector: aSymbol asSymbol;
+				selector: aSymbol;
 				yourself)
 ]

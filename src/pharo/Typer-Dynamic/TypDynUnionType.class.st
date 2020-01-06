@@ -15,7 +15,7 @@ TypDynUnionType class >> types: aCollection [
 { #category : #'as yet unclassified' }
 TypDynUnionType class >> types: aCollection weights: anotherCollection [
 	^ self new
-		initializeWithTypes: (self asTypes: aCollection) weights: anotherCollection;
+		initializeTypes: (self asTypes: aCollection) weights: anotherCollection;
 		yourself
 ]
 
@@ -66,9 +66,9 @@ TypDynUnionType >> initialize [
 ]
 
 { #category : #accessing }
-TypDynUnionType >> initializeWithTypes: anObject weights: anotherObject [
+TypDynUnionType >> initializeTypes: anObject weights: anotherObject [
 	<typTypeArgument: 2 as: 'SequenceableCollection<TypType>'>
-	super initializeWithTypes: anObject.
+	super initializeTypes: anObject.
 	weights := anotherObject
 ]
 

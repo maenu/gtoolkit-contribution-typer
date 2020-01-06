@@ -8,15 +8,8 @@ Class {
 	#category : #'Typer-Core-Type'
 }
 
-{ #category : #'instance creation' }
-TypParametricType class >> classDescription: aClassDescription [
-	self shouldNotImplement
-]
-
 { #category : #accessing }
 TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection [
-	<typTypeArgument: 1 as: 'ClassDescription'>
-	<typTypeArgument: 2 as: 'SequenceableCollection<String>'>
 	^ self
 		classDescription: aClassDescription
 		parameters: aSequenceableCollection
@@ -25,19 +18,9 @@ TypParametricType class >> classDescription: aClassDescription parameters: aSequ
 
 { #category : #accessing }
 TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection bindings: aDictionary [
-	<typTypeArgument: 1 as: 'ClassDescription'>
-	<typTypeArgument: 2 as: 'SequenceableCollection<String>'>
-	<typTypeArgument: 3 as: 'Dictionary<String,TypType>'>
-	^ self new
-		initializeWithClassDescription: aClassDescription
-			parameters: aSequenceableCollection
-			bindings: aDictionary;
+	^ (self classDescription: aClassDescription)
+		initializeParameters: aSequenceableCollection bindings: aDictionary;
 		yourself
-]
-
-{ #category : #'instance creation' }
-TypParametricType class >> named: aString [
-	self shouldNotImplement
 ]
 
 { #category : #accessing }
@@ -50,10 +33,8 @@ TypParametricType class >> named: aString parameters: aSequenceableCollection [
 
 { #category : #accessing }
 TypParametricType class >> named: aString parameters: aSequenceableCollection bindings: aDictionary [
-	^ self new
-		initializeWithName: aString
-			parameters: aSequenceableCollection
-			bindings: aDictionary;
+	^ (self named: aString)
+		initializeParameters: aSequenceableCollection bindings: aDictionary;
 		yourself
 ]
 
@@ -108,17 +89,9 @@ TypParametricType >> copyWithBindings: aDictionary [
 	bindings_ := bindings copy
 		addAll: aDictionary;
 		yourself.
-	^ self hasClassDescription
-		ifTrue: [ self copy
-				initializeWithClassDescription: self classDescription
-					parameters: parameters
-					bindings: bindings_;
-				yourself ]
-		ifFalse: [ self copy
-				initializeWithName: name
-					parameters: parameters
-					bindings: bindings_;
-				yourself ]
+	^ self copy
+		initializeParameters: parameters bindings: bindings_;
+		yourself
 ]
 
 { #category : #comparing }
@@ -147,24 +120,7 @@ TypParametricType >> initializeParameters: aSequenceableCollection bindings: aDi
 	parameters
 		do: [ :e | 
 			(bindings includesKey: e)
-				ifFalse: [ bindings at: e put: e typAsTypeVariableType ] ].
-	superType := nil
-]
-
-{ #category : #accessing }
-TypParametricType >> initializeWithClassDescription: aClassDescription parameters: aSequenceableCollection bindings: aBindings [
-	self initializeWithClassDescription: aClassDescription.
-	self
-		initializeParameters: aSequenceableCollection
-		bindings: aBindings
-]
-
-{ #category : #accessing }
-TypParametricType >> initializeWithName: aString parameters: aSequenceableCollection bindings: aBindings [
-	self initializeWithName: aString.
-	self
-		initializeParameters: aSequenceableCollection
-		bindings: aBindings
+				ifFalse: [ bindings at: e put: e typAsTypeVariableType ] ]
 ]
 
 { #category : #testing }
