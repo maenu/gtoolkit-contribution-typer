@@ -26,7 +26,7 @@ TypParametricTypeExamples >> asTypeCompatibleWith [
 	self
 		assert:
 			(type asCompatibleWith: self typeSequenceableCollectionString)
-				= self typeSequenceableCollectionA.
+				= self typeSequenceableCollectionObject.
 	self
 		assert:
 			(type asCompatibleWith: self typeNotAClass)
