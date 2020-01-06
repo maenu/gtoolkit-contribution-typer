@@ -1,7 +1,7 @@
 Class {
 	#name : #TypParametricTypeExamples,
 	#superclass : #TypNamedTypeExamples,
-	#category : #'Typer-Core-Examples-Type'
+	#category : #'Typer-Core-Examples-OLD-Type'
 }
 
 { #category : #converting }

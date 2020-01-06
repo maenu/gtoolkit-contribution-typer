@@ -1,7 +1,7 @@
 Class {
 	#name : #TypUnionTypeExamples,
 	#superclass : #TypTypeExamples,
-	#category : #'Typer-Core-Examples-Type'
+	#category : #'Typer-Core-Examples-OLD-Type'
 }
 
 { #category : #converting }

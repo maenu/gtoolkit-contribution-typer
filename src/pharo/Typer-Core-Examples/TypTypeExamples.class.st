@@ -1,7 +1,7 @@
 Class {
 	#name : #TypTypeExamples,
 	#superclass : #Object,
-	#category : #'Typer-Core-Examples-Type'
+	#category : #'Typer-Core-Examples-OLD-Type'
 }
 
 { #category : #testing }
@@ -75,10 +75,7 @@ TypTypeExamples >> equality [
 { #category : #testing }
 TypTypeExamples >> hasSuperType [
 	<gtExample>
-	| type |
-	type := self type.
-	self assert: type hasSuperType not.
-	^ type
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -188,10 +185,7 @@ TypTypeExamples >> printOn [
 { #category : #accessing }
 TypTypeExamples >> superType [
 	<gtExample>
-	| type |
-	type := self type.
-	self assert: [ type superType ] signals: AssertionFailure.
-	^ type
+	self subclassResponsibility
 ]
 
 { #category : #'as yet unclassified' }

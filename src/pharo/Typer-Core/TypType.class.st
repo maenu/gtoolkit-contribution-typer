@@ -77,7 +77,7 @@ TypType >> asUnionType [
 	^ TypUnionType types: {self}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TypType >> canUnderstand: aSymbol [
 	<typTypeArgument: 1 as: 'Symbol'>
 	<typTypeResultAs: 'Boolean'>
@@ -114,7 +114,12 @@ TypType >> isNil [
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
+TypType >> isNoType [
+	^ false
+]
+
+{ #category : #testing }
 TypType >> isNullable [
 	^ self isNil
 ]
@@ -123,11 +128,6 @@ TypType >> isNullable [
 TypType >> isParametric [
 	<typTypeResultAs: 'Boolean'>
 	^ false
-]
-
-{ #category : #testing }
-TypType >> isType [
-	^ true
 ]
 
 { #category : #testing }

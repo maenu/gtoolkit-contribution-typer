@@ -23,8 +23,8 @@ TypNoType >> canUnderstand: aSymbol [
 ]
 
 { #category : #testing }
-TypNoType >> isType [
-	^ false
+TypNoType >> isNoType [
+	^ true
 ]
 
 { #category : #'as yet unclassified' }

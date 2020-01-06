@@ -1,7 +1,7 @@
 Class {
 	#name : #TypTypeVariableTypeExamples,
 	#superclass : #TypTypeExamples,
-	#category : #'Typer-Core-Examples-Type'
+	#category : #'Typer-Core-Examples-OLD-Type'
 }
 
 { #category : #converting }
@@ -124,20 +124,20 @@ TypTypeVariableTypeExamples >> type [
 
 { #category : #requirements }
 TypTypeVariableTypeExamples >> typeA [
-	^ '@A' typAsType
+	^ TypTypeVariableType named: '@A'
 ]
 
 { #category : #requirements }
 TypTypeVariableTypeExamples >> typeAInteger [
-	^ '@A<=Integer' typAsType
+	^ TypTypeVariableType named: '@A' superType: self typeInteger
 ]
 
 { #category : #requirements }
 TypTypeVariableTypeExamples >> typeAString [
-	^ '@A<=String' typAsType
+	^ TypTypeVariableType named: '@A' superType: self typeString
 ]
 
 { #category : #requirements }
 TypTypeVariableTypeExamples >> typeB [
-	^ '@B' typAsType
+	^ TypTypeVariableType named: '@B'
 ]

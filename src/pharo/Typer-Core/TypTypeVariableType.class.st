@@ -29,6 +29,7 @@ TypTypeVariableType class >> named: aString superType: aType [
 TypTypeVariableType class >> named: aString type: aType [
 	<typTypeArgument: 1 as: 'String'>
 	<typTypeArgument: 2 as: 'TypType'>
+	self flag: 'TODO remove?'.
 	^ (self named: aString)
 		type: aType;
 		yourself
@@ -79,6 +80,7 @@ TypTypeVariableType >> initialize [
 	<typTypeVariable: 'superType' as:'TypType'>
 	<typTypeVariable: 'type' as:'TypType'>
 	super initialize.
+	self flag: 'TODO make use of type, or drop it.'.
 	superType := ProtoObject typAsType
 ]
 

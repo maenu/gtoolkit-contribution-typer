@@ -1,7 +1,7 @@
 Class {
 	#name : #TypTypeVariableBindingsExamples,
 	#superclass : #Object,
-	#category : #'Typer-Core-Examples-Type'
+	#category : #'Typer-Core-Examples-OLD-Type'
 }
 
 { #category : #accessing }

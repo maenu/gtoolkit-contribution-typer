@@ -1,7 +1,7 @@
 Class {
 	#name : #TypUnknownTypeExamples,
 	#superclass : #TypTypeExamples,
-	#category : #'Typer-Core-Examples-Type'
+	#category : #'Typer-Core-Examples-OLD-Type'
 }
 
 { #category : #converting }
@@ -50,6 +50,15 @@ TypUnknownTypeExamples >> equality [
 	self assert: type = other.
 	self assert: type asNullableType hash ~= other hash.
 	self assert: type asNullableType ~= other.
+	^ type
+]
+
+{ #category : #testing }
+TypUnknownTypeExamples >> hasSuperType [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type hasSuperType not.
 	^ type
 ]
 
