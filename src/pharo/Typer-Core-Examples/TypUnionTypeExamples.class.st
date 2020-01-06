@@ -40,9 +40,9 @@ TypUnionTypeExamples >> hasSuperType [
 	self assert: self typeWithUnknown hasSuperType.
 	self assert: self typeWithUnknownAndNil hasSuperType.
 	self assert: self typeSmallIntegerAndTrue hasSuperType.
-	self assert: self typeWithNil superType hasSuperType not.
-	self assert: self typeWithUnknown superType hasSuperType not.
-	self assert: self typeWithUnknownAndNil superType hasSuperType not.
+	self assert: self typeWithNil superType hasSuperType.
+	self assert: self typeWithUnknown superType hasSuperType.
+	self assert: self typeWithUnknownAndNil superType hasSuperType.
 	^ type
 ]
 
@@ -94,14 +94,24 @@ TypUnionTypeExamples >> superType [
 					TypNilType instance} typAsType.
 	self assert: self typeSmallIntegerAndTrue superType = self typeObject.
 	self
-		assert: [ self typeWithNil superType superType ]
-		signals: AssertionFailure.
+		assert:
+			self typeWithNil superType superType
+				=
+					{Number typAsType.
+					TypNilType instance} typAsType.
 	self
-		assert: [ self typeWithUnknown superType superType ]
-		signals: AssertionFailure.
+		assert:
+			self typeWithUnknown superType superType
+				=
+					{Number typAsType.
+					TypUnknownType instance} typAsType.
 	self
-		assert: [ self typeWithUnknownAndNil superType superType ]
-		signals: AssertionFailure.
+		assert:
+			self typeWithUnknownAndNil superType superType
+				=
+					{Number typAsType.
+					TypUnknownType instance.
+					TypNilType instance} typAsType.
 	^ type
 ]
 

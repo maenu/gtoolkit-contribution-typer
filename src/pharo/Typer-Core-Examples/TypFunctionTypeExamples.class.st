@@ -21,36 +21,8 @@ TypFunctionTypeExamples >> asTypeCompatibleWith [
 				= Object typAsType.
 	self
 		assert:
-			(type asCompatibleWith: self typeOptionalArgumentVariableResult)
-				= Object typAsType.
-	self
-		assert:
-			(type asCompatibleWith: self typeNonOptionalArgumentVariableResult)
-				= Object typAsType.
-	self
-		assert:
 			(type asCompatibleWith: self typeNonOptionalTwoArguments)
 				= Object typAsType.
-	self
-		assert:
-			(self typeNonOptionalArgumentVariableResult
-				asCompatibleWith: self typeNonOptionalArgumentVariableResultBound)
-				= self typeNonOptionalArgumentVariableResult.
-	self
-		assert:
-			(self typeNonOptionalArgumentVariableResultBound
-				asCompatibleWith: self typeNonOptionalArgumentVariableResult)
-				= self typeNonOptionalArgumentVariableResult.
-	self
-		assert:
-			(self typeNonOptionalVariableArgument
-				asCompatibleWith: self typeNonOptionalVariableArgumentBound)
-				= self typeNonOptionalVariableArgument.
-	self
-		assert:
-			(self typeNonOptionalVariableArgument
-				asCompatibleWith: self typeNonOptionalVariableArgumentBound)
-				= self typeNonOptionalVariableArgument.
 	^ type
 ]
 
@@ -105,8 +77,6 @@ TypFunctionTypeExamples >> superType [
 	self
 		assert: self typeNonOptionalTwoArguments superType = Object typAsType.
 	self assert: self typeOptionalArgument superType = Object typAsType.
-	self
-		assert: self typeOptionalArgumentVariableResult superType = Object typAsType.
 	^ type
 ]
 
@@ -149,30 +119,6 @@ TypFunctionTypeExamples >> typeNonOptionalArgumentTrueResult [
 ]
 
 { #category : #'as yet unclassified' }
-TypFunctionTypeExamples >> typeNonOptionalArgumentVariableResult [
-	^ TypFunctionType
-		classDescription: BlockClosure
-		argumentsSize: 1
-		argumentsOptional: false
-		bindings:
-			{('@A' -> '@A' typAsType).
-			('@0' -> '@A' typAsType).
-			('@1' -> Integer typAsType)} asDictionary
-]
-
-{ #category : #'as yet unclassified' }
-TypFunctionTypeExamples >> typeNonOptionalArgumentVariableResultBound [
-	^ TypFunctionType
-		classDescription: BlockClosure
-		argumentsSize: 1
-		argumentsOptional: false
-		bindings:
-			{('@A' -> Boolean typAsType).
-			('@0' -> '@A' typAsType).
-			('@1' -> Integer typAsType)} asDictionary
-]
-
-{ #category : #'as yet unclassified' }
 TypFunctionTypeExamples >> typeNonOptionalTwoArguments [
 	^ TypFunctionType
 		classDescription: BlockClosure
@@ -182,30 +128,6 @@ TypFunctionTypeExamples >> typeNonOptionalTwoArguments [
 			{('@0' -> Boolean typAsType).
 			('@1' -> Integer typAsType).
 			('@2' -> Character typAsType)} asDictionary
-]
-
-{ #category : #'as yet unclassified' }
-TypFunctionTypeExamples >> typeNonOptionalVariableArgument [
-	^ TypFunctionType
-		classDescription: BlockClosure
-		argumentsSize: 1
-		argumentsOptional: false
-		bindings:
-			{('@A' -> '@A' typAsType).
-			('@0' -> Boolean typAsType).
-			('@1' -> '@A' typAsType)} asDictionary
-]
-
-{ #category : #'as yet unclassified' }
-TypFunctionTypeExamples >> typeNonOptionalVariableArgumentBound [
-	^ TypFunctionType
-		classDescription: BlockClosure
-		argumentsSize: 1
-		argumentsOptional: false
-		bindings:
-			{('@A' -> Integer typAsType).
-			('@0' -> Boolean typAsType).
-			('@1' -> '@A' typAsType)} asDictionary
 ]
 
 { #category : #'as yet unclassified' }
@@ -228,28 +150,4 @@ TypFunctionTypeExamples >> typeOptionalArgument [
 		bindings:
 			{('@0' -> Boolean typAsType).
 			('@1' -> Integer typAsType)} asDictionary
-]
-
-{ #category : #'as yet unclassified' }
-TypFunctionTypeExamples >> typeOptionalArgumentVariableResult [
-	^ TypFunctionType
-		classDescription: BlockClosure
-		argumentsSize: 1
-		argumentsOptional: true
-		bindings:
-			{('@A' -> '@A' typAsType).
-			('@0' -> '@A' typAsType).
-			('@1' -> Integer typAsType)} asDictionary
-]
-
-{ #category : #'as yet unclassified' }
-TypFunctionTypeExamples >> typeOptionalVariableArgument [
-	^ TypFunctionType
-		classDescription: BlockClosure
-		argumentsSize: 1
-		argumentsOptional: true
-		bindings:
-			{('@A' -> '@A' typAsType).
-			('@0' -> Boolean typAsType).
-			('@1' -> '@A' typAsType)} asDictionary
 ]
