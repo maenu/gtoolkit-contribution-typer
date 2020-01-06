@@ -38,6 +38,14 @@ ClassDescription >> typAsNamedType [
 ]
 
 { #category : #'*Typer-Core' }
+ClassDescription >> typAsNamedTypeWithSuperTypeBindings: aDictionary [
+	| type |
+	type := self typAsNamedType.
+	type superType: (type superType copyWithBindings: aDictionary).
+	^ type
+]
+
+{ #category : #'*Typer-Core' }
 ClassDescription >> typAsParametricTypeWithParameters: aSequenceableCollection [
 	^ TypParametricType
 		classDescription: self
@@ -50,6 +58,16 @@ ClassDescription >> typAsParametricTypeWithParameters: aSequenceableCollection b
 		classDescription: self
 		parameters: aSequenceableCollection
 		bindings: aBindings
+]
+
+{ #category : #'*Typer-Core' }
+ClassDescription >> typAsParametricTypeWithParameters: aSequenceableCollection bindings: aDictionary superTypeBindings: anotherDictionary [
+	| type |
+	type := self
+		typAsParametricTypeWithParameters: aSequenceableCollection
+		bindings: aDictionary.
+	type superType: (type superType copyWithBindings: anotherDictionary).
+	^ type
 ]
 
 { #category : #'*Typer-Core' }

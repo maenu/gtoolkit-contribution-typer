@@ -1,7 +1,7 @@
 Class {
 	#name : #TypFunctionTypeTestingExamples,
 	#superclass : #TypParametricTypeTestingExamples,
-	#category : #'Typer-Core-Examples-Type'
+	#category : #'Typer-Core-Examples-Type-Testing'
 }
 
 { #category : #testing }

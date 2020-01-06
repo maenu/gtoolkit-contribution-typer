@@ -135,26 +135,26 @@ TypFunctionType >> asCompatibleWith: aType [
 ]
 
 { #category : #copying }
-TypFunctionType >> copyWithBindings: aBindings [
+TypFunctionType >> copyWithBindings: aDictionary [
 	^ self hasClassDescription
 		ifTrue: [ self copy
 				initializeWithClassDescription: self classDescription
 					argumentsSize: argumentsSize
 					argumentsOptional: argumentsOptional
-					bindings: aBindings;
+					bindings: aDictionary;
 				yourself ]
 		ifFalse: [ self copy
 				initializeWithName: name
 					argumentsSize: argumentsSize
 					argumentsOptional: argumentsOptional
-					bindings: aBindings;
+					bindings: aDictionary;
 				yourself ]
 ]
 
 { #category : #copying }
 TypFunctionType >> copyWithResult: aType [
 	<typTypeArgument: 1 as: 'TypType'>
-	^ self copyWithSomeBindings: {('@0' -> aType)} asDictionary
+	^ self copyWithBindings: {('@0' -> aType)} asDictionary
 ]
 
 { #category : #comparing }

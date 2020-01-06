@@ -104,15 +104,10 @@ TypParametricType >> at: aString put: aType [
 TypParametricType >> copyWithBindings: aDictionary [
 	<typTypeArgument: 1 as: 'Dictionary<String,TypType>'>
 	| bindings_ |
-	bindings_ := (aDictionary associations
-		collect: [ :e | 
-			e key
-				->
-					((e value isTypeVariable and: [ e value type == self ])
-						ifTrue: [ e value copy
-								type: nil;
-								yourself ]
-						ifFalse: [ e value ]) ]) asDictionary.
+	self assert: [ parameters includesAll: aDictionary keys ].
+	bindings_ := bindings copy
+		addAll: aDictionary;
+		yourself.
 	^ self hasClassDescription
 		ifTrue: [ self copy
 				initializeWithClassDescription: self classDescription
@@ -124,16 +119,6 @@ TypParametricType >> copyWithBindings: aDictionary [
 					parameters: parameters
 					bindings: bindings_;
 				yourself ]
-]
-
-{ #category : #copying }
-TypParametricType >> copyWithSomeBindings: aDictionary [
-	<typTypeArgument: 1 as: 'Dictionary<String,TypType>'>
-	| bindings_ |
-	self assert: [ parameters includesAll: aDictionary keys ].
-	bindings_ := bindings copy.
-	aDictionary keysAndValuesDo: [ :n :t | bindings_ at: n put: t ].
-	^ self copyWithBindings: bindings_
 ]
 
 { #category : #comparing }
@@ -152,8 +137,6 @@ TypParametricType >> initialize [
 
 { #category : #accessing }
 TypParametricType >> initializeParameters: aSequenceableCollection bindings: aDictionary [
-	"Sets type to self on variables without type."
-
 	<typTypeArgument: 1 as: 'SequenceableCollection<String>'>
 	<typTypeArgument: 2 as: 'Dictionary<String,TypType>'>
 	self assert: [ aSequenceableCollection isNotEmpty ].
@@ -165,10 +148,6 @@ TypParametricType >> initializeParameters: aSequenceableCollection bindings: aDi
 		do: [ :e | 
 			(bindings includesKey: e)
 				ifFalse: [ bindings at: e put: e typAsTypeVariableType ] ].
-	bindings
-		do: [ :e | 
-			(e isTypeVariable and: [ e type isNil ])
-				ifTrue: [ e type: self ] ].
 	superType := nil
 ]
 
@@ -223,7 +202,7 @@ TypParametricType >> superType [
 	superType := super superType.
 	superType isParametric
 		ifTrue: [ superType := superType
-				copyWithSomeBindings:
+				copyWithBindings:
 					((bindings keys select: [ :e | superType parameters includes: e ])
 						collect: [ :e | e -> (self at: e) ]) asDictionary ].
 	^ superType

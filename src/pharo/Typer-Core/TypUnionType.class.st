@@ -190,12 +190,6 @@ TypUnionType >> printOn: aStream [
 ]
 
 { #category : #accessing }
-TypUnionType >> superType [
-	self assert: [ self hasSuperType ].
-	^ superType "typCastAs TypType"
-]
-
-{ #category : #accessing }
 TypUnionType >> types [
 	<typTypeResultAs: 'Set<TypType>'>
 	^ types copy

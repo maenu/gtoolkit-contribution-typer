@@ -95,7 +95,8 @@ TypShaPhaString >> ___translated [
 
 { #category : #converting }
 TypShaPhaString >> asType: aClass [
-	^ aClass typAsNamedType
-		initializeSuperTypeWithBindings: {('@A' -> Character typAsType)} asDictionary;
-		yourself
+	^ aClass == String
+		ifTrue: [ aClass
+				typAsNamedTypeWithSuperTypeBindings: {('@A' -> Character typAsType)} asDictionary ]
+		ifFalse: [ aClass typAsNamedType ]
 ]

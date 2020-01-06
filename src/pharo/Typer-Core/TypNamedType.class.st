@@ -47,25 +47,13 @@ TypNamedType >> canUnderstand: aSymbol [
 TypNamedType >> classDescription [
 	self assert: [ self hasClassDescription ].
 	^ classDescription
-		ifNil: [ classDescription := (name endsWith: ' class')
-				ifTrue: [ (name copyFrom: 1 to: name size - ' class' size) asClass classSide ]
-				ifFalse: [ (name endsWith: ' classTrait')
-						ifTrue: [ (name copyFrom: 1 to: name size - ' classTrait' size) asClass
-								classSide ]
-						ifFalse: [ name asClass ] ] ]
 ]
 
 { #category : #testing }
 TypNamedType >> hasClassDescription [
 	<typTypeResultAs: 'Boolean'>
 	^ hasClassDescription
-		ifNil: [ | clazz_ |
-			clazz_ := name.
-			(clazz_ endsWith: ' class')
-				ifTrue: [ clazz_ := name copyFrom: 1 to: name size - ' class' size ].
-			(clazz_ endsWith: ' classTrait')
-				ifTrue: [ clazz_ := name copyFrom: 1 to: name size - ' classTrait' size ].
-			hasClassDescription := [ clazz_ asClass.
+		ifNil: [ hasClassDescription := [ classDescription := (Character space split: name) first asClass.
 			true ]
 				on: NotFound
 				do: [ false ] ]
@@ -75,7 +63,11 @@ TypNamedType >> hasClassDescription [
 TypNamedType >> hasSuperType [
 	^ superType isNotNil
 		or: [ self hasClassDescription
-				and: [ self classDescription superclass isNotNil ] ]
+				and: [ self classDescription superclass
+						ifNil: [ false ]
+						ifNotNil: [ :e | 
+							superType := e typAsType.
+							true ] ] ]
 ]
 
 { #category : #comparing }
@@ -89,17 +81,6 @@ TypNamedType >> initialize [
 	<typTypeVariable: 'classDescription' as: 'ClassDescription'>
 	<typTypeVariable: 'hasClassDescription' as: '{!,Boolean}'>
 	super initialize
-]
-
-{ #category : #initialization }
-TypNamedType >> initializeSuperTypeWithBindings: aDictionary [
-	superType := (self superType "typCastAs TypParametricType") copyWithBindings: aDictionary
-]
-
-{ #category : #initialization }
-TypNamedType >> initializeSuperTypeWithSomeBindings: aDictionary [
-	<typTypeArgument: 1 as: 'Dictionary<String,TypType>'>
-	superType := (self superType "typCastAs TypParametricType") copyWithSomeBindings: aDictionary
 ]
 
 { #category : #accessing }
@@ -137,11 +118,4 @@ TypNamedType >> name [
 { #category : #printing }
 TypNamedType >> printOn: aStream [
 	aStream << name asString
-]
-
-{ #category : #accessing }
-TypNamedType >> superType [
-	self assert: [ self hasSuperType ].
-	superType ifNotNil: [ :f | ^ f ].
-	^ superType := self classDescription superclass typAsType
 ]

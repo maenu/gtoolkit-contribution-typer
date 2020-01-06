@@ -11,7 +11,8 @@ TypShaPhaByteArray class >> shadowedClass [
 
 { #category : #'as yet unclassified' }
 TypShaPhaByteArray >> asType: aClass [
-	^ aClass typAsNamedType
-		initializeSuperTypeWithBindings: {('@A' -> Integer typAsType)} asDictionary;
-		yourself
+	^ aClass == ByteArray
+		ifTrue: [ aClass
+				typAsNamedTypeWithSuperTypeBindings: {('@A' -> Integer typAsType)} asDictionary ]
+		ifFalse: [ aClass typAsNamedType ]
 ]

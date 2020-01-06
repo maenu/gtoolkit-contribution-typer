@@ -2,8 +2,7 @@ Class {
 	#name : #TypTypeVariableType,
 	#superclass : #TypType,
 	#instVars : [
-		'name',
-		'type'
+		'name'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -22,16 +21,6 @@ TypTypeVariableType class >> named: aString superType: aType [
 	<typTypeArgument: 2 as: 'TypType'>
 	^ (self named: aString)
 		superType: aType;
-		yourself
-]
-
-{ #category : #'instance creation' }
-TypTypeVariableType class >> named: aString type: aType [
-	<typTypeArgument: 1 as: 'String'>
-	<typTypeArgument: 2 as: 'TypType'>
-	self flag: 'TODO remove?'.
-	^ (self named: aString)
-		type: aType;
 		yourself
 ]
 
@@ -77,10 +66,8 @@ TypTypeVariableType >> hash [
 { #category : #initialization }
 TypTypeVariableType >> initialize [
 	<typTypeVariable: 'name' as: 'String'>
-	<typTypeVariable: 'superType' as:'TypType'>
-	<typTypeVariable: 'type' as:'TypType'>
+	<typTypeVariable: 'superType' as: 'TypType'>
 	super initialize.
-	self flag: 'TODO make use of type, or drop it.'.
 	superType := ProtoObject typAsType
 ]
 
@@ -125,14 +112,4 @@ TypTypeVariableType >> resolveIn: aType [
 	^ aType hasSuperType
 		ifTrue: [ self resolveIn: aType superType ]
 		ifFalse: [ self ]
-]
-
-{ #category : #accessing }
-TypTypeVariableType >> type [
-	^ type
-]
-
-{ #category : #accessing }
-TypTypeVariableType >> type: anObject [
-	type := anObject
 ]

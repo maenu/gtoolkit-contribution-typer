@@ -86,7 +86,6 @@ TypType >> canUnderstand: aSymbol [
 
 { #category : #testing }
 TypType >> hasSuperType [
-	<typTypeResultAs: 'Boolean'>
 	^ superType isNotNil
 ]
 

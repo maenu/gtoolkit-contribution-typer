@@ -13,10 +13,8 @@ ClassDescription >> typPraAsClassDescriptionLookupResult [
 	bindings := (parameters asSet collect: [ :e | e name -> e ])
 		asDictionary.
 	(pragmas select: [ :e | e selector = #typBind:to: ])
-		do: [ :e | 
-			bindings
-				at: e arguments first
-				put: e arguments second typAsType ].
+		do:
+			[ :e | bindings at: e arguments first put: e arguments second typAsType ].
 	superTypeBindings := ((pragmas
 		select: [ :e | e selector = #typBindSuper:to: ])
 		collect: [ :e | e arguments first -> e arguments second typAsType ])
@@ -28,20 +26,22 @@ ClassDescription >> typPraAsClassDescriptionLookupResult [
 		and: [ bindings isEmpty and: [ superTypeBindings isNotEmpty ] ])
 		ifTrue: [ ^ TypClassDescriptionLookupResult new
 				type: [ :a | 
-					a classDescription typAsNamedType
-						initializeSuperTypeWithBindings: superTypeBindings;
-						yourself ];
+					a classDescription
+						typAsNamedTypeWithSuperTypeBindings: superTypeBindings ];
 				yourself ].
 	^ superTypeBindings isEmpty
 		ifTrue: [ TypClassDescriptionLookupResult new
-				type:
-						[ :a | a classDescription typAsParametricTypeWithParameters: parameters bindings: bindings ];
+				type: [ :a | 
+					a classDescription
+						typAsParametricTypeWithParameters: parameters
+						bindings: bindings ];
 				yourself ]
 		ifFalse: [ TypClassDescriptionLookupResult new
 				type: [ :a | 
-					(a classDescription typAsParametricTypeWithParameters: parameters bindings: bindings)
-						initializeSuperTypeWithSomeBindings: superTypeBindings;
-						yourself ];
+					a classDescription
+						typAsParametricTypeWithParameters: parameters
+						bindings: bindings
+						superTypeBindings: superTypeBindings ];
 				yourself ]
 ]
 
