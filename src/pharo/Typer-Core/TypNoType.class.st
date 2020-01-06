@@ -19,7 +19,12 @@ TypNoType >> > aType [
 
 { #category : #'as yet unclassified' }
 TypNoType >> canUnderstand: aSymbol [
-	^false
+	^ false
+]
+
+{ #category : #copying }
+TypNoType >> copy [
+	^ self
 ]
 
 { #category : #testing }
