@@ -18,7 +18,7 @@ TypParametricType class >> classDescription: aClassDescription parameters: aSequ
 
 { #category : #accessing }
 TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection bindings: aDictionary [
-	^ (self classDescription: aClassDescription)
+	^ ((self classDescription: aClassDescription) "typCastAs TypParametricType")
 		initializeParameters: aSequenceableCollection bindings: aDictionary;
 		yourself
 ]

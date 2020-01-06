@@ -45,6 +45,7 @@ TypNamedType >> canUnderstand: aSymbol [
 
 { #category : #converting }
 TypNamedType >> classDescription [
+	<typTypeResultAs: 'ClassDescription'>
 	self assert: [ self hasClassDescription ].
 	^ classDescription
 ]
