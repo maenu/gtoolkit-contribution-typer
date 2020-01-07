@@ -64,6 +64,6 @@ ClassDescription >> typPraAsVariableLookupResultFor: aSymbol [
 		ifNone: [ ^ nil ].
 	type := pragma arguments second typAsType.
 	^ TypVariableLookupResult new
-		type: [ :r :a | type resolveIn: a receiverType ];
+		type: [ :a :s :r | type resolveIn: a receiverType ];
 		yourself
 ]

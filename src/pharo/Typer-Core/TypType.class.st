@@ -150,7 +150,7 @@ TypType >> isUnknown [
 { #category : #accessing }
 TypType >> lookupSelector: aSymbol [
 	<typTypeArgument: 1 as: 'Symbol'>
-	<typTypeResultAs: 'Set<CompiledMethod>'>
+	<typTypeResultAs: 'IdentitySet<CompiledMethod>'>
 	self subclassResponsibility
 ]
 

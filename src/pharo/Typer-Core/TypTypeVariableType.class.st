@@ -105,8 +105,11 @@ TypTypeVariableType >> printOn: aStream [
 { #category : #accessing }
 TypTypeVariableType >> resolveIn: aType [
 	self flag: 'TODO get rid off it'.
+	"self is special"
+	name = '@self'
+		ifTrue: [ ^ aType ].
 	aType isParametric
-		ifTrue: [ [ ^ aType at: self name ]
+		ifTrue: [ [ ^ aType at: name ]
 				on: KeyNotFound
 				do: [ "continue in super" ] ].
 	^ aType hasSuperType

@@ -17,12 +17,6 @@ TypGtTypeValueBodyStyler >> visitArrayNode: aNode [
 ]
 
 { #category : #visiting }
-TypGtTypeValueBodyStyler >> visitBlockNode: aNode [
-	super visitBlockNode: aNode.
-	self styleValueNode: aNode
-]
-
-{ #category : #visiting }
 TypGtTypeValueBodyStyler >> visitGlobalNode: aNode [
 	super visitGlobalNode: aNode.
 	self styleValueNode: aNode
@@ -37,12 +31,6 @@ TypGtTypeValueBodyStyler >> visitInstanceVariableNode: aNode [
 { #category : #visiting }
 TypGtTypeValueBodyStyler >> visitLiteralArrayNode: aNode [
 	super visitLiteralArrayNode: aNode.
-	self styleValueNode: aNode
-]
-
-{ #category : #visiting }
-TypGtTypeValueBodyStyler >> visitLiteralNode: aNode [
-	super visitLiteralNode: aNode.
 	self styleValueNode: aNode
 ]
 
@@ -66,18 +54,6 @@ TypGtTypeValueBodyStyler >> visitMethodNode: aNode [
 			{(TypGtTypeAttribute new
 				type_: aNode typTypeForResult;
 				yourself)}
-]
-
-{ #category : #visiting }
-TypGtTypeValueBodyStyler >> visitSelfNode: aNode [
-	super visitSelfNode: aNode.
-	self styleValueNode: aNode
-]
-
-{ #category : #visiting }
-TypGtTypeValueBodyStyler >> visitSuperNode: aNode [
-	super visitSuperNode: aNode.
-	self styleValueNode: aNode
 ]
 
 { #category : #visiting }

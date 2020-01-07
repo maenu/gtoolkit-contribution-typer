@@ -45,7 +45,7 @@ TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOption
 
 { #category : #accessing }
 TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
-	^ (self new named: aString)
+	^ (self named: aString)
 		initializeArgumentsSize: anInteger
 			argumentsOptional: aBoolean
 			bindings: aBindings;

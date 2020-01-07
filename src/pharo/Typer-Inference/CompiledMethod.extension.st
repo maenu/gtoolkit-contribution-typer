@@ -27,16 +27,15 @@ CompiledMethod >> typInfAsMethodLookupResult [
 		argumentTypes:
 			[ :i :a :s :r | argumentTypes at: i ifAbsent: [ TypUnknownType instance ] ].
 	method typIsReturnSelf
-		ifTrue: [ result resultType: [ :r :a | a receiverType ] ]
-		ifFalse: [ (self isAbstract or: [ method isPrimitive ])
-				ifTrue: [ nil ]
-				ifFalse: [ | lastIsReturn types |
-					lastIsReturn := method lastIsReturn.
+		ifTrue: [ result resultType: [ :a :s :r | a receiverType ] ]
+		ifFalse: [ (self isAbstract not and: [ method isPrimitive not ])
+				ifTrue: [ | types |
 					types := method typReturnNodes collect: #typType.
-					result
-						resultType: [ :r :a | 
-							lastIsReturn
-								ifTrue: [ types typAsType ]
-								ifFalse: [ (types , {a receiverType}) typAsType ] ] ] ].
+					method lastIsReturn
+						ifTrue: [ result
+								resultType: [ :a :s :r | types typAsType resolveIn: a receiverType ] ]
+						ifFalse: [ result
+								resultType:
+									[ :a :s :r | (types , {a receiverType}) typAsType resolveIn: a receiverType ] ] ] ].
 	^ result
 ]

@@ -2,5 +2,7 @@ Extension { #name : #RBSelfNode }
 
 { #category : #'*Typer-Core' }
 RBSelfNode >> typTypeRecursive [
-	^ self methodNode method methodClass typAsType
+	^ TypTypeVariableType
+		named: '@self'
+		superType: self methodNode method methodClass typAsType
 ]

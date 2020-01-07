@@ -103,7 +103,7 @@ TypNamedType >> isNamed [
 { #category : #'as yet unclassified' }
 TypNamedType >> lookupSelector: aSymbol [
 	self assert: [ self canUnderstand: aSymbol ].
-	^ Set with: (self classDescription lookupSelector: aSymbol)
+	^ IdentitySet with: (self classDescription lookupSelector: aSymbol)
 ]
 
 { #category : #accessing }

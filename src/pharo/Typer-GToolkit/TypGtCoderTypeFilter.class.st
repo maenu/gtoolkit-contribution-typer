@@ -2,18 +2,18 @@ Class {
 	#name : #TypGtCoderTypeFilter,
 	#superclass : #GtSearchMethodsFilter,
 	#instVars : [
-		'type',
-		'clazzes'
+		'type'
 	],
 	#category : #'Typer-GToolkit'
 }
 
 { #category : #testing }
 TypGtCoderTypeFilter >> includesMethod: aCompiledMethod [
-	<typTypeArgument: 1 as: 'CompiledMethod()->Object'>
+	<typTypeArgument: 1 as: 'CompiledMethod'>
 	<typTypeResultAs: 'Boolean'>
-	clazzes ifEmpty: [ ^ true ].
-	^ clazzes includes: aCompiledMethod methodClass
+	^ (type canUnderstand: aCompiledMethod selector)
+		and: [ (type lookupSelector: aCompiledMethod selector)
+				includes: aCompiledMethod ]
 ]
 
 { #category : #initialization }
@@ -31,8 +31,5 @@ TypGtCoderTypeFilter >> type [
 { #category : #accessing }
 TypGtCoderTypeFilter >> type: anObject [
 	<typTypeArgument: 1 as: 'TypType'>
-	type := anObject.
-	clazzes := (((type isUnion
-		ifTrue: [ (type "typCastAs TypUnionType") types ]
-		ifFalse: [ {type} ]) select: [ :e | e isNamed and: [ e hasClassDescription ] ]) flatCollect: [ :e | e classDescription withAllSuperclasses ]) asSet
+	type := anObject
 ]

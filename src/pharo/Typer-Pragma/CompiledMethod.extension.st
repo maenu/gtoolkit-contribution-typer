@@ -35,7 +35,7 @@ CompiledMethod >> typPraAsMethodLookupResult [
 		ifNotNil: [ signalsAlwaysPragma arguments first ].
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :r :a | (argumentTypes at: i) resolveIn: a receiverType ];
-		resultType: [ :r :a | resultType resolveIn: a receiverType ];
+		resultType: [ :a :s :r | resultType resolveIn: a receiverType ];
 		signalsAlways: [ signalsAlways ];
 		yourself
 ]
