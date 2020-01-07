@@ -5,7 +5,7 @@ RBBlockNode >> typTypeForArgumentAt: anInteger in: aContext [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>
 	| type |
-	type := self typType.
+	type := self typTypeIn: aContext.
 	(self parent isMessage and: [ (self parent "typCastAs RBMessageNode") receiver ~~ self ])
 		ifTrue: [ | i parent_ |
 			parent_ := self parent "typCastAs RBMessageNode".
