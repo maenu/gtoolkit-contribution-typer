@@ -78,6 +78,7 @@ TypParametricType >> at: aString [
 TypParametricType >> at: aString put: aType [
 	<typTypeArgument: 1 as: 'String'>
 	<typTypeArgument: 2 as: 'TypType'>
+	superType := nil. "must be nilled as change in binding might invalidate super type"
 	^ bindings at: aString put: aType
 ]
 
@@ -120,7 +121,8 @@ TypParametricType >> initializeParameters: aSequenceableCollection bindings: aDi
 	parameters
 		do: [ :e | 
 			(bindings includesKey: e)
-				ifFalse: [ bindings at: e put: e typAsTypeVariableType ] ]
+				ifFalse: [ bindings at: e put: e typAsTypeVariableType ] ].
+	superType := nil
 ]
 
 { #category : #testing }
@@ -159,7 +161,7 @@ TypParametricType >> superType [
 	superType isParametric
 		ifTrue: [ superType := superType
 				copyWithBindings:
-					((bindings keys select: [ :e | superType parameters includes: e ])
+					((bindings keys intersection: superType parameters)
 						collect: [ :e | e -> (self at: e) ]) asDictionary ].
 	^ superType
 ]

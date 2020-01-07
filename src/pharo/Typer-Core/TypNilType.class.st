@@ -46,7 +46,7 @@ TypNilType >> copy [
 { #category : #initialization }
 TypNilType >> initialize [
 	super initialize.
-	self initializeWithClassDescription: UndefinedObject
+	self initializeClassDescription: UndefinedObject
 ]
 
 { #category : #testing }

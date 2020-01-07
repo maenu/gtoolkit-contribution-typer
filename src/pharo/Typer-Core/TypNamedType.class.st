@@ -13,7 +13,7 @@ Class {
 TypNamedType class >> classDescription: aClassDescription [
 	<typTypeArgument: 1 as: 'ClassDescription'>
 	^ self new
-		initializeWithClassDescription: aClassDescription;
+		initializeClassDescription: aClassDescription;
 		yourself
 ]
 
@@ -64,11 +64,7 @@ TypNamedType >> hasClassDescription [
 TypNamedType >> hasSuperType [
 	^ superType isNotNil
 		or: [ self hasClassDescription
-				and: [ self classDescription superclass
-						ifNil: [ false ]
-						ifNotNil: [ :e | 
-							superType := e typAsType.
-							true ] ] ]
+				and: [ self classDescription superclass isNotNil ] ]
 ]
 
 { #category : #comparing }
@@ -85,18 +81,18 @@ TypNamedType >> initialize [
 ]
 
 { #category : #accessing }
-TypNamedType >> initializeName: anObject [
-	<typTypeArgument: 1 as: 'String'>
-	name := anObject.
-	hasClassDescription := nil
-]
-
-{ #category : #accessing }
-TypNamedType >> initializeWithClassDescription: aClassDescription [
+TypNamedType >> initializeClassDescription: aClassDescription [
 	<typTypeArgument: 1 as: 'ClassDescription'>
 	classDescription := aClassDescription.
 	name := classDescription name.
 	hasClassDescription := true
+]
+
+{ #category : #accessing }
+TypNamedType >> initializeName: anObject [
+	<typTypeArgument: 1 as: 'String'>
+	name := anObject.
+	hasClassDescription := nil
 ]
 
 { #category : #testing }
@@ -119,4 +115,11 @@ TypNamedType >> name [
 { #category : #printing }
 TypNamedType >> printOn: aStream [
 	aStream << name asString
+]
+
+{ #category : #accessing }
+TypNamedType >> superType [
+	self assert: [ self hasSuperType ].
+	^ superType
+		ifNil: [ superType := classDescription superclass typAsType ]
 ]
