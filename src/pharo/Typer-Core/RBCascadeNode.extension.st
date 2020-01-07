@@ -1,11 +1,11 @@
 Extension { #name : #RBCascadeNode }
 
 { #category : #'*Typer-Core' }
-RBCascadeNode >> typSignalsAlways [
-	^ self messages anySatisfy: [ :e | e typSignalsAlways = true ]
+RBCascadeNode >> typSignalsAlwaysIn: aContext [
+	^ self messages anySatisfy: [ :e | (e typSignalsAlwaysIn: aContext) = true ]
 ]
 
 { #category : #'*Typer-Core' }
-RBCascadeNode >> typTypeRecursive [
-	^ (self messages collect: #typType) last
+RBCascadeNode >> typTypeRecursiveIn: aContext [
+	^ (self messages collect: [ :e | e typTypeIn: aContext ]) last
 ]

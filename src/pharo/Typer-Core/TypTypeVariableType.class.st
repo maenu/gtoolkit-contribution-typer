@@ -107,7 +107,7 @@ TypTypeVariableType >> resolveIn: aType [
 	self flag: 'TODO get rid off it'.
 	"self is special"
 	name = '@self'
-		ifTrue: [ ^ aType ].
+		ifTrue: [ ^ superType ].
 	aType isParametric
 		ifTrue: [ [ ^ aType at: name ]
 				on: KeyNotFound

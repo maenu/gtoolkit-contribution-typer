@@ -1,7 +1,7 @@
 Extension { #name : #RBSuperNode }
 
 { #category : #'*Typer-Core' }
-RBSuperNode >> typTypeRecursive [
+RBSuperNode >> typTypeRecursiveIn: aContext [
 	^ TypTypeVariableType
 		named: '@super'
 		superType: self methodNode method methodClass typAsType superType

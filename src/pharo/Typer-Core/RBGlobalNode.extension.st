@@ -20,7 +20,7 @@ RBGlobalNode >> typHasDefiningClass [
 ]
 
 { #category : #'*Typer-Core' }
-RBGlobalNode >> typTypeRecursive [
+RBGlobalNode >> typTypeRecursiveIn: aContext [
 	self binding isGlobalClassNameBinding
 		ifTrue: [ ^ self binding value class typAsType ].
 	self typHasDefiningClass

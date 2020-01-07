@@ -1,13 +1,13 @@
 Extension { #name : #RBArrayNode }
 
 { #category : #'*Typer-Core' }
-RBArrayNode >> typTypeRecursive [
+RBArrayNode >> typTypeRecursiveIn: aContext [
 	| type |
 	type := Array typAsType.
 	(type isParametric and: [ type parameters size = 1 ])
 		ifTrue: [ type := type
 				copyWithBindings:
 					{((type parameters at: 1)
-						-> (self statements collect: #typType) typAsType)} asDictionary ].
+						-> (self statements collect: [ :e | e typTypeIn: aContext ]) typAsType)} asDictionary ].
 	^ type
 ]

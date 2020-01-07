@@ -1,7 +1,7 @@
 Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer-Core' }
-RBBlockNode >> typTypeForArgumentAt: anInteger [
+RBBlockNode >> typTypeForArgumentAt: anInteger in: aContext [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>
 	| type |
@@ -10,7 +10,7 @@ RBBlockNode >> typTypeForArgumentAt: anInteger [
 		ifTrue: [ | i parent_ |
 			parent_ := self parent "typCastAs RBMessageNode".
 			i := parent_ arguments detectIndex: [ :e | e == self ].
-			type := parent_ typTypeForArgumentAt: i.
+			type := parent_ typTypeForArgumentAt: i in: aContext.
 			type isUnion
 				ifTrue: [ type := ((type "typCastAs TypUnionType") types select: #isFunction) typAsType ] ].
 	(type isFunction and: [ anInteger <= (type "typCastAs TypFunctionType") arguments size ])
@@ -19,24 +19,24 @@ RBBlockNode >> typTypeForArgumentAt: anInteger [
 ]
 
 { #category : #'*Typer-Core' }
-RBBlockNode >> typTypeForArgumentNamed: aString [
+RBBlockNode >> typTypeForArgumentNamed: aString in: aContext [
 	<typTypeArgument: 1 as: 'String'>
 	<typTypeResultAs: 'TypType'>
 	| i |
 	i := self arguments detectIndex: [ :f | f name = aString ].
-	^ self typTypeForArgumentAt: i
+	^ self typTypeForArgumentAt: i in: aContext
 ]
 
 { #category : #'*Typer-Core' }
-RBBlockNode >> typTypeForResult [
+RBBlockNode >> typTypeForResultIn: aContext [
 	<typTypeResultAs: 'TypType'>
-	^ (self typType "typCastAs TypFunctionType") result
+	^ ((self typTypeIn: aContext) "typCastAs TypFunctionType") result
 ]
 
 { #category : #'*Typer-Core' }
-RBBlockNode >> typTypeRecursive [
+RBBlockNode >> typTypeRecursiveIn: aContext [
 	^ BlockClosure
-		typAsFunctionTypeWithArguments: (self arguments collect: #typType)
-		result: self body typType
+		typAsFunctionTypeWithArguments: (self arguments collect: [ :e | e typTypeIn: aContext ])
+		result: (self body typTypeIn: aContext)
 		argumentsOptional: false
 ]

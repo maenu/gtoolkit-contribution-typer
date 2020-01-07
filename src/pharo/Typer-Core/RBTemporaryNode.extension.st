@@ -33,21 +33,21 @@ RBTemporaryNode >> typIsDeclaration [
 ]
 
 { #category : #'*Typer-Core' }
-RBTemporaryNode >> typTypeRecursive [
+RBTemporaryNode >> typTypeRecursiveIn: aContext [
 	^ self typIsDeclaration
 		ifTrue: [ | type |
-			type := (self typAssignments collect: [ :e | e value typType ])
+			type := (self typAssignments collect: [ :e | e value typTypeIn: aContext ])
 				typAsType.
 			type isUnknown
 				ifTrue: [ type := (self typArguments
 						collect: [ :e | 
 							| i |
 							i := e parent arguments detectIndex: [ :f | f == e ].
-							e parent typTypeForArgumentAt: i ]) typAsType ].
+							e parent typTypeForArgumentAt: i in: aContext ]) typAsType ].
 					type isUnknown
 						ifTrue: [ type := ((self typAssigned select: [ :e | e variable typHasDefiningClass ]) collect: [ :e | e variable typDefiningClass typTypeForVariable: e variable name asSymbol ]) typAsType ].
 						type ]
 		ifFalse: [ self typIsAssignmentVariable
-				ifTrue: [ (self parent "typCastAs RBAssignmentNode") value typType ]
+				ifTrue: [ (self parent "typCastAs RBAssignmentNode") value typTypeIn: aContext ]
 				ifFalse: [ TypExecutionOrderVisitor typeForTemporary: self ] ]
 ]

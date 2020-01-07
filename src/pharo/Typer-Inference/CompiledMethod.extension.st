@@ -33,9 +33,9 @@ CompiledMethod >> typInfAsMethodLookupResult [
 					types := method typReturnNodes collect: #typType.
 					method lastIsReturn
 						ifTrue: [ result
-								resultType: [ :a :s :r | types typAsType resolveIn: a receiverType ] ]
+								resultType: [ :a :s :r | types typAsType "resolveIn: a receiverType" ] ]
 						ifFalse: [ result
 								resultType:
-									[ :a :s :r | (types , {a receiverType}) typAsType resolveIn: a receiverType ] ] ] ].
+									[ :a :s :r | (types , {a receiverType}) typAsType "resolveIn: a receiverType" ] ] ] ].
 	^ result
 ]

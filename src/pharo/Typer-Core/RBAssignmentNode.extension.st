@@ -1,11 +1,11 @@
 Extension { #name : #RBAssignmentNode }
 
 { #category : #'*Typer-Core' }
-RBAssignmentNode >> typSignalsAlways [
-	^ self value typSignalsAlways
+RBAssignmentNode >> typSignalsAlwaysIn: aContext [
+	^ self value typSignalsAlwaysIn: aContext
 ]
 
 { #category : #'*Typer-Core' }
-RBAssignmentNode >> typTypeRecursive [
-	^ self variable typType
+RBAssignmentNode >> typTypeRecursiveIn: aContext [
+	^ self variable typTypeIn: aContext
 ]
