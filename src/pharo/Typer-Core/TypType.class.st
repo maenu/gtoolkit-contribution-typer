@@ -164,7 +164,6 @@ TypType >> postCopy [
 TypType >> resolveIn: aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'TypType'>
-	self flag: 'TODO get rid of this?'.
 	^ self
 ]
 

@@ -42,12 +42,11 @@ TypTypeVariableType >> assign: aType in: anotherType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeArgument: 2 as: 'TypType'>
 	<typTypeResultAs: 'TypType'>
-	self flag: 'TODO get rid off it'.
 	(anotherType isParametric
 		and:
-			[ (anotherType "typCastAs TypParametricType") parameters includes: self name ])
+			[ (anotherType "typCastAs TypParametricType") parameters includes: name ])
 		ifTrue:
-			[ ^ (anotherType "typCastAs TypParametricType") at: self name put: aType ].
+			[ ^ (anotherType "typCastAs TypParametricType") at: name put: aType ].
 	^ anotherType hasSuperType
 		ifTrue: [ self assign: aType in: anotherType superType ]
 		ifFalse: [ self ]
@@ -104,14 +103,10 @@ TypTypeVariableType >> printOn: aStream [
 
 { #category : #accessing }
 TypTypeVariableType >> resolveIn: aType [
-	self flag: 'TODO get rid off it'.
-	"self is special"
 	name = '@self'
-		ifTrue: [ ^ superType ].
-	aType isParametric
-		ifTrue: [ [ ^ aType at: name ]
-				on: KeyNotFound
-				do: [ "continue in super" ] ].
+		ifTrue: [ ^ aType ].
+	(aType isParametric and: [ aType parameters includes: name ])
+		ifTrue: [ ^ aType at: name ].
 	^ aType hasSuperType
 		ifTrue: [ self resolveIn: aType superType ]
 		ifFalse: [ self ]
