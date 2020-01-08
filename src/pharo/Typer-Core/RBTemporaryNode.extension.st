@@ -1,30 +1,6 @@
 Extension { #name : #RBTemporaryNode }
 
 { #category : #'*Typer-Core' }
-RBTemporaryNode >> typArguments [
-	<typTypeResultAs: 'Collection<RBTemporaryNode>'>
-	^ ((self whoDefines: self name) allChildren
-		select: [ :e | 
-			e isTemp
-				and: [ e name = self name
-						and: [ e parent isMessage and: [ (e parent "typCastAs RBMessageNode") arguments anySatisfy: [ :f | f == e] ] ] ] ]) "typParameters RBTemporaryNode"
-]
-
-{ #category : #'*Typer-Core' }
-RBTemporaryNode >> typAssigned [
-	<typTypeResultAs: 'Collection<RBAssignmentNode>'>
-	^ (self whoDefines: self name) assignmentNodes
-		select: [ :e | e value isTemp and: [ e value name = self name ] ]
-]
-
-{ #category : #'*Typer-Core' }
-RBTemporaryNode >> typAssignments [
-	<typTypeResultAs: 'Collection<RBAssignmentNode>'>
-	^ (self whoDefines: self name) assignmentNodes
-		select: [ :e | e variable name = self name ]
-]
-
-{ #category : #'*Typer-Core' }
 RBTemporaryNode >> typIsDeclaration [
 	<typTypeResultAs: 'Boolean'>
 	^ self parent isSequence
@@ -36,18 +12,13 @@ RBTemporaryNode >> typIsDeclaration [
 RBTemporaryNode >> typTypeRecursiveIn: aContext [
 	^ self typIsDeclaration
 		ifTrue: [ | type |
-			type := (self typAssignments collect: [ :e | e value typTypeIn: aContext ])
-				typAsType.
+			type := self typInfTypeAssignedToIn: aContext.
 			type isUnknown
-				ifTrue: [ type := (self typArguments
-						collect: [ :e | 
-							| i |
-							i := e parent arguments detectIndex: [ :f | f == e ].
-							e parent typTypeForArgumentAt: i in: aContext ]) typAsType ].
-					type isUnknown
-						ifTrue: [ type := (self typAssigned collect: [ :e | e variable typType ]) typAsType ].
-						type ]
-		ifFalse: [ self typIsAssignmentVariable
+				ifTrue: [ type := self typInfTypeArgumentsIn: aContext ].
+			type isUnknown
+				ifTrue: [ type := self typInfTypeAssignedIn: aContext ].
+			type ]
+		ifFalse: [ self typIsAssignedTo
 				ifTrue: [ (self parent "typCastAs RBAssignmentNode") value typTypeIn: aContext ]
 				ifFalse: [ TypExecutionOrderVisitor typeForTemporary: self ] ]
 ]

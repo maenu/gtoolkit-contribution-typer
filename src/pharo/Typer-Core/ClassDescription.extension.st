@@ -68,15 +68,3 @@ ClassDescription >> typAsType [
 				classDescription: self;
 				yourself)
 ]
-
-{ #category : #'*Typer-Core' }
-ClassDescription >> typTypeForVariable: aSymbol [
-	| type |
-	type := self typAsType.
-	^ TypVariableLookupIndex instance
-		typeFor:
-			(TypVariableLookup new
-				receiverType: type;
-				selector: aSymbol;
-				yourself)
-]

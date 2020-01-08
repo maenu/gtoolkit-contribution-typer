@@ -14,7 +14,7 @@ RBInstanceVariableNode >> typHasDefiningTypeIn: aContext [
 
 { #category : #'*Typer-Core' }
 RBInstanceVariableNode >> typTypeRecursiveIn: aContext [
-	^ self typIsAssignmentVariable
+	^ self typIsAssignedTo
 		ifTrue:
 			[ self parent value typTypeIn: aContext	"typCastAs RBAssignmentNode" ]
 		ifFalse: [ TypVariableLookupIndex instance

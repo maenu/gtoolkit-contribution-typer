@@ -24,7 +24,39 @@ RBVariableNode >> typHasDefiningTypeIn: aContext [
 ]
 
 { #category : #'*Typer-Core' }
-RBVariableNode >> typIsAssignmentVariable [
+RBVariableNode >> typInfTypeArgumentsIn: aContext [
+	^ (((self whoDefines: self name) allChildren
+		select: [ :e | 
+			e = self
+				and: [ e parent isMessage and: [ e parent arguments includes: e ] ] ])
+		collect: [ :e | 
+			| i |
+			i := e parent arguments indexOf: e.
+			e parent typTypeForArgumentAt: i in: aContext ]) typAsType
+]
+
+{ #category : #'*Typer-Core' }
+RBVariableNode >> typInfTypeAssignedIn: aContext [
+	^ (((self whoDefines: self name) assignmentNodes
+		select: [ :e | e value = self ])
+		collect: [ :e | e variable typTypeIn: aContext ]) typAsType
+]
+
+{ #category : #'*Typer-Core' }
+RBVariableNode >> typInfTypeAssignedToIn: aContext [
+	^ (((self whoDefines: self name) assignmentNodes
+		select: [ :e | e variable = self ])
+		collect: [ :e | e value typTypeIn: aContext ]) typAsType
+]
+
+{ #category : #'*Typer-Core' }
+RBVariableNode >> typIsAssignedTo [
 	^ self parent isAssignment
-		and: [ (self parent"typCastAs RBAssignmentNode") variable == self ]
+		and: [ (self parent "typCastAs RBAssignmentNode") variable == self ]
+]
+
+{ #category : #'*Typer-Core' }
+RBVariableNode >> typIsDeclaration [
+	<typTypeResultAs: 'Boolean'>
+	^ false
 ]

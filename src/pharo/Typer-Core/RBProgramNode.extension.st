@@ -2,6 +2,8 @@ Extension { #name : #RBProgramNode }
 
 { #category : #'*Typer-Core' }
 RBProgramNode >> typAnnotateType: aType [
+	"Annotates aType according to my comments used for casting and setting parameters."
+	
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'TypType'>
 	| type |
