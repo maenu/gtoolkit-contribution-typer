@@ -10,5 +10,4 @@ Metaclass >> typInfAsVariableLookupResultFor: aSymbol [
 			TypVariableLookupResult new
 				type: [ type ];
 				yourself ]
-		ifFalse: [ nil ]
 ]

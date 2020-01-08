@@ -18,6 +18,5 @@ Class >> typInfAsVariableLookupResultFor: aSymbol [
 						in: self allMethods.
 					TypVariableLookupResult new
 						type: [ type ];
-						yourself ]
-				ifFalse: [ nil ] ]
+						yourself ] ]
 ]

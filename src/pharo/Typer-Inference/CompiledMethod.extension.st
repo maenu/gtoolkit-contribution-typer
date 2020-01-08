@@ -12,7 +12,7 @@ CompiledMethod >> typInfAsMethodLookupResult [
 						and: [ (method defines: e name)
 								and: [ e parent isAssignment
 										or: [ e parent isMessage and: [ e parent arguments includes: e ] ] ] ] ] ])
-		groupedBy: [ :e | method arguments detectIndex: [ :f | f name == e name ] ])
+		groupedBy: [ :e | method arguments indexOf: e ])
 		associations
 		collect: [ :e | 
 			e key
