@@ -1,6 +1,11 @@
 Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer-Core' }
+RBBlockNode >> typTypeForArgumentAt: anInteger [
+	^ self typTypeForArgumentAt: anInteger in: self methodNode typContext
+]
+
+{ #category : #'*Typer-Core' }
 RBBlockNode >> typTypeForArgumentAt: anInteger in: aContext [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>
@@ -19,12 +24,22 @@ RBBlockNode >> typTypeForArgumentAt: anInteger in: aContext [
 ]
 
 { #category : #'*Typer-Core' }
+RBBlockNode >> typTypeForArgumentNamed: aString [
+	^ self typTypeForArgumentNamed: aString in: self methodNode typContext
+]
+
+{ #category : #'*Typer-Core' }
 RBBlockNode >> typTypeForArgumentNamed: aString in: aContext [
 	<typTypeArgument: 1 as: 'String'>
 	<typTypeResultAs: 'TypType'>
 	| i |
 	i := self arguments detectIndex: [ :f | f name = aString ].
 	^ self typTypeForArgumentAt: i in: aContext
+]
+
+{ #category : #'*Typer-Core' }
+RBBlockNode >> typTypeForResult [
+	^ self typTypeForResultIn: self methodNode typContext
 ]
 
 { #category : #'*Typer-Core' }

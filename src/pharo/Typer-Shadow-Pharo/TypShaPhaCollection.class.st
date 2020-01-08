@@ -215,6 +215,25 @@ TypShaPhaCollection >> ___detect: _a [
 ]
 
 { #category : #accessing }
+TypShaPhaCollection >> ___detect: _a ifFound: _b [
+	^ TypMethodLookupResult new
+		argumentTypes: [ :i :a | 
+			i = 1
+				ifTrue: [ {Symbol typAsType.
+					(BlockClosure
+						typAsFunctionTypeWithArguments: {(a receiverType at: '@A')}
+						result: Boolean typAsType
+						argumentsOptional: false)} typAsType ]
+				ifFalse: [ {Symbol typAsType.
+					(BlockClosure
+						typAsFunctionTypeWithArguments: {(a receiverType at: '@A')}
+						result: TypUnknownType instance
+						argumentsOptional: true)} typAsType ] ];
+		resultType: [ :a | a receiverType ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaCollection >> ___detect: _a ifFound: _b ifNone: _c [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 

@@ -141,10 +141,10 @@ TypUnionType >> isUnion [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypUnionType >> lookupSelector: aSymbol [
 	self assert: [ self canUnderstand: aSymbol ].
-	^ types flatCollect: [ :e | e lookupSelector: aSymbol ]
+	^ types asIdentitySet flatCollect: [ :e | e lookupSelector: aSymbol ]
 ]
 
 { #category : #'as yet unclassified' }

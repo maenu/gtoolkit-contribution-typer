@@ -43,6 +43,11 @@ RBMessageNode >> typSignalsAlwaysIn: aContext [
 ]
 
 { #category : #'*Typer-Core' }
+RBMessageNode >> typTypeForArgumentAt: anInteger [
+	^ self typTypeForArgumentAt: anInteger in: self methodNode typContext
+]
+
+{ #category : #'*Typer-Core' }
 RBMessageNode >> typTypeForArgumentAt: anInteger in: aContext [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>
@@ -67,9 +72,19 @@ RBMessageNode >> typTypeForArgumentAt: anInteger in: aContext [
 ]
 
 { #category : #'*Typer-Core' }
+RBMessageNode >> typTypeForReceiver [
+	^ self typTypeForReceiverIn: self methodNode typContext
+]
+
+{ #category : #'*Typer-Core' }
 RBMessageNode >> typTypeForReceiverIn: aContext [
 	<typTypeResultAs: 'TypType'>
 	^ self receiver typTypeIn: aContext
+]
+
+{ #category : #'*Typer-Core' }
+RBMessageNode >> typTypeForResult [
+	^ self typTypeForResultIn: self methodNode typContext
 ]
 
 { #category : #'*Typer-Core' }
@@ -87,8 +102,7 @@ RBMessageNode >> typTypeForResultIn: aContext [
 			((receiverType canUnderstand: self selector asSymbol) not
 				and:
 					[ receiverType asNonNullableType canUnderstand: self selector asSymbol ])
-				ifTrue: [ self flag: 'TODO flag as nil error, or let checker deal with it?'.
-					receiverType := receiverType asNonNullableType ].
+				ifTrue: [ receiverType := receiverType asNonNullableType ].
 			TypMethodLookupIndex instance
 				resultTypeFor:
 					(TypMethodLookup new
@@ -109,7 +123,12 @@ RBMessageNode >> typTypeResetIn: aContext [
 	self removeProperty: #typTypeForResult -> aContext ifAbsent: [  ].
 	self arguments size timesCollect: [ :i | self removeProperty: #typTypeForArgument , i asString -> aContext ifAbsent: [  ] ].
 	self removeProperty: #typSignalsAlways -> aContext ifAbsent: [  ].
-	super typTypeReset
+	super typTypeResetIn: aContext
+]
+
+{ #category : #'*Typer-Core' }
+RBMessageNode >> typTypesForArguments [
+	^ self typTypesForArgumentsIn: self methodNode typContext
 ]
 
 { #category : #'*Typer-Core' }

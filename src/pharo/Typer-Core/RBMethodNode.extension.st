@@ -1,6 +1,11 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Core' }
+RBMethodNode >> typContext [
+	^ TypContext selfType: self methodClass typAsType
+]
+
+{ #category : #'*Typer-Core' }
 RBMethodNode >> typIsReturnSelf [
 	<typTypeResultAs: 'Boolean'>
 	^ self method isAbstract not
@@ -28,20 +33,28 @@ RBMethodNode >> typTemporaryProfileIn: aContext [
 ]
 
 { #category : #'*Typer-Core' }
+RBMethodNode >> typTypeForArgumentAt: anInteger [
+	^ self typTypeForArgumentAt: anInteger in: self methodNode typContext
+]
+
+{ #category : #'*Typer-Core' }
 RBMethodNode >> typTypeForArgumentAt: anInteger in: aContext [
 	<typTypeArgument: 1 as: 'Integer'>
 	<typTypeResultAs: 'TypType'>
-	self assert: [ compilationContext isNotNil ].
-	self flag: 'TODO use context for receiver type'.
 	^ TypMethodLookupIndex instance
 		argumentTypeFor:
 			(TypMethodLookup new
-				receiverType: self methodClass typAsType;
+				receiverType: aContext selfType;
 				selector: self selector asSymbol;
 				argumentTypes: (self typTypesForArgumentsIn: aContext);
 				argumentNodes: self arguments;
 				yourself)
 		at: anInteger
+]
+
+{ #category : #'*Typer-Core' }
+RBMethodNode >> typTypeForArgumentNamed: aString [
+	^ self typTypeForArgumentNamed: aString in: self methodNode typContext
 ]
 
 { #category : #'*Typer-Core' }
@@ -54,14 +67,18 @@ RBMethodNode >> typTypeForArgumentNamed: aString in: aContext [
 ]
 
 { #category : #'*Typer-Core' }
+RBMethodNode >> typTypeForResult [
+	^ self typTypeForResultIn: self methodNode typContext
+]
+
+{ #category : #'*Typer-Core' }
 RBMethodNode >> typTypeForResultIn: aContext [
 	<typTypeResultAs: 'TypType'>
 	self assert: [ compilationContext isNotNil ].
-	self flag: 'TODO make use of context for receiver'.
 	^ TypMethodLookupIndex instance
 		resultTypeFor:
 			(TypMethodLookup new
-				receiverType: self methodClass typAsType;
+				receiverType: aContext selfType;
 				selector: self selector asSymbol;
 				argumentTypes: (self typTypesForArgumentsIn: aContext);
 				argumentNodes: self arguments;
@@ -73,7 +90,7 @@ RBMethodNode >> typTypeRecursiveIn: aContext [
 	<typTypeResultAs: 'TypType'>
 	| oldTemporaryProfiles newTemporaryProfile |
 	self
-		typTypeReset;
+		typTypeResetIn: aContext;
 		doSemanticAnalysis;
 		propertyAt: #typFixPoint -> aContext put: false.
 	oldTemporaryProfiles := Set new.
@@ -106,6 +123,11 @@ RBMethodNode >> typTypeRecursiveIn: aContext [
 RBMethodNode >> typTypeResetIn: aContext [
 	self removeProperty: #typFixPoint -> aContext ifAbsent: [  ].
 	super typTypeResetIn: aContext
+]
+
+{ #category : #'*Typer-Core' }
+RBMethodNode >> typTypesForArguments [
+	^ self typTypesForArgumentsIn: self methodNode typContext
 ]
 
 { #category : #'*Typer-Core' }

@@ -9,6 +9,7 @@ Class {
 
 { #category : #accessing }
 TypClassDescriptionLookupIndex class >> instance [
+	<typTypeResultAs: 'TypClassDescriptionLookupIndex'>
 	^ instance
 		ifNil: [ instance := self new
 				resolver:

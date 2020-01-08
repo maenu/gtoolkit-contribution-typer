@@ -4,6 +4,14 @@ Class {
 	#category : #'Typer-Shadow-Pharo'
 }
 
+{ #category : #accessing }
+TypShaPhaCharacter class >> ___value: _a [
+	^ TypMethodLookupResult new
+		argumentTypes: [ :i :a :s :r | Integer typAsType ];
+		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaCharacter class >> shadowedClass [
 	^ Character class

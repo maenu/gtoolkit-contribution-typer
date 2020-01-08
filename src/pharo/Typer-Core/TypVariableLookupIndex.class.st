@@ -6,6 +6,7 @@ Class {
 
 { #category : #accessing }
 TypVariableLookupIndex class >> instance [
+	<typTypeResultAs: 'TypVariableLookupIndex'>
 	^ instance
 		ifNil: [ instance := self new
 				resolver:

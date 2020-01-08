@@ -27,6 +27,11 @@ RBProgramNode >> typAnnotateType: aType [
 ]
 
 { #category : #'*Typer-Core' }
+RBProgramNode >> typInvokedMethods [
+	^ self typInvokedMethodsIn: self methodNode typContext
+]
+
+{ #category : #'*Typer-Core' }
 RBProgramNode >> typInvokedMethodsIn: aContext [
 	^ self children
 		inject: Set new
@@ -37,9 +42,19 @@ RBProgramNode >> typInvokedMethodsIn: aContext [
 ]
 
 { #category : #'*Typer-Core' }
+RBProgramNode >> typSignalsAlways [
+	^ self typSignalsAlwaysIn: self methodNode typContext
+]
+
+{ #category : #'*Typer-Core' }
 RBProgramNode >> typSignalsAlwaysIn: aContext [
 	<typTypeResultAs: '{!,Boolean}'>
 	^ false
+]
+
+{ #category : #'*Typer-Core' }
+RBProgramNode >> typType [
+	^ self typTypeIn: self methodNode typContext
 ]
 
 { #category : #'*Typer-Core' }
@@ -60,6 +75,11 @@ RBProgramNode >> typTypeIn: aContext [
 RBProgramNode >> typTypeRecursiveIn: aContext [
 	<typTypeResultAs: 'TypType'>
 	^ TypUnknownType instance
+]
+
+{ #category : #'*Typer-Core' }
+RBProgramNode >> typTypeReset [
+	^ self typTypeResetIn: self methodNode typContext
 ]
 
 { #category : #'*Typer-Core' }

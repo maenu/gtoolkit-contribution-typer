@@ -6,6 +6,7 @@ Class {
 
 { #category : #accessing }
 TypMethodLookupIndex class >> instance [
+	<typTypeResultAs: 'TypMethodLookupIndex'>
 	^ instance
 		ifNil: [ instance := self new
 				resolver:

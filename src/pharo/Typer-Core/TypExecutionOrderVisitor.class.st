@@ -7,7 +7,7 @@ Class {
 		'types',
 		'stopped'
 	],
-	#category : #'Typer-Core-Typer-Core'
+	#category : #'Typer-Core'
 }
 
 { #category : #accessing }
