@@ -36,7 +36,12 @@ ClassDescription >> typGtMethodsElementInPackage: aPackage [
 { #category : #'*Typer-GToolkit' }
 ClassDescription >> typGtVariableElementFor: aSymbol [
 	| type |
-	type := self typAsType typeForVariable: aSymbol.
+	type := TypVariableLookupIndex instance
+		typeFor:
+			(TypVariableLookup new
+				receiverType: self typAsType;
+				selector: aSymbol;
+				yourself).
 	^ BlElement new
 		background:
 			(type isUnknown

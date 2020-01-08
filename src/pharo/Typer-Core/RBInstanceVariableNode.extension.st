@@ -15,6 +15,12 @@ RBInstanceVariableNode >> typHasDefiningTypeIn: aContext [
 { #category : #'*Typer-Core' }
 RBInstanceVariableNode >> typTypeRecursiveIn: aContext [
 	^ self typIsAssignmentVariable
-			ifTrue: [ (self parent "typCastAs RBAssignmentNode") value typTypeIn: aContext ]
-			ifFalse: [ (self typDefiningTypeIn: aContext) typeForVariable: self name asSymbol ]
+		ifTrue:
+			[ self parent value typTypeIn: aContext	"typCastAs RBAssignmentNode" ]
+		ifFalse: [ TypVariableLookupIndex instance
+				typeFor:
+					(TypVariableLookup new
+						receiverType: (self typDefiningTypeIn: aContext);
+						selector: self name asSymbol;
+						yourself) ]
 ]
