@@ -37,7 +37,7 @@ RBArgumentNode >> typTypeRecursiveIn: aContext [
 							i := e parent arguments detectIndex: [ :f | f == e ].
 							e parent typTypeForArgumentAt: i in: aContext ]) typAsType ].
 			type isUnknown
-				ifTrue: [ type := ((self typAssigned select: [ :e | e variable typHasDefiningClass ]) collect: [ :e | e variable typDefiningClass typTypeForVariable: e variable name asSymbol ]) typAsType ].
+				ifTrue: [ type := ((self typAssigned select: [ :e | e variable typHasDefiningTypeIn: aContext ]) collect: [ :e | e variable typDefiningType typeForVariable: e variable name asSymbol ]) typAsType ].
 			type ]
 		ifFalse:
 			[ "if defining a temp with the name of an arg, definer will be an argument node"

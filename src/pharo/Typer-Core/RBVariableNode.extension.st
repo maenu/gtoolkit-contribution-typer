@@ -1,7 +1,24 @@
 Extension { #name : #RBVariableNode }
 
 { #category : #'*Typer-Core' }
-RBVariableNode >> typHasDefiningClass [
+RBVariableNode >> typDefiningType [
+	^ self typDefiningTypeIn: self methodNode typContext
+]
+
+{ #category : #'*Typer-Core' }
+RBVariableNode >> typDefiningTypeIn: aContext [
+	<typTypeResultAs: 'Type'>
+	self assert: [ self typHasDefiningTypeIn: aContext ].
+	^ TypUnknownType instance
+]
+
+{ #category : #'*Typer-Core' }
+RBVariableNode >> typHasDefiningType [
+	^ self typHasDefiningTypeIn: self methodNode typContext
+]
+
+{ #category : #'*Typer-Core' }
+RBVariableNode >> typHasDefiningTypeIn: aContext [
 	<typTypeResultAs: 'Boolean'>
 	^ false
 ]

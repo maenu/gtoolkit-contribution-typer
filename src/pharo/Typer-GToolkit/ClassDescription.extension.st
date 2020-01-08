@@ -36,7 +36,7 @@ ClassDescription >> typGtMethodsElementInPackage: aPackage [
 { #category : #'*Typer-GToolkit' }
 ClassDescription >> typGtVariableElementFor: aSymbol [
 	| type |
-	type := self typTypeForVariable: aSymbol.
+	type := self typAsType typeForVariable: aSymbol.
 	^ BlElement new
 		background:
 			(type isUnknown

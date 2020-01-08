@@ -1,14 +1,14 @@
 Extension { #name : #RBInstanceVariableNode }
 
 { #category : #'*Typer-Core' }
-RBInstanceVariableNode >> typDefiningClass [
-	<typTypeResultAs: 'Class'>
-	self assert: [ self typHasDefiningClass ].
-	^ self methodNode methodClass
+RBInstanceVariableNode >> typDefiningTypeIn: aContext [
+	<typTypeResultAs: 'Type'>
+	self assert: [ self typHasDefiningTypeIn: aContext ].
+	^ aContext selfType
 ]
 
 { #category : #'*Typer-Core' }
-RBInstanceVariableNode >> typHasDefiningClass [
+RBInstanceVariableNode >> typHasDefiningTypeIn: aContext [
 	^ true
 ]
 
@@ -16,5 +16,5 @@ RBInstanceVariableNode >> typHasDefiningClass [
 RBInstanceVariableNode >> typTypeRecursiveIn: aContext [
 	^ self typIsAssignmentVariable
 			ifTrue: [ (self parent "typCastAs RBAssignmentNode") value typTypeIn: aContext ]
-			ifFalse: [ self methodNode methodClass typTypeForVariable: self name asSymbol ]
+			ifFalse: [ (self typDefiningTypeIn: aContext) typeForVariable: self name asSymbol ]
 ]
