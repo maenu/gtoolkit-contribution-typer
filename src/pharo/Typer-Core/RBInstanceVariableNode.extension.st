@@ -21,6 +21,6 @@ RBInstanceVariableNode >> typTypeRecursiveIn: aContext [
 				typeFor:
 					(TypVariableLookup new
 						receiverType: (self typDefiningTypeIn: aContext);
-						selector: self name asSymbol;
+						selector: name asSymbol;
 						yourself) ]
 ]

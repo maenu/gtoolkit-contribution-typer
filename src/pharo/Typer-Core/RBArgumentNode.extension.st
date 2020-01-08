@@ -11,12 +11,12 @@ RBArgumentNode >> typIsDeclaration [
 RBArgumentNode >> typTypeRecursiveIn: aContext [
 	^ self typIsDeclaration
 		ifTrue: [ | type |
-			type := (self parent "typCastAs {RBBlockNode,RBMethodNode}") typTypeForArgumentNamed: self name in: aContext.
+			type := (self parent "typCastAs {RBBlockNode,RBMethodNode}") typTypeForArgumentNamed: name in: aContext.
 			type isUnknown
 				ifTrue: [ type := self typInfTypeArgumentsIn: aContext ].
 			type isUnknown
 				ifTrue: [ type := self typInfTypeAssignedIn: aContext ].
 			type ]
 		ifFalse:
-			[ (((self whoDefines: self name) "typCastAs {RBBlockNode,RBMethodNode}") arguments detect: [ :e | e = self ]) typTypeIn: aContext ]
+			[ (((self whoDefines: name) "typCastAs {RBBlockNode,RBMethodNode}") arguments detect: [ :e | e = self ]) typTypeIn: aContext ]
 ]

@@ -1,6 +1,21 @@
 Extension { #name : #RBVariableNode }
 
 { #category : #'*Typer-Core' }
+RBVariableNode >> typDefinedType [
+	^ self typDefinedTypeIn: self methodNode typContext
+]
+
+{ #category : #'*Typer-Core' }
+RBVariableNode >> typDefinedTypeIn: aContext [
+	^ TypVariableLookupIndex instance
+		typeFor:
+			(TypVariableLookup new
+				receiverType: (self typDefiningTypeIn: aContext);
+				selector: name asSymbol;
+				yourself)
+]
+
+{ #category : #'*Typer-Core' }
 RBVariableNode >> typDefiningType [
 	^ self typDefiningTypeIn: self methodNode typContext
 ]
@@ -25,7 +40,7 @@ RBVariableNode >> typHasDefiningTypeIn: aContext [
 
 { #category : #'*Typer-Core' }
 RBVariableNode >> typInfTypeArgumentsIn: aContext [
-	^ (((self whoDefines: self name) allChildren
+	^ (((self whoDefines: name) allChildren
 		select: [ :e | 
 			e = self
 				and: [ e parent isMessage and: [ e parent arguments includes: e ] ] ])
@@ -37,9 +52,9 @@ RBVariableNode >> typInfTypeArgumentsIn: aContext [
 
 { #category : #'*Typer-Core' }
 RBVariableNode >> typInfTypeAssignedIn: aContext [
-	^ (((self whoDefines: self name) assignmentNodes
+	^ (((self whoDefines: name) assignmentNodes
 		select: [ :e | e value = self ])
-		collect: [ :e | e variable typTypeIn: aContext ]) typAsType
+		collect: [ :e | e variable typDefinedTypeIn: aContext ]) typAsType
 ]
 
 { #category : #'*Typer-Core' }

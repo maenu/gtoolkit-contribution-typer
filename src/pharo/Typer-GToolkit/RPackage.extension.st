@@ -45,13 +45,13 @@ RPackage >> typGtViewFor: aView [
 		title: 'Typer' translated;
 		priority: 50;
 		painting: [ :e | 
+			| classes_ |
+			classes_ := (self classes collect: #instanceSide) asSet.
 			e nodes
 				stencil: [ :f | f typGtElementInPackage: self ];
-				with: (self classes collect: #instanceSide) asSet.
+				with: classes_.
 			e edges
-				fromCenterBottom;
-				toCenterTop;
-				connectFrom: #superclass.
-			e layout tree ];
+				connectTo: [ :f | f allSuperclasses detect: [ :g | classes_ includes: g ] ifNone: [ nil ] ].
+			e layout force charge: -5000 ];
 		yourself
 ]
