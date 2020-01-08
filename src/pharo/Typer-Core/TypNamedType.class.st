@@ -60,7 +60,7 @@ TypNamedType >> hasClassDescription [
 				do: [ false ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypNamedType >> hasSuperType [
 	^ superType isNotNil
 		or: [ self hasClassDescription

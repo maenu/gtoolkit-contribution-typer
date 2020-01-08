@@ -7,6 +7,8 @@ CompiledMethod >> typGtElement [
 			| color |
 			color := self ast
 				typType;
+				typTypeReset;
+				typType;
 				typCheColor.
 			(self ast typCheHasUnknownArguments not
 				and: [ self ast typCheHasUnknownResult not ])

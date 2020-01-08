@@ -85,7 +85,7 @@ TypShaPhaBlockClosure >> ___value [
 { #category : #'as yet unclassified' }
 TypShaPhaBlockClosure >> ___value: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a | a receiverType parameters at: i ifAbsent: [ TypUnknownType instance ] ];
+		argumentTypes: [ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType instance ] ];
 		resultType: [ :a | a receiverType result ];
 		yourself
 ]
@@ -93,7 +93,7 @@ TypShaPhaBlockClosure >> ___value: _a [
 { #category : #'as yet unclassified' }
 TypShaPhaBlockClosure >> ___value: _a value: _b [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a | a receiverType parameters at: i ];
+		argumentTypes: [ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType instance ] ];
 		resultType: [ :a | a receiverType result ];
 		yourself
 ]
@@ -101,7 +101,7 @@ TypShaPhaBlockClosure >> ___value: _a value: _b [
 { #category : #'as yet unclassified' }
 TypShaPhaBlockClosure >> ___value: _a value: _b value: _c [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a | a receiverType parameters at: i ];
+		argumentTypes: [ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType instance ] ];
 		resultType: [ :a | a receiverType result ];
 		yourself
 ]
@@ -109,7 +109,7 @@ TypShaPhaBlockClosure >> ___value: _a value: _b value: _c [
 { #category : #'as yet unclassified' }
 TypShaPhaBlockClosure >> ___value: _a value: _b value: _c value: _d [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a | a receiverType parameters at: i ];
+		argumentTypes: [ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType instance ] ];
 		resultType: [ :a | a receiverType result ];
 		yourself
 ]

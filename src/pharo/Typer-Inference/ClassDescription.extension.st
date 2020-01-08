@@ -23,8 +23,5 @@ ClassDescription >> typInfVariableAssignedTypeFor: aSymbol in: aCollection [
 			types := (f assignmentNodes
 				select: [ :h | h variable name = aSymbol ])
 				collect: [ :h | h value typType ].
-			types
-				ifNotEmpty:
-					[ f ast typTypeReset	"reset type, as it might impact other resolvers" ].
 			types ]) typAsType
 ]

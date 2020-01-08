@@ -15,6 +15,20 @@ TypShaPhaCollection class >> ___with: _a [
 ]
 
 { #category : #accessing }
+TypShaPhaCollection class >> ___with: _a with: _b [
+	^ TypMethodLookupResult new
+		argumentTypes: [ :i :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | a argumentTypes traceCr.
+			a receiverType classDescription instanceSide typAsType
+				copyWithBindings:
+					{('@A'
+						->
+							{(a argumentTypes at: 1).
+							(a argumentTypes at: 2)} typAsType)} asDictionary ];
+		yourself
+]
+
+{ #category : #accessing }
 TypShaPhaCollection class >> ___withAll: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Collection typAsType ];

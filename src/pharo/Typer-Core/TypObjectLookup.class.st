@@ -41,6 +41,15 @@ TypObjectLookup >> initialize [
 	super initialize
 ]
 
+{ #category : #printing }
+TypObjectLookup >> printOn: aStream [
+	super printOn: aStream.
+	aStream nextPutAll: ' '.
+	receiverType printOn: aStream.
+	aStream nextPutAll: ' >> '.
+	aStream nextPutAll: selector.
+]
+
 { #category : #accessing }
 TypObjectLookup >> receiverType [
 	<typTypeResultAs: 'TypType'>

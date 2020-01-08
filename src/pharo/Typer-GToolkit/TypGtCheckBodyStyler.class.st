@@ -112,6 +112,8 @@ TypGtCheckBodyStyler >> visitMethodNode: aNode [
 		ifTrue: [ aNode ]
 		ifFalse: [ coder rbAST
 				typType;
+				typTypeReset;
+				typType;
 				yourself ].
 	node typCheHasUnknownResult
 		ifTrue: [ markUnknowns
