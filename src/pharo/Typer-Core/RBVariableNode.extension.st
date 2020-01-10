@@ -53,7 +53,7 @@ RBVariableNode >> typInfTypeArgumentsIn: aContext [
 { #category : #'*Typer-Core' }
 RBVariableNode >> typInfTypeAssignedIn: aContext [
 	^ (((self whoDefines: name) assignmentNodes
-		select: [ :e | e value = self ])
+		select: [ :e | e value = self and: [ e variable typHasDefiningTypeIn: aContext ] ])
 		collect: [ :e | e variable typDefinedTypeIn: aContext ]) typAsType
 ]
 
