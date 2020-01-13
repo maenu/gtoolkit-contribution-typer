@@ -20,6 +20,7 @@ ClassDescription >> typInfVariableAssignedTypeFor: aSymbol in: aCollection [
 	^ (aCollection
 		flatCollect: [ :f | 
 			| types |
+			self flag: 'TODO might this affect the ast typing in other stacks?'.
 			types := (f assignmentNodes
 				select: [ :h | h variable name = aSymbol ])
 				collect: [ :h | h value typType ].

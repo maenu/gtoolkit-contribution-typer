@@ -36,7 +36,10 @@ TypGtCheckBodyStyler >> markUnknowns: anObject [
 
 { #category : #styling }
 TypGtCheckBodyStyler >> style: aText ast: anAst [
-	anAst typType.
+	anAst
+		typType;
+		typTypeReset;
+		typType.
 	super style: aText ast: anAst
 ]
 
