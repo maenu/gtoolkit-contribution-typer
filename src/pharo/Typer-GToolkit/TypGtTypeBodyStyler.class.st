@@ -6,6 +6,7 @@ Class {
 
 { #category : #styling }
 TypGtTypeBodyStyler >> style: aText ast: anAst [
+	text := aText.
 	anAst typType.
 	super style: aText ast: anAst
 ]

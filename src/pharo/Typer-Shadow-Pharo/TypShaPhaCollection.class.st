@@ -18,7 +18,7 @@ TypShaPhaCollection class >> ___with: _a [
 TypShaPhaCollection class >> ___with: _a with: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | TypUnknownType instance ];
-		resultType: [ :a :s :r | a argumentTypes traceCr.
+		resultType: [ :a :s :r | 
 			a receiverType classDescription instanceSide typAsType
 				copyWithBindings:
 					{('@A'
