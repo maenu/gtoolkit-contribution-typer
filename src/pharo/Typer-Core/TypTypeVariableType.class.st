@@ -2,7 +2,8 @@ Class {
 	#name : #TypTypeVariableType,
 	#superclass : #TypType,
 	#instVars : [
-		'name'
+		'name',
+		'scope'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -42,11 +43,9 @@ TypTypeVariableType >> assign: aType in: anotherType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeArgument: 2 as: 'TypType'>
 	<typTypeResultAs: 'TypType'>
-	(anotherType isParametric
-		and:
-			[ (anotherType "typCastAs TypParametricType") parameters includes: name ])
-		ifTrue:
-			[ ^ (anotherType "typCastAs TypParametricType") at: name put: aType ].
+	self assert: [ name ~= '@self' ].
+	(scope == anotherType)
+		ifTrue: [ ^ scope at: name put: aType ].
 	^ anotherType hasSuperType
 		ifTrue: [ self assign: aType in: anotherType superType ]
 		ifFalse: [ self ]
@@ -94,20 +93,34 @@ TypTypeVariableType >> name [
 ]
 
 { #category : #printing }
-TypTypeVariableType >> printOn: aStream [
+TypTypeVariableType >> printOn: aStream skipping: anIdentitySet [
+	(anIdentitySet includes: self)
+		ifTrue: [ aStream << '.'.
+			^ self ].
 	aStream nextPutAll: name asString.
 	superType = ProtoObject typAsType
 		ifFalse: [ aStream nextPutAll: '<='.
-			superType printOn: aStream ]
+			superType printOn: aStream skipping: anIdentitySet , {self} ]
 ]
 
 { #category : #accessing }
 TypTypeVariableType >> resolveIn: aType [
 	name = '@self'
 		ifTrue: [ ^ aType ].
-	(aType isParametric and: [ aType parameters includes: name ])
-		ifTrue: [ ^ aType at: name ].
+	(scope == aType)
+		ifTrue: [ ^ scope at: name ].
 	^ aType hasSuperType
 		ifTrue: [ self resolveIn: aType superType ]
 		ifFalse: [ self ]
+]
+
+{ #category : #accessing }
+TypTypeVariableType >> scope [
+	^ scope
+]
+
+{ #category : #accessing }
+TypTypeVariableType >> scope: anObject [
+	self assert: [ scope isNil ].
+	scope := anObject
 ]

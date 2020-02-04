@@ -59,7 +59,7 @@ TypClassDescriptionLookupIndex >> typeFor: aLookup [
 					type isUnknown not ]
 						on: Error
 						do: [ :f |
-							self log: f for: aLookup.
+							f emit.
 							self flag: 'FIXME signal?'.
 							false ] ]
 				ifFound: #type

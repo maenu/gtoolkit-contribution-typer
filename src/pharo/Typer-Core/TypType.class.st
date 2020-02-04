@@ -114,11 +114,6 @@ TypType >> isNil [
 ]
 
 { #category : #testing }
-TypType >> isNoType [
-	^ false
-]
-
-{ #category : #testing }
 TypType >> isNullable [
 	^ self isNil
 ]
@@ -147,6 +142,11 @@ TypType >> isUnknown [
 	^ false
 ]
 
+{ #category : #testing }
+TypType >> isVoidType [
+	^ false
+]
+
 { #category : #accessing }
 TypType >> lookupSelector: aSymbol [
 	<typTypeArgument: 1 as: 'Symbol'>
@@ -158,6 +158,18 @@ TypType >> lookupSelector: aSymbol [
 TypType >> postCopy [
 	super postCopy.
 	superType := superType copy
+]
+
+{ #category : #printing }
+TypType >> printOn: aStream [
+	self printOn: aStream skipping: Set new
+]
+
+{ #category : #printing }
+TypType >> printOn: aStream skipping: aSet [
+	"Respects skipping set to not print recursive type infinitely."
+
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

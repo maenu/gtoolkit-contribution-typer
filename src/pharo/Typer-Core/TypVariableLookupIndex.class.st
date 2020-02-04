@@ -42,7 +42,7 @@ TypVariableLookupIndex >> typeFor: aLookup [
 				ifFalse: [ ^ type ] ]
 				on: Error
 				do: [ :f | 
-					self log: f for: aLookup.
+					f emit.
 					self flag: 'FIXME signal?' ] ].
 	^ TypUnknownType instance
 ]

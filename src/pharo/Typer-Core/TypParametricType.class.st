@@ -143,12 +143,15 @@ TypParametricType >> postCopy [
 ]
 
 { #category : #printing }
-TypParametricType >> printOn: aStream [
-	super printOn: aStream.
+TypParametricType >> printOn: aStream skipping: anIdentitySet [
+	(anIdentitySet includes: self)
+		ifTrue: [ aStream << '.'.
+			^ self ].
+	super printOn: aStream skipping: anIdentitySet.
 	aStream << '<'.
 	parameters
 		withIndexDo: [ :e :i | 
-			(self at: e) printOn: aStream.
+			(self at: e) printOn: aStream skipping: anIdentitySet , {self}.
 			i < parameters size
 				ifTrue: [ aStream << ',' ] ].
 	aStream << '>'

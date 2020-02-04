@@ -88,14 +88,17 @@ RBMethodNode >> typTypeForResultIn: aContext [
 { #category : #'*Typer-Core' }
 RBMethodNode >> typTypeRecursiveIn: aContext [
 	<typTypeResultAs: 'TypType'>
-	| oldTemporaryProfiles newTemporaryProfile |
+	| iterations maxIterations oldTemporaryProfiles newTemporaryProfile |
 	self
 		typTypeResetIn: aContext;
 		doSemanticAnalysis;
 		propertyAt: #typFixPoint -> aContext put: false.
+	iterations := 0.
+	maxIterations := 5.
 	oldTemporaryProfiles := Set new.
 	newTemporaryProfile := self typTemporaryProfileIn: aContext.
 	[ | oldTemporaryProfile |
+	iterations := iterations + 1.
 	oldTemporaryProfiles add: newTemporaryProfile.
 	self typTypeResetIn: aContext.
 	newTemporaryProfile
@@ -112,7 +115,8 @@ RBMethodNode >> typTypeRecursiveIn: aContext [
 	newTemporaryProfile := self typTemporaryProfileIn: aContext.
 	oldTemporaryProfile = newTemporaryProfile
 		ifTrue: [ self propertyAt: #typFixPoint -> aContext put: true ].
-	oldTemporaryProfiles includes: newTemporaryProfile ] whileFalse.
+	(oldTemporaryProfiles includes: newTemporaryProfile) not
+		and: [ iterations < maxIterations ] ] whileTrue.
 	^ CompiledMethod
 		typAsFunctionTypeWithArguments: (self typTypesForArgumentsIn: aContext)
 		result: (self typTypeForResultIn: aContext)

@@ -41,7 +41,7 @@ TypMethodLookupIndex >> argumentTypeFor: aLookup at: anInteger [
 				ifFalse: [ ^ type ] ]
 				on: Error
 				do: [ :f | 
-					self log: f for: aLookup.
+					f emit.
 					self flag: 'FIXME signal?' ] ].
 	^ TypUnknownType instance
 ]
@@ -57,7 +57,7 @@ TypMethodLookupIndex >> resultTypeFor: aLookup [
 				ifFalse: [ ^ type ] ]
 				on: Error
 				do: [ :f | 
-					self log: f for: aLookup.
+					f emit.
 					self flag: 'FIXME signal?' ] ].
 	^ TypUnknownType instance
 ]
@@ -71,7 +71,7 @@ TypMethodLookupIndex >> signalsAlwaysFor: aLookup [
 			signalsAlways ifNotNil: [ ^ signalsAlways ] ]
 				on: Error
 				do: [ :f | 
-					self log: f for: aLookup.
+					f emit.
 					self flag: 'FIXME signal?' ] ].
 	^ nil
 ]

@@ -16,7 +16,7 @@ TypUnionType class >> asTypes: aCollection [
 		flatCollect: [ :e | 
 			e isUnion
 				ifTrue: [ (e "typCastAs TypUnionType") types ]
-				ifFalse: [ {e} "typCastAs Collection<TypType>" ] ]) asSet reject: #isNoType.
+				ifFalse: [ {e} "typCastAs Collection<TypType>" ] ]) asSet reject: #isVoidType.
 	nil_ := remains includes: TypNilType instance.
 	nil_
 		ifTrue: [ remains remove: TypNilType instance ].
@@ -154,22 +154,25 @@ TypUnionType >> postCopy [
 ]
 
 { #category : #printing }
-TypUnionType >> printOn: aStream [
+TypUnionType >> printOn: aStream skipping: anIdentitySet [
 	| types_ |
+	(anIdentitySet includes: self)
+		ifTrue: [ aStream << '.'.
+			^ self ].
 	types_ := types copy.
 	aStream << '{'.
 	types_
 		detect: [ :e | e = TypNilType instance ]
 		ifFound: [ :e | 
 			types_ remove: e.
-			e printOn: aStream.
+			e printOn: aStream skipping: anIdentitySet , {self}.
 			types_ ifNotEmpty: [ aStream << ',' ] ]
 		ifNone: [  ].
 	types_
 		detect: [ :e | e = TypUnknownType instance ]
 		ifFound: [ :e | 
 			types_ remove: e.
-			e printOn: aStream.
+			e printOn: aStream skipping: anIdentitySet , {self}.
 			types_ ifNotEmpty: [ aStream << ',' ] ]
 		ifNone: [  ].
 	types_ size > 1
@@ -184,7 +187,7 @@ TypUnionType >> printOn: aStream [
 	types_ copy
 		do: [ :e | 
 			types_ remove: e.
-			e printOn: aStream.
+			e printOn: aStream skipping: anIdentitySet , {self}.
 			types_ ifNotEmpty: [ aStream << ',' ] ].
 	aStream << '}'
 ]

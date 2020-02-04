@@ -55,6 +55,9 @@ TypNilType >> isNil [
 ]
 
 { #category : #printing }
-TypNilType >> printOn: aStream [
+TypNilType >> printOn: aStream skipping: anIdentitySet [
+	(anIdentitySet includes: self)
+		ifTrue: [ aStream << '.'.
+			^ self ].
 	aStream << '!'
 ]

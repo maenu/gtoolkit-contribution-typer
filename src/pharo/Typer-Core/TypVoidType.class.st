@@ -1,5 +1,5 @@
 Class {
-	#name : #TypNoType,
+	#name : #TypVoidType,
 	#superclass : #TypType,
 	#classInstVars : [
 		'instance'
@@ -8,31 +8,39 @@ Class {
 }
 
 { #category : #accessing }
-TypNoType class >> instance [
+TypVoidType class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
 { #category : #comparing }
-TypNoType >> > aType [
+TypVoidType >> > aType [
 	self shouldNotImplement
 ]
 
 { #category : #'as yet unclassified' }
-TypNoType >> canUnderstand: aSymbol [
+TypVoidType >> canUnderstand: aSymbol [
 	^ false
 ]
 
 { #category : #copying }
-TypNoType >> copy [
+TypVoidType >> copy [
 	^ self
 ]
 
 { #category : #testing }
-TypNoType >> isNoType [
+TypVoidType >> isVoidType [
 	^ true
 ]
 
 { #category : #'as yet unclassified' }
-TypNoType >> lookupSelector: aSymbol [
+TypVoidType >> lookupSelector: aSymbol [
 	self shouldNotImplement
+]
+
+{ #category : #printing }
+TypVoidType >> printOn: aStream skipping: anIdentitySet [
+	(anIdentitySet includes: self)
+		ifTrue: [ aStream << '.'.
+			^ self ].
+	aStream << 'void'
 ]

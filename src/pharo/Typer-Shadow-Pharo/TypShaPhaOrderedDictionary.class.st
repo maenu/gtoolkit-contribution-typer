@@ -13,7 +13,7 @@ TypShaPhaOrderedDictionary class >> shadowedClass [
 TypShaPhaOrderedDictionary >> ___anyOne [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a | a receiverType at: '@A' ];
+		resultType: [ :a | '@A' typAsTypeVariableType resolveIn: a receiverType ];
 		yourself
 ]
 
@@ -24,8 +24,8 @@ TypShaPhaOrderedDictionary >> ___asOrderedDictionary [
 		resultType: [ :a | 
 			OrderedDictionary typAsType
 				copyWithBindings:
-					{('@B' -> (a receiverType at: '@B')).
-					('@A' -> (a receiverType at: '@A'))} asDictionary ];
+					{('@B' -> ('@B' typAsTypeVariableType resolveIn: a receiverType)).
+					('@A' -> ('@A' typAsTypeVariableType resolveIn: a receiverType))} asDictionary ];
 		yourself
 ]
 
@@ -40,8 +40,8 @@ TypShaPhaOrderedDictionary >> ___associations [
 						->
 							(Association typAsType
 								copyWithBindings:
-									{('@A' -> (a receiverType at: '@B')).
-									('@B' -> (a receiverType at: '@A'))} asDictionary))}
+									{('@A' -> ('@B' typAsTypeVariableType resolveIn: a receiverType)).
+									('@B' -> ('@A' typAsTypeVariableType resolveIn: a receiverType))} asDictionary))}
 						asDictionary ];
 		yourself
 ]
@@ -54,8 +54,8 @@ TypShaPhaOrderedDictionary >> ___associationsDo: _a [
 				typAsFunctionTypeWithArguments:
 					{(Association typAsType
 						copyWithBindings:
-							{('@A' -> (a receiverType at: '@B')).
-							('@B' -> (a receiverType at: '@A'))} asDictionary)}
+							{('@A' -> ('@B' typAsTypeVariableType resolveIn: a receiverType)).
+							('@B' -> ('@A' typAsTypeVariableType resolveIn: a receiverType))} asDictionary)}
 				result: TypUnknownType instance
 				argumentsOptional: false ];
 		resultType: [ :a :s | a receiverType ];
@@ -65,8 +65,8 @@ TypShaPhaOrderedDictionary >> ___associationsDo: _a [
 { #category : #accessing }
 TypShaPhaOrderedDictionary >> ___at: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | a receiverType at: '@B' ];
-		resultType: [ :a :s :r | a receiverType at: '@A' ];
+		argumentTypes: [ :i :a :s :r | '@B' typAsTypeVariableType resolveIn: a receiverType ];
+		resultType: [ :a :s :r | '@A' typAsTypeVariableType resolveIn: a receiverType ];
 		yourself
 ]
 
@@ -75,12 +75,12 @@ TypShaPhaOrderedDictionary >> ___at: _a ifAbsentPut: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			i = 1
-				ifTrue: [ a receiverType at: '@B' ]
+				ifTrue: [ '@B' typAsTypeVariableType resolveIn: a receiverType ]
 				ifFalse: [ BlockClosure
 						typAsFunctionTypeWithArguments: {}
-						result: (a receiverType at: '@A')
+						result: ('@A' typAsTypeVariableType resolveIn: a receiverType)
 						argumentsOptional: false ] ];
-		resultType: [ :a | a receiverType at: '@A' ];
+		resultType: [ :a | '@A' typAsTypeVariableType resolveIn: a receiverType ];
 		yourself
 ]
 
@@ -88,9 +88,9 @@ TypShaPhaOrderedDictionary >> ___at: _a ifAbsentPut: _b [
 TypShaPhaOrderedDictionary >> ___at: _a ifPresent: _b ifAbsent: _c [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
-			{(a receiverType at: '@B').
+			{('@A' typAsTypeVariableType resolveIn: a receiverType).
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {(a receiverType at: '@A')}
+				typAsFunctionTypeWithArguments: {('@A' typAsTypeVariableType resolveIn: a receiverType)}
 				result: TypUnknownType instance
 				argumentsOptional: true).
 			(BlockClosure
@@ -108,9 +108,9 @@ TypShaPhaOrderedDictionary >> ___at: _a put: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a | 
 			i = 1
-				ifTrue: [ a receiverType at: '@B' ]
-				ifFalse: [ a receiverType at: '@A' ] ];
-		resultType: [ :a | a receiverType at: '@A' ];
+				ifTrue: [ '@B' typAsTypeVariableType resolveIn: a receiverType ]
+				ifFalse: [ '@A' typAsTypeVariableType resolveIn: a receiverType ] ];
+		resultType: [ :a | '@A' typAsTypeVariableType resolveIn: a receiverType ];
 		yourself
 ]
 
@@ -120,7 +120,7 @@ TypShaPhaOrderedDictionary >> ___collect: _a [
 		argumentTypes: [ :i :a :s :r | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {(a receiverType at: '@A')}
+				typAsFunctionTypeWithArguments: {('@A' typAsTypeVariableType resolveIn: a receiverType)}
 				result: TypUnknownType instance
 				argumentsOptional: false)} typAsType ];
 		resultType: [ :a :s :r | 
@@ -135,7 +135,7 @@ TypShaPhaOrderedDictionary >> ___collect: _a [
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new
-										receiverType: (a receiverType at: '@A');
+										receiverType: ('@A' typAsTypeVariableType resolveIn: a receiverType);
 										selector: argumentNode value asSymbol;
 										argumentTypes: {};
 										argumentNodes: {};
@@ -151,7 +151,7 @@ TypShaPhaOrderedDictionary >> ___collect: _a [
 { #category : #'as yet unclassified' }
 TypShaPhaOrderedDictionary >> ___includes: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a | a receiverType at: '@A' ];
+		argumentTypes: [ :i :a | '@A' typAsTypeVariableType resolveIn: a receiverType ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
@@ -159,7 +159,7 @@ TypShaPhaOrderedDictionary >> ___includes: _a [
 { #category : #'as yet unclassified' }
 TypShaPhaOrderedDictionary >> ___includesKey: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a | a receiverType at: '@B' ];
+		argumentTypes: [ :i :a | '@B' typAsTypeVariableType resolveIn: a receiverType ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
@@ -170,7 +170,7 @@ TypShaPhaOrderedDictionary >> ___keys [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
 			Array typAsType
-				copyWithBindings: {('@A' -> (a receiverType at: '@B'))} asDictionary ];
+				copyWithBindings: {('@A' -> ('@B' typAsTypeVariableType resolveIn: a receiverType))} asDictionary ];
 		yourself
 ]
 
@@ -188,11 +188,11 @@ TypShaPhaOrderedDictionary >> ~~~, _a [
 				copyWithBindings:
 					{('@B'
 						->
-							{(a receiverType at: '@B').
-							((a argumentTypes at: 1) at: '@B')} typAsType).
+							{('@B' typAsTypeVariableType resolveIn: a receiverType).
+							('@B' typAsTypeVariableType resolveIn: (a argumentTypes at: 1))} typAsType).
 					('@A'
 						->
-							{(a receiverType at: '@A').
-							((a argumentTypes at: 1) at: '@A')} typAsType)} asDictionary ];
+							{('@A' typAsTypeVariableType resolveIn: a receiverType).
+							('@A' typAsTypeVariableType resolveIn: (a argumentTypes at: 1))} typAsType)} asDictionary ];
 		yourself
 ]

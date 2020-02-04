@@ -4,8 +4,16 @@ Class {
 	#category : #'Typer-Core-Examples-OLD'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+TypExamples >> recursion [
+	| x |
+	x := [ x ].
+	^ x
+]
+
+{ #category : #accessing }
 TypExamples >> typeAllMethods [
+	<gtExample>
 	TypLookupIndex resetAll.
 	^ Smalltalk globals allClassesAndTraits
 		flatCollect: [ :e | 

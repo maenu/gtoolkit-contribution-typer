@@ -44,6 +44,9 @@ TypUnknownType >> lookupSelector: aSymbol [
 ]
 
 { #category : #accessing }
-TypUnknownType >> printOn: aStream [
+TypUnknownType >> printOn: aStream skipping: anIdentitySet [
+	(anIdentitySet includes: self)
+		ifTrue: [ aStream << '.'.
+			^ self ].
 	aStream << '?'
 ]

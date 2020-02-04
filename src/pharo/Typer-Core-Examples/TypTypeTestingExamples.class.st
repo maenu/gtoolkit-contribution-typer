@@ -37,15 +37,6 @@ TypTypeTestingExamples >> isNil [
 ]
 
 { #category : #testing }
-TypTypeTestingExamples >> isNoType [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isNoType not.
-	^ type
-]
-
-{ #category : #testing }
 TypTypeTestingExamples >> isParametric [
 	<gtExample>
 	| type |
@@ -78,6 +69,15 @@ TypTypeTestingExamples >> isUnknown [
 	| type |
 	type := self type.
 	self assert: type isUnknown not.
+	^ type
+]
+
+{ #category : #testing }
+TypTypeTestingExamples >> isVoidType [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isVoidType not.
 	^ type
 ]
 

@@ -5,15 +5,15 @@ Class {
 }
 
 { #category : #testing }
-TypNoTypeTestingExamples >> isNoType [
+TypNoTypeTestingExamples >> isVoidType [
 	<gtExample>
 	| type |
 	type := self type.
-	self assert: type isNoType.
+	self assert: type isVoidType.
 	^ type
 ]
 
 { #category : #generated }
 TypNoTypeTestingExamples >> type [
-	^ TypNoType instance
+	^ TypVoidType instance
 ]

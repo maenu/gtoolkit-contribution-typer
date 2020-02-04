@@ -65,7 +65,7 @@ TypShaPhaProtoObject >> ___ifNil: _a ifNotNil: _b [
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new
-										receiverType: (a receiverType  at: '@A' );
+										receiverType: ('@A' typAsTypeVariableType resolveIn: a receiverType);
 										selector: argumentNode value asSymbol;
 										argumentTypes: {};
 										argumentNodes: {};

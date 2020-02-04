@@ -158,7 +158,10 @@ TypFunctionType >> isFunction [
 ]
 
 { #category : #accessing }
-TypFunctionType >> printOn: aStream [
+TypFunctionType >> printOn: aStream skipping: anIdentitySet [
+	(anIdentitySet includes: self)
+		ifTrue: [ aStream << '.'.
+			^ self ].
 	aStream << name asString.
 	aStream
 		<<
@@ -167,7 +170,7 @@ TypFunctionType >> printOn: aStream [
 				ifFalse: [ '(' ]).
 	self arguments
 		withIndexDo: [ :e :i | 
-			e printOn: aStream.
+			e printOn: aStream skipping: anIdentitySet , {self}.
 			i < argumentsSize
 				ifTrue: [ aStream << ',' ] ].
 	aStream
@@ -176,7 +179,7 @@ TypFunctionType >> printOn: aStream [
 				ifTrue: [ ']' ]
 				ifFalse: [ ')' ]).
 	aStream << '->'.
-	self result printOn: aStream
+	self result printOn: aStream skipping: anIdentitySet , {self}
 ]
 
 { #category : #accessing }

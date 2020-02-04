@@ -113,7 +113,10 @@ TypNamedType >> name [
 ]
 
 { #category : #printing }
-TypNamedType >> printOn: aStream [
+TypNamedType >> printOn: aStream skipping: anIdentitySet [
+	(anIdentitySet includes: self)
+		ifTrue: [ aStream << '.'.
+			^ self ].
 	aStream << name asString
 ]
 

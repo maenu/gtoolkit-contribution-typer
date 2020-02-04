@@ -68,7 +68,7 @@ RBProgramNode >> typTypeIn: aContext [
 		propertyAt: key
 		ifAbsent: [ "need to set property to default to unknown on recursive calls"
 			self
-				propertyAt: key put: TypUnknownType instance;
+				propertyAt: key put: (TypUnknownType instance);
 				propertyAt: key
 					put: (self typAnnotateType: (self typTypeRecursiveIn: aContext)) ]) "typCastAs TypType"
 ]
