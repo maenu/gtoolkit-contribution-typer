@@ -23,7 +23,13 @@ TypShaPhaBehavior >> ___allSubclasses [
 TypShaPhaBehavior >> ___basicNew [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
+		resultType: [ :a :s :r | 
+			(a receiverType asCollection
+				collect: [ :e | 
+					e isUnknown
+						ifTrue: [ e ]
+						ifFalse: [ e classDescription instanceSide typAsType ] ])
+				typAsType ];
 		yourself
 ]
 
@@ -140,7 +146,13 @@ TypShaPhaBehavior >> ___name [
 TypShaPhaBehavior >> ___new [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
+		resultType: [ :a :s :r | 
+			(a receiverType asCollection
+				collect: [ :e | 
+					e isUnknown
+						ifTrue: [ e ]
+						ifFalse: [ e classDescription instanceSide typAsType ] ])
+				typAsType ];
 		yourself
 ]
 

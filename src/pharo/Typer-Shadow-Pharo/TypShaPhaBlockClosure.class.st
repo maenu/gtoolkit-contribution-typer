@@ -12,7 +12,7 @@ TypShaPhaBlockClosure class >> shadowedClass [
 { #category : #accessing }
 TypShaPhaBlockClosure >> ___cull: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a | a receiverType arguments at: i ];
+		argumentTypes: [ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType instance ] ];
 		resultType: [ :a | a receiverType result ];
 		yourself
 ]
@@ -20,7 +20,7 @@ TypShaPhaBlockClosure >> ___cull: _a [
 { #category : #accessing }
 TypShaPhaBlockClosure >> ___cull: _a cull: _b [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a | a receiverType arguments at: i ];
+		argumentTypes: [ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType instance ] ];
 		resultType: [ :a | a receiverType result ];
 		yourself
 ]
@@ -28,7 +28,7 @@ TypShaPhaBlockClosure >> ___cull: _a cull: _b [
 { #category : #accessing }
 TypShaPhaBlockClosure >> ___cull: _a cull: _b cull: _c [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a | a receiverType arguments at: i ];
+		argumentTypes: [ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType instance ] ];
 		resultType: [ :a | a receiverType result ];
 		yourself
 ]
@@ -36,7 +36,7 @@ TypShaPhaBlockClosure >> ___cull: _a cull: _b cull: _c [
 { #category : #accessing }
 TypShaPhaBlockClosure >> ___cull: _a cull: _b cull: _c cull: _d [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a | a receiverType arguments at: i ];
+		argumentTypes: [ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType instance ] ];
 		resultType: [ :a | a receiverType result ];
 		yourself
 ]
