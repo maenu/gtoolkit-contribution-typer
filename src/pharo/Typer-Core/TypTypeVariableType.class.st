@@ -46,6 +46,8 @@ TypTypeVariableType >> assign: aType in: anotherType [
 	self assert: [ name ~= '@self' ].
 	(scope == anotherType)
 		ifTrue: [ ^ scope at: name put: aType ].
+	(aType isParametric and: [ aType parameters includes: name ])
+		ifTrue: [ ^ aType at: name put: aType ].
 	^ anotherType hasSuperType
 		ifTrue: [ self assign: aType in: anotherType superType ]
 		ifFalse: [ self ]
@@ -107,8 +109,10 @@ TypTypeVariableType >> printOn: aStream skipping: anIdentitySet [
 TypTypeVariableType >> resolveIn: aType [
 	name = '@self'
 		ifTrue: [ ^ aType ].
-	(scope == aType)
+	scope == aType
 		ifTrue: [ ^ scope at: name ].
+	(aType isParametric and: [ aType parameters includes: name ])
+		ifTrue: [ ^ aType at: name ].
 	^ aType hasSuperType
 		ifTrue: [ self resolveIn: aType superType ]
 		ifFalse: [ self ]

@@ -18,6 +18,11 @@ TypUnknownType >> > aType [
 	^ self ~= aType
 ]
 
+{ #category : #polymorphic }
+TypUnknownType >> arguments [
+	^ #()
+]
+
 { #category : #converting }
 TypUnknownType >> asNonNullableType [
 	^ self
@@ -49,4 +54,9 @@ TypUnknownType >> printOn: aStream skipping: anIdentitySet [
 		ifTrue: [ aStream << '.'.
 			^ self ].
 	aStream << '?'
+]
+
+{ #category : #polymorphic }
+TypUnknownType >> result [
+	^ self
 ]

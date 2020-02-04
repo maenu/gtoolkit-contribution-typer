@@ -56,6 +56,21 @@ TypUnionType >> > aType [
 				ifFalse: [ types anySatisfy: [ :e | e >= aType ] ] ]
 ]
 
+{ #category : #polymorphic }
+TypUnionType >> arguments [
+	| arguments |
+	arguments := types
+		collect: [ :e | 
+			e isFunction
+				ifTrue: [ e arguments ]
+				ifFalse: [ {} ] ].
+	^ (arguments collect: #size) max
+		timesCollect: [ :e | 
+			(arguments
+				collect: [ :f | f at: e ifAbsent: [ TypUnknownType instance ] ])
+				typAsType ]
+]
+
 { #category : #converting }
 TypUnionType >> asCollection [
 	^ self types
@@ -190,6 +205,15 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 			e printOn: aStream skipping: anIdentitySet , {self}.
 			types_ ifNotEmpty: [ aStream << ',' ] ].
 	aStream << '}'
+]
+
+{ #category : #polymorphic }
+TypUnionType >> result [
+	^ (types
+		collect: [ :e | 
+			e isFunction
+				ifTrue: [ e result ]
+				ifFalse: [ TypUnknownType instance ] ]) typAsType
 ]
 
 { #category : #accessing }
