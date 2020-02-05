@@ -14,19 +14,16 @@ TypExamples >> recursion [
 { #category : #accessing }
 TypExamples >> typeAllMethods [
 	<gtExample>
-	TypLookupIndex resetAll.
-	^ Smalltalk globals allClassesAndTraits
+	^ (Smalltalk globals allClassesAndTraits copyFrom: 1 to: 1)
 		flatCollect: [ :e | 
 			{e.
 			e classSide}
 				flatCollect: [ :f | 
 					f methods
 						collect: [ :g | 
-							(g methodClass -> g selector
+							g methodClass -> g selector
 								->
-								[ g ast
-								typTypeReset;
-								typType ] timeToRun)
-								traceCr;
-								yourself ] ] ]
+									[ g ast
+										typTypeReset;
+										typType ] timeToRun ] ] ]
 ]

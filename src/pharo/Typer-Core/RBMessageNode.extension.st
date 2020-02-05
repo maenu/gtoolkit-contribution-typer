@@ -92,7 +92,7 @@ RBMessageNode >> typTypeForResultIn: aContext [
 	<typTypeResultAs: 'TypType'>
 	| key |
 	key := #typTypeForResult -> aContext.
-	^ self
+	^ (self
 		propertyAt: key
 		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
 			| receiverType argumentTypes |
@@ -110,7 +110,7 @@ RBMessageNode >> typTypeForResultIn: aContext [
 						selector: self selector asSymbol;
 						argumentTypes: argumentTypes;
 						argumentNodes: self arguments;
-						yourself) ]	"typCastAs TypType"
+						yourself) ]) "typCastAs TypType"
 ]
 
 { #category : #'*Typer-Core' }

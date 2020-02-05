@@ -194,7 +194,7 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifAbsentPut: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
-				ifTrue: [ String typAsType ]
+				ifTrue: [ TypUnknownType instance ]
 				ifFalse: [ BlockClosure
 						typAsFunctionTypeWithArguments: {}
 						result: TypUnknownType instance
@@ -247,11 +247,8 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifPresent: _b ifAbsent: _c [
 { #category : #accessing }
 TypShaPhaRBProgramNode >> ___propertyAt: _a put: _b [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | 
-			i = 1
-				ifTrue: [ String typAsType ]
-				ifFalse: [ TypUnknownType instance asNullableType ] ];
-		resultType: [ :a :s :r | a argumentTypes at: 1 ];
+		argumentTypes: [ :i :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | a argumentTypes at: 2 ];
 		yourself
 ]
 

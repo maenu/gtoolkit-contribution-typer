@@ -25,8 +25,7 @@ TypLookupIndex class >> reset [
 { #category : #initialization }
 TypLookupIndex class >> resetAll [
 	<script>
-	self allSubclassesDo: #reset.
-	Smalltalk garbageCollect
+	self allSubclassesDo: #reset
 ]
 
 { #category : #initialization }
