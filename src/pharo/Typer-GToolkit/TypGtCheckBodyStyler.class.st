@@ -1,6 +1,6 @@
 Class {
 	#name : #TypGtCheckBodyStyler,
-	#superclass : #GtCoderBodyStyler,
+	#superclass : #GtASTStyler,
 	#instVars : [
 		'coder',
 		'markUnknowns'

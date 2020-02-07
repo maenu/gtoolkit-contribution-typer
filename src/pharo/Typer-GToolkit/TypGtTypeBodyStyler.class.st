@@ -1,6 +1,6 @@
 Class {
 	#name : #TypGtTypeBodyStyler,
-	#superclass : #GtCoderBodyStyler,
+	#superclass : #GtASTStyler,
 	#category : #'Typer-GToolkit'
 }
 
