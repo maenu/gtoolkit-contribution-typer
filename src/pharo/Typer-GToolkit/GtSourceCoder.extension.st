@@ -53,7 +53,7 @@ GtSourceCoder >> typGtBrowseToTypeWithShadow: anElement [
 
 { #category : #'*Typer-GToolkit' }
 GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
-	"<gtAstCoderAddOns: 10>"
+	<gtAstCoderAddOns: 10>
 	self completionStrategy class == GtPharoCompletionStrategy
 		ifTrue: [ completionStrategy := completionStrategy
 				typGtAsTypGtPharoCompletionStrategyFor: self ].
@@ -99,12 +99,17 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 		addMainAction: 'Types' translated
 			icon: BrGlamorousIcons inspect
 			action: [ | declaration |
-			declaration := anAddOns stylers
+			declaration := addOns stylers
 				anySatisfy: [ :e | e class == TypGtTypeDeclarationBodyStyler ].
 			declaration
-				ifTrue: [ anAddOns typGtReplaceStylerOfType: TypGtTypeDeclarationBodyStyler with: TypGtTypeValueBodyStyler new ]
-				ifFalse: [ anAddOns typGtReplaceStylerOfType: TypGtTypeValueBodyStyler with: TypGtTypeDeclarationBodyStyler new ].
-			self updateAddOns ];
+				ifTrue: [ addOns
+						typGtReplaceStylerOfType: TypGtTypeDeclarationBodyStyler
+						with: TypGtTypeValueBodyStyler new ]
+				ifFalse: [ addOns
+						typGtReplaceStylerOfType: TypGtTypeValueBodyStyler
+						with: TypGtTypeDeclarationBodyStyler new ].
+			addOns changesDo: [ :each | self addOnChanged: each ].
+			addOns clearChanges ];
 		addMainAction: 'Unknowns' translated
 			icon: BrGlamorousIcons minimize
 			action: [ | checker |
