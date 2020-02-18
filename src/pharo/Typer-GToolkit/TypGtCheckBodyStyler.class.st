@@ -36,10 +36,7 @@ TypGtCheckBodyStyler >> markUnknowns: anObject [
 
 { #category : #styling }
 TypGtCheckBodyStyler >> style: aText ast: anAst [
-	anAst
-		typType;
-		typTypeReset;
-		typType.
+	anAst typType.
 	super style: aText ast: anAst
 ]
 
@@ -114,8 +111,6 @@ TypGtCheckBodyStyler >> visitMethodNode: aNode [
 	node := aNode == coder rbAST
 		ifTrue: [ aNode ]
 		ifFalse: [ coder rbAST
-				typType;
-				typTypeReset;
 				typType;
 				yourself ].
 	node typCheHasUnknownResult

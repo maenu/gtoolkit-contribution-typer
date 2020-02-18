@@ -6,6 +6,7 @@ Metaclass >> typInfAsVariableLookupResultFor: aSymbol [
 		ifTrue: [ | type |
 			type := self
 				typInfVariableAssignedTypeFor: aSymbol
+				nodeClass: RBInstanceVariableNode
 				in: self allMethods.
 			TypVariableLookupResult new
 				type: [ type ];

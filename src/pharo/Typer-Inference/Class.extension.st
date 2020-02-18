@@ -7,6 +7,7 @@ Class >> typInfAsVariableLookupResultFor: aSymbol [
 				ifTrue: [ | type |
 					type := self
 						typInfVariableAssignedTypeFor: aSymbol
+						nodeClass: RBGlobalNode
 						in: self allMethods , self class allMethods.
 					TypVariableLookupResult new
 						type: [ type ];
@@ -15,6 +16,7 @@ Class >> typInfAsVariableLookupResultFor: aSymbol [
 				ifTrue: [ | type |
 					type := self
 						typInfVariableAssignedTypeFor: aSymbol
+						nodeClass: RBInstanceVariableNode
 						in: self allMethods.
 					TypVariableLookupResult new
 						type: [ type ];
