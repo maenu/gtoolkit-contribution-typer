@@ -38,18 +38,6 @@ TypLookupIndex >> initialize [
 		to: self
 ]
 
-{ #category : #'logging-Deprecated' }
-TypLookupIndex >> log: anError for: aLookup [
-	<typTypeArgument: 1 as: 'Error'>
-	<typTypeArgument: 2 as: 'TypLookup'>
-	'>>>>>>>>>>>>>>' traceCr.
-	self traceCr.
-	anError traceCr.
-	aLookup traceCr.
-	(anError signalerContext stackOfSize: 25) do: #traceCr.
-	'<<<<<<<<<<<<<<' traceCr
-]
-
 { #category : #initialization }
 TypLookupIndex >> reset [
 	resolver reset

@@ -46,6 +46,12 @@ TypMethodLookupIndex >> argumentTypeFor: aLookup at: anInteger [
 	^ TypUnknownType instance
 ]
 
+{ #category : #initialization }
+TypMethodLookupIndex >> reset [
+	super reset.
+	ASTCache default do: #typTypeResetAll
+]
+
 { #category : #accessing }
 TypMethodLookupIndex >> resultTypeFor: aLookup [
 	<typTypeArgument: 1 as: 'TypLookup'>

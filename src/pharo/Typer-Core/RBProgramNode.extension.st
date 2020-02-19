@@ -85,6 +85,17 @@ RBProgramNode >> typTypeReset [
 ]
 
 { #category : #'*Typer-Core' }
+RBProgramNode >> typTypeResetAll [
+	properties
+		ifNotNil: [ (properties keys
+				select: [ :e | 
+					(e isKindOf: Association)
+						and: [ (e key beginsWith: #typ) and: [ e value isKindOf: TypContext ] ] ])
+				do: [ :e | self removeProperty: e ] ].
+	self children do: #typTypeResetAll
+]
+
+{ #category : #'*Typer-Core' }
 RBProgramNode >> typTypeResetIn: aContext [
 	self removeProperty: #typType -> aContext ifAbsent: [  ].
 	self children do: [ :e | e typTypeResetIn: aContext ]
