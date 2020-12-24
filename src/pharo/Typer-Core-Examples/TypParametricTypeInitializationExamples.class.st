@@ -1,11 +1,11 @@
 Class {
-	#name : #TypParametricTypeInstantiationExamples,
-	#superclass : #TypNamedTypeInstantiationExamples,
-	#category : #'Typer-Core-Examples-Type-Instantiation'
+	#name : #TypParametricTypeInitializationExamples,
+	#superclass : #TypNamedTypeInitializationExamples,
+	#category : #'Typer-Core-Examples-Type-Initialization'
 }
 
 { #category : #accessing }
-TypParametricTypeInstantiationExamples >> typeClassDescription [
+TypParametricTypeInitializationExamples >> typeClassDescription [
 	<gtExample>
 	| type |
 	type := TypParametricType
@@ -23,7 +23,7 @@ TypParametricTypeInstantiationExamples >> typeClassDescription [
 ]
 
 { #category : #'as yet unclassified' }
-TypParametricTypeInstantiationExamples >> typeNamedWithClassDescription [
+TypParametricTypeInitializationExamples >> typeNamedWithClassDescription [
 	<gtExample>
 	| type |
 	type := TypParametricType
@@ -38,7 +38,7 @@ TypParametricTypeInstantiationExamples >> typeNamedWithClassDescription [
 ]
 
 { #category : #'as yet unclassified' }
-TypParametricTypeInstantiationExamples >> typeNamedWithoutClassDescription [
+TypParametricTypeInitializationExamples >> typeNamedWithoutClassDescription [
 	<gtExample>
 	| type |
 	type := TypParametricType

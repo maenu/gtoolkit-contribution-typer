@@ -1,11 +1,11 @@
 Class {
-	#name : #TypNamedTypeInstantiationExamples,
-	#superclass : #TypTypeInstantiationExamples,
-	#category : #'Typer-Core-Examples-Type-Instantiation'
+	#name : #TypNamedTypeInitializationExamples,
+	#superclass : #TypTypeInitializationExamples,
+	#category : #'Typer-Core-Examples-Type-Initialization'
 }
 
 { #category : #'as yet unclassified' }
-TypNamedTypeInstantiationExamples >> typeClassDescription [
+TypNamedTypeInitializationExamples >> typeClassDescription [
 	<gtExample>
 	| type |
 	type := TypNamedType classDescription: Integer.
@@ -18,7 +18,7 @@ TypNamedTypeInstantiationExamples >> typeClassDescription [
 ]
 
 { #category : #'as yet unclassified' }
-TypNamedTypeInstantiationExamples >> typeNamedWithClassDescription [
+TypNamedTypeInitializationExamples >> typeNamedWithClassDescription [
 	<gtExample>
 	| type |
 	type := TypNamedType named: 'Integer'.
@@ -31,7 +31,7 @@ TypNamedTypeInstantiationExamples >> typeNamedWithClassDescription [
 ]
 
 { #category : #'as yet unclassified' }
-TypNamedTypeInstantiationExamples >> typeNamedWithoutClassDescription [
+TypNamedTypeInitializationExamples >> typeNamedWithoutClassDescription [
 	<gtExample>
 	| type |
 	type := TypNamedType named: 'Nothing'.

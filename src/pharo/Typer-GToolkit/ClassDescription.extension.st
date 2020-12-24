@@ -16,19 +16,13 @@ ClassDescription >> typGtMethodsElementInPackage: aPackage [
 			c horizontal fitContent.
 			c vertical fitContent ];
 		border: (BlBorder paint: BrGlamorousColors defaultButtonBorderColor width: 1);
-		viewModel:
-			(BrTooltipModel new
-				stencil: [ BrLabel new
+		look:
+			(BrGlamorousWithTooltipLook
+				content: [ BrLabel new
 						look: BrGlamorousLabelLook;
 						padding: (BlInsets all: 5);
 						text: self name;
-						yourself ];
-				yourself)
-				+
-					(BrInteractiveModel new
-						addState: BrHoverModel new;
-						yourself);
-		look: BrGlamorousWithTooltipLook;
+						yourself ]);
 		addChildren: (methods collect: #typGtElement);
 		yourself
 ]
@@ -50,19 +44,13 @@ ClassDescription >> typGtVariableElementFor: aSymbol [
 		constraintsDo: [ :c | 
 			c horizontal exact: 16.	"typCastAs BlLayoutCommonConstraintsAxis"
 			c vertical exact: 16	"typCastAs BlLayoutCommonConstraintsAxis" ];
-		viewModel:
-			(BrTooltipModel new
-				stencil: [ BrLabel new
+		look:
+			(BrGlamorousWithTooltipLook
+				content: [ BrLabel new
 						look: BrGlamorousLabelLook;
 						padding: (BlInsets all: 5);
 						text: aSymbol;
-						yourself ];
-				yourself)
-				+
-					(BrInteractiveModel new
-						addState: BrHoverModel new;
-						yourself);
-		look: BrGlamorousWithTooltipLook;
+						yourself ]);
 		when: BlClickEvent do: [ :f | f target phlow spawnObject: type ];
 		yourself
 ]
@@ -90,19 +78,13 @@ ClassDescription >> typGtVariablesElementInPackage: aPackage [
 			c horizontal fitContent.
 			c vertical fitContent ];
 		border: (BlBorder paint: BrGlamorousColors defaultButtonBorderColor width: 1);
-		viewModel:
-			(BrTooltipModel new
-				stencil: [ BrLabel new
+		look:
+			(BrGlamorousWithTooltipLook
+				content: [ BrLabel new
 						look: BrGlamorousLabelLook;
 						padding: (BlInsets all: 5);
 						text: self name;
-						yourself ];
-				yourself)
-				+
-					(BrInteractiveModel new
-						addState: BrHoverModel new;
-						yourself);
-		look: BrGlamorousWithTooltipLook;
+						yourself ]);
 		addChildren: (variables collect: [ :e | self typGtVariableElementFor: e ]);
 		yourself
 ]

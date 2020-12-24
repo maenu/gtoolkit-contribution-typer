@@ -1,11 +1,11 @@
 Class {
-	#name : #TypNoTypeTestingExamples,
+	#name : #TypVoidTypeTestingExamples,
 	#superclass : #TypTypeTestingExamples,
 	#category : #'Typer-Core-Examples-Type-Testing'
 }
 
 { #category : #testing }
-TypNoTypeTestingExamples >> isVoidType [
+TypVoidTypeTestingExamples >> isVoidType [
 	<gtExample>
 	| type |
 	type := self type.
@@ -14,6 +14,6 @@ TypNoTypeTestingExamples >> isVoidType [
 ]
 
 { #category : #generated }
-TypNoTypeTestingExamples >> type [
+TypVoidTypeTestingExamples >> type [
 	^ TypVoidType instance
 ]

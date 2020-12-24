@@ -12,14 +12,19 @@ TypNilType class >> classDescription: aClassDescription [
 	self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 TypNilType class >> instance [
 	<typTypeResultAs: 'TypNilType'>
-	^ instance ifNil: [ instance := self new ]
+	^ instance ifNil: [ instance := self basicNew initialize ]
 ]
 
 { #category : #'instance creation' }
 TypNilType class >> named: aString [
+	self shouldNotImplement
+]
+
+{ #category : #'instance creation' }
+TypNilType class >> new [
 	self shouldNotImplement
 ]
 
