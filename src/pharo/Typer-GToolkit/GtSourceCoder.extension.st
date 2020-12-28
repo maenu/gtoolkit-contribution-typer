@@ -20,6 +20,22 @@ GtSourceCoder >> typGtBrowseImplementors: anElement [
 ]
 
 { #category : #'*Typer-GToolkit' }
+GtSourceCoder >> typGtBrowseImplementorsAt: anInteger [
+	<typTypeArgument: 1 as: 'Integer'>
+	| node |
+	node := self typGtRbNodeAt: anInteger.
+	node isNil
+		ifTrue: [ ^ self ].
+	node isMessage
+		ifFalse: [ ^ self ].
+	self
+		notifyObjectSpawn:
+			(TypGtCoderTypeFilter new
+				type: node receiver typType;
+				yourself) & (GtSearchImplementorsFilter selector: node selector)
+]
+
+{ #category : #'*Typer-GToolkit' }
 GtSourceCoder >> typGtBrowseToTypeWithPragma: anElement [
 	<typTypeArgument: 1 as: 'BlElement'>
 	| node |
@@ -36,6 +52,18 @@ GtSourceCoder >> typGtBrowseToTypeWithPragma: anElement [
 ]
 
 { #category : #'*Typer-GToolkit' }
+GtSourceCoder >> typGtBrowseToTypeWithPragmaAt: anInteger [
+	<typTypeArgument: 1 as: 'Integer'>
+	| node |
+	node := self typGtRbNodeAt: anInteger.
+	node isNil
+		ifTrue: [ ^ self ].
+	node typGtCanType
+		ifFalse: [ ^ self ].
+	self notifyObjectSpawn: node typGtFiltersToTypeWithPragma
+]
+
+{ #category : #'*Typer-GToolkit' }
 GtSourceCoder >> typGtBrowseToTypeWithShadow: anElement [
 	<typTypeArgument: 1 as: 'BlElement'>
 	| node |
@@ -49,6 +77,18 @@ GtSourceCoder >> typGtBrowseToTypeWithShadow: anElement [
 			(GtPhlowObjectToSpawn new
 				object: (node "typCastAs {RBMethodNode,RBMessageNode,RBInstanceVariableNode,RBGlobalNode}") typGtFiltersToTypeWithShadow;
 				sourceElement: anElement)
+]
+
+{ #category : #'*Typer-GToolkit' }
+GtSourceCoder >> typGtBrowseToTypeWithShadowAt: anInteger [
+	<typTypeArgument: 1 as: 'Integer'>
+	| node |
+	node := self typGtRbNodeAt: anInteger.
+	node isNil
+		ifTrue: [ ^ self ].
+	node typGtCanType
+		ifFalse: [ ^ self ].
+	self notifyObjectSpawn: node typGtFiltersToTypeWithShadow
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -117,6 +157,15 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 				detect: [ :e | e class == TypGtCheckBodyStyler ].
 			checker markUnknowns: checker markUnknowns not.
 			self styleText ]
+]
+
+{ #category : #'*Typer-GToolkit' }
+GtSourceCoder >> typGtRbNodeAt: anInteger [
+	<typTypeResultAs: '{!,RBProgramNode}'>
+	^ self rbAST
+		bestNodeFor: (anInteger to: anInteger)
+		on: Error
+		do: [ :f | f return ]
 ]
 
 { #category : #'*Typer-GToolkit' }

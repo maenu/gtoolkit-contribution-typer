@@ -20,6 +20,22 @@ GtMethodCoder >> typGtBrowseImplementors: anElement [
 ]
 
 { #category : #'*Typer-GToolkit' }
+GtMethodCoder >> typGtBrowseImplementorsAt: anInteger [
+	<typTypeArgument: 1 as: 'Integer'>
+	| node |
+	node := self typGtRbNodeAt: anInteger.
+	node isNil
+		ifTrue: [ ^ self ].
+	node isMethod
+		ifFalse: [ ^ self ].
+	self
+		notifyObjectSpawn:
+			(TypGtCoderTypeFilter new
+				type: self classOrMetaClass typAsType;
+				yourself) & (GtSearchImplementorsFilter selector: self selector)
+]
+
+{ #category : #'*Typer-GToolkit' }
 GtMethodCoder >> typGtInitializeMethodAddOnsFor: anAst into: anAddOns [
 	<gtAstCoderAddOns: 11>
 	anAddOns
