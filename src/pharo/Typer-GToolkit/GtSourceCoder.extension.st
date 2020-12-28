@@ -1,25 +1,6 @@
 Extension { #name : #GtSourceCoder }
 
 { #category : #'*Typer-GToolkit' }
-GtSourceCoder >> typGtBrowseImplementors: anElement [
-	<typTypeArgument: 1 as: 'BlElement'>
-	| node |
-	node := self typGtRbNodeAtCursor.
-	node isNil
-		ifTrue: [ ^ self ].
-	node isMessage
-		ifFalse: [ ^ self ].
-	anElement
-		fireEvent:
-			(GtPhlowObjectToSpawn new
-				object:
-					(TypGtCoderTypeFilter new
-						type: (node "typCastAs RBMessageNode") receiver typType;
-						yourself) & (GtSearchImplementorsFilter selector: (node "typCastAs RBMessageNode") selector);
-				sourceElement: anElement)
-]
-
-{ #category : #'*Typer-GToolkit' }
 GtSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	| node |
@@ -36,22 +17,6 @@ GtSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 ]
 
 { #category : #'*Typer-GToolkit' }
-GtSourceCoder >> typGtBrowseToTypeWithPragma: anElement [
-	<typTypeArgument: 1 as: 'BlElement'>
-	| node |
-	node := self typGtRbNodeAtCursor.
-	node isNil
-		ifTrue: [ ^ self ].
-	node typGtCanType
-		ifFalse: [ ^ self ].
-	anElement
-		fireEvent:
-			(GtPhlowObjectToSpawn new
-				object: (node "typCastAs {RBMethodNode,RBMessageNode,RBInstanceVariableNode,RBGlobalNode}") typGtFiltersToTypeWithPragma;
-				sourceElement: anElement)
-]
-
-{ #category : #'*Typer-GToolkit' }
 GtSourceCoder >> typGtBrowseToTypeWithPragmaAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	| node |
@@ -61,22 +26,6 @@ GtSourceCoder >> typGtBrowseToTypeWithPragmaAt: anInteger [
 	node typGtCanType
 		ifFalse: [ ^ self ].
 	self notifyObjectSpawn: node typGtFiltersToTypeWithPragma
-]
-
-{ #category : #'*Typer-GToolkit' }
-GtSourceCoder >> typGtBrowseToTypeWithShadow: anElement [
-	<typTypeArgument: 1 as: 'BlElement'>
-	| node |
-	node := self typGtRbNodeAtCursor.
-	node isNil
-		ifTrue: [ ^ self ].
-	node typGtCanType
-		ifFalse: [ ^ self ].
-	anElement
-		fireEvent:
-			(GtPhlowObjectToSpawn new
-				object: (node "typCastAs {RBMethodNode,RBMessageNode,RBInstanceVariableNode,RBGlobalNode}") typGtFiltersToTypeWithShadow;
-				sourceElement: anElement)
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -104,33 +53,9 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 				coder: self;
 				yourself)."
 	anAddOns
-		addShortcut:
-			(BlShortcut new
-				combination:
-					(BlKeyCombination builder
-						primary;
-						shift;
-						key: BlKeyboardKey m;
-						build);
-				action: [ :e | self typGtBrowseImplementors: e ]);
-		addShortcut:
-			(BlShortcut new
-				combination:
-					(BlKeyCombination builder
-						primary;
-						shift;
-						key: BlKeyboardKey t;
-						build);
-				action: [ :e | self typGtBrowseToTypeWithPragma: e ]);
-		addShortcut:
-			(BlShortcut new
-				combination:
-					(BlKeyCombination builder
-						primary;
-						shift;
-						key: BlKeyboardKey h;
-						build);
-				action: [ :e | self typGtBrowseToTypeWithShadow: e ]);
+		addShortcut: TypGtBrowseImplementorsShortcut new;
+		addShortcut: TypGtBrowseToTypeWithPragmaShortcut new;
+		addShortcut: TypGtBrowseToTypeWithShadowShortcut new;
 		addStyler: TypGtTypeDeclarationBodyStyler new;
 		addStyler:
 			(TypGtCheckBodyStyler new
@@ -166,15 +91,4 @@ GtSourceCoder >> typGtRbNodeAt: anInteger [
 		bestNodeFor: (anInteger to: anInteger)
 		on: Error
 		do: [ :f | f return ]
-]
-
-{ #category : #'*Typer-GToolkit' }
-GtSourceCoder >> typGtRbNodeAtCursor [
-	<typTypeResultAs: '{!,RBProgramNode}'>
-	self
-		cursorPositionDo: [ :e | 
-			[ ^ self rbAST bestNodeFor: (e to: e) ]
-				on: Error
-				do: [ :f | f return ] ].
-	^ nil
 ]
