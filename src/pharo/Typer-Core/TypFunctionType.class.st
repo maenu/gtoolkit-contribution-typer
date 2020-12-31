@@ -31,6 +31,16 @@ TypFunctionType class >> classDescription: aClassDescription argumentsSize: anIn
 ]
 
 { #category : #accessing }
+TypFunctionType class >> classDescription: aClassDescription parameters: aSequenceableCollection [
+	self shouldNotImplement
+]
+
+{ #category : #accessing }
+TypFunctionType class >> classDescription: aClassDescription parameters: aSequenceableCollection bindings: aDictionary [
+	self shouldNotImplement
+]
+
+{ #category : #accessing }
 TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOptional: aBoolean [
 	^ self
 		named: aString
@@ -50,6 +60,16 @@ TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOption
 			argumentsOptional: aBoolean
 			bindings: aBindings;
 		yourself
+]
+
+{ #category : #accessing }
+TypFunctionType class >> named: aString parameters: aSequenceableCollection [
+	self shouldNotImplement
+]
+
+{ #category : #accessing }
+TypFunctionType class >> named: aString parameters: aSequenceableCollection bindings: aDictionary [
+	self shouldNotImplement
 ]
 
 { #category : #comparing }

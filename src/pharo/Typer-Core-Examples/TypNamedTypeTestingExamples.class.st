@@ -1,8 +1,17 @@
 Class {
 	#name : #TypNamedTypeTestingExamples,
-	#superclass : #TypTypeTestingExamples,
+	#superclass : #Object,
 	#category : #'Typer-Core-Examples-Type-Testing'
 }
+
+{ #category : #testing }
+TypNamedTypeTestingExamples >> isFunction [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isFunction not.
+	^ type
+]
 
 { #category : #testing }
 TypNamedTypeTestingExamples >> isNamed [
@@ -13,7 +22,62 @@ TypNamedTypeTestingExamples >> isNamed [
 	^ type
 ]
 
+{ #category : #testing }
+TypNamedTypeTestingExamples >> isNil [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isNil not.
+	^ type
+]
+
+{ #category : #testing }
+TypNamedTypeTestingExamples >> isParametric [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isParametric not.
+	^ type
+]
+
+{ #category : #testing }
+TypNamedTypeTestingExamples >> isTypeVariable [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isTypeVariable not.
+	^ type
+]
+
+{ #category : #testing }
+TypNamedTypeTestingExamples >> isUnion [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isUnion not.
+	^ type
+]
+
+{ #category : #testing }
+TypNamedTypeTestingExamples >> isUnknown [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isUnknown not.
+	^ type
+]
+
+{ #category : #testing }
+TypNamedTypeTestingExamples >> isVoidType [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isVoidType not.
+	^ type
+]
+
 { #category : #generated }
 TypNamedTypeTestingExamples >> type [
+	<gtExample>
 	^ TypNamedType named: 'Object'
 ]

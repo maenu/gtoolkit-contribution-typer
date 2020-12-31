@@ -9,7 +9,13 @@ Class {
 
 { #category : #accessing }
 TypVoidType class >> instance [
-	^ instance ifNil: [ instance := self new ]
+	<typTypeResultAs: 'TypVoidType'>
+	^ instance ifNil: [ instance := self basicNew initialize ]
+]
+
+{ #category : #'instance creation' }
+TypVoidType class >> new [
+	self shouldNotImplement
 ]
 
 { #category : #comparing }

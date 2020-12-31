@@ -1,8 +1,35 @@
 Class {
 	#name : #TypParametricTypeTestingExamples,
-	#superclass : #TypNamedTypeTestingExamples,
+	#superclass : #Object,
 	#category : #'Typer-Core-Examples-Type-Testing'
 }
+
+{ #category : #testing }
+TypParametricTypeTestingExamples >> isFunction [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isFunction not.
+	^ type
+]
+
+{ #category : #testing }
+TypParametricTypeTestingExamples >> isNamed [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isNamed.
+	^ type
+]
+
+{ #category : #testing }
+TypParametricTypeTestingExamples >> isNil [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isNil not.
+	^ type
+]
 
 { #category : #testing }
 TypParametricTypeTestingExamples >> isParametric [
@@ -13,8 +40,45 @@ TypParametricTypeTestingExamples >> isParametric [
 	^ type
 ]
 
+{ #category : #testing }
+TypParametricTypeTestingExamples >> isTypeVariable [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isTypeVariable not.
+	^ type
+]
+
+{ #category : #testing }
+TypParametricTypeTestingExamples >> isUnion [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isUnion not.
+	^ type
+]
+
+{ #category : #testing }
+TypParametricTypeTestingExamples >> isUnknown [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isUnknown not.
+	^ type
+]
+
+{ #category : #testing }
+TypParametricTypeTestingExamples >> isVoidType [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isVoidType not.
+	^ type
+]
+
 { #category : #'as yet unclassified' }
 TypParametricTypeTestingExamples >> type [
+	<gtExample>
 	^ TypParametricType
 		named: 'OrderedCollection'
 		parameters: {'@A'}

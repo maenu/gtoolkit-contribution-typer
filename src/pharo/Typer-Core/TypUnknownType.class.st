@@ -10,7 +10,12 @@ Class {
 { #category : #accessing }
 TypUnknownType class >> instance [
 	<typTypeResultAs: 'TypUnknownType'>
-	^ instance ifNil: [ instance := self new ]
+	^ instance ifNil: [ instance := self basicNew initialize ]
+]
+
+{ #category : #'instance creation' }
+TypUnknownType class >> new [
+	self shouldNotImplement
 ]
 
 { #category : #comparing }

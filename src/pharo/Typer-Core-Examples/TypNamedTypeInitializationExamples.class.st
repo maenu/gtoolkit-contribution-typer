@@ -1,6 +1,8 @@
 Class {
 	#name : #TypNamedTypeInitializationExamples,
-	#superclass : #TypTypeInitializationExamples,
+	#superclass : #Object,
+	#traits : 'TTypAssertable',
+	#classTraits : 'TTypAssertable classTrait',
 	#category : #'Typer-Core-Examples-Type-Initialization'
 }
 

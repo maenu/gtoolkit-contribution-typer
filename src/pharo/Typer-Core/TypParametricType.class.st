@@ -8,6 +8,11 @@ Class {
 	#category : #'Typer-Core-Type'
 }
 
+{ #category : #'instance creation' }
+TypParametricType class >> classDescription: aClassDescription [
+	self shouldNotImplement
+]
+
 { #category : #accessing }
 TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection [
 	^ self
@@ -21,6 +26,11 @@ TypParametricType class >> classDescription: aClassDescription parameters: aSequ
 	^ ((self classDescription: aClassDescription) "typCastAs TypParametricType")
 		initializeParameters: aSequenceableCollection bindings: aDictionary;
 		yourself
+]
+
+{ #category : #'instance creation' }
+TypParametricType class >> named: aString [
+	self shouldNotImplement
 ]
 
 { #category : #accessing }
