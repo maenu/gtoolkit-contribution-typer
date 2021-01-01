@@ -65,15 +65,6 @@ TypParametricTypeExamples >> hasSuperType [
 	^ type
 ]
 
-{ #category : #testing }
-TypParametricTypeExamples >> isParametric [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isParametric.
-	^ type
-]
-
 { #category : #accessing }
 TypParametricTypeExamples >> printOn [
 	<gtExample>

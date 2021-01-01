@@ -111,24 +111,6 @@ TypNilTypeExamples >> hasSuperType [
 	^ type
 ]
 
-{ #category : #testing }
-TypNilTypeExamples >> isNil [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isNil.
-	^ type
-]
-
-{ #category : #testing }
-TypNilTypeExamples >> isNullable [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isNullable.
-	^ type
-]
-
 { #category : #accessing }
 TypNilTypeExamples >> printOn [
 	<gtExample>

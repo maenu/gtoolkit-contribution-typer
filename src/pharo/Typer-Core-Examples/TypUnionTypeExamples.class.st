@@ -46,15 +46,6 @@ TypUnionTypeExamples >> hasSuperType [
 	^ type
 ]
 
-{ #category : #testing }
-TypUnionTypeExamples >> isUnion [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isUnion.
-	^ type
-]
-
 { #category : #accessing }
 TypUnionTypeExamples >> printOn [
 	<gtExample>

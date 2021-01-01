@@ -69,15 +69,6 @@ TypNamedTypeExamples >> hasSuperType [
 	^ type
 ]
 
-{ #category : #testing }
-TypNamedTypeExamples >> isNamed [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isNamed.
-	^ type
-]
-
 { #category : #accessing }
 TypNamedTypeExamples >> printOn [
 	<gtExample>

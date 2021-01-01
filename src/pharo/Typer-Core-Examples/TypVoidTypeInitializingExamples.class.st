@@ -1,13 +1,13 @@
 Class {
-	#name : #TypVoidTypeInitializationExamples,
+	#name : #TypVoidTypeInitializingExamples,
 	#superclass : #Object,
 	#traits : 'TTypAssertable',
 	#classTraits : 'TTypAssertable classTrait',
-	#category : #'Typer-Core-Examples-Type-Initialization'
+	#category : #'Typer-Core-Examples-Type-Initializing'
 }
 
 { #category : #accessing }
-TypVoidTypeInitializationExamples >> typeInstance [
+TypVoidTypeInitializingExamples >> typeInstance [
 	<gtExample>
 	| type |
 	type := TypVoidType instance.

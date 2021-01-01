@@ -48,15 +48,6 @@ TypFunctionTypeExamples >> hasSuperType [
 	^ type
 ]
 
-{ #category : #testing }
-TypFunctionTypeExamples >> isFunction [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isFunction.
-	^ type
-]
-
 { #category : #accessing }
 TypFunctionTypeExamples >> printOn [
 	<gtExample>

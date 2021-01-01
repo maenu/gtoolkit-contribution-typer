@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'selfType'
 	],
-	#category : #'Typer-Core'
+	#category : #'Typer-Core-Typing'
 }
 
 { #category : #'as yet unclassified' }

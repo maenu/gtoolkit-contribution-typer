@@ -50,15 +50,6 @@ TypTypeVariableTypeExamples >> hasSuperType [
 	^ type
 ]
 
-{ #category : #testing }
-TypTypeVariableTypeExamples >> isTypeVariable [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isTypeVariable.
-	^ type
-]
-
 { #category : #accessing }
 TypTypeVariableTypeExamples >> lookupSelector [
 	<gtExample>

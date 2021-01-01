@@ -62,15 +62,6 @@ TypUnknownTypeExamples >> hasSuperType [
 	^ type
 ]
 
-{ #category : #testing }
-TypUnknownTypeExamples >> isUnknown [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isUnknown.
-	^ type
-]
-
 { #category : #accessing }
 TypUnknownTypeExamples >> lookupSelector [
 	<gtExample>

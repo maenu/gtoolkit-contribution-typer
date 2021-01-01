@@ -1,13 +1,13 @@
 Class {
-	#name : #TypUnknownTypeInitializationExamples,
+	#name : #TypUnknownTypeInitializingExamples,
 	#superclass : #Object,
 	#traits : 'TTypAssertable',
 	#classTraits : 'TTypAssertable classTrait',
-	#category : #'Typer-Core-Examples-Type-Initialization'
+	#category : #'Typer-Core-Examples-Type-Initializing'
 }
 
 { #category : #accessing }
-TypUnknownTypeInitializationExamples >> typeInstance [
+TypUnknownTypeInitializingExamples >> typeInstance [
 	<gtExample>
 	| type |
 	type := TypUnknownType instance.

@@ -1,20 +1,20 @@
 Class {
-	#name : #TypNilTypeInitializationExamples,
+	#name : #TypNilTypeInitializingExamples,
 	#superclass : #Object,
 	#traits : 'TTypAssertable',
 	#classTraits : 'TTypAssertable classTrait',
-	#category : #'Typer-Core-Examples-Type-Initialization'
+	#category : #'Typer-Core-Examples-Type-Initializing'
 }
 
 { #category : #accessing }
-TypNilTypeInitializationExamples >> typeClassDescription [
+TypNilTypeInitializingExamples >> typeClassDescription [
 	<gtExample>
 	self assert: [ TypNilType classDescription: Integer ] signals: ShouldNotImplement.
 	^ nil
 ]
 
 { #category : #accessing }
-TypNilTypeInitializationExamples >> typeInstance [
+TypNilTypeInitializingExamples >> typeInstance [
 	<gtExample>
 	| type |
 	type := TypNilType instance.
@@ -28,14 +28,14 @@ TypNilTypeInitializationExamples >> typeInstance [
 ]
 
 { #category : #accessing }
-TypNilTypeInitializationExamples >> typeNamedWithClassDescription [
+TypNilTypeInitializingExamples >> typeNamedWithClassDescription [
 	<gtExample>
 	self assert: [ TypNilType named: 'Integer' ] signals: ShouldNotImplement.
 	^ nil
 ]
 
 { #category : #accessing }
-TypNilTypeInitializationExamples >> typeNamedWithoutClassDescription [
+TypNilTypeInitializingExamples >> typeNamedWithoutClassDescription [
 	<gtExample>
 	self assert: [ TypNilType named: 'Nothing' ] signals: ShouldNotImplement.
 	^ nil

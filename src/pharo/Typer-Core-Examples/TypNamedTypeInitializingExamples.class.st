@@ -1,36 +1,16 @@
 Class {
-	#name : #TypParametricTypeInitializationExamples,
+	#name : #TypNamedTypeInitializingExamples,
 	#superclass : #Object,
 	#traits : 'TTypAssertable',
 	#classTraits : 'TTypAssertable classTrait',
-	#category : #'Typer-Core-Examples-Type-Initialization'
+	#category : #'Typer-Core-Examples-Type-Initializing'
 }
 
-{ #category : #accessing }
-TypParametricTypeInitializationExamples >> typeClassDescription [
-	<gtExample>
-	| type |
-	type := TypParametricType
-		classDescription: Integer
-		parameters: {'@A'}.
-	self assert: type name equals: 'Integer'.
-	self assert: type hasClassDescription.
-	self assert: type classDescription equals: Integer.
-	self assert: type hasSuperType.
-	self
-		assert: type superType
-		equals: (TypNamedType classDescription: Number).
-	self assert: type parameters equals: {'@A'}.
-	^ type
-]
-
 { #category : #'as yet unclassified' }
-TypParametricTypeInitializationExamples >> typeNamedWithClassDescription [
+TypNamedTypeInitializingExamples >> typeClassDescription [
 	<gtExample>
 	| type |
-	type := TypParametricType
-		named: 'Integer'
-		parameters: {'@A'}.
+	type := TypNamedType classDescription: Integer.
 	self assert: type name equals: 'Integer'.
 	self assert: type hasClassDescription.
 	self assert: type classDescription equals: Integer.
@@ -40,12 +20,23 @@ TypParametricTypeInitializationExamples >> typeNamedWithClassDescription [
 ]
 
 { #category : #'as yet unclassified' }
-TypParametricTypeInitializationExamples >> typeNamedWithoutClassDescription [
+TypNamedTypeInitializingExamples >> typeNamedWithClassDescription [
 	<gtExample>
 	| type |
-	type := TypParametricType
-		named: 'Nothing'
-		parameters: {'@A'}.
+	type := TypNamedType named: 'Integer'.
+	self assert: type name equals: 'Integer'.
+	self assert: type hasClassDescription.
+	self assert: type classDescription equals: Integer.
+	self assert: type hasSuperType.
+	self assert: type superType equals: (TypNamedType classDescription: Number).
+	^ type
+]
+
+{ #category : #'as yet unclassified' }
+TypNamedTypeInitializingExamples >> typeNamedWithoutClassDescription [
+	<gtExample>
+	| type |
+	type := TypNamedType named: 'Nothing'.
 	self assert: type name equals: 'Nothing'.
 	self assert: type hasClassDescription not.
 	self assert: [ type classDescription ] signals: AssertionFailure.

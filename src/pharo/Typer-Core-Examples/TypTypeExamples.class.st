@@ -39,16 +39,6 @@ TypTypeExamples >> asTypeCompatibleWith [
 	self subclassResponsibility
 ]
 
-{ #category : #asserting }
-TypTypeExamples >> assert: aBlock signals: aClass [
-	| signaled |
-	signaled := false.
-	aBlock
-		on: aClass
-		do: [ signaled := true ].
-	self assert: signaled
-]
-
 { #category : #'as yet unclassified' }
 TypTypeExamples >> canUnderstand [
 	<gtExample>
@@ -79,74 +69,11 @@ TypTypeExamples >> hasSuperType [
 ]
 
 { #category : #testing }
-TypTypeExamples >> isFunction [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isFunction not.
-	^ type
-]
-
-{ #category : #testing }
-TypTypeExamples >> isNamed [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isNamed not.
-	^ type
-]
-
-{ #category : #testing }
-TypTypeExamples >> isNil [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isNil not.
-	^ type
-]
-
-{ #category : #testing }
 TypTypeExamples >> isNullable [
 	<gtExample>
 	| type |
 	type := self type.
 	self assert: type isNullable not.
-	^ type
-]
-
-{ #category : #testing }
-TypTypeExamples >> isParametric [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isParametric not.
-	^ type
-]
-
-{ #category : #testing }
-TypTypeExamples >> isTypeVariable [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isTypeVariable not.
-	^ type
-]
-
-{ #category : #testing }
-TypTypeExamples >> isUnion [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isUnion not.
-	^ type
-]
-
-{ #category : #testing }
-TypTypeExamples >> isUnknown [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isUnknown not.
 	^ type
 ]
 
