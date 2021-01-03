@@ -9,6 +9,15 @@ Class {
 { #category : #accessing }
 TypParametricTypeInitializingExamples >> typeClassDescription [
 	<gtExample>
+	self
+		assert: [ TypParametricType classDescription: Integer ]
+		signals: ShouldNotImplement.
+	^ nil
+]
+
+{ #category : #accessing }
+TypParametricTypeInitializingExamples >> typeClassDescriptionParameters [
+	<gtExample>
 	| type |
 	type := TypParametricType
 		classDescription: Integer
@@ -27,6 +36,15 @@ TypParametricTypeInitializingExamples >> typeClassDescription [
 { #category : #'as yet unclassified' }
 TypParametricTypeInitializingExamples >> typeNamedWithClassDescription [
 	<gtExample>
+	self
+		assert: [ TypParametricType named: 'Integer' ]
+		signals: ShouldNotImplement.
+	^ nil
+]
+
+{ #category : #'as yet unclassified' }
+TypParametricTypeInitializingExamples >> typeNamedWithClassDescriptionParameters [
+	<gtExample>
 	| type |
 	type := TypParametricType
 		named: 'Integer'
@@ -41,6 +59,15 @@ TypParametricTypeInitializingExamples >> typeNamedWithClassDescription [
 
 { #category : #'as yet unclassified' }
 TypParametricTypeInitializingExamples >> typeNamedWithoutClassDescription [
+	<gtExample>
+	self
+		assert: [ TypParametricType named: 'Nothing' ]
+		signals: ShouldNotImplement.
+	^ nil
+]
+
+{ #category : #'as yet unclassified' }
+TypParametricTypeInitializingExamples >> typeNamedWithoutClassDescriptionParameters [
 	<gtExample>
 	| type |
 	type := TypParametricType

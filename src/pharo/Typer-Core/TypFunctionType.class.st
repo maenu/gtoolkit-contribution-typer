@@ -9,6 +9,14 @@ Class {
 }
 
 { #category : #accessing }
+TypFunctionType class >> classDescription: aClassDescription argumentsSize: anInteger [
+	^ self
+		classDescription: aClassDescription
+		argumentsSize: anInteger
+		argumentsOptional: false
+]
+
+{ #category : #accessing }
 TypFunctionType class >> classDescription: aClassDescription argumentsSize: anInteger argumentsOptional: aBoolean [
 	^ self
 		classDescription: aClassDescription
@@ -23,7 +31,8 @@ TypFunctionType class >> classDescription: aClassDescription argumentsSize: anIn
 
 { #category : #accessing }
 TypFunctionType class >> classDescription: aClassDescription argumentsSize: anInteger argumentsOptional: aBoolean bindings: aDictionary [
-	^ (self classDescription: aClassDescription)
+	^ self new
+		initializeClassDescription: aClassDescription;
 		initializeArgumentsSize: anInteger
 			argumentsOptional: aBoolean
 			bindings: aDictionary;
@@ -41,6 +50,14 @@ TypFunctionType class >> classDescription: aClassDescription parameters: aSequen
 ]
 
 { #category : #accessing }
+TypFunctionType class >> named: aString argumentsSize: anInteger [
+	^ self
+		named: aString
+		argumentsSize: anInteger
+		argumentsOptional: false
+]
+
+{ #category : #accessing }
 TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOptional: aBoolean [
 	^ self
 		named: aString
@@ -55,7 +72,8 @@ TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOption
 
 { #category : #accessing }
 TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
-	^ (self named: aString)
+	^ self new
+		initializeName: aString;
 		initializeArgumentsSize: anInteger
 			argumentsOptional: aBoolean
 			bindings: aBindings;
@@ -160,6 +178,8 @@ TypFunctionType >> initialize [
 
 { #category : #initialization }
 TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean bindings: aDictionary [
+	self assert: [ anInteger isInteger ].
+	self assert: [ anInteger >= 0 ].
 	self
 		assert: [ aDictionary associations
 				allSatisfy: [ :e | 
