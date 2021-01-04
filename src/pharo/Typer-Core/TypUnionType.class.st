@@ -62,7 +62,7 @@ TypUnionType >> arguments [
 	arguments := types
 		collect: [ :e | 
 			e isFunction
-				ifTrue: [ e arguments ]
+				ifTrue: [ (e "typCastAs TypFunctionType") arguments ]
 				ifFalse: [ {} ] ].
 	^ (arguments collect: #size) max
 		timesCollect: [ :e | 
@@ -212,7 +212,7 @@ TypUnionType >> result [
 	^ (types
 		collect: [ :e | 
 			e isFunction
-				ifTrue: [ e result ]
+				ifTrue: [ (e "typCastAs TypFunctionType") result ]
 				ifFalse: [ TypUnknownType instance ] ]) typAsType
 ]
 

@@ -34,12 +34,59 @@ TypFunctionTypeInitializingExamples >> typeClassDescriptionArgumentsSize [
 	^ type
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypFunctionTypeInitializingExamples >> typeClassDescriptionArgumentsSizeArgumentsOptional [
+	<gtExample>
+	| type |
+	type := TypFunctionType
+		classDescription: Integer
+		argumentsSize: 1
+		argumentsOptional: true.
+	self assert: type name equals: 'Integer'.
+	self assert: type hasClassDescription.
+	self assert: type classDescription equals: Integer.
+	self assert: type hasSuperType.
+	self
+		assert: type superType
+		equals: (TypNamedType classDescription: Number).
+	self assert: type parameters equals: {'@0' . '@1'}.
+	self assert: type argumentsOptional equals: true.
+	self assert: type argumentsSize equals: 1.
+	self
+		assert: type arguments
+		equals: {(TypTypeVariableType named: '@1')}.
+	self assert: type result equals: (TypTypeVariableType named: '@0').
+	^ type
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypFunctionTypeInitializingExamples >> typeClassDescriptionArgumentsSizeArgumentsOptionalBindings [
+	<gtExample>
+	| type |
+	type := TypFunctionType
+		classDescription: Integer
+		argumentsSize: 1
+		argumentsOptional: true
+		bindings:
+			{('@0' -> (TypNamedType classDescription: Boolean)).
+			('@1' -> (TypNamedType classDescription: Float))} asDictionary.
+	self assert: type name equals: 'Integer'.
+	self assert: type hasClassDescription.
+	self assert: type classDescription equals: Integer.
+	self assert: type hasSuperType.
+	self
+		assert: type superType
+		equals: (TypNamedType classDescription: Number).
+	self assert: type parameters equals: {'@0' . '@1'}.
+	self assert: type argumentsOptional equals: true.
+	self assert: type argumentsSize equals: 1.
+	self
+		assert: type arguments
+		equals: {(TypNamedType classDescription: Float)}.
+	self
+		assert: type result
+		equals: (TypNamedType classDescription: Boolean).
+	^ type
 ]
 
 { #category : #accessing }
@@ -66,12 +113,59 @@ TypFunctionTypeInitializingExamples >> typeNamedArgumentsSize [
 	^ type
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypFunctionTypeInitializingExamples >> typeNamedArgumentsSizeArgumentsOptional [
+	<gtExample>
+	| type |
+	type := TypFunctionType
+		named: 'Integer'
+		argumentsSize: 1
+		argumentsOptional: true.
+	self assert: type name equals: 'Integer'.
+	self assert: type hasClassDescription.
+	self assert: type classDescription equals: Integer.
+	self assert: type hasSuperType.
+	self
+		assert: type superType
+		equals: (TypNamedType classDescription: Number).
+	self assert: type parameters equals: {'@0' . '@1'}.
+	self assert: type argumentsOptional equals: true.
+	self assert: type argumentsSize equals: 1.
+	self
+		assert: type arguments
+		equals: {(TypTypeVariableType named: '@1')}.
+	self assert: type result equals: (TypTypeVariableType named: '@0').
+	^ type
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypFunctionTypeInitializingExamples >> typeNamedArgumentsSizeArgumentsOptionalBindings [
+	<gtExample>
+	| type |
+	type := TypFunctionType
+		named: 'Integer'
+		argumentsSize: 1
+		argumentsOptional: true
+		bindings:
+			{('@0' -> (TypNamedType classDescription: Boolean)).
+			('@1' -> (TypNamedType classDescription: Float))} asDictionary.
+	self assert: type name equals: 'Integer'.
+	self assert: type hasClassDescription.
+	self assert: type classDescription equals: Integer.
+	self assert: type hasSuperType.
+	self
+		assert: type superType
+		equals: (TypNamedType classDescription: Number).
+	self assert: type parameters equals: {'@0' . '@1'}.
+	self assert: type argumentsOptional equals: true.
+	self assert: type argumentsSize equals: 1.
+	self
+		assert: type arguments
+		equals: {(TypNamedType classDescription: Float)}.
+	self
+		assert: type result
+		equals: (TypNamedType classDescription: Boolean).
+	^ type
 ]
 
 { #category : #'as yet unclassified' }
