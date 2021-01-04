@@ -7,13 +7,13 @@ String >> typAsType [
 ]
 
 { #category : #'*Typer-Core' }
-String >> typAsTypeVariableType [
-	<typTypeResultAs: 'TypTypeVariableType'>
-	^ self typAsType "typCastAs TypTypeVariableType"
-]
-
-{ #category : #'*Typer-Core' }
 String >> typAsTypes [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	^ TypTypeParser parse: self
+]
+
+{ #category : #'*Typer-Core' }
+String >> typAsVariableType [
+	<typTypeResultAs: 'TypVariableType'>
+	^ self typAsType "typCastAs TypVariableType"
 ]

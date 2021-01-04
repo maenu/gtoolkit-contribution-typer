@@ -133,7 +133,7 @@ TypParametricType >> initializeParameters: aSequenceableCollection bindings: aDi
 	parameters
 		do: [ :e | 
 			(bindings includesKey: e)
-				ifFalse: [ bindings at: e put: e typAsTypeVariableType ] ].
+				ifFalse: [ bindings at: e put: e typAsVariableType ] ].
 	superType := nil
 ]
 

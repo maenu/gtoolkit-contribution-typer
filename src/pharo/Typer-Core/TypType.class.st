@@ -45,7 +45,7 @@ TypType >> asCollection [
 TypType >> asCompatibleWith: aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'TypType'>
-	aType isTypeVariable
+	aType isVariable
 		ifTrue: [ ^ aType ].
 	aType isUnknown
 		ifTrue: [ ^ aType ].
@@ -125,12 +125,6 @@ TypType >> isParametric [
 ]
 
 { #category : #testing }
-TypType >> isTypeVariable [
-	<typTypeResultAs: 'Boolean'>
-	^ false
-]
-
-{ #category : #testing }
 TypType >> isUnion [
 	<typTypeResultAs: 'Boolean'>
 	^ false
@@ -143,7 +137,13 @@ TypType >> isUnknown [
 ]
 
 { #category : #testing }
-TypType >> isVoidType [
+TypType >> isVariable [
+	<typTypeResultAs: 'Boolean'>
+	^ false
+]
+
+{ #category : #testing }
+TypType >> isVoid [
 	^ false
 ]
 

@@ -41,15 +41,6 @@ TypNilTypeTestingExamples >> isParametric [
 ]
 
 { #category : #testing }
-TypNilTypeTestingExamples >> isTypeVariable [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isTypeVariable not.
-	^ type
-]
-
-{ #category : #testing }
 TypNilTypeTestingExamples >> isUnion [
 	<gtExample>
 	| type |
@@ -68,11 +59,20 @@ TypNilTypeTestingExamples >> isUnknown [
 ]
 
 { #category : #testing }
-TypNilTypeTestingExamples >> isVoidType [
+TypNilTypeTestingExamples >> isVariable [
 	<gtExample>
 	| type |
 	type := self type.
-	self assert: type isVoidType not.
+	self assert: type isVariable not.
+	^ type
+]
+
+{ #category : #testing }
+TypNilTypeTestingExamples >> isVoid [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isVoid not.
 	^ type
 ]
 

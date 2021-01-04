@@ -1,5 +1,5 @@
 Class {
-	#name : #TypTypeVariableType,
+	#name : #TypVariableType,
 	#superclass : #TypType,
 	#instVars : [
 		'name',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-TypTypeVariableType class >> named: aString [
+TypVariableType class >> named: aString [
 	<typTypeArgument: 1 as: 'String'>
 	^ self new
 		initializeName: aString;
@@ -17,7 +17,7 @@ TypTypeVariableType class >> named: aString [
 ]
 
 { #category : #'instance creation' }
-TypTypeVariableType class >> named: aString superType: aType [
+TypVariableType class >> named: aString superType: aType [
 	<typTypeArgument: 1 as: 'String'>
 	<typTypeArgument: 2 as: 'TypType'>
 	^ (self named: aString)
@@ -26,7 +26,7 @@ TypTypeVariableType class >> named: aString superType: aType [
 ]
 
 { #category : #comparing }
-TypTypeVariableType >> = anObject [
+TypVariableType >> = anObject [
 	^ anObject == self
 		or: [ anObject class = self class
 				and: [ anObject name = name
@@ -34,12 +34,12 @@ TypTypeVariableType >> = anObject [
 ]
 
 { #category : #comparing }
-TypTypeVariableType >> > aType [
+TypVariableType >> > aType [
 	^ superType >= aType
 ]
 
 { #category : #accessing }
-TypTypeVariableType >> assign: aType in: anotherType [
+TypVariableType >> assign: aType in: anotherType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeArgument: 2 as: 'TypType'>
 	<typTypeResultAs: 'TypType'>
@@ -54,17 +54,17 @@ TypTypeVariableType >> assign: aType in: anotherType [
 ]
 
 { #category : #'as yet unclassified' }
-TypTypeVariableType >> canUnderstand: aSymbol [
+TypVariableType >> canUnderstand: aSymbol [
 	^ self superType canUnderstand: aSymbol
 ]
 
 { #category : #comparing }
-TypTypeVariableType >> hash [
+TypVariableType >> hash [
 	^ name hash bitXor: superType hash
 ]
 
 { #category : #initialization }
-TypTypeVariableType >> initialize [
+TypVariableType >> initialize [
 	<typTypeVariable: 'name' as: 'String'>
 	<typTypeVariable: 'superType' as: 'TypType'>
 	super initialize.
@@ -72,7 +72,7 @@ TypTypeVariableType >> initialize [
 ]
 
 { #category : #accessing }
-TypTypeVariableType >> initializeName: aString [
+TypVariableType >> initializeName: aString [
 	<typTypeArgument: 1 as: 'String'>
 	self assert: [ aString size > 1 ].
 	self assert: [ aString first = $@ ].
@@ -80,22 +80,22 @@ TypTypeVariableType >> initializeName: aString [
 ]
 
 { #category : #testing }
-TypTypeVariableType >> isTypeVariable [
+TypVariableType >> isVariable [
 	^ true
 ]
 
 { #category : #'as yet unclassified' }
-TypTypeVariableType >> lookupSelector: aSymbol [
+TypVariableType >> lookupSelector: aSymbol [
 	^ self superType lookupSelector: aSymbol
 ]
 
 { #category : #accessing }
-TypTypeVariableType >> name [
+TypVariableType >> name [
 	^ name
 ]
 
 { #category : #printing }
-TypTypeVariableType >> printOn: aStream skipping: anIdentitySet [
+TypVariableType >> printOn: aStream skipping: anIdentitySet [
 	(anIdentitySet includes: self)
 		ifTrue: [ aStream << '.'.
 			^ self ].
@@ -106,7 +106,7 @@ TypTypeVariableType >> printOn: aStream skipping: anIdentitySet [
 ]
 
 { #category : #accessing }
-TypTypeVariableType >> resolveIn: aType [
+TypVariableType >> resolveIn: aType [
 	name = '@self'
 		ifTrue: [ ^ aType ].
 	scope == aType
@@ -119,12 +119,12 @@ TypTypeVariableType >> resolveIn: aType [
 ]
 
 { #category : #accessing }
-TypTypeVariableType >> scope [
+TypVariableType >> scope [
 	^ scope
 ]
 
 { #category : #accessing }
-TypTypeVariableType >> scope: anObject [
+TypVariableType >> scope: anObject [
 	self assert: [ scope isNil ].
 	scope := anObject
 ]

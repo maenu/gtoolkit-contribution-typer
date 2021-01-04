@@ -1,5 +1,5 @@
 Class {
-	#name : #TypTypeVariableTypeInitializingExamples,
+	#name : #TypVariableTypeInitializingExamples,
 	#superclass : #Object,
 	#traits : 'TTypAssertable',
 	#classTraits : 'TTypAssertable classTrait',
@@ -7,10 +7,10 @@ Class {
 }
 
 { #category : #accessing }
-TypTypeVariableTypeInitializingExamples >> typeNamed [
+TypVariableTypeInitializingExamples >> typeNamed [
 	<gtExample>
 	| type |
-	type := TypTypeVariableType named: '@A'.
+	type := TypVariableType named: '@A'.
 	self assert: type name equals: '@A'.
 	self assert: type hasSuperType.
 	self assert: type superType equals: (TypNamedType classDescription: ProtoObject).
@@ -18,19 +18,19 @@ TypTypeVariableTypeInitializingExamples >> typeNamed [
 ]
 
 { #category : #accessing }
-TypTypeVariableTypeInitializingExamples >> typeNamedInvalid [
+TypVariableTypeInitializingExamples >> typeNamedInvalid [
 	<gtExample>
 	self
-		assert: [ TypTypeVariableType named: 'A' ]
+		assert: [ TypVariableType named: 'A' ]
 		signals: AssertionFailure.
 	^ nil
 ]
 
 { #category : #accessing }
-TypTypeVariableTypeInitializingExamples >> typeNamedSuperType [
+TypVariableTypeInitializingExamples >> typeNamedSuperType [
 	<gtExample>
 	| type |
-	type := TypTypeVariableType named: '@A' superType: (TypNamedType classDescription: String).
+	type := TypVariableType named: '@A' superType: (TypNamedType classDescription: String).
 	self assert: type name equals: '@A'.
 	self assert: type hasSuperType.
 	self assert: type superType equals: (TypNamedType classDescription: String).

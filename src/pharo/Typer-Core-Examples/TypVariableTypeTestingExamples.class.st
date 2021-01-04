@@ -1,11 +1,11 @@
 Class {
-	#name : #TypTypeVariableTypeTestingExamples,
+	#name : #TypVariableTypeTestingExamples,
 	#superclass : #Object,
 	#category : #'Typer-Core-Examples-Type-Testing'
 }
 
 { #category : #testing }
-TypTypeVariableTypeTestingExamples >> isFunction [
+TypVariableTypeTestingExamples >> isFunction [
 	<gtExample>
 	| type |
 	type := self type.
@@ -14,7 +14,7 @@ TypTypeVariableTypeTestingExamples >> isFunction [
 ]
 
 { #category : #testing }
-TypTypeVariableTypeTestingExamples >> isNamed [
+TypVariableTypeTestingExamples >> isNamed [
 	<gtExample>
 	| type |
 	type := self type.
@@ -23,7 +23,7 @@ TypTypeVariableTypeTestingExamples >> isNamed [
 ]
 
 { #category : #testing }
-TypTypeVariableTypeTestingExamples >> isNil [
+TypVariableTypeTestingExamples >> isNil [
 	<gtExample>
 	| type |
 	type := self type.
@@ -32,7 +32,7 @@ TypTypeVariableTypeTestingExamples >> isNil [
 ]
 
 { #category : #testing }
-TypTypeVariableTypeTestingExamples >> isParametric [
+TypVariableTypeTestingExamples >> isParametric [
 	<gtExample>
 	| type |
 	type := self type.
@@ -41,16 +41,7 @@ TypTypeVariableTypeTestingExamples >> isParametric [
 ]
 
 { #category : #testing }
-TypTypeVariableTypeTestingExamples >> isTypeVariable [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isTypeVariable.
-	^ type
-]
-
-{ #category : #testing }
-TypTypeVariableTypeTestingExamples >> isUnion [
+TypVariableTypeTestingExamples >> isUnion [
 	<gtExample>
 	| type |
 	type := self type.
@@ -59,7 +50,7 @@ TypTypeVariableTypeTestingExamples >> isUnion [
 ]
 
 { #category : #testing }
-TypTypeVariableTypeTestingExamples >> isUnknown [
+TypVariableTypeTestingExamples >> isUnknown [
 	<gtExample>
 	| type |
 	type := self type.
@@ -68,16 +59,25 @@ TypTypeVariableTypeTestingExamples >> isUnknown [
 ]
 
 { #category : #testing }
-TypTypeVariableTypeTestingExamples >> isVoidType [
+TypVariableTypeTestingExamples >> isVariable [
 	<gtExample>
 	| type |
 	type := self type.
-	self assert: type isVoidType not.
+	self assert: type isVariable.
+	^ type
+]
+
+{ #category : #testing }
+TypVariableTypeTestingExamples >> isVoid [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isVoid not.
 	^ type
 ]
 
 { #category : #generated }
-TypTypeVariableTypeTestingExamples >> type [
+TypVariableTypeTestingExamples >> type [
 	<gtExample>
-	^ TypTypeVariableType named: '@A'
+	^ TypVariableType named: '@A'
 ]

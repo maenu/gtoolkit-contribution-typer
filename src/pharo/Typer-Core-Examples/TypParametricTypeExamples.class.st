@@ -96,7 +96,7 @@ TypParametricTypeExamples >> type [
 
 { #category : #'as yet unclassified' }
 TypParametricTypeExamples >> typeA [
-	^ TypTypeVariableType named: '@A'
+	^ TypVariableType named: '@A'
 ]
 
 { #category : #'as yet unclassified' }

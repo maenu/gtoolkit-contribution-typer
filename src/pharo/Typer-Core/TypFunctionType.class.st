@@ -25,7 +25,7 @@ TypFunctionType class >> classDescription: aClassDescription argumentsSize: anIn
 		bindings:
 			((0 to: anInteger)
 				collect:
-					[ :e | ('@' , e asString) -> ('@' , e asString) typAsTypeVariableType ])
+					[ :e | ('@' , e asString) -> ('@' , e asString) typAsVariableType ])
 				asDictionary
 ]
 
@@ -66,7 +66,7 @@ TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOption
 		bindings:
 			((0 to: anInteger)
 				collect:
-					[ :e | ('@' , e asString) -> ('@' , e asString) typAsTypeVariableType ])
+					[ :e | ('@' , e asString) -> ('@' , e asString) typAsVariableType ])
 				asDictionary
 ]
 
@@ -184,7 +184,7 @@ TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolea
 		assert: [ aDictionary associations
 				allSatisfy: [ :e | 
 					e key = '@0'
-						or: [ e value isTypeVariable not or: [ e value name ~= '@0' ] ] ] ].
+						or: [ e value isVariable not or: [ e value name ~= '@0' ] ] ] ].
 	self
 		initializeParameters: ((0 to: anInteger) collect: [ :e | '@' , e asString ])
 		bindings: aDictionary.

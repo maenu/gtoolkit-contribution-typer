@@ -115,20 +115,20 @@ TypTypeVariableTypeExamples >> type [
 
 { #category : #requirements }
 TypTypeVariableTypeExamples >> typeA [
-	^ TypTypeVariableType named: '@A'
+	^ TypVariableType named: '@A'
 ]
 
 { #category : #requirements }
 TypTypeVariableTypeExamples >> typeAInteger [
-	^ TypTypeVariableType named: '@A' superType: self typeInteger
+	^ TypVariableType named: '@A' superType: self typeInteger
 ]
 
 { #category : #requirements }
 TypTypeVariableTypeExamples >> typeAString [
-	^ TypTypeVariableType named: '@A' superType: self typeString
+	^ TypVariableType named: '@A' superType: self typeString
 ]
 
 { #category : #requirements }
 TypTypeVariableTypeExamples >> typeB [
-	^ TypTypeVariableType named: '@B'
+	^ TypVariableType named: '@B'
 ]

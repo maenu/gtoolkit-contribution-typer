@@ -41,15 +41,6 @@ TypVoidTypeTestingExamples >> isParametric [
 ]
 
 { #category : #testing }
-TypVoidTypeTestingExamples >> isTypeVariable [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isTypeVariable not.
-	^ type
-]
-
-{ #category : #testing }
 TypVoidTypeTestingExamples >> isUnion [
 	<gtExample>
 	| type |
@@ -68,11 +59,20 @@ TypVoidTypeTestingExamples >> isUnknown [
 ]
 
 { #category : #testing }
-TypVoidTypeTestingExamples >> isVoidType [
+TypVoidTypeTestingExamples >> isVariable [
 	<gtExample>
 	| type |
 	type := self type.
-	self assert: type isVoidType.
+	self assert: type isVariable not.
+	^ type
+]
+
+{ #category : #testing }
+TypVoidTypeTestingExamples >> isVoid [
+	<gtExample>
+	| type |
+	type := self type.
+	self assert: type isVoid.
 	^ type
 ]
 

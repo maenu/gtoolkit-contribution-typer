@@ -29,8 +29,8 @@ TypFunctionTypeInitializingExamples >> typeClassDescriptionArgumentsSize [
 	self assert: type argumentsSize equals: 1.
 	self
 		assert: type arguments
-		equals: {(TypTypeVariableType named: '@1')}.
-	self assert: type result equals: (TypTypeVariableType named: '@0').
+		equals: {(TypVariableType named: '@1')}.
+	self assert: type result equals: (TypVariableType named: '@0').
 	^ type
 ]
 
@@ -54,8 +54,8 @@ TypFunctionTypeInitializingExamples >> typeClassDescriptionArgumentsSizeArgument
 	self assert: type argumentsSize equals: 1.
 	self
 		assert: type arguments
-		equals: {(TypTypeVariableType named: '@1')}.
-	self assert: type result equals: (TypTypeVariableType named: '@0').
+		equals: {(TypVariableType named: '@1')}.
+	self assert: type result equals: (TypVariableType named: '@0').
 	^ type
 ]
 
@@ -133,8 +133,8 @@ TypFunctionTypeInitializingExamples >> typeNamedArgumentsSizeArgumentsOptional [
 	self assert: type argumentsSize equals: 1.
 	self
 		assert: type arguments
-		equals: {(TypTypeVariableType named: '@1')}.
-	self assert: type result equals: (TypTypeVariableType named: '@0').
+		equals: {(TypVariableType named: '@1')}.
+	self assert: type result equals: (TypVariableType named: '@0').
 	^ type
 ]
 

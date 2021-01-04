@@ -16,7 +16,7 @@ TypUnionType class >> asTypes: aCollection [
 		flatCollect: [ :e | 
 			e isUnion
 				ifTrue: [ (e "typCastAs TypUnionType") types ]
-				ifFalse: [ {e} "typCastAs Collection<TypType>" ] ]) asSet reject: #isVoidType.
+				ifFalse: [ {e} "typCastAs Collection<TypType>" ] ]) asSet reject: #isVoid.
 	nil_ := remains includes: TypNilType instance.
 	nil_
 		ifTrue: [ remains remove: TypNilType instance ].

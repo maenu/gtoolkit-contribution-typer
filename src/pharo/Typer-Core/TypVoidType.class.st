@@ -34,7 +34,7 @@ TypVoidType >> copy [
 ]
 
 { #category : #testing }
-TypVoidType >> isVoidType [
+TypVoidType >> isVoid [
 	^ true
 ]
 
