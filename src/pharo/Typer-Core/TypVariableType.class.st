@@ -66,6 +66,7 @@ TypVariableType >> hash [
 { #category : #initialization }
 TypVariableType >> initialize [
 	<typTypeVariable: 'name' as: 'String'>
+	<typTypeVariable: 'scope' as: '{!,TypType}'>
 	<typTypeVariable: 'superType' as: 'TypType'>
 	super initialize.
 	superType := ProtoObject typAsType

@@ -154,12 +154,6 @@ TypType >> lookupSelector: aSymbol [
 	self subclassResponsibility
 ]
 
-{ #category : #copying }
-TypType >> postCopy [
-	super postCopy.
-	superType := superType copy
-]
-
 { #category : #printing }
 TypType >> printOn: aStream [
 	self printOn: aStream skipping: Set new
