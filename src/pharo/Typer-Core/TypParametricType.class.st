@@ -94,6 +94,11 @@ TypParametricType >> at: aString put: aType [
 	^ bindings at: aString put: aType
 ]
 
+{ #category : #accessing }
+TypParametricType >> bindings [
+	^ bindings
+]
+
 { #category : #copying }
 TypParametricType >> copyWithBindings: aDictionary [
 	<typTypeArgument: 1 as: 'Dictionary<String,TypType>'>

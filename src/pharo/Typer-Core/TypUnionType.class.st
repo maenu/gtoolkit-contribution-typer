@@ -162,10 +162,10 @@ TypUnionType >> lookupSelector: aSymbol [
 	^ types asIdentitySet flatCollect: [ :e | e lookupSelector: aSymbol ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypUnionType >> postCopy [
 	super postCopy.
-	types := types collect: #copy
+	types := types copy
 ]
 
 { #category : #printing }
@@ -219,5 +219,5 @@ TypUnionType >> result [
 { #category : #accessing }
 TypUnionType >> types [
 	<typTypeResultAs: 'Set<TypType>'>
-	^ types copy
+	^ types
 ]
