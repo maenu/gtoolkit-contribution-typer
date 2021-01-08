@@ -31,3 +31,35 @@ TypParametricTypeCopyingExamples >> copyIsNearlyShallow [
 	self assert: original bindings = copy bindings.
 	^ copy
 ]
+
+{ #category : #accessing }
+TypParametricTypeCopyingExamples >> copyWithBindings [
+	<gtExample>
+	| original copy |
+	original := self copyIsNearlyShallow.
+	"ensure superType"
+	original superType.
+	copy := original
+		copyWithBindings:
+			{('@A'
+				->
+					(TypNamedTypeInitializingExamples
+						typGtExampleValue: #typeNamedWithoutClassDescription))}
+				asDictionary.
+	self assert: original ~~ copy.
+	self assert: original superType isNotNil.
+	self assert: original superType == copy superType.
+	self assert: original name isNotNil.
+	self assert: original name == copy name.
+	self assert: original parameters isNotNil.
+	self assert: original parameters ~~ copy parameters.
+	self assert: original parameters = copy parameters.
+	self assert: original bindings isNotNil.
+	self assert: original bindings ~= copy bindings.
+	self
+		assert: (copy at: '@A')
+		equals:
+			(TypNamedTypeInitializingExamples
+				typGtExampleValue: #typeNamedWithoutClassDescription).
+	^ copy
+]

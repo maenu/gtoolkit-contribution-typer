@@ -102,13 +102,13 @@ TypParametricType >> bindings [
 { #category : #copying }
 TypParametricType >> copyWithBindings: aDictionary [
 	<typTypeArgument: 1 as: 'Dictionary<String,TypType>'>
-	| bindings_ |
 	self assert: [ parameters includesAll: aDictionary keys ].
-	bindings_ := bindings copy
-		addAll: aDictionary;
-		yourself.
 	^ self copy
-		initializeParameters: parameters bindings: bindings_;
+		initializeParameters: parameters copy
+			bindings:
+			(bindings copy
+				addAll: aDictionary;
+				yourself);
 		yourself
 ]
 

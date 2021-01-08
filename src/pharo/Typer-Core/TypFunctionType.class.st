@@ -160,7 +160,9 @@ TypFunctionType >> copyWithBindings: aDictionary [
 { #category : #copying }
 TypFunctionType >> copyWithResult: aType [
 	<typTypeArgument: 1 as: 'TypType'>
-	^ self copyWithBindings: {('@0' -> aType)} asDictionary
+	^ self copy
+		at: '@0' put: aType;
+		yourself
 ]
 
 { #category : #comparing }

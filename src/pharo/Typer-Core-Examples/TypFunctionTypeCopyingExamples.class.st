@@ -33,3 +33,64 @@ TypFunctionTypeCopyingExamples >> copyIsNearlyShallow [
 	self assert: original argumentsOptional == copy argumentsOptional.
 	^ copy
 ]
+
+{ #category : #accessing }
+TypFunctionTypeCopyingExamples >> copyWithBindings [
+	<gtExample>
+	| original copy |
+	original := self copyIsNearlyShallow.
+	"ensure superType"
+	original superType.
+	copy := original
+		copyWithBindings:
+			{('@0'
+				->
+					(TypNamedTypeInitializingExamples
+						typGtExampleValue: #typeNamedWithoutClassDescription))}
+				asDictionary.
+	self assert: original ~~ copy.
+	self assert: original superType isNotNil.
+	self assert: original superType == copy superType.
+	self assert: original name isNotNil.
+	self assert: original name == copy name.
+	self assert: original parameters isNotNil.
+	self assert: original parameters ~~ copy parameters.
+	self assert: original parameters = copy parameters.
+	self assert: original bindings isNotNil.
+	self assert: original bindings ~= copy bindings.
+	self
+		assert: (copy at: '@0')
+		equals:
+			(TypNamedTypeInitializingExamples
+				typGtExampleValue: #typeNamedWithoutClassDescription).
+	^ copy
+]
+
+{ #category : #accessing }
+TypFunctionTypeCopyingExamples >> copyWithResult [
+	<gtExample>
+	| original copy |
+	original := self copyIsNearlyShallow.
+	"ensure superType"
+	original superType.
+	copy := original
+		copyWithResult:
+			(TypNamedTypeInitializingExamples
+				typGtExampleValue: #typeNamedWithoutClassDescription).
+	self assert: original ~~ copy.
+	self assert: original superType isNotNil.
+	self assert: original superType == copy superType.
+	self assert: original name isNotNil.
+	self assert: original name == copy name.
+	self assert: original parameters isNotNil.
+	self assert: original parameters ~~ copy parameters.
+	self assert: original parameters = copy parameters.
+	self assert: original bindings isNotNil.
+	self assert: original bindings ~= copy bindings.
+	self
+		assert: (copy at: '@0')
+		equals:
+			(TypNamedTypeInitializingExamples
+				typGtExampleValue: #typeNamedWithoutClassDescription).
+	^ copy
+]
