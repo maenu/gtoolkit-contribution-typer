@@ -156,11 +156,11 @@ TypType >> lookupSelector: aSymbol [
 
 { #category : #printing }
 TypType >> printOn: aStream [
-	self printOn: aStream skipping: Set new
+	self printOn: aStream skipping: IdentitySet new
 ]
 
 { #category : #printing }
-TypType >> printOn: aStream skipping: aSet [
+TypType >> printOn: aStream skipping: anIdentitySet [
 	"Respects skipping set to not print recursive type infinitely."
 
 	self subclassResponsibility

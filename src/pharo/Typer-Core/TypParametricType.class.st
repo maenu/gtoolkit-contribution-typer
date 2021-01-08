@@ -164,7 +164,7 @@ TypParametricType >> printOn: aStream skipping: anIdentitySet [
 	(anIdentitySet includes: self)
 		ifTrue: [ aStream << '.'.
 			^ self ].
-	super printOn: aStream skipping: anIdentitySet.
+	aStream << name asString.
 	aStream << '<'.
 	parameters
 		withIndexDo: [ :e :i | 
