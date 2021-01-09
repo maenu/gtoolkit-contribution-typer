@@ -20,7 +20,7 @@ TypVoidType class >> new [
 
 { #category : #comparing }
 TypVoidType >> > aType [
-	self shouldNotImplement
+	^ false
 ]
 
 { #category : #'as yet unclassified' }

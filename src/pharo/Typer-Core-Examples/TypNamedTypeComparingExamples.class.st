@@ -1,0 +1,53 @@
+Class {
+	#name : #TypNamedTypeComparingExamples,
+	#superclass : #Object,
+	#category : #'Typer-Core-Examples-Type-Comparing'
+}
+
+{ #category : #accessing }
+TypNamedTypeComparingExamples >> equality [
+	<gtExample>
+	| type copy superType |
+	type := TypNamedTypeInitializingExamples
+		typGtExampleValue: #typeClassDescription.
+	copy := type copy.
+	superType := type superType.
+	self assert: type = type.
+	self assert: type = copy.
+	self assert: type hash = type hash.
+	self assert: type hash = copy hash.
+	self assert: type ~= superType.
+	self assert: type hash ~= superType hash.
+	^ type
+]
+
+{ #category : #accessing }
+TypNamedTypeComparingExamples >> monotony [
+	<gtExample>
+	| type copy superType |
+	type := TypNamedTypeInitializingExamples
+		typGtExampleValue: #typeClassDescription.
+	copy := type copy.
+	superType := type superType.
+	self assert: (type > type) not.
+	self assert: (type > copy) not.
+	self assert: (copy > type) not.
+	self assert: (type > superType) not.
+	self assert: superType > type.
+	self assert: type >= type.
+	self assert: type >= copy.
+	self assert: copy >= type.
+	self assert: (type >= superType) not.
+	self assert: superType >= type.
+	self assert: type <= type.
+	self assert: type <= copy.
+	self assert: copy <= type.
+	self assert: type <= superType.
+	self assert: (superType <= type) not.
+	self assert: (type < type) not.
+	self assert: (type < copy) not.
+	self assert: (copy < type) not.
+	self assert: type < superType.
+	self assert: (superType < type) not.
+	^ type
+]
