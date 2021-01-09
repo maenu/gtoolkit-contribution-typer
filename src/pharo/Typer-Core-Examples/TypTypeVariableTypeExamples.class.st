@@ -14,7 +14,7 @@ TypTypeVariableTypeExamples >> asTypeCompatibleWith [
 			(type asCompatibleWith: TypUnknownType instance)
 				= TypUnknownType instance.
 	self
-		assert: (type asCompatibleWith: TypNilType instance) = type asNullableType.
+		assert: (type asCompatibleWith: TypNilType instance) = type asNullable.
 	self assert: (type asCompatibleWith: self typeInteger) = type.
 	self assert: (type asCompatibleWith: self typeProtoObject) = type.
 	self assert: (type asCompatibleWith: self typeNotAClass) = TypUnknownType instance.
@@ -89,7 +89,7 @@ TypTypeVariableTypeExamples >> printOn [
 	| type |
 	type := self type.
 	self assert: type asString = '@A'.
-	self assert: type asNullableType asString = '{!,@A}'.
+	self assert: type asNullable asString = '{!,@A}'.
 	self assert: self typeB asString = '@B'.
 	self assert: self typeAInteger asString = '@A<=Integer'.
 	self assert: self typeAString asString = '@A<=String'.

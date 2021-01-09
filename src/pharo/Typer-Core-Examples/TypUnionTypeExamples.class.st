@@ -14,7 +14,7 @@ TypUnionTypeExamples >> asTypeCompatibleWith [
 			(type asCompatibleWith: TypUnknownType instance)
 				= TypUnknownType instance.
 	self
-		assert: (type asCompatibleWith: TypNilType instance) = type asNullableType.
+		assert: (type asCompatibleWith: TypNilType instance) = type asNullable.
 	self
 		assert: (type asCompatibleWith: TypNilType instance) = self typeWithNil.
 	self

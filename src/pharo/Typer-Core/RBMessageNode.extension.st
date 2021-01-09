@@ -101,8 +101,8 @@ RBMessageNode >> typTypeForResultIn: aContext [
 			argumentTypes := self typTypesForArgumentsIn: aContext.
 			((receiverType canUnderstand: self selector asSymbol) not
 				and:
-					[ receiverType asNonNullableType canUnderstand: self selector asSymbol ])
-				ifTrue: [ receiverType := receiverType asNonNullableType ].
+					[ receiverType asNonNullable canUnderstand: self selector asSymbol ])
+				ifTrue: [ receiverType := receiverType asNonNullable ].
 			TypMethodLookupIndex instance
 				resultTypeFor:
 					(TypMethodLookup new

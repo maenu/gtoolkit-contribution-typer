@@ -30,16 +30,16 @@ TypNilType class >> new [
 
 { #category : #converting }
 TypNilType >> asCompatibleWith: aType [
-	^ aType asNullableType
+	^ aType asNullable
 ]
 
 { #category : #converting }
-TypNilType >> asNonNullableType [
+TypNilType >> asNonNullable [
 	^ TypUnknownType instance
 ]
 
 { #category : #converting }
-TypNilType >> asNullableType [
+TypNilType >> asNullable [
 	^ self
 ]
 

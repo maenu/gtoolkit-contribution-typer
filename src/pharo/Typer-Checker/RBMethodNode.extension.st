@@ -78,7 +78,7 @@ RBMethodNode >> typCheHasNullableArguments [
 			i := e_ arguments detectIndex: [ :f | f == e ].
 			expected := e_ typTypeForArgumentAt: i.
 			actual := e typType.
-			(expected >= actual) not and: [ expected >= actual asNonNullableType ] ]
+			(expected >= actual) not and: [ expected >= actual asNonNullable ] ]
 ]
 
 { #category : #'*Typer-Checker' }

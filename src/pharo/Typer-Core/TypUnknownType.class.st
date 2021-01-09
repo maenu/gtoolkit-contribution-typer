@@ -29,7 +29,7 @@ TypUnknownType >> arguments [
 ]
 
 { #category : #converting }
-TypUnknownType >> asNonNullableType [
+TypUnknownType >> asNonNullable [
 	^ self
 ]
 

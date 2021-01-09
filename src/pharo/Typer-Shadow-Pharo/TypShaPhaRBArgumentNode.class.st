@@ -14,6 +14,6 @@ TypShaPhaRBArgumentNode >> ___whoDefines: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ String typAsType ];
 		resultType: [ {RBMethodNode typAsType.
-			RBBlockNode typAsType} typAsType asNullableType ];
+			RBBlockNode typAsType} typAsType asNullable ];
 		yourself
 ]

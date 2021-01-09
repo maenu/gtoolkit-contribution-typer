@@ -9,7 +9,7 @@ RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 	actual := argument typType.
 	(expected isUnknown or: [ actual isUnknown ])
 		ifTrue: [ ^ self ].
-	expected asNonNullableType >= actual asNonNullableType
+	expected asNonNullable >= actual asNonNullable
 		ifTrue: [ ^ self ].
 	(actual isFunction
 		and: [ actual result isUnknown
@@ -27,7 +27,7 @@ RBMessageNode >> typCheCheckMethod [
 	receiverType := self typTypeForReceiver.
 	receiverType isUnknown
 		ifTrue: [ ^ self ].
-	(receiverType asNonNullableType canUnderstand: self selector)
+	(receiverType asNonNullable canUnderstand: self selector)
 		ifTrue: [ ^ self ].
 	TypCheNoMethodError new
 		type: receiverType;

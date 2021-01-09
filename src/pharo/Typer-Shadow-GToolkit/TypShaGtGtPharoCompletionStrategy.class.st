@@ -48,7 +48,7 @@ TypShaGtGtPharoCompletionStrategy >> ___nodeFor: _a in: _b [
 			i = 1
 				ifTrue: [ Integer typAsType ]
 				ifFalse: [ GtPharoMethodNode typAsType ] ];
-		resultType: [ :a :s :r | GtPharoProgramNode typAsType asNullableType ];
+		resultType: [ :a :s :r | GtPharoProgramNode typAsType asNullable ];
 		yourself
 ]
 

@@ -36,7 +36,7 @@ TypShaPhaCompilationContext >> ___forSyntaxHighlighting: _a [
 { #category : #accessing }
 TypShaPhaCompilationContext >> ___requestor: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | Object typAsType asNullableType ];
+		argumentTypes: [ :i :a :s :r | Object typAsType asNullable ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

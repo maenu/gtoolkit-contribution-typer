@@ -64,7 +64,7 @@ TypShaPhaCompiledMethod >> ___pragmas [
 TypShaPhaCompiledMethod >> ___reflectiveMethod [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | ReflectiveMethod typAsType asNullableType ];
+		resultType: [ :a :s :r | ReflectiveMethod typAsType asNullable ];
 		yourself
 ]
 

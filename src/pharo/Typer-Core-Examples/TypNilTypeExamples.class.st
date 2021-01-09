@@ -5,26 +5,26 @@ Class {
 }
 
 { #category : #converting }
-TypNilTypeExamples >> asNonNullableType [
+TypNilTypeExamples >> asNonNullable [
 	<gtExample>
 	| type nonNullableType |
 	type := self type.
-	nonNullableType := type asNonNullableType.
+	nonNullableType := type asNonNullable.
 	self assert: nonNullableType isNullable not.
 	self assert: nonNullableType = TypUnknownType instance.
 	^ nonNullableType
 ]
 
 { #category : #converting }
-TypNilTypeExamples >> asNullableType [
+TypNilTypeExamples >> asNullable [
 	<gtExample>
 	| type nullableType |
 	type := self type.
-	nullableType := type asNullableType.
+	nullableType := type asNullable.
 	self assert: nullableType isNullable.
 	self assert: nullableType == type.
 	self assert: nullableType >= type.
-	self assert: nullableType asNonNullableType = TypUnknownType instance.
+	self assert: nullableType asNonNullable = TypUnknownType instance.
 	^ nullableType
 ]
 
@@ -88,8 +88,8 @@ TypNilTypeExamples >> equality [
 	self assert: type == other.
 	self assert: type hash = other hash.
 	self assert: type = other.
-	self assert: type asNullableType hash = other hash.
-	self assert: type asNullableType = other.
+	self assert: type asNullable hash = other hash.
+	self assert: type asNullable = other.
 	^ type
 ]
 
@@ -117,7 +117,7 @@ TypNilTypeExamples >> printOn [
 	| type |
 	type := self type.
 	self assert: type asString = '!'.
-	self assert: type asNullableType asString = '!'.
+	self assert: type asNullable asString = '!'.
 	^ type
 ]
 

@@ -14,7 +14,7 @@ TypUnknownTypeExamples >> asTypeCompatibleWith [
 			(type asCompatibleWith: TypUnknownType instance)
 				= TypUnknownType instance.
 	self
-		assert: (type asCompatibleWith: TypNilType instance) = type asNullableType.
+		assert: (type asCompatibleWith: TypNilType instance) = type asNullable.
 	self
 		assert:
 			(type asCompatibleWith: self typeInteger)
@@ -48,8 +48,8 @@ TypUnknownTypeExamples >> equality [
 	self assert: type == other.
 	self assert: type hash = other hash.
 	self assert: type = other.
-	self assert: type asNullableType hash ~= other hash.
-	self assert: type asNullableType ~= other.
+	self assert: type asNullable hash ~= other hash.
+	self assert: type asNullable ~= other.
 	^ type
 ]
 
@@ -91,7 +91,7 @@ TypUnknownTypeExamples >> printOn [
 	| type |
 	type := self type.
 	self assert: type asString = '?'.
-	self assert: type asNullableType asString = '{!,?}'.
+	self assert: type asNullable asString = '{!,?}'.
 	^ type
 ]
 

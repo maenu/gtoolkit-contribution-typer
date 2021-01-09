@@ -14,7 +14,7 @@ TypParametricTypeExamples >> asTypeCompatibleWith [
 			(type asCompatibleWith: TypUnknownType instance)
 				= TypUnknownType instance.
 	self
-		assert: (type asCompatibleWith: TypNilType instance) = type asNullableType.
+		assert: (type asCompatibleWith: TypNilType instance) = type asNullable.
 	self
 		assert: (type asCompatibleWith: self typeOrderedCollectionA) = self typeOrderedCollectionA.
 	self
@@ -71,7 +71,7 @@ TypParametricTypeExamples >> printOn [
 	| type |
 	type := self type.
 	self assert: type asString = 'OrderedCollection<Integer>'.
-	self assert: type asNullableType asString = '{!,OrderedCollection<Integer>}'.
+	self assert: type asNullable asString = '{!,OrderedCollection<Integer>}'.
 	^ type
 ]
 

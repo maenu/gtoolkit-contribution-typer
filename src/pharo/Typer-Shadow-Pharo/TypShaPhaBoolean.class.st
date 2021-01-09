@@ -29,7 +29,7 @@ TypShaPhaBoolean >> ___ifFalse: _a [
 				typAsFunctionTypeWithArguments: {}
 				result: TypUnknownType instance
 				argumentsOptional: false ];
-		resultType: [ :a :s :r | (a argumentTypes at: 1) result asNullableType ];
+		resultType: [ :a :s :r | (a argumentTypes at: 1) result asNullable ];
 		yourself
 ]
 
@@ -41,7 +41,7 @@ TypShaPhaBoolean >> ___ifTrue: _a [
 				typAsFunctionTypeWithArguments: {}
 				result: TypUnknownType instance
 				argumentsOptional: false ];
-		resultType: [ :a :s :r | (a argumentTypes at: 1) result asNullableType ];
+		resultType: [ :a :s :r | (a argumentTypes at: 1) result asNullable ];
 		yourself
 ]
 

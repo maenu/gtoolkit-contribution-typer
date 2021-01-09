@@ -14,7 +14,7 @@ TypNamedTypeExamples >> asTypeCompatibleWith [
 			(type asCompatibleWith: TypUnknownType instance)
 				= TypUnknownType instance.
 	self
-		assert: (type asCompatibleWith: TypNilType instance) = type asNullableType.
+		assert: (type asCompatibleWith: TypNilType instance) = type asNullable.
 	self assert: (type asCompatibleWith: self typeInteger) = type.
 	self
 		assert:
@@ -75,7 +75,7 @@ TypNamedTypeExamples >> printOn [
 	| type |
 	type := self type.
 	self assert: type asString = 'Object'.
-	self assert: type asNullableType asString = '{!,Object}'.
+	self assert: type asNullable asString = '{!,Object}'.
 	^ type
 ]
 

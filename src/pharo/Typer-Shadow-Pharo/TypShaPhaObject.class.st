@@ -166,7 +166,7 @@ TypShaPhaObject >> ~~~= _a [
 { #category : #accessing }
 TypShaPhaObject >> ~~~~= _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | TypUnknownType instance asNullableType ];
+		argumentTypes: [ :i :a :s :r | TypUnknownType instance asNullable ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]

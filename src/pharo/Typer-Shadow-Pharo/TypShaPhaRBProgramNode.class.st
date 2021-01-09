@@ -34,7 +34,7 @@ TypShaPhaRBProgramNode >> ___bestNodeFor: _a [
 		argumentTypes: [ :i :a :s :r | 
 			Interval typAsType
 				copyWithBindings: {('@A' -> Integer typAsType)} asDictionary ];
-		resultType: [ :a :s :r | RBProgramNode typAsType asNullableType ];
+		resultType: [ :a :s :r | RBProgramNode typAsType asNullable ];
 		yourself
 ]
 
@@ -167,7 +167,7 @@ TypShaPhaRBProgramNode >> ___methodNode [
 TypShaPhaRBProgramNode >> ___parent [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | RBProgramNode typAsType asNullableType ];
+		resultType: [ :a :s :r | RBProgramNode typAsType asNullable ];
 		yourself
 ]
 
@@ -308,6 +308,6 @@ TypShaPhaRBProgramNode >> ___whoDefines: _a [
 		argumentTypes: [ String typAsType ];
 		resultType: [ {RBSequenceNode typAsType.
 			RBMethodNode typAsType.
-			RBBlockNode typAsType} typAsType asNullableType ];
+			RBBlockNode typAsType} typAsType asNullable ];
 		yourself
 ]

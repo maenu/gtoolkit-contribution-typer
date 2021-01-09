@@ -10,26 +10,26 @@ TypTypeExamples class >> isAbstract [
 ]
 
 { #category : #converting }
-TypTypeExamples >> asNonNullableType [ 
+TypTypeExamples >> asNonNullable [ 
 	<gtExample>
 	| type nonNullableType |
 	type := self type.
-	nonNullableType := type asNonNullableType.
+	nonNullableType := type asNonNullable.
 	self assert: nonNullableType isNullable not.
 	self assert: nonNullableType == type.
 	^ nonNullableType
 ]
 
 { #category : #converting }
-TypTypeExamples >> asNullableType [
+TypTypeExamples >> asNullable [
 	<gtExample>
 	| type nullableType |
 	type := self type.
-	nullableType := type asNullableType.
+	nullableType := type asNullable.
 	self assert: nullableType isNullable.
 	self assert: nullableType ~~ type.
 	self assert: nullableType >= type.
-	self assert: nullableType asNonNullableType = type.
+	self assert: nullableType asNonNullable = type.
 	^ nullableType
 ]
 
@@ -57,8 +57,8 @@ TypTypeExamples >> equality [
 	self assert: type ~~ other.
 	self assert: type hash = other hash.
 	self assert: type = other.
-	self assert: type asNullableType hash ~= other hash.
-	self assert: type asNullableType ~= other.
+	self assert: type asNullable hash ~= other hash.
+	self assert: type asNullable ~= other.
 	^ type
 ]
 

@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 TypShaPhaCollection class >> ___with: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | TypUnknownType instance asNullableType ];
+		argumentTypes: [ :i :a :s :r | TypUnknownType instance asNullable ];
 		resultType: [ :a :s :r | 
 			| instanceType |
 			instanceType := a receiverType classDescription instanceSide

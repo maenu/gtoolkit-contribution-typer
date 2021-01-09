@@ -13,6 +13,6 @@ TypShaPhaRBTemporaryNode class >> shadowedClass [
 TypShaPhaRBTemporaryNode >> ___whoDefines: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ String typAsType ];
-		resultType: [ RBSequenceNode typAsType asNullableType ];
+		resultType: [ RBSequenceNode typAsType asNullable ];
 		yourself
 ]

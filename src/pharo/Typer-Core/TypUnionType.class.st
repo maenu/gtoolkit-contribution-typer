@@ -77,10 +77,17 @@ TypUnionType >> asCollection [
 ]
 
 { #category : #converting }
-TypUnionType >> asNonNullableType [
+TypUnionType >> asNonNullable [
 	^ (types includes: TypNilType instance)
 		ifTrue: [ (types copyWithout: TypNilType instance) typAsType ]
 		ifFalse: [ self ]
+]
+
+{ #category : #converting }
+TypUnionType >> asNullable [
+	^ (types includes: TypNilType instance)
+		ifTrue: [ self ]
+		ifFalse: [ (types , TypNilType instance) typAsType ]
 ]
 
 { #category : #'as yet unclassified' }
