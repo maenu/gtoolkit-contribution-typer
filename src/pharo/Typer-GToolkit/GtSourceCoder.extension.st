@@ -56,6 +56,7 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 		addShortcut: TypGtBrowseImplementorsShortcut new;
 		addShortcut: TypGtBrowseToTypeWithPragmaShortcut new;
 		addShortcut: TypGtBrowseToTypeWithShadowShortcut new;
+		addStyler: TypGtCoverageAstStyler new;
 		addStyler: TypGtTypeDeclarationBodyStyler new;
 		addStyler:
 			(TypGtCheckBodyStyler new
