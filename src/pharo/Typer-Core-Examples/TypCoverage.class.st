@@ -16,27 +16,27 @@ TypCoverage >> executed: aNode [
 TypCoverage >> initialize [
 	super initialize.
 	link := MetaLink new
-		metaObject: self;
-		selector: #executed:;
-		arguments: #(node);
+		metaObject: #node;
+		selector: #tagExecuted;
 		yourself
 ]
 
 { #category : #accessing }
 TypCoverage >> run [
 	<gtExample>
-	| package |
+	| package result |
 	package := 'Typer-Core' asPackage.
 	package methods
 		do: [ :m | 
 			m ast
 				nodesDo: [ :n | 
-					n removeProperty: #typExecuted ifAbsent: [  ].
-					(n isMessage or: n isReturn)
-						ifTrue: [ n
-								propertyAt: #typExecuted put: false;
-								link: link ] ] ].
-	(GtExplicitExampleGroup
-		withAll: 'Typer-Core-Examples' asPackage gtExamplesContained) runAll.
-	link uninstall
+					n
+						propertyAt: #tagExecuted put: false;
+						link: link ] ].
+	result := (GtExplicitExampleGroup
+		withAll:
+			('Typer-Core-Examples' asPackage gtExamplesContained
+				reject: [ :e | e methodClass = self class instanceSide ])) runAll.
+	link uninstall.
+	^ result
 ]

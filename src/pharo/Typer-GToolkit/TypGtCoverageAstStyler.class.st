@@ -8,7 +8,7 @@ Class {
 TypGtCoverageAstStyler >> visitNode: aNode [
 	super visitNode: aNode.
 	aNode
-		propertyAt: #typCoverage
+		propertyAt: #tagExecuted
 		ifPresent: [ :c | 
 			self
 				styleFrom: aNode start
@@ -19,5 +19,12 @@ TypGtCoverageAstStyler >> visitNode: aNode [
 							(c
 								ifTrue: [ Color green ]
 								ifFalse: [ Color red ]);
+						yourself)} ]
+		ifAbsent: [ self
+				styleFrom: aNode start
+				to: aNode stop
+				with:
+					{(BlTextUnderlineAttribute new
+						color: Color orange;
 						yourself)} ]
 ]
