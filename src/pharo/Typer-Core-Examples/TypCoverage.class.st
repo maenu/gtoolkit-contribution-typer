@@ -8,11 +8,6 @@ Class {
 }
 
 { #category : #accessing }
-TypCoverage >> executed: aNode [
-	aNode propertyAt: #typExecuted put: true
-]
-
-{ #category : #accessing }
 TypCoverage >> initialize [
 	super initialize.
 	link := MetaLink new
@@ -30,9 +25,11 @@ TypCoverage >> run [
 		do: [ :m | 
 			m ast
 				nodesDo: [ :n | 
-					n
-						propertyAt: #tagExecuted put: false;
-						link: link ] ].
+					n removeProperty: #tagExecuted ifAbsent: [  ].
+					n isMethod
+						ifTrue: [ n
+								propertyAt: #tagExecuted put: false;
+								link: link ] ] ].
 	result := (GtExplicitExampleGroup
 		withAll:
 			('Typer-Core-Examples' asPackage gtExamplesContained

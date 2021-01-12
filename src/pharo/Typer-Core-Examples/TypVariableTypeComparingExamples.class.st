@@ -30,25 +30,25 @@ TypVariableTypeComparingExamples >> monotony [
 	copy := type copy.
 	superType := type superType.
 	self flag: 'TODO should it really be bigger than itself?'.
-	self assert: (type > type) not.
-	self assert: (type > copy) not.
-	self assert: (copy > type) not.
-	self assert: (type > superType) not.
+	self assert: type > type.
+	self assert: type > copy.
+	self assert: copy > type.
+	self assert: type > superType.
 	self assert: superType > type.
 	self assert: type >= type.
 	self assert: type >= copy.
 	self assert: copy >= type.
-	self assert: (type >= superType) not.
+	self assert: type >= superType.
 	self assert: superType >= type.
 	self assert: type <= type.
 	self assert: type <= copy.
 	self assert: copy <= type.
 	self assert: type <= superType.
-	self assert: (superType <= type) not.
-	self assert: (type < type) not.
-	self assert: (type < copy) not.
-	self assert: (copy < type) not.
+	self assert: superType <= type.
+	self assert: type < type.
+	self assert: type < copy.
+	self assert: copy < type.
 	self assert: type < superType.
-	self assert: (superType < type) not.
+	self assert: superType < type.
 	^ type
 ]
