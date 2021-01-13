@@ -18,7 +18,7 @@ TypCoverage >> initialize [
 
 { #category : #accessing }
 TypCoverage >> link: aBlock runUnlink: aSymbol [
-	| a b |
+	| a b nodes |
 	(self class >> aSymbol) compiledMethod recompile.
 	a := self perform: aSymbol.
 	(self class >> aSymbol) ast
@@ -32,6 +32,11 @@ TypCoverage >> link: aBlock runUnlink: aSymbol [
 		on: Error
 		do: [ :e | e ].
 	link uninstall.
+	self assert: a equals: b.
+	(self class >> aSymbol) ast
+		nodesDo: [ :n | 
+			(aBlock value: n)
+				ifTrue: [ self assert: (n propertyAt: #tagExecuted) ] ].
 	^ {a.
 	b}
 ]
@@ -47,14 +52,16 @@ TypCoverage >> metaLinkLongNestedLiteralArray [
 ]
 
 { #category : #accessing }
-TypCoverage >> metaLinkMessageLiteralArgument [
-	^ (self perform: #asString) , 'xxx'
-]
-
-{ #category : #accessing }
 TypCoverage >> metaLinkPragma [
 	<tudelu>
 	^ 4
+]
+
+{ #category : #accessing }
+TypCoverage >> metaLinkProblematicMessages [
+	| n |
+	n := 5.
+	^ {} == 2 and: [ {} = 3 and: [ n > 6 ] ]
 ]
 
 { #category : #accessing }
@@ -68,7 +75,9 @@ TypCoverage >> run [
 			m ast
 				nodesDo: [ :n | 
 					n removeProperty: #tagExecuted ifAbsent: [  ].
-					(n isMessage and: [ (#(#= #== #>) includes: n selector) not ])
+					((n isMessage and: [ #(#= #== #>) includes: n selector ]) not
+						and: [ n isPragma not
+								and: [ n isDynamicArray not and: [ n isLiteralArray not ] ] ])
 						ifTrue: [ n
 								propertyAt: #tagExecuted put: false;
 								link: link ] ] ].
@@ -97,17 +106,17 @@ TypCoverage >> runMetaLinkLongNestedLiteralArray [
 ]
 
 { #category : #accessing }
-TypCoverage >> runMetaLinkMessageLiteralArgument [
-	<gtExample>
-	^ self
-		link: [ :n | n isMessage ]
-		runUnlink: #metaLinkMessageLiteralArgument
-]
-
-{ #category : #accessing }
 TypCoverage >> runMetaLinkPragma [
 	<gtExample>
 	^ self
 		link: [ :n | n isPragma ]
 		runUnlink: #metaLinkPragma
+]
+
+{ #category : #accessing }
+TypCoverage >> runMetaLinkProblematicMessages [
+	<gtExample>
+	^ self
+		link: [ :n | n isMessage ]
+		runUnlink: #metaLinkProblematicMessages
 ]
