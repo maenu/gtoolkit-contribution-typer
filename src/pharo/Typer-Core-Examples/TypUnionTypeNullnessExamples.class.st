@@ -8,8 +8,7 @@ Class {
 TypUnionTypeNullnessExamples >> asNonNullable [
 	<gtExample>
 	| type nonNullable |
-	type := TypUnionTypeInitializingExamples
-		typGtExampleValue: #typesMany.
+	type := TypUnionTypeInitializingExamples new typesMany.
 	nonNullable := type asNonNullable.
 	self assert: nonNullable == TypUnknownType instance.
 	^ nonNullable
@@ -19,8 +18,7 @@ TypUnionTypeNullnessExamples >> asNonNullable [
 TypUnionTypeNullnessExamples >> asNullable [
 	<gtExample>
 	| type nullable |
-	type := TypUnionTypeInitializingExamples
-		typGtExampleValue: #typesMany.
+	type := TypUnionTypeInitializingExamples new typesMany.
 	nullable := type asNullable.
 	self assert: nullable == type.
 	^ nullable
@@ -30,8 +28,7 @@ TypUnionTypeNullnessExamples >> asNullable [
 TypUnionTypeNullnessExamples >> isNullable [
 	<gtExample>
 	| type nonNullable |
-	type := TypUnionTypeInitializingExamples
-		typGtExampleValue: #typesMany.
+	type := TypUnionTypeInitializingExamples new typesMany.
 	nonNullable := type asNonNullable.
 	self assert: type isNullable.
 	self assert: nonNullable isNullable not.

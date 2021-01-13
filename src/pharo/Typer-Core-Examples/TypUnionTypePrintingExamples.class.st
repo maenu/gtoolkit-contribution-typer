@@ -8,8 +8,7 @@ Class {
 TypUnionTypePrintingExamples >> asString [
 	<gtExample>
 	| type |
-	type := TypUnionTypeInitializingExamples
-		typGtExampleValue: #typesMany.
+	type := TypUnionTypeInitializingExamples new typesMany.
 	self assert: type asString equals: '{!,?}'.
 	^ type
 ]

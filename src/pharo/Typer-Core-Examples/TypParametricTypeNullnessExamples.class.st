@@ -8,8 +8,7 @@ Class {
 TypParametricTypeNullnessExamples >> asNonNullable [
 	<gtExample>
 	| type nonNullable |
-	type := TypParametricTypeInitializingExamples
-		typGtExampleValue: #typeClassDescriptionParameters.
+	type := TypParametricTypeInitializingExamples new typeClassDescriptionParameters.
 	nonNullable := type asNonNullable.
 	self assert: nonNullable == type.
 	^ nonNullable
@@ -19,8 +18,7 @@ TypParametricTypeNullnessExamples >> asNonNullable [
 TypParametricTypeNullnessExamples >> asNullable [
 	<gtExample>
 	| type nullable |
-	type := TypParametricTypeInitializingExamples
-		typGtExampleValue: #typeClassDescriptionParameters.
+	type := TypParametricTypeInitializingExamples new typeClassDescriptionParameters.
 	nullable := type asNullable.
 	self
 		assert:
@@ -37,8 +35,7 @@ TypParametricTypeNullnessExamples >> asNullable [
 TypParametricTypeNullnessExamples >> isNullable [
 	<gtExample>
 	| type nullable |
-	type := TypParametricTypeInitializingExamples
-		typGtExampleValue: #typeClassDescriptionParameters.
+	type := TypParametricTypeInitializingExamples new typeClassDescriptionParameters.
 	nullable := type asNullable.
 	self assert: type isNullable not.
 	self assert: nullable isNullable.

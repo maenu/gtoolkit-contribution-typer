@@ -8,8 +8,7 @@ Class {
 TypVoidTypePrintingExamples >> asString [
 	<gtExample>
 	| type |
-	type := TypVoidTypeInitializingExamples
-		typGtExampleValue: #typeInstance.
+	type := TypVoidTypeInitializingExamples new typeInstance.
 	self assert: type asString equals: 'void'.
 	^ type
 ]

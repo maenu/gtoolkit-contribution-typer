@@ -8,8 +8,7 @@ Class {
 TypFunctionTypePrintingExamples >> asString [
 	<gtExample>
 	| type |
-	type := TypFunctionTypeInitializingExamples
-		typGtExampleValue: #typeClassDescriptionArgumentsSize.
+	type := TypFunctionTypeInitializingExamples new typeClassDescriptionArgumentsSize.
 	self assert: type asString equals: 'Integer(@1)->@0'.
 	^ type
 ]
@@ -18,8 +17,7 @@ TypFunctionTypePrintingExamples >> asString [
 TypFunctionTypePrintingExamples >> asStringRecursive [
 	<gtExample>
 	| type |
-	type := TypFunctionTypeInitializingExamples
-		typGtExampleValue: #typeClassDescriptionArgumentsSize.
+	type := TypFunctionTypeInitializingExamples new typeClassDescriptionArgumentsSize.
 	type at: '@1' put: type.
 	self assert: type asString equals: 'Integer(.)->@0'.
 	^ type

@@ -8,8 +8,7 @@ Class {
 TypNamedTypeComparingExamples >> equality [
 	<gtExample>
 	| type copy superType |
-	type := TypNamedTypeInitializingExamples
-		typGtExampleValue: #typeClassDescription.
+	type := TypNamedTypeInitializingExamples new typeClassDescription.
 	copy := type copy.
 	superType := type superType.
 	self assert: type = type.
@@ -25,8 +24,7 @@ TypNamedTypeComparingExamples >> equality [
 TypNamedTypeComparingExamples >> monotony [
 	<gtExample>
 	| type copy superType |
-	type := TypNamedTypeInitializingExamples
-		typGtExampleValue: #typeClassDescription.
+	type := TypNamedTypeInitializingExamples new typeClassDescription.
 	copy := type copy.
 	superType := type superType.
 	self assert: (type > type) not.

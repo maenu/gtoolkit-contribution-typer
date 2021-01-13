@@ -8,8 +8,7 @@ Class {
 TypNilTypeComparingExamples >> equality [
 	<gtExample>
 	| type superType |
-	type := TypNilTypeInitializingExamples
-		typGtExampleValue: #typeInstance.
+	type := TypNilTypeInitializingExamples new typeInstance.
 	superType := type superType.
 	self assert: type = type.
 	self assert: type hash = type hash.
@@ -22,8 +21,7 @@ TypNilTypeComparingExamples >> equality [
 TypNilTypeComparingExamples >> monotony [
 	<gtExample>
 	| type superType |
-	type := TypNilTypeInitializingExamples
-		typGtExampleValue: #typeInstance.
+	type := TypNilTypeInitializingExamples new typeInstance.
 	superType := type superType.
 	self assert: (type > type) not.
 	self assert: (type > superType) not.

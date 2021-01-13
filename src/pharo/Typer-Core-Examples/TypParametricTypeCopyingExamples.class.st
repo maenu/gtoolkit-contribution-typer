@@ -8,13 +8,11 @@ Class {
 TypParametricTypeCopyingExamples >> copyIsNearlyShallow [
 	<gtExample>
 	| original copy |
-	original := TypParametricTypeInitializingExamples
-		typGtExampleValue: #typeClassDescriptionParameters.
+	original := TypParametricTypeInitializingExamples new typeClassDescriptionParameters.
 	original
 		at: original parameters first
 		put:
-			(TypNamedTypeInitializingExamples
-				typGtExampleValue: #typeClassDescription).
+			(TypNamedTypeInitializingExamples new typeClassDescription).
 	"ensure superType"
 	original superType.
 	copy := original copy.
@@ -43,8 +41,7 @@ TypParametricTypeCopyingExamples >> copyWithBindings [
 		copyWithBindings:
 			{('@A'
 				->
-					(TypNamedTypeInitializingExamples
-						typGtExampleValue: #typeNamedWithoutClassDescription))}
+					(TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription))}
 				asDictionary.
 	self assert: original ~~ copy.
 	self assert: original superType isNotNil.
@@ -59,7 +56,6 @@ TypParametricTypeCopyingExamples >> copyWithBindings [
 	self
 		assert: (copy at: '@A')
 		equals:
-			(TypNamedTypeInitializingExamples
-				typGtExampleValue: #typeNamedWithoutClassDescription).
+			(TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription).
 	^ copy
 ]

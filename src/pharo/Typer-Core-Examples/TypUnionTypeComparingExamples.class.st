@@ -8,11 +8,9 @@ Class {
 TypUnionTypeComparingExamples >> equality [
 	<gtExample>
 	| type copy other |
-	type := TypUnionTypeInitializingExamples
-		typGtExampleValue: #typesMany.
+	type := TypUnionTypeInitializingExamples new typesMany.
 	copy := type copy.
-	other := TypNamedTypeInitializingExamples
-		typGtExampleValue: #typeClassDescription.
+	other := TypNamedTypeInitializingExamples new typeClassDescription.
 	self assert: type = type.
 	self assert: type = copy.
 	self assert: type hash = type hash.

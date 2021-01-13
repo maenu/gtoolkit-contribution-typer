@@ -8,8 +8,7 @@ Class {
 TypUnionTypeCopyingExamples >> copyIsNearlyShallow [
 	<gtExample>
 	| original copy |
-	original := TypUnionTypeInitializingExamples
-		typGtExampleValue: #typesMany.
+	original := TypUnionTypeInitializingExamples new typesMany.
 	copy := original copy.
 	self assert: original ~~ copy.
 	self assert: original hasSuperType not.

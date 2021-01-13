@@ -8,15 +8,12 @@ Class {
 TypVariableTypeCopyingExamples >> copyIsShallow [
 	<gtExample>
 	| original copy |
-	original := TypVariableTypeInitializingExamples
-		typGtExampleValue: #typeNamed.
+	original := TypVariableTypeInitializingExamples new typeNamed.
 	original
 		scope:
-			(TypParametricTypeInitializingExamples
-				typGtExampleValue: #typeClassDescriptionParameters);
+			(TypParametricTypeInitializingExamples new typeClassDescriptionParameters);
 		superType:
-			(TypNamedTypeInitializingExamples
-				typGtExampleValue: #typeClassDescription).
+			(TypNamedTypeInitializingExamples new typeClassDescription).
 	copy := original copy.
 	self assert: original ~~ copy.
 	self assert: original superType isNotNil.

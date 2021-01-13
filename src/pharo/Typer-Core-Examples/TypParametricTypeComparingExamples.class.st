@@ -8,8 +8,7 @@ Class {
 TypParametricTypeComparingExamples >> equality [
 	<gtExample>
 	| type copy superType |
-	type := TypParametricTypeInitializingExamples
-		typGtExampleValue: #typeClassDescriptionParameters.
+	type := TypParametricTypeInitializingExamples new typeClassDescriptionParameters.
 	copy := type copy.
 	superType := type superType.
 	self assert: type = type.
@@ -25,8 +24,7 @@ TypParametricTypeComparingExamples >> equality [
 TypParametricTypeComparingExamples >> monotony [
 	<gtExample>
 	| type copy superType |
-	type := TypParametricTypeInitializingExamples
-		typGtExampleValue: #typeClassDescriptionParameters.
+	type := TypParametricTypeInitializingExamples new typeClassDescriptionParameters.
 	copy := type copy.
 	superType := type superType.
 	self assert: (type > type) not.

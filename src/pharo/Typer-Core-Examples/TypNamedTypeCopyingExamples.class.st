@@ -8,8 +8,7 @@ Class {
 TypNamedTypeCopyingExamples >> copyIsShallow [
 	<gtExample>
 	| original copy |
-	original := TypNamedTypeInitializingExamples
-		typGtExampleValue: #typeClassDescription.
+	original := TypNamedTypeInitializingExamples new typeClassDescription.
 	"ensure superType"
 	original superType.
 	copy := original copy.

@@ -8,8 +8,7 @@ Class {
 TypVariableTypeNullnessExamples >> asNonNullable [
 	<gtExample>
 	| type nonNullable |
-	type := TypVariableTypeInitializingExamples
-		typGtExampleValue: #typeNamed.
+	type := TypVariableTypeInitializingExamples new typeNamed.
 	nonNullable := type asNonNullable.
 	self assert: nonNullable == type.
 	^ nonNullable
@@ -19,8 +18,7 @@ TypVariableTypeNullnessExamples >> asNonNullable [
 TypVariableTypeNullnessExamples >> asNullable [
 	<gtExample>
 	| type nullable |
-	type := TypVariableTypeInitializingExamples
-		typGtExampleValue: #typeNamed.
+	type := TypVariableTypeInitializingExamples new typeNamed.
 	nullable := type asNullable.
 	self
 		assert:
@@ -37,8 +35,7 @@ TypVariableTypeNullnessExamples >> asNullable [
 TypVariableTypeNullnessExamples >> isNullable [
 	<gtExample>
 	| type nullable |
-	type := TypVariableTypeInitializingExamples
-		typGtExampleValue: #typeNamed.
+	type := TypVariableTypeInitializingExamples new typeNamed.
 	nullable := type asNullable.
 	self assert: type isNullable not.
 	self assert: nullable isNullable.

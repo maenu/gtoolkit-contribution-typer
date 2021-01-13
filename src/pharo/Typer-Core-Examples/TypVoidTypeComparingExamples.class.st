@@ -8,10 +8,8 @@ Class {
 TypVoidTypeComparingExamples >> equality [
 	<gtExample>
 	| type other |
-	type := TypVoidTypeInitializingExamples
-		typGtExampleValue: #typeInstance.
-	other := TypNamedTypeInitializingExamples
-		typGtExampleValue: #typeClassDescription.
+	type := TypVoidTypeInitializingExamples new typeInstance.
+	other := TypNamedTypeInitializingExamples new typeClassDescription.
 	self assert: type = type.
 	self assert: type hash = type hash.
 	self assert: type ~= other.
@@ -23,10 +21,8 @@ TypVoidTypeComparingExamples >> equality [
 TypVoidTypeComparingExamples >> monotony [
 	<gtExample>
 	| type other |
-	type := TypVoidTypeInitializingExamples
-		typGtExampleValue: #typeInstance.
-	other := TypNamedTypeInitializingExamples
-		typGtExampleValue: #typeClassDescription.
+	type := TypVoidTypeInitializingExamples new typeInstance.
+	other := TypNamedTypeInitializingExamples new typeClassDescription.
 	self assert: (type > type) not.
 	self assert: (type > other) not.
 	self assert: (other > type) not.

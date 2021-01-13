@@ -8,13 +8,11 @@ Class {
 TypFunctionTypeCopyingExamples >> copyIsNearlyShallow [
 	<gtExample>
 	| original copy |
-	original := TypFunctionTypeInitializingExamples
-		typGtExampleValue: #typeClassDescriptionArgumentsSize.
+	original := TypFunctionTypeInitializingExamples new typeClassDescriptionArgumentsSize.
 	original
 		at: original parameters first
 		put:
-			(TypNamedTypeInitializingExamples
-				typGtExampleValue: #typeClassDescription).
+			(TypNamedTypeInitializingExamples new typeClassDescription).
 	"ensure superType"
 	original superType.
 	copy := original copy.
@@ -45,8 +43,7 @@ TypFunctionTypeCopyingExamples >> copyWithBindings [
 		copyWithBindings:
 			{('@0'
 				->
-					(TypNamedTypeInitializingExamples
-						typGtExampleValue: #typeNamedWithoutClassDescription))}
+					(TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription))}
 				asDictionary.
 	self assert: original ~~ copy.
 	self assert: original superType isNotNil.
@@ -61,8 +58,7 @@ TypFunctionTypeCopyingExamples >> copyWithBindings [
 	self
 		assert: (copy at: '@0')
 		equals:
-			(TypNamedTypeInitializingExamples
-				typGtExampleValue: #typeNamedWithoutClassDescription).
+			(TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription).
 	^ copy
 ]
 
@@ -75,8 +71,7 @@ TypFunctionTypeCopyingExamples >> copyWithResult [
 	original superType.
 	copy := original
 		copyWithResult:
-			(TypNamedTypeInitializingExamples
-				typGtExampleValue: #typeNamedWithoutClassDescription).
+			(TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription).
 	self assert: original ~~ copy.
 	self assert: original superType isNotNil.
 	self assert: original superType == copy superType.
@@ -90,7 +85,6 @@ TypFunctionTypeCopyingExamples >> copyWithResult [
 	self
 		assert: (copy at: '@0')
 		equals:
-			(TypNamedTypeInitializingExamples
-				typGtExampleValue: #typeNamedWithoutClassDescription).
+			(TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription).
 	^ copy
 ]

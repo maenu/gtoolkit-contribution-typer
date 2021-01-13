@@ -8,8 +8,7 @@ Class {
 TypFunctionTypeComparingExamples >> equality [
 	<gtExample>
 	| type copy superType |
-	type := TypFunctionTypeInitializingExamples
-		typGtExampleValue: #typeClassDescriptionArgumentsSize.
+	type := TypFunctionTypeInitializingExamples new typeClassDescriptionArgumentsSize.
 	copy := type copy.
 	superType := type superType.
 	self assert: type = type.
@@ -25,8 +24,7 @@ TypFunctionTypeComparingExamples >> equality [
 TypFunctionTypeComparingExamples >> monotony [
 	<gtExample>
 	| type copy superType |
-	type := TypFunctionTypeInitializingExamples
-		typGtExampleValue: #typeClassDescriptionArgumentsSize.
+	type := TypFunctionTypeInitializingExamples new typeClassDescriptionArgumentsSize.
 	copy := type copy.
 	superType := type superType.
 	self assert: (type > type) not.

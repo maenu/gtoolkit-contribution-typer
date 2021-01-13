@@ -8,8 +8,7 @@ Class {
 TypVoidTypeCopyingExamples >> copyIsSame [
 	<gtExample>
 	| original copy |
-	original := TypVoidTypeInitializingExamples
-		typGtExampleValue: #typeInstance.
+	original := TypVoidTypeInitializingExamples new typeInstance.
 	copy := original copy.
 	self assert: original == copy.
 	^ copy
