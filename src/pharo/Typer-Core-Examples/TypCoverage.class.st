@@ -62,12 +62,13 @@ TypCoverage >> run [
 	<gtExample>
 	| package result |
 	package := 'Typer-Core' asPackage.
+	package methods do: #recompile.
 	package methods
 		do: [ :m | 
 			m ast
 				nodesDo: [ :n | 
 					n removeProperty: #tagExecuted ifAbsent: [  ].
-					n isMessage
+					(n isMessage and: [ (#(#= #== #>) includes: n selector) not ])
 						ifTrue: [ n
 								propertyAt: #tagExecuted put: false;
 								link: link ] ] ].
