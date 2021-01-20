@@ -1,6 +1,38 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-GToolkit' }
+ClassDescription >> typGtMethodCoverage [
+	^ self methods , self classSide methods
+		groupedBy: [ :e | 
+			ASTCache default
+				at: e
+				ifPresent: [ :f | f propertyAt: #tagExecuted ifAbsent: [ false ] ]
+				ifAbsent: [ false ] ]
+]
+
+{ #category : #'*Typer-GToolkit' }
+ClassDescription >> typGtMethodCoverageFor: aView context: aDictionary [
+	<gtClassView>
+	^ aView explicit
+		title: 'Method Coverage';
+		priority: 50;
+		stencil: [ | coverage covereds uncovereds |
+			coverage := self typGtMethodCoverage.
+			covereds := coverage at: true ifAbsent: [ #() ].
+			uncovereds := coverage at: false ifAbsent: [ #() ].
+			BrLabel new
+				look: BrGlamorousLabelLook;
+				text:
+					covereds size asString , ' covered, ' , uncovereds size asString
+						, ' uncovered, '
+						,
+							(covereds size / (covereds size + uncovereds size) * 100) floor
+								asString , '%';
+				yourself ];
+		yourself
+]
+
+{ #category : #'*Typer-GToolkit' }
 ClassDescription >> typGtMethodsElementInPackage: aPackage [
 	| methods width |
 	methods := aPackage methodsForClass: self.
@@ -25,6 +57,13 @@ ClassDescription >> typGtMethodsElementInPackage: aPackage [
 						yourself ]);
 		addChildren: (methods collect: #typGtElement);
 		yourself
+]
+
+{ #category : #'*Typer-GToolkit' }
+ClassDescription >> typGtNodeCoverage [
+	^ (self methods , self classSide methods
+		flatCollect: [ :e | e ast allChildren , {e ast} ])
+		groupedBy: [ :e | e propertyAt: #tagExecuted ifAbsent: [ false ] ]
 ]
 
 { #category : #'*Typer-GToolkit' }
