@@ -28,12 +28,12 @@ ClassDescription >> typGtCoverageFor: aView context: aDictionary [
 
 { #category : #'*Typer-GToolkit' }
 ClassDescription >> typGtMethodCoverage [
-	^ self methods , self classSide methods
+	^ (self methods , self classSide methods
 		groupedBy: [ :e | 
 			ASTCache default
 				at: e
 				ifPresent: [ :f | f propertyAt: #tagExecuted ifAbsent: [ nil ] ]
-				ifAbsent: [ nil ] ]
+				ifAbsent: [ nil ] ]) asDictionary
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -65,9 +65,10 @@ ClassDescription >> typGtMethodsElementInPackage: aPackage [
 
 { #category : #'*Typer-GToolkit' }
 ClassDescription >> typGtNodeCoverage [
-	^ (self methods , self classSide methods
+	^ ((self methods , self classSide methods
 		flatCollect: [ :e | e ast allChildren , {e ast} ])
-		groupedBy: [ :e | e propertyAt: #tagExecuted ifAbsent: [ nil ] ]
+		groupedBy: [ :e | e propertyAt: #tagExecuted ifAbsent: [ nil ] ])
+		asDictionary
 ]
 
 { #category : #'*Typer-GToolkit' }

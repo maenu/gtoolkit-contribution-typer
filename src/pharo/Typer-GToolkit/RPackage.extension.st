@@ -28,18 +28,19 @@ RPackage >> typGtCoverageFor: aView context: aDictionary [
 
 { #category : #'*Typer-GToolkit' }
 RPackage >> typGtMethodCoverage [
-	^ self methods
+	^ (self methods
 		groupedBy: [ :e | 
 			ASTCache default
 				at: e
 				ifPresent: [ :f | f propertyAt: #tagExecuted ifAbsent: [ nil ] ]
-				ifAbsent: [ nil ] ]
+				ifAbsent: [ nil ] ]) asDictionary
 ]
 
 { #category : #'*Typer-GToolkit' }
 RPackage >> typGtNodeCoverage [
-	^ (self methods flatCollect: [ :e | e ast allChildren , {e ast} ])
-		groupedBy: [ :e | e propertyAt: #tagExecuted ifAbsent: [ nil ] ]
+	^ ((self methods flatCollect: [ :e | e ast allChildren , {e ast} ])
+		groupedBy: [ :e | e propertyAt: #tagExecuted ifAbsent: [ nil ] ])
+		asDictionary
 ]
 
 { #category : #'*Typer-GToolkit' }

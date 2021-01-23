@@ -1,7 +1,7 @@
-Extension { #name : #Collection }
+Extension { #name : #Dictionary }
 
 { #category : #'*Typer-GToolkit' }
-Collection >> typGtAsCoverageElement [
+Dictionary >> typGtAsCoverageElement [
 	| executed notExecuted notInstrumented executedButton notExecutedButton notInstrumentedButton instrumentedLabel allLabel |
 	executed := self at: true ifAbsent: [ #() ].
 	notExecuted := self at: false ifAbsent: [ #() ].
@@ -24,17 +24,18 @@ Collection >> typGtAsCoverageElement [
 	instrumentedLabel := BrLabel new
 		look: BrGlamorousLabelLook;
 		text:
-			([ 100 * executed size / (executed size + notExecuted size) ]
+			(([ 100 * executed size / (executed size + notExecuted size) ]
 				on: ZeroDivide
-				do: [ 0 ]) asFloat asString , '% coverage of instrumented';
+				do: [ 0 ]) asFloat round: 2) asString
+				, '% coverage of instrumented';
 		yourself.
 	allLabel := BrLabel new
 		look: BrGlamorousLabelLook;
 		text:
-			([ 100 * executed size
+			(([ 100 * executed size
 				/ (executed size + notExecuted size + notInstrumented size) ]
 				on: ZeroDivide
-				do: [ 0 ]) asFloat asString , '% coverage of all';
+				do: [ 0 ]) asFloat round: 2) asString , '% coverage of all';
 		yourself.
 	^ BlElement new
 		layout: BlLinearLayout vertical;
