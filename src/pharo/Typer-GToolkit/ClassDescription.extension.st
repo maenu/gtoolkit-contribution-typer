@@ -1,66 +1,29 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-GToolkit' }
-ClassDescription >> typGtCoverageElementFor: aDictionary [
-	| executed notExecuted notInstrumented executedButton notExecutedButton notInstrumentedButton instrumentedLabel allLabel |
-	executed := aDictionary at: true ifAbsent: [ #() ].
-	notExecuted := aDictionary at: false ifAbsent: [ #() ].
-	notInstrumented := aDictionary at: nil ifAbsent: [ #() ].
-	executedButton := BrButton new
-		look: BrGlamorousButtonWithLabelLook;
-		label: executed size asString , ' executed';
-		action: [ :e | e phlow spawnObject: executed ];
-		yourself.
-	notExecutedButton := BrButton new
-		look: BrGlamorousButtonWithLabelLook;
-		label: notExecuted size asString , ' not executed';
-		action: [ :e | e phlow spawnObject: notExecuted ];
-		yourself.
-	notInstrumentedButton := BrButton new
-		look: BrGlamorousButtonWithLabelLook;
-		label: notInstrumented size asString , ' not instrumented';
-		action: [ :e | e phlow spawnObject: notInstrumented ];
-		yourself.
-	instrumentedLabel := BrLabel new
-		look: BrGlamorousLabelLook;
-		text:
-			([ 100 * executed size / (executed size + notExecuted size) ]
-				on: ZeroDivide
-				do: [ 0 ]) asFloat asString , '% coverage of instrumented';
-		yourself.
-	allLabel := BrLabel new
-		look: BrGlamorousLabelLook;
-		text:
-			([ 100 * executed size
-				/ (executed size + notExecuted size + notInstrumented size) ]
-				on: ZeroDivide
-				do: [ 0 ]) asFloat asString , '% coverage of all';
-		yourself.
-	^ BlElement new
-		layout: BlLinearLayout vertical;
-		constraintsDo: [ :c | 
-			c horizontal fitContent.
-			c vertical fitContent ];
-		addChildren:
-			{executedButton.
-			notExecutedButton.
-			notInstrumentedButton.
-			instrumentedLabel.
-			allLabel};
+ClassDescription >> typGtCoverageFor: aView context: aDictionary [
+	<gtClassView>
+	^ aView explicit
+		title: 'Coverage';
+		priority: 50;
+		stencil: [ BlElement new
+				layout: BlLinearLayout vertical;
+				constraintsDo: [ :c | 
+					c horizontal fitContent.
+					c vertical fitContent ];
+				addChildren:
+					{(BrLabel new
+						look: BrGlamorousLabelLook;
+						text: 'methods';
+						yourself).
+					self typGtMethodCoverage typGtAsCoverageElement.
+					(BrLabel new
+						look: BrGlamorousLabelLook;
+						text: 'nodes';
+						yourself).
+					self typGtNodeCoverage typGtAsCoverageElement};
+				yourself ];
 		yourself
-]
-
-{ #category : #'*Typer-GToolkit' }
-ClassDescription >> typGtCoverageTextFor: aDictionary [
-	| coverage covereds uncovereds |
-	coverage := self typGtMethodCoverage.
-	covereds := coverage at: true ifAbsent: [ #() ].
-	uncovereds := coverage at: false ifAbsent: [ #() ].
-	covereds size asString , ' covered, ' , uncovereds size asString
-		, ' uncovered, '
-		,
-			(covereds size / (covereds size + uncovereds size) * 100) floor
-				asString , '%'
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -71,16 +34,6 @@ ClassDescription >> typGtMethodCoverage [
 				at: e
 				ifPresent: [ :f | f propertyAt: #tagExecuted ifAbsent: [ nil ] ]
 				ifAbsent: [ nil ] ]
-]
-
-{ #category : #'*Typer-GToolkit' }
-ClassDescription >> typGtMethodCoverageFor: aView context: aDictionary [
-	<gtClassView>
-	^ aView explicit
-		title: 'Method Coverage';
-		priority: 50;
-		stencil: [ self typGtCoverageElementFor: self typGtMethodCoverage ];
-		yourself
 ]
 
 { #category : #'*Typer-GToolkit' }
