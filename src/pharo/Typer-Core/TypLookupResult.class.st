@@ -2,9 +2,9 @@ Class {
 	#name : #TypLookupResult,
 	#superclass : #Object,
 	#instVars : [
-		'lookup',
-		'resolvedBy',
-		'resolver'
+		'resolvedLookup',
+		'originalLookup',
+		'resolvedResolver'
 	],
 	#category : #'Typer-Core-Lookup'
 }
@@ -18,34 +18,34 @@ TypLookupResult >> initialize [
 ]
 
 { #category : #accessing }
-TypLookupResult >> lookup [
-	^ lookup
+TypLookupResult >> originalLookup [
+	^ originalLookup
 ]
 
 { #category : #accessing }
-TypLookupResult >> lookup: anObject [
+TypLookupResult >> originalLookup: anObject [
 	<typTypeArgument: 1 as: 'TypLookup'>
-	lookup := anObject
+	originalLookup := anObject
 ]
 
 { #category : #accessing }
-TypLookupResult >> resolvedBy [
-	^ resolvedBy
+TypLookupResult >> resolvedLookup [
+	^ resolvedLookup
 ]
 
 { #category : #accessing }
-TypLookupResult >> resolvedBy: anObject [
+TypLookupResult >> resolvedLookup: anObject [
 	<typTypeArgument: 1 as: 'TypLookup'>
-	resolvedBy := anObject
+	resolvedLookup := anObject
 ]
 
 { #category : #accessing }
-TypLookupResult >> resolver [
-	^ resolver
+TypLookupResult >> resolvedResolver [
+	^ resolvedResolver
 ]
 
 { #category : #accessing }
-TypLookupResult >> resolver: anObject [
+TypLookupResult >> resolvedResolver: anObject [
 	<typTypeArgument: 1 as: 'TypLookupResolver'>
-	resolver := anObject
+	resolvedResolver := anObject
 ]

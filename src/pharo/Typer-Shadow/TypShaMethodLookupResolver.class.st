@@ -16,8 +16,8 @@ TypShaMethodLookupResolver >> resolve: aLookup [
 				reject: #isNil)
 				collect: [ :f | 
 					f copy
-						lookup: aLookup;
-						resolvedBy: aLookup;
-						resolver: self;
+						originalLookup: aLookup;
+						resolvedLookup: aLookup;
+						resolvedResolver: self;
 						yourself ] ]
 ]

@@ -18,7 +18,7 @@ TypVariableLookupResult >> initialize [
 
 { #category : #accessing }
 TypVariableLookupResult >> type [
-	^ type cull: lookup cull: resolvedBy cull: self
+	^ type cull: originalLookup cull: resolvedLookup cull: self
 ]
 
 { #category : #accessing }

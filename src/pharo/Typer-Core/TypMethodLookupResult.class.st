@@ -13,8 +13,8 @@ Class {
 TypMethodLookupResult >> argumentTypeAt: anInteger [
 	^ argumentTypes
 		cull: anInteger
-		cull: lookup
-		cull: resolvedBy
+		cull: originalLookup
+		cull: resolvedLookup
 		cull: self
 ]
 
@@ -38,7 +38,7 @@ TypMethodLookupResult >> initialize [
 
 { #category : #accessing }
 TypMethodLookupResult >> resultType [
-	^ resultType cull: lookup cull: resolvedBy cull: self
+	^ resultType cull: originalLookup cull: resolvedLookup cull: self
 ]
 
 { #category : #accessing }
@@ -48,7 +48,7 @@ TypMethodLookupResult >> resultType: anObject [
 
 { #category : #accessing }
 TypMethodLookupResult >> signalsAlways [
-	^ signalsAlways cull: lookup cull: resolvedBy cull: self
+	^ signalsAlways cull: originalLookup cull: resolvedLookup cull: self
 ]
 
 { #category : #accessing }

@@ -73,8 +73,8 @@ TypMethodLookup >> argumentTypes: anObject [
 { #category : #'as yet unclassified' }
 TypMethodLookup >> emptyResult [
 	^ TypMethodLookupResult new
-		lookup: self;
-		resolvedBy: self;
+		originalLookup: self;
+		resolvedLookup: self;
 		yourself
 ]
 

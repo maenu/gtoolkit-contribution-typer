@@ -18,7 +18,7 @@ TypClassDescriptionLookupResult >> initialize [
 
 { #category : #accessing }
 TypClassDescriptionLookupResult >> type [
-	^ type cull: lookup cull: resolvedBy cull: self
+	^ type cull: originalLookup cull: resolvedLookup cull: self
 ]
 
 { #category : #accessing }

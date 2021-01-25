@@ -41,13 +41,11 @@ TypObjectLookup >> initialize [
 	super initialize
 ]
 
-{ #category : #printing }
+{ #category : #accessing }
 TypObjectLookup >> printOn: aStream [
-	super printOn: aStream.
-	aStream nextPutAll: ' '.
 	receiverType printOn: aStream.
-	aStream nextPutAll: ' >> '.
-	aStream nextPutAll: selector.
+	aStream nextPutAll: '>>'.
+	selector printOn: aStream
 ]
 
 { #category : #accessing }

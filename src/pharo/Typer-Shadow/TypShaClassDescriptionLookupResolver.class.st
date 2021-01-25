@@ -12,8 +12,8 @@ TypShaClassDescriptionLookupResolver >> resolve: aLookup [
 		reject: #isNil)
 		do: [ :e | 
 			e
-				lookup: aLookup;
-				resolvedBy: aLookup;
-				resolver: self;
+				originalLookup: aLookup;
+				resolvedLookup: aLookup;
+				resolvedResolver: self;
 				yourself ]
 ]

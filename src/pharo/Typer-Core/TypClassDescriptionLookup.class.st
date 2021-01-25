@@ -37,8 +37,8 @@ TypClassDescriptionLookup >> classDescription: anObject [
 { #category : #'as yet unclassified' }
 TypClassDescriptionLookup >> emptyResult [
 	^ TypClassDescriptionLookupResult new
-		lookup: self;
-		resolvedBy: self;
+		originalLookup: self;
+		resolvedLookup: self;
 		yourself
 ]
 
@@ -56,4 +56,9 @@ TypClassDescriptionLookup >> hash [
 TypClassDescriptionLookup >> initialize [
 	<typTypeVariable: 'classDescription' as: 'ClassDescription'>
 	super initialize
+]
+
+{ #category : #accessing }
+TypClassDescriptionLookup >> printOn: aStream [
+	aStream nextPutAll: classDescription name
 ]

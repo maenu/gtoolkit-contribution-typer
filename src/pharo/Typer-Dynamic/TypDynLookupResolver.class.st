@@ -16,9 +16,9 @@ TypDynLookupResolver >> resolve: aLookup [
 				at: aLookup receiverType classDescription -> aLookup selector
 				ifPresent: [ :e | 
 					{(e copy
-						lookup: aLookup;
-						resolvedBy: aLookup;
-						resolver: self;
+						originalLookup: aLookup;
+						resolvedLookup: aLookup;
+						resolvedResolver: self;
 						yourself)} ]
 				ifAbsent: [ #() ] ]
 		ifFalse: [ #() ]

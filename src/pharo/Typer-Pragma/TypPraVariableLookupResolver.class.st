@@ -15,8 +15,8 @@ TypPraVariableLookupResolver >> resolve: aLookup [
 				ifNil: [ #() ]
 				ifNotNil: [ :f | 
 					{(f
-						lookup: aLookup;
-						resolvedBy: aLookup;
-						resolver: self;
+						originalLookup: aLookup;
+						resolvedLookup: aLookup;
+						resolvedResolver: self;
 						yourself)} ] ]
 ]
