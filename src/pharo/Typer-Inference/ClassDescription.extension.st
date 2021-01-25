@@ -2,9 +2,7 @@ Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Inference' }
 ClassDescription >> typInfAsClassDescriptionLookupResult [
-	^ TypClassDescriptionLookupResult new
-		type: [ :a | a classDescription typAsNamedType ];
-		yourself
+	^ TypInfClassDescriptionLookupResult new
 ]
 
 { #category : #'*Typer-Inference' }

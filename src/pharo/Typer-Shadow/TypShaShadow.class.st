@@ -13,9 +13,7 @@ Class {
 
 { #category : #converting }
 TypShaShadow class >> asClassDescriptionLookupResult [
-	^ TypClassDescriptionLookupResult new
-		type: [ :a | self asType: a classDescription ];
-		yourself
+	^ TypShaClassDescriptionLookupResult shadow: self
 ]
 
 { #category : #converting }
@@ -83,9 +81,7 @@ TypShaShadow class >> shadowedClass [
 
 { #category : #converting }
 TypShaShadow >> asClassDescriptionLookupResult [
-	^ TypClassDescriptionLookupResult new
-		type: [ :a | self asType: a classDescription ];
-		yourself
+	^ TypShaClassDescriptionLookupResult shadow: self
 ]
 
 { #category : #'as yet unclassified' }

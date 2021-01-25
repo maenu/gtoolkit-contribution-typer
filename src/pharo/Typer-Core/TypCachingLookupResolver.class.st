@@ -18,7 +18,8 @@ TypCachingLookupResolver >> initialize [
 
 { #category : #initialization }
 TypCachingLookupResolver >> reset [
-	cache removeAll
+	cache removeAll.
+	resolver reset
 ]
 
 { #category : #accessing }

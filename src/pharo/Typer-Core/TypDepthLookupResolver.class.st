@@ -26,7 +26,7 @@ TypDepthLookupResolver >> resolve: aLookup [
 		ifTrue: [ results
 				addAll:
 					((self resolve: aLookup copy adaptWithSuperType)
-						do: [ :e | e lookup: aLookup ]) ].
+						do: [ :e | e originalLookup: aLookup ]) ].
 	^ results
 ]
 
