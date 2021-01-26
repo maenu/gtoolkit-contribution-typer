@@ -34,14 +34,8 @@ TypShaGtGtMethodsCoder >> ___announce: _a [
 { #category : #accessing }
 TypShaGtGtMethodsCoder >> initialize [
 	super initialize.
-	___methods := TypVariableLookupResult new
-		type: [ :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> CompiledMethod typAsType)} asDictionary ];
-		yourself.
-	___methodCoders := TypVariableLookupResult new
-		type: [ :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> GtMethodCoder typAsType)} asDictionary ];
-		yourself
+	___methods := SequenceableCollection typAsType
+		copyWithBindings: {('@A' -> CompiledMethod typAsType)} asDictionary.
+	___methodCoders := SequenceableCollection typAsType
+		copyWithBindings: {('@A' -> GtMethodCoder typAsType)} asDictionary
 ]

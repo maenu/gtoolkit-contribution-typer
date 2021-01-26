@@ -99,11 +99,8 @@ TypShaGtGtMethodCoder >> ___updateMethod: _a [
 { #category : #initialization }
 TypShaGtGtMethodCoder >> initialize [
 	super initialize.
-	___astCache := TypVariableLookupResult new
-		type: [ :a :s :r | 
-			Association typAsType
-				copyWithBindings:
-					{('@A' -> String typAsType).
-					('@B' -> RBMethodNode typAsType)} asDictionary ];
-		yourself
+	___astCache := Association typAsType
+		copyWithBindings:
+			{('@A' -> String typAsType).
+			('@B' -> RBMethodNode typAsType)} asDictionary
 ]

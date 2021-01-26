@@ -1,11 +1,6 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Inference' }
-ClassDescription >> typInfAsClassDescriptionLookupResult [
-	^ TypInfClassDescriptionLookupResult new
-]
-
-{ #category : #'*Typer-Inference' }
 ClassDescription >> typInfAsMethodLookupResultFor: aSymbol [
 	^ self methodDict
 		at: aSymbol

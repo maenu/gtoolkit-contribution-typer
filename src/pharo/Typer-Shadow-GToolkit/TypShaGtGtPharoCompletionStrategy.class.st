@@ -68,7 +68,5 @@ TypShaGtGtPharoCompletionStrategy >> ___selectorsForReceiver: _a matching: _b [
 { #category : #initialization }
 TypShaGtGtPharoCompletionStrategy >> initialize [
 	super initialize.
-	___maxItems := TypVariableLookupResult new
-		type: [ :a :s :r | Integer typAsType ];
-		yourself
+	___maxItems := Integer typAsType
 ]

@@ -11,12 +11,9 @@ TypShaVariableLookupResolver >> resolve: aLookup [
 	^ (aLookup receiverType asCollection
 		select: [ :e | e isNamed and: [ e hasClassDescription ] ])
 		flatCollect: [ :e | 
-			((e classDescription typShaShadows
-				collect: [ :f | f asVariableLookupResultFor: aLookup selector ])
-				reject: #isNil)
-				do: [ :f | 
-					f copy
-						originalLookup: aLookup;
+			e classDescription typShaShadows
+				collect: [ :f | 
+					(TypShaVariableLookupResult shadow: f name: aLookup selector)
 						resolvedLookup: aLookup;
 						resolvedResolver: self;
 						yourself ] ]

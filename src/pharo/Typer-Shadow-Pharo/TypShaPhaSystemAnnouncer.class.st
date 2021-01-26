@@ -7,11 +7,9 @@ Class {
 	#category : #'Typer-Shadow-Pharo'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaSystemAnnouncer class >> initialize [
-	___announcer := TypVariableLookupResult new
-		type: [ :a :s :r | SystemAnnouncer typAsType ];
-		yourself
+	___announcer := SystemAnnouncer typAsType
 ]
 
 { #category : #'as yet unclassified' }

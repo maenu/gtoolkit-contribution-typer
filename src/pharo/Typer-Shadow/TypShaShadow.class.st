@@ -12,11 +12,6 @@ Class {
 }
 
 { #category : #converting }
-TypShaShadow class >> asClassDescriptionLookupResult [
-	^ TypShaClassDescriptionLookupResult shadow: self
-]
-
-{ #category : #converting }
 TypShaShadow class >> asMethodLookupResultFor: aSymbol [
 	^ self class selectors
 		detect: [ :e | e = ('___' , aSymbol) or: [ e = ('~~~' , aSymbol) ] ]
@@ -33,16 +28,6 @@ TypShaShadow class >> asType: aClass [
 	<typTypeArgument: 1 as: 'ClassDescription'>
 	<typTypeResultAs: 'TypNamedType'>
 	^ aClass typAsNamedType
-]
-
-{ #category : #converting }
-TypShaShadow class >> asVariableLookupResultFor: aSymbol [
-	^ self class instVarNames
-		detect: [ :e | e = ('___' , aSymbol) ]
-		ifFound: [ :e | self instVarNamed: e ]
-		ifNone: [ TypVariableLookupResult new
-				type: [ TypUnknownType instance ];
-				yourself ]
 ]
 
 { #category : #'class initialization' }
@@ -77,11 +62,6 @@ TypShaShadow class >> resetAll [
 TypShaShadow class >> shadowedClass [
 	<typTypeResultAs: 'ClassDescription'>
 	self subclassResponsibility
-]
-
-{ #category : #converting }
-TypShaShadow >> asClassDescriptionLookupResult [
-	^ TypShaClassDescriptionLookupResult shadow: self
 ]
 
 { #category : #'as yet unclassified' }

@@ -58,14 +58,8 @@ TypShaGtGtMethodCoderAddOns >> ___stylers [
 { #category : #accessing }
 TypShaGtGtMethodCoderAddOns >> initialize [
 	super initialize.
-	___stylers := TypVariableLookupResult new
-		type: [ :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> GtCoderBodyStyler typAsType)} asDictionary ];
-		yourself.
-	___modified := TypVariableLookupResult new
-		type: [ :a :s :r | 
-			Set typAsType
-				copyWithBindings: {('@A' -> Symbol typAsType)} asDictionary ];
-		yourself
+	___stylers := SequenceableCollection typAsType
+		copyWithBindings: {('@A' -> GtASTStyler typAsType)} asDictionary.
+	___modified := Set typAsType
+		copyWithBindings: {('@A' -> Symbol typAsType)} asDictionary
 ]

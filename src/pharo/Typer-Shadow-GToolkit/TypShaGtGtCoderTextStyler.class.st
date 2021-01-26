@@ -45,7 +45,5 @@ TypShaGtGtCoderTextStyler >> ___style: _a ast: _b [
 { #category : #accessing }
 TypShaGtGtCoderTextStyler >> initialize [
 	super initialize.
-	___coder := TypVariableLookupResult new
-		type: [ :a :s :r | GtMethodCoder typAsType ];
-		yourself
+	___coder := GtMethodCoder typAsType
 ]

@@ -147,7 +147,5 @@ TypShaGtGtCoderBodyStyler >> ___visitThisContextNode: _a [
 { #category : #initialization }
 TypShaGtGtCoderBodyStyler >> initialize [
 	super initialize.
-	___text := TypVariableLookupResult new
-		type: [ :a :s :r | BlText typAsType ];
-		yourself
+	___text := BlText typAsType
 ]
