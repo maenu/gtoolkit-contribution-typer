@@ -1,7 +1,7 @@
 Class {
 	#name : #TypShaVariableLookupResolver,
 	#superclass : #TypLookupResolver,
-	#category : #'Typer-Shadow'
+	#category : #'Typer-Shadow-Lookup'
 }
 
 { #category : #accessing }
@@ -13,7 +13,7 @@ TypShaVariableLookupResolver >> resolve: aLookup [
 		flatCollect: [ :e | 
 			e classDescription typShaShadows
 				collect: [ :f | 
-					(TypShaVariableLookupResult shadow: f name: aLookup selector)
+					(TypShaVariableLookupResult shadow: f)
 						resolvedLookup: aLookup;
 						resolvedResolver: self;
 						yourself ] ]

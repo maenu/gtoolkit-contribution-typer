@@ -1,7 +1,7 @@
 Class {
 	#name : #TypPraVariableLookupResolver,
 	#superclass : #TypLookupResolver,
-	#category : #'Typer-Pragma'
+	#category : #'Typer-Pragma-Lookup'
 }
 
 { #category : #accessing }
@@ -10,13 +10,9 @@ TypPraVariableLookupResolver >> resolve: aLookup [
 	<typTypeResultAs: 'SequenceableCollection<TypVariableLookupResult>'>
 	^ (aLookup receiverType asCollection
 		select: [ :e | e isNamed and: [ e hasClassDescription ] ])
-		flatCollect: [ :e | 
-			(e classDescription typPraAsVariableLookupResultFor: aLookup selector)
-				ifNil: [ #() ]
-				ifNotNil: [ :f | 
-					{(f
-						originalLookup: aLookup;
-						resolvedLookup: aLookup;
-						resolvedResolver: self;
-						yourself)} ] ]
+		collect: [ :e | 
+			TypPraVariableLookupResult new
+				resolvedLookup: aLookup;
+				resolvedResolver: self;
+				yourself ]
 ]

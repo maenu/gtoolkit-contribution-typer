@@ -9,7 +9,7 @@ TypPraClassDescriptionLookupResult >> type [
 	| pragmas parameters bindings superTypeBindings |
 	pragmas := (originalLookup classDescription
 		lookupSelector: #initialize)
-		ifNil: [ Error signal: 'No #initialize method found' ]
+		ifNil: [ TypNoTypeError signal ]
 		ifNotNil: #pragmas.
 	parameters := pragmas
 		detect: [ :e | e selector = #typParameters: ]
@@ -26,7 +26,7 @@ TypPraClassDescriptionLookupResult >> type [
 		asDictionary.
 	(parameters isEmpty
 		and: [ bindings isEmpty and: [ superTypeBindings isEmpty ] ])
-		ifTrue: [ Error signal: 'No typing pragmas found in #initialize' ].
+		ifTrue: [ TypNoTypeError signal ].
 	(parameters isEmpty
 		and: [ bindings isEmpty and: [ superTypeBindings isNotEmpty ] ])
 		ifTrue: [ ^ originalLookup classDescription

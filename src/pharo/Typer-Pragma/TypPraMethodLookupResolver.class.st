@@ -1,7 +1,7 @@
 Class {
 	#name : #TypPraMethodLookupResolver,
 	#superclass : #TypLookupResolver,
-	#category : #'Typer-Pragma'
+	#category : #'Typer-Pragma-Lookup'
 }
 
 { #category : #accessing }
