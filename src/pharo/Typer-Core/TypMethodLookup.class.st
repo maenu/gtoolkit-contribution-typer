@@ -70,11 +70,11 @@ TypMethodLookup >> argumentTypes: anObject [
 	argumentTypes := anObject
 ]
 
-{ #category : #'as yet unclassified' }
-TypMethodLookup >> emptyResult [
-	^ TypMethodLookupResult new
-		originalLookup: self;
-		resolvedLookup: self;
+{ #category : #accessing }
+TypMethodLookup >> asSuperType [
+	^ super asSuperType
+		argumentNodes: argumentNodes copy;
+		argumentTypes: argumentTypes copy;
 		yourself
 ]
 
@@ -88,11 +88,4 @@ TypMethodLookup >> initialize [
 	<typTypeVariable: 'argumentTypes' as: 'SequenceableCollection<TypType>'>
 	<typTypeVariable: 'argumentNodes' as: 'SequenceableCollection<RBValueNode>'>
 	super initialize
-]
-
-{ #category : #accessing }
-TypMethodLookup >> postCopy [
-	super postCopy.
-	argumentTypes := argumentTypes copy.
-	argumentNodes := argumentNodes copy
 ]

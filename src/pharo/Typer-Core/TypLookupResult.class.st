@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'resolvedLookup',
 		'originalLookup',
-		'resolvedResolver'
+		'resolvedResolver',
+		'originalResolver'
 	],
 	#category : #'Typer-Core-Lookup'
 }
@@ -18,6 +19,18 @@ TypLookupResult >> initialize [
 ]
 
 { #category : #accessing }
+TypLookupResult >> initializeOriginalLookup: aLookup originalResolver: aResolver [
+	originalLookup := aLookup.
+	originalResolver := aResolver
+]
+
+{ #category : #accessing }
+TypLookupResult >> initializeResolvedLookup: aLookup resolvedResolver: aResolver [
+	resolvedLookup := aLookup.
+	resolvedResolver := aResolver
+]
+
+{ #category : #accessing }
 TypLookupResult >> originalLookup [
 	^ originalLookup
 ]
@@ -26,6 +39,17 @@ TypLookupResult >> originalLookup [
 TypLookupResult >> originalLookup: anObject [
 	<typTypeArgument: 1 as: 'TypLookup'>
 	originalLookup := anObject
+]
+
+{ #category : #accessing }
+TypLookupResult >> originalResolver [
+	^ originalResolver
+]
+
+{ #category : #accessing }
+TypLookupResult >> originalResolver: anObject [
+	<typTypeArgument: 1 as: 'TypLookupResolver'>
+	originalResolver := anObject
 ]
 
 { #category : #accessing }

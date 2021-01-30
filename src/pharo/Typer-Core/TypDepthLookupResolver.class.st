@@ -21,12 +21,11 @@ TypDepthLookupResolver >> reset [
 { #category : #resolving }
 TypDepthLookupResolver >> resolve: aLookup [
 	| results |
+	aLookup push: self.
 	results := OrderedCollection withAll: (resolver resolve: aLookup).
 	aLookup hasSuperType
-		ifTrue: [ results
-				addAll:
-					((self resolve: aLookup copy adaptWithSuperType)
-						do: [ :e | e originalLookup: aLookup ]) ].
+		ifTrue:
+			[ results addAll: (self resolve: aLookup asSuperType) ].
 	^ results
 ]
 

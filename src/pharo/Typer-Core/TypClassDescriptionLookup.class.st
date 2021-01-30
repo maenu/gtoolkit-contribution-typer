@@ -17,9 +17,10 @@ TypClassDescriptionLookup >> = anObject [
 ]
 
 { #category : #copying }
-TypClassDescriptionLookup >> adaptWithSuperType [
-	self assert: [ self hasSuperType ].
-	self classDescription: classDescription superclass
+TypClassDescriptionLookup >> asSuperType [
+	^ super asSuperType
+		classDescription: classDescription superclass;
+		yourself
 ]
 
 { #category : #accessing }
@@ -32,14 +33,6 @@ TypClassDescriptionLookup >> classDescription [
 TypClassDescriptionLookup >> classDescription: anObject [
 	<typTypeArgument: 1 as: 'ClassDescription'>
 	classDescription := anObject
-]
-
-{ #category : #'as yet unclassified' }
-TypClassDescriptionLookup >> emptyResult [
-	^ TypClassDescriptionLookupResult new
-		originalLookup: self;
-		resolvedLookup: self;
-		yourself
 ]
 
 { #category : #testing }
