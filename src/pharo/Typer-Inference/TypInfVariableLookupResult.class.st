@@ -6,21 +6,18 @@ Class {
 
 { #category : #accessing }
 TypInfVariableLookupResult >> type [
-	| root selector |
-	root := lookup root.
-	selector := root selector.
-	^ root receiverType asCollection
+	^ lookup receiverType asCollection
 		collect: [ :e | 
 			(e isNamed and: [ e hasClassDescription ])
-				ifTrue: [ (e allInstVarNames includes: selector)
+				ifTrue: [ (e allInstVarNames includes: lookup selector)
 						ifTrue: [ e
-								typInfVariableAssignedTypeFor: selector
+								typInfVariableAssignedTypeFor: lookup selector
 								nodeClass: RBInstanceVariableNode
 								in: e allMethods ]
-						ifFalse: [ ((e allClassVariables collect: #key) includes: selector)
+						ifFalse: [ ((e allClassVariables collect: #key) includes: lookup selector)
 								ifTrue: [ self flag: '...or we just take the type of the value?'.
 									e
-										typInfVariableAssignedTypeFor: selector
+										typInfVariableAssignedTypeFor: lookup selector
 										nodeClass: RBGlobalNode
 										in: e allMethods , e class allMethods ]
 								ifFalse: [ TypUnknownType instance ] ] ]

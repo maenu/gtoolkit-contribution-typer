@@ -6,16 +6,15 @@ Class {
 
 { #category : #accessing }
 TypPraVariableLookupResult >> type [
-	| root pragmas pragma |
-	root := lookup root.
-	pragmas := (root receiverType classDescription
+	| pragmas pragma |
+	pragmas := (lookup receiverType classDescription
 		lookupSelector: #initialize)
 		ifNil: [ TypNoTypeError signal ]
 		ifNotNil: #typPraAllPragmas.
 	pragma := pragmas
 		detect: [ :e | 
 			e selector = #typTypeVariable:as:
-				and: [ e arguments first = root selector ] ]
+				and: [ e arguments first = lookup selector ] ]
 		ifNone: [ TypNoTypeError signal ].
-	^ pragma arguments second typAsType resolveIn: root receiverType
+	^ pragma arguments second typAsType resolveIn: lookup receiverType
 ]

@@ -6,5 +6,5 @@ Class {
 
 { #category : #accessing }
 TypInfClassDescriptionLookupResult >> type [
-	^ lookup root classDescription typAsNamedType
+	^ lookup classDescription typAsNamedType
 ]

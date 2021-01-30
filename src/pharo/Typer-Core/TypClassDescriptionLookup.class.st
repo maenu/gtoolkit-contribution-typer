@@ -22,18 +22,17 @@ TypClassDescriptionLookup >> = anObject [
 				and: [ classDescription = anObject classDescription ] ]
 ]
 
-{ #category : #copying }
-TypClassDescriptionLookup >> asSuperType [
-	self assert: [ self hasSuperType ].
-	^ self class
-		origin: self asOrigin
-		classDescription: classDescription superclass
-]
-
 { #category : #accessing }
 TypClassDescriptionLookup >> classDescription [
 	<typTypeResultAs: 'ClassDescription'>
 	^ classDescription
+]
+
+{ #category : #copying }
+TypClassDescriptionLookup >> copyWithSuperType [
+	^ super copyWithSuperType
+		initializeClassDescription: classDescription superclass;
+		yourself
 ]
 
 { #category : #testing }

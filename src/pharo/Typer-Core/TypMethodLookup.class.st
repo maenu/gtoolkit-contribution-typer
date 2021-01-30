@@ -54,16 +54,6 @@ TypMethodLookup >> arguments [
 	^ arguments
 ]
 
-{ #category : #accessing }
-TypMethodLookup >> asSuperType [
-	self assert: [ self hasSuperType ].
-	^ self class
-		origin: self
-		receiverType: receiverType superType
-		selector: selector
-		arguments: arguments copy
-]
-
 { #category : #comparing }
 TypMethodLookup >> hash [
 	^ super hash bitXor: arguments hash
@@ -79,4 +69,10 @@ TypMethodLookup >> initialize [
 { #category : #accessing }
 TypMethodLookup >> initializeArguments: aCollection [
 	arguments := aCollection
+]
+
+{ #category : #accessing }
+TypMethodLookup >> postCopy [
+	super postCopy.
+	arguments := arguments copy
 ]

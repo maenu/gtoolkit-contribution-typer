@@ -8,14 +8,6 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
-{ #category : #accessing }
-TypObjectLookup class >> origin: anOrigin receiverType: aType selector: aSymbol [
-	^ self new
-		initializeOrigin: anOrigin;
-		initializeReceiverType: aType selector: aSymbol;
-		yourself
-]
-
 { #category : #comparing }
 TypObjectLookup >> = anObject [
 	^ self == anObject
@@ -24,6 +16,13 @@ TypObjectLookup >> = anObject [
 					object := anObject "typCastAs TypObjectLookup".
 					selector = object selector
 						and: [ receiverType = object receiverType ] ] ]
+]
+
+{ #category : #accessing }
+TypObjectLookup >> copyWithSuperType [
+	^ super copyWithSuperType
+		initializeReceiverType: receiverType superType selector: selector;
+		yourself
 ]
 
 { #category : #testing }

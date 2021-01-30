@@ -14,8 +14,11 @@ TypLookup >> asOrigin [
 ]
 
 { #category : #copying }
-TypLookup >> asSuperType [
-	self subclassResponsibility
+TypLookup >> copyWithSuperType [
+	self assert: [ self hasSuperType ].
+	^ self copy
+		initializeOrigin: self asOrigin;
+		yourself
 ]
 
 { #category : #testing }
@@ -34,6 +37,12 @@ TypLookup >> initialize [
 { #category : #accessing }
 TypLookup >> initializeOrigin: aLookup [
 	origin := aLookup
+]
+
+{ #category : #accessing }
+TypLookup >> postCopy [
+	super postCopy.
+	stack := stack copy
 ]
 
 { #category : #accessing }

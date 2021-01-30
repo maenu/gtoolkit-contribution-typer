@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 TypPraClassDescriptionLookupResult >> type [
 	| classDescription pragmas parameters bindings superTypeBindings |
-	classDescription := lookup root classDescription.
+	classDescription := lookup classDescription.
 	pragmas := (classDescription lookupSelector: #initialize)
 		ifNil: [ TypNoTypeError signal ]
 		ifNotNil: #pragmas.

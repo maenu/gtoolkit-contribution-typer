@@ -11,12 +11,3 @@ TypVariableLookup class >> origin: anOrigin receiverType: aType selector: aSymbo
 		initializeReceiverType: aType selector: aSymbol;
 		yourself
 ]
-
-{ #category : #accessing }
-TypVariableLookup >> asSuperType [
-	self assert: [ self hasSuperType ].
-	^ self class
-		origin: self asOrigin
-		receiverType: receiverType superType
-		selector: selector
-]

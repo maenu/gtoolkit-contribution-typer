@@ -21,7 +21,7 @@ TypBreadthLookupResolver >> reset [
 { #category : #accessing }
 TypBreadthLookupResolver >> resolve: aLookup [
 	aLookup push: self.
-	^ resolvers flatCollect: [ :e | e resolve: aLookup ]
+	^ resolvers flatCollect: [ :e | e resolve: aLookup copy ]
 ]
 
 { #category : #accessing }
