@@ -28,59 +28,45 @@ Class {
 	#name : #TypMethodLookup,
 	#superclass : #TypObjectLookup,
 	#instVars : [
-		'argumentTypes',
-		'argumentNodes'
+		'arguments'
 	],
 	#category : #'Typer-Core-Lookup'
 }
 
-{ #category : #comparing }
-TypMethodLookup >> = anObject [
-	^ self == anObject
-		or: [ self class == anObject class
-				and: [ | object |
-					object := anObject "typCastAs TypMethodLookup".
-					selector = object selector
-						and: [ receiverType = object receiverType
-								and: [ argumentTypes asOrderedCollection = object argumentTypes asOrderedCollection
-										and: [ argumentNodes asOrderedCollection = object argumentNodes asOrderedCollection ] ] ] ] ]
-]
-
 { #category : #accessing }
-TypMethodLookup >> argumentNodes [
-	<typTypeResultAs: 'SequenceableCollection<RBValueNode>'>
-	^ argumentNodes
-]
-
-{ #category : #accessing }
-TypMethodLookup >> argumentNodes: anObject [
-	<typTypeArgument: 1 as: 'SequenceableCollection<RBValueNode>'>
-	argumentNodes := anObject
-]
-
-{ #category : #accessing }
-TypMethodLookup >> argumentTypes [
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	^ argumentTypes
-]
-
-{ #category : #accessing }
-TypMethodLookup >> argumentTypes: anObject [
-	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
-	argumentTypes := anObject
-]
-
-{ #category : #accessing }
-TypMethodLookup >> asSuperType [
-	^ super asSuperType
-		argumentNodes: argumentNodes copy;
-		argumentTypes: argumentTypes copy;
+TypMethodLookup class >> origin: anOrigin receiverType: aType selector: aSymbol arguments: aCollection [
+	^ self new
+		initializeOrigin: anOrigin;
+		initializeReceiverType: aType selector: aSymbol;
+		initializeArguments: aCollection;
 		yourself
 ]
 
 { #category : #comparing }
+TypMethodLookup >> = anObject [
+	^ super = anObject
+		and: [ arguments asOrderedCollection
+				= anObject arguments asOrderedCollection ]
+]
+
+{ #category : #accessing }
+TypMethodLookup >> arguments [
+	^ arguments
+]
+
+{ #category : #accessing }
+TypMethodLookup >> asSuperType [
+	self assert: [ self hasSuperType ].
+	^ self class
+		origin: self
+		receiverType: receiverType superType
+		selector: selector
+		arguments: arguments copy
+]
+
+{ #category : #comparing }
 TypMethodLookup >> hash [
-	^ (super hash bitXor: argumentTypes hash) bitXor: argumentNodes hash
+	^ super hash bitXor: arguments hash
 ]
 
 { #category : #initialization }
@@ -88,4 +74,9 @@ TypMethodLookup >> initialize [
 	<typTypeVariable: 'argumentTypes' as: 'SequenceableCollection<TypType>'>
 	<typTypeVariable: 'argumentNodes' as: 'SequenceableCollection<RBValueNode>'>
 	super initialize
+]
+
+{ #category : #accessing }
+TypMethodLookup >> initializeArguments: aCollection [
+	arguments := aCollection
 ]

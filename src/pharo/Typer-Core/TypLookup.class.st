@@ -9,17 +9,13 @@ Class {
 }
 
 { #category : #accessing }
-TypLookup >> asLookupOrigin [
+TypLookup >> asOrigin [
 	^ TypLookupLookupOrigin lookup: self
 ]
 
 { #category : #copying }
 TypLookup >> asSuperType [
-	<typTypeResultAs: '@self'>
-	self assert: [ self hasSuperType ].
-	^ self class new
-		origin: self asLookupOrigin;
-		yourself
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -36,12 +32,7 @@ TypLookup >> initialize [
 ]
 
 { #category : #accessing }
-TypLookup >> origin [
-	^ origin
-]
-
-{ #category : #accessing }
-TypLookup >> origin: aLookup [
+TypLookup >> initializeOrigin: aLookup [
 	origin := aLookup
 ]
 
@@ -51,6 +42,6 @@ TypLookup >> push: aResolver [
 ]
 
 { #category : #accessing }
-TypLookup >> stack [
-	^ stack
+TypLookup >> root [
+	^ origin rootOr: self
 ]

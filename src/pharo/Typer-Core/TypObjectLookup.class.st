@@ -8,6 +8,14 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
+{ #category : #accessing }
+TypObjectLookup class >> origin: anOrigin receiverType: aType selector: aSymbol [
+	^ self new
+		initializeOrigin: anOrigin;
+		initializeReceiverType: aType selector: aSymbol;
+		yourself
+]
+
 { #category : #comparing }
 TypObjectLookup >> = anObject [
 	^ self == anObject
@@ -16,14 +24,6 @@ TypObjectLookup >> = anObject [
 					object := anObject "typCastAs TypObjectLookup".
 					selector = object selector
 						and: [ receiverType = object receiverType ] ] ]
-]
-
-{ #category : #copying }
-TypObjectLookup >> asSuperType [
-	^ super asSuperType
-		receiverType: receiverType superType;
-		selector: selector;
-		yourself
 ]
 
 { #category : #testing }
@@ -44,6 +44,12 @@ TypObjectLookup >> initialize [
 ]
 
 { #category : #accessing }
+TypObjectLookup >> initializeReceiverType: aType selector: aSymbol [
+	receiverType := aType.
+	selector := aSymbol
+]
+
+{ #category : #accessing }
 TypObjectLookup >> printOn: aStream [
 	receiverType printOn: aStream.
 	aStream nextPutAll: '>>'.
@@ -57,19 +63,7 @@ TypObjectLookup >> receiverType [
 ]
 
 { #category : #accessing }
-TypObjectLookup >> receiverType: anObject [
-	<typTypeArgument: 1 as: 'TypType'>
-	receiverType := anObject
-]
-
-{ #category : #accessing }
 TypObjectLookup >> selector [
 	<typTypeResultAs:  'Symbol'>
 	^ selector
-]
-
-{ #category : #accessing }
-TypObjectLookup >> selector: anObject [
-	<typTypeArgument: 1 as:  'Symbol'>
-	selector := anObject
 ]

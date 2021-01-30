@@ -7,32 +7,33 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
+{ #category : #accessing }
+TypClassDescriptionLookup class >> origin: anOrigin classDescription: aClassDescription [
+	^ self new
+		initializeOrigin: anOrigin;
+		initializeClassDescription: aClassDescription;
+		yourself
+]
+
 { #category : #comparing }
 TypClassDescriptionLookup >> = anObject [
 	^ self == anObject
 		or: [ self class == anObject class
-				and: [ | object |
-					object := anObject "typCastAs TypClassDescriptionLookup".
-					classDescription = object classDescription ] ]
+				and: [ classDescription = anObject classDescription ] ]
 ]
 
 { #category : #copying }
 TypClassDescriptionLookup >> asSuperType [
-	^ super asSuperType
-		classDescription: classDescription superclass;
-		yourself
+	self assert: [ self hasSuperType ].
+	^ self class
+		origin: self asOrigin
+		classDescription: classDescription superclass
 ]
 
 { #category : #accessing }
 TypClassDescriptionLookup >> classDescription [
 	<typTypeResultAs: 'ClassDescription'>
 	^ classDescription
-]
-
-{ #category : #accessing }
-TypClassDescriptionLookup >> classDescription: anObject [
-	<typTypeArgument: 1 as: 'ClassDescription'>
-	classDescription := anObject
 ]
 
 { #category : #testing }
@@ -49,6 +50,12 @@ TypClassDescriptionLookup >> hash [
 TypClassDescriptionLookup >> initialize [
 	<typTypeVariable: 'classDescription' as: 'ClassDescription'>
 	super initialize
+]
+
+{ #category : #accessing }
+TypClassDescriptionLookup >> initializeClassDescription: anObject [
+	<typTypeArgument: 1 as: 'ClassDescription'>
+	classDescription := anObject
 ]
 
 { #category : #accessing }
