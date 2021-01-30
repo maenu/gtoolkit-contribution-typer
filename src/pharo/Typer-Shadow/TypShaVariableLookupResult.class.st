@@ -22,7 +22,7 @@ TypShaVariableLookupResult >> initializeShadow: anObject [
 { #category : #accessing }
 TypShaVariableLookupResult >> type [
 	shadow class instVarNames
-		detect: [ :e | e = ('___' , originalLookup selector asString) ]
+		detect: [ :e | e = ('___' , lookup selector asString) ]
 		ifFound: [ :e | ^ shadow instVarNamed: e ]
 		ifNone: [ TypNoTypeError signal ]
 ]

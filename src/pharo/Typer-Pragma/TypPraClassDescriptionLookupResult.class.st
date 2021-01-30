@@ -6,9 +6,9 @@ Class {
 
 { #category : #accessing }
 TypPraClassDescriptionLookupResult >> type [
-	| pragmas parameters bindings superTypeBindings |
-	pragmas := (originalLookup classDescription
-		lookupSelector: #initialize)
+	| classDescription pragmas parameters bindings superTypeBindings |
+	classDescription := lookup root classDescription.
+	pragmas := (classDescription lookupSelector: #initialize)
 		ifNil: [ TypNoTypeError signal ]
 		ifNotNil: #pragmas.
 	parameters := pragmas
@@ -29,13 +29,13 @@ TypPraClassDescriptionLookupResult >> type [
 		ifTrue: [ TypNoTypeError signal ].
 	(parameters isEmpty
 		and: [ bindings isEmpty and: [ superTypeBindings isNotEmpty ] ])
-		ifTrue: [ ^ originalLookup classDescription
+		ifTrue: [ ^ classDescription
 				typAsNamedTypeWithSuperTypeBindings: superTypeBindings ].
 	^ superTypeBindings isEmpty
-		ifTrue: [ originalLookup classDescription
+		ifTrue: [ classDescription
 				typAsParametricTypeWithParameters: parameters
 				bindings: bindings ]
-		ifFalse: [ originalLookup classDescription
+		ifFalse: [ classDescription
 				typAsParametricTypeWithParameters: parameters
 				bindings: bindings
 				superTypeBindings: superTypeBindings ]

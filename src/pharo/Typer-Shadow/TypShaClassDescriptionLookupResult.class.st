@@ -21,5 +21,5 @@ TypShaClassDescriptionLookupResult >> initializeShadow: anObject [
 
 { #category : #accessing }
 TypShaClassDescriptionLookupResult >> type [
-	^ shadow asType: originalLookup classDescription
+	^ shadow asType: lookup root classDescription
 ]

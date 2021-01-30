@@ -1,57 +1,25 @@
 Class {
 	#name : #TypMethodLookupResult,
 	#superclass : #TypLookupResult,
-	#instVars : [
-		'argumentTypes',
-		'resultType',
-		'signalsAlways'
-	],
 	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #accessing }
-TypMethodLookupResult >> argumentTypeAt: anInteger [
-	^ argumentTypes
-		cull: anInteger
-		cull: originalLookup
-		cull: resolvedLookup
-		cull: self
-]
-
-{ #category : #accessing }
-TypMethodLookupResult >> argumentTypes: anObject [
-	argumentTypes := anObject
-]
-
-{ #category : #initialization }
-TypMethodLookupResult >> initialize [
-	<typTypeVariable: 'argumentTypes' as: 'BlockClosure[Integer,TypMethodLookup,TypMethodLookup,TypMethodLookupResult]->TypType'>
-	<typTypeVariable: 'resultType' as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypMethodLookupResult]->TypType'>
-	<typTypeVariable: 'signalsAlways' as: 'BlockClosure[TypMethodLookup,TypMethodLookup,TypMethodLookupResult]->{!,Boolean}'>
-	<typTypeVariable: 'lookup' as: 'TypMethodLookup'>
-	<typTypeVariable: 'resolvedBy' as: 'TypMethodLookup'>
-	super initialize.
-	argumentTypes := [ TypUnknownType instance ].
-	resultType := [ TypUnknownType instance ].
-	signalsAlways := [ nil ]
+TypMethodLookupResult >> argumentTypes [
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 TypMethodLookupResult >> resultType [
-	^ resultType cull: originalLookup cull: resolvedLookup cull: self
-]
-
-{ #category : #accessing }
-TypMethodLookupResult >> resultType: anObject [
-	resultType := anObject
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 TypMethodLookupResult >> signalsAlways [
-	^ signalsAlways cull: originalLookup cull: resolvedLookup cull: self
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
-TypMethodLookupResult >> signalsAlways: anObject [
-	signalsAlways := anObject
+TypMethodLookupResult >> type [
+	self subclassResponsibility
 ]
