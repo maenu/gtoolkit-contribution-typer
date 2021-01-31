@@ -1,36 +1,17 @@
 Class {
 	#name : #TypBreadthLookupResolver,
-	#superclass : #TypLookupResolver,
-	#instVars : [
-		'resolvers'
-	],
+	#superclass : #TypWrappingLookupResolver,
 	#category : #'Typer-Core-Lookup'
 }
 
-{ #category : #initialization }
-TypBreadthLookupResolver >> initialize [
-	<typTypeVariable: 'resolvers' as: 'SequenceableCollection<TypLookupResolver>'>
-	super initialize
-]
-
-{ #category : #initialization }
-TypBreadthLookupResolver >> reset [
-	resolvers do: #reset
-]
-
 { #category : #accessing }
 TypBreadthLookupResolver >> resolve: aLookup [
+	| results |
+	self flag: 'TODO'.
 	aLookup push: self.
-	^ resolvers flatCollect: [ :e | e resolve: aLookup copy ]
-]
-
-{ #category : #accessing }
-TypBreadthLookupResolver >> resolvers [
-	^ resolvers
-]
-
-{ #category : #accessing }
-TypBreadthLookupResolver >> resolvers: anObject [
-	<typTypeArgument: 1 as: 'SequenceableCollection<TypLookupResolver>'>
-	resolvers := anObject asOrderedCollection
+	aLookup asCollection.
+	results := OrderedCollection withAll: (resolver resolve: aLookup).
+	aLookup hasSuperType
+		ifTrue: [ results addAll: (self resolve: aLookup copyWithSuperType) ].
+	^ results
 ]

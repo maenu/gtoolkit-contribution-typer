@@ -1,22 +1,8 @@
 Class {
 	#name : #TypDepthLookupResolver,
-	#superclass : #TypLookupResolver,
-	#instVars : [
-		'resolver'
-	],
+	#superclass : #TypWrappingLookupResolver,
 	#category : #'Typer-Core-Lookup'
 }
-
-{ #category : #initialization }
-TypDepthLookupResolver >> initialize [
-	<typTypeVariable: 'resolver' as: 'TypLookupResolver'>
-	super initialize
-]
-
-{ #category : #initialization }
-TypDepthLookupResolver >> reset [
-	resolver reset
-]
 
 { #category : #resolving }
 TypDepthLookupResolver >> resolve: aLookup [
@@ -27,14 +13,4 @@ TypDepthLookupResolver >> resolve: aLookup [
 		ifTrue:
 			[ results addAll: (self resolve: aLookup copyWithSuperType) ].
 	^ results
-]
-
-{ #category : #accessing }
-TypDepthLookupResolver >> resolver [
-	^ resolver
-]
-
-{ #category : #accessing }
-TypDepthLookupResolver >> resolver: anObject [
-	resolver := anObject
 ]

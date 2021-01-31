@@ -1,8 +1,7 @@
 Class {
 	#name : #TypCachingLookupResolver,
-	#superclass : #TypLookupResolver,
+	#superclass : #TypWrappingLookupResolver,
 	#instVars : [
-		'resolver',
 		'cache'
 	],
 	#category : #'Typer-Core-Lookup'
@@ -18,8 +17,8 @@ TypCachingLookupResolver >> initialize [
 
 { #category : #initialization }
 TypCachingLookupResolver >> reset [
-	cache removeAll.
-	resolver reset
+	super reset.
+	cache removeAll
 ]
 
 { #category : #accessing }
@@ -30,14 +29,4 @@ TypCachingLookupResolver >> resolve: aLookup [
 		ifAbsent: [ cache
 				at: aLookup put: {};
 				at: aLookup put: (resolver resolve: aLookup) ]
-]
-
-{ #category : #accessing }
-TypCachingLookupResolver >> resolver [
-	^ resolver
-]
-
-{ #category : #accessing }
-TypCachingLookupResolver >> resolver: anObject [
-	resolver := anObject
 ]

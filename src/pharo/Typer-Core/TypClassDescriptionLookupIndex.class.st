@@ -15,11 +15,11 @@ TypClassDescriptionLookupIndex class >> instance [
 				resolver:
 					(TypCachingLookupResolver new
 						resolver:
-							(TypBreadthLookupResolver new
+							(TypCompositeLookupResolver new
 								resolvers:
 									{(TypDepthLookupResolver new
 										resolver:
-											(TypBreadthLookupResolver new
+											(TypCompositeLookupResolver new
 												resolvers:
 													{TypPraClassDescriptionLookupResolver new.
 													TypShaClassDescriptionLookupResolver new};
