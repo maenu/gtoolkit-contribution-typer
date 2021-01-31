@@ -1,5 +1,5 @@
 Class {
-	#name : #TypObjectLookup,
+	#name : #TypPropertyLookup,
 	#superclass : #TypLookup,
 	#instVars : [
 		'selector',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #comparing }
-TypObjectLookup >> = anObject [
+TypPropertyLookup >> = anObject [
 	^ self == anObject
 		or: [ self class == anObject class
 				and: [ | object |
@@ -19,50 +19,50 @@ TypObjectLookup >> = anObject [
 ]
 
 { #category : #accessing }
-TypObjectLookup >> copyWithSuperType [
+TypPropertyLookup >> copyWithSuperType [
 	^ super copyWithSuperType
 		initializeReceiverType: receiverType superType selector: selector;
 		yourself
 ]
 
 { #category : #testing }
-TypObjectLookup >> hasSuperType [
+TypPropertyLookup >> hasSuperType [
 	^ receiverType hasSuperType
 ]
 
 { #category : #comparing }
-TypObjectLookup >> hash [
+TypPropertyLookup >> hash [
 	^ selector hash bitXor: receiverType hash
 ]
 
 { #category : #initialization }
-TypObjectLookup >> initialize [
+TypPropertyLookup >> initialize [
 	<typTypeVariable: 'selector' as: 'Symbol'>
 	<typTypeVariable: 'receiverType' as: 'TypType'>
 	super initialize
 ]
 
 { #category : #accessing }
-TypObjectLookup >> initializeReceiverType: aType selector: aSymbol [
+TypPropertyLookup >> initializeReceiverType: aType selector: aSymbol [
 	receiverType := aType.
 	selector := aSymbol
 ]
 
 { #category : #accessing }
-TypObjectLookup >> printOn: aStream [
+TypPropertyLookup >> printOn: aStream [
 	receiverType printOn: aStream.
 	aStream nextPutAll: '>>'.
 	selector printOn: aStream
 ]
 
 { #category : #accessing }
-TypObjectLookup >> receiverType [
+TypPropertyLookup >> receiverType [
 	<typTypeResultAs: 'TypType'>
 	^ receiverType
 ]
 
 { #category : #accessing }
-TypObjectLookup >> selector [
+TypPropertyLookup >> selector [
 	<typTypeResultAs:  'Symbol'>
 	^ selector
 ]

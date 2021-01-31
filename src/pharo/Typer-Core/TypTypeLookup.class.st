@@ -1,5 +1,5 @@
 Class {
-	#name : #TypClassDescriptionLookup,
+	#name : #TypTypeLookup,
 	#superclass : #TypLookup,
 	#instVars : [
 		'classDescription'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-TypClassDescriptionLookup class >> origin: anOrigin classDescription: aClassDescription [
+TypTypeLookup class >> origin: anOrigin classDescription: aClassDescription [
 	^ self new
 		initializeOrigin: anOrigin;
 		initializeClassDescription: aClassDescription;
@@ -16,48 +16,48 @@ TypClassDescriptionLookup class >> origin: anOrigin classDescription: aClassDesc
 ]
 
 { #category : #comparing }
-TypClassDescriptionLookup >> = anObject [
+TypTypeLookup >> = anObject [
 	^ self == anObject
 		or: [ self class == anObject class
 				and: [ classDescription = anObject classDescription ] ]
 ]
 
 { #category : #accessing }
-TypClassDescriptionLookup >> classDescription [
+TypTypeLookup >> classDescription [
 	<typTypeResultAs: 'ClassDescription'>
 	^ classDescription
 ]
 
 { #category : #copying }
-TypClassDescriptionLookup >> copyWithSuperType [
+TypTypeLookup >> copyWithSuperType [
 	^ super copyWithSuperType
 		initializeClassDescription: classDescription superclass;
 		yourself
 ]
 
 { #category : #testing }
-TypClassDescriptionLookup >> hasSuperType [
+TypTypeLookup >> hasSuperType [
 	^ classDescription superclass isNotNil and: [ classDescription superclass ~= classDescription and: [ (classDescription superclass inheritsFrom: classDescription) not ] ]
 ]
 
 { #category : #comparing }
-TypClassDescriptionLookup >> hash [
+TypTypeLookup >> hash [
 	^ classDescription hash
 ]
 
 { #category : #initialization }
-TypClassDescriptionLookup >> initialize [
+TypTypeLookup >> initialize [
 	<typTypeVariable: 'classDescription' as: 'ClassDescription'>
 	super initialize
 ]
 
 { #category : #accessing }
-TypClassDescriptionLookup >> initializeClassDescription: anObject [
+TypTypeLookup >> initializeClassDescription: anObject [
 	<typTypeArgument: 1 as: 'ClassDescription'>
 	classDescription := anObject
 ]
 
 { #category : #accessing }
-TypClassDescriptionLookup >> printOn: aStream [
+TypTypeLookup >> printOn: aStream [
 	aStream nextPutAll: classDescription name
 ]

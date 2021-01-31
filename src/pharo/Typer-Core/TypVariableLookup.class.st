@@ -1,6 +1,6 @@
 Class {
 	#name : #TypVariableLookup,
-	#superclass : #TypObjectLookup,
+	#superclass : #TypPropertyLookup,
 	#category : #'Typer-Core-Lookup'
 }
 

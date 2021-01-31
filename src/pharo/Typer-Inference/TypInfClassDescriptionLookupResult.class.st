@@ -1,6 +1,6 @@
 Class {
 	#name : #TypInfClassDescriptionLookupResult,
-	#superclass : #TypClassDescriptionLookupResult,
+	#superclass : #TypTypeLookupResult,
 	#category : #'Typer-Inference-Lookup'
 }
 

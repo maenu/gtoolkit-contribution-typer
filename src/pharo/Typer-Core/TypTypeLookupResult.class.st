@@ -1,10 +1,10 @@
 Class {
-	#name : #TypClassDescriptionLookupResult,
+	#name : #TypTypeLookupResult,
 	#superclass : #TypLookupResult,
 	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #accessing }
-TypClassDescriptionLookupResult >> type [
+TypTypeLookupResult >> type [
 	self subclassResponsibility
 ]

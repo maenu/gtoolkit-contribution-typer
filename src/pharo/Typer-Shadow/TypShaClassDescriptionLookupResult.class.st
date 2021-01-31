@@ -1,6 +1,6 @@
 Class {
 	#name : #TypShaClassDescriptionLookupResult,
-	#superclass : #TypClassDescriptionLookupResult,
+	#superclass : #TypTypeLookupResult,
 	#instVars : [
 		'shadow'
 	],

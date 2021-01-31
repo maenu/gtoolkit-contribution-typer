@@ -62,9 +62,9 @@ ClassDescription >> typAsParametricTypeWithParameters: aSequenceableCollection b
 
 { #category : #'*Typer-Core' }
 ClassDescription >> typAsType [
-	^ TypClassDescriptionLookupIndex instance
+	^ TypTypeLookupIndex instance
 		typeFor:
-			(TypClassDescriptionLookup new
+			(TypTypeLookup new
 				classDescription: self;
 				yourself)
 ]

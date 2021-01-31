@@ -1,6 +1,6 @@
 Class {
 	#name : #TypPraClassDescriptionLookupResult,
-	#superclass : #TypClassDescriptionLookupResult,
+	#superclass : #TypTypeLookupResult,
 	#category : #'Typer-Pragma-Lookup'
 }
 
