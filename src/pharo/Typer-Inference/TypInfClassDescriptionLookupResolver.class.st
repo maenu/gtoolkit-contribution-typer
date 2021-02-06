@@ -8,8 +8,5 @@ Class {
 TypInfClassDescriptionLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypClassDescriptionLookup'>
 	<typTypeResultAs: 'SequenceableCollection<TypClassDescriptionLookupResult>'>
-	^ {(TypInfClassDescriptionLookupResult new
-		resolvedLookup: aLookup;
-		resolvedResolver: self;
-		yourself)}
+	^ {(TypInfClassDescriptionLookupResult lookup: aLookup)}
 ]

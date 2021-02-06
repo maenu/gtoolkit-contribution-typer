@@ -64,7 +64,7 @@ ClassDescription >> typAsParametricTypeWithParameters: aSequenceableCollection b
 ClassDescription >> typAsType [
 	^ TypTypeLookupIndex instance
 		typeFor:
-			(TypTypeLookup new
-				classDescription: self;
-				yourself)
+			(TypTypeLookup
+				origin: TypLookupNilOrigin instance
+				classDescription: self)
 ]

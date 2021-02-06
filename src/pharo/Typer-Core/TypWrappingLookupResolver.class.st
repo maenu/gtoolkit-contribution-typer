@@ -29,3 +29,8 @@ TypWrappingLookupResolver >> reset [
 TypWrappingLookupResolver >> resolver [
 	^ resolver
 ]
+
+{ #category : #accessing }
+TypWrappingLookupResolver >> resolver: aResolver [
+	resolver := aResolver
+]

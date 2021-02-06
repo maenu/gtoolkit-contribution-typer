@@ -8,8 +8,9 @@ Class {
 }
 
 { #category : #accessing }
-TypShaClassDescriptionLookupResult class >> shadow: anObject [
+TypShaClassDescriptionLookupResult class >> lookup: aLookup shadow: anObject [
 	^ self new
+		initializeLookup: aLookup;
 		initializeShadow: anObject;
 		yourself
 ]
