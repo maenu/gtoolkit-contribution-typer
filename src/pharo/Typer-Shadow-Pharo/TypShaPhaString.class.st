@@ -60,7 +60,7 @@ TypShaPhaString >> ___join: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			Collection typAsType
-				copyWithBindings: {('@A' -> String typAsType)} asDictionary ];
+				copyWithParameters: {('@A' -> String typAsType)} asDictionary ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself
 ]
@@ -71,7 +71,7 @@ TypShaPhaString >> ___keywords [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> String typAsType)} asDictionary ];
+				copyWithParameters: {('@A' -> String typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -81,7 +81,7 @@ TypShaPhaString >> ___split: _a [
 		argumentTypes: [ :i :a :s :r | SequenceableCollection typAsType ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> (a argumentTypes at: 1))} asDictionary ];
+				copyWithParameters: {('@A' -> (a argumentTypes at: 1))} asDictionary ];
 		yourself
 ]
 
@@ -97,6 +97,6 @@ TypShaPhaString >> ___translated [
 TypShaPhaString >> asType: aClass [
 	^ aClass == String
 		ifTrue: [ aClass
-				typAsNamedTypeWithSuperTypeBindings: {('@A' -> Character typAsType)} asDictionary ]
+				typAsNamedTypeWithSuperTypeParameters: {('@A' -> Character typAsType)} asDictionary ]
 		ifFalse: [ aClass typAsNamedType ]
 ]

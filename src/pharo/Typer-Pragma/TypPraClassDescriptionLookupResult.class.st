@@ -30,13 +30,10 @@ TypPraClassDescriptionLookupResult >> type [
 	(parameters isEmpty
 		and: [ bindings isEmpty and: [ superTypeBindings isNotEmpty ] ])
 		ifTrue: [ ^ classDescription
-				typAsNamedTypeWithSuperTypeBindings: superTypeBindings ].
+				typAsNamedTypeWithSuperTypeParameters: superTypeBindings ].
 	^ superTypeBindings isEmpty
-		ifTrue: [ classDescription
-				typAsParametricTypeWithParameters: parameters
-				bindings: bindings ]
+		ifTrue: [ classDescription typAsParametricTypeWithParameters: bindings ]
 		ifFalse: [ classDescription
-				typAsParametricTypeWithParameters: parameters
-				bindings: bindings
-				superTypeBindings: superTypeBindings ]
+				typAsParametricTypeWithParameters: bindings
+				superTypeParameters: superTypeBindings ]
 ]

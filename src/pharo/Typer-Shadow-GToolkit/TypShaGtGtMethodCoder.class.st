@@ -99,8 +99,9 @@ TypShaGtGtMethodCoder >> ___updateMethod: _a [
 { #category : #initialization }
 TypShaGtGtMethodCoder >> initialize [
 	super initialize.
-	___astCache := Association typAsType
-		copyWithBindings:
+	self flag: 'FIXME breaks lookup'
+	"___astCache := Association typAsType
+		copyWithParameters:
 			{('@A' -> String typAsType).
-			('@B' -> RBMethodNode typAsType)} asDictionary
+			('@B' -> RBMethodNode typAsType)} asOrderedDictionary"
 ]

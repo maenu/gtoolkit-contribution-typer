@@ -13,7 +13,7 @@ TypShaPhaSystemDictionary class >> shadowedClass [
 TypShaPhaSystemDictionary >> asType: aClass [
 	^ aClass == SystemDictionary
 		ifTrue: [ aClass
-				typAsNamedTypeWithSuperTypeBindings:
+				typAsNamedTypeWithSuperTypeParameters:
 					{('@B' -> Symbol typAsType).
 					('@A'
 						->

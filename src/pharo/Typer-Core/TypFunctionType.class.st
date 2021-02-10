@@ -143,13 +143,13 @@ TypFunctionType >> asCompatibleWith: aType [
 				and: [ argumentsOptional = aType argumentsOptional ] ])
 		ifFalse: [ ^ super asCompatibleWith: aType ].
 	copy := self copy.
-	bindings
+	parameters
 		keysAndValuesDo: [ :n :t | copy at: n put: (t asCompatibleWith: (aType at: n)) ].
 	^ copy
 ]
 
 { #category : #copying }
-TypFunctionType >> copyWithBindings: aDictionary [
+TypFunctionType >> copyWithParameters: aDictionary [
 	^ self copy
 		initializeArgumentsSize: argumentsSize
 			argumentsOptional: argumentsOptional
@@ -179,17 +179,15 @@ TypFunctionType >> initialize [
 ]
 
 { #category : #initialization }
-TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean bindings: aDictionary [
+TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean bindings: anOrderedDictionary [
 	self assert: [ anInteger isInteger ].
 	self assert: [ anInteger >= 0 ].
 	self
-		assert: [ aDictionary associations
+		assert: [ anOrderedDictionary associations
 				allSatisfy: [ :e | 
 					e key = '@0'
 						or: [ e value isVariable not or: [ e value name ~= '@0' ] ] ] ].
-	self
-		initializeParameters: ((0 to: anInteger) collect: [ :e | '@' , e asString ])
-		bindings: aDictionary.
+	self initializeParameters: anOrderedDictionary.
 	argumentsSize := anInteger.
 	argumentsOptional := aBoolean
 ]

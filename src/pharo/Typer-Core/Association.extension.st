@@ -9,7 +9,7 @@ Association >> typSelfType [
 			type_ := type "typCastAs TypParametricType".
 			type_ parameters size = 2
 				ifTrue: [ type := type_
-						copyWithBindings:
+						copyWithParameters:
 							{((type_ parameters at: 1) -> key typSelfType).
 							((type_ parameters at: 2) -> value typSelfType)}
 								asDictionary. ] ].

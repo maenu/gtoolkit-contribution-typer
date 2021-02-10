@@ -32,7 +32,8 @@ TypShaShadow class >> asType: aClass [
 
 { #category : #'class initialization' }
 TypShaShadow class >> instance [
-	^ instance ifNil: [ instance := self new ]
+	self flag: 'FIXME should call new for proper initialize, but seems to break'.
+	^ instance ifNil: [ instance := self basicNew ]
 ]
 
 { #category : #accessing }

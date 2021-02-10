@@ -20,7 +20,7 @@ RBProgramNode >> typAnnotateType: aType [
 					bindings := e typParameters.
 					bindings size = type_ parameters size
 						ifTrue: [ type := type_
-								copyWithBindings:
+								copyWithParameters:
 									(type_ parameters withIndexCollect: [ :f :i | f -> (bindings at: i) ])
 										asDictionary ]
 						ifFalse: [ self flag: 'log or do nothing?' ] ]

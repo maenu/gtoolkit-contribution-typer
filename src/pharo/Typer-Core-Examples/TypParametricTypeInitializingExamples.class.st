@@ -21,7 +21,7 @@ TypParametricTypeInitializingExamples >> typeClassDescriptionParameters [
 	| type |
 	type := TypParametricType
 		classDescription: Integer
-		parameters: {'@A'}.
+		parameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary.
 	self assert: type name equals: 'Integer'.
 	self assert: type hasClassDescription.
 	self assert: type classDescription equals: Integer.
@@ -29,7 +29,9 @@ TypParametricTypeInitializingExamples >> typeClassDescriptionParameters [
 	self
 		assert: type superType
 		equals: (TypNamedType classDescription: Number).
-	self assert: type parameters equals: {'@A'}.
+	self
+		assert: type parameters
+		equals: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary.
 	^ type
 ]
 
@@ -42,18 +44,20 @@ TypParametricTypeInitializingExamples >> typeNamedWithClassDescription [
 	^ nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypParametricTypeInitializingExamples >> typeNamedWithClassDescriptionParameters [
 	<gtExample>
 	| type |
 	type := TypParametricType
 		named: 'Integer'
-		parameters: {'@A'}.
+		parameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary.
 	self assert: type name equals: 'Integer'.
 	self assert: type hasClassDescription.
 	self assert: type classDescription equals: Integer.
 	self assert: type hasSuperType.
-	self assert: type superType equals: (TypNamedType classDescription: Number).
+	self
+		assert: type superType
+		equals: (TypNamedType classDescription: Number).
 	^ type
 ]
 

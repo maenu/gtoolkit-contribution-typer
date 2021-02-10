@@ -6,7 +6,7 @@ RBArrayNode >> typTypeRecursiveIn: aContext [
 	type := Array typAsType.
 	(type isParametric and: [ type parameters size = 1 ])
 		ifTrue: [ type := type
-				copyWithBindings:
+				copyWithParameters:
 					{((type parameters at: 1)
 						-> (self statements collect: [ :e | e typTypeIn: aContext ]) typAsType)} asDictionary ].
 	^ type

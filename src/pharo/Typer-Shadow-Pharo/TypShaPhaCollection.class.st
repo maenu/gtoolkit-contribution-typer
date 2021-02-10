@@ -69,7 +69,7 @@ TypShaPhaCollection >> ___addAll: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			Collection typAsType
-				copyWithBindings: {('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary ];
+				copyWithParameters: {('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary ];
 		resultType: [ :a :s :r | a argumentTypes at: 1 ];
 		yourself
 ]
@@ -118,7 +118,7 @@ TypShaPhaCollection >> ___asDictionary [
 			type := Dictionary typAsType.
 			Association typAsType >= elementType
 				ifTrue: [ type := type
-						copyWithBindings:
+						copyWithParameters:
 							{('@B' -> ('@A' typAsVariableType resolveIn: elementType)).
 							('@A' -> ('@B' typAsVariableType resolveIn: elementType))} asDictionary ].
 			type ];
@@ -131,7 +131,7 @@ TypShaPhaCollection >> ___asIdentitySet [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			IdentitySet typAsType
-				copyWithBindings: {('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary ];
+				copyWithParameters: {('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary ];
 		yourself
 ]
 
@@ -141,7 +141,7 @@ TypShaPhaCollection >> ___asOrderedCollection [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			OrderedCollection typAsType
-				copyWithBindings: {('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary ];
+				copyWithParameters: {('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary ];
 		yourself
 ]
 
@@ -155,7 +155,7 @@ TypShaPhaCollection >> ___asOrderedDictionary [
 			type := OrderedDictionary typAsType.
 			Association typAsType >= elementType
 				ifTrue: [ type := type
-						copyWithBindings:
+						copyWithParameters:
 							{('@B' -> ('@A' typAsVariableType resolveIn: elementType)).
 							('@A' -> ('@B' typAsVariableType resolveIn: elementType))} asDictionary ].
 			type ];
@@ -168,7 +168,7 @@ TypShaPhaCollection >> ___asSet [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
 			Set typAsType
-				copyWithBindings: {('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary ];
+				copyWithParameters: {('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary ];
 		yourself
 ]
 
@@ -208,7 +208,7 @@ TypShaPhaCollection >> ___collect: _a [
 										yourself) ]
 						ifFalse: [ TypUnknownType instance ] ].
 			a receiverType
-				copyWithBindings: {('@A' -> elementType)} asDictionary ];
+				copyWithParameters: {('@A' -> elementType)} asDictionary ];
 		yourself
 ]
 
@@ -366,7 +366,7 @@ TypShaPhaCollection >> ___flatCollect: _a [
 										yourself)) ]
 						ifFalse: [ TypUnknownType instance ] ].
 			a receiverType
-				copyWithBindings: {('@A' -> elementType)} asDictionary ];
+				copyWithParameters: {('@A' -> elementType)} asDictionary ];
 		yourself
 ]
 
@@ -398,12 +398,12 @@ TypShaPhaCollection >> ___groupedBy: _a [
 										yourself) ]
 						ifFalse: [ '@B' typAsVariableType ] ].
 			OrderedDictionary typAsType
-				copyWithBindings:
+				copyWithParameters:
 					{('@B' -> keyType).
 					('@A'
 						->
 							(Collection typAsType
-								copyWithBindings: {('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary))}
+								copyWithParameters: {('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary))}
 						asDictionary ];
 		yourself
 ]
@@ -510,7 +510,7 @@ TypShaPhaCollection >> ___includes: _a [
 { #category : #accessing }
 TypShaPhaCollection >> ___includesAll: _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | a receiverType copyWithBindings: {'@A' -> ('@A' typAsVariableType resolveIn: a receiverType)} asDictionary ];
+		argumentTypes: [ :i :a :s :r | a receiverType copyWithParameters: {'@A' -> ('@A' typAsVariableType resolveIn: a receiverType)} asDictionary ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
@@ -630,9 +630,10 @@ TypShaPhaCollection >> ___size [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaCollection >> asType: aClass [
-	^ aClass typAsParametricTypeWithParameters: {'@A'}
+	^ aClass
+		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
 ]
 
 { #category : #accessing }

@@ -18,7 +18,7 @@ TypShaPhaNumber >> ___timesCollect: _a [
 				argumentsOptional: true ];
 		resultType: [ :a | 
 			OrderedCollection typAsType
-				copyWithBindings:
+				copyWithParameters:
 					{('@A'
 						->
 							(a argumentTypes
@@ -36,7 +36,7 @@ TypShaPhaNumber >> ___to: _a [
 		argumentTypes: [ :i :a :s :r | Number typAsType ];
 		resultType: [ :a :s :r | 
 			Interval typAsType
-				copyWithBindings:
+				copyWithParameters:
 					{('@A'
 						->
 							{a receiverType.

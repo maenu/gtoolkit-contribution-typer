@@ -39,7 +39,7 @@ TypShaPhaClass >> ___sharedPools [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Collection typAsType
-				copyWithBindings: {('@A' -> Class typAsType)} asDictionary ];
+				copyWithParameters: {('@A' -> Class typAsType)} asDictionary ];
 		yourself
 ]
 

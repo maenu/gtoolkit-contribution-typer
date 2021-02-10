@@ -2,8 +2,7 @@ Class {
 	#name : #TypParametricType,
 	#superclass : #TypNamedType,
 	#instVars : [
-		'parameters',
-		'bindings'
+		'parameters'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -14,18 +13,10 @@ TypParametricType class >> classDescription: aClassDescription [
 ]
 
 { #category : #accessing }
-TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection [
-	^ self
-		classDescription: aClassDescription
-		parameters: aSequenceableCollection
-		bindings: Dictionary new
-]
-
-{ #category : #accessing }
-TypParametricType class >> classDescription: aClassDescription parameters: aSequenceableCollection bindings: aDictionary [
+TypParametricType class >> classDescription: aClassDescription parameters: anOrderedDictionary [
 	^ self new
 		initializeClassDescription: aClassDescription;
-		initializeParameters: aSequenceableCollection bindings: aDictionary;
+		initializeParameters: anOrderedDictionary;
 		yourself
 ]
 
@@ -35,26 +26,16 @@ TypParametricType class >> named: aString [
 ]
 
 { #category : #accessing }
-TypParametricType class >> named: aString parameters: aSequenceableCollection [
-	^ self
-		named: aString
-		parameters: aSequenceableCollection
-		bindings: Dictionary new
-]
-
-{ #category : #accessing }
-TypParametricType class >> named: aString parameters: aSequenceableCollection bindings: aDictionary [
+TypParametricType class >> named: aString parameters: anOrderedDictionary [
 	^ self new
 		initializeName: aString;
-		initializeParameters: aSequenceableCollection bindings: aDictionary;
+		initializeParameters: anOrderedDictionary;
 		yourself
 ]
 
 { #category : #comparing }
 TypParametricType >> = aType [
-	^ super = aType
-		and: [ parameters = aType parameters
-				and: [ parameters allSatisfy: [ :e | (self at: e) = (aType at: e) ] ] ]
+	^ super = aType and: [ parameters = aType parameters ]
 ]
 
 { #category : #comparing }
@@ -62,9 +43,8 @@ TypParametricType >> > aType [
 	^ self ~= aType
 		and: [ (aType isParametric
 				and: [ name = aType name
-						and: [ parameters = aType parameters
-								and:
-									[ parameters allSatisfy: [ :e | (self at: e) >= (aType at: e) ] ] ] ])
+						and: [ parameters keys = aType parameters keys
+								and: [ parameters keys allSatisfy: [ :e | (self at: e) >= (aType at: e) ] ] ] ])
 				or: [ super > aType ] ]
 ]
 
@@ -75,70 +55,50 @@ TypParametricType >> asCompatibleWith: aType [
 		and: [ name = aType name and: [ parameters = aType parameters ] ])
 		ifFalse: [ ^ super asCompatibleWith: aType ].
 	copy := self copy.
-	bindings
+	parameters
 		keysAndValuesDo: [ :n :t | copy at: n put: (t asCompatibleWith: (aType at: n)) ].
 	^ copy
 ]
 
 { #category : #accessing }
 TypParametricType >> at: aString [
-	<typTypeArgument: 1 as: 'String'>
-	^ bindings at: aString
+	^ parameters at: aString
 ]
 
 { #category : #accessing }
 TypParametricType >> at: aString put: aType [
-	<typTypeArgument: 1 as: 'String'>
-	<typTypeArgument: 2 as: 'TypType'>
 	superType := nil. "must be nilled as change in binding might invalidate super type"
-	^ bindings at: aString put: aType
-]
-
-{ #category : #accessing }
-TypParametricType >> bindings [
-	^ bindings
+	^ parameters at: aString put: aType
 ]
 
 { #category : #copying }
-TypParametricType >> copyWithBindings: aDictionary [
-	<typTypeArgument: 1 as: 'Dictionary<String,TypType>'>
-	self assert: [ parameters includesAll: aDictionary keys ].
+TypParametricType >> copyWithParameters: anOrderedDictionary [
+	<typTypeArgument: 1 as: 'OrderedDictionary<String,TypType>'>
+	self
+		assert: [ parameters keys includesAll: anOrderedDictionary keys ].
 	^ self copy
-		initializeParameters: parameters copy
-			bindings:
-			(bindings copy
-				addAll: aDictionary;
+		initializeParameters:
+			(parameters copy
+				addAll: anOrderedDictionary;
 				yourself);
 		yourself
 ]
 
 { #category : #comparing }
 TypParametricType >> hash [
-	^ (super hash bitXor: bindings hash) bitXor: parameters hash
+	^ super hash bitXor: parameters hash
 ]
 
 { #category : #initialization }
 TypParametricType >> initialize [
-	<typTypeVariable: 'parameters' as: 'SequenceableCollection<String>'>
-	<typTypeVariable: 'bindings' as: 'Dictionary<String,TypType>'>
-	self flag: 'TODO how is shadowing of bindings handled?'.
 	super initialize.
-	bindings := Dictionary new "typParameters String,TypType".
+	parameters := OrderedDictionary new
 ]
 
 { #category : #accessing }
-TypParametricType >> initializeParameters: aSequenceableCollection bindings: aDictionary [
-	<typTypeArgument: 1 as: 'SequenceableCollection<String>'>
-	<typTypeArgument: 2 as: 'Dictionary<String,TypType>'>
-	self assert: [ aSequenceableCollection isNotEmpty ].
-	self
-		assert: [ aSequenceableCollection asSet includesAll: aDictionary keys asSet ].
-	parameters := aSequenceableCollection.
-	bindings := aDictionary.
-	parameters
-		do: [ :e | 
-			(bindings includesKey: e)
-				ifFalse: [ bindings at: e put: e typAsVariableType ] ].
+TypParametricType >> initializeParameters: anOrderedDictionary [
+	self assert: [ anOrderedDictionary isNotEmpty ].
+	parameters := anOrderedDictionary.
 	superType := nil
 ]
 
@@ -155,8 +115,7 @@ TypParametricType >> parameters [
 { #category : #copying }
 TypParametricType >> postCopy [
 	super postCopy.
-	parameters := parameters copy.
-	bindings := bindings copy
+	parameters := parameters copy
 ]
 
 { #category : #printing }
@@ -166,9 +125,9 @@ TypParametricType >> printOn: aStream skipping: anIdentitySet [
 			^ self ].
 	aStream << name asString.
 	aStream << '<'.
-	parameters
+	parameters values
 		withIndexDo: [ :e :i | 
-			(self at: e) printOn: aStream skipping: anIdentitySet , {self}.
+			e printOn: aStream skipping: anIdentitySet , {self}.
 			i < parameters size
 				ifTrue: [ aStream << ',' ] ].
 	aStream << '>'
@@ -180,8 +139,8 @@ TypParametricType >> superType [
 	superType := super superType.
 	superType isParametric
 		ifTrue: [ superType := superType
-				copyWithBindings:
-					((bindings keys intersection: superType parameters)
-						collect: [ :e | e -> (self at: e) ]) asDictionary ].
+				copyWithParameters:
+					((parameters keys intersection: superType parameters keys)
+						collect: [ :e | e -> (self at: e) ]) asOrderedDictionary ].
 	^ superType
 ]

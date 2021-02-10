@@ -13,6 +13,6 @@ TypShaPhaByteArray class >> shadowedClass [
 TypShaPhaByteArray >> asType: aClass [
 	^ aClass == ByteArray
 		ifTrue: [ aClass
-				typAsNamedTypeWithSuperTypeBindings: {('@A' -> Integer typAsType)} asDictionary ]
+				typAsNamedTypeWithSuperTypeParameters: {('@A' -> Integer typAsType)} asDictionary ]
 		ifFalse: [ aClass typAsNamedType ]
 ]

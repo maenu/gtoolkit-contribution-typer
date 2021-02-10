@@ -11,7 +11,7 @@ TypShaPhaRBPragmaNode class >> ___selector: _a arguments: _b [
 			i = 1
 				ifTrue: [ Symbol typAsType ]
 				ifFalse: [ SequenceableCollection typAsType
-						copyWithBindings: {('@A' -> RBLiteralValueNode typAsType)} asDictionary ] ];
+						copyWithParameters: {('@A' -> RBLiteralValueNode typAsType)} asDictionary ] ];
 		resultType: [ :a :s :r | RBPragmaNode typAsType ];
 		yourself
 ]

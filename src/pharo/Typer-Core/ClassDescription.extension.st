@@ -28,35 +28,26 @@ ClassDescription >> typAsNamedType [
 ]
 
 { #category : #'*Typer-Core' }
-ClassDescription >> typAsNamedTypeWithSuperTypeBindings: aDictionary [
+ClassDescription >> typAsNamedTypeWithSuperTypeParameters: anOrderedDictionary [
 	| type |
 	type := self typAsNamedType.
-	type superType: (type superType copyWithBindings: aDictionary).
+	type superType: (type superType copyWithParameters: anOrderedDictionary).
 	^ type
 ]
 
 { #category : #'*Typer-Core' }
-ClassDescription >> typAsParametricTypeWithParameters: aSequenceableCollection [
+ClassDescription >> typAsParametricTypeWithParameters: anOrderedDictionary [
 	^ TypParametricType
 		classDescription: self
-		parameters: aSequenceableCollection
+		parameters: anOrderedDictionary
 ]
 
 { #category : #'*Typer-Core' }
-ClassDescription >> typAsParametricTypeWithParameters: aSequenceableCollection bindings: aBindings [
-	^ TypParametricType
-		classDescription: self
-		parameters: aSequenceableCollection
-		bindings: aBindings
-]
-
-{ #category : #'*Typer-Core' }
-ClassDescription >> typAsParametricTypeWithParameters: aSequenceableCollection bindings: aDictionary superTypeBindings: anotherDictionary [
+ClassDescription >> typAsParametricTypeWithParameters: anOrderedDictionary superTypeParameters: anotherOrderedDictionary [
 	| type |
-	type := self
-		typAsParametricTypeWithParameters: aSequenceableCollection
-		bindings: aDictionary.
-	type superType: (type superType copyWithBindings: anotherDictionary).
+	type := self typAsParametricTypeWithParameters: anOrderedDictionary.
+	type
+		superType: (type superType copyWithParameters: anotherOrderedDictionary).
 	^ type
 ]
 

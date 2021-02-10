@@ -15,6 +15,6 @@ TypShaGtGtMondrianNodeBuilder >> ___with: _a [
 		argumentTypes: [ :i :a :s :r | Collection typAsType ];
 		resultType: [ :a :s :r | 
 			(a argumentTypes at: 1)
-				copyWithBindings: {('@A' -> BlElement typAsType)} asDictionary ];
+				copyWithParameters: {('@A' -> BlElement typAsType)} asDictionary ];
 		yourself
 ]

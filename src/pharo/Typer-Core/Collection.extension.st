@@ -17,7 +17,7 @@ Collection >> typSelfType [
 	type := super typSelfType.
 	(type isParametric and: [ type parameters size = 1 ])
 		ifTrue: [ type := type
-				copyWithBindings:
+				copyWithParameters:
 					{((type parameters at: 1)
 						->
 							(self typSelfTypeSamples collect: [ :e | e class typAsType ])

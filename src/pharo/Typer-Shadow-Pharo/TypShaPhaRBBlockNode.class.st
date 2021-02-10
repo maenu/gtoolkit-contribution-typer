@@ -14,7 +14,7 @@ TypShaPhaRBBlockNode >> ___arguments [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
-				copyWithBindings: {('@A' -> RBArgumentNode typAsType)} asDictionary ];
+				copyWithParameters: {('@A' -> RBArgumentNode typAsType)} asDictionary ];
 		yourself
 ]
 

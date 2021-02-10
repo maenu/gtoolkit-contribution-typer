@@ -38,7 +38,7 @@ TypParametricTypeCopyingExamples >> copyWithBindings [
 	"ensure superType"
 	original superType.
 	copy := original
-		copyWithBindings:
+		copyWithParameters:
 			{('@A'
 				->
 					(TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription))}

@@ -15,7 +15,7 @@ TypShaPhaBehavior >> ___allSubclasses [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> Behavior typAsType)} asDictionary ];
+				copyWithParameters: {('@A' -> Behavior typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -47,7 +47,7 @@ TypShaPhaBehavior >> ___classVarNames [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Set typAsType
-				copyWithBindings: {('@A' -> String typAsType)} asDictionary ];
+				copyWithParameters: {('@A' -> String typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -97,7 +97,7 @@ TypShaPhaBehavior >> ___instVarNames [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> String typAsType)} asDictionary ];
+				copyWithParameters: {('@A' -> String typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -130,7 +130,7 @@ TypShaPhaBehavior >> ___methods [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Collection typAsType
-				copyWithBindings: {('@A' -> CompiledMethod typAsType)} asDictionary ];
+				copyWithParameters: {('@A' -> CompiledMethod typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -162,7 +162,7 @@ TypShaPhaBehavior >> ___selectors [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Collection typAsType
-				copyWithBindings: {('@A' -> Symbol typAsType)} asDictionary ];
+				copyWithParameters: {('@A' -> Symbol typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -196,7 +196,7 @@ TypShaPhaBehavior >> ___withAllSuperclasses [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings: {('@A' -> ClassDescription typAsType)} asDictionary ];
+				copyWithParameters: {('@A' -> ClassDescription typAsType)} asDictionary ];
 		yourself
 ]
 

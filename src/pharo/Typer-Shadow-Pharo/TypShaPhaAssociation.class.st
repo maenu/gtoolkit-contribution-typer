@@ -25,7 +25,10 @@ TypShaPhaAssociation >> ___value [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaAssociation >> asType: aClass [
-	^ aClass typAsParametricTypeWithParameters: {'@A' . '@B'}
+	^ aClass
+		typAsParametricTypeWithParameters:
+			{('@A' -> '@A' typAsVariableType).
+			('@B' -> '@B' typAsVariableType)} asOrderedDictionary
 ]

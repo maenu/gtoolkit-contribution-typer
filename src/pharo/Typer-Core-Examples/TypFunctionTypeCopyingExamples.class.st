@@ -40,7 +40,7 @@ TypFunctionTypeCopyingExamples >> copyWithBindings [
 	"ensure superType"
 	original superType.
 	copy := original
-		copyWithBindings:
+		copyWithParameters:
 			{('@0'
 				->
 					(TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription))}

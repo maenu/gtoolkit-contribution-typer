@@ -18,7 +18,7 @@ Dictionary >> typSelfType [
 					(s at: 2) add: e value class typAsType.
 					s ]) collect: #typAsType.
 			type := type
-				copyWithBindings:
+				copyWithParameters:
 					{((type parameters at: 1) -> (types at: 2)).
 					((type parameters at: 2) -> (types at: 1))} asDictionary ].
 	^ type

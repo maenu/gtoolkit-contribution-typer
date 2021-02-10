@@ -23,7 +23,7 @@ TypShaPhaOrderedDictionary >> ___asOrderedDictionary [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
 			OrderedDictionary typAsType
-				copyWithBindings:
+				copyWithParameters:
 					{('@B' -> ('@B' typAsVariableType resolveIn: a receiverType)).
 					('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary ];
 		yourself
@@ -35,11 +35,11 @@ TypShaPhaOrderedDictionary >> ___associations [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
 			Array typAsType
-				copyWithBindings:
+				copyWithParameters:
 					{('@A'
 						->
 							(Association typAsType
-								copyWithBindings:
+								copyWithParameters:
 									{('@A' -> ('@B' typAsVariableType resolveIn: a receiverType)).
 									('@B' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary))}
 						asDictionary ];
@@ -53,7 +53,7 @@ TypShaPhaOrderedDictionary >> ___associationsDo: _a [
 			BlockClosure
 				typAsFunctionTypeWithArguments:
 					{(Association typAsType
-						copyWithBindings:
+						copyWithParameters:
 							{('@A' -> ('@B' typAsVariableType resolveIn: a receiverType)).
 							('@B' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary)}
 				result: TypUnknownType instance
@@ -142,7 +142,7 @@ TypShaPhaOrderedDictionary >> ___collect: _a [
 										yourself) ]
 						ifFalse: [ TypUnknownType instance ] ].
 			a receiverType
-				copyWithBindings:
+				copyWithParameters:
 					{('@B' -> (a receiverType at: '@B')).
 					('@A' -> elementType)} asDictionary ];
 		yourself
@@ -170,13 +170,16 @@ TypShaPhaOrderedDictionary >> ___keys [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
 			Array typAsType
-				copyWithBindings: {('@A' -> ('@B' typAsVariableType resolveIn: a receiverType))} asDictionary ];
+				copyWithParameters: {('@A' -> ('@B' typAsVariableType resolveIn: a receiverType))} asDictionary ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaOrderedDictionary >> asType: aClass [
-	^ aClass typAsParametricTypeWithParameters: {'@B' . '@A'}
+	^ aClass
+		typAsParametricTypeWithParameters:
+			{('@B' -> '@B' typAsVariableType).
+			('@A' -> '@A' typAsVariableType)} asOrderedDictionary
 ]
 
 { #category : #accessing }
@@ -185,7 +188,7 @@ TypShaPhaOrderedDictionary >> ~~~, _a [
 		argumentTypes: [ :i :a :s :r | OrderedDictionary typAsType ];
 		resultType: [ :a :s :r | 
 			a receiverType
-				copyWithBindings:
+				copyWithParameters:
 					{('@B'
 						->
 							{('@B' typAsVariableType resolveIn: a receiverType).

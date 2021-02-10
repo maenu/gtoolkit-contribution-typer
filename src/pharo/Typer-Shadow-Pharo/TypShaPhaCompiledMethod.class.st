@@ -15,7 +15,7 @@ TypShaPhaCompiledMethod >> ___assignmentNodes [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Collection typAsType
-				copyWithBindings: {('@A'  -> RBAssignmentNode typAsType)} asDictionary ];
+				copyWithParameters: {('@A'  -> RBAssignmentNode typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -56,7 +56,7 @@ TypShaPhaCompiledMethod >> ___pragmas [
 	^ TypMethodLookupResult new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
-				copyWithBindings: {('@A' -> Pragma typAsType)} asDictionary ];
+				copyWithParameters: {('@A' -> Pragma typAsType)} asDictionary ];
 		yourself
 ]
 

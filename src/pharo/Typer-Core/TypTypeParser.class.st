@@ -245,7 +245,7 @@ TypTypeParser >> reduceActionForParametricType1: nodes [
 		do: [ TypNamedType named: (nodes at: 1) ].
 	^ type isParametric
 		ifTrue: [ type
-				copyWithBindings:
+				copyWithParameters:
 					((nodes at: 3)
 						withIndexCollect: [ :e :i | 
 							| parameter |

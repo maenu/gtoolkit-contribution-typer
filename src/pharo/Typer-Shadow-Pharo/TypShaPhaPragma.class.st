@@ -15,7 +15,7 @@ TypShaPhaPragma >> ___arguments [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithBindings:
+				copyWithParameters:
 					{('@A'
 						->
 							{String typAsType.

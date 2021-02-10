@@ -19,7 +19,8 @@ TypShaPhaStream >> ___nextPutAll: _a [
 
 { #category : #accessing }
 TypShaPhaStream >> asType: aClass [
-	^ aClass typAsParametricTypeWithParameters: {'@A'}
+	^ aClass
+		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
 ]
 
 { #category : #accessing }
@@ -27,7 +28,7 @@ TypShaPhaStream >> ~~~<< _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			Collection typAsType
-				copyWithBindings: {('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary ];
+				copyWithParameters: {('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
