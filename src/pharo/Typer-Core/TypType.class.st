@@ -36,12 +36,6 @@ TypType >> >= aType [
 ]
 
 { #category : #converting }
-TypType >> asCollection [
-	<typTypeResultAs: 'Collection<TypType>'>
-	^ { self }
-]
-
-{ #category : #converting }
 TypType >> asCompatibleWith: aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'TypType'>
@@ -69,13 +63,6 @@ TypType >> asNullable [
 	<typTypeResultAs: 'TypType'>
 	^ {TypNilType instance.
 	self} typAsType
-]
-
-{ #category : #testing }
-TypType >> canUnderstand: aSymbol [
-	<typTypeArgument: 1 as: 'Symbol'>
-	<typTypeResultAs: 'Boolean'>
-	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -141,13 +128,6 @@ TypType >> isVoid [
 	^ false
 ]
 
-{ #category : #accessing }
-TypType >> lookupSelector: aSymbol [
-	<typTypeArgument: 1 as: 'Symbol'>
-	<typTypeResultAs: 'IdentitySet<CompiledMethod>'>
-	self subclassResponsibility
-]
-
 { #category : #printing }
 TypType >> printOn: aStream [
 	self printOn: aStream skipping: IdentitySet new
@@ -158,13 +138,6 @@ TypType >> printOn: aStream skipping: anIdentitySet [
 	"Respects skipping set to not print recursive type infinitely."
 
 	self subclassResponsibility
-]
-
-{ #category : #accessing }
-TypType >> resolveIn: aType [
-	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeResultAs: 'TypType'>
-	^ self
 ]
 
 { #category : #accessing }

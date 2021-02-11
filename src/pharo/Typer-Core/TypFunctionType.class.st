@@ -33,9 +33,8 @@ TypFunctionType class >> classDescription: aClassDescription argumentsSize: anIn
 TypFunctionType class >> classDescription: aClassDescription argumentsSize: anInteger argumentsOptional: aBoolean parameters: anOrderedDictionary [
 	^ self new
 		initializeClassDescription: aClassDescription;
-		initializeArgumentsSize: anInteger
-			argumentsOptional: aBoolean
-			parameters: anOrderedDictionary;
+		initializeParameters: anOrderedDictionary;
+		initializeArgumentsSize: anInteger argumentsOptional: aBoolean;
 		yourself
 ]
 
@@ -69,9 +68,8 @@ TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOption
 TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOptional: aBoolean parameters: anOrderedDictionary [
 	^ self new
 		initializeName: aString;
-		initializeArgumentsSize: anInteger
-			argumentsOptional: aBoolean
-			parameters: anOrderedDictionary;
+		initializeParameters: anOrderedDictionary;
+		initializeArgumentsSize: anInteger argumentsOptional: aBoolean;
 		yourself
 ]
 
@@ -160,17 +158,21 @@ TypFunctionType >> initialize [
 ]
 
 { #category : #initialization }
-TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean parameters: anOrderedDictionary [
+TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean [
 	self assert: [ anInteger isInteger ].
 	self assert: [ anInteger >= 0 ].
+	argumentsSize := anInteger.
+	argumentsOptional := aBoolean
+]
+
+{ #category : #initialization }
+TypFunctionType >> initializeParameters: anOrderedDictionary [
 	self
 		assert: [ anOrderedDictionary associations
 				allSatisfy: [ :e | 
 					e key = '@0'
 						or: [ e value isVariable not or: [ e value name ~= '@0' ] ] ] ].
-	self initializeParameters: anOrderedDictionary.
-	argumentsSize := anInteger.
-	argumentsOptional := aBoolean
+	super initializeParameters: anOrderedDictionary
 ]
 
 { #category : #testing }

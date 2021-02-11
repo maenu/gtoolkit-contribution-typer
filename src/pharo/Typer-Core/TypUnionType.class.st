@@ -56,26 +56,6 @@ TypUnionType >> > aType [
 				ifFalse: [ types anySatisfy: [ :e | e >= aType ] ] ]
 ]
 
-{ #category : #polymorphic }
-TypUnionType >> arguments [
-	| arguments |
-	arguments := types
-		collect: [ :e | 
-			e isFunction
-				ifTrue: [ (e "typCastAs TypFunctionType") arguments ]
-				ifFalse: [ {} ] ].
-	^ (arguments collect: #size) max
-		timesCollect: [ :e | 
-			(arguments
-				collect: [ :f | f at: e ifAbsent: [ TypUnknownType instance ] ])
-				typAsType ]
-]
-
-{ #category : #converting }
-TypUnionType >> asCollection [
-	^ self types
-]
-
 { #category : #converting }
 TypUnionType >> asNonNullable [
 	^ (types includes: TypNilType instance)
@@ -88,11 +68,6 @@ TypUnionType >> asNullable [
 	^ (types includes: TypNilType instance)
 		ifTrue: [ self ]
 		ifFalse: [ (types , TypNilType instance) typAsType ]
-]
-
-{ #category : #'as yet unclassified' }
-TypUnionType >> canUnderstand: aSymbol [
-	^ types allSatisfy: [ :e | e canUnderstand: aSymbol ]
 ]
 
 { #category : #testing }
@@ -164,12 +139,6 @@ TypUnionType >> isUnion [
 ]
 
 { #category : #accessing }
-TypUnionType >> lookupSelector: aSymbol [
-	self assert: [ self canUnderstand: aSymbol ].
-	^ types asIdentitySet flatCollect: [ :e | e lookupSelector: aSymbol ]
-]
-
-{ #category : #accessing }
 TypUnionType >> postCopy [
 	super postCopy.
 	types := types copy
@@ -212,15 +181,6 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 			e printOn: aStream skipping: anIdentitySet , {self}.
 			types_ ifNotEmpty: [ aStream << ',' ] ].
 	aStream << '}'
-]
-
-{ #category : #polymorphic }
-TypUnionType >> result [
-	^ (types
-		collect: [ :e | 
-			e isFunction
-				ifTrue: [ (e "typCastAs TypFunctionType") result ]
-				ifFalse: [ TypUnknownType instance ] ]) typAsType
 ]
 
 { #category : #accessing }

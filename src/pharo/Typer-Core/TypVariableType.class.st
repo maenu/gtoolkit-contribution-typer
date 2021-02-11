@@ -38,26 +38,6 @@ TypVariableType >> > aType [
 	^ superType >= aType
 ]
 
-{ #category : #accessing }
-TypVariableType >> assign: aType in: anotherType [
-	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeArgument: 2 as: 'TypType'>
-	<typTypeResultAs: 'TypType'>
-	self assert: [ name ~= '@self' ].
-	(scope == anotherType)
-		ifTrue: [ ^ scope at: name put: aType ].
-	(aType isParametric and: [ aType parameters includes: name ])
-		ifTrue: [ ^ aType at: name put: aType ].
-	^ anotherType hasSuperType
-		ifTrue: [ self assign: aType in: anotherType superType ]
-		ifFalse: [ self ]
-]
-
-{ #category : #'as yet unclassified' }
-TypVariableType >> canUnderstand: aSymbol [
-	^ self superType canUnderstand: aSymbol
-]
-
 { #category : #comparing }
 TypVariableType >> hash [
 	^ name hash bitXor: superType hash
@@ -85,11 +65,6 @@ TypVariableType >> isVariable [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
-TypVariableType >> lookupSelector: aSymbol [
-	^ self superType lookupSelector: aSymbol
-]
-
 { #category : #accessing }
 TypVariableType >> name [
 	^ name
@@ -104,19 +79,6 @@ TypVariableType >> printOn: aStream skipping: anIdentitySet [
 	superType = ProtoObject typAsType
 		ifFalse: [ aStream nextPutAll: '<='.
 			superType printOn: aStream skipping: anIdentitySet , {self} ]
-]
-
-{ #category : #accessing }
-TypVariableType >> resolveIn: aType [
-	name = '@self'
-		ifTrue: [ ^ aType ].
-	scope == aType
-		ifTrue: [ ^ scope at: name ].
-	(aType isParametric and: [ aType parameters includes: name ])
-		ifTrue: [ ^ aType at: name ].
-	^ aType hasSuperType
-		ifTrue: [ self resolveIn: aType superType ]
-		ifFalse: [ self ]
 ]
 
 { #category : #accessing }

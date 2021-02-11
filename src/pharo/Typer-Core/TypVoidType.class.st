@@ -23,11 +23,6 @@ TypVoidType >> > aType [
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
-TypVoidType >> canUnderstand: aSymbol [
-	^ false
-]
-
 { #category : #copying }
 TypVoidType >> copy [
 	^ self
@@ -36,11 +31,6 @@ TypVoidType >> copy [
 { #category : #testing }
 TypVoidType >> isVoid [
 	^ true
-]
-
-{ #category : #'as yet unclassified' }
-TypVoidType >> lookupSelector: aSymbol [
-	self shouldNotImplement
 ]
 
 { #category : #printing }

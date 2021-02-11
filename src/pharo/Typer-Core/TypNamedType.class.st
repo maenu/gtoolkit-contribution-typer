@@ -37,12 +37,6 @@ TypNamedType >> > aType [
 		and: [ aType hasSuperType and: [ self >= aType superType ] ]
 ]
 
-{ #category : #accessing }
-TypNamedType >> canUnderstand: aSymbol [
-	^ self hasClassDescription
-		and: [ self classDescription canUnderstand: aSymbol ]
-]
-
 { #category : #converting }
 TypNamedType >> classDescription [
 	<typTypeResultAs: 'ClassDescription'>
@@ -98,12 +92,6 @@ TypNamedType >> initializeName: anObject [
 { #category : #testing }
 TypNamedType >> isNamed [
 	^ true
-]
-
-{ #category : #'as yet unclassified' }
-TypNamedType >> lookupSelector: aSymbol [
-	self assert: [ self canUnderstand: aSymbol ].
-	^ IdentitySet with: (self classDescription lookupSelector: aSymbol)
 ]
 
 { #category : #accessing }
