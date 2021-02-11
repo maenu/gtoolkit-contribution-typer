@@ -6,7 +6,7 @@ Class {
 
 { #category : #'generated-accessing' }
 TypTypeParser class >> cacheId [
-	^'2021-01-04T20:38:59.321173+01:00'
+	^'2021-02-11T16:20:22.052658+01:00'
 ]
 
 { #category : #generated }
@@ -73,20 +73,20 @@ ParametricType
 		{ | type |
 		type := [ name asClass typAsType ] on: NotFound do: [ TypNamedType named: name ].
 		type isParametric
-			ifTrue: [ type copyWithBindings: (parameters withIndexCollect: [ :e :i | | parameter |
-				parameter := type parameters at: i.
-				parameter -> e ]) asDictionary ]
+			ifTrue: [ type copyWithParameters: (parameters withIndexCollect: [ :e :i | | parameter |
+				parameter := type parameters keys at: i.
+				parameter -> e ]) asOrderedDictionary ]
 			ifFalse: [ type ] }
 	;
 FunctionType
 	: Name 'name' ""["" EmptyTypes 'arguments' ""]"" ""->"" Type 'result'
-		{ TypFunctionType named: name argumentsSize: arguments size argumentsOptional: true bindings:  ({ result } , arguments withIndexCollect: [ :e :i |  '@', (i - 1) asString -> e ]) asDictionary }
+		{ TypFunctionType named: name argumentsSize: arguments size argumentsOptional: true parameters:  ({ '@0' -> result } , (arguments withIndexCollect: [ :e :i |  '@' , i asString -> e ])) asOrderedDictionary }
 	| Name 'name' ""("" EmptyTypes 'arguments' "")"" ""->"" Type 'result'
-		{ TypFunctionType named: name argumentsSize: arguments size argumentsOptional: false bindings:  ({ result } , arguments withIndexCollect: [ :e :i |  '@', (i - 1) asString -> e ]) asDictionary }
+		{ TypFunctionType named: name argumentsSize: arguments size argumentsOptional: false parameters:  ({ '@0' -> result } , (arguments withIndexCollect: [ :e :i |  '@' , i asString -> e ])) asOrderedDictionary }
 	;
 UnionType
 	: ""{"" Types 'types' ""}""
-		{  TypUnionType types: types  }
+		{ TypUnionType types: types }
 	;
 EmptyTypes
 	: Types 'types'
@@ -111,7 +111,7 @@ TypTypeParser class >> reduceTable [
 ^#(
 	#(20 1 #reduceActionForNilType1: 630785 false ) 
 	#(19 1 #reduceActionForUnknownType1: 577537 false ) 
-	#(27 1 #reduceActionForName1: 2023425 false ) 
+	#(27 1 #reduceActionForName1: 2064385 false ) 
 	#(17 1 #reduceActionForTypes1: 241665 false ) 
 	#(18 1 #liftFirstValue: 334849 false ) 
 	#(18 1 #liftFirstValue: 334850 false ) 
@@ -122,14 +122,14 @@ TypTypeParser class >> reduceTable [
 	#(18 1 #liftFirstValue: 334852 false ) 
 	#(22 1 #reduceActionForNamedType1: 858113 false ) 
 	#(21 2 #reduceActionForVariableType1: 675841 false ) 
-	#(26 0 #reduceActionForEmptyTypes2: 1969154 false ) 
-	#(25 3 #reduceActionForUnionType1: 1895425 false ) 
+	#(26 0 #reduceActionForEmptyTypes2: 2010114 false ) 
+	#(25 3 #reduceActionForUnionType1: 1938433 false ) 
 	#(17 3 #reduceActionForTypes2: 241666 false ) 
-	#(26 1 #liftFirstValue: 1969153 false ) 
+	#(26 1 #liftFirstValue: 2010113 false ) 
 	#(21 4 #reduceActionForVariableType2: 675842 false ) 
 	#(23 4 #reduceActionForParametricType1: 968705 false ) 
-	#(24 6 #reduceActionForFunctionType2: 1345538 false ) 
-	#(24 6 #reduceActionForFunctionType1: 1345537 false )
+	#(24 6 #reduceActionForFunctionType2: 1359874 false ) 
+	#(24 6 #reduceActionForFunctionType1: 1359873 false )
 	).
 ]
 
@@ -202,10 +202,10 @@ TypTypeParser >> reduceActionForFunctionType1: nodes [
 		named: (nodes at: 1)
 		argumentsSize: (nodes at: 3) size
 		argumentsOptional: true
-		bindings:
-			({(nodes at: 6)} , (nodes at: 3)
-				withIndexCollect: [ :e :i | ('@' , (i - 1) asString) -> e ])
-				asDictionary
+		parameters:
+			({('@0' -> (nodes at: 6))}
+				, ((nodes at: 3) withIndexCollect: [ :e :i | ('@' , i asString) -> e ]))
+				asOrderedDictionary
 ]
 
 { #category : #'generated-reduction actions' }
@@ -214,10 +214,10 @@ TypTypeParser >> reduceActionForFunctionType2: nodes [
 		named: (nodes at: 1)
 		argumentsSize: (nodes at: 3) size
 		argumentsOptional: false
-		bindings:
-			({(nodes at: 6)} , (nodes at: 3)
-				withIndexCollect: [ :e :i | ('@' , (i - 1) asString) -> e ])
-				asDictionary
+		parameters:
+			({('@0' -> (nodes at: 6))}
+				, ((nodes at: 3) withIndexCollect: [ :e :i | ('@' , i asString) -> e ]))
+				asOrderedDictionary
 ]
 
 { #category : #'generated-reduction actions' }
@@ -249,8 +249,8 @@ TypTypeParser >> reduceActionForParametricType1: nodes [
 					((nodes at: 3)
 						withIndexCollect: [ :e :i | 
 							| parameter |
-							parameter := type parameters at: i.
-							parameter -> e ]) asDictionary ]
+							parameter := type parameters keys at: i.
+							parameter -> e ]) asOrderedDictionary ]
 		ifFalse: [ type ]
 ]
 

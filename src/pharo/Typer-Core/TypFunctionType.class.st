@@ -22,30 +22,25 @@ TypFunctionType class >> classDescription: aClassDescription argumentsSize: anIn
 		classDescription: aClassDescription
 		argumentsSize: anInteger
 		argumentsOptional: aBoolean
-		bindings:
+		parameters:
 			((0 to: anInteger)
 				collect:
 					[ :e | ('@' , e asString) -> ('@' , e asString) typAsVariableType ])
-				asDictionary
+				asOrderedDictionary
 ]
 
 { #category : #accessing }
-TypFunctionType class >> classDescription: aClassDescription argumentsSize: anInteger argumentsOptional: aBoolean bindings: aDictionary [
+TypFunctionType class >> classDescription: aClassDescription argumentsSize: anInteger argumentsOptional: aBoolean parameters: anOrderedDictionary [
 	^ self new
 		initializeClassDescription: aClassDescription;
 		initializeArgumentsSize: anInteger
 			argumentsOptional: aBoolean
-			bindings: aDictionary;
+			parameters: anOrderedDictionary;
 		yourself
 ]
 
 { #category : #accessing }
 TypFunctionType class >> classDescription: aClassDescription parameters: aSequenceableCollection [
-	self shouldNotImplement
-]
-
-{ #category : #accessing }
-TypFunctionType class >> classDescription: aClassDescription parameters: aSequenceableCollection bindings: aDictionary [
 	self shouldNotImplement
 ]
 
@@ -63,30 +58,25 @@ TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOption
 		named: aString
 		argumentsSize: anInteger
 		argumentsOptional: aBoolean
-		bindings:
+		parameters:
 			((0 to: anInteger)
 				collect:
 					[ :e | ('@' , e asString) -> ('@' , e asString) typAsVariableType ])
-				asDictionary
+				asOrderedDictionary
 ]
 
 { #category : #accessing }
-TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
+TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOptional: aBoolean parameters: anOrderedDictionary [
 	^ self new
 		initializeName: aString;
 		initializeArgumentsSize: anInteger
 			argumentsOptional: aBoolean
-			bindings: aBindings;
+			parameters: anOrderedDictionary;
 		yourself
 ]
 
 { #category : #accessing }
 TypFunctionType class >> named: aString parameters: aSequenceableCollection [
-	self shouldNotImplement
-]
-
-{ #category : #accessing }
-TypFunctionType class >> named: aString parameters: aSequenceableCollection bindings: aDictionary [
 	self shouldNotImplement
 ]
 
@@ -149,15 +139,6 @@ TypFunctionType >> asCompatibleWith: aType [
 ]
 
 { #category : #copying }
-TypFunctionType >> copyWithParameters: aDictionary [
-	^ self copy
-		initializeArgumentsSize: argumentsSize
-			argumentsOptional: argumentsOptional
-			bindings: aDictionary;
-		yourself
-]
-
-{ #category : #copying }
 TypFunctionType >> copyWithResult: aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	^ self copy
@@ -179,7 +160,7 @@ TypFunctionType >> initialize [
 ]
 
 { #category : #initialization }
-TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean bindings: anOrderedDictionary [
+TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean parameters: anOrderedDictionary [
 	self assert: [ anInteger isInteger ].
 	self assert: [ anInteger >= 0 ].
 	self

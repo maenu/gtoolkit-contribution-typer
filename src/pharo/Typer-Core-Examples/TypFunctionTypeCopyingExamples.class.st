@@ -10,7 +10,7 @@ TypFunctionTypeCopyingExamples >> copyIsNearlyShallow [
 	| original copy |
 	original := TypFunctionTypeInitializingExamples new typeClassDescriptionArgumentsSize.
 	original
-		at: original parameters first
+		at: original parameters keys first
 		put:
 			(TypNamedTypeInitializingExamples new typeClassDescription).
 	"ensure superType"
@@ -24,9 +24,6 @@ TypFunctionTypeCopyingExamples >> copyIsNearlyShallow [
 	self assert: original parameters isNotNil.
 	self assert: original parameters ~~ copy parameters.
 	self assert: original parameters = copy parameters.
-	self assert: original bindings isNotNil.
-	self assert: original bindings ~~ copy bindings.
-	self assert: original bindings = copy bindings.
 	self assert: original argumentsSize == copy argumentsSize.
 	self assert: original argumentsOptional == copy argumentsOptional.
 	^ copy
@@ -47,14 +44,12 @@ TypFunctionTypeCopyingExamples >> copyWithBindings [
 				asDictionary.
 	self assert: original ~~ copy.
 	self assert: original superType isNotNil.
-	self assert: original superType == copy superType.
+	self assert: original superType = copy superType.
 	self assert: original name isNotNil.
 	self assert: original name == copy name.
 	self assert: original parameters isNotNil.
 	self assert: original parameters ~~ copy parameters.
-	self assert: original parameters = copy parameters.
-	self assert: original bindings isNotNil.
-	self assert: original bindings ~= copy bindings.
+	self assert: original parameters keys = copy parameters keys.
 	self
 		assert: (copy at: '@0')
 		equals:
@@ -74,14 +69,12 @@ TypFunctionTypeCopyingExamples >> copyWithResult [
 			(TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription).
 	self assert: original ~~ copy.
 	self assert: original superType isNotNil.
-	self assert: original superType == copy superType.
+	self assert: original superType = copy superType.
 	self assert: original name isNotNil.
 	self assert: original name == copy name.
 	self assert: original parameters isNotNil.
 	self assert: original parameters ~~ copy parameters.
-	self assert: original parameters = copy parameters.
-	self assert: original bindings isNotNil.
-	self assert: original bindings ~= copy bindings.
+	self assert: original parameters keys = copy parameters keys.
 	self
 		assert: (copy at: '@0')
 		equals:

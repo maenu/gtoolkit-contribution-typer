@@ -6,7 +6,7 @@ Class {
 	#category : #'Typer-Core-Examples-Type-Initializing'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypFunctionTypeInitializingExamples >> typeClassDescriptionArgumentsSize [
 	<gtExample>
 	| type |
@@ -24,7 +24,7 @@ TypFunctionTypeInitializingExamples >> typeClassDescriptionArgumentsSize [
 	self
 		assert: type superType
 		equals: (TypNamedType classDescription: Number).
-	self assert: type parameters equals: {'@0' . '@1'}.
+	self assert: type parameters keys equals: {'@0' . '@1'}.
 	self assert: type argumentsOptional equals: false.
 	self assert: type argumentsSize equals: 1.
 	self
@@ -49,7 +49,7 @@ TypFunctionTypeInitializingExamples >> typeClassDescriptionArgumentsSizeArgument
 	self
 		assert: type superType
 		equals: (TypNamedType classDescription: Number).
-	self assert: type parameters equals: {'@0' . '@1'}.
+	self assert: type parameters keys equals: {'@0' . '@1'}.
 	self assert: type argumentsOptional equals: true.
 	self assert: type argumentsSize equals: 1.
 	self
@@ -67,7 +67,7 @@ TypFunctionTypeInitializingExamples >> typeClassDescriptionArgumentsSizeArgument
 		classDescription: Integer
 		argumentsSize: 1
 		argumentsOptional: true
-		bindings:
+		parameters:
 			{('@0' -> (TypNamedType classDescription: Boolean)).
 			('@1' -> (TypNamedType classDescription: Float))} asDictionary.
 	self assert: type name equals: 'Integer'.
@@ -77,7 +77,7 @@ TypFunctionTypeInitializingExamples >> typeClassDescriptionArgumentsSizeArgument
 	self
 		assert: type superType
 		equals: (TypNamedType classDescription: Number).
-	self assert: type parameters equals: {'@0' . '@1'}.
+	self assert: type parameters keys equals: {'@0' . '@1'}.
 	self assert: type argumentsOptional equals: true.
 	self assert: type argumentsSize equals: 1.
 	self
@@ -128,7 +128,7 @@ TypFunctionTypeInitializingExamples >> typeNamedArgumentsSizeArgumentsOptional [
 	self
 		assert: type superType
 		equals: (TypNamedType classDescription: Number).
-	self assert: type parameters equals: {'@0' . '@1'}.
+	self assert: type parameters keys equals: {'@0' . '@1'}.
 	self assert: type argumentsOptional equals: true.
 	self assert: type argumentsSize equals: 1.
 	self
@@ -146,7 +146,7 @@ TypFunctionTypeInitializingExamples >> typeNamedArgumentsSizeArgumentsOptionalBi
 		named: 'Integer'
 		argumentsSize: 1
 		argumentsOptional: true
-		bindings:
+		parameters:
 			{('@0' -> (TypNamedType classDescription: Boolean)).
 			('@1' -> (TypNamedType classDescription: Float))} asDictionary.
 	self assert: type name equals: 'Integer'.
@@ -156,7 +156,7 @@ TypFunctionTypeInitializingExamples >> typeNamedArgumentsSizeArgumentsOptionalBi
 	self
 		assert: type superType
 		equals: (TypNamedType classDescription: Number).
-	self assert: type parameters equals: {'@0' . '@1'}.
+	self assert: type parameters keys equals: {'@0' . '@1'}.
 	self assert: type argumentsOptional equals: true.
 	self assert: type argumentsSize equals: 1.
 	self

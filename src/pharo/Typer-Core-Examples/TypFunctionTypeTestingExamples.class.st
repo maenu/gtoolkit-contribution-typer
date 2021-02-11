@@ -83,7 +83,7 @@ TypFunctionTypeTestingExamples >> type [
 		classDescription: BlockClosure
 		argumentsSize: 1
 		argumentsOptional: false
-		bindings:
+		parameters:
 			{('@0' -> Boolean typAsType).
 			('@1' -> Integer typAsType)} asDictionary
 ]

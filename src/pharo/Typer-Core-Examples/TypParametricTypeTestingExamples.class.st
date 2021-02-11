@@ -76,11 +76,10 @@ TypParametricTypeTestingExamples >> isVoid [
 	^ type
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypParametricTypeTestingExamples >> type [
 	<gtExample>
 	^ TypParametricType
 		named: 'OrderedCollection'
-		parameters: {'@A'}
-		bindings: {('@A' -> Integer typAsType)} asDictionary
+		parameters: {('@A' -> Integer typAsType)} asOrderedDictionary
 ]

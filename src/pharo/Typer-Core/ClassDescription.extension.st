@@ -7,19 +7,19 @@ ClassDescription >> typAsFunctionTypeWithArguments: aCollection result: aType ar
 	^ self
 		typAsFunctionTypeWithArgumentsSize: aCollection size
 		argumentsOptional: aBoolean
-		bindings:
+		parameters:
 			({('@0' -> aType)}
 				, (aCollection withIndexCollect: [ :e :i | ('@' , i asString) -> e ]))
-				asDictionary
+				asOrderedDictionary
 ]
 
 { #category : #'*Typer-Core' }
-ClassDescription >> typAsFunctionTypeWithArgumentsSize: anInteger argumentsOptional: aBoolean bindings: aBindings [
+ClassDescription >> typAsFunctionTypeWithArgumentsSize: anInteger argumentsOptional: aBoolean parameters: aBindings [
 	^ TypFunctionType
 		classDescription: self
 		argumentsSize: anInteger
 		argumentsOptional: aBoolean
-		bindings: aBindings
+		parameters: aBindings
 ]
 
 { #category : #'*Typer-Core' }
