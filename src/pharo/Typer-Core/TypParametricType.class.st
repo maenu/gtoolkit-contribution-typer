@@ -99,6 +99,10 @@ TypParametricType >> initialize [
 TypParametricType >> initializeParameters: anOrderedDictionary [
 	self assert: [ anOrderedDictionary isNotEmpty ].
 	parameters := anOrderedDictionary.
+	parameters
+		do: [ :e | 
+			(e isVariable and: [ e scope isNil ])
+				ifTrue: [ e scope: self ] ].
 	superType := nil
 ]
 

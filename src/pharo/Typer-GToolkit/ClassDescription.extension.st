@@ -28,12 +28,9 @@ ClassDescription >> typGtCoverageFor: aView context: aDictionary [
 
 { #category : #'*Typer-GToolkit' }
 ClassDescription >> typGtMethodCoverage [
-	^ (self methods , self classSide methods
-		groupedBy: [ :e | 
-			ASTCache default
-				at: e
-				ifPresent: [ :f | f propertyAt: #tagExecuted ifAbsent: [ nil ] ]
-				ifAbsent: [ nil ] ]) asDictionary
+	^ ((self methods , self classSide methods collect: #ast)
+		groupedBy: [ :e | e propertyAt: #tagExecuted ifAbsent: [ nil ] ])
+		asDictionary
 ]
 
 { #category : #'*Typer-GToolkit' }

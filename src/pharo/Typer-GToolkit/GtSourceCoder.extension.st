@@ -43,11 +43,10 @@ GtSourceCoder >> typGtBrowseToTypeWithShadowAt: anInteger [
 { #category : #'*Typer-GToolkit' }
 GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 	<gtAstCoderAddOns: 10>
-	self completionStrategy class == GtPharoCompletionStrategy
+	"self completionStrategy class == GtPharoCompletionStrategy
 		ifTrue: [ completionStrategy := completionStrategy
 				typGtAsTypGtPharoCompletionStrategyFor: self ].
-	self flag: 'currently dead code'.
-	"addOns
+	addOns
 		addStyler:
 			(TypGtTypeCursorBodyStyler new
 				coder: self;
@@ -56,12 +55,12 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 		addShortcut: TypGtBrowseImplementorsShortcut new;
 		addShortcut: TypGtBrowseToTypeWithPragmaShortcut new;
 		addShortcut: TypGtBrowseToTypeWithShadowShortcut new;
-		"addStyler: TypGtCoverageAstStyler new;
+		addStyler: TypGtCoverageAstStyler new";
 		addStyler: TypGtTypeDeclarationBodyStyler new;
 		addStyler:
 			(TypGtCheckBodyStyler new
 				coder: self;
-				yourself);"
+				yourself);
 		addMainAction: 'Types' translated
 			icon: BrGlamorousIcons inspect
 			action: [ | declaration |
@@ -82,7 +81,7 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 			checker := anAddOns stylers
 				detect: [ :e | e class == TypGtCheckBodyStyler ].
 			checker markUnknowns: checker markUnknowns not.
-			self styleText ]
+			self styleText ]"
 ]
 
 { #category : #'*Typer-GToolkit' }

@@ -98,18 +98,20 @@ TypFunctionTypeInitializingExamples >> typeClassDescriptionParameters [
 	^ nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypFunctionTypeInitializingExamples >> typeNamedArgumentsSize [
 	<gtExample>
 	| type |
 	type := TypParametricType
 		named: 'Integer'
-		parameters: {'@A'}.
+		parameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary.
 	self assert: type name equals: 'Integer'.
 	self assert: type hasClassDescription.
 	self assert: type classDescription equals: Integer.
 	self assert: type hasSuperType.
-	self assert: type superType equals: (TypNamedType classDescription: Number).
+	self
+		assert: type superType
+		equals: (TypNamedType classDescription: Number).
 	^ type
 ]
 

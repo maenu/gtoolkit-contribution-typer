@@ -70,13 +70,13 @@ TypParametricTypeInitializingExamples >> typeNamedWithoutClassDescription [
 	^ nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypParametricTypeInitializingExamples >> typeNamedWithoutClassDescriptionParameters [
 	<gtExample>
 	| type |
 	type := TypParametricType
 		named: 'Nothing'
-		parameters: {'@A'}.
+		parameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary.
 	self assert: type name equals: 'Nothing'.
 	self assert: type hasClassDescription not.
 	self assert: [ type classDescription ] signals: AssertionFailure.
