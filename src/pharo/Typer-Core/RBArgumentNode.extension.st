@@ -8,15 +8,15 @@ RBArgumentNode >> typIsDeclaration [
 ]
 
 { #category : #'*Typer-Core' }
-RBArgumentNode >> typTypeRecursiveIn: aContext [
+RBArgumentNode >> typTypeRecursive [
 	^ self typIsDeclaration
 		ifTrue: [ | type |
-			type := (self parent "typCastAs {RBBlockNode,RBMethodNode}") typTypeForArgumentNamed: name in: aContext.
+			type := self parent typTypeForArgumentNamed: name.	"typCastAs {RBBlockNode,RBMethodNode}"
 			type isUnknown
-				ifTrue: [ type := self typInfTypeArgumentsIn: aContext ].
+				ifTrue: [ type := self typInfTypeArguments ].
 			type isUnknown
-				ifTrue: [ type := self typInfTypeAssignedIn: aContext ].
+				ifTrue: [ type := self typInfTypeAssigned ].
 			type ]
-		ifFalse:
-			[ (((self whoDefines: name) "typCastAs {RBBlockNode,RBMethodNode}") arguments detect: [ :e | e = self ]) typTypeIn: aContext ]
+		ifFalse: [ ((self whoDefines: name) arguments detect: [ :e | e = self ])
+				typType	"typCastAs {RBBlockNode,RBMethodNode}" ]
 ]

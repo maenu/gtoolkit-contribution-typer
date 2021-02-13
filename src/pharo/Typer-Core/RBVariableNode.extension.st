@@ -2,44 +2,29 @@ Extension { #name : #RBVariableNode }
 
 { #category : #'*Typer-Core' }
 RBVariableNode >> typDefinedType [
-	^ self typDefinedTypeIn: self methodNode typContext
-]
-
-{ #category : #'*Typer-Core' }
-RBVariableNode >> typDefinedTypeIn: aContext [
 	^ TypVariableLookupIndex instance
 		typeFor:
 			(TypVariableLookup new
-				receiverType: (self typDefiningTypeIn: aContext);
+				receiverType: self typDefiningType;
 				selector: name asSymbol;
 				yourself)
 ]
 
 { #category : #'*Typer-Core' }
 RBVariableNode >> typDefiningType [
-	^ self typDefiningTypeIn: self methodNode typContext
-]
-
-{ #category : #'*Typer-Core' }
-RBVariableNode >> typDefiningTypeIn: aContext [
 	<typTypeResultAs: 'Type'>
-	self assert: [ self typHasDefiningTypeIn: aContext ].
+	self assert: [ self typHasDefiningType ].
 	^ TypUnknownType instance
 ]
 
 { #category : #'*Typer-Core' }
 RBVariableNode >> typHasDefiningType [
-	^ self typHasDefiningTypeIn: self methodNode typContext
-]
-
-{ #category : #'*Typer-Core' }
-RBVariableNode >> typHasDefiningTypeIn: aContext [
 	<typTypeResultAs: 'Boolean'>
 	^ false
 ]
 
 { #category : #'*Typer-Core' }
-RBVariableNode >> typInfTypeArgumentsIn: aContext [
+RBVariableNode >> typInfTypeArguments [
 	^ (((self whoDefines: name) allChildren
 		select: [ :e | 
 			e = self
@@ -47,21 +32,21 @@ RBVariableNode >> typInfTypeArgumentsIn: aContext [
 		collect: [ :e | 
 			| i |
 			i := e parent arguments indexOf: e.
-			e parent typTypeForArgumentAt: i in: aContext ]) typAsType
+			e parent typTypeForArgumentAt: i ]) typAsType
 ]
 
 { #category : #'*Typer-Core' }
-RBVariableNode >> typInfTypeAssignedIn: aContext [
+RBVariableNode >> typInfTypeAssigned [
 	^ (((self whoDefines: name) assignmentNodes
-		select: [ :e | e value = self and: [ e variable typHasDefiningTypeIn: aContext ] ])
-		collect: [ :e | e variable typDefinedTypeIn: aContext ]) typAsType
+		select: [ :e | e value = self and: [ e variable typHasDefiningType ] ])
+		collect: [ :e | e variable typDefinedType ]) typAsType
 ]
 
 { #category : #'*Typer-Core' }
-RBVariableNode >> typInfTypeAssignedToIn: aContext [
+RBVariableNode >> typInfTypeAssignedTo [
 	^ (((self whoDefines: self name) assignmentNodes
 		select: [ :e | e variable = self ])
-		collect: [ :e | e value typTypeIn: aContext ]) typAsType
+		collect: [ :e | e value typType ]) typAsType
 ]
 
 { #category : #'*Typer-Core' }

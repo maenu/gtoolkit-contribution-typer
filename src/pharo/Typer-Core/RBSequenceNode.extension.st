@@ -1,12 +1,12 @@
 Extension { #name : #RBSequenceNode }
 
 { #category : #'*Typer-Core' }
-RBSequenceNode >> typSignalsAlwaysIn: aContext [
-	^ self statements anySatisfy: [ :e | (e typSignalsAlwaysIn: aContext) = true ]
+RBSequenceNode >> typSignalsAlways [
+	^ self statements anySatisfy: [ :e | (e typSignalsAlways) = true ]
 ]
 
 { #category : #'*Typer-Core' }
-RBSequenceNode >> typTypeRecursiveIn: aContext [
+RBSequenceNode >> typTypeRecursive [
 	self statements ifEmpty: [ ^ TypNilType instance ].
-	^ (self statements collect: [ :e | e typTypeIn: aContext ]) last
+	^ (self statements collect: [ :e | e typType ]) last
 ]

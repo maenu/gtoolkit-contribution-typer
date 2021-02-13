@@ -1,10 +1,10 @@
 Extension { #name : #RBGlobalNode }
 
 { #category : #'*Typer-Core' }
-RBGlobalNode >> typDefiningTypeIn: aContext [
+RBGlobalNode >> typDefiningType [
 	<typTypeResultAs: 'Metaclass'>
 	| clazz |
-	self assert: [ self typHasDefiningTypeIn: aContext ].
+	self assert: [ self typHasDefiningType ].
 	clazz := self methodNode methodClass.
 	"lookup pool in defining class"
 	self binding typIsFromSharedPool
@@ -14,20 +14,20 @@ RBGlobalNode >> typDefiningTypeIn: aContext [
 ]
 
 { #category : #'*Typer-Core' }
-RBGlobalNode >> typHasDefiningTypeIn: aContext [
+RBGlobalNode >> typHasDefiningType [
 	^ self binding isClassVariable
 		or: [ self binding typIsFromSharedPool ]
 ]
 
 { #category : #'*Typer-Core' }
-RBGlobalNode >> typTypeRecursiveIn: aContext [
+RBGlobalNode >> typTypeRecursive [
 	self binding isGlobalClassNameBinding
 		ifTrue: [ ^ self binding value class typAsType ].
-	(self typHasDefiningTypeIn: aContext)
+	(self typHasDefiningType)
 		ifTrue: [ ^ TypVariableLookupIndex instance
 				typeFor:
 					(TypVariableLookup new
-						receiverType: (self typDefiningTypeIn: aContext);
+						receiverType: (self typDefiningType);
 						selector: self name asSymbol;
 						yourself) ].
 	^ TypUnknownType instance

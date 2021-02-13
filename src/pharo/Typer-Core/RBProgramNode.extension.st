@@ -30,73 +30,50 @@ RBProgramNode >> typAnnotateType: aType [
 
 { #category : #'*Typer-Core' }
 RBProgramNode >> typInvokedMethods [
-	^ self typInvokedMethodsIn: self methodNode typContext
-]
-
-{ #category : #'*Typer-Core' }
-RBProgramNode >> typInvokedMethodsIn: aContext [
 	^ self children
 		inject: Set new
 		into: [ :s :e | 
 			s
-				addAll: (e typInvokedMethodsIn: aContext);
+				addAll: e typInvokedMethods;
 				yourself ]
 ]
 
 { #category : #'*Typer-Core' }
 RBProgramNode >> typSignalsAlways [
-	^ self typSignalsAlwaysIn: self methodNode typContext
-]
-
-{ #category : #'*Typer-Core' }
-RBProgramNode >> typSignalsAlwaysIn: aContext [
 	<typTypeResultAs: '{!,Boolean}'>
 	^ false
 ]
 
 { #category : #'*Typer-Core' }
 RBProgramNode >> typType [
-	^ self typTypeIn: self methodNode typContext
-]
-
-{ #category : #'*Typer-Core' }
-RBProgramNode >> typTypeIn: aContext [
 	<typTypeResultAs: 'TypType'>
 	| key |
-	key := #typType -> aContext.
+	key := #typType.
 	^ (self
 		propertyAt: key
 		ifAbsent: [ "need to set property to default to unknown on recursive calls"
 			self
 				propertyAt: key put: (TypUnknownType instance);
 				propertyAt: key
-					put: (self typAnnotateType: (self typTypeRecursiveIn: aContext)) ]) "typCastAs TypType"
+					put: (self typAnnotateType: (self typTypeRecursive)) ]) "typCastAs TypType"
 ]
 
 { #category : #'*Typer-Core' }
-RBProgramNode >> typTypeRecursiveIn: aContext [
+RBProgramNode >> typTypeRecursive [
 	<typTypeResultAs: 'TypType'>
 	^ TypUnknownType instance
 ]
 
 { #category : #'*Typer-Core' }
 RBProgramNode >> typTypeReset [
-	^ self typTypeResetIn: self methodNode typContext
+	self removeProperty: #typType ifAbsent: [  ].
+	self children do: [ :e | e typTypeReset ]
 ]
 
 { #category : #'*Typer-Core' }
 RBProgramNode >> typTypeResetAll [
 	properties
-		ifNotNil: [ (properties keys
-				select: [ :e | 
-					(e isKindOf: Association)
-						and: [ (e key beginsWith: #typ) and: [ e value isKindOf: TypContext ] ] ])
+		ifNotNil: [ (properties keys select: [ :e | e beginsWith: #typ ])
 				do: [ :e | self removeProperty: e ] ].
 	self children do: #typTypeResetAll
-]
-
-{ #category : #'*Typer-Core' }
-RBProgramNode >> typTypeResetIn: aContext [
-	self removeProperty: #typType -> aContext ifAbsent: [  ].
-	self children do: [ :e | e typTypeResetIn: aContext ]
 ]

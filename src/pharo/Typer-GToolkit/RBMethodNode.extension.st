@@ -71,7 +71,7 @@ RBMethodNode >> typGtTypeWithPragma [
 									(RBLiteralValueNode value: (TypVariableLookupIndex instance
 										typeFor:
 											(TypVariableLookup new
-											receiverType: self typContext selfType;
+											receiverType: nil;
 											selector: e asSymbol;
 											yourself)) asString)} ] ] ].
 	arguments_ do: [ :e | self addPragma: e ].

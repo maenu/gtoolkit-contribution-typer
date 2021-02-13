@@ -1,11 +1,6 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Core' }
-RBMethodNode >> typContext [
-	^ TypContext selfType: self methodClass typAsType
-]
-
-{ #category : #'*Typer-Core' }
 RBMethodNode >> typIsReturnSelf [
 	<typTypeResultAs: 'Boolean'>
 	^ self method isAbstract not
@@ -21,32 +16,26 @@ RBMethodNode >> typReturnNodes [
 ]
 
 { #category : #'*Typer-Core' }
-RBMethodNode >> typSignalsAlwaysIn: aContext [
-	^ self body typSignalsAlwaysIn: aContext
+RBMethodNode >> typSignalsAlways [
+	^ self body typSignalsAlways
 ]
 
 { #category : #'*Typer-Core' }
-RBMethodNode >> typTemporaryProfileIn: aContext [
+RBMethodNode >> typTemporaryProfile [
 	<typTypeResultAs: 'SequenceableCollection<Association<RBProgramNode,TypType>>'>
 	^ (self allChildren select: [ :e | e isVariable or: [ e isReturn ] ])
-		collect: [ :e | e -> (e typTypeIn: aContext) ]
+		collect: [ :e | e -> e typType ]
 ]
 
 { #category : #'*Typer-Core' }
 RBMethodNode >> typTypeForArgumentAt: anInteger [
-	^ self typTypeForArgumentAt: anInteger in: self methodNode typContext
-]
-
-{ #category : #'*Typer-Core' }
-RBMethodNode >> typTypeForArgumentAt: anInteger in: aContext [
 	<typTypeArgument: 1 as: 'Integer'>
-	<typTypeResultAs: 'TypType'>
 	^ TypMethodLookupIndex instance
 		argumentTypeFor:
 			(TypMethodLookup new
-				receiverType: aContext selfType;
+				receiverType: nil;
 				selector: self selector asSymbol;
-				argumentTypes: (self typTypesForArgumentsIn: aContext);
+				argumentTypes: (self typTypesForArguments);
 				argumentNodes: self arguments;
 				yourself)
 		at: anInteger
@@ -54,88 +43,72 @@ RBMethodNode >> typTypeForArgumentAt: anInteger in: aContext [
 
 { #category : #'*Typer-Core' }
 RBMethodNode >> typTypeForArgumentNamed: aString [
-	^ self typTypeForArgumentNamed: aString in: self methodNode typContext
-]
-
-{ #category : #'*Typer-Core' }
-RBMethodNode >> typTypeForArgumentNamed: aString in: aContext [
 	<typTypeArgument: 1 as: 'String'>
-	<typTypeResultAs: 'TypType'>
 	| i |
 	i := self arguments detectIndex: [ :f | f name = aString ].
-	^ self typTypeForArgumentAt: i in: aContext
+	^ self typTypeForArgumentAt: i
 ]
 
 { #category : #'*Typer-Core' }
 RBMethodNode >> typTypeForResult [
-	^ self typTypeForResultIn: self methodNode typContext
-]
-
-{ #category : #'*Typer-Core' }
-RBMethodNode >> typTypeForResultIn: aContext [
 	<typTypeResultAs: 'TypType'>
 	self assert: [ compilationContext isNotNil ].
 	^ TypMethodLookupIndex instance
 		resultTypeFor:
 			(TypMethodLookup new
-				receiverType: aContext selfType;
+				receiverType: nil;
 				selector: self selector asSymbol;
-				argumentTypes: (self typTypesForArgumentsIn: aContext);
+				argumentTypes: (self typTypesForArguments);
 				argumentNodes: self arguments;
 				yourself)
 ]
 
 { #category : #'*Typer-Core' }
-RBMethodNode >> typTypeRecursiveIn: aContext [
+RBMethodNode >> typTypeRecursive [
 	<typTypeResultAs: 'TypType'>
 	| iterations maxIterations oldTemporaryProfiles newTemporaryProfile |
 	self
-		typTypeResetIn: aContext;
+		typTypeReset;
 		doSemanticAnalysis;
-		propertyAt: #typFixPoint -> aContext put: false.
+		propertyAt: #typFixPoint put: false.
 	iterations := 0.
 	maxIterations := 5.
 	oldTemporaryProfiles := Set new.
-	newTemporaryProfile := self typTemporaryProfileIn: aContext.
+	newTemporaryProfile := self typTemporaryProfile.
 	[ | oldTemporaryProfile |
 	iterations := iterations + 1.
 	oldTemporaryProfiles add: newTemporaryProfile.
-	self typTypeResetIn: aContext.
+	self typTypeReset.
 	newTemporaryProfile
-		do: [ :e | e key propertyAt: #typType -> aContext put: e value ].
+		do: [ :e | e key propertyAt: #typType put: e value ].
 	(self allChildren
 		copyWithoutAll: (newTemporaryProfile collect: #key) , {self})
-		do: [ :e | e typTypeIn: aContext ].
+		do: [ :e | e typType ].
 	(newTemporaryProfile collect: #key)
 		do: [ :e | 
 			e
-				typTypeResetIn: aContext;
-				typTypeIn: aContext ].
+				typTypeReset;
+				typType ].
 	oldTemporaryProfile := newTemporaryProfile.
-	newTemporaryProfile := self typTemporaryProfileIn: aContext.
+	newTemporaryProfile := self typTemporaryProfile.
 	oldTemporaryProfile = newTemporaryProfile
-		ifTrue: [ self propertyAt: #typFixPoint -> aContext put: true ].
+		ifTrue: [ self propertyAt: #typFixPoint put: true ].
 	(oldTemporaryProfiles includes: newTemporaryProfile) not
 		and: [ iterations < maxIterations ] ] whileTrue.
 	^ CompiledMethod
-		typAsFunctionTypeWithArguments: (self typTypesForArgumentsIn: aContext)
-		result: (self typTypeForResultIn: aContext)
+		typAsFunctionTypeWithArguments: self typTypesForArguments
+		result: self typTypeForResult
 		argumentsOptional: false
 ]
 
 { #category : #'*Typer-Core' }
-RBMethodNode >> typTypeResetIn: aContext [
-	self removeProperty: #typFixPoint -> aContext ifAbsent: [  ].
-	super typTypeResetIn: aContext
+RBMethodNode >> typTypeReset [
+	self removeProperty: #typFixPoint ifAbsent: [  ].
+	super typTypeReset
 ]
 
 { #category : #'*Typer-Core' }
 RBMethodNode >> typTypesForArguments [
-	^ self typTypesForArgumentsIn: self methodNode typContext
-]
-
-{ #category : #'*Typer-Core' }
-RBMethodNode >> typTypesForArgumentsIn: aContext [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	^ self arguments collect: [ :e | e typTypeIn: aContext ]
+	^ self arguments collect: [ :e | e typType ]
 ]

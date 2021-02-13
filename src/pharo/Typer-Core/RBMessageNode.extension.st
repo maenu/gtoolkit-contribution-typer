@@ -1,23 +1,23 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer-Core' }
-RBMessageNode >> typInvokedMethodsIn: aContext [
-	^ (super typInvokedMethodsIn: aContext)
-		addAll: ((self typTypeForReceiverIn: aContext) lookupSelector: self selector);
+RBMessageNode >> typInvokedMethods [
+	^ super typInvokedMethods
+		addAll: (self typTypeForReceiver lookupSelector: self selector);
 		yourself
 ]
 
 { #category : #'*Typer-Core' }
-RBMessageNode >> typSignalsAlwaysIn: aContext [
+RBMessageNode >> typSignalsAlways [
 	| key |
-	key := #typSignalsAlways -> aContext.
+	key := #typSignalsAlways.
 	^ (self
 		propertyAt: key
 		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
 			| receiverType argumentTypes |
 			self propertyAt: key put: nil.
-			receiverType := self typTypeForReceiverIn: aContext.
-			argumentTypes := self typTypesForArgumentsIn: aContext.
+			receiverType := self typTypeForReceiver.
+			argumentTypes := self typTypesForArguments.
 			receiverType isUnion
 				ifTrue: [ | signalsAlways |
 					signalsAlways := (receiverType "typCastAs TypUnionType") types
@@ -44,22 +44,16 @@ RBMessageNode >> typSignalsAlwaysIn: aContext [
 
 { #category : #'*Typer-Core' }
 RBMessageNode >> typTypeForArgumentAt: anInteger [
-	^ self typTypeForArgumentAt: anInteger in: self methodNode typContext
-]
-
-{ #category : #'*Typer-Core' }
-RBMessageNode >> typTypeForArgumentAt: anInteger in: aContext [
 	<typTypeArgument: 1 as: 'Integer'>
-	<typTypeResultAs: 'TypType'>
 	| key |
-	key := #typTypeForArgument , anInteger asString -> aContext.
+	key := #typTypeForArgument , anInteger asString.
 	^ self
 		propertyAt: key
 		ifAbsentPut: [ | receiverType argumentTypes |
 			"need to set property to default to unknown on recursive calls"
 			self propertyAt: key put: TypUnknownType instance.
-			receiverType := self typTypeForReceiverIn: aContext.
-			argumentTypes := self typTypesForArgumentsIn: aContext.
+			receiverType := self typTypeForReceiver.
+			argumentTypes := self typTypesForArguments.
 			TypMethodLookupIndex instance
 				argumentTypeFor:
 					(TypMethodLookup new
@@ -73,32 +67,21 @@ RBMessageNode >> typTypeForArgumentAt: anInteger in: aContext [
 
 { #category : #'*Typer-Core' }
 RBMessageNode >> typTypeForReceiver [
-	^ self typTypeForReceiverIn: self methodNode typContext
-]
-
-{ #category : #'*Typer-Core' }
-RBMessageNode >> typTypeForReceiverIn: aContext [
 	<typTypeResultAs: 'TypType'>
-	^ self receiver typTypeIn: aContext
+	^ self receiver typType
 ]
 
 { #category : #'*Typer-Core' }
 RBMessageNode >> typTypeForResult [
-	^ self typTypeForResultIn: self methodNode typContext
-]
-
-{ #category : #'*Typer-Core' }
-RBMessageNode >> typTypeForResultIn: aContext [
-	<typTypeResultAs: 'TypType'>
 	| key |
-	key := #typTypeForResult -> aContext.
+	key := #typTypeForResult.
 	^ (self
 		propertyAt: key
 		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
 			| receiverType argumentTypes |
 			self propertyAt: key put: TypUnknownType instance.
-			receiverType := self typTypeForReceiverIn: aContext.
-			argumentTypes := self typTypesForArgumentsIn: aContext.
+			receiverType := self typTypeForReceiver.
+			argumentTypes := self typTypesForArguments.
 			((receiverType canUnderstand: self selector asSymbol) not
 				and:
 					[ receiverType asNonNullable canUnderstand: self selector asSymbol ])
@@ -114,25 +97,22 @@ RBMessageNode >> typTypeForResultIn: aContext [
 ]
 
 { #category : #'*Typer-Core' }
-RBMessageNode >> typTypeRecursiveIn: aContext [
-	^ self typTypeForResultIn: aContext
+RBMessageNode >> typTypeRecursive [
+	^ self typTypeForResult
 ]
 
 { #category : #'*Typer-Core' }
-RBMessageNode >> typTypeResetIn: aContext [
-	self removeProperty: #typTypeForResult -> aContext ifAbsent: [  ].
-	self arguments size timesCollect: [ :i | self removeProperty: #typTypeForArgument , i asString -> aContext ifAbsent: [  ] ].
-	self removeProperty: #typSignalsAlways -> aContext ifAbsent: [  ].
-	super typTypeResetIn: aContext
+RBMessageNode >> typTypeReset [
+	self removeProperty: #typTypeForResult ifAbsent: [  ].
+	self arguments size
+		timesCollect:
+			[ :i | self removeProperty: #typTypeForArgument , i asString ifAbsent: [  ] ].
+	self removeProperty: #typSignalsAlways ifAbsent: [  ].
+	super typTypeReset
 ]
 
 { #category : #'*Typer-Core' }
 RBMessageNode >> typTypesForArguments [
-	^ self typTypesForArgumentsIn: self methodNode typContext
-]
-
-{ #category : #'*Typer-Core' }
-RBMessageNode >> typTypesForArgumentsIn: aContext [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	^ self arguments collect: [ :e | e typTypeIn: aContext ]
+	^ self arguments collect: [ :e | e typType ]
 ]

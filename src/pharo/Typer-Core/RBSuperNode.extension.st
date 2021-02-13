@@ -1,9 +1,9 @@
 Extension { #name : #RBSuperNode }
 
 { #category : #'*Typer-Core' }
-RBSuperNode >> typTypeRecursiveIn: aContext [
+RBSuperNode >> typTypeRecursive [
 	| superType superClass |
-	superType := aContext selfType superType.
+	superType := nil.
 	superClass := self methodNode methodClass superclass.
 	[ superType classDescription = superClass ]
 		whileFalse: [ superType := superType superType ].

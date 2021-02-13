@@ -1,26 +1,25 @@
 Extension { #name : #RBInstanceVariableNode }
 
 { #category : #'*Typer-Core' }
-RBInstanceVariableNode >> typDefiningTypeIn: aContext [
+RBInstanceVariableNode >> typDefiningType [
 	<typTypeResultAs: 'Type'>
-	self assert: [ self typHasDefiningTypeIn: aContext ].
-	^ aContext selfType
+	self assert: [ self typHasDefiningType ].
+	^ nil
 ]
 
 { #category : #'*Typer-Core' }
-RBInstanceVariableNode >> typHasDefiningTypeIn: aContext [
+RBInstanceVariableNode >> typHasDefiningType [
 	^ true
 ]
 
 { #category : #'*Typer-Core' }
-RBInstanceVariableNode >> typTypeRecursiveIn: aContext [
+RBInstanceVariableNode >> typTypeRecursive [
 	^ self typIsAssignedTo
-		ifTrue:
-			[ self parent value typTypeIn: aContext	"typCastAs RBAssignmentNode" ]
+		ifTrue: [ self parent value typType	"typCastAs RBAssignmentNode" ]
 		ifFalse: [ TypVariableLookupIndex instance
 				typeFor:
 					(TypVariableLookup new
-						receiverType: (self typDefiningTypeIn: aContext);
+						receiverType: self typDefiningType;
 						selector: name asSymbol;
 						yourself) ]
 ]

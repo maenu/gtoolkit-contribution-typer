@@ -2,20 +2,14 @@ Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer-Core' }
 RBBlockNode >> typTypeForArgumentAt: anInteger [
-	^ self typTypeForArgumentAt: anInteger in: self methodNode typContext
-]
-
-{ #category : #'*Typer-Core' }
-RBBlockNode >> typTypeForArgumentAt: anInteger in: aContext [
 	<typTypeArgument: 1 as: 'Integer'>
-	<typTypeResultAs: 'TypType'>
 	| type |
-	type := self typTypeIn: aContext.
+	type := self typType.
 	(self parent isMessage and: [ (self parent "typCastAs RBMessageNode") receiver ~~ self ])
 		ifTrue: [ | i parent_ |
 			parent_ := self parent "typCastAs RBMessageNode".
 			i := parent_ arguments detectIndex: [ :e | e == self ].
-			type := parent_ typTypeForArgumentAt: i in: aContext.
+			type := parent_ typTypeForArgumentAt: i.
 			type isUnion
 				ifTrue: [ type := ((type "typCastAs TypUnionType") types select: #isFunction) typAsType ] ].
 	(type isFunction and: [ anInteger <= (type "typCastAs TypFunctionType") arguments size ])
@@ -25,33 +19,22 @@ RBBlockNode >> typTypeForArgumentAt: anInteger in: aContext [
 
 { #category : #'*Typer-Core' }
 RBBlockNode >> typTypeForArgumentNamed: aString [
-	^ self typTypeForArgumentNamed: aString in: self methodNode typContext
-]
-
-{ #category : #'*Typer-Core' }
-RBBlockNode >> typTypeForArgumentNamed: aString in: aContext [
 	<typTypeArgument: 1 as: 'String'>
-	<typTypeResultAs: 'TypType'>
 	| i |
 	i := self arguments detectIndex: [ :f | f name = aString ].
-	^ self typTypeForArgumentAt: i in: aContext
+	^ self typTypeForArgumentAt: i
 ]
 
 { #category : #'*Typer-Core' }
 RBBlockNode >> typTypeForResult [
-	^ self typTypeForResultIn: self methodNode typContext
-]
-
-{ #category : #'*Typer-Core' }
-RBBlockNode >> typTypeForResultIn: aContext [
 	<typTypeResultAs: 'TypType'>
-	^ ((self typTypeIn: aContext) "typCastAs TypFunctionType") result
+	^ ((self typType) "typCastAs TypFunctionType") result
 ]
 
 { #category : #'*Typer-Core' }
-RBBlockNode >> typTypeRecursiveIn: aContext [
+RBBlockNode >> typTypeRecursive [
 	^ BlockClosure
-		typAsFunctionTypeWithArguments: (self arguments collect: [ :e | e typTypeIn: aContext ])
-		result: (self body typTypeIn: aContext)
+		typAsFunctionTypeWithArguments: (self arguments collect: [ :e | e typType ])
+		result: (self body typType)
 		argumentsOptional: false
 ]

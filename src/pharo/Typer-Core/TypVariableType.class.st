@@ -82,18 +82,6 @@ TypVariableType >> printOn: aStream skipping: anIdentitySet [
 ]
 
 { #category : #accessing }
-TypVariableType >> resolve [
-	| result |
-	self assert: [ scope isNotNil ].
-	result := scope at: name.
-	result == self
-		ifTrue: [ ^ self ].
-	result isVariable
-		ifTrue: [ ^ result resolve ].
-	^ result
-]
-
-{ #category : #accessing }
 TypVariableType >> scope [
 	^ scope
 ]
