@@ -21,7 +21,7 @@ TypShaPhaClass >> ___addClassVarNamed: _a [
 TypShaPhaClass >> ___classVarNamed: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 

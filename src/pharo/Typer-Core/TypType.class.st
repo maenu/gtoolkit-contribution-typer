@@ -50,7 +50,7 @@ TypType >> asCompatibleWith: aType [
 		ifTrue: [ ^ self ].
 	self hasSuperType
 		ifTrue: [ ^ self superType asCompatibleWith: aType ].
-	^ TypUnknownType instance
+	^ TypUnknownType new
 ]
 
 { #category : #converting }
@@ -62,7 +62,7 @@ TypType >> asNonNullable [
 { #category : #converting }
 TypType >> asNullable [
 	<typTypeResultAs: 'TypType'>
-	^ {TypNilType instance.
+	^ {TypNilType new.
 	self} typAsType
 ]
 

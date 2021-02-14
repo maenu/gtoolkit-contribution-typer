@@ -14,7 +14,7 @@ RBVariableNode >> typDefinedType [
 RBVariableNode >> typDefiningType [
 	<typTypeResultAs: 'Type'>
 	self assert: [ self typHasDefiningType ].
-	^ TypUnknownType instance
+	^ TypUnknownType new
 ]
 
 { #category : #'*Typer-Core' }

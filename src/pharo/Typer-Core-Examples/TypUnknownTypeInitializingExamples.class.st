@@ -10,8 +10,10 @@ Class {
 TypUnknownTypeInitializingExamples >> typeInstance [
 	<gtExample>
 	| type |
-	type := TypUnknownType instance.
+	type := TypUnknownType new.
 	self assert: type hasSuperType not.
-	self assert: type == TypUnknownType instance description: 'unknown instance should always be the exact same object'.
+	self
+		assert: type == TypUnknownType new
+		description: 'unknown instance should always be the exact same object'.
 	^ type
 ]

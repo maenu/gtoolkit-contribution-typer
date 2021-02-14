@@ -8,7 +8,7 @@ Class {
 TypShaSmaSmaCCParser class >> ___parse: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 

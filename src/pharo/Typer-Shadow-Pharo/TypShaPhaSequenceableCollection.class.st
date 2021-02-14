@@ -33,7 +33,7 @@ TypShaPhaSequenceableCollection >> ___at: _a ifAbsent: _b [
 				ifTrue: [ Integer typAsType ]
 				ifFalse: [ BlockClosure
 						typAsFunctionTypeWithArguments: {}
-						result: TypUnknownType instance
+						result: TypUnknownType new
 						argumentsOptional: false ] ];
 		resultType: [ :a :s :r | 
 			{('@A' typAsVariableType resolveIn: a receiverType).
@@ -78,7 +78,7 @@ TypShaPhaSequenceableCollection >> ___detectIndex: _a ifNone: _b [
 						typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
 						result: Boolean typAsType
 						argumentsOptional: false ]
-				ifFalse: [ {TypUnknownType instance.
+				ifFalse: [ {TypUnknownType new.
 					(BlockClosure
 						typAsFunctionTypeWithArguments: {}
 						result: Boolean typAsType
@@ -149,7 +149,7 @@ TypShaPhaSequenceableCollection >> ___sort: _a [
 			| type |
 			type := a receiverType isParametric
 				ifTrue: [ '@A' typAsVariableType resolveIn: a receiverType ]
-				ifFalse: [ TypUnknownType instance ].
+				ifFalse: [ TypUnknownType new ].
 			BlockClosure
 				typAsFunctionTypeWithArguments:
 					{type.
@@ -168,7 +168,7 @@ TypShaPhaSequenceableCollection >> ___withIndexCollect: _a [
 				typAsFunctionTypeWithArguments:
 					{('@A' typAsVariableType resolveIn: a receiverType).
 					Integer typAsType}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: false ];
 		resultType: [ :a :s :r | 
 			a receiverType
@@ -184,7 +184,7 @@ TypShaPhaSequenceableCollection >> ___withIndexDo: _a [
 				typAsFunctionTypeWithArguments:
 					{('@A' typAsVariableType resolveIn: a receiverType).
 					Integer typAsType}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: false ];
 		resultType: [ :a | a receiverType ];
 		yourself

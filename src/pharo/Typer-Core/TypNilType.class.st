@@ -21,7 +21,7 @@ TypNilType >> asCompatibleWith: aType [
 
 { #category : #converting }
 TypNilType >> asNonNullable [
-	^ TypUnknownType instance
+	^ TypUnknownType new
 ]
 
 { #category : #converting }

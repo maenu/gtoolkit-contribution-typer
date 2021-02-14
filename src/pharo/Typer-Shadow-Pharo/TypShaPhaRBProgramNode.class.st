@@ -185,7 +185,7 @@ TypShaPhaRBProgramNode >> ___parents [
 TypShaPhaRBProgramNode >> ___propertyAt: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
@@ -194,13 +194,13 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifAbsentPut: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
-				ifTrue: [ TypUnknownType instance ]
+				ifTrue: [ TypUnknownType new ]
 				ifFalse: [ BlockClosure
 						typAsFunctionTypeWithArguments: {}
-						result: TypUnknownType instance
+						result: TypUnknownType new
 						argumentsOptional: false ] ];
 		resultType: [ :a :s :r | 
-			{TypUnknownType instance.
+			{TypUnknownType new.
 			(a argumentTypes at: 2) result} typAsType ];
 		yourself
 ]
@@ -214,12 +214,12 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifPresent: _b ifAbsent: _c [
 				ifFalse: [ i = 2
 						ifTrue: [ {Symbol typAsType.
 							(BlockClosure
-								typAsFunctionTypeWithArguments: {TypUnknownType instance}
-								result: TypUnknownType instance
+								typAsFunctionTypeWithArguments: {TypUnknownType new}
+								result: TypUnknownType new
 								argumentsOptional: true)} typAsType ]
 						ifFalse: [ BlockClosure
 								typAsFunctionTypeWithArguments: {}
-								result: TypUnknownType instance
+								result: TypUnknownType new
 								argumentsOptional: false ] ] ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
@@ -238,7 +238,7 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifPresent: _b ifAbsent: _c [
 										argumentTypes: {};
 										argumentNodes: {};
 										yourself) ]
-						ifFalse: [ TypUnknownType instance ] ].
+						ifFalse: [ TypUnknownType new ] ].
 			{elementType.
 			(a argumentTypes at: 3) result} typAsType ];
 		yourself
@@ -247,7 +247,7 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifPresent: _b ifAbsent: _c [
 { #category : #accessing }
 TypShaPhaRBProgramNode >> ___propertyAt: _a put: _b [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | TypUnknownType instance ];
+		argumentTypes: [ :i :a :s :r | TypUnknownType new ];
 		resultType: [ :a :s :r | a argumentTypes at: 2 ];
 		yourself
 ]
@@ -268,10 +268,10 @@ TypShaPhaRBProgramNode >> ___removeProperty: _a ifAbsent: _b [
 				ifTrue: [ String typAsType ]
 				ifFalse: [ BlockClosure
 						typAsFunctionTypeWithArguments: {}
-						result: TypUnknownType instance
+						result: TypUnknownType new
 						argumentsOptional: false ] ];
 		resultType: [ :a :s :r | 
-			{TypUnknownType instance.
+			{TypUnknownType new.
 			(a argumentTypes at: 2) result} typAsType ];
 		yourself
 ]

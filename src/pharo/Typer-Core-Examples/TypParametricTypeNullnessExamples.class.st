@@ -18,7 +18,8 @@ TypParametricTypeNullnessExamples >> asNonNullable [
 TypParametricTypeNullnessExamples >> asNullable [
 	<gtExample>
 	| type nullable |
-	type := TypParametricTypeInitializingExamples new typeClassDescriptionParameters.
+	type := TypParametricTypeInitializingExamples new
+		typeClassDescriptionParameters.
 	nullable := type asNullable.
 	self
 		assert:
@@ -26,7 +27,7 @@ TypParametricTypeNullnessExamples >> asNullable [
 				=
 					(TypUnionType
 						types:
-							{TypNilType instance.
+							{TypNilType new.
 							type}).
 	^ nullable
 ]

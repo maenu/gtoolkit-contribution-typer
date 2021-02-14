@@ -28,7 +28,7 @@ TypShaGtGtCoderBodyStyler >> ___styleFrom: _a to: _b with: _c [
 TypShaGtGtCoderBodyStyler >> ___visitArgumentNode: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | RBArgumentNode typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
@@ -36,7 +36,7 @@ TypShaGtGtCoderBodyStyler >> ___visitArgumentNode: _a [
 TypShaGtGtCoderBodyStyler >> ___visitArrayNode: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | RBArrayNode typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
@@ -44,7 +44,7 @@ TypShaGtGtCoderBodyStyler >> ___visitArrayNode: _a [
 TypShaGtGtCoderBodyStyler >> ___visitAssignmentNode: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | RBAssignmentNode typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
@@ -52,7 +52,7 @@ TypShaGtGtCoderBodyStyler >> ___visitAssignmentNode: _a [
 TypShaGtGtCoderBodyStyler >> ___visitBlockNode: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | RBBlockNode typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
@@ -60,7 +60,7 @@ TypShaGtGtCoderBodyStyler >> ___visitBlockNode: _a [
 TypShaGtGtCoderBodyStyler >> ___visitGlobalNode: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | RBGlobalNode typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
@@ -68,7 +68,7 @@ TypShaGtGtCoderBodyStyler >> ___visitGlobalNode: _a [
 TypShaGtGtCoderBodyStyler >> ___visitInstanceVariableNode: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | RBInstanceVariableNode typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
@@ -76,7 +76,7 @@ TypShaGtGtCoderBodyStyler >> ___visitInstanceVariableNode: _a [
 TypShaGtGtCoderBodyStyler >> ___visitLiteralArrayNode: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | RBLiteralArrayNode typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
@@ -84,7 +84,7 @@ TypShaGtGtCoderBodyStyler >> ___visitLiteralArrayNode: _a [
 TypShaGtGtCoderBodyStyler >> ___visitLiteralNode: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | RBLiteralNode typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
@@ -92,7 +92,7 @@ TypShaGtGtCoderBodyStyler >> ___visitLiteralNode: _a [
 TypShaGtGtCoderBodyStyler >> ___visitMessageNode: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | RBMessageNode typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
@@ -100,7 +100,7 @@ TypShaGtGtCoderBodyStyler >> ___visitMessageNode: _a [
 TypShaGtGtCoderBodyStyler >> ___visitMethodNode: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | RBMethodNode typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
@@ -108,7 +108,7 @@ TypShaGtGtCoderBodyStyler >> ___visitMethodNode: _a [
 TypShaGtGtCoderBodyStyler >> ___visitReturnNode: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | RBReturnNode typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
@@ -116,7 +116,7 @@ TypShaGtGtCoderBodyStyler >> ___visitReturnNode: _a [
 TypShaGtGtCoderBodyStyler >> ___visitSelfNode: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | RBSelfNode typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
@@ -124,7 +124,7 @@ TypShaGtGtCoderBodyStyler >> ___visitSelfNode: _a [
 TypShaGtGtCoderBodyStyler >> ___visitSuperNode: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | RBSuperNode typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
@@ -132,7 +132,7 @@ TypShaGtGtCoderBodyStyler >> ___visitSuperNode: _a [
 TypShaGtGtCoderBodyStyler >> ___visitTemporaryNode: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | RBTemporaryNode typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
@@ -140,7 +140,7 @@ TypShaGtGtCoderBodyStyler >> ___visitTemporaryNode: _a [
 TypShaGtGtCoderBodyStyler >> ___visitThisContextNode: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | RBThisContextNode typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 

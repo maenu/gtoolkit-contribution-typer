@@ -70,5 +70,5 @@ TypNilTypeTestingExamples >> isVariable [
 { #category : #generated }
 TypNilTypeTestingExamples >> type [
 	<gtExample>
-	^ TypNilType instance
+	^ TypNilType new
 ]

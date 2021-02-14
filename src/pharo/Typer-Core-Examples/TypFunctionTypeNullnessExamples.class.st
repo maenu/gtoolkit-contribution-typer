@@ -18,7 +18,8 @@ TypFunctionTypeNullnessExamples >> asNonNullable [
 TypFunctionTypeNullnessExamples >> asNullable [
 	<gtExample>
 	| type nullable |
-	type := TypFunctionTypeInitializingExamples new typeClassDescriptionArgumentsSize.
+	type := TypFunctionTypeInitializingExamples new
+		typeClassDescriptionArgumentsSize.
 	nullable := type asNullable.
 	self
 		assert:
@@ -26,7 +27,7 @@ TypFunctionTypeNullnessExamples >> asNullable [
 				=
 					(TypUnionType
 						types:
-							{TypNilType instance.
+							{TypNilType new.
 							type}).
 	^ nullable
 ]

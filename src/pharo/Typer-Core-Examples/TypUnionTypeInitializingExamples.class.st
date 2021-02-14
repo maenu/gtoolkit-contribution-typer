@@ -16,12 +16,12 @@ TypUnionTypeInitializingExamples >> asTypesFlattensUnionTypes [
 					{(TypNamedType classDescription: ProtoObject).
 					(TypUnionType
 						types:
-							{TypNilType instance.
-							TypUnknownType instance})})
+							{TypNilType new.
+							TypUnknownType new})})
 		equals:
 			{(TypNamedType classDescription: ProtoObject).
-			TypNilType instance.
-			TypUnknownType instance} asSet.
+			TypNilType new.
+			TypUnknownType new} asSet.
 	^ nil
 ]
 
@@ -33,10 +33,10 @@ TypUnionTypeInitializingExamples >> asTypesKeepsNilType [
 			(TypUnionType
 				asTypes:
 					{(TypNamedType classDescription: ProtoObject).
-					TypNilType instance})
+					TypNilType new})
 		equals:
 			{(TypNamedType classDescription: ProtoObject).
-			TypNilType instance} asSet.
+			TypNilType new} asSet.
 	^ nil
 ]
 
@@ -48,10 +48,10 @@ TypUnionTypeInitializingExamples >> asTypesKeepsUnknownType [
 			(TypUnionType
 				asTypes:
 					{(TypNamedType classDescription: ProtoObject).
-					TypUnknownType instance})
+					TypUnknownType new})
 		equals:
 			{(TypNamedType classDescription: ProtoObject).
-			TypUnknownType instance} asSet.
+			TypUnknownType new} asSet.
 	^ nil
 ]
 
@@ -62,9 +62,9 @@ TypUnionTypeInitializingExamples >> asTypesRemovesDuplicates [
 		assert:
 			(TypUnionType
 				asTypes:
-					{TypUnknownType instance.
-					TypUnknownType instance})
-		equals: {TypUnknownType instance} asSet.
+					{TypUnknownType new.
+					TypUnknownType new})
+		equals: {TypUnknownType new} asSet.
 	^ nil
 ]
 
@@ -94,13 +94,13 @@ TypUnionTypeInitializingExamples >> typesMany [
 	| type |
 	type := TypUnionType
 		types:
-			{TypUnknownType instance.
-			TypNilType instance}.
+			{TypUnknownType new.
+			TypNilType new}.
 	self
 		assert: type types
 		equals:
-			{TypUnknownType instance.
-			TypNilType instance} asSet.
+			{TypUnknownType new.
+			TypNilType new} asSet.
 	^ type
 ]
 
@@ -110,8 +110,8 @@ TypUnionTypeInitializingExamples >> typesNonNormalized [
 	self
 		assert: [ TypUnionType
 				types:
-					{TypUnknownType instance.
-					TypUnknownType instance} ]
+					{TypUnknownType new.
+					TypUnknownType new} ]
 		signals: AssertionFailure.
 	^ nil
 ]
@@ -120,7 +120,7 @@ TypUnionTypeInitializingExamples >> typesNonNormalized [
 TypUnionTypeInitializingExamples >> typesOne [
 	<gtExample>
 	self
-		assert: [ TypUnionType types: {TypUnknownType instance} ]
+		assert: [ TypUnionType types: {TypUnknownType new} ]
 		signals: AssertionFailure.
 	^ nil
 ]

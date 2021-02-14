@@ -25,7 +25,7 @@ TypShaBlBlElement >> ___constraintsDo: _a [
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments: {BlLayoutConstraints typAsType}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself

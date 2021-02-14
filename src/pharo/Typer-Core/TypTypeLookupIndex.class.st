@@ -40,5 +40,5 @@ TypTypeLookupIndex >> typeFor: aLookup [
 				on: TypNoTypeError
 				do: [ false ] ]
 		ifFound: #type
-		ifNone: [ TypUnknownType instance ]
+		ifNone: [ TypUnknownType new ]
 ]

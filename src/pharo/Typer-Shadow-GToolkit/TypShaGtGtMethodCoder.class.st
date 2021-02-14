@@ -42,7 +42,7 @@ TypShaGtGtMethodCoder >> ___cursorPositionDo: _a [
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments: {Integer typAsType}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself

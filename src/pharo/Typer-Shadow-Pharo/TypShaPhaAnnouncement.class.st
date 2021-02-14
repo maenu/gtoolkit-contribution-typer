@@ -13,6 +13,6 @@ TypShaPhaAnnouncement class >> shadowedClass [
 TypShaPhaAnnouncement class >> ~~~, _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | Announcement class typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]

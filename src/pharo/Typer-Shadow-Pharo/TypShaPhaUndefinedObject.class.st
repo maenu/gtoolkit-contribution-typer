@@ -15,7 +15,7 @@ TypShaPhaUndefinedObject >> ___ifNil: _a [
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments: {}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: false ];
 		resultType: [ :a :s :r | 
 			| node |
@@ -35,7 +35,7 @@ TypShaPhaUndefinedObject >> ___ifNotNil: _a [
 			{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithArguments: {a receiverType asNonNullable}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: true)} typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself

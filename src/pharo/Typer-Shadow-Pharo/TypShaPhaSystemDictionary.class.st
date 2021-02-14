@@ -18,6 +18,6 @@ TypShaPhaSystemDictionary >> asType: aClass [
 					('@A'
 						->
 							{Class typAsType.
-							TypUnknownType instance} typAsType)} asDictionary ]
+							TypUnknownType new} typAsType)} asDictionary ]
 		ifFalse: [ aClass typAsNamedType ]
 ]

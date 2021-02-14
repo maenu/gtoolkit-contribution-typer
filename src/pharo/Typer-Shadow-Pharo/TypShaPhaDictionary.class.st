@@ -55,8 +55,9 @@ TypShaPhaDictionary >> ___associationsDo: _a [
 					{(Association typAsType
 						copyWithParameters:
 							{('@A' -> ('@B' typAsVariableType resolveIn: a receiverType)).
-							('@B' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary)}
-				result: TypUnknownType instance
+							('@B' -> ('@A' typAsVariableType resolveIn: a receiverType))}
+								asDictionary)}
+				result: TypUnknownType new
 				argumentsOptional: false ];
 		resultType: [ :a :s | a receiverType ];
 		yourself
@@ -78,7 +79,7 @@ TypShaPhaDictionary >> ___at: _a ifAbsent: _b [
 				ifTrue: [ '@B' typAsVariableType resolveIn: a receiverType ]
 				ifFalse: [ BlockClosure
 						typAsFunctionTypeWithArguments: {}
-						result: TypUnknownType instance
+						result: TypUnknownType new
 						argumentsOptional: false ] ];
 		resultType: [ :a | 
 			{('@A' typAsVariableType resolveIn: a receiverType).
@@ -107,11 +108,11 @@ TypShaPhaDictionary >> ___at: _a ifPresent: _b ifAbsent: _c [
 			{('@B' typAsVariableType resolveIn: a receiverType).
 			(BlockClosure
 				typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: true).
 			(BlockClosure
 				typAsFunctionTypeWithArguments: {}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: false)} at: i ];
 		resultType: [ :a :s | 
 			{(a argumentTypes at: 2) result.
@@ -137,7 +138,7 @@ TypShaPhaDictionary >> ___collect: _a [
 			{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: false)} typAsType ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
@@ -156,7 +157,7 @@ TypShaPhaDictionary >> ___collect: _a [
 										argumentTypes: {};
 										argumentNodes: {};
 										yourself) ]
-						ifFalse: [ TypUnknownType instance ] ].
+						ifFalse: [ TypUnknownType new ] ].
 			a receiverType
 				copyWithParameters:
 					{('@B' -> ('@B' typAsVariableType resolveIn: a receiverType)).
@@ -198,7 +199,7 @@ TypShaPhaDictionary >> ___keysAndValuesDo: _a [
 				typAsFunctionTypeWithArguments:
 					{('@B' typAsVariableType resolveIn: a receiverType).
 					('@A' typAsVariableType resolveIn: a receiverType)}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -212,7 +213,7 @@ TypShaPhaDictionary >> ___removeKey: _a ifAbsent: _b [
 				ifTrue: [ '@B' typAsVariableType resolveIn: a receiverType ]
 				ifFalse: [ BlockClosure
 						typAsFunctionTypeWithArguments: #()
-						result: TypUnknownType instance
+						result: TypUnknownType new
 						argumentsOptional: false ] ];
 		resultType: [ :a :s :r | 
 			{('@A' typAsVariableType resolveIn: a receiverType).

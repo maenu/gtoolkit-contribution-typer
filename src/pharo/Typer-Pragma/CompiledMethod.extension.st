@@ -26,9 +26,9 @@ CompiledMethod >> typPraAsMethodLookupResult [
 			argumentPragmas
 				at: i
 				ifPresent: [ :e | e arguments second typAsType ]
-				ifAbsent: [ TypUnknownType instance ] ].
+				ifAbsent: [ TypUnknownType new ] ].
 	resultType := resultPragma
-		ifNil: [ TypUnknownType instance ]
+		ifNil: [ TypUnknownType new ]
 		ifNotNil: [ resultPragma arguments first typAsType ].
 	signalsAlways := signalsAlwaysPragma
 		ifNil: [ nil ]

@@ -26,7 +26,7 @@ TypUnknownTypeNullnessExamples >> asNullable [
 				=
 					(TypUnionType
 						types:
-							{TypNilType instance.
+							{TypNilType new.
 							type}).
 	^ nullable
 ]

@@ -25,7 +25,7 @@ TypShaPhaString >> ___asClassInEnvironment: _a ifAbsent: _b [
 				ifTrue: [ SystemDictionary typAsType ]
 				ifFalse: [ BlockClosure
 						typAsFunctionTypeWithArguments: {}
-						result: TypUnknownType instance
+						result: TypUnknownType new
 						argumentsOptional: false ] ];
 		resultType: [ :a :s :r | 
 			| node |

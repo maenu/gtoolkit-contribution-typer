@@ -55,8 +55,9 @@ TypShaPhaOrderedDictionary >> ___associationsDo: _a [
 					{(Association typAsType
 						copyWithParameters:
 							{('@A' -> ('@B' typAsVariableType resolveIn: a receiverType)).
-							('@B' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary)}
-				result: TypUnknownType instance
+							('@B' -> ('@A' typAsVariableType resolveIn: a receiverType))}
+								asDictionary)}
+				result: TypUnknownType new
 				argumentsOptional: false ];
 		resultType: [ :a :s | a receiverType ];
 		yourself
@@ -91,11 +92,11 @@ TypShaPhaOrderedDictionary >> ___at: _a ifPresent: _b ifAbsent: _c [
 			{('@A' typAsVariableType resolveIn: a receiverType).
 			(BlockClosure
 				typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: true).
 			(BlockClosure
 				typAsFunctionTypeWithArguments: {}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: false)} ];
 		resultType: [ :a :s | 
 			{(a argumentTypes at: 2) result.
@@ -121,7 +122,7 @@ TypShaPhaOrderedDictionary >> ___collect: _a [
 			{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: false)} typAsType ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
@@ -140,7 +141,7 @@ TypShaPhaOrderedDictionary >> ___collect: _a [
 										argumentTypes: {};
 										argumentNodes: {};
 										yourself) ]
-						ifFalse: [ TypUnknownType instance ] ].
+						ifFalse: [ TypUnknownType new ] ].
 			a receiverType
 				copyWithParameters:
 					{('@B' -> (a receiverType at: '@B')).

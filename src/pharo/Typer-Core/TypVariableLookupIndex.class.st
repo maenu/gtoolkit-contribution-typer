@@ -44,5 +44,5 @@ TypVariableLookupIndex >> typeFor: aLookup [
 				do: [ :f | 
 					f emit.
 					self flag: 'FIXME signal?' ] ].
-	^ TypUnknownType instance
+	^ TypUnknownType new
 ]

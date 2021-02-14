@@ -28,16 +28,17 @@ RBProgramNode >> typType [
 	^ self
 		propertyAt: key
 		ifAbsent: [ "need to set property to default to unknown on recursive calls"
+			"typCastAs TypType"
 			self
-				propertyAt: key put: TypUnknownType instance;
+				propertyAt: key put: TypUnknownType new;
 				propertyAt: key
-					put: (self typAnnotateType: self typTypeRecursive) ]	"typCastAs TypType"
+					put: (self typAnnotateType: self typTypeRecursive) ]
 ]
 
 { #category : #'*Typer-Core' }
 RBProgramNode >> typTypeRecursive [
 	<typTypeResultAs: 'TypType'>
-	^ TypUnknownType instance
+	^ TypUnknownType new
 ]
 
 { #category : #'*Typer-Core' }

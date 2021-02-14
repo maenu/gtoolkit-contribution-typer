@@ -119,6 +119,6 @@ TypExecutionOrderVisitor >> visitSequenceNode: aSequenceNode [
 	aSequenceNode == definer
 		ifTrue: [ types
 				removeAll;
-				add: TypNilType instance ].
+				add: TypNilType new ].
 	super visitSequenceNode: aSequenceNode
 ]

@@ -23,7 +23,7 @@ TypShaGtGtMethodCoderAddOns >> ___addMainAction: _a icon: _b action: _c [
 						ifTrue: [ Form typAsType ]
 						ifFalse: [ BlockClosure
 								typAsFunctionTypeWithArguments: {}
-								result: TypUnknownType instance
+								result: TypUnknownType new
 								argumentsOptional: false ] ] ];
 		resultType: [ :a :s :r | 'GtMethodCoderAddOns' typAsType ];
 		yourself

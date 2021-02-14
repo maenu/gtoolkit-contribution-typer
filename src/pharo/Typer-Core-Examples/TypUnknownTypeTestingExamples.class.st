@@ -70,5 +70,5 @@ TypUnknownTypeTestingExamples >> isVariable [
 { #category : #generated }
 TypUnknownTypeTestingExamples >> type [
 	<gtExample>
-	^ TypUnknownType instance
+	^ TypUnknownType new
 ]

@@ -20,6 +20,6 @@ TypInfVariableLookupResult >> type [
 										typInfVariableAssignedTypeFor: lookup selector
 										nodeClass: RBGlobalNode
 										in: e allMethods , e class allMethods ]
-								ifFalse: [ TypUnknownType instance ] ] ]
-				ifFalse: [ TypUnknownType instance ] ]
+								ifFalse: [ TypUnknownType new ] ] ]
+				ifFalse: [ TypUnknownType new ] ]
 ]

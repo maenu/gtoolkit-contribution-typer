@@ -36,7 +36,7 @@ TypShaPhaProtoObject >> ___ifNil: _a [
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments: {}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: false ];
 		resultType: [ :a :s :r | 
 			{a receiverType asNonNullable.
@@ -51,12 +51,12 @@ TypShaPhaProtoObject >> ___ifNil: _a ifNotNil: _b [
 			i = 1
 				ifTrue: [ BlockClosure
 						typAsFunctionTypeWithArguments: {}
-						result: TypUnknownType instance
+						result: TypUnknownType new
 						argumentsOptional: false ]
 				ifFalse: [ {Symbol typAsType.
 					(BlockClosure
 						typAsFunctionTypeWithArguments: {a receiverType asNonNullable}
-						result: TypUnknownType instance
+						result: TypUnknownType new
 						argumentsOptional: true)} typAsType ] ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
@@ -75,7 +75,7 @@ TypShaPhaProtoObject >> ___ifNil: _a ifNotNil: _b [
 										argumentTypes: {};
 										argumentNodes: {};
 										yourself) ]
-						ifFalse: [ TypUnknownType instance ] ].
+						ifFalse: [ TypUnknownType new ] ].
 			{(a argumentTypes at: 1) result.
 			elementType} typAsType ];
 		yourself
@@ -88,7 +88,7 @@ TypShaPhaProtoObject >> ___ifNotNil: _a [
 			{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithArguments: {a receiverType asNonNullable}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: true)} typAsType ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode |
@@ -107,7 +107,7 @@ TypShaPhaProtoObject >> ___ifNotNil: _a [
 										argumentTypes: {};
 										argumentNodes: {};
 										yourself) ]
-						ifFalse: [ TypUnknownType instance ] ] ];
+						ifFalse: [ TypUnknownType new ] ] ];
 		yourself
 ]
 
@@ -122,7 +122,7 @@ TypShaPhaProtoObject >> ___isNil [
 { #category : #accessing }
 TypShaPhaProtoObject >> ~~~== _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | TypUnknownType instance asNullable ];
+		argumentTypes: [ :i :a :s :r | TypUnknownType new asNullable ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
@@ -130,7 +130,7 @@ TypShaPhaProtoObject >> ~~~== _a [
 { #category : #'as yet unclassified' }
 TypShaPhaProtoObject >> ~~~~~ _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | TypUnknownType instance asNullable ];
+		argumentTypes: [ :i :a :s :r | TypUnknownType new asNullable ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]

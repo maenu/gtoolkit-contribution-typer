@@ -34,7 +34,8 @@ TypMethodLookupIndex class >> instance [
 TypMethodLookupIndex >> argumentTypeFor: aLookup at: anInteger [
 	<typTypeArgument: 1 as: 'TypLookup'>
 	(resolver resolve: aLookup)
-		do: [ :e "typCastAs TypMethodLookupResult" | 
+		do: [ :e"typCastAs TypMethodLookupResult"
+			 | 
 			[ | type |
 			type := e argumentTypeAt: anInteger.
 			type isUnknown
@@ -43,7 +44,7 @@ TypMethodLookupIndex >> argumentTypeFor: aLookup at: anInteger [
 				do: [ :f | 
 					f emit.
 					self flag: 'FIXME signal?' ] ].
-	^ TypUnknownType instance
+	^ TypUnknownType new
 ]
 
 { #category : #initialization }
@@ -56,7 +57,8 @@ TypMethodLookupIndex >> reset [
 TypMethodLookupIndex >> resultTypeFor: aLookup [
 	<typTypeArgument: 1 as: 'TypLookup'>
 	(resolver resolve: aLookup)
-		do: [ :e "typCastAs TypMethodLookupResult" | 
+		do: [ :e"typCastAs TypMethodLookupResult"
+			 | 
 			[ | type |
 			type := e resultType.
 			type isUnknown
@@ -65,7 +67,7 @@ TypMethodLookupIndex >> resultTypeFor: aLookup [
 				do: [ :f | 
 					f emit.
 					self flag: 'FIXME signal?' ] ].
-	^ TypUnknownType instance
+	^ TypUnknownType new
 ]
 
 { #category : #accessing }

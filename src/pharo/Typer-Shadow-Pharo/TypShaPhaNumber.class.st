@@ -14,7 +14,7 @@ TypShaPhaNumber >> ___timesCollect: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ BlockClosure
 				typAsFunctionTypeWithArguments: {Integer typAsType}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: true ];
 		resultType: [ :a | 
 			OrderedCollection typAsType
@@ -25,8 +25,7 @@ TypShaPhaNumber >> ___timesCollect: _a [
 								collect: [ :e | 
 									e isFunction
 										ifTrue: [ e result ]
-										ifFalse: [ TypUnknownType instance ] ]) typAsType)}
-						asDictionary ];
+										ifFalse: [ TypUnknownType new ] ]) typAsType)} asDictionary ];
 		yourself
 ]
 
@@ -54,7 +53,7 @@ TypShaPhaNumber >> ___to: _a do: _b [
 						typAsFunctionTypeWithArguments:
 							{{a receiverType.
 							(a argumentTypes at: 1)} typAsType}
-						result: TypUnknownType instance
+						result: TypUnknownType new
 						argumentsOptional: false ] ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself

@@ -7,6 +7,6 @@ RBSequenceNode >> typSignalsAlways [
 
 { #category : #'*Typer-Core' }
 RBSequenceNode >> typTypeRecursive [
-	self statements ifEmpty: [ ^ TypNilType instance ].
+	self statements ifEmpty: [ ^ TypNilType new ].
 	^ (self statements collect: #typType) last
 ]

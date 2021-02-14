@@ -10,7 +10,7 @@ TypNilTypeNullnessExamples >> asNonNullable [
 	| type nonNullable |
 	type := TypNilTypeInitializingExamples new typeInstance.
 	nonNullable := type asNonNullable.
-	self assert: nonNullable == TypUnknownType instance.
+	self assert: nonNullable == TypUnknownType new.
 	^ nonNullable
 ]
 

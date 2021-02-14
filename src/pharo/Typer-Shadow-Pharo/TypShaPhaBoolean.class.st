@@ -27,7 +27,7 @@ TypShaPhaBoolean >> ___ifFalse: _a [
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments: {}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: false ];
 		resultType: [ :a :s :r | (a argumentTypes at: 1) result asNullable ];
 		yourself
@@ -39,7 +39,7 @@ TypShaPhaBoolean >> ___ifTrue: _a [
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments: {}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: false ];
 		resultType: [ :a :s :r | (a argumentTypes at: 1) result asNullable ];
 		yourself
@@ -50,14 +50,14 @@ TypShaPhaBoolean >> ___ifTrue: _a ifFalse: _b [
 	^ TypMethodLookupResult new
 		argumentTypes: [ BlockClosure
 				typAsFunctionTypeWithArguments: {}
-				result: TypUnknownType instance
+				result: TypUnknownType new
 				argumentsOptional: false ];
 		resultType: [ :a | 
 			(a argumentTypes
 				collect: [ :e | 
 					e isFunction
 						ifTrue: [ e result ]
-						ifFalse: [ TypUnknownType instance ] ]) typAsType ];
+						ifFalse: [ TypUnknownType new ] ]) typAsType ];
 		yourself
 ]
 

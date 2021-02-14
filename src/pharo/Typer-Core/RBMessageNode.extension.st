@@ -48,9 +48,10 @@ RBMessageNode >> typTypeForArgumentAt: anInteger [
 	key := #typTypeForArgument , anInteger asString.
 	^ self
 		propertyAt: key
-		ifAbsentPut: [ | receiverType argumentTypes |
+		ifAbsentPut: [ "typCastAs TypType"
+			| receiverType argumentTypes |
 			"need to set property to default to unknown on recursive calls"
-			self propertyAt: key put: TypUnknownType instance.
+			self propertyAt: key put: TypUnknownType new.
 			receiverType := self typTypeForReceiver.
 			argumentTypes := self typTypesForArguments.
 			TypMethodLookupIndex instance
@@ -61,7 +62,7 @@ RBMessageNode >> typTypeForArgumentAt: anInteger [
 						argumentTypes: argumentTypes;
 						argumentNodes: self arguments;
 						yourself)
-				at: anInteger ]	"typCastAs TypType"
+				at: anInteger ]
 ]
 
 { #category : #'*Typer-Core' }
@@ -74,16 +75,15 @@ RBMessageNode >> typTypeForReceiver [
 RBMessageNode >> typTypeForResult [
 	| key |
 	key := #typTypeForResult.
-	^ (self
+	^ self
 		propertyAt: key
 		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
 			| receiverType argumentTypes |
-			self propertyAt: key put: TypUnknownType instance.
+			self propertyAt: key put: TypUnknownType new.
 			receiverType := self typTypeForReceiver.
 			argumentTypes := self typTypesForArguments.
 			((receiverType canUnderstand: self selector asSymbol) not
-				and:
-					[ receiverType asNonNullable canUnderstand: self selector asSymbol ])
+				and: [ receiverType asNonNullable canUnderstand: self selector asSymbol ])
 				ifTrue: [ receiverType := receiverType asNonNullable ].
 			TypMethodLookupIndex instance
 				resultTypeFor:
@@ -92,7 +92,7 @@ RBMessageNode >> typTypeForResult [
 						selector: self selector asSymbol;
 						argumentTypes: argumentTypes;
 						argumentNodes: self arguments;
-						yourself) ]) "typCastAs TypType"
+						yourself) ]	"typCastAs TypType"
 ]
 
 { #category : #'*Typer-Core' }

@@ -58,7 +58,7 @@ TypShaPhaObject >> ___hash [
 TypShaPhaObject >> ___instVarNamed: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
@@ -102,7 +102,7 @@ TypShaPhaObject >> ___perform: _a [
 								argumentTypes: #();
 								argumentNodes: #();
 								yourself) ]
-				ifFalse: [ TypUnknownType instance ] ];
+				ifFalse: [ TypUnknownType new ] ];
 		yourself
 ]
 
@@ -113,7 +113,7 @@ TypShaPhaObject >> ___perform: _a withEnoughArguments: _b [
 			i = 1
 				ifTrue: [ Symbol typAsType ]
 				ifFalse: [ SequenceableCollection typAsType ] ];
-		resultType: [ :a :s :r | TypUnknownType instance ];
+		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
@@ -166,7 +166,7 @@ TypShaPhaObject >> ~~~= _a [
 { #category : #accessing }
 TypShaPhaObject >> ~~~~= _a [
 	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | TypUnknownType instance asNullable ];
+		argumentTypes: [ :i :a :s :r | TypUnknownType new asNullable ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]

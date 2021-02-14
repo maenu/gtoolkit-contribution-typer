@@ -14,7 +14,7 @@ TypShaGtGtMondrianGraphBuilder >> ___stencil: _a [
 	^ TypMethodLookupResult new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
-				typAsFunctionTypeWithArguments: {TypUnknownType instance}
+				typAsFunctionTypeWithArguments: {TypUnknownType new}
 				result: BlElement typAsType
 				argumentsOptional: false ];
 		resultType: [ :a :s :r | a receiverType ];

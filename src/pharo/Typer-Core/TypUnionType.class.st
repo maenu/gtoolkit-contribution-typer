@@ -15,19 +15,20 @@ TypUnionType class >> asTypes: aCollection [
 	remains := aCollection
 		flatCollect: [ :e | 
 			e isUnion
-				ifTrue: [ (e "typCastAs TypUnionType") types ]
-				ifFalse: [ {e} "typCastAs Collection<TypType>" ] ] as: Set .
-	nil_ := remains includes: TypNilType instance.
+				ifTrue: [ e types	"typCastAs TypUnionType" ]
+				ifFalse: [ {e}	"typCastAs Collection<TypType>" ] ]
+		as: Set.
+	nil_ := remains includes: TypNilType new.
 	nil_
-		ifTrue: [ remains remove: TypNilType instance ].
+		ifTrue: [ remains remove: TypNilType new ].
 	remains := remains
 		reject: [ :e | 
 			(remains
 				copyWithoutAll:
 					{e.
-					TypUnknownType instance}) anySatisfy: [ :f | f >= e ] ].
+					TypUnknownType new}) anySatisfy: [ :f | f >= e ] ].
 	nil_
-		ifTrue: [ remains add: TypNilType instance ].
+		ifTrue: [ remains add: TypNilType new ].
 	^ remains
 ]
 
@@ -58,16 +59,16 @@ TypUnionType >> > aType [
 
 { #category : #converting }
 TypUnionType >> asNonNullable [
-	^ (types includes: TypNilType instance)
-		ifTrue: [ (types copyWithout: TypNilType instance) typAsType ]
+	^ (types includes: TypNilType new)
+		ifTrue: [ (types copyWithout: TypNilType new) typAsType ]
 		ifFalse: [ self ]
 ]
 
 { #category : #converting }
 TypUnionType >> asNullable [
-	^ (types includes: TypNilType instance)
+	^ (types includes: TypNilType new)
 		ifTrue: [ self ]
-		ifFalse: [ (types , TypNilType instance) typAsType ]
+		ifFalse: [ (types , TypNilType new) typAsType ]
 ]
 
 { #category : #testing }
@@ -75,12 +76,12 @@ TypUnionType >> hasSuperType [
 	superType
 		ifNil: [ | remains nil_ unknown current |
 			remains := types copy.
-			nil_ := remains includes: TypNilType instance.
+			nil_ := remains includes: TypNilType new.
 			nil_
-				ifTrue: [ remains remove: TypNilType instance ].
-			unknown := remains includes: TypUnknownType instance.
+				ifTrue: [ remains remove: TypNilType new ].
+			unknown := remains includes: TypUnknownType new.
 			unknown
-				ifTrue: [ remains remove: TypUnknownType instance ].
+				ifTrue: [ remains remove: TypUnknownType new ].
 			remains
 				ifEmpty: [ superType := self.
 					^ false ].
@@ -99,10 +100,10 @@ TypUnionType >> hasSuperType [
 										ifFalse: [ current := common.
 											remains add: current ] ] ] ].
 			remains := Set with: current.
-			(nil_ and: [ (current >= TypNilType instance) not ])
-				ifTrue: [ remains add: TypNilType instance ].
+			(nil_ and: [ (current >= TypNilType new) not ])
+				ifTrue: [ remains add: TypNilType new ].
 			unknown
-				ifTrue: [ remains add: TypUnknownType instance ].
+				ifTrue: [ remains add: TypUnknownType new ].
 			superType := remains typAsType ].
 	^ superType ~= self
 ]
@@ -130,7 +131,7 @@ TypUnionType >> initializeTypes: anObject [
 
 { #category : #'as yet unclassified' }
 TypUnionType >> isNullable [
-	^ types includes: TypNilType instance
+	^ types includes: TypNilType new
 ]
 
 { #category : #testing }
@@ -153,14 +154,14 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 	types_ := types copy.
 	aStream << '{'.
 	types_
-		detect: [ :e | e = TypNilType instance ]
+		detect: [ :e | e = TypNilType new ]
 		ifFound: [ :e | 
 			types_ remove: e.
 			e printOn: aStream skipping: anIdentitySet , {self}.
 			types_ ifNotEmpty: [ aStream << ',' ] ]
 		ifNone: [  ].
 	types_
-		detect: [ :e | e = TypUnknownType instance ]
+		detect: [ :e | e = TypUnknownType new ]
 		ifFound: [ :e | 
 			types_ remove: e.
 			e printOn: aStream skipping: anIdentitySet , {self}.
