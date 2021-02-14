@@ -1,9 +1,6 @@
 Class {
 	#name : #TypNilType,
 	#superclass : #TypNamedType,
-	#classInstVars : [
-		'instance'
-	],
 	#category : #'Typer-Core-Type'
 }
 
@@ -13,18 +10,7 @@ TypNilType class >> classDescription: aClassDescription [
 ]
 
 { #category : #'instance creation' }
-TypNilType class >> instance [
-	<typTypeResultAs: 'TypNilType'>
-	^ instance ifNil: [ instance := self basicNew initialize ]
-]
-
-{ #category : #'instance creation' }
 TypNilType class >> named: aString [
-	self shouldNotImplement
-]
-
-{ #category : #'instance creation' }
-TypNilType class >> new [
 	self shouldNotImplement
 ]
 

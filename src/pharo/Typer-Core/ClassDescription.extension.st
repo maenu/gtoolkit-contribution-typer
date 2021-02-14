@@ -56,6 +56,6 @@ ClassDescription >> typAsType [
 	^ TypTypeLookupIndex instance
 		typeFor:
 			(TypTypeLookup
-				origin: TypLookupNilOrigin instance
+				origin: TypNilOrigin instance
 				classDescription: self)
 ]

@@ -3,8 +3,7 @@ Extension { #name : #RBMessageNode }
 { #category : #'*Typer-Core' }
 RBMessageNode >> typInvokedMethods [
 	^ super typInvokedMethods
-		addAll: (self typTypeForReceiver lookupSelector: self selector);
-		yourself
+		, (self typTypeForReceiver lookupSelector: self selector)
 ]
 
 { #category : #'*Typer-Core' }
@@ -114,5 +113,5 @@ RBMessageNode >> typTypeReset [
 { #category : #'*Typer-Core' }
 RBMessageNode >> typTypesForArguments [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	^ self arguments collect: [ :e | e typType ]
+	^ self arguments collect: #typType
 ]

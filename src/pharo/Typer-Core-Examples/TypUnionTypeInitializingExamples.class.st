@@ -82,22 +82,6 @@ TypUnionTypeInitializingExamples >> asTypesRemovesSubTypes [
 ]
 
 { #category : #accessing }
-TypUnionTypeInitializingExamples >> asTypesRemovesVoidType [
-	<gtExample>
-	self
-		assert: (TypUnionType asTypes: {TypVoidType instance})
-		equals: {} asSet.
-	self
-		assert:
-			(TypUnionType
-				asTypes:
-					{TypVoidType instance.
-					TypUnknownType instance})
-		equals: {TypUnknownType instance} asSet.
-	^ nil
-]
-
-{ #category : #accessing }
 TypUnionTypeInitializingExamples >> typesEmpty [
 	<gtExample>
 	self assert: [ TypUnionType types: {} ] signals: AssertionFailure.

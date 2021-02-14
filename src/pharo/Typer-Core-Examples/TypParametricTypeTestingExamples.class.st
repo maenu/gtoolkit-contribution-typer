@@ -67,15 +67,6 @@ TypParametricTypeTestingExamples >> isVariable [
 	^ type
 ]
 
-{ #category : #testing }
-TypParametricTypeTestingExamples >> isVoid [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isVoid not.
-	^ type
-]
-
 { #category : #accessing }
 TypParametricTypeTestingExamples >> type [
 	<gtExample>

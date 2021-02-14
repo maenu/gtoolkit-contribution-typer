@@ -110,5 +110,5 @@ RBMethodNode >> typTypeReset [
 { #category : #'*Typer-Core' }
 RBMethodNode >> typTypesForArguments [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	^ self arguments collect: [ :e | e typType ]
+	^ self arguments collect: #typType
 ]

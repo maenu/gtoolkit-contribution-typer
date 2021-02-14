@@ -13,8 +13,8 @@ RBBlockNode >> typTypeForArgumentAt: anInteger [
 			type isUnion
 				ifTrue: [ type := ((type "typCastAs TypUnionType") types select: #isFunction) typAsType ] ].
 	(type isFunction and: [ anInteger <= (type "typCastAs TypFunctionType") arguments size ])
-		ifTrue: [ ^ self typAnnotateType: ((type "typCastAs TypFunctionType") arguments at: anInteger) ].
-	^ self typAnnotateType: TypUnknownType instance
+		ifTrue: [ ^ ((type "typCastAs TypFunctionType") arguments at: anInteger) ].
+	^ TypUnknownType instance
 ]
 
 { #category : #'*Typer-Core' }

@@ -12,11 +12,11 @@ TypUnionType class >> asTypes: aCollection [
 	<typTypeArgument: 1 as: 'Collection<TypType>'>
 	<typTypeResultAs: 'Set<TypType>'>
 	| remains nil_ |
-	remains := (aCollection
+	remains := aCollection
 		flatCollect: [ :e | 
 			e isUnion
 				ifTrue: [ (e "typCastAs TypUnionType") types ]
-				ifFalse: [ {e} "typCastAs Collection<TypType>" ] ]) asSet reject: #isVoid.
+				ifFalse: [ {e} "typCastAs Collection<TypType>" ] ] as: Set .
 	nil_ := remains includes: TypNilType instance.
 	nil_
 		ifTrue: [ remains remove: TypNilType instance ].

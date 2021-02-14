@@ -10,7 +10,7 @@ Class {
 
 { #category : #accessing }
 TypLookup >> asOrigin [
-	^ TypLookupLookupOrigin lookup: self
+	^ TypLookupOrigin lookup: self
 ]
 
 { #category : #copying }

@@ -2,7 +2,8 @@ Class {
 	#name : #TypType,
 	#superclass : #Object,
 	#instVars : [
-		'superType'
+		'superType',
+		'origin'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -73,7 +74,8 @@ TypType >> hasSuperType [
 { #category : #initialization }
 TypType >> initialize [
 	<typTypeVariable: 'superType' as: '{!,TypType}'>
-	super initialize
+	super initialize.
+	origin := TypNilOrigin instance
 ]
 
 { #category : #testing }
@@ -123,9 +125,14 @@ TypType >> isVariable [
 	^ false
 ]
 
-{ #category : #testing }
-TypType >> isVoid [
-	^ false
+{ #category : #accessing }
+TypType >> origin [
+	^ origin
+]
+
+{ #category : #accessing }
+TypType >> origin: anOrigin [
+	origin := anOrigin
 ]
 
 { #category : #printing }

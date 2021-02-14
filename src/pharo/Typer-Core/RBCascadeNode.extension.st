@@ -7,5 +7,5 @@ RBCascadeNode >> typSignalsAlways [
 
 { #category : #'*Typer-Core' }
 RBCascadeNode >> typTypeRecursive [
-	^ (self messages collect: [ :e | e typType ]) last
+	^ (self messages collect: #typType) last
 ]

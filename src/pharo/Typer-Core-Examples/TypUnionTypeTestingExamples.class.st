@@ -67,15 +67,6 @@ TypUnionTypeTestingExamples >> isVariable [
 	^ type
 ]
 
-{ #category : #testing }
-TypUnionTypeTestingExamples >> isVoid [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isVoid not.
-	^ type
-]
-
 { #category : #generated }
 TypUnionTypeTestingExamples >> type [
 	<gtExample>

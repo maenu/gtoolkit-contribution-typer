@@ -23,7 +23,7 @@ TypShaPhaUndefinedObject >> ___ifNil: _a [
 			(node isBlock
 				and: [ node body statements size > 0
 						and: [ node body statements last isReturn ] ])
-				ifTrue: [ TypVoidType instance ]
+				ifTrue: [ TypNoTypeError signal ]
 				ifFalse: [ (a argumentTypes at: 1) result ] ];
 		yourself
 ]

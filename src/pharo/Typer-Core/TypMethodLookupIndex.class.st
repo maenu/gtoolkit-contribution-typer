@@ -49,7 +49,7 @@ TypMethodLookupIndex >> argumentTypeFor: aLookup at: anInteger [
 { #category : #initialization }
 TypMethodLookupIndex >> reset [
 	super reset.
-	ASTCache default do: #typTypeResetAll
+	ASTCache default do: #typTypeReset
 ]
 
 { #category : #accessing }

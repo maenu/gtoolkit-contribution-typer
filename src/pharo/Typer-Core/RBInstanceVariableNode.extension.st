@@ -4,6 +4,7 @@ Extension { #name : #RBInstanceVariableNode }
 RBInstanceVariableNode >> typDefiningType [
 	<typTypeResultAs: 'Type'>
 	self assert: [ self typHasDefiningType ].
+	self flag: 'FIXME where to lookup self?'.
 	^ nil
 ]
 

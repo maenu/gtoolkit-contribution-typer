@@ -67,15 +67,6 @@ TypVariableTypeTestingExamples >> isVariable [
 	^ type
 ]
 
-{ #category : #testing }
-TypVariableTypeTestingExamples >> isVoid [
-	<gtExample>
-	| type |
-	type := self type.
-	self assert: type isVoid not.
-	^ type
-]
-
 { #category : #generated }
 TypVariableTypeTestingExamples >> type [
 	<gtExample>

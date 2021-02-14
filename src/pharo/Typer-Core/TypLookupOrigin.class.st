@@ -1,25 +1,35 @@
 Class {
 	#name : #TypLookupOrigin,
-	#superclass : #Object,
+	#superclass : #TypOrigin,
+	#instVars : [
+		'lookup'
+	],
 	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #accessing }
+TypLookupOrigin class >> lookup: aLookup [
+	^ self new
+		initializeLookup: aLookup;
+		yourself
+]
+
+{ #category : #accessing }
+TypLookupOrigin >> initializeLookup: aLookup [
+	lookup := aLookup
+]
+
+{ #category : #accessing }
 TypLookupOrigin >> isLookup [
-	^ false
+	^ true
 ]
 
 { #category : #accessing }
-TypLookupOrigin >> isNil [
-	^ false
-]
-
-{ #category : #accessing }
-TypLookupOrigin >> isNode [
-	^ false
+TypLookupOrigin >> lookup [
+	^ lookup
 ]
 
 { #category : #accessing }
 TypLookupOrigin >> rootOr: aLookup [
-	^ aLookup
+	^ lookup root
 ]
