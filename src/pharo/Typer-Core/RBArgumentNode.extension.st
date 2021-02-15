@@ -1,17 +1,10 @@
 Extension { #name : #RBArgumentNode }
 
 { #category : #'*Typer-Core' }
-RBArgumentNode >> typIsDeclaration [
-	^ (self parent isBlock or: [ self parent isMethod ])
-		and: [ (self parent "typCastAs {RBBlockNode,RBMethodNode}") arguments
-				anySatisfy: [ :e | e == self ] ]
-]
-
-{ #category : #'*Typer-Core' }
 RBArgumentNode >> typTypeRecursive [
-	^ self typIsDeclaration
+	^ self isDefinition
 		ifTrue: [ | type |
-			type := self parent typTypeForArgumentNamed: name.	"typCastAs {RBBlockNode,RBMethodNode}"
+			type := self parent typInfTypeForArgumentNamed: name.	"typCastAs {RBBlockNode,RBMethodNode}"
 			type isUnknown
 				ifTrue: [ type := self typInfTypeArguments ].
 			type isUnknown

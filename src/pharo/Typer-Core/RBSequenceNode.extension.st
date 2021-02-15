@@ -2,7 +2,7 @@ Extension { #name : #RBSequenceNode }
 
 { #category : #'*Typer-Core' }
 RBSequenceNode >> typSignalsAlways [
-	^ self statements anySatisfy: [ :e | (e typSignalsAlways) = true ]
+	^ self statements anySatisfy: [ :e | e typSignalsAlways = true ]
 ]
 
 { #category : #'*Typer-Core' }

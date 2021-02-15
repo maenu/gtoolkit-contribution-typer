@@ -1,16 +1,8 @@
 Extension { #name : #RBTemporaryNode }
 
 { #category : #'*Typer-Core' }
-RBTemporaryNode >> typIsDeclaration [
-	<typTypeResultAs: 'Boolean'>
-	^ self parent isSequence
-		and:
-			[ (self parent "typCastAs RBSequenceNode") temporaries anySatisfy: [ :e | e == self ] ]
-]
-
-{ #category : #'*Typer-Core' }
 RBTemporaryNode >> typTypeRecursive [
-	^ self typIsDeclaration
+	^ self isDefinition
 		ifTrue: [ | type |
 			type := self typInfTypeAssignedTo.
 			type isUnknown
@@ -19,6 +11,6 @@ RBTemporaryNode >> typTypeRecursive [
 				ifTrue: [ type := self typInfTypeAssigned ].
 			type ]
 		ifFalse: [ self typIsAssignedTo
-				ifTrue: [ (self parent "typCastAs RBAssignmentNode") value typType ]
+				ifTrue: [ self parent value typType	"typCastAs RBAssignmentNode" ]
 				ifFalse: [ TypExecutionOrderVisitor typeForTemporary: self ] ]
 ]

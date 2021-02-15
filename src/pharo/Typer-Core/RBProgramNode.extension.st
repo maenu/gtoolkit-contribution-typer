@@ -10,11 +10,6 @@ RBProgramNode >> typAnnotateType: aType [
 ]
 
 { #category : #'*Typer-Core' }
-RBProgramNode >> typInvokedMethods [
-	^ self children flatCollect: #typInvokedMethods as: IdentitySet
-]
-
-{ #category : #'*Typer-Core' }
 RBProgramNode >> typSignalsAlways [
 	<typTypeResultAs: '{!,Boolean}'>
 	^ false
@@ -28,7 +23,6 @@ RBProgramNode >> typType [
 	^ self
 		propertyAt: key
 		ifAbsent: [ "need to set property to default to unknown on recursive calls"
-			"typCastAs TypType"
 			self
 				propertyAt: key put: TypUnknownType new;
 				propertyAt: key

@@ -11,7 +11,7 @@ RBMethodNode >> typGtFiltersToTypeWithShadow [
 	| clazz shadows argumentTypes resultType |
 	clazz := self methodClass.
 	argumentTypes := self numArgs
-		timesCollect: [ :i | self typTypeForArgumentAt: i ].
+		timesCollect: [ :i | self typInfTypeForArgumentAt: i ].
 	resultType := self typTypeForResult.
 	shadows := (TypShaShadow typGtShadowFor: clazz)
 		ifEmpty: [ {(TypShaShadow typGtNewShadowFor: clazz)} ]
@@ -48,7 +48,7 @@ RBMethodNode >> typGtTypeWithPragma [
 						selector: #typTypeArgument:as:
 						arguments:
 							{(RBLiteralValueNode value: i).
-							(RBLiteralValueNode value: (self typTypeForArgumentAt: i) asString)} ] ].
+							(RBLiteralValueNode value: (self typInfTypeForArgumentAt: i) asString)} ] ].
 	result_ := self pragmas
 		detect: [ :e | e selector = #typTypeResultAs: ]
 		ifFound: [ :e | 

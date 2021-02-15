@@ -36,7 +36,7 @@ RBMethodNode >> typDynInstall [
 	self propertyAt: #typDynLink put: link.
 	self link: link.
 	self typDynAssignNodes do: #typDynInstall.
-	self typReturnNodes do: #typDynInstall.
+	self typInfReturnNodes do: #typDynInstall.
 	self method reflectiveMethod compileAndInstallCompiledMethod.
 	^ self method ast
 ]
@@ -79,7 +79,7 @@ RBMethodNode >> typDynStash [
 	self typDynStashed addAll: self typDynInvocations.
 	self propertyAt: #typDynInvocations put: TypDynUnionType new.
 	self typDynAssignNodes do: #typDynStash.
-	self typReturnNodes do: #typDynStash
+	self typInfReturnNodes do: #typDynStash
 ]
 
 { #category : #'*Typer-Dynamic' }
@@ -98,7 +98,7 @@ RBMethodNode >> typDynTypeForArgumentAt: anInteger [
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypeForResult [
 	<typTypeResultAs: 'TypUnionType'>
-	^ (self typReturnNodes collect: [ :e | e typDynReturns , e typDynStashed ]) "typParameters TypDynUnionType"
+	^ (self typInfReturnNodes collect: [ :e | e typDynReturns , e typDynStashed ]) "typParameters TypDynUnionType"
 		inject: TypDynUnionType new
 		into: [ :a :b | a , b ]
 ]
@@ -154,5 +154,5 @@ RBMethodNode >> typDynUninstall [
 	self removeProperty: #typDynInvocations ifAbsent: [  ].
 	self typDynRemoveLink.
 	self typDynAssignNodes do: #typDynUninstall.
-	self typReturnNodes do: #typDynUninstall
+	self typInfReturnNodes do: #typDynUninstall
 ]

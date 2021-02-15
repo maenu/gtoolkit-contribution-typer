@@ -2,7 +2,7 @@ Extension { #name : #RBCascadeNode }
 
 { #category : #'*Typer-Core' }
 RBCascadeNode >> typSignalsAlways [
-	^ self messages anySatisfy: [ :e | (e typSignalsAlways) = true ]
+	^ self messages anySatisfy: [ :e | e typSignalsAlways = true ]
 ]
 
 { #category : #'*Typer-Core' }

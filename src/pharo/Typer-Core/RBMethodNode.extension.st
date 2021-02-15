@@ -1,21 +1,6 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Core' }
-RBMethodNode >> typIsReturnSelf [
-	<typTypeResultAs: 'Boolean'>
-	^ self method isAbstract not
-		and: [ self isPrimitive not
-				and:
-					[ (self typReturnNodes reject: [ :e | e value isSelf ]) isEmpty ] ]
-]
-
-{ #category : #'*Typer-Core' }
-RBMethodNode >> typReturnNodes [
-	<typTypeResultAs: 'SequenceableCollection<RBReturnNode>'>
-	^ (self allChildren select: #isReturn) "typParameters RBReturnNode"
-]
-
-{ #category : #'*Typer-Core' }
 RBMethodNode >> typSignalsAlways [
 	^ self body typSignalsAlways
 ]
@@ -25,28 +10,6 @@ RBMethodNode >> typTemporaryProfile [
 	<typTypeResultAs: 'SequenceableCollection<Association<RBProgramNode,TypType>>'>
 	^ (self allChildren select: [ :e | e isVariable or: [ e isReturn ] ])
 		collect: [ :e | e -> e typType ]
-]
-
-{ #category : #'*Typer-Core' }
-RBMethodNode >> typTypeForArgumentAt: anInteger [
-	<typTypeArgument: 1 as: 'Integer'>
-	^ TypMethodLookupIndex instance
-		argumentTypeFor:
-			(TypMethodLookup new
-				receiverType: nil;
-				selector: self selector asSymbol;
-				argumentTypes: (self typTypesForArguments);
-				argumentNodes: self arguments;
-				yourself)
-		at: anInteger
-]
-
-{ #category : #'*Typer-Core' }
-RBMethodNode >> typTypeForArgumentNamed: aString [
-	<typTypeArgument: 1 as: 'String'>
-	| i |
-	i := self arguments detectIndex: [ :f | f name = aString ].
-	^ self typTypeForArgumentAt: i
 ]
 
 { #category : #'*Typer-Core' }

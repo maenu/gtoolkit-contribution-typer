@@ -1,12 +1,6 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer-Core' }
-RBMessageNode >> typInvokedMethods [
-	^ super typInvokedMethods
-		, (self typTypeForReceiver lookupSelector: self selector)
-]
-
-{ #category : #'*Typer-Core' }
 RBMessageNode >> typSignalsAlways [
 	| key |
 	key := #typSignalsAlways.
@@ -39,30 +33,6 @@ RBMessageNode >> typSignalsAlways [
 								argumentTypes: argumentTypes;
 								argumentNodes: self arguments;
 								yourself) ] ]) "typCastAs {!,Boolean}"
-]
-
-{ #category : #'*Typer-Core' }
-RBMessageNode >> typTypeForArgumentAt: anInteger [
-	<typTypeArgument: 1 as: 'Integer'>
-	| key |
-	key := #typTypeForArgument , anInteger asString.
-	^ self
-		propertyAt: key
-		ifAbsentPut: [ "typCastAs TypType"
-			| receiverType argumentTypes |
-			"need to set property to default to unknown on recursive calls"
-			self propertyAt: key put: TypUnknownType new.
-			receiverType := self typTypeForReceiver.
-			argumentTypes := self typTypesForArguments.
-			TypMethodLookupIndex instance
-				argumentTypeFor:
-					(TypMethodLookup new
-						receiverType: receiverType;
-						selector: self selector asSymbol;
-						argumentTypes: argumentTypes;
-						argumentNodes: self arguments;
-						yourself)
-				at: anInteger ]
 ]
 
 { #category : #'*Typer-Core' }

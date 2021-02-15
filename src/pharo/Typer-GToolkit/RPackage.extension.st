@@ -74,7 +74,7 @@ RPackage >> typGtView2For: aView [
 								yourself);
 						yourself ];
 				connect: methods
-					toAll: [ :f | f ast typInvokedMethods select: [ :g | methods includes: g ] ].
+					toAll: [ :f | f ast typGtInvokedMethods select: [ :g | methods includes: g ] ].
 			e layout circle ];
 		yourself
 ]

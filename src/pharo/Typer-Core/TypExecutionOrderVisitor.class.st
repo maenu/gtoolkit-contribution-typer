@@ -15,9 +15,10 @@ TypExecutionOrderVisitor class >> typeForTemporary: aTemporaryNode [
 	| definer |
 	self
 		assert: [ (aTemporaryNode isKindOf: RBTemporaryNode)
-				and: [ aTemporaryNode typIsDeclaration not ] ].
+				and: [ aTemporaryNode isDefinition not ] ].
 	definer := aTemporaryNode whoDefines: aTemporaryNode name.
-	^ (self typesFor: aTemporaryNode in: definer definer: definer) typAsType
+	^ (self typesFor: aTemporaryNode in: definer definer: definer)
+		typAsType
 ]
 
 { #category : #accessing }
@@ -42,7 +43,7 @@ TypExecutionOrderVisitor >> initialize [
 { #category : #accessing }
 TypExecutionOrderVisitor >> initializeNode: aNode definer: anotherNode [
 	self assert: [ aNode isKindOf: RBTemporaryNode ].
-	self assert: [ aNode typIsDeclaration not ].
+	self assert: [ aNode isDefinition not ].
 	node := aNode.
 	definer := anotherNode
 ]
@@ -50,8 +51,8 @@ TypExecutionOrderVisitor >> initializeNode: aNode definer: anotherNode [
 { #category : #accessing }
 TypExecutionOrderVisitor >> node: aNode [
 	self
-		assert: [ (aNode isKindOf: RBTemporaryNode)
-				and: [ aNode typIsDeclaration not ] ].
+		assert:
+			[ (aNode isKindOf: RBTemporaryNode) and: [ aNode isDefinition not ] ].
 	node := aNode.
 	definer := node whoDefines: node name
 ]

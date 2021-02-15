@@ -1,7 +1,7 @@
 Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer-Core' }
-RBBlockNode >> typTypeForArgumentAt: anInteger [
+RBBlockNode >> typInfTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	| type |
 	type := self typType.
@@ -10,7 +10,7 @@ RBBlockNode >> typTypeForArgumentAt: anInteger [
 		ifTrue: [ | i parent_ |
 			parent_ := self parent.	"typCastAs RBMessageNode"
 			i := parent_ arguments detectIndex: [ :e | e == self ].
-			type := parent_ typTypeForArgumentAt: i.
+			type := parent_ typInfTypeForArgumentAt: i.
 			type isUnion
 				ifTrue:
 					[ type := (type types select: #isFunction) typAsType	"typCastAs TypUnionType" ] ].
@@ -21,11 +21,11 @@ RBBlockNode >> typTypeForArgumentAt: anInteger [
 ]
 
 { #category : #'*Typer-Core' }
-RBBlockNode >> typTypeForArgumentNamed: aString [
+RBBlockNode >> typInfTypeForArgumentNamed: aString [
 	<typTypeArgument: 1 as: 'String'>
 	| i |
 	i := self arguments detectIndex: [ :f | f name = aString ].
-	^ self typTypeForArgumentAt: i
+	^ self typInfTypeForArgumentAt: i
 ]
 
 { #category : #'*Typer-Core' }

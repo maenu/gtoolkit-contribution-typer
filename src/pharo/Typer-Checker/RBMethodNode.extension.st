@@ -76,7 +76,7 @@ RBMethodNode >> typCheHasNullableArguments [
 			| e_ i expected actual |
 			e_ := (e parent) "typCastAs RBMessageNode".
 			i := e_ arguments detectIndex: [ :f | f == e ].
-			expected := e_ typTypeForArgumentAt: i.
+			expected := e_ typInfTypeForArgumentAt: i.
 			actual := e typType.
 			(expected >= actual) not and: [ expected >= actual asNonNullable ] ]
 ]
@@ -108,7 +108,7 @@ RBMethodNode >> typCheHasNullables [
 RBMethodNode >> typCheHasUnknownArguments [
 	<typTypeResultAs: 'Boolean'>
 	1 to: self numArgs do: [ :e | 
-		(self typTypeForArgumentAt: e) isUnknown
+		(self typInfTypeForArgumentAt: e) isUnknown
 			ifTrue: [ ^ true ] ].
 	^ false
 ]
@@ -120,7 +120,7 @@ RBMethodNode >> typCheHasUnknownArgumentsPassed [
 		do: [ :e | 
 			e arguments
 				withIndexDo: [ :f :i | 
-					(e typTypeForArgumentAt: i) isUnknown
+					(e typInfTypeForArgumentAt: i) isUnknown
 						ifTrue: [ ^ true ] ] ].
 	^ false
 ]
@@ -140,7 +140,12 @@ RBMethodNode >> typCheHasUnknownResult [
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasUnknownTemporaries [
 	<typTypeResultAs: 'Boolean'>
-	^ (self allChildren select: [ :e | e isTemp and: [ e isArgument not and: [ (e "typCastAs RBTemporaryNode") typIsDeclaration ] ] ]) anySatisfy: [ :e | e typType isUnknown ]
+	^ (self allChildren
+		select: [ :e | 
+			e isTemp
+				and:
+					[ e isArgument not and: [ e isDefinition	"typCastAs RBTemporaryNode" ] ] ])
+		anySatisfy: [ :e | e typType isUnknown ]
 ]
 
 { #category : #'*Typer-Checker' }

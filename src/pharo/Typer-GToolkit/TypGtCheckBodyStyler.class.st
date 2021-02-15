@@ -97,7 +97,7 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 				do: [ :e | self styleSelectorOf: aNode color: e color ] ].
 	aNode arguments
 		withIndexDo: [ :e :i | 
-			(e typType isUnknown or: [ (aNode typTypeForArgumentAt: i) isUnknown ])
+			(e typType isUnknown or: [ (aNode typInfTypeForArgumentAt: i) isUnknown ])
 				ifTrue: [ markUnknowns ifTrue: [ self styleNode: e color: Color blue ] ]
 				ifFalse: [ [ aNode typCheCheckArgumentCompatibilityAt: i ]
 						on: TypCheError
@@ -155,6 +155,7 @@ TypGtCheckBodyStyler >> visitReturnNode: aNode [
 { #category : #visiting }
 TypGtCheckBodyStyler >> visitTemporaryNode: aNode [
 	super visitTemporaryNode: aNode.
-	(aNode typIsDeclaration and: [ aNode typType isUnknown ])
-		ifTrue: [ markUnknowns ifTrue: [ self styleNode: aNode color: Color blue ] ]
+	(aNode isDefinition and: [ aNode typType isUnknown ])
+		ifTrue: [ markUnknowns
+				ifTrue: [ self styleNode: aNode color: Color blue ] ]
 ]
