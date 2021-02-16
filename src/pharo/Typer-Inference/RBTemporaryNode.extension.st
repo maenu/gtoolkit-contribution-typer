@@ -1,9 +1,10 @@
 Extension { #name : #RBTemporaryNode }
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Inference' }
 RBTemporaryNode >> typTypeRecursive [
 	self isDefinition
 		ifTrue: [ | type |
+			self flag: 'FIXME should either not be here, or inf sends should be moved here'.
 			type := self typInfTypeAssignedTo.
 			type isUnknown
 				ifTrue: [ type := self typInfTypeArguments ].

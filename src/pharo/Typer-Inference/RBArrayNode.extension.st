@@ -1,11 +1,11 @@
 Extension { #name : #RBArrayNode }
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Inference' }
 RBArrayNode >> typSignalsAlways [
 	^ self statements anySatisfy: [ :e | e typSignalsAlways = true ]
 ]
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Inference' }
 RBArrayNode >> typTypeRecursive [
 	| type |
 	type := Array typAsType.

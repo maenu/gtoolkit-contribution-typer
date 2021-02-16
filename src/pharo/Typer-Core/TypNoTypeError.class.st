@@ -1,5 +1,5 @@
 Class {
 	#name : #TypNoTypeError,
 	#superclass : #Error,
-	#category : #'Typer-Core-Typing'
+	#category : #'Typer-Core-Lookup'
 }

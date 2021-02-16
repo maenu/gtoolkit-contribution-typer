@@ -1,6 +1,6 @@
 Extension { #name : #RBGlobalNode }
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Inference' }
 RBGlobalNode >> typDefiningType [
 	<typTypeResultAs: 'Metaclass'>
 	| clazz |
@@ -11,13 +11,13 @@ RBGlobalNode >> typDefiningType [
 	^ clazz classSide typAsType
 ]
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Inference' }
 RBGlobalNode >> typHasDefiningType [
 	^ self binding isClassVariable
 		or: [ self binding typIsFromSharedPool ]
 ]
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Inference' }
 RBGlobalNode >> typTypeRecursive [
 	self binding isGlobalClassNameBinding
 		ifTrue: [ ^ self binding value class typAsType ].

@@ -1,6 +1,6 @@
 Extension { #name : #RBLiteralArrayNode }
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Inference' }
 RBLiteralArrayNode >> typTypeRecursive [
 	| type |
 	type := Array typAsType.

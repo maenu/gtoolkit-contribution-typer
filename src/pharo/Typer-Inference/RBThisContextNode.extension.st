@@ -1,6 +1,6 @@
 Extension { #name : #RBThisContextNode }
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Inference' }
 RBThisContextNode >> typTypeRecursive [
 	^ Context typAsType
 ]

@@ -1,7 +1,7 @@
 Class {
 	#name : #TypRewriter,
 	#superclass : #Object,
-	#category : #'Typer-Core'
+	#category : #'Typer-Core-Examples'
 }
 
 { #category : #accessing }

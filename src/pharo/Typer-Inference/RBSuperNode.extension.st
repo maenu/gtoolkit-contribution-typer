@@ -1,6 +1,6 @@
 Extension { #name : #RBSuperNode }
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Inference' }
 RBSuperNode >> typTypeRecursive [
 	^ self methodNode typReceiverType superType
 ]

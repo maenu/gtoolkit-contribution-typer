@@ -1,6 +1,6 @@
 Extension { #name : #Dictionary }
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Inference' }
 Dictionary >> typSelfType [
 	| type |
 	type := super typSelfType.
@@ -24,7 +24,7 @@ Dictionary >> typSelfType [
 	^ type
 ]
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Inference' }
 Dictionary >> typSelfTypeSamples [
 	| pool |
 	self size < 128

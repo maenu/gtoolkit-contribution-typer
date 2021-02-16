@@ -1,6 +1,6 @@
 Extension { #name : #RBComment }
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Inference' }
 RBComment >> typType: aType [
 	(contents beginsWith: 'typCastAs ')
 		ifTrue: [ ^ (contents copyFrom: 'typCastAs ' size + 1 to: contents size)

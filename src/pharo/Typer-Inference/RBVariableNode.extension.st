@@ -1,6 +1,19 @@
 Extension { #name : #RBVariableNode }
 
 { #category : #'*Typer-Inference' }
+RBVariableNode >> typDefiningType [
+	<typTypeResultAs: 'Type'>
+	self assert: [ self typHasDefiningType ].
+	^ TypUnknownType new
+]
+
+{ #category : #'*Typer-Inference' }
+RBVariableNode >> typHasDefiningType [
+	<typTypeResultAs: 'Boolean'>
+	^ false
+]
+
+{ #category : #'*Typer-Inference' }
 RBVariableNode >> typInfTypeArguments [
 	^ (((self whoDefines: name) allChildren
 		select: [ :e | 
@@ -30,4 +43,10 @@ RBVariableNode >> typInfTypeAssignedTo [
 	^ (((self whoDefines: self name) assignmentNodes
 		select: [ :e | e variable = self ])
 		collect: [ :e | e value typType ]) typAsType
+]
+
+{ #category : #'*Typer-Inference' }
+RBVariableNode >> typIsAssignedTo [
+	^ self parent isAssignment
+		and: [ (self parent "typCastAs RBAssignmentNode") variable == self ]
 ]

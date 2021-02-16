@@ -1,6 +1,6 @@
 Extension { #name : #RBProgramNode }
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typAnnotateType: aType [
 	"Annotates aType according to my comments used for casting and setting parameters."
 
@@ -9,13 +9,13 @@ RBProgramNode >> typAnnotateType: aType [
 	^ self comments inject: aType into: [ :r :e | e typType: r ]
 ]
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typSignalsAlways [
 	<typTypeResultAs: '{!,Boolean}'>
 	^ false
 ]
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typType [
 	<typTypeResultAs: 'TypType'>
 	| key |
@@ -29,13 +29,13 @@ RBProgramNode >> typType [
 					put: (self typAnnotateType: self typTypeRecursive) ]
 ]
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typTypeRecursive [
 	<typTypeResultAs: 'TypType'>
 	^ TypUnknownType new
 ]
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typTypeReset [
 	properties
 		ifNotNil: [ (properties keys select: [ :e | e beginsWith: #typ ])

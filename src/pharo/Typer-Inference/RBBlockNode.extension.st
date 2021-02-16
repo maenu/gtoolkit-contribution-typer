@@ -27,3 +27,17 @@ RBBlockNode >> typInfTypeForArgumentNamed: aString [
 	i := self arguments detectIndex: [ :f | f name = aString ].
 	^ self typInfTypeForArgumentAt: i
 ]
+
+{ #category : #'*Typer-Inference' }
+RBBlockNode >> typResultType [
+	<typTypeResultAs: 'TypType'>
+	^ ((self typType) "typCastAs TypFunctionType") result
+]
+
+{ #category : #'*Typer-Inference' }
+RBBlockNode >> typTypeRecursive [
+	^ BlockClosure
+		typAsFunctionTypeWithArguments: (self arguments collect: [ :e | e typType ])
+		result: (self body typType)
+		argumentsOptional: false
+]
