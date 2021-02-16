@@ -4,8 +4,7 @@ Extension { #name : #RBInstanceVariableNode }
 RBInstanceVariableNode >> typDefiningType [
 	<typTypeResultAs: 'Type'>
 	self assert: [ self typHasDefiningType ].
-	self flag: 'FIXME where to lookup self?'.
-	^ nil
+	^ self methodNode typReceiverType
 ]
 
 { #category : #'*Typer-Core' }
@@ -15,12 +14,12 @@ RBInstanceVariableNode >> typHasDefiningType [
 
 { #category : #'*Typer-Core' }
 RBInstanceVariableNode >> typTypeRecursive [
-	^ self typIsAssignedTo
-		ifTrue: [ self parent value typType	"typCastAs RBAssignmentNode" ]
-		ifFalse: [ TypVariableLookupIndex instance
-				typeFor:
-					(TypVariableLookup new
-						receiverType: self typDefiningType;
-						selector: name asSymbol;
-						yourself) ]
+	self typIsAssignedTo
+		ifTrue: [ ^ self parent value typType ].
+	^ TypVariableLookupIndex instance
+		typeFor:
+			(TypVariableLookup new
+				receiverType: self typDefiningType;
+				selector: name asSymbol;
+				yourself)
 ]

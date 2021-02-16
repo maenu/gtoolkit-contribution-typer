@@ -1,16 +1,6 @@
 Extension { #name : #RBVariableNode }
 
 { #category : #'*Typer-Core' }
-RBVariableNode >> typDefinedType [
-	^ TypVariableLookupIndex instance
-		typeFor:
-			(TypVariableLookup new
-				receiverType: self typDefiningType;
-				selector: name asSymbol;
-				yourself)
-]
-
-{ #category : #'*Typer-Core' }
 RBVariableNode >> typDefiningType [
 	<typTypeResultAs: 'Type'>
 	self assert: [ self typHasDefiningType ].

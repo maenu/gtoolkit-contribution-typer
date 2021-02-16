@@ -11,8 +11,8 @@ RBMessageNode >> typInfTypeForArgumentAt: anInteger [
 			| receiverType argumentTypes |
 			"need to set property to default to unknown on recursive calls"
 			self propertyAt: key put: TypUnknownType new.
-			receiverType := self typTypeForReceiver.
-			argumentTypes := self typTypesForArguments.
+			receiverType := self typReceiverType.
+			argumentTypes := self typArgumentTypes.
 			TypMethodLookupIndex instance
 				argumentTypeFor:
 					(TypMethodLookup new

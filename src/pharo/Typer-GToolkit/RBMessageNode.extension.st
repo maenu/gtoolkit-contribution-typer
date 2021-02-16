@@ -23,7 +23,7 @@ RBMessageNode >> typGtFiltersToTypeWithShadow [
 		ifFalse: [ Object ].
 	argumentTypes := self numArgs
 		timesCollect: [ :i | self typInfTypeForArgumentAt: i ].
-	resultType := self typTypeForResult.
+	resultType := self typResultType.
 	shadows := (TypShaShadow typGtShadowFor: clazz)
 		ifEmpty: [ {(TypShaShadow typGtNewShadowFor: clazz)} ]
 		ifNotEmpty: #yourself.
@@ -48,5 +48,5 @@ RBMessageNode >> typGtFiltersToTypeWithShadow [
 { #category : #'*Typer-GToolkit' }
 RBMessageNode >> typGtInvokedMethods [
 	^ super typGtInvokedMethods
-		, (self typTypeForReceiver lookupSelector: self selector)
+		, (self typReceiverType lookupSelector: self selector)
 ]

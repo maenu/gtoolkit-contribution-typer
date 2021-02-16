@@ -23,7 +23,7 @@ RBMethodNode >> typInfTypeForArgumentAt: anInteger [
 			(TypMethodLookup new
 				receiverType: nil;
 				selector: self selector asSymbol;
-				argumentTypes: (self typTypesForArguments);
+				argumentTypes: (self typArgumentTypes);
 				argumentNodes: self arguments;
 				yourself)
 		at: anInteger

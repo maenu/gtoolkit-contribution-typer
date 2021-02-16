@@ -1,6 +1,31 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Core' }
+RBMethodNode >> typArgumentTypes [
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
+	^ self arguments collect: #typType
+]
+
+{ #category : #'*Typer-Core' }
+RBMethodNode >> typReceiverType [
+	self flag: 'FIXME implement'
+]
+
+{ #category : #'*Typer-Core' }
+RBMethodNode >> typResultType [
+	<typTypeResultAs: 'TypType'>
+	self assert: [ compilationContext isNotNil ].
+	^ TypMethodLookupIndex instance
+		resultTypeFor:
+			(TypMethodLookup new
+				receiverType: nil;
+				selector: self selector asSymbol;
+				argumentTypes: (self typArgumentTypes);
+				argumentNodes: self arguments;
+				yourself)
+]
+
+{ #category : #'*Typer-Core' }
 RBMethodNode >> typSignalsAlways [
 	^ self body typSignalsAlways
 ]
@@ -10,20 +35,6 @@ RBMethodNode >> typTemporaryProfile [
 	<typTypeResultAs: 'SequenceableCollection<Association<RBProgramNode,TypType>>'>
 	^ (self allChildren select: [ :e | e isVariable or: [ e isReturn ] ])
 		collect: [ :e | e -> e typType ]
-]
-
-{ #category : #'*Typer-Core' }
-RBMethodNode >> typTypeForResult [
-	<typTypeResultAs: 'TypType'>
-	self assert: [ compilationContext isNotNil ].
-	^ TypMethodLookupIndex instance
-		resultTypeFor:
-			(TypMethodLookup new
-				receiverType: nil;
-				selector: self selector asSymbol;
-				argumentTypes: (self typTypesForArguments);
-				argumentNodes: self arguments;
-				yourself)
 ]
 
 { #category : #'*Typer-Core' }
@@ -59,19 +70,7 @@ RBMethodNode >> typTypeRecursive [
 	(oldTemporaryProfiles includes: newTemporaryProfile) not
 		and: [ iterations < maxIterations ] ] whileTrue.
 	^ CompiledMethod
-		typAsFunctionTypeWithArguments: self typTypesForArguments
-		result: self typTypeForResult
+		typAsFunctionTypeWithArguments: self typArgumentTypes
+		result: self typResultType
 		argumentsOptional: false
-]
-
-{ #category : #'*Typer-Core' }
-RBMethodNode >> typTypeReset [
-	self removeProperty: #typFixPoint ifAbsent: [  ].
-	super typTypeReset
-]
-
-{ #category : #'*Typer-Core' }
-RBMethodNode >> typTypesForArguments [
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	^ self arguments collect: #typType
 ]

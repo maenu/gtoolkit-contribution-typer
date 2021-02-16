@@ -134,7 +134,7 @@ RBMethodNode >> typCheHasUnknownReceivers [
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasUnknownResult [
 	<typTypeResultAs: 'Boolean'>
-	^ self typTypeForResult isUnknown
+	^ self typResultType isUnknown
 ]
 
 { #category : #'*Typer-Checker' }

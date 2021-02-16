@@ -12,7 +12,7 @@ RBMethodNode >> typGtFiltersToTypeWithShadow [
 	clazz := self methodClass.
 	argumentTypes := self numArgs
 		timesCollect: [ :i | self typInfTypeForArgumentAt: i ].
-	resultType := self typTypeForResult.
+	resultType := self typResultType.
 	shadows := (TypShaShadow typGtShadowFor: clazz)
 		ifEmpty: [ {(TypShaShadow typGtNewShadowFor: clazz)} ]
 		ifNotEmpty: #yourself.
@@ -54,7 +54,7 @@ RBMethodNode >> typGtTypeWithPragma [
 		ifFound: [ :e | 
 			self removePragma: e.
 			e ]
-		ifNone: [ RBPragmaNode selector: #typTypeResultAs: arguments: {(RBLiteralValueNode value: self typTypeForResult asString)} ].
+		ifNone: [ RBPragmaNode selector: #typTypeResultAs: arguments: {(RBLiteralValueNode value: self typResultType asString)} ].
 	variables_ := {} "typCastAs SequenceableCollection<RBPragmaNode>".
 	self selector = #initialize
 		ifTrue: [ variables_ := self methodClass instVarNames

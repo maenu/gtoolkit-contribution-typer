@@ -3,7 +3,7 @@ Extension { #name : #RBReturnNode }
 { #category : #'*Typer-Checker' }
 RBReturnNode >> typCheCheckCompatibility [
 	| expected actual |
-	expected := self methodNode typTypeForResult.
+	expected := self methodNode typResultType.
 	actual := self value typType.
 	(expected isUnknown or: [ actual isUnknown ])
 		ifTrue: [ ^ self ].
@@ -35,7 +35,7 @@ RBReturnNode >> typCheCheckCompatibility [
 { #category : #'*Typer-Checker' }
 RBReturnNode >> typCheCheckNullables [
 	| expected actual |
-	expected := self methodNode typTypeForResult.
+	expected := self methodNode typResultType.
 	actual := self value typType.
 	(expected isUnknown
 		or: [ actual isUnknown
