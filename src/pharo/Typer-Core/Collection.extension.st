@@ -4,7 +4,7 @@ Extension { #name : #Collection }
 Collection >> typAsType [
 	<typTypeResultAs: 'TypType'>
 	| types |
-	types := TypUnionType asTypes: self.	"typParameters TypType"
+	types := TypUnionType asTypes: self.
 	types ifEmpty: [ ^ TypUnknownType new ].
 	types size = 1
 		ifTrue: [ ^ types anyOne ].
@@ -15,19 +15,18 @@ Collection >> typAsType [
 Collection >> typSelfType [
 	| type |
 	type := super typSelfType.
-	(type isParametric and: [ type parameters size = 1 ])
-		ifTrue: [ type := type
-				copyWithParameters:
-					{((type parameters at: 1)
-						->
-							(self typSelfTypeSamples collect: [ :e | e class typAsType ])
-								typAsType)} asDictionary ].
 	^ type
+		copyWithParameters:
+			{((type parameters keys at: 1)
+				-> (self typSelfTypeSamples collect: #typAsType) typAsType)}
+				asOrderedDictionary
 ]
 
 { #category : #'*Typer-Core' }
 Collection >> typSelfTypeSamples [
-	^ self size > 100
-		ifTrue: [ self asOrderedCollection copyFrom: 1 to: 100 ]
-		ifFalse: [ self asOrderedCollection ]
+	| pool |
+	self size < 128
+		ifTrue: [ ^ self ].
+	pool := self copy asOrderedCollection.
+	^ 128 timesCollect: [ pool remove: pool atRandom ]
 ]

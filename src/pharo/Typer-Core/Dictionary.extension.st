@@ -26,7 +26,9 @@ Dictionary >> typSelfType [
 
 { #category : #'*Typer-Core' }
 Dictionary >> typSelfTypeSamples [
-	^ self size > 100
-		ifTrue: [ self associations asOrderedCollection copyFrom: 1 to: 100 ]
-		ifFalse: [ self associations ]
+	| pool |
+	self size < 128
+		ifTrue: [ ^ self ].
+	pool := self associations copy asOrderedCollection.
+	^ 128 timesCollect: [ pool remove: pool atRandom ]
 ]
