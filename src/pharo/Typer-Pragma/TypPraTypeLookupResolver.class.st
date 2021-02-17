@@ -1,13 +1,16 @@
 Class {
-	#name : #TypPraClassDescriptionLookupResult,
-	#superclass : #TypTypeLookupResult,
-	#category : #'Typer-Pragma-Lookup'
+	#name : #TypPraTypeLookupResolver,
+	#superclass : #TypLookupResolver,
+	#category : #'Typer-Pragma'
 }
 
 { #category : #accessing }
-TypPraClassDescriptionLookupResult >> type [
+TypPraTypeLookupResolver >> resolve: aLookup [
+	<typTypeArgument: 1 as: 'TypTypeLookup'>
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	| classDescription pragmas parameters bindings superTypeBindings |
-	classDescription := lookup classDescription.
+	aLookup push: self.
+	classDescription := aLookup classDescription.
 	pragmas := (classDescription lookupSelector: #initialize)
 		ifNil: [ TypNoTypeError signal ]
 		ifNotNil: #pragmas.
@@ -29,11 +32,11 @@ TypPraClassDescriptionLookupResult >> type [
 		ifTrue: [ TypNoTypeError signal ].
 	(parameters isEmpty
 		and: [ bindings isEmpty and: [ superTypeBindings isNotEmpty ] ])
-		ifTrue: [ ^ classDescription
-				typAsNamedTypeWithSuperTypeParameters: superTypeBindings ].
-	^ superTypeBindings isEmpty
-		ifTrue: [ classDescription typAsParametricTypeWithParameters: bindings ]
-		ifFalse: [ classDescription
-				typAsParametricTypeWithParameters: bindings
-				superTypeParameters: superTypeBindings ]
+		ifTrue: [ ^ {(classDescription
+				typAsNamedTypeWithSuperTypeParameters: superTypeBindings)} ].
+	superTypeBindings isEmpty
+		ifTrue: [ ^ {(classDescription typAsParametricTypeWithParameters: bindings)} ].
+	^ {(classDescription
+		typAsParametricTypeWithParameters: bindings
+		superTypeParameters: superTypeBindings)}
 ]

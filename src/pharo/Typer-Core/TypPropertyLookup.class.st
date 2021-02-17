@@ -8,6 +8,13 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
+{ #category : #accessing }
+TypPropertyLookup class >> receiverType: aType selector: aSymbol [
+	^ self new
+		initializeReceiverType: aType selector: aSymbol;
+		yourself
+]
+
 { #category : #comparing }
 TypPropertyLookup >> = anObject [
 	^ self == anObject

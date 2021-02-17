@@ -17,7 +17,7 @@ TypLookup >> asOrigin [
 TypLookup >> copyWithSuperType [
 	self assert: [ self hasSuperType ].
 	^ self copy
-		initializeOrigin: self asOrigin;
+		origin: self asOrigin;
 		yourself
 ]
 
@@ -30,12 +30,11 @@ TypLookup >> hasSuperType [
 { #category : #accessing }
 TypLookup >> initialize [
 	super initialize.
-	stack := Stack new.
-	origin := nil
+	stack := Stack new
 ]
 
 { #category : #accessing }
-TypLookup >> initializeOrigin: aLookup [
+TypLookup >> origin: aLookup [
 	origin := aLookup
 ]
 
@@ -52,5 +51,5 @@ TypLookup >> push: aResolver [
 
 { #category : #accessing }
 TypLookup >> root [
-	^ origin rootOr: self
+	^ origin ifNil: self
 ]

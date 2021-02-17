@@ -8,9 +8,8 @@ Class {
 }
 
 { #category : #accessing }
-TypTypeLookup class >> origin: anOrigin classDescription: aClassDescription [
+TypTypeLookup class >> classDescription: aClassDescription [
 	^ self new
-		initializeOrigin: anOrigin;
 		initializeClassDescription: aClassDescription;
 		yourself
 ]

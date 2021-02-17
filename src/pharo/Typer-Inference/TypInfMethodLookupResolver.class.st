@@ -1,22 +1,20 @@
 Class {
 	#name : #TypInfMethodLookupResolver,
 	#superclass : #TypLookupResolver,
-	#category : #'Typer-Inference-Lookup'
+	#category : #'Typer-Inference'
 }
 
 { #category : #accessing }
 TypInfMethodLookupResolver >> resolve: aLookup [
-	<typTypeArgument: 1 as: 'TypMethodLookup'>
-	<typTypeResultAs: 'SequenceableCollection<TypMethodLookupResult>'>
-	^ (aLookup receiverType asCollection
-		select: [ :e | e isNamed and: [ e hasClassDescription ] ])
-		flatCollect: [ :e | 
-			(e classDescription typInfAsMethodLookupResultFor: aLookup selector)
-				ifNil: [ #() ]
-				ifNotNil: [ :f | 
-					{(f
-						originalLookup: aLookup;
-						resolvedLookup: aLookup;
-						resolvedResolver: self;
-						yourself)} ] ]
+	<typTypeArgument: 1 as: 'TypVariableLookup'>
+	<typTypeResultAs: 'SequenceableCollection<TypType>'>
+	| classDescription selector  |
+	aLookup push: self.
+	aLookup receiverType isNamed
+		ifFalse: [ TypNoTypeError signal ].
+	aLookup receiverType hasClassDescription
+		ifFalse: [ TypNoTypeError signal ].
+	classDescription := aLookup receiverType classDescription.
+	selector := aLookup selector.
+	^ {(classDescription lookupSelector: selector) typInfType}
 ]

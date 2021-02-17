@@ -27,52 +27,5 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : #TypMethodLookup,
 	#superclass : #TypPropertyLookup,
-	#instVars : [
-		'arguments'
-	],
 	#category : #'Typer-Core-Lookup'
 }
-
-{ #category : #accessing }
-TypMethodLookup class >> origin: anOrigin receiverType: aType selector: aSymbol arguments: aCollection [
-	^ self new
-		initializeOrigin: anOrigin;
-		initializeReceiverType: aType selector: aSymbol;
-		initializeArguments: aCollection;
-		yourself
-]
-
-{ #category : #comparing }
-TypMethodLookup >> = anObject [
-	^ super = anObject
-		and: [ arguments asOrderedCollection
-				= anObject arguments asOrderedCollection ]
-]
-
-{ #category : #accessing }
-TypMethodLookup >> arguments [
-	^ arguments
-]
-
-{ #category : #comparing }
-TypMethodLookup >> hash [
-	^ super hash bitXor: arguments hash
-]
-
-{ #category : #initialization }
-TypMethodLookup >> initialize [
-	<typTypeVariable: 'argumentTypes' as: 'SequenceableCollection<TypType>'>
-	<typTypeVariable: 'argumentNodes' as: 'SequenceableCollection<RBValueNode>'>
-	super initialize
-]
-
-{ #category : #accessing }
-TypMethodLookup >> initializeArguments: aCollection [
-	arguments := aCollection
-]
-
-{ #category : #accessing }
-TypMethodLookup >> postCopy [
-	super postCopy.
-	arguments := arguments copy
-]
