@@ -20,16 +20,6 @@ TypLookupOrigin >> initializeLookup: aLookup [
 ]
 
 { #category : #accessing }
-TypLookupOrigin >> isLookup [
-	^ true
-]
-
-{ #category : #accessing }
-TypLookupOrigin >> lookup [
-	^ lookup
-]
-
-{ #category : #accessing }
 TypLookupOrigin >> rootOr: aLookup [
 	^ lookup root
 ]

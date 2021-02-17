@@ -59,14 +59,14 @@ TypUnionType >> > aType [
 
 { #category : #converting }
 TypUnionType >> asNonNullable [
-	^ (types includes: TypNilType new)
+	^ self isNullable
 		ifTrue: [ (types copyWithout: TypNilType new) typAsType ]
 		ifFalse: [ self ]
 ]
 
 { #category : #converting }
 TypUnionType >> asNullable [
-	^ (types includes: TypNilType new)
+	^ self isNullable
 		ifTrue: [ self ]
 		ifFalse: [ (types , TypNilType new) typAsType ]
 ]

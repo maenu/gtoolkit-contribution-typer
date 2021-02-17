@@ -2,28 +2,18 @@ Class {
 	#name : #TypOrigin,
 	#superclass : #Object,
 	#instVars : [
-		'origin'
+		'origins'
 	],
 	#category : #'Typer-Core-Type'
 }
 
 { #category : #accessing }
+TypOrigin >> add: anOrigin [
+	origins add: anOrigin
+]
+
+{ #category : #accessing }
 TypOrigin >> initialize [
 	super initialize.
-	origin := TypNilOrigin instance
-]
-
-{ #category : #accessing }
-TypOrigin >> isNil [
-	^ false
-]
-
-{ #category : #accessing }
-TypOrigin >> origin [
-	^ origin
-]
-
-{ #category : #accessing }
-TypOrigin >> origin: anOrigin [
-	origin := anOrigin
+	origins := OrderedCollection new
 ]

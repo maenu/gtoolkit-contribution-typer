@@ -76,6 +76,7 @@ TypParametricType >> copyWithParameters: anOrderedDictionary [
 	<typTypeArgument: 1 as: 'OrderedDictionary<String,TypType>'>
 	self
 		assert: [ parameters keys includesAll: anOrderedDictionary keys ].
+	self flag: 'TODO crappy api'.
 	^ self copy
 		initializeParameters:
 			(parameters copy

@@ -6,17 +6,7 @@ Class {
 
 { #category : #comparing }
 TypUnknownType >> > aType [
-	^ self ~= aType
-]
-
-{ #category : #converting }
-TypUnknownType >> asNonNullable [
-	^ self
-]
-
-{ #category : #copying }
-TypUnknownType >> copy [
-	^ self
+	^ aType isUnknown not
 ]
 
 { #category : #testing }

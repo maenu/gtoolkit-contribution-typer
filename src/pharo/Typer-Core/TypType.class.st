@@ -40,6 +40,7 @@ TypType >> >= aType [
 TypType >> asCompatibleWith: aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'TypType'>
+	self flag: 'TODO only real usage in union type, odd one out'.
 	aType isVariable
 		ifTrue: [ ^ aType ].
 	aType isUnknown
@@ -74,8 +75,7 @@ TypType >> hasSuperType [
 { #category : #initialization }
 TypType >> initialize [
 	<typTypeVariable: 'superType' as: '{!,TypType}'>
-	super initialize.
-	origin := TypNilOrigin instance
+	super initialize
 ]
 
 { #category : #testing }
@@ -123,11 +123,6 @@ TypType >> isUnknown [
 TypType >> isVariable [
 	<typTypeResultAs: 'Boolean'>
 	^ false
-]
-
-{ #category : #accessing }
-TypType >> origin [
-	^ origin
 ]
 
 { #category : #accessing }

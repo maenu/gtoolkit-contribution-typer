@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'node'
 	],
-	#category : #'Typer-Core-Type'
+	#category : #'Typer-Inference'
 }
 
 { #category : #accessing }

@@ -136,14 +136,6 @@ TypFunctionType >> asCompatibleWith: aType [
 	^ copy
 ]
 
-{ #category : #copying }
-TypFunctionType >> copyWithResult: aType [
-	<typTypeArgument: 1 as: 'TypType'>
-	^ self copy
-		at: '@0' put: aType;
-		yourself
-]
-
 { #category : #comparing }
 TypFunctionType >> hash [
 	^ (super hash bitXor: argumentsSize hash)

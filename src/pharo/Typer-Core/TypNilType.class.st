@@ -21,16 +21,11 @@ TypNilType >> asCompatibleWith: aType [
 
 { #category : #converting }
 TypNilType >> asNonNullable [
-	^ TypUnknownType new
+	TypNoTypeError signal
 ]
 
 { #category : #converting }
 TypNilType >> asNullable [
-	^ self
-]
-
-{ #category : #copying }
-TypNilType >> copy [
 	^ self
 ]
 

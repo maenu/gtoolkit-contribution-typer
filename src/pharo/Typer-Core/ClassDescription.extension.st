@@ -54,8 +54,5 @@ ClassDescription >> typAsParametricTypeWithParameters: anOrderedDictionary super
 { #category : #'*Typer-Core' }
 ClassDescription >> typAsType [
 	^ TypTypeLookupIndex instance
-		typeFor:
-			(TypTypeLookup
-				origin: TypNilOrigin instance
-				classDescription: self)
+		typeFor: (TypTypeLookup classDescription: self)
 ]
