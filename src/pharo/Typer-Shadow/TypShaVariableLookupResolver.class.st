@@ -13,8 +13,8 @@ TypShaVariableLookupResolver >> resolve: aLookup [
 		flatCollect: [ :e | 
 			e classDescription typShaShadows
 				collect: [ :f | 
-					(TypShaVariableLookupResult shadow: f)
-						resolvedLookup: aLookup;
-						resolvedResolver: self;
-						yourself ] ]
+					f class instVarNames
+						detect: [ :g | g = ('___' , aLookup selector asString) ]
+						ifFound: [ :g | f instVarNamed: g ]
+						ifNone: [ TypNoTypeError signal ] ] ]
 ]

@@ -1,14 +1,13 @@
 Class {
-	#name : #TypShaClassDescriptionLookupResolver,
+	#name : #TypShaTypeLookupResolver,
 	#superclass : #TypLookupResolver,
 	#category : #'Typer-Shadow-Lookup'
 }
 
 { #category : #accessing }
-TypShaClassDescriptionLookupResolver >> resolve: aLookup [
+TypShaTypeLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypClassDescriptionLookup'>
 	<typTypeResultAs: 'SequenceableCollection<TypClassDescriptionLookupResult>'>
 	^ aLookup classDescription typShaShadows
-		collect:
-			[ :f | TypShaClassDescriptionLookupResult lookup: aLookup shadow: f ]
+		collect: [ :f | f asType: aLookup root classDescription ]
 ]

@@ -19,7 +19,7 @@ TypTypeLookupIndex class >> instance [
 											(TypBreadthLookupResolver new
 												resolvers:
 													{TypPraTypeLookupResolver new.
-													TypShaClassDescriptionLookupResolver new};
+													TypShaTypeLookupResolver new};
 												yourself);
 										yourself).
 									(TypDepthLookupResolver new
