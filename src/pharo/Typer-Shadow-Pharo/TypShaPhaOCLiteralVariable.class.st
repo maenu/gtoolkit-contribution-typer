@@ -16,8 +16,8 @@ TypShaPhaOCLiteralVariable >> ___assoc [
 		resultType: [ :a :s :r | 
 			Association typAsType
 				copyWithParameters:
-					{('@A' -> String typAsType).
-					('@B' -> TypUnknownType new)} asDictionary ];
+					{String typAsType.
+					TypUnknownType new} ];
 		yourself
 ]
 

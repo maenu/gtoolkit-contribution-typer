@@ -14,6 +14,6 @@ TypShaPhaRBArrayNode >> ___statements [
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
-				copyWithParameters: {('@A' -> RBProgramNode typAsType)} asDictionary ];
+				copyWithParameters: {RBProgramNode typAsType} ];
 		yourself
 ]

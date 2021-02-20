@@ -13,8 +13,7 @@ TypShaGtGtMondrianNodeBuilder class >> shadowedClass [
 TypShaGtGtMondrianNodeBuilder >> ___with: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Collection typAsType ];
-		resultType: [ :a :s :r | 
-			(a argumentTypes at: 1)
-				copyWithParameters: {('@A' -> BlElement typAsType)} asDictionary ];
+		resultType:
+				[ :a :s :r | (a argumentTypes at: 1) copyWithParameters: {BlElement typAsType} ];
 		yourself
 ]

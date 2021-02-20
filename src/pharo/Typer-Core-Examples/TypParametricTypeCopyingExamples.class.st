@@ -36,10 +36,7 @@ TypParametricTypeCopyingExamples >> copyWithBindings [
 	original superType.
 	copy := original
 		copyWithParameters:
-			{('@A'
-				->
-					(TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription))}
-				asDictionary.
+			{TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription}.
 	self assert: original ~~ copy.
 	self assert: original superType isNotNil.
 	self assert: original superType = copy superType.
@@ -51,6 +48,6 @@ TypParametricTypeCopyingExamples >> copyWithBindings [
 	self
 		assert: (copy at: '@A')
 		equals:
-			(TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription).
+			TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription.
 	^ copy
 ]

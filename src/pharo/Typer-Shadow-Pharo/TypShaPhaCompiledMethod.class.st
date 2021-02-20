@@ -13,9 +13,8 @@ TypShaPhaCompiledMethod class >> shadowedClass [
 TypShaPhaCompiledMethod >> ___assignmentNodes [
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			Collection typAsType
-				copyWithParameters: {('@A' -> RBAssignmentNode typAsType)} asDictionary ];
+		resultType:
+				[ :a :s :r | Collection typAsType copyWithParameters: {RBAssignmentNode typAsType} ];
 		yourself
 ]
 
@@ -55,8 +54,8 @@ TypShaPhaCompiledMethod >> ___numArgs [
 TypShaPhaCompiledMethod >> ___pragmas [
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ OrderedCollection typAsType
-				copyWithParameters: {('@A' -> Pragma typAsType)} asDictionary ];
+		resultType:
+				[ OrderedCollection typAsType copyWithParameters: {Pragma typAsType} ];
 		yourself
 ]
 

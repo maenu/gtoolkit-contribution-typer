@@ -14,7 +14,7 @@ TypShaPhaRBSequenceNode >> ___statements [
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
-				copyWithParameters: {('@A' -> RBProgramNode typAsType)} asDictionary ];
+				copyWithParameters: {RBProgramNode typAsType} ];
 		yourself
 ]
 
@@ -24,6 +24,6 @@ TypShaPhaRBSequenceNode >> ___temporaries [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithParameters: {('@A' -> RBTemporaryNode typAsType)} asDictionary ];
+				copyWithParameters: {RBTemporaryNode typAsType} ];
 		yourself
 ]

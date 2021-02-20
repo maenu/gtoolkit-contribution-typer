@@ -14,6 +14,6 @@ TypShaPhaRBLiteralArrayNode >> ___contents [
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
-				copyWithParameters: {('@A' -> RBLiteralNode typAsType)} asDictionary ];
+				copyWithParameters: {RBLiteralNode typAsType} ];
 		yourself
 ]

@@ -15,7 +15,7 @@ TypShaPhaBehavior >> ___allSubclasses [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithParameters: {('@A' -> Behavior typAsType)} asDictionary ];
+				copyWithParameters: {Behavior typAsType} ];
 		yourself
 ]
 
@@ -45,9 +45,8 @@ TypShaPhaBehavior >> ___canUnderstand: _a [
 TypShaPhaBehavior >> ___classVarNames [
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			Set typAsType
-				copyWithParameters: {('@A' -> String typAsType)} asDictionary ];
+		resultType:
+				[ :a :s :r | Set typAsType copyWithParameters: {String typAsType} ];
 		yourself
 ]
 
@@ -97,7 +96,7 @@ TypShaPhaBehavior >> ___instVarNames [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithParameters: {('@A' -> String typAsType)} asDictionary ];
+				copyWithParameters: {String typAsType} ];
 		yourself
 ]
 
@@ -129,8 +128,8 @@ TypShaPhaBehavior >> ___methodNamed: _a [
 TypShaPhaBehavior >> ___methods [
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ Collection typAsType
-				copyWithParameters: {('@A' -> CompiledMethod typAsType)} asDictionary ];
+		resultType:
+				[ Collection typAsType copyWithParameters: {CompiledMethod typAsType} ];
 		yourself
 ]
 
@@ -160,9 +159,8 @@ TypShaPhaBehavior >> ___new [
 TypShaPhaBehavior >> ___selectors [
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			Collection typAsType
-				copyWithParameters: {('@A' -> Symbol typAsType)} asDictionary ];
+		resultType:
+				[ :a :s :r | Collection typAsType copyWithParameters: {Symbol typAsType} ];
 		yourself
 ]
 
@@ -196,7 +194,7 @@ TypShaPhaBehavior >> ___withAllSuperclasses [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithParameters: {('@A' -> ClassDescription typAsType)} asDictionary ];
+				copyWithParameters: {ClassDescription typAsType} ];
 		yourself
 ]
 

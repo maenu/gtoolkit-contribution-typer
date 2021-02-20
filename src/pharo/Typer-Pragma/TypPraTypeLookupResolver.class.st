@@ -32,11 +32,19 @@ TypPraTypeLookupResolver >> resolve: aLookup [
 		ifTrue: [ TypNoTypeError signal ].
 	(parameters isEmpty
 		and: [ bindings isEmpty and: [ superTypeBindings isNotEmpty ] ])
-		ifTrue: [ ^ {(classDescription
-				typAsNamedTypeWithSuperTypeParameters: superTypeBindings)} ].
+		ifTrue: [ | type |
+			type := classDescription typAsNamedType.
+			type superType: type superType copy.
+			superTypeBindings
+				keysAndValuesDo: [ :k :v | type superType at: k put: v ].
+			^ type ].
 	superTypeBindings isEmpty
-		ifTrue: [ ^ {(classDescription typAsParametricTypeWithParameters: bindings)} ].
-	^ {(classDescription
-		typAsParametricTypeWithParameters: bindings
-		superTypeParameters: superTypeBindings)}
+		ifFalse: [ | type |
+			type := classDescription
+				typAsParametricTypeWithParameters: bindings.
+			type superType: type superType copy.
+			superTypeBindings
+				keysAndValuesDo: [ :k :v | type superType at: k put: v ].
+			^ type ].
+	^ {(classDescription typAsParametricTypeWithParameters: bindings)}
 ]

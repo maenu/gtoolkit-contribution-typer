@@ -16,12 +16,10 @@ TypShaPhaPragma >> ___arguments [
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
 				copyWithParameters:
-					{('@A'
-						->
-							{String typAsType.
-							Symbol typAsType.
-							Number typAsType.
-							Boolean typAsType} typAsType)} asDictionary ];
+					{{String typAsType.
+					Symbol typAsType.
+					Number typAsType.
+					Boolean typAsType} typAsType} ];
 		yourself
 ]
 

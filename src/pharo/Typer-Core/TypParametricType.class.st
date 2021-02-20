@@ -146,6 +146,6 @@ TypParametricType >> superType [
 		ifTrue: [ superType := superType
 				copyWithParameters:
 					((parameters keys intersection: superType parameters keys)
-						collect: [ :e | e -> (self at: e) ]) asOrderedDictionary ].
+						collect: [ :e | self at: e ]) ].
 	^ superType
 ]

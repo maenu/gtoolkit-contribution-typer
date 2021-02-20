@@ -38,10 +38,7 @@ TypFunctionTypeCopyingExamples >> copyWithBindings [
 	original superType.
 	copy := original
 		copyWithParameters:
-			{('@0'
-				->
-					(TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription))}
-				asDictionary.
+			{TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription}.
 	self assert: original ~~ copy.
 	self assert: original superType isNotNil.
 	self assert: original superType = copy superType.
@@ -53,6 +50,6 @@ TypFunctionTypeCopyingExamples >> copyWithBindings [
 	self
 		assert: (copy at: '@0')
 		equals:
-			(TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription).
+			TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription.
 	^ copy
 ]

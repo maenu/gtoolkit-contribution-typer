@@ -59,9 +59,8 @@ TypShaPhaString >> ___includesSubstring: _a [
 { #category : #accessing }
 TypShaPhaString >> ___join: _a [
 	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			Collection typAsType
-				copyWithParameters: {('@A' -> String typAsType)} asDictionary ];
+		argumentTypes:
+				[ :i :a :s :r | Collection typAsType copyWithParameters: {String typAsType} ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself
 ]
@@ -72,7 +71,7 @@ TypShaPhaString >> ___keywords [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithParameters: {('@A' -> String typAsType)} asDictionary ];
+				copyWithParameters: {String typAsType} ];
 		yourself
 ]
 
@@ -82,7 +81,7 @@ TypShaPhaString >> ___split: _a [
 		argumentTypes: [ :i :a :s :r | SequenceableCollection typAsType ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithParameters: {('@A' -> (a argumentTypes at: 1))} asDictionary ];
+				copyWithParameters: {(a argumentTypes at: 1)} ];
 		yourself
 ]
 
@@ -97,7 +96,11 @@ TypShaPhaString >> ___translated [
 { #category : #converting }
 TypShaPhaString >> asType: aClass [
 	^ aClass == String
-		ifTrue: [ aClass
-				typAsNamedTypeWithSuperTypeParameters: {('@A' -> Character typAsType)} asDictionary ]
+		ifTrue: [ | type |
+			type := aClass typAsNamedType.
+			type
+				superType:
+					(type superType copyWithParameters: {Character typAsType}).
+			^ type ]
 		ifFalse: [ aClass typAsNamedType ]
 ]

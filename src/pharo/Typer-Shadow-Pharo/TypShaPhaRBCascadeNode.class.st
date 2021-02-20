@@ -15,6 +15,6 @@ TypShaPhaRBCascadeNode >> ___messages [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithParameters: {('@A' -> RBMessageNode typAsType)} asDictionary ];
+				copyWithParameters: {RBMessageNode typAsType} ];
 		yourself
 ]

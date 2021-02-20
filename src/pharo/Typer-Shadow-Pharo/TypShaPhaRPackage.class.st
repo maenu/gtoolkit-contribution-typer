@@ -13,9 +13,8 @@ TypShaPhaRPackage class >> shadowedClass [
 TypShaPhaRPackage >> ___definedClasses [
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			Collection typAsType
-				copyWithParameters: {('@A' -> Class typAsType)} asDictionary ];
+		resultType:
+				[ :a :s :r | Collection typAsType copyWithParameters: {Class typAsType} ];
 		yourself
 ]
 
@@ -23,8 +22,7 @@ TypShaPhaRPackage >> ___definedClasses [
 TypShaPhaRPackage >> ___methods [
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			Collection typAsType
-				copyWithParameters: {('@A' -> CompiledMethod typAsType)} asDictionary ];
+		resultType:
+				[ :a :s :r | Collection typAsType copyWithParameters: {CompiledMethod typAsType} ];
 		yourself
 ]

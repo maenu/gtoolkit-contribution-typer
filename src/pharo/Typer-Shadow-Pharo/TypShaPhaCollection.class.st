@@ -69,9 +69,7 @@ TypShaPhaCollection >> ___addAll: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			Collection typAsType
-				copyWithParameters:
-					{('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))}
-						asDictionary ];
+				copyWithParameters: {('@A' typAsVariableType resolveIn: a receiverType)} ];
 		resultType: [ :a :s :r | a argumentTypes at: 1 ];
 		yourself
 ]
@@ -123,9 +121,8 @@ TypShaPhaCollection >> ___asDictionary [
 			Association typAsType >= elementType
 				ifTrue: [ type := type
 						copyWithParameters:
-							{('@B' -> ('@A' typAsVariableType resolveIn: elementType)).
-							('@A' -> ('@B' typAsVariableType resolveIn: elementType))}
-								asDictionary ].
+							{('@A' typAsVariableType resolveIn: elementType).
+							('@B' typAsVariableType resolveIn: elementType)} ].
 			type ];
 		yourself
 ]
@@ -136,9 +133,7 @@ TypShaPhaCollection >> ___asIdentitySet [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			IdentitySet typAsType
-				copyWithParameters:
-					{('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))}
-						asDictionary ];
+				copyWithParameters: {('@A' typAsVariableType resolveIn: a receiverType)} ];
 		yourself
 ]
 
@@ -148,9 +143,7 @@ TypShaPhaCollection >> ___asOrderedCollection [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			OrderedCollection typAsType
-				copyWithParameters:
-					{('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))}
-						asDictionary ];
+				copyWithParameters: {('@A' typAsVariableType resolveIn: a receiverType)} ];
 		yourself
 ]
 
@@ -165,9 +158,8 @@ TypShaPhaCollection >> ___asOrderedDictionary [
 			Association typAsType >= elementType
 				ifTrue: [ type := type
 						copyWithParameters:
-							{('@B' -> ('@A' typAsVariableType resolveIn: elementType)).
-							('@A' -> ('@B' typAsVariableType resolveIn: elementType))}
-								asDictionary ].
+							{('@A' typAsVariableType resolveIn: elementType).
+							('@B' typAsVariableType resolveIn: elementType)} ].
 			type ];
 		yourself
 ]
@@ -178,9 +170,7 @@ TypShaPhaCollection >> ___asSet [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
 			Set typAsType
-				copyWithParameters:
-					{('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))}
-						asDictionary ];
+				copyWithParameters: {('@A' typAsVariableType resolveIn: a receiverType)} ];
 		yourself
 ]
 
@@ -220,8 +210,7 @@ TypShaPhaCollection >> ___collect: _a [
 										argumentNodes: {};
 										yourself) ]
 						ifFalse: [ TypUnknownType new ] ].
-			a receiverType
-				copyWithParameters: {('@A' -> elementType)} asDictionary ];
+			a receiverType copyWithParameters: {elementType} ];
 		yourself
 ]
 
@@ -390,8 +379,7 @@ TypShaPhaCollection >> ___flatCollect: _a [
 												argumentNodes: {};
 												yourself)) ]
 						ifFalse: [ TypUnknownType new ] ].
-			a receiverType
-				copyWithParameters: {('@A' -> elementType)} asDictionary ];
+			a receiverType copyWithParameters: {elementType} ];
 		yourself
 ]
 
@@ -425,13 +413,9 @@ TypShaPhaCollection >> ___groupedBy: _a [
 						ifFalse: [ '@B' typAsVariableType ] ].
 			OrderedDictionary typAsType
 				copyWithParameters:
-					{('@B' -> keyType).
-					('@A'
-						->
-							(Collection typAsType
-								copyWithParameters:
-									{('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))}
-										asDictionary))} asDictionary ];
+					{keyType.
+					(Collection typAsType
+						copyWithParameters: {('@A' typAsVariableType resolveIn: a receiverType)})} ];
 		yourself
 ]
 
@@ -543,9 +527,7 @@ TypShaPhaCollection >> ___includesAll: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			a receiverType
-				copyWithParameters:
-					{('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))}
-						asDictionary ];
+				copyWithParameters: {('@A' typAsVariableType resolveIn: a receiverType)} ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]

@@ -8,10 +8,7 @@ RBComment >> typType: aType [
 	(contents beginsWith: 'typParameters ')
 		ifTrue: [ ^ aType
 				copyWithParameters:
-					(aType parameters keys
-						with:
-							(contents copyFrom: 'typParameters ' size + 1 to: contents size)
-								typAsTypes
-						collect: [ :f :g | f -> g ]) asOrderedDictionary ].
+					(contents copyFrom: 'typParameters ' size + 1 to: contents size)
+						typAsTypes ].
 	^ aType
 ]

@@ -24,9 +24,8 @@ TypShaPhaDictionary >> ___asOrderedDictionary [
 		resultType: [ :a | 
 			OrderedDictionary typAsType
 				copyWithParameters:
-					{('@B' -> ('@B' typAsVariableType resolveIn: a receiverType)).
-					('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))}
-						asDictionary ];
+					{('@B' typAsVariableType resolveIn: a receiverType).
+					('@A' typAsVariableType resolveIn: a receiverType)} ];
 		yourself
 ]
 
@@ -37,13 +36,10 @@ TypShaPhaDictionary >> ___associations [
 		resultType: [ :a | 
 			Array typAsType
 				copyWithParameters:
-					{('@A'
-						->
-							(Association typAsType
-								copyWithParameters:
-									{('@A' -> ('@B' typAsVariableType resolveIn: a receiverType)).
-									('@B' -> ('@A' typAsVariableType resolveIn: a receiverType))}
-										asDictionary))} asDictionary ];
+					{(Association typAsType
+						copyWithParameters:
+							{('@B' typAsVariableType resolveIn: a receiverType).
+							('@A' typAsVariableType resolveIn: a receiverType)})} ];
 		yourself
 ]
 
@@ -56,9 +52,8 @@ TypShaPhaDictionary >> ___associationsDo: _a [
 				arguments:
 					{(Association typAsType
 						copyWithParameters:
-							{('@A' -> ('@B' typAsVariableType resolveIn: a receiverType)).
-							('@B' -> ('@A' typAsVariableType resolveIn: a receiverType))}
-								asDictionary)}
+							{('@B' typAsVariableType resolveIn: a receiverType).
+							('@A' typAsVariableType resolveIn: a receiverType)})}
 				argumentsOptional: false
 				signalsAlways: false ];
 		resultType: [ :a :s | a receiverType ];
@@ -167,8 +162,8 @@ TypShaPhaDictionary >> ___collect: _a [
 						ifFalse: [ TypUnknownType new ] ].
 			a receiverType
 				copyWithParameters:
-					{('@B' -> ('@B' typAsVariableType resolveIn: a receiverType)).
-					('@A' -> elementType)} asDictionary ];
+					{('@B' typAsVariableType resolveIn: a receiverType).
+					elementType} ];
 		yourself
 ]
 
@@ -194,9 +189,7 @@ TypShaPhaDictionary >> ___keys [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
 			Collection typAsType
-				copyWithParameters:
-					{('@A' -> ('@B' typAsVariableType resolveIn: a receiverType))}
-						asDictionary ];
+				copyWithParameters: {('@B' typAsVariableType resolveIn: a receiverType)} ];
 		yourself
 ]
 
@@ -238,9 +231,7 @@ TypShaPhaDictionary >> ___values [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Collection typAsType
-				copyWithParameters:
-					{('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))}
-						asDictionary ];
+				copyWithParameters: {('@A' typAsVariableType resolveIn: a receiverType)} ];
 		yourself
 ]
 
@@ -259,15 +250,11 @@ TypShaPhaDictionary >> ~~~, _a [
 		resultType: [ :a :s :r | 
 			a receiverType
 				copyWithParameters:
-					{('@B'
-						->
-							{('@B' typAsVariableType resolveIn: a receiverType).
-							('@B' typAsVariableType resolveIn: (a argumentTypes at: 1))}
-								typAsType).
-					('@A'
-						->
-							{('@A' typAsVariableType resolveIn: a receiverType).
-							('@A' typAsVariableType resolveIn: (a argumentTypes at: 1))}
-								typAsType)} asDictionary ];
+					{{('@B' typAsVariableType resolveIn: a receiverType).
+					('@B' typAsVariableType resolveIn: (a argumentTypes at: 1))}
+						typAsType.
+					{('@A' typAsVariableType resolveIn: a receiverType).
+					('@A' typAsVariableType resolveIn: (a argumentTypes at: 1))}
+						typAsType} ];
 		yourself
 ]

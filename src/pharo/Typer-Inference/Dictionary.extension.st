@@ -19,8 +19,8 @@ Dictionary >> typSelfType [
 					s ]) collect: #typAsType.
 			type := type
 				copyWithParameters:
-					{((type parameters at: 1) -> (types at: 2)).
-					((type parameters at: 2) -> (types at: 1))} asDictionary ].
+					{(types at: 2).
+					(types at: 1)} ].
 	^ type
 ]
 

@@ -12,7 +12,7 @@ TypRewriter >> rewrite [
 		select: [ :e | 
 			| rewriter ok method |
 			rewriter := RBParseTreeRewriter new.
-			rewriter replace: '`@r typAsFunctionTypeWithArguments: `@a result: `@b argumentsOptional: `@c' with: '`@r typAsFunctionTypeWithResult: `@b arguments: `@a argumentsOptional: `@c signalsAlways: false'.
+			rewriter replace: '`@r copyWithParameters: {''@A'' -> `@a} asDictionary' with: '`@r copyWithParameters: {`@a}'.
 			ok := rewriter executeTree: e parseTree.
 			ok
 				ifTrue:

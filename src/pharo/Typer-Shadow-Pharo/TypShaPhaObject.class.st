@@ -121,9 +121,8 @@ TypShaPhaObject >> ___perform: _a withEnoughArguments: _b [
 { #category : #accessing }
 TypShaPhaObject >> ___printOn: _a [
 	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			Stream typAsType
-				copyWithParameters: {('@A' -> Character typAsType)} asDictionary ];
+		argumentTypes:
+				[ :i :a :s :r | Stream typAsType copyWithParameters: {Character typAsType} ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
@@ -151,8 +150,8 @@ TypShaPhaObject >> ~~~-> _a [
 		resultType: [ :a :s :r | 
 			Association typAsType
 				copyWithParameters:
-					{('@A' -> a receiverType).
-					('@B' -> (a argumentTypes at: 1))} asDictionary ];
+					{a receiverType.
+					(a argumentTypes at: 1)} ];
 		yourself
 ]
 

@@ -5,10 +5,7 @@ Collection >> typSelfType [
 	| type |
 	type := super typSelfType.
 	^ type
-		copyWithParameters:
-			{((type parameters keys at: 1)
-				-> (self typSelfTypeSamples collect: #typAsType) typAsType)}
-				asOrderedDictionary
+		copyWithParameters: {(self typSelfTypeSamples collect: #typAsType) typAsType}
 ]
 
 { #category : #'*Typer-Inference' }

@@ -176,9 +176,8 @@ TypShaPhaSequenceableCollection >> ___withIndexCollect: _a [
 					Integer typAsType}
 				argumentsOptional: false
 				signalsAlways: false ];
-		resultType: [ :a :s :r | 
-			a receiverType
-				copyWithParameters: {('@A' -> (a argumentTypes at: 1) result)} asDictionary ];
+		resultType:
+				[ :a :s :r | a receiverType copyWithParameters: {(a argumentTypes at: 1) result} ];
 		yourself
 ]
 

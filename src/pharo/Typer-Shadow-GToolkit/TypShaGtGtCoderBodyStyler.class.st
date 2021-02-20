@@ -19,7 +19,7 @@ TypShaGtGtCoderBodyStyler >> ___styleFrom: _a to: _b with: _c [
 			(i = 1 or: [ i = 2 ])
 				ifTrue: [ Integer typAsType ]
 				ifFalse: [ SequenceableCollection typAsType
-						copyWithParameters: {('@A' -> BlTextAttribute typAsType)} asDictionary ] ];
+						copyWithParameters: {BlTextAttribute typAsType} ] ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

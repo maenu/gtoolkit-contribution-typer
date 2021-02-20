@@ -37,9 +37,8 @@ TypShaPhaClass >> ___hasClassVarNamed: _a [
 TypShaPhaClass >> ___sharedPools [
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			Collection typAsType
-				copyWithParameters: {('@A' -> Class typAsType)} asDictionary ];
+		resultType:
+				[ :a :s :r | Collection typAsType copyWithParameters: {Class typAsType} ];
 		yourself
 ]
 

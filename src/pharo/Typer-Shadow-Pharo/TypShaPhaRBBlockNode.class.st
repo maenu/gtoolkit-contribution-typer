@@ -14,7 +14,7 @@ TypShaPhaRBBlockNode >> ___arguments [
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
-				copyWithParameters: {('@A' -> RBArgumentNode typAsType)} asDictionary ];
+				copyWithParameters: {RBArgumentNode typAsType} ];
 		yourself
 ]
 

@@ -20,13 +20,11 @@ TypShaPhaNumber >> ___timesCollect: _a [
 		resultType: [ :a | 
 			OrderedCollection typAsType
 				copyWithParameters:
-					{('@A'
-						->
-							(a argumentTypes
-								collect: [ :e | 
-									e isFunction
-										ifTrue: [ e result ]
-										ifFalse: [ TypUnknownType new ] ]) typAsType)} asDictionary ];
+					{(a argumentTypes
+						collect: [ :e | 
+							e isFunction
+								ifTrue: [ e result ]
+								ifFalse: [ TypUnknownType new ] ]) typAsType} ];
 		yourself
 ]
 
@@ -37,10 +35,8 @@ TypShaPhaNumber >> ___to: _a [
 		resultType: [ :a :s :r | 
 			Interval typAsType
 				copyWithParameters:
-					{('@A'
-						->
-							{a receiverType.
-							(a argumentTypes at: 1)} typAsType)} asDictionary ];
+					{{a receiverType.
+					(a argumentTypes at: 1)} typAsType} ];
 		yourself
 ]
 

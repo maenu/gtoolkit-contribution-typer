@@ -6,7 +6,6 @@ Association >> typSelfType [
 	type := super typSelfType.
 	^ type
 		copyWithParameters:
-			{((type parameters keys at: 1) -> key typSelfType).
-			((type parameters keys at: 2) -> value typSelfType)}
-				asOrderedDictionary
+			{key typSelfType.
+			value typSelfType}
 ]

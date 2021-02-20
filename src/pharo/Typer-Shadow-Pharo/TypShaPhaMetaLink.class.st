@@ -14,7 +14,7 @@ TypShaPhaMetaLink >> ___arguments: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithParameters: {('@A' -> Symbol typAsType)} asDictionary ];
+				copyWithParameters: {Symbol typAsType} ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

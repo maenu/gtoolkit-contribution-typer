@@ -28,9 +28,7 @@ TypShaPhaStream >> ~~~<< _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			Collection typAsType
-				copyWithParameters:
-					{('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))}
-						asDictionary ];
+				copyWithParameters: {('@A' typAsVariableType resolveIn: a receiverType)} ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

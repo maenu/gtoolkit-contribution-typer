@@ -11,9 +11,8 @@ Class {
 { #category : #accessing }
 TypShaGtGtMethodsCoder class >> ___forMethods: _a [
 	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			Collection typAsType
-				copyWithParameters: {('@A' -> CompiledMethod typAsType)} asDictionary ];
+		argumentTypes:
+				[ :i :a :s :r | Collection typAsType copyWithParameters: {CompiledMethod typAsType} ];
 		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
 		yourself
 ]
@@ -35,7 +34,7 @@ TypShaGtGtMethodsCoder >> ___announce: _a [
 TypShaGtGtMethodsCoder >> initialize [
 	super initialize.
 	___methods := SequenceableCollection typAsType
-		copyWithParameters: {('@A' -> CompiledMethod typAsType)} asDictionary.
+		copyWithParameters: {CompiledMethod typAsType}.
 	___methodCoders := SequenceableCollection typAsType
-		copyWithParameters: {('@A' -> GtMethodCoder typAsType)} asDictionary
+		copyWithParameters: {GtMethodCoder typAsType}
 ]

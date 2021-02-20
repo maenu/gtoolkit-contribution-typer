@@ -52,7 +52,7 @@ TypShaGtGtMethodCoderAddOns >> ___stylers [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
-				copyWithParameters: {('@A' -> GtCoderBodyStyler typAsType)} asDictionary ];
+				copyWithParameters: {GtCoderBodyStyler typAsType} ];
 		yourself
 ]
 
@@ -60,7 +60,6 @@ TypShaGtGtMethodCoderAddOns >> ___stylers [
 TypShaGtGtMethodCoderAddOns >> initialize [
 	super initialize.
 	___stylers := SequenceableCollection typAsType
-		copyWithParameters: {('@A' -> GtASTStyler typAsType)} asDictionary.
-	___modified := Set typAsType
-		copyWithParameters: {('@A' -> Symbol typAsType)} asDictionary
+		copyWithParameters: {GtASTStyler typAsType}.
+	___modified := Set typAsType copyWithParameters: {Symbol typAsType}
 ]
