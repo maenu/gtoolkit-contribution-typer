@@ -72,16 +72,13 @@ TypParametricType >> at: aString put: aType [
 ]
 
 { #category : #copying }
-TypParametricType >> copyWithParameters: anOrderedDictionary [
-	<typTypeArgument: 1 as: 'OrderedDictionary<String,TypType>'>
-	self
-		assert: [ parameters keys includesAll: anOrderedDictionary keys ].
-	self flag: 'TODO crappy api'.
+TypParametricType >> copyWithParameters: aCollection [
+	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
 	^ self copy
 		initializeParameters:
-			(parameters copy
-				addAll: anOrderedDictionary;
-				yourself);
+			(parameters associations
+				with: aCollection
+				collect: [ :e :f | e key -> f ]) asOrderedDictionary;
 		yourself
 ]
 

@@ -6,7 +6,7 @@ Class {
 
 { #category : #'generated-accessing' }
 TypTypeParser class >> cacheId [
-	^'2021-02-20T11:14:31.575703+01:00'
+	^'2021-02-20T14:36:22.992928+01:00'
 ]
 
 { #category : #generated }
@@ -73,9 +73,7 @@ ParametricType
 		{ | type |
 		type := [ name asClass typAsType ] on: NotFound do: [ TypNamedType named: name ].
 		type isParametric
-			ifTrue: [ type copyWithParameters: (parameters withIndexCollect: [ :e :i | | parameter |
-				parameter := type parameters keys at: i.
-				parameter -> e ]) asOrderedDictionary ]
+			ifTrue: [ type copyWithParameters: parameters ]
 			ifFalse: [ type ] }
 	;
 FunctionType
@@ -111,7 +109,7 @@ TypTypeParser class >> reduceTable [
 ^#(
 	#(20 1 #reduceActionForNilType1: 630785 false ) 
 	#(19 1 #reduceActionForUnknownType1: 577537 false ) 
-	#(27 1 #reduceActionForName1: 1867777 false ) 
+	#(27 1 #reduceActionForName1: 1734657 false ) 
 	#(17 1 #reduceActionForTypes1: 241665 false ) 
 	#(18 1 #liftFirstValue: 334849 false ) 
 	#(18 1 #liftFirstValue: 334850 false ) 
@@ -122,14 +120,14 @@ TypTypeParser class >> reduceTable [
 	#(18 1 #liftFirstValue: 334852 false ) 
 	#(22 1 #reduceActionForNamedType1: 858113 false ) 
 	#(21 2 #reduceActionForVariableType1: 675841 false ) 
-	#(26 0 #reduceActionForEmptyTypes2: 1813506 false ) 
-	#(25 3 #reduceActionForUnionType1: 1741825 false ) 
+	#(26 0 #reduceActionForEmptyTypes2: 1680386 false ) 
+	#(25 3 #reduceActionForUnionType1: 1608705 false ) 
 	#(17 3 #reduceActionForTypes2: 241666 false ) 
-	#(26 1 #liftFirstValue: 1813505 false ) 
+	#(26 1 #liftFirstValue: 1680385 false ) 
 	#(21 4 #reduceActionForVariableType2: 675842 false ) 
 	#(23 4 #reduceActionForParametricType1: 968705 false ) 
-	#(24 6 #reduceActionForFunctionType2: 1359874 false ) 
-	#(24 6 #reduceActionForFunctionType1: 1359873 false )
+	#(24 6 #reduceActionForFunctionType2: 1226754 false ) 
+	#(24 6 #reduceActionForFunctionType1: 1226753 false )
 	).
 ]
 
@@ -240,13 +238,7 @@ TypTypeParser >> reduceActionForParametricType1: nodes [
 		on: NotFound
 		do: [ TypNamedType named: (nodes at: 1) ].
 	^ type isParametric
-		ifTrue: [ type
-				copyWithParameters:
-					((nodes at: 3)
-						withIndexCollect: [ :e :i | 
-							| parameter |
-							parameter := type parameters keys at: i.
-							parameter -> e ]) asOrderedDictionary ]
+		ifTrue: [ type copyWithParameters: (nodes at: 3) ]
 		ifFalse: [ type ]
 ]
 
