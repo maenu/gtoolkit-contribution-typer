@@ -14,9 +14,10 @@ TypShaBrBrTextAdornmentDynamicAttribute >> ___stencil: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
-				typAsFunctionTypeWithArguments: {}
-				result: BlElement typAsType
-				argumentsOptional: false ];
+				typAsFunctionTypeWithResult: BlElement typAsType
+				arguments: {}
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

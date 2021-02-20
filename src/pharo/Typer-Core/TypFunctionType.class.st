@@ -10,15 +10,6 @@ Class {
 }
 
 { #category : #accessing }
-TypFunctionType class >> classDescription: aClassDescription argumentsSize: anInteger argumentsOptional: aBoolean parameters: anOrderedDictionary [
-	^ self new
-		initializeClassDescription: aClassDescription;
-		initializeParameters: anOrderedDictionary;
-		initializeArgumentsSize: anInteger argumentsOptional: aBoolean;
-		yourself
-]
-
-{ #category : #accessing }
 TypFunctionType class >> classDescription: aClassDescription parameters: aSequenceableCollection [
 	self shouldNotImplement
 ]

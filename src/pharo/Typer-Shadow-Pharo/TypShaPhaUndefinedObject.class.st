@@ -14,9 +14,10 @@ TypShaPhaUndefinedObject >> ___ifNil: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
-				typAsFunctionTypeWithArguments: {}
-				result: TypUnknownType new
-				argumentsOptional: false ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {}
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ :a :s :r | 
 			| node |
 			node := a argumentNodes at: 1.
@@ -34,9 +35,10 @@ TypShaPhaUndefinedObject >> ___ifNotNil: _a [
 		argumentTypes: [ :i :a :s :r | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {a receiverType asNonNullable}
-				result: TypUnknownType new
-				argumentsOptional: true)} typAsType ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {a receiverType asNonNullable}
+				argumentsOptional: true
+				signalsAlways: false)} typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

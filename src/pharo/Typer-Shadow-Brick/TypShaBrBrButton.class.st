@@ -14,9 +14,10 @@ TypShaBrBrButton >> ___action: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
-				typAsFunctionTypeWithArguments: {}
-				result: TypUnknownType new
-				argumentsOptional: false ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {}
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

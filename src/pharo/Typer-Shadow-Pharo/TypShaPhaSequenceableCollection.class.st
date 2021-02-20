@@ -32,9 +32,10 @@ TypShaPhaSequenceableCollection >> ___at: _a ifAbsent: _b [
 			i = 1
 				ifTrue: [ Integer typAsType ]
 				ifFalse: [ BlockClosure
-						typAsFunctionTypeWithArguments: {}
-						result: TypUnknownType new
-						argumentsOptional: false ] ];
+						typAsFunctionTypeWithResult: TypUnknownType new
+						arguments: {}
+						argumentsOptional: false
+						signalsAlways: false ] ];
 		resultType: [ :a :s :r | 
 			{('@A' typAsVariableType resolveIn: a receiverType).
 			(a argumentTypes at: 2) result} typAsType ];
@@ -62,9 +63,10 @@ TypShaPhaSequenceableCollection >> ___detectIndex: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			BlockClosure
-				typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-				result: Boolean typAsType
-				argumentsOptional: false ];
+				typAsFunctionTypeWithResult: Boolean typAsType
+				arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ Integer typAsType ];
 		yourself
 ]
@@ -75,14 +77,16 @@ TypShaPhaSequenceableCollection >> ___detectIndex: _a ifNone: _b [
 		argumentTypes: [ :i :a | 
 			i = 1
 				ifTrue: [ BlockClosure
-						typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-						result: Boolean typAsType
-						argumentsOptional: false ]
+						typAsFunctionTypeWithResult: Boolean typAsType
+						arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+						argumentsOptional: false
+						signalsAlways: false ]
 				ifFalse: [ {TypUnknownType new.
 					(BlockClosure
-						typAsFunctionTypeWithArguments: {}
-						result: Boolean typAsType
-						argumentsOptional: false)} typAsType ] ];
+						typAsFunctionTypeWithResult: Boolean typAsType
+						arguments: {}
+						argumentsOptional: false
+						signalsAlways: false)} typAsType ] ];
 		resultType: [ :a | 
 			| none |
 			none := a argumentTypes at: 2.
@@ -151,11 +155,12 @@ TypShaPhaSequenceableCollection >> ___sort: _a [
 				ifTrue: [ '@A' typAsVariableType resolveIn: a receiverType ]
 				ifFalse: [ TypUnknownType new ].
 			BlockClosure
-				typAsFunctionTypeWithArguments:
+				typAsFunctionTypeWithResult: Boolean typAsType
+				arguments:
 					{type.
 					type}
-				result: Boolean typAsType
-				argumentsOptional: false ];
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ :a | a receiverType ];
 		yourself
 ]
@@ -165,11 +170,12 @@ TypShaPhaSequenceableCollection >> ___withIndexCollect: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
-				typAsFunctionTypeWithArguments:
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments:
 					{('@A' typAsVariableType resolveIn: a receiverType).
 					Integer typAsType}
-				result: TypUnknownType new
-				argumentsOptional: false ];
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ :a :s :r | 
 			a receiverType
 				copyWithParameters: {('@A' -> (a argumentTypes at: 1) result)} asDictionary ];
@@ -181,11 +187,12 @@ TypShaPhaSequenceableCollection >> ___withIndexDo: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			BlockClosure
-				typAsFunctionTypeWithArguments:
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments:
 					{('@A' typAsVariableType resolveIn: a receiverType).
 					Integer typAsType}
-				result: TypUnknownType new
-				argumentsOptional: false ];
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ :a | a receiverType ];
 		yourself
 ]
@@ -195,11 +202,12 @@ TypShaPhaSequenceableCollection >> ___withIndexSelect: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
-				typAsFunctionTypeWithArguments:
+				typAsFunctionTypeWithResult: Boolean typAsType
+				arguments:
 					{('@A' typAsVariableType resolveIn: a receiverType).
 					Integer typAsType}
-				result: Boolean typAsType
-				argumentsOptional: false ];
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

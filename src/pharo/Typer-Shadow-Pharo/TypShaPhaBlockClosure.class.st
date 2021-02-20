@@ -50,9 +50,10 @@ TypShaPhaBlockClosure >> ___ensure: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
-				typAsFunctionTypeWithArguments: {}
-				result: TypUnknownType new
-				argumentsOptional: false ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {}
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ :a :s :r | a receiverType result ];
 		yourself
 ]
@@ -69,9 +70,10 @@ TypShaPhaBlockClosure >> ___on: _a do: _b [
 						ifTrue: [ first classDescription instanceSide typAsType ]
 						ifFalse: [ Exception class typAsType ].
 					BlockClosure
-						typAsFunctionTypeWithArguments: {type}
-						result: TypUnknownType new
-						argumentsOptional: true ] ];
+						typAsFunctionTypeWithResult: TypUnknownType new
+						arguments: {type}
+						argumentsOptional: true
+						signalsAlways: false ] ];
 		resultType: [ :a :s :r | 
 			{a receiverType result.
 			(a argumentTypes at: 2) result} typAsType ];
@@ -127,9 +129,10 @@ TypShaPhaBlockClosure >> ___whileFalse: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
-				typAsFunctionTypeWithArguments: {}
-				result: TypUnknownType new
-				argumentsOptional: false ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {}
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
@@ -139,9 +142,10 @@ TypShaPhaBlockClosure >> ___whileTrue: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
-				typAsFunctionTypeWithArguments: #()
-				result: TypUnknownType new
-				argumentsOptional: false ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: #()
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ :a :s :r | TypNilType new ];
 		yourself
 ]
@@ -149,7 +153,8 @@ TypShaPhaBlockClosure >> ___whileTrue: _a [
 { #category : #'as yet unclassified' }
 TypShaPhaBlockClosure >> asType: aClass [
 	^ aClass
-		typAsFunctionTypeWithArguments: {}
-		result: TypUnknownType new
+		typAsFunctionTypeWithResult: TypUnknownType new
+		arguments: {}
 		argumentsOptional: false
+		signalsAlways: false
 ]

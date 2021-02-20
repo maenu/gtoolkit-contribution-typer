@@ -107,7 +107,8 @@ RBMethodNode >> typTypeRecursive [
 	(oldTemporaryProfiles includes: newTemporaryProfile) not
 		and: [ iterations < maxIterations ] ] whileTrue.
 	^ CompiledMethod
-		typAsFunctionTypeWithArguments: self typArgumentTypes
-		result: self typResultType
+		typAsFunctionTypeWithResult: self typResultType
+		arguments: self typArgumentTypes
 		argumentsOptional: false
+		signalsAlways: self typSignalsAlways
 ]

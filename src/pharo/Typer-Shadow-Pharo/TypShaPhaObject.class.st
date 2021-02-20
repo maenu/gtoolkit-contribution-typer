@@ -31,9 +31,10 @@ TypShaPhaObject >> ___assert: _a [
 		argumentTypes: [ :i :a :s :r | 
 			{Boolean typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {}
-				result: Boolean typAsType
-				argumentsOptional: false)} typAsType ];
+				typAsFunctionTypeWithResult: Boolean typAsType
+				arguments: {}
+				argumentsOptional: false
+				signalsAlways: false)} typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

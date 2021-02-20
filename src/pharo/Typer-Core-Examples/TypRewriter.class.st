@@ -12,7 +12,7 @@ TypRewriter >> rewrite [
 		select: [ :e | 
 			| rewriter ok method |
 			rewriter := RBParseTreeRewriter new.
-			rewriter replace: 'TypMethodLookupResult' with: 'TypFunctionType'.
+			rewriter replace: '`@r typAsFunctionTypeWithArguments: `@a result: `@b argumentsOptional: `@c' with: '`@r typAsFunctionTypeWithResult: `@b arguments: `@a argumentsOptional: `@c signalsAlways: false'.
 			ok := rewriter executeTree: e parseTree.
 			ok
 				ifTrue:

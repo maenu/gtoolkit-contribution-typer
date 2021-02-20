@@ -14,11 +14,12 @@ TypShaBrBrTextCursorAttribute >> ___enterAction: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
-				typAsFunctionTypeWithArguments:
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments:
 					{BrTextEditor typAsType.
 					BrTextEditorCursorAddedEvent typAsType}
-				result: TypUnknownType new
-				argumentsOptional: true ];
+				argumentsOptional: true
+				signalsAlways: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
@@ -28,11 +29,12 @@ TypShaBrBrTextCursorAttribute >> ___leaveAction: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
-				typAsFunctionTypeWithArguments:
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments:
 					{BrTextEditor typAsType.
 					BrTextEditorCursorRemovedEvent typAsType}
-				result: TypUnknownType new
-				argumentsOptional: true ];
+				argumentsOptional: true
+				signalsAlways: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

@@ -1,25 +1,15 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Core' }
-ClassDescription >> typAsFunctionTypeWithArguments: aCollection result: aType argumentsOptional: aBoolean [
+ClassDescription >> typAsFunctionTypeWithResult: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean [
 	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
 	<typTypeArgument: 2 as: 'TypType'>
-	^ self
-		typAsFunctionTypeWithArgumentsSize: aCollection size
-		argumentsOptional: aBoolean
-		parameters:
-			({('@0' -> aType)}
-				, (aCollection withIndexCollect: [ :e :i | ('@' , i asString) -> e ]))
-				asOrderedDictionary
-]
-
-{ #category : #'*Typer-Core' }
-ClassDescription >> typAsFunctionTypeWithArgumentsSize: anInteger argumentsOptional: aBoolean parameters: aBindings [
 	^ TypFunctionType
 		classDescription: self
-		argumentsSize: anInteger
+		result: aType
+		arguments: aCollection
 		argumentsOptional: aBoolean
-		parameters: aBindings
+		signalsAlways: anotherBoolean
 ]
 
 { #category : #'*Typer-Core' }

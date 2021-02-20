@@ -14,9 +14,10 @@ TypShaGtGtMondrianGraphBuilder >> ___stencil: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
-				typAsFunctionTypeWithArguments: {TypUnknownType new}
-				result: BlElement typAsType
-				argumentsOptional: false ];
+				typAsFunctionTypeWithResult: BlElement typAsType
+				arguments: {TypUnknownType new}
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

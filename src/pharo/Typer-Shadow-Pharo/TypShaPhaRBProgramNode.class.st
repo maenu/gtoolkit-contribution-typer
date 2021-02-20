@@ -196,9 +196,10 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifAbsentPut: _b [
 			i = 1
 				ifTrue: [ TypUnknownType new ]
 				ifFalse: [ BlockClosure
-						typAsFunctionTypeWithArguments: {}
-						result: TypUnknownType new
-						argumentsOptional: false ] ];
+						typAsFunctionTypeWithResult: TypUnknownType new
+						arguments: {}
+						argumentsOptional: false
+						signalsAlways: false ] ];
 		resultType: [ :a :s :r | 
 			{TypUnknownType new.
 			(a argumentTypes at: 2) result} typAsType ];
@@ -214,13 +215,15 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifPresent: _b ifAbsent: _c [
 				ifFalse: [ i = 2
 						ifTrue: [ {Symbol typAsType.
 							(BlockClosure
-								typAsFunctionTypeWithArguments: {TypUnknownType new}
-								result: TypUnknownType new
-								argumentsOptional: true)} typAsType ]
+								typAsFunctionTypeWithResult: TypUnknownType new
+								arguments: {TypUnknownType new}
+								argumentsOptional: true
+								signalsAlways: false)} typAsType ]
 						ifFalse: [ BlockClosure
-								typAsFunctionTypeWithArguments: {}
-								result: TypUnknownType new
-								argumentsOptional: false ] ] ];
+								typAsFunctionTypeWithResult: TypUnknownType new
+								arguments: {}
+								argumentsOptional: false
+								signalsAlways: false ] ] ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 2.
@@ -267,9 +270,10 @@ TypShaPhaRBProgramNode >> ___removeProperty: _a ifAbsent: _b [
 			i = 1
 				ifTrue: [ String typAsType ]
 				ifFalse: [ BlockClosure
-						typAsFunctionTypeWithArguments: {}
-						result: TypUnknownType new
-						argumentsOptional: false ] ];
+						typAsFunctionTypeWithResult: TypUnknownType new
+						arguments: {}
+						argumentsOptional: false
+						signalsAlways: false ] ];
 		resultType: [ :a :s :r | 
 			{TypUnknownType new.
 			(a argumentTypes at: 2) result} typAsType ];

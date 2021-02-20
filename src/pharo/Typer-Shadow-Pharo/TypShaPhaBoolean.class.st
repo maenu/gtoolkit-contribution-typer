@@ -14,9 +14,10 @@ TypShaPhaBoolean >> ___and: _a [
 	^ TypFunctionType new
 		argumentTypes: [ {Boolean typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {}
-				result: Boolean typAsType
-				argumentsOptional: false)} typAsType ];
+				typAsFunctionTypeWithResult: Boolean typAsType
+				arguments: {}
+				argumentsOptional: false
+				signalsAlways: false)} typAsType ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
@@ -26,9 +27,10 @@ TypShaPhaBoolean >> ___ifFalse: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
-				typAsFunctionTypeWithArguments: {}
-				result: TypUnknownType new
-				argumentsOptional: false ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {}
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ :a :s :r | (a argumentTypes at: 1) result asNullable ];
 		yourself
 ]
@@ -38,9 +40,10 @@ TypShaPhaBoolean >> ___ifTrue: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
-				typAsFunctionTypeWithArguments: {}
-				result: TypUnknownType new
-				argumentsOptional: false ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {}
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ :a :s :r | (a argumentTypes at: 1) result asNullable ];
 		yourself
 ]
@@ -49,9 +52,10 @@ TypShaPhaBoolean >> ___ifTrue: _a [
 TypShaPhaBoolean >> ___ifTrue: _a ifFalse: _b [
 	^ TypFunctionType new
 		argumentTypes: [ BlockClosure
-				typAsFunctionTypeWithArguments: {}
-				result: TypUnknownType new
-				argumentsOptional: false ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {}
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ :a | 
 			(a argumentTypes
 				collect: [ :e | 
@@ -74,9 +78,10 @@ TypShaPhaBoolean >> ___or: _a [
 	^ TypFunctionType new
 		argumentTypes: [ {Boolean typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {}
-				result: Boolean typAsType
-				argumentsOptional: false)} typAsType ];
+				typAsFunctionTypeWithResult: Boolean typAsType
+				arguments: {}
+				argumentsOptional: false
+				signalsAlways: false)} typAsType ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]

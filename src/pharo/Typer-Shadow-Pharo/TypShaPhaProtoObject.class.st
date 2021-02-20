@@ -35,9 +35,10 @@ TypShaPhaProtoObject >> ___ifNil: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
-				typAsFunctionTypeWithArguments: {}
-				result: TypUnknownType new
-				argumentsOptional: false ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {}
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ :a :s :r | 
 			{a receiverType asNonNullable.
 			a argumentTypes first result} typAsType ];
@@ -50,14 +51,16 @@ TypShaPhaProtoObject >> ___ifNil: _a ifNotNil: _b [
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ BlockClosure
-						typAsFunctionTypeWithArguments: {}
-						result: TypUnknownType new
-						argumentsOptional: false ]
+						typAsFunctionTypeWithResult: TypUnknownType new
+						arguments: {}
+						argumentsOptional: false
+						signalsAlways: false ]
 				ifFalse: [ {Symbol typAsType.
 					(BlockClosure
-						typAsFunctionTypeWithArguments: {a receiverType asNonNullable}
-						result: TypUnknownType new
-						argumentsOptional: true)} typAsType ] ];
+						typAsFunctionTypeWithResult: TypUnknownType new
+						arguments: {a receiverType asNonNullable}
+						argumentsOptional: true
+						signalsAlways: false)} typAsType ] ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 2.
@@ -87,9 +90,10 @@ TypShaPhaProtoObject >> ___ifNotNil: _a [
 		argumentTypes: [ :i :a :s :r | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {a receiverType asNonNullable}
-				result: TypUnknownType new
-				argumentsOptional: true)} typAsType ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {a receiverType asNonNullable}
+				argumentsOptional: true
+				signalsAlways: false)} typAsType ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode |
 			argumentType := a argumentTypes at: 1.

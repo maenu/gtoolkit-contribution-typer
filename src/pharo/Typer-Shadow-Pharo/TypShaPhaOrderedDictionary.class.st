@@ -52,14 +52,15 @@ TypShaPhaOrderedDictionary >> ___associationsDo: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			BlockClosure
-				typAsFunctionTypeWithArguments:
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments:
 					{(Association typAsType
 						copyWithParameters:
 							{('@A' -> ('@B' typAsVariableType resolveIn: a receiverType)).
 							('@B' -> ('@A' typAsVariableType resolveIn: a receiverType))}
 								asDictionary)}
-				result: TypUnknownType new
-				argumentsOptional: false ];
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ :a :s | a receiverType ];
 		yourself
 ]
@@ -79,9 +80,10 @@ TypShaPhaOrderedDictionary >> ___at: _a ifAbsentPut: _b [
 			i = 1
 				ifTrue: [ '@B' typAsVariableType resolveIn: a receiverType ]
 				ifFalse: [ BlockClosure
-						typAsFunctionTypeWithArguments: {}
-						result: ('@A' typAsVariableType resolveIn: a receiverType)
-						argumentsOptional: false ] ];
+						typAsFunctionTypeWithResult: ('@A' typAsVariableType resolveIn: a receiverType)
+						arguments: {}
+						argumentsOptional: false
+						signalsAlways: false ] ];
 		resultType: [ :a | '@A' typAsVariableType resolveIn: a receiverType ];
 		yourself
 ]
@@ -92,13 +94,15 @@ TypShaPhaOrderedDictionary >> ___at: _a ifPresent: _b ifAbsent: _c [
 		argumentTypes: [ :i :a | 
 			{('@A' typAsVariableType resolveIn: a receiverType).
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-				result: TypUnknownType new
-				argumentsOptional: true).
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+				argumentsOptional: true
+				signalsAlways: false).
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {}
-				result: TypUnknownType new
-				argumentsOptional: false)} ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {}
+				argumentsOptional: false
+				signalsAlways: false)} ];
 		resultType: [ :a :s | 
 			{(a argumentTypes at: 2) result.
 			(a argumentTypes at: 3) result} typAsType ];
@@ -122,9 +126,10 @@ TypShaPhaOrderedDictionary >> ___collect: _a [
 		argumentTypes: [ :i :a :s :r | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-				result: TypUnknownType new
-				argumentsOptional: false)} typAsType ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+				argumentsOptional: false
+				signalsAlways: false)} typAsType ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 1.

@@ -8,7 +8,7 @@ Class {
 TypPraMethodLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypMethodLookup'>
 	<typTypeResultAs: 'SequenceableCollection<TypFunctionType>'>
-	| classDescription method pragmas argumentPragmas resultPragma signalsAlwaysPragma argumentTypes resultType signalsAlways |
+	| classDescription method pragmas argumentPragmas resultPragma signalsAlwaysPragma arguments result signalsAlways |
 	aLookup push: self.
 	aLookup receiverType isNamed
 		ifFalse: [ TypNoTypeError signal ].
@@ -30,24 +30,22 @@ TypPraMethodLookupResolver >> resolve: aLookup [
 	(argumentPragmas isEmpty
 		and: [ resultPragma isNil and: [ signalsAlwaysPragma isNil ] ])
 		ifTrue: [ ^ nil ].
-	argumentTypes := method numArgs
+	arguments := method numArgs
 		timesCollect: [ :i | 
 			argumentPragmas
 				at: i
 				ifPresent: [ :e | e arguments second typAsType ]
 				ifAbsent: [ TypUnknownType new ] ].
-	resultType := resultPragma
+	result := resultPragma
 		ifNil: [ TypUnknownType new ]
 		ifNotNil: [ resultPragma arguments first typAsType ].
 	signalsAlways := signalsAlwaysPragma
 		ifNil: [ nil ]
 		ifNotNil: [ signalsAlwaysPragma arguments first ].
-	self
-		flag: 'TODO use signals and rework once function type refactored'.
 	^ {(TypFunctionType
 		classDescription: classDescription
-		result: resultType
-		arguments: argumentTypes
+		result: result
+		arguments: arguments
 		argumentsOptional: false
 		signalsAlways: signalsAlways)}
 ]

@@ -14,9 +14,10 @@ TypShaBlBlShortcut >> ___action: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
-				typAsFunctionTypeWithArguments: {BlElement typAsType}
-				result: TypUnknownType new
-				argumentsOptional: true ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {BlElement typAsType}
+				argumentsOptional: true
+				signalsAlways: false ];
 		resultType: [ :a :s :r | BlShortcut typAsType ];
 		yourself
 ]

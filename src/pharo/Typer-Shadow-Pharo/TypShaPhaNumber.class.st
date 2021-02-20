@@ -13,9 +13,10 @@ TypShaPhaNumber class >> shadowedClass [
 TypShaPhaNumber >> ___timesCollect: _a [
 	^ TypFunctionType new
 		argumentTypes: [ BlockClosure
-				typAsFunctionTypeWithArguments: {Integer typAsType}
-				result: TypUnknownType new
-				argumentsOptional: true ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {Integer typAsType}
+				argumentsOptional: true
+				signalsAlways: false ];
 		resultType: [ :a | 
 			OrderedCollection typAsType
 				copyWithParameters:
@@ -50,11 +51,12 @@ TypShaPhaNumber >> ___to: _a do: _b [
 			i = 1
 				ifTrue: [ Number typAsType ]
 				ifFalse: [ BlockClosure
-						typAsFunctionTypeWithArguments:
+						typAsFunctionTypeWithResult: TypUnknownType new
+						arguments:
 							{{a receiverType.
 							(a argumentTypes at: 1)} typAsType}
-						result: TypUnknownType new
-						argumentsOptional: false ] ];
+						argumentsOptional: false
+						signalsAlways: false ] ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

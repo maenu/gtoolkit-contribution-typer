@@ -82,9 +82,10 @@ TypShaPhaCollection >> ___allSatisfy: _a [
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-				result: Boolean typAsType
-				argumentsOptional: false)} typAsType ];
+				typAsFunctionTypeWithResult: Boolean typAsType
+				arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+				argumentsOptional: false
+				signalsAlways: false)} typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
@@ -103,9 +104,10 @@ TypShaPhaCollection >> ___anySatisfy: _a [
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-				result: Boolean typAsType
-				argumentsOptional: false)} typAsType ];
+				typAsFunctionTypeWithResult: Boolean typAsType
+				arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+				argumentsOptional: false
+				signalsAlways: false)} typAsType ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
@@ -196,9 +198,10 @@ TypShaPhaCollection >> ___collect: _a [
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-				result: TypUnknownType new
-				argumentsOptional: false)} typAsType ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+				argumentsOptional: false
+				signalsAlways: false)} typAsType ];
 		resultType: [ :a | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 1.
@@ -244,9 +247,10 @@ TypShaPhaCollection >> ___detect: _a [
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-				result: Boolean typAsType
-				argumentsOptional: false)} typAsType ];
+				typAsFunctionTypeWithResult: Boolean typAsType
+				arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+				argumentsOptional: false
+				signalsAlways: false)} typAsType ];
 		resultType: [ :a | '@A' typAsVariableType resolveIn: a receiverType ];
 		yourself
 ]
@@ -258,14 +262,16 @@ TypShaPhaCollection >> ___detect: _a ifFound: _b [
 			i = 1
 				ifTrue: [ {Symbol typAsType.
 					(BlockClosure
-						typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-						result: Boolean typAsType
-						argumentsOptional: false)} typAsType ]
+						typAsFunctionTypeWithResult: Boolean typAsType
+						arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+						argumentsOptional: false
+						signalsAlways: false)} typAsType ]
 				ifFalse: [ {Symbol typAsType.
 					(BlockClosure
-						typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-						result: TypUnknownType new
-						argumentsOptional: true)} typAsType ] ];
+						typAsFunctionTypeWithResult: TypUnknownType new
+						arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+						argumentsOptional: true
+						signalsAlways: false)} typAsType ] ];
 		resultType: [ :a | a receiverType ];
 		yourself
 ]
@@ -277,19 +283,22 @@ TypShaPhaCollection >> ___detect: _a ifFound: _b ifNone: _c [
 			i = 1
 				ifTrue: [ {Symbol typAsType.
 					(BlockClosure
-						typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-						result: Boolean typAsType
-						argumentsOptional: false)} typAsType ]
+						typAsFunctionTypeWithResult: Boolean typAsType
+						arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+						argumentsOptional: false
+						signalsAlways: false)} typAsType ]
 				ifFalse: [ i = 2
 						ifTrue: [ {Symbol typAsType.
 							(BlockClosure
-								typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-								result: TypUnknownType new
-								argumentsOptional: true)} typAsType ]
+								typAsFunctionTypeWithResult: TypUnknownType new
+								arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+								argumentsOptional: true
+								signalsAlways: false)} typAsType ]
 						ifFalse: [ BlockClosure
-								typAsFunctionTypeWithArguments: {}
-								result: TypUnknownType new
-								argumentsOptional: false ] ] ];
+								typAsFunctionTypeWithResult: TypUnknownType new
+								arguments: {}
+								argumentsOptional: false
+								signalsAlways: false ] ] ];
 		resultType: [ :a | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 2.
@@ -320,13 +329,15 @@ TypShaPhaCollection >> ___detect: _a ifNone: _b [
 			i = 1
 				ifTrue: [ {Symbol typAsType.
 					(BlockClosure
-						typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-						result: Boolean typAsType
-						argumentsOptional: false)} typAsType ]
+						typAsFunctionTypeWithResult: Boolean typAsType
+						arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+						argumentsOptional: false
+						signalsAlways: false)} typAsType ]
 				ifFalse: [ BlockClosure
-						typAsFunctionTypeWithArguments: {}
-						result: TypUnknownType new
-						argumentsOptional: false ] ];
+						typAsFunctionTypeWithResult: TypUnknownType new
+						arguments: {}
+						argumentsOptional: false
+						signalsAlways: false ] ];
 		resultType: [ :a | 
 			{('@A' typAsVariableType resolveIn: a receiverType).
 			(a argumentTypes at: 2) result} typAsType ];
@@ -339,9 +350,10 @@ TypShaPhaCollection >> ___do: _a [
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-				result: TypUnknownType new
-				argumentsOptional: false)} typAsType ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+				argumentsOptional: false
+				signalsAlways: false)} typAsType ];
 		resultType: [ :a | a receiverType ];
 		yourself
 ]
@@ -352,9 +364,10 @@ TypShaPhaCollection >> ___flatCollect: _a [
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-				result: TypUnknownType new
-				argumentsOptional: false)} typAsType ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+				argumentsOptional: false
+				signalsAlways: false)} typAsType ];
 		resultType: [ :a | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 1.
@@ -388,9 +401,10 @@ TypShaPhaCollection >> ___groupedBy: _a [
 		argumentTypes: [ :i :a :s :r | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-				result: TypUnknownType new
-				argumentsOptional: false)} typAsType ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+				argumentsOptional: false
+				signalsAlways: false)} typAsType ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode keyType |
 			argumentType := a argumentTypes at: 1.
@@ -434,9 +448,10 @@ TypShaPhaCollection >> ___ifEmpty: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
-				typAsFunctionTypeWithArguments: {}
-				result: TypUnknownType new
-				argumentsOptional: false ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {}
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ :a :s :r | 
 			{a receiverType.
 			(a argumentTypes at: 1) result} typAsType ];
@@ -449,14 +464,16 @@ TypShaPhaCollection >> ___ifEmpty: _a ifNotEmpty: _b [
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ BlockClosure
-						typAsFunctionTypeWithArguments: {}
-						result: TypUnknownType new
-						argumentsOptional: false ]
+						typAsFunctionTypeWithResult: TypUnknownType new
+						arguments: {}
+						argumentsOptional: false
+						signalsAlways: false ]
 				ifFalse: [ {Symbol typAsType.
 					(BlockClosure
-						typAsFunctionTypeWithArguments: {a receiverType}
-						result: TypUnknownType new
-						argumentsOptional: true)} typAsType ] ];
+						typAsFunctionTypeWithResult: TypUnknownType new
+						arguments: {a receiverType}
+						argumentsOptional: true
+						signalsAlways: false)} typAsType ] ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 2.
@@ -486,9 +503,10 @@ TypShaPhaCollection >> ___ifNotEmpty: _a [
 		argumentTypes: [ :i :a :s :r | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {a receiverType}
-				result: TypUnknownType new
-				argumentsOptional: true)} typAsType ];
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {a receiverType}
+				argumentsOptional: true
+				signalsAlways: false)} typAsType ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 1.
@@ -539,11 +557,12 @@ TypShaPhaCollection >> ___inject: _a into: _b [
 			i = 1
 				ifTrue: [ a argumentTypes at: 1 ]
 				ifFalse: [ BlockClosure
-						typAsFunctionTypeWithArguments:
+						typAsFunctionTypeWithResult: TypUnknownType new
+						arguments:
 							{(a argumentTypes at: 1).
 							('@A' typAsVariableType resolveIn: a receiverType)}
-						result: TypUnknownType new
-						argumentsOptional: false ] ];
+						argumentsOptional: false
+						signalsAlways: false ] ];
 		resultType: [ :a :s :r | 
 			{(a argumentTypes at: 1).
 			(a argumentTypes at: 2) result} typAsType ];
@@ -579,12 +598,13 @@ TypShaPhaCollection >> ___reduce: _a [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
-				typAsFunctionTypeWithArguments:
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments:
 					{{('@A' typAsVariableType resolveIn: a receiverType).
 					(a argumentTypes at: 1) result} typAsType.
 					('@A' typAsVariableType resolveIn: a receiverType)}
-				result: TypUnknownType new
-				argumentsOptional: false ];
+				argumentsOptional: false
+				signalsAlways: false ];
 		resultType: [ :a :s :r | (a argumentTypes at: 1) result ];
 		yourself
 ]
@@ -595,9 +615,10 @@ TypShaPhaCollection >> ___reject: _a [
 		argumentTypes: [ :i :a :s :r | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-				result: Boolean typAsType
-				argumentsOptional: false)} typAsType ];
+				typAsFunctionTypeWithResult: Boolean typAsType
+				arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+				argumentsOptional: false
+				signalsAlways: false)} typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
@@ -617,9 +638,10 @@ TypShaPhaCollection >> ___remove: _a ifAbsent: _b [
 			i = 1
 				ifTrue: [ '@A' typAsVariableType resolveIn: a receiverType ]
 				ifFalse: [ BlockClosure
-						typAsFunctionTypeWithArguments: {}
-						result: TypUnknownType new
-						argumentsOptional: false ] ];
+						typAsFunctionTypeWithResult: TypUnknownType new
+						arguments: {}
+						argumentsOptional: false
+						signalsAlways: false ] ];
 		resultType: [ :a :s :r | 
 			{(a argumentTypes at: 1).
 			(a argumentTypes at: 2) result} typAsType ];
@@ -632,9 +654,10 @@ TypShaPhaCollection >> ___select: _a [
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
-				typAsFunctionTypeWithArguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-				result: Boolean typAsType
-				argumentsOptional: false)} typAsType ];
+				typAsFunctionTypeWithResult: Boolean typAsType
+				arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+				argumentsOptional: false
+				signalsAlways: false)} typAsType ];
 		resultType: [ :a | a receiverType ];
 		yourself
 ]

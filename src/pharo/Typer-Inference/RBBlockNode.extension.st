@@ -37,7 +37,8 @@ RBBlockNode >> typResultType [
 { #category : #'*Typer-Inference' }
 RBBlockNode >> typTypeRecursive [
 	^ BlockClosure
-		typAsFunctionTypeWithArguments: (self arguments collect: [ :e | e typType ])
-		result: (self body typType)
+		typAsFunctionTypeWithResult: self body typType
+		arguments: (self arguments collect: #typType)
 		argumentsOptional: false
+		signalsAlways: self body typSignalsAlways
 ]
