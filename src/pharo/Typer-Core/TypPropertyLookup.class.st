@@ -19,22 +19,21 @@ TypPropertyLookup class >> receiverType: aType selector: aSymbol [
 TypPropertyLookup >> = anObject [
 	^ self == anObject
 		or: [ self class == anObject class
-				and: [ | object |
-					object := anObject "typCastAs TypObjectLookup".
-					selector = object selector
-						and: [ receiverType = object receiverType ] ] ]
+				and: [ selector = anObject selector
+						and: [ receiverType = anObject receiverType ] ] ]
 ]
 
 { #category : #accessing }
-TypPropertyLookup >> copyWithSuperType [
-	^ super copyWithSuperType
+TypPropertyLookup >> copyAsSuper [
+	self assert: [ self hasSuper ].
+	^ self copy
 		initializeReceiverType: receiverType superType selector: selector;
 		yourself
 ]
 
 { #category : #testing }
-TypPropertyLookup >> hasSuperType [
-	^ receiverType hasSuperType
+TypPropertyLookup >> hasSuper [
+	^ receiverType hasSuper
 ]
 
 { #category : #comparing }

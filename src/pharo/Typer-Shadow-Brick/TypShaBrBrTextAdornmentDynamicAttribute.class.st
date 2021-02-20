@@ -11,7 +11,7 @@ TypShaBrBrTextAdornmentDynamicAttribute class >> shadowedClass [
 
 { #category : #accessing }
 TypShaBrBrTextAdornmentDynamicAttribute >> ___stencil: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments: {}

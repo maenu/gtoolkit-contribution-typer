@@ -11,7 +11,7 @@ TypShaPhaNumber class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaNumber >> ___timesCollect: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ BlockClosure
 				typAsFunctionTypeWithArguments: {Integer typAsType}
 				result: TypUnknownType new
@@ -31,7 +31,7 @@ TypShaPhaNumber >> ___timesCollect: _a [
 
 { #category : #accessing }
 TypShaPhaNumber >> ___to: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];
 		resultType: [ :a :s :r | 
 			Interval typAsType
@@ -45,7 +45,7 @@ TypShaPhaNumber >> ___to: _a [
 
 { #category : #accessing }
 TypShaPhaNumber >> ___to: _a do: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ Number typAsType ]
@@ -61,7 +61,7 @@ TypShaPhaNumber >> ___to: _a do: _b [
 
 { #category : #accessing }
 TypShaPhaNumber >> ~~~+ _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];
 		resultType: [ :a :s :r | 
 			{a receiverType.
@@ -71,7 +71,7 @@ TypShaPhaNumber >> ~~~+ _a [
 
 { #category : #accessing }
 TypShaPhaNumber >> ~~~- _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];
 		resultType: [ :a :s :r | 
 			{a receiverType.

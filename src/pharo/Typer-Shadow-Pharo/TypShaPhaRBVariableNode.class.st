@@ -11,7 +11,7 @@ TypShaPhaRBVariableNode class >> shadowedClass [
 
 { #category : #'as yet unclassified' }
 TypShaPhaRBVariableNode >> ___binding [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OCLiteralVariable typAsType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaPhaRBVariableNode >> ___binding [
 
 { #category : #accessing }
 TypShaPhaRBVariableNode >> ___isInstance [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -27,7 +27,7 @@ TypShaPhaRBVariableNode >> ___isInstance [
 
 { #category : #accessing }
 TypShaPhaRBVariableNode >> ___name [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself

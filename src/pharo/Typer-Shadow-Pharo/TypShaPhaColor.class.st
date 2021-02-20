@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaPhaColor class >> ___blue [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Color typAsType ];
 		yourself
@@ -14,7 +14,7 @@ TypShaPhaColor class >> ___blue [
 
 { #category : #accessing }
 TypShaPhaColor class >> ___green [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Color typAsType ];
 		yourself
@@ -22,7 +22,7 @@ TypShaPhaColor class >> ___green [
 
 { #category : #accessing }
 TypShaPhaColor class >> ___orange [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Color typAsType ];
 		yourself
@@ -30,7 +30,7 @@ TypShaPhaColor class >> ___orange [
 
 { #category : #accessing }
 TypShaPhaColor class >> ___purple [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Color typAsType ];
 		yourself
@@ -38,7 +38,7 @@ TypShaPhaColor class >> ___purple [
 
 { #category : #accessing }
 TypShaPhaColor class >> ___red [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Color typAsType ];
 		yourself
@@ -46,7 +46,7 @@ TypShaPhaColor class >> ___red [
 
 { #category : #accessing }
 TypShaPhaColor class >> ___veryLightGray [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Color typAsType ];
 		yourself
@@ -59,7 +59,7 @@ TypShaPhaColor class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaColor >> ___alpha: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself

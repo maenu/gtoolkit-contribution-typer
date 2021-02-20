@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaPhaCollection class >> ___with: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | TypUnknownType new asNullable ];
 		resultType: [ :a :s :r | 
 			| instanceType |
@@ -21,7 +21,7 @@ TypShaPhaCollection class >> ___with: _a [
 
 { #category : #accessing }
 TypShaPhaCollection class >> ___with: _a with: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | TypUnknownType new ];
 		resultType: [ :a :s :r | 
 			| instanceType |
@@ -38,7 +38,7 @@ TypShaPhaCollection class >> ___with: _a with: _b [
 
 { #category : #accessing }
 TypShaPhaCollection class >> ___withAll: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Collection typAsType ];
 		resultType: [ :a :s :r | 
 			| instanceType |
@@ -58,7 +58,7 @@ TypShaPhaCollection class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___add: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | '@A' typAsVariableType resolveIn: a receiverType ];
 		resultType: [ :a :s :r | a argumentTypes at: 1 ];
 		yourself
@@ -66,17 +66,19 @@ TypShaPhaCollection >> ___add: _a [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___addAll: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			Collection typAsType
-				copyWithParameters: {('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary ];
+				copyWithParameters:
+					{('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))}
+						asDictionary ];
 		resultType: [ :a :s :r | a argumentTypes at: 1 ];
 		yourself
 ]
 
 { #category : #accessing }
 TypShaPhaCollection >> ___allSatisfy: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
@@ -89,7 +91,7 @@ TypShaPhaCollection >> ___allSatisfy: _a [
 
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___anyOne [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | '@A' typAsVariableType resolveIn: a receiverType ];
 		yourself
@@ -97,7 +99,7 @@ TypShaPhaCollection >> ___anyOne [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___anySatisfy: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
@@ -110,7 +112,7 @@ TypShaPhaCollection >> ___anySatisfy: _a [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___asDictionary [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			| elementType type |
@@ -120,34 +122,39 @@ TypShaPhaCollection >> ___asDictionary [
 				ifTrue: [ type := type
 						copyWithParameters:
 							{('@B' -> ('@A' typAsVariableType resolveIn: elementType)).
-							('@A' -> ('@B' typAsVariableType resolveIn: elementType))} asDictionary ].
+							('@A' -> ('@B' typAsVariableType resolveIn: elementType))}
+								asDictionary ].
 			type ];
 		yourself
 ]
 
 { #category : #accessing }
 TypShaPhaCollection >> ___asIdentitySet [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			IdentitySet typAsType
-				copyWithParameters: {('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary ];
+				copyWithParameters:
+					{('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))}
+						asDictionary ];
 		yourself
 ]
 
 { #category : #accessing }
 TypShaPhaCollection >> ___asOrderedCollection [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			OrderedCollection typAsType
-				copyWithParameters: {('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary ];
+				copyWithParameters:
+					{('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))}
+						asDictionary ];
 		yourself
 ]
 
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___asOrderedDictionary [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			| elementType type |
@@ -157,24 +164,27 @@ TypShaPhaCollection >> ___asOrderedDictionary [
 				ifTrue: [ type := type
 						copyWithParameters:
 							{('@B' -> ('@A' typAsVariableType resolveIn: elementType)).
-							('@A' -> ('@B' typAsVariableType resolveIn: elementType))} asDictionary ].
+							('@A' -> ('@B' typAsVariableType resolveIn: elementType))}
+								asDictionary ].
 			type ];
 		yourself
 ]
 
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___asSet [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
 			Set typAsType
-				copyWithParameters: {('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary ];
+				copyWithParameters:
+					{('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))}
+						asDictionary ];
 		yourself
 ]
 
 { #category : #accessing }
 TypShaPhaCollection >> ___at: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Integer typAsType ];
 		resultType: [ :a :s :r | '@A' typAsVariableType resolveIn: a receiverType ];
 		yourself
@@ -182,7 +192,7 @@ TypShaPhaCollection >> ___at: _a [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___collect: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
@@ -214,7 +224,7 @@ TypShaPhaCollection >> ___collect: _a [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___copyWithout: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | '@A' typAsVariableType resolveIn: a receiverType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -222,7 +232,7 @@ TypShaPhaCollection >> ___copyWithout: _a [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___copyWithoutAll: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Collection typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -230,7 +240,7 @@ TypShaPhaCollection >> ___copyWithoutAll: _a [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___detect: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
@@ -243,7 +253,7 @@ TypShaPhaCollection >> ___detect: _a [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___detect: _a ifFound: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			i = 1
 				ifTrue: [ {Symbol typAsType.
@@ -262,7 +272,7 @@ TypShaPhaCollection >> ___detect: _a ifFound: _b [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___detect: _a ifFound: _b ifNone: _c [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			i = 1
 				ifTrue: [ {Symbol typAsType.
@@ -305,7 +315,7 @@ TypShaPhaCollection >> ___detect: _a ifFound: _b ifNone: _c [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___detect: _a ifNone: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			i = 1
 				ifTrue: [ {Symbol typAsType.
@@ -325,7 +335,7 @@ TypShaPhaCollection >> ___detect: _a ifNone: _b [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___do: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
@@ -338,7 +348,7 @@ TypShaPhaCollection >> ___do: _a [
 
 { #category : #enumerating }
 TypShaPhaCollection >> ___flatCollect: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
@@ -374,7 +384,7 @@ TypShaPhaCollection >> ___flatCollect: _a [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___groupedBy: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{Symbol typAsType.
 			(BlockClosure
@@ -413,7 +423,7 @@ TypShaPhaCollection >> ___groupedBy: _a [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___gtItemsFor: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | GtPhlowView typAsType ];
 		resultType: [ :a :s :r | GtPhlowView typAsType ];
 		yourself
@@ -421,7 +431,7 @@ TypShaPhaCollection >> ___gtItemsFor: _a [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___ifEmpty: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments: {}
@@ -435,7 +445,7 @@ TypShaPhaCollection >> ___ifEmpty: _a [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___ifEmpty: _a ifNotEmpty: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ BlockClosure
@@ -472,7 +482,7 @@ TypShaPhaCollection >> ___ifEmpty: _a ifNotEmpty: _b [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___ifNotEmpty: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{Symbol typAsType.
 			(BlockClosure
@@ -504,7 +514,7 @@ TypShaPhaCollection >> ___ifNotEmpty: _a [
 
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___includes: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a | '@A' typAsVariableType resolveIn: a receiverType ];
 		resultType: [ Boolean typAsType ];
 		yourself
@@ -512,15 +522,19 @@ TypShaPhaCollection >> ___includes: _a [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___includesAll: _a [
-	^ TypMethodLookupResult new
-		argumentTypes: [ :i :a :s :r | a receiverType copyWithParameters: {'@A' -> ('@A' typAsVariableType resolveIn: a receiverType)} asDictionary ];
+	^ TypFunctionType new
+		argumentTypes: [ :i :a :s :r | 
+			a receiverType
+				copyWithParameters:
+					{('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))}
+						asDictionary ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
 { #category : #accessing }
 TypShaPhaCollection >> ___inject: _a into: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ a argumentTypes at: 1 ]
@@ -538,7 +552,7 @@ TypShaPhaCollection >> ___inject: _a into: _b [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___isEmpty [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -546,7 +560,7 @@ TypShaPhaCollection >> ___isEmpty [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___isNotEmpty [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -554,7 +568,7 @@ TypShaPhaCollection >> ___isNotEmpty [
 
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___max [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Number typAsType ];
 		yourself
@@ -562,7 +576,7 @@ TypShaPhaCollection >> ___max [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___reduce: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments:
@@ -577,7 +591,7 @@ TypShaPhaCollection >> ___reduce: _a [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___reject: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{Symbol typAsType.
 			(BlockClosure
@@ -590,7 +604,7 @@ TypShaPhaCollection >> ___reject: _a [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___remove: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | a receiverType at: '@A' ];
 		resultType: [ :a :s :r | a receiverType at: '@A' ];
 		yourself
@@ -598,7 +612,7 @@ TypShaPhaCollection >> ___remove: _a [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___remove: _a ifAbsent: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ '@A' typAsVariableType resolveIn: a receiverType ]
@@ -614,7 +628,7 @@ TypShaPhaCollection >> ___remove: _a ifAbsent: _b [
 
 { #category : #accessing }
 TypShaPhaCollection >> ___select: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			{Symbol typAsType.
 			(BlockClosure
@@ -627,7 +641,7 @@ TypShaPhaCollection >> ___select: _a [
 
 { #category : #'as yet unclassified' }
 TypShaPhaCollection >> ___size [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Integer typAsType ];
 		yourself
@@ -641,7 +655,7 @@ TypShaPhaCollection >> asType: aClass [
 
 { #category : #accessing }
 TypShaPhaCollection >> ~~~, _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Collection typAsType ];
 		resultType: [ :a :s :r | 
 			| result |
@@ -649,7 +663,8 @@ TypShaPhaCollection >> ~~~, _a [
 			'@A' typAsType
 				assign:
 					{('@A' typAsVariableType resolveIn: a receiverType).
-					('@A' typAsVariableType resolveIn: (a argumentTypes at: 1))} typAsType
+					('@A' typAsVariableType resolveIn: (a argumentTypes at: 1))}
+						typAsType
 				in: result.
 			result ];
 		yourself

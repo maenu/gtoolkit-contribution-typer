@@ -72,9 +72,8 @@ TypFunctionTypeTestingExamples >> type [
 	<gtExample>
 	^ TypFunctionType
 		classDescription: BlockClosure
-		argumentsSize: 1
+		result: Boolean typAsType
+		arguments: {Integer typAsType}
 		argumentsOptional: false
-		parameters:
-			{('@0' -> Boolean typAsType).
-			('@1' -> Integer typAsType)} asDictionary
+		signalsAlways: nil
 ]

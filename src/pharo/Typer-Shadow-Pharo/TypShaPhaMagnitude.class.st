@@ -11,7 +11,7 @@ TypShaPhaMagnitude class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaMagnitude >> ___max: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Magnitude typAsType ];
 		resultType: [ :a :s :r | 
 			{a receiverType.
@@ -21,7 +21,7 @@ TypShaPhaMagnitude >> ___max: _a [
 
 { #category : #accessing }
 TypShaPhaMagnitude >> ~~~< _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Magnitude typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -29,7 +29,7 @@ TypShaPhaMagnitude >> ~~~< _a [
 
 { #category : #accessing }
 TypShaPhaMagnitude >> ~~~<= _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Magnitude typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -37,7 +37,7 @@ TypShaPhaMagnitude >> ~~~<= _a [
 
 { #category : #accessing }
 TypShaPhaMagnitude >> ~~~> _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Magnitude typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself

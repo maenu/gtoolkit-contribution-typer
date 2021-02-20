@@ -11,7 +11,7 @@ TypShaPhaCompilationContext class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaCompilationContext >> ___bindings: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Dictionary typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaPhaCompilationContext >> ___bindings: _a [
 
 { #category : #accessing }
 TypShaPhaCompilationContext >> ___class: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | ClassDescription typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -27,7 +27,7 @@ TypShaPhaCompilationContext >> ___class: _a [
 
 { #category : #accessing }
 TypShaPhaCompilationContext >> ___forSyntaxHighlighting: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Boolean typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -35,7 +35,7 @@ TypShaPhaCompilationContext >> ___forSyntaxHighlighting: _a [
 
 { #category : #accessing }
 TypShaPhaCompilationContext >> ___requestor: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Object typAsType asNullable ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself

@@ -11,7 +11,7 @@ TypShaBlBlLayoutConstraints class >> shadowedClass [
 
 { #category : #accessing }
 TypShaBlBlLayoutConstraints >> ___horizontal [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | BlLayoutConstraintsAxis typAsType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaBlBlLayoutConstraints >> ___horizontal [
 
 { #category : #accessing }
 TypShaBlBlLayoutConstraints >> ___vertical [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | BlLayoutConstraintsAxis typAsType ];
 		yourself

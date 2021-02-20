@@ -11,17 +11,17 @@ TypShaPhaCompiledMethod class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaCompiledMethod >> ___assignmentNodes [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Collection typAsType
-				copyWithParameters: {('@A'  -> RBAssignmentNode typAsType)} asDictionary ];
+				copyWithParameters: {('@A' -> RBAssignmentNode typAsType)} asDictionary ];
 		yourself
 ]
 
 { #category : #accessing }
 TypShaPhaCompiledMethod >> ___ast [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RBMethodNode typAsType ];
 		yourself
@@ -29,7 +29,7 @@ TypShaPhaCompiledMethod >> ___ast [
 
 { #category : #accessing }
 TypShaPhaCompiledMethod >> ___isAbstract [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -37,7 +37,7 @@ TypShaPhaCompiledMethod >> ___isAbstract [
 
 { #category : #accessing }
 TypShaPhaCompiledMethod >> ___methodClass [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | ClassDescription typAsType ];
 		yourself
@@ -45,7 +45,7 @@ TypShaPhaCompiledMethod >> ___methodClass [
 
 { #category : #'as yet unclassified' }
 TypShaPhaCompiledMethod >> ___numArgs [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Integer typAsType ];
 		yourself
@@ -53,7 +53,7 @@ TypShaPhaCompiledMethod >> ___numArgs [
 
 { #category : #'as yet unclassified' }
 TypShaPhaCompiledMethod >> ___pragmas [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
 				copyWithParameters: {('@A' -> Pragma typAsType)} asDictionary ];
@@ -62,7 +62,7 @@ TypShaPhaCompiledMethod >> ___pragmas [
 
 { #category : #accessing }
 TypShaPhaCompiledMethod >> ___reflectiveMethod [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | ReflectiveMethod typAsType asNullable ];
 		yourself
@@ -70,7 +70,7 @@ TypShaPhaCompiledMethod >> ___reflectiveMethod [
 
 { #category : #accessing }
 TypShaPhaCompiledMethod >> ___selector [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Symbol typAsType ];
 		yourself
@@ -78,7 +78,7 @@ TypShaPhaCompiledMethod >> ___selector [
 
 { #category : #accessing }
 TypShaPhaCompiledMethod >> ___sourceCode [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself

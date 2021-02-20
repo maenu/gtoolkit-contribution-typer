@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaSmaSmaCCParser class >> ___parse: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself

@@ -11,7 +11,7 @@ TypShaGtGtPrefixTree class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtPrefixTree >> ___add: _a weight: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ String typAsType ]
@@ -22,7 +22,7 @@ TypShaGtGtPrefixTree >> ___add: _a weight: _b [
 
 { #category : #accessing }
 TypShaGtGtPrefixTree >> ___weightedFirst: _a startingWith: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ Integer typAsType ]

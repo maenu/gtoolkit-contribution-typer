@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaPhaRBLiteralValueNode class >> ___value: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{Number typAsType.
 			String typAsType} typAsType ];

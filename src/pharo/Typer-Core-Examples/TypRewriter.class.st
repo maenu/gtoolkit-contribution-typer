@@ -12,7 +12,7 @@ TypRewriter >> rewrite [
 		select: [ :e | 
 			| rewriter ok method |
 			rewriter := RBParseTreeRewriter new.
-			rewriter replace: '`@r typIsDeclaration' with: '`@r isDefinition'.
+			rewriter replace: 'TypMethodLookupResult' with: 'TypFunctionType'.
 			ok := rewriter executeTree: e parseTree.
 			ok
 				ifTrue:

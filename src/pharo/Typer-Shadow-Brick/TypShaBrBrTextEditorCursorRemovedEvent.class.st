@@ -11,7 +11,7 @@ TypShaBrBrTextEditorCursorRemovedEvent class >> shadowedClass [
 
 { #category : #accessing }
 TypShaBrBrTextEditorCursorRemovedEvent >> ___cursor [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | BrTextEditorSingleCursor typAsType ];
 		yourself

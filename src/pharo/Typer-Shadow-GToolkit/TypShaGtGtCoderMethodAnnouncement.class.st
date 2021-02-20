@@ -11,7 +11,7 @@ TypShaGtGtCoderMethodAnnouncement class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtCoderMethodAnnouncement >> ___coder: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | GtMethodsCoder typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself

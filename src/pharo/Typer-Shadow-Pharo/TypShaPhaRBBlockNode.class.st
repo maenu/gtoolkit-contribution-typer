@@ -11,7 +11,7 @@ TypShaPhaRBBlockNode class >> shadowedClass [
 
 { #category : #'as yet unclassified' }
 TypShaPhaRBBlockNode >> ___arguments [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
 				copyWithParameters: {('@A' -> RBArgumentNode typAsType)} asDictionary ];
@@ -20,7 +20,7 @@ TypShaPhaRBBlockNode >> ___arguments [
 
 { #category : #accessing }
 TypShaPhaRBBlockNode >> ___body [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RBSequenceNode typAsType ];
 		yourself

@@ -28,14 +28,15 @@ TypTypeLookup >> classDescription [
 ]
 
 { #category : #copying }
-TypTypeLookup >> copyWithSuperType [
-	^ super copyWithSuperType
+TypTypeLookup >> copyAsSuper [
+	self assert: [ self hasSuper ].
+	^ self copy
 		initializeClassDescription: classDescription superclass;
 		yourself
 ]
 
 { #category : #testing }
-TypTypeLookup >> hasSuperType [
+TypTypeLookup >> hasSuper [
 	^ classDescription superclass isNotNil and: [ classDescription superclass ~= classDescription and: [ (classDescription superclass inheritsFrom: classDescription) not ] ]
 ]
 

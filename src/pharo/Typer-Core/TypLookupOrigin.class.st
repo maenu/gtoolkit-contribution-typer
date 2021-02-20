@@ -18,8 +18,3 @@ TypLookupOrigin class >> lookup: aLookup [
 TypLookupOrigin >> initializeLookup: aLookup [
 	lookup := aLookup
 ]
-
-{ #category : #accessing }
-TypLookupOrigin >> rootOr: aLookup [
-	^ lookup root
-]

@@ -14,7 +14,7 @@ TypShaGtGtPharoCompletionStrategy class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtPharoCompletionStrategy >> ___actionsFor: _a at: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ GtPharoMethodNode typAsType ]
@@ -27,7 +27,7 @@ TypShaGtGtPharoCompletionStrategy >> ___actionsFor: _a at: _b [
 
 { #category : #accessing }
 TypShaGtGtPharoCompletionStrategy >> ___classOrMetaClass: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | ClassDescription typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -35,7 +35,7 @@ TypShaGtGtPharoCompletionStrategy >> ___classOrMetaClass: _a [
 
 { #category : #accessing }
 TypShaGtGtPharoCompletionStrategy >> ___index [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Integer typAsType ];
 		yourself
@@ -43,7 +43,7 @@ TypShaGtGtPharoCompletionStrategy >> ___index [
 
 { #category : #accessing }
 TypShaGtGtPharoCompletionStrategy >> ___nodeFor: _a in: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ Integer typAsType ]
@@ -54,7 +54,7 @@ TypShaGtGtPharoCompletionStrategy >> ___nodeFor: _a in: _b [
 
 { #category : #accessing }
 TypShaGtGtPharoCompletionStrategy >> ___selectorsForReceiver: _a matching: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ Behavior typAsType ]

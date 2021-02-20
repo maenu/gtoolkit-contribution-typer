@@ -11,7 +11,7 @@ TypShaPhaClass class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaClass >> ___addClassVarNamed: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaPhaClass >> ___addClassVarNamed: _a [
 
 { #category : #accessing }
 TypShaPhaClass >> ___classVarNamed: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
@@ -27,7 +27,7 @@ TypShaPhaClass >> ___classVarNamed: _a [
 
 { #category : #accessing }
 TypShaPhaClass >> ___hasClassVarNamed: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -35,7 +35,7 @@ TypShaPhaClass >> ___hasClassVarNamed: _a [
 
 { #category : #accessing }
 TypShaPhaClass >> ___sharedPools [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Collection typAsType
@@ -45,7 +45,7 @@ TypShaPhaClass >> ___sharedPools [
 
 { #category : #accessing }
 TypShaPhaClass >> ___subclass: _a instanceVariableNames: _b classVariableNames: _c package: _d [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | a receiverType classDescription typAsType ];
 		yourself

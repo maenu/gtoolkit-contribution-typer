@@ -11,7 +11,7 @@ TypShaPhaRBTemporaryNode class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaRBTemporaryNode >> ___whoDefines: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ String typAsType ];
 		resultType: [ RBSequenceNode typAsType asNullable ];
 		yourself

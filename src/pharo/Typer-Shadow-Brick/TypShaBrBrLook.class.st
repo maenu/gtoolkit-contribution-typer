@@ -11,7 +11,7 @@ TypShaBrBrLook class >> shadowedClass [
 
 { #category : #accessing }
 TypShaBrBrLook class >> ~~~+ _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{BrLook typAsType.
 			BrLook class typAsType} typAsType ];

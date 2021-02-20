@@ -10,7 +10,7 @@ RBMethodNode >> typDynAsMethodLookupResult [
 	result := self typDynTypeForResult asNonDynType.
 	^ result isUnknown
 		ifTrue: [ nil ]
-		ifFalse: [ TypMethodLookupResult new
+		ifFalse: [ TypFunctionType new
 				argumentTypes: [ :i | arguments_ at: i ];
 				resultType: [ result ];
 				yourself ]

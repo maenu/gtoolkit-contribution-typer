@@ -3,31 +3,11 @@ Class {
 	#superclass : #TypParametricType,
 	#instVars : [
 		'argumentsSize',
-		'argumentsOptional'
+		'argumentsOptional',
+		'signalsAlways'
 	],
 	#category : #'Typer-Core-Type'
 }
-
-{ #category : #accessing }
-TypFunctionType class >> classDescription: aClassDescription argumentsSize: anInteger [
-	^ self
-		classDescription: aClassDescription
-		argumentsSize: anInteger
-		argumentsOptional: false
-]
-
-{ #category : #accessing }
-TypFunctionType class >> classDescription: aClassDescription argumentsSize: anInteger argumentsOptional: aBoolean [
-	^ self
-		classDescription: aClassDescription
-		argumentsSize: anInteger
-		argumentsOptional: aBoolean
-		parameters:
-			((0 to: anInteger)
-				collect:
-					[ :e | ('@' , e asString) -> ('@' , e asString) typAsVariableType ])
-				asOrderedDictionary
-]
 
 { #category : #accessing }
 TypFunctionType class >> classDescription: aClassDescription argumentsSize: anInteger argumentsOptional: aBoolean parameters: anOrderedDictionary [
@@ -44,38 +24,40 @@ TypFunctionType class >> classDescription: aClassDescription parameters: aSequen
 ]
 
 { #category : #accessing }
-TypFunctionType class >> named: aString argumentsSize: anInteger [
-	^ self
-		named: aString
-		argumentsSize: anInteger
-		argumentsOptional: false
-]
-
-{ #category : #accessing }
-TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOptional: aBoolean [
-	^ self
-		named: aString
-		argumentsSize: anInteger
-		argumentsOptional: aBoolean
-		parameters:
-			((0 to: anInteger)
-				collect:
-					[ :e | ('@' , e asString) -> ('@' , e asString) typAsVariableType ])
-				asOrderedDictionary
-]
-
-{ #category : #accessing }
-TypFunctionType class >> named: aString argumentsSize: anInteger argumentsOptional: aBoolean parameters: anOrderedDictionary [
+TypFunctionType class >> classDescription: aClassDescription result: aType arguments: anOrderedCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean [
+	| parameters |
+	parameters := OrderedDictionary new.
+	parameters at: '@0' put: aType.
+	anOrderedCollection
+		withIndexDo: [ :e :i | parameters at: '@' , i asString put: e ].
 	^ self new
-		initializeName: aString;
-		initializeParameters: anOrderedDictionary;
-		initializeArgumentsSize: anInteger argumentsOptional: aBoolean;
+		initializeClassDescription: aClassDescription;
+		initializeParameters: parameters;
+		initializeArgumentsSize: parameters size - 1
+			argumentsOptional: aBoolean
+			signalsAlways: anotherBoolean;
 		yourself
 ]
 
 { #category : #accessing }
 TypFunctionType class >> named: aString parameters: aSequenceableCollection [
 	self shouldNotImplement
+]
+
+{ #category : #accessing }
+TypFunctionType class >> named: aString result: aType arguments: anOrderedCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean [
+	| parameters |
+	parameters := OrderedDictionary new.
+	parameters at: '@0' put: aType.
+	anOrderedCollection
+		withIndexDo: [ :e :i | parameters at: '@' , i asString put: e ].
+	^ self new
+		initializeName: aString;
+		initializeParameters: parameters;
+		initializeArgumentsSize: parameters size - 1
+			argumentsOptional: aBoolean
+			signalsAlways: anotherBoolean;
+		yourself
 ]
 
 { #category : #comparing }
@@ -150,11 +132,12 @@ TypFunctionType >> initialize [
 ]
 
 { #category : #initialization }
-TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean [
+TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean signalsAlways: anotherBoolean [
 	self assert: [ anInteger isInteger ].
 	self assert: [ anInteger >= 0 ].
 	argumentsSize := anInteger.
-	argumentsOptional := aBoolean
+	argumentsOptional := aBoolean.
+	signalsAlways := anotherBoolean
 ]
 
 { #category : #initialization }
@@ -201,4 +184,9 @@ TypFunctionType >> printOn: aStream skipping: anIdentitySet [
 TypFunctionType >> result [
 	<typTypeResultAs: 'TypType'>
 	^ self at: '@0'
+]
+
+{ #category : #accessing }
+TypFunctionType >> signalsAlways [
+	^ signalsAlways
 ]

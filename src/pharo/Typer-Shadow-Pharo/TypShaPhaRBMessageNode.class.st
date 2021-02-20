@@ -11,7 +11,7 @@ TypShaPhaRBMessageNode class >> shadowedClass [
 
 { #category : #'as yet unclassified' }
 TypShaPhaRBMessageNode >> ___arguments [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
 				copyWithParameters: {('@A' -> RBValueNode typAsType)} asDictionary ];
@@ -20,7 +20,7 @@ TypShaPhaRBMessageNode >> ___arguments [
 
 { #category : #accessing }
 TypShaPhaRBMessageNode >> ___keywordsIntervals [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
@@ -35,7 +35,7 @@ TypShaPhaRBMessageNode >> ___keywordsIntervals [
 
 { #category : #accessing }
 TypShaPhaRBMessageNode >> ___numArgs [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Integer typAsType ];
 		yourself
@@ -43,7 +43,7 @@ TypShaPhaRBMessageNode >> ___numArgs [
 
 { #category : #accessing }
 TypShaPhaRBMessageNode >> ___receiver [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RBValueNode typAsType ];
 		yourself
@@ -51,7 +51,7 @@ TypShaPhaRBMessageNode >> ___receiver [
 
 { #category : #accessing }
 TypShaPhaRBMessageNode >> ___selector [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Symbol typAsType ];
 		yourself

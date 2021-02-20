@@ -3,26 +3,25 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'stack',
-		'origin'
+		'parent'
 	],
 	#category : #'Typer-Core-Lookup'
 }
 
-{ #category : #accessing }
-TypLookup >> asOrigin [
-	^ TypLookupOrigin lookup: self
-]
-
 { #category : #copying }
-TypLookup >> copyWithSuperType [
-	self assert: [ self hasSuperType ].
-	^ self copy
-		origin: self asOrigin;
+TypLookup >> copy [
+	^ super copy
+		initializeParent: self;
 		yourself
 ]
 
+{ #category : #copying }
+TypLookup >> copyAsSuper [
+	self subclassResponsibility
+]
+
 { #category : #testing }
-TypLookup >> hasSuperType [
+TypLookup >> hasSuper [
 	<typTypeResultAs: 'Boolean'>
 	self subclassResponsibility
 ]
@@ -34,8 +33,8 @@ TypLookup >> initialize [
 ]
 
 { #category : #accessing }
-TypLookup >> origin: aLookup [
-	origin := aLookup
+TypLookup >> initializeParent: aLookup [
+	parent := aLookup
 ]
 
 { #category : #accessing }
@@ -47,9 +46,4 @@ TypLookup >> postCopy [
 { #category : #accessing }
 TypLookup >> push: aResolver [
 	stack push: aResolver
-]
-
-{ #category : #accessing }
-TypLookup >> root [
-	^ origin ifNil: self
 ]

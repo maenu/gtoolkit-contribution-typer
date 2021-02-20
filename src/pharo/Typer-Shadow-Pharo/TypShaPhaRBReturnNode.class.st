@@ -11,7 +11,7 @@ TypShaPhaRBReturnNode class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaRBReturnNode >> ___value [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RBValueNode typAsType ];
 		yourself

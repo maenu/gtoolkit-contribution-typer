@@ -6,7 +6,7 @@ Class {
 
 { #category : #'generated-accessing' }
 TypTypeParser class >> cacheId [
-	^'2021-02-11T16:20:22.052658+01:00'
+	^'2021-02-20T11:14:31.575703+01:00'
 ]
 
 { #category : #generated }
@@ -80,9 +80,9 @@ ParametricType
 	;
 FunctionType
 	: Name 'name' ""["" EmptyTypes 'arguments' ""]"" ""->"" Type 'result'
-		{ TypFunctionType named: name argumentsSize: arguments size argumentsOptional: true parameters:  ({ '@0' -> result } , (arguments withIndexCollect: [ :e :i |  '@' , i asString -> e ])) asOrderedDictionary }
+		{ TypFunctionType named: name result: result arguments: arguments argumentsOptional: true signalsAlways: nil }
 	| Name 'name' ""("" EmptyTypes 'arguments' "")"" ""->"" Type 'result'
-		{ TypFunctionType named: name argumentsSize: arguments size argumentsOptional: false parameters:  ({ '@0' -> result } , (arguments withIndexCollect: [ :e :i |  '@' , i asString -> e ])) asOrderedDictionary }
+		{ TypFunctionType named: name result: result arguments: arguments argumentsOptional: false signalsAlways: nil }
 	;
 UnionType
 	: ""{"" Types 'types' ""}""
@@ -111,7 +111,7 @@ TypTypeParser class >> reduceTable [
 ^#(
 	#(20 1 #reduceActionForNilType1: 630785 false ) 
 	#(19 1 #reduceActionForUnknownType1: 577537 false ) 
-	#(27 1 #reduceActionForName1: 2064385 false ) 
+	#(27 1 #reduceActionForName1: 1867777 false ) 
 	#(17 1 #reduceActionForTypes1: 241665 false ) 
 	#(18 1 #liftFirstValue: 334849 false ) 
 	#(18 1 #liftFirstValue: 334850 false ) 
@@ -122,10 +122,10 @@ TypTypeParser class >> reduceTable [
 	#(18 1 #liftFirstValue: 334852 false ) 
 	#(22 1 #reduceActionForNamedType1: 858113 false ) 
 	#(21 2 #reduceActionForVariableType1: 675841 false ) 
-	#(26 0 #reduceActionForEmptyTypes2: 2010114 false ) 
-	#(25 3 #reduceActionForUnionType1: 1938433 false ) 
+	#(26 0 #reduceActionForEmptyTypes2: 1813506 false ) 
+	#(25 3 #reduceActionForUnionType1: 1741825 false ) 
 	#(17 3 #reduceActionForTypes2: 241666 false ) 
-	#(26 1 #liftFirstValue: 2010113 false ) 
+	#(26 1 #liftFirstValue: 1813505 false ) 
 	#(21 4 #reduceActionForVariableType2: 675842 false ) 
 	#(23 4 #reduceActionForParametricType1: 968705 false ) 
 	#(24 6 #reduceActionForFunctionType2: 1359874 false ) 
@@ -200,24 +200,20 @@ TypTypeParser >> reduceActionForEmptyTypes2: nodes [
 TypTypeParser >> reduceActionForFunctionType1: nodes [
 	^ TypFunctionType
 		named: (nodes at: 1)
-		argumentsSize: (nodes at: 3) size
+		result: (nodes at: 6)
+		arguments: (nodes at: 3)
 		argumentsOptional: true
-		parameters:
-			({('@0' -> (nodes at: 6))}
-				, ((nodes at: 3) withIndexCollect: [ :e :i | ('@' , i asString) -> e ]))
-				asOrderedDictionary
+		signalsAlways: nil
 ]
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForFunctionType2: nodes [
 	^ TypFunctionType
 		named: (nodes at: 1)
-		argumentsSize: (nodes at: 3) size
+		result: (nodes at: 6)
+		arguments: (nodes at: 3)
 		argumentsOptional: false
-		parameters:
-			({('@0' -> (nodes at: 6))}
-				, ((nodes at: 3) withIndexCollect: [ :e :i | ('@' , i asString) -> e ]))
-				asOrderedDictionary
+		signalsAlways: nil
 ]
 
 { #category : #'generated-reduction actions' }
@@ -234,7 +230,7 @@ TypTypeParser >> reduceActionForNamedType1: nodes [
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForNilType1: nodes [
-	^ TypNilType new
+	^ TypNilType instance
 ]
 
 { #category : #'generated-reduction actions' }
@@ -271,7 +267,7 @@ TypTypeParser >> reduceActionForUnionType1: nodes [
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForUnknownType1: nodes [
-	^ TypUnknownType new
+	^ TypUnknownType instance
 ]
 
 { #category : #'generated-reduction actions' }

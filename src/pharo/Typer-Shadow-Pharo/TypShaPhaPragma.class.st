@@ -11,7 +11,7 @@ TypShaPhaPragma class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaPragma >> ___arguments [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
@@ -27,7 +27,7 @@ TypShaPhaPragma >> ___arguments [
 
 { #category : #accessing }
 TypShaPhaPragma >> ___selector [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Symbol typAsType ];
 		yourself

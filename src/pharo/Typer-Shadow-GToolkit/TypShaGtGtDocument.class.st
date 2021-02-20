@@ -11,7 +11,7 @@ TypShaGtGtDocument class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtDocument >> ___asElement [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | BlElement typAsType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaGtGtDocument >> ___asElement [
 
 { #category : #accessing }
 TypShaGtGtDocument >> ___strategy: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Gt2StorageStrategy typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -27,7 +27,7 @@ TypShaGtGtDocument >> ___strategy: _a [
 
 { #category : #accessing }
 TypShaGtGtDocument >> ___text: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{String typAsType.
 			BlRope typAsType} typAsType ];

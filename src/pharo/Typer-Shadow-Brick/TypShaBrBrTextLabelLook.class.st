@@ -11,7 +11,7 @@ TypShaBrBrTextLabelLook class >> shadowedClass [
 
 { #category : #accessing }
 TypShaBrBrTextLabelLook >> ___fontSize: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaBrBrTextLabelLook >> ___fontSize: _a [
 
 { #category : #accessing }
 TypShaBrBrTextLabelLook >> ___foreground: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{Color typAsType.
 			BlPaint typAsType} typAsType ];

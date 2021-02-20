@@ -11,7 +11,7 @@ TypShaGtGtFilteredMethodsCoder class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtFilteredMethodsCoder >> ___methodAdded: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | ValueAdded typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaGtGtFilteredMethodsCoder >> ___methodAdded: _a [
 
 { #category : #accessing }
 TypShaGtGtFilteredMethodsCoder >> ___newMethodCoderFor: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | CompiledMethod typAsType ];
 		resultType: [ :a :s :r | GtMethodCoder typAsType ];
 		yourself

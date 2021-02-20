@@ -11,7 +11,7 @@ TypShaPhaBlockClosure class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaBlockClosure >> ___cull: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes:
 				[ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType new ] ];
 		resultType: [ :a | a receiverType result ];
@@ -20,7 +20,7 @@ TypShaPhaBlockClosure >> ___cull: _a [
 
 { #category : #accessing }
 TypShaPhaBlockClosure >> ___cull: _a cull: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes:
 				[ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType new ] ];
 		resultType: [ :a | a receiverType result ];
@@ -29,7 +29,7 @@ TypShaPhaBlockClosure >> ___cull: _a cull: _b [
 
 { #category : #accessing }
 TypShaPhaBlockClosure >> ___cull: _a cull: _b cull: _c [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes:
 				[ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType new ] ];
 		resultType: [ :a | a receiverType result ];
@@ -38,7 +38,7 @@ TypShaPhaBlockClosure >> ___cull: _a cull: _b cull: _c [
 
 { #category : #accessing }
 TypShaPhaBlockClosure >> ___cull: _a cull: _b cull: _c cull: _d [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes:
 				[ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType new ] ];
 		resultType: [ :a | a receiverType result ];
@@ -47,7 +47,7 @@ TypShaPhaBlockClosure >> ___cull: _a cull: _b cull: _c cull: _d [
 
 { #category : #accessing }
 TypShaPhaBlockClosure >> ___ensure: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments: {}
@@ -59,7 +59,7 @@ TypShaPhaBlockClosure >> ___ensure: _a [
 
 { #category : #accessing }
 TypShaPhaBlockClosure >> ___on: _a do: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ Exception class typAsType ]
@@ -80,7 +80,7 @@ TypShaPhaBlockClosure >> ___on: _a do: _b [
 
 { #category : #accessing }
 TypShaPhaBlockClosure >> ___value [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | a receiverType result ];
 		yourself
@@ -88,7 +88,7 @@ TypShaPhaBlockClosure >> ___value [
 
 { #category : #'as yet unclassified' }
 TypShaPhaBlockClosure >> ___value: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes:
 				[ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType new ] ];
 		resultType: [ :a | a receiverType result ];
@@ -97,7 +97,7 @@ TypShaPhaBlockClosure >> ___value: _a [
 
 { #category : #'as yet unclassified' }
 TypShaPhaBlockClosure >> ___value: _a value: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes:
 				[ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType new ] ];
 		resultType: [ :a | a receiverType result ];
@@ -106,7 +106,7 @@ TypShaPhaBlockClosure >> ___value: _a value: _b [
 
 { #category : #'as yet unclassified' }
 TypShaPhaBlockClosure >> ___value: _a value: _b value: _c [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes:
 				[ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType new ] ];
 		resultType: [ :a | a receiverType result ];
@@ -115,7 +115,7 @@ TypShaPhaBlockClosure >> ___value: _a value: _b value: _c [
 
 { #category : #'as yet unclassified' }
 TypShaPhaBlockClosure >> ___value: _a value: _b value: _c value: _d [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes:
 				[ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType new ] ];
 		resultType: [ :a | a receiverType result ];
@@ -124,7 +124,7 @@ TypShaPhaBlockClosure >> ___value: _a value: _b value: _c value: _d [
 
 { #category : #accessing }
 TypShaPhaBlockClosure >> ___whileFalse: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments: {}
@@ -136,7 +136,7 @@ TypShaPhaBlockClosure >> ___whileFalse: _a [
 
 { #category : #accessing }
 TypShaPhaBlockClosure >> ___whileTrue: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments: #()

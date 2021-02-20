@@ -11,7 +11,7 @@ TypShaPhaObject class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaObject >> ___asString [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaPhaObject >> ___asString [
 
 { #category : #'as yet unclassified' }
 TypShaPhaObject >> ___asSymbol [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Symbol typAsType ];
 		yourself
@@ -27,7 +27,7 @@ TypShaPhaObject >> ___asSymbol [
 
 { #category : #accessing }
 TypShaPhaObject >> ___assert: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{Boolean typAsType.
 			(BlockClosure
@@ -40,7 +40,7 @@ TypShaPhaObject >> ___assert: _a [
 
 { #category : #'as yet unclassified' }
 TypShaPhaObject >> ___copy [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | a receiverType ];
 		yourself
@@ -48,7 +48,7 @@ TypShaPhaObject >> ___copy [
 
 { #category : #'as yet unclassified' }
 TypShaPhaObject >> ___hash [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Integer typAsType ];
 		yourself
@@ -56,7 +56,7 @@ TypShaPhaObject >> ___hash [
 
 { #category : #accessing }
 TypShaPhaObject >> ___instVarNamed: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
@@ -64,7 +64,7 @@ TypShaPhaObject >> ___instVarNamed: _a [
 
 { #category : #accessing }
 TypShaPhaObject >> ___isBlock [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -72,7 +72,7 @@ TypShaPhaObject >> ___isBlock [
 
 { #category : #accessing }
 TypShaPhaObject >> ___isKindOf: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | {ClassDescription typAsType} at: i ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -80,7 +80,7 @@ TypShaPhaObject >> ___isKindOf: _a [
 
 { #category : #accessing }
 TypShaPhaObject >> ___isNotNil [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -88,7 +88,7 @@ TypShaPhaObject >> ___isNotNil [
 
 { #category : #accessing }
 TypShaPhaObject >> ___perform: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | 
 			| argument |
@@ -108,7 +108,7 @@ TypShaPhaObject >> ___perform: _a [
 
 { #category : #accessing }
 TypShaPhaObject >> ___perform: _a withEnoughArguments: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ Symbol typAsType ]
@@ -119,7 +119,7 @@ TypShaPhaObject >> ___perform: _a withEnoughArguments: _b [
 
 { #category : #accessing }
 TypShaPhaObject >> ___printOn: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			Stream typAsType
 				copyWithParameters: {('@A' -> Character typAsType)} asDictionary ];
@@ -129,7 +129,7 @@ TypShaPhaObject >> ___printOn: _a [
 
 { #category : #'as yet unclassified' }
 TypShaPhaObject >> ___printString [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself
@@ -137,7 +137,7 @@ TypShaPhaObject >> ___printString [
 
 { #category : #'as yet unclassified' }
 TypShaPhaObject >> ___yourself [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | a receiverType ];
 		yourself
@@ -145,7 +145,7 @@ TypShaPhaObject >> ___yourself [
 
 { #category : #'as yet unclassified' }
 TypShaPhaObject >> ~~~-> _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | a argumentTypes at: 1 ];
 		resultType: [ :a :s :r | 
 			Association typAsType
@@ -157,7 +157,7 @@ TypShaPhaObject >> ~~~-> _a [
 
 { #category : #'as yet unclassified' }
 TypShaPhaObject >> ~~~= _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Object typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -165,7 +165,7 @@ TypShaPhaObject >> ~~~= _a [
 
 { #category : #accessing }
 TypShaPhaObject >> ~~~~= _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | TypUnknownType new asNullable ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself

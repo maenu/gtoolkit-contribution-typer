@@ -11,7 +11,7 @@ TypShaPhaRBLiteralArrayNode class >> shadowedClass [
 
 { #category : #'as yet unclassified' }
 TypShaPhaRBLiteralArrayNode >> ___contents [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
 				copyWithParameters: {('@A' -> RBLiteralNode typAsType)} asDictionary ];

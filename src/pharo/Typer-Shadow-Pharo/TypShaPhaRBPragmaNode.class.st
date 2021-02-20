@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaPhaRBPragmaNode class >> ___selector: _a arguments: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ Symbol typAsType ]
@@ -23,7 +23,7 @@ TypShaPhaRBPragmaNode class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaRBPragmaNode >> ___selector [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Symbol typAsType ];
 		yourself

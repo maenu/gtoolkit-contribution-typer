@@ -11,7 +11,7 @@ TypShaGtGtPhlowView class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtPhlowView >> ___actionStencil: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments: {}

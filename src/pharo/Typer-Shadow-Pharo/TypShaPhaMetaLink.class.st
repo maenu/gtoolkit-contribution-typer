@@ -11,7 +11,7 @@ TypShaPhaMetaLink class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaMetaLink >> ___arguments: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			SequenceableCollection typAsType
 				copyWithParameters: {('@A' -> Symbol typAsType)} asDictionary ];
@@ -21,7 +21,7 @@ TypShaPhaMetaLink >> ___arguments: _a [
 
 { #category : #accessing }
 TypShaPhaMetaLink >> ___control: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -29,7 +29,7 @@ TypShaPhaMetaLink >> ___control: _a [
 
 { #category : #accessing }
 TypShaPhaMetaLink >> ___metaObject: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{Symbol typAsType.
 			Object typAsType} typAsType ];
@@ -39,7 +39,7 @@ TypShaPhaMetaLink >> ___metaObject: _a [
 
 { #category : #accessing }
 TypShaPhaMetaLink >> ___selector: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself

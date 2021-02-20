@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaPhaException class >> ___signal [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
 		signalsAlways: [ true ];

@@ -11,7 +11,7 @@ TypShaPhaAssociation class >> shadowedClass [
 
 { #category : #'as yet unclassified' }
 TypShaPhaAssociation >> ___key [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | '@A' typAsVariableType resolveIn: a receiverType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaPhaAssociation >> ___key [
 
 { #category : #'as yet unclassified' }
 TypShaPhaAssociation >> ___value [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | '@B' typAsVariableType resolveIn: a receiverType ];
 		yourself

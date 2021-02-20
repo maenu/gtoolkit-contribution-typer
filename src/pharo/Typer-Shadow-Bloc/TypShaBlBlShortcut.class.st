@@ -11,7 +11,7 @@ TypShaBlBlShortcut class >> shadowedClass [
 
 { #category : #accessing }
 TypShaBlBlShortcut >> ___action: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments: {BlElement typAsType}
@@ -23,7 +23,7 @@ TypShaBlBlShortcut >> ___action: _a [
 
 { #category : #accessing }
 TypShaBlBlShortcut >> ___combination: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | BlKeyCombination typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself

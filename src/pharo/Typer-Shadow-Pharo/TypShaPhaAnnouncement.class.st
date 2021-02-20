@@ -11,7 +11,7 @@ TypShaPhaAnnouncement class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaAnnouncement class >> ~~~, _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Announcement class typAsType ];
 		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself

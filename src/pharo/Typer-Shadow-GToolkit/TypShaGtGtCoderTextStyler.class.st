@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 TypShaGtGtCoderTextStyler class >> ___forCoder: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | GtMethodCoder typAsType ];
 		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
 		yourself
@@ -22,7 +22,7 @@ TypShaGtGtCoderTextStyler class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtCoderTextStyler >> ___extraStyle: _a ast: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ BlText typAsType ]
@@ -33,7 +33,7 @@ TypShaGtGtCoderTextStyler >> ___extraStyle: _a ast: _b [
 
 { #category : #accessing }
 TypShaGtGtCoderTextStyler >> ___style: _a ast: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ BlText typAsType ]

@@ -11,7 +11,7 @@ TypShaSmaSmaCCToken class >> shadowedClass [
 
 { #category : #accessing }
 TypShaSmaSmaCCToken >> ___stopPosition [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Integer typAsType asNullable ];
 		yourself
@@ -19,7 +19,7 @@ TypShaSmaSmaCCToken >> ___stopPosition [
 
 { #category : #accessing }
 TypShaSmaSmaCCToken >> ___value [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself

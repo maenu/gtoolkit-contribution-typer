@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaPhaCharacter class >> ___value: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Integer typAsType ];
 		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaPhaCharacter class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaCharacter >> ___isUppercase [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself

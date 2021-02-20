@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaPhaKey class >> ___h [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Key typAsType ];
 		yourself
@@ -14,7 +14,7 @@ TypShaPhaKey class >> ___h [
 
 { #category : #accessing }
 TypShaPhaKey class >> ___t [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Key typAsType ];
 		yourself

@@ -11,7 +11,7 @@ TypShaPhaBoolean class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaBoolean >> ___and: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ {Boolean typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithArguments: {}
@@ -23,7 +23,7 @@ TypShaPhaBoolean >> ___and: _a [
 
 { #category : #accessing }
 TypShaPhaBoolean >> ___ifFalse: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments: {}
@@ -35,7 +35,7 @@ TypShaPhaBoolean >> ___ifFalse: _a [
 
 { #category : #accessing }
 TypShaPhaBoolean >> ___ifTrue: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments: {}
@@ -47,7 +47,7 @@ TypShaPhaBoolean >> ___ifTrue: _a [
 
 { #category : #accessing }
 TypShaPhaBoolean >> ___ifTrue: _a ifFalse: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ BlockClosure
 				typAsFunctionTypeWithArguments: {}
 				result: TypUnknownType new
@@ -63,7 +63,7 @@ TypShaPhaBoolean >> ___ifTrue: _a ifFalse: _b [
 
 { #category : #'as yet unclassified' }
 TypShaPhaBoolean >> ___not [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Boolean typAsType ];
 		yourself
@@ -71,7 +71,7 @@ TypShaPhaBoolean >> ___not [
 
 { #category : #accessing }
 TypShaPhaBoolean >> ___or: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ {Boolean typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithArguments: {}

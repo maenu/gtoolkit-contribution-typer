@@ -10,7 +10,7 @@ Class {
 
 { #category : #accessing }
 TypShaGtGtMethodsCoder class >> ___forMethods: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			Collection typAsType
 				copyWithParameters: {('@A' -> CompiledMethod typAsType)} asDictionary ];
@@ -25,7 +25,7 @@ TypShaGtGtMethodsCoder class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtMethodsCoder >> ___announce: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Announcement typAsType ];
 		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself

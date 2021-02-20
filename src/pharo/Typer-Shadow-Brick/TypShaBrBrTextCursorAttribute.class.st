@@ -11,7 +11,7 @@ TypShaBrBrTextCursorAttribute class >> shadowedClass [
 
 { #category : #accessing }
 TypShaBrBrTextCursorAttribute >> ___enterAction: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments:
@@ -25,7 +25,7 @@ TypShaBrBrTextCursorAttribute >> ___enterAction: _a [
 
 { #category : #accessing }
 TypShaBrBrTextCursorAttribute >> ___leaveAction: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments:

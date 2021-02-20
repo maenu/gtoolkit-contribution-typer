@@ -11,7 +11,7 @@ TypShaGtGtPharoProgramNode class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtPharoProgramNode >> ___actionForSelector: _a startingWith: _b at: _c [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ String typAsType ]
@@ -24,7 +24,7 @@ TypShaGtGtPharoProgramNode >> ___actionForSelector: _a startingWith: _b at: _c [
 
 { #category : #accessing }
 TypShaGtGtPharoProgramNode >> ___completionActionsFor: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | GtPharoCompletionStrategy typAsType ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
@@ -34,7 +34,7 @@ TypShaGtGtPharoProgramNode >> ___completionActionsFor: _a [
 
 { #category : #accessing }
 TypShaGtGtPharoProgramNode >> ___source [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself

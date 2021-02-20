@@ -15,7 +15,7 @@ TypShaGtGtMethodCoderAddOns class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtMethodCoderAddOns >> ___addMainAction: _a icon: _b action: _c [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ Symbol typAsType ]
@@ -31,7 +31,7 @@ TypShaGtGtMethodCoderAddOns >> ___addMainAction: _a icon: _b action: _c [
 
 { #category : #accessing }
 TypShaGtGtMethodCoderAddOns >> ___addShortcut: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | BlShortcut typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -39,7 +39,7 @@ TypShaGtGtMethodCoderAddOns >> ___addShortcut: _a [
 
 { #category : #accessing }
 TypShaGtGtMethodCoderAddOns >> ___addStyler: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | GtCoderBodyStyler typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -47,7 +47,7 @@ TypShaGtGtMethodCoderAddOns >> ___addStyler: _a [
 
 { #category : #accessing }
 TypShaGtGtMethodCoderAddOns >> ___stylers [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType

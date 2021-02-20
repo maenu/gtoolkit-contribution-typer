@@ -11,7 +11,7 @@ TypShaPhaForm class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaForm >> ___asElement [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | BlElement typAsType ];
 		yourself

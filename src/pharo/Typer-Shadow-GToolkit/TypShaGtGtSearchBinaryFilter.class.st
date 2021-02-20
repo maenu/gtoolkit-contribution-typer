@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaGtGtSearchBinaryFilter class >> ___forFilter: _a filter: _b [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | GtCoderMethodsFilter typAsType ];
 		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
 		yourself

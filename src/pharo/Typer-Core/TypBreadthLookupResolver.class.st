@@ -15,6 +15,7 @@ TypBreadthLookupResolver >> initialize [
 
 { #category : #initialization }
 TypBreadthLookupResolver >> reset [
+	super reset.
 	resolvers do: #reset
 ]
 
@@ -32,5 +33,5 @@ TypBreadthLookupResolver >> resolvers [
 { #category : #accessing }
 TypBreadthLookupResolver >> resolvers: anObject [
 	<typTypeArgument: 1 as: 'SequenceableCollection<TypLookupResolver>'>
-	resolvers := anObject asOrderedCollection
+	resolvers := anObject
 ]

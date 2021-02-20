@@ -11,7 +11,7 @@ TypShaGtGtSourceCoder class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtSourceCoder >> ___classOrMetaClass [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | ClassDescription typAsType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaGtGtSourceCoder >> ___classOrMetaClass [
 
 { #category : #accessing }
 TypShaGtGtSourceCoder >> ___collapsedEditor [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | BrTextEditor typAsType ];
 		yourself
@@ -27,7 +27,7 @@ TypShaGtGtSourceCoder >> ___collapsedEditor [
 
 { #category : #accessing }
 TypShaGtGtSourceCoder >> ___expanded: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Boolean typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -35,7 +35,7 @@ TypShaGtGtSourceCoder >> ___expanded: _a [
 
 { #category : #accessing }
 TypShaGtGtSourceCoder >> ___methodsCoder: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | GtMethodsCoder typAsType ];
 		resultType: [ :a :s :r | a argumentTypes at: 1 ];
 		yourself
@@ -43,7 +43,7 @@ TypShaGtGtSourceCoder >> ___methodsCoder: _a [
 
 { #category : #accessing }
 TypShaGtGtSourceCoder >> ___source [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself

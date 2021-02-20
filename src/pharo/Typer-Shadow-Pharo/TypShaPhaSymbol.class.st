@@ -11,7 +11,7 @@ TypShaPhaSymbol class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaSymbol >> ___isBinary [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaPhaSymbol >> ___isBinary [
 
 { #category : #accessing }
 TypShaPhaSymbol >> ___isKeyword [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -27,7 +27,7 @@ TypShaPhaSymbol >> ___isKeyword [
 
 { #category : #accessing }
 TypShaPhaSymbol >> ___isUnary [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself

@@ -11,7 +11,7 @@ TypShaGtGtPhlowProtoView class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtPhlowProtoView >> ___explicit [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | GtPhlowExplicitView typAsType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaGtGtPhlowProtoView >> ___explicit [
 
 { #category : #accessing }
 TypShaGtGtPhlowProtoView >> ___mondrian [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | GtPhlowMondrianView typAsType ];
 		yourself
@@ -27,7 +27,7 @@ TypShaGtGtPhlowProtoView >> ___mondrian [
 
 { #category : #accessing }
 TypShaGtGtPhlowProtoView >> ___priority: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -35,7 +35,7 @@ TypShaGtGtPhlowProtoView >> ___priority: _a [
 
 { #category : #accessing }
 TypShaGtGtPhlowProtoView >> ___title: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself

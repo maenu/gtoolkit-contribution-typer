@@ -11,7 +11,7 @@ TypShaGtGtMondrianGraphBuilder class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtMondrianGraphBuilder >> ___stencil: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments: {TypUnknownType new}

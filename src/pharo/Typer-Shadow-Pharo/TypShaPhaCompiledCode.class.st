@@ -11,7 +11,7 @@ TypShaPhaCompiledCode class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaCompiledCode >> ___isPrimitive [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself

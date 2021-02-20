@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaPhaRBParser class >> ___parseFaultyMethod: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | RBMethodNode typAsType ];
 		yourself

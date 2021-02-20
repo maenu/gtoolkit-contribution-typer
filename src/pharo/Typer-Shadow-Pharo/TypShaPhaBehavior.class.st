@@ -11,7 +11,7 @@ TypShaPhaBehavior class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___allSubclasses [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
@@ -21,7 +21,7 @@ TypShaPhaBehavior >> ___allSubclasses [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___basicNew [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			(a receiverType asCollection
@@ -35,7 +35,7 @@ TypShaPhaBehavior >> ___basicNew [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___canUnderstand: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -43,7 +43,7 @@ TypShaPhaBehavior >> ___canUnderstand: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___classVarNames [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Set typAsType
@@ -53,7 +53,7 @@ TypShaPhaBehavior >> ___classVarNames [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___compile: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | Symbol typAsType ];
 		yourself
@@ -61,7 +61,7 @@ TypShaPhaBehavior >> ___compile: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___compiledMethodAt: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | CompiledMethod typAsType ];
 		yourself
@@ -69,7 +69,7 @@ TypShaPhaBehavior >> ___compiledMethodAt: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___includesBehavior: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Behavior typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -77,7 +77,7 @@ TypShaPhaBehavior >> ___includesBehavior: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___includesSelector: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -85,7 +85,7 @@ TypShaPhaBehavior >> ___includesSelector: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___inheritsFrom: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | ClassDescription typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -93,7 +93,7 @@ TypShaPhaBehavior >> ___inheritsFrom: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___instVarNames [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
@@ -103,7 +103,7 @@ TypShaPhaBehavior >> ___instVarNames [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___isAbstract [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
@@ -111,7 +111,7 @@ TypShaPhaBehavior >> ___isAbstract [
 
 { #category : #'as yet unclassified' }
 TypShaPhaBehavior >> ___lookupSelector: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ Symbol typAsType ];
 		resultType: [ CompiledMethod typAsType ];
 		yourself
@@ -119,7 +119,7 @@ TypShaPhaBehavior >> ___lookupSelector: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___methodNamed: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | CompiledMethod typAsType ];
 		yourself
@@ -127,7 +127,7 @@ TypShaPhaBehavior >> ___methodNamed: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___methods [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Collection typAsType
 				copyWithParameters: {('@A' -> CompiledMethod typAsType)} asDictionary ];
@@ -136,7 +136,7 @@ TypShaPhaBehavior >> ___methods [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___name [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself
@@ -144,7 +144,7 @@ TypShaPhaBehavior >> ___name [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___new [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			(a receiverType asCollection
@@ -158,7 +158,7 @@ TypShaPhaBehavior >> ___new [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___selectors [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Collection typAsType
@@ -168,7 +168,7 @@ TypShaPhaBehavior >> ___selectors [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___superclass [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | ClassDescription typAsType ];
 		yourself
@@ -176,7 +176,7 @@ TypShaPhaBehavior >> ___superclass [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___whichClassDefinesClassVar: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | Class typAsType ];
 		yourself
@@ -184,7 +184,7 @@ TypShaPhaBehavior >> ___whichClassDefinesClassVar: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___whichClassDefinesInstVar: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | ClassDescription typAsType ];
 		yourself
@@ -192,7 +192,7 @@ TypShaPhaBehavior >> ___whichClassDefinesInstVar: _a [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ___withAllSuperclasses [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType
@@ -202,7 +202,7 @@ TypShaPhaBehavior >> ___withAllSuperclasses [
 
 { #category : #accessing }
 TypShaPhaBehavior >> ~~~>> _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | CompiledMethod typAsType ];
 		yourself

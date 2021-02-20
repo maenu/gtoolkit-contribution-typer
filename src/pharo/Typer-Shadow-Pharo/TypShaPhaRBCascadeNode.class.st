@@ -11,7 +11,7 @@ TypShaPhaRBCascadeNode class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaRBCascadeNode >> ___messages [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			SequenceableCollection typAsType

@@ -16,7 +16,7 @@ TypShaShadow class >> asMethodLookupResultFor: aSymbol [
 	^ self class selectors
 		detect: [ :e | e = ('___' , aSymbol) or: [ e = ('~~~' , aSymbol) ] ]
 		ifFound: [ :e | self perform: e asSymbol withEnoughArguments: {} ]
-		ifNone: [ TypMethodLookupResult new
+		ifNone: [ TypFunctionType new
 				argumentTypes: [ TypUnknownType new ];
 				resultType: [ TypUnknownType new ];
 				signalsAlways: [ nil ];

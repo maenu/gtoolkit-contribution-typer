@@ -11,7 +11,7 @@ TypShaPhaStream class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaStream >> ___nextPutAll: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Collection typAsType ];
 		resultType: [ :a :s :r | a argumentTypes first ];
 		yourself
@@ -25,10 +25,12 @@ TypShaPhaStream >> asType: aClass [
 
 { #category : #accessing }
 TypShaPhaStream >> ~~~<< _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			Collection typAsType
-				copyWithParameters: {('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))} asDictionary ];
+				copyWithParameters:
+					{('@A' -> ('@A' typAsVariableType resolveIn: a receiverType))}
+						asDictionary ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]

@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaBlBlKeyCombination class >> ___builder [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | BlKeyCombinationBuilder typAsType ];
 		yourself

@@ -11,7 +11,7 @@ TypShaGtGtPhlowObjectEvent class >> shadowedClass [
 
 { #category : #accessing }
 TypShaGtGtPhlowObjectEvent >> ___object: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Object typAsType asNullable ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaGtGtPhlowObjectEvent >> ___object: _a [
 
 { #category : #accessing }
 TypShaGtGtPhlowObjectEvent >> ___sourceElement: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | BlElement typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself

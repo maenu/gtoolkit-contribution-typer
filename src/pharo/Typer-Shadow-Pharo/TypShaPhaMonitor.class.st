@@ -11,7 +11,7 @@ TypShaPhaMonitor class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaMonitor >> ___critical: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments: {}

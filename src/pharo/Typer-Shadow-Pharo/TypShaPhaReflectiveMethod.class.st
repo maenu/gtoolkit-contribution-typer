@@ -11,7 +11,7 @@ TypShaPhaReflectiveMethod class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaReflectiveMethod >> ___compiledMethod [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | CompiledMethod typAsType ];
 		yourself

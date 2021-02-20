@@ -46,10 +46,8 @@ TypPraMethodLookupResolver >> resolve: aLookup [
 		flag: 'TODO use signals and rework once function type refactored'.
 	^ {(TypFunctionType
 		classDescription: classDescription
-		argumentsSize: argumentTypes size
+		result: resultType
+		arguments: argumentTypes
 		argumentsOptional: false
-		parameters:
-			({('@0' -> resultType)}
-				, (argumentTypes withIndexCollect: [ :e :i | ('@' , i asString) -> e ]))
-				asOrderedDictionary)}
+		signalsAlways: signalsAlways)}
 ]

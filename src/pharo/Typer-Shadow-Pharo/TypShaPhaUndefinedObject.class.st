@@ -11,7 +11,7 @@ TypShaPhaUndefinedObject class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaUndefinedObject >> ___ifNil: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithArguments: {}
@@ -30,7 +30,7 @@ TypShaPhaUndefinedObject >> ___ifNil: _a [
 
 { #category : #accessing }
 TypShaPhaUndefinedObject >> ___ifNotNil: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{Symbol typAsType.
 			(BlockClosure

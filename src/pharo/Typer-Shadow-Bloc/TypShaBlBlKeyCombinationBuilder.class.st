@@ -11,7 +11,7 @@ TypShaBlBlKeyCombinationBuilder class >> shadowedClass [
 
 { #category : #accessing }
 TypShaBlBlKeyCombinationBuilder >> ___build [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | BlKeyCombination typAsType ];
 		yourself
@@ -19,7 +19,7 @@ TypShaBlBlKeyCombinationBuilder >> ___build [
 
 { #category : #accessing }
 TypShaBlBlKeyCombinationBuilder >> ___key: _a [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Key typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself

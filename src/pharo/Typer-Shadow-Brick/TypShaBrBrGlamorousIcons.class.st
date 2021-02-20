@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaBrBrGlamorousIcons class >> ___browse [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Form typAsType ];
 		yourself
@@ -14,7 +14,7 @@ TypShaBrBrGlamorousIcons class >> ___browse [
 
 { #category : #accessing }
 TypShaBrBrGlamorousIcons class >> ___inspect [
-	^ TypMethodLookupResult new
+	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Form typAsType ];
 		yourself
