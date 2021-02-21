@@ -9,18 +9,6 @@ TypShaPhaString class >> shadowedClass [
 	^ String class
 ]
 
-{ #category : #converting }
-TypShaPhaString >> asType: aClass [
-	^ aClass == String
-		ifTrue: [ | type |
-			type := aClass typAsNamedType.
-			type
-				superType:
-					(type superType copyWithParameters: {Character typAsType}).
-			^ type ]
-		ifFalse: [ aClass typAsNamedType ]
-]
-
 { #category : #shadow }
 TypShaPhaString >> mAsClass: aLookup [ 
 	<typShaMethod: 'asClass'>
@@ -119,4 +107,13 @@ TypShaPhaString >> mTranslated: aLookup [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself
+]
+
+{ #category : #converting }
+TypShaPhaString >> resolveType: aLookup [
+	| type |
+	type := aLookup classDescription typAsNamedType.
+	type
+		superType: (type superType copyWithParameters: {Character typAsType}).
+	^ type
 ]

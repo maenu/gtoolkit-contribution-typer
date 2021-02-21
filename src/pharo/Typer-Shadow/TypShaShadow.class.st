@@ -11,13 +11,6 @@ Class {
 	#category : #'Typer-Shadow'
 }
 
-{ #category : #accessing }
-TypShaShadow class >> asType: aClass [
-	<typTypeArgument: 1 as: 'ClassDescription'>
-	<typTypeResultAs: 'TypNamedType'>
-	^ aClass typAsNamedType
-]
-
 { #category : #'class initialization' }
 TypShaShadow class >> initialize [
 ]
@@ -55,27 +48,25 @@ TypShaShadow class >> resetAll [
 TypShaShadow class >> resolveMethod: aLookup [
 	^ (self class methods
 		select: [ :e | e typShaResolvesMethod: aLookup selector ])
-		flatCollect: [ :e | self perform: e selector with: aLookup ]
+		collect: [ :e | self perform: e selector with: aLookup ]
+]
+
+{ #category : #accessing }
+TypShaShadow class >> resolveType: aLookup [
+	^ aLookup classDescription typAsNamedType
 ]
 
 { #category : #'as yet unclassified' }
 TypShaShadow class >> resolveVariable: aLookup [
 	^ (self class methods
 		select: [ :e | e typShaResolvesVariable: aLookup selector ])
-		flatCollect: [ :e | self perform: e selector with: aLookup ]
+		collect: [ :e | self perform: e selector with: aLookup ]
 ]
 
 { #category : #'as yet unclassified' }
 TypShaShadow class >> shadowedClass [
-	<typTypeResultAs: 'ClassDescription'>
+	<typTypeResultAs: 'MetaClass'>
 	self subclassResponsibility
-]
-
-{ #category : #converting }
-TypShaShadow >> asType: aClass [
-	<typTypeArgument: 1 as: 'ClassDescription'>
-	<typTypeResultAs: 'TypType'>
-	^ aClass typAsNamedType
 ]
 
 { #category : #initialization }
@@ -98,18 +89,23 @@ TypShaShadow >> priority: anObject [
 TypShaShadow >> resolveMethod: aLookup [
 	^ (self class methods
 		select: [ :e | e typShaResolvesMethod: aLookup selector ])
-		flatCollect: [ :e | self perform: e selector with: aLookup ]
+		collect: [ :e | self perform: e selector with: aLookup ]
+]
+
+{ #category : #converting }
+TypShaShadow >> resolveType: aLookup [
+	^ aLookup classDescription typAsNamedType
 ]
 
 { #category : #'as yet unclassified' }
 TypShaShadow >> resolveVariable: aLookup [
 	^ (self class methods
 		select: [ :e | e typShaResolvesVariable: aLookup selector ])
-		flatCollect: [ :e | self perform: e selector with: aLookup ]
+		collect: [ :e | self perform: e selector with: aLookup ]
 ]
 
 { #category : #accessing }
 TypShaShadow >> shadowedClass [
-	<typTypeResultAs: 'ClassDescription'>
+	<typTypeResultAs: 'Class'>
 	^ self class shadowedClass instanceSide
 ]

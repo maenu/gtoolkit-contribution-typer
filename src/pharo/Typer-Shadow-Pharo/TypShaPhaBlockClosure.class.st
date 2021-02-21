@@ -9,15 +9,6 @@ TypShaPhaBlockClosure class >> shadowedClass [
 	^ BlockClosure class
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaBlockClosure >> asType: aClass [
-	^ aClass
-		typAsFunctionTypeWithResult: TypUnknownType new
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
-]
-
 { #category : #shadow }
 TypShaPhaBlockClosure >> mCull: aLookup [ 
 	<typShaMethod: 'cull:'>
@@ -173,4 +164,13 @@ TypShaPhaBlockClosure >> mWhileTrue: aLookup [
 				signalsAlways: false ];
 		resultType: [ :a :s :r | TypNilType new ];
 		yourself
+]
+
+{ #category : #'as yet unclassified' }
+TypShaPhaBlockClosure >> resolveType: aLookup [
+	^ aLookup classDescription
+		typAsFunctionTypeWithResult: TypUnknownType new
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

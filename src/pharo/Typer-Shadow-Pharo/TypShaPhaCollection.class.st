@@ -62,12 +62,6 @@ TypShaPhaCollection class >> shadowedClass [
 	^ Collection class
 ]
 
-{ #category : #accessing }
-TypShaPhaCollection >> asType: aClass [
-	^ aClass
-		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
-]
-
 { #category : #shadow }
 TypShaPhaCollection >> mAdd: aLookup [ 
 	<typShaMethod: 'add:'>
@@ -755,4 +749,10 @@ TypShaPhaCollection >> mSize: aLookup [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Integer typAsType ];
 		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaCollection >> resolveType: aLookup [
+	^ aLookup classDescription
+		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
 ]

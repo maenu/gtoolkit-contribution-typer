@@ -9,14 +9,6 @@ TypShaPhaAssociation class >> shadowedClass [
 	^ Association class
 ]
 
-{ #category : #accessing }
-TypShaPhaAssociation >> asType: aClass [
-	^ aClass
-		typAsParametricTypeWithParameters:
-			{('@A' -> '@A' typAsVariableType).
-			('@B' -> '@B' typAsVariableType)} asOrderedDictionary
-]
-
 { #category : #shadow }
 TypShaPhaAssociation >> mKey: aLookup [ 
 	<typShaMethod: 'key'>
@@ -35,4 +27,12 @@ TypShaPhaAssociation >> mValue: aLookup [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | '@B' typAsVariableType resolveIn: a receiverType ];
 		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaAssociation >> resolveType: aLookup [
+	^ aLookup classDescription
+		typAsParametricTypeWithParameters:
+			{('@A' -> '@A' typAsVariableType).
+			('@B' -> '@B' typAsVariableType)} asOrderedDictionary
 ]

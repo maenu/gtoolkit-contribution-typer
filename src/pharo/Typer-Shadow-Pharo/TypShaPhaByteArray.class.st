@@ -10,12 +10,10 @@ TypShaPhaByteArray class >> shadowedClass [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaPhaByteArray >> asType: aClass [
-	^ aClass == ByteArray
-		ifTrue: [ | type |
-			type := aClass typAsNamedType.
-			type
-				superType: (type superType copyWithParameters: {Integer typAsType}).
-			^ type ]
-		ifFalse: [ aClass typAsNamedType ]
+TypShaPhaByteArray >> resolveType: aLookup [
+	| type |
+	type := aLookup classDescription typAsNamedType.
+	type
+		superType: (type superType copyWithParameters: {Integer typAsType}).
+	^ type
 ]

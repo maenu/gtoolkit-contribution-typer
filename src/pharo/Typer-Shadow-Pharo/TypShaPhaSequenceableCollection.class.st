@@ -19,12 +19,6 @@ TypShaPhaSequenceableCollection class >> shadowedClass [
 	^ SequenceableCollection class
 ]
 
-{ #category : #converting }
-TypShaPhaSequenceableCollection >> asType: aClass [
-	^ aClass
-		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
-]
-
 { #category : #shadow }
 TypShaPhaSequenceableCollection >> mAt: aLookup [ 
 	<typShaMethod: 'at:'>
@@ -249,4 +243,10 @@ TypShaPhaSequenceableCollection >> mWithIndexSelect: aLookup [
 				signalsAlways: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
+]
+
+{ #category : #converting }
+TypShaPhaSequenceableCollection >> resolveType: aLookup [
+	^ aLookup classDescription
+		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
 ]

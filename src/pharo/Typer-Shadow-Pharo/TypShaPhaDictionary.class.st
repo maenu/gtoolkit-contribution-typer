@@ -9,14 +9,6 @@ TypShaPhaDictionary class >> shadowedClass [
 	^ Dictionary class
 ]
 
-{ #category : #accessing }
-TypShaPhaDictionary >> asType: aClass [
-	^ aClass
-		typAsParametricTypeWithParameters:
-			{('@B' -> '@B' typAsVariableType).
-			('@A' -> '@A' typAsVariableType)} asOrderedDictionary
-]
-
 { #category : #shadow }
 TypShaPhaDictionary >> mAnyOne: aLookup [ 
 	<typShaMethod: 'anyOne'>
@@ -291,4 +283,12 @@ TypShaPhaDictionary >> mValues: aLookup [
 			Collection typAsType
 				copyWithParameters: {('@A' typAsVariableType resolveIn: a receiverType)} ];
 		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaDictionary >> resolveType: aLookup [
+	^ aLookup classDescription
+		typAsParametricTypeWithParameters:
+			{('@B' -> '@B' typAsVariableType).
+			('@A' -> '@A' typAsVariableType)} asOrderedDictionary
 ]

@@ -9,12 +9,6 @@ TypShaPhaOrderedCollection class >> shadowedClass [
 	^ OrderedCollection class
 ]
 
-{ #category : #converting }
-TypShaPhaOrderedCollection >> asType: aClass [
-	^ aClass
-		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
-]
-
 { #category : #shadow }
 TypShaPhaOrderedCollection >> mAddFirst: aLookup [ 
 	<typShaMethod: 'addFirst:'>
@@ -46,4 +40,10 @@ TypShaPhaOrderedCollection >> mRemoveLast: aLookup [
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | '@A' typAsVariableType resolveIn: a receiverType ];
 		yourself
+]
+
+{ #category : #converting }
+TypShaPhaOrderedCollection >> resolveType: aLookup [
+	^ aLookup classDescription
+		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
 ]

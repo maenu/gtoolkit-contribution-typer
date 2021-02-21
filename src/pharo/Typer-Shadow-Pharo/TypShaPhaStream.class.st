@@ -9,12 +9,6 @@ TypShaPhaStream class >> shadowedClass [
 	^ Stream class
 ]
 
-{ #category : #accessing }
-TypShaPhaStream >> asType: aClass [
-	^ aClass
-		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
-]
-
 { #category : #shadow }
 TypShaPhaStream >> mBinary380: aLookup [ 
 	<typShaMethod: '<<'>
@@ -35,4 +29,10 @@ TypShaPhaStream >> mNextPutAll: aLookup [
 		argumentTypes: [ :i :a :s :r | Collection typAsType ];
 		resultType: [ :a :s :r | a argumentTypes first ];
 		yourself
+]
+
+{ #category : #accessing }
+TypShaPhaStream >> resolveType: aLookup [
+	^ aLookup classDescription
+		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
 ]
