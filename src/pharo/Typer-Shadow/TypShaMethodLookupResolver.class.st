@@ -13,7 +13,6 @@ TypShaMethodLookupResolver >> resolve: aLookup [
 		ifFalse: [ TypNoTypeError signal ].
 	aLookup receiverType hasClassDescription
 		ifFalse: [ TypNoTypeError signal ].
-	^ (aLookup receiverType classDescription typShaShadows
-		collect: [ :f | f asMethodLookupResultFor: aLookup selector ])
-		reject: #isNil
+	^ aLookup receiverType classDescription typShaShadows
+		flatCollect: [ :f | f resolveMethod: aLookup copy ]
 ]

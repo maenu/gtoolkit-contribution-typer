@@ -11,14 +11,6 @@ Class {
 	#category : #'Typer-Shadow'
 }
 
-{ #category : #converting }
-TypShaShadow class >> asMethodLookupResultFor: aSymbol [
-	^ self class selectors
-		detect: [ :e | e = ('___' , aSymbol) or: [ e = ('~~~' , aSymbol) ] ]
-		ifFound: [ :e | self perform: e asSymbol withEnoughArguments: {} ]
-		ifNone: [ TypNoTypeError signal ]
-]
-
 { #category : #accessing }
 TypShaShadow class >> asType: aClass [
 	<typTypeArgument: 1 as: 'ClassDescription'>
@@ -60,17 +52,23 @@ TypShaShadow class >> resetAll [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaShadow class >> shadowedClass [
-	<typTypeResultAs: 'ClassDescription'>
-	self subclassResponsibility
+TypShaShadow class >> resolveMethod: aLookup [
+	^ (self class methods
+		select: [ :e | e typShaResolvesMethod: aLookup selector ])
+		flatCollect: [ :e | self perform: e selector with: aLookup ]
 ]
 
 { #category : #'as yet unclassified' }
-TypShaShadow >> asMethodLookupResultFor: aSymbol [
-	^ self class selectors
-		detect: [ :e | e = ('___' , aSymbol) or: [ e = ('~~~' , aSymbol) ] ]
-		ifFound: [ :e | self perform: e asSymbol withEnoughArguments: {} ]
-		ifNone: [ nil ]
+TypShaShadow class >> resolveVariable: aLookup [
+	^ (self class methods
+		select: [ :e | e typShaResolvesVariable: aLookup selector ])
+		flatCollect: [ :e | self perform: e selector with: aLookup ]
+]
+
+{ #category : #'as yet unclassified' }
+TypShaShadow class >> shadowedClass [
+	<typTypeResultAs: 'ClassDescription'>
+	self subclassResponsibility
 ]
 
 { #category : #converting }
@@ -78,19 +76,6 @@ TypShaShadow >> asType: aClass [
 	<typTypeArgument: 1 as: 'ClassDescription'>
 	<typTypeResultAs: 'TypType'>
 	^ aClass typAsNamedType
-]
-
-{ #category : #'as yet unclassified' }
-TypShaShadow >> asVariableLookupResultFor: aSymbol [
-	^ aSymbol first isUppercase
-		ifTrue: [ self class classVarNames
-				detect: [ :e | e = ('___' , aSymbol) ]
-				ifFound: [ :e | self class instanceSide classVarNamed: e ]
-				ifNone: [ nil ] ]
-		ifFalse: [ self class instVarNames
-				detect: [ :e | e = ('___' , aSymbol) ]
-				ifFound: [ :e | self instVarNamed: e ]
-				ifNone: [ nil ] ]
 ]
 
 { #category : #initialization }
@@ -107,6 +92,20 @@ TypShaShadow >> priority [
 { #category : #accessing }
 TypShaShadow >> priority: anObject [
 	priority := anObject
+]
+
+{ #category : #'as yet unclassified' }
+TypShaShadow >> resolveMethod: aLookup [
+	^ (self class methods
+		select: [ :e | e typShaResolvesMethod: aLookup selector ])
+		flatCollect: [ :e | self perform: e selector with: aLookup ]
+]
+
+{ #category : #'as yet unclassified' }
+TypShaShadow >> resolveVariable: aLookup [
+	^ (self class methods
+		select: [ :e | e typShaResolvesVariable: aLookup selector ])
+		flatCollect: [ :e | self perform: e selector with: aLookup ]
 ]
 
 { #category : #accessing }

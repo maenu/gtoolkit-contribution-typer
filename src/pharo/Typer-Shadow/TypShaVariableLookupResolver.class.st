@@ -14,9 +14,5 @@ TypShaVariableLookupResolver >> resolve: aLookup [
 	aLookup receiverType hasClassDescription
 		ifFalse: [ TypNoTypeError signal ].
 	^ aLookup receiverType classDescription typShaShadows
-		collect: [ :f | 
-			f class instVarNames
-				detect: [ :g | g = ('___' , aLookup selector asString) ]
-				ifFound: [ :g | f instVarNamed: g ]
-				ifNone: [ TypNoTypeError signal ] ]
+		flatCollect: [ :f | f resolveVariable: aLookup copy ]
 ]
