@@ -1,9 +1,6 @@
 Class {
 	#name : #TypShaGtGtPharoCompletionStrategy,
 	#superclass : #TypShaShadow,
-	#instVars : [
-		'___maxItems'
-	],
 	#category : #'Typer-Shadow-GToolkit'
 }
 
@@ -65,8 +62,8 @@ TypShaGtGtPharoCompletionStrategy >> ___selectorsForReceiver: _a matching: _b [
 		yourself
 ]
 
-{ #category : #initialization }
-TypShaGtGtPharoCompletionStrategy >> initialize [
-	super initialize.
-	___maxItems := Integer typAsType
+{ #category : #'as yet unclassified' }
+TypShaGtGtPharoCompletionStrategy >> vMaxItems: aLookup [
+	<typShaForVariable: #maxItems>
+	^ Integer typAsType
 ]

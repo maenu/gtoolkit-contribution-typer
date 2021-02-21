@@ -1,9 +1,6 @@
 Class {
 	#name : #TypShaGtGtMethodCoder,
 	#superclass : #TypShaShadow,
-	#instVars : [
-		'___astCache'
-	],
 	#category : #'Typer-Shadow-GToolkit'
 }
 
@@ -97,12 +94,11 @@ TypShaGtGtMethodCoder >> ___updateMethod: _a [
 		yourself
 ]
 
-{ #category : #initialization }
-TypShaGtGtMethodCoder >> initialize [
-	super initialize.
-	self flag: 'FIXME breaks lookup'
-	"___astCache := Association typAsType
+{ #category : #'as yet unclassified' }
+TypShaGtGtMethodCoder >> vAstCache: aLookup [
+	<typShaForVariable: #astCache>
+	^ Association typAsType
 		copyWithParameters:
-			{('@A' -> String typAsType).
-			('@B' -> RBMethodNode typAsType)} asOrderedDictionary"
+			{String typAsType.
+			RBMethodNode typAsType}
 ]

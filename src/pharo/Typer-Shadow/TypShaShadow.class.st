@@ -16,11 +16,7 @@ TypShaShadow class >> asMethodLookupResultFor: aSymbol [
 	^ self class selectors
 		detect: [ :e | e = ('___' , aSymbol) or: [ e = ('~~~' , aSymbol) ] ]
 		ifFound: [ :e | self perform: e asSymbol withEnoughArguments: {} ]
-		ifNone: [ TypFunctionType new
-				argumentTypes: [ TypUnknownType new ];
-				resultType: [ TypUnknownType new ];
-				signalsAlways: [ nil ];
-				yourself ]
+		ifNone: [ TypNoTypeError signal ]
 ]
 
 { #category : #accessing }
@@ -28,6 +24,10 @@ TypShaShadow class >> asType: aClass [
 	<typTypeArgument: 1 as: 'ClassDescription'>
 	<typTypeResultAs: 'TypNamedType'>
 	^ aClass typAsNamedType
+]
+
+{ #category : #'class initialization' }
+TypShaShadow class >> initialize [
 ]
 
 { #category : #'class initialization' }

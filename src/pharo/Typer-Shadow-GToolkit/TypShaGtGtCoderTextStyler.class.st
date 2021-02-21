@@ -1,9 +1,6 @@
 Class {
 	#name : #TypShaGtGtCoderTextStyler,
 	#superclass : #TypShaShadow,
-	#instVars : [
-		'___coder'
-	],
 	#category : #'Typer-Shadow-GToolkit'
 }
 
@@ -42,8 +39,8 @@ TypShaGtGtCoderTextStyler >> ___style: _a ast: _b [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaGtGtCoderTextStyler >> initialize [
-	super initialize.
-	___coder := GtMethodCoder typAsType
+{ #category : #'as yet unclassified' }
+TypShaGtGtCoderTextStyler >> vCoder: aLookup [
+	<typShaForVariable: #coder>
+	^ GtMethodCoder typAsType
 ]

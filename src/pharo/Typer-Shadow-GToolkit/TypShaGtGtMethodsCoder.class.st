@@ -1,10 +1,6 @@
 Class {
 	#name : #TypShaGtGtMethodsCoder,
 	#superclass : #TypShaShadow,
-	#instVars : [
-		'___methods',
-		'___methodCoders'
-	],
 	#category : #'Typer-Shadow-GToolkit'
 }
 
@@ -30,11 +26,16 @@ TypShaGtGtMethodsCoder >> ___announce: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaGtGtMethodsCoder >> initialize [
-	super initialize.
-	___methods := SequenceableCollection typAsType
-		copyWithParameters: {CompiledMethod typAsType}.
-	___methodCoders := SequenceableCollection typAsType
+{ #category : #'as yet unclassified' }
+TypShaGtGtMethodsCoder >> vMethodCoders: aLookup [
+	<typShaForVariable: #methodCoders>
+	^ SequenceableCollection typAsType
 		copyWithParameters: {GtMethodCoder typAsType}
+]
+
+{ #category : #'as yet unclassified' }
+TypShaGtGtMethodsCoder >> vMethods: aLookup [
+	<typShaForVariable: #methods>
+	^ SequenceableCollection typAsType
+		copyWithParameters: {CompiledMethod typAsType}
 ]

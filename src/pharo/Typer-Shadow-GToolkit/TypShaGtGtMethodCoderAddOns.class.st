@@ -1,10 +1,6 @@
 Class {
 	#name : #TypShaGtGtMethodCoderAddOns,
 	#superclass : #TypShaShadow,
-	#instVars : [
-		'___stylers',
-		'___modified'
-	],
 	#category : #'Typer-Shadow-GToolkit'
 }
 
@@ -56,10 +52,15 @@ TypShaGtGtMethodCoderAddOns >> ___stylers [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaGtGtMethodCoderAddOns >> initialize [
-	super initialize.
-	___stylers := SequenceableCollection typAsType
-		copyWithParameters: {GtASTStyler typAsType}.
-	___modified := Set typAsType copyWithParameters: {Symbol typAsType}
+{ #category : #'as yet unclassified' }
+TypShaGtGtMethodCoderAddOns >> vModified: aLookup [
+	<typShaForVariable: #modified>
+	^ Set typAsType copyWithParameters: {Symbol typAsType}
+]
+
+{ #category : #'as yet unclassified' }
+TypShaGtGtMethodCoderAddOns >> vStylers: aLookup [
+	<typShaForVariable: #stylers>
+	^ SequenceableCollection typAsType
+		copyWithParameters: {GtASTStyler typAsType}
 ]

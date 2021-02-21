@@ -1,9 +1,6 @@
 Class {
 	#name : #TypShaGtGtCoderBodyStyler,
 	#superclass : #TypShaShadow,
-	#instVars : [
-		'___text'
-	],
 	#category : #'Typer-Shadow-GToolkit'
 }
 
@@ -144,8 +141,8 @@ TypShaGtGtCoderBodyStyler >> ___visitThisContextNode: _a [
 		yourself
 ]
 
-{ #category : #initialization }
-TypShaGtGtCoderBodyStyler >> initialize [
-	super initialize.
-	___text := BlText typAsType
+{ #category : #'as yet unclassified' }
+TypShaGtGtCoderBodyStyler >> vText: aLookup [
+	<typShaForVariable: #text>
+	^ BlText typAsType
 ]

@@ -41,7 +41,7 @@ TypPraMethodLookupResolver >> resolve: aLookup [
 		ifNotNil: [ resultPragma arguments first typAsType ].
 	signalsAlways := signalsAlwaysPragma
 		ifNil: [ nil ]
-		ifNotNil: [ signalsAlwaysPragma arguments first ].
+		ifNotNil: [ signalsAlwaysPragma arguments first ifNotNil: #asBoolean ].
 	^ {(TypFunctionType
 		classDescription: classDescription
 		result: result
