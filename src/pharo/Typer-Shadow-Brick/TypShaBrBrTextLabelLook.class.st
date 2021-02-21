@@ -9,16 +9,20 @@ TypShaBrBrTextLabelLook class >> shadowedClass [
 	^ BrTextLabelLook class
 ]
 
-{ #category : #accessing }
-TypShaBrBrTextLabelLook >> ___fontSize: _a [
+{ #category : #shadow }
+TypShaBrBrTextLabelLook >> mFontSize: aLookup [ 
+	<typShaMethod: 'fontSize:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaBrBrTextLabelLook >> ___foreground: _a [
+{ #category : #shadow }
+TypShaBrBrTextLabelLook >> mForeground: aLookup [ 
+	<typShaMethod: 'foreground:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{Color typAsType.

@@ -9,48 +9,60 @@ TypShaPhaClassDescription class >> shadowedClass [
 	^ ClassDescription class
 ]
 
-{ #category : #accessing }
-TypShaPhaClassDescription >> ___addInstVarNamed: _a [
+{ #category : #shadow }
+TypShaPhaClassDescription >> mAddInstVarNamed: aLookup [ 
+	<typShaMethod: 'addInstVarNamed:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaClassDescription >> ___classSide [
+{ #category : #shadow }
+TypShaPhaClassDescription >> mClassSide: aLookup [ 
+	<typShaMethod: 'classSide'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Metaclass typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaClassDescription >> ___hasInstVarNamed: _a [
+{ #category : #shadow }
+TypShaPhaClassDescription >> mHasInstVarNamed: aLookup [ 
+	<typShaMethod: 'hasInstVarNamed:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaClassDescription >> ___instanceSide [
+{ #category : #shadow }
+TypShaPhaClassDescription >> mInstanceSide: aLookup [ 
+	<typShaMethod: 'instanceSide'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Class typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaClassDescription >> ___isClassSide [
+{ #category : #shadow }
+TypShaPhaClassDescription >> mIsClassSide: aLookup [ 
+	<typShaMethod: 'isClassSide'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaClassDescription >> ___isTestCase [
+{ #category : #shadow }
+TypShaPhaClassDescription >> mIsTestCase: aLookup [ 
+	<typShaMethod: 'isTestCase'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];

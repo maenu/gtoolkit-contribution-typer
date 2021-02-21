@@ -9,8 +9,10 @@ TypShaBrBrLabel class >> shadowedClass [
 	^ BrLabel class
 ]
 
-{ #category : #accessing }
-TypShaBrBrLabel >> ___text: _a [
+{ #category : #shadow }
+TypShaBrBrLabel >> mText: aLookup [ 
+	<typShaMethod: 'text:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{String typAsType.

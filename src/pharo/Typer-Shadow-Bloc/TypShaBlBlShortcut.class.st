@@ -9,8 +9,10 @@ TypShaBlBlShortcut class >> shadowedClass [
 	^ BlShortcut class
 ]
 
-{ #category : #accessing }
-TypShaBlBlShortcut >> ___action: _a [
+{ #category : #shadow }
+TypShaBlBlShortcut >> mAction: aLookup [ 
+	<typShaMethod: 'action:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
@@ -22,8 +24,10 @@ TypShaBlBlShortcut >> ___action: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaBlBlShortcut >> ___combination: _a [
+{ #category : #shadow }
+TypShaBlBlShortcut >> mCombination: aLookup [ 
+	<typShaMethod: 'combination:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | BlKeyCombination typAsType ];
 		resultType: [ :a :s :r | a receiverType ];

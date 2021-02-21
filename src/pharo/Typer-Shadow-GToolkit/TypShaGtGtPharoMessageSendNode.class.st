@@ -9,8 +9,10 @@ TypShaGtGtPharoMessageSendNode class >> shadowedClass [
 	^ GtPharoMessageSendNode class
 ]
 
-{ #category : #accessing }
-TypShaGtGtPharoMessageSendNode >> ___receiver [
+{ #category : #shadow }
+TypShaGtGtPharoMessageSendNode >> mReceiver: aLookup [ 
+	<typShaMethod: 'receiver'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | GtPharoValueNode typAsType ];

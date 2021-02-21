@@ -9,8 +9,10 @@ TypShaPhaMonitor class >> shadowedClass [
 	^ Monitor class
 ]
 
-{ #category : #accessing }
-TypShaPhaMonitor >> ___critical: _a [
+{ #category : #shadow }
+TypShaPhaMonitor >> mCritical: aLookup [ 
+	<typShaMethod: 'critical:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure

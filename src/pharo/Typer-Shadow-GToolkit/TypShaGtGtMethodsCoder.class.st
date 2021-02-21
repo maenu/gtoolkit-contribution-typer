@@ -4,8 +4,10 @@ Class {
 	#category : #'Typer-Shadow-GToolkit'
 }
 
-{ #category : #accessing }
-TypShaGtGtMethodsCoder class >> ___forMethods: _a [
+{ #category : #shadow }
+TypShaGtGtMethodsCoder class >> mForMethods: aLookup [ 
+	<typShaMethod: 'forMethods:'>
+	
 	^ TypFunctionType new
 		argumentTypes:
 				[ :i :a :s :r | Collection typAsType copyWithParameters: {CompiledMethod typAsType} ];
@@ -18,8 +20,10 @@ TypShaGtGtMethodsCoder class >> shadowedClass [
 	^ GtMethodsCoder class
 ]
 
-{ #category : #accessing }
-TypShaGtGtMethodsCoder >> ___announce: _a [
+{ #category : #shadow }
+TypShaGtGtMethodsCoder >> mAnnounce: aLookup [ 
+	<typShaMethod: 'announce:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Announcement typAsType ];
 		resultType: [ :a :s :r | TypUnknownType new ];

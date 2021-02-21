@@ -9,8 +9,10 @@ TypShaGtGtPhlowView class >> shadowedClass [
 	^ GtPhlowView class
 ]
 
-{ #category : #accessing }
-TypShaGtGtPhlowView >> ___actionStencil: _a [
+{ #category : #shadow }
+TypShaGtGtPhlowView >> mActionStencil: aLookup [ 
+	<typShaMethod: 'actionStencil:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure

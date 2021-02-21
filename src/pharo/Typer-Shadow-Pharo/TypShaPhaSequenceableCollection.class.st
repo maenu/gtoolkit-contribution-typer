@@ -4,8 +4,10 @@ Class {
 	#category : #'Typer-Shadow-Pharo'
 }
 
-{ #category : #accessing }
-TypShaPhaSequenceableCollection class >> ___ofSize: _a [
+{ #category : #shadow }
+TypShaPhaSequenceableCollection class >> mOfSize: aLookup [ 
+	<typShaMethod: 'ofSize:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ Integer typAsType ];
 		resultType: [ :a | a receiverType classDescription instanceSide typAsType ];
@@ -17,16 +19,26 @@ TypShaPhaSequenceableCollection class >> shadowedClass [
 	^ SequenceableCollection class
 ]
 
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> ___at: _a [
+{ #category : #converting }
+TypShaPhaSequenceableCollection >> asType: aClass [
+	^ aClass
+		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
+]
+
+{ #category : #shadow }
+TypShaPhaSequenceableCollection >> mAt: aLookup [ 
+	<typShaMethod: 'at:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ Integer typAsType ];
 		resultType: [ :a | '@A' typAsVariableType resolveIn: a receiverType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> ___at: _a ifAbsent: _b [
+{ #category : #shadow }
+TypShaPhaSequenceableCollection >> mAtIfAbsent: aLookup [ 
+	<typShaMethod: 'at:ifAbsent:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -42,24 +54,30 @@ TypShaPhaSequenceableCollection >> ___at: _a ifAbsent: _b [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> ___beginsWith: _a [
+{ #category : #shadow }
+TypShaPhaSequenceableCollection >> mBeginsWith: aLookup [ 
+	<typShaMethod: 'beginsWith:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | a receiverType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaSequenceableCollection >> ___copyFrom: _a to: _b [
+{ #category : #shadow }
+TypShaPhaSequenceableCollection >> mCopyFromTo: aLookup [ 
+	<typShaMethod: 'copyFrom:to:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ Integer typAsType ];
 		resultType: [ :a | a receiverType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> ___detectIndex: _a [
+{ #category : #shadow }
+TypShaPhaSequenceableCollection >> mDetectIndex: aLookup [ 
+	<typShaMethod: 'detectIndex:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			BlockClosure
@@ -71,8 +89,10 @@ TypShaPhaSequenceableCollection >> ___detectIndex: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> ___detectIndex: _a ifNone: _b [
+{ #category : #shadow }
+TypShaPhaSequenceableCollection >> mDetectIndexIfNone: aLookup [ 
+	<typShaMethod: 'detectIndex:ifNone:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			i = 1
@@ -98,56 +118,70 @@ TypShaPhaSequenceableCollection >> ___detectIndex: _a ifNone: _b [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> ___endsWith: _a [
+{ #category : #shadow }
+TypShaPhaSequenceableCollection >> mEndsWith: aLookup [ 
+	<typShaMethod: 'endsWith:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | a receiverType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> ___first [
+{ #category : #shadow }
+TypShaPhaSequenceableCollection >> mFirst: aLookup [ 
+	<typShaMethod: 'first'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | '@A' typAsVariableType resolveIn: a receiverType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> ___indexOf: _a [
+{ #category : #shadow }
+TypShaPhaSequenceableCollection >> mIndexOf: aLookup [ 
+	<typShaMethod: 'indexOf:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | '@A' typAsVariableType resolveIn: a receiverType ];
 		resultType: [ :a :s :r | Integer typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> ___isEmpty [
+{ #category : #shadow }
+TypShaPhaSequenceableCollection >> mIsEmpty: aLookup [ 
+	<typShaMethod: 'isEmpty'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaSequenceableCollection >> ___last [
+{ #category : #shadow }
+TypShaPhaSequenceableCollection >> mLast: aLookup [ 
+	<typShaMethod: 'last'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | '@A' typAsVariableType resolveIn: a receiverType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> ___reversed [
+{ #category : #shadow }
+TypShaPhaSequenceableCollection >> mReversed: aLookup [ 
+	<typShaMethod: 'reversed'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> ___sort: _a [
+{ #category : #shadow }
+TypShaPhaSequenceableCollection >> mSort: aLookup [ 
+	<typShaMethod: 'sort:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			| type |
@@ -165,8 +199,10 @@ TypShaPhaSequenceableCollection >> ___sort: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> ___withIndexCollect: _a [
+{ #category : #shadow }
+TypShaPhaSequenceableCollection >> mWithIndexCollect: aLookup [ 
+	<typShaMethod: 'withIndexCollect:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
@@ -181,8 +217,10 @@ TypShaPhaSequenceableCollection >> ___withIndexCollect: _a [
 		yourself
 ]
 
-{ #category : #enumerating }
-TypShaPhaSequenceableCollection >> ___withIndexDo: _a [
+{ #category : #shadow }
+TypShaPhaSequenceableCollection >> mWithIndexDo: aLookup [ 
+	<typShaMethod: 'withIndexDo:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			BlockClosure
@@ -196,8 +234,10 @@ TypShaPhaSequenceableCollection >> ___withIndexDo: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaSequenceableCollection >> ___withIndexSelect: _a [
+{ #category : #shadow }
+TypShaPhaSequenceableCollection >> mWithIndexSelect: aLookup [ 
+	<typShaMethod: 'withIndexSelect:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
@@ -209,10 +249,4 @@ TypShaPhaSequenceableCollection >> ___withIndexSelect: _a [
 				signalsAlways: false ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
-]
-
-{ #category : #converting }
-TypShaPhaSequenceableCollection >> asType: aClass [
-	^ aClass
-		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
 ]

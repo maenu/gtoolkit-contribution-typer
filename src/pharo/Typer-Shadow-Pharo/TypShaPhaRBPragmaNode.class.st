@@ -4,8 +4,10 @@ Class {
 	#category : #'Typer-Shadow-Pharo'
 }
 
-{ #category : #accessing }
-TypShaPhaRBPragmaNode class >> ___selector: _a arguments: _b [
+{ #category : #shadow }
+TypShaPhaRBPragmaNode class >> mSelectorArguments: aLookup [ 
+	<typShaMethod: 'selector:arguments:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -21,8 +23,10 @@ TypShaPhaRBPragmaNode class >> shadowedClass [
 	^ RBPragmaNode class
 ]
 
-{ #category : #accessing }
-TypShaPhaRBPragmaNode >> ___selector [
+{ #category : #shadow }
+TypShaPhaRBPragmaNode >> mSelector: aLookup [ 
+	<typShaMethod: 'selector'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Symbol typAsType ];

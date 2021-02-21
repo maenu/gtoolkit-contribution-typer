@@ -4,16 +4,20 @@ Class {
 	#category : #'Typer-Shadow-Brick'
 }
 
-{ #category : #accessing }
-TypShaBrBrGlamorousIcons class >> ___browse [
+{ #category : #shadow }
+TypShaBrBrGlamorousIcons class >> mBrowse: aLookup [ 
+	<typShaMethod: 'browse'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Form typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaBrBrGlamorousIcons class >> ___inspect [
+{ #category : #shadow }
+TypShaBrBrGlamorousIcons class >> mInspect: aLookup [ 
+	<typShaMethod: 'inspect'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Form typAsType ];

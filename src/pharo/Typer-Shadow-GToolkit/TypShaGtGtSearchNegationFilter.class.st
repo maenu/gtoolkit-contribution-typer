@@ -9,8 +9,10 @@ TypShaGtGtSearchNegationFilter class >> shadowedClass [
 	^ GtSearchNegationFilter class
 ]
 
-{ #category : #accessing }
-TypShaGtGtSearchNegationFilter >> ___originalFilter: _a [
+{ #category : #shadow }
+TypShaGtGtSearchNegationFilter >> mOriginalFilter: aLookup [ 
+	<typShaMethod: 'originalFilter:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | GtCoderMethodsFilter typAsType ];
 		resultType: [ :a :s :r | a receiverType ];

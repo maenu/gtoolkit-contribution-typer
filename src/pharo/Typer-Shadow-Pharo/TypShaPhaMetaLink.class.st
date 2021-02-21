@@ -9,8 +9,10 @@ TypShaPhaMetaLink class >> shadowedClass [
 	^ MetaLink class
 ]
 
-{ #category : #accessing }
-TypShaPhaMetaLink >> ___arguments: _a [
+{ #category : #shadow }
+TypShaPhaMetaLink >> mArguments: aLookup [ 
+	<typShaMethod: 'arguments:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			SequenceableCollection typAsType
@@ -19,16 +21,20 @@ TypShaPhaMetaLink >> ___arguments: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaMetaLink >> ___control: _a [
+{ #category : #shadow }
+TypShaPhaMetaLink >> mControl: aLookup [ 
+	<typShaMethod: 'control:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaMetaLink >> ___metaObject: _a [
+{ #category : #shadow }
+TypShaPhaMetaLink >> mMetaObject: aLookup [ 
+	<typShaMethod: 'metaObject:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{Symbol typAsType.
@@ -37,8 +43,10 @@ TypShaPhaMetaLink >> ___metaObject: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaMetaLink >> ___selector: _a [
+{ #category : #shadow }
+TypShaPhaMetaLink >> mSelector: aLookup [ 
+	<typShaMethod: 'selector:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | a receiverType ];

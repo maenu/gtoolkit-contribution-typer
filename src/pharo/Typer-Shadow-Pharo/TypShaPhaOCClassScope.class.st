@@ -9,8 +9,10 @@ TypShaPhaOCClassScope class >> shadowedClass [
 	^ OCClassScope class
 ]
 
-{ #category : #accessing }
-TypShaPhaOCClassScope >> ___getClass [
+{ #category : #shadow }
+TypShaPhaOCClassScope >> mGetClass: aLookup [ 
+	<typShaMethod: 'getClass'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | ClassDescription typAsType ];

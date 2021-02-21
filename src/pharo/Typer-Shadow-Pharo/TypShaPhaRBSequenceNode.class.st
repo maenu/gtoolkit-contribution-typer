@@ -9,8 +9,10 @@ TypShaPhaRBSequenceNode class >> shadowedClass [
 	^ RBSequenceNode class
 ]
 
-{ #category : #generated }
-TypShaPhaRBSequenceNode >> ___statements [
+{ #category : #shadow }
+TypShaPhaRBSequenceNode >> mStatements: aLookup [ 
+	<typShaMethod: 'statements'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
@@ -18,8 +20,10 @@ TypShaPhaRBSequenceNode >> ___statements [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBSequenceNode >> ___temporaries [
+{ #category : #shadow }
+TypShaPhaRBSequenceNode >> mTemporaries: aLookup [ 
+	<typShaMethod: 'temporaries'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 

@@ -9,8 +9,10 @@ TypShaBlBlTextUnderlineAttribute class >> shadowedClass [
 	^ BlTextUnderlineAttribute class
 ]
 
-{ #category : #accessing }
-TypShaBlBlTextUnderlineAttribute >> ___paint: _a [
+{ #category : #shadow }
+TypShaBlBlTextUnderlineAttribute >> mPaint: aLookup [ 
+	<typShaMethod: 'paint:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{Color typAsType.

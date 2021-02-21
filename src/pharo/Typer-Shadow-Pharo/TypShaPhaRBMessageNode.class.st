@@ -9,8 +9,10 @@ TypShaPhaRBMessageNode class >> shadowedClass [
 	^ RBMessageNode class
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaRBMessageNode >> ___arguments [
+{ #category : #shadow }
+TypShaPhaRBMessageNode >> mArguments: aLookup [ 
+	<typShaMethod: 'arguments'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
@@ -18,8 +20,10 @@ TypShaPhaRBMessageNode >> ___arguments [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBMessageNode >> ___keywordsIntervals [
+{ #category : #shadow }
+TypShaPhaRBMessageNode >> mKeywordsIntervals: aLookup [ 
+	<typShaMethod: 'keywordsIntervals'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
@@ -28,24 +32,30 @@ TypShaPhaRBMessageNode >> ___keywordsIntervals [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBMessageNode >> ___numArgs [
+{ #category : #shadow }
+TypShaPhaRBMessageNode >> mNumArgs: aLookup [ 
+	<typShaMethod: 'numArgs'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Integer typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBMessageNode >> ___receiver [
+{ #category : #shadow }
+TypShaPhaRBMessageNode >> mReceiver: aLookup [ 
+	<typShaMethod: 'receiver'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RBValueNode typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBMessageNode >> ___selector [
+{ #category : #shadow }
+TypShaPhaRBMessageNode >> mSelector: aLookup [ 
+	<typShaMethod: 'selector'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Symbol typAsType ];

@@ -4,8 +4,10 @@ Class {
 	#category : #'Typer-Shadow-Pharo'
 }
 
-{ #category : #accessing }
-TypShaPhaRBLiteralValueNode class >> ___value: _a [
+{ #category : #shadow }
+TypShaPhaRBLiteralValueNode class >> mValue: aLookup [ 
+	<typShaMethod: 'value:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{Number typAsType.

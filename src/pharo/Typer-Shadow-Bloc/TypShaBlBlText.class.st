@@ -9,16 +9,20 @@ TypShaBlBlText class >> shadowedClass [
 	^ BlText class
 ]
 
-{ #category : #accessing }
-TypShaBlBlText >> ___attribute: _a [
+{ #category : #shadow }
+TypShaBlBlText >> mAttribute: aLookup [ 
+	<typShaMethod: 'attribute:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | BlTextAttribute typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaBlBlText >> ___attributesAt: _a [
+{ #category : #shadow }
+TypShaBlBlText >> mAttributesAt: aLookup [ 
+	<typShaMethod: 'attributesAt:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Integer typAsType ];
 		resultType: [ :a :s :r | 
@@ -27,8 +31,10 @@ TypShaBlBlText >> ___attributesAt: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaBlBlText >> ___clearAttributes: _a [
+{ #category : #shadow }
+TypShaBlBlText >> mClearAttributes: aLookup [ 
+	<typShaMethod: 'clearAttributes:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
@@ -40,8 +46,10 @@ TypShaBlBlText >> ___clearAttributes: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaBlBlText >> ___from: _a to: _b [
+{ #category : #shadow }
+TypShaBlBlText >> mFromTo: aLookup [ 
+	<typShaMethod: 'from:to:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Integer typAsType ];
 		resultType: [ :a :s :r | BlText typAsType ];

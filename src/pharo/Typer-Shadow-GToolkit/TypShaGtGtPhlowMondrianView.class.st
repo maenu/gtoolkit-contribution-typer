@@ -9,8 +9,10 @@ TypShaGtGtPhlowMondrianView class >> shadowedClass [
 	^ GtPhlowMondrianView class
 ]
 
-{ #category : #accessing }
-TypShaGtGtPhlowMondrianView >> ___painting: _a [
+{ #category : #shadow }
+TypShaGtGtPhlowMondrianView >> mPainting: aLookup [ 
+	<typShaMethod: 'painting:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure

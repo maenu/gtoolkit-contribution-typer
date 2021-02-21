@@ -4,16 +4,20 @@ Class {
 	#category : #'Typer-Shadow-Pharo'
 }
 
-{ #category : #accessing }
-TypShaPhaKey class >> ___h [
+{ #category : #shadow }
+TypShaPhaKey class >> mH: aLookup [ 
+	<typShaMethod: 'h'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Key typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaKey class >> ___t [
+{ #category : #shadow }
+TypShaPhaKey class >> mT: aLookup [ 
+	<typShaMethod: 't'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Key typAsType ];

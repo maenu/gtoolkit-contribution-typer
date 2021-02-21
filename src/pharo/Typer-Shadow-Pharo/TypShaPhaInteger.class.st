@@ -9,24 +9,30 @@ TypShaPhaInteger class >> shadowedClass [
 	^ Integer class
 ]
 
-{ #category : #accessing }
-TypShaPhaInteger >> ___asCharacter [
+{ #category : #shadow }
+TypShaPhaInteger >> mAsCharacter: aLookup [ 
+	<typShaMethod: 'asCharacter'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Character typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaInteger >> ___atRandom [
+{ #category : #shadow }
+TypShaPhaInteger >> mAtRandom: aLookup [ 
+	<typShaMethod: 'atRandom'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Integer typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaInteger >> ___bitXor: _a [
+{ #category : #shadow }
+TypShaPhaInteger >> mBitXor: aLookup [ 
+	<typShaMethod: 'bitXor:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Integer typAsType ];
 		resultType: [ :a :s :r | Integer typAsType ];

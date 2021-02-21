@@ -9,26 +9,30 @@ TypShaPhaAssociation class >> shadowedClass [
 	^ Association class
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaAssociation >> ___key [
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a | '@A' typAsVariableType resolveIn: a receiverType ];
-		yourself
-]
-
-{ #category : #'as yet unclassified' }
-TypShaPhaAssociation >> ___value [
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a | '@B' typAsVariableType resolveIn: a receiverType ];
-		yourself
-]
-
 { #category : #accessing }
 TypShaPhaAssociation >> asType: aClass [
 	^ aClass
 		typAsParametricTypeWithParameters:
 			{('@A' -> '@A' typAsVariableType).
 			('@B' -> '@B' typAsVariableType)} asOrderedDictionary
+]
+
+{ #category : #shadow }
+TypShaPhaAssociation >> mKey: aLookup [ 
+	<typShaMethod: 'key'>
+	
+	^ TypFunctionType new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a | '@A' typAsVariableType resolveIn: a receiverType ];
+		yourself
+]
+
+{ #category : #shadow }
+TypShaPhaAssociation >> mValue: aLookup [ 
+	<typShaMethod: 'value'>
+	
+	^ TypFunctionType new
+		argumentTypes: [ TypNoTypeError signal ];
+		resultType: [ :a | '@B' typAsVariableType resolveIn: a receiverType ];
+		yourself
 ]

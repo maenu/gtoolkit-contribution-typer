@@ -9,8 +9,10 @@ TypShaBrBrTextCursorAttribute class >> shadowedClass [
 	^ BrTextCursorAttribute class
 ]
 
-{ #category : #accessing }
-TypShaBrBrTextCursorAttribute >> ___enterAction: _a [
+{ #category : #shadow }
+TypShaBrBrTextCursorAttribute >> mEnterAction: aLookup [ 
+	<typShaMethod: 'enterAction:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
@@ -24,8 +26,10 @@ TypShaBrBrTextCursorAttribute >> ___enterAction: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaBrBrTextCursorAttribute >> ___leaveAction: _a [
+{ #category : #shadow }
+TypShaBrBrTextCursorAttribute >> mLeaveAction: aLookup [ 
+	<typShaMethod: 'leaveAction:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure

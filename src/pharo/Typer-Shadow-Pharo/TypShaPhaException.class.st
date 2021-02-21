@@ -4,8 +4,10 @@ Class {
 	#category : #'Typer-Shadow-Pharo'
 }
 
-{ #category : #accessing }
-TypShaPhaException class >> ___signal [
+{ #category : #shadow }
+TypShaPhaException class >> mSignal: aLookup [ 
+	<typShaMethod: 'signal'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];

@@ -9,8 +9,10 @@ TypShaPhaOCLiteralVariable class >> shadowedClass [
 	^ OCLiteralVariable class
 ]
 
-{ #category : #accessing }
-TypShaPhaOCLiteralVariable >> ___assoc [
+{ #category : #shadow }
+TypShaPhaOCLiteralVariable >> mAssoc: aLookup [ 
+	<typShaMethod: 'assoc'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
@@ -21,48 +23,60 @@ TypShaPhaOCLiteralVariable >> ___assoc [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaOCLiteralVariable >> ___isClassVariable [
+{ #category : #shadow }
+TypShaPhaOCLiteralVariable >> mIsClassVariable: aLookup [ 
+	<typShaMethod: 'isClassVariable'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaOCLiteralVariable >> ___isFromSharedPool [
+{ #category : #shadow }
+TypShaPhaOCLiteralVariable >> mIsFromSharedPool: aLookup [ 
+	<typShaMethod: 'isFromSharedPool'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaOCLiteralVariable >> ___isGlobalClassNameBinding [
+{ #category : #shadow }
+TypShaPhaOCLiteralVariable >> mIsGlobalClassNameBinding: aLookup [ 
+	<typShaMethod: 'isGlobalClassNameBinding'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaOCLiteralVariable >> ___isGlobalVariable [
+{ #category : #shadow }
+TypShaPhaOCLiteralVariable >> mIsGlobalVariable: aLookup [ 
+	<typShaMethod: 'isGlobalVariable'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaOCLiteralVariable >> ___scope [
+{ #category : #shadow }
+TypShaPhaOCLiteralVariable >> mScope: aLookup [ 
+	<typShaMethod: 'scope'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | OCAbstractScope typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaOCLiteralVariable >> ___value [
+{ #category : #shadow }
+TypShaPhaOCLiteralVariable >> mValue: aLookup [ 
+	<typShaMethod: 'value'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Object typAsType ];

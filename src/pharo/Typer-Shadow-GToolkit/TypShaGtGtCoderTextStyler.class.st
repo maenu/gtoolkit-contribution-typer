@@ -4,8 +4,10 @@ Class {
 	#category : #'Typer-Shadow-GToolkit'
 }
 
-{ #category : #accessing }
-TypShaGtGtCoderTextStyler class >> ___forCoder: _a [
+{ #category : #shadow }
+TypShaGtGtCoderTextStyler class >> mForCoder: aLookup [ 
+	<typShaMethod: 'forCoder:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | GtMethodCoder typAsType ];
 		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
@@ -17,8 +19,10 @@ TypShaGtGtCoderTextStyler class >> shadowedClass [
 	^ GtCoderTextStyler class
 ]
 
-{ #category : #accessing }
-TypShaGtGtCoderTextStyler >> ___extraStyle: _a ast: _b [
+{ #category : #shadow }
+TypShaGtGtCoderTextStyler >> mExtraStyleAst: aLookup [ 
+	<typShaMethod: 'extraStyle:ast:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -28,8 +32,10 @@ TypShaGtGtCoderTextStyler >> ___extraStyle: _a ast: _b [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaGtGtCoderTextStyler >> ___style: _a ast: _b [
+{ #category : #shadow }
+TypShaGtGtCoderTextStyler >> mStyleAst: aLookup [ 
+	<typShaMethod: 'style:ast:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1

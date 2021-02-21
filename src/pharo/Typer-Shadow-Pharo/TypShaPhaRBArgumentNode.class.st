@@ -9,8 +9,10 @@ TypShaPhaRBArgumentNode class >> shadowedClass [
 	^ RBArgumentNode class
 ]
 
-{ #category : #accessing }
-TypShaPhaRBArgumentNode >> ___whoDefines: _a [
+{ #category : #shadow }
+TypShaPhaRBArgumentNode >> mWhoDefines: aLookup [ 
+	<typShaMethod: 'whoDefines:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ String typAsType ];
 		resultType: [ {RBMethodNode typAsType.

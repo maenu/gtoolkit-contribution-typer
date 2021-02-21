@@ -9,8 +9,34 @@ TypShaPhaNumber class >> shadowedClass [
 	^ Number class
 ]
 
-{ #category : #accessing }
-TypShaPhaNumber >> ___timesCollect: _a [
+{ #category : #shadow }
+TypShaPhaNumber >> mBinary233: aLookup [ 
+	<typShaMethod: '-'>
+	
+	^ TypFunctionType new
+		argumentTypes: [ :i :a :s :r | Number typAsType ];
+		resultType: [ :a :s :r | 
+			{a receiverType.
+			(a argumentTypes at: 1)} typAsType ];
+		yourself
+]
+
+{ #category : #shadow }
+TypShaPhaNumber >> mBinary235: aLookup [ 
+	<typShaMethod: '+'>
+	
+	^ TypFunctionType new
+		argumentTypes: [ :i :a :s :r | Number typAsType ];
+		resultType: [ :a :s :r | 
+			{a receiverType.
+			(a argumentTypes at: 1)} typAsType ];
+		yourself
+]
+
+{ #category : #shadow }
+TypShaPhaNumber >> mTimesCollect: aLookup [ 
+	<typShaMethod: 'timesCollect:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
@@ -28,8 +54,10 @@ TypShaPhaNumber >> ___timesCollect: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaNumber >> ___to: _a [
+{ #category : #shadow }
+TypShaPhaNumber >> mTo: aLookup [ 
+	<typShaMethod: 'to:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];
 		resultType: [ :a :s :r | 
@@ -40,8 +68,10 @@ TypShaPhaNumber >> ___to: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaNumber >> ___to: _a do: _b [
+{ #category : #shadow }
+TypShaPhaNumber >> mToDo: aLookup [ 
+	<typShaMethod: 'to:do:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -54,25 +84,5 @@ TypShaPhaNumber >> ___to: _a do: _b [
 						argumentsOptional: false
 						signalsAlways: false ] ];
 		resultType: [ :a :s :r | a receiverType ];
-		yourself
-]
-
-{ #category : #accessing }
-TypShaPhaNumber >> ~~~+ _a [
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Number typAsType ];
-		resultType: [ :a :s :r | 
-			{a receiverType.
-			(a argumentTypes at: 1)} typAsType ];
-		yourself
-]
-
-{ #category : #accessing }
-TypShaPhaNumber >> ~~~- _a [
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Number typAsType ];
-		resultType: [ :a :s :r | 
-			{a receiverType.
-			(a argumentTypes at: 1)} typAsType ];
 		yourself
 ]

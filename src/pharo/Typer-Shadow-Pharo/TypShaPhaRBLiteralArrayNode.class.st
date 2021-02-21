@@ -9,8 +9,10 @@ TypShaPhaRBLiteralArrayNode class >> shadowedClass [
 	^ RBLiteralArrayNode class
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaRBLiteralArrayNode >> ___contents [
+{ #category : #shadow }
+TypShaPhaRBLiteralArrayNode >> mContents: aLookup [ 
+	<typShaMethod: 'contents'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType

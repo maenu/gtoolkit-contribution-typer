@@ -9,32 +9,40 @@ TypShaPhaClass class >> shadowedClass [
 	^ Class class
 ]
 
-{ #category : #accessing }
-TypShaPhaClass >> ___addClassVarNamed: _a [
+{ #category : #shadow }
+TypShaPhaClass >> mAddClassVarNamed: aLookup [ 
+	<typShaMethod: 'addClassVarNamed:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaClass >> ___classVarNamed: _a [
+{ #category : #shadow }
+TypShaPhaClass >> mClassVarNamed: aLookup [ 
+	<typShaMethod: 'classVarNamed:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaClass >> ___hasClassVarNamed: _a [
+{ #category : #shadow }
+TypShaPhaClass >> mHasClassVarNamed: aLookup [ 
+	<typShaMethod: 'hasClassVarNamed:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaClass >> ___sharedPools [
+{ #category : #shadow }
+TypShaPhaClass >> mSharedPools: aLookup [ 
+	<typShaMethod: 'sharedPools'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType:
@@ -42,8 +50,10 @@ TypShaPhaClass >> ___sharedPools [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaClass >> ___subclass: _a instanceVariableNames: _b classVariableNames: _c package: _d [
+{ #category : #shadow }
+TypShaPhaClass >> mSubclassInstanceVariableNamesClassVariableNamesPackage: aLookup [ 
+	<typShaMethod: 'subclass:instanceVariableNames:classVariableNames:package:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | a receiverType classDescription typAsType ];

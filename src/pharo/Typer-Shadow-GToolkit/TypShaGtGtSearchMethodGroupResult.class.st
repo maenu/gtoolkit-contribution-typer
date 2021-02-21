@@ -4,8 +4,10 @@ Class {
 	#category : #'Typer-Shadow-GToolkit'
 }
 
-{ #category : #accessing }
-TypShaGtGtSearchMethodGroupResult class >> ___forFilter: _a [
+{ #category : #shadow }
+TypShaGtGtSearchMethodGroupResult class >> mForFilter: aLookup [ 
+	<typShaMethod: 'forFilter:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | GtSearchMethodsFilter typAsType ];
 		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];

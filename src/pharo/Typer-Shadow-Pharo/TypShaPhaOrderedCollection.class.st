@@ -9,16 +9,26 @@ TypShaPhaOrderedCollection class >> shadowedClass [
 	^ OrderedCollection class
 ]
 
-{ #category : #accessing }
-TypShaPhaOrderedCollection >> ___addFirst: _a [
+{ #category : #converting }
+TypShaPhaOrderedCollection >> asType: aClass [
+	^ aClass
+		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
+]
+
+{ #category : #shadow }
+TypShaPhaOrderedCollection >> mAddFirst: aLookup [ 
+	<typShaMethod: 'addFirst:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | '@A' typAsVariableType resolveIn: a receiverType ];
 		resultType: [ :a :s :r | a argumentTypes at: 1 ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaOrderedCollection >> ___at: _a put: _b [
+{ #category : #shadow }
+TypShaPhaOrderedCollection >> mAtPut: aLookup [ 
+	<typShaMethod: 'at:put:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -28,16 +38,12 @@ TypShaPhaOrderedCollection >> ___at: _a put: _b [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaOrderedCollection >> ___removeLast [
+{ #category : #shadow }
+TypShaPhaOrderedCollection >> mRemoveLast: aLookup [ 
+	<typShaMethod: 'removeLast'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | '@A' typAsVariableType resolveIn: a receiverType ];
 		yourself
-]
-
-{ #category : #converting }
-TypShaPhaOrderedCollection >> asType: aClass [
-	^ aClass
-		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
 ]

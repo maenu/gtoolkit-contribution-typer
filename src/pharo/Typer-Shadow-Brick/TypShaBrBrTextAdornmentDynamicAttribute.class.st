@@ -9,8 +9,10 @@ TypShaBrBrTextAdornmentDynamicAttribute class >> shadowedClass [
 	^ BrTextAdornmentDynamicAttribute class
 ]
 
-{ #category : #accessing }
-TypShaBrBrTextAdornmentDynamicAttribute >> ___stencil: _a [
+{ #category : #shadow }
+TypShaBrBrTextAdornmentDynamicAttribute >> mStencil: aLookup [ 
+	<typShaMethod: 'stencil:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure

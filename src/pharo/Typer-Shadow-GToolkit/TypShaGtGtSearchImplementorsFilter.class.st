@@ -4,8 +4,10 @@ Class {
 	#category : #'Typer-Shadow-GToolkit'
 }
 
-{ #category : #accessing }
-TypShaGtGtSearchImplementorsFilter class >> ___selector: _a [
+{ #category : #shadow }
+TypShaGtGtSearchImplementorsFilter class >> mSelector: aLookup [ 
+	<typShaMethod: 'selector:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];

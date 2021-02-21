@@ -9,8 +9,10 @@ TypShaBlBlLayoutCommonConstraintsAxis class >> shadowedClass [
 	^ BlLayoutCommonConstraintsAxis class
 ]
 
-{ #category : #accessing }
-TypShaBlBlLayoutCommonConstraintsAxis >> ___exact: _a [
+{ #category : #shadow }
+TypShaBlBlLayoutCommonConstraintsAxis >> mExact: aLookup [ 
+	<typShaMethod: 'exact:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Number typAsType ];
 		resultType: [ :a :s :r | a receiverType ];

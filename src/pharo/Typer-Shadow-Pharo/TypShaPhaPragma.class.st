@@ -9,8 +9,10 @@ TypShaPhaPragma class >> shadowedClass [
 	^ Pragma class
 ]
 
-{ #category : #accessing }
-TypShaPhaPragma >> ___arguments [
+{ #category : #shadow }
+TypShaPhaPragma >> mArguments: aLookup [ 
+	<typShaMethod: 'arguments'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
@@ -23,8 +25,10 @@ TypShaPhaPragma >> ___arguments [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaPragma >> ___selector [
+{ #category : #shadow }
+TypShaPhaPragma >> mSelector: aLookup [ 
+	<typShaMethod: 'selector'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Symbol typAsType ];

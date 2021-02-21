@@ -9,8 +9,10 @@ TypShaPhaForm class >> shadowedClass [
 	^ Form class
 ]
 
-{ #category : #accessing }
-TypShaPhaForm >> ___asElement [
+{ #category : #shadow }
+TypShaPhaForm >> mAsElement: aLookup [ 
+	<typShaMethod: 'asElement'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | BlElement typAsType ];

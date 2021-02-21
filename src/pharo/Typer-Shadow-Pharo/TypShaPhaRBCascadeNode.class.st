@@ -9,8 +9,10 @@ TypShaPhaRBCascadeNode class >> shadowedClass [
 	^ RBCascadeNode class
 ]
 
-{ #category : #accessing }
-TypShaPhaRBCascadeNode >> ___messages [
+{ #category : #shadow }
+TypShaPhaRBCascadeNode >> mMessages: aLookup [ 
+	<typShaMethod: 'messages'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 

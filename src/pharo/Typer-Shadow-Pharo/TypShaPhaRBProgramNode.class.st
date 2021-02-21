@@ -9,8 +9,10 @@ TypShaPhaRBProgramNode class >> shadowedClass [
 	^ RBProgramNode class
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___allChildren [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mAllChildren: aLookup [ 
+	<typShaMethod: 'allChildren'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
@@ -19,8 +21,10 @@ TypShaPhaRBProgramNode >> ___allChildren [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___assignmentNodes [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mAssignmentNodes: aLookup [ 
+	<typShaMethod: 'assignmentNodes'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ SequenceableCollection typAsType
@@ -28,8 +32,10 @@ TypShaPhaRBProgramNode >> ___assignmentNodes [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___bestNodeFor: _a [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mBestNodeFor: aLookup [ 
+	<typShaMethod: 'bestNodeFor:'>
+	
 	^ TypFunctionType new
 		argumentTypes:
 				[ :i :a :s :r | Interval typAsType copyWithParameters: {Integer typAsType} ];
@@ -37,8 +43,10 @@ TypShaPhaRBProgramNode >> ___bestNodeFor: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___children [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mChildren: aLookup [ 
+	<typShaMethod: 'children'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
@@ -47,8 +55,10 @@ TypShaPhaRBProgramNode >> ___children [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaRBProgramNode >> ___comments [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mComments: aLookup [ 
+	<typShaMethod: 'comments'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
@@ -56,16 +66,20 @@ TypShaPhaRBProgramNode >> ___comments [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___hasProperty: _a [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mHasProperty: aLookup [ 
+	<typShaMethod: 'hasProperty:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___instanceVariableWriteNodes [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mInstanceVariableWriteNodes: aLookup [ 
+	<typShaMethod: 'instanceVariableWriteNodes'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType:
@@ -73,104 +87,130 @@ TypShaPhaRBProgramNode >> ___instanceVariableWriteNodes [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___isArgument [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mIsArgument: aLookup [ 
+	<typShaMethod: 'isArgument'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___isAssignment [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mIsAssignment: aLookup [ 
+	<typShaMethod: 'isAssignment'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___isLiteralNode [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mIsLiteralNode: aLookup [ 
+	<typShaMethod: 'isLiteralNode'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___isMessage [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mIsMessage: aLookup [ 
+	<typShaMethod: 'isMessage'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___isMethod [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mIsMethod: aLookup [ 
+	<typShaMethod: 'isMethod'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___isSelf [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mIsSelf: aLookup [ 
+	<typShaMethod: 'isSelf'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___isSequence [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mIsSequence: aLookup [ 
+	<typShaMethod: 'isSequence'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___isTemp [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mIsTemp: aLookup [ 
+	<typShaMethod: 'isTemp'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___lastIsReturn [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mLastIsReturn: aLookup [ 
+	<typShaMethod: 'lastIsReturn'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___link: _a [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mLink: aLookup [ 
+	<typShaMethod: 'link:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | MetaLink typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaRBProgramNode >> ___methodNode [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mMethodNode: aLookup [ 
+	<typShaMethod: 'methodNode'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ RBMethodNode typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___parent [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mParent: aLookup [ 
+	<typShaMethod: 'parent'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RBProgramNode typAsType asNullable ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___parents [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mParents: aLookup [ 
+	<typShaMethod: 'parents'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
@@ -179,16 +219,20 @@ TypShaPhaRBProgramNode >> ___parents [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___propertyAt: _a [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mPropertyAt: aLookup [ 
+	<typShaMethod: 'propertyAt:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___propertyAt: _a ifAbsentPut: _b [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mPropertyAtIfAbsentPut: aLookup [ 
+	<typShaMethod: 'propertyAt:ifAbsentPut:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -204,8 +248,10 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifAbsentPut: _b [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___propertyAt: _a ifPresent: _b ifAbsent: _c [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mPropertyAtIfPresentIfAbsent: aLookup [ 
+	<typShaMethod: 'propertyAt:ifPresent:ifAbsent:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -245,24 +291,30 @@ TypShaPhaRBProgramNode >> ___propertyAt: _a ifPresent: _b ifAbsent: _c [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___propertyAt: _a put: _b [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mPropertyAtPut: aLookup [ 
+	<typShaMethod: 'propertyAt:put:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | TypUnknownType new ];
 		resultType: [ :a :s :r | a argumentTypes at: 2 ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___removeLink: _a [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mRemoveLink: aLookup [ 
+	<typShaMethod: 'removeLink:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | MetaLink typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___removeProperty: _a ifAbsent: _b [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mRemovePropertyIfAbsent: aLookup [ 
+	<typShaMethod: 'removeProperty:ifAbsent:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -278,24 +330,30 @@ TypShaPhaRBProgramNode >> ___removeProperty: _a ifAbsent: _b [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___start [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mStart: aLookup [ 
+	<typShaMethod: 'start'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Integer typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___stop [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mStop: aLookup [ 
+	<typShaMethod: 'stop'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Integer typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___variableWriteNodes [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mVariableWriteNodes: aLookup [ 
+	<typShaMethod: 'variableWriteNodes'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType:
@@ -303,8 +361,10 @@ TypShaPhaRBProgramNode >> ___variableWriteNodes [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBProgramNode >> ___whoDefines: _a [
+{ #category : #shadow }
+TypShaPhaRBProgramNode >> mWhoDefines: aLookup [ 
+	<typShaMethod: 'whoDefines:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ String typAsType ];
 		resultType: [ {RBSequenceNode typAsType.

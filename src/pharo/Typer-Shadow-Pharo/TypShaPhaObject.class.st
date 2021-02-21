@@ -9,24 +9,30 @@ TypShaPhaObject class >> shadowedClass [
 	^ Object class
 ]
 
-{ #category : #accessing }
-TypShaPhaObject >> ___asString [
+{ #category : #shadow }
+TypShaPhaObject >> mAsString: aLookup [ 
+	<typShaMethod: 'asString'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaObject >> ___asSymbol [
+{ #category : #shadow }
+TypShaPhaObject >> mAsSymbol: aLookup [ 
+	<typShaMethod: 'asSymbol'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Symbol typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaObject >> ___assert: _a [
+{ #category : #shadow }
+TypShaPhaObject >> mAssert: aLookup [ 
+	<typShaMethod: 'assert:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{Boolean typAsType.
@@ -39,56 +45,104 @@ TypShaPhaObject >> ___assert: _a [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaObject >> ___copy [
+{ #category : #shadow }
+TypShaPhaObject >> mBinary248: aLookup [ 
+	<typShaMethod: '='>
+	
+	^ TypFunctionType new
+		argumentTypes: [ :i :a :s :r | Object typAsType ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #shadow }
+TypShaPhaObject >> mBinary255: aLookup [ 
+	<typShaMethod: '~='>
+	
+	^ TypFunctionType new
+		argumentTypes: [ :i :a :s :r | TypUnknownType new asNullable ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #shadow }
+TypShaPhaObject >> mBinary256: aLookup [ 
+	<typShaMethod: '->'>
+	
+	^ TypFunctionType new
+		argumentTypes: [ :i :a :s :r | a argumentTypes at: 1 ];
+		resultType: [ :a :s :r | 
+			Association typAsType
+				copyWithParameters:
+					{a receiverType.
+					(a argumentTypes at: 1)} ];
+		yourself
+]
+
+{ #category : #shadow }
+TypShaPhaObject >> mCopy: aLookup [ 
+	<typShaMethod: 'copy'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | a receiverType ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaObject >> ___hash [
+{ #category : #shadow }
+TypShaPhaObject >> mHash: aLookup [ 
+	<typShaMethod: 'hash'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Integer typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaObject >> ___instVarNamed: _a [
+{ #category : #shadow }
+TypShaPhaObject >> mInstVarNamed: aLookup [ 
+	<typShaMethod: 'instVarNamed:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | TypUnknownType new ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaObject >> ___isBlock [
+{ #category : #shadow }
+TypShaPhaObject >> mIsBlock: aLookup [ 
+	<typShaMethod: 'isBlock'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaObject >> ___isKindOf: _a [
+{ #category : #shadow }
+TypShaPhaObject >> mIsKindOf: aLookup [ 
+	<typShaMethod: 'isKindOf:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | {ClassDescription typAsType} at: i ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaObject >> ___isNotNil [
+{ #category : #shadow }
+TypShaPhaObject >> mIsNotNil: aLookup [ 
+	<typShaMethod: 'isNotNil'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaObject >> ___perform: _a [
+{ #category : #shadow }
+TypShaPhaObject >> mPerform: aLookup [ 
+	<typShaMethod: 'perform:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
 		resultType: [ :a :s :r | 
@@ -107,8 +161,10 @@ TypShaPhaObject >> ___perform: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaObject >> ___perform: _a withEnoughArguments: _b [
+{ #category : #shadow }
+TypShaPhaObject >> mPerformWithEnoughArguments: aLookup [ 
+	<typShaMethod: 'perform:withEnoughArguments:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -118,8 +174,10 @@ TypShaPhaObject >> ___perform: _a withEnoughArguments: _b [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaObject >> ___printOn: _a [
+{ #category : #shadow }
+TypShaPhaObject >> mPrintOn: aLookup [ 
+	<typShaMethod: 'printOn:'>
+	
 	^ TypFunctionType new
 		argumentTypes:
 				[ :i :a :s :r | Stream typAsType copyWithParameters: {Character typAsType} ];
@@ -127,46 +185,22 @@ TypShaPhaObject >> ___printOn: _a [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaObject >> ___printString [
+{ #category : #shadow }
+TypShaPhaObject >> mPrintString: aLookup [ 
+	<typShaMethod: 'printString'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaObject >> ___yourself [
+{ #category : #shadow }
+TypShaPhaObject >> mYourself: aLookup [ 
+	<typShaMethod: 'yourself'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | a receiverType ];
-		yourself
-]
-
-{ #category : #'as yet unclassified' }
-TypShaPhaObject >> ~~~-> _a [
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | a argumentTypes at: 1 ];
-		resultType: [ :a :s :r | 
-			Association typAsType
-				copyWithParameters:
-					{a receiverType.
-					(a argumentTypes at: 1)} ];
-		yourself
-]
-
-{ #category : #'as yet unclassified' }
-TypShaPhaObject >> ~~~= _a [
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Object typAsType ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
-]
-
-{ #category : #accessing }
-TypShaPhaObject >> ~~~~= _a [
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | TypUnknownType new asNullable ];
-		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]

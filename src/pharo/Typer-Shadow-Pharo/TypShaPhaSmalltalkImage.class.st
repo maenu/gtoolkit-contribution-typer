@@ -9,8 +9,10 @@ TypShaPhaSmalltalkImage class >> shadowedClass [
 	^ SmalltalkImage class
 ]
 
-{ #category : #accessing }
-TypShaPhaSmalltalkImage >> ___globals [
+{ #category : #shadow }
+TypShaPhaSmalltalkImage >> mGlobals: aLookup [ 
+	<typShaMethod: 'globals'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | SystemDictionary typAsType ];

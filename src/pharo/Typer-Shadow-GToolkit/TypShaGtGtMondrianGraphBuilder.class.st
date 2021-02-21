@@ -9,8 +9,10 @@ TypShaGtGtMondrianGraphBuilder class >> shadowedClass [
 	^ GtMondrianGraphBuilder class
 ]
 
-{ #category : #accessing }
-TypShaGtGtMondrianGraphBuilder >> ___stencil: _a [
+{ #category : #shadow }
+TypShaGtGtMondrianGraphBuilder >> mStencil: aLookup [ 
+	<typShaMethod: 'stencil:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure

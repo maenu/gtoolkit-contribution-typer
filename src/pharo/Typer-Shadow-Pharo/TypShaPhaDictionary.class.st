@@ -9,16 +9,28 @@ TypShaPhaDictionary class >> shadowedClass [
 	^ Dictionary class
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaDictionary >> ___anyOne [
+{ #category : #accessing }
+TypShaPhaDictionary >> asType: aClass [
+	^ aClass
+		typAsParametricTypeWithParameters:
+			{('@B' -> '@B' typAsVariableType).
+			('@A' -> '@A' typAsVariableType)} asOrderedDictionary
+]
+
+{ #category : #shadow }
+TypShaPhaDictionary >> mAnyOne: aLookup [ 
+	<typShaMethod: 'anyOne'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | '@A' typAsVariableType resolveIn: a receiverType ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaDictionary >> ___asOrderedDictionary [
+{ #category : #shadow }
+TypShaPhaDictionary >> mAsOrderedDictionary: aLookup [ 
+	<typShaMethod: 'asOrderedDictionary'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
@@ -29,8 +41,10 @@ TypShaPhaDictionary >> ___asOrderedDictionary [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaDictionary >> ___associations [
+{ #category : #shadow }
+TypShaPhaDictionary >> mAssociations: aLookup [ 
+	<typShaMethod: 'associations'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
@@ -43,8 +57,10 @@ TypShaPhaDictionary >> ___associations [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaDictionary >> ___associationsDo: _a [
+{ #category : #shadow }
+TypShaPhaDictionary >> mAssociationsDo: aLookup [ 
+	<typShaMethod: 'associationsDo:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			BlockClosure
@@ -60,16 +76,20 @@ TypShaPhaDictionary >> ___associationsDo: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaDictionary >> ___at: _a [
+{ #category : #shadow }
+TypShaPhaDictionary >> mAt: aLookup [ 
+	<typShaMethod: 'at:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | '@B' typAsVariableType resolveIn: a receiverType ];
 		resultType: [ :a :s :r | '@A' typAsVariableType resolveIn: a receiverType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaDictionary >> ___at: _a ifAbsent: _b [
+{ #category : #shadow }
+TypShaPhaDictionary >> mAtIfAbsent: aLookup [ 
+	<typShaMethod: 'at:ifAbsent:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			i = 1
@@ -85,8 +105,10 @@ TypShaPhaDictionary >> ___at: _a ifAbsent: _b [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaDictionary >> ___at: _a ifAbsentPut: _b [
+{ #category : #shadow }
+TypShaPhaDictionary >> mAtIfAbsentPut: aLookup [ 
+	<typShaMethod: 'at:ifAbsentPut:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			i = 1
@@ -100,8 +122,10 @@ TypShaPhaDictionary >> ___at: _a ifAbsentPut: _b [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaDictionary >> ___at: _a ifPresent: _b ifAbsent: _c [
+{ #category : #shadow }
+TypShaPhaDictionary >> mAtIfPresentIfAbsent: aLookup [ 
+	<typShaMethod: 'at:ifPresent:ifAbsent:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			{('@B' typAsVariableType resolveIn: a receiverType).
@@ -121,8 +145,10 @@ TypShaPhaDictionary >> ___at: _a ifPresent: _b ifAbsent: _c [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaDictionary >> ___at: _a put: _b [
+{ #category : #shadow }
+TypShaPhaDictionary >> mAtPut: aLookup [ 
+	<typShaMethod: 'at:put:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			i = 1
@@ -132,8 +158,28 @@ TypShaPhaDictionary >> ___at: _a put: _b [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaDictionary >> ___collect: _a [
+{ #category : #shadow }
+TypShaPhaDictionary >> mBinary214: aLookup [ 
+	<typShaMethod: ','>
+	
+	^ TypFunctionType new
+		argumentTypes: [ :i :a :s :r | Dictionary typAsType ];
+		resultType: [ :a :s :r | 
+			a receiverType
+				copyWithParameters:
+					{{('@B' typAsVariableType resolveIn: a receiverType).
+					('@B' typAsVariableType resolveIn: (a argumentTypes at: 1))}
+						typAsType.
+					{('@A' typAsVariableType resolveIn: a receiverType).
+					('@A' typAsVariableType resolveIn: (a argumentTypes at: 1))}
+						typAsType} ];
+		yourself
+]
+
+{ #category : #shadow }
+TypShaPhaDictionary >> mCollect: aLookup [ 
+	<typShaMethod: 'collect:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{Symbol typAsType.
@@ -167,24 +213,30 @@ TypShaPhaDictionary >> ___collect: _a [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaDictionary >> ___includes: _a [
+{ #category : #shadow }
+TypShaPhaDictionary >> mIncludes: aLookup [ 
+	<typShaMethod: 'includes:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | '@A' typAsVariableType resolveIn: a receiverType ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaDictionary >> ___includesKey: _a [
+{ #category : #shadow }
+TypShaPhaDictionary >> mIncludesKey: aLookup [ 
+	<typShaMethod: 'includesKey:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | '@B' typAsVariableType resolveIn: a receiverType ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaDictionary >> ___keys [
+{ #category : #shadow }
+TypShaPhaDictionary >> mKeys: aLookup [ 
+	<typShaMethod: 'keys'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a | 
@@ -193,8 +245,10 @@ TypShaPhaDictionary >> ___keys [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaDictionary >> ___keysAndValuesDo: _a [
+{ #category : #shadow }
+TypShaPhaDictionary >> mKeysAndValuesDo: aLookup [ 
+	<typShaMethod: 'keysAndValuesDo:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
@@ -208,8 +262,10 @@ TypShaPhaDictionary >> ___keysAndValuesDo: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaDictionary >> ___removeKey: _a ifAbsent: _b [
+{ #category : #shadow }
+TypShaPhaDictionary >> mRemoveKeyIfAbsent: aLookup [ 
+	<typShaMethod: 'removeKey:ifAbsent:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i == 1
@@ -225,36 +281,14 @@ TypShaPhaDictionary >> ___removeKey: _a ifAbsent: _b [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaDictionary >> ___values [
+{ #category : #shadow }
+TypShaPhaDictionary >> mValues: aLookup [ 
+	<typShaMethod: 'values'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
 			Collection typAsType
 				copyWithParameters: {('@A' typAsVariableType resolveIn: a receiverType)} ];
-		yourself
-]
-
-{ #category : #accessing }
-TypShaPhaDictionary >> asType: aClass [
-	^ aClass
-		typAsParametricTypeWithParameters:
-			{('@B' -> '@B' typAsVariableType).
-			('@A' -> '@A' typAsVariableType)} asOrderedDictionary
-]
-
-{ #category : #accessing }
-TypShaPhaDictionary >> ~~~, _a [
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Dictionary typAsType ];
-		resultType: [ :a :s :r | 
-			a receiverType
-				copyWithParameters:
-					{{('@B' typAsVariableType resolveIn: a receiverType).
-					('@B' typAsVariableType resolveIn: (a argumentTypes at: 1))}
-						typAsType.
-					{('@A' typAsVariableType resolveIn: a receiverType).
-					('@A' typAsVariableType resolveIn: (a argumentTypes at: 1))}
-						typAsType} ];
 		yourself
 ]

@@ -9,24 +9,30 @@ TypShaPhaRBComment class >> shadowedClass [
 	^ RBComment class
 ]
 
-{ #category : #accessing }
-TypShaPhaRBComment >> ___contents [
+{ #category : #shadow }
+TypShaPhaRBComment >> mContents: aLookup [ 
+	<typShaMethod: 'contents'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBComment >> ___start [
+{ #category : #shadow }
+TypShaPhaRBComment >> mStart: aLookup [ 
+	<typShaMethod: 'start'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Integer typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBComment >> ___stop [
+{ #category : #shadow }
+TypShaPhaRBComment >> mStop: aLookup [ 
+	<typShaMethod: 'stop'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Integer typAsType ];

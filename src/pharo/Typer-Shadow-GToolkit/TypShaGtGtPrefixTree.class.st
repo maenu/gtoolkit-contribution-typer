@@ -9,8 +9,10 @@ TypShaGtGtPrefixTree class >> shadowedClass [
 	^ GtPrefixTree class
 ]
 
-{ #category : #accessing }
-TypShaGtGtPrefixTree >> ___add: _a weight: _b [
+{ #category : #shadow }
+TypShaGtGtPrefixTree >> mAddWeight: aLookup [ 
+	<typShaMethod: 'add:weight:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -20,8 +22,10 @@ TypShaGtGtPrefixTree >> ___add: _a weight: _b [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaGtGtPrefixTree >> ___weightedFirst: _a startingWith: _b [
+{ #category : #shadow }
+TypShaGtGtPrefixTree >> mWeightedFirstStartingWith: aLookup [ 
+	<typShaMethod: 'weightedFirst:startingWith:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1

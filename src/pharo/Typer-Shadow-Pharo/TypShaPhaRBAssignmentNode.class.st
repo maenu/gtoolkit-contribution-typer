@@ -9,16 +9,20 @@ TypShaPhaRBAssignmentNode class >> shadowedClass [
 	^ RBAssignmentNode class
 ]
 
-{ #category : #accessing }
-TypShaPhaRBAssignmentNode >> ___value [
+{ #category : #shadow }
+TypShaPhaRBAssignmentNode >> mValue: aLookup [ 
+	<typShaMethod: 'value'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RBValueNode typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBAssignmentNode >> ___variable [
+{ #category : #shadow }
+TypShaPhaRBAssignmentNode >> mVariable: aLookup [ 
+	<typShaMethod: 'variable'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RBVariableNode typAsType ];

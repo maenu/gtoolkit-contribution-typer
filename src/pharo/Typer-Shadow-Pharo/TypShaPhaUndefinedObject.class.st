@@ -9,8 +9,10 @@ TypShaPhaUndefinedObject class >> shadowedClass [
 	^ UndefinedObject class
 ]
 
-{ #category : #accessing }
-TypShaPhaUndefinedObject >> ___ifNil: _a [
+{ #category : #shadow }
+TypShaPhaUndefinedObject >> mIfNil: aLookup [ 
+	<typShaMethod: 'ifNil:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
@@ -29,8 +31,10 @@ TypShaPhaUndefinedObject >> ___ifNil: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaUndefinedObject >> ___ifNotNil: _a [
+{ #category : #shadow }
+TypShaPhaUndefinedObject >> mIfNotNil: aLookup [ 
+	<typShaMethod: 'ifNotNil:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{Symbol typAsType.

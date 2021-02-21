@@ -9,24 +9,30 @@ TypShaPhaContext class >> shadowedClass [
 	^ Context class
 ]
 
-{ #category : #accessing }
-TypShaPhaContext >> ___arguments [
+{ #category : #shadow }
+TypShaPhaContext >> mArguments: aLookup [ 
+	<typShaMethod: 'arguments'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | SequenceableCollection typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaContext >> ___method [
+{ #category : #shadow }
+TypShaPhaContext >> mMethod: aLookup [ 
+	<typShaMethod: 'method'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | CompiledMethod typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaContext >> ___receiver [
+{ #category : #shadow }
+TypShaPhaContext >> mReceiver: aLookup [ 
+	<typShaMethod: 'receiver'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Object typAsType ];

@@ -4,8 +4,10 @@ Class {
 	#category : #'Typer-Shadow-Bloc'
 }
 
-{ #category : #accessing }
-TypShaBlBlKeyCombination class >> ___builder [
+{ #category : #shadow }
+TypShaBlBlKeyCombination class >> mBuilder: aLookup [ 
+	<typShaMethod: 'builder'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | BlKeyCombinationBuilder typAsType ];

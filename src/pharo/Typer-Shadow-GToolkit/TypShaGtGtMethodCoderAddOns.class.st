@@ -9,8 +9,10 @@ TypShaGtGtMethodCoderAddOns class >> shadowedClass [
 	^ GtMethodCoderAddOns class
 ]
 
-{ #category : #accessing }
-TypShaGtGtMethodCoderAddOns >> ___addMainAction: _a icon: _b action: _c [
+{ #category : #shadow }
+TypShaGtGtMethodCoderAddOns >> mAddMainActionIconAction: aLookup [ 
+	<typShaMethod: 'addMainAction:icon:action:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -26,24 +28,30 @@ TypShaGtGtMethodCoderAddOns >> ___addMainAction: _a icon: _b action: _c [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaGtGtMethodCoderAddOns >> ___addShortcut: _a [
+{ #category : #shadow }
+TypShaGtGtMethodCoderAddOns >> mAddShortcut: aLookup [ 
+	<typShaMethod: 'addShortcut:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | BlShortcut typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaGtGtMethodCoderAddOns >> ___addStyler: _a [
+{ #category : #shadow }
+TypShaGtGtMethodCoderAddOns >> mAddStyler: aLookup [ 
+	<typShaMethod: 'addStyler:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | GtCoderBodyStyler typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaGtGtMethodCoderAddOns >> ___stylers [
+{ #category : #shadow }
+TypShaGtGtMethodCoderAddOns >> mStylers: aLookup [ 
+	<typShaMethod: 'stylers'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 

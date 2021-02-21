@@ -4,8 +4,10 @@ Class {
 	#category : #'Typer-Shadow-Pharo'
 }
 
-{ #category : #accessing }
-TypShaPhaTestCase class >> ___suite [
+{ #category : #shadow }
+TypShaPhaTestCase class >> mSuite: aLookup [ 
+	<typShaMethod: 'suite'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | TestSuite typAsType ];

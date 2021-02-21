@@ -9,8 +9,30 @@ TypShaPhaProtoObject class >> shadowedClass [
 	^ ProtoObject class
 ]
 
-{ #category : #accessing }
-TypShaPhaProtoObject >> ___class [
+{ #category : #shadow }
+TypShaPhaProtoObject >> mBinary284: aLookup [ 
+	<typShaMethod: '=='>
+	
+	^ TypFunctionType new
+		argumentTypes: [ :i :a :s :r | TypUnknownType new asNullable ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #shadow }
+TypShaPhaProtoObject >> mBinary288: aLookup [ 
+	<typShaMethod: '~~'>
+	
+	^ TypFunctionType new
+		argumentTypes: [ :i :a :s :r | TypUnknownType new asNullable ];
+		resultType: [ :a :s :r | Boolean typAsType ];
+		yourself
+]
+
+{ #category : #shadow }
+TypShaPhaProtoObject >> mClass: aLookup [ 
+	<typShaMethod: 'class'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
@@ -22,16 +44,20 @@ TypShaPhaProtoObject >> ___class [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaProtoObject >> ___flag: _a [
+{ #category : #shadow }
+TypShaPhaProtoObject >> mFlag: aLookup [ 
+	<typShaMethod: 'flag:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaProtoObject >> ___ifNil: _a [
+{ #category : #shadow }
+TypShaPhaProtoObject >> mIfNil: aLookup [ 
+	<typShaMethod: 'ifNil:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
@@ -45,8 +71,10 @@ TypShaPhaProtoObject >> ___ifNil: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaProtoObject >> ___ifNil: _a ifNotNil: _b [
+{ #category : #shadow }
+TypShaPhaProtoObject >> mIfNilIfNotNil: aLookup [ 
+	<typShaMethod: 'ifNil:ifNotNil:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -84,8 +112,10 @@ TypShaPhaProtoObject >> ___ifNil: _a ifNotNil: _b [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaProtoObject >> ___ifNotNil: _a [
+{ #category : #shadow }
+TypShaPhaProtoObject >> mIfNotNil: aLookup [ 
+	<typShaMethod: 'ifNotNil:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{Symbol typAsType.
@@ -115,26 +145,12 @@ TypShaPhaProtoObject >> ___ifNotNil: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaProtoObject >> ___isNil [
+{ #category : #shadow }
+TypShaPhaProtoObject >> mIsNil: aLookup [ 
+	<typShaMethod: 'isNil'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
-]
-
-{ #category : #accessing }
-TypShaPhaProtoObject >> ~~~== _a [
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | TypUnknownType new asNullable ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
-]
-
-{ #category : #'as yet unclassified' }
-TypShaPhaProtoObject >> ~~~~~ _a [
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | TypUnknownType new asNullable ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]

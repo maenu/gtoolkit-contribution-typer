@@ -4,8 +4,10 @@ Class {
 	#category : #'Typer-Shadow-GToolkit'
 }
 
-{ #category : #accessing }
-TypShaGtGtSearchBinaryFilter class >> ___forFilter: _a filter: _b [
+{ #category : #shadow }
+TypShaGtGtSearchBinaryFilter class >> mForFilterFilter: aLookup [ 
+	<typShaMethod: 'forFilter:filter:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | GtCoderMethodsFilter typAsType ];
 		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];

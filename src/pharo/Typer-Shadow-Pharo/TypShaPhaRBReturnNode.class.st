@@ -9,8 +9,10 @@ TypShaPhaRBReturnNode class >> shadowedClass [
 	^ RBReturnNode class
 ]
 
-{ #category : #accessing }
-TypShaPhaRBReturnNode >> ___value [
+{ #category : #shadow }
+TypShaPhaRBReturnNode >> mValue: aLookup [ 
+	<typShaMethod: 'value'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RBValueNode typAsType ];

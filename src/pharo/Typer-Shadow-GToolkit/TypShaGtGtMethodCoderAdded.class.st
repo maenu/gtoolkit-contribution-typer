@@ -9,8 +9,10 @@ TypShaGtGtMethodCoderAdded class >> shadowedClass [
 	^ GtMethodCoderAdded class
 ]
 
-{ #category : #accessing }
-TypShaGtGtMethodCoderAdded >> ___methodCoder: _a [
+{ #category : #shadow }
+TypShaGtGtMethodCoderAdded >> mMethodCoder: aLookup [ 
+	<typShaMethod: 'methodCoder:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | GtMethodCoder typAsType ];
 		resultType: [ :a :s :r | a receiverType ];

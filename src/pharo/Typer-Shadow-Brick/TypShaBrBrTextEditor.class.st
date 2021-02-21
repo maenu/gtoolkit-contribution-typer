@@ -9,24 +9,30 @@ TypShaBrBrTextEditor class >> shadowedClass [
 	^ BrTextEditor class
 ]
 
-{ #category : #accessing }
-TypShaBrBrTextEditor >> ___invalidate: _a to: _b [
+{ #category : #shadow }
+TypShaBrBrTextEditor >> mInvalidateTo: aLookup [ 
+	<typShaMethod: 'invalidate:to:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Integer typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaBrBrTextEditor >> ___text [
+{ #category : #shadow }
+TypShaBrBrTextEditor >> mText: aLookup [ 
+	<typShaMethod: 'text'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | BlText typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaBrBrTextEditor >> ___update: _a to: _b [
+{ #category : #shadow }
+TypShaBrBrTextEditor >> mUpdateTo: aLookup [ 
+	<typShaMethod: 'update:to:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Integer typAsType ];
 		resultType: [ :a :s :r | a receiverType ];

@@ -4,8 +4,10 @@ Class {
 	#category : #'Typer-Shadow-Pharo'
 }
 
-{ #category : #accessing }
-TypShaPhaRBParser class >> ___parseFaultyMethod: _a [
+{ #category : #shadow }
+TypShaPhaRBParser class >> mParseFaultyMethod: aLookup [ 
+	<typShaMethod: 'parseFaultyMethod:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | RBMethodNode typAsType ];

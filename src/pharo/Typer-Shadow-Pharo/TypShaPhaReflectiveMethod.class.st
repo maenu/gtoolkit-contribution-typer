@@ -9,8 +9,10 @@ TypShaPhaReflectiveMethod class >> shadowedClass [
 	^ ReflectiveMethod class
 ]
 
-{ #category : #accessing }
-TypShaPhaReflectiveMethod >> ___compiledMethod [
+{ #category : #shadow }
+TypShaPhaReflectiveMethod >> mCompiledMethod: aLookup [ 
+	<typShaMethod: 'compiledMethod'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | CompiledMethod typAsType ];

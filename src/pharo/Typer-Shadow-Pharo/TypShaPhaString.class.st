@@ -9,16 +9,32 @@ TypShaPhaString class >> shadowedClass [
 	^ String class
 ]
 
-{ #category : #accessing }
-TypShaPhaString >> ___asClass [
+{ #category : #converting }
+TypShaPhaString >> asType: aClass [
+	^ aClass == String
+		ifTrue: [ | type |
+			type := aClass typAsNamedType.
+			type
+				superType:
+					(type superType copyWithParameters: {Character typAsType}).
+			^ type ]
+		ifFalse: [ aClass typAsNamedType ]
+]
+
+{ #category : #shadow }
+TypShaPhaString >> mAsClass: aLookup [ 
+	<typShaMethod: 'asClass'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Class typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaString >> ___asClassInEnvironment: _a ifAbsent: _b [
+{ #category : #shadow }
+TypShaPhaString >> mAsClassInEnvironmentIfAbsent: aLookup [ 
+	<typShaMethod: 'asClassInEnvironment:ifAbsent:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -40,24 +56,30 @@ TypShaPhaString >> ___asClassInEnvironment: _a ifAbsent: _b [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaString >> ___asPackage [
+{ #category : #shadow }
+TypShaPhaString >> mAsPackage: aLookup [ 
+	<typShaMethod: 'asPackage'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RPackage typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaString >> ___includesSubstring: _a [
+{ #category : #shadow }
+TypShaPhaString >> mIncludesSubstring: aLookup [ 
+	<typShaMethod: 'includesSubstring:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | String typAsType ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaString >> ___join: _a [
+{ #category : #shadow }
+TypShaPhaString >> mJoin: aLookup [ 
+	<typShaMethod: 'join:'>
+	
 	^ TypFunctionType new
 		argumentTypes:
 				[ :i :a :s :r | Collection typAsType copyWithParameters: {String typAsType} ];
@@ -65,8 +87,10 @@ TypShaPhaString >> ___join: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaString >> ___keywords [
+{ #category : #shadow }
+TypShaPhaString >> mKeywords: aLookup [ 
+	<typShaMethod: 'keywords'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | 
@@ -75,8 +99,10 @@ TypShaPhaString >> ___keywords [
 		yourself
 ]
 
-{ #category : #converting }
-TypShaPhaString >> ___split: _a [
+{ #category : #shadow }
+TypShaPhaString >> mSplit: aLookup [ 
+	<typShaMethod: 'split:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | SequenceableCollection typAsType ];
 		resultType: [ :a :s :r | 
@@ -85,22 +111,12 @@ TypShaPhaString >> ___split: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaString >> ___translated [
+{ #category : #shadow }
+TypShaPhaString >> mTranslated: aLookup [ 
+	<typShaMethod: 'translated'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | String typAsType ];
 		yourself
-]
-
-{ #category : #converting }
-TypShaPhaString >> asType: aClass [
-	^ aClass == String
-		ifTrue: [ | type |
-			type := aClass typAsNamedType.
-			type
-				superType:
-					(type superType copyWithParameters: {Character typAsType}).
-			^ type ]
-		ifFalse: [ aClass typAsNamedType ]
 ]

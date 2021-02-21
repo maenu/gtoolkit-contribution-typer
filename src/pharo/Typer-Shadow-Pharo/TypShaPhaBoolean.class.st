@@ -9,8 +9,10 @@ TypShaPhaBoolean class >> shadowedClass [
 	^ Boolean class
 ]
 
-{ #category : #accessing }
-TypShaPhaBoolean >> ___and: _a [
+{ #category : #shadow }
+TypShaPhaBoolean >> mAnd: aLookup [ 
+	<typShaMethod: 'and:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ {Boolean typAsType.
 			(BlockClosure
@@ -22,8 +24,10 @@ TypShaPhaBoolean >> ___and: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaBoolean >> ___ifFalse: _a [
+{ #category : #shadow }
+TypShaPhaBoolean >> mIfFalse: aLookup [ 
+	<typShaMethod: 'ifFalse:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
@@ -35,8 +39,10 @@ TypShaPhaBoolean >> ___ifFalse: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaBoolean >> ___ifTrue: _a [
+{ #category : #shadow }
+TypShaPhaBoolean >> mIfTrue: aLookup [ 
+	<typShaMethod: 'ifTrue:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
@@ -48,8 +54,10 @@ TypShaPhaBoolean >> ___ifTrue: _a [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaBoolean >> ___ifTrue: _a ifFalse: _b [
+{ #category : #shadow }
+TypShaPhaBoolean >> mIfTrueIfFalse: aLookup [ 
+	<typShaMethod: 'ifTrue:ifFalse:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
@@ -65,16 +73,20 @@ TypShaPhaBoolean >> ___ifTrue: _a ifFalse: _b [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaBoolean >> ___not [
+{ #category : #shadow }
+TypShaPhaBoolean >> mNot: aLookup [ 
+	<typShaMethod: 'not'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaBoolean >> ___or: _a [
+{ #category : #shadow }
+TypShaPhaBoolean >> mOr: aLookup [ 
+	<typShaMethod: 'or:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ {Boolean typAsType.
 			(BlockClosure

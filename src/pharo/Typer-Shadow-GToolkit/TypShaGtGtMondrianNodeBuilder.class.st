@@ -9,8 +9,10 @@ TypShaGtGtMondrianNodeBuilder class >> shadowedClass [
 	^ GtMondrianNodeBuilder class
 ]
 
-{ #category : #accessing }
-TypShaGtGtMondrianNodeBuilder >> ___with: _a [
+{ #category : #shadow }
+TypShaGtGtMondrianNodeBuilder >> mWith: aLookup [ 
+	<typShaMethod: 'with:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Collection typAsType ];
 		resultType:

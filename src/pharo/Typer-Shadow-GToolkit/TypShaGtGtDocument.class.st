@@ -9,24 +9,30 @@ TypShaGtGtDocument class >> shadowedClass [
 	^ GtDocument class
 ]
 
-{ #category : #accessing }
-TypShaGtGtDocument >> ___asElement [
+{ #category : #shadow }
+TypShaGtGtDocument >> mAsElement: aLookup [ 
+	<typShaMethod: 'asElement'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | BlElement typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaGtGtDocument >> ___strategy: _a [
+{ #category : #shadow }
+TypShaGtGtDocument >> mStrategy: aLookup [ 
+	<typShaMethod: 'strategy:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Gt2StorageStrategy typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaGtGtDocument >> ___text: _a [
+{ #category : #shadow }
+TypShaGtGtDocument >> mText: aLookup [ 
+	<typShaMethod: 'text:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			{String typAsType.

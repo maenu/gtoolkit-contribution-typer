@@ -9,8 +9,10 @@ TypShaPhaRPackage class >> shadowedClass [
 	^ RPackage class
 ]
 
-{ #category : #accessing }
-TypShaPhaRPackage >> ___definedClasses [
+{ #category : #shadow }
+TypShaPhaRPackage >> mDefinedClasses: aLookup [ 
+	<typShaMethod: 'definedClasses'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType:
@@ -18,8 +20,10 @@ TypShaPhaRPackage >> ___definedClasses [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRPackage >> ___methods [
+{ #category : #shadow }
+TypShaPhaRPackage >> mMethods: aLookup [ 
+	<typShaMethod: 'methods'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType:

@@ -9,8 +9,10 @@ TypShaPhaCompiledMethod class >> shadowedClass [
 	^ CompiledMethod class
 ]
 
-{ #category : #accessing }
-TypShaPhaCompiledMethod >> ___assignmentNodes [
+{ #category : #shadow }
+TypShaPhaCompiledMethod >> mAssignmentNodes: aLookup [ 
+	<typShaMethod: 'assignmentNodes'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType:
@@ -18,40 +20,50 @@ TypShaPhaCompiledMethod >> ___assignmentNodes [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaCompiledMethod >> ___ast [
+{ #category : #shadow }
+TypShaPhaCompiledMethod >> mAst: aLookup [ 
+	<typShaMethod: 'ast'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RBMethodNode typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaCompiledMethod >> ___isAbstract [
+{ #category : #shadow }
+TypShaPhaCompiledMethod >> mIsAbstract: aLookup [ 
+	<typShaMethod: 'isAbstract'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaCompiledMethod >> ___methodClass [
+{ #category : #shadow }
+TypShaPhaCompiledMethod >> mMethodClass: aLookup [ 
+	<typShaMethod: 'methodClass'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | ClassDescription typAsType ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaCompiledMethod >> ___numArgs [
+{ #category : #shadow }
+TypShaPhaCompiledMethod >> mNumArgs: aLookup [ 
+	<typShaMethod: 'numArgs'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ Integer typAsType ];
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaCompiledMethod >> ___pragmas [
+{ #category : #shadow }
+TypShaPhaCompiledMethod >> mPragmas: aLookup [ 
+	<typShaMethod: 'pragmas'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType:
@@ -59,24 +71,30 @@ TypShaPhaCompiledMethod >> ___pragmas [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaCompiledMethod >> ___reflectiveMethod [
+{ #category : #shadow }
+TypShaPhaCompiledMethod >> mReflectiveMethod: aLookup [ 
+	<typShaMethod: 'reflectiveMethod'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | ReflectiveMethod typAsType asNullable ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaCompiledMethod >> ___selector [
+{ #category : #shadow }
+TypShaPhaCompiledMethod >> mSelector: aLookup [ 
+	<typShaMethod: 'selector'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Symbol typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaCompiledMethod >> ___sourceCode [
+{ #category : #shadow }
+TypShaPhaCompiledMethod >> mSourceCode: aLookup [ 
+	<typShaMethod: 'sourceCode'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | String typAsType ];

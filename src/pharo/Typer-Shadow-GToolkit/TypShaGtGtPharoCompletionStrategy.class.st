@@ -9,8 +9,10 @@ TypShaGtGtPharoCompletionStrategy class >> shadowedClass [
 	^ GtPharoCompletionStrategy class
 ]
 
-{ #category : #accessing }
-TypShaGtGtPharoCompletionStrategy >> ___actionsFor: _a at: _b [
+{ #category : #shadow }
+TypShaGtGtPharoCompletionStrategy >> mActionsForAt: aLookup [ 
+	<typShaMethod: 'actionsFor:at:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -22,24 +24,30 @@ TypShaGtGtPharoCompletionStrategy >> ___actionsFor: _a at: _b [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaGtGtPharoCompletionStrategy >> ___classOrMetaClass: _a [
+{ #category : #shadow }
+TypShaGtGtPharoCompletionStrategy >> mClassOrMetaClass: aLookup [ 
+	<typShaMethod: 'classOrMetaClass:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | ClassDescription typAsType ];
 		resultType: [ :a :s :r | a receiverType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaGtGtPharoCompletionStrategy >> ___index [
+{ #category : #shadow }
+TypShaGtGtPharoCompletionStrategy >> mIndex: aLookup [ 
+	<typShaMethod: 'index'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Integer typAsType ];
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaGtGtPharoCompletionStrategy >> ___nodeFor: _a in: _b [
+{ #category : #shadow }
+TypShaGtGtPharoCompletionStrategy >> mNodeForIn: aLookup [ 
+	<typShaMethod: 'nodeFor:in:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -49,8 +57,10 @@ TypShaGtGtPharoCompletionStrategy >> ___nodeFor: _a in: _b [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaGtGtPharoCompletionStrategy >> ___selectorsForReceiver: _a matching: _b [
+{ #category : #shadow }
+TypShaGtGtPharoCompletionStrategy >> mSelectorsForReceiverMatching: aLookup [ 
+	<typShaMethod: 'selectorsForReceiver:matching:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1

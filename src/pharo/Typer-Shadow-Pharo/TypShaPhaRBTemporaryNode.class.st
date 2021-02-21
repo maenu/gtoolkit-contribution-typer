@@ -9,8 +9,10 @@ TypShaPhaRBTemporaryNode class >> shadowedClass [
 	^ RBTemporaryNode class
 ]
 
-{ #category : #accessing }
-TypShaPhaRBTemporaryNode >> ___whoDefines: _a [
+{ #category : #shadow }
+TypShaPhaRBTemporaryNode >> mWhoDefines: aLookup [ 
+	<typShaMethod: 'whoDefines:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ String typAsType ];
 		resultType: [ RBSequenceNode typAsType asNullable ];

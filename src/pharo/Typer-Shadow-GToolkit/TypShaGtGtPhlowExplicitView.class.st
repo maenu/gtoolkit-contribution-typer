@@ -9,8 +9,10 @@ TypShaGtGtPhlowExplicitView class >> shadowedClass [
 	^ GtPhlowExplicitView class
 ]
 
-{ #category : #accessing }
-TypShaGtGtPhlowExplicitView >> ___stencil: _a [
+{ #category : #shadow }
+TypShaGtGtPhlowExplicitView >> mStencil: aLookup [ 
+	<typShaMethod: 'stencil:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure

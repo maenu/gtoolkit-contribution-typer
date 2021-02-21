@@ -4,8 +4,10 @@ Class {
 	#category : #'Typer-Shadow-Pharo'
 }
 
-{ #category : #accessing }
-TypShaPhaCharacter class >> ___value: _a [
+{ #category : #shadow }
+TypShaPhaCharacter class >> mValue: aLookup [ 
+	<typShaMethod: 'value:'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Integer typAsType ];
 		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
@@ -17,8 +19,10 @@ TypShaPhaCharacter class >> shadowedClass [
 	^ Character class
 ]
 
-{ #category : #accessing }
-TypShaPhaCharacter >> ___isUppercase [
+{ #category : #shadow }
+TypShaPhaCharacter >> mIsUppercase: aLookup [ 
+	<typShaMethod: 'isUppercase'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | Boolean typAsType ];

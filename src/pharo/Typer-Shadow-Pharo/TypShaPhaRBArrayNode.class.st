@@ -9,8 +9,10 @@ TypShaPhaRBArrayNode class >> shadowedClass [
 	^ RBArrayNode class
 ]
 
-{ #category : #generated }
-TypShaPhaRBArrayNode >> ___statements [
+{ #category : #shadow }
+TypShaPhaRBArrayNode >> mStatements: aLookup [ 
+	<typShaMethod: 'statements'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType

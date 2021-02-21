@@ -9,8 +9,10 @@ TypShaPhaRBBlockNode class >> shadowedClass [
 	^ RBBlockNode class
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaPhaRBBlockNode >> ___arguments [
+{ #category : #shadow }
+TypShaPhaRBBlockNode >> mArguments: aLookup [ 
+	<typShaMethod: 'arguments'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ OrderedCollection typAsType
@@ -18,8 +20,10 @@ TypShaPhaRBBlockNode >> ___arguments [
 		yourself
 ]
 
-{ #category : #accessing }
-TypShaPhaRBBlockNode >> ___body [
+{ #category : #shadow }
+TypShaPhaRBBlockNode >> mBody: aLookup [ 
+	<typShaMethod: 'body'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | RBSequenceNode typAsType ];

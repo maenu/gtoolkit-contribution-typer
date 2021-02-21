@@ -4,8 +4,10 @@ Class {
 	#category : #'Typer-Shadow-GToolkit'
 }
 
-{ #category : #accessing }
-TypShaGtGtNoStorageStrategy class >> ___uniqueInstance [
+{ #category : #shadow }
+TypShaGtGtNoStorageStrategy class >> mUniqueInstance: aLookup [ 
+	<typShaMethod: 'uniqueInstance'>
+	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
 		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
