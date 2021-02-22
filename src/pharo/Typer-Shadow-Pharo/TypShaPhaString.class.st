@@ -10,13 +10,13 @@ TypShaPhaString class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaString >> mAsClass: aLookup [ 
+TypShaPhaString >> mAsClass: aLookup [
 	<typShaMethod: 'asClass'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Class typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Class typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -45,23 +45,23 @@ TypShaPhaString >> mAsClassInEnvironmentIfAbsent: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaString >> mAsPackage: aLookup [ 
+TypShaPhaString >> mAsPackage: aLookup [
 	<typShaMethod: 'asPackage'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | RPackage typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: RPackage typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaString >> mIncludesSubstring: aLookup [ 
+TypShaPhaString >> mIncludesSubstring: aLookup [
 	<typShaMethod: 'includesSubstring:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {String typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -76,15 +76,15 @@ TypShaPhaString >> mJoin: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaString >> mKeywords: aLookup [ 
+TypShaPhaString >> mKeywords: aLookup [
 	<typShaMethod: 'keywords'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithParameters: {String typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(SequenceableCollection typAsType
+				copyWithParameters: {String typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -100,13 +100,13 @@ TypShaPhaString >> mSplit: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaString >> mTranslated: aLookup [ 
+TypShaPhaString >> mTranslated: aLookup [
 	<typShaMethod: 'translated'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | String typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: String typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #converting }

@@ -10,41 +10,41 @@ TypShaGtGtPhlowProtoView class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtPhlowProtoView >> mExplicit: aLookup [ 
+TypShaGtGtPhlowProtoView >> mExplicit: aLookup [
 	<typShaMethod: 'explicit'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | GtPhlowExplicitView typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: GtPhlowExplicitView typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtPhlowProtoView >> mMondrian: aLookup [ 
+TypShaGtGtPhlowProtoView >> mMondrian: aLookup [
 	<typShaMethod: 'mondrian'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | GtPhlowMondrianView typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: GtPhlowMondrianView typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtPhlowProtoView >> mPriority: aLookup [ 
+TypShaGtGtPhlowProtoView >> mPriority: aLookup [
 	<typShaMethod: 'priority:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Number typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {Number typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtPhlowProtoView >> mTitle: aLookup [ 
+TypShaGtGtPhlowProtoView >> mTitle: aLookup [
 	<typShaMethod: 'title:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {String typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

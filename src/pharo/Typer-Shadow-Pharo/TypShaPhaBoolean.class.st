@@ -10,18 +10,19 @@ TypShaPhaBoolean class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaBoolean >> mAnd: aLookup [ 
+TypShaPhaBoolean >> mAnd: aLookup [
 	<typShaMethod: 'and:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ {Boolean typAsType.
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments:
+			{{Boolean typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: Boolean typAsType
 				arguments: {}
 				argumentsOptional: false
-				signalsAlways: false)} typAsType ];
-		resultType: [ Boolean typAsType ];
-		yourself
+				signalsAlways: false)} typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -74,26 +75,27 @@ TypShaPhaBoolean >> mIfTrueIfFalse: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaBoolean >> mNot: aLookup [ 
+TypShaPhaBoolean >> mNot: aLookup [
 	<typShaMethod: 'not'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBoolean >> mOr: aLookup [ 
+TypShaPhaBoolean >> mOr: aLookup [
 	<typShaMethod: 'or:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ {Boolean typAsType.
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments:
+			{{Boolean typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: Boolean typAsType
 				arguments: {}
 				argumentsOptional: false
-				signalsAlways: false)} typAsType ];
-		resultType: [ Boolean typAsType ];
-		yourself
+				signalsAlways: false)} typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

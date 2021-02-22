@@ -10,33 +10,33 @@ TypShaGtGtDocument class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtDocument >> mAsElement: aLookup [ 
+TypShaGtGtDocument >> mAsElement: aLookup [
 	<typShaMethod: 'asElement'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | BlElement typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: BlElement typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtDocument >> mStrategy: aLookup [ 
+TypShaGtGtDocument >> mStrategy: aLookup [
 	<typShaMethod: 'strategy:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Gt2StorageStrategy typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {Gt2StorageStrategy typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtDocument >> mText: aLookup [ 
+TypShaGtGtDocument >> mText: aLookup [
 	<typShaMethod: 'text:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			{String typAsType.
-			BlRope typAsType} typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{{String typAsType.
+			BlRope typAsType} typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

@@ -10,27 +10,27 @@ TypShaPhaPragma class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaPragma >> mArguments: aLookup [ 
+TypShaPhaPragma >> mArguments: aLookup [
 	<typShaMethod: 'arguments'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			SequenceableCollection typAsType
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(SequenceableCollection typAsType
 				copyWithParameters:
 					{{String typAsType.
 					Symbol typAsType.
 					Number typAsType.
-					Boolean typAsType} typAsType} ];
-		yourself
+					Boolean typAsType} typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaPragma >> mSelector: aLookup [ 
+TypShaPhaPragma >> mSelector: aLookup [
 	<typShaMethod: 'selector'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Symbol typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Symbol typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

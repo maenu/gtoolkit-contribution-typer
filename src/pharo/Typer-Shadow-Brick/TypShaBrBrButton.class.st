@@ -25,11 +25,11 @@ TypShaBrBrButton >> mAction: aLookup [
 ]
 
 { #category : #shadow }
-TypShaBrBrButton >> mIcon: aLookup [ 
+TypShaBrBrButton >> mIcon: aLookup [
 	<typShaMethod: 'icon:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | BlElement typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {BlElement typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

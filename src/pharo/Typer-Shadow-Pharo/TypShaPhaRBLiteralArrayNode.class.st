@@ -10,12 +10,13 @@ TypShaPhaRBLiteralArrayNode class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaRBLiteralArrayNode >> mContents: aLookup [ 
+TypShaPhaRBLiteralArrayNode >> mContents: aLookup [
 	<typShaMethod: 'contents'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ OrderedCollection typAsType
-				copyWithParameters: {RBLiteralNode typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(OrderedCollection typAsType
+				copyWithParameters: {RBLiteralNode typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

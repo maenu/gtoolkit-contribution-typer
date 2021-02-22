@@ -10,43 +10,44 @@ TypShaPhaMagnitude class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaMagnitude >> mBinary223: aLookup [ 
+TypShaPhaMagnitude >> mBinary223: aLookup [
 	<typShaMethod: '<='>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Magnitude typAsType ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {Magnitude typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaMagnitude >> mBinary225: aLookup [ 
+TypShaPhaMagnitude >> mBinary225: aLookup [
 	<typShaMethod: '>'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Magnitude typAsType ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {Magnitude typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaMagnitude >> mBinary226: aLookup [ 
+TypShaPhaMagnitude >> mBinary226: aLookup [
 	<typShaMethod: '<'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Magnitude typAsType ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {Magnitude typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaMagnitude >> mMax: aLookup [ 
+TypShaPhaMagnitude >> mMax: aLookup [
 	<typShaMethod: 'max:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Magnitude typAsType ];
-		resultType: [ :a :s :r | 
-			{a receiverType.
-			(a argumentTypes at: 1)} typAsType ];
-		yourself
+	self flag: 'FIXME argumentTypes?'.
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			{aLookup receiverType.
+			(aLookup argumentTypes at: 1)} typAsType
+		arguments: {Magnitude typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

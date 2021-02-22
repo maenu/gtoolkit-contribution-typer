@@ -20,11 +20,11 @@ TypShaPhaCharacter class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaCharacter >> mIsUppercase: aLookup [ 
+TypShaPhaCharacter >> mIsUppercase: aLookup [
 	<typShaMethod: 'isUppercase'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

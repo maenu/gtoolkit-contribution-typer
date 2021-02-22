@@ -10,11 +10,11 @@ TypShaPhaCompiledCode class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaCompiledCode >> mIsPrimitive: aLookup [ 
+TypShaPhaCompiledCode >> mIsPrimitive: aLookup [
 	<typShaMethod: 'isPrimitive'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

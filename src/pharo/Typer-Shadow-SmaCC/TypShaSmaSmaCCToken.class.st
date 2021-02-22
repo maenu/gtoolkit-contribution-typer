@@ -10,21 +10,21 @@ TypShaSmaSmaCCToken class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaSmaSmaCCToken >> mStopPosition: aLookup [ 
+TypShaSmaSmaCCToken >> mStopPosition: aLookup [
 	<typShaMethod: 'stopPosition'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Integer typAsType asNullable ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType asNullable
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaSmaSmaCCToken >> mValue: aLookup [ 
+TypShaSmaSmaCCToken >> mValue: aLookup [
 	<typShaMethod: 'value'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | String typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: String typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

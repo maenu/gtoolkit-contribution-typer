@@ -10,33 +10,33 @@ TypShaPhaCompilationContext class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaCompilationContext >> mBindings: aLookup [ 
+TypShaPhaCompilationContext >> mBindings: aLookup [
 	<typShaMethod: 'bindings:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Dictionary typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {Dictionary typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaCompilationContext >> mClass: aLookup [ 
+TypShaPhaCompilationContext >> mClass: aLookup [
 	<typShaMethod: 'class:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | ClassDescription typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {ClassDescription typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaCompilationContext >> mForSyntaxHighlighting: aLookup [ 
+TypShaPhaCompilationContext >> mForSyntaxHighlighting: aLookup [
 	<typShaMethod: 'forSyntaxHighlighting:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Boolean typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {Boolean typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }

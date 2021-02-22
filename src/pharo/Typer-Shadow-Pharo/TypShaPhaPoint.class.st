@@ -10,11 +10,11 @@ TypShaPhaPoint class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaPoint >> mAbs: aLookup [ 
+TypShaPhaPoint >> mAbs: aLookup [
 	<typShaMethod: 'abs'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Number typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Number typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

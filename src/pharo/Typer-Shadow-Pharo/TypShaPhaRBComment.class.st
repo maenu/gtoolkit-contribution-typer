@@ -10,31 +10,31 @@ TypShaPhaRBComment class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaRBComment >> mContents: aLookup [ 
+TypShaPhaRBComment >> mContents: aLookup [
 	<typShaMethod: 'contents'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | String typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: String typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBComment >> mStart: aLookup [ 
+TypShaPhaRBComment >> mStart: aLookup [
 	<typShaMethod: 'start'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Integer typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBComment >> mStop: aLookup [ 
+TypShaPhaRBComment >> mStop: aLookup [
 	<typShaMethod: 'stop'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Integer typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

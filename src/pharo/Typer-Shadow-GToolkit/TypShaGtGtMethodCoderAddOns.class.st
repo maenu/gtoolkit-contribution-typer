@@ -29,35 +29,35 @@ TypShaGtGtMethodCoderAddOns >> mAddMainActionIconAction: aLookup [
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoderAddOns >> mAddShortcut: aLookup [ 
+TypShaGtGtMethodCoderAddOns >> mAddShortcut: aLookup [
 	<typShaMethod: 'addShortcut:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | BlShortcut typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {BlShortcut typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoderAddOns >> mAddStyler: aLookup [ 
+TypShaGtGtMethodCoderAddOns >> mAddStyler: aLookup [
 	<typShaMethod: 'addStyler:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | GtCoderBodyStyler typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {GtCoderBodyStyler typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoderAddOns >> mStylers: aLookup [ 
+TypShaGtGtMethodCoderAddOns >> mStylers: aLookup [
 	<typShaMethod: 'stylers'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithParameters: {GtCoderBodyStyler typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(SequenceableCollection typAsType
+				copyWithParameters: {GtCoderBodyStyler typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #'as yet unclassified' }

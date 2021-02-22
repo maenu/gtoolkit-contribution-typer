@@ -10,11 +10,11 @@ TypShaPhaForm class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaForm >> mAsElement: aLookup [ 
+TypShaPhaForm >> mAsElement: aLookup [
 	<typShaMethod: 'asElement'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | BlElement typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: BlElement typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

@@ -10,26 +10,26 @@ TypShaBlBlShortcut class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaBlBlShortcut >> mAction: aLookup [ 
+TypShaBlBlShortcut >> mAction: aLookup [
 	<typShaMethod: 'action:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			BlockClosure
+	CompiledMethod
+		typAsFunctionTypeWithResult: BlShortcut typAsType
+		arguments:
+			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
 				arguments: {BlElement typAsType}
 				argumentsOptional: true
-				signalsAlways: false ];
-		resultType: [ :a :s :r | BlShortcut typAsType ];
-		yourself
+				signalsAlways: false)}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaBlBlShortcut >> mCombination: aLookup [ 
+TypShaBlBlShortcut >> mCombination: aLookup [
 	<typShaMethod: 'combination:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | BlKeyCombination typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {BlKeyCombination typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

@@ -10,21 +10,21 @@ TypShaGtGtPharoUnaryMessageNode class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtPharoUnaryMessageNode >> mParent: aLookup [ 
+TypShaGtGtPharoUnaryMessageNode >> mParent: aLookup [
 	<typShaMethod: 'parent'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | GtPharoMessageSendNode typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: GtPharoMessageSendNode typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtPharoUnaryMessageNode >> mSelectorPart: aLookup [ 
+TypShaGtGtPharoUnaryMessageNode >> mSelectorPart: aLookup [
 	<typShaMethod: 'selectorPart'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | SmaCCToken typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: SmaCCToken typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

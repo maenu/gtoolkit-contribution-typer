@@ -32,17 +32,17 @@ TypShaPhaUndefinedObject >> mIfNil: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaUndefinedObject >> mIfNotNil: aLookup [ 
+TypShaPhaUndefinedObject >> mIfNotNil: aLookup [
 	<typShaMethod: 'ifNotNil:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			{Symbol typAsType.
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {a receiverType asNonNullable}
+				arguments: {aLookup receiverType asNonNullable}
 				argumentsOptional: true
-				signalsAlways: false)} typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+				signalsAlways: false)} typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

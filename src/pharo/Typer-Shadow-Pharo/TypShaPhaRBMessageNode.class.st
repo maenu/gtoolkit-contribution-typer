@@ -10,54 +10,55 @@ TypShaPhaRBMessageNode class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaRBMessageNode >> mArguments: aLookup [ 
+TypShaPhaRBMessageNode >> mArguments: aLookup [
 	<typShaMethod: 'arguments'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ OrderedCollection typAsType
-				copyWithParameters: {RBValueNode typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(OrderedCollection typAsType
+				copyWithParameters: {RBValueNode typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBMessageNode >> mKeywordsIntervals: aLookup [ 
+TypShaPhaRBMessageNode >> mKeywordsIntervals: aLookup [
 	<typShaMethod: 'keywordsIntervals'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithParameters: {(Interval typAsType copyWithParameters: {Integer typAsType})} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(SequenceableCollection typAsType
+				copyWithParameters: {(Interval typAsType copyWithParameters: {Integer typAsType})})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBMessageNode >> mNumArgs: aLookup [ 
+TypShaPhaRBMessageNode >> mNumArgs: aLookup [
 	<typShaMethod: 'numArgs'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Integer typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBMessageNode >> mReceiver: aLookup [ 
+TypShaPhaRBMessageNode >> mReceiver: aLookup [
 	<typShaMethod: 'receiver'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | RBValueNode typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: RBValueNode typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBMessageNode >> mSelector: aLookup [ 
+TypShaPhaRBMessageNode >> mSelector: aLookup [
 	<typShaMethod: 'selector'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Symbol typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Symbol typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

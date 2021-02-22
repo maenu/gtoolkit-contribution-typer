@@ -10,13 +10,13 @@ TypShaBrBrLabel class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaBrBrLabel >> mText: aLookup [ 
+TypShaBrBrLabel >> mText: aLookup [
 	<typShaMethod: 'text:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			{String typAsType.
-			BlText typAsType} typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{{String typAsType.
+			BlText typAsType} typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

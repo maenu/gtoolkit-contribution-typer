@@ -24,11 +24,11 @@ TypShaPhaRBPragmaNode class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaRBPragmaNode >> mSelector: aLookup [ 
+TypShaPhaRBPragmaNode >> mSelector: aLookup [
 	<typShaMethod: 'selector'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Symbol typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Symbol typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

@@ -10,31 +10,31 @@ TypShaPhaContext class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaContext >> mArguments: aLookup [ 
+TypShaPhaContext >> mArguments: aLookup [
 	<typShaMethod: 'arguments'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | SequenceableCollection typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: SequenceableCollection typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaContext >> mMethod: aLookup [ 
+TypShaPhaContext >> mMethod: aLookup [
 	<typShaMethod: 'method'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | CompiledMethod typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: CompiledMethod typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaContext >> mReceiver: aLookup [ 
+TypShaPhaContext >> mReceiver: aLookup [
 	<typShaMethod: 'receiver'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Object typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Object typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

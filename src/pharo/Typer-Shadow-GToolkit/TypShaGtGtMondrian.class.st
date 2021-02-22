@@ -10,31 +10,31 @@ TypShaGtGtMondrian class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtMondrian >> mEdges: aLookup [ 
+TypShaGtGtMondrian >> mEdges: aLookup [
 	<typShaMethod: 'edges'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | GtMondrianEdgeBuilder typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: GtMondrianEdgeBuilder typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtMondrian >> mLayout: aLookup [ 
+TypShaGtGtMondrian >> mLayout: aLookup [
 	<typShaMethod: 'layout'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | GtMondrianLayoutBuilder typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: GtMondrianLayoutBuilder typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtMondrian >> mNodes: aLookup [ 
+TypShaGtGtMondrian >> mNodes: aLookup [
 	<typShaMethod: 'nodes'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | GtMondrianNodeBuilder typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: GtMondrianNodeBuilder typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

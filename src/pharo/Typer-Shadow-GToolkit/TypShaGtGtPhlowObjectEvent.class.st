@@ -20,11 +20,11 @@ TypShaGtGtPhlowObjectEvent >> mObject: aLookup [
 ]
 
 { #category : #shadow }
-TypShaGtGtPhlowObjectEvent >> mSourceElement: aLookup [ 
+TypShaGtGtPhlowObjectEvent >> mSourceElement: aLookup [
 	<typShaMethod: 'sourceElement:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | BlElement typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {BlElement typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

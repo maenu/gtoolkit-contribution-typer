@@ -20,23 +20,23 @@ TypShaGtGtMethodCoder class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoder >> mAsElement: aLookup [ 
+TypShaGtGtMethodCoder >> mAsElement: aLookup [
 	<typShaMethod: 'asElement'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | GtCoderMethodElement typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: GtCoderMethodElement typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoder >> mCompiledMethod: aLookup [ 
+TypShaGtGtMethodCoder >> mCompiledMethod: aLookup [
 	<typShaMethod: 'compiledMethod'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | CompiledMethod typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: CompiledMethod typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -55,63 +55,63 @@ TypShaGtGtMethodCoder >> mCursorPositionDo: aLookup [
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoder >> mNewCompletionStrategy: aLookup [ 
+TypShaGtGtMethodCoder >> mNewCompletionStrategy: aLookup [
 	<typShaMethod: 'newCompletionStrategy'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | GtCompletionStrategy typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: GtCompletionStrategy typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoder >> mNewSourceStyler: aLookup [ 
+TypShaGtGtMethodCoder >> mNewSourceStyler: aLookup [
 	<typShaMethod: 'newSourceStyler'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | GtCoderTextStyler typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: GtCoderTextStyler typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoder >> mRbAST: aLookup [ 
+TypShaGtGtMethodCoder >> mRbAST: aLookup [
 	<typShaMethod: 'rbAST'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | RBMethodNode typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: RBMethodNode typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoder >> mSave: aLookup [ 
+TypShaGtGtMethodCoder >> mSave: aLookup [
 	<typShaMethod: 'save'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoder >> mSelector: aLookup [ 
+TypShaGtGtMethodCoder >> mSelector: aLookup [
 	<typShaMethod: 'selector'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Symbol typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Symbol typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoder >> mUpdateMethod: aLookup [ 
+TypShaGtGtMethodCoder >> mUpdateMethod: aLookup [
 	<typShaMethod: 'updateMethod:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | CompiledMethod typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {CompiledMethod typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #'as yet unclassified' }

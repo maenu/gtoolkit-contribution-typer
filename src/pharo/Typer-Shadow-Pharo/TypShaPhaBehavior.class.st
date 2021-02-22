@@ -10,242 +10,230 @@ TypShaPhaBehavior class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mAllSubclasses: aLookup [ 
+TypShaPhaBehavior >> mAllSubclasses: aLookup [
 	<typShaMethod: 'allSubclasses'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithParameters: {Behavior typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(SequenceableCollection typAsType
+				copyWithParameters: {Behavior typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mBasicNew: aLookup [ 
+TypShaPhaBehavior >> mBasicNew: aLookup [
 	<typShaMethod: 'basicNew'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			(a receiverType asCollection
-				collect: [ :e | 
-					e isUnknown
-						ifTrue: [ e ]
-						ifFalse: [ e classDescription instanceSide typAsType ] ])
-				typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			aLookup receiverType classDescription instanceSide typAsType typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mBinary83: aLookup [ 
+TypShaPhaBehavior >> mBinary83: aLookup [
 	<typShaMethod: '>>'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
-		resultType: [ :a :s :r | CompiledMethod typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: CompiledMethod typAsType
+		arguments: {Symbol typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mCanUnderstand: aLookup [ 
+TypShaPhaBehavior >> mCanUnderstand: aLookup [
 	<typShaMethod: 'canUnderstand:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {Symbol typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mClassVarNames: aLookup [ 
+TypShaPhaBehavior >> mClassVarNames: aLookup [
 	<typShaMethod: 'classVarNames'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType:
-				[ :a :s :r | Set typAsType copyWithParameters: {String typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (Set typAsType copyWithParameters: {String typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mCompile: aLookup [ 
+TypShaPhaBehavior >> mCompile: aLookup [
 	<typShaMethod: 'compile:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | Symbol typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Symbol typAsType
+		arguments: {String typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mCompiledMethodAt: aLookup [ 
+TypShaPhaBehavior >> mCompiledMethodAt: aLookup [
 	<typShaMethod: 'compiledMethodAt:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
-		resultType: [ :a :s :r | CompiledMethod typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: CompiledMethod typAsType
+		arguments: {Symbol typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mIncludesBehavior: aLookup [ 
+TypShaPhaBehavior >> mIncludesBehavior: aLookup [
 	<typShaMethod: 'includesBehavior:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Behavior typAsType ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {Behavior typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mIncludesSelector: aLookup [ 
+TypShaPhaBehavior >> mIncludesSelector: aLookup [
 	<typShaMethod: 'includesSelector:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {Symbol typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mInheritsFrom: aLookup [ 
+TypShaPhaBehavior >> mInheritsFrom: aLookup [
 	<typShaMethod: 'inheritsFrom:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | ClassDescription typAsType ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {ClassDescription typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mInstVarNames: aLookup [ 
+TypShaPhaBehavior >> mInstVarNames: aLookup [
 	<typShaMethod: 'instVarNames'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithParameters: {String typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(SequenceableCollection typAsType
+				copyWithParameters: {String typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mIsAbstract: aLookup [ 
+TypShaPhaBehavior >> mIsAbstract: aLookup [
 	<typShaMethod: 'isAbstract'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mLookupSelector: aLookup [ 
+TypShaPhaBehavior >> mLookupSelector: aLookup [
 	<typShaMethod: 'lookupSelector:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ Symbol typAsType ];
-		resultType: [ CompiledMethod typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: CompiledMethod typAsType
+		arguments: {Symbol typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mMethodNamed: aLookup [ 
+TypShaPhaBehavior >> mMethodNamed: aLookup [
 	<typShaMethod: 'methodNamed:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
-		resultType: [ :a :s :r | CompiledMethod typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: CompiledMethod typAsType
+		arguments: {Symbol typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mMethods: aLookup [ 
+TypShaPhaBehavior >> mMethods: aLookup [
 	<typShaMethod: 'methods'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType:
-				[ Collection typAsType copyWithParameters: {CompiledMethod typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(Collection typAsType copyWithParameters: {CompiledMethod typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mName: aLookup [ 
+TypShaPhaBehavior >> mName: aLookup [
 	<typShaMethod: 'name'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | String typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: String typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mNew: aLookup [ 
+TypShaPhaBehavior >> mNew: aLookup [
 	<typShaMethod: 'new'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			(a receiverType asCollection
-				collect: [ :e | 
-					e isUnknown
-						ifTrue: [ e ]
-						ifFalse: [ e classDescription instanceSide typAsType ] ])
-				typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			aLookup receiverType classDescription instanceSide typAsType typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mSelectors: aLookup [ 
+TypShaPhaBehavior >> mSelectors: aLookup [
 	<typShaMethod: 'selectors'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType:
-				[ :a :s :r | Collection typAsType copyWithParameters: {Symbol typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (Collection typAsType copyWithParameters: {Symbol typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mSuperclass: aLookup [ 
+TypShaPhaBehavior >> mSuperclass: aLookup [
 	<typShaMethod: 'superclass'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | ClassDescription typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: ClassDescription typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mWhichClassDefinesClassVar: aLookup [ 
+TypShaPhaBehavior >> mWhichClassDefinesClassVar: aLookup [
 	<typShaMethod: 'whichClassDefinesClassVar:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | Class typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Class typAsType
+		arguments: {String typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mWhichClassDefinesInstVar: aLookup [ 
+TypShaPhaBehavior >> mWhichClassDefinesInstVar: aLookup [
 	<typShaMethod: 'whichClassDefinesInstVar:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | ClassDescription typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: ClassDescription typAsType
+		arguments: {String typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mWithAllSuperclasses: aLookup [ 
+TypShaPhaBehavior >> mWithAllSuperclasses: aLookup [
 	<typShaMethod: 'withAllSuperclasses'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithParameters: {ClassDescription typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(SequenceableCollection typAsType
+				copyWithParameters: {ClassDescription typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

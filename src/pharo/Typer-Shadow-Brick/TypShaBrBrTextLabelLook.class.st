@@ -10,23 +10,23 @@ TypShaBrBrTextLabelLook class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaBrBrTextLabelLook >> mFontSize: aLookup [ 
+TypShaBrBrTextLabelLook >> mFontSize: aLookup [
 	<typShaMethod: 'fontSize:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Number typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {Number typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaBrBrTextLabelLook >> mForeground: aLookup [ 
+TypShaBrBrTextLabelLook >> mForeground: aLookup [
 	<typShaMethod: 'foreground:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			{Color typAsType.
-			BlPaint typAsType} typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{{Color typAsType.
+			BlPaint typAsType} typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

@@ -10,126 +10,127 @@ TypShaPhaRBMethodNode class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaRBMethodNode >> mAddPragma: aLookup [ 
+TypShaPhaRBMethodNode >> mAddPragma: aLookup [
 	<typShaMethod: 'addPragma:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | RBPragmaNode typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {RBPragmaNode typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBMethodNode >> mAllChildren: aLookup [ 
+TypShaPhaRBMethodNode >> mAllChildren: aLookup [
 	<typShaMethod: 'allChildren'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithParameters: {RBProgramNode typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(SequenceableCollection typAsType
+				copyWithParameters: {RBProgramNode typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBMethodNode >> mArguments: aLookup [ 
+TypShaPhaRBMethodNode >> mArguments: aLookup [
 	<typShaMethod: 'arguments'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ SequenceableCollection typAsType
-				copyWithParameters: {RBArgumentNode typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(SequenceableCollection typAsType
+				copyWithParameters: {RBArgumentNode typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBMethodNode >> mBody: aLookup [ 
+TypShaPhaRBMethodNode >> mBody: aLookup [
 	<typShaMethod: 'body'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | RBSequenceNode typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: RBSequenceNode typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBMethodNode >> mCompilationContext: aLookup [ 
+TypShaPhaRBMethodNode >> mCompilationContext: aLookup [
 	<typShaMethod: 'compilationContext:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | CompilationContext typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {CompilationContext typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBMethodNode >> mIsPrimitive: aLookup [ 
+TypShaPhaRBMethodNode >> mIsPrimitive: aLookup [
 	<typShaMethod: 'isPrimitive'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBMethodNode >> mMethod: aLookup [ 
+TypShaPhaRBMethodNode >> mMethod: aLookup [
 	<typShaMethod: 'method'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | CompiledMethod typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: CompiledMethod typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBMethodNode >> mMethodClass: aLookup [ 
+TypShaPhaRBMethodNode >> mMethodClass: aLookup [
 	<typShaMethod: 'methodClass'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ ClassDescription typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: ClassDescription typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBMethodNode >> mNumArgs: aLookup [ 
+TypShaPhaRBMethodNode >> mNumArgs: aLookup [
 	<typShaMethod: 'numArgs'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Integer typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBMethodNode >> mPragmas: aLookup [ 
+TypShaPhaRBMethodNode >> mPragmas: aLookup [
 	<typShaMethod: 'pragmas'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithParameters: {RBPragmaNode typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(SequenceableCollection typAsType
+				copyWithParameters: {RBPragmaNode typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBMethodNode >> mRemovePragma: aLookup [ 
+TypShaPhaRBMethodNode >> mRemovePragma: aLookup [
 	<typShaMethod: 'removePragma:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | RBPragmaNode typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {RBPragmaNode typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBMethodNode >> mSelector: aLookup [ 
+TypShaPhaRBMethodNode >> mSelector: aLookup [
 	<typShaMethod: 'selector'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Symbol typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Symbol typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

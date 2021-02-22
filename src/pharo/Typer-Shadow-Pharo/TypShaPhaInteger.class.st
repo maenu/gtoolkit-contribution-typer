@@ -10,31 +10,31 @@ TypShaPhaInteger class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaInteger >> mAsCharacter: aLookup [ 
+TypShaPhaInteger >> mAsCharacter: aLookup [
 	<typShaMethod: 'asCharacter'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Character typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Character typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaInteger >> mAtRandom: aLookup [ 
+TypShaPhaInteger >> mAtRandom: aLookup [
 	<typShaMethod: 'atRandom'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Integer typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaInteger >> mBitXor: aLookup [ 
+TypShaPhaInteger >> mBitXor: aLookup [
 	<typShaMethod: 'bitXor:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Integer typAsType ];
-		resultType: [ :a :s :r | Integer typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType
+		arguments: {Integer typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

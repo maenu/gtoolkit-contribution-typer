@@ -10,33 +10,33 @@ TypShaGtGtSourceCoder class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtSourceCoder >> mClassOrMetaClass: aLookup [ 
+TypShaGtGtSourceCoder >> mClassOrMetaClass: aLookup [
 	<typShaMethod: 'classOrMetaClass'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | ClassDescription typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: ClassDescription typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtSourceCoder >> mCollapsedEditor: aLookup [ 
+TypShaGtGtSourceCoder >> mCollapsedEditor: aLookup [
 	<typShaMethod: 'collapsedEditor'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | BrTextEditor typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: BrTextEditor typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtSourceCoder >> mExpanded: aLookup [ 
+TypShaGtGtSourceCoder >> mExpanded: aLookup [
 	<typShaMethod: 'expanded:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Boolean typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {Boolean typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -50,11 +50,11 @@ TypShaGtGtSourceCoder >> mMethodsCoder: aLookup [
 ]
 
 { #category : #shadow }
-TypShaGtGtSourceCoder >> mSource: aLookup [ 
+TypShaGtGtSourceCoder >> mSource: aLookup [
 	<typShaMethod: 'source'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | String typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: String typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

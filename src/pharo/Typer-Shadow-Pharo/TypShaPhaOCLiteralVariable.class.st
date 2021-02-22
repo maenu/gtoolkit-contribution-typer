@@ -10,75 +10,75 @@ TypShaPhaOCLiteralVariable class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaOCLiteralVariable >> mAssoc: aLookup [ 
+TypShaPhaOCLiteralVariable >> mAssoc: aLookup [
 	<typShaMethod: 'assoc'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			Association typAsType
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(Association typAsType
 				copyWithParameters:
 					{String typAsType.
-					TypUnknownType new} ];
-		yourself
+					TypUnknownType new})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaOCLiteralVariable >> mIsClassVariable: aLookup [ 
+TypShaPhaOCLiteralVariable >> mIsClassVariable: aLookup [
 	<typShaMethod: 'isClassVariable'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaOCLiteralVariable >> mIsFromSharedPool: aLookup [ 
+TypShaPhaOCLiteralVariable >> mIsFromSharedPool: aLookup [
 	<typShaMethod: 'isFromSharedPool'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaOCLiteralVariable >> mIsGlobalClassNameBinding: aLookup [ 
+TypShaPhaOCLiteralVariable >> mIsGlobalClassNameBinding: aLookup [
 	<typShaMethod: 'isGlobalClassNameBinding'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaOCLiteralVariable >> mIsGlobalVariable: aLookup [ 
+TypShaPhaOCLiteralVariable >> mIsGlobalVariable: aLookup [
 	<typShaMethod: 'isGlobalVariable'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaOCLiteralVariable >> mScope: aLookup [ 
+TypShaPhaOCLiteralVariable >> mScope: aLookup [
 	<typShaMethod: 'scope'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | OCAbstractScope typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: OCAbstractScope typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaOCLiteralVariable >> mValue: aLookup [ 
+TypShaPhaOCLiteralVariable >> mValue: aLookup [
 	<typShaMethod: 'value'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Object typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Object typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

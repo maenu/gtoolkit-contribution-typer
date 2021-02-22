@@ -10,52 +10,51 @@ TypShaPhaClass class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaClass >> mAddClassVarNamed: aLookup [ 
+TypShaPhaClass >> mAddClassVarNamed: aLookup [
 	<typShaMethod: 'addClassVarNamed:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {String typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaClass >> mClassVarNamed: aLookup [ 
+TypShaPhaClass >> mClassVarNamed: aLookup [
 	<typShaMethod: 'classVarNamed:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | TypUnknownType new ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: TypUnknownType new
+		arguments: {String typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaClass >> mHasClassVarNamed: aLookup [ 
+TypShaPhaClass >> mHasClassVarNamed: aLookup [
 	<typShaMethod: 'hasClassVarNamed:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {String typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaClass >> mSharedPools: aLookup [ 
+TypShaPhaClass >> mSharedPools: aLookup [
 	<typShaMethod: 'sharedPools'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType:
-				[ :a :s :r | Collection typAsType copyWithParameters: {Class typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (Collection typAsType copyWithParameters: {Class typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaClass >> mSubclassInstanceVariableNamesClassVariableNamesPackage: aLookup [ 
+TypShaPhaClass >> mSubclassInstanceVariableNamesClassVariableNamesPackage: aLookup [
 	<typShaMethod: 'subclass:instanceVariableNames:classVariableNames:package:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | a receiverType classDescription typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType classDescription typAsType
+		arguments: {String typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

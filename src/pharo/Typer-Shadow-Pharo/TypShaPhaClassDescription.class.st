@@ -10,61 +10,61 @@ TypShaPhaClassDescription class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaClassDescription >> mAddInstVarNamed: aLookup [ 
+TypShaPhaClassDescription >> mAddInstVarNamed: aLookup [
 	<typShaMethod: 'addInstVarNamed:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {String typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaClassDescription >> mClassSide: aLookup [ 
+TypShaPhaClassDescription >> mClassSide: aLookup [
 	<typShaMethod: 'classSide'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Metaclass typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Metaclass typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaClassDescription >> mHasInstVarNamed: aLookup [ 
+TypShaPhaClassDescription >> mHasInstVarNamed: aLookup [
 	<typShaMethod: 'hasInstVarNamed:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {String typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaClassDescription >> mInstanceSide: aLookup [ 
+TypShaPhaClassDescription >> mInstanceSide: aLookup [
 	<typShaMethod: 'instanceSide'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Class typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Class typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaClassDescription >> mIsClassSide: aLookup [ 
+TypShaPhaClassDescription >> mIsClassSide: aLookup [
 	<typShaMethod: 'isClassSide'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaClassDescription >> mIsTestCase: aLookup [ 
+TypShaPhaClassDescription >> mIsTestCase: aLookup [
 	<typShaMethod: 'isTestCase'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

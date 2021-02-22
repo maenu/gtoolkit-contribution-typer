@@ -10,23 +10,21 @@ TypShaPhaRPackage class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaRPackage >> mDefinedClasses: aLookup [ 
+TypShaPhaRPackage >> mDefinedClasses: aLookup [
 	<typShaMethod: 'definedClasses'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType:
-				[ :a :s :r | Collection typAsType copyWithParameters: {Class typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (Collection typAsType copyWithParameters: {Class typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRPackage >> mMethods: aLookup [ 
+TypShaPhaRPackage >> mMethods: aLookup [
 	<typShaMethod: 'methods'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType:
-				[ :a :s :r | Collection typAsType copyWithParameters: {CompiledMethod typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (Collection typAsType copyWithParameters: {CompiledMethod typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

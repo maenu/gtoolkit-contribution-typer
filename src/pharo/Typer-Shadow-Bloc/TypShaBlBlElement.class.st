@@ -10,70 +10,70 @@ TypShaBlBlElement class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaBlBlElement >> mBackground: aLookup [ 
+TypShaBlBlElement >> mBackground: aLookup [
 	<typShaMethod: 'background:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			{Color typAsType.
-			BlBackground typAsType} typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{{Color typAsType.
+			BlBackground typAsType} typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaBlBlElement >> mConstraintsDo: aLookup [ 
+TypShaBlBlElement >> mConstraintsDo: aLookup [
 	<typShaMethod: 'constraintsDo:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			BlockClosure
+	CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
 				arguments: {BlLayoutConstraints typAsType}
 				argumentsOptional: false
-				signalsAlways: false ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+				signalsAlways: false)}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaBlBlElement >> mFireEvent: aLookup [ 
+TypShaBlBlElement >> mFireEvent: aLookup [
 	<typShaMethod: 'fireEvent:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | BlEvent typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {BlEvent typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaBlBlElement >> mGeometry: aLookup [ 
+TypShaBlBlElement >> mGeometry: aLookup [
 	<typShaMethod: 'geometry:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | BlGeometry typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {BlGeometry typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaBlBlElement >> mLook: aLookup [ 
+TypShaBlBlElement >> mLook: aLookup [
 	<typShaMethod: 'look:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			{BrLook class typAsType.
-			BrLook typAsType} typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{{BrLook class typAsType.
+			BrLook typAsType} typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaBlBlElement >> mMargin: aLookup [ 
+TypShaBlBlElement >> mMargin: aLookup [
 	<typShaMethod: 'margin:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | BlInsets typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {BlInsets typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

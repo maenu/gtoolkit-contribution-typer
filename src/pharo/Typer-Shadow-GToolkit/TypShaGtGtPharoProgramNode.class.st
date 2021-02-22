@@ -37,11 +37,11 @@ TypShaGtGtPharoProgramNode >> mCompletionActionsFor: aLookup [
 ]
 
 { #category : #shadow }
-TypShaGtGtPharoProgramNode >> mSource: aLookup [ 
+TypShaGtGtPharoProgramNode >> mSource: aLookup [
 	<typShaMethod: 'source'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | String typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: String typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

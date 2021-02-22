@@ -10,21 +10,21 @@ TypShaGtGtFilteredMethodsCoder class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtFilteredMethodsCoder >> mMethodAdded: aLookup [ 
+TypShaGtGtFilteredMethodsCoder >> mMethodAdded: aLookup [
 	<typShaMethod: 'methodAdded:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | ValueAdded typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {ValueAdded typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtFilteredMethodsCoder >> mNewMethodCoderFor: aLookup [ 
+TypShaGtGtFilteredMethodsCoder >> mNewMethodCoderFor: aLookup [
 	<typShaMethod: 'newMethodCoderFor:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | CompiledMethod typAsType ];
-		resultType: [ :a :s :r | GtMethodCoder typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: GtMethodCoder typAsType
+		arguments: {CompiledMethod typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

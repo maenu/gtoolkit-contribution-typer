@@ -30,28 +30,23 @@ TypShaPhaProtoObject >> mBinary288: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaProtoObject >> mClass: aLookup [ 
+TypShaPhaProtoObject >> mClass: aLookup [
 	<typShaMethod: 'class'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			(a receiverType asCollection
-				collect: [ :e | 
-					e isUnknown
-						ifTrue: [ e ]
-						ifFalse: [ e classDescription class typAsType ] ]) typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType classDescription class typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaProtoObject >> mFlag: aLookup [ 
+TypShaPhaProtoObject >> mFlag: aLookup [
 	<typShaMethod: 'flag:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {String typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -146,11 +141,11 @@ TypShaPhaProtoObject >> mIfNotNil: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaProtoObject >> mIsNil: aLookup [ 
+TypShaPhaProtoObject >> mIsNil: aLookup [
 	<typShaMethod: 'isNil'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

@@ -10,27 +10,29 @@ TypShaPhaNumber class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaNumber >> mBinary233: aLookup [ 
+TypShaPhaNumber >> mBinary233: aLookup [
 	<typShaMethod: '-'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Number typAsType ];
-		resultType: [ :a :s :r | 
-			{a receiverType.
-			(a argumentTypes at: 1)} typAsType ];
-		yourself
+	self flag: 'FIXME argumentTypes'.
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			{aLookup receiverType.
+			(aLookup argumentTypes at: 1)} typAsType
+		arguments: {Number typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaNumber >> mBinary235: aLookup [ 
+TypShaPhaNumber >> mBinary235: aLookup [
 	<typShaMethod: '+'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Number typAsType ];
-		resultType: [ :a :s :r | 
-			{a receiverType.
-			(a argumentTypes at: 1)} typAsType ];
-		yourself
+	self flag: 'FIXME argumentTypes'.
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			{aLookup receiverType.
+			(aLookup argumentTypes at: 1)} typAsType
+		arguments: {Number typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }

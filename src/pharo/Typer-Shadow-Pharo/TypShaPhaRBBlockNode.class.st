@@ -10,22 +10,23 @@ TypShaPhaRBBlockNode class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaRBBlockNode >> mArguments: aLookup [ 
+TypShaPhaRBBlockNode >> mArguments: aLookup [
 	<typShaMethod: 'arguments'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ OrderedCollection typAsType
-				copyWithParameters: {RBArgumentNode typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(OrderedCollection typAsType
+				copyWithParameters: {RBArgumentNode typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBBlockNode >> mBody: aLookup [ 
+TypShaPhaRBBlockNode >> mBody: aLookup [
 	<typShaMethod: 'body'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | RBSequenceNode typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: RBSequenceNode typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

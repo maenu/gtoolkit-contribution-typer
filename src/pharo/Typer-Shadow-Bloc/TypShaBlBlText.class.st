@@ -10,13 +10,13 @@ TypShaBlBlText class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaBlBlText >> mAttribute: aLookup [ 
+TypShaBlBlText >> mAttribute: aLookup [
 	<typShaMethod: 'attribute:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | BlTextAttribute typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {BlTextAttribute typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -47,11 +47,11 @@ TypShaBlBlText >> mClearAttributes: aLookup [
 ]
 
 { #category : #shadow }
-TypShaBlBlText >> mFromTo: aLookup [ 
+TypShaBlBlText >> mFromTo: aLookup [
 	<typShaMethod: 'from:to:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Integer typAsType ];
-		resultType: [ :a :s :r | BlText typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: BlText typAsType
+		arguments: {Integer typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

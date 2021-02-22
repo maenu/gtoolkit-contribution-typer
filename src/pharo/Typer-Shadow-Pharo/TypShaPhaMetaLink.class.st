@@ -22,33 +22,33 @@ TypShaPhaMetaLink >> mArguments: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaMetaLink >> mControl: aLookup [ 
+TypShaPhaMetaLink >> mControl: aLookup [
 	<typShaMethod: 'control:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {Symbol typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaMetaLink >> mMetaObject: aLookup [ 
+TypShaPhaMetaLink >> mMetaObject: aLookup [
 	<typShaMethod: 'metaObject:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			{Symbol typAsType.
-			Object typAsType} typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{{Symbol typAsType.
+			Object typAsType} typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaMetaLink >> mSelector: aLookup [ 
+TypShaPhaMetaLink >> mSelector: aLookup [
 	<typShaMethod: 'selector:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {Symbol typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

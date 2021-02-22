@@ -10,21 +10,21 @@ TypShaBlBlLayoutConstraints class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaBlBlLayoutConstraints >> mHorizontal: aLookup [ 
+TypShaBlBlLayoutConstraints >> mHorizontal: aLookup [
 	<typShaMethod: 'horizontal'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | BlLayoutConstraintsAxis typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: BlLayoutConstraintsAxis typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaBlBlLayoutConstraints >> mVertical: aLookup [ 
+TypShaBlBlLayoutConstraints >> mVertical: aLookup [
 	<typShaMethod: 'vertical'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | BlLayoutConstraintsAxis typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: BlLayoutConstraintsAxis typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

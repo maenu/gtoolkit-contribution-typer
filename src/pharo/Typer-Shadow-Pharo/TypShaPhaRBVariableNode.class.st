@@ -10,31 +10,31 @@ TypShaPhaRBVariableNode class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaRBVariableNode >> mBinding: aLookup [ 
+TypShaPhaRBVariableNode >> mBinding: aLookup [
 	<typShaMethod: 'binding'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ OCLiteralVariable typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: OCLiteralVariable typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBVariableNode >> mIsInstance: aLookup [ 
+TypShaPhaRBVariableNode >> mIsInstance: aLookup [
 	<typShaMethod: 'isInstance'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBVariableNode >> mName: aLookup [ 
+TypShaPhaRBVariableNode >> mName: aLookup [
 	<typShaMethod: 'name'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | String typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: String typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

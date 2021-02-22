@@ -25,23 +25,23 @@ TypShaGtGtPharoCompletionStrategy >> mActionsForAt: aLookup [
 ]
 
 { #category : #shadow }
-TypShaGtGtPharoCompletionStrategy >> mClassOrMetaClass: aLookup [ 
+TypShaGtGtPharoCompletionStrategy >> mClassOrMetaClass: aLookup [
 	<typShaMethod: 'classOrMetaClass:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | ClassDescription typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {ClassDescription typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtPharoCompletionStrategy >> mIndex: aLookup [ 
+TypShaGtGtPharoCompletionStrategy >> mIndex: aLookup [
 	<typShaMethod: 'index'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Integer typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }

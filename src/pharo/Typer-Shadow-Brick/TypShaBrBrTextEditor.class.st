@@ -10,31 +10,31 @@ TypShaBrBrTextEditor class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaBrBrTextEditor >> mInvalidateTo: aLookup [ 
+TypShaBrBrTextEditor >> mInvalidateTo: aLookup [
 	<typShaMethod: 'invalidate:to:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Integer typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {Integer typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaBrBrTextEditor >> mText: aLookup [ 
+TypShaBrBrTextEditor >> mText: aLookup [
 	<typShaMethod: 'text'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | BlText typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: BlText typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaBrBrTextEditor >> mUpdateTo: aLookup [ 
+TypShaBrBrTextEditor >> mUpdateTo: aLookup [
 	<typShaMethod: 'update:to:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Integer typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {Integer typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

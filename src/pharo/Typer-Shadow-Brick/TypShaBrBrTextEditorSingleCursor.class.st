@@ -10,11 +10,11 @@ TypShaBrBrTextEditorSingleCursor class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaBrBrTextEditorSingleCursor >> mPosition: aLookup [ 
+TypShaBrBrTextEditorSingleCursor >> mPosition: aLookup [
 	<typShaMethod: 'position'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Integer typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

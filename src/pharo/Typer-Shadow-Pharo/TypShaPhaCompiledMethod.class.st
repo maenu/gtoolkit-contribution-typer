@@ -10,93 +10,91 @@ TypShaPhaCompiledMethod class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaCompiledMethod >> mAssignmentNodes: aLookup [ 
+TypShaPhaCompiledMethod >> mAssignmentNodes: aLookup [
 	<typShaMethod: 'assignmentNodes'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType:
-				[ :a :s :r | Collection typAsType copyWithParameters: {RBAssignmentNode typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (Collection typAsType copyWithParameters: {RBAssignmentNode typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaCompiledMethod >> mAst: aLookup [ 
+TypShaPhaCompiledMethod >> mAst: aLookup [
 	<typShaMethod: 'ast'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | RBMethodNode typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: RBMethodNode typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaCompiledMethod >> mIsAbstract: aLookup [ 
+TypShaPhaCompiledMethod >> mIsAbstract: aLookup [
 	<typShaMethod: 'isAbstract'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaCompiledMethod >> mMethodClass: aLookup [ 
+TypShaPhaCompiledMethod >> mMethodClass: aLookup [
 	<typShaMethod: 'methodClass'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | ClassDescription typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: ClassDescription typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaCompiledMethod >> mNumArgs: aLookup [ 
+TypShaPhaCompiledMethod >> mNumArgs: aLookup [
 	<typShaMethod: 'numArgs'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ Integer typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaCompiledMethod >> mPragmas: aLookup [ 
+TypShaPhaCompiledMethod >> mPragmas: aLookup [
 	<typShaMethod: 'pragmas'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType:
-				[ OrderedCollection typAsType copyWithParameters: {Pragma typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (OrderedCollection typAsType copyWithParameters: {Pragma typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaCompiledMethod >> mReflectiveMethod: aLookup [ 
+TypShaPhaCompiledMethod >> mReflectiveMethod: aLookup [
 	<typShaMethod: 'reflectiveMethod'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | ReflectiveMethod typAsType asNullable ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: ReflectiveMethod typAsType asNullable
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaCompiledMethod >> mSelector: aLookup [ 
+TypShaPhaCompiledMethod >> mSelector: aLookup [
 	<typShaMethod: 'selector'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Symbol typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Symbol typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaCompiledMethod >> mSourceCode: aLookup [ 
+TypShaPhaCompiledMethod >> mSourceCode: aLookup [
 	<typShaMethod: 'sourceCode'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | String typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: String typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

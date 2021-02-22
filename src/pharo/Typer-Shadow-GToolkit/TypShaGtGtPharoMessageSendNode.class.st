@@ -10,11 +10,11 @@ TypShaGtGtPharoMessageSendNode class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtPharoMessageSendNode >> mReceiver: aLookup [ 
+TypShaGtGtPharoMessageSendNode >> mReceiver: aLookup [
 	<typShaMethod: 'receiver'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | GtPharoValueNode typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: GtPharoValueNode typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

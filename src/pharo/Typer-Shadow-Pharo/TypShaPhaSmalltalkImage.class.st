@@ -10,11 +10,11 @@ TypShaPhaSmalltalkImage class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaSmalltalkImage >> mGlobals: aLookup [ 
+TypShaPhaSmalltalkImage >> mGlobals: aLookup [
 	<typShaMethod: 'globals'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | SystemDictionary typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: SystemDictionary typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

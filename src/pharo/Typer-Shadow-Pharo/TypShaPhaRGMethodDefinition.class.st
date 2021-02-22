@@ -10,11 +10,11 @@ TypShaPhaRGMethodDefinition class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaRGMethodDefinition >> mCompiledMethod: aLookup [ 
+TypShaPhaRGMethodDefinition >> mCompiledMethod: aLookup [
 	<typShaMethod: 'compiledMethod'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | CompiledMethod typAsType asNullable ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: CompiledMethod typAsType asNullable
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

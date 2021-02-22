@@ -10,11 +10,11 @@ TypShaPhaTestSuite class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaTestSuite >> mRun: aLookup [ 
+TypShaPhaTestSuite >> mRun: aLookup [
 	<typShaMethod: 'run:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | TestResult typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {TestResult typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

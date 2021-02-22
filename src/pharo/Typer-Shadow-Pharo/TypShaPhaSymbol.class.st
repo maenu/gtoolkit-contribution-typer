@@ -10,31 +10,31 @@ TypShaPhaSymbol class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaSymbol >> mIsBinary: aLookup [ 
+TypShaPhaSymbol >> mIsBinary: aLookup [
 	<typShaMethod: 'isBinary'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaSymbol >> mIsKeyword: aLookup [ 
+TypShaPhaSymbol >> mIsKeyword: aLookup [
 	<typShaMethod: 'isKeyword'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaSymbol >> mIsUnary: aLookup [ 
+TypShaPhaSymbol >> mIsUnary: aLookup [
 	<typShaMethod: 'isUnary'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

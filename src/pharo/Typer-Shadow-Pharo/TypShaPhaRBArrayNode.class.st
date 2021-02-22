@@ -10,12 +10,13 @@ TypShaPhaRBArrayNode class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaRBArrayNode >> mStatements: aLookup [ 
+TypShaPhaRBArrayNode >> mStatements: aLookup [
 	<typShaMethod: 'statements'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ OrderedCollection typAsType
-				copyWithParameters: {RBProgramNode typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(OrderedCollection typAsType
+				copyWithParameters: {RBProgramNode typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

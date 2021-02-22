@@ -10,24 +10,25 @@ TypShaPhaRBSequenceNode class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaRBSequenceNode >> mStatements: aLookup [ 
+TypShaPhaRBSequenceNode >> mStatements: aLookup [
 	<typShaMethod: 'statements'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ OrderedCollection typAsType
-				copyWithParameters: {RBProgramNode typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(OrderedCollection typAsType
+				copyWithParameters: {RBProgramNode typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaRBSequenceNode >> mTemporaries: aLookup [ 
+TypShaPhaRBSequenceNode >> mTemporaries: aLookup [
 	<typShaMethod: 'temporaries'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithParameters: {RBTemporaryNode typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(SequenceableCollection typAsType
+				copyWithParameters: {RBTemporaryNode typAsType})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

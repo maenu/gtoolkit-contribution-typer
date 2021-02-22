@@ -274,15 +274,15 @@ TypShaPhaDictionary >> mRemoveKeyIfAbsent: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaDictionary >> mValues: aLookup [ 
+TypShaPhaDictionary >> mValues: aLookup [
 	<typShaMethod: 'values'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | 
-			Collection typAsType
-				copyWithParameters: {('@A' typAsVariableType resolveIn: a receiverType)} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(Collection typAsType
+				copyWithParameters: {(aLookup receiverType at: '@A')})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #accessing }

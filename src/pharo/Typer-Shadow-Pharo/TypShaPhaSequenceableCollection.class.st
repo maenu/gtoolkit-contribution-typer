@@ -143,13 +143,13 @@ TypShaPhaSequenceableCollection >> mIndexOf: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaSequenceableCollection >> mIsEmpty: aLookup [ 
+TypShaPhaSequenceableCollection >> mIsEmpty: aLookup [
 	<typShaMethod: 'isEmpty'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -163,13 +163,13 @@ TypShaPhaSequenceableCollection >> mLast: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaSequenceableCollection >> mReversed: aLookup [ 
+TypShaPhaSequenceableCollection >> mReversed: aLookup [
 	<typShaMethod: 'reversed'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }

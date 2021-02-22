@@ -10,11 +10,11 @@ TypShaBrBrTextEditorCursorRemovedEvent class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaBrBrTextEditorCursorRemovedEvent >> mCursor: aLookup [ 
+TypShaBrBrTextEditorCursorRemovedEvent >> mCursor: aLookup [
 	<typShaMethod: 'cursor'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | BrTextEditorSingleCursor typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: BrTextEditorSingleCursor typAsType
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]

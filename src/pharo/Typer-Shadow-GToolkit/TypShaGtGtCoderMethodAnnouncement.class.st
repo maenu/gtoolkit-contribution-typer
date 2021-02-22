@@ -10,11 +10,11 @@ TypShaGtGtCoderMethodAnnouncement class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtCoderMethodAnnouncement >> mCoder: aLookup [ 
+TypShaGtGtCoderMethodAnnouncement >> mCoder: aLookup [
 	<typShaMethod: 'coder:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | GtMethodsCoder typAsType ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {GtMethodsCoder typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

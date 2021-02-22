@@ -21,13 +21,13 @@ TypShaGtGtMethodsCoder class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodsCoder >> mAnnounce: aLookup [ 
+TypShaGtGtMethodsCoder >> mAnnounce: aLookup [
 	<typShaMethod: 'announce:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Announcement typAsType ];
-		resultType: [ :a :s :r | TypUnknownType new ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: TypUnknownType new
+		arguments: {Announcement typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #'as yet unclassified' }
