@@ -137,33 +137,33 @@ TypShaPhaBlockClosure >> mValueValueValueValue: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaBlockClosure >> mWhileFalse: aLookup [ 
+TypShaPhaBlockClosure >> mWhileFalse: aLookup [
 	<typShaMethod: 'whileFalse:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			BlockClosure
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
 				arguments: {}
 				argumentsOptional: false
-				signalsAlways: false ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+				signalsAlways: false)}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaBlockClosure >> mWhileTrue: aLookup [ 
+TypShaPhaBlockClosure >> mWhileTrue: aLookup [
 	<typShaMethod: 'whileTrue:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			BlockClosure
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: TypNilType new
+		arguments:
+			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
 				arguments: #()
 				argumentsOptional: false
-				signalsAlways: false ];
-		resultType: [ :a :s :r | TypNilType new ];
-		yourself
+				signalsAlways: false)}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #'as yet unclassified' }

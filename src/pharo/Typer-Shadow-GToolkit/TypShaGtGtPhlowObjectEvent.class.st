@@ -10,13 +10,13 @@ TypShaGtGtPhlowObjectEvent class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtPhlowObjectEvent >> mObject: aLookup [ 
+TypShaGtGtPhlowObjectEvent >> mObject: aLookup [
 	<typShaMethod: 'object:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Object typAsType asNullable ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {Object typAsType asNullable}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }

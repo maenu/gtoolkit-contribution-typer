@@ -10,16 +10,16 @@ TypShaGtGtMondrianGraphBuilder class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtMondrianGraphBuilder >> mStencil: aLookup [ 
+TypShaGtGtMondrianGraphBuilder >> mStencil: aLookup [
 	<typShaMethod: 'stencil:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			BlockClosure
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{(BlockClosure
 				typAsFunctionTypeWithResult: BlElement typAsType
 				arguments: {TypUnknownType new}
 				argumentsOptional: false
-				signalsAlways: false ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+				signalsAlways: false)}
+		argumentsOptional: false
+		signalsAlways: false
 ]

@@ -10,29 +10,27 @@ TypShaGtGtPrefixTree class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtPrefixTree >> mAddWeight: aLookup [ 
+TypShaGtGtPrefixTree >> mAddWeight: aLookup [
 	<typShaMethod: 'add:weight:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			i = 1
-				ifTrue: [ String typAsType ]
-				ifFalse: [ Number typAsType ] ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{String typAsType.
+			Number typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtPrefixTree >> mWeightedFirstStartingWith: aLookup [ 
+TypShaGtGtPrefixTree >> mWeightedFirstStartingWith: aLookup [
 	<typShaMethod: 'weightedFirst:startingWith:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			i = 1
-				ifTrue: [ Integer typAsType ]
-				ifFalse: [ String typAsType ] ];
-		resultType: [ :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithParameters: {String typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(SequenceableCollection typAsType
+				copyWithParameters: {String typAsType})
+		arguments:
+			{Integer typAsType.
+			String typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

@@ -10,30 +10,28 @@ TypShaGtGtPharoProgramNode class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtPharoProgramNode >> mActionForSelectorStartingWithAt: aLookup [ 
+TypShaGtGtPharoProgramNode >> mActionForSelectorStartingWithAt: aLookup [
 	<typShaMethod: 'actionForSelector:startingWith:at:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			i = 1
-				ifTrue: [ String typAsType ]
-				ifFalse: [ i = 2
-						ifTrue: [ String typAsType ]
-						ifFalse: [ Integer typAsType ] ] ];
-		resultType: [ :a :s :r | GtCompletionAction typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: GtCompletionAction typAsType
+		arguments:
+			{String typAsType.
+			String typAsType.
+			Integer typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtPharoProgramNode >> mCompletionActionsFor: aLookup [ 
+TypShaGtGtPharoProgramNode >> mCompletionActionsFor: aLookup [
 	<typShaMethod: 'completionActionsFor:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | GtPharoCompletionStrategy typAsType ];
-		resultType: [ :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithParameters: {GtCompletionAction typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(SequenceableCollection typAsType
+				copyWithParameters: {GtCompletionAction typAsType})
+		arguments: {GtPharoCompletionStrategy typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }

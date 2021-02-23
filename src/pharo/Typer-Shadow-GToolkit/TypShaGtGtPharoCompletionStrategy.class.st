@@ -45,16 +45,15 @@ TypShaGtGtPharoCompletionStrategy >> mIndex: aLookup [
 ]
 
 { #category : #shadow }
-TypShaGtGtPharoCompletionStrategy >> mNodeForIn: aLookup [ 
+TypShaGtGtPharoCompletionStrategy >> mNodeForIn: aLookup [
 	<typShaMethod: 'nodeFor:in:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			i = 1
-				ifTrue: [ Integer typAsType ]
-				ifFalse: [ GtPharoMethodNode typAsType ] ];
-		resultType: [ :a :s :r | GtPharoProgramNode typAsType asNullable ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: GtPharoProgramNode typAsType asNullable
+		arguments:
+			{Integer typAsType.
+			GtPharoMethodNode typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }

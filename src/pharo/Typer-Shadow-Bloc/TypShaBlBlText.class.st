@@ -20,30 +20,30 @@ TypShaBlBlText >> mAttribute: aLookup [
 ]
 
 { #category : #shadow }
-TypShaBlBlText >> mAttributesAt: aLookup [ 
+TypShaBlBlText >> mAttributesAt: aLookup [
 	<typShaMethod: 'attributesAt:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Integer typAsType ];
-		resultType: [ :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithParameters: {BlTextAttribute typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(SequenceableCollection typAsType
+				copyWithParameters: {BlTextAttribute typAsType})
+		arguments: {Integer typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaBlBlText >> mClearAttributes: aLookup [ 
+TypShaBlBlText >> mClearAttributes: aLookup [
 	<typShaMethod: 'clearAttributes:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			BlockClosure
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
 				arguments: {BlTextAttribute typAsType}
 				argumentsOptional: false
-				signalsAlways: false ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+				signalsAlways: false)}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }

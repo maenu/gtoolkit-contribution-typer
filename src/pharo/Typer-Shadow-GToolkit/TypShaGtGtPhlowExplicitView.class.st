@@ -10,16 +10,16 @@ TypShaGtGtPhlowExplicitView class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtPhlowExplicitView >> mStencil: aLookup [ 
+TypShaGtGtPhlowExplicitView >> mStencil: aLookup [
 	<typShaMethod: 'stencil:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			BlockClosure
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{(BlockClosure
 				typAsFunctionTypeWithResult: BlElement typAsType
 				arguments: {}
 				argumentsOptional: false
-				signalsAlways: false ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+				signalsAlways: false)}
+		argumentsOptional: false
+		signalsAlways: false
 ]

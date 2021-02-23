@@ -10,18 +10,18 @@ TypShaBrBrButton class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaBrBrButton >> mAction: aLookup [ 
+TypShaBrBrButton >> mAction: aLookup [
 	<typShaMethod: 'action:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			BlockClosure
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
 				arguments: {}
 				argumentsOptional: false
-				signalsAlways: false ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+				signalsAlways: false)}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
