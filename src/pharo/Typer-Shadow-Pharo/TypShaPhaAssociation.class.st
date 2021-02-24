@@ -10,23 +10,23 @@ TypShaPhaAssociation class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaAssociation >> mKey: aLookup [ 
+TypShaPhaAssociation >> mKey: aLookup [
 	<typShaMethod: 'key'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a | '@A' typAsVariableType resolveIn: a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaAssociation >> mValue: aLookup [ 
+TypShaPhaAssociation >> mValue: aLookup [
 	<typShaMethod: 'value'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a | '@B' typAsVariableType resolveIn: a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup receiverType at: '@B')
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #accessing }

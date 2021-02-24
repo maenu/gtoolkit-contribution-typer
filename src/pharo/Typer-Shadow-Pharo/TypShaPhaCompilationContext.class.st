@@ -40,11 +40,11 @@ TypShaPhaCompilationContext >> mForSyntaxHighlighting: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaCompilationContext >> mRequestor: aLookup [ 
+TypShaPhaCompilationContext >> mRequestor: aLookup [
 	<typShaMethod: 'requestor:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Object typAsType asNullable ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {Object typAsType asNullable}
+		argumentsOptional: false
+		signalsAlways: false
 ]

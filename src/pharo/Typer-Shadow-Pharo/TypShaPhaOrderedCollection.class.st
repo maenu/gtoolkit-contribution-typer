@@ -20,26 +20,25 @@ TypShaPhaOrderedCollection >> mAddFirst: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaOrderedCollection >> mAtPut: aLookup [ 
+TypShaPhaOrderedCollection >> mAtPut: aLookup [
 	<typShaMethod: 'at:put:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			i = 1
-				ifTrue: [ Integer typAsType ]
-				ifFalse: [ '@A' typAsVariableType resolveIn: a receiverType ] ];
-		resultType: [ :a :s :r | '@A' typAsVariableType resolveIn: a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
+		arguments:
+			{Integer typAsType.
+			(aLookup receiverType at: '@A')}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaOrderedCollection >> mRemoveLast: aLookup [ 
+TypShaPhaOrderedCollection >> mRemoveLast: aLookup [
 	<typShaMethod: 'removeLast'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | '@A' typAsVariableType resolveIn: a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #converting }

@@ -10,18 +10,17 @@ TypShaGtGtPharoCompletionStrategy class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtPharoCompletionStrategy >> mActionsForAt: aLookup [ 
+TypShaGtGtPharoCompletionStrategy >> mActionsForAt: aLookup [
 	<typShaMethod: 'actionsFor:at:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			i = 1
-				ifTrue: [ GtPharoMethodNode typAsType ]
-				ifFalse: [ Integer typAsType ] ];
-		resultType: [ :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithParameters: {GtCompletionAction typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(SequenceableCollection typAsType
+				copyWithParameters: {GtCompletionAction typAsType})
+		arguments:
+			{GtPharoMethodNode typAsType.
+			Integer typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -57,18 +56,17 @@ TypShaGtGtPharoCompletionStrategy >> mNodeForIn: aLookup [
 ]
 
 { #category : #shadow }
-TypShaGtGtPharoCompletionStrategy >> mSelectorsForReceiverMatching: aLookup [ 
+TypShaGtGtPharoCompletionStrategy >> mSelectorsForReceiverMatching: aLookup [
 	<typShaMethod: 'selectorsForReceiver:matching:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			i = 1
-				ifTrue: [ Behavior typAsType ]
-				ifFalse: [ String typAsType ] ];
-		resultType: [ :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithParameters: {String typAsType} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(SequenceableCollection typAsType
+				copyWithParameters: {String typAsType})
+		arguments:
+			{Behavior typAsType.
+			String typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #'as yet unclassified' }

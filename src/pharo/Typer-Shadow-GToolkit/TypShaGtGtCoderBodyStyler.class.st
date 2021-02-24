@@ -10,17 +10,17 @@ TypShaGtGtCoderBodyStyler class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtCoderBodyStyler >> mStyleFromToWith: aLookup [ 
+TypShaGtGtCoderBodyStyler >> mStyleFromToWith: aLookup [
 	<typShaMethod: 'styleFrom:to:with:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			(i = 1 or: [ i = 2 ])
-				ifTrue: [ Integer typAsType ]
-				ifFalse: [ SequenceableCollection typAsType
-						copyWithParameters: {BlTextAttribute typAsType} ] ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{Integer typAsType.
+			Integer typAsType.
+			(SequenceableCollection typAsType
+				copyWithParameters: {BlTextAttribute typAsType})}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }

@@ -10,13 +10,13 @@ TypShaPhaDictionary class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaDictionary >> mAnyOne: aLookup [ 
+TypShaPhaDictionary >> mAnyOne: aLookup [
 	<typShaMethod: 'anyOne'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a | '@A' typAsVariableType resolveIn: a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -69,13 +69,13 @@ TypShaPhaDictionary >> mAssociationsDo: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaDictionary >> mAt: aLookup [ 
+TypShaPhaDictionary >> mAt: aLookup [
 	<typShaMethod: 'at:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | '@B' typAsVariableType resolveIn: a receiverType ];
-		resultType: [ :a :s :r | '@A' typAsVariableType resolveIn: a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
+		arguments: {(aLookup receiverType at: '@B')}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -138,16 +138,15 @@ TypShaPhaDictionary >> mAtIfPresentIfAbsent: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaDictionary >> mAtPut: aLookup [ 
+TypShaPhaDictionary >> mAtPut: aLookup [
 	<typShaMethod: 'at:put:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a | 
-			i = 1
-				ifTrue: [ '@B' typAsVariableType resolveIn: a receiverType ]
-				ifFalse: [ '@A' typAsVariableType resolveIn: a receiverType ] ];
-		resultType: [ :a | '@A' typAsVariableType resolveIn: a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
+		arguments:
+			{(aLookup receiverType at: '@B').
+			(aLookup receiverType at: '@A')}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -206,35 +205,35 @@ TypShaPhaDictionary >> mCollect: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaDictionary >> mIncludes: aLookup [ 
+TypShaPhaDictionary >> mIncludes: aLookup [
 	<typShaMethod: 'includes:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a | '@A' typAsVariableType resolveIn: a receiverType ];
-		resultType: [ Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {(aLookup receiverType at: '@A')}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaDictionary >> mIncludesKey: aLookup [ 
+TypShaPhaDictionary >> mIncludesKey: aLookup [
 	<typShaMethod: 'includesKey:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a | '@B' typAsVariableType resolveIn: a receiverType ];
-		resultType: [ Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {(aLookup receiverType at: '@B')}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaDictionary >> mKeys: aLookup [ 
+TypShaPhaDictionary >> mKeys: aLookup [
 	<typShaMethod: 'keys'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a | 
-			Collection typAsType
-				copyWithParameters: {('@B' typAsVariableType resolveIn: a receiverType)} ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(Collection typAsType
+				copyWithParameters: {(aLookup receiverType at: '@B')})
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }

@@ -10,15 +10,15 @@ TypShaPhaMetaLink class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaMetaLink >> mArguments: aLookup [ 
+TypShaPhaMetaLink >> mArguments: aLookup [
 	<typShaMethod: 'arguments:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithParameters: {Symbol typAsType} ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{(SequenceableCollection typAsType
+				copyWithParameters: {Symbol typAsType})}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }

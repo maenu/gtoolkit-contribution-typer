@@ -40,18 +40,18 @@ TypShaGtGtMethodCoder >> mCompiledMethod: aLookup [
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoder >> mCursorPositionDo: aLookup [ 
+TypShaGtGtMethodCoder >> mCursorPositionDo: aLookup [
 	<typShaMethod: 'cursorPositionDo:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			BlockClosure
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
 				arguments: {Integer typAsType}
 				argumentsOptional: false
-				signalsAlways: false ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+				signalsAlways: false)}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }

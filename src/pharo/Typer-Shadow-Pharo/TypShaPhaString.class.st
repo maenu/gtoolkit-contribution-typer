@@ -65,14 +65,13 @@ TypShaPhaString >> mIncludesSubstring: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaString >> mJoin: aLookup [ 
+TypShaPhaString >> mJoin: aLookup [
 	<typShaMethod: 'join:'>
-	
-	^ TypFunctionType new
-		argumentTypes:
-				[ :i :a :s :r | Collection typAsType copyWithParameters: {String typAsType} ];
-		resultType: [ :a :s :r | String typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: String typAsType
+		arguments: {(Collection typAsType copyWithParameters: {String typAsType})}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }

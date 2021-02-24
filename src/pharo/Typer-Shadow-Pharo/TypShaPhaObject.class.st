@@ -56,13 +56,13 @@ TypShaPhaObject >> mBinary248: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaObject >> mBinary255: aLookup [ 
+TypShaPhaObject >> mBinary255: aLookup [
 	<typShaMethod: '~='>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | TypUnknownType new asNullable ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {TypUnknownType new asNullable}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -120,13 +120,13 @@ TypShaPhaObject >> mIsBlock: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaObject >> mIsKindOf: aLookup [ 
+TypShaPhaObject >> mIsKindOf: aLookup [
 	<typShaMethod: 'isKindOf:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | {ClassDescription typAsType} at: i ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {ClassDescription typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -162,27 +162,25 @@ TypShaPhaObject >> mPerform: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaObject >> mPerformWithEnoughArguments: aLookup [ 
+TypShaPhaObject >> mPerformWithEnoughArguments: aLookup [
 	<typShaMethod: 'perform:withEnoughArguments:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			i = 1
-				ifTrue: [ Symbol typAsType ]
-				ifFalse: [ SequenceableCollection typAsType ] ];
-		resultType: [ :a :s :r | TypUnknownType new ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: TypUnknownType new
+		arguments:
+			{Symbol typAsType.
+			SequenceableCollection typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaObject >> mPrintOn: aLookup [ 
+TypShaPhaObject >> mPrintOn: aLookup [
 	<typShaMethod: 'printOn:'>
-	
-	^ TypFunctionType new
-		argumentTypes:
-				[ :i :a :s :r | Stream typAsType copyWithParameters: {Character typAsType} ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: {(Stream typAsType copyWithParameters: {Character typAsType})}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }

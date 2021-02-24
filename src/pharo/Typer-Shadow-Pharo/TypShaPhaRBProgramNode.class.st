@@ -34,14 +34,13 @@ TypShaPhaRBProgramNode >> mAssignmentNodes: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaRBProgramNode >> mBestNodeFor: aLookup [ 
+TypShaPhaRBProgramNode >> mBestNodeFor: aLookup [
 	<typShaMethod: 'bestNodeFor:'>
-	
-	^ TypFunctionType new
-		argumentTypes:
-				[ :i :a :s :r | Interval typAsType copyWithParameters: {Integer typAsType} ];
-		resultType: [ :a :s :r | RBProgramNode typAsType asNullable ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: RBProgramNode typAsType asNullable
+		arguments: {(Interval typAsType copyWithParameters: {Integer typAsType})}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -361,13 +360,14 @@ TypShaPhaRBProgramNode >> mVariableWriteNodes: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaRBProgramNode >> mWhoDefines: aLookup [ 
+TypShaPhaRBProgramNode >> mWhoDefines: aLookup [
 	<typShaMethod: 'whoDefines:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ String typAsType ];
-		resultType: [ {RBSequenceNode typAsType.
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			{RBSequenceNode typAsType.
 			RBMethodNode typAsType.
-			RBBlockNode typAsType} typAsType asNullable ];
-		yourself
+			RBBlockNode typAsType} typAsType asNullable
+		arguments: {String typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]

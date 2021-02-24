@@ -10,22 +10,20 @@ TypShaGtGtMethodCoderAddOns class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoderAddOns >> mAddMainActionIconAction: aLookup [ 
+TypShaGtGtMethodCoderAddOns >> mAddMainActionIconAction: aLookup [
 	<typShaMethod: 'addMainAction:icon:action:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			i = 1
-				ifTrue: [ Symbol typAsType ]
-				ifFalse: [ i = 2
-						ifTrue: [ Form typAsType ]
-						ifFalse: [ BlockClosure
-								typAsFunctionTypeWithResult: TypUnknownType new
-								arguments: {}
-								argumentsOptional: false
-								signalsAlways: false ] ] ];
-		resultType: [ :a :s :r | 'GtMethodCoderAddOns' typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{Symbol typAsType.
+			Form typAsType.
+			(BlockClosure
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {}
+				argumentsOptional: false
+				signalsAlways: false)}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }

@@ -20,29 +20,27 @@ TypShaGtGtCoderTextStyler class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtCoderTextStyler >> mExtraStyleAst: aLookup [ 
+TypShaGtGtCoderTextStyler >> mExtraStyleAst: aLookup [
 	<typShaMethod: 'extraStyle:ast:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			i = 1
-				ifTrue: [ BlText typAsType ]
-				ifFalse: [ RBMethodNode typAsType ] ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{BlText typAsType.
+			RBMethodNode typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaGtGtCoderTextStyler >> mStyleAst: aLookup [ 
+TypShaGtGtCoderTextStyler >> mStyleAst: aLookup [
 	<typShaMethod: 'style:ast:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			i = 1
-				ifTrue: [ BlText typAsType ]
-				ifFalse: [ RBMethodNode typAsType ] ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{BlText typAsType.
+			RBMethodNode typAsType}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #'as yet unclassified' }

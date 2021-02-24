@@ -10,15 +10,15 @@ TypShaPhaStream class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaStream >> mBinary380: aLookup [ 
+TypShaPhaStream >> mBinary380: aLookup [
 	<typShaMethod: '<<'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			Collection typAsType
-				copyWithParameters: {('@A' typAsVariableType resolveIn: a receiverType)} ];
-		resultType: [ :a :s :r | a receiverType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments:
+			{(Collection typAsType
+				copyWithParameters: {(aLookup receiverType at: '@A')})}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }

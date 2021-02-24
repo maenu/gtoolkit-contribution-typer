@@ -10,23 +10,23 @@ TypShaPhaProtoObject class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaProtoObject >> mBinary284: aLookup [ 
+TypShaPhaProtoObject >> mBinary284: aLookup [
 	<typShaMethod: '=='>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | TypUnknownType new asNullable ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {TypUnknownType new asNullable}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
-TypShaPhaProtoObject >> mBinary288: aLookup [ 
+TypShaPhaProtoObject >> mBinary288: aLookup [
 	<typShaMethod: '~~'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | TypUnknownType new asNullable ];
-		resultType: [ :a :s :r | Boolean typAsType ];
-		yourself
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {TypUnknownType new asNullable}
+		argumentsOptional: false
+		signalsAlways: false
 ]
 
 { #category : #shadow }
