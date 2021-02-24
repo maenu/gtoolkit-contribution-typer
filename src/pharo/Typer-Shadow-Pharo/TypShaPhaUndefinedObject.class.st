@@ -35,7 +35,7 @@ TypShaPhaUndefinedObject >> mIfNil: aLookup [
 TypShaPhaUndefinedObject >> mIfNotNil: aLookup [
 	<typShaMethod: 'ifNotNil:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{{Symbol typAsType.
 			(BlockClosure
@@ -43,6 +43,4 @@ TypShaPhaUndefinedObject >> mIfNotNil: aLookup [
 				arguments: {aLookup receiverType asNonNullable}
 				argumentsOptional: true
 				signalsAlways: false)} typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

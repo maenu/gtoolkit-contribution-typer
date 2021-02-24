@@ -22,9 +22,6 @@ TypShaPhaCharacter class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaCharacter >> mIsUppercase: aLookup [
 	<typShaMethod: 'isUppercase'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]

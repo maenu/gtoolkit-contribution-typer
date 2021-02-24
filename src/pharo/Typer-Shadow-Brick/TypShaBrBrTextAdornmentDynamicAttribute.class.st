@@ -13,13 +13,11 @@ TypShaBrBrTextAdornmentDynamicAttribute class >> shadowedClass [
 TypShaBrBrTextAdornmentDynamicAttribute >> mStencil: aLookup [
 	<typShaMethod: 'stencil:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: BlElement typAsType
 				arguments: {}
 				argumentsOptional: false
 				signalsAlways: false)}
-		argumentsOptional: false
-		signalsAlways: false
 ]

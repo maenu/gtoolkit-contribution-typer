@@ -12,11 +12,10 @@ TypShaPhaRBArgumentNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBArgumentNode >> mWhoDefines: aLookup [
 	<typShaMethod: 'whoDefines:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			{RBMethodNode typAsType.
 			RBBlockNode typAsType} typAsType asNullable
 		arguments: {String typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

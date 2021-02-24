@@ -12,53 +12,40 @@ TypShaPhaRBMessageNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBMessageNode >> mArguments: aLookup [
 	<typShaMethod: 'arguments'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			(OrderedCollection typAsType
+			(SequenceableCollection typAsType
 				copyWithParameters: {RBValueNode typAsType})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaRBMessageNode >> mKeywordsIntervals: aLookup [
 	<typShaMethod: 'keywordsIntervals'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
 				copyWithParameters: {(Interval typAsType copyWithParameters: {Integer typAsType})})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaRBMessageNode >> mNumArgs: aLookup [
 	<typShaMethod: 'numArgs'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Integer typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaRBMessageNode >> mReceiver: aLookup [
 	<typShaMethod: 'receiver'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: RBValueNode typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: RBValueNode typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaRBMessageNode >> mSelector: aLookup [
 	<typShaMethod: 'selector'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Symbol typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Symbol typAsType
 ]

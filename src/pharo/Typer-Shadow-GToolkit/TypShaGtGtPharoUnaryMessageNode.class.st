@@ -12,19 +12,14 @@ TypShaGtGtPharoUnaryMessageNode class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtPharoUnaryMessageNode >> mParent: aLookup [
 	<typShaMethod: 'parent'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtPharoMessageSendNode typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaGtGtPharoUnaryMessageNode >> mSelectorPart: aLookup [
 	<typShaMethod: 'selectorPart'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: SmaCCToken typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: SmaCCToken typAsType
 ]

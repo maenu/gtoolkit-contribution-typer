@@ -12,11 +12,9 @@ TypShaPhaRBCascadeNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBCascadeNode >> mMessages: aLookup [
 	<typShaMethod: 'messages'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
 				copyWithParameters: {RBMessageNode typAsType})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]

@@ -12,11 +12,9 @@ TypShaPhaRBLiteralArrayNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBLiteralArrayNode >> mContents: aLookup [
 	<typShaMethod: 'contents'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			(OrderedCollection typAsType
+			(SequenceableCollection typAsType
 				copyWithParameters: {RBLiteralNode typAsType})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]

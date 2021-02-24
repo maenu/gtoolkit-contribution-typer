@@ -12,34 +12,29 @@ TypShaGtGtPharoProgramNode class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtPharoProgramNode >> mActionForSelectorStartingWithAt: aLookup [
 	<typShaMethod: 'actionForSelector:startingWith:at:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtCompletionAction typAsType
 		arguments:
 			{String typAsType.
 			String typAsType.
 			Integer typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaGtGtPharoProgramNode >> mCompletionActionsFor: aLookup [
 	<typShaMethod: 'completionActionsFor:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
 				copyWithParameters: {GtCompletionAction typAsType})
 		arguments: {GtPharoCompletionStrategy typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaGtGtPharoProgramNode >> mSource: aLookup [
 	<typShaMethod: 'source'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: String typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]

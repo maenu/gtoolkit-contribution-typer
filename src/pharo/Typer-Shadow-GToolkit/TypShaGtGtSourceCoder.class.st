@@ -12,31 +12,24 @@ TypShaGtGtSourceCoder class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtSourceCoder >> mClassOrMetaClass: aLookup [
 	<typShaMethod: 'classOrMetaClass'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: ClassDescription typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaGtGtSourceCoder >> mCollapsedEditor: aLookup [
 	<typShaMethod: 'collapsedEditor'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: BrTextEditor typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: BrTextEditor typAsType
 ]
 
 { #category : #shadow }
 TypShaGtGtSourceCoder >> mExpanded: aLookup [
 	<typShaMethod: 'expanded:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {Boolean typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -52,9 +45,6 @@ TypShaGtGtSourceCoder >> mMethodsCoder: aLookup [
 { #category : #shadow }
 TypShaGtGtSourceCoder >> mSource: aLookup [
 	<typShaMethod: 'source'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: String typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]

@@ -12,6 +12,7 @@ TypShaGtGtPharoCompletionStrategy class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtPharoCompletionStrategy >> mActionsForAt: aLookup [
 	<typShaMethod: 'actionsFor:at:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -19,45 +20,38 @@ TypShaGtGtPharoCompletionStrategy >> mActionsForAt: aLookup [
 		arguments:
 			{GtPharoMethodNode typAsType.
 			Integer typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaGtGtPharoCompletionStrategy >> mClassOrMetaClass: aLookup [
 	<typShaMethod: 'classOrMetaClass:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {ClassDescription typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaGtGtPharoCompletionStrategy >> mIndex: aLookup [
 	<typShaMethod: 'index'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Integer typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
 ]
 
 { #category : #shadow }
 TypShaGtGtPharoCompletionStrategy >> mNodeForIn: aLookup [
 	<typShaMethod: 'nodeFor:in:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtPharoProgramNode typAsType asNullable
 		arguments:
 			{Integer typAsType.
 			GtPharoMethodNode typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaGtGtPharoCompletionStrategy >> mSelectorsForReceiverMatching: aLookup [
 	<typShaMethod: 'selectorsForReceiver:matching:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -65,8 +59,6 @@ TypShaGtGtPharoCompletionStrategy >> mSelectorsForReceiverMatching: aLookup [
 		arguments:
 			{Behavior typAsType.
 			String typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #'as yet unclassified' }

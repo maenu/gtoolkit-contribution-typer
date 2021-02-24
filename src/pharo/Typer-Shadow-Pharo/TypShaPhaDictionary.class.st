@@ -12,11 +12,9 @@ TypShaPhaDictionary class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaDictionary >> mAnyOne: aLookup [
 	<typShaMethod: 'anyOne'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -71,11 +69,10 @@ TypShaPhaDictionary >> mAssociationsDo: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mAt: aLookup [
 	<typShaMethod: 'at:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
 		arguments: {(aLookup receiverType at: '@B')}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -140,13 +137,12 @@ TypShaPhaDictionary >> mAtIfPresentIfAbsent: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mAtPut: aLookup [
 	<typShaMethod: 'at:put:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
 		arguments:
 			{(aLookup receiverType at: '@B').
 			(aLookup receiverType at: '@A')}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -207,33 +203,29 @@ TypShaPhaDictionary >> mCollect: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mIncludes: aLookup [
 	<typShaMethod: 'includes:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {(aLookup receiverType at: '@A')}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaDictionary >> mIncludesKey: aLookup [
 	<typShaMethod: 'includesKey:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {(aLookup receiverType at: '@B')}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaDictionary >> mKeys: aLookup [
 	<typShaMethod: 'keys'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(Collection typAsType
 				copyWithParameters: {(aLookup receiverType at: '@B')})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -275,13 +267,11 @@ TypShaPhaDictionary >> mRemoveKeyIfAbsent: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mValues: aLookup [
 	<typShaMethod: 'values'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(Collection typAsType
 				copyWithParameters: {(aLookup receiverType at: '@A')})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #accessing }

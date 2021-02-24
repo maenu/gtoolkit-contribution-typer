@@ -12,11 +12,9 @@ TypShaPhaOrderedDictionary class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mAnyOne: aLookup [
 	<typShaMethod: 'anyOne'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -71,11 +69,10 @@ TypShaPhaOrderedDictionary >> mAssociationsDo: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mAt: aLookup [
 	<typShaMethod: 'at:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
 		arguments: {(aLookup receiverType at: '@B')}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -121,13 +118,12 @@ TypShaPhaOrderedDictionary >> mAtIfPresentIfAbsent: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mAtPut: aLookup [
 	<typShaMethod: 'at:put:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
 		arguments:
 			{(aLookup receiverType at: '@B').
 			(aLookup receiverType at: '@A')}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -188,32 +184,28 @@ TypShaPhaOrderedDictionary >> mCollect: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mIncludes: aLookup [
 	<typShaMethod: 'includes:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {(aLookup receiverType at: '@A')}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mIncludesKey: aLookup [
 	<typShaMethod: 'includesKey:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {(aLookup receiverType at: '@B')}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mKeys: aLookup [
 	<typShaMethod: 'keys'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(Array typAsType copyWithParameters: {(aLookup receiverType at: '@B')})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #accessing }

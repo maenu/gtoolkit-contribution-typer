@@ -22,11 +22,10 @@ TypShaPhaSequenceableCollection class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaSequenceableCollection >> mAt: aLookup [
 	<typShaMethod: 'at:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
 		arguments: {Integer typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -54,18 +53,14 @@ TypShaPhaSequenceableCollection >> mBeginsWith: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {aLookup receiverType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaSequenceableCollection >> mCopyFromTo: aLookup [
 	<typShaMethod: 'copyFrom:to:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {Integer typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -113,63 +108,50 @@ TypShaPhaSequenceableCollection >> mDetectIndexIfNone: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaSequenceableCollection >> mEndsWith: aLookup [ 
+TypShaPhaSequenceableCollection >> mEndsWith: aLookup [
 	<typShaMethod: 'endsWith:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {aLookup receiverType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaSequenceableCollection >> mFirst: aLookup [
 	<typShaMethod: 'first'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaSequenceableCollection >> mIndexOf: aLookup [
 	<typShaMethod: 'indexOf:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Integer typAsType
 		arguments: {(aLookup receiverType at: '@A')}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaSequenceableCollection >> mIsEmpty: aLookup [
 	<typShaMethod: 'isEmpty'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaSequenceableCollection >> mLast: aLookup [
 	<typShaMethod: 'last'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaSequenceableCollection >> mReversed: aLookup [
 	<typShaMethod: 'reversed'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 ]
 
 { #category : #shadow }

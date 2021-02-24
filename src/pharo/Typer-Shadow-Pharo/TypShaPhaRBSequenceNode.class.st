@@ -12,23 +12,19 @@ TypShaPhaRBSequenceNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBSequenceNode >> mStatements: aLookup [
 	<typShaMethod: 'statements'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			(OrderedCollection typAsType
+			(SequenceableCollection typAsType
 				copyWithParameters: {RBProgramNode typAsType})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaRBSequenceNode >> mTemporaries: aLookup [
 	<typShaMethod: 'temporaries'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
 				copyWithParameters: {RBTemporaryNode typAsType})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]

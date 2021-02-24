@@ -12,19 +12,14 @@ TypShaSmaSmaCCToken class >> shadowedClass [
 { #category : #shadow }
 TypShaSmaSmaCCToken >> mStopPosition: aLookup [
 	<typShaMethod: 'stopPosition'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Integer typAsType asNullable
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaSmaSmaCCToken >> mValue: aLookup [
 	<typShaMethod: 'value'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: String typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]

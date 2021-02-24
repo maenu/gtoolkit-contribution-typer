@@ -26,9 +26,6 @@ TypShaPhaRBPragmaNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBPragmaNode >> mSelector: aLookup [
 	<typShaMethod: 'selector'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Symbol typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Symbol typAsType
 ]

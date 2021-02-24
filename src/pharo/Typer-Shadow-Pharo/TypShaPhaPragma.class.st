@@ -12,6 +12,7 @@ TypShaPhaPragma class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaPragma >> mArguments: aLookup [
 	<typShaMethod: 'arguments'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -20,17 +21,11 @@ TypShaPhaPragma >> mArguments: aLookup [
 					Symbol typAsType.
 					Number typAsType.
 					Boolean typAsType} typAsType})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaPragma >> mSelector: aLookup [
 	<typShaMethod: 'selector'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Symbol typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Symbol typAsType
 ]

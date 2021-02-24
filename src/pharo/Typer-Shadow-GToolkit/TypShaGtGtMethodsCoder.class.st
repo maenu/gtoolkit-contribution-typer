@@ -26,8 +26,6 @@ TypShaGtGtMethodsCoder >> mAnnounce: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {Announcement typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #'as yet unclassified' }

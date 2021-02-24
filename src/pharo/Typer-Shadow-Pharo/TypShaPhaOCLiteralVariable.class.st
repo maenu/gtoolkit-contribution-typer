@@ -12,73 +12,53 @@ TypShaPhaOCLiteralVariable class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaOCLiteralVariable >> mAssoc: aLookup [
 	<typShaMethod: 'assoc'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(Association typAsType
 				copyWithParameters:
 					{String typAsType.
 					TypUnknownType new})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaOCLiteralVariable >> mIsClassVariable: aLookup [
 	<typShaMethod: 'isClassVariable'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaOCLiteralVariable >> mIsFromSharedPool: aLookup [
 	<typShaMethod: 'isFromSharedPool'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaOCLiteralVariable >> mIsGlobalClassNameBinding: aLookup [
 	<typShaMethod: 'isGlobalClassNameBinding'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaOCLiteralVariable >> mIsGlobalVariable: aLookup [
 	<typShaMethod: 'isGlobalVariable'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaOCLiteralVariable >> mScope: aLookup [
 	<typShaMethod: 'scope'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: OCAbstractScope typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaOCLiteralVariable >> mValue: aLookup [
 	<typShaMethod: 'value'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Object typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	^ CompiledMethod typAsFunctionTypeWithResult: Object typAsType
 ]

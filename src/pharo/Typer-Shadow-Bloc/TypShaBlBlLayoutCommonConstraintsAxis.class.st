@@ -13,8 +13,6 @@ TypShaBlBlLayoutCommonConstraintsAxis class >> shadowedClass [
 TypShaBlBlLayoutCommonConstraintsAxis >> mExact: aLookup [
 	<typShaMethod: 'exact:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {Number typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

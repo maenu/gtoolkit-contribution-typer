@@ -12,9 +12,6 @@ TypShaPhaForm class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaForm >> mAsElement: aLookup [
 	<typShaMethod: 'asElement'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: BlElement typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: BlElement typAsType
 ]

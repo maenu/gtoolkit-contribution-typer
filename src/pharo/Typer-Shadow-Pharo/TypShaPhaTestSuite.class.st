@@ -13,8 +13,6 @@ TypShaPhaTestSuite class >> shadowedClass [
 TypShaPhaTestSuite >> mRun: aLookup [
 	<typShaMethod: 'run:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {TestResult typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

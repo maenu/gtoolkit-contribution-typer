@@ -140,20 +140,19 @@ TypShaPhaBlockClosure >> mValueValueValueValue: aLookup [
 TypShaPhaBlockClosure >> mWhileFalse: aLookup [
 	<typShaMethod: 'whileFalse:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
 				arguments: {}
 				argumentsOptional: false
 				signalsAlways: false)}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaBlockClosure >> mWhileTrue: aLookup [
 	<typShaMethod: 'whileTrue:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypNilType new
 		arguments:
@@ -162,8 +161,6 @@ TypShaPhaBlockClosure >> mWhileTrue: aLookup [
 				arguments: #()
 				argumentsOptional: false
 				signalsAlways: false)}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #'as yet unclassified' }

@@ -13,12 +13,10 @@ TypShaBlBlElement class >> shadowedClass [
 TypShaBlBlElement >> mBackground: aLookup [
 	<typShaMethod: 'background:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{{Color typAsType.
 			BlBackground typAsType} typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -40,40 +38,32 @@ TypShaBlBlElement >> mConstraintsDo: aLookup [
 TypShaBlBlElement >> mFireEvent: aLookup [
 	<typShaMethod: 'fireEvent:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {BlEvent typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaBlBlElement >> mGeometry: aLookup [
 	<typShaMethod: 'geometry:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {BlGeometry typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaBlBlElement >> mLook: aLookup [
 	<typShaMethod: 'look:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{{BrLook class typAsType.
 			BrLook typAsType} typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaBlBlElement >> mMargin: aLookup [
 	<typShaMethod: 'margin:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {BlInsets typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

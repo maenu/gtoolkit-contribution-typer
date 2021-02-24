@@ -13,38 +13,30 @@ TypShaPhaCompilationContext class >> shadowedClass [
 TypShaPhaCompilationContext >> mBindings: aLookup [
 	<typShaMethod: 'bindings:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {Dictionary typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaCompilationContext >> mClass: aLookup [
 	<typShaMethod: 'class:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {ClassDescription typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaCompilationContext >> mForSyntaxHighlighting: aLookup [
 	<typShaMethod: 'forSyntaxHighlighting:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {Boolean typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaCompilationContext >> mRequestor: aLookup [
 	<typShaMethod: 'requestor:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {Object typAsType asNullable}
-		argumentsOptional: false
-		signalsAlways: false
 ]

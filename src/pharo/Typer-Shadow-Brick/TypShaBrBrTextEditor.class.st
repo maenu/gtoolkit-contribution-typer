@@ -13,28 +13,21 @@ TypShaBrBrTextEditor class >> shadowedClass [
 TypShaBrBrTextEditor >> mInvalidateTo: aLookup [
 	<typShaMethod: 'invalidate:to:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {Integer typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaBrBrTextEditor >> mText: aLookup [
 	<typShaMethod: 'text'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: BlText typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: BlText typAsType
 ]
 
 { #category : #shadow }
 TypShaBrBrTextEditor >> mUpdateTo: aLookup [
 	<typShaMethod: 'update:to:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {Integer typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

@@ -14,7 +14,4 @@ TypShaPhaReflectiveMethod >> mCompiledMethod: aLookup [
 	<typShaMethod: 'compiledMethod'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: CompiledMethod typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]

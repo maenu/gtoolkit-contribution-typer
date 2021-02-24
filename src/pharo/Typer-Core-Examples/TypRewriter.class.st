@@ -131,17 +131,63 @@ TypRewriter >> rewriteShadowMethodReturn5: e [
 ]
 
 { #category : #accessing }
+TypRewriter >> rewriteShadowMethodReturn6: e [
+	| rewriter |
+	rewriter := RBParseTreeRewriter new.
+	rewriter
+		replace:
+			'^ CompiledMethod
+		typAsFunctionTypeWithResult: `@r
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: false'
+		with:
+			'^ CompiledMethod typAsFunctionTypeWithResult: `@r'.
+	^ (rewriter executeTree: e parseTree)
+		ifTrue:
+			[ e origin compile: rewriter tree formattedCode classified: e protocol ]
+		ifFalse: [ e ]
+]
+
+{ #category : #accessing }
+TypRewriter >> rewriteShadowMethodReturn7: e [
+	| rewriter |
+	rewriter := RBParseTreeRewriter new.
+	rewriter
+		replace:
+			'^ CompiledMethod
+		typAsFunctionTypeWithResult: `@r
+		arguments: `@a
+		argumentsOptional: false
+		signalsAlways: false'
+		with:
+			'^ CompiledMethod typAsFunctionTypeWithResult: `@r arguments: `@a'.
+	^ (rewriter executeTree: e parseTree)
+		ifTrue:
+			[ e origin compile: rewriter tree formattedCode classified: e protocol ]
+		ifFalse: [ e ]
+]
+
+{ #category : #accessing }
 TypRewriter >> rewriteShadowMethodReturn: e [
 	| rewriter |
 	rewriter := RBParseTreeRewriter new.
 	rewriter
 		replace:
-			'^ TypFunctionType new
-			argumentTypes: [ TypNoTypeError signal ];
-			resultType: [ :a :s :r | `@r typAsType asNullable ];
-			yourself'
+			'^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType'
 		with:
-			'^ CompiledMethod typAsFunctionTypeWithResult: (`@r typAsType asNullable) arguments: {} argumentsOptional: false signalsAlways: false'.
+			'^ CompiledMethod
+		typAsFunctionTypeWithResult: ''@self'' typAsVariableType'.
+	rewriter
+		replace:
+			'^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiverType
+		arguments: `@a'
+		with:
+			'^ CompiledMethod
+		typAsFunctionTypeWithResult: ''@self'' typAsVariableType
+		arguments: `@a'.
 	^ (rewriter executeTree: e parseTree)
 		ifTrue:
 			[ e origin compile: rewriter tree formattedCode classified: e protocol ]
@@ -152,9 +198,8 @@ TypRewriter >> rewriteShadowMethodReturn: e [
 TypRewriter >> rewriteShadowMethodReturns [
 	<gtExample>
 	^ ((TypShaShadow withAllSubclasses flatCollect: #methods)
-		select: [ :e | 
-			(e ast references: #TypFunctionType)
-				and: [ e pragmas anySatisfy: [ :f | f selector = #typShaMethod: ] ] ])
+		select:
+			[ :e | e pragmas anySatisfy: [ :f | f selector = #typShaMethod: ] ])
 		collect: [ :e | self rewriteShadowMethodReturn: e ]
 ]
 

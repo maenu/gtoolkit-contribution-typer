@@ -13,10 +13,8 @@ TypShaBlBlTextUnderlineAttribute class >> shadowedClass [
 TypShaBlBlTextUnderlineAttribute >> mPaint: aLookup [
 	<typShaMethod: 'paint:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{{Color typAsType.
 			BlPaint typAsType} typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

@@ -13,13 +13,11 @@ TypShaGtGtPhlowView class >> shadowedClass [
 TypShaGtGtPhlowView >> mActionStencil: aLookup [
 	<typShaMethod: 'actionStencil:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: BlElement typAsType
 				arguments: {}
 				argumentsOptional: false
 				signalsAlways: false)}
-		argumentsOptional: false
-		signalsAlways: false
 ]

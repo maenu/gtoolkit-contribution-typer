@@ -13,48 +13,41 @@ TypShaPhaClass class >> shadowedClass [
 TypShaPhaClass >> mAddClassVarNamed: aLookup [
 	<typShaMethod: 'addClassVarNamed:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {String typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaClass >> mClassVarNamed: aLookup [
 	<typShaMethod: 'classVarNamed:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {String typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaClass >> mHasClassVarNamed: aLookup [
 	<typShaMethod: 'hasClassVarNamed:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {String typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaClass >> mSharedPools: aLookup [
 	<typShaMethod: 'sharedPools'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Collection typAsType copyWithParameters: {Class typAsType})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaClass >> mSubclassInstanceVariableNamesClassVariableNamesPackage: aLookup [
 	<typShaMethod: 'subclass:instanceVariableNames:classVariableNames:package:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType classDescription typAsType
+		typAsFunctionTypeWithResult:
+			aLookup receiverType classDescription typAsType
 		arguments: {String typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

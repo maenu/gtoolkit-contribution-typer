@@ -12,9 +12,8 @@ TypShaPhaRBTemporaryNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBTemporaryNode >> mWhoDefines: aLookup [
 	<typShaMethod: 'whoDefines:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: RBSequenceNode typAsType asNullable
 		arguments: {String typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

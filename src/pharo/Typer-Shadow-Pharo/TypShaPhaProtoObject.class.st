@@ -12,41 +12,36 @@ TypShaPhaProtoObject class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaProtoObject >> mBinary284: aLookup [
 	<typShaMethod: '=='>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {TypUnknownType new asNullable}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaProtoObject >> mBinary288: aLookup [
 	<typShaMethod: '~~'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {TypUnknownType new asNullable}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaProtoObject >> mClass: aLookup [
 	<typShaMethod: 'class'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType classDescription class typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+		typAsFunctionTypeWithResult:
+			aLookup receiverType classDescription class typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaProtoObject >> mFlag: aLookup [
 	<typShaMethod: 'flag:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {String typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -143,9 +138,6 @@ TypShaPhaProtoObject >> mIfNotNil: aLookup [
 { #category : #shadow }
 TypShaPhaProtoObject >> mIsNil: aLookup [
 	<typShaMethod: 'isNil'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]

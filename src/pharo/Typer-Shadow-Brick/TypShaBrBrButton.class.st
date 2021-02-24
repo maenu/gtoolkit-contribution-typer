@@ -13,23 +13,19 @@ TypShaBrBrButton class >> shadowedClass [
 TypShaBrBrButton >> mAction: aLookup [
 	<typShaMethod: 'action:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
 				arguments: {}
 				argumentsOptional: false
 				signalsAlways: false)}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaBrBrButton >> mIcon: aLookup [
 	<typShaMethod: 'icon:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {BlElement typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

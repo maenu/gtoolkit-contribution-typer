@@ -14,7 +14,4 @@ TypShaPhaOCClassScope >> mGetClass: aLookup [
 	<typShaMethod: 'getClass'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: ClassDescription typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]

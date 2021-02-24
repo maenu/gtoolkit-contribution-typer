@@ -27,18 +27,14 @@ TypShaPhaOrderedCollection >> mAtPut: aLookup [
 		arguments:
 			{Integer typAsType.
 			(aLookup receiverType at: '@A')}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaOrderedCollection >> mRemoveLast: aLookup [
 	<typShaMethod: 'removeLast'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #converting }

@@ -12,11 +12,9 @@ TypShaPhaContext class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaContext >> mArguments: aLookup [
 	<typShaMethod: 'arguments'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: SequenceableCollection typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -24,17 +22,11 @@ TypShaPhaContext >> mMethod: aLookup [
 	<typShaMethod: 'method'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: CompiledMethod typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaContext >> mReceiver: aLookup [
 	<typShaMethod: 'receiver'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Object typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Object typAsType
 ]

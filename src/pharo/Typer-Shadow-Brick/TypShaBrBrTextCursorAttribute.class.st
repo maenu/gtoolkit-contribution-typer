@@ -13,7 +13,7 @@ TypShaBrBrTextCursorAttribute class >> shadowedClass [
 TypShaBrBrTextCursorAttribute >> mEnterAction: aLookup [
 	<typShaMethod: 'enterAction:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
@@ -22,15 +22,13 @@ TypShaBrBrTextCursorAttribute >> mEnterAction: aLookup [
 					BrTextEditorCursorAddedEvent typAsType}
 				argumentsOptional: true
 				signalsAlways: false)}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaBrBrTextCursorAttribute >> mLeaveAction: aLookup [
 	<typShaMethod: 'leaveAction:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
@@ -39,6 +37,4 @@ TypShaBrBrTextCursorAttribute >> mLeaveAction: aLookup [
 					BrTextEditorCursorRemovedEvent typAsType}
 				argumentsOptional: true
 				signalsAlways: false)}
-		argumentsOptional: false
-		signalsAlways: false
 ]

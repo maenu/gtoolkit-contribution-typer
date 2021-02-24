@@ -13,8 +13,6 @@ TypShaGtGtCoderMethodAnnouncement class >> shadowedClass [
 TypShaGtGtCoderMethodAnnouncement >> mCoder: aLookup [
 	<typShaMethod: 'coder:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {GtMethodsCoder typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

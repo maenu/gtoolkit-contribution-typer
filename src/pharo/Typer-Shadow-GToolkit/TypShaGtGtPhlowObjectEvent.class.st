@@ -13,18 +13,14 @@ TypShaGtGtPhlowObjectEvent class >> shadowedClass [
 TypShaGtGtPhlowObjectEvent >> mObject: aLookup [
 	<typShaMethod: 'object:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {Object typAsType asNullable}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaGtGtPhlowObjectEvent >> mSourceElement: aLookup [
 	<typShaMethod: 'sourceElement:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {BlElement typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

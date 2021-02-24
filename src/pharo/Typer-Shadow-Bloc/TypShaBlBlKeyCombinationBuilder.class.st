@@ -12,19 +12,15 @@ TypShaBlBlKeyCombinationBuilder class >> shadowedClass [
 { #category : #shadow }
 TypShaBlBlKeyCombinationBuilder >> mBuild: aLookup [
 	<typShaMethod: 'build'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: BlKeyCombination typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaBlBlKeyCombinationBuilder >> mKey: aLookup [
 	<typShaMethod: 'key:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {Key typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

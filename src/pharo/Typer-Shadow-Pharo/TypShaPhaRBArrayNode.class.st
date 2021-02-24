@@ -12,11 +12,9 @@ TypShaPhaRBArrayNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBArrayNode >> mStatements: aLookup [
 	<typShaMethod: 'statements'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			(OrderedCollection typAsType
+			(SequenceableCollection typAsType
 				copyWithParameters: {RBProgramNode typAsType})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]

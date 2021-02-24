@@ -12,31 +12,28 @@ TypShaPhaMagnitude class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaMagnitude >> mBinary223: aLookup [
 	<typShaMethod: '<='>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {Magnitude typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaMagnitude >> mBinary225: aLookup [
 	<typShaMethod: '>'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {Magnitude typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaMagnitude >> mBinary226: aLookup [
 	<typShaMethod: '<'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {Magnitude typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -48,6 +45,4 @@ TypShaPhaMagnitude >> mMax: aLookup [
 			{aLookup receiverType.
 			(aLookup argumentTypes at: 1)} typAsType
 		arguments: {Magnitude typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

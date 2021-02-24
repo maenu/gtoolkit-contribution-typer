@@ -13,45 +13,41 @@ TypShaBlBlText class >> shadowedClass [
 TypShaBlBlText >> mAttribute: aLookup [
 	<typShaMethod: 'attribute:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {BlTextAttribute typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaBlBlText >> mAttributesAt: aLookup [
 	<typShaMethod: 'attributesAt:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
 				copyWithParameters: {BlTextAttribute typAsType})
 		arguments: {Integer typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaBlBlText >> mClearAttributes: aLookup [
 	<typShaMethod: 'clearAttributes:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
 				arguments: {BlTextAttribute typAsType}
 				argumentsOptional: false
 				signalsAlways: false)}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaBlBlText >> mFromTo: aLookup [
 	<typShaMethod: 'from:to:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: BlText typAsType
-		arguments: {Integer typAsType}
-		argumentsOptional: false
-		signalsAlways: false
+		arguments:
+			{Integer typAsType.
+			Integer typAsType}
 ]

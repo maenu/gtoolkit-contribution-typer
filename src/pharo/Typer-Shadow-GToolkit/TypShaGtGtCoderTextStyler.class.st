@@ -23,24 +23,20 @@ TypShaGtGtCoderTextStyler class >> shadowedClass [
 TypShaGtGtCoderTextStyler >> mExtraStyleAst: aLookup [
 	<typShaMethod: 'extraStyle:ast:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{BlText typAsType.
 			RBMethodNode typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaGtGtCoderTextStyler >> mStyleAst: aLookup [
 	<typShaMethod: 'style:ast:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{BlText typAsType.
 			RBMethodNode typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #'as yet unclassified' }

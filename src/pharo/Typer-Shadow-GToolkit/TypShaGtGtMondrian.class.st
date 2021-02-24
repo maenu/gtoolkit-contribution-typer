@@ -12,29 +12,23 @@ TypShaGtGtMondrian class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtMondrian >> mEdges: aLookup [
 	<typShaMethod: 'edges'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtMondrianEdgeBuilder typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaGtGtMondrian >> mLayout: aLookup [
 	<typShaMethod: 'layout'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtMondrianLayoutBuilder typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaGtGtMondrian >> mNodes: aLookup [
 	<typShaMethod: 'nodes'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtMondrianNodeBuilder typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]

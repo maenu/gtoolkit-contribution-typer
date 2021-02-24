@@ -14,7 +14,4 @@ TypShaPhaRGMethodDefinition >> mCompiledMethod: aLookup [
 	<typShaMethod: 'compiledMethod'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: CompiledMethod typAsType asNullable
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]

@@ -103,11 +103,9 @@ TypShaPhaCollection >> mAllSatisfy: aLookup [
 { #category : #shadow }
 TypShaPhaCollection >> mAnyOne: aLookup [
 	<typShaMethod: 'anyOne'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -148,25 +146,21 @@ TypShaPhaCollection >> mAsDictionary: aLookup [
 { #category : #shadow }
 TypShaPhaCollection >> mAsIdentitySet: aLookup [
 	<typShaMethod: 'asIdentitySet'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(IdentitySet typAsType
 				copyWithParameters: {(aLookup receiverType at: '@A')})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaCollection >> mAsOrderedCollection: aLookup [
 	<typShaMethod: 'asOrderedCollection'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(OrderedCollection typAsType
 				copyWithParameters: {(aLookup receiverType at: '@A')})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -191,21 +185,19 @@ TypShaPhaCollection >> mAsOrderedDictionary: aLookup [
 { #category : #shadow }
 TypShaPhaCollection >> mAsSet: aLookup [
 	<typShaMethod: 'asSet'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (Set typAsType copyWithParameters: {(aLookup receiverType at: '@A')})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+		typAsFunctionTypeWithResult:
+			(Set typAsType copyWithParameters: {(aLookup receiverType at: '@A')})
 ]
 
 { #category : #shadow }
 TypShaPhaCollection >> mAt: aLookup [
 	<typShaMethod: 'at:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
 		arguments: {Integer typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -265,20 +257,16 @@ TypShaPhaCollection >> mCollect: aLookup [
 TypShaPhaCollection >> mCopyWithout: aLookup [
 	<typShaMethod: 'copyWithout:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {(aLookup receiverType at: '@A')}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaCollection >> mCopyWithoutAll: aLookup [
 	<typShaMethod: 'copyWithoutAll:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {Collection typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -301,7 +289,7 @@ TypShaPhaCollection >> mDetect: aLookup [
 TypShaPhaCollection >> mDetectIfFound: aLookup [
 	<typShaMethod: 'detect:ifFound:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{{Symbol typAsType.
 			(BlockClosure
@@ -315,8 +303,6 @@ TypShaPhaCollection >> mDetectIfFound: aLookup [
 				arguments: {(aLookup receiverType at: '@A')}
 				argumentsOptional: true
 				signalsAlways: false)} typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -395,7 +381,7 @@ TypShaPhaCollection >> mDetectIfNone: aLookup [
 TypShaPhaCollection >> mDo: aLookup [
 	<typShaMethod: 'do:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{{Symbol typAsType.
 			(BlockClosure
@@ -403,8 +389,6 @@ TypShaPhaCollection >> mDo: aLookup [
 				arguments: {(aLookup receiverType at: '@A')}
 				argumentsOptional: false
 				signalsAlways: false)} typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -486,11 +470,10 @@ TypShaPhaCollection >> mGroupedBy: aLookup [
 { #category : #shadow }
 TypShaPhaCollection >> mGtItemsFor: aLookup [
 	<typShaMethod: 'gtItemsFor:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtPhlowView typAsType
 		arguments: {GtPhlowView typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -589,23 +572,21 @@ TypShaPhaCollection >> mIfNotEmpty: aLookup [
 { #category : #shadow }
 TypShaPhaCollection >> mIncludes: aLookup [
 	<typShaMethod: 'includes:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {(aLookup receiverType at: '@A')}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaCollection >> mIncludesAll: aLookup [
 	<typShaMethod: 'includesAll:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments:
 			{(Collection typAsType
 				copyWithParameters: {(aLookup receiverType at: '@A')})}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -632,31 +613,22 @@ TypShaPhaCollection >> mInjectInto: aLookup [
 { #category : #shadow }
 TypShaPhaCollection >> mIsEmpty: aLookup [
 	<typShaMethod: 'isEmpty'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaCollection >> mIsNotEmpty: aLookup [
 	<typShaMethod: 'isNotEmpty'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaCollection >> mMax: aLookup [
 	<typShaMethod: 'max'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Number typAsType
 ]
 
 { #category : #shadow }
@@ -681,7 +653,7 @@ TypShaPhaCollection >> mReduce: aLookup [
 TypShaPhaCollection >> mReject: aLookup [
 	<typShaMethod: 'reject:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{{Symbol typAsType.
 			(BlockClosure
@@ -689,18 +661,15 @@ TypShaPhaCollection >> mReject: aLookup [
 				arguments: {(aLookup receiverType at: '@A')}
 				argumentsOptional: false
 				signalsAlways: false)} typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaCollection >> mRemove: aLookup [
 	<typShaMethod: 'remove:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
 		arguments: {(aLookup receiverType at: '@A')}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -726,7 +695,7 @@ TypShaPhaCollection >> mRemoveIfAbsent: aLookup [
 TypShaPhaCollection >> mSelect: aLookup [
 	<typShaMethod: 'select:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{{Symbol typAsType.
 			(BlockClosure
@@ -734,18 +703,13 @@ TypShaPhaCollection >> mSelect: aLookup [
 				arguments: {(aLookup receiverType at: '@A')}
 				argumentsOptional: false
 				signalsAlways: false)} typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaCollection >> mSize: aLookup [
 	<typShaMethod: 'size'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Integer typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
 ]
 
 { #category : #accessing }

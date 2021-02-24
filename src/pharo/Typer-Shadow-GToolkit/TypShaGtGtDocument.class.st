@@ -12,31 +12,24 @@ TypShaGtGtDocument class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtDocument >> mAsElement: aLookup [
 	<typShaMethod: 'asElement'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: BlElement typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: BlElement typAsType
 ]
 
 { #category : #shadow }
 TypShaGtGtDocument >> mStrategy: aLookup [
 	<typShaMethod: 'strategy:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {Gt2StorageStrategy typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaGtGtDocument >> mText: aLookup [
 	<typShaMethod: 'text:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{{String typAsType.
 			BlRope typAsType} typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

@@ -12,28 +12,22 @@ TypShaPhaObject class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaObject >> mAsString: aLookup [
 	<typShaMethod: 'asString'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: String typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaObject >> mAsSymbol: aLookup [
 	<typShaMethod: 'asSymbol'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Symbol typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Symbol typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaObject >> mAssert: aLookup [
 	<typShaMethod: 'assert:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{{Boolean typAsType.
 			(BlockClosure
@@ -41,8 +35,6 @@ TypShaPhaObject >> mAssert: aLookup [
 				arguments: {}
 				argumentsOptional: false
 				signalsAlways: false)} typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -51,18 +43,15 @@ TypShaPhaObject >> mBinary248: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {Object typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaObject >> mBinary255: aLookup [
 	<typShaMethod: '~='>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {TypUnknownType new asNullable}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -83,20 +72,14 @@ TypShaPhaObject >> mBinary256: aLookup [
 TypShaPhaObject >> mCopy: aLookup [
 	<typShaMethod: 'copy'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 ]
 
 { #category : #shadow }
 TypShaPhaObject >> mHash: aLookup [
 	<typShaMethod: 'hash'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Integer typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
 ]
 
 { #category : #shadow }
@@ -105,38 +88,29 @@ TypShaPhaObject >> mInstVarNamed: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {String typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaObject >> mIsBlock: aLookup [
 	<typShaMethod: 'isBlock'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaObject >> mIsKindOf: aLookup [
 	<typShaMethod: 'isKindOf:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {ClassDescription typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaObject >> mIsNotNil: aLookup [
 	<typShaMethod: 'isNotNil'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
@@ -169,36 +143,26 @@ TypShaPhaObject >> mPerformWithEnoughArguments: aLookup [
 		arguments:
 			{Symbol typAsType.
 			SequenceableCollection typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaObject >> mPrintOn: aLookup [
 	<typShaMethod: 'printOn:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {(Stream typAsType copyWithParameters: {Character typAsType})}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaObject >> mPrintString: aLookup [
 	<typShaMethod: 'printString'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: String typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaObject >> mYourself: aLookup [
 	<typShaMethod: 'yourself'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 ]

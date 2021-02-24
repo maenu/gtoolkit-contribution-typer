@@ -18,8 +18,6 @@ TypShaPhaNumber >> mBinary233: aLookup [
 			{aLookup receiverType.
 			(aLookup argumentTypes at: 1)} typAsType
 		arguments: {Number typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -31,8 +29,6 @@ TypShaPhaNumber >> mBinary235: aLookup [
 			{aLookup receiverType.
 			(aLookup argumentTypes at: 1)} typAsType
 		arguments: {Number typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }

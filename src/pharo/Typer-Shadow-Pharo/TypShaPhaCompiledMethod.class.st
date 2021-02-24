@@ -12,89 +12,69 @@ TypShaPhaCompiledMethod class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaCompiledMethod >> mAssignmentNodes: aLookup [
 	<typShaMethod: 'assignmentNodes'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (Collection typAsType copyWithParameters: {RBAssignmentNode typAsType})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+		typAsFunctionTypeWithResult:
+			(Collection typAsType copyWithParameters: {RBAssignmentNode typAsType})
 ]
 
 { #category : #shadow }
 TypShaPhaCompiledMethod >> mAst: aLookup [
 	<typShaMethod: 'ast'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: RBMethodNode typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: RBMethodNode typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaCompiledMethod >> mIsAbstract: aLookup [
 	<typShaMethod: 'isAbstract'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaCompiledMethod >> mMethodClass: aLookup [
 	<typShaMethod: 'methodClass'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: ClassDescription typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaCompiledMethod >> mNumArgs: aLookup [
 	<typShaMethod: 'numArgs'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Integer typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaCompiledMethod >> mPragmas: aLookup [
 	<typShaMethod: 'pragmas'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (OrderedCollection typAsType copyWithParameters: {Pragma typAsType})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+		typAsFunctionTypeWithResult:
+			(SequenceableCollection typAsType
+				copyWithParameters: {Pragma typAsType})
 ]
 
 { #category : #shadow }
 TypShaPhaCompiledMethod >> mReflectiveMethod: aLookup [
 	<typShaMethod: 'reflectiveMethod'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: ReflectiveMethod typAsType asNullable
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaCompiledMethod >> mSelector: aLookup [
 	<typShaMethod: 'selector'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Symbol typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Symbol typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaCompiledMethod >> mSourceCode: aLookup [
 	<typShaMethod: 'sourceCode'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: String typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]

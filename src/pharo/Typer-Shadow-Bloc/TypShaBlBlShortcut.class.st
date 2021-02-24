@@ -12,6 +12,7 @@ TypShaBlBlShortcut class >> shadowedClass [
 { #category : #shadow }
 TypShaBlBlShortcut >> mAction: aLookup [
 	<typShaMethod: 'action:'>
+	<typMigrated>
 	CompiledMethod
 		typAsFunctionTypeWithResult: BlShortcut typAsType
 		arguments:
@@ -28,8 +29,6 @@ TypShaBlBlShortcut >> mAction: aLookup [
 TypShaBlBlShortcut >> mCombination: aLookup [
 	<typShaMethod: 'combination:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {BlKeyCombination typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

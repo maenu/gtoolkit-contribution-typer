@@ -12,21 +12,17 @@ TypShaPhaAssociation class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaAssociation >> mKey: aLookup [
 	<typShaMethod: 'key'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaAssociation >> mValue: aLookup [
 	<typShaMethod: 'value'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiverType at: '@B')
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #accessing }

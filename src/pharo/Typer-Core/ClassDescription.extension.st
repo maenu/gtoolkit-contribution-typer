@@ -1,6 +1,26 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Core' }
+ClassDescription >> typAsFunctionTypeWithResult: aType [
+	^ TypFunctionType
+		classDescription: self
+		result: aType
+		arguments: #()
+		argumentsOptional: false
+		signalsAlways: false
+]
+
+{ #category : #'*Typer-Core' }
+ClassDescription >> typAsFunctionTypeWithResult: aType arguments: aCollection [
+	^ TypFunctionType
+		classDescription: self
+		result: aType
+		arguments: aCollection
+		argumentsOptional: false
+		signalsAlways: false
+]
+
+{ #category : #'*Typer-Core' }
 ClassDescription >> typAsFunctionTypeWithResult: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean [
 	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
 	<typTypeArgument: 2 as: 'TypType'>

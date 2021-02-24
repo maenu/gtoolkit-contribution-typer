@@ -13,20 +13,16 @@ TypShaBrBrTextLabelLook class >> shadowedClass [
 TypShaBrBrTextLabelLook >> mFontSize: aLookup [
 	<typShaMethod: 'fontSize:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {Number typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaBrBrTextLabelLook >> mForeground: aLookup [
 	<typShaMethod: 'foreground:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{{Color typAsType.
 			BlPaint typAsType} typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

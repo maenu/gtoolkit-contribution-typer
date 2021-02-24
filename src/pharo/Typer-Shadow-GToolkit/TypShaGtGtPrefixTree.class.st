@@ -13,17 +13,16 @@ TypShaGtGtPrefixTree class >> shadowedClass [
 TypShaGtGtPrefixTree >> mAddWeight: aLookup [
 	<typShaMethod: 'add:weight:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{String typAsType.
 			Number typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaGtGtPrefixTree >> mWeightedFirstStartingWith: aLookup [
 	<typShaMethod: 'weightedFirst:startingWith:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -31,6 +30,4 @@ TypShaGtGtPrefixTree >> mWeightedFirstStartingWith: aLookup [
 		arguments:
 			{Integer typAsType.
 			String typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

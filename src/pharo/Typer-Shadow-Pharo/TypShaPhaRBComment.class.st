@@ -12,29 +12,20 @@ TypShaPhaRBComment class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBComment >> mContents: aLookup [
 	<typShaMethod: 'contents'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: String typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaRBComment >> mStart: aLookup [
 	<typShaMethod: 'start'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Integer typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaRBComment >> mStop: aLookup [
 	<typShaMethod: 'stop'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Integer typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
 ]

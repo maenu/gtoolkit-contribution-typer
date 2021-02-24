@@ -12,29 +12,21 @@ TypShaPhaRBVariableNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBVariableNode >> mBinding: aLookup [
 	<typShaMethod: 'binding'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: OCLiteralVariable typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaRBVariableNode >> mIsInstance: aLookup [
 	<typShaMethod: 'isInstance'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaRBVariableNode >> mName: aLookup [
 	<typShaMethod: 'name'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: String typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]

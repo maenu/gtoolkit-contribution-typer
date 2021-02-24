@@ -12,6 +12,7 @@ TypShaPhaBoolean class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaBoolean >> mAnd: aLookup [
 	<typShaMethod: 'and:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments:
@@ -21,8 +22,6 @@ TypShaPhaBoolean >> mAnd: aLookup [
 				arguments: {}
 				argumentsOptional: false
 				signalsAlways: false)} typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -77,16 +76,14 @@ TypShaPhaBoolean >> mIfTrueIfFalse: aLookup [
 { #category : #shadow }
 TypShaPhaBoolean >> mNot: aLookup [
 	<typShaMethod: 'not'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaBoolean >> mOr: aLookup [
 	<typShaMethod: 'or:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments:
@@ -96,6 +93,4 @@ TypShaPhaBoolean >> mOr: aLookup [
 				arguments: {}
 				argumentsOptional: false
 				signalsAlways: false)} typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]

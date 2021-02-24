@@ -24,44 +24,35 @@ TypShaGtGtMethodCoder >> mAsElement: aLookup [
 	<typShaMethod: 'asElement'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtCoderMethodElement typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaGtGtMethodCoder >> mCompiledMethod: aLookup [
 	<typShaMethod: 'compiledMethod'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: CompiledMethod typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaGtGtMethodCoder >> mCursorPositionDo: aLookup [
 	<typShaMethod: 'cursorPositionDo:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
 				arguments: {Integer typAsType}
 				argumentsOptional: false
 				signalsAlways: false)}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaGtGtMethodCoder >> mNewCompletionStrategy: aLookup [
 	<typShaMethod: 'newCompletionStrategy'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtCompletionStrategy typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
@@ -69,49 +60,35 @@ TypShaGtGtMethodCoder >> mNewSourceStyler: aLookup [
 	<typShaMethod: 'newSourceStyler'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtCoderTextStyler typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaGtGtMethodCoder >> mRbAST: aLookup [
 	<typShaMethod: 'rbAST'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: RBMethodNode typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: RBMethodNode typAsType
 ]
 
 { #category : #shadow }
 TypShaGtGtMethodCoder >> mSave: aLookup [
 	<typShaMethod: 'save'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaGtGtMethodCoder >> mSelector: aLookup [
 	<typShaMethod: 'selector'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Symbol typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Symbol typAsType
 ]
 
 { #category : #shadow }
 TypShaGtGtMethodCoder >> mUpdateMethod: aLookup [
 	<typShaMethod: 'updateMethod:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {CompiledMethod typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #'as yet unclassified' }

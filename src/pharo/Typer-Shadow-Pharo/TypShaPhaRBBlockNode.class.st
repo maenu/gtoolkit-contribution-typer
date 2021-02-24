@@ -12,21 +12,17 @@ TypShaPhaRBBlockNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBBlockNode >> mArguments: aLookup [
 	<typShaMethod: 'arguments'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			(OrderedCollection typAsType
+			(SequenceableCollection typAsType
 				copyWithParameters: {RBArgumentNode typAsType})
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaRBBlockNode >> mBody: aLookup [
 	<typShaMethod: 'body'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: RBSequenceNode typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]

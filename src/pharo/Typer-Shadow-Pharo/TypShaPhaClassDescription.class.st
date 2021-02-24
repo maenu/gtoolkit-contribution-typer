@@ -13,58 +13,40 @@ TypShaPhaClassDescription class >> shadowedClass [
 TypShaPhaClassDescription >> mAddInstVarNamed: aLookup [
 	<typShaMethod: 'addInstVarNamed:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: '@self' typAsVariableType
 		arguments: {String typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaClassDescription >> mClassSide: aLookup [
 	<typShaMethod: 'classSide'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Metaclass typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	^ CompiledMethod typAsFunctionTypeWithResult: Metaclass typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaClassDescription >> mHasInstVarNamed: aLookup [
 	<typShaMethod: 'hasInstVarNamed:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {String typAsType}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaPhaClassDescription >> mInstanceSide: aLookup [
 	<typShaMethod: 'instanceSide'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Class typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	^ CompiledMethod typAsFunctionTypeWithResult: Class typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaClassDescription >> mIsClassSide: aLookup [
 	<typShaMethod: 'isClassSide'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaClassDescription >> mIsTestCase: aLookup [
 	<typShaMethod: 'isTestCase'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
