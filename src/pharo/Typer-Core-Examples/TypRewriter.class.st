@@ -169,25 +169,29 @@ TypRewriter >> rewriteShadowMethodReturn7: e [
 ]
 
 { #category : #accessing }
+TypRewriter >> rewriteShadowMethodReturn8: e [
+	| rewriter |
+	rewriter := RBParseTreeRewriter new.
+	rewriter
+		replace:
+			'''@self'' typAsVariableType'
+		with:
+			'aLookup root receiver'.
+	^ (rewriter executeTree: e parseTree)
+		ifTrue:
+			[ e origin compile: rewriter tree formattedCode classified: e protocol ]
+		ifFalse: [ e ]
+]
+
+{ #category : #accessing }
 TypRewriter >> rewriteShadowMethodReturn: e [
 	| rewriter |
 	rewriter := RBParseTreeRewriter new.
 	rewriter
 		replace:
-			'^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType'
+			'''@self'' typAsVariableType'
 		with:
-			'^ CompiledMethod
-		typAsFunctionTypeWithResult: ''@self'' typAsVariableType'.
-	rewriter
-		replace:
-			'^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
-		arguments: `@a'
-		with:
-			'^ CompiledMethod
-		typAsFunctionTypeWithResult: ''@self'' typAsVariableType
-		arguments: `@a'.
+			'aLookup root receiver'.
 	^ (rewriter executeTree: e parseTree)
 		ifTrue:
 			[ e origin compile: rewriter tree formattedCode classified: e protocol ]

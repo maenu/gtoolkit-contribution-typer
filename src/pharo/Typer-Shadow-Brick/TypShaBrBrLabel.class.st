@@ -12,8 +12,9 @@ TypShaBrBrLabel class >> shadowedClass [
 { #category : #shadow }
 TypShaBrBrLabel >> mText: aLookup [
 	<typShaMethod: 'text:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{{String typAsType.
 			BlText typAsType} typAsType}

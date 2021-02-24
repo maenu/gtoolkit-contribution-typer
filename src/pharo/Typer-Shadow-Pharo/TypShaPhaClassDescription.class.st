@@ -12,8 +12,9 @@ TypShaPhaClassDescription class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaClassDescription >> mAddInstVarNamed: aLookup [
 	<typShaMethod: 'addInstVarNamed:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {String typAsType}
 ]
 
@@ -41,6 +42,7 @@ TypShaPhaClassDescription >> mInstanceSide: aLookup [
 { #category : #shadow }
 TypShaPhaClassDescription >> mIsClassSide: aLookup [
 	<typShaMethod: 'isClassSide'>
+	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 

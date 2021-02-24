@@ -28,15 +28,17 @@ TypShaGtGtPhlowProtoView >> mMondrian: aLookup [
 { #category : #shadow }
 TypShaGtGtPhlowProtoView >> mPriority: aLookup [
 	<typShaMethod: 'priority:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {Number typAsType}
 ]
 
 { #category : #shadow }
 TypShaGtGtPhlowProtoView >> mTitle: aLookup [
 	<typShaMethod: 'title:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {String typAsType}
 ]

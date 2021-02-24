@@ -12,15 +12,17 @@ TypShaGtGtPhlowObjectEvent class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtPhlowObjectEvent >> mObject: aLookup [
 	<typShaMethod: 'object:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {Object typAsType asNullable}
 ]
 
 { #category : #shadow }
 TypShaGtGtPhlowObjectEvent >> mSourceElement: aLookup [
 	<typShaMethod: 'sourceElement:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {BlElement typAsType}
 ]

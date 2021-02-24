@@ -14,7 +14,7 @@ TypShaPhaAssociation >> mKey: aLookup [
 	<typShaMethod: 'key'>
 	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
+		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
 ]
 
 { #category : #shadow }
@@ -22,7 +22,7 @@ TypShaPhaAssociation >> mValue: aLookup [
 	<typShaMethod: 'value'>
 	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiverType at: '@B')
+		typAsFunctionTypeWithResult: (aLookup receiver at: '@B')
 ]
 
 { #category : #accessing }

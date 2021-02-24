@@ -10,7 +10,7 @@ TypShaPhaException class >> mSignal: aLookup [
 	
 	^ TypFunctionType new
 		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
+		resultType: [ :a :s :r | a receiver classDescription instanceSide typAsType ];
 		signalsAlways: [ true ];
 		yourself
 ]

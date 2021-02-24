@@ -39,10 +39,10 @@ TypShaPhaMagnitude >> mBinary226: aLookup [
 { #category : #shadow }
 TypShaPhaMagnitude >> mMax: aLookup [
 	<typShaMethod: 'max:'>
-	self flag: 'FIXME argumentTypes?'.
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			{aLookup receiverType.
-			(aLookup argumentTypes at: 1)} typAsType
+			{aLookup receiver.
+			(aLookup arguments at: 1)} typAsType
 		arguments: {Magnitude typAsType}
 ]

@@ -9,10 +9,10 @@ TypShaVariableLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypVariableLookup'>
 	<typTypeResultAs: 'SequenceableCollection<TypVariableLookup>'>
 	aLookup push: self.
-	aLookup receiverType isNamed
+	aLookup receiver isNamed
 		ifFalse: [ TypNoTypeError signal ].
-	aLookup receiverType hasClassDescription
+	aLookup receiver hasClassDescription
 		ifFalse: [ TypNoTypeError signal ].
-	^ aLookup receiverType classDescription typShaShadows
+	^ aLookup receiver classDescription typShaShadows
 		flatCollect: [ :f | f resolveVariable: aLookup copy ]
 ]

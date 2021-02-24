@@ -10,7 +10,7 @@ TypShaGtGtSearchBinaryFilter class >> mForFilterFilter: aLookup [
 	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | GtCoderMethodsFilter typAsType ];
-		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
+		resultType: [ :a :s :r | a receiver classDescription instanceSide typAsType ];
 		yourself
 ]
 

@@ -12,8 +12,9 @@ TypShaGtGtPrefixTree class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtPrefixTree >> mAddWeight: aLookup [
 	<typShaMethod: 'add:weight:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{String typAsType.
 			Number typAsType}

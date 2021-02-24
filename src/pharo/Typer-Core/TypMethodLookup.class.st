@@ -27,5 +27,36 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : #TypMethodLookup,
 	#superclass : #TypPropertyLookup,
+	#instVars : [
+		'arguments'
+	],
 	#category : #'Typer-Core-Lookup'
 }
+
+{ #category : #accessing }
+TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection [
+	^ self new
+		initializeReceiver: aType selector: aSymbol;
+		initializeArguments: aCollection;
+		yourself
+]
+
+{ #category : #accessing }
+TypMethodLookup >> = anObject [
+	^ super = anObject and: [ arguments = anObject arguments ]
+]
+
+{ #category : #accessing }
+TypMethodLookup >> arguments [
+	^ arguments
+]
+
+{ #category : #accessing }
+TypMethodLookup >> hash [
+	^ super hash bitXor: arguments hash
+]
+
+{ #category : #accessing }
+TypMethodLookup >> initializeArguments: aCollection [
+	arguments := aCollection
+]

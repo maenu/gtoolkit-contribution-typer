@@ -10,11 +10,11 @@ TypPraMethodLookupResolver >> resolve: aLookup [
 	<typTypeResultAs: 'SequenceableCollection<TypFunctionType>'>
 	| classDescription method pragmas argumentPragmas resultPragma signalsAlwaysPragma arguments result signalsAlways |
 	aLookup push: self.
-	aLookup receiverType isNamed
+	aLookup receiver isNamed
 		ifFalse: [ TypNoTypeError signal ].
-	aLookup receiverType hasClassDescription
+	aLookup receiver hasClassDescription
 		ifFalse: [ TypNoTypeError signal ].
-	classDescription := aLookup receiverType classDescription.
+	classDescription := aLookup receiver classDescription.
 	method := (classDescription lookupSelector: aLookup selector)
 		ifNil: [ TypNoTypeError signal ].
 	pragmas := method typPraAllPragmas.

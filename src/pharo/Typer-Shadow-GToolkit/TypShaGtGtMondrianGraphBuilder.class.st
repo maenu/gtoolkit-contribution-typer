@@ -12,12 +12,11 @@ TypShaGtGtMondrianGraphBuilder class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtMondrianGraphBuilder >> mStencil: aLookup [
 	<typShaMethod: 'stencil:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: BlElement typAsType
-				arguments: {TypUnknownType new}
-				argumentsOptional: false
-				signalsAlways: false)}
+				arguments: {TypUnknownType new})}
 ]

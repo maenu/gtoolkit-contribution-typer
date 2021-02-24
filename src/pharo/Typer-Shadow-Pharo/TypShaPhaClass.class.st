@@ -12,8 +12,9 @@ TypShaPhaClass class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaClass >> mAddClassVarNamed: aLookup [
 	<typShaMethod: 'addClassVarNamed:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {String typAsType}
 ]
 
@@ -46,8 +47,9 @@ TypShaPhaClass >> mSharedPools: aLookup [
 { #category : #shadow }
 TypShaPhaClass >> mSubclassInstanceVariableNamesClassVariableNamesPackage: aLookup [
 	<typShaMethod: 'subclass:instanceVariableNames:classVariableNames:package:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			aLookup receiverType classDescription typAsType
+			aLookup receiver classDescription typAsType
 		arguments: {String typAsType}
 ]

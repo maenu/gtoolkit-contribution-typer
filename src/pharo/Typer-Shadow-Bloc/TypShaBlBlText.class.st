@@ -12,8 +12,9 @@ TypShaBlBlText class >> shadowedClass [
 { #category : #shadow }
 TypShaBlBlText >> mAttribute: aLookup [
 	<typShaMethod: 'attribute:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {BlTextAttribute typAsType}
 ]
 
@@ -31,14 +32,13 @@ TypShaBlBlText >> mAttributesAt: aLookup [
 { #category : #shadow }
 TypShaBlBlText >> mClearAttributes: aLookup [
 	<typShaMethod: 'clearAttributes:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {BlTextAttribute typAsType}
-				argumentsOptional: false
-				signalsAlways: false)}
+				arguments: {BlTextAttribute typAsType})}
 ]
 
 { #category : #shadow }

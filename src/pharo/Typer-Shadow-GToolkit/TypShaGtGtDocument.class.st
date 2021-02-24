@@ -19,16 +19,18 @@ TypShaGtGtDocument >> mAsElement: aLookup [
 { #category : #shadow }
 TypShaGtGtDocument >> mStrategy: aLookup [
 	<typShaMethod: 'strategy:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
-		arguments: {Gt2StorageStrategy typAsType}
+		typAsFunctionTypeWithResult: aLookup root receiver
+		arguments: {GtStorageStrategy typAsType}
 ]
 
 { #category : #shadow }
 TypShaGtGtDocument >> mText: aLookup [
 	<typShaMethod: 'text:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{{String typAsType.
 			BlRope typAsType} typAsType}

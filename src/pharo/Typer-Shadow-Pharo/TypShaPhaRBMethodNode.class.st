@@ -12,8 +12,9 @@ TypShaPhaRBMethodNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBMethodNode >> mAddPragma: aLookup [
 	<typShaMethod: 'addPragma:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {RBPragmaNode typAsType}
 ]
 
@@ -48,8 +49,9 @@ TypShaPhaRBMethodNode >> mBody: aLookup [
 { #category : #shadow }
 TypShaPhaRBMethodNode >> mCompilationContext: aLookup [
 	<typShaMethod: 'compilationContext:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {CompilationContext typAsType}
 ]
 
@@ -95,8 +97,9 @@ TypShaPhaRBMethodNode >> mPragmas: aLookup [
 { #category : #shadow }
 TypShaPhaRBMethodNode >> mRemovePragma: aLookup [
 	<typShaMethod: 'removePragma:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {RBPragmaNode typAsType}
 ]
 

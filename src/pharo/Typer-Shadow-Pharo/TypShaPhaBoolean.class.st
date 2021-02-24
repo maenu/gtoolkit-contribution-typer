@@ -17,53 +17,36 @@ TypShaPhaBoolean >> mAnd: aLookup [
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments:
 			{{Boolean typAsType.
-			(BlockClosure
-				typAsFunctionTypeWithResult: Boolean typAsType
-				arguments: {}
-				argumentsOptional: false
-				signalsAlways: false)} typAsType}
+			(BlockClosure typAsFunctionTypeWithResult: Boolean typAsType)}
+				typAsType}
 ]
 
 { #category : #shadow }
-TypShaPhaBoolean >> mIfFalse: aLookup [ 
+TypShaPhaBoolean >> mIfFalse: aLookup [
 	<typShaMethod: 'ifFalse:'>
-	
 	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {}
-				argumentsOptional: false
-				signalsAlways: false ];
+		argumentTypes:
+				[ :i :a :s :r | BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ];
 		resultType: [ :a :s :r | (a argumentTypes at: 1) result asNullable ];
 		yourself
 ]
 
 { #category : #shadow }
-TypShaPhaBoolean >> mIfTrue: aLookup [ 
+TypShaPhaBoolean >> mIfTrue: aLookup [
 	<typShaMethod: 'ifTrue:'>
-	
 	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {}
-				argumentsOptional: false
-				signalsAlways: false ];
+		argumentTypes:
+				[ :i :a :s :r | BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ];
 		resultType: [ :a :s :r | (a argumentTypes at: 1) result asNullable ];
 		yourself
 ]
 
 { #category : #shadow }
-TypShaPhaBoolean >> mIfTrueIfFalse: aLookup [ 
+TypShaPhaBoolean >> mIfTrueIfFalse: aLookup [
 	<typShaMethod: 'ifTrue:ifFalse:'>
-	
 	^ TypFunctionType new
-		argumentTypes: [ BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {}
-				argumentsOptional: false
-				signalsAlways: false ];
+		argumentTypes:
+				[ BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ];
 		resultType: [ :a | 
 			(a argumentTypes
 				collect: [ :e | 
@@ -88,9 +71,6 @@ TypShaPhaBoolean >> mOr: aLookup [
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments:
 			{{Boolean typAsType.
-			(BlockClosure
-				typAsFunctionTypeWithResult: Boolean typAsType
-				arguments: {}
-				argumentsOptional: false
-				signalsAlways: false)} typAsType}
+			(BlockClosure typAsFunctionTypeWithResult: Boolean typAsType)}
+				typAsType}
 ]

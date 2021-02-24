@@ -3,42 +3,35 @@ Class {
 	#superclass : #TypLookup,
 	#instVars : [
 		'selector',
-		'receiverType'
+		'receiver'
 	],
 	#category : #'Typer-Core-Lookup'
 }
-
-{ #category : #accessing }
-TypPropertyLookup class >> receiverType: aType selector: aSymbol [
-	^ self new
-		initializeReceiverType: aType selector: aSymbol;
-		yourself
-]
 
 { #category : #comparing }
 TypPropertyLookup >> = anObject [
 	^ self == anObject
 		or: [ self class == anObject class
 				and: [ selector = anObject selector
-						and: [ receiverType = anObject receiverType ] ] ]
+						and: [ receiver = anObject receiver ] ] ]
 ]
 
 { #category : #accessing }
 TypPropertyLookup >> copyAsSuper [
 	self assert: [ self hasSuper ].
 	^ self copy
-		initializeReceiverType: receiverType superType selector: selector;
+		initializeReceiver: receiver superType selector: selector;
 		yourself
 ]
 
 { #category : #testing }
 TypPropertyLookup >> hasSuper [
-	^ receiverType hasSuper
+	^ receiver hasSuper
 ]
 
 { #category : #comparing }
 TypPropertyLookup >> hash [
-	^ selector hash bitXor: receiverType hash
+	^ selector hash bitXor: receiver hash
 ]
 
 { #category : #initialization }
@@ -49,22 +42,22 @@ TypPropertyLookup >> initialize [
 ]
 
 { #category : #accessing }
-TypPropertyLookup >> initializeReceiverType: aType selector: aSymbol [
-	receiverType := aType.
+TypPropertyLookup >> initializeReceiver: aType selector: aSymbol [
+	receiver := aType.
 	selector := aSymbol
 ]
 
 { #category : #accessing }
 TypPropertyLookup >> printOn: aStream [
-	receiverType printOn: aStream.
+	receiver printOn: aStream.
 	aStream nextPutAll: '>>'.
 	selector printOn: aStream
 ]
 
 { #category : #accessing }
-TypPropertyLookup >> receiverType [
+TypPropertyLookup >> receiver [
 	<typTypeResultAs: 'TypType'>
-	^ receiverType
+	^ receiver
 ]
 
 { #category : #accessing }

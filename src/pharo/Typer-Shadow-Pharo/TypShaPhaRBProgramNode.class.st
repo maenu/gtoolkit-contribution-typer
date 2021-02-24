@@ -142,7 +142,7 @@ TypShaPhaRBProgramNode >> mLastIsReturn: aLookup [
 TypShaPhaRBProgramNode >> mLink: aLookup [
 	<typShaMethod: 'link:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {MetaLink typAsType}
 ]
 
@@ -181,18 +181,13 @@ TypShaPhaRBProgramNode >> mPropertyAt: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaRBProgramNode >> mPropertyAtIfAbsentPut: aLookup [ 
+TypShaPhaRBProgramNode >> mPropertyAtIfAbsentPut: aLookup [
 	<typShaMethod: 'propertyAt:ifAbsentPut:'>
-	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ TypUnknownType new ]
-				ifFalse: [ BlockClosure
-						typAsFunctionTypeWithResult: TypUnknownType new
-						arguments: {}
-						argumentsOptional: false
-						signalsAlways: false ] ];
+				ifFalse: [ BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ] ];
 		resultType: [ :a :s :r | 
 			{TypUnknownType new.
 			(a argumentTypes at: 2) result} typAsType ];
@@ -200,9 +195,8 @@ TypShaPhaRBProgramNode >> mPropertyAtIfAbsentPut: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaRBProgramNode >> mPropertyAtIfPresentIfAbsent: aLookup [ 
+TypShaPhaRBProgramNode >> mPropertyAtIfPresentIfAbsent: aLookup [
 	<typShaMethod: 'propertyAt:ifPresent:ifAbsent:'>
-	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -214,11 +208,8 @@ TypShaPhaRBProgramNode >> mPropertyAtIfPresentIfAbsent: aLookup [
 								arguments: {TypUnknownType new}
 								argumentsOptional: true
 								signalsAlways: false)} typAsType ]
-						ifFalse: [ BlockClosure
-								typAsFunctionTypeWithResult: TypUnknownType new
-								arguments: {}
-								argumentsOptional: false
-								signalsAlways: false ] ] ];
+						ifFalse:
+							[ BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ] ] ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 2.
@@ -231,7 +222,7 @@ TypShaPhaRBProgramNode >> mPropertyAtIfPresentIfAbsent: aLookup [
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new
-										receiverType: a receiverType;
+										receiverType: a receiver;
 										selector: argumentNode value asSymbol;
 										argumentTypes: {};
 										argumentNodes: {};
@@ -255,24 +246,20 @@ TypShaPhaRBProgramNode >> mPropertyAtPut: aLookup [
 { #category : #shadow }
 TypShaPhaRBProgramNode >> mRemoveLink: aLookup [
 	<typShaMethod: 'removeLink:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {MetaLink typAsType}
 ]
 
 { #category : #shadow }
-TypShaPhaRBProgramNode >> mRemovePropertyIfAbsent: aLookup [ 
+TypShaPhaRBProgramNode >> mRemovePropertyIfAbsent: aLookup [
 	<typShaMethod: 'removeProperty:ifAbsent:'>
-	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ String typAsType ]
-				ifFalse: [ BlockClosure
-						typAsFunctionTypeWithResult: TypUnknownType new
-						arguments: {}
-						argumentsOptional: false
-						signalsAlways: false ] ];
+				ifFalse: [ BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ] ];
 		resultType: [ :a :s :r | 
 			{TypUnknownType new.
 			(a argumentTypes at: 2) result} typAsType ];

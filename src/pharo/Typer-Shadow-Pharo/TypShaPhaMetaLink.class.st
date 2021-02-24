@@ -12,8 +12,9 @@ TypShaPhaMetaLink class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaMetaLink >> mArguments: aLookup [
 	<typShaMethod: 'arguments:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{(SequenceableCollection typAsType
 				copyWithParameters: {Symbol typAsType})}
@@ -22,16 +23,18 @@ TypShaPhaMetaLink >> mArguments: aLookup [
 { #category : #shadow }
 TypShaPhaMetaLink >> mControl: aLookup [
 	<typShaMethod: 'control:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {Symbol typAsType}
 ]
 
 { #category : #shadow }
 TypShaPhaMetaLink >> mMetaObject: aLookup [
 	<typShaMethod: 'metaObject:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{{Symbol typAsType.
 			Object typAsType} typAsType}
@@ -40,7 +43,8 @@ TypShaPhaMetaLink >> mMetaObject: aLookup [
 { #category : #shadow }
 TypShaPhaMetaLink >> mSelector: aLookup [
 	<typShaMethod: 'selector:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {Symbol typAsType}
 ]

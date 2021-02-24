@@ -15,8 +15,8 @@ TypShaPhaBlockClosure >> mCull: aLookup [
 	
 	^ TypFunctionType new
 		argumentTypes:
-				[ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType new ] ];
-		resultType: [ :a | a receiverType result ];
+				[ :i :a | a receiver arguments at: i ifAbsent: [ TypUnknownType new ] ];
+		resultType: [ :a | a receiver result ];
 		yourself
 ]
 
@@ -26,8 +26,8 @@ TypShaPhaBlockClosure >> mCullCull: aLookup [
 	
 	^ TypFunctionType new
 		argumentTypes:
-				[ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType new ] ];
-		resultType: [ :a | a receiverType result ];
+				[ :i :a | a receiver arguments at: i ifAbsent: [ TypUnknownType new ] ];
+		resultType: [ :a | a receiver result ];
 		yourself
 ]
 
@@ -37,8 +37,8 @@ TypShaPhaBlockClosure >> mCullCullCull: aLookup [
 	
 	^ TypFunctionType new
 		argumentTypes:
-				[ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType new ] ];
-		resultType: [ :a | a receiverType result ];
+				[ :i :a | a receiver arguments at: i ifAbsent: [ TypUnknownType new ] ];
+		resultType: [ :a | a receiver result ];
 		yourself
 ]
 
@@ -48,30 +48,24 @@ TypShaPhaBlockClosure >> mCullCullCullCull: aLookup [
 	
 	^ TypFunctionType new
 		argumentTypes:
-				[ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType new ] ];
-		resultType: [ :a | a receiverType result ];
+				[ :i :a | a receiver arguments at: i ifAbsent: [ TypUnknownType new ] ];
+		resultType: [ :a | a receiver result ];
 		yourself
 ]
 
 { #category : #shadow }
-TypShaPhaBlockClosure >> mEnsure: aLookup [ 
+TypShaPhaBlockClosure >> mEnsure: aLookup [
 	<typShaMethod: 'ensure:'>
-	
 	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {}
-				argumentsOptional: false
-				signalsAlways: false ];
-		resultType: [ :a :s :r | a receiverType result ];
+		argumentTypes:
+				[ :i :a :s :r | BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ];
+		resultType: [ :a :s :r | a receiver result ];
 		yourself
 ]
 
 { #category : #shadow }
-TypShaPhaBlockClosure >> mOnDo: aLookup [ 
+TypShaPhaBlockClosure >> mOnDo: aLookup [
 	<typShaMethod: 'on:do:'>
-	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -83,11 +77,9 @@ TypShaPhaBlockClosure >> mOnDo: aLookup [
 						ifFalse: [ Exception class typAsType ].
 					BlockClosure
 						typAsFunctionTypeWithResult: TypUnknownType new
-						arguments: {type}
-						argumentsOptional: true
-						signalsAlways: false ] ];
+						arguments: {type} ] ];
 		resultType: [ :a :s :r | 
-			{a receiverType result.
+			{a receiver result.
 			(a argumentTypes at: 2) result} typAsType ];
 		yourself
 ]
@@ -98,8 +90,8 @@ TypShaPhaBlockClosure >> mValue: aLookup [
 	
 	^ TypFunctionType new
 		argumentTypes:
-				[ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType new ] ];
-		resultType: [ :a | a receiverType result ];
+				[ :i :a | a receiver arguments at: i ifAbsent: [ TypUnknownType new ] ];
+		resultType: [ :a | a receiver result ];
 		yourself
 ]
 
@@ -109,8 +101,8 @@ TypShaPhaBlockClosure >> mValueValue: aLookup [
 	
 	^ TypFunctionType new
 		argumentTypes:
-				[ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType new ] ];
-		resultType: [ :a | a receiverType result ];
+				[ :i :a | a receiver arguments at: i ifAbsent: [ TypUnknownType new ] ];
+		resultType: [ :a | a receiver result ];
 		yourself
 ]
 
@@ -120,8 +112,8 @@ TypShaPhaBlockClosure >> mValueValueValue: aLookup [
 	
 	^ TypFunctionType new
 		argumentTypes:
-				[ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType new ] ];
-		resultType: [ :a | a receiverType result ];
+				[ :i :a | a receiver arguments at: i ifAbsent: [ TypUnknownType new ] ];
+		resultType: [ :a | a receiver result ];
 		yourself
 ]
 
@@ -131,22 +123,19 @@ TypShaPhaBlockClosure >> mValueValueValueValue: aLookup [
 	
 	^ TypFunctionType new
 		argumentTypes:
-				[ :i :a | a receiverType arguments at: i ifAbsent: [ TypUnknownType new ] ];
-		resultType: [ :a | a receiverType result ];
+				[ :i :a | a receiver arguments at: i ifAbsent: [ TypUnknownType new ] ];
+		resultType: [ :a | a receiver result ];
 		yourself
 ]
 
 { #category : #shadow }
 TypShaPhaBlockClosure >> mWhileFalse: aLookup [
 	<typShaMethod: 'whileFalse:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
-			{(BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {}
-				argumentsOptional: false
-				signalsAlways: false)}
+			{(BlockClosure typAsFunctionTypeWithResult: TypUnknownType new)}
 ]
 
 { #category : #shadow }
@@ -156,18 +145,11 @@ TypShaPhaBlockClosure >> mWhileTrue: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypNilType new
 		arguments:
-			{(BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: #()
-				argumentsOptional: false
-				signalsAlways: false)}
+			{(BlockClosure typAsFunctionTypeWithResult: TypUnknownType new)}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaBlockClosure >> resolveType: aLookup [
 	^ aLookup classDescription
 		typAsFunctionTypeWithResult: TypUnknownType new
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false
 ]

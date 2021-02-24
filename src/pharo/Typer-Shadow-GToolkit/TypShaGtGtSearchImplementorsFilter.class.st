@@ -10,7 +10,7 @@ TypShaGtGtSearchImplementorsFilter class >> mSelector: aLookup [
 	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
-		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
+		resultType: [ :a :s :r | a receiver classDescription instanceSide typAsType ];
 		yourself
 ]
 

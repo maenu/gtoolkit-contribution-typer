@@ -11,7 +11,7 @@ TypShaGtGtMethodsCoder class >> mForMethods: aLookup [
 	^ TypFunctionType new
 		argumentTypes:
 				[ :i :a :s :r | Collection typAsType copyWithParameters: {CompiledMethod typAsType} ];
-		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
+		resultType: [ :a :s :r | a receiver classDescription instanceSide typAsType ];
 		yourself
 ]
 
@@ -23,6 +23,7 @@ TypShaGtGtMethodsCoder class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtMethodsCoder >> mAnnounce: aLookup [
 	<typShaMethod: 'announce:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {Announcement typAsType}

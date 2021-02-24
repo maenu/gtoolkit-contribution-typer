@@ -47,3 +47,8 @@ TypLookup >> postCopy [
 TypLookup >> push: aResolver [
 	stack push: aResolver
 ]
+
+{ #category : #accessing }
+TypLookup >> root [
+	^ parent ifNil: self ifNotNil: #root
+]

@@ -12,8 +12,9 @@ TypShaBlBlElement class >> shadowedClass [
 { #category : #shadow }
 TypShaBlBlElement >> mBackground: aLookup [
 	<typShaMethod: 'background:'>
+	<migrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{{Color typAsType.
 			BlBackground typAsType} typAsType}
@@ -22,39 +23,39 @@ TypShaBlBlElement >> mBackground: aLookup [
 { #category : #shadow }
 TypShaBlBlElement >> mConstraintsDo: aLookup [
 	<typShaMethod: 'constraintsDo:'>
+	<migrated>
 	CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiverType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {BlLayoutConstraints typAsType}
-				argumentsOptional: false
-				signalsAlways: false)}
-		argumentsOptional: false
-		signalsAlways: false
+				arguments: {BlLayoutConstraints typAsType})}
 ]
 
 { #category : #shadow }
 TypShaBlBlElement >> mFireEvent: aLookup [
 	<typShaMethod: 'fireEvent:'>
+	<migrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {BlEvent typAsType}
 ]
 
 { #category : #shadow }
 TypShaBlBlElement >> mGeometry: aLookup [
 	<typShaMethod: 'geometry:'>
+	<migrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
-		arguments: {BlGeometry typAsType}
+		typAsFunctionTypeWithResult: aLookup root receiver
+		arguments: {BlElementGeometry typAsType}
 ]
 
 { #category : #shadow }
 TypShaBlBlElement >> mLook: aLookup [
 	<typShaMethod: 'look:'>
+	<migrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{{BrLook class typAsType.
 			BrLook typAsType} typAsType}
@@ -63,7 +64,8 @@ TypShaBlBlElement >> mLook: aLookup [
 { #category : #shadow }
 TypShaBlBlElement >> mMargin: aLookup [
 	<typShaMethod: 'margin:'>
+	<migrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {BlInsets typAsType}
 ]

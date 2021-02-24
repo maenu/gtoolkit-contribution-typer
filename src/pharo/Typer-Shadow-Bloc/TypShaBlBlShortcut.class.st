@@ -21,14 +21,13 @@ TypShaBlBlShortcut >> mAction: aLookup [
 				arguments: {BlElement typAsType}
 				argumentsOptional: true
 				signalsAlways: false)}
-		argumentsOptional: false
-		signalsAlways: false
 ]
 
 { #category : #shadow }
 TypShaBlBlShortcut >> mCombination: aLookup [
 	<typShaMethod: 'combination:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {BlKeyCombination typAsType}
 ]

@@ -12,12 +12,11 @@ TypShaGtGtPhlowMondrianView class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtPhlowMondrianView >> mPainting: aLookup [
 	<typShaMethod: 'painting:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {GtMondrian typAsType}
-				argumentsOptional: false
-				signalsAlways: false)}
+				arguments: {GtMondrian typAsType})}
 ]

@@ -26,7 +26,7 @@ TypShaGtGtPharoCompletionStrategy >> mActionsForAt: aLookup [
 TypShaGtGtPharoCompletionStrategy >> mClassOrMetaClass: aLookup [
 	<typShaMethod: 'classOrMetaClass:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {ClassDescription typAsType}
 ]
 

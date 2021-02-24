@@ -26,23 +26,22 @@ TypShaPhaObject >> mAsSymbol: aLookup [
 { #category : #shadow }
 TypShaPhaObject >> mAssert: aLookup [
 	<typShaMethod: 'assert:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{{Boolean typAsType.
-			(BlockClosure
-				typAsFunctionTypeWithResult: Boolean typAsType
-				arguments: {}
-				argumentsOptional: false
-				signalsAlways: false)} typAsType}
+			(BlockClosure typAsFunctionTypeWithResult: Boolean typAsType)}
+				typAsType}
 ]
 
 { #category : #shadow }
 TypShaPhaObject >> mBinary248: aLookup [
 	<typShaMethod: '='>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {Object typAsType}
+		arguments: {TypUnknownType new asNullable}
 ]
 
 { #category : #shadow }
@@ -63,7 +62,7 @@ TypShaPhaObject >> mBinary256: aLookup [
 		resultType: [ :a :s :r | 
 			Association typAsType
 				copyWithParameters:
-					{a receiverType.
+					{a receiver.
 					(a argumentTypes at: 1)} ];
 		yourself
 ]
@@ -71,8 +70,8 @@ TypShaPhaObject >> mBinary256: aLookup [
 { #category : #shadow }
 TypShaPhaObject >> mCopy: aLookup [
 	<typShaMethod: 'copy'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: aLookup root receiver
 ]
 
 { #category : #shadow }
@@ -85,8 +84,9 @@ TypShaPhaObject >> mHash: aLookup [
 { #category : #shadow }
 TypShaPhaObject >> mInstVarNamed: aLookup [
 	<typShaMethod: 'instVarNamed:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: TypUnknownType new
+		typAsFunctionTypeWithResult: TypUnknownType new asNullable
 		arguments: {String typAsType}
 ]
 
@@ -126,7 +126,7 @@ TypShaPhaObject >> mPerform: aLookup [
 				ifTrue: [ TypMethodLookupIndex instance
 						resultTypeFor:
 							(TypMethodLookup new
-								receiverType: a receiverType;
+								receiverType: a receiver;
 								selector: argument value;
 								argumentTypes: #();
 								argumentNodes: #();
@@ -148,8 +148,9 @@ TypShaPhaObject >> mPerformWithEnoughArguments: aLookup [
 { #category : #shadow }
 TypShaPhaObject >> mPrintOn: aLookup [
 	<typShaMethod: 'printOn:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {(Stream typAsType copyWithParameters: {Character typAsType})}
 ]
 
@@ -163,6 +164,6 @@ TypShaPhaObject >> mPrintString: aLookup [
 { #category : #shadow }
 TypShaPhaObject >> mYourself: aLookup [
 	<typShaMethod: 'yourself'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: aLookup root receiver
 ]

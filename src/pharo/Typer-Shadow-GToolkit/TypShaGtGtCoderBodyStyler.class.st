@@ -12,8 +12,9 @@ TypShaGtGtCoderBodyStyler class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtCoderBodyStyler >> mStyleFromToWith: aLookup [
 	<typShaMethod: 'styleFrom:to:with:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{Integer typAsType.
 			Integer typAsType.

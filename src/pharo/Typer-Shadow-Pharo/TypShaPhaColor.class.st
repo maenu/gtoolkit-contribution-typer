@@ -72,7 +72,8 @@ TypShaPhaColor class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaColor >> mAlpha: aLookup [
 	<typShaMethod: 'alpha:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {Number typAsType}
 ]

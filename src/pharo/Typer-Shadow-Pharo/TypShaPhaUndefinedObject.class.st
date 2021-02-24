@@ -10,16 +10,11 @@ TypShaPhaUndefinedObject class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaUndefinedObject >> mIfNil: aLookup [ 
+TypShaPhaUndefinedObject >> mIfNil: aLookup [
 	<typShaMethod: 'ifNil:'>
-	
 	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {}
-				argumentsOptional: false
-				signalsAlways: false ];
+		argumentTypes:
+				[ :i :a :s :r | BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ];
 		resultType: [ :a :s :r | 
 			| node |
 			node := a argumentNodes at: 1.
@@ -34,13 +29,14 @@ TypShaPhaUndefinedObject >> mIfNil: aLookup [
 { #category : #shadow }
 TypShaPhaUndefinedObject >> mIfNotNil: aLookup [
 	<typShaMethod: 'ifNotNil:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {aLookup receiverType asNonNullable}
+				arguments: {aLookup receiver asNonNullable}
 				argumentsOptional: true
 				signalsAlways: false)} typAsType}
 ]

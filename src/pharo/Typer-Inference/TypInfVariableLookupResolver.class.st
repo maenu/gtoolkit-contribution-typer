@@ -10,11 +10,11 @@ TypInfVariableLookupResolver >> resolve: aLookup [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	| classDescription selector |
 	aLookup push: self.
-	aLookup receiverType isNamed
+	aLookup receiver isNamed
 		ifFalse: [ TypNoTypeError signal ].
-	aLookup receiverType hasClassDescription
+	aLookup receiver hasClassDescription
 		ifFalse: [ TypNoTypeError signal ].
-	classDescription := aLookup receiverType classDescription.
+	classDescription := aLookup receiver classDescription.
 	selector := aLookup selector.
 	classDescription allSlots
 		detect: [ :e | e name = selector ]

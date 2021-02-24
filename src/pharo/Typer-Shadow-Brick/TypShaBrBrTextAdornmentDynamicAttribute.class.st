@@ -12,12 +12,8 @@ TypShaBrBrTextAdornmentDynamicAttribute class >> shadowedClass [
 { #category : #shadow }
 TypShaBrBrTextAdornmentDynamicAttribute >> mStencil: aLookup [
 	<typShaMethod: 'stencil:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
-		arguments:
-			{(BlockClosure
-				typAsFunctionTypeWithResult: BlElement typAsType
-				arguments: {}
-				argumentsOptional: false
-				signalsAlways: false)}
+		typAsFunctionTypeWithResult: aLookup root receiver
+		arguments: {(BlockClosure typAsFunctionTypeWithResult: BlElement typAsType)}
 ]

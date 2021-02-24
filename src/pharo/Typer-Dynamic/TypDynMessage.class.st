@@ -18,7 +18,7 @@ TypDynMessage >> = anObject [
 					object := anObject "typCastAs TypDynMessage".
 					selector = object selector
 						and: [ argumentTypes = object argumentTypes
-								and: [ receiverType = object receiverType ] ] ] ]
+								and: [ receiverType = object receiver ] ] ] ]
 ]
 
 { #category : #accessing }
@@ -62,7 +62,7 @@ TypDynMessage >> printOn: aStream [
 ]
 
 { #category : #accessing }
-TypDynMessage >> receiverType [
+TypDynMessage >> receiver [
 	<typTypeResultAs: 'TypType'>
 	^ receiverType
 ]

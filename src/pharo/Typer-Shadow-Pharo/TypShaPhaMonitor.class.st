@@ -10,16 +10,11 @@ TypShaPhaMonitor class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaMonitor >> mCritical: aLookup [ 
+TypShaPhaMonitor >> mCritical: aLookup [
 	<typShaMethod: 'critical:'>
-	
 	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {}
-				argumentsOptional: false
-				signalsAlways: false ];
+		argumentTypes:
+				[ :i :a :s :r | BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ];
 		resultType: [ :a :s :r | (a argumentTypes at: 1) result ];
 		yourself
 ]

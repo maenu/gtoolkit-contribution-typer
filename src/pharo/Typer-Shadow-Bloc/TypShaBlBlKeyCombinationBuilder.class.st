@@ -20,7 +20,8 @@ TypShaBlBlKeyCombinationBuilder >> mBuild: aLookup [
 { #category : #shadow }
 TypShaBlBlKeyCombinationBuilder >> mKey: aLookup [
 	<typShaMethod: 'key:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
-		arguments: {Key typAsType}
+		typAsFunctionTypeWithResult: aLookup root receiver
+		arguments: {BlKeyboardKey typAsType}
 ]

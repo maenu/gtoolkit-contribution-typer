@@ -14,7 +14,7 @@ TypShaPhaDictionary >> mAnyOne: aLookup [
 	<typShaMethod: 'anyOne'>
 	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
+		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
 ]
 
 { #category : #shadow }
@@ -26,8 +26,8 @@ TypShaPhaDictionary >> mAsOrderedDictionary: aLookup [
 		resultType: [ :a | 
 			OrderedDictionary typAsType
 				copyWithParameters:
-					{('@B' typAsVariableType resolveIn: a receiverType).
-					('@A' typAsVariableType resolveIn: a receiverType)} ];
+					{('@B' typAsVariableType resolveIn: a receiver).
+					('@A' typAsVariableType resolveIn: a receiver)} ];
 		yourself
 ]
 
@@ -42,15 +42,14 @@ TypShaPhaDictionary >> mAssociations: aLookup [
 				copyWithParameters:
 					{(Association typAsType
 						copyWithParameters:
-							{('@B' typAsVariableType resolveIn: a receiverType).
-							('@A' typAsVariableType resolveIn: a receiverType)})} ];
+							{('@B' typAsVariableType resolveIn: a receiver).
+							('@A' typAsVariableType resolveIn: a receiver)})} ];
 		yourself
 ]
 
 { #category : #shadow }
-TypShaPhaDictionary >> mAssociationsDo: aLookup [ 
+TypShaPhaDictionary >> mAssociationsDo: aLookup [
 	<typShaMethod: 'associationsDo:'>
-	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			BlockClosure
@@ -58,11 +57,9 @@ TypShaPhaDictionary >> mAssociationsDo: aLookup [
 				arguments:
 					{(Association typAsType
 						copyWithParameters:
-							{('@B' typAsVariableType resolveIn: a receiverType).
-							('@A' typAsVariableType resolveIn: a receiverType)})}
-				argumentsOptional: false
-				signalsAlways: false ];
-		resultType: [ :a :s | a receiverType ];
+							{('@B' typAsVariableType resolveIn: a receiver).
+							('@A' typAsVariableType resolveIn: a receiver)})} ];
+		resultType: [ :a :s | a receiver ];
 		yourself
 ]
 
@@ -71,63 +68,50 @@ TypShaPhaDictionary >> mAt: aLookup [
 	<typShaMethod: 'at:'>
 	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
-		arguments: {(aLookup receiverType at: '@B')}
+		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
+		arguments: {(aLookup receiver at: '@B')}
 ]
 
 { #category : #shadow }
-TypShaPhaDictionary >> mAtIfAbsent: aLookup [ 
+TypShaPhaDictionary >> mAtIfAbsent: aLookup [
 	<typShaMethod: 'at:ifAbsent:'>
-	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			i = 1
-				ifTrue: [ '@B' typAsVariableType resolveIn: a receiverType ]
-				ifFalse: [ BlockClosure
-						typAsFunctionTypeWithResult: TypUnknownType new
-						arguments: {}
-						argumentsOptional: false
-						signalsAlways: false ] ];
+				ifTrue: [ '@B' typAsVariableType resolveIn: a receiver ]
+				ifFalse: [ BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ] ];
 		resultType: [ :a | 
-			{('@A' typAsVariableType resolveIn: a receiverType).
+			{('@A' typAsVariableType resolveIn: a receiver).
 			a argumentTypes second result} typAsType ];
 		yourself
 ]
 
 { #category : #shadow }
-TypShaPhaDictionary >> mAtIfAbsentPut: aLookup [ 
+TypShaPhaDictionary >> mAtIfAbsentPut: aLookup [
 	<typShaMethod: 'at:ifAbsentPut:'>
-	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			i = 1
-				ifTrue: [ '@B' typAsVariableType resolveIn: a receiverType ]
+				ifTrue: [ '@B' typAsVariableType resolveIn: a receiver ]
 				ifFalse: [ BlockClosure
-						typAsFunctionTypeWithResult: ('@A' typAsVariableType resolveIn: a receiverType)
-						arguments: {}
-						argumentsOptional: false
-						signalsAlways: false ] ];
-		resultType: [ :a | '@A' typAsVariableType resolveIn: a receiverType ];
+						typAsFunctionTypeWithResult: ('@A' typAsVariableType resolveIn: a receiver) ] ];
+		resultType: [ :a | '@A' typAsVariableType resolveIn: a receiver ];
 		yourself
 ]
 
 { #category : #shadow }
-TypShaPhaDictionary >> mAtIfPresentIfAbsent: aLookup [ 
+TypShaPhaDictionary >> mAtIfPresentIfAbsent: aLookup [
 	<typShaMethod: 'at:ifPresent:ifAbsent:'>
-	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
-			{('@B' typAsVariableType resolveIn: a receiverType).
+			{('@B' typAsVariableType resolveIn: a receiver).
 			(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
+				arguments: {('@A' typAsVariableType resolveIn: a receiver)}
 				argumentsOptional: true
 				signalsAlways: false).
-			(BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {}
-				argumentsOptional: false
-				signalsAlways: false)} at: i ];
+			(BlockClosure typAsFunctionTypeWithResult: TypUnknownType new)}
+				at: i ];
 		resultType: [ :a :s | 
 			{(a argumentTypes at: 2) result.
 			(a argumentTypes at: 3) result} typAsType ];
@@ -139,10 +123,10 @@ TypShaPhaDictionary >> mAtPut: aLookup [
 	<typShaMethod: 'at:put:'>
 	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
+		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
 		arguments:
-			{(aLookup receiverType at: '@B').
-			(aLookup receiverType at: '@A')}
+			{(aLookup receiver at: '@B').
+			(aLookup receiver at: '@A')}
 ]
 
 { #category : #shadow }
@@ -152,12 +136,12 @@ TypShaPhaDictionary >> mBinary214: aLookup [
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | Dictionary typAsType ];
 		resultType: [ :a :s :r | 
-			a receiverType
+			a receiver
 				copyWithParameters:
-					{{('@B' typAsVariableType resolveIn: a receiverType).
+					{{('@B' typAsVariableType resolveIn: a receiver).
 					('@B' typAsVariableType resolveIn: (a argumentTypes at: 1))}
 						typAsType.
-					{('@A' typAsVariableType resolveIn: a receiverType).
+					{('@A' typAsVariableType resolveIn: a receiver).
 					('@A' typAsVariableType resolveIn: (a argumentTypes at: 1))}
 						typAsType} ];
 		yourself
@@ -172,9 +156,7 @@ TypShaPhaDictionary >> mCollect: aLookup [
 			{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-				argumentsOptional: false
-				signalsAlways: false)} typAsType ];
+				arguments: {('@A' typAsVariableType resolveIn: a receiver)})} typAsType ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
 			argumentType := a argumentTypes at: 1.
@@ -187,15 +169,15 @@ TypShaPhaDictionary >> mCollect: aLookup [
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new
-										receiverType: ('@A' typAsVariableType resolveIn: a receiverType);
+										receiverType: ('@A' typAsVariableType resolveIn: a receiver);
 										selector: argumentNode value asSymbol;
 										argumentTypes: {};
 										argumentNodes: {};
 										yourself) ]
 						ifFalse: [ TypUnknownType new ] ].
-			a receiverType
+			a receiver
 				copyWithParameters:
-					{('@B' typAsVariableType resolveIn: a receiverType).
+					{('@B' typAsVariableType resolveIn: a receiver).
 					elementType} ];
 		yourself
 ]
@@ -206,7 +188,7 @@ TypShaPhaDictionary >> mIncludes: aLookup [
 	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {(aLookup receiverType at: '@A')}
+		arguments: {(aLookup receiver at: '@A')}
 ]
 
 { #category : #shadow }
@@ -215,7 +197,7 @@ TypShaPhaDictionary >> mIncludesKey: aLookup [
 	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {(aLookup receiverType at: '@B')}
+		arguments: {(aLookup receiver at: '@B')}
 ]
 
 { #category : #shadow }
@@ -225,7 +207,7 @@ TypShaPhaDictionary >> mKeys: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(Collection typAsType
-				copyWithParameters: {(aLookup receiverType at: '@B')})
+				copyWithParameters: {(aLookup receiver at: '@B')})
 ]
 
 { #category : #shadow }
@@ -237,29 +219,22 @@ TypShaPhaDictionary >> mKeysAndValuesDo: aLookup [
 			BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
 				arguments:
-					{('@B' typAsVariableType resolveIn: a receiverType).
-					('@A' typAsVariableType resolveIn: a receiverType)}
-				argumentsOptional: false
-				signalsAlways: false ];
-		resultType: [ :a :s :r | a receiverType ];
+					{('@B' typAsVariableType resolveIn: a receiver).
+					('@A' typAsVariableType resolveIn: a receiver)} ];
+		resultType: [ :a :s :r | a receiver ];
 		yourself
 ]
 
 { #category : #shadow }
-TypShaPhaDictionary >> mRemoveKeyIfAbsent: aLookup [ 
+TypShaPhaDictionary >> mRemoveKeyIfAbsent: aLookup [
 	<typShaMethod: 'removeKey:ifAbsent:'>
-	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i == 1
-				ifTrue: [ '@B' typAsVariableType resolveIn: a receiverType ]
-				ifFalse: [ BlockClosure
-						typAsFunctionTypeWithResult: TypUnknownType new
-						arguments: #()
-						argumentsOptional: false
-						signalsAlways: false ] ];
+				ifTrue: [ '@B' typAsVariableType resolveIn: a receiver ]
+				ifFalse: [ BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ] ];
 		resultType: [ :a :s :r | 
-			{('@A' typAsVariableType resolveIn: a receiverType).
+			{('@A' typAsVariableType resolveIn: a receiver).
 			a argumentTypes first result} typAsType ];
 		yourself
 ]
@@ -271,7 +246,7 @@ TypShaPhaDictionary >> mValues: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(Collection typAsType
-				copyWithParameters: {(aLookup receiverType at: '@A')})
+				copyWithParameters: {(aLookup receiver at: '@A')})
 ]
 
 { #category : #accessing }

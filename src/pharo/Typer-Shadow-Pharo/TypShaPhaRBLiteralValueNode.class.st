@@ -12,7 +12,7 @@ TypShaPhaRBLiteralValueNode class >> mValue: aLookup [
 		argumentTypes: [ :i :a :s :r | 
 			{Number typAsType.
 			String typAsType} typAsType ];
-		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
+		resultType: [ :a :s :r | a receiver classDescription instanceSide typAsType ];
 		yourself
 ]
 

@@ -13,6 +13,6 @@ TypShaGtGtSearchNegationFilter class >> shadowedClass [
 TypShaGtGtSearchNegationFilter >> mOriginalFilter: aLookup [
 	<typShaMethod: 'originalFilter:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {GtCoderMethodsFilter typAsType}
 ]

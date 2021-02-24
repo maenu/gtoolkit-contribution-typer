@@ -10,7 +10,7 @@ TypShaPhaSequenceableCollection class >> mOfSize: aLookup [
 	
 	^ TypFunctionType new
 		argumentTypes: [ Integer typAsType ];
-		resultType: [ :a | a receiverType classDescription instanceSide typAsType ];
+		resultType: [ :a | a receiver classDescription instanceSide typAsType ];
 		yourself
 ]
 
@@ -24,25 +24,20 @@ TypShaPhaSequenceableCollection >> mAt: aLookup [
 	<typShaMethod: 'at:'>
 	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
+		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
 		arguments: {Integer typAsType}
 ]
 
 { #category : #shadow }
-TypShaPhaSequenceableCollection >> mAtIfAbsent: aLookup [ 
+TypShaPhaSequenceableCollection >> mAtIfAbsent: aLookup [
 	<typShaMethod: 'at:ifAbsent:'>
-	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ Integer typAsType ]
-				ifFalse: [ BlockClosure
-						typAsFunctionTypeWithResult: TypUnknownType new
-						arguments: {}
-						argumentsOptional: false
-						signalsAlways: false ] ];
+				ifFalse: [ BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ] ];
 		resultType: [ :a :s :r | 
-			{('@A' typAsVariableType resolveIn: a receiverType).
+			{('@A' typAsVariableType resolveIn: a receiver).
 			(a argumentTypes at: 2) result} typAsType ];
 		yourself
 ]
@@ -50,16 +45,18 @@ TypShaPhaSequenceableCollection >> mAtIfAbsent: aLookup [
 { #category : #shadow }
 TypShaPhaSequenceableCollection >> mBeginsWith: aLookup [
 	<typShaMethod: 'beginsWith:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {aLookup receiverType}
+		arguments: {aLookup receiver}
 ]
 
 { #category : #shadow }
 TypShaPhaSequenceableCollection >> mCopyFromTo: aLookup [
 	<typShaMethod: 'copyFrom:to:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {Integer typAsType}
 ]
 
@@ -71,31 +68,23 @@ TypShaPhaSequenceableCollection >> mDetectIndex: aLookup [
 		argumentTypes: [ :i :a | 
 			BlockClosure
 				typAsFunctionTypeWithResult: Boolean typAsType
-				arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-				argumentsOptional: false
-				signalsAlways: false ];
+				arguments: {('@A' typAsVariableType resolveIn: a receiver)}];
 		resultType: [ Integer typAsType ];
 		yourself
 ]
 
 { #category : #shadow }
-TypShaPhaSequenceableCollection >> mDetectIndexIfNone: aLookup [ 
+TypShaPhaSequenceableCollection >> mDetectIndexIfNone: aLookup [
 	<typShaMethod: 'detectIndex:ifNone:'>
-	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			i = 1
 				ifTrue: [ BlockClosure
 						typAsFunctionTypeWithResult: Boolean typAsType
-						arguments: {('@A' typAsVariableType resolveIn: a receiverType)}
-						argumentsOptional: false
-						signalsAlways: false ]
+						arguments: {('@A' typAsVariableType resolveIn: a receiver)} ]
 				ifFalse: [ {TypUnknownType new.
-					(BlockClosure
-						typAsFunctionTypeWithResult: Boolean typAsType
-						arguments: {}
-						argumentsOptional: false
-						signalsAlways: false)} typAsType ] ];
+					(BlockClosure typAsFunctionTypeWithResult: Boolean typAsType)}
+						typAsType ] ];
 		resultType: [ :a | 
 			| none |
 			none := a argumentTypes at: 2.
@@ -110,9 +99,10 @@ TypShaPhaSequenceableCollection >> mDetectIndexIfNone: aLookup [
 { #category : #shadow }
 TypShaPhaSequenceableCollection >> mEndsWith: aLookup [
 	<typShaMethod: 'endsWith:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {aLookup receiverType}
+		arguments: {aLookup receiver}
 ]
 
 { #category : #shadow }
@@ -120,7 +110,7 @@ TypShaPhaSequenceableCollection >> mFirst: aLookup [
 	<typShaMethod: 'first'>
 	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
+		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
 ]
 
 { #category : #shadow }
@@ -129,7 +119,7 @@ TypShaPhaSequenceableCollection >> mIndexOf: aLookup [
 	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Integer typAsType
-		arguments: {(aLookup receiverType at: '@A')}
+		arguments: {(aLookup receiver at: '@A')}
 ]
 
 { #category : #shadow }
@@ -144,86 +134,74 @@ TypShaPhaSequenceableCollection >> mLast: aLookup [
 	<typShaMethod: 'last'>
 	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiverType at: '@A')
+		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
 ]
 
 { #category : #shadow }
 TypShaPhaSequenceableCollection >> mReversed: aLookup [
 	<typShaMethod: 'reversed'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: aLookup root receiver
 ]
 
 { #category : #shadow }
-TypShaPhaSequenceableCollection >> mSort: aLookup [ 
+TypShaPhaSequenceableCollection >> mSort: aLookup [
 	<typShaMethod: 'sort:'>
-	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			| type |
-			type := a receiverType isParametric
-				ifTrue: [ '@A' typAsVariableType resolveIn: a receiverType ]
+			type := a receiver isParametric
+				ifTrue: [ '@A' typAsVariableType resolveIn: a receiver ]
 				ifFalse: [ TypUnknownType new ].
 			BlockClosure
 				typAsFunctionTypeWithResult: Boolean typAsType
 				arguments:
 					{type.
-					type}
-				argumentsOptional: false
-				signalsAlways: false ];
-		resultType: [ :a | a receiverType ];
+					type} ];
+		resultType: [ :a | a receiver ];
 		yourself
 ]
 
 { #category : #shadow }
-TypShaPhaSequenceableCollection >> mWithIndexCollect: aLookup [ 
+TypShaPhaSequenceableCollection >> mWithIndexCollect: aLookup [
 	<typShaMethod: 'withIndexCollect:'>
-	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
 				arguments:
-					{('@A' typAsVariableType resolveIn: a receiverType).
-					Integer typAsType}
-				argumentsOptional: false
-				signalsAlways: false ];
+					{('@A' typAsVariableType resolveIn: a receiver).
+					Integer typAsType} ];
 		resultType:
-				[ :a :s :r | a receiverType copyWithParameters: {(a argumentTypes at: 1) result} ];
+				[ :a :s :r | a receiver copyWithParameters: {(a argumentTypes at: 1) result} ];
 		yourself
 ]
 
 { #category : #shadow }
-TypShaPhaSequenceableCollection >> mWithIndexDo: aLookup [ 
+TypShaPhaSequenceableCollection >> mWithIndexDo: aLookup [
 	<typShaMethod: 'withIndexDo:'>
-	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a | 
 			BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
 				arguments:
-					{('@A' typAsVariableType resolveIn: a receiverType).
-					Integer typAsType}
-				argumentsOptional: false
-				signalsAlways: false ];
-		resultType: [ :a | a receiverType ];
+					{('@A' typAsVariableType resolveIn: a receiver).
+					Integer typAsType} ];
+		resultType: [ :a | a receiver ];
 		yourself
 ]
 
 { #category : #shadow }
-TypShaPhaSequenceableCollection >> mWithIndexSelect: aLookup [ 
+TypShaPhaSequenceableCollection >> mWithIndexSelect: aLookup [
 	<typShaMethod: 'withIndexSelect:'>
-	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			BlockClosure
 				typAsFunctionTypeWithResult: Boolean typAsType
 				arguments:
-					{('@A' typAsVariableType resolveIn: a receiverType).
-					Integer typAsType}
-				argumentsOptional: false
-				signalsAlways: false ];
-		resultType: [ :a :s :r | a receiverType ];
+					{('@A' typAsVariableType resolveIn: a receiver).
+					Integer typAsType} ];
+		resultType: [ :a :s :r | a receiver ];
 		yourself
 ]
 

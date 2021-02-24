@@ -10,7 +10,7 @@ TypShaGtGtMethodCoder class >> mForMethod: aLookup [
 	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | CompiledMethod typAsType ];
-		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
+		resultType: [ :a :s :r | a receiver classDescription instanceSide typAsType ];
 		yourself
 ]
 
@@ -37,14 +37,13 @@ TypShaGtGtMethodCoder >> mCompiledMethod: aLookup [
 { #category : #shadow }
 TypShaGtGtMethodCoder >> mCursorPositionDo: aLookup [
 	<typShaMethod: 'cursorPositionDo:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {Integer typAsType}
-				argumentsOptional: false
-				signalsAlways: false)}
+				arguments: {Integer typAsType})}
 ]
 
 { #category : #shadow }
@@ -87,7 +86,7 @@ TypShaGtGtMethodCoder >> mSelector: aLookup [
 TypShaGtGtMethodCoder >> mUpdateMethod: aLookup [
 	<typShaMethod: 'updateMethod:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {CompiledMethod typAsType}
 ]
 

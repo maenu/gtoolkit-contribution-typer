@@ -12,23 +12,21 @@ TypShaGtGtMethodCoderAddOns class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtMethodCoderAddOns >> mAddMainActionIconAction: aLookup [
 	<typShaMethod: 'addMainAction:icon:action:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{Symbol typAsType.
 			Form typAsType.
-			(BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {}
-				argumentsOptional: false
-				signalsAlways: false)}
+			(BlockClosure typAsFunctionTypeWithResult: TypUnknownType new)}
 ]
 
 { #category : #shadow }
 TypShaGtGtMethodCoderAddOns >> mAddShortcut: aLookup [
 	<typShaMethod: 'addShortcut:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {BlShortcut typAsType}
 ]
 
@@ -36,17 +34,18 @@ TypShaGtGtMethodCoderAddOns >> mAddShortcut: aLookup [
 TypShaGtGtMethodCoderAddOns >> mAddStyler: aLookup [
 	<typShaMethod: 'addStyler:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
-		arguments: {GtCoderBodyStyler typAsType}
+		typAsFunctionTypeWithResult: aLookup root receiver
+		arguments: {GtASTStyler typAsType}
 ]
 
 { #category : #shadow }
 TypShaGtGtMethodCoderAddOns >> mStylers: aLookup [
 	<typShaMethod: 'stylers'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {GtCoderBodyStyler typAsType})
+				copyWithParameters: {GtASTStyler typAsType})
 ]
 
 { #category : #'as yet unclassified' }

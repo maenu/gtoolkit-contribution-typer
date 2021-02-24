@@ -12,22 +12,22 @@ TypShaPhaNumber class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaNumber >> mBinary233: aLookup [
 	<typShaMethod: '-'>
-	self flag: 'FIXME argumentTypes'.
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			{aLookup receiverType.
-			(aLookup argumentTypes at: 1)} typAsType
+			{aLookup receiver.
+			(aLookup argument at: 1)} typAsType
 		arguments: {Number typAsType}
 ]
 
 { #category : #shadow }
 TypShaPhaNumber >> mBinary235: aLookup [
 	<typShaMethod: '+'>
-	self flag: 'FIXME argumentTypes'.
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			{aLookup receiverType.
-			(aLookup argumentTypes at: 1)} typAsType
+			{aLookup receiver.
+			(aLookup arguments at: 1)} typAsType
 		arguments: {Number typAsType}
 ]
 
@@ -61,15 +61,14 @@ TypShaPhaNumber >> mTo: aLookup [
 		resultType: [ :a :s :r | 
 			Interval typAsType
 				copyWithParameters:
-					{{a receiverType.
+					{{a receiver.
 					(a argumentTypes at: 1)} typAsType} ];
 		yourself
 ]
 
 { #category : #shadow }
-TypShaPhaNumber >> mToDo: aLookup [ 
+TypShaPhaNumber >> mToDo: aLookup [
 	<typShaMethod: 'to:do:'>
-	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
@@ -77,10 +76,8 @@ TypShaPhaNumber >> mToDo: aLookup [
 				ifFalse: [ BlockClosure
 						typAsFunctionTypeWithResult: TypUnknownType new
 						arguments:
-							{{a receiverType.
-							(a argumentTypes at: 1)} typAsType}
-						argumentsOptional: false
-						signalsAlways: false ] ];
-		resultType: [ :a :s :r | a receiverType ];
+							{{a receiver.
+							(a argumentTypes at: 1)} typAsType} ] ];
+		resultType: [ :a :s :r | a receiver ];
 		yourself
 ]

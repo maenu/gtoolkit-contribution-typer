@@ -10,7 +10,7 @@ TypShaGtGtCoderTextStyler class >> mForCoder: aLookup [
 	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | GtMethodCoder typAsType ];
-		resultType: [ :a :s :r | a receiverType classDescription instanceSide typAsType ];
+		resultType: [ :a :s :r | a receiver classDescription instanceSide typAsType ];
 		yourself
 ]
 
@@ -22,8 +22,9 @@ TypShaGtGtCoderTextStyler class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtCoderTextStyler >> mExtraStyleAst: aLookup [
 	<typShaMethod: 'extraStyle:ast:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{BlText typAsType.
 			RBMethodNode typAsType}
@@ -32,8 +33,9 @@ TypShaGtGtCoderTextStyler >> mExtraStyleAst: aLookup [
 { #category : #shadow }
 TypShaGtGtCoderTextStyler >> mStyleAst: aLookup [
 	<typShaMethod: 'style:ast:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{BlText typAsType.
 			RBMethodNode typAsType}

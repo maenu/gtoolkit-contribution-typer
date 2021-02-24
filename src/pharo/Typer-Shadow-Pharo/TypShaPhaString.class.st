@@ -17,18 +17,13 @@ TypShaPhaString >> mAsClass: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaString >> mAsClassInEnvironmentIfAbsent: aLookup [ 
+TypShaPhaString >> mAsClassInEnvironmentIfAbsent: aLookup [
 	<typShaMethod: 'asClassInEnvironment:ifAbsent:'>
-	
 	^ TypFunctionType new
 		argumentTypes: [ :i :a :s :r | 
 			i = 1
 				ifTrue: [ SystemDictionary typAsType ]
-				ifFalse: [ BlockClosure
-						typAsFunctionTypeWithResult: TypUnknownType new
-						arguments: {}
-						argumentsOptional: false
-						signalsAlways: false ] ];
+				ifFalse: [ BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ] ];
 		resultType: [ :a :s :r | 
 			| node |
 			node := a argumentNodes at: 2.

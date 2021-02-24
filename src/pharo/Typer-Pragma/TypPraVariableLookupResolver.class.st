@@ -10,11 +10,11 @@ TypPraVariableLookupResolver >> resolve: aLookup [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	| pragmas pragma |
 	aLookup push: self.
-	aLookup receiverType isNamed
+	aLookup receiver isNamed
 		ifFalse: [ TypNoTypeError signal ].
-	aLookup receiverType hasClassDescription
+	aLookup receiver hasClassDescription
 		ifFalse: [ TypNoTypeError signal ].
-	pragmas := (aLookup receiverType classDescription
+	pragmas := (aLookup receiver classDescription
 		lookupSelector: #initialize)
 		ifNil: [ TypNoTypeError signal ]
 		ifNotNil: #typPraAllPragmas.
@@ -23,5 +23,5 @@ TypPraVariableLookupResolver >> resolve: aLookup [
 			e selector = #typTypeVariable:as:
 				and: [ e arguments first = aLookup selector ] ]
 		ifNone: [ TypNoTypeError signal ].
-	^ {(aLookup receiverType at: pragma arguments second)}
+	^ {(aLookup receiver at: pragma arguments second)}
 ]

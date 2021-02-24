@@ -27,8 +27,9 @@ TypShaGtGtSourceCoder >> mCollapsedEditor: aLookup [
 { #category : #shadow }
 TypShaGtGtSourceCoder >> mExpanded: aLookup [
 	<typShaMethod: 'expanded:'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: '@self' typAsVariableType
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {Boolean typAsType}
 ]
 
