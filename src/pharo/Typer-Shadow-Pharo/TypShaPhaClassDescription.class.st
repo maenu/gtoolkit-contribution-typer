@@ -21,7 +21,8 @@ TypShaPhaClassDescription >> mAddInstVarNamed: aLookup [
 { #category : #shadow }
 TypShaPhaClassDescription >> mClassSide: aLookup [
 	<typShaMethod: 'classSide'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Metaclass typAsType
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: aLookup receiver classDescription classSide
 ]
 
 { #category : #shadow }
@@ -36,7 +37,8 @@ TypShaPhaClassDescription >> mHasInstVarNamed: aLookup [
 { #category : #shadow }
 TypShaPhaClassDescription >> mInstanceSide: aLookup [
 	<typShaMethod: 'instanceSide'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Class typAsType
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide
 ]
 
 { #category : #shadow }

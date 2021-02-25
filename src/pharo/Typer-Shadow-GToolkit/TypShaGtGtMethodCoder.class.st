@@ -20,13 +20,6 @@ TypShaGtGtMethodCoder class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoder >> mAsElement: aLookup [
-	<typShaMethod: 'asElement'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: GtCoderMethodElement typAsType
-]
-
-{ #category : #shadow }
 TypShaGtGtMethodCoder >> mCompiledMethod: aLookup [
 	<typShaMethod: 'compiledMethod'>
 	<typMigrated>
@@ -55,13 +48,6 @@ TypShaGtGtMethodCoder >> mNewCompletionStrategy: aLookup [
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoder >> mNewSourceStyler: aLookup [
-	<typShaMethod: 'newSourceStyler'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: GtCoderTextStyler typAsType
-]
-
-{ #category : #shadow }
 TypShaGtGtMethodCoder >> mRbAST: aLookup [
 	<typShaMethod: 'rbAST'>
 	<typMigrated>
@@ -85,6 +71,7 @@ TypShaGtGtMethodCoder >> mSelector: aLookup [
 { #category : #shadow }
 TypShaGtGtMethodCoder >> mUpdateMethod: aLookup [
 	<typShaMethod: 'updateMethod:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {CompiledMethod typAsType}

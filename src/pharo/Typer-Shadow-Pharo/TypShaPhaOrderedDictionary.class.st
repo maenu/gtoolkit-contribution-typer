@@ -18,50 +18,45 @@ TypShaPhaOrderedDictionary >> mAnyOne: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaOrderedDictionary >> mAsOrderedDictionary: aLookup [ 
+TypShaPhaOrderedDictionary >> mAsOrderedDictionary: aLookup [
 	<typShaMethod: 'asOrderedDictionary'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a | 
-			OrderedDictionary typAsType
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(OrderedDictionary typAsType
 				copyWithParameters:
-					{('@B' typAsVariableType resolveIn: a receiver).
-					('@A' typAsVariableType resolveIn: a receiver)} ];
-		yourself
+					{(aLookup receiver at: '@B').
+					(aLookup receiver at: '@A')})
 ]
 
 { #category : #shadow }
-TypShaPhaOrderedDictionary >> mAssociations: aLookup [ 
+TypShaPhaOrderedDictionary >> mAssociations: aLookup [
 	<typShaMethod: 'associations'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a | 
-			Array typAsType
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(Array typAsType
 				copyWithParameters:
 					{(Association typAsType
 						copyWithParameters:
-							{('@B' typAsVariableType resolveIn: a receiver).
-							('@A' typAsVariableType resolveIn: a receiver)})} ];
-		yourself
+							{(aLookup receiver at: '@B').
+							(aLookup receiver at: '@A')})})
 ]
 
 { #category : #shadow }
-TypShaPhaOrderedDictionary >> mAssociationsDo: aLookup [ 
+TypShaPhaOrderedDictionary >> mAssociationsDo: aLookup [
 	<typShaMethod: 'associationsDo:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a | 
-			BlockClosure
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiver
+		arguments:
+			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
 				arguments:
 					{(Association typAsType
 						copyWithParameters:
-							{('@B' typAsVariableType resolveIn: a receiver).
-							('@A' typAsVariableType resolveIn: a receiver)})} ];
-		resultType: [ :a :s | a receiver ];
-		yourself
+							{(aLookup receiver at: '@B').
+							(aLookup receiver at: '@A')})})}
 ]
 
 { #category : #shadow }
@@ -76,32 +71,31 @@ TypShaPhaOrderedDictionary >> mAt: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mAtIfAbsentPut: aLookup [
 	<typShaMethod: 'at:ifAbsentPut:'>
-	^ TypFunctionType new
-		argumentTypes: [ :i :a | 
-			i = 1
-				ifTrue: [ '@B' typAsVariableType resolveIn: a receiver ]
-				ifFalse: [ BlockClosure
-						typAsFunctionTypeWithResult: ('@A' typAsVariableType resolveIn: a receiver) ] ];
-		resultType: [ :a | '@A' typAsVariableType resolveIn: a receiver ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
+		arguments:
+			{(aLookup receiver at: '@B').
+			(BlockClosure
+				typAsFunctionTypeWithResult: (aLookup receiver at: '@A'))}
 ]
 
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mAtIfPresentIfAbsent: aLookup [
 	<typShaMethod: 'at:ifPresent:ifAbsent:'>
-	^ TypFunctionType new
-		argumentTypes: [ :i :a | 
-			{('@A' typAsVariableType resolveIn: a receiver).
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			{(aLookup arguments at: 2) result.
+			(aLookup arguments at: 3) result} typAsType
+		arguments:
+			{(aLookup receiver at: '@B').
 			(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {('@A' typAsVariableType resolveIn: a receiver)}
+				arguments: {(aLookup receiver at: '@A')}
 				argumentsOptional: true
 				signalsAlways: false).
-			(BlockClosure typAsFunctionTypeWithResult: TypUnknownType new)} ];
-		resultType: [ :a :s | 
-			{(a argumentTypes at: 2) result.
-			(a argumentTypes at: 3) result} typAsType ];
-		yourself
+			BlockClosure typAsType}
 ]
 
 { #category : #shadow }
@@ -116,37 +110,32 @@ TypShaPhaOrderedDictionary >> mAtPut: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaOrderedDictionary >> mBinary276: aLookup [ 
+TypShaPhaOrderedDictionary >> mBinary276: aLookup [
 	<typShaMethod: ','>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | OrderedDictionary typAsType ];
-		resultType: [ :a :s :r | 
-			a receiver
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(aLookup receiver
 				copyWithParameters:
-					{{('@B' typAsVariableType resolveIn: a receiver).
-					('@B' typAsVariableType resolveIn: (a argumentTypes at: 1))}
-						typAsType.
-					{('@A' typAsVariableType resolveIn: a receiver).
-					('@A' typAsVariableType resolveIn: (a argumentTypes at: 1))}
-						typAsType} ];
-		yourself
+					{{(aLookup receiver at: '@B').
+					((aLookup arguments at: 1) at: '@B')} typAsType.
+					{(aLookup receiver at: '@A').
+					((aLookup arguments at: 1) at: '@A')} typAsType})
+		arguments: {OrderedDictionary typAsType}
 ]
 
 { #category : #shadow }
-TypShaPhaOrderedDictionary >> mCollect: aLookup [ 
+TypShaPhaOrderedDictionary >> mCollect: aLookup [
 	<typShaMethod: 'collect:'>
-	
 	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			{Symbol typAsType.
+		argumentTypes: [ {Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {('@A' typAsVariableType resolveIn: a receiver)})} typAsType ];
+				arguments: {(aLookup receiver at: '@A')})} typAsType ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
-			argumentType := a argumentTypes at: 1.
-			argumentNode := a argumentNodes at: 1.
+			argumentType := aLookup arguments at: 1.
+			argumentNode := aLookup argumentNodes at: 1.
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
@@ -155,15 +144,15 @@ TypShaPhaOrderedDictionary >> mCollect: aLookup [
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new
-										receiverType: ('@A' typAsVariableType resolveIn: a receiver);
+										receiverType: (aLookup receiver at: '@A');
 										selector: argumentNode value asSymbol;
 										argumentTypes: {};
 										argumentNodes: {};
 										yourself) ]
 						ifFalse: [ TypUnknownType new ] ].
-			a receiver
+			aLookup receiver
 				copyWithParameters:
-					{(a receiver at: '@B').
+					{(aLookup receiver at: '@B').
 					elementType} ];
 		yourself
 ]

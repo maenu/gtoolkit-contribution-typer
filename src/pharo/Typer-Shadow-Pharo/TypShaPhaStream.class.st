@@ -21,13 +21,12 @@ TypShaPhaStream >> mBinary380: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaStream >> mNextPutAll: aLookup [ 
+TypShaPhaStream >> mNextPutAll: aLookup [
 	<typShaMethod: 'nextPutAll:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Collection typAsType ];
-		resultType: [ :a :s :r | a argumentTypes first ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup arguments first
+		arguments: {Collection typAsType}
 ]
 
 { #category : #accessing }

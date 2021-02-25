@@ -34,13 +34,12 @@ TypShaGtGtSourceCoder >> mExpanded: aLookup [
 ]
 
 { #category : #shadow }
-TypShaGtGtSourceCoder >> mMethodsCoder: aLookup [ 
+TypShaGtGtSourceCoder >> mMethodsCoder: aLookup [
 	<typShaMethod: 'methodsCoder:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | GtMethodsCoder typAsType ];
-		resultType: [ :a :s :r | a argumentTypes at: 1 ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup arguments at: 1)
+		arguments: {GtMethodsCoder typAsType}
 ]
 
 { #category : #shadow }

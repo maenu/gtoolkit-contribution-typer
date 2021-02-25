@@ -12,6 +12,7 @@ TypShaPhaRGMethodDefinition class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRGMethodDefinition >> mCompiledMethod: aLookup [
 	<typShaMethod: 'compiledMethod'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: CompiledMethod typAsType asNullable
 ]

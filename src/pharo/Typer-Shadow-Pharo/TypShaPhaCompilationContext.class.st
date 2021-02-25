@@ -21,6 +21,7 @@ TypShaPhaCompilationContext >> mBindings: aLookup [
 { #category : #shadow }
 TypShaPhaCompilationContext >> mClass: aLookup [
 	<typShaMethod: 'class:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {ClassDescription typAsType}

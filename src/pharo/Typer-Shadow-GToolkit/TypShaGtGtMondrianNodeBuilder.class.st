@@ -10,12 +10,10 @@ TypShaGtGtMondrianNodeBuilder class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaGtGtMondrianNodeBuilder >> mWith: aLookup [ 
+TypShaGtGtMondrianNodeBuilder >> mWith: aLookup [
 	<typShaMethod: 'with:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Collection typAsType ];
-		resultType:
-				[ :a :s :r | (a argumentTypes at: 1) copyWithParameters: {BlElement typAsType} ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: ((aLookup arguments at: 1) copyWithParameters: {BlElement typAsType})
+		arguments: {Collection typAsType}
 ]

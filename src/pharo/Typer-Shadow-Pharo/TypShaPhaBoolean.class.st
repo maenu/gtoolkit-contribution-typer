@@ -24,36 +24,33 @@ TypShaPhaBoolean >> mAnd: aLookup [
 { #category : #shadow }
 TypShaPhaBoolean >> mIfFalse: aLookup [
 	<typShaMethod: 'ifFalse:'>
-	^ TypFunctionType new
-		argumentTypes:
-				[ :i :a :s :r | BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ];
-		resultType: [ :a :s :r | (a argumentTypes at: 1) result asNullable ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup arguments at: 1) result asNullable
+		arguments: {BlockClosure typAsType}
 ]
 
 { #category : #shadow }
 TypShaPhaBoolean >> mIfTrue: aLookup [
 	<typShaMethod: 'ifTrue:'>
-	^ TypFunctionType new
-		argumentTypes:
-				[ :i :a :s :r | BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ];
-		resultType: [ :a :s :r | (a argumentTypes at: 1) result asNullable ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup arguments at: 1) result asNullable
+		arguments: {BlockClosure typAsType}
 ]
 
 { #category : #shadow }
 TypShaPhaBoolean >> mIfTrueIfFalse: aLookup [
 	<typShaMethod: 'ifTrue:ifFalse:'>
-	^ TypFunctionType new
-		argumentTypes:
-				[ BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ];
-		resultType: [ :a | 
-			(a argumentTypes
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(aLookup arguments
 				collect: [ :e | 
 					e isFunction
 						ifTrue: [ e result ]
-						ifFalse: [ TypUnknownType new ] ]) typAsType ];
-		yourself
+						ifFalse: [ e ] ]) typAsType
+		arguments: {BlockClosure typAsType}
 ]
 
 { #category : #shadow }

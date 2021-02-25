@@ -41,157 +41,37 @@ TypRewriter >> rewriteShadow: aMethod at: anInteger [
 ]
 
 { #category : #accessing }
-TypRewriter >> rewriteShadowMethodReturn1: e [
-	| rewriter |
-	rewriter := RBParseTreeRewriter new.
-	rewriter
-		replace:
-			'^ TypFunctionType new
-			argumentTypes: [ :i :a :s :r | `@a typAsType ];
-			resultType: [ :a :s :r | `@r typAsType ];
-			yourself'
-		with:
-			'^ CompiledMethod typAsFunctionTypeWithResult: `@r typAsType arguments: {`@a typAsType} argumentsOptional: false signalsAlways: false'.
-	^ (rewriter executeTree: e parseTree)
-		ifTrue:
-			[ e origin compile: rewriter tree formattedCode classified: e protocol ]
-		ifFalse: [ e ]
-]
-
-{ #category : #accessing }
-TypRewriter >> rewriteShadowMethodReturn2: e [
-	| rewriter |
-	rewriter := RBParseTreeRewriter new.
-	rewriter
-		replace:
-			'^ TypFunctionType new
-			argumentTypes: [ :i :a :s :r | `@a typAsType ];
-			resultType: [ :a :s :r | a receiverType ];
-			yourself'
-		with:
-			'^ CompiledMethod typAsFunctionTypeWithResult: aLookup receiverType arguments: {`@a typAsType} argumentsOptional: false signalsAlways: false'.
-	^ (rewriter executeTree: e parseTree)
-		ifTrue:
-			[ e origin compile: rewriter tree formattedCode classified: e protocol ]
-		ifFalse: [ e ]
-]
-
-{ #category : #accessing }
-TypRewriter >> rewriteShadowMethodReturn3: e [
-	| rewriter |
-	rewriter := RBParseTreeRewriter new.
-	rewriter
-		replace:
-			'^ TypFunctionType new
-			argumentTypes: [ TypNoTypeError signal ];
-			resultType: [ :a :s :r | `@r typAsType ];
-			yourself'
-		with:
-			'^ CompiledMethod typAsFunctionTypeWithResult: `@r typAsType arguments: {} argumentsOptional: false signalsAlways: false'.
-	^ (rewriter executeTree: e parseTree)
-		ifTrue:
-			[ e origin compile: rewriter tree formattedCode classified: e protocol ]
-		ifFalse: [ e ]
-]
-
-{ #category : #accessing }
-TypRewriter >> rewriteShadowMethodReturn4: e [
-	| rewriter |
-	rewriter := RBParseTreeRewriter new.
-	rewriter
-		replace:
-			'^ TypFunctionType new
-			argumentTypes: [ `@a typAsType ];
-			resultType: [ `@r typAsType ];
-			yourself'
-		with:
-			'^ CompiledMethod typAsFunctionTypeWithResult: `@r typAsType arguments: {`@a typAsType} argumentsOptional: false signalsAlways: false'.
-	^ (rewriter executeTree: e parseTree)
-		ifTrue:
-			[ e origin compile: rewriter tree formattedCode classified: e protocol ]
-		ifFalse: [ e ]
-]
-
-{ #category : #accessing }
-TypRewriter >> rewriteShadowMethodReturn5: e [
-	| rewriter |
-	rewriter := RBParseTreeRewriter new.
-	rewriter
-		replace:
-			'^ TypFunctionType new
-			argumentTypes: [ :i :a :s :r | `@a typAsType ];
-			resultType: [ :a :s :r | TypUnknownType new ];
-			yourself'
-		with:
-			'^ CompiledMethod typAsFunctionTypeWithResult: TypUnknownType new arguments: {`@a typAsType} argumentsOptional: false signalsAlways: false'.
-	^ (rewriter executeTree: e parseTree)
-		ifTrue:
-			[ e origin compile: rewriter tree formattedCode classified: e protocol ]
-		ifFalse: [ e ]
-]
-
-{ #category : #accessing }
-TypRewriter >> rewriteShadowMethodReturn6: e [
-	| rewriter |
-	rewriter := RBParseTreeRewriter new.
-	rewriter
-		replace:
-			'^ CompiledMethod
-		typAsFunctionTypeWithResult: `@r
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: false'
-		with:
-			'^ CompiledMethod typAsFunctionTypeWithResult: `@r'.
-	^ (rewriter executeTree: e parseTree)
-		ifTrue:
-			[ e origin compile: rewriter tree formattedCode classified: e protocol ]
-		ifFalse: [ e ]
-]
-
-{ #category : #accessing }
-TypRewriter >> rewriteShadowMethodReturn7: e [
-	| rewriter |
-	rewriter := RBParseTreeRewriter new.
-	rewriter
-		replace:
-			'^ CompiledMethod
-		typAsFunctionTypeWithResult: `@r
-		arguments: `@a
-		argumentsOptional: false
-		signalsAlways: false'
-		with:
-			'^ CompiledMethod typAsFunctionTypeWithResult: `@r arguments: `@a'.
-	^ (rewriter executeTree: e parseTree)
-		ifTrue:
-			[ e origin compile: rewriter tree formattedCode classified: e protocol ]
-		ifFalse: [ e ]
-]
-
-{ #category : #accessing }
-TypRewriter >> rewriteShadowMethodReturn8: e [
-	| rewriter |
-	rewriter := RBParseTreeRewriter new.
-	rewriter
-		replace:
-			'''@self'' typAsVariableType'
-		with:
-			'aLookup root receiver'.
-	^ (rewriter executeTree: e parseTree)
-		ifTrue:
-			[ e origin compile: rewriter tree formattedCode classified: e protocol ]
-		ifFalse: [ e ]
-]
-
-{ #category : #accessing }
 TypRewriter >> rewriteShadowMethodReturn: e [
 	| rewriter |
 	rewriter := RBParseTreeRewriter new.
 	rewriter
 		replace:
-			'''@self'' typAsVariableType'
+			'^ TypFunctionType new
+		argumentTypes: { `@a1 . `@a2 };
+		resultType: [ `@r ];
+		yourself'
 		with:
-			'aLookup root receiver'.
+			'^ CompiledMethod
+		typAsFunctionTypeWithResult: `@r
+		arguments: { `@a1 . `@a2 }';
+		replace:
+			'^ TypFunctionType new
+		argumentTypes: { `@a1 . `@a2 . `@a3 };
+		resultType: [ `@r ];
+		yourself'
+		with:
+			'^ CompiledMethod
+		typAsFunctionTypeWithResult: `@r
+		arguments: { `@a1 . `@a2 . `@a3 }';
+		replace:
+			'^ TypFunctionType new
+		argumentTypes: { `@a1 . `@a2 . `@a3 . `@a4 };
+		resultType: [ `@r ];
+		yourself'
+		with:
+			'^ CompiledMethod
+		typAsFunctionTypeWithResult: `@r
+		arguments: { `@a1 . `@a2 . `@a3 . `@a4 }'.
 	^ (rewriter executeTree: e parseTree)
 		ifTrue:
 			[ e origin compile: rewriter tree formattedCode classified: e protocol ]

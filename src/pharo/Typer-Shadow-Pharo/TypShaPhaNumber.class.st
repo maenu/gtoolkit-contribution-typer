@@ -32,52 +32,50 @@ TypShaPhaNumber >> mBinary235: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaNumber >> mTimesCollect: aLookup [ 
+TypShaPhaNumber >> mTimesCollect: aLookup [
 	<typShaMethod: 'timesCollect:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {Integer typAsType}
-				argumentsOptional: true
-				signalsAlways: false ];
-		resultType: [ :a | 
-			OrderedCollection typAsType
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(OrderedCollection typAsType
 				copyWithParameters:
-					{(a argumentTypes
+					{(aLookup arguments
 						collect: [ :e | 
 							e isFunction
 								ifTrue: [ e result ]
-								ifFalse: [ TypUnknownType new ] ]) typAsType} ];
-		yourself
+								ifFalse: [ e ] ]) typAsType})
+		arguments:
+			{(BlockClosure
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {Integer typAsType}
+				argumentsOptional: true
+				signalsAlways: false)}
 ]
 
 { #category : #shadow }
-TypShaPhaNumber >> mTo: aLookup [ 
+TypShaPhaNumber >> mTo: aLookup [
 	<typShaMethod: 'to:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Number typAsType ];
-		resultType: [ :a :s :r | 
-			Interval typAsType
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(Interval typAsType
 				copyWithParameters:
-					{{a receiver.
-					(a argumentTypes at: 1)} typAsType} ];
-		yourself
+					{{aLookup receiver.
+					(aLookup arguments at: 1)} typAsType})
+		arguments: {Number typAsType}
 ]
 
 { #category : #shadow }
 TypShaPhaNumber >> mToDo: aLookup [
 	<typShaMethod: 'to:do:'>
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			i = 1
-				ifTrue: [ Number typAsType ]
-				ifFalse: [ BlockClosure
-						typAsFunctionTypeWithResult: TypUnknownType new
-						arguments:
-							{{a receiver.
-							(a argumentTypes at: 1)} typAsType} ] ];
-		resultType: [ :a :s :r | a receiver ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiver
+		arguments:
+			{Number typAsType.
+			(BlockClosure
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments:
+					{{aLookup receiver.
+					(aLookup arguments at: 1)} typAsType})}
 ]

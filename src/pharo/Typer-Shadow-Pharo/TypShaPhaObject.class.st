@@ -54,17 +54,16 @@ TypShaPhaObject >> mBinary255: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaObject >> mBinary256: aLookup [ 
+TypShaPhaObject >> mBinary256: aLookup [
 	<typShaMethod: '->'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | a argumentTypes at: 1 ];
-		resultType: [ :a :s :r | 
-			Association typAsType
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(Association typAsType
 				copyWithParameters:
-					{a receiver.
-					(a argumentTypes at: 1)} ];
-		yourself
+					{aLookup receiver.
+					(aLookup arguments at: 1)})
+		arguments: {(aLookup arguments at: 1)}
 ]
 
 { #category : #shadow }
@@ -114,19 +113,18 @@ TypShaPhaObject >> mIsNotNil: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaObject >> mPerform: aLookup [ 
+TypShaPhaObject >> mPerform: aLookup [
 	<typShaMethod: 'perform:'>
-	
 	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
+		argumentTypes: [ Symbol typAsType ];
 		resultType: [ :a :s :r | 
 			| argument |
-			argument := a argumentNodes at: 1.
+			argument := aLookup argumentNodes at: 1.
 			(argument isLiteralNode and: [ argument value isSymbol ])
 				ifTrue: [ TypMethodLookupIndex instance
 						resultTypeFor:
 							(TypMethodLookup new
-								receiverType: a receiver;
+								receiverType: aLookup receiver;
 								selector: argument value;
 								argumentTypes: #();
 								argumentNodes: #();

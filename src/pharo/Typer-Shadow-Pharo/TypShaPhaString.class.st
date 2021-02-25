@@ -20,19 +20,18 @@ TypShaPhaString >> mAsClass: aLookup [
 TypShaPhaString >> mAsClassInEnvironmentIfAbsent: aLookup [
 	<typShaMethod: 'asClassInEnvironment:ifAbsent:'>
 	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			i = 1
-				ifTrue: [ SystemDictionary typAsType ]
-				ifFalse: [ BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ] ];
+		argumentTypes:
+			{SystemDictionary typAsType.
+			BlockClosure typAsType};
 		resultType: [ :a :s :r | 
 			| node |
-			node := a argumentNodes at: 2.
+			node := aLookup argumentNodes at: 2.
 			(node isBlock
 				and: [ node body statements size > 0
 						and: [ node body statements last isReturn ] ])
 				ifTrue: [ Class typAsType ]
 				ifFalse: [ {Class typAsType.
-					(a argumentTypes at: 1) result} typAsType ] ];
+					(aLookup arguments at: 1) result} typAsType ] ];
 		yourself
 ]
 
@@ -72,15 +71,14 @@ TypShaPhaString >> mKeywords: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaString >> mSplit: aLookup [ 
+TypShaPhaString >> mSplit: aLookup [
 	<typShaMethod: 'split:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | SequenceableCollection typAsType ];
-		resultType: [ :a :s :r | 
-			SequenceableCollection typAsType
-				copyWithParameters: {(a argumentTypes at: 1)} ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(SequenceableCollection typAsType
+				copyWithParameters: {(aLookup arguments at: 1)})
+		arguments: {SequenceableCollection typAsType}
 ]
 
 { #category : #shadow }

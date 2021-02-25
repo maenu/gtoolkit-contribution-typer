@@ -13,16 +13,15 @@ TypShaPhaUndefinedObject class >> shadowedClass [
 TypShaPhaUndefinedObject >> mIfNil: aLookup [
 	<typShaMethod: 'ifNil:'>
 	^ TypFunctionType new
-		argumentTypes:
-				[ :i :a :s :r | BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ];
+		argumentTypes: [ BlockClosure typAsType ];
 		resultType: [ :a :s :r | 
 			| node |
-			node := a argumentNodes at: 1.
+			node := aLookup argumentNodes at: 1.
 			(node isBlock
 				and: [ node body statements size > 0
 						and: [ node body statements last isReturn ] ])
 				ifTrue: [ TypNoTypeError signal ]
-				ifFalse: [ (a argumentTypes at: 1) result ] ];
+				ifFalse: [ (aLookup arguments at: 1) result ] ];
 		yourself
 ]
 

@@ -25,6 +25,7 @@ TypShaGtGtPharoCompletionStrategy >> mActionsForAt: aLookup [
 { #category : #shadow }
 TypShaGtGtPharoCompletionStrategy >> mClassOrMetaClass: aLookup [
 	<typShaMethod: 'classOrMetaClass:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {ClassDescription typAsType}

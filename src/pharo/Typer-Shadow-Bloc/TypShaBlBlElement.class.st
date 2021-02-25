@@ -12,7 +12,7 @@ TypShaBlBlElement class >> shadowedClass [
 { #category : #shadow }
 TypShaBlBlElement >> mBackground: aLookup [
 	<typShaMethod: 'background:'>
-	<migrated>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
@@ -23,7 +23,7 @@ TypShaBlBlElement >> mBackground: aLookup [
 { #category : #shadow }
 TypShaBlBlElement >> mConstraintsDo: aLookup [
 	<typShaMethod: 'constraintsDo:'>
-	<migrated>
+	<typMigrated>
 	CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
@@ -35,7 +35,7 @@ TypShaBlBlElement >> mConstraintsDo: aLookup [
 { #category : #shadow }
 TypShaBlBlElement >> mFireEvent: aLookup [
 	<typShaMethod: 'fireEvent:'>
-	<migrated>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {BlEvent typAsType}
@@ -44,7 +44,7 @@ TypShaBlBlElement >> mFireEvent: aLookup [
 { #category : #shadow }
 TypShaBlBlElement >> mGeometry: aLookup [
 	<typShaMethod: 'geometry:'>
-	<migrated>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {BlElementGeometry typAsType}
@@ -53,7 +53,7 @@ TypShaBlBlElement >> mGeometry: aLookup [
 { #category : #shadow }
 TypShaBlBlElement >> mLook: aLookup [
 	<typShaMethod: 'look:'>
-	<migrated>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
@@ -64,7 +64,7 @@ TypShaBlBlElement >> mLook: aLookup [
 { #category : #shadow }
 TypShaBlBlElement >> mMargin: aLookup [
 	<typShaMethod: 'margin:'>
-	<migrated>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {BlInsets typAsType}

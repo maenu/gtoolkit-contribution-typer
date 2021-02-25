@@ -15,8 +15,7 @@ TypShaBrBrButton >> mAction: aLookup [
 	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
-		arguments:
-			{(BlockClosure typAsFunctionTypeWithResult: TypUnknownType new)}
+		arguments: {BlockClosure typAsType}
 ]
 
 { #category : #shadow }

@@ -48,32 +48,30 @@ TypShaPhaProtoObject >> mFlag: aLookup [
 { #category : #shadow }
 TypShaPhaProtoObject >> mIfNil: aLookup [
 	<typShaMethod: 'ifNil:'>
-	^ TypFunctionType new
-		argumentTypes:
-				[ :i :a :s :r | BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ];
-		resultType: [ :a :s :r | 
-			{a receiver asNonNullable.
-			a argumentTypes first result} typAsType ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			{aLookup receiver asNonNullable.
+			aLookup arguments first result} typAsType
+		arguments: {BlockClosure typAsType}
 ]
 
 { #category : #shadow }
 TypShaPhaProtoObject >> mIfNilIfNotNil: aLookup [
 	<typShaMethod: 'ifNil:ifNotNil:'>
 	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			i = 1
-				ifTrue: [ BlockClosure typAsFunctionTypeWithResult: TypUnknownType new ]
-				ifFalse: [ {Symbol typAsType.
-					(BlockClosure
-						typAsFunctionTypeWithResult: TypUnknownType new
-						arguments: {a receiver asNonNullable}
-						argumentsOptional: true
-						signalsAlways: false)} typAsType ] ];
+		argumentTypes:
+			{BlockClosure typAsType.
+			{Symbol typAsType.
+			(BlockClosure
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {aLookup receiver asNonNullable}
+				argumentsOptional: true
+				signalsAlways: false)} typAsType};
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
-			argumentType := a argumentTypes at: 2.
-			argumentNode := a argumentNodes at: 2.
+			argumentType := aLookup arguments at: 2.
+			argumentNode := aLookup argumentNodes at: 2.
 			elementType := argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
@@ -82,33 +80,31 @@ TypShaPhaProtoObject >> mIfNilIfNotNil: aLookup [
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new
-										receiverType: ('@A' typAsVariableType resolveIn: a receiver);
+										receiverType: (aLookup receiver at: '@A');
 										selector: argumentNode value asSymbol;
 										argumentTypes: {};
 										argumentNodes: {};
 										yourself) ]
 						ifFalse: [ TypUnknownType new ] ].
-			{(a argumentTypes at: 1) result.
+			{(aLookup arguments at: 1) result.
 			elementType} typAsType ];
 		yourself
 ]
 
 { #category : #shadow }
-TypShaPhaProtoObject >> mIfNotNil: aLookup [ 
+TypShaPhaProtoObject >> mIfNotNil: aLookup [
 	<typShaMethod: 'ifNotNil:'>
-	
 	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			{Symbol typAsType.
+		argumentTypes: [ {Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {a receiver asNonNullable}
+				arguments: {aLookup receiver asNonNullable}
 				argumentsOptional: true
 				signalsAlways: false)} typAsType ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode |
-			argumentType := a argumentTypes at: 1.
-			argumentNode := a argumentNodes at: 1.
+			argumentType := aLookup arguments at: 1.
+			argumentNode := aLookup argumentNodes at: 1.
 			argumentType isFunction
 				ifTrue: [ argumentType result ]
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
@@ -117,7 +113,7 @@ TypShaPhaProtoObject >> mIfNotNil: aLookup [
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
 									(TypMethodLookup new
-										receiverType: a receiver;
+										receiverType: aLookup receiver;
 										selector: argumentNode value asSymbol;
 										argumentTypes: {};
 										argumentNodes: {};

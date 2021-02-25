@@ -22,9 +22,9 @@ TypShaPhaBehavior >> mAllSubclasses: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mBasicNew: aLookup [
 	<typShaMethod: 'basicNew'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult:
-			aLookup receiver classDescription instanceSide typAsType typAsType
+		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
 ]
 
 { #category : #shadow }
@@ -65,6 +65,7 @@ TypShaPhaBehavior >> mCompile: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mCompiledMethodAt: aLookup [
 	<typShaMethod: 'compiledMethodAt:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: CompiledMethod typAsType
 		arguments: {Symbol typAsType}
@@ -117,6 +118,7 @@ TypShaPhaBehavior >> mIsAbstract: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mLookupSelector: aLookup [
 	<typShaMethod: 'lookupSelector:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: CompiledMethod typAsType
 		arguments: {Symbol typAsType}
@@ -125,6 +127,7 @@ TypShaPhaBehavior >> mLookupSelector: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mMethodNamed: aLookup [
 	<typShaMethod: 'methodNamed:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: CompiledMethod typAsType
 		arguments: {Symbol typAsType}
@@ -133,6 +136,7 @@ TypShaPhaBehavior >> mMethodNamed: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mMethods: aLookup [
 	<typShaMethod: 'methods'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Collection typAsType copyWithParameters: {CompiledMethod typAsType})
 ]
@@ -147,9 +151,9 @@ TypShaPhaBehavior >> mName: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mNew: aLookup [
 	<typShaMethod: 'new'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult:
-			aLookup receiver classDescription instanceSide typAsType typAsType
+		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
 ]
 
 { #category : #shadow }
@@ -163,8 +167,9 @@ TypShaPhaBehavior >> mSelectors: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mSuperclass: aLookup [
 	<typShaMethod: 'superclass'>
+	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: ClassDescription typAsType
+		typAsFunctionTypeWithResult: aLookup receiver classDescription superclass
 ]
 
 { #category : #shadow }

@@ -56,9 +56,3 @@ TypShaPhaOCLiteralVariable >> mScope: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: OCAbstractScope typAsType
 ]
-
-{ #category : #shadow }
-TypShaPhaOCLiteralVariable >> mValue: aLookup [
-	<typShaMethod: 'value'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Object typAsType
-]

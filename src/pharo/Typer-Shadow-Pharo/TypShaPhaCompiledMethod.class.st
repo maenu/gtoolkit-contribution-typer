@@ -78,3 +78,9 @@ TypShaPhaCompiledMethod >> mSourceCode: aLookup [
 	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]
+
+{ #category : #accessing }
+TypShaPhaCompiledMethod >> resolveType: aLookup [
+	^ aLookup classDescription
+		typAsFunctionTypeWithResult: TypUnknownType new
+]

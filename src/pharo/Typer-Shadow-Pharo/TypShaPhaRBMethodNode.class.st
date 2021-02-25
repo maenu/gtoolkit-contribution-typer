@@ -65,6 +65,7 @@ TypShaPhaRBMethodNode >> mIsPrimitive: aLookup [
 { #category : #shadow }
 TypShaPhaRBMethodNode >> mMethod: aLookup [
 	<typShaMethod: 'method'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: CompiledMethod typAsType
 ]

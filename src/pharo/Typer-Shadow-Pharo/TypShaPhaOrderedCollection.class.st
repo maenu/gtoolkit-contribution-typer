@@ -10,13 +10,12 @@ TypShaPhaOrderedCollection class >> shadowedClass [
 ]
 
 { #category : #shadow }
-TypShaPhaOrderedCollection >> mAddFirst: aLookup [ 
+TypShaPhaOrderedCollection >> mAddFirst: aLookup [
 	<typShaMethod: 'addFirst:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | '@A' typAsVariableType resolveIn: a receiver ];
-		resultType: [ :a :s :r | a argumentTypes at: 1 ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup arguments at: 1)
+		arguments: {(aLookup receiver at: '@A')}
 ]
 
 { #category : #shadow }

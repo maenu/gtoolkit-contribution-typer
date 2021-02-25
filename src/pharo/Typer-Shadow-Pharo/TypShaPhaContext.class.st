@@ -20,6 +20,7 @@ TypShaPhaContext >> mArguments: aLookup [
 { #category : #shadow }
 TypShaPhaContext >> mMethod: aLookup [
 	<typShaMethod: 'method'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: CompiledMethod typAsType
 ]

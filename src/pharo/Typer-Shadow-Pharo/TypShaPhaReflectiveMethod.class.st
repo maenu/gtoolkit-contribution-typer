@@ -12,6 +12,7 @@ TypShaPhaReflectiveMethod class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaReflectiveMethod >> mCompiledMethod: aLookup [
 	<typShaMethod: 'compiledMethod'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: CompiledMethod typAsType
 ]

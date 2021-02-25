@@ -18,7 +18,7 @@ TypShaGtGtMethodCoderAddOns >> mAddMainActionIconAction: aLookup [
 		arguments:
 			{Symbol typAsType.
 			Form typAsType.
-			(BlockClosure typAsFunctionTypeWithResult: TypUnknownType new)}
+			BlockClosure typAsType}
 ]
 
 { #category : #shadow }
@@ -33,6 +33,7 @@ TypShaGtGtMethodCoderAddOns >> mAddShortcut: aLookup [
 { #category : #shadow }
 TypShaGtGtMethodCoderAddOns >> mAddStyler: aLookup [
 	<typShaMethod: 'addStyler:'>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {GtASTStyler typAsType}
