@@ -218,12 +218,10 @@ TypShaPhaRBProgramNode >> mPropertyAtIfPresentIfAbsent: aLookup [
 								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
-									(TypMethodLookup new
-										receiverType: aLookup receiver;
-										selector: argumentNode value asSymbol;
-										argumentTypes: {};
-										argumentNodes: {};
-										yourself) ]
+									(TypMethodLookup
+										receiver: aLookup receiver
+										selector: argumentNode value asSymbol
+										arguments: #()) ]
 						ifFalse: [ TypUnknownType new ] ].
 			{elementType.
 			(aLookup arguments at: 3) result} typAsType ];

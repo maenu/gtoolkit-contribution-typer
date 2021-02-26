@@ -112,7 +112,6 @@ TypShaPhaOrderedDictionary >> mAtPut: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mBinary276: aLookup [
 	<typShaMethod: ','>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(aLookup receiver
@@ -134,6 +133,7 @@ TypShaPhaOrderedDictionary >> mCollect: aLookup [
 				arguments: {(aLookup receiver at: '@A')})} typAsType ];
 		resultType: [ :a :s :r | 
 			| argumentType argumentNode elementType |
+			self flag: 'FIXME should lookup value:'.
 			argumentType := aLookup arguments at: 1.
 			argumentNode := aLookup argumentNodes at: 1.
 			elementType := argumentType isFunction
@@ -143,12 +143,10 @@ TypShaPhaOrderedDictionary >> mCollect: aLookup [
 								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
-									(TypMethodLookup new
-										receiverType: (aLookup receiver at: '@A');
-										selector: argumentNode value asSymbol;
-										argumentTypes: {};
-										argumentNodes: {};
-										yourself) ]
+									(TypMethodLookup
+										receiver: (aLookup receiver at: '@A')
+										selector: argumentNode value asSymbol
+										arguments: #()) ]
 						ifFalse: [ TypUnknownType new ] ].
 			aLookup receiver
 				copyWithParameters:

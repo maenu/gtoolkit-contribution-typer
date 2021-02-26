@@ -18,8 +18,7 @@ RBInstanceVariableNode >> typTypeRecursive [
 		ifTrue: [ ^ self parent value typType ].
 	^ TypVariableLookupIndex instance
 		typeFor:
-			(TypVariableLookup new
-				receiverType: self typDefiningType;
-				selector: name asSymbol;
-				yourself)
+			(TypVariableLookup
+				receiver: self typDefiningType
+				selector: name asSymbol)
 ]

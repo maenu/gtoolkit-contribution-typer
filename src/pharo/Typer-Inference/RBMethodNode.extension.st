@@ -24,14 +24,13 @@ RBMethodNode >> typInfReturnNodes [
 { #category : #'*Typer-Inference' }
 RBMethodNode >> typInfTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
+	self flag: 'FIXME how to get hold of self?'.
 	^ TypMethodLookupIndex instance
 		argumentTypeFor:
-			(TypMethodLookup new
-				receiverType: nil;
-				selector: self selector asSymbol;
-				argumentTypes: (self typArgumentTypes);
-				argumentNodes: self arguments;
-				yourself)
+			(TypMethodLookup
+				receiver: nil
+				selector: self selector asSymbol
+				arguments: self typArgumentTypes)
 		at: anInteger
 ]
 
@@ -51,15 +50,14 @@ RBMethodNode >> typReceiverType [
 { #category : #'*Typer-Inference' }
 RBMethodNode >> typResultType [
 	<typTypeResultAs: 'TypType'>
+	self flag: 'FIXME how to get hold of self?'.
 	self assert: [ compilationContext isNotNil ].
 	^ TypMethodLookupIndex instance
 		resultTypeFor:
-			(TypMethodLookup new
-				receiverType: nil;
-				selector: self selector asSymbol;
-				argumentTypes: (self typArgumentTypes);
-				argumentNodes: self arguments;
-				yourself)
+			(TypMethodLookup
+				receiver: nil
+				selector: self selector asSymbol
+				arguments: self typArgumentTypes)
 ]
 
 { #category : #'*Typer-Inference' }

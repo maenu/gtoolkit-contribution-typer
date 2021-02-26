@@ -119,18 +119,13 @@ TypShaPhaCollection >> mAnySatisfy: aLookup [
 { #category : #shadow }
 TypShaPhaCollection >> mAsDictionary: aLookup [
 	<typShaMethod: 'asDictionary'>
-	^ TypFunctionType new
-		resultType: [ :a :s :r | 
-			| elementType type |
-			elementType := aLookup receiver at: '@A'.
-			type := Dictionary typAsType.
-			Association typAsType >= elementType
-				ifTrue: [ type := type
-						copyWithParameters:
-							{(elementType at: '@A').
-							(elementType at: '@B')} ].
-			type ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(Dictionary typAsType
+				copyWithParameters:
+					{((aLookup receiver at: '@A') at: '@A').
+					((aLookup receiver at: '@A') at: '@B')})
 ]
 
 { #category : #shadow }
@@ -156,18 +151,13 @@ TypShaPhaCollection >> mAsOrderedCollection: aLookup [
 { #category : #shadow }
 TypShaPhaCollection >> mAsOrderedDictionary: aLookup [
 	<typShaMethod: 'asOrderedDictionary'>
-	^ TypFunctionType new
-		resultType: [ :a :s :r | 
-			| elementType type |
-			elementType := aLookup receiver at: '@A'.
-			type := OrderedDictionary typAsType.
-			Association typAsType >= elementType
-				ifTrue: [ type := type
-						copyWithParameters:
-							{(elementType at: '@A').
-							(elementType at: '@B')} ].
-			type ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(OrderedDictionary typAsType
+				copyWithParameters:
+					{((aLookup receiver at: '@A') at: '@A').
+					((aLookup receiver at: '@A') at: '@B')})
 ]
 
 { #category : #shadow }
@@ -191,18 +181,15 @@ TypShaPhaCollection >> mAt: aLookup [
 { #category : #shadow }
 TypShaPhaCollection >> mBinary170: aLookup [
 	<typShaMethod: ','>
-	^ TypFunctionType new
-		argumentTypes: [ Collection typAsType ];
-		resultType: [ :a :s :r | 
-			| result |
-			result := aLookup root receiver copy.
-			'@A' typAsType
-				assign:
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(aLookup root receiver copy
+				at: '@A'
+					put:
 					{(aLookup receiver at: '@A').
-					((aLookup arguments at: 1) at: '@A')} typAsType
-				in: result.
-			result ];
-		yourself
+					((aLookup arguments at: 1) at: '@A')} typAsType;
+				yourself)
+		arguments: {Collection typAsType}
 ]
 
 { #category : #shadow }
@@ -225,12 +212,10 @@ TypShaPhaCollection >> mCollect: aLookup [
 								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
-									(TypMethodLookup new
-										receiverType: (aLookup receiver at: '@A');
-										selector: argumentNode value asSymbol;
-										argumentTypes: {};
-										argumentNodes: {};
-										yourself) ]
+									(TypMethodLookup
+										receiver: (aLookup receiver at: '@A')
+										selector: argumentNode value asSymbol
+										arguments: #()) ]
 						ifFalse: [ TypUnknownType new ] ].
 			aLookup receiver copyWithParameters: {elementType} ];
 		yourself
@@ -313,12 +298,10 @@ TypShaPhaCollection >> mDetectIfFoundIfNone: aLookup [
 								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
-									(TypMethodLookup new
-										receiverType: (aLookup receiver at: '@A');
-										selector: argumentNode value asSymbol;
-										argumentTypes: {};
-										argumentNodes: {};
-										yourself) ]
+									(TypMethodLookup
+										receiver: (aLookup receiver at: '@A')
+										selector: argumentNode value asSymbol
+										arguments: #()) ]
 						ifFalse: [ TypUnknownType new ] ].
 			{elementType.
 			(aLookup arguments at: 3) result} typAsType ];
@@ -376,12 +359,10 @@ TypShaPhaCollection >> mFlatCollect: aLookup [
 								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ (TypMethodLookupIndex instance
 								resultTypeFor:
-									(TypMethodLookup new
-										receiverType: ('@A' typAsVariableType resolveIn: aLookup receiver);
-										selector: argumentNode value asSymbol;
-										argumentTypes: {};
-										argumentNodes: {};
-										yourself)) at: '@A' ]
+									(TypMethodLookup
+										receiver: (aLookup receiver at: '@A')
+										selector: argumentNode value asSymbol
+										arguments: #())) at: '@A' ]
 						ifFalse: [ TypUnknownType new ] ].
 			aLookup receiver copyWithParameters: {elementType} ];
 		yourself
@@ -406,12 +387,10 @@ TypShaPhaCollection >> mGroupedBy: aLookup [
 								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
-									(TypMethodLookup new
-										receiverType: (aLookup receiver at: '@A');
-										selector: argumentNode value asSymbol;
-										argumentTypes: {};
-										argumentNodes: {};
-										yourself) ]
+									(TypMethodLookup
+										receiver: (aLookup receiver at: '@A')
+										selector: argumentNode value asSymbol
+										arguments: #()) ]
 						ifFalse: [ '@B' typAsVariableType ] ].
 			OrderedDictionary typAsType
 				copyWithParameters:
@@ -464,12 +443,10 @@ TypShaPhaCollection >> mIfEmptyIfNotEmpty: aLookup [
 								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
-									(TypMethodLookup new
-										receiverType: aLookup receiver;
-										selector: argumentNode value asSymbol;
-										argumentTypes: {};
-										argumentNodes: {};
-										yourself) ]
+									(TypMethodLookup
+										receiver: aLookup receiver
+										selector: argumentNode value asSymbol
+										arguments: #()) ]
 						ifFalse: [ TypUnknownType new ] ].
 			{(aLookup arguments at: 1) result.
 			elementType} typAsType ];
@@ -497,12 +474,10 @@ TypShaPhaCollection >> mIfNotEmpty: aLookup [
 								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
-									(TypMethodLookup new
-										receiverType: aLookup receiver;
-										selector: argumentNode value asSymbol;
-										argumentTypes: {};
-										argumentNodes: {};
-										yourself) ]
+									(TypMethodLookup
+										receiver: aLookup receiver
+										selector: argumentNode value asSymbol
+										arguments: #()) ]
 						ifFalse: [ TypUnknownType new ] ].
 			{aLookup receiver.
 			elementType} typAsType ];

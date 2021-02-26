@@ -73,10 +73,7 @@ ClassDescription >> typGtVariableElementFor: aSymbol [
 	| type |
 	type := TypVariableLookupIndex instance
 		typeFor:
-			(TypVariableLookup new
-				receiverType: self typAsType;
-				selector: aSymbol;
-				yourself).
+			(TypVariableLookup receiver: self typAsType selector: aSymbol).
 	^ BlElement new
 		background:
 			(type isUnknown

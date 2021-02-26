@@ -48,14 +48,17 @@ RBMethodNode >> typGtTypeWithPragma [
 						selector: #typTypeArgument:as:
 						arguments:
 							{(RBLiteralValueNode value: i).
-							(RBLiteralValueNode value: (self typInfTypeForArgumentAt: i) asString)} ] ].
+							(RBLiteralValueNode
+								value: (self typInfTypeForArgumentAt: i) asString)} ] ].
 	result_ := self pragmas
 		detect: [ :e | e selector = #typTypeResultAs: ]
 		ifFound: [ :e | 
 			self removePragma: e.
 			e ]
-		ifNone: [ RBPragmaNode selector: #typTypeResultAs: arguments: {(RBLiteralValueNode value: self typResultType asString)} ].
-	variables_ := {} "typCastAs SequenceableCollection<RBPragmaNode>".
+		ifNone: [ RBPragmaNode
+				selector: #typTypeResultAs:
+				arguments: {(RBLiteralValueNode value: self typResultType asString)} ].
+	variables_ := {}.	"typCastAs SequenceableCollection<RBPragmaNode>"
 	self selector = #initialize
 		ifTrue: [ variables_ := self methodClass instVarNames
 				collect: [ :e | 
@@ -64,16 +67,16 @@ RBMethodNode >> typGtTypeWithPragma [
 						ifFound: [ :f | 
 							self removePragma: f.
 							f ]
-						ifNone: [ RBPragmaNode
+						ifNone: [ self flag: 'FIXME how to get self?'.
+							RBPragmaNode
 								selector: #typTypeVariable:as:
 								arguments:
 									{(RBLiteralValueNode value: e asString).
-									(RBLiteralValueNode value: (TypVariableLookupIndex instance
-										typeFor:
-											(TypVariableLookup new
-											receiverType: nil;
-											selector: e asSymbol;
-											yourself)) asString)} ] ] ].
+									(RBLiteralValueNode
+										value:
+											(TypVariableLookupIndex instance
+												typeFor: (TypVariableLookup receiver: nil selector: e asSymbol))
+												asString)} ] ] ].
 	arguments_ do: [ :e | self addPragma: e ].
 	self addPragma: result_.
 	variables_ do: [ :e | self addPragma: e ]

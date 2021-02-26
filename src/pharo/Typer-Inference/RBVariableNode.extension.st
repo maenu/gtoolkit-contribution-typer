@@ -32,10 +32,9 @@ RBVariableNode >> typInfTypeAssigned [
 		collect: [ :e | 
 			TypVariableLookupIndex instance
 				typeFor:
-					(TypVariableLookup new
-						receiverType: e variable typDefiningType;
-						selector: e variable name asSymbol;
-						yourself) ]) typAsType
+					(TypVariableLookup
+						receiver: e variable typDefiningType
+						selector: e variable name asSymbol) ]) typAsType
 ]
 
 { #category : #'*Typer-Inference' }

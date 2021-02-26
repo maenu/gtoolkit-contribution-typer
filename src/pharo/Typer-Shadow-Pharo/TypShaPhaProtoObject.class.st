@@ -79,12 +79,10 @@ TypShaPhaProtoObject >> mIfNilIfNotNil: aLookup [
 								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
-									(TypMethodLookup new
-										receiverType: (aLookup receiver at: '@A');
-										selector: argumentNode value asSymbol;
-										argumentTypes: {};
-										argumentNodes: {};
-										yourself) ]
+									(TypMethodLookup
+										receiver: (aLookup receiver at: '@A')
+										selector: argumentNode value asSymbol
+										arguments: #()) ]
 						ifFalse: [ TypUnknownType new ] ].
 			{(aLookup arguments at: 1) result.
 			elementType} typAsType ];
@@ -112,12 +110,10 @@ TypShaPhaProtoObject >> mIfNotNil: aLookup [
 								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
-									(TypMethodLookup new
-										receiverType: aLookup receiver;
-										selector: argumentNode value asSymbol;
-										argumentTypes: {};
-										argumentNodes: {};
-										yourself) ]
+									(TypMethodLookup
+										receiver: aLookup receiver
+										selector: argumentNode value asSymbol
+										arguments: #()) ]
 						ifFalse: [ TypUnknownType new ] ] ];
 		yourself
 ]

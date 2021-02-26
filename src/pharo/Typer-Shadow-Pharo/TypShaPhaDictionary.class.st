@@ -125,7 +125,6 @@ TypShaPhaDictionary >> mAtPut: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mBinary214: aLookup [
 	<typShaMethod: ','>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(aLookup receiver
@@ -156,12 +155,10 @@ TypShaPhaDictionary >> mCollect: aLookup [
 								and: [ argumentNode value asSymbol isUnary ] ])
 						ifTrue: [ TypMethodLookupIndex instance
 								resultTypeFor:
-									(TypMethodLookup new
-										receiverType: (aLookup receiver at: '@A');
-										selector: argumentNode value asSymbol;
-										argumentTypes: {};
-										argumentNodes: {};
-										yourself) ]
+									(TypMethodLookup
+										receiver: (aLookup receiver at: '@A')
+										selector: argumentNode value asSymbol
+										arguments: #()) ]
 						ifFalse: [ TypUnknownType new ] ].
 			aLookup receiver
 				copyWithParameters:

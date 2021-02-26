@@ -21,12 +21,10 @@ RBMessageNode >> typInfTypeForArgumentAt: anInteger [
 			argumentTypes := self typArgumentTypes.
 			TypMethodLookupIndex instance
 				argumentTypeFor:
-					(TypMethodLookup new
-						receiverType: receiverType;
-						selector: self selector asSymbol;
-						argumentTypes: argumentTypes;
-						argumentNodes: self arguments;
-						yourself)
+					(TypMethodLookup
+						receiver: receiverType
+						selector: self selector asSymbol
+						arguments: argumentTypes)
 				at: anInteger ]
 ]
 
@@ -43,6 +41,7 @@ RBMessageNode >> typResultType [
 	^ self
 		propertyAt: key
 		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
+			"typCastAs TypType"
 			| receiverType argumentTypes |
 			self propertyAt: key put: TypUnknownType new.
 			receiverType := self typReceiverType.
@@ -52,47 +51,43 @@ RBMessageNode >> typResultType [
 				ifTrue: [ receiverType := receiverType asNonNullable ].
 			TypMethodLookupIndex instance
 				resultTypeFor:
-					(TypMethodLookup new
-						receiverType: receiverType;
-						selector: self selector asSymbol;
-						argumentTypes: argumentTypes;
-						argumentNodes: self arguments;
-						yourself) ]	"typCastAs TypType"
+					(TypMethodLookup
+						receiver: receiverType
+						selector: self selector asSymbol
+						arguments: argumentTypes) ]
 ]
 
 { #category : #'*Typer-Inference' }
 RBMessageNode >> typSignalsAlways [
 	| key |
 	key := #typSignalsAlways.
-	^ (self
+	^ self
 		propertyAt: key
 		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
+			"typCastAs {!,Boolean}"
 			| receiverType argumentTypes |
 			self propertyAt: key put: nil.
 			receiverType := self typReceiverType.
 			argumentTypes := self typArgumentTypes.
 			receiverType isUnion
 				ifTrue: [ | signalsAlways |
-					signalsAlways := (receiverType "typCastAs TypUnionType") types
-						collect: [ :e | TypMethodLookupIndex instance
+					signalsAlways := receiverType types
+						collect: [ :e | 
+							TypMethodLookupIndex instance
 								signalsAlwaysFor:
-									(TypMethodLookup new
-										receiverType: e;
-										selector: self selector asSymbol;
-										argumentTypes: argumentTypes;
-										argumentNodes: self arguments;
-										yourself) ].
+									(TypMethodLookup
+										receiver: e
+										selector: self selector asSymbol
+										arguments: argumentTypes) ].	"typCastAs TypUnionType"
 					(signalsAlways anySatisfy: #isNil)
 						ifTrue: [ nil ]
 						ifFalse: [ signalsAlways inject: true into: [ :a :b | a and: b ] ] ]
 				ifFalse: [ TypMethodLookupIndex instance
 						signalsAlwaysFor:
-							(TypMethodLookup new
-								receiverType: receiverType;
-								selector: self selector asSymbol;
-								argumentTypes: argumentTypes;
-								argumentNodes: self arguments;
-								yourself) ] ]) "typCastAs {!,Boolean}"
+							(TypMethodLookup
+								receiver: receiverType
+								selector: self selector asSymbol
+								arguments: argumentTypes) ] ]
 ]
 
 { #category : #'*Typer-Inference' }
