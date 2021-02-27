@@ -19,7 +19,7 @@ TypLookupIndex class >> instance [
 { #category : #initialization }
 TypLookupIndex class >> reset [
 	<script>
-	instance := nil
+	self instance reset
 ]
 
 { #category : #initialization }
@@ -40,7 +40,14 @@ TypLookupIndex >> initialize [
 
 { #category : #accessing }
 TypLookupIndex >> lookup: aLookup [
-	^ resolver resolve: aLookup
+	| types type rest |
+	self flag: 'FIXME unknown, really?'.
+	types := resolver resolve: aLookup.
+	types ifEmpty: [ ^ TypUnknownType new ].
+	type := types first.
+	rest := types allButFirst.
+	type origin add: (TypLookupIndexOrigin alternatives: rest).
+	^ type
 ]
 
 { #category : #initialization }

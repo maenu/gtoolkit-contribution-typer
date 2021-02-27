@@ -9,11 +9,12 @@ TypShaPhaByteArray class >> shadowedClass [
 	^ ByteArray class
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaPhaByteArray >> resolveType: aLookup [
 	| type |
 	type := aLookup classDescription typAsNamedType.
 	type
+		origin: aLookup asOrigin;
 		superType: (type superType copyWithParameters: {Integer typAsType}).
 	^ type
 ]

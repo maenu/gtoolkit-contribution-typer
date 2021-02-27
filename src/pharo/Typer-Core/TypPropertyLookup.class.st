@@ -26,7 +26,7 @@ TypPropertyLookup >> copyAsSuper [
 
 { #category : #testing }
 TypPropertyLookup >> hasSuper [
-	^ receiver hasSuper
+	^ receiver hasSuperType
 ]
 
 { #category : #comparing }

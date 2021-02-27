@@ -93,6 +93,7 @@ TypShaPhaString >> resolveType: aLookup [
 	| type |
 	type := aLookup classDescription typAsNamedType.
 	type
+		origin: aLookup asOrigin;
 		superType: (type superType copyWithParameters: {Character typAsType}).
 	^ type
 ]

@@ -141,6 +141,11 @@ TypType >> lookupVariable: aSymbol [
 ]
 
 { #category : #accessing }
+TypType >> origin [
+	^ origin
+]
+
+{ #category : #accessing }
 TypType >> origin: anOrigin [
 	origin := anOrigin
 ]

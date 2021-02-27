@@ -20,8 +20,9 @@ TypInfVariableLookupResolver >> resolve: aLookup [
 		detect: [ :e | e name = selector ]
 		ifFound: [ :e | ^ (e assignmentNodes collect: #typType) typAsType ].
 	self flag: '...or we just take the type of the value?'.
-	classDescription allClassVariables
-		detect: [ :e | e name = selector ]
-		ifFound: [ :e | ^ (e assignmentNodes collect: #typType) typAsType ].
+	classDescription isInstanceSide
+		ifTrue: [ classDescription allClassVariables
+				detect: [ :e | e name = selector ]
+				ifFound: [ :e | ^ (e assignmentNodes collect: #typType) typAsType ] ].
 	^ #()
 ]

@@ -54,6 +54,8 @@ TypShaShadow class >> resolveMethod: aLookup [
 { #category : #accessing }
 TypShaShadow class >> resolveType: aLookup [
 	^ aLookup classDescription typAsNamedType
+		origin: aLookup asOrigin;
+		yourself
 ]
 
 { #category : #'as yet unclassified' }
@@ -95,6 +97,8 @@ TypShaShadow >> resolveMethod: aLookup [
 { #category : #converting }
 TypShaShadow >> resolveType: aLookup [
 	^ aLookup classDescription typAsNamedType
+		origin: aLookup asOrigin;
+		yourself
 ]
 
 { #category : #'as yet unclassified' }

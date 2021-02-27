@@ -9,5 +9,7 @@ TypInfTypeLookupResolver >> resolve: aLookup [
 	<typTypeArgument: 1 as: 'TypTypeLookup'>
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
 	aLookup push: self.
-	^ {aLookup classDescription typAsType}
+	^ {(aLookup classDescription typAsNamedType
+		origin: aLookup asOrigin;
+		yourself)}
 ]

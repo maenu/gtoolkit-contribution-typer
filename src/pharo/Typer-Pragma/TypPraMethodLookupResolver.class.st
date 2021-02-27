@@ -29,7 +29,7 @@ TypPraMethodLookupResolver >> resolve: aLookup [
 		ifNone: [ nil ].
 	(argumentPragmas isEmpty
 		and: [ resultPragma isNil and: [ signalsAlwaysPragma isNil ] ])
-		ifTrue: [ ^ nil ].
+		ifTrue: [ ^ #() ].
 	arguments := method numArgs
 		timesCollect: [ :i | 
 			argumentPragmas

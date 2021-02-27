@@ -8,6 +8,11 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
+{ #category : #accessing }
+TypLookup >> asOrigin [
+	^ TypLookupOrigin lookup: self
+]
+
 { #category : #copying }
 TypLookup >> copy [
 	^ super copy

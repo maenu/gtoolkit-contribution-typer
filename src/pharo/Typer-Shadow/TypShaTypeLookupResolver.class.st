@@ -10,5 +10,5 @@ TypShaTypeLookupResolver >> resolve: aLookup [
 	<typTypeResultAs: 'SequenceableCollection<TypClassDescriptionLookupResult>'>
 	aLookup push: self.
 	^ aLookup classDescription typShaShadows
-		flatCollect: [ :f | f resolveType: aLookup copy ]
+		collect: [ :f | f resolveType: aLookup copy ]
 ]
