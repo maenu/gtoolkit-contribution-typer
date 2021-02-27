@@ -5,13 +5,11 @@ Class {
 }
 
 { #category : #shadow }
-TypShaGtGtNoStorageStrategy class >> mUniqueInstance: aLookup [ 
+TypShaGtGtNoStorageStrategy class >> mUniqueInstance: aLookup [
 	<typShaMethod: 'uniqueInstance'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | a receiver classDescription instanceSide typAsType ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
 ]
 
 { #category : #'as yet unclassified' }

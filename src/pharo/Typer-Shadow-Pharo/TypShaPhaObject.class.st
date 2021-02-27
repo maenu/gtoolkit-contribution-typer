@@ -121,12 +121,8 @@ TypShaPhaObject >> mPerform: aLookup [
 			| argument |
 			argument := aLookup argumentNodes at: 1.
 			(argument isLiteralNode and: [ argument value isSymbol ])
-				ifTrue: [ TypMethodLookupIndex instance
-						resultTypeFor:
-							(TypMethodLookup
-								receiver: aLookup receiver
-								selector: argument value
-								arguments: #()) ]
+				ifTrue: [ (aLookup receiver lookupMethod: argument value arguments: #())
+						result ]
 				ifFalse: [ TypUnknownType new ] ];
 		yourself
 ]

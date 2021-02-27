@@ -16,9 +16,5 @@ RBInstanceVariableNode >> typHasDefiningType [
 RBInstanceVariableNode >> typTypeRecursive [
 	self typIsAssignedTo
 		ifTrue: [ ^ self parent value typType ].
-	^ TypVariableLookupIndex instance
-		typeFor:
-			(TypVariableLookup
-				receiver: self typDefiningType
-				selector: name asSymbol)
+	^ self typDefiningType lookupVariable: name asSymbol
 ]

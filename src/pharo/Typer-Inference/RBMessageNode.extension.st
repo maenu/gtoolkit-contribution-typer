@@ -19,13 +19,9 @@ RBMessageNode >> typInfTypeForArgumentAt: anInteger [
 			self propertyAt: key put: TypUnknownType new.
 			receiverType := self typReceiverType.
 			argumentTypes := self typArgumentTypes.
-			TypMethodLookupIndex instance
-				argumentTypeFor:
-					(TypMethodLookup
-						receiver: receiverType
-						selector: self selector asSymbol
-						arguments: argumentTypes)
-				at: anInteger ]
+			(receiverType
+				lookupMethod: self selector asSymbol
+				arguments: argumentTypes) arguments at: anInteger ]
 ]
 
 { #category : #'*Typer-Inference' }
@@ -49,12 +45,9 @@ RBMessageNode >> typResultType [
 			((receiverType canUnderstand: self selector asSymbol) not
 				and: [ receiverType asNonNullable canUnderstand: self selector asSymbol ])
 				ifTrue: [ receiverType := receiverType asNonNullable ].
-			TypMethodLookupIndex instance
-				resultTypeFor:
-					(TypMethodLookup
-						receiver: receiverType
-						selector: self selector asSymbol
-						arguments: argumentTypes) ]
+			(receiverType
+				lookupMethod: self selector asSymbol
+				arguments: argumentTypes) result ]
 ]
 
 { #category : #'*Typer-Inference' }
@@ -73,21 +66,14 @@ RBMessageNode >> typSignalsAlways [
 				ifTrue: [ | signalsAlways |
 					signalsAlways := receiverType types
 						collect: [ :e | 
-							TypMethodLookupIndex instance
-								signalsAlwaysFor:
-									(TypMethodLookup
-										receiver: e
-										selector: self selector asSymbol
-										arguments: argumentTypes) ].	"typCastAs TypUnionType"
+							(e lookupMethod: self selector asSymbol arguments: argumentTypes)
+								signalsAlways ].	"typCastAs TypUnionType"
 					(signalsAlways anySatisfy: #isNil)
 						ifTrue: [ nil ]
 						ifFalse: [ signalsAlways inject: true into: [ :a :b | a and: b ] ] ]
-				ifFalse: [ TypMethodLookupIndex instance
-						signalsAlwaysFor:
-							(TypMethodLookup
-								receiver: receiverType
-								selector: self selector asSymbol
-								arguments: argumentTypes) ] ]
+				ifFalse: [ (receiverType
+						lookupMethod: self selector asSymbol
+						arguments: argumentTypes) signalsAlways ] ]
 ]
 
 { #category : #'*Typer-Inference' }

@@ -5,23 +5,17 @@ Class {
 }
 
 { #category : #shadow }
-TypShaPhaKey class >> mH: aLookup [ 
+TypShaPhaKey class >> mH: aLookup [
 	<typShaMethod: 'h'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Key typAsType ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: BlKeyboardKey typAsType
 ]
 
 { #category : #shadow }
-TypShaPhaKey class >> mT: aLookup [ 
+TypShaPhaKey class >> mT: aLookup [
 	<typShaMethod: 't'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Key typAsType ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: BlKeyboardKey typAsType
 ]
 
 { #category : #'as yet unclassified' }

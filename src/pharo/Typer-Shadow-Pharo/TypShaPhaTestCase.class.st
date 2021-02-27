@@ -5,13 +5,10 @@ Class {
 }
 
 { #category : #shadow }
-TypShaPhaTestCase class >> mSuite: aLookup [ 
+TypShaPhaTestCase class >> mSuite: aLookup [
 	<typShaMethod: 'suite'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | TestSuite typAsType ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: TestSuite typAsType
 ]
 
 { #category : #'as yet unclassified' }

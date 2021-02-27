@@ -5,13 +5,12 @@ Class {
 }
 
 { #category : #shadow }
-TypShaPhaRBParser class >> mParseFaultyMethod: aLookup [ 
+TypShaPhaRBParser class >> mParseFaultyMethod: aLookup [
 	<typShaMethod: 'parseFaultyMethod:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | String typAsType ];
-		resultType: [ :a :s :r | RBMethodNode typAsType ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: RBMethodNode typAsType
+		arguments: {String typAsType}
 ]
 
 { #category : #'as yet unclassified' }

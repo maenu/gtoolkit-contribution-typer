@@ -11,9 +11,9 @@ TypInfVariableLookupResolver >> resolve: aLookup [
 	| classDescription selector |
 	aLookup push: self.
 	aLookup receiver isNamed
-		ifFalse: [ TypNoTypeError signal ].
+		ifFalse: [ ^ #() ].
 	aLookup receiver hasClassDescription
-		ifFalse: [ TypNoTypeError signal ].
+		ifFalse: [ ^ #() ].
 	classDescription := aLookup receiver classDescription.
 	selector := aLookup selector.
 	classDescription allSlots
@@ -23,5 +23,5 @@ TypInfVariableLookupResolver >> resolve: aLookup [
 	classDescription allClassVariables
 		detect: [ :e | e name = selector ]
 		ifFound: [ :e | ^ (e assignmentNodes collect: #typType) typAsType ].
-	TypNoTypeError signal
+	^ #()
 ]

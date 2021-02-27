@@ -29,12 +29,9 @@ RBVariableNode >> typInfTypeArguments [
 RBVariableNode >> typInfTypeAssigned [
 	^ (((self whoDefines: name) assignmentNodes
 		select: [ :e | e value = self and: [ e variable typHasDefiningType ] ])
-		collect: [ :e | 
-			TypVariableLookupIndex instance
-				typeFor:
-					(TypVariableLookup
-						receiver: e variable typDefiningType
-						selector: e variable name asSymbol) ]) typAsType
+		collect:
+			[ :e | e variable typDefiningType lookupVariable: e variable name asSymbol ])
+		typAsType
 ]
 
 { #category : #'*Typer-Inference' }

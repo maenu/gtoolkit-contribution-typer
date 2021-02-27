@@ -11,12 +11,12 @@ TypPraMethodLookupResolver >> resolve: aLookup [
 	| classDescription method pragmas argumentPragmas resultPragma signalsAlwaysPragma arguments result signalsAlways |
 	aLookup push: self.
 	aLookup receiver isNamed
-		ifFalse: [ TypNoTypeError signal ].
+		ifFalse: [ ^ #() ].
 	aLookup receiver hasClassDescription
-		ifFalse: [ TypNoTypeError signal ].
+		ifFalse: [ ^ #() ].
 	classDescription := aLookup receiver classDescription.
 	method := (classDescription lookupSelector: aLookup selector)
-		ifNil: [ TypNoTypeError signal ].
+		ifNil: [ ^ #() ].
 	pragmas := method typPraAllPragmas.
 	argumentPragmas := ((pragmas
 		select: [ :e | e selector = #typTypeArgument:as: ])

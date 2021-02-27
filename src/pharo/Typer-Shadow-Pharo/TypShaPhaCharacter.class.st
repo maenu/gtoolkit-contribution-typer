@@ -5,13 +5,12 @@ Class {
 }
 
 { #category : #shadow }
-TypShaPhaCharacter class >> mValue: aLookup [ 
+TypShaPhaCharacter class >> mValue: aLookup [
 	<typShaMethod: 'value:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Integer typAsType ];
-		resultType: [ :a :s :r | a receiver classDescription instanceSide typAsType ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
+		arguments: {Integer typAsType}
 ]
 
 { #category : #'as yet unclassified' }

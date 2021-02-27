@@ -5,23 +5,17 @@ Class {
 }
 
 { #category : #shadow }
-TypShaBrBrGlamorousIcons class >> mBrowse: aLookup [ 
+TypShaBrBrGlamorousIcons class >> mBrowse: aLookup [
 	<typShaMethod: 'browse'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Form typAsType ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Form typAsType
 ]
 
 { #category : #shadow }
-TypShaBrBrGlamorousIcons class >> mInspect: aLookup [ 
+TypShaBrBrGlamorousIcons class >> mInspect: aLookup [
 	<typShaMethod: 'inspect'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | Form typAsType ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod typAsFunctionTypeWithResult: Form typAsType
 ]
 
 { #category : #'as yet unclassified' }

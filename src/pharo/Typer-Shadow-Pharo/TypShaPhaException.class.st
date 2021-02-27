@@ -5,14 +5,14 @@ Class {
 }
 
 { #category : #shadow }
-TypShaPhaException class >> mSignal: aLookup [ 
+TypShaPhaException class >> mSignal: aLookup [
 	<typShaMethod: 'signal'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | a receiver classDescription instanceSide typAsType ];
-		signalsAlways: [ true ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
+		arguments: #()
+		argumentsOptional: false
+		signalsAlways: true
 ]
 
 { #category : #'as yet unclassified' }

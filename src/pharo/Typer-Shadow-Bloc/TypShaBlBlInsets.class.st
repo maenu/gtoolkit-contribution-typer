@@ -5,13 +5,12 @@ Class {
 }
 
 { #category : #shadow }
-TypShaBlBlInsets class >> mTopRightBottomLeft: aLookup [ 
+TypShaBlBlInsets class >> mTopRightBottomLeft: aLookup [
 	<typShaMethod: 'top:right:bottom:left:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Number typAsType ];
-		resultType: [ :a :s :r | a receiver classDescription instanceSide typAsType ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
+		arguments: {Number typAsType}
 ]
 
 { #category : #'as yet unclassified' }

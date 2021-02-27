@@ -31,14 +31,6 @@ TypTypeLookupIndex class >> instance [
 ]
 
 { #category : #accessing }
-TypTypeLookupIndex >> typeFor: aLookup [
-	<typTypeArgument: 1 as: 'TypClassDescriptionLookup'>
-	^ (resolver resolve: aLookup)
-		detect: [ :e | 
-			[ e type.
-			true ]
-				on: TypNoTypeError
-				do: [ false ] ]
-		ifFound: #type
-		ifNone: [ TypUnknownType new ]
+TypTypeLookupIndex >> lookupClassDescription: aClassDescription [
+	^ self lookup: (TypTypeLookup classDescription: aClassDescription)
 ]

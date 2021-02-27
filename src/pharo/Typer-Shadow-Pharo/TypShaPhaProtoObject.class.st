@@ -77,12 +77,9 @@ TypShaPhaProtoObject >> mIfNilIfNotNil: aLookup [
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
 						and: [ (argumentNode value isKindOf: Symbol)
 								and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ TypMethodLookupIndex instance
-								resultTypeFor:
-									(TypMethodLookup
-										receiver: (aLookup receiver at: '@A')
-										selector: argumentNode value asSymbol
-										arguments: #()) ]
+						ifTrue: [ ((aLookup receiver at: '@A')
+								lookupMethod: argumentNode value asSymbol
+								arguments: #()) result ]
 						ifFalse: [ TypUnknownType new ] ].
 			{(aLookup arguments at: 1) result.
 			elementType} typAsType ];
@@ -108,12 +105,9 @@ TypShaPhaProtoObject >> mIfNotNil: aLookup [
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
 						and: [ (argumentNode value isKindOf: Symbol)
 								and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ TypMethodLookupIndex instance
-								resultTypeFor:
-									(TypMethodLookup
-										receiver: aLookup receiver
-										selector: argumentNode value asSymbol
-										arguments: #()) ]
+						ifTrue: [ (aLookup receiver
+								lookupMethod: argumentNode value asSymbol
+								arguments: #()) result ]
 						ifFalse: [ TypUnknownType new ] ] ];
 		yourself
 ]

@@ -125,6 +125,21 @@ TypType >> isVariable [
 	^ false
 ]
 
+{ #category : #lookup }
+TypType >> lookupMethod: aSymbol arguments: aCollection [
+	^ TypMethodLookupIndex instance
+		lookupReceiver: self
+		selector: aSymbol
+		arguments: aCollection
+]
+
+{ #category : #lookup }
+TypType >> lookupVariable: aSymbol [
+	^ TypVariableLookupIndex instance
+		lookupReceiver: self
+		selector: aSymbol
+]
+
 { #category : #accessing }
 TypType >> origin: anOrigin [
 	origin := anOrigin

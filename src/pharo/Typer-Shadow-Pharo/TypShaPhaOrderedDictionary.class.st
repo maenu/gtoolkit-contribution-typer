@@ -141,12 +141,9 @@ TypShaPhaOrderedDictionary >> mCollect: aLookup [
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
 						and: [ (argumentNode value isKindOf: String)
 								and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ TypMethodLookupIndex instance
-								resultTypeFor:
-									(TypMethodLookup
-										receiver: (aLookup receiver at: '@A')
-										selector: argumentNode value asSymbol
-										arguments: #()) ]
+						ifTrue: [ ((aLookup receiver at: '@A')
+								lookupMethod: argumentNode value asSymbol
+								arguments: #()) result ]
 						ifFalse: [ TypUnknownType new ] ].
 			aLookup receiver
 				copyWithParameters:

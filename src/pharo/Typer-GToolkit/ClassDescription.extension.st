@@ -71,9 +71,7 @@ ClassDescription >> typGtNodeCoverage [
 { #category : #'*Typer-GToolkit' }
 ClassDescription >> typGtVariableElementFor: aSymbol [
 	| type |
-	type := TypVariableLookupIndex instance
-		typeFor:
-			(TypVariableLookup receiver: self typAsType selector: aSymbol).
+	type := self typAsType lookupVariable: aSymbol.
 	^ BlElement new
 		background:
 			(type isUnknown

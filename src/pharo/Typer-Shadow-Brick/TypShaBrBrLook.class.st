@@ -5,15 +5,14 @@ Class {
 }
 
 { #category : #shadow }
-TypShaBrBrLook class >> mBinary26: aLookup [ 
+TypShaBrBrLook class >> mBinary26: aLookup [
 	<typShaMethod: '+'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			{BrLook typAsType.
-			BrLook class typAsType} typAsType ];
-		resultType: [ :a :s :r | BrLook typAsType ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: BrLook typAsType
+		arguments:
+			{{BrLook typAsType.
+			BrLook class typAsType} typAsType}
 ]
 
 { #category : #'as yet unclassified' }

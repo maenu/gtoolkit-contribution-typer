@@ -5,13 +5,11 @@ Class {
 }
 
 { #category : #shadow }
-TypShaBlBlKeyCombination class >> mBuilder: aLookup [ 
+TypShaBlBlKeyCombination class >> mBuilder: aLookup [
 	<typShaMethod: 'builder'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ TypNoTypeError signal ];
-		resultType: [ :a :s :r | BlKeyCombinationBuilder typAsType ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: BlKeyCombinationBuilder typAsType
 ]
 
 { #category : #'as yet unclassified' }

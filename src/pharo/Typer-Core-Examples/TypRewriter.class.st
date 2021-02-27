@@ -21,6 +21,108 @@ TypRewriter >> rewriteCopyWithParameters [
 ]
 
 { #category : #accessing }
+TypRewriter >> rewriteLookupIndex [
+	<gtExample>
+	^ ((RPackageOrganizer default packages
+		select: [ :e | e name beginsWith: 'Typer' ]) flatCollect: #methods)
+		select: [ :e | 
+			| rewriter ok method |
+			rewriter := RBParseTreeRewriter new.
+			rewriter
+				replace:
+					'TypMethodLookupIndex instance
+				resultTypeFor:
+					(TypMethodLookup
+						receiver: `@r
+						selector: `@s
+						arguments: `@a)'
+				with:
+					'(TypLookupIndex lookupMethodOfReceiver: `@r
+						selector: `@s
+						arguments: `@a) result'.
+			rewriter
+				replace:
+					'TypMethodLookupIndex instance
+				signalsAlwaysFor:
+					(TypMethodLookup
+						receiver: `@r
+						selector: `@s
+						arguments: `@a)'
+				with:
+					'(TypLookupIndex lookupMethodOfReceiver: `@r
+						selector: `@s
+						arguments: `@a) signalsAlways'.
+			rewriter
+				replace:
+					'TypMethodLookupIndex instance
+				argumentTypeFor:
+					(TypMethodLookup
+						receiver: `@r
+						selector: `@s
+						arguments: `@a) at: `@i'
+				with:
+					'(TypLookupIndex lookupMethodOfReceiver: `@r
+						selector: `@s
+						arguments: `@a) arguments at: `@i'.
+			ok := rewriter executeTree: e parseTree.
+			ok
+				ifTrue:
+					[ e origin compile: rewriter tree formattedCode classified: e protocol ].
+			ok ]
+]
+
+{ #category : #accessing }
+TypRewriter >> rewriteMethodLookupIndex [
+	<gtExample>
+	^ ((RPackageOrganizer default packages
+		select: [ :e | e name beginsWith: 'Typer' ]) flatCollect: #methods)
+		select: [ :e | 
+			| rewriter ok method |
+			rewriter := RBParseTreeRewriter new.
+			rewriter
+				replace:
+					'TypMethodLookupIndex instance
+				resultTypeFor:
+					(TypMethodLookup
+						receiver: `@r
+						selector: `@s
+						arguments: `@a)'
+				with:
+					'(TypLookupIndex lookupMethodOfReceiver: `@r
+						selector: `@s
+						arguments: `@a) result'.
+			rewriter
+				replace:
+					'TypMethodLookupIndex instance
+				signalsAlwaysFor:
+					(TypMethodLookup
+						receiver: `@r
+						selector: `@s
+						arguments: `@a)'
+				with:
+					'(TypLookupIndex lookupMethodOfReceiver: `@r
+						selector: `@s
+						arguments: `@a) signalsAlways'.
+			rewriter
+				replace:
+					'TypMethodLookupIndex instance
+				argumentTypeFor:
+					(TypMethodLookup
+						receiver: `@r
+						selector: `@s
+						arguments: `@a) at: `@i'
+				with:
+					'(TypLookupIndex lookupMethodOfReceiver: `@r
+						selector: `@s
+						arguments: `@a) arguments at: `@i'.
+			ok := rewriter executeTree: e parseTree.
+			ok
+				ifTrue:
+					[ e origin compile: rewriter tree formattedCode classified: e protocol ].
+			ok ]
+]
+
+{ #category : #accessing }
 TypRewriter >> rewriteShadow: aMethod at: anInteger [
 	| cut selector code |
 	cut := aMethod selector copyFrom: 4 to: aMethod selector size.
@@ -125,4 +227,22 @@ TypRewriter >> rewriteShadowSelectors [
 		select:
 			[ :e | (e selector beginsWith: '___') or: [ e selector beginsWith: '~~~' ] ])
 		collectWithIndex: [ :e :i | self rewriteShadow: e at: i ]
+]
+
+{ #category : #accessing }
+TypRewriter >> rewriteVariableLookupIndex [
+	<gtExample>
+	^ ((RPackageOrganizer default packages
+		select: [ :e | e name beginsWith: 'Typer' ]) flatCollect: #methods)
+		select: [ :e | 
+			| rewriter ok method |
+			rewriter := RBParseTreeRewriter new.
+			rewriter
+				replace: 'TypLookupIndex lookupMethodOfReceiver: `@r selector: `@s arguments: `@a'
+				with: '`@r lookupMethod: `@s arguments: `@a'.
+			ok := rewriter executeTree: e parseTree.
+			ok
+				ifTrue:
+					[ e origin compile: rewriter tree formattedCode classified: e protocol ].
+			ok ]
 ]

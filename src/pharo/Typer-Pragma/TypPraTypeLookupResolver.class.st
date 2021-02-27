@@ -12,7 +12,7 @@ TypPraTypeLookupResolver >> resolve: aLookup [
 	aLookup push: self.
 	classDescription := aLookup classDescription.
 	pragmas := (classDescription lookupSelector: #initialize)
-		ifNil: [ TypNoTypeError signal ]
+		ifNil: [ ^ #() ]
 		ifNotNil: #pragmas.
 	parameters := pragmas
 		detect: [ :e | e selector = #typParameters: ]
@@ -29,7 +29,7 @@ TypPraTypeLookupResolver >> resolve: aLookup [
 		asDictionary.
 	(parameters isEmpty
 		and: [ bindings isEmpty and: [ superTypeBindings isEmpty ] ])
-		ifTrue: [ TypNoTypeError signal ].
+		ifTrue: [ ^ #() ].
 	(parameters isEmpty
 		and: [ bindings isEmpty and: [ superTypeBindings isNotEmpty ] ])
 		ifTrue: [ | type |

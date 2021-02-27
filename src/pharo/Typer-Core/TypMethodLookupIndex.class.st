@@ -31,55 +31,17 @@ TypMethodLookupIndex class >> instance [
 ]
 
 { #category : #accessing }
-TypMethodLookupIndex >> argumentTypeFor: aLookup at: anInteger [
-	<typTypeArgument: 1 as: 'TypLookup'>
-	(resolver resolve: aLookup)
-		do: [ :e"typCastAs TypMethodLookupResult"
-			 | 
-			[ | type |
-			type := e argumentTypeAt: anInteger.
-			type isUnknown
-				ifFalse: [ ^ type ] ]
-				on: Error
-				do: [ :f | 
-					f emit.
-					self flag: 'FIXME signal?' ] ].
-	^ TypUnknownType new
+TypMethodLookupIndex >> lookupReceiver: aType selector: aSymbol arguments: aCollection [
+	^ self
+		lookup:
+			(TypMethodLookup
+				receiver: aType
+				selector: aSymbol
+				arguments: aCollection)
 ]
 
 { #category : #initialization }
 TypMethodLookupIndex >> reset [
 	super reset.
 	ASTCache default do: #typTypeReset
-]
-
-{ #category : #accessing }
-TypMethodLookupIndex >> resultTypeFor: aLookup [
-	<typTypeArgument: 1 as: 'TypLookup'>
-	(resolver resolve: aLookup)
-		do: [ :e"typCastAs TypMethodLookupResult"
-			 | 
-			[ | type |
-			type := e resultType.
-			type isUnknown
-				ifFalse: [ ^ type ] ]
-				on: Error
-				do: [ :f | 
-					f emit.
-					self flag: 'FIXME signal?' ] ].
-	^ TypUnknownType new
-]
-
-{ #category : #accessing }
-TypMethodLookupIndex >> signalsAlwaysFor: aLookup [
-	(resolver resolve: aLookup)
-		do: [ :e "typCastAs TypMethodLookupResult" | 
-			[ | signalsAlways |
-			signalsAlways := e signalsAlways.
-			signalsAlways ifNotNil: [ ^ signalsAlways ] ]
-				on: Error
-				do: [ :f | 
-					f emit.
-					self flag: 'FIXME signal?' ] ].
-	^ nil
 ]

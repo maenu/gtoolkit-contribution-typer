@@ -73,10 +73,7 @@ RBMethodNode >> typGtTypeWithPragma [
 								arguments:
 									{(RBLiteralValueNode value: e asString).
 									(RBLiteralValueNode
-										value:
-											(TypVariableLookupIndex instance
-												typeFor: (TypVariableLookup receiver: nil selector: e asSymbol))
-												asString)} ] ] ].
+										value: (nil lookupVariable: e asSymbol) asString)} ] ] ].
 	arguments_ do: [ :e | self addPragma: e ].
 	self addPragma: result_.
 	variables_ do: [ :e | self addPragma: e ]

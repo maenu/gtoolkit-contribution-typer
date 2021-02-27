@@ -5,13 +5,12 @@ Class {
 }
 
 { #category : #shadow }
-TypShaGtGtCoderTextStyler class >> mForCoder: aLookup [ 
+TypShaGtGtCoderTextStyler class >> mForCoder: aLookup [
 	<typShaMethod: 'forCoder:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | GtMethodCoder typAsType ];
-		resultType: [ :a :s :r | a receiver classDescription instanceSide typAsType ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
+		arguments: {GtMethodCoder typAsType}
 ]
 
 { #category : #'as yet unclassified' }

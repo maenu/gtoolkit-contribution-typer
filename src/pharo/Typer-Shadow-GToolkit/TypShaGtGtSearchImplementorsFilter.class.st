@@ -5,13 +5,12 @@ Class {
 }
 
 { #category : #shadow }
-TypShaGtGtSearchImplementorsFilter class >> mSelector: aLookup [ 
+TypShaGtGtSearchImplementorsFilter class >> mSelector: aLookup [
 	<typShaMethod: 'selector:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Symbol typAsType ];
-		resultType: [ :a :s :r | a receiver classDescription instanceSide typAsType ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
+		arguments: {Symbol typAsType}
 ]
 
 { #category : #'as yet unclassified' }

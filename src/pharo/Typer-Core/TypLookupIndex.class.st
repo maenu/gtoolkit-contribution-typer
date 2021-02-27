@@ -38,6 +38,11 @@ TypLookupIndex >> initialize [
 		to: self
 ]
 
+{ #category : #accessing }
+TypLookupIndex >> lookup: aLookup [
+	^ resolver resolve: aLookup
+]
+
 { #category : #initialization }
 TypLookupIndex >> reset [
 	resolver reset

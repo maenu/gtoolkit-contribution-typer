@@ -11,17 +11,17 @@ TypPraVariableLookupResolver >> resolve: aLookup [
 	| pragmas pragma |
 	aLookup push: self.
 	aLookup receiver isNamed
-		ifFalse: [ TypNoTypeError signal ].
+		ifFalse: [ ^ #() ].
 	aLookup receiver hasClassDescription
-		ifFalse: [ TypNoTypeError signal ].
+		ifFalse: [ ^ #() ].
 	pragmas := (aLookup receiver classDescription
 		lookupSelector: #initialize)
-		ifNil: [ TypNoTypeError signal ]
+		ifNil: [ ^ #() ]
 		ifNotNil: #typPraAllPragmas.
 	pragma := pragmas
 		detect: [ :e | 
 			e selector = #typTypeVariable:as:
 				and: [ e arguments first = aLookup selector ] ]
-		ifNone: [ TypNoTypeError signal ].
+		ifNone: [ ^ #() ].
 	^ {(aLookup receiver at: pragma arguments second)}
 ]

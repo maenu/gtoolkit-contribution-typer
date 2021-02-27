@@ -25,13 +25,9 @@ RBMethodNode >> typInfReturnNodes [
 RBMethodNode >> typInfTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	self flag: 'FIXME how to get hold of self?'.
-	^ TypMethodLookupIndex instance
-		argumentTypeFor:
-			(TypMethodLookup
-				receiver: nil
-				selector: self selector asSymbol
-				arguments: self typArgumentTypes)
-		at: anInteger
+	^ (nil
+		lookupMethod: self selector asSymbol
+		arguments: self typArgumentTypes) arguments at: anInteger
 ]
 
 { #category : #'*Typer-Inference' }
@@ -52,12 +48,9 @@ RBMethodNode >> typResultType [
 	<typTypeResultAs: 'TypType'>
 	self flag: 'FIXME how to get hold of self?'.
 	self assert: [ compilationContext isNotNil ].
-	^ TypMethodLookupIndex instance
-		resultTypeFor:
-			(TypMethodLookup
-				receiver: nil
-				selector: self selector asSymbol
-				arguments: self typArgumentTypes)
+	^ (nil
+		lookupMethod: self selector asSymbol
+		arguments: self typArgumentTypes) result
 ]
 
 { #category : #'*Typer-Inference' }

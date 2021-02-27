@@ -5,13 +5,12 @@ Class {
 }
 
 { #category : #shadow }
-TypShaPhaSequenceableCollection class >> mOfSize: aLookup [ 
+TypShaPhaSequenceableCollection class >> mOfSize: aLookup [
 	<typShaMethod: 'ofSize:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ Integer typAsType ];
-		resultType: [ :a | a receiver classDescription instanceSide typAsType ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
+		arguments: {Integer typAsType}
 ]
 
 { #category : #'as yet unclassified' }

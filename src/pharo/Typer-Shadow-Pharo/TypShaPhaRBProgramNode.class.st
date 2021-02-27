@@ -216,12 +216,9 @@ TypShaPhaRBProgramNode >> mPropertyAtIfPresentIfAbsent: aLookup [
 				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
 						and: [ (argumentNode value isKindOf: Symbol)
 								and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ TypMethodLookupIndex instance
-								resultTypeFor:
-									(TypMethodLookup
-										receiver: aLookup receiver
-										selector: argumentNode value asSymbol
-										arguments: #()) ]
+						ifTrue: [ (aLookup receiver
+								lookupMethod: argumentNode value asSymbol
+								arguments: #()) result ]
 						ifFalse: [ TypUnknownType new ] ].
 			{elementType.
 			(aLookup arguments at: 3) result} typAsType ];

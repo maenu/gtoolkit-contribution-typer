@@ -22,10 +22,7 @@ RBGlobalNode >> typTypeRecursive [
 	self binding isGlobalClassNameBinding
 		ifTrue: [ ^ self binding value class typAsType ].
 	self typHasDefiningType
-		ifTrue: [ ^ TypVariableLookupIndex instance
-				typeFor:
-					(TypVariableLookup
-						receiver: self typDefiningType
-						selector: self name asSymbol) ].
+		ifTrue:
+			[ ^ self typDefiningType lookupVariable: self name asSymbol ].
 	^ TypUnknownType new
 ]

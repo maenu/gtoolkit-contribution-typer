@@ -11,9 +11,9 @@ TypInfMethodLookupResolver >> resolve: aLookup [
 	| classDescription selector  |
 	aLookup push: self.
 	aLookup receiver isNamed
-		ifFalse: [ TypNoTypeError signal ].
+		ifFalse: [ ^ #() ].
 	aLookup receiver hasClassDescription
-		ifFalse: [ TypNoTypeError signal ].
+		ifFalse: [ ^ #() ].
 	classDescription := aLookup receiver classDescription.
 	selector := aLookup selector.
 	^ {(classDescription lookupSelector: selector) typInfType}

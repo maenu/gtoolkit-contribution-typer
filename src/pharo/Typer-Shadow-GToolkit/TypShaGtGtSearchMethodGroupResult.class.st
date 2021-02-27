@@ -5,13 +5,12 @@ Class {
 }
 
 { #category : #shadow }
-TypShaGtGtSearchMethodGroupResult class >> mForFilter: aLookup [ 
+TypShaGtGtSearchMethodGroupResult class >> mForFilter: aLookup [
 	<typShaMethod: 'forFilter:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | GtSearchMethodsFilter typAsType ];
-		resultType: [ :a :s :r | a receiver classDescription instanceSide typAsType ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
+		arguments: {GtSearchMethodsFilter typAsType}
 ]
 
 { #category : #'as yet unclassified' }

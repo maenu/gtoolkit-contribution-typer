@@ -5,14 +5,12 @@ Class {
 }
 
 { #category : #shadow }
-TypShaGtGtMethodsCoder class >> mForMethods: aLookup [ 
+TypShaGtGtMethodsCoder class >> mForMethods: aLookup [
 	<typShaMethod: 'forMethods:'>
-	
-	^ TypFunctionType new
-		argumentTypes:
-				[ :i :a :s :r | Collection typAsType copyWithParameters: {CompiledMethod typAsType} ];
-		resultType: [ :a :s :r | a receiver classDescription instanceSide typAsType ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
+		arguments: {(Collection typAsType copyWithParameters: {CompiledMethod typAsType})}
 ]
 
 { #category : #'as yet unclassified' }

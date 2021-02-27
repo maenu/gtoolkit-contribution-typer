@@ -31,18 +31,6 @@ TypVariableLookupIndex class >> instance [
 ]
 
 { #category : #accessing }
-TypVariableLookupIndex >> typeFor: aLookup [
-	<typTypeArgument: 1 as: 'TypLookup'>
-	(resolver resolve: aLookup)
-		do: [ :e"typCastAs TypVariableLookupResult"
-			 | 
-			[ | type |
-			type := e type.
-			type isUnknown
-				ifFalse: [ ^ type ] ]
-				on: Error
-				do: [ :f | 
-					f emit.
-					self flag: 'FIXME signal?' ] ].
-	^ TypUnknownType new
+TypVariableLookupIndex >> lookupReceiver: aType selector: aSymbol [
+	^ self lookup: (TypVariableLookup receiver: aType selector: aSymbol)
 ]

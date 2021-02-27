@@ -5,17 +5,15 @@ Class {
 }
 
 { #category : #shadow }
-TypShaPhaRBPragmaNode class >> mSelectorArguments: aLookup [ 
+TypShaPhaRBPragmaNode class >> mSelectorArguments: aLookup [
 	<typShaMethod: 'selector:arguments:'>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | 
-			i = 1
-				ifTrue: [ Symbol typAsType ]
-				ifFalse: [ SequenceableCollection typAsType
-						copyWithParameters: {RBLiteralValueNode typAsType} ] ];
-		resultType: [ :a :s :r | RBPragmaNode typAsType ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: RBPragmaNode typAsType
+		arguments:
+			{Symbol typAsType.
+			(SequenceableCollection typAsType
+				copyWithParameters: {RBLiteralValueNode typAsType})}
 ]
 
 { #category : #'as yet unclassified' }

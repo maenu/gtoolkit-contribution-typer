@@ -5,13 +5,12 @@ Class {
 }
 
 { #category : #shadow }
-TypShaPhaAnnouncement class >> mBinary77: aLookup [ 
+TypShaPhaAnnouncement class >> mBinary77: aLookup [
 	<typShaMethod: ','>
-	
-	^ TypFunctionType new
-		argumentTypes: [ :i :a :s :r | Announcement class typAsType ];
-		resultType: [ :a :s :r | TypUnknownType new ];
-		yourself
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: TypUnknownType new
+		arguments: {Announcement class typAsType}
 ]
 
 { #category : #'as yet unclassified' }
