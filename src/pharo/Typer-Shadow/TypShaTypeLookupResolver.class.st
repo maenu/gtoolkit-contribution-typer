@@ -5,10 +5,7 @@ Class {
 }
 
 { #category : #accessing }
-TypShaTypeLookupResolver >> resolve: aLookup [
-	<typTypeArgument: 1 as: 'TypClassDescriptionLookup'>
-	<typTypeResultAs: 'SequenceableCollection<TypClassDescriptionLookupResult>'>
-	aLookup push: self.
+TypShaTypeLookupResolver >> resolveBasic: aLookup [
 	^ aLookup classDescription typShaShadows
-		collect: [ :f | f resolveType: aLookup copy ]
+		collect: [ :f | f resolveType: aLookup ]
 ]

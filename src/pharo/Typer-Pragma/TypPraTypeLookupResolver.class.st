@@ -5,11 +5,8 @@ Class {
 }
 
 { #category : #accessing }
-TypPraTypeLookupResolver >> resolve: aLookup [
-	<typTypeArgument: 1 as: 'TypTypeLookup'>
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
+TypPraTypeLookupResolver >> resolveBasic: aLookup [
 	| classDescription pragmas parameters bindings superTypeBindings |
-	aLookup push: self.
 	classDescription := aLookup classDescription.
 	pragmas := (classDescription lookupSelector: #initialize)
 		ifNil: [ ^ #() ]
@@ -17,7 +14,7 @@ TypPraTypeLookupResolver >> resolve: aLookup [
 	parameters := pragmas
 		detect: [ :e | e selector = #typParameters: ]
 		ifFound: [ :e | e arguments first typAsTypes ]
-		ifNone: [ {} ].
+		ifNone: [ #() ].
 	bindings := (parameters asSet collect: [ :e | e name -> e ])
 		asDictionary.
 	(pragmas select: [ :e | e selector = #typBind:to: ])

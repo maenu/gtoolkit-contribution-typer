@@ -22,8 +22,7 @@ TypCachingLookupResolver >> reset [
 ]
 
 { #category : #accessing }
-TypCachingLookupResolver >> resolve: aLookup [
-	aLookup push: self.
+TypCachingLookupResolver >> resolveBasic: aLookup [
 	^ cache
 		at: aLookup
 		ifAbsent: [ cache at: aLookup put: #().

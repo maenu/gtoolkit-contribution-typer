@@ -11,7 +11,14 @@ TypLookupResolver >> reset [
 
 { #category : #accessing }
 TypLookupResolver >> resolve: aLookup [
-	<typTypeArgument: 1 as: 'TypLookup'>
-	<typTypeResultAs: 'SequenceableCollection<TypLookupResult>'>
+	| types |
+	aLookup push: self.
+	types := self resolveBasic: aLookup.
+	self assert: [ types allSatisfy: [ :e | e origin isNotNil ] ].
+	^ types
+]
+
+{ #category : #accessing }
+TypLookupResolver >> resolveBasic: aLookup [
 	self subclassResponsibility
 ]

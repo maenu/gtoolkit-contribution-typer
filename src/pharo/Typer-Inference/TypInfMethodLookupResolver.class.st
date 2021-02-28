@@ -5,16 +5,15 @@ Class {
 }
 
 { #category : #accessing }
-TypInfMethodLookupResolver >> resolve: aLookup [
-	<typTypeArgument: 1 as: 'TypVariableLookup'>
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	| classDescription selector  |
-	aLookup push: self.
+TypInfMethodLookupResolver >> resolveBasic: aLookup [
+	| classDescription selector |
 	aLookup receiver isNamed
 		ifFalse: [ ^ #() ].
 	aLookup receiver hasClassDescription
 		ifFalse: [ ^ #() ].
 	classDescription := aLookup receiver classDescription.
 	selector := aLookup selector.
-	^ {(classDescription lookupSelector: selector) typInfType}
+	^ {((classDescription lookupSelector: selector) typInfType
+		origin: aLookup asOrigin;
+		yourself)}
 ]

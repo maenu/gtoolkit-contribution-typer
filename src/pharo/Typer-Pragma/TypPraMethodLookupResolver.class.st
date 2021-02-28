@@ -5,11 +5,8 @@ Class {
 }
 
 { #category : #accessing }
-TypPraMethodLookupResolver >> resolve: aLookup [
-	<typTypeArgument: 1 as: 'TypMethodLookup'>
-	<typTypeResultAs: 'SequenceableCollection<TypFunctionType>'>
+TypPraMethodLookupResolver >> resolveBasic: aLookup [
 	| classDescription method pragmas argumentPragmas resultPragma signalsAlwaysPragma arguments result signalsAlways |
-	aLookup push: self.
 	aLookup receiver isNamed
 		ifFalse: [ ^ #() ].
 	aLookup receiver hasClassDescription
@@ -42,10 +39,12 @@ TypPraMethodLookupResolver >> resolve: aLookup [
 	signalsAlways := signalsAlwaysPragma
 		ifNil: [ nil ]
 		ifNotNil: [ signalsAlwaysPragma arguments first ifNotNil: #asBoolean ].
-	^ {(TypFunctionType
+	^ {((TypFunctionType
 		classDescription: classDescription
 		result: result
 		arguments: arguments
 		argumentsOptional: false
-		signalsAlways: signalsAlways)}
+		signalsAlways: signalsAlways)
+		origin: aLookup asOrigin;
+		yourself)}
 ]

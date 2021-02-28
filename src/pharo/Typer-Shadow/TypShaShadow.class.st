@@ -44,11 +44,14 @@ TypShaShadow class >> resetAll [
 	self allSubclassesDo: #reset
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaShadow class >> resolveMethod: aLookup [
 	^ (self class methods
 		select: [ :e | e typShaResolvesMethod: aLookup selector ])
-		collect: [ :e | self perform: e selector with: aLookup ]
+		collect: [ :e | 
+			(self perform: e selector with: aLookup)
+				origin: aLookup asOrigin;
+				yourself ]
 ]
 
 { #category : #accessing }
@@ -58,11 +61,14 @@ TypShaShadow class >> resolveType: aLookup [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaShadow class >> resolveVariable: aLookup [
 	^ (self class methods
 		select: [ :e | e typShaResolvesVariable: aLookup selector ])
-		collect: [ :e | self perform: e selector with: aLookup ]
+		collect: [ :e | 
+			(self perform: e selector with: aLookup)
+				origin: aLookup asOrigin;
+				yourself ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -87,11 +93,14 @@ TypShaShadow >> priority: anObject [
 	priority := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaShadow >> resolveMethod: aLookup [
 	^ (self class methods
 		select: [ :e | e typShaResolvesMethod: aLookup selector ])
-		collect: [ :e | self perform: e selector with: aLookup ]
+		collect: [ :e | 
+			(self perform: e selector with: aLookup)
+				origin: aLookup asOrigin;
+				yourself ]
 ]
 
 { #category : #converting }
@@ -101,11 +110,14 @@ TypShaShadow >> resolveType: aLookup [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaShadow >> resolveVariable: aLookup [
 	^ (self class methods
 		select: [ :e | e typShaResolvesVariable: aLookup selector ])
-		collect: [ :e | self perform: e selector with: aLookup ]
+		collect: [ :e | 
+			(self perform: e selector with: aLookup)
+				origin: aLookup asOrigin;
+				yourself ]
 ]
 
 { #category : #accessing }

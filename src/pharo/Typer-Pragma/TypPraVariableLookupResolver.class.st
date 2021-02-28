@@ -5,11 +5,8 @@ Class {
 }
 
 { #category : #accessing }
-TypPraVariableLookupResolver >> resolve: aLookup [
-	<typTypeArgument: 1 as: 'TypVariableLookup'>
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
+TypPraVariableLookupResolver >> resolveBasic: aLookup [
 	| pragmas pragma |
-	aLookup push: self.
 	aLookup receiver isNamed
 		ifFalse: [ ^ #() ].
 	aLookup receiver hasClassDescription
@@ -23,5 +20,8 @@ TypPraVariableLookupResolver >> resolve: aLookup [
 			e selector = #typTypeVariable:as:
 				and: [ e arguments first = aLookup selector ] ]
 		ifNone: [ ^ #() ].
-	^ {(aLookup receiver at: pragma arguments second)}
+	self flag: 'FIXME parameters not covered yet, scopes'.
+	^ {(pragma arguments second typAsType
+		origin: aLookup asOrigin;
+		yourself)}
 ]

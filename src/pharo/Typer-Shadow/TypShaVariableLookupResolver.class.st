@@ -5,14 +5,11 @@ Class {
 }
 
 { #category : #accessing }
-TypShaVariableLookupResolver >> resolve: aLookup [
-	<typTypeArgument: 1 as: 'TypVariableLookup'>
-	<typTypeResultAs: 'SequenceableCollection<TypVariableLookup>'>
-	aLookup push: self.
+TypShaVariableLookupResolver >> resolveBasic: aLookup [
 	aLookup receiver isNamed
 		ifFalse: [ ^ #() ].
 	aLookup receiver hasClassDescription
 		ifFalse: [ ^ #() ].
 	^ aLookup receiver classDescription typShaShadows
-		flatCollect: [ :f | f resolveVariable: aLookup copy ]
+		flatCollect: [ :f | f resolveVariable: aLookup ]
 ]
