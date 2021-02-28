@@ -21,7 +21,7 @@ TypDynCollector >> collectIn: aCollection doing: aBlock [
 	variableTypes := Dictionary new "typParameters Association<ClassDescription,Symbol>,TypVariableResolver<TypVariableLookup>".
 	asts := aCollection collect: [ :e | e ast
 		doSemanticAnalysis;
-		typTypeReset;
+		typInfTypeReset;
 		typDynInstall ].
 	[ result := aBlock value.
 	methodResults := self collectMethodResultsIn: asts.
@@ -52,7 +52,7 @@ TypDynCollector >> collectIn: aCollection running: someTestCases [
 		collect: [ :e | 
 			e ast
 				doSemanticAnalysis;
-				typTypeReset;
+				typInfTypeReset;
 				typDynInstall ].
 	TestCase class announcer when: TestCaseEnded send: #stash to: self.
 	[ someTestCases

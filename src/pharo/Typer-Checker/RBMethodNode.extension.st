@@ -71,20 +71,20 @@ RBMethodNode >> typCheHasMissingMethods [
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasNullableArguments [
 	<typTypeResultAs: 'Boolean'>
-	^ ((((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode" flatCollect: #arguments) select: [ :e | e typType isNullable ])
+	^ ((((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode" flatCollect: #arguments) select: [ :e | e typInfType isNullable ])
 		anySatisfy: [ :e | 
 			| e_ i expected actual |
 			e_ := (e parent) "typCastAs RBMessageNode".
 			i := e_ arguments detectIndex: [ :f | f == e ].
 			expected := e_ typInfTypeForArgumentAt: i.
-			actual := e typType.
+			actual := e typInfType.
 			(expected >= actual) not and: [ expected >= actual asNonNullable ] ]
 ]
 
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasNullableReceivers [
 	<typTypeResultAs: 'Boolean'>
-	^ ((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode" anySatisfy: [ :e | e receiver typType isNullable and: [ (e receiver typType canUnderstand: e selector) not ] ]
+	^ ((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode" anySatisfy: [ :e | e receiver typInfType isNullable and: [ (e receiver typInfType canUnderstand: e selector) not ] ]
 ]
 
 { #category : #'*Typer-Checker' }
@@ -128,13 +128,13 @@ RBMethodNode >> typCheHasUnknownArgumentsPassed [
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasUnknownReceivers [
 	<typTypeResultAs: 'Boolean'>
-	^ ((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode" anySatisfy: [ :e | e receiver typType isUnknown ]
+	^ ((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode" anySatisfy: [ :e | e receiver typInfType isUnknown ]
 ]
 
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasUnknownResult [
 	<typTypeResultAs: 'Boolean'>
-	^ self typResultType isUnknown
+	^ self typInfResult isUnknown
 ]
 
 { #category : #'*Typer-Checker' }
@@ -145,7 +145,7 @@ RBMethodNode >> typCheHasUnknownTemporaries [
 			e isTemp
 				and:
 					[ e isArgument not and: [ e isDefinition	"typCastAs RBTemporaryNode" ] ] ])
-		anySatisfy: [ :e | e typType isUnknown ]
+		anySatisfy: [ :e | e typInfType isUnknown ]
 ]
 
 { #category : #'*Typer-Checker' }

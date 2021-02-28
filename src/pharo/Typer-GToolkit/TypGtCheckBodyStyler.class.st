@@ -36,7 +36,7 @@ TypGtCheckBodyStyler >> markUnknowns: anObject [
 
 { #category : #styling }
 TypGtCheckBodyStyler >> style: aText ast: anAst [
-	anAst typType.
+	anAst typInfType.
 	super style: aText ast: anAst
 ]
 
@@ -72,14 +72,14 @@ TypGtCheckBodyStyler >> styleSelectorOf: aNode color: aColor [
 { #category : #visiting }
 TypGtCheckBodyStyler >> visitArgumentNode: aNode [
 	super visitArgumentNode: aNode.
-	aNode typType isUnknown
+	aNode typInfType isUnknown
 		ifTrue: [ markUnknowns ifTrue: [ self styleNode: aNode color: Color blue ] ]
 ]
 
 { #category : #visiting }
 TypGtCheckBodyStyler >> visitAssignmentNode: aNode [
 	super visitAssignmentNode: aNode.
-	aNode value typType isUnknown
+	aNode value typInfType isUnknown
 		ifTrue: [ markUnknowns ifTrue: [ self styleNode: aNode value color: Color blue ] ]
 		ifFalse: [ [ aNode typCheCheckCompatibility ]
 				on: TypCheError
@@ -89,7 +89,7 @@ TypGtCheckBodyStyler >> visitAssignmentNode: aNode [
 { #category : #visiting }
 TypGtCheckBodyStyler >> visitMessageNode: aNode [
 	super visitMessageNode: aNode.
-	aNode receiver typType isUnknown
+	aNode receiver typInfType isUnknown
 		ifTrue: [ markUnknowns ifTrue: [ self styleNode: aNode color: Color blue ] ]
 		ifFalse: [ [ aNode typCheCheckMethod.
 			aNode typCheCheckReceiver ]
@@ -97,7 +97,7 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 				do: [ :e | self styleSelectorOf: aNode color: e color ] ].
 	aNode arguments
 		withIndexDo: [ :e :i | 
-			(e typType isUnknown or: [ (aNode typInfTypeForArgumentAt: i) isUnknown ])
+			(e typInfType isUnknown or: [ (aNode typInfTypeForArgumentAt: i) isUnknown ])
 				ifTrue: [ markUnknowns ifTrue: [ self styleNode: e color: Color blue ] ]
 				ifFalse: [ [ aNode typCheCheckArgumentCompatibilityAt: i ]
 						on: TypCheError
@@ -111,7 +111,7 @@ TypGtCheckBodyStyler >> visitMethodNode: aNode [
 	node := aNode == coder rbAST
 		ifTrue: [ aNode ]
 		ifFalse: [ coder rbAST
-				typType;
+				typInfType;
 				yourself ].
 	node typCheHasUnknownResult
 		ifTrue: [ markUnknowns
@@ -143,7 +143,7 @@ TypGtCheckBodyStyler >> visitMethodNode: aNode [
 { #category : #visiting }
 TypGtCheckBodyStyler >> visitReturnNode: aNode [
 	super visitReturnNode: aNode.
-	aNode typType isUnknown
+	aNode typInfType isUnknown
 		ifTrue: [ markUnknowns
 				ifTrue: [ self styleNode: aNode color: Color blue ] ]
 		ifFalse: [ [ aNode typCheCheckCompatibility.
@@ -155,7 +155,7 @@ TypGtCheckBodyStyler >> visitReturnNode: aNode [
 { #category : #visiting }
 TypGtCheckBodyStyler >> visitTemporaryNode: aNode [
 	super visitTemporaryNode: aNode.
-	(aNode isDefinition and: [ aNode typType isUnknown ])
+	(aNode isDefinition and: [ aNode typInfType isUnknown ])
 		ifTrue: [ markUnknowns
 				ifTrue: [ self styleNode: aNode color: Color blue ] ]
 ]

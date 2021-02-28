@@ -18,14 +18,14 @@ CompiledMethod >> typInfType [
 					(e value
 						collect: [ :f | 
 							f parent isAssignment
-								ifTrue: [ f parent variable typType ]
+								ifTrue: [ f parent variable typInfType ]
 								ifFalse: [ f parent typInfTypeForArgumentAt: (f parent arguments indexOf: f) ] ])
 						typAsType ]) asDictionary.
 	ast typInfIsReturnSelf
 		ifTrue: [ resultType := ast typInfSelf ]
 		ifFalse: [ (self isAbstract not and: [ ast isPrimitive not ])
 				ifTrue: [ | types |
-					types := ast typInfReturnNodes collect: #typType.
+					types := ast typInfReturnNodes collect: #typInfType.
 					ast lastIsReturn
 						ifTrue: [ resultType := types typAsType ]
 						ifFalse: [ resultType := (types , {ast typInfSelf}) typAsType ] ] ].

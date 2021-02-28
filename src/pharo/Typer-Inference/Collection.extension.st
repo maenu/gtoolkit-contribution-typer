@@ -1,15 +1,15 @@
 Extension { #name : #Collection }
 
 { #category : #'*Typer-Inference' }
-Collection >> typSelfType [
+Collection >> typInfSelfType [
 	| type |
-	type := super typSelfType.
+	type := super typInfSelfType.
 	^ type
-		copyWithParameters: {(self typSelfTypeSamples collect: #typAsType) typAsType}
+		copyWithParameters: {(self typInfSelfTypeSamples collect: #typAsType) typAsType}
 ]
 
 { #category : #'*Typer-Inference' }
-Collection >> typSelfTypeSamples [
+Collection >> typInfSelfTypeSamples [
 	| pool |
 	self size < 128
 		ifTrue: [ ^ self ].

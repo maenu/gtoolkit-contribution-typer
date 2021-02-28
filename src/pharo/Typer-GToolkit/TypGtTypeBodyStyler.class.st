@@ -7,7 +7,7 @@ Class {
 { #category : #styling }
 TypGtTypeBodyStyler >> style: aText ast: anAst [
 	text := aText.
-	anAst typType.
+	anAst typInfType.
 	super style: aText ast: anAst
 ]
 
@@ -25,7 +25,7 @@ TypGtTypeBodyStyler >> styleValueNode: aNode [
 		to: aNode stop
 		with:
 			{(TypGtTypeAttribute new
-				type_: aNode typType;
+				type_: aNode typInfType;
 				yourself)}
 ]
 

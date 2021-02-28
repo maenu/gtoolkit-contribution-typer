@@ -1,7 +1,7 @@
 Extension { #name : #Object }
 
 { #category : #'*Typer-Inference' }
-Object >> typSelfType [
+Object >> typInfSelfType [
 	<typTypeResultAs: 'TypType'>
 	^ self class typAsType
 ]

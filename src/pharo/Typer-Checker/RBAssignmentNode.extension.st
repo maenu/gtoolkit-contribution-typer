@@ -3,8 +3,8 @@ Extension { #name : #RBAssignmentNode }
 { #category : #'*Typer-Checker' }
 RBAssignmentNode >> typCheCheckCompatibility [
 	| expected actual |
-	expected := self variable typType.
-	actual := self value typType.
+	expected := self variable typInfType.
+	actual := self value typInfType.
 	(expected isUnknown or: [ actual isUnknown ])
 		ifTrue: [ ^ self ].
 	expected >= actual
@@ -13,7 +13,7 @@ RBAssignmentNode >> typCheCheckCompatibility [
 		and: [ self value isBlock
 				and: [ | block |
 					block := self value "typCastAs RBBlockNode".
-					(block body typSignalsAlways = true
+					(block body typInfSignalsAlways = true
 						or: [ block body lastIsReturn ])
 						and: [ | functions |
 							functions := expected isUnion

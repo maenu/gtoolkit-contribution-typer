@@ -1,11 +1,11 @@
 Extension { #name : #RBReturnNode }
 
 { #category : #'*Typer-Inference' }
-RBReturnNode >> typSignalsAlways [
-	^ self value typSignalsAlways
+RBReturnNode >> typInfSignalsAlways [
+	^ self value typInfSignalsAlways
 ]
 
 { #category : #'*Typer-Inference' }
-RBReturnNode >> typTypeRecursive [
-	^ self value typType
+RBReturnNode >> typInfTypeRecursive [
+	^ self value typInfType
 ]

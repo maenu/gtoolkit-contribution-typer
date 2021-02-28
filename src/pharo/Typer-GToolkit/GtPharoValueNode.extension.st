@@ -5,5 +5,5 @@ GtPharoValueNode >> typGtGuessType: aStrategy in: anRbNode [
 	<typTypeArgument: 1 as: 'TypGtPharoCompletionStrategy'>
 	<typTypeArgument: 2 as: 'RBProgramNode'>
 	<typTypeResultAs: 'TypType'>
-	^ anRbNode typType
+	^ anRbNode typInfType
 ]

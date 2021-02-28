@@ -12,7 +12,7 @@ GtSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 	self
 		notifyObjectSpawn:
 			(TypGtCoderTypeFilter new
-				type: node receiver typType;
+				type: node receiver typInfType;
 				yourself) & (GtSearchImplementorsFilter selector: node selector)
 ]
 

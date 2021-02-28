@@ -1,47 +1,29 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer-Inference' }
-RBMessageNode >> typArgumentTypes [
+RBMessageNode >> typInfArguments [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	^ self arguments collect: #typType
+	^ self arguments collect: #typInfType
 ]
 
 { #category : #'*Typer-Inference' }
-RBMessageNode >> typInfTypeForArgumentAt: anInteger [
-	<typTypeArgument: 1 as: 'Integer'>
-	| key |
-	key := #typTypeForArgument , anInteger asString.
-	^ self
-		propertyAt: key
-		ifAbsentPut: [ "typCastAs TypType"
-			| receiverType argumentTypes |
-			"need to set property to default to unknown on recursive calls"
-			self propertyAt: key put: TypUnknownType new.
-			receiverType := self typReceiverType.
-			argumentTypes := self typArgumentTypes.
-			(receiverType
-				lookupMethod: self selector asSymbol
-				arguments: argumentTypes) arguments at: anInteger ]
-]
-
-{ #category : #'*Typer-Inference' }
-RBMessageNode >> typReceiverType [
+RBMessageNode >> typInfReceiver [
 	<typTypeResultAs: 'TypType'>
-	^ self receiver typType
+	^ self receiver typInfType
 ]
 
 { #category : #'*Typer-Inference' }
-RBMessageNode >> typResultType [
+RBMessageNode >> typInfResult [
 	| key |
-	key := #typResultType.
+	key := #typInfResult.
 	^ self
 		propertyAt: key
 		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
 			"typCastAs TypType"
 			| receiverType argumentTypes |
 			self propertyAt: key put: TypUnknownType new.
-			receiverType := self typReceiverType.
-			argumentTypes := self typArgumentTypes.
+			receiverType := self typInfReceiver.
+			argumentTypes := self typInfArguments.
 			((receiverType canUnderstand: self selector asSymbol) not
 				and: [ receiverType asNonNullable canUnderstand: self selector asSymbol ])
 				ifTrue: [ receiverType := receiverType asNonNullable ].
@@ -51,17 +33,17 @@ RBMessageNode >> typResultType [
 ]
 
 { #category : #'*Typer-Inference' }
-RBMessageNode >> typSignalsAlways [
+RBMessageNode >> typInfSignalsAlways [
 	| key |
-	key := #typSignalsAlways.
+	key := #typInfSignalsAlways.
 	^ self
 		propertyAt: key
 		ifAbsentPut: [ "need to set property to default to unknown on recursive calls"
 			"typCastAs {!,Boolean}"
 			| receiverType argumentTypes |
 			self propertyAt: key put: nil.
-			receiverType := self typReceiverType.
-			argumentTypes := self typArgumentTypes.
+			receiverType := self typInfReceiver.
+			argumentTypes := self typInfArguments.
 			receiverType isUnion
 				ifTrue: [ | signalsAlways |
 					signalsAlways := receiverType types
@@ -77,6 +59,24 @@ RBMessageNode >> typSignalsAlways [
 ]
 
 { #category : #'*Typer-Inference' }
-RBMessageNode >> typTypeRecursive [
-	^ self typResultType
+RBMessageNode >> typInfTypeForArgumentAt: anInteger [
+	<typTypeArgument: 1 as: 'Integer'>
+	| key |
+	key := #typTypeForArgument , anInteger asString.
+	^ self
+		propertyAt: key
+		ifAbsentPut: [ "typCastAs TypType"
+			| receiverType argumentTypes |
+			"need to set property to default to unknown on recursive calls"
+			self propertyAt: key put: TypUnknownType new.
+			receiverType := self typInfReceiver.
+			argumentTypes := self typInfArguments.
+			(receiverType
+				lookupMethod: self selector asSymbol
+				arguments: argumentTypes) arguments at: anInteger ]
+]
+
+{ #category : #'*Typer-Inference' }
+RBMessageNode >> typInfTypeRecursive [
+	^ self typInfResult
 ]

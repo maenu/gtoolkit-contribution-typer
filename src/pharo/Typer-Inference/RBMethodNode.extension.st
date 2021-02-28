@@ -1,9 +1,9 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Inference' }
-RBMethodNode >> typArgumentTypes [
+RBMethodNode >> typInfArguments [
 	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	^ self arguments collect: #typType
+	^ self arguments collect: #typInfType
 ]
 
 { #category : #'*Typer-Inference' }
@@ -16,9 +16,36 @@ RBMethodNode >> typInfIsReturnSelf [
 ]
 
 { #category : #'*Typer-Inference' }
+RBMethodNode >> typInfReceiver [
+	self flag: 'FIXME implement'
+]
+
+{ #category : #'*Typer-Inference' }
+RBMethodNode >> typInfResult [
+	<typTypeResultAs: 'TypType'>
+	self flag: 'FIXME how to get hold of self?'.
+	self assert: [ compilationContext isNotNil ].
+	^ (nil
+		lookupMethod: self selector asSymbol
+		arguments: self typInfArguments) result
+]
+
+{ #category : #'*Typer-Inference' }
 RBMethodNode >> typInfReturnNodes [
 	<typTypeResultAs: 'SequenceableCollection<RBReturnNode>'>
 	^ (self allChildren select: #isReturn) "typParameters RBReturnNode"
+]
+
+{ #category : #'*Typer-Inference' }
+RBMethodNode >> typInfSignalsAlways [
+	^ self body typInfSignalsAlways
+]
+
+{ #category : #'*Typer-Inference' }
+RBMethodNode >> typInfTemporaryProfile [
+	<typTypeResultAs: 'SequenceableCollection<Association<RBProgramNode,TypType>>'>
+	^ (self allChildren select: [ :e | e isVariable or: [ e isReturn ] ])
+		collect: [ :e | e -> e typInfType ]
 ]
 
 { #category : #'*Typer-Inference' }
@@ -27,7 +54,7 @@ RBMethodNode >> typInfTypeForArgumentAt: anInteger [
 	self flag: 'FIXME how to get hold of self?'.
 	^ (nil
 		lookupMethod: self selector asSymbol
-		arguments: self typArgumentTypes) arguments at: anInteger
+		arguments: self typInfArguments) arguments at: anInteger
 ]
 
 { #category : #'*Typer-Inference' }
@@ -39,67 +66,40 @@ RBMethodNode >> typInfTypeForArgumentNamed: aString [
 ]
 
 { #category : #'*Typer-Inference' }
-RBMethodNode >> typReceiverType [
-	self flag: 'FIXME implement'
-]
-
-{ #category : #'*Typer-Inference' }
-RBMethodNode >> typResultType [
-	<typTypeResultAs: 'TypType'>
-	self flag: 'FIXME how to get hold of self?'.
-	self assert: [ compilationContext isNotNil ].
-	^ (nil
-		lookupMethod: self selector asSymbol
-		arguments: self typArgumentTypes) result
-]
-
-{ #category : #'*Typer-Inference' }
-RBMethodNode >> typSignalsAlways [
-	^ self body typSignalsAlways
-]
-
-{ #category : #'*Typer-Inference' }
-RBMethodNode >> typTemporaryProfile [
-	<typTypeResultAs: 'SequenceableCollection<Association<RBProgramNode,TypType>>'>
-	^ (self allChildren select: [ :e | e isVariable or: [ e isReturn ] ])
-		collect: [ :e | e -> e typType ]
-]
-
-{ #category : #'*Typer-Inference' }
-RBMethodNode >> typTypeRecursive [
+RBMethodNode >> typInfTypeRecursive [
 	<typTypeResultAs: 'TypType'>
 	| iterations maxIterations oldTemporaryProfiles newTemporaryProfile |
 	self
-		typTypeReset;
+		typInfTypeReset;
 		doSemanticAnalysis;
 		propertyAt: #typFixPoint put: false.
 	iterations := 0.
 	maxIterations := 5.
 	oldTemporaryProfiles := Set new.
-	newTemporaryProfile := self typTemporaryProfile.
+	newTemporaryProfile := self typInfTemporaryProfile.
 	[ | oldTemporaryProfile |
 	iterations := iterations + 1.
 	oldTemporaryProfiles add: newTemporaryProfile.
-	self typTypeReset.
+	self typInfTypeReset.
 	newTemporaryProfile
-		do: [ :e | e key propertyAt: #typType put: e value ].
+		do: [ :e | e key propertyAt: #typInfType put: e value ].
 	(self allChildren
 		copyWithoutAll: (newTemporaryProfile collect: #key) , {self})
-		do: [ :e | e typType ].
+		do: [ :e | e typInfType ].
 	(newTemporaryProfile collect: #key)
 		do: [ :e | 
 			e
-				typTypeReset;
-				typType ].
+				typInfTypeReset;
+				typInfType ].
 	oldTemporaryProfile := newTemporaryProfile.
-	newTemporaryProfile := self typTemporaryProfile.
+	newTemporaryProfile := self typInfTemporaryProfile.
 	oldTemporaryProfile = newTemporaryProfile
 		ifTrue: [ self propertyAt: #typFixPoint put: true ].
 	(oldTemporaryProfiles includes: newTemporaryProfile) not
 		and: [ iterations < maxIterations ] ] whileTrue.
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: self typResultType
-		arguments: self typArgumentTypes
+		typAsFunctionTypeWithResult: self typInfResult
+		arguments: self typInfArguments
 		argumentsOptional: false
-		signalsAlways: self typSignalsAlways
+		signalsAlways: self typInfSignalsAlways
 ]

@@ -6,7 +6,7 @@ CompiledMethod >> typGtElement [
 		in: [ :e | 
 			| color |
 			color := self ast
-				typType;
+				typInfType;
 				typCheColor.
 			(self ast typCheHasUnknownArguments not
 				and: [ self ast typCheHasUnknownResult not ])

@@ -1,7 +1,7 @@
 Extension { #name : #OCAbstractVariable }
 
 { #category : #'*Typer-Inference' }
-OCAbstractVariable >> typIsFromSharedPool [
+OCAbstractVariable >> typInfIsFromSharedPool [
 	<typTypeResultAs: 'Boolean'>
 	^ false
 ]

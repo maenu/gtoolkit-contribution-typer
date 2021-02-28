@@ -30,7 +30,7 @@ RBReturnNode >> typDynReturn: anObject [
 	<typTypeArgument: 1 as: 'Object'>
 	SharedRandom globalGenerator next
 		< (1 - (self typDynReturns weights size / 200))
-		ifTrue: [ self typDynReturns add: anObject typSelfType ].
+		ifTrue: [ self typDynReturns add: anObject typInfSelfType ].
 	self typDynReturns weights size >= 100
 		ifTrue: [ self typDynRemoveLink ]
 ]

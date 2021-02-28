@@ -19,7 +19,7 @@ TypLookupIndex class >> instance [
 { #category : #initialization }
 TypLookupIndex class >> reset [
 	<script>
-	self instance reset.
+	instance ifNotNil: #reset.
 	instance := nil
 ]
 

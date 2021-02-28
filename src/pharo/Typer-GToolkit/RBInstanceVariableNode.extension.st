@@ -25,7 +25,7 @@ RBInstanceVariableNode >> typGtFiltersToTypeWithShadow [
 	clazz := (type isNamed and: [ type hasClassDescription ])
 		ifTrue: [ type classDescription ]
 		ifFalse: [ Object ].
-	variableType := self typType.
+	variableType := self typInfType.
 	shadows := (TypShaShadow typGtShadowFor: clazz)
 		ifEmpty: [ {(TypShaShadow typGtNewShadowFor: clazz)} ]
 		ifNotEmpty: #yourself.

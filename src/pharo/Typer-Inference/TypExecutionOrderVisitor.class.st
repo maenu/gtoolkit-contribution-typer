@@ -78,7 +78,7 @@ TypExecutionOrderVisitor >> visitAssignmentNode: aNode [
 	(stopped not and: [ aNode variable name = node name ])
 		ifTrue: [ (aNode parentSuchAs: #isSequence) == definer
 				ifTrue: [ types removeAll ].
-			types add: aNode value typType ].
+			types add: aNode value typInfType ].
 	self visitNode: aNode variable.
 ]
 

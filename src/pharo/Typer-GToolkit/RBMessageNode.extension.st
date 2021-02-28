@@ -9,7 +9,7 @@ RBMessageNode >> typGtCanType [
 RBMessageNode >> typGtFiltersToTypeWithPragma [
 	<typTypeResultAs: 'GtCoderMethodsFilter'>
 	^ (TypGtCoderTypeFilter new
-		type: self receiver typType;
+		type: self receiver typInfType;
 		yourself) & (GtSearchImplementorsFilter selector: self selector)
 ]
 
@@ -17,13 +17,13 @@ RBMessageNode >> typGtFiltersToTypeWithPragma [
 RBMessageNode >> typGtFiltersToTypeWithShadow [
 	<typTypeResultAs: 'GtCoderMethodsFilter'>
 	| type clazz shadows argumentTypes resultType |
-	type := self receiver typType.
+	type := self receiver typInfType.
 	clazz := (type isNamed and: [ type hasClassDescription ])
 		ifTrue: [ type classDescription ]
 		ifFalse: [ Object ].
 	argumentTypes := self numArgs
 		timesCollect: [ :i | self typInfTypeForArgumentAt: i ].
-	resultType := self typResultType.
+	resultType := self typInfResult.
 	shadows := (TypShaShadow typGtShadowFor: clazz)
 		ifEmpty: [ {(TypShaShadow typGtNewShadowFor: clazz)} ]
 		ifNotEmpty: #yourself.
@@ -48,5 +48,5 @@ RBMessageNode >> typGtFiltersToTypeWithShadow [
 { #category : #'*Typer-GToolkit' }
 RBMessageNode >> typGtInvokedMethods [
 	^ super typGtInvokedMethods
-		, (self typReceiverType lookupSelector: self selector)
+		, (self typInfReceiver lookupSelector: self selector)
 ]

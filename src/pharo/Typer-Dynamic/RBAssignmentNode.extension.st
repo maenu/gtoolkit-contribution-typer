@@ -5,7 +5,7 @@ RBAssignmentNode >> typDynAssign: anObject [
 	<typTypeArgument: 1 as: 'Object'>
 	SharedRandom globalGenerator next
 		< (1 - (self typDynAssigns weights size / 200))
-		ifTrue: [ self typDynAssigns add: anObject typSelfType ].
+		ifTrue: [ self typDynAssigns add: anObject typInfSelfType ].
 	self typDynAssigns weights size >= 100
 		ifTrue: [ self typDynRemoveLink ]
 ]

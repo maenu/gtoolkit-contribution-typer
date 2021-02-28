@@ -1,14 +1,14 @@
 Extension { #name : #Dictionary }
 
 { #category : #'*Typer-Inference' }
-Dictionary >> typSelfType [
+Dictionary >> typInfSelfType [
 	| type |
-	type := super typSelfType.
+	type := super typInfSelfType.
 	(type isParametric and: [ type parameters size = 2 ])
 		ifTrue: [ | types |
 			type := type copy.
 			"infer parametric type from elements, using only generic types to avoid infinite loop"
-			types := (self typSelfTypeSamples
+			types := (self typInfSelfTypeSamples
 				inject:
 					(OrderedCollection
 						with: OrderedCollection new
@@ -25,7 +25,7 @@ Dictionary >> typSelfType [
 ]
 
 { #category : #'*Typer-Inference' }
-Dictionary >> typSelfTypeSamples [
+Dictionary >> typInfSelfTypeSamples [
 	| pool |
 	self size < 128
 		ifTrue: [ ^ self ].

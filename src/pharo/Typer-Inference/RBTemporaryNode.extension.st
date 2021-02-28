@@ -1,7 +1,7 @@
 Extension { #name : #RBTemporaryNode }
 
 { #category : #'*Typer-Inference' }
-RBTemporaryNode >> typTypeRecursive [
+RBTemporaryNode >> typInfTypeRecursive [
 	self isDefinition
 		ifTrue: [ | type |
 			self flag: 'FIXME should either not be here, or inf sends should be moved here'.
@@ -11,7 +11,7 @@ RBTemporaryNode >> typTypeRecursive [
 			type isUnknown
 				ifTrue: [ type := self typInfTypeAssigned ].
 			^ type ].
-	self typIsAssignedTo
-		ifTrue: [ ^ self parent value typType ].
+	self typInfIsAssignedTo
+		ifTrue: [ ^ self parent value typInfType ].
 	^ TypExecutionOrderVisitor typeForTemporary: self
 ]

@@ -1,10 +1,16 @@
 Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer-Inference' }
+RBBlockNode >> typInfResult [
+	<typTypeResultAs: 'TypType'>
+	^ ((self typInfType) "typCastAs TypFunctionType") result
+]
+
+{ #category : #'*Typer-Inference' }
 RBBlockNode >> typInfTypeForArgumentAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	| type |
-	type := self typType.
+	type := self typInfType.
 	(self parent isMessage
 		and: [ self parent receiver ~~ self	"typCastAs RBMessageNode" ])
 		ifTrue: [ | i parent_ |
@@ -29,16 +35,10 @@ RBBlockNode >> typInfTypeForArgumentNamed: aString [
 ]
 
 { #category : #'*Typer-Inference' }
-RBBlockNode >> typResultType [
-	<typTypeResultAs: 'TypType'>
-	^ ((self typType) "typCastAs TypFunctionType") result
-]
-
-{ #category : #'*Typer-Inference' }
-RBBlockNode >> typTypeRecursive [
+RBBlockNode >> typInfTypeRecursive [
 	^ BlockClosure
-		typAsFunctionTypeWithResult: self body typType
-		arguments: (self arguments collect: #typType)
+		typAsFunctionTypeWithResult: self body typInfType
+		arguments: (self arguments collect: #typInfType)
 		argumentsOptional: false
-		signalsAlways: self body typSignalsAlways
+		signalsAlways: self body typInfSignalsAlways
 ]

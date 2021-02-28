@@ -1,16 +1,22 @@
 Extension { #name : #RBVariableNode }
 
 { #category : #'*Typer-Inference' }
-RBVariableNode >> typDefiningType [
+RBVariableNode >> typInfDefiningType [
 	<typTypeResultAs: 'Type'>
-	self assert: [ self typHasDefiningType ].
+	self assert: [ self typInfHasDefiningType ].
 	^ TypUnknownType new
 ]
 
 { #category : #'*Typer-Inference' }
-RBVariableNode >> typHasDefiningType [
+RBVariableNode >> typInfHasDefiningType [
 	<typTypeResultAs: 'Boolean'>
 	^ false
+]
+
+{ #category : #'*Typer-Inference' }
+RBVariableNode >> typInfIsAssignedTo [
+	^ self parent isAssignment
+		and: [ (self parent "typCastAs RBAssignmentNode") variable == self ]
 ]
 
 { #category : #'*Typer-Inference' }
@@ -28,9 +34,9 @@ RBVariableNode >> typInfTypeArguments [
 { #category : #'*Typer-Inference' }
 RBVariableNode >> typInfTypeAssigned [
 	^ (((self whoDefines: name) assignmentNodes
-		select: [ :e | e value = self and: [ e variable typHasDefiningType ] ])
+		select: [ :e | e value = self and: [ e variable typInfHasDefiningType ] ])
 		collect:
-			[ :e | e variable typDefiningType lookupVariable: e variable name asSymbol ])
+			[ :e | e variable typInfDefiningType lookupVariable: e variable name asSymbol ])
 		typAsType
 ]
 
@@ -38,11 +44,5 @@ RBVariableNode >> typInfTypeAssigned [
 RBVariableNode >> typInfTypeAssignedTo [
 	^ (((self whoDefines: self name) assignmentNodes
 		select: [ :e | e variable = self ])
-		collect: [ :e | e value typType ]) typAsType
-]
-
-{ #category : #'*Typer-Inference' }
-RBVariableNode >> typIsAssignedTo [
-	^ self parent isAssignment
-		and: [ (self parent "typCastAs RBAssignmentNode") variable == self ]
+		collect: [ :e | e value typInfType ]) typAsType
 ]

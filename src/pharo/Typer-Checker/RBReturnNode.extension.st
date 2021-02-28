@@ -3,8 +3,8 @@ Extension { #name : #RBReturnNode }
 { #category : #'*Typer-Checker' }
 RBReturnNode >> typCheCheckCompatibility [
 	| expected actual |
-	expected := self methodNode typResultType.
-	actual := self value typType.
+	expected := self methodNode typInfResult.
+	actual := self value typInfType.
 	(expected isUnknown or: [ actual isUnknown ])
 		ifTrue: [ ^ self ].
 	(expected isNullable and: [ actual isNil ])
@@ -15,7 +15,7 @@ RBReturnNode >> typCheCheckCompatibility [
 		and: [ self value isBlock
 				and: [ | block |
 					block := self value "typCastAs RBBlockNode".
-					(block body typSignalsAlways = true
+					(block body typInfSignalsAlways = true
 						or: [ block body lastIsReturn ])
 						and: [ | functions |
 							functions := expected isUnion
@@ -35,8 +35,8 @@ RBReturnNode >> typCheCheckCompatibility [
 { #category : #'*Typer-Checker' }
 RBReturnNode >> typCheCheckNullables [
 	| expected actual |
-	expected := self methodNode typResultType.
-	actual := self value typType.
+	expected := self methodNode typInfResult.
+	actual := self value typInfType.
 	(expected isUnknown
 		or: [ actual isUnknown
 				or: [ actual isNullable not or: [ expected >= actual ] ] ])

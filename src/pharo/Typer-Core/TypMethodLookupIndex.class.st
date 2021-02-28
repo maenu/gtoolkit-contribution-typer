@@ -43,5 +43,5 @@ TypMethodLookupIndex >> lookupReceiver: aType selector: aSymbol arguments: aColl
 { #category : #initialization }
 TypMethodLookupIndex >> reset [
 	super reset.
-	ASTCache default do: #typTypeReset
+	ASTCache default do: #typInfTypeReset
 ]

@@ -6,14 +6,14 @@ RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 	| argument expected actual |
 	argument := self arguments at: anInteger.
 	expected := self typInfTypeForArgumentAt: anInteger.
-	actual := argument typType.
+	actual := argument typInfType.
 	(expected isUnknown or: [ actual isUnknown ])
 		ifTrue: [ ^ self ].
 	expected asNonNullable >= actual asNonNullable
 		ifTrue: [ ^ self ].
 	(actual isFunction
 		and: [ actual result isUnknown
-			or: [ argument isBlock and: [ argument body typSignalsAlways = true or: [ argument body lastIsReturn ] ] ] ])
+			or: [ argument isBlock and: [ argument body typInfSignalsAlways = true or: [ argument body lastIsReturn ] ] ] ])
 		ifTrue: [ ^ self ].
 	TypCheIncompatibleTypeError new
 		expected: expected;
@@ -24,7 +24,7 @@ RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 { #category : #'*Typer-Checker' }
 RBMessageNode >> typCheCheckMethod [
 	| receiverType |
-	receiverType := self typReceiverType.
+	receiverType := self typInfReceiver.
 	receiverType isUnknown
 		ifTrue: [ ^ self ].
 	(receiverType asNonNullable canUnderstand: self selector)
@@ -38,7 +38,7 @@ RBMessageNode >> typCheCheckMethod [
 { #category : #'*Typer-Checker' }
 RBMessageNode >> typCheCheckReceiver [
 	| receiverType |
-	receiverType := self typReceiverType.
+	receiverType := self typInfReceiver.
 	receiverType isUnknown
 		ifTrue: [ ^ self ].
 	(receiverType canUnderstand: self selector)

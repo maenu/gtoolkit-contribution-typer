@@ -1,7 +1,7 @@
 Extension { #name : #RBArgumentNode }
 
 { #category : #'*Typer-Inference' }
-RBArgumentNode >> typTypeRecursive [
+RBArgumentNode >> typInfTypeRecursive [
 	self isDefinition
 		ifTrue: [ | type |
 			self
@@ -13,5 +13,5 @@ RBArgumentNode >> typTypeRecursive [
 				ifTrue: [ type := self typInfTypeAssigned ].
 			^ type ].
 	^ ((self whoDefines: name) arguments detect: [ :e | e = self ])
-		typType
+		typInfType
 ]

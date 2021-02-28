@@ -55,9 +55,9 @@ RBMethodNode >> typDynInvokeIn: aContext [
 		ifTrue: [ self typDynInvocations
 				add:
 					(TypDynMessage new
-						receiverType: aContext receiver typSelfType;
+						receiverType: aContext receiver typInfSelfType;
 						selector: aContext method selector;
-						argumentTypes: (aContext arguments collect: #typSelfType);
+						argumentTypes: (aContext arguments collect: #typInfSelfType);
 						yourself) ].
 	self typDynInvocations weights size >= 100
 		ifTrue: [ self typDynRemoveLink ]
@@ -124,8 +124,8 @@ RBMethodNode >> typDynTypesForPoolVariables [
 	<typTypeResultAs:
 		'Dictionary<Association<ClassDescription,Symbol>,TypDynUnionType>'>
 	^ self
-		typDynTypesForVariablesSelectedWith: [ :e | e variable binding typIsFromSharedPool ]
-		definedBy: [ :e | e binding typSharedPool ]
+		typDynTypesForVariablesSelectedWith: [ :e | e variable binding typInfIsFromSharedPool ]
+		definedBy: [ :e | e binding typInfSharedPool ]
 ]
 
 { #category : #'*Typer-Dynamic' }
