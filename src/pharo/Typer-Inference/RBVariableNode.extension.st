@@ -1,14 +1,14 @@
 Extension { #name : #RBVariableNode }
 
 { #category : #'*Typer-Inference' }
-RBVariableNode >> typInfDefiningType [
+RBVariableNode >> typInfDefiner [
 	<typTypeResultAs: 'Type'>
-	self assert: [ self typInfHasDefiningType ].
+	self assert: [ self typInfHasDefiner ].
 	^ TypUnknownType new
 ]
 
 { #category : #'*Typer-Inference' }
-RBVariableNode >> typInfHasDefiningType [
+RBVariableNode >> typInfHasDefiner [
 	<typTypeResultAs: 'Boolean'>
 	^ false
 ]
@@ -21,6 +21,7 @@ RBVariableNode >> typInfIsAssignedTo [
 
 { #category : #'*Typer-Inference' }
 RBVariableNode >> typInfTypeArguments [
+	self flag: 'FIXME weird'.
 	^ (((self whoDefines: name) allChildren
 		select: [ :e | 
 			e = self
@@ -33,15 +34,17 @@ RBVariableNode >> typInfTypeArguments [
 
 { #category : #'*Typer-Inference' }
 RBVariableNode >> typInfTypeAssigned [
+	self flag: 'FIXME weird'.
 	^ (((self whoDefines: name) assignmentNodes
-		select: [ :e | e value = self and: [ e variable typInfHasDefiningType ] ])
+		select: [ :e | e value = self and: [ e variable typInfHasDefiner ] ])
 		collect:
-			[ :e | e variable typInfDefiningType lookupVariable: e variable name asSymbol ])
+			[ :e | e variable typInfDefiner lookupVariable: e variable name asSymbol ])
 		typAsType
 ]
 
 { #category : #'*Typer-Inference' }
 RBVariableNode >> typInfTypeAssignedTo [
+	self flag: 'FIXME weird'.
 	^ (((self whoDefines: self name) assignmentNodes
 		select: [ :e | e variable = self ])
 		collect: [ :e | e value typInfType ]) typAsType

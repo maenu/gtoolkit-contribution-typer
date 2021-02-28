@@ -4,7 +4,7 @@ Extension { #name : #RBTemporaryNode }
 RBTemporaryNode >> typInfTypeRecursive [
 	self isDefinition
 		ifTrue: [ | type |
-			self flag: 'FIXME should either not be here, or inf sends should be moved here'.
+			self flag: 'FIXME those should be in a resolver as strategies'.
 			type := self typInfTypeAssignedTo.
 			type isUnknown
 				ifTrue: [ type := self typInfTypeArguments ].

@@ -15,7 +15,7 @@ RBReturnNode >> typCheCheckCompatibility [
 		and: [ self value isBlock
 				and: [ | block |
 					block := self value "typCastAs RBBlockNode".
-					(block body typInfSignalsAlways = true
+					(block typInfType signalsAlways = true
 						or: [ block body lastIsReturn ])
 						and: [ | functions |
 							functions := expected isUnion

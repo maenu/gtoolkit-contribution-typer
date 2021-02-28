@@ -1,18 +1,15 @@
 Extension { #name : #RBGlobalNode }
 
 { #category : #'*Typer-Inference' }
-RBGlobalNode >> typInfDefiningType [
-	<typTypeResultAs: 'Metaclass'>
-	| clazz |
-	self assert: [ self typInfHasDefiningType ].
-	clazz := self methodNode methodClass.
+RBGlobalNode >> typInfDefiner [
+	self assert: [ self typInfHasDefiner ].
 	self binding typInfIsFromSharedPool
-		ifTrue: [ clazz := self binding typInfSharedPool ].
-	^ clazz classSide typAsType
+		ifTrue: [ ^ self binding typInfSharedPool classSide typAsType ].
+	^ self methodNode methodClass classSide typAsType
 ]
 
 { #category : #'*Typer-Inference' }
-RBGlobalNode >> typInfHasDefiningType [
+RBGlobalNode >> typInfHasDefiner [
 	^ self binding isClassVariable
 		or: [ self binding typInfIsFromSharedPool ]
 ]
@@ -21,8 +18,5 @@ RBGlobalNode >> typInfHasDefiningType [
 RBGlobalNode >> typInfTypeRecursive [
 	self binding isGlobalClassNameBinding
 		ifTrue: [ ^ self binding value class typAsType ].
-	self typInfHasDefiningType
-		ifTrue:
-			[ ^ self typInfDefiningType lookupVariable: self name asSymbol ].
-	^ TypUnknownType new
+	^ self typInfDefiner lookupVariable: name asSymbol
 ]

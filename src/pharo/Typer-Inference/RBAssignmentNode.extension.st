@@ -7,5 +7,5 @@ RBAssignmentNode >> typInfSignalsAlways [
 
 { #category : #'*Typer-Inference' }
 RBAssignmentNode >> typInfTypeRecursive [
-	^ self variable typInfType
+	^ self value typInfType
 ]

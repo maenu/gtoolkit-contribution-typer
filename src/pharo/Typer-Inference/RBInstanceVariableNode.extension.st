@@ -1,14 +1,14 @@
 Extension { #name : #RBInstanceVariableNode }
 
 { #category : #'*Typer-Inference' }
-RBInstanceVariableNode >> typInfDefiningType [
+RBInstanceVariableNode >> typInfDefiner [
 	<typTypeResultAs: 'Type'>
-	self assert: [ self typInfHasDefiningType ].
+	self assert: [ self typInfHasDefiner ].
 	^ self methodNode typInfReceiver
 ]
 
 { #category : #'*Typer-Inference' }
-RBInstanceVariableNode >> typInfHasDefiningType [
+RBInstanceVariableNode >> typInfHasDefiner [
 	^ true
 ]
 
@@ -16,5 +16,5 @@ RBInstanceVariableNode >> typInfHasDefiningType [
 RBInstanceVariableNode >> typInfTypeRecursive [
 	self typInfIsAssignedTo
 		ifTrue: [ ^ self parent value typInfType ].
-	^ self typInfDefiningType lookupVariable: name asSymbol
+	^ self typInfDefiner lookupVariable: name asSymbol
 ]

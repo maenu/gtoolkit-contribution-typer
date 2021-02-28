@@ -13,7 +13,7 @@ RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 		ifTrue: [ ^ self ].
 	(actual isFunction
 		and: [ actual result isUnknown
-			or: [ argument isBlock and: [ argument body typInfSignalsAlways = true or: [ argument body lastIsReturn ] ] ] ])
+			or: [ argument isBlock and: [ argument signalsAlways = true or: [ argument body lastIsReturn ] ] ] ])
 		ifTrue: [ ^ self ].
 	TypCheIncompatibleTypeError new
 		expected: expected;

@@ -23,11 +23,40 @@ RBMethodNode >> typInfReceiver [
 { #category : #'*Typer-Inference' }
 RBMethodNode >> typInfResult [
 	<typTypeResultAs: 'TypType'>
-	self flag: 'FIXME how to get hold of self?'.
-	self assert: [ compilationContext isNotNil ].
-	^ (nil
-		lookupMethod: self selector asSymbol
-		arguments: self typInfArguments) result
+	| argumentTypes resultType signalsAlways |
+	self typInfIsReturnSelf
+		ifTrue: [ ^ self typInfReceiver ].
+	self isPrimitive
+		ifTrue: [ | types |
+			types := self typInfReturnNodes collect: #typInfType.
+			self lastIsReturn
+				ifTrue: [ resultType := types typAsType ]
+				ifFalse: [ resultType := (types , {self typInfReceiver}) typAsType ] ].
+	argumentTypes := (((self allChildren
+		select: [ :e | 
+			e isArgument
+				and: [ e isDefinition not
+						and: [ (self defines: e name)
+								and: [ e parent isAssignment
+										or: [ e parent isMessage and: [ e parent arguments includes: e ] ] ] ] ] ])
+		groupedBy: [ :e | self arguments indexOf: e ]) associations
+		collect: [ :e | 
+			e key
+				->
+					(e value
+						collect: [ :f | 
+							f parent isAssignment
+								ifTrue: [ f parent variable typInfType ]
+								ifFalse: [ f parent typInfTypeForArgumentAt: (f parent arguments indexOf: f) ] ])
+						typAsType ]) asDictionary.
+	(self isAbstract not and: [ self isPrimitive not ])
+		ifTrue: [ | types |
+			types := self typInfReturnNodes collect: #typInfType.
+			self lastIsReturn
+				ifTrue: [ resultType := types typAsType ]
+				ifFalse: [ resultType := (types , {self typInfSelf}) typAsType ] ].
+	self flag: 'FIXME this is a mess'.
+	^ resultType
 ]
 
 { #category : #'*Typer-Inference' }
@@ -46,23 +75,6 @@ RBMethodNode >> typInfTemporaryProfile [
 	<typTypeResultAs: 'SequenceableCollection<Association<RBProgramNode,TypType>>'>
 	^ (self allChildren select: [ :e | e isVariable or: [ e isReturn ] ])
 		collect: [ :e | e -> e typInfType ]
-]
-
-{ #category : #'*Typer-Inference' }
-RBMethodNode >> typInfTypeForArgumentAt: anInteger [
-	<typTypeArgument: 1 as: 'Integer'>
-	self flag: 'FIXME how to get hold of self?'.
-	^ (nil
-		lookupMethod: self selector asSymbol
-		arguments: self typInfArguments) arguments at: anInteger
-]
-
-{ #category : #'*Typer-Inference' }
-RBMethodNode >> typInfTypeForArgumentNamed: aString [
-	<typTypeArgument: 1 as: 'String'>
-	| i |
-	i := self arguments detectIndex: [ :f | f name = aString ].
-	^ self typInfTypeForArgumentAt: i
 ]
 
 { #category : #'*Typer-Inference' }
