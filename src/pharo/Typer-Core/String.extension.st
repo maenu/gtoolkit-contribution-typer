@@ -17,3 +17,8 @@ String >> typAsVariableType [
 	<typTypeResultAs: 'TypVariableType'>
 	^ self typAsType "typCastAs TypVariableType"
 ]
+
+{ #category : #'*Typer-Core' }
+String >> typSelfType [
+	^ self class typAsType
+]

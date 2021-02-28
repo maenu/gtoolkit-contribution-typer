@@ -7,5 +7,8 @@ Class {
 { #category : #accessing }
 TypShaTypeLookupResolver >> resolveBasic: aLookup [
 	^ aLookup classDescription typShaShadows
-		collect: [ :f | f resolveType: aLookup ]
+		collect: [ :f | 
+			(f resolveType: aLookup)
+				origin: aLookup asOrigin;
+				yourself ]
 ]

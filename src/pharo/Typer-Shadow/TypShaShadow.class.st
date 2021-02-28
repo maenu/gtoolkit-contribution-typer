@@ -48,27 +48,19 @@ TypShaShadow class >> resetAll [
 TypShaShadow class >> resolveMethod: aLookup [
 	^ (self class methods
 		select: [ :e | e typShaResolvesMethod: aLookup selector ])
-		collect: [ :e | 
-			(self perform: e selector with: aLookup)
-				origin: aLookup asOrigin;
-				yourself ]
+		collect: [ :e | self perform: e selector with: aLookup ]
 ]
 
 { #category : #accessing }
 TypShaShadow class >> resolveType: aLookup [
 	^ aLookup classDescription typAsNamedType
-		origin: aLookup asOrigin;
-		yourself
 ]
 
 { #category : #accessing }
 TypShaShadow class >> resolveVariable: aLookup [
 	^ (self class methods
 		select: [ :e | e typShaResolvesVariable: aLookup selector ])
-		collect: [ :e | 
-			(self perform: e selector with: aLookup)
-				origin: aLookup asOrigin;
-				yourself ]
+		collect: [ :e | self perform: e selector with: aLookup ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -97,27 +89,19 @@ TypShaShadow >> priority: anObject [
 TypShaShadow >> resolveMethod: aLookup [
 	^ (self class methods
 		select: [ :e | e typShaResolvesMethod: aLookup selector ])
-		collect: [ :e | 
-			(self perform: e selector with: aLookup)
-				origin: aLookup asOrigin;
-				yourself ]
+		collect: [ :e | self perform: e selector with: aLookup ]
 ]
 
 { #category : #converting }
 TypShaShadow >> resolveType: aLookup [
 	^ aLookup classDescription typAsNamedType
-		origin: aLookup asOrigin;
-		yourself
 ]
 
 { #category : #accessing }
 TypShaShadow >> resolveVariable: aLookup [
 	^ (self class methods
 		select: [ :e | e typShaResolvesVariable: aLookup selector ])
-		collect: [ :e | 
-			(self perform: e selector with: aLookup)
-				origin: aLookup asOrigin;
-				yourself ]
+		collect: [ :e | self perform: e selector with: aLookup ]
 ]
 
 { #category : #accessing }
