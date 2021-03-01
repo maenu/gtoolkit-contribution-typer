@@ -1,16 +1,13 @@
 Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer-Inference' }
-RBBlockNode >> typInfResult [
-	<typTypeResultAs: 'TypType'>
-	^ ((self typInfType) "typCastAs TypFunctionType") result
-]
-
-{ #category : #'*Typer-Inference' }
 RBBlockNode >> typInfTypeRecursive [
+	| visitor |
+	visitor := TypInfSignalsAlwaysVisitor new.
+	self acceptVisitor: visitor.
 	^ BlockClosure
 		typAsFunctionTypeWithResult: self body typInfType
 		arguments: (self arguments collect: #typInfType)
 		argumentsOptional: false
-		signalsAlways: self body typInfSignalsAlways
+		signalsAlways: visitor signalsAlways
 ]

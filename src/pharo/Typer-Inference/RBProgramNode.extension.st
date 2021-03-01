@@ -10,12 +10,6 @@ RBProgramNode >> typInfAnnotateType: aType [
 ]
 
 { #category : #'*Typer-Inference' }
-RBProgramNode >> typInfSignalsAlways [
-	<typTypeResultAs: '{!,Boolean}'>
-	^ false
-]
-
-{ #category : #'*Typer-Inference' }
 RBProgramNode >> typInfType [
 	<typTypeResultAs: 'TypType'>
 	| key |

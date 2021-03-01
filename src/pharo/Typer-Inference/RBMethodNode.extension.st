@@ -1,73 +1,8 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Inference' }
-RBMethodNode >> typInfArguments [
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	^ self arguments collect: #typInfType
-]
-
-{ #category : #'*Typer-Inference' }
-RBMethodNode >> typInfIsReturnSelf [
-	<typTypeResultAs: 'Boolean'>
-	^ self method isAbstract not
-		and: [ self isPrimitive not
-				and:
-					[ (self typInfReturnNodes reject: [ :e | e value isSelf ]) isEmpty ] ]
-]
-
-{ #category : #'*Typer-Inference' }
 RBMethodNode >> typInfReceiver [
 	self flag: 'FIXME implement'
-]
-
-{ #category : #'*Typer-Inference' }
-RBMethodNode >> typInfResult [
-	<typTypeResultAs: 'TypType'>
-	| argumentTypes resultType signalsAlways |
-	self typInfIsReturnSelf
-		ifTrue: [ ^ self typInfReceiver ].
-	self isPrimitive
-		ifTrue: [ | types |
-			types := self typInfReturnNodes collect: #typInfType.
-			self lastIsReturn
-				ifTrue: [ resultType := types typAsType ]
-				ifFalse: [ resultType := (types , {self typInfReceiver}) typAsType ] ].
-	argumentTypes := (((self allChildren
-		select: [ :e | 
-			e isArgument
-				and: [ e isDefinition not
-						and: [ (self defines: e name)
-								and: [ e parent isAssignment
-										or: [ e parent isMessage and: [ e parent arguments includes: e ] ] ] ] ] ])
-		groupedBy: [ :e | self arguments indexOf: e ]) associations
-		collect: [ :e | 
-			e key
-				->
-					(e value
-						collect: [ :f | 
-							f parent isAssignment
-								ifTrue: [ f parent variable typInfType ]
-								ifFalse: [ f parent typInfTypeForArgumentAt: (f parent arguments indexOf: f) ] ])
-						typAsType ]) asDictionary.
-	(self isAbstract not and: [ self isPrimitive not ])
-		ifTrue: [ | types |
-			types := self typInfReturnNodes collect: #typInfType.
-			self lastIsReturn
-				ifTrue: [ resultType := types typAsType ]
-				ifFalse: [ resultType := (types , {self typInfSelf}) typAsType ] ].
-	self flag: 'FIXME this is a mess'.
-	^ resultType
-]
-
-{ #category : #'*Typer-Inference' }
-RBMethodNode >> typInfReturnNodes [
-	<typTypeResultAs: 'SequenceableCollection<RBReturnNode>'>
-	^ (self allChildren select: #isReturn) "typParameters RBReturnNode"
-]
-
-{ #category : #'*Typer-Inference' }
-RBMethodNode >> typInfSignalsAlways [
-	^ self body typInfSignalsAlways
 ]
 
 { #category : #'*Typer-Inference' }
@@ -80,7 +15,14 @@ RBMethodNode >> typInfTemporaryProfile [
 { #category : #'*Typer-Inference' }
 RBMethodNode >> typInfTypeRecursive [
 	<typTypeResultAs: 'TypType'>
-	| iterations maxIterations oldTemporaryProfiles newTemporaryProfile |
+	| iterations maxIterations oldTemporaryProfiles newTemporaryProfile visitor types |
+	types := (self allChildren select: #isReturn)
+		collect: #typInfType
+		as: OrderedCollection.
+	self lastIsReturn
+		ifFalse: [ types add: self typInfReceiver ].
+	visitor := TypInfSignalsAlwaysVisitor new.
+	self acceptVisitor: visitor.
 	self
 		typInfTypeReset;
 		doSemanticAnalysis;
@@ -110,8 +52,8 @@ RBMethodNode >> typInfTypeRecursive [
 	(oldTemporaryProfiles includes: newTemporaryProfile) not
 		and: [ iterations < maxIterations ] ] whileTrue.
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: self typInfResult
-		arguments: self typInfArguments
+		typAsFunctionTypeWithResult: types typAsType
+		arguments: (self arguments collect: #typInfType)
 		argumentsOptional: false
-		signalsAlways: self typInfSignalsAlways
+		signalsAlways: visitor signalsAlways
 ]
