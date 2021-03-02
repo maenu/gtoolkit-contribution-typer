@@ -7,14 +7,28 @@ Class {
 }
 
 { #category : #accessing }
-TypNilTypeInitializingExamples >> typeClassDescription [
+TypNilTypeInitializingExamples >> classDescription [
 	<gtExample>
 	self assert: [ TypNilType classDescription: Integer ] signals: ShouldNotImplement.
 	^ nil
 ]
 
 { #category : #accessing }
-TypNilTypeInitializingExamples >> typeInstance [
+TypNilTypeInitializingExamples >> namedWithClassDescription [
+	<gtExample>
+	self assert: [ TypNilType named: 'Integer' ] signals: ShouldNotImplement.
+	^ nil
+]
+
+{ #category : #accessing }
+TypNilTypeInitializingExamples >> namedWithoutClassDescription [
+	<gtExample>
+	self assert: [ TypNilType named: 'Nothing' ] signals: ShouldNotImplement.
+	^ nil
+]
+
+{ #category : #accessing }
+TypNilTypeInitializingExamples >> new [
 	<gtExample>
 	| type |
 	type := TypNilType new.
@@ -25,22 +39,5 @@ TypNilTypeInitializingExamples >> typeInstance [
 	self
 		assert: type superType
 		equals: (TypNamedType classDescription: Object).
-	self
-		assert: type == TypNilType new
-		description: 'nil instance should always be the exact same object'.
 	^ type
-]
-
-{ #category : #accessing }
-TypNilTypeInitializingExamples >> typeNamedWithClassDescription [
-	<gtExample>
-	self assert: [ TypNilType named: 'Integer' ] signals: ShouldNotImplement.
-	^ nil
-]
-
-{ #category : #accessing }
-TypNilTypeInitializingExamples >> typeNamedWithoutClassDescription [
-	<gtExample>
-	self assert: [ TypNilType named: 'Nothing' ] signals: ShouldNotImplement.
-	^ nil
 ]

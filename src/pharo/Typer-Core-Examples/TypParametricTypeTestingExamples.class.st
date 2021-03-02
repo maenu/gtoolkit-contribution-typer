@@ -8,7 +8,8 @@ Class {
 TypParametricTypeTestingExamples >> isFunction [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypParametricTypeInitializingExamples new
+		classDescriptionParameters.
 	self assert: type isFunction not.
 	^ type
 ]
@@ -17,7 +18,8 @@ TypParametricTypeTestingExamples >> isFunction [
 TypParametricTypeTestingExamples >> isNamed [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypParametricTypeInitializingExamples new
+		classDescriptionParameters.
 	self assert: type isNamed.
 	^ type
 ]
@@ -26,7 +28,8 @@ TypParametricTypeTestingExamples >> isNamed [
 TypParametricTypeTestingExamples >> isNil [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypParametricTypeInitializingExamples new
+		classDescriptionParameters.
 	self assert: type isNil not.
 	^ type
 ]
@@ -35,7 +38,8 @@ TypParametricTypeTestingExamples >> isNil [
 TypParametricTypeTestingExamples >> isParametric [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypParametricTypeInitializingExamples new
+		classDescriptionParameters.
 	self assert: type isParametric.
 	^ type
 ]
@@ -44,7 +48,8 @@ TypParametricTypeTestingExamples >> isParametric [
 TypParametricTypeTestingExamples >> isUnion [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypParametricTypeInitializingExamples new
+		classDescriptionParameters.
 	self assert: type isUnion not.
 	^ type
 ]
@@ -53,7 +58,8 @@ TypParametricTypeTestingExamples >> isUnion [
 TypParametricTypeTestingExamples >> isUnknown [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypParametricTypeInitializingExamples new
+		classDescriptionParameters.
 	self assert: type isUnknown not.
 	^ type
 ]
@@ -62,15 +68,8 @@ TypParametricTypeTestingExamples >> isUnknown [
 TypParametricTypeTestingExamples >> isVariable [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypParametricTypeInitializingExamples new
+		classDescriptionParameters.
 	self assert: type isVariable not.
 	^ type
-]
-
-{ #category : #accessing }
-TypParametricTypeTestingExamples >> type [
-	<gtExample>
-	^ TypParametricType
-		named: 'OrderedCollection'
-		parameters: {('@A' -> Integer typAsType)} asOrderedDictionary
 ]

@@ -8,7 +8,8 @@ Class {
 TypFunctionTypeTestingExamples >> isFunction [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypFunctionTypeInitializingExamples new
+		classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	self assert: type isFunction.
 	^ type
 ]
@@ -17,7 +18,8 @@ TypFunctionTypeTestingExamples >> isFunction [
 TypFunctionTypeTestingExamples >> isNamed [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypFunctionTypeInitializingExamples new
+		classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	self assert: type isNamed.
 	^ type
 ]
@@ -26,7 +28,8 @@ TypFunctionTypeTestingExamples >> isNamed [
 TypFunctionTypeTestingExamples >> isNil [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypFunctionTypeInitializingExamples new
+		classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	self assert: type isNil not.
 	^ type
 ]
@@ -35,7 +38,8 @@ TypFunctionTypeTestingExamples >> isNil [
 TypFunctionTypeTestingExamples >> isParametric [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypFunctionTypeInitializingExamples new
+		classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	self assert: type isParametric.
 	^ type
 ]
@@ -44,7 +48,8 @@ TypFunctionTypeTestingExamples >> isParametric [
 TypFunctionTypeTestingExamples >> isUnion [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypFunctionTypeInitializingExamples new
+		classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	self assert: type isUnion not.
 	^ type
 ]
@@ -53,7 +58,8 @@ TypFunctionTypeTestingExamples >> isUnion [
 TypFunctionTypeTestingExamples >> isUnknown [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypFunctionTypeInitializingExamples new
+		classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	self assert: type isUnknown not.
 	^ type
 ]
@@ -62,18 +68,8 @@ TypFunctionTypeTestingExamples >> isUnknown [
 TypFunctionTypeTestingExamples >> isVariable [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypFunctionTypeInitializingExamples new
+		classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	self assert: type isVariable not.
 	^ type
-]
-
-{ #category : #generated }
-TypFunctionTypeTestingExamples >> type [
-	<gtExample>
-	^ TypFunctionType
-		classDescription: BlockClosure
-		result: Boolean typAsType
-		arguments: {Integer typAsType}
-		argumentsOptional: false
-		signalsAlways: nil
 ]

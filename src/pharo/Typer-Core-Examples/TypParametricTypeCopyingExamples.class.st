@@ -8,11 +8,11 @@ Class {
 TypParametricTypeCopyingExamples >> copyIsNearlyShallow [
 	<gtExample>
 	| original copy |
-	original := TypParametricTypeInitializingExamples new typeClassDescriptionParameters.
+	original := TypParametricTypeInitializingExamples new classDescriptionParameters.
 	original
 		at: original parameters keys first
 		put:
-			(TypNamedTypeInitializingExamples new typeClassDescription).
+			(TypNamedTypeInitializingExamples new classDescription).
 	"ensure superType"
 	original superType.
 	copy := original copy.
@@ -28,15 +28,15 @@ TypParametricTypeCopyingExamples >> copyIsNearlyShallow [
 ]
 
 { #category : #accessing }
-TypParametricTypeCopyingExamples >> copyWithBindings [
+TypParametricTypeCopyingExamples >> copyWithParameters [
 	<gtExample>
 	| original copy |
-	original := self copyIsNearlyShallow.
+	original := TypParametricTypeInitializingExamples new classDescriptionParameters.
 	"ensure superType"
 	original superType.
 	copy := original
 		copyWithParameters:
-			{TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription}.
+			{TypNamedTypeInitializingExamples new namedWithoutClassDescription}.
 	self assert: original ~~ copy.
 	self assert: original superType isNotNil.
 	self assert: original superType = copy superType.
@@ -48,6 +48,6 @@ TypParametricTypeCopyingExamples >> copyWithBindings [
 	self
 		assert: (copy at: '@A')
 		equals:
-			TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription.
+			TypNamedTypeInitializingExamples new namedWithoutClassDescription.
 	^ copy
 ]

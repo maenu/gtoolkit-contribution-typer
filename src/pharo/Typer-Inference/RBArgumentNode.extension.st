@@ -8,9 +8,9 @@ RBArgumentNode >> typInfTypeRecursive [
 				flag: 'FIXME should either not be here, or inf sends should be moved here'.
 			type := self parent typInfTypeForArgumentNamed: name.
 			type isUnknown
-				ifTrue: [ type := self typInfTypeArguments ].
+				ifTrue: [ type := self typInfArgumentUse ].
 			type isUnknown
-				ifTrue: [ type := self typInfTypeAssigned ].
+				ifTrue: [ type := self typInfAssigned ].
 			^ type ].
 	^ ((self whoDefines: name) arguments detect: [ :e | e = self ])
 		typInfType

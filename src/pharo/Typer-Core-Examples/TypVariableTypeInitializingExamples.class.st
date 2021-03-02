@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : #accessing }
-TypVariableTypeInitializingExamples >> typeNamed [
+TypVariableTypeInitializingExamples >> named [
 	<gtExample>
 	| type |
 	type := TypVariableType named: '@A'.
@@ -18,7 +18,7 @@ TypVariableTypeInitializingExamples >> typeNamed [
 ]
 
 { #category : #accessing }
-TypVariableTypeInitializingExamples >> typeNamedInvalid [
+TypVariableTypeInitializingExamples >> namedInvalid [
 	<gtExample>
 	self
 		assert: [ TypVariableType named: 'A' ]
@@ -27,7 +27,7 @@ TypVariableTypeInitializingExamples >> typeNamedInvalid [
 ]
 
 { #category : #accessing }
-TypVariableTypeInitializingExamples >> typeNamedSuperType [
+TypVariableTypeInitializingExamples >> namedSuperType [
 	<gtExample>
 	| type |
 	type := TypVariableType named: '@A' superType: (TypNamedType classDescription: String).

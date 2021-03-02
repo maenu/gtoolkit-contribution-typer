@@ -8,7 +8,7 @@ Class {
 TypVariableTypeComparingExamples >> equality [
 	<gtExample>
 	| type copy superType |
-	type := TypVariableTypeInitializingExamples new typeNamed.
+	type := TypVariableTypeInitializingExamples new named.
 	copy := type copy.
 	superType := type superType.
 	self assert: type = type.
@@ -24,7 +24,7 @@ TypVariableTypeComparingExamples >> equality [
 TypVariableTypeComparingExamples >> monotony [
 	<gtExample>
 	| type copy superType |
-	type := TypVariableTypeInitializingExamples new typeNamed.
+	type := TypVariableTypeInitializingExamples new named.
 	copy := type copy.
 	superType := type superType.
 	self flag: 'TODO should it really be bigger than itself?'.

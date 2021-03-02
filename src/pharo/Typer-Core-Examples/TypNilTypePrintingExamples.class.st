@@ -8,7 +8,7 @@ Class {
 TypNilTypePrintingExamples >> asString [
 	<gtExample>
 	| type |
-	type := TypNilTypeInitializingExamples new typeInstance.
+	type := TypNilTypeInitializingExamples new new.
 	self assert: type asString equals: '!'.
 	^ type
 ]

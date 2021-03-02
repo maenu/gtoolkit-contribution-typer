@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : #accessing }
-TypFunctionTypeInitializingExamples >> typeClassDescriptionArgumentsSizeArgumentsOptionalBindings [
+TypFunctionTypeInitializingExamples >> classDescriptionArgumentsSizeArgumentsOptionalBindings [
 	<gtExample>
 	| type |
 	type := TypFunctionType
@@ -37,7 +37,7 @@ TypFunctionTypeInitializingExamples >> typeClassDescriptionArgumentsSizeArgument
 ]
 
 { #category : #accessing }
-TypFunctionTypeInitializingExamples >> typeClassDescriptionParameters [
+TypFunctionTypeInitializingExamples >> classDescriptionParameters [
 	<gtExample>
 	self
 		assert: [ TypFunctionType classDescription: Integer parameters: {'@A'} ]
@@ -46,7 +46,7 @@ TypFunctionTypeInitializingExamples >> typeClassDescriptionParameters [
 ]
 
 { #category : #accessing }
-TypFunctionTypeInitializingExamples >> typeNamedArgumentsSizeArgumentsOptionalBindings [
+TypFunctionTypeInitializingExamples >> namedArgumentsSizeArgumentsOptionalBindings [
 	<gtExample>
 	| type |
 	type := TypFunctionType
@@ -76,7 +76,7 @@ TypFunctionTypeInitializingExamples >> typeNamedArgumentsSizeArgumentsOptionalBi
 ]
 
 { #category : #'as yet unclassified' }
-TypFunctionTypeInitializingExamples >> typeNamedParameters [
+TypFunctionTypeInitializingExamples >> namedParameters [
 	<gtExample>
 	self
 		assert: [ TypFunctionType named: 'Integer' parameters: {'@A'} ]

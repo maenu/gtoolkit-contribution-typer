@@ -8,8 +8,8 @@ Class {
 TypFunctionTypePrintingExamples >> asString [
 	<gtExample>
 	| type |
-	type := TypFunctionTypeInitializingExamples new typeClassDescriptionArgumentsSize.
-	self assert: type asString equals: 'Integer(@1)->@0'.
+	type := TypFunctionTypeInitializingExamples new classDescriptionArgumentsSizeArgumentsOptionalBindings.
+	self assert: type asString equals: 'Integer[Float]->Boolean'.
 	^ type
 ]
 
@@ -17,8 +17,8 @@ TypFunctionTypePrintingExamples >> asString [
 TypFunctionTypePrintingExamples >> asStringRecursive [
 	<gtExample>
 	| type |
-	type := TypFunctionTypeInitializingExamples new typeClassDescriptionArgumentsSize.
+	type := TypFunctionTypeInitializingExamples new classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	type at: '@1' put: type.
-	self assert: type asString equals: 'Integer(.)->@0'.
+	self assert: type asString equals: 'Integer[.]->Boolean'.
 	^ type
 ]

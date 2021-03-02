@@ -8,7 +8,8 @@ Class {
 TypFunctionTypeNullnessExamples >> asNonNullable [
 	<gtExample>
 	| type nonNullable |
-	type := TypFunctionTypeInitializingExamples new typeClassDescriptionArgumentsSize.
+	type := TypFunctionTypeInitializingExamples new
+		classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	nonNullable := type asNonNullable.
 	self assert: nonNullable == type.
 	^ nonNullable
@@ -19,7 +20,7 @@ TypFunctionTypeNullnessExamples >> asNullable [
 	<gtExample>
 	| type nullable |
 	type := TypFunctionTypeInitializingExamples new
-		typeClassDescriptionArgumentsSize.
+		classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	nullable := type asNullable.
 	self
 		assert:
@@ -36,7 +37,8 @@ TypFunctionTypeNullnessExamples >> asNullable [
 TypFunctionTypeNullnessExamples >> isNullable [
 	<gtExample>
 	| type nullable |
-	type := TypFunctionTypeInitializingExamples new typeClassDescriptionArgumentsSize.
+	type := TypFunctionTypeInitializingExamples new
+		classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	nullable := type asNullable.
 	self assert: type isNullable not.
 	self assert: nullable isNullable.

@@ -10,7 +10,7 @@ TypUnionTypeComparingExamples >> equality [
 	| type copy other |
 	type := TypUnionTypeInitializingExamples new typesMany.
 	copy := type copy.
-	other := TypNamedTypeInitializingExamples new typeClassDescription.
+	other := TypNamedTypeInitializingExamples new classDescription.
 	self assert: type = type.
 	self assert: type = copy.
 	self assert: type hash = type hash.

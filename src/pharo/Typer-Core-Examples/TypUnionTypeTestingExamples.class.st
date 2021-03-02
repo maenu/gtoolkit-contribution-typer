@@ -8,7 +8,7 @@ Class {
 TypUnionTypeTestingExamples >> isFunction [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypUnionTypeInitializingExamples new typesMany.
 	self assert: type isFunction not.
 	^ type
 ]
@@ -17,7 +17,7 @@ TypUnionTypeTestingExamples >> isFunction [
 TypUnionTypeTestingExamples >> isNamed [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypUnionTypeInitializingExamples new typesMany.
 	self assert: type isNamed not.
 	^ type
 ]
@@ -26,7 +26,7 @@ TypUnionTypeTestingExamples >> isNamed [
 TypUnionTypeTestingExamples >> isNil [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypUnionTypeInitializingExamples new typesMany.
 	self assert: type isNil not.
 	^ type
 ]
@@ -35,7 +35,7 @@ TypUnionTypeTestingExamples >> isNil [
 TypUnionTypeTestingExamples >> isParametric [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypUnionTypeInitializingExamples new typesMany.
 	self assert: type isParametric not.
 	^ type
 ]
@@ -44,7 +44,7 @@ TypUnionTypeTestingExamples >> isParametric [
 TypUnionTypeTestingExamples >> isUnion [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypUnionTypeInitializingExamples new typesMany.
 	self assert: type isUnion.
 	^ type
 ]
@@ -53,7 +53,7 @@ TypUnionTypeTestingExamples >> isUnion [
 TypUnionTypeTestingExamples >> isUnknown [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypUnionTypeInitializingExamples new typesMany.
 	self assert: type isUnknown not.
 	^ type
 ]
@@ -62,16 +62,7 @@ TypUnionTypeTestingExamples >> isUnknown [
 TypUnionTypeTestingExamples >> isVariable [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypUnionTypeInitializingExamples new typesMany.
 	self assert: type isVariable not.
 	^ type
-]
-
-{ #category : #generated }
-TypUnionTypeTestingExamples >> type [
-	<gtExample>
-	^ TypUnionType
-		types:
-			{LargePositiveInteger typAsType.
-			SmallInteger typAsType}
 ]

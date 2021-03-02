@@ -8,7 +8,7 @@ Class {
 TypNamedTypePrintingExamples >> asString [
 	<gtExample>
 	| type |
-	type := TypNamedTypeInitializingExamples new typeClassDescription.
+	type := TypNamedTypeInitializingExamples new classDescription.
 	self assert: type asString equals: 'Integer'.
 	^ type
 ]

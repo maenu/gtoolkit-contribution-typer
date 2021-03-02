@@ -8,11 +8,11 @@ Class {
 TypFunctionTypeCopyingExamples >> copyIsNearlyShallow [
 	<gtExample>
 	| original copy |
-	original := TypFunctionTypeInitializingExamples new typeClassDescriptionArgumentsSize.
+	original := TypFunctionTypeInitializingExamples new classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	original
 		at: original parameters keys first
 		put:
-			(TypNamedTypeInitializingExamples new typeClassDescription).
+			(TypNamedTypeInitializingExamples new classDescription).
 	"ensure superType"
 	original superType.
 	copy := original copy.
@@ -30,15 +30,17 @@ TypFunctionTypeCopyingExamples >> copyIsNearlyShallow [
 ]
 
 { #category : #accessing }
-TypFunctionTypeCopyingExamples >> copyWithBindings [
+TypFunctionTypeCopyingExamples >> copyWithParameters [
 	<gtExample>
 	| original copy |
-	original := self copyIsNearlyShallow.
+	original := TypFunctionTypeInitializingExamples new
+		classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	"ensure superType"
 	original superType.
 	copy := original
 		copyWithParameters:
-			{TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription}.
+			{TypNamedTypeInitializingExamples new namedWithoutClassDescription.
+			TypNilTypeInitializingExamples new new}.
 	self assert: original ~~ copy.
 	self assert: original superType isNotNil.
 	self assert: original superType = copy superType.
@@ -49,7 +51,9 @@ TypFunctionTypeCopyingExamples >> copyWithBindings [
 	self assert: original parameters keys = copy parameters keys.
 	self
 		assert: (copy at: '@0')
-		equals:
-			TypNamedTypeInitializingExamples new typeNamedWithoutClassDescription.
+		equals: TypNamedTypeInitializingExamples new namedWithoutClassDescription.
+	self
+		assert: (copy at: '@1')
+		equals: TypNilTypeInitializingExamples new new.
 	^ copy
 ]

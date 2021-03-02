@@ -10,7 +10,7 @@ TypUnionTypeNullnessExamples >> asNonNullable [
 	| type nonNullable |
 	type := TypUnionTypeInitializingExamples new typesMany.
 	nonNullable := type asNonNullable.
-	self assert: nonNullable == TypUnknownType new.
+	self assert: nonNullable = TypUnknownType new.
 	^ nonNullable
 ]
 

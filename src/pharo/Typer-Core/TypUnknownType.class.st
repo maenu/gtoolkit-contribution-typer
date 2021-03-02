@@ -4,9 +4,19 @@ Class {
 	#category : #'Typer-Core-Type'
 }
 
+{ #category : #accessing }
+TypUnknownType >> = anObject [
+	^ self class = anObject class
+]
+
 { #category : #comparing }
 TypUnknownType >> > aType [
 	^ aType isUnknown not
+]
+
+{ #category : #accessing }
+TypUnknownType >> hash [
+	^ self class hash bitXor: 7
 ]
 
 { #category : #testing }

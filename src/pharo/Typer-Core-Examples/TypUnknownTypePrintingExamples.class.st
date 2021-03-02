@@ -8,7 +8,7 @@ Class {
 TypUnknownTypePrintingExamples >> asString [
 	<gtExample>
 	| type |
-	type := TypUnknownTypeInitializingExamples new typeInstance.
+	type := TypUnknownTypeInitializingExamples new new.
 	self assert: type asString equals: '?'.
 	^ type
 ]

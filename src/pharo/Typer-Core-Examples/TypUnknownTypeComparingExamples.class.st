@@ -8,8 +8,8 @@ Class {
 TypUnknownTypeComparingExamples >> equality [
 	<gtExample>
 	| type other |
-	type := TypUnknownTypeInitializingExamples new typeInstance.
-	other := TypNamedTypeInitializingExamples new typeClassDescription.
+	type := TypUnknownTypeInitializingExamples new new.
+	other := TypNamedTypeInitializingExamples new classDescription.
 	self assert: type = type.
 	self assert: type hash = type hash.
 	self assert: type ~= other.
@@ -21,8 +21,8 @@ TypUnknownTypeComparingExamples >> equality [
 TypUnknownTypeComparingExamples >> monotony [
 	<gtExample>
 	| type other |
-	type := TypUnknownTypeInitializingExamples new typeInstance.
-	other := TypNamedTypeInitializingExamples new typeClassDescription.
+	type := TypUnknownTypeInitializingExamples new new.
+	other := TypNamedTypeInitializingExamples new classDescription.
 	self assert: (type > type) not.
 	self assert: type > other.
 	self assert: (other > type) not.

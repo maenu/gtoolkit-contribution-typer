@@ -7,13 +7,10 @@ Class {
 }
 
 { #category : #accessing }
-TypUnknownTypeInitializingExamples >> typeInstance [
+TypUnknownTypeInitializingExamples >> new [
 	<gtExample>
 	| type |
 	type := TypUnknownType new.
 	self assert: type hasSuperType not.
-	self
-		assert: type == TypUnknownType new
-		description: 'unknown instance should always be the exact same object'.
 	^ type
 ]

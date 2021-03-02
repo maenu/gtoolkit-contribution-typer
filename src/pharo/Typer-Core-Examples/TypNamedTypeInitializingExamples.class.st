@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypNamedTypeInitializingExamples >> typeClassDescription [
+TypNamedTypeInitializingExamples >> classDescription [
 	<gtExample>
 	| type |
 	type := TypNamedType classDescription: Integer.
@@ -20,7 +20,7 @@ TypNamedTypeInitializingExamples >> typeClassDescription [
 ]
 
 { #category : #'as yet unclassified' }
-TypNamedTypeInitializingExamples >> typeNamedWithClassDescription [
+TypNamedTypeInitializingExamples >> namedWithClassDescription [
 	<gtExample>
 	| type |
 	type := TypNamedType named: 'Integer'.
@@ -33,7 +33,7 @@ TypNamedTypeInitializingExamples >> typeNamedWithClassDescription [
 ]
 
 { #category : #'as yet unclassified' }
-TypNamedTypeInitializingExamples >> typeNamedWithoutClassDescription [
+TypNamedTypeInitializingExamples >> namedWithoutClassDescription [
 	<gtExample>
 	| type |
 	type := TypNamedType named: 'Nothing'.

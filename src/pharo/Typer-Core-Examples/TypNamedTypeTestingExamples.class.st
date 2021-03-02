@@ -8,7 +8,7 @@ Class {
 TypNamedTypeTestingExamples >> isFunction [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypNamedTypeInitializingExamples new classDescription.
 	self assert: type isFunction not.
 	^ type
 ]
@@ -17,7 +17,7 @@ TypNamedTypeTestingExamples >> isFunction [
 TypNamedTypeTestingExamples >> isNamed [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypNamedTypeInitializingExamples new classDescription.
 	self assert: type isNamed.
 	^ type
 ]
@@ -26,7 +26,7 @@ TypNamedTypeTestingExamples >> isNamed [
 TypNamedTypeTestingExamples >> isNil [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypNamedTypeInitializingExamples new classDescription.
 	self assert: type isNil not.
 	^ type
 ]
@@ -35,7 +35,7 @@ TypNamedTypeTestingExamples >> isNil [
 TypNamedTypeTestingExamples >> isParametric [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypNamedTypeInitializingExamples new classDescription.
 	self assert: type isParametric not.
 	^ type
 ]
@@ -44,7 +44,7 @@ TypNamedTypeTestingExamples >> isParametric [
 TypNamedTypeTestingExamples >> isUnion [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypNamedTypeInitializingExamples new classDescription.
 	self assert: type isUnion not.
 	^ type
 ]
@@ -53,7 +53,7 @@ TypNamedTypeTestingExamples >> isUnion [
 TypNamedTypeTestingExamples >> isUnknown [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypNamedTypeInitializingExamples new classDescription.
 	self assert: type isUnknown not.
 	^ type
 ]
@@ -62,13 +62,7 @@ TypNamedTypeTestingExamples >> isUnknown [
 TypNamedTypeTestingExamples >> isVariable [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypNamedTypeInitializingExamples new classDescription.
 	self assert: type isVariable not.
 	^ type
-]
-
-{ #category : #generated }
-TypNamedTypeTestingExamples >> type [
-	<gtExample>
-	^ TypNamedType named: 'Object'
 ]

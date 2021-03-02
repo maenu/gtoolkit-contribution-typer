@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : #accessing }
-TypParametricTypeInitializingExamples >> typeClassDescription [
+TypParametricTypeInitializingExamples >> classDescription [
 	<gtExample>
 	self
 		assert: [ TypParametricType classDescription: Integer ]
@@ -16,7 +16,7 @@ TypParametricTypeInitializingExamples >> typeClassDescription [
 ]
 
 { #category : #accessing }
-TypParametricTypeInitializingExamples >> typeClassDescriptionParameters [
+TypParametricTypeInitializingExamples >> classDescriptionParameters [
 	<gtExample>
 	| type |
 	type := TypParametricType
@@ -36,7 +36,7 @@ TypParametricTypeInitializingExamples >> typeClassDescriptionParameters [
 ]
 
 { #category : #'as yet unclassified' }
-TypParametricTypeInitializingExamples >> typeNamedWithClassDescription [
+TypParametricTypeInitializingExamples >> namedWithClassDescription [
 	<gtExample>
 	self
 		assert: [ TypParametricType named: 'Integer' ]
@@ -45,7 +45,7 @@ TypParametricTypeInitializingExamples >> typeNamedWithClassDescription [
 ]
 
 { #category : #accessing }
-TypParametricTypeInitializingExamples >> typeNamedWithClassDescriptionParameters [
+TypParametricTypeInitializingExamples >> namedWithClassDescriptionParameters [
 	<gtExample>
 	| type |
 	type := TypParametricType
@@ -62,7 +62,7 @@ TypParametricTypeInitializingExamples >> typeNamedWithClassDescriptionParameters
 ]
 
 { #category : #'as yet unclassified' }
-TypParametricTypeInitializingExamples >> typeNamedWithoutClassDescription [
+TypParametricTypeInitializingExamples >> namedWithoutClassDescription [
 	<gtExample>
 	self
 		assert: [ TypParametricType named: 'Nothing' ]
@@ -71,7 +71,7 @@ TypParametricTypeInitializingExamples >> typeNamedWithoutClassDescription [
 ]
 
 { #category : #accessing }
-TypParametricTypeInitializingExamples >> typeNamedWithoutClassDescriptionParameters [
+TypParametricTypeInitializingExamples >> namedWithoutClassDescriptionParameters [
 	<gtExample>
 	| type |
 	type := TypParametricType

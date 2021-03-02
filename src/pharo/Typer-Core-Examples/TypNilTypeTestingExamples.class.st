@@ -8,7 +8,7 @@ Class {
 TypNilTypeTestingExamples >> isFunction [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypNilTypeInitializingExamples new new.
 	self assert: type isFunction not.
 	^ type
 ]
@@ -17,7 +17,7 @@ TypNilTypeTestingExamples >> isFunction [
 TypNilTypeTestingExamples >> isNamed [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypNilTypeInitializingExamples new new.
 	self assert: type isNamed.
 	^ type
 ]
@@ -26,7 +26,7 @@ TypNilTypeTestingExamples >> isNamed [
 TypNilTypeTestingExamples >> isNil [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypNilTypeInitializingExamples new new.
 	self assert: type isNil.
 	^ type
 ]
@@ -35,7 +35,7 @@ TypNilTypeTestingExamples >> isNil [
 TypNilTypeTestingExamples >> isParametric [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypNilTypeInitializingExamples new new.
 	self assert: type isParametric not.
 	^ type
 ]
@@ -44,7 +44,7 @@ TypNilTypeTestingExamples >> isParametric [
 TypNilTypeTestingExamples >> isUnion [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypNilTypeInitializingExamples new new.
 	self assert: type isUnion not.
 	^ type
 ]
@@ -53,7 +53,7 @@ TypNilTypeTestingExamples >> isUnion [
 TypNilTypeTestingExamples >> isUnknown [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypNilTypeInitializingExamples new new.
 	self assert: type isUnknown not.
 	^ type
 ]
@@ -62,13 +62,7 @@ TypNilTypeTestingExamples >> isUnknown [
 TypNilTypeTestingExamples >> isVariable [
 	<gtExample>
 	| type |
-	type := self type.
+	type := TypNilTypeInitializingExamples new new.
 	self assert: type isVariable not.
 	^ type
-]
-
-{ #category : #generated }
-TypNilTypeTestingExamples >> type [
-	<gtExample>
-	^ TypNilType new
 ]
