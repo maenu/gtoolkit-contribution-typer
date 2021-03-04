@@ -1,15 +1,15 @@
 Extension { #name : #RBGlobalNode }
 
 { #category : #'*Typer-Inference' }
-RBGlobalNode >> typInfDefiner [
-	self assert: [ self typInfHasDefiner ].
+RBGlobalNode >> typInfDefiningType [
+	self assert: [ self typInfHasDefiningType ].
 	self binding typInfIsFromSharedPool
 		ifTrue: [ ^ self binding typInfSharedPool classSide typAsType ].
 	^ self methodNode methodClass classSide typAsType
 ]
 
 { #category : #'*Typer-Inference' }
-RBGlobalNode >> typInfHasDefiner [
+RBGlobalNode >> typInfHasDefiningType [
 	^ self binding isClassVariable
 		or: [ self binding typInfIsFromSharedPool ]
 ]
@@ -18,5 +18,5 @@ RBGlobalNode >> typInfHasDefiner [
 RBGlobalNode >> typInfTypeRecursive [
 	self binding isGlobalClassNameBinding
 		ifTrue: [ ^ self binding value class typAsType ].
-	^ self typInfDefiner lookupVariable: name asSymbol
+	^ self typInfDefiningType lookupVariable: name asSymbol
 ]

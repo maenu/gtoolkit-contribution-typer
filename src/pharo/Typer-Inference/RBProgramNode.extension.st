@@ -12,14 +12,12 @@ RBProgramNode >> typInfAnnotateType: aType [
 { #category : #'*Typer-Inference' }
 RBProgramNode >> typInfType [
 	<typTypeResultAs: 'TypType'>
-	| key |
-	key := #typInfType.
 	^ self
-		propertyAt: key
+		propertyAt: #typInfType
 		ifAbsent: [ "need to set property to default to unknown on recursive calls"
 			self
-				propertyAt: key put: TypUnknownType new;
-				propertyAt: key
+				propertyAt: #typInfType put: TypUnknownType new;
+				propertyAt: #typInfType
 					put: (self typInfAnnotateType: self typInfTypeRecursive) ]
 ]
 
@@ -32,7 +30,7 @@ RBProgramNode >> typInfTypeRecursive [
 { #category : #'*Typer-Inference' }
 RBProgramNode >> typInfTypeReset [
 	properties
-		ifNotNil: [ (properties keys select: [ :e | e beginsWith: #typ ])
+		ifNotNil: [ (properties keys select: [ :e | e beginsWith: #typInf ])
 				do: [ :e | self removeProperty: e ] ].
 	self children do: #typInfTypeReset
 ]

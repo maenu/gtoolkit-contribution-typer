@@ -2,7 +2,9 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Inference' }
 RBMethodNode >> typInfReceiver [
-	self flag: 'FIXME implement'
+	^ self
+		propertyAt: #typInfReceiver
+		ifAbsentPut: [ self methodClass typAsType ]
 ]
 
 { #category : #'*Typer-Inference' }

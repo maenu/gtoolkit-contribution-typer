@@ -6,6 +6,6 @@ RBArrayNode >> typInfTypeRecursive [
 	type := Array typAsType.
 	type
 		at: type parameters keys first
-		put: (self statements collect: #typInfType) typAsType.
+		put: (statements collect: #typInfType) typAsType.
 	^ type
 ]

@@ -3,7 +3,7 @@ Extension { #name : #RBGlobalNode }
 { #category : #'*Typer-GToolkit' }
 RBGlobalNode >> typGtCanType [
 	<typTypeResultAs: 'Boolean'>
-	^ self typInfHasDefiner
+	^ self typInfHasDefiningType
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -11,7 +11,7 @@ RBGlobalNode >> typGtFiltersToTypeWithPragma [
 	<typTypeResultAs: 'GtCoderMethodsFilter'>
 	self assert: [ self typGtCanType ].
 	^ (TypGtCoderTypeFilter new
-		type: self typInfDefiner typAsType;
+		type: self typInfDefiningType typAsType;
 		yourself)
 		&
 			(TypGtCoderDefinerFilter new
@@ -24,7 +24,7 @@ RBGlobalNode >> typGtFiltersToTypeWithShadow [
 	<typTypeResultAs: 'GtCoderMethodsFilter'>
 	| clazz variableType shadows |
 	self assert: [ self typGtCanType ].
-	clazz := self typInfDefiner.
+	clazz := self typInfDefiningType.
 	variableType := self typInfType.
 	shadows := (TypShaShadow typGtShadowFor: clazz)
 		ifEmpty: [ {(TypShaShadow typGtNewShadowFor: clazz)} ]
