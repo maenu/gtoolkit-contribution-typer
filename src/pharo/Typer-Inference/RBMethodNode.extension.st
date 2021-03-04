@@ -1,6 +1,15 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Inference' }
+RBMethodNode >> typInfMethod [
+	^ self
+		propertyAt: #typInfMethod
+		ifAbsentPut: [ self typInfReceiver
+				lookupMethod: selector asSymbol
+				arguments: (arguments collect: #typInfType) ]
+]
+
+{ #category : #'*Typer-Inference' }
 RBMethodNode >> typInfReceiver [
 	^ self
 		propertyAt: #typInfReceiver
