@@ -54,7 +54,7 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 	anAddOns
 		addShortcut: TypGtBrowseImplementorsShortcut new;
 		addShortcut: TypGtBrowseToTypeWithPragmaShortcut new;
-		addShortcut: TypGtBrowseToTypeWithShadowShortcut new";
+		addShortcut: TypGtBrowseToTypeWithShadowShortcut new;
 		addStyler: TypGtCoverageAstStyler new;
 		addStyler: TypGtTypeDeclarationBodyStyler new;
 		addStyler:
@@ -81,7 +81,7 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 			checker := anAddOns stylers
 				detect: [ :e | e class == TypGtCheckBodyStyler ].
 			checker markUnknowns: checker markUnknowns not.
-			self styleText ]"
+			self styleText ]
 ]
 
 { #category : #'*Typer-GToolkit' }

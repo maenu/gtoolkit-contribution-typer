@@ -11,5 +11,9 @@ RBMessageNode >> typInfMethod [
 
 { #category : #'*Typer-Inference' }
 RBMessageNode >> typInfTypeRecursive [
-	^ self typInfMethod result
+	| method |
+	method := self typInfMethod.
+	method isFunction
+		ifFalse: [ ^ TypUnknownType new ].
+	^ method result
 ]

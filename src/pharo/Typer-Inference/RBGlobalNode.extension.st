@@ -5,7 +5,7 @@ RBGlobalNode >> typInfDefiningType [
 	self assert: [ self typInfHasDefiningType ].
 	self binding typInfIsFromSharedPool
 		ifTrue: [ ^ self binding typInfSharedPool classSide typAsType ].
-	^ self methodNode methodClass classSide typAsType
+	^ self methodNode methodClass class typAsType
 ]
 
 { #category : #'*Typer-Inference' }

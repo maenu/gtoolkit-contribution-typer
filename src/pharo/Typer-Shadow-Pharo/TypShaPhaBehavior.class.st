@@ -24,7 +24,7 @@ TypShaPhaBehavior >> mBasicNew: aLookup [
 	<typShaMethod: 'basicNew'>
 	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
+		typAsFunctionTypeWithResult: aLookup root receiver classDescription instanceSide typAsType
 ]
 
 { #category : #shadow }
@@ -153,7 +153,7 @@ TypShaPhaBehavior >> mNew: aLookup [
 	<typShaMethod: 'new'>
 	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
+		typAsFunctionTypeWithResult: aLookup root receiver classDescription instanceSide typAsType
 ]
 
 { #category : #shadow }

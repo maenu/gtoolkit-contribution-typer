@@ -27,9 +27,12 @@ TypInfSignalsAlwaysVisitor >> visitBlockNode: aNode [
 
 { #category : #visiting }
 TypInfSignalsAlwaysVisitor >> visitMessageNode: aNode [
-	| s |
+	| method s |
 	super visitMessageNode: aNode.
-	s := aNode typInfMethod signalsAlways.
+	method := aNode typInfMethod.
+	s := method isFunction
+		ifTrue: [ method signalsAlways ]
+		ifFalse: [ nil ].
 	s = true
 		ifTrue: [ signalsAlways := true ].
 	s = nil
