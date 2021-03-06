@@ -26,7 +26,9 @@ TypType >> <= aType [
 TypType >> > aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'Boolean'>
-	self subclassResponsibility
+	aType hasSuperType
+		ifFalse: [ ^ false ].
+	^ self >= aType superType
 ]
 
 { #category : #comparing }

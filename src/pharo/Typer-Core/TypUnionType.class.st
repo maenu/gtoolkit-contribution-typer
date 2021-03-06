@@ -42,19 +42,18 @@ TypUnionType class >> types: aCollection [
 
 { #category : #comparing }
 TypUnionType >> = anObject [
-	^ self == anObject
-		or: [ self class = anObject class
-				and: [ | object |
-					object := anObject "typCastAs TypUnionType".
-					self types asSet = object types asSet ] ]
+	self == anObject
+		ifTrue: [ ^ true ].
+	self class = anObject class
+		ifFalse: [ ^ false ].
+	^ types asSet = anObject types asSet
 ]
 
 { #category : #comparing }
 TypUnionType >> > aType [
-	^ self ~= aType
-		and: [ aType isUnion
-				ifTrue: [ (aType "typCastAs TypUnionType") types allSatisfy: [ :e | self >= e ] ]
-				ifFalse: [ types anySatisfy: [ :e | e >= aType ] ] ]
+	aType isUnion
+		ifFalse: [ ^ types anySatisfy: [ :e | e >= aType ] ].
+	^ aType types allSatisfy: [ :e | self >= e ]
 ]
 
 { #category : #converting }

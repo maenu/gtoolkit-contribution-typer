@@ -21,10 +21,10 @@ TypTypeLookupIndex class >> instance [
 													{TypPraTypeLookupResolver new.
 													TypShaTypeLookupResolver new};
 												yourself);
-										yourself)".
+										yourself).
 									(TypDepthLookupResolver new
 										resolver: TypInfTypeLookupResolver new;
-										yourself)"};
+										yourself)};
 								yourself);
 						yourself);
 				yourself ]

@@ -27,14 +27,18 @@ TypNamedType class >> named: aString [
 
 { #category : #comparing }
 TypNamedType >> = anObject [
-	^ self == anObject
-		or: [ self class = anObject class and: [ name = (anObject "typCastAs TypNamedType") name ] ]
+	self == anObject
+		ifTrue: [ ^ true ].
+	self class = anObject class
+		ifFalse: [ ^ false ].
+	^ name = anObject name
 ]
 
-{ #category : #comparing }
+{ #category : #accessing }
 TypNamedType >> > aType [
-	^ self ~= aType
-		and: [ aType hasSuperType and: [ self >= aType superType ] ]
+	(aType class inheritsFrom: self class)
+		ifTrue: [ ^ super >= (TypNamedType named: aType name) ].
+	^ super > aType
 ]
 
 { #category : #converting }

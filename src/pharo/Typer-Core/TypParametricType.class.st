@@ -35,17 +35,28 @@ TypParametricType class >> named: aString parameters: anOrderedDictionary [
 
 { #category : #comparing }
 TypParametricType >> = aType [
-	^ super = aType and: [ parameters = aType parameters ]
+	super = aType
+		ifFalse: [ ^ false ].
+	^ parameters = aType parameters
 ]
 
 { #category : #comparing }
 TypParametricType >> > aType [
-	^ self ~= aType
-		and: [ (aType isParametric
-				and: [ name = aType name
-						and: [ parameters keys = aType parameters keys
-								and: [ parameters keys allSatisfy: [ :e | (self at: e) >= (aType at: e) ] ] ] ])
-				or: [ super > aType ] ]
+	(aType class inheritsFrom: self class)
+		ifTrue: [ ^ super
+				>=
+					(TypParametricType named: aType name parameters: aType parameters copy) ].
+	aType class = self class
+		ifFalse: [ ^ super > aType ].
+	aType name = name
+		ifFalse: [ ^ super > aType ].
+	parameters size >= aType parameters size
+		ifFalse: [ ^ false ].
+	(parameters keys copyFrom: 1 to: aType parameters size)
+		= aType parameters keys
+		ifFalse: [ ^ false ].
+	^ aType parameters keys
+		allSatisfy: [ :e | (self at: e) >= (aType at: e) ]
 ]
 
 { #category : #converting }

@@ -42,12 +42,12 @@ TypLookupIndex >> initialize [
 { #category : #accessing }
 TypLookupIndex >> lookup: aLookup [
 	| types type rest |
-	self flag: 'FIXME unknown, really?'.
-	types := resolver resolve: aLookup.
-	types ifEmpty: [ ^ TypUnknownType new ].
+	types := (resolver resolve: aLookup) asSet asOrderedCollection.
+	types sort.
+	types sort.
 	type := types first.
 	rest := types allButFirst.
-	type origin add: (TypLookupIndexOrigin alternatives: rest).
+	"type origin add: (TypLookupIndexOrigin alternatives: rest)."
 	^ type
 ]
 

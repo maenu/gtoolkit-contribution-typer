@@ -27,10 +27,13 @@ TypVariableType class >> named: aString superType: aType [
 
 { #category : #comparing }
 TypVariableType >> = anObject [
-	^ anObject == self
-		or: [ anObject class = self class
-				and: [ anObject name = name
-						and: [ anObject superType = superType ] ] ]
+	self == anObject
+		ifTrue: [ ^ true ].
+	self class = anObject class
+		ifFalse: [ ^ false ].
+	name = anObject name
+		ifFalse: [ ^ false ].
+	^ superType = anObject superType
 ]
 
 { #category : #comparing }

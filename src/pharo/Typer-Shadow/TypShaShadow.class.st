@@ -12,13 +12,8 @@ Class {
 }
 
 { #category : #'class initialization' }
-TypShaShadow class >> initialize [
-]
-
-{ #category : #'class initialization' }
 TypShaShadow class >> instance [
-	self flag: 'FIXME should call new for proper initialize, but seems to break'.
-	^ instance ifNil: [ instance := self basicNew ]
+	^ instance ifNil: [ instance := self new initialize ]
 ]
 
 { #category : #accessing }

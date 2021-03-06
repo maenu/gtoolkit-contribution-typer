@@ -6,12 +6,14 @@ Class {
 
 { #category : #accessing }
 TypUnknownType >> = anObject [
+	self == anObject
+		ifTrue: [ ^ true ].
 	^ self class = anObject class
 ]
 
 { #category : #comparing }
 TypUnknownType >> > aType [
-	^ aType isUnknown not
+	^ false
 ]
 
 { #category : #accessing }
