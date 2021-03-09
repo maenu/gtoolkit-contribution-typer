@@ -53,6 +53,8 @@ TypUnionType >> = anObject [
 TypUnionType >> > aType [
 	aType isUnion
 		ifFalse: [ ^ types anySatisfy: [ :e | e >= aType ] ].
+	aType = self
+		ifTrue: [ ^ false ].
 	^ aType types allSatisfy: [ :e | self >= e ]
 ]
 

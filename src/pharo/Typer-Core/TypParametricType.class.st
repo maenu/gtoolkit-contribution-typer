@@ -33,6 +33,12 @@ TypParametricType class >> named: aString parameters: anOrderedDictionary [
 		yourself
 ]
 
+{ #category : #accessing }
+TypParametricType class >> newFrom: aType [
+	self assert: [ aType isKindOf: self ].
+	^ self named: aType name parameters: aType parameters copy
+]
+
 { #category : #comparing }
 TypParametricType >> = aType [
 	super = aType
@@ -42,16 +48,16 @@ TypParametricType >> = aType [
 
 { #category : #comparing }
 TypParametricType >> > aType [
+	aType = self
+		ifTrue: [ ^ false ].
 	(aType class inheritsFrom: self class)
-		ifTrue: [ ^ super
-				>=
-					(TypParametricType named: aType name parameters: aType parameters copy) ].
+		ifTrue: [ ^ self >= (aType as: TypParametricType) ].
 	aType class = self class
 		ifFalse: [ ^ super > aType ].
 	aType name = name
-		ifFalse: [ ^ super > aType ].
-	parameters size >= aType parameters size
-		ifFalse: [ ^ false ].
+		ifFalse: [ ^ (self as: TypNamedType) > (aType as: TypNamedType) ].
+	aType parameters size > parameters size
+		ifTrue: [ ^ false ].
 	(parameters keys copyFrom: 1 to: aType parameters size)
 		= aType parameters keys
 		ifFalse: [ ^ false ].

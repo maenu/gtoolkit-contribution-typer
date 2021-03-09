@@ -25,6 +25,12 @@ TypNamedType class >> named: aString [
 		yourself
 ]
 
+{ #category : #accessing }
+TypNamedType class >> newFrom: aType [
+	self assert: [ aType isKindOf: self ].
+	^ self named: aType name
+]
+
 { #category : #comparing }
 TypNamedType >> = anObject [
 	self == anObject
@@ -32,13 +38,6 @@ TypNamedType >> = anObject [
 	self class = anObject class
 		ifFalse: [ ^ false ].
 	^ name = anObject name
-]
-
-{ #category : #accessing }
-TypNamedType >> > aType [
-	(aType class inheritsFrom: self class)
-		ifTrue: [ ^ super >= (TypNamedType named: aType name) ].
-	^ super > aType
 ]
 
 { #category : #converting }

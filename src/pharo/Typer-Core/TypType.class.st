@@ -26,6 +26,10 @@ TypType >> <= aType [
 TypType >> > aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'Boolean'>
+	aType = self
+		ifTrue: [ ^ false ].
+	(aType class inheritsFrom: self class)
+		ifTrue: [ ^ self >= (aType as: self class) ].
 	aType hasSuperType
 		ifFalse: [ ^ false ].
 	^ self >= aType superType

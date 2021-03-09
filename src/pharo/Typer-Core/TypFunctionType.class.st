@@ -51,6 +51,17 @@ TypFunctionType class >> named: aString result: aType arguments: anOrderedCollec
 		yourself
 ]
 
+{ #category : #accessing }
+TypFunctionType class >> newFrom: aType [
+	self assert: [ aType isKindOf: self ].
+	^ self
+		named: aType name
+		result: aType result
+		arguments: aType arguments copy
+		argumentsOptional: aType argumentsOptional
+		signalsAlways: aType signalsAlways
+]
+
 { #category : #comparing }
 TypFunctionType >> = aType [
 	super = aType
@@ -62,12 +73,16 @@ TypFunctionType >> = aType [
 
 { #category : #comparing }
 TypFunctionType >> > aType [
+	aType = self
+		ifTrue: [ ^ false ].
 	(aType isKindOf: self class)
-		ifFalse: [ ^ super > aType ].
-	aType name = name
-		ifFalse: [ ^ super > aType ].
-	aType result >= self result
 		ifFalse: [ ^ false ].
+	(aType class inheritsFrom: self class)
+		ifTrue: [ ^ self >= (aType as: TypFunctionType) ].
+	aType name = name
+		ifFalse: [ ^ (self as: TypNamedType) > (aType as: TypNamedType) ].
+	aType result < self result
+		ifTrue: [ ^ false ].
 	argumentsOptional
 		ifTrue: [ | size |
 			size := argumentsSize min: aType argumentsSize.
@@ -75,13 +90,13 @@ TypFunctionType >> > aType [
 				ifTrue: [ ^ true ].
 			^ ((self arguments copyFrom: 1 to: size)
 				with: (aType arguments copyFrom: 1 to: size)
-				collect: [ :a :b | a >= b ]) allSatisfy: #yourself ]
-		ifFalse: [ aType argumentsOptional
-				ifFalse: [ ^ false ].
-			argumentsSize = aType argumentsSize
-				ifFalse: [ ^ false ].
-			^ (self arguments with: aType arguments collect: [ :a :b | a >= b ])
-				allSatisfy: #yourself ]
+				collect: [ :a :b | a >= b ]) allSatisfy: #yourself ].
+	aType argumentsOptional
+		ifFalse: [ ^ false ].
+	argumentsSize = aType argumentsSize
+		ifFalse: [ ^ false ].
+	^ (self arguments with: aType arguments collect: [ :a :b | a >= b ])
+		allSatisfy: #yourself
 ]
 
 { #category : #accessing }

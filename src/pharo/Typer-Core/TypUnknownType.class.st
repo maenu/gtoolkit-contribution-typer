@@ -13,7 +13,7 @@ TypUnknownType >> = anObject [
 
 { #category : #comparing }
 TypUnknownType >> > aType [
-	^ false
+	^ aType isUnknown not
 ]
 
 { #category : #accessing }

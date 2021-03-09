@@ -14,6 +14,7 @@ TypLookupResolver >> resolve: aLookup [
 	| types |
 	aLookup push: self.
 	types := self resolveBasic: aLookup.
+	types sort.
 	self assert: [ types allSatisfy: [ :e | e origin isNotNil ] ].
 	^ types
 ]
