@@ -75,28 +75,26 @@ TypFunctionType >> = aType [
 TypFunctionType >> > aType [
 	aType = self
 		ifTrue: [ ^ false ].
-	(aType isKindOf: self class)
-		ifFalse: [ ^ false ].
 	(aType class inheritsFrom: self class)
-		ifTrue: [ ^ self >= (aType as: TypFunctionType) ].
-	aType name = name
-		ifFalse: [ ^ (self as: TypNamedType) > (aType as: TypNamedType) ].
-	aType result < self result
-		ifTrue: [ ^ false ].
-	argumentsOptional
-		ifTrue: [ | size |
-			size := argumentsSize min: aType argumentsSize.
-			size = 0
-				ifTrue: [ ^ true ].
-			^ ((self arguments copyFrom: 1 to: size)
-				with: (aType arguments copyFrom: 1 to: size)
-				collect: [ :a :b | a >= b ]) allSatisfy: #yourself ].
-	aType argumentsOptional
-		ifFalse: [ ^ false ].
-	argumentsSize = aType argumentsSize
-		ifFalse: [ ^ false ].
-	^ (self arguments with: aType arguments collect: [ :a :b | a >= b ])
-		allSatisfy: #yourself
+		ifTrue: [ ^ self >= (aType as: self class) ].
+	(aType isFunction and: [ aType name = name ])
+		ifTrue: [ aType result >= self result
+				ifFalse: [ ^ false ].
+			argumentsOptional
+				ifTrue: [ | size |
+					size := argumentsSize min: aType argumentsSize.
+					size = 0
+						ifTrue: [ ^ true ].
+					^ ((self arguments copyFrom: 1 to: size)
+						with: (aType arguments copyFrom: 1 to: size)
+						collect: [ :a :b | a >= b ]) allSatisfy: #yourself ].
+			aType argumentsOptional
+				ifFalse: [ ^ false ].
+			argumentsSize = aType argumentsSize
+				ifFalse: [ ^ false ].
+			^ (self arguments with: aType arguments collect: [ :a :b | a >= b ])
+				allSatisfy: #yourself ].
+	^ super > aType
 ]
 
 { #category : #accessing }

@@ -40,6 +40,18 @@ TypNamedType >> = anObject [
 	^ name = anObject name
 ]
 
+{ #category : #accessing }
+TypNamedType >> > aType [
+	aType = self
+		ifTrue: [ ^ false ].
+	(aType class inheritsFrom: self class)
+		ifTrue: [ ^ self >= (aType as: self class) ].
+	(aType isNamed
+		and: [ self hasClassDescription and: [ aType hasClassDescription ] ])
+		ifTrue: [ ^ aType classDescription inheritsFrom: self classDescription ].
+	^ super > aType
+]
+
 { #category : #converting }
 TypNamedType >> classDescription [
 	<typTypeResultAs: 'ClassDescription'>
