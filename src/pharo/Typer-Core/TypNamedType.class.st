@@ -46,8 +46,12 @@ TypNamedType >> > aType [
 		ifTrue: [ ^ self >= (aType as: self class) ].
 	(aType isNamed
 		and: [ self hasClassDescription and: [ aType hasClassDescription ] ])
-		ifTrue: [ ^ aType classDescription inheritsFrom: self classDescription ].
-	^ super > aType
+		ifFalse: [ ^ super > aType ].
+	aType classDescription = self classDescription
+		ifFalse: [ ^ aType classDescription inheritsFrom: self classDescription ].
+	(self hasSuperType and: [ aType hasSuperType ])
+		ifFalse: [ ^ false ].
+	^ self superType > aType superType
 ]
 
 { #category : #converting }
