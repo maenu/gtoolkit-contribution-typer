@@ -8,6 +8,8 @@ RBBlockNode >> typInfArgumentType: anArgumentNode [
 	i := parent arguments indexOf: self.
 	j := arguments indexOf: anArgumentNode.
 	method := parent typInfMethod.
+	method isFunction
+		ifFalse: [ ^ TypUnknownType new ].
 	argument := method arguments at: i.
 	argument isFunction
 		ifTrue: [ ^ argument arguments at: j ].

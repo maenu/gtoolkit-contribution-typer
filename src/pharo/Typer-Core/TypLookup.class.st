@@ -9,6 +9,15 @@ Class {
 }
 
 { #category : #accessing }
+TypLookup >> = anObject [
+	anObject == self
+		ifTrue: [ ^ true ].
+	anObject class = self class
+		ifFalse: [ ^ false ].
+	^ anObject parent = parent
+]
+
+{ #category : #accessing }
 TypLookup >> asOrigin [
 	^ TypLookupOrigin lookup: self
 ]
@@ -32,6 +41,11 @@ TypLookup >> hasSuper [
 ]
 
 { #category : #accessing }
+TypLookup >> hash [
+	^ parent hash
+]
+
+{ #category : #accessing }
 TypLookup >> initialize [
 	super initialize.
 	stack := Stack new
@@ -40,6 +54,11 @@ TypLookup >> initialize [
 { #category : #accessing }
 TypLookup >> initializeParent: aLookup [
 	parent := aLookup
+]
+
+{ #category : #accessing }
+TypLookup >> parent [
+	^ parent
 ]
 
 { #category : #accessing }

@@ -21,10 +21,10 @@ TypVariableLookupIndex class >> instance [
 													{TypPraVariableLookupResolver new.
 													TypShaVariableLookupResolver new};
 												yourself);
-										yourself)".
+										yourself).
 									(TypDepthLookupResolver new
 										resolver: TypInfVariableLookupResolver new;
-										yourself)"};
+										yourself)};
 								yourself);
 						yourself);
 				yourself ]

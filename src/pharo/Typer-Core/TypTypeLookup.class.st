@@ -16,9 +16,9 @@ TypTypeLookup class >> classDescription: aClassDescription [
 
 { #category : #comparing }
 TypTypeLookup >> = anObject [
-	^ self == anObject
-		or: [ self class == anObject class
-				and: [ classDescription = anObject classDescription ] ]
+	super = anObject
+		ifFalse: [ ^ false ].
+	^ classDescription = anObject classDescription
 ]
 
 { #category : #accessing }
@@ -42,7 +42,7 @@ TypTypeLookup >> hasSuper [
 
 { #category : #comparing }
 TypTypeLookup >> hash [
-	^ classDescription hash
+	^ super hash bitXor: classDescription hash
 ]
 
 { #category : #initialization }

@@ -92,7 +92,8 @@ TypShaPhaString >> mTranslated: aLookup [
 TypShaPhaString >> resolveType: aLookup [
 	| type |
 	type := aLookup classDescription typAsNamedType.
-	type
-		superType: (type superType copyWithParameters: {Character typAsType}).
+	(type hasSuperType and: [ type superType isParametric ])
+		ifTrue: [ type
+				superType: (type superType copyWithParameters: {Character typAsType}) ].
 	^ type
 ]

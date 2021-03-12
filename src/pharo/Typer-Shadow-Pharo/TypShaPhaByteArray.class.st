@@ -13,7 +13,8 @@ TypShaPhaByteArray class >> shadowedClass [
 TypShaPhaByteArray >> resolveType: aLookup [
 	| type |
 	type := aLookup classDescription typAsNamedType.
-	type
-		superType: (type superType copyWithParameters: {Integer typAsType}).
+	(type hasSuperType and: [ type superType isParametric ])
+		ifTrue: [ type
+				superType: (type superType copyWithParameters: {Integer typAsType}) ].
 	^ type
 ]

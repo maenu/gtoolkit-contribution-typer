@@ -1,6 +1,12 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer-Inference' }
+RBMessageNode >> typInfArgumentType: anArgumentNode [
+	self flag: 'TODO'.
+	^ TypUnknownType new
+]
+
+{ #category : #'*Typer-Inference' }
 RBMessageNode >> typInfMethod [
 	^ self
 		propertyAt: #typInfMethod

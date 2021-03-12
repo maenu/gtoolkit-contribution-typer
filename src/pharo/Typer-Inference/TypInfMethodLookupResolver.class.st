@@ -13,7 +13,10 @@ TypInfMethodLookupResolver >> resolveBasic: aLookup [
 		ifFalse: [ ^ #() ].
 	classDescription := aLookup receiver classDescription.
 	selector := aLookup selector.
-	^ {((classDescription lookupSelector: selector) typInfType
-		origin: aLookup asOrigin;
-		yourself)}
+	(classDescription lookupSelector: selector)
+		ifNil: [ ^ #() ]
+		ifNotNil: [ :e | 
+			^ {(e typInfType
+				origin: aLookup asOrigin;
+				yourself)} ]
 ]

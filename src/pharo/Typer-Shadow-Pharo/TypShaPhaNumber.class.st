@@ -16,7 +16,7 @@ TypShaPhaNumber >> mBinary233: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			{aLookup receiver.
-			(aLookup argument at: 1)} typAsType
+			(aLookup arguments at: 1)} typAsType
 		arguments: {Number typAsType}
 ]
 

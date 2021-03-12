@@ -16,6 +16,11 @@ TypUnknownType >> > aType [
 	^ aType isUnknown not
 ]
 
+{ #category : #polymorphic }
+TypUnknownType >> at: anObject [
+	^ self
+]
+
 { #category : #accessing }
 TypUnknownType >> hash [
 	^ self class hash bitXor: 7
@@ -32,4 +37,9 @@ TypUnknownType >> printOn: aStream skipping: anIdentitySet [
 		ifTrue: [ aStream << '.'.
 			^ self ].
 	aStream << '?'
+]
+
+{ #category : #polymorphic }
+TypUnknownType >> result [
+	^ self
 ]

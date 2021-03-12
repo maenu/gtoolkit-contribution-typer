@@ -44,6 +44,12 @@ TypLookupIndex >> lookup: aLookup [
 	| types type rest |
 	types := (resolver resolve: aLookup) asSet asOrderedCollection.
 	types sort.
+	types
+		ifEmpty: [ types
+				add:
+					(TypUnknownType new
+						origin: (TypLookupIndexOrigin alternatives: #());
+						yourself) ].
 	type := types first.
 	rest := types allButFirst.
 	type origin add: (TypLookupIndexOrigin alternatives: rest).
