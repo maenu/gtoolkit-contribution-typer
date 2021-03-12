@@ -50,7 +50,7 @@ TypType >> > aType [
 TypType >> >= aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	<typTypeResultAs: 'Boolean'>
-	^ self = aType or: [ self > aType ]
+	^ self > aType or: [ self = aType ]
 ]
 
 { #category : #converting }
