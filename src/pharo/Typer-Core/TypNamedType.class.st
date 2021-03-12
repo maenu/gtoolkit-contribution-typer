@@ -33,9 +33,7 @@ TypNamedType class >> newFrom: aType [
 
 { #category : #comparing }
 TypNamedType >> = anObject [
-	self == anObject
-		ifTrue: [ ^ true ].
-	self class = anObject class
+	super = anObject
 		ifFalse: [ ^ false ].
 	^ name = anObject name
 ]
@@ -78,7 +76,7 @@ TypNamedType >> hasSuperType [
 
 { #category : #comparing }
 TypNamedType >> hash [
-	^ name hash
+	^ super hash bitXor: name hash
 ]
 
 { #category : #initialization }

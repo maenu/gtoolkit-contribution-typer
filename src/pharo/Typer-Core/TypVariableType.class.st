@@ -27,13 +27,9 @@ TypVariableType class >> named: aString superType: aType [
 
 { #category : #comparing }
 TypVariableType >> = anObject [
-	self == anObject
-		ifTrue: [ ^ true ].
-	self class = anObject class
+	super = anObject
 		ifFalse: [ ^ false ].
-	name = anObject name
-		ifFalse: [ ^ false ].
-	^ superType = anObject superType
+	^ name = anObject name
 ]
 
 { #category : #comparing }
@@ -43,7 +39,7 @@ TypVariableType >> > aType [
 
 { #category : #comparing }
 TypVariableType >> hash [
-	^ name hash bitXor: superType hash
+	^ (super hash bitXor: name hash) bitXor: superType hash
 ]
 
 { #category : #initialization }

@@ -53,14 +53,14 @@ TypParametricType >> > aType [
 	(aType class inheritsFrom: self class)
 		ifTrue: [ ^ self >= (aType as: self class) ].
 	(aType isParametric and: [ aType name = name ])
-		ifTrue: [ aType parameters size <= parameters size
-				ifFalse: [ ^ false ].
-			(parameters keys copyFrom: 1 to: aType parameters size)
-				= aType parameters keys
-				ifFalse: [ ^ false ].
-			^ aType parameters keys
-				allSatisfy: [ :e | (self at: e) >= (aType at: e) ] ].
-	^ super > aType
+		ifFalse: [ ^ super > aType ].
+	aType parameters size <= parameters size
+		ifFalse: [ ^ false ].
+	(parameters keys copyFrom: 1 to: aType parameters size)
+		= aType parameters keys
+		ifFalse: [ ^ false ].
+	^ aType parameters keys
+		allSatisfy: [ :e | (self at: e) >= (aType at: e) ]
 ]
 
 { #category : #converting }

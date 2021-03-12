@@ -42,9 +42,7 @@ TypUnionType class >> types: aCollection [
 
 { #category : #comparing }
 TypUnionType >> = anObject [
-	self == anObject
-		ifTrue: [ ^ true ].
-	self class = anObject class
+	super = anObject
 		ifFalse: [ ^ false ].
 	^ types asSet = anObject types asSet
 ]
@@ -111,7 +109,7 @@ TypUnionType >> hasSuperType [
 
 { #category : #comparing }
 TypUnionType >> hash [
-	^ types hash
+	^ super hash bitXor: types hash
 ]
 
 { #category : #accessing }

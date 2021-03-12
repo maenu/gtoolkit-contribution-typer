@@ -22,6 +22,19 @@ TypType >> <= aType [
 	^ aType >= self
 ]
 
+{ #category : #accessing }
+TypType >> = anObject [
+	self == anObject
+		ifTrue: [ ^ true ].
+	self class = anObject class
+		ifFalse: [ ^ false ].
+	self hasSuperType = anObject hasSuperType
+		ifFalse: [ ^ false ].
+	self hasSuperType
+		ifFalse: [ ^ true ].
+	^ self superType = anObject superType
+]
+
 { #category : #comparing }
 TypType >> > aType [
 	<typTypeArgument: 1 as: 'TypType'>
@@ -74,6 +87,13 @@ TypType >> asNullable [
 { #category : #testing }
 TypType >> hasSuperType [
 	^ superType isNotNil
+]
+
+{ #category : #accessing }
+TypType >> hash [
+	self hasSuperType
+		ifTrue: [ ^ self superType hash ].
+	^ nil hash bitXor: 23
 ]
 
 { #category : #initialization }
