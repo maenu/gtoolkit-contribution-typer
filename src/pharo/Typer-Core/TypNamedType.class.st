@@ -54,11 +54,24 @@ TypNamedType >> > aType [
 	^ self superType > aType superType
 ]
 
+{ #category : #polymorphic }
+TypNamedType >> at: aString [
+	^ self superType at: aString
+]
+
 { #category : #converting }
 TypNamedType >> classDescription [
 	<typTypeResultAs: 'ClassDescription'>
 	self assert: [ self hasClassDescription ].
 	^ classDescription
+]
+
+{ #category : #polymorphic }
+TypNamedType >> copyWithParameters: aCollection [
+	| copy |
+	copy := self copy.
+	copy superType: (copy superType copyWithParameters: aCollection).
+	^ copy
 ]
 
 { #category : #testing }

@@ -169,7 +169,7 @@ TypShaPhaBehavior >> mSuperclass: aLookup [
 	<typShaMethod: 'superclass'>
 	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiver classDescription superclass
+		typAsFunctionTypeWithResult: aLookup receiver classDescription superclass classSide typAsType
 ]
 
 { #category : #shadow }

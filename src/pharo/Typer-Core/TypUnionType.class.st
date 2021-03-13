@@ -67,7 +67,7 @@ TypUnionType >> asNonNullable [
 TypUnionType >> asNullable [
 	^ self isNullable
 		ifTrue: [ self ]
-		ifFalse: [ (types , TypNilType new) typAsType ]
+		ifFalse: [ (types , { TypNilType new }) typAsType ]
 ]
 
 { #category : #testing }
@@ -104,7 +104,7 @@ TypUnionType >> hasSuperType [
 			unknown
 				ifTrue: [ remains add: TypUnknownType new ].
 			superType := remains typAsType ].
-	^ superType ~= self
+	^ superType isUnion not or: [ superType types size < types size ]
 ]
 
 { #category : #comparing }

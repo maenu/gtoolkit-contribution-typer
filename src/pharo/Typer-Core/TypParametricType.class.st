@@ -154,10 +154,9 @@ TypParametricType >> printOn: aStream skipping: anIdentitySet [
 TypParametricType >> superType [
 	superType ifNotNil: [ ^ superType ].
 	superType := super superType.
-	superType isParametric
+	(superType isParametric
+		and: [ parameters keys includesAll: superType parameters keys ])
 		ifTrue: [ superType := superType
-				copyWithParameters:
-					((parameters keys intersection: superType parameters keys)
-						collect: [ :e | self at: e ]) ].
+				copyWithParameters: (superType parameters keys collect: [ :e | self at: e ]) ].
 	^ superType
 ]
