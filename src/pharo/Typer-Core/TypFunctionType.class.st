@@ -79,7 +79,7 @@ TypFunctionType >> > aType [
 		ifTrue: [ ^ self >= (aType as: self class) ].
 	(aType isFunction and: [ aType name = name ])
 		ifFalse: [ ^ super > aType ].
-	aType result >= self result
+	aType result <= self result
 		ifFalse: [ ^ false ].
 	argumentsOptional
 		ifTrue: [ | size |
@@ -90,7 +90,7 @@ TypFunctionType >> > aType [
 				with: (aType arguments copyFrom: 1 to: size)
 				collect: [ :a :b | a >= b ]) allSatisfy: #yourself ].
 	aType argumentsOptional
-		ifFalse: [ ^ false ].
+		ifTrue: [ ^ false ].
 	argumentsSize = aType argumentsSize
 		ifFalse: [ ^ false ].
 	^ (self arguments with: aType arguments collect: [ :a :b | a >= b ])
