@@ -36,7 +36,7 @@ TypShaGtGtMethodCoderAddOns >> mAddStyler: aLookup [
 	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
-		arguments: {GtASTStyler typAsType}
+		arguments: {GtRBASTStyler typAsType}
 ]
 
 { #category : #shadow }
@@ -46,7 +46,7 @@ TypShaGtGtMethodCoderAddOns >> mStylers: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {GtASTStyler typAsType})
+				copyWithParameters: {GtRBASTStyler typAsType})
 ]
 
 { #category : #'as yet unclassified' }
@@ -55,9 +55,9 @@ TypShaGtGtMethodCoderAddOns >> vModified: aLookup [
 	^ Set typAsType copyWithParameters: {Symbol typAsType}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaGtGtMethodCoderAddOns >> vStylers: aLookup [
 	<typShaForVariable: #stylers>
 	^ SequenceableCollection typAsType
-		copyWithParameters: {GtASTStyler typAsType}
+		copyWithParameters: {GtRBASTStyler typAsType}
 ]

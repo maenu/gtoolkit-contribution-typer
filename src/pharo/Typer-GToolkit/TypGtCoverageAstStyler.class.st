@@ -1,6 +1,6 @@
 Class {
 	#name : #TypGtCoverageAstStyler,
-	#superclass : #GtASTStyler,
+	#superclass : #GtRBASTStyler,
 	#category : #'Typer-GToolkit-Typer-GToolkit'
 }
 
