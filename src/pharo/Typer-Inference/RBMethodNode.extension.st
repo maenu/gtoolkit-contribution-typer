@@ -19,7 +19,7 @@ RBMethodNode >> typInfReceiver [
 { #category : #'*Typer-Inference' }
 RBMethodNode >> typInfTemporaryProfile [
 	<typTypeResultAs: 'SequenceableCollection<Association<RBProgramNode,TypType>>'>
-	^ (self allChildren select: [ :e | e isVariable or: [ e isReturn ] ])
+	^ (self allChildren select: #isValue)
 		collect: [ :e | e -> e typInfType ]
 ]
 
@@ -27,19 +27,11 @@ RBMethodNode >> typInfTemporaryProfile [
 RBMethodNode >> typInfTypeRecursive [
 	<typTypeResultAs: 'TypType'>
 	| iterations maxIterations oldTemporaryProfiles newTemporaryProfile visitor types |
-	types := (self allChildren select: #isReturn)
-		collect: #typInfType
-		as: OrderedCollection.
-	self lastIsReturn
-		ifFalse: [ types add: self typInfReceiver ].
-	visitor := TypInfSignalsAlwaysVisitor new.
-	self acceptVisitor: visitor.
 	self
 		typInfTypeReset;
-		doSemanticAnalysis;
 		propertyAt: #typFixPoint put: false.
 	iterations := 0.
-	maxIterations := 5.
+	maxIterations := 25.
 	oldTemporaryProfiles := Set new.
 	newTemporaryProfile := self typInfTemporaryProfile.
 	[ | oldTemporaryProfile |
@@ -47,7 +39,9 @@ RBMethodNode >> typInfTypeRecursive [
 	oldTemporaryProfiles add: newTemporaryProfile.
 	self typInfTypeReset.
 	newTemporaryProfile
-		do: [ :e | e key propertyAt: #typInfType put: e value ].
+		do: [ :e | 
+			e value isUnknown
+				ifFalse: [ e key propertyAt: #typInfType put: e value ] ].
 	(self allChildren
 		copyWithoutAll: (newTemporaryProfile collect: #key) , {self})
 		do: [ :e | e typInfType ].
@@ -62,9 +56,16 @@ RBMethodNode >> typInfTypeRecursive [
 		ifTrue: [ self propertyAt: #typFixPoint put: true ].
 	(oldTemporaryProfiles includes: newTemporaryProfile) not
 		and: [ iterations < maxIterations ] ] whileTrue.
+	types := (self allChildren select: #isReturn)
+		collect: #typInfType
+		as: OrderedCollection.
+	self lastIsReturn
+		ifFalse: [ types add: self typInfReceiver ].
+	visitor := TypInfSignalsAlwaysVisitor new.
+	self acceptVisitor: visitor.
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: types typAsType
-		arguments: (self arguments collect: #typInfType)
+		arguments: (arguments collect: #typInfType)
 		argumentsOptional: false
 		signalsAlways: visitor signalsAlways
 ]

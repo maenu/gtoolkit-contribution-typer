@@ -84,7 +84,10 @@ TypShaShadow >> priority: anObject [
 TypShaShadow >> resolveMethod: aLookup [
 	^ (self class methods
 		select: [ :e | e typShaResolvesMethod: aLookup selector ])
-		collect: [ :e | self perform: e selector with: aLookup ]
+		collect: [ :e | 
+			[ self perform: e selector with: aLookup ]
+				on: Error
+				do: [ self flag:'FIXME fix cause instead, non-typMigrated pragma'. TypUnknownType new ] ]
 ]
 
 { #category : #converting }
