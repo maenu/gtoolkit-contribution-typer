@@ -42,7 +42,6 @@ GtSourceCoder >> typGtBrowseToTypeWithShadowAt: anInteger [
 
 { #category : #'*Typer-GToolkit' }
 GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
-	<gtAstCoderAddOns: 10>
 	"self completionStrategy class == GtPharoCompletionStrategy
 		ifTrue: [ completionStrategy := completionStrategy
 				typGtAsTypGtPharoCompletionStrategyFor: self ].
@@ -51,7 +50,9 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 			(TypGtTypeCursorBodyStyler new
 				coder: self;
 				yourself)."
-	anAddOns
+
+	<gtAstCoderAddOns: 10>
+	"anAddOns
 		addShortcut: TypGtBrowseImplementorsShortcut new;
 		addShortcut: TypGtBrowseToTypeWithPragmaShortcut new;
 		addShortcut: TypGtBrowseToTypeWithShadowShortcut new;
@@ -64,24 +65,22 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 		addMainAction: 'Types' translated
 			icon: BrGlamorousIcons inspect
 			action: [ | declaration |
-			declaration := addOns stylers
+			declaration := anAddOns stylers
 				anySatisfy: [ :e | e class == TypGtTypeDeclarationBodyStyler ].
 			declaration
-				ifTrue: [ addOns
+				ifTrue: [ anAddOns
 						typGtReplaceStylerOfType: TypGtTypeDeclarationBodyStyler
 						with: TypGtTypeValueBodyStyler new ]
-				ifFalse: [ addOns
+				ifFalse: [ anAddOns
 						typGtReplaceStylerOfType: TypGtTypeValueBodyStyler
-						with: TypGtTypeDeclarationBodyStyler new ].
-			addOns changesDo: [ :each | self addOnChanged: each ].
-			addOns clearChanges ];
+						with: TypGtTypeDeclarationBodyStyler new ] ];
 		addMainAction: 'Unknowns' translated
 			icon: BrGlamorousIcons minimize
 			action: [ | checker |
 			checker := anAddOns stylers
 				detect: [ :e | e class == TypGtCheckBodyStyler ].
 			checker markUnknowns: checker markUnknowns not.
-			self styleText ]
+			self styleText ]"
 ]
 
 { #category : #'*Typer-GToolkit' }
