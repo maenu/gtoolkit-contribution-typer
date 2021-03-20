@@ -1,14 +1,25 @@
 Class {
 	#name : #TypGtTypeBodyStyler,
 	#superclass : #GtRBASTStyler,
+	#traits : 'TRBProgramNodeVisitor',
+	#classTraits : 'TRBProgramNodeVisitor classTrait',
+	#instVars : [
+		'coder'
+	],
 	#category : #'Typer-GToolkit'
 }
 
+{ #category : #accessing }
+TypGtTypeBodyStyler >> coder: aCoder [
+	coder := aCoder
+]
+
 { #category : #styling }
 TypGtTypeBodyStyler >> style: aText ast: anAst [
-	text := aText.
-	anAst typInfType.
-	super style: aText ast: anAst
+	| ast |
+	ast := coder rbAST.
+	ast typInfType.
+	super style: aText ast: ast
 ]
 
 { #category : #private }
@@ -19,9 +30,8 @@ TypGtTypeBodyStyler >> styleFrom: from to: to with: attributes [
 
 { #category : #visiting }
 TypGtTypeBodyStyler >> styleValueNode: aNode [
-	<typTypeArgument: 1 as: 'RBValueNode'>
 	self
-		styleFrom: aNode stop
+		styleFrom: aNode start
 		to: aNode stop
 		with:
 			{(TypGtTypeAttribute new

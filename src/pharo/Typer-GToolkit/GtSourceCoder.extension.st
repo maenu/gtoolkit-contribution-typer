@@ -52,6 +52,7 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 				yourself)."
 
 	<gtAstCoderAddOns: 10>
+	anAddOns addStyler: (TypGtTypeDeclarationBodyStyler new coder: self; yourself).
 	"anAddOns
 		addShortcut: TypGtBrowseImplementorsShortcut new;
 		addShortcut: TypGtBrowseToTypeWithPragmaShortcut new;

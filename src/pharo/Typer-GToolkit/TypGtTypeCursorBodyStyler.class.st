@@ -1,9 +1,6 @@
 Class {
 	#name : #TypGtTypeCursorBodyStyler,
 	#superclass : #TypGtTypeValueBodyStyler,
-	#instVars : [
-		'coder'
-	],
 	#category : #'Typer-GToolkit'
 }
 

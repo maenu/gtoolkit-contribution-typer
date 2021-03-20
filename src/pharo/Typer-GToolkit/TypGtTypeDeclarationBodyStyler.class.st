@@ -23,6 +23,6 @@ TypGtTypeDeclarationBodyStyler >> visitMethodNode: aNode [
 		to: position
 		with:
 			{(TypGtTypeAttribute new
-				type_: aNode typInfResult;
+				type_: aNode typInfType result;
 				yourself)}
 ]
