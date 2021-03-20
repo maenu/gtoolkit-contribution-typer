@@ -18,6 +18,14 @@ TypShaPhaClass >> mAddClassVarNamed: aLookup [
 		arguments: {String typAsType}
 ]
 
+{ #category : #accessing }
+TypShaPhaClass >> mBasicNew: aLookup [
+	<typShaMethod: 'basicNew'>
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup root receiver classDescription instanceSide typAsType
+]
+
 { #category : #shadow }
 TypShaPhaClass >> mClassVarNamed: aLookup [
 	<typShaMethod: 'classVarNamed:'>
@@ -34,6 +42,14 @@ TypShaPhaClass >> mHasClassVarNamed: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {String typAsType}
+]
+
+{ #category : #accessing }
+TypShaPhaClass >> mNew: aLookup [
+	<typShaMethod: 'new'>
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup root receiver classDescription instanceSide typAsType
 ]
 
 { #category : #shadow }

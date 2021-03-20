@@ -51,8 +51,7 @@ TypLookupIndex >> lookup: aLookup [
 						origin: (TypLookupIndexOrigin alternatives: #());
 						yourself) ].
 	type := types first.
-	rest := types allButFirst.
-	type origin add: (TypLookupIndexOrigin alternatives: rest).
+	type origin add: (TypLookupIndexOrigin alternatives: types).
 	^ type
 ]
 

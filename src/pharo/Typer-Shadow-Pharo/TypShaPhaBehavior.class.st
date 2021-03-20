@@ -20,14 +20,6 @@ TypShaPhaBehavior >> mAllSubclasses: aLookup [
 ]
 
 { #category : #shadow }
-TypShaPhaBehavior >> mBasicNew: aLookup [
-	<typShaMethod: 'basicNew'>
-	<typMigrated>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver classDescription instanceSide typAsType
-]
-
-{ #category : #shadow }
 TypShaPhaBehavior >> mBinary83: aLookup [
 	<typShaMethod: '>>'>
 	<typMigrated>
@@ -146,14 +138,6 @@ TypShaPhaBehavior >> mName: aLookup [
 	<typShaMethod: 'name'>
 	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
-]
-
-{ #category : #shadow }
-TypShaPhaBehavior >> mNew: aLookup [
-	<typShaMethod: 'new'>
-	<typMigrated>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver classDescription instanceSide typAsType
 ]
 
 { #category : #shadow }
