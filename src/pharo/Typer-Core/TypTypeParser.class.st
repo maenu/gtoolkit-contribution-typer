@@ -6,7 +6,7 @@ Class {
 
 { #category : #'generated-accessing' }
 TypTypeParser class >> cacheId [
-	^'2021-02-20T14:36:22.992928+01:00'
+	^'2021-03-20T18:04:51.724039+01:00'
 ]
 
 { #category : #generated }
@@ -52,11 +52,11 @@ Type
 	;
 UnknownType
 	: ""?""
-		{ TypUnknownType instance }
+		{ TypUnknownType new }
 	;
 NilType
 	: ""!""
-		{ TypNilType instance }
+		{ TypNilType new }
 	;
 VariableType
 	: ""@"" Name 'name'
@@ -107,9 +107,9 @@ TypTypeParser class >> parse: aString [
 { #category : #generated }
 TypTypeParser class >> reduceTable [
 ^#(
-	#(20 1 #reduceActionForNilType1: 630785 false ) 
+	#(20 1 #reduceActionForNilType1: 625665 false ) 
 	#(19 1 #reduceActionForUnknownType1: 577537 false ) 
-	#(27 1 #reduceActionForName1: 1734657 false ) 
+	#(27 1 #reduceActionForName1: 1724417 false ) 
 	#(17 1 #reduceActionForTypes1: 241665 false ) 
 	#(18 1 #liftFirstValue: 334849 false ) 
 	#(18 1 #liftFirstValue: 334850 false ) 
@@ -118,16 +118,16 @@ TypTypeParser class >> reduceTable [
 	#(18 1 #liftFirstValue: 334854 false ) 
 	#(18 1 #liftFirstValue: 334853 false ) 
 	#(18 1 #liftFirstValue: 334852 false ) 
-	#(22 1 #reduceActionForNamedType1: 858113 false ) 
-	#(21 2 #reduceActionForVariableType1: 675841 false ) 
-	#(26 0 #reduceActionForEmptyTypes2: 1680386 false ) 
-	#(25 3 #reduceActionForUnionType1: 1608705 false ) 
+	#(22 1 #reduceActionForNamedType1: 847873 false ) 
+	#(21 2 #reduceActionForVariableType1: 665601 false ) 
+	#(26 0 #reduceActionForEmptyTypes2: 1670146 false ) 
+	#(25 3 #reduceActionForUnionType1: 1598465 false ) 
 	#(17 3 #reduceActionForTypes2: 241666 false ) 
-	#(26 1 #liftFirstValue: 1680385 false ) 
-	#(21 4 #reduceActionForVariableType2: 675842 false ) 
-	#(23 4 #reduceActionForParametricType1: 968705 false ) 
-	#(24 6 #reduceActionForFunctionType2: 1226754 false ) 
-	#(24 6 #reduceActionForFunctionType1: 1226753 false )
+	#(26 1 #liftFirstValue: 1670145 false ) 
+	#(21 4 #reduceActionForVariableType2: 665602 false ) 
+	#(23 4 #reduceActionForParametricType1: 958465 false ) 
+	#(24 6 #reduceActionForFunctionType2: 1216514 false ) 
+	#(24 6 #reduceActionForFunctionType1: 1216513 false )
 	).
 ]
 
@@ -228,7 +228,7 @@ TypTypeParser >> reduceActionForNamedType1: nodes [
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForNilType1: nodes [
-	^ TypNilType instance
+	^ TypNilType new
 ]
 
 { #category : #'generated-reduction actions' }
@@ -259,7 +259,7 @@ TypTypeParser >> reduceActionForUnionType1: nodes [
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForUnknownType1: nodes [
-	^ TypUnknownType instance
+	^ TypUnknownType new
 ]
 
 { #category : #'generated-reduction actions' }

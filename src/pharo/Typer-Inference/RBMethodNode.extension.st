@@ -31,7 +31,7 @@ RBMethodNode >> typInfTypeRecursive [
 		typInfTypeReset;
 		propertyAt: #typFixPoint put: false.
 	iterations := 0.
-	maxIterations := 25.
+	maxIterations := 3.
 	oldTemporaryProfiles := Set new.
 	newTemporaryProfile := self typInfTemporaryProfile.
 	[ | oldTemporaryProfile |
