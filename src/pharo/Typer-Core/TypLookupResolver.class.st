@@ -14,7 +14,8 @@ TypLookupResolver >> resolve: aLookup [
 	| types |
 	aLookup push: self.
 	types := self resolveBasic: aLookup.
-	self assert: [ types allSatisfy: [ :e | e origin isNotNil ] ].
+	self flag: 'FIXME this is odd'.
+	self assert: [ types allSatisfy: [ :e | e origins isNotEmpty ] ].
 	^ types
 ]
 

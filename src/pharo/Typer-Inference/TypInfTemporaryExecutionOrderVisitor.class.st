@@ -131,6 +131,9 @@ TypInfTemporaryExecutionOrderVisitor >> visitSequenceNode: aSequenceNode [
 	aSequenceNode == definer
 		ifTrue: [ types
 				removeAll;
-				add: TypNilType new ].
+				add:
+					(TypNilType new
+						addOrigin: (TypInfNodeOrigin node: aSequenceNode);
+						yourself) ].
 	super visitSequenceNode: aSequenceNode
 ]

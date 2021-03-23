@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'superType',
-		'origin'
+		'origins'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -53,6 +53,11 @@ TypType >> >= aType [
 	^ self > aType or: [ self = aType ]
 ]
 
+{ #category : #accessing }
+TypType >> addOrigin: anOrigin [
+	origins add: anOrigin
+]
+
 { #category : #converting }
 TypType >> asCompatibleWith: aType [
 	<typTypeArgument: 1 as: 'TypType'>
@@ -69,6 +74,12 @@ TypType >> asCompatibleWith: aType [
 	self hasSuperType
 		ifTrue: [ ^ self superType asCompatibleWith: aType ].
 	^ TypUnknownType new
+		addOrigin:
+			(TypConversionOrigin
+				type: self
+				selector: #asCompatibleWith:
+				arguments: {aType});
+		yourself
 ]
 
 { #category : #converting }
@@ -82,6 +93,9 @@ TypType >> asNullable [
 	<typTypeResultAs: 'TypType'>
 	^ {TypNilType new.
 	self} typAsType
+		addOrigin:
+			(TypConversionOrigin type: self selector: #asNullable arguments: #());
+		yourself
 ]
 
 { #category : #testing }
@@ -99,7 +113,8 @@ TypType >> hash [
 { #category : #initialization }
 TypType >> initialize [
 	<typTypeVariable: 'superType' as: '{!,TypType}'>
-	super initialize
+	super initialize.
+	origins := OrderedCollection new
 ]
 
 { #category : #testing }
@@ -165,13 +180,8 @@ TypType >> lookupVariable: aSymbol [
 ]
 
 { #category : #accessing }
-TypType >> origin [
-	^ origin
-]
-
-{ #category : #accessing }
-TypType >> origin: anOrigin [
-	origin := anOrigin
+TypType >> origins [
+	^ origins
 ]
 
 { #category : #printing }

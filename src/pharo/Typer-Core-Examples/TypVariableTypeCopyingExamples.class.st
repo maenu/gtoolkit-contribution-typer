@@ -10,7 +10,7 @@ TypVariableTypeCopyingExamples >> copyIsShallow [
 	| original copy |
 	original := TypVariableTypeInitializingExamples new named.
 	original
-		scope:
+		type:
 			(TypParametricTypeInitializingExamples new classDescriptionParameters);
 		superType:
 			(TypNamedTypeInitializingExamples new classDescription).
@@ -20,7 +20,7 @@ TypVariableTypeCopyingExamples >> copyIsShallow [
 	self assert: original superType == copy superType.
 	self assert: original name isNotNil.
 	self assert: original name == copy name.
-	self assert: original scope isNotNil.
-	self assert: original scope == copy scope.
+	self assert: original type isNotNil.
+	self assert: original type == copy type.
 	^ copy
 ]

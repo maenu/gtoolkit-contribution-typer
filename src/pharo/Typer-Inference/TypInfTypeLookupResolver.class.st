@@ -7,6 +7,6 @@ Class {
 { #category : #accessing }
 TypInfTypeLookupResolver >> resolveBasic: aLookup [
 	^ {(aLookup classDescription typAsNamedType
-		origin: aLookup asOrigin;
+		addOrigin: aLookup asOrigin;
 		yourself)}
 ]

@@ -41,17 +41,17 @@ TypLookupIndex >> initialize [
 
 { #category : #accessing }
 TypLookupIndex >> lookup: aLookup [
-	| types type rest |
+	| types type |
 	types := (resolver resolve: aLookup) asSet asOrderedCollection.
 	types sort.
 	types
 		ifEmpty: [ types
 				add:
 					(TypUnknownType new
-						origin: (TypLookupIndexOrigin alternatives: #());
+						addOrigin: (TypLookupIndexOrigin alternatives: #());
 						yourself) ].
 	type := types first.
-	type origin add: (TypLookupIndexOrigin alternatives: types).
+	type addOrigin: (TypLookupIndexOrigin alternatives: types copyWithoutFirst ).
 	^ type
 ]
 

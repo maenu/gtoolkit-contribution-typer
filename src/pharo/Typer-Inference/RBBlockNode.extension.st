@@ -3,13 +3,17 @@ Extension { #name : #RBBlockNode }
 { #category : #'*Typer-Inference' }
 RBBlockNode >> typInfArgumentType: anArgumentNode [
 	| i j method argument |
-	self typIsArgument
-		ifFalse: [ ^ TypUnknownType new ].
+	self typIsMessageArgument
+		ifFalse: [ ^ TypUnknownType new
+				addOrigin: (TypInfNodeOrigin node: self);
+				yourself ].
 	i := parent arguments indexOf: self.
 	j := arguments indexOf: anArgumentNode.
 	method := parent typInfMethod.
 	method isFunction
-		ifFalse: [ ^ TypUnknownType new ].
+		ifFalse: [ ^ TypUnknownType new
+				addOrigin: (TypInfNodeOrigin node: self);
+				yourself ].
 	argument := method arguments at: i.
 	argument isFunction
 		ifTrue: [ ^ argument arguments at: j ].
@@ -18,6 +22,8 @@ RBBlockNode >> typInfArgumentType: anArgumentNode [
 				detect: #isFunction
 				ifFound: [ :e | ^ e arguments at: j ] ].
 	^ TypUnknownType new
+		addOrigin: (TypInfNodeOrigin node: self);
+		yourself
 ]
 
 { #category : #'*Typer-Inference' }
@@ -33,6 +39,6 @@ RBBlockNode >> typInfTypeRecursive [
 ]
 
 { #category : #'*Typer-Inference' }
-RBBlockNode >> typIsArgument [
+RBBlockNode >> typIsMessageArgument [
 	^ parent isMessage and: [ parent arguments includes: self ]
 ]

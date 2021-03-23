@@ -24,7 +24,7 @@ TypShaBlBlElement >> mBackground: aLookup [
 TypShaBlBlElement >> mConstraintsDo: aLookup [
 	<typShaMethod: 'constraintsDo:'>
 	<typMigrated>
-	CompiledMethod
+	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{(BlockClosure

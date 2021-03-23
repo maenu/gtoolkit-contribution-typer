@@ -31,7 +31,7 @@ TypPraTypeLookupResolver >> resolveBasic: aLookup [
 		and: [ bindings isEmpty and: [ superTypeBindings isNotEmpty ] ])
 		ifTrue: [ | type |
 			type := classDescription typAsNamedType.
-			type origin: aLookup asOrigin.
+			type addOrigin: aLookup asOrigin.
 			type superType: type superType copy.
 			superTypeBindings
 				keysAndValuesDo: [ :k :v | type superType at: k put: v ].
@@ -40,12 +40,12 @@ TypPraTypeLookupResolver >> resolveBasic: aLookup [
 		ifFalse: [ | type |
 			type := classDescription
 				typAsParametricTypeWithParameters: bindings.
-			type origin: aLookup asOrigin.
+			type addOrigin: aLookup asOrigin.
 			type superType: type superType copy.
 			superTypeBindings
 				keysAndValuesDo: [ :k :v | type superType at: k put: v ].
 			^ type ].
 	^ {((classDescription typAsParametricTypeWithParameters: bindings)
-		origin: aLookup asOrigin;
+		addOrigin: aLookup asOrigin;
 		yourself)}
 ]

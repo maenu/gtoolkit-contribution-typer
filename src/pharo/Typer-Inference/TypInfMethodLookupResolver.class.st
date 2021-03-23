@@ -17,6 +17,6 @@ TypInfMethodLookupResolver >> resolveBasic: aLookup [
 		ifNil: [ ^ #() ]
 		ifNotNil: [ :e | 
 			^ {(e typInfType
-				origin: aLookup asOrigin;
+				addOrigin: aLookup asOrigin;
 				yourself)} ]
 ]

@@ -22,6 +22,6 @@ TypPraVariableLookupResolver >> resolveBasic: aLookup [
 		ifNone: [ ^ #() ].
 	self flag: 'FIXME parameters not covered yet, scopes'.
 	^ {(pragma arguments second typAsType
-		origin: aLookup asOrigin;
+		addOrigin: aLookup asOrigin;
 		yourself)}
 ]

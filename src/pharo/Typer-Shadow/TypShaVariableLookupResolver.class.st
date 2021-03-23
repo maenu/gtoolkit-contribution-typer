@@ -12,5 +12,5 @@ TypShaVariableLookupResolver >> resolveBasic: aLookup [
 		ifFalse: [ ^ #() ].
 	^ aLookup receiver classDescription typShaShadows
 		flatCollect:
-			[ :e | (e resolveVariable: aLookup) do: [ :f | f origin: aLookup asOrigin ] ]
+			[ :e | (e resolveVariable: aLookup) do: [ :f | f addOrigin: aLookup asOrigin ] ]
 ]

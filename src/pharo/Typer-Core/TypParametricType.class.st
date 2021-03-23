@@ -114,8 +114,8 @@ TypParametricType >> initializeParameters: anOrderedDictionary [
 	parameters := anOrderedDictionary.
 	parameters
 		do: [ :e | 
-			(e isVariable and: [ e scope isNil ])
-				ifTrue: [ e scope: self ] ].
+			(e isVariable and: [ e type isNil ])
+				ifTrue: [ e type: self ] ].
 	superType := nil
 ]
 

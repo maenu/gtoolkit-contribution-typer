@@ -17,7 +17,7 @@ TypInfVariableLookupResolver >> resolveBasic: aLookup [
 		detect: [ :e | e name = selector ]
 		ifFound: [ :e | 
 			^ {((e assignmentNodes collect: #typInfType) typAsType
-				origin: aLookup asOrigin;
+				addOrigin: aLookup asOrigin;
 				yourself)} ].
 	self flag: '...or we just take the type of the value?'.
 	classDescription isInstanceSide
@@ -25,7 +25,7 @@ TypInfVariableLookupResolver >> resolveBasic: aLookup [
 				detect: [ :e | e name = selector ]
 				ifFound: [ :e | 
 					^ {((e assignmentNodes collect: #typInfType) typAsType
-						origin: aLookup asOrigin;
+						addOrigin: aLookup asOrigin;
 						yourself)} ] ].
 	^ #()
 ]

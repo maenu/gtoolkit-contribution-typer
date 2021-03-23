@@ -3,7 +3,7 @@ Class {
 	#superclass : #TypType,
 	#instVars : [
 		'name',
-		'scope'
+		'type'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -81,12 +81,12 @@ TypVariableType >> printOn: aStream skipping: anIdentitySet [
 ]
 
 { #category : #accessing }
-TypVariableType >> scope [
-	^ scope
+TypVariableType >> type [
+	^ type
 ]
 
 { #category : #accessing }
-TypVariableType >> scope: anObject [
-	self assert: [ scope isNil ].
-	scope := anObject
+TypVariableType >> type: anObject [
+	self assert: [ type isNil ].
+	type := anObject
 ]

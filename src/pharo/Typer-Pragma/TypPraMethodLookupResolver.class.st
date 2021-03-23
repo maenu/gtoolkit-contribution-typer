@@ -45,6 +45,6 @@ TypPraMethodLookupResolver >> resolveBasic: aLookup [
 		arguments: arguments
 		argumentsOptional: false
 		signalsAlways: signalsAlways)
-		origin: aLookup asOrigin;
+		addOrigin: aLookup asOrigin;
 		yourself)}
 ]

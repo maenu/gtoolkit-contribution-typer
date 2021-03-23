@@ -1,12 +1,6 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer-Inference' }
-RBMessageNode >> typInfArgumentType: anArgumentNode [
-	self flag: 'TODO'.
-	^ TypUnknownType new
-]
-
-{ #category : #'*Typer-Inference' }
 RBMessageNode >> typInfMethod [
 	^ self
 		propertyAt: #typInfMethod
@@ -20,6 +14,8 @@ RBMessageNode >> typInfTypeRecursive [
 	| method |
 	method := self typInfMethod.
 	method isFunction
-		ifFalse: [ ^ TypUnknownType new ].
+		ifFalse: [ ^ TypUnknownType new
+				addOrigin: (TypInfNodeOrigin node: self);
+				yourself ].
 	^ method result
 ]

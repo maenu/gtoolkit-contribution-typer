@@ -12,19 +12,14 @@ TypTypeLookupIndex class >> instance [
 				resolver:
 					(TypCachingLookupResolver new
 						resolver:
-							(TypBreadthLookupResolver new
-								resolvers:
-									{(TypDepthLookupResolver new
-										resolver:
-											(TypBreadthLookupResolver new
-												resolvers:
-													{TypPraTypeLookupResolver new.
-													TypShaTypeLookupResolver new};
-												yourself);
-										yourself).
-									(TypDepthLookupResolver new
-										resolver: TypInfTypeLookupResolver new;
-										yourself)};
+							(TypDepthLookupResolver new
+								resolver:
+									(TypBreadthLookupResolver new
+										resolvers:
+											{TypPraTypeLookupResolver new.
+											TypShaTypeLookupResolver new.
+											TypInfTypeLookupResolver new};
+										yourself);
 								yourself);
 						yourself);
 				yourself ]

@@ -16,7 +16,11 @@ RBProgramNode >> typInfType [
 		propertyAt: #typInfType
 		ifAbsent: [ "need to set property to default to unknown on recursive calls"
 			self
-				propertyAt: #typInfType put: TypUnknownType new;
+				propertyAt: #typInfType
+					put:
+					(TypUnknownType new
+						addOrigin: (TypInfNodeOrigin node: self);
+						yourself);
 				propertyAt: #typInfType
 					put: (self typInfAnnotateType: self typInfTypeRecursive) ]
 ]
@@ -25,6 +29,8 @@ RBProgramNode >> typInfType [
 RBProgramNode >> typInfTypeRecursive [
 	<typTypeResultAs: 'TypType'>
 	^ TypUnknownType new
+		addOrigin: (TypInfNodeOrigin node: self);
+		yourself
 ]
 
 { #category : #'*Typer-Inference' }
