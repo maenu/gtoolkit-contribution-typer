@@ -1,6 +1,6 @@
 Class {
 	#name : #TypDescriptionOrigin,
-	#superclass : #Object,
+	#superclass : #TypOrigin,
 	#instVars : [
 		'description'
 	],
