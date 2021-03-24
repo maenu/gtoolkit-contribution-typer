@@ -98,6 +98,15 @@ TypType >> asNullable [
 		yourself
 ]
 
+{ #category : #accessing }
+TypType >> gtOriginsFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Origins';
+		object: [ origins ];
+		view: #gtItemsFor:
+]
+
 { #category : #testing }
 TypType >> hasSuperType [
 	^ superType isNotNil

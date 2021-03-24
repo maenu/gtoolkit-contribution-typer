@@ -22,3 +22,12 @@ TypConversionOrigin >> initializeType: aType selector: aSymbol arguments: aColle
 	selector := aSymbol.
 	arguments := aCollection
 ]
+
+{ #category : #accessing }
+TypConversionOrigin >> printOn: aStream [
+	type printOn: aStream.
+	aStream nextPutAll: ' '.
+	selector printOn: aStream.
+	aStream nextPutAll: ' '.
+	arguments printOn: aStream
+]

@@ -82,7 +82,10 @@ TypParametricType >> at: aString [
 
 { #category : #accessing }
 TypParametricType >> at: aString put: aType [
-	superType := nil. "must be nilled as change in binding might invalidate super type"
+	superType := nil.	"must be nilled as change in binding might invalidate super type"
+	(aType isVariable and: [ aType type isNil ])
+		ifTrue: [ aType type: self ].
+	aType addOrigin: (TypParameterOrigin type: self name: aString).
 	^ parameters at: aString put: aType
 ]
 
@@ -113,9 +116,10 @@ TypParametricType >> initializeParameters: anOrderedDictionary [
 	self assert: [ anOrderedDictionary isNotEmpty ].
 	parameters := anOrderedDictionary.
 	parameters
-		do: [ :e | 
-			(e isVariable and: [ e type isNil ])
-				ifTrue: [ e type: self ] ].
+		keysAndValuesDo: [ :n :t | 
+			(t isVariable and: [ t type isNil ])
+				ifTrue: [ t type: self ].
+			t addOrigin: (TypParameterOrigin type: self name: n) ].
 	superType := nil
 ]
 

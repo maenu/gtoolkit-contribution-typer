@@ -10,7 +10,7 @@ RBArgumentNode >> typInfTypeRecursive [
 
 { #category : #'*Typer-Inference' }
 RBArgumentNode >> typIsDefinition [
-	^ self isDefinition
+	^ parent isMethod
 		or: [ self isBlockVar
 				and: [ (self whoDefines: name) arguments anySatisfy: [ :e | e == self ] ] ]
 ]
