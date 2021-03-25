@@ -5,8 +5,9 @@ Class {
 }
 
 { #category : #accessing }
-TypPraTypeLookupResolver >> resolveBasic: aLookup [
+TypPraTypeLookupResolver >> resolve: aLookup [
 	| classDescription pragmas parameters bindings superTypeBindings |
+	aLookup push: self.
 	classDescription := aLookup classDescription.
 	pragmas := (classDescription lookupSelector: #initialize)
 		ifNil: [ ^ #() ]

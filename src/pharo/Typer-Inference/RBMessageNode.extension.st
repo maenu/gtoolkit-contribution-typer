@@ -11,11 +11,8 @@ RBMessageNode >> typInfMethod [
 
 { #category : #'*Typer-Inference' }
 RBMessageNode >> typInfTypeRecursive [
-	| method |
-	method := self typInfMethod.
-	method isFunction
-		ifFalse: [ ^ TypUnknownType new
-				addOrigin: (TypInfNodeOrigin node: self);
-				yourself ].
-	^ method result
+	^ TypMethodLookupIndex instance
+		lookupMethodResultReceiver: receiver typInfType
+		selector: selector asSymbol
+		arguments: (arguments collect: #typInfType)
 ]

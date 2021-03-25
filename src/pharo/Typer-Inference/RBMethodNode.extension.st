@@ -2,12 +2,13 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Inference' }
 RBMethodNode >> typInfArgumentType: anArgumentNode [
-	| method i |
-	method := self typInfMethod.
+	| i |
 	i := arguments detectIndex: [ :e | e == anArgumentNode ].
-	method isFunction
-		ifFalse: [ ^ method ].
-	^ method arguments at: i
+	^ TypMethodLookupIndex instance
+		lookupMethodArgument: i
+		receiver: self typInfReceiver
+		selector: selector asSymbol
+		arguments: (arguments collect: #typInfType)
 ]
 
 { #category : #'*Typer-Inference' }

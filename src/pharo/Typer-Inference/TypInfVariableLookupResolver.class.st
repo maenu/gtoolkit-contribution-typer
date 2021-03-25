@@ -5,8 +5,9 @@ Class {
 }
 
 { #category : #accessing }
-TypInfVariableLookupResolver >> resolveBasic: aLookup [
+TypInfVariableLookupResolver >> resolve: aLookup [
 	| classDescription selector |
+	aLookup push: self.
 	aLookup receiver isNamed
 		ifFalse: [ ^ #() ].
 	aLookup receiver hasClassDescription

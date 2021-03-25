@@ -5,7 +5,8 @@ Class {
 }
 
 { #category : #accessing }
-TypShaMethodLookupResolver >> resolveBasic: aLookup [
+TypShaMethodLookupResolver >> resolve: aLookup [
+	aLookup push: self.
 	aLookup receiver isNamed
 		ifFalse: [ ^ #() ].
 	aLookup receiver hasClassDescription

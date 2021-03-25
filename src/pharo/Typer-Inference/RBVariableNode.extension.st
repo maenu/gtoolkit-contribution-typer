@@ -4,9 +4,7 @@ Extension { #name : #RBVariableNode }
 RBVariableNode >> typInfDefiningType [
 	<typTypeResultAs: 'Type'>
 	self assert: [ self typInfHasDefiningType ].
-	^ TypUnknownType new
-		addOrigin: (TypInfNodeOrigin node: self);
-		yourself
+	^ self typInfUnknown
 ]
 
 { #category : #'*Typer-Inference' }

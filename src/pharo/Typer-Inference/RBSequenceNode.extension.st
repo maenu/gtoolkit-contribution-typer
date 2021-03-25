@@ -2,9 +2,6 @@ Extension { #name : #RBSequenceNode }
 
 { #category : #'*Typer-Inference' }
 RBSequenceNode >> typInfTypeRecursive [
-	statements
-		ifEmpty: [ ^ TypNilType new
-				addOrigin: (TypInfNodeOrigin node: self);
-				yourself ].
+	statements ifEmpty: [ ^ self typInfNil ].
 	^ (statements collect: #typInfType) last
 ]

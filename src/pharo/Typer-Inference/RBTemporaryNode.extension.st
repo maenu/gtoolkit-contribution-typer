@@ -6,9 +6,7 @@ RBTemporaryNode >> typInfTypeRecursive [
 		ifTrue: [ ^ (((self whoDefines: name) assignmentNodes
 				select: [ :e | e variable = self ])
 				collect: [ :e | e value typInfType ])
-				ifEmpty: [ TypNilType new
-						addOrigin: (TypInfNodeOrigin node: self);
-						yourself ]
+				ifEmpty: [ self typInfNil ]
 				ifNotEmpty: #typAsType ].
 	self isWrite
 		ifTrue: [ ^ parent value typInfType ].

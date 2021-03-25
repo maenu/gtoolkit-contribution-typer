@@ -5,8 +5,9 @@ Class {
 }
 
 { #category : #accessing }
-TypPraVariableLookupResolver >> resolveBasic: aLookup [
+TypPraVariableLookupResolver >> resolve: aLookup [
 	| pragmas pragma |
+	aLookup push: self.
 	aLookup receiver isNamed
 		ifFalse: [ ^ #() ].
 	aLookup receiver hasClassDescription
