@@ -15,5 +15,5 @@ TypShaGtGtMethodCoderAdded >> mMethodCoder: aLookup [
 	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
-		arguments: {GtMethodCoder typAsType}
+		arguments: {GtPharoMethodCoder typAsType}
 ]

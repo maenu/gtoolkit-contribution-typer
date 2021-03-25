@@ -2,7 +2,8 @@ Class {
 	#name : #TypLookupIndex,
 	#superclass : #Object,
 	#instVars : [
-		'resolver'
+		'resolver',
+		'cache'
 	],
 	#classInstVars : [
 		'instance'
@@ -33,6 +34,7 @@ TypLookupIndex class >> resetAll [
 TypLookupIndex >> initialize [
 	<typTypeVariable: 'resolver' as: 'TypLookupResolver'>
 	super initialize.
+	cache := Dictionary new.
 	SystemAnnouncer uniqueInstance weak
 		when: ClassAnnouncement , MethodAnnouncement
 		send: #reset

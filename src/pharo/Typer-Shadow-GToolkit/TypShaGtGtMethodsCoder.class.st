@@ -27,11 +27,11 @@ TypShaGtGtMethodsCoder >> mAnnounce: aLookup [
 		arguments: {Announcement typAsType}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaGtGtMethodsCoder >> vMethodCoders: aLookup [
 	<typShaForVariable: #methodCoders>
 	^ SequenceableCollection typAsType
-		copyWithParameters: {GtMethodCoder typAsType}
+		copyWithParameters: {GtPharoMethodCoder typAsType}
 ]
 
 { #category : #'as yet unclassified' }

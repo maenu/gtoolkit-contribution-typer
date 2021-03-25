@@ -1,11 +1,11 @@
 Class {
-	#name : #TypShaGtGtMethodCoder,
+	#name : #TypShaGtGtPharoMethodCoder,
 	#superclass : #TypShaShadow,
 	#category : #'Typer-Shadow-GToolkit'
 }
 
 { #category : #shadow }
-TypShaGtGtMethodCoder class >> mForMethod: aLookup [
+TypShaGtGtPharoMethodCoder class >> mForMethod: aLookup [
 	<typShaMethod: 'forMethod:'>
 	<typMigrated>
 	^ CompiledMethod
@@ -13,13 +13,13 @@ TypShaGtGtMethodCoder class >> mForMethod: aLookup [
 		arguments: {CompiledMethod typAsType}
 ]
 
-{ #category : #'as yet unclassified' }
-TypShaGtGtMethodCoder class >> shadowedClass [
-	^ GtMethodCoder class
+{ #category : #accessing }
+TypShaGtGtPharoMethodCoder class >> shadowedClass [
+	^ GtPharoMethodCoder class
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoder >> mCompiledMethod: aLookup [
+TypShaGtGtPharoMethodCoder >> mCompiledMethod: aLookup [
 	<typShaMethod: 'compiledMethod'>
 	<typMigrated>
 	^ CompiledMethod
@@ -27,7 +27,7 @@ TypShaGtGtMethodCoder >> mCompiledMethod: aLookup [
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoder >> mCursorPositionDo: aLookup [
+TypShaGtGtPharoMethodCoder >> mCursorPositionDo: aLookup [
 	<typShaMethod: 'cursorPositionDo:'>
 	<typMigrated>
 	^ CompiledMethod
@@ -39,7 +39,7 @@ TypShaGtGtMethodCoder >> mCursorPositionDo: aLookup [
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoder >> mNewCompletionStrategy: aLookup [
+TypShaGtGtPharoMethodCoder >> mNewCompletionStrategy: aLookup [
 	<typShaMethod: 'newCompletionStrategy'>
 	<typMigrated>
 	^ CompiledMethod
@@ -47,28 +47,28 @@ TypShaGtGtMethodCoder >> mNewCompletionStrategy: aLookup [
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoder >> mRbAST: aLookup [
+TypShaGtGtPharoMethodCoder >> mRbAST: aLookup [
 	<typShaMethod: 'rbAST'>
 	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: RBMethodNode typAsType
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoder >> mSave: aLookup [
+TypShaGtGtPharoMethodCoder >> mSave: aLookup [
 	<typShaMethod: 'save'>
 	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoder >> mSelector: aLookup [
+TypShaGtGtPharoMethodCoder >> mSelector: aLookup [
 	<typShaMethod: 'selector'>
 	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Symbol typAsType
 ]
 
 { #category : #shadow }
-TypShaGtGtMethodCoder >> mUpdateMethod: aLookup [
+TypShaGtGtPharoMethodCoder >> mUpdateMethod: aLookup [
 	<typShaMethod: 'updateMethod:'>
 	<typMigrated>
 	^ CompiledMethod
@@ -77,7 +77,7 @@ TypShaGtGtMethodCoder >> mUpdateMethod: aLookup [
 ]
 
 { #category : #'as yet unclassified' }
-TypShaGtGtMethodCoder >> vAstCache: aLookup [
+TypShaGtGtPharoMethodCoder >> vAstCache: aLookup [
 	<typShaForVariable: #astCache>
 	^ Association typAsType
 		copyWithParameters:

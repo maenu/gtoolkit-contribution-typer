@@ -1,7 +1,7 @@
-Extension { #name : #GtSourceCoder }
+Extension { #name : #GtPharoSourceCoder }
 
 { #category : #'*Typer-GToolkit' }
-GtSourceCoder >> typGtBrowseImplementorsAt: anInteger [
+GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	| node |
 	node := self typGtRbNodeAt: anInteger.
@@ -17,7 +17,7 @@ GtSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 ]
 
 { #category : #'*Typer-GToolkit' }
-GtSourceCoder >> typGtBrowseToTypeWithPragmaAt: anInteger [
+GtPharoSourceCoder >> typGtBrowseToTypeWithPragmaAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	| node |
 	node := self typGtRbNodeAt: anInteger.
@@ -29,7 +29,7 @@ GtSourceCoder >> typGtBrowseToTypeWithPragmaAt: anInteger [
 ]
 
 { #category : #'*Typer-GToolkit' }
-GtSourceCoder >> typGtBrowseToTypeWithShadowAt: anInteger [
+GtPharoSourceCoder >> typGtBrowseToTypeWithShadowAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	| node |
 	node := self typGtRbNodeAt: anInteger.
@@ -41,7 +41,7 @@ GtSourceCoder >> typGtBrowseToTypeWithShadowAt: anInteger [
 ]
 
 { #category : #'*Typer-GToolkit' }
-GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
+GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 	"self completionStrategy class == GtPharoCompletionStrategy
 		ifTrue: [ completionStrategy := completionStrategy
 				typGtAsTypGtPharoCompletionStrategyFor: self ].
@@ -85,7 +85,7 @@ GtSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 ]
 
 { #category : #'*Typer-GToolkit' }
-GtSourceCoder >> typGtRbNodeAt: anInteger [
+GtPharoSourceCoder >> typGtRbNodeAt: anInteger [
 	<typTypeResultAs: '{!,RBProgramNode}'>
 	^ self rbAST
 		bestNodeFor: (anInteger to: anInteger)

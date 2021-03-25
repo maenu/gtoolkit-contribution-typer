@@ -10,7 +10,7 @@ TypShaGtGtCoderTextStyler class >> mForCoder: aLookup [
 	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
-		arguments: {GtMethodCoder typAsType}
+		arguments: {GtPharoMethodCoder typAsType}
 ]
 
 { #category : #'as yet unclassified' }
@@ -40,8 +40,8 @@ TypShaGtGtCoderTextStyler >> mStyleAst: aLookup [
 			RBMethodNode typAsType}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypShaGtGtCoderTextStyler >> vCoder: aLookup [
 	<typShaForVariable: #coder>
-	^ GtMethodCoder typAsType
+	^ GtPharoMethodCoder typAsType
 ]

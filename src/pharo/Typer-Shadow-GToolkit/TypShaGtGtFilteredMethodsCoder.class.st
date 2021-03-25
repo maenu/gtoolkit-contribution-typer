@@ -23,6 +23,6 @@ TypShaGtGtFilteredMethodsCoder >> mNewMethodCoderFor: aLookup [
 	<typShaMethod: 'newMethodCoderFor:'>
 	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: GtMethodCoder typAsType
+		typAsFunctionTypeWithResult: GtPharoMethodCoder typAsType
 		arguments: {CompiledMethod typAsType}
 ]

@@ -1,7 +1,7 @@
-Extension { #name : #GtMethodCoder }
+Extension { #name : #GtPharoMethodCoder }
 
 { #category : #'*Typer-GToolkit' }
-GtMethodCoder >> typGtBrowseImplementorsAt: anInteger [
+GtPharoMethodCoder >> typGtBrowseImplementorsAt: anInteger [
 	<typTypeArgument: 1 as: 'Integer'>
 	| node |
 	node := self typGtRbNodeAt: anInteger.
@@ -17,13 +17,13 @@ GtMethodCoder >> typGtBrowseImplementorsAt: anInteger [
 ]
 
 { #category : #'*Typer-GToolkit' }
-GtMethodCoder >> typGtInitializeMethodAddOnsFor: anAst into: anAddOns [
+GtPharoMethodCoder >> typGtInitializeMethodAddOnsFor: anAst into: anAddOns [
 	<gtAstCoderAddOns: 11>
 	anAddOns addShortcut: TypGtTypeWithPragmaShortcut new
 ]
 
 { #category : #'*Typer-GToolkit' }
-GtMethodCoder >> typGtTypeWithPragma [
+GtPharoMethodCoder >> typGtTypeWithPragma [
 	self
 		sourceCode:
 			(self rbAST
