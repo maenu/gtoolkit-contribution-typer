@@ -2,8 +2,7 @@ Class {
 	#name : #TypLookupIndex,
 	#superclass : #Object,
 	#instVars : [
-		'resolver',
-		'cache'
+		'resolver'
 	],
 	#classInstVars : [
 		'instance'
@@ -27,14 +26,13 @@ TypLookupIndex class >> reset [
 { #category : #initialization }
 TypLookupIndex class >> resetAll [
 	<script>
-	self allSubclassesDo: #reset
+	self withAllSubclassesDo: #reset
 ]
 
 { #category : #initialization }
 TypLookupIndex >> initialize [
 	<typTypeVariable: 'resolver' as: 'TypLookupResolver'>
 	super initialize.
-	cache := Dictionary new.
 	SystemAnnouncer uniqueInstance weak
 		when: ClassAnnouncement , MethodAnnouncement
 		send: #reset
@@ -42,33 +40,24 @@ TypLookupIndex >> initialize [
 ]
 
 { #category : #accessing }
-TypLookupIndex >> lookup: aLookup [
-	| types type |
-	types := (resolver resolve: aLookup) asSet asOrderedCollection.
-	types sort.
-	types
-		ifEmpty: [ types
-				add:
-					(TypUnknownType new
-						addOrigin: (TypLookupIndexOrigin alternatives: #());
-						yourself) ].
-	type := types first.
-	type addOrigin: (TypLookupIndexOrigin alternatives: types copyWithoutFirst ).
-	^ type
+TypLookupIndex >> initializeResolver: anObject [
+	<typTypeArgument: 1 as: 'TypLookupResolver'>
+	resolver := anObject
+]
+
+{ #category : #accessing }
+TypLookupIndex >> reduce: aCollection [
+	aCollection sort.
+	aCollection
+		ifEmpty: [ ^ TypUnknownType new
+				addOrigin: (TypLookupIndexOrigin alternatives: #());
+				yourself ].
+	^ aCollection first
+		addOrigin: (TypLookupIndexOrigin alternatives: aCollection copyWithoutFirst);
+		yourself
 ]
 
 { #category : #initialization }
 TypLookupIndex >> reset [
 	resolver reset
-]
-
-{ #category : #accessing }
-TypLookupIndex >> resolver [
-	^ resolver
-]
-
-{ #category : #accessing }
-TypLookupIndex >> resolver: anObject [
-	<typTypeArgument: 1 as: 'TypLookupResolver'>
-	resolver := anObject
 ]

@@ -6,33 +6,59 @@ Class {
 
 { #category : #accessing }
 TypMethodLookupIndex class >> instance [
-	<typTypeResultAs: 'TypMethodLookupIndex'>
 	^ instance
 		ifNil: [ instance := self new
-				resolver:
-					(TypCachingLookupResolver new
+				initializeResolver:
+					(TypCachingLookupResolver
 						resolver:
-							(TypDepthLookupResolver new
+							(TypDepthLookupResolver
 								resolver:
-									(TypBreadthLookupResolver new
+									(TypBreadthLookupResolver
 										resolvers:
 											{TypPraMethodLookupResolver new.
 											TypShaMethodLookupResolver new.
-											TypInfMethodLookupResolver new};
-										yourself);
-								yourself);
-						yourself);
+											TypInfMethodLookupResolver new})));
 				yourself ]
 ]
 
 { #category : #accessing }
-TypMethodLookupIndex >> lookupReceiver: aType selector: aSymbol arguments: aCollection [
+TypMethodLookupIndex >> lookupMethodArgument: anInteger receiver: aType selector: aSymbol arguments: aCollection [
 	^ self
-		lookup:
-			(TypMethodLookup
-				receiver: aType
-				selector: aSymbol
-				arguments: aCollection)
+		reduce:
+			((resolver
+				resolve:
+					(TypMethodLookup
+						receiver: aType
+						selector: aSymbol
+						arguments: aCollection))
+				select: [ :e | e isFunction and: [ e arguments size >= anInteger ] ]
+				thenCollect: [ :e | e arguments at: anInteger ])
+]
+
+{ #category : #accessing }
+TypMethodLookupIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aCollection [
+	^ self
+		reduce:
+			(resolver
+				resolve:
+					(TypMethodLookup
+						receiver: aType
+						selector: aSymbol
+						arguments: aCollection))
+]
+
+{ #category : #accessing }
+TypMethodLookupIndex >> lookupMethodResultReceiver: aType selector: aSymbol arguments: aCollection [
+	^ self
+		reduce:
+			((resolver
+				resolve:
+					(TypMethodLookup
+						receiver: aType
+						selector: aSymbol
+						arguments: aCollection))
+				select: #isFunction
+				thenCollect: #result)
 ]
 
 { #category : #initialization }

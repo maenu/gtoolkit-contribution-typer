@@ -20,7 +20,7 @@ TypShaPhaUndefinedObject >> mIfNil: aLookup [
 			(node isBlock
 				and: [ node body statements size > 0
 						and: [ node body statements last isReturn ] ])
-				ifTrue: [ TypNoTypeError signal ]
+				ifTrue: [ self flag: 'FIXME well?' ]
 				ifFalse: [ (aLookup arguments at: 1) result ] ];
 		yourself
 ]

@@ -7,10 +7,23 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
+{ #category : #accessing }
+TypBreadthLookupResolver class >> resolvers: aCollection [
+	^ self new
+		initializeResolvers: aCollection;
+		yourself
+]
+
 { #category : #initialization }
 TypBreadthLookupResolver >> initialize [
 	<typTypeVariable: 'resolvers' as: 'SequenceableCollection<TypLookupResolver>'>
 	super initialize
+]
+
+{ #category : #accessing }
+TypBreadthLookupResolver >> initializeResolvers: anObject [
+	<typTypeArgument: 1 as: 'SequenceableCollection<TypLookupResolver>'>
+	resolvers := anObject
 ]
 
 { #category : #initialization }
@@ -20,17 +33,7 @@ TypBreadthLookupResolver >> reset [
 ]
 
 { #category : #accessing }
-TypBreadthLookupResolver >> resolveBasic: aLookup [
+TypBreadthLookupResolver >> resolve: aLookup [
+	aLookup push: self.
 	^ resolvers flatCollect: [ :e | e resolve: aLookup copy ]
-]
-
-{ #category : #accessing }
-TypBreadthLookupResolver >> resolvers [
-	^ resolvers
-]
-
-{ #category : #accessing }
-TypBreadthLookupResolver >> resolvers: anObject [
-	<typTypeArgument: 1 as: 'SequenceableCollection<TypLookupResolver>'>
-	resolvers := anObject
 ]

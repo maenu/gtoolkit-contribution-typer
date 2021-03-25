@@ -176,7 +176,7 @@ TypType >> isVariable [
 { #category : #lookup }
 TypType >> lookupMethod: aSymbol arguments: aCollection [
 	^ TypMethodLookupIndex instance
-		lookupReceiver: self
+		lookupMethodReceiver: self
 		selector: aSymbol
 		arguments: aCollection
 ]

@@ -6,26 +6,24 @@ Class {
 
 { #category : #accessing }
 TypTypeLookupIndex class >> instance [
-	<typTypeResultAs: 'TypClassDescriptionLookupIndex'>
 	^ instance
 		ifNil: [ instance := self new
-				resolver:
-					(TypCachingLookupResolver new
+				initializeResolver:
+					(TypCachingLookupResolver
 						resolver:
-							(TypDepthLookupResolver new
+							(TypDepthLookupResolver
 								resolver:
-									(TypBreadthLookupResolver new
+									(TypBreadthLookupResolver
 										resolvers:
 											{TypPraTypeLookupResolver new.
 											TypShaTypeLookupResolver new.
-											TypInfTypeLookupResolver new};
-										yourself);
-								yourself);
-						yourself);
+											TypInfTypeLookupResolver new})));
 				yourself ]
 ]
 
 { #category : #accessing }
 TypTypeLookupIndex >> lookupClassDescription: aClassDescription [
-	^ self lookup: (TypTypeLookup classDescription: aClassDescription)
+	^ self
+		reduce:
+			(resolver resolve: (TypTypeLookup classDescription: aClassDescription))
 ]

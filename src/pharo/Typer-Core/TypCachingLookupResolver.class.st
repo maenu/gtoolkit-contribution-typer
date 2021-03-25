@@ -12,7 +12,7 @@ TypCachingLookupResolver >> initialize [
 	<typTypeVariable: 'resolver' as: 'TypLookupResolver'>
 	<typTypeVariable: 'cache' as: 'Dictionary<TypLookup,SequenceableCollection<TypLookupResult>>'>
 	super initialize.
-	cache := Dictionary new  "typParameters TypLookup,SequenceableCollection<TypLookupResult>"
+	cache := Dictionary new
 ]
 
 { #category : #initialization }
@@ -22,9 +22,11 @@ TypCachingLookupResolver >> reset [
 ]
 
 { #category : #accessing }
-TypCachingLookupResolver >> resolveBasic: aLookup [
+TypCachingLookupResolver >> resolve: aLookup [
 	^ cache
 		at: aLookup
-		ifAbsent: [ cache at: aLookup put: #().
-			cache at: aLookup put: (resolver resolve: aLookup) ]
+		ifAbsent: [ aLookup push: self.
+			cache
+				at: aLookup put: #();
+				at: aLookup put: (resolver resolve: aLookup) ]
 ]

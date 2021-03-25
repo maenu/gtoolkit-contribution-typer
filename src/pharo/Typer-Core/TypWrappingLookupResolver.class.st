@@ -24,13 +24,3 @@ TypWrappingLookupResolver >> reset [
 	super reset.
 	resolver reset
 ]
-
-{ #category : #accessing }
-TypWrappingLookupResolver >> resolver [
-	^ resolver
-]
-
-{ #category : #accessing }
-TypWrappingLookupResolver >> resolver: aResolver [
-	resolver := aResolver
-]

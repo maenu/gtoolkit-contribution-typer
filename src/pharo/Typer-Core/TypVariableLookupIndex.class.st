@@ -6,26 +6,25 @@ Class {
 
 { #category : #accessing }
 TypVariableLookupIndex class >> instance [
-	<typTypeResultAs: 'TypVariableLookupIndex'>
 	^ instance
 		ifNil: [ instance := self new
-				resolver:
-					(TypCachingLookupResolver new
+				initializeResolver:
+					(TypCachingLookupResolver
 						resolver:
-							(TypDepthLookupResolver new
+							(TypDepthLookupResolver
 								resolver:
-									(TypBreadthLookupResolver new
+									(TypBreadthLookupResolver
 										resolvers:
 											{TypPraVariableLookupResolver new.
 											TypShaVariableLookupResolver new.
-											TypInfVariableLookupResolver new};
-										yourself);
-								yourself);
-						yourself);
+											TypInfVariableLookupResolver new})));
 				yourself ]
 ]
 
 { #category : #accessing }
 TypVariableLookupIndex >> lookupReceiver: aType selector: aSymbol [
-	^ self lookup: (TypVariableLookup receiver: aType selector: aSymbol)
+	^ self
+		reduce:
+			(resolver
+				resolve: (TypVariableLookup receiver: aType selector: aSymbol))
 ]
