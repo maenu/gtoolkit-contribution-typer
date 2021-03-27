@@ -70,7 +70,8 @@ TypNamedType >> classDescription [
 TypNamedType >> copyWithParameters: aCollection [
 	| copy |
 	copy := self copy.
-	copy superType: (copy superType copyWithParameters: aCollection).
+	copy hasSuperType
+		ifTrue: [ copy superType: (copy superType copyWithParameters: aCollection) ].
 	^ copy
 ]
 

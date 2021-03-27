@@ -1,5 +1,5 @@
 Class {
-	#name : #TypLookupIndexOrigin,
+	#name : #TypLookupAlternativeOrigin,
 	#superclass : #TypOrigin,
 	#instVars : [
 		'alternatives'
@@ -8,13 +8,13 @@ Class {
 }
 
 { #category : #accessing }
-TypLookupIndexOrigin class >> alternatives: aCollection [
+TypLookupAlternativeOrigin class >> alternatives: aCollection [
 	^ self new
 		initializeAlternatives: aCollection;
 		yourself
 ]
 
 { #category : #accessing }
-TypLookupIndexOrigin >> initializeAlternatives: aCollection [
+TypLookupAlternativeOrigin >> initializeAlternatives: aCollection [
 	alternatives := aCollection
 ]
