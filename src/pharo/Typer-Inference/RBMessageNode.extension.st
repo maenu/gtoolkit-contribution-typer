@@ -11,8 +11,5 @@ RBMessageNode >> typInfMethod [
 
 { #category : #'*Typer-Inference' }
 RBMessageNode >> typInfTypeRecursive [
-	^ TypMethodLookupIndex instance
-		lookupMethodResultReceiver: receiver typInfType
-		selector: selector asSymbol
-		arguments: (arguments collect: #typInfType)
+	^ self typInfMethod result
 ]

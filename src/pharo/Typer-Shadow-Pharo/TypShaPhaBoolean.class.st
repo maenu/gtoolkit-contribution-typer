@@ -50,7 +50,9 @@ TypShaPhaBoolean >> mIfTrueIfFalse: aLookup [
 					e isFunction
 						ifTrue: [ e result ]
 						ifFalse: [ e ] ]) typAsType
-		arguments: {BlockClosure typAsType}
+		arguments:
+			{BlockClosure typAsType.
+			BlockClosure typAsType}
 ]
 
 { #category : #shadow }

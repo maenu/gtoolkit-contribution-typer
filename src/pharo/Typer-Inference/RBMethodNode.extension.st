@@ -4,11 +4,7 @@ Extension { #name : #RBMethodNode }
 RBMethodNode >> typInfArgumentType: anArgumentNode [
 	| i |
 	i := arguments detectIndex: [ :e | e == anArgumentNode ].
-	^ TypMethodLookupIndex instance
-		lookupMethodArgument: i
-		receiver: self typInfReceiver
-		selector: selector asSymbol
-		arguments: (arguments collect: #typInfType)
+	^ self typInfMethod arguments at: i
 ]
 
 { #category : #'*Typer-Inference' }

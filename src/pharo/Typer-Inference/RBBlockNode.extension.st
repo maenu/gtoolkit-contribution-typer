@@ -7,11 +7,7 @@ RBBlockNode >> typInfArgumentType: anArgumentNode [
 		ifFalse: [ ^ self typInfUnknown ].
 	i := parent arguments indexOf: self.
 	j := arguments indexOf: anArgumentNode.
-	argument := TypMethodLookupIndex instance
-		lookupMethodArgument: i
-		receiver: parent receiver typInfType
-		selector: parent selector asSymbol
-		arguments: (parent arguments collect: #typInfType).
+	argument := parent typInfMethod arguments at: i.
 	argument isFunction
 		ifFalse: [ ^ self typInfUnknown ].
 	^ argument arguments at: j

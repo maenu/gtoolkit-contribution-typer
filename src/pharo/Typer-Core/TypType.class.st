@@ -55,6 +55,8 @@ TypType >> >= aType [
 
 { #category : #accessing }
 TypType >> addOrigin: anOrigin [
+	(origins includes: anOrigin)
+		ifTrue: [ ^ self ].
 	origins add: anOrigin
 ]
 
@@ -191,6 +193,12 @@ TypType >> lookupVariable: aSymbol [
 { #category : #accessing }
 TypType >> origins [
 	^ origins
+]
+
+{ #category : #accessing }
+TypType >> postCopy [
+	super postCopy.
+	origins := origins copy
 ]
 
 { #category : #printing }

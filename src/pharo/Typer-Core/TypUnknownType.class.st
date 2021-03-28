@@ -9,6 +9,11 @@ TypUnknownType >> > aType [
 	^ aType isUnknown not
 ]
 
+{ #category : #accessing }
+TypUnknownType >> arguments [
+	^ self
+]
+
 { #category : #polymorphic }
 TypUnknownType >> at: anObject [
 	^ self

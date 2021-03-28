@@ -22,20 +22,6 @@ TypMethodLookupIndex class >> instance [
 ]
 
 { #category : #accessing }
-TypMethodLookupIndex >> lookupMethodArgument: anInteger receiver: aType selector: aSymbol arguments: aCollection [
-	^ self
-		reduce:
-			((resolver
-				resolve:
-					(TypMethodLookup
-						receiver: aType
-						selector: aSymbol
-						arguments: aCollection))
-				select: [ :e | e isFunction and: [ e arguments size >= anInteger ] ]
-				thenCollect: [ :e | e arguments at: anInteger ])
-]
-
-{ #category : #accessing }
 TypMethodLookupIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aCollection [
 	^ self
 		reduce:
@@ -45,20 +31,6 @@ TypMethodLookupIndex >> lookupMethodReceiver: aType selector: aSymbol arguments:
 						receiver: aType
 						selector: aSymbol
 						arguments: aCollection))
-]
-
-{ #category : #accessing }
-TypMethodLookupIndex >> lookupMethodResultReceiver: aType selector: aSymbol arguments: aCollection [
-	^ self
-		reduce:
-			((resolver
-				resolve:
-					(TypMethodLookup
-						receiver: aType
-						selector: aSymbol
-						arguments: aCollection))
-				select: #isFunction
-				thenCollect: #result)
 ]
 
 { #category : #initialization }

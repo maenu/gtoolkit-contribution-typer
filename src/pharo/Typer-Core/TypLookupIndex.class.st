@@ -47,15 +47,10 @@ TypLookupIndex >> initializeResolver: anObject [
 
 { #category : #accessing }
 TypLookupIndex >> reduce: aCollection [
-	| type |
 	aCollection ifEmpty: [ ^ self unknown ].
-	type := aCollection first.
-	type origins
-		detect: [ :e | e isKindOf: TypLookupAlternativeOrigin ]
-		ifNone: [ type
-				addOrigin:
-					(TypLookupAlternativeOrigin alternatives: aCollection copyWithoutFirst) ].
-	^ type
+	^ aCollection first
+		addOrigin:
+			(TypLookupAlternativeOrigin alternatives: aCollection copyWithoutFirst)
 ]
 
 { #category : #initialization }

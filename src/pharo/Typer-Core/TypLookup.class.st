@@ -42,7 +42,7 @@ TypLookup >> hasSuper [
 
 { #category : #accessing }
 TypLookup >> hash [
-	^ parent hash
+	^ self class hash bitXor: parent hash
 ]
 
 { #category : #accessing }

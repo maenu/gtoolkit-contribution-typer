@@ -79,8 +79,9 @@ TypFunctionType >> > aType [
 		ifTrue: [ ^ self >= (aType as: self class) ].
 	(aType isFunction and: [ aType name = name ])
 		ifFalse: [ ^ super > aType ].
-	aType result <= self result
-		ifFalse: [ ^ false ].
+	self flag: 'FIXME should we really ignore result?'.
+	"aType result <= self result
+		ifFalse: [ ^ false ]."
 	argumentsOptional
 		ifTrue: [ | size |
 			size := argumentsSize min: aType argumentsSize.
