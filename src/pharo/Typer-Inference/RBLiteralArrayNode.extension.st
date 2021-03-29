@@ -6,6 +6,7 @@ RBLiteralArrayNode >> typInfTypeRecursive [
 	type := Array typAsType.
 	type
 		at: type parameters keys first
-		put: (contents collect: #typInfType) typAsType.
+			put: (contents collect: #typInfType) typAsType;
+		value: self value.
 	^ type
 ]

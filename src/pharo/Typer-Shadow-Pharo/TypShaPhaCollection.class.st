@@ -163,6 +163,7 @@ TypShaPhaCollection >> mAt: aLookup [
 { #category : #shadow }
 TypShaPhaCollection >> mBinary170: aLookup [
 	<typShaMethod: ','>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(aLookup root receiver copy

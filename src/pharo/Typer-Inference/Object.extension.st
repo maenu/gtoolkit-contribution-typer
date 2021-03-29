@@ -4,4 +4,6 @@ Extension { #name : #Object }
 Object >> typInfSelfType [
 	<typTypeResultAs: 'TypType'>
 	^ self class typAsType
+		value: self;
+		yourself
 ]

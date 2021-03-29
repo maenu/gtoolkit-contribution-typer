@@ -3,7 +3,9 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'superType',
-		'origins'
+		'origins',
+		'value',
+		'hasValue'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -28,6 +30,10 @@ TypType >> = anObject [
 		ifTrue: [ ^ true ].
 	self class = anObject class
 		ifFalse: [ ^ false ].
+	self hasValue = anObject hasValue
+		ifFalse: [ ^ false ].
+	(self hasValue and: [ self value ~= anObject value ])
+		ifTrue: [ ^ false ].
 	self hasSuperType = anObject hasSuperType
 		ifFalse: [ ^ false ].
 	self hasSuperType
@@ -115,17 +121,27 @@ TypType >> hasSuperType [
 ]
 
 { #category : #accessing }
+TypType >> hasValue [
+	^ hasValue
+]
+
+{ #category : #accessing }
 TypType >> hash [
+	| hash |
+	hash := nil hash bitXor: 23.
+	self hasValue
+		ifTrue: [ hash := hash bitXor: self value hash ].
 	self hasSuperType
-		ifTrue: [ ^ self superType hash ].
-	^ nil hash bitXor: 23
+		ifTrue: [ hash := hash bitXor: self superType hash ].
+	^ hash
 ]
 
 { #category : #initialization }
 TypType >> initialize [
 	<typTypeVariable: 'superType' as: '{!,TypType}'>
 	super initialize.
-	origins := OrderedCollection new
+	origins := OrderedCollection new.
+	hasValue := false
 ]
 
 { #category : #testing }
@@ -224,4 +240,16 @@ TypType >> superType [
 TypType >> superType: aType [
 	<typTypeArgument: 1 as: 'TypType'>
 	superType := aType
+]
+
+{ #category : #accessing }
+TypType >> value [
+	self assert: [ self hasValue ].
+	^ value
+]
+
+{ #category : #accessing }
+TypType >> value: anObject [
+	hasValue := true.
+	value := anObject
 ]

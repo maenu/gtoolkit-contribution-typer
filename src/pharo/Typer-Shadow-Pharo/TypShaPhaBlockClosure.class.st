@@ -57,21 +57,21 @@ TypShaPhaBlockClosure >> mEnsure: aLookup [
 { #category : #shadow }
 TypShaPhaBlockClosure >> mOnDo: aLookup [
 	<typShaMethod: 'on:do:'>
+	<typMigrated>
+	| a b |
+	a := aLookup arguments at: 1.
+	b := (a hasValue and: [ a value isClass ])
+		ifTrue: [ a value instanceSide typAsType ]
+		ifFalse: [ Exception typAsType ].
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			{aLookup receiver result.
 			(aLookup arguments at: 2) result} typAsType
 		arguments:
-			{(i = 1
-				ifTrue: [ Exception class typAsType ]
-				ifFalse: [ | first type |
-					first := aLookup arguments at: 1.
-					type := (first isNamed and: [ first hasClassDescription ])
-						ifTrue: [ first classDescription instanceSide typAsType ]
-						ifFalse: [ Exception class typAsType ].
-					BlockClosure
-						typAsFunctionTypeWithResult: TypUnknownType new
-						arguments: {type} ])}
+			{Exception class typAsType.
+			(BlockClosure
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {b})}
 ]
 
 { #category : #shadow }

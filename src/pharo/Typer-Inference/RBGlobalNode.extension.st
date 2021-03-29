@@ -16,9 +16,8 @@ RBGlobalNode >> typInfHasDefiningType [
 
 { #category : #'*Typer-Inference' }
 RBGlobalNode >> typInfTypeRecursive [
-	self binding isGlobalClassNameBinding
-		ifTrue: [ ^ self binding value class typAsType ].
-	self binding isGlobalVariable
+	(self binding isGlobalClassNameBinding
+		or: [ self binding isGlobalVariable ])
 		ifTrue: [ ^ self binding value typInfSelfType ].
 	^ self typInfDefiningType lookupVariable: name asSymbol
 ]
