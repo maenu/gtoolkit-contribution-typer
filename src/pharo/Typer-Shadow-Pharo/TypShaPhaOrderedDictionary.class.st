@@ -112,6 +112,7 @@ TypShaPhaOrderedDictionary >> mAtPut: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mBinary276: aLookup [
 	<typShaMethod: ','>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(aLookup receiver

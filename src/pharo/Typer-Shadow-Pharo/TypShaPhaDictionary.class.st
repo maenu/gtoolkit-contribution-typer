@@ -125,6 +125,7 @@ TypShaPhaDictionary >> mAtPut: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mBinary214: aLookup [
 	<typShaMethod: ','>
+	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(aLookup receiver

@@ -115,23 +115,31 @@ TypShaPhaObject >> mIsNotNil: aLookup [
 { #category : #shadow }
 TypShaPhaObject >> mPerform: aLookup [
 	<typShaMethod: 'perform:'>
-	^ TypFunctionType new
-		argumentTypes: [ Symbol typAsType ];
-		resultType: [ :a :s :r | 
-			| argument |
-			argument := aLookup argumentNodes at: 1.
-			(argument isLiteralNode and: [ argument value isSymbol ])
-				ifTrue: [ (aLookup receiver lookupMethod: argument value arguments: #())
-						result ]
-				ifFalse: [ TypUnknownType new ] ];
-		yourself
+	<typMigrated>
+	| a r |
+	a := aLookup arguments at: 1.
+	r := (a hasValue and: [ a value isSymbol ])
+		ifTrue:
+			[ (aLookup root receiver lookupMethod: a value arguments: #()) result ]
+		ifFalse: [ TypUnknownType new ].
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: r
+		arguments: {Symbol typAsType}
 ]
 
 { #category : #shadow }
 TypShaPhaObject >> mPerformWithEnoughArguments: aLookup [
 	<typShaMethod: 'perform:withEnoughArguments:'>
+	<typMigrated>
+	| a r |
+	a := aLookup arguments at: 1.
+	r := (a hasValue and: [ a value isSymbol ])
+		ifTrue: [ (aLookup root receiver
+				lookupMethod: a value
+				arguments: aLookup arguments) result ]
+		ifFalse: [ TypUnknownType new ].
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: TypUnknownType new
+		typAsFunctionTypeWithResult: r
 		arguments:
 			{Symbol typAsType.
 			SequenceableCollection typAsType}

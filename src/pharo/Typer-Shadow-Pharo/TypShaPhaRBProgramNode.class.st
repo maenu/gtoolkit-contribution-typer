@@ -197,8 +197,19 @@ TypShaPhaRBProgramNode >> mPropertyAtIfAbsentPut: aLookup [
 { #category : #shadow }
 TypShaPhaRBProgramNode >> mPropertyAtIfPresentIfAbsent: aLookup [
 	<typShaMethod: 'propertyAt:ifPresent:ifAbsent:'>
-	^ TypFunctionType new
-		argumentTypes:
+	<typMigrated>
+	| a r |
+	a := aLookup arguments at: 2.
+	r := (a hasValue and: [ a value isSymbol ])
+		ifTrue: [ (aLookup root receiver
+				lookupMethod: a value
+				arguments: {TypUnknownType new}) result ]
+		ifFalse: [ a result ].
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			{r.
+			(aLookup arguments at: 3) result} typAsType
+		arguments:
 			{String typAsType.
 			{Symbol typAsType.
 			(BlockClosure
@@ -206,23 +217,7 @@ TypShaPhaRBProgramNode >> mPropertyAtIfPresentIfAbsent: aLookup [
 				arguments: {TypUnknownType new}
 				argumentsOptional: true
 				signalsAlways: false)} typAsType.
-			BlockClosure typAsType};
-		resultType: [ :a :s :r | 
-			| argumentType argumentNode elementType |
-			argumentType := aLookup arguments at: 2.
-			argumentNode := aLookup argumentNodes at: 2.
-			elementType := argumentType isFunction
-				ifTrue: [ argumentType result ]
-				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
-						and: [ (argumentNode value isKindOf: Symbol)
-								and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ (aLookup receiver
-								lookupMethod: argumentNode value asSymbol
-								arguments: #()) result ]
-						ifFalse: [ TypUnknownType new ] ].
-			{elementType.
-			(aLookup arguments at: 3) result} typAsType ];
-		yourself
+			BlockClosure typAsType}
 ]
 
 { #category : #shadow }

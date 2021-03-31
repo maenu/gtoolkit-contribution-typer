@@ -59,57 +59,49 @@ TypShaPhaProtoObject >> mIfNil: aLookup [
 { #category : #shadow }
 TypShaPhaProtoObject >> mIfNilIfNotNil: aLookup [
 	<typShaMethod: 'ifNil:ifNotNil:'>
-	^ TypFunctionType new
-		argumentTypes:
+	<typMigrated>
+	| a1 a2 r2 |
+	a1 := aLookup arguments at: 1.
+	a2 := aLookup arguments at: 2.
+	r2 := (a2 hasValue and: [ a2 value isString ])
+		ifTrue: [ (aLookup root receiver asNonNullable
+				lookupMethod: a2 value asSymbol
+				arguments: {aLookup root receiver asNonNullable}) result ]
+		ifFalse: [ a2 result ].
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			{a1 result.
+			r2} typAsType
+		arguments:
 			{BlockClosure typAsType.
 			{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
 				arguments: {aLookup receiver asNonNullable}
 				argumentsOptional: true
-				signalsAlways: false)} typAsType};
-		resultType: [ :a :s :r | 
-			| argumentType argumentNode elementType |
-			argumentType := aLookup arguments at: 2.
-			argumentNode := aLookup argumentNodes at: 2.
-			elementType := argumentType isFunction
-				ifTrue: [ argumentType result ]
-				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
-						and: [ (argumentNode value isKindOf: Symbol)
-								and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ ((aLookup receiver at: '@A')
-								lookupMethod: argumentNode value asSymbol
-								arguments: #()) result ]
-						ifFalse: [ TypUnknownType new ] ].
-			{(aLookup arguments at: 1) result.
-			elementType} typAsType ];
-		yourself
+				signalsAlways: false)} typAsType}
 ]
 
 { #category : #shadow }
 TypShaPhaProtoObject >> mIfNotNil: aLookup [
 	<typShaMethod: 'ifNotNil:'>
-	^ TypFunctionType new
-		argumentTypes: [ {Symbol typAsType.
+	<typMigrated>
+	| a r |
+	a := aLookup arguments at: 1.
+	r := (a hasValue and: [ a value isString ])
+		ifTrue: [ (aLookup root receiver asNonNullable
+				lookupMethod: a value asSymbol
+				arguments: {aLookup root receiver}) result ]
+		ifFalse: [ a result ].
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: r
+		arguments:
+			{{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
 				arguments: {aLookup receiver asNonNullable}
 				argumentsOptional: true
-				signalsAlways: false)} typAsType ];
-		resultType: [ :a :s :r | 
-			| argumentType argumentNode |
-			argumentType := aLookup arguments at: 1.
-			argumentNode := aLookup argumentNodes at: 1.
-			argumentType isFunction
-				ifTrue: [ argumentType result ]
-				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
-						and: [ (argumentNode value isKindOf: Symbol)
-								and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ (aLookup receiver
-								lookupMethod: argumentNode value asSymbol
-								arguments: #()) result ]
-						ifFalse: [ TypUnknownType new ] ] ];
-		yourself
+				signalsAlways: false)} typAsType}
 ]
 
 { #category : #shadow }

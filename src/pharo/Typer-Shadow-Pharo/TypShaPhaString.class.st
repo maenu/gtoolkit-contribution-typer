@@ -19,20 +19,14 @@ TypShaPhaString >> mAsClass: aLookup [
 { #category : #shadow }
 TypShaPhaString >> mAsClassInEnvironmentIfAbsent: aLookup [
 	<typShaMethod: 'asClassInEnvironment:ifAbsent:'>
-	^ TypFunctionType new
-		argumentTypes:
+	<typMigrated>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			{Class typAsType.
+			(aLookup arguments at: 1) result} typAsType
+		arguments:
 			{SystemDictionary typAsType.
-			BlockClosure typAsType};
-		resultType: [ :a :s :r | 
-			| node |
-			node := aLookup argumentNodes at: 2.
-			(node isBlock
-				and: [ node body statements size > 0
-						and: [ node body statements last isReturn ] ])
-				ifTrue: [ Class typAsType ]
-				ifFalse: [ {Class typAsType.
-					(aLookup arguments at: 1) result} typAsType ] ];
-		yourself
+			BlockClosure typAsType}
 ]
 
 { #category : #shadow }

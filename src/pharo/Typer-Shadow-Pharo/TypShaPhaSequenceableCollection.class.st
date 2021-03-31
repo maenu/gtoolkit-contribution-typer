@@ -73,23 +73,22 @@ TypShaPhaSequenceableCollection >> mDetectIndex: aLookup [
 { #category : #shadow }
 TypShaPhaSequenceableCollection >> mDetectIndexIfNone: aLookup [
 	<typShaMethod: 'detectIndex:ifNone:'>
-	^ TypFunctionType new
-		argumentTypes:
+	<typMigrated>
+	| a |
+	a := aLookup arguments at: 2.
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			{Integer typAsType.
+			(a isFunction
+				ifTrue: [ a result ]
+				ifFalse: [ a ])} typAsType
+		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: Boolean typAsType
 				arguments: {(aLookup receiver at: '@A')}).
 			{TypUnknownType new.
 			(BlockClosure typAsFunctionTypeWithResult: Boolean typAsType)}
-				typAsType};
-		resultType: [ :a | 
-			| none |
-			none := aLookup arguments at: 2.
-			{Integer typAsType.
-			((none hasClassDescription
-				and: [ none classDescription == BlockClosure ])
-				ifTrue: [ none result ]
-				ifFalse: [ none ])} typAsType ];
-		yourself
+				typAsType}
 ]
 
 { #category : #shadow }
