@@ -23,14 +23,12 @@ TypMethodLookupIndex class >> instance [
 
 { #category : #accessing }
 TypMethodLookupIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aCollection [
-	^ self
-		reduce:
-			(resolver
-				resolve:
-					(TypMethodLookup
-						receiver: aType
-						selector: aSymbol
-						arguments: aCollection))
+	^ resolver
+		resolve:
+			(TypMethodLookup
+				receiver: aType
+				selector: aSymbol
+				arguments: aCollection)
 ]
 
 { #category : #initialization }

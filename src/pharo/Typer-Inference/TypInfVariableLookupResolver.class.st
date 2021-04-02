@@ -9,24 +9,24 @@ TypInfVariableLookupResolver >> resolve: aLookup [
 	| classDescription selector |
 	aLookup push: self.
 	aLookup receiver isNamed
-		ifFalse: [ ^ #() ].
+		ifFalse: [ ^ self unknown ].
 	aLookup receiver hasClassDescription
-		ifFalse: [ ^ #() ].
+		ifFalse: [ ^ self unknown ].
 	classDescription := aLookup receiver classDescription.
 	selector := aLookup selector.
 	classDescription allSlots
 		detect: [ :e | e name = selector ]
 		ifFound: [ :e | 
-			^ {((e assignmentNodes collect: #typInfType) typAsType
+			^ (e assignmentNodes collect: #typInfType) typAsType
 				addOrigin: aLookup asOrigin;
-				yourself)} ].
+				yourself ].
 	self flag: '...or we just take the type of the value?'.
 	classDescription isInstanceSide
 		ifTrue: [ classDescription allClassVariables
 				detect: [ :e | e name = selector ]
 				ifFound: [ :e | 
-					^ {((e assignmentNodes collect: #typInfType) typAsType
+					^ (e assignmentNodes collect: #typInfType) typAsType
 						addOrigin: aLookup asOrigin;
-						yourself)} ] ].
-	^ #()
+						yourself ] ].
+	^ self unknown
 ]

@@ -45,22 +45,7 @@ TypLookupIndex >> initializeResolver: anObject [
 	resolver := anObject
 ]
 
-{ #category : #accessing }
-TypLookupIndex >> reduce: aCollection [
-	aCollection ifEmpty: [ ^ self unknown ].
-	^ aCollection first
-		addOrigin:
-			(TypLookupAlternativeOrigin alternatives: aCollection copyWithoutFirst)
-]
-
 { #category : #initialization }
 TypLookupIndex >> reset [
 	resolver reset
-]
-
-{ #category : #accessing }
-TypLookupIndex >> unknown [
-	^ TypUnknownType new
-		addOrigin: (TypDescriptionOrigin description: 'no type found');
-		yourself
 ]

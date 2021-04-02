@@ -8,8 +8,8 @@ Class {
 TypDepthLookupResolver >> resolve: aLookup [
 	| results |
 	aLookup push: self.
-	results := resolver resolve: aLookup.
+	results := OrderedCollection with: (resolver resolve: aLookup).
 	aLookup hasSuper
-		ifTrue: [ results := results , (self resolve: aLookup copyAsSuper) ].
-	^ results
+		ifTrue: [ results add: (self resolve: aLookup copyAsSuper) ].
+	^ self reduce: results
 ]

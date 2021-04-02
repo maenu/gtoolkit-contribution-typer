@@ -83,9 +83,7 @@ TypUnionType >> asNullable [
 TypUnionType >> hasSuperType [
 	superType
 		ifNil: [ | remains nil_ unknown current |
-			remains := types
-				rehash;
-				copy.
+			remains := types copy.
 			nil_ := remains includes: TypNilType new.
 			nil_
 				ifTrue: [ remains remove: TypNilType new ].
@@ -95,7 +93,9 @@ TypUnionType >> hasSuperType [
 			remains
 				ifEmpty: [ superType := self.
 					^ false ].
-			current := remains remove: remains anyOne.
+			current := remains
+				rehash;
+				remove: remains anyOne.
 			(remains isEmpty and: [ current hasSuperType ])
 				ifTrue: [ current := current superType ].
 			[ remains isEmpty ]

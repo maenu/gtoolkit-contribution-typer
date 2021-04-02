@@ -8,10 +8,14 @@ Class {
 TypShaVariableLookupResolver >> resolve: aLookup [
 	aLookup push: self.
 	aLookup receiver isNamed
-		ifFalse: [ ^ #() ].
+		ifFalse: [ ^ self unknown ].
 	aLookup receiver hasClassDescription
-		ifFalse: [ ^ #() ].
-	^ aLookup receiver classDescription typShaShadows
-		flatCollect:
-			[ :e | (e resolveVariable: aLookup) do: [ :f | f addOrigin: aLookup asOrigin ] ]
+		ifFalse: [ ^ self unknown ].
+	^ self
+		reduce:
+			(aLookup receiver classDescription typShaShadows
+				flatCollect: [ :e | 
+					(e resolveVariable: aLookup)
+						do: [ :f | f addOrigin: aLookup asOrigin ];
+						yourself ])
 ]

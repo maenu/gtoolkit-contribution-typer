@@ -23,8 +23,6 @@ TypVariableLookupIndex class >> instance [
 
 { #category : #accessing }
 TypVariableLookupIndex >> lookupReceiver: aType selector: aSymbol [
-	^ self
-		reduce:
-			(resolver
-				resolve: (TypVariableLookup receiver: aType selector: aSymbol))
+	^ resolver
+		resolve: (TypVariableLookup receiver: aType selector: aSymbol)
 ]

@@ -9,12 +9,12 @@ TypPraMethodLookupResolver >> resolve: aLookup [
 	| classDescription method pragmas argumentPragmas resultPragma signalsAlwaysPragma arguments result signalsAlways |
 	aLookup push: self.
 	aLookup receiver isNamed
-		ifFalse: [ ^ #() ].
+		ifFalse: [ ^ self unknown ].
 	aLookup receiver hasClassDescription
-		ifFalse: [ ^ #() ].
+		ifFalse: [ ^ self unknown ].
 	classDescription := aLookup receiver classDescription.
 	method := (classDescription lookupSelector: aLookup selector)
-		ifNil: [ ^ #() ].
+		ifNil: [ ^ self unknown ].
 	pragmas := method typPraAllPragmas.
 	argumentPragmas := ((pragmas
 		select: [ :e | e selector = #typTypeArgument:as: ])
@@ -27,7 +27,7 @@ TypPraMethodLookupResolver >> resolve: aLookup [
 		ifNone: [ nil ].
 	(argumentPragmas isEmpty
 		and: [ resultPragma isNil and: [ signalsAlwaysPragma isNil ] ])
-		ifTrue: [ ^ #() ].
+		ifTrue: [ ^ self unknown ].
 	arguments := method numArgs
 		timesCollect: [ :i | 
 			argumentPragmas
@@ -40,12 +40,12 @@ TypPraMethodLookupResolver >> resolve: aLookup [
 	signalsAlways := signalsAlwaysPragma
 		ifNil: [ nil ]
 		ifNotNil: [ signalsAlwaysPragma arguments first ifNotNil: #asBoolean ].
-	^ {((TypFunctionType
+	^ (TypFunctionType
 		classDescription: classDescription
 		result: result
 		arguments: arguments
 		argumentsOptional: false
 		signalsAlways: signalsAlways)
 		addOrigin: aLookup asOrigin;
-		yourself)}
+		yourself
 ]

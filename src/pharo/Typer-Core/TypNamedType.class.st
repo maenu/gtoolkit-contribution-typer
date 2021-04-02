@@ -59,6 +59,11 @@ TypNamedType >> at: aString [
 	^ self superType at: aString
 ]
 
+{ #category : #polymorphic }
+TypNamedType >> at: aString put: aType [
+	^ self superType at: aString put: aType
+]
+
 { #category : #converting }
 TypNamedType >> classDescription [
 	<typTypeResultAs: 'ClassDescription'>

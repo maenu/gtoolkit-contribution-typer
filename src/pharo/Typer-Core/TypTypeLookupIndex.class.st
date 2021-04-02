@@ -23,7 +23,6 @@ TypTypeLookupIndex class >> instance [
 
 { #category : #accessing }
 TypTypeLookupIndex >> lookupClassDescription: aClassDescription [
-	^ self
-		reduce:
-			(resolver resolve: (TypTypeLookup classDescription: aClassDescription))
+	^ resolver
+		resolve: (TypTypeLookup classDescription: aClassDescription)
 ]

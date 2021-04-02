@@ -9,20 +9,20 @@ TypPraVariableLookupResolver >> resolve: aLookup [
 	| pragmas pragma |
 	aLookup push: self.
 	aLookup receiver isNamed
-		ifFalse: [ ^ #() ].
+		ifFalse: [ ^ self unknown ].
 	aLookup receiver hasClassDescription
-		ifFalse: [ ^ #() ].
+		ifFalse: [ ^ self unknown ].
 	pragmas := (aLookup receiver classDescription
 		lookupSelector: #initialize)
-		ifNil: [ ^ #() ]
+		ifNil: [ ^ self unknown ]
 		ifNotNil: #typPraAllPragmas.
 	pragma := pragmas
 		detect: [ :e | 
 			e selector = #typTypeVariable:as:
 				and: [ e arguments first = aLookup selector ] ]
-		ifNone: [ ^ #() ].
+		ifNone: [ ^ self unknown ].
 	self flag: 'FIXME parameters not covered yet, scopes'.
-	^ {(pragma arguments second typAsType
+	^ pragma arguments second typAsType
 		addOrigin: aLookup asOrigin;
-		yourself)}
+		yourself
 ]

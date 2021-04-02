@@ -10,7 +10,7 @@ TypPraTypeLookupResolver >> resolve: aLookup [
 	aLookup push: self.
 	classDescription := aLookup classDescription.
 	pragmas := (classDescription lookupSelector: #initialize)
-		ifNil: [ ^ #() ]
+		ifNil: [ ^ self unknown ]
 		ifNotNil: #pragmas.
 	parameters := pragmas
 		detect: [ :e | e selector = #typParameters: ]
@@ -27,7 +27,7 @@ TypPraTypeLookupResolver >> resolve: aLookup [
 		asDictionary.
 	(parameters isEmpty
 		and: [ bindings isEmpty and: [ superTypeBindings isEmpty ] ])
-		ifTrue: [ ^ #() ].
+		ifTrue: [ ^ self unknown ].
 	(parameters isEmpty
 		and: [ bindings isEmpty and: [ superTypeBindings isNotEmpty ] ])
 		ifTrue: [ | type |
@@ -46,7 +46,7 @@ TypPraTypeLookupResolver >> resolve: aLookup [
 			superTypeBindings
 				keysAndValuesDo: [ :k :v | type superType at: k put: v ].
 			^ type ].
-	^ {((classDescription typAsParametricTypeWithParameters: bindings)
+	^ (classDescription typAsParametricTypeWithParameters: bindings)
 		addOrigin: aLookup asOrigin;
-		yourself)}
+		yourself
 ]

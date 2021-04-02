@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 TypInfTypeLookupResolver >> resolve: aLookup [
 	aLookup push: self.
-	^ {(aLookup classDescription typAsNamedType
+	^ aLookup classDescription typAsNamedType
 		addOrigin: aLookup asOrigin;
-		yourself)}
+		yourself
 ]

@@ -15,6 +15,11 @@ TypLookupAlternativeOrigin class >> alternatives: aCollection [
 ]
 
 { #category : #accessing }
+TypLookupAlternativeOrigin >> alternatives [
+	^ alternatives
+]
+
+{ #category : #accessing }
 TypLookupAlternativeOrigin >> initializeAlternatives: aCollection [
 	alternatives := aCollection
 ]

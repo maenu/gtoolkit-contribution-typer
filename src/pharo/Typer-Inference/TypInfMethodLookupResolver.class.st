@@ -9,15 +9,15 @@ TypInfMethodLookupResolver >> resolve: aLookup [
 	| classDescription selector |
 	aLookup push: self.
 	aLookup receiver isNamed
-		ifFalse: [ ^ #() ].
+		ifFalse: [ ^ self unknown ].
 	aLookup receiver hasClassDescription
-		ifFalse: [ ^ #() ].
+		ifFalse: [ ^ self unknown ].
 	classDescription := aLookup receiver classDescription.
 	selector := aLookup selector.
 	(classDescription lookupSelector: selector)
-		ifNil: [ ^ #() ]
+		ifNil: [ ^ self unknown ]
 		ifNotNil: [ :e | 
-			^ {(e typInfType
+			^ e typInfType
 				addOrigin: aLookup asOrigin;
-				yourself)} ]
+				yourself ]
 ]

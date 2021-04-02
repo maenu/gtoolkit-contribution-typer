@@ -54,13 +54,9 @@ TypParametricType >> > aType [
 		ifTrue: [ ^ self >= (aType as: self class) ].
 	(aType isParametric and: [ aType name = name ])
 		ifFalse: [ ^ super > aType ].
-	aType parameters size <= parameters size
+	(aType parameters keys includesAll: parameters keys)
 		ifFalse: [ ^ false ].
-	(parameters keys copyFrom: 1 to: aType parameters size)
-		= aType parameters keys
-		ifFalse: [ ^ false ].
-	^ aType parameters keys
-		allSatisfy: [ :e | (self at: e) >= (aType at: e) ]
+	^ parameters keys allSatisfy: [ :e | (self at: e) >= (aType at: e) ]
 ]
 
 { #category : #converting }
@@ -94,9 +90,9 @@ TypParametricType >> copyWithParameters: aCollection [
 	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
 	^ self copy
 		initializeParameters:
-			(parameters associations
-				with: aCollection
-				collect: [ :e :f | e key -> f ]) asOrderedDictionary;
+			((1 to: (aCollection size min: parameters size))
+				collect: [ :i | (parameters keys at: i) -> (aCollection at: i) ])
+				asOrderedDictionary;
 		yourself
 ]
 

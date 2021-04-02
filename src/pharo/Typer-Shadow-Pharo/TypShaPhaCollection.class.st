@@ -182,7 +182,7 @@ TypShaPhaCollection >> mCollect: aLookup [
 	| a r |
 	a := aLookup arguments at: 1.
 	r := (a hasValue and: [ a value isString ])
-		ifTrue: [ ((aLookup receiver at: '@A')
+		ifTrue: [ ((aLookup root receiver at: '@A')
 				lookupMethod: a value asSymbol
 				arguments: #()) result ]
 		ifFalse: [ a result ].
@@ -192,7 +192,7 @@ TypShaPhaCollection >> mCollect: aLookup [
 			{{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {(aLookup receiver at: '@A')})} typAsType}
+				arguments: {(aLookup root receiver at: '@A')})} typAsType}
 ]
 
 { #category : #shadow }
@@ -300,7 +300,7 @@ TypShaPhaCollection >> mDo: aLookup [
 			{{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {(aLookup receiver at: '@A')})} typAsType}
+				arguments: {(aLookup root receiver at: '@A')})} typAsType}
 ]
 
 { #category : #shadow }
