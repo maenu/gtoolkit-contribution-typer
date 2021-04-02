@@ -127,30 +127,25 @@ TypShaPhaOrderedDictionary >> mBinary276: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mCollect: aLookup [
 	<typShaMethod: 'collect:'>
-	^ TypFunctionType new
-		argumentTypes: [ {Symbol typAsType.
-			(BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {(aLookup receiver at: '@A')})} typAsType ];
-		resultType: [ :a :s :r | 
-			| argumentType argumentNode elementType |
-			self flag: 'FIXME should lookup value:'.
-			argumentType := aLookup arguments at: 1.
-			argumentNode := aLookup argumentNodes at: 1.
-			elementType := argumentType isFunction
-				ifTrue: [ argumentType result ]
-				ifFalse: [ ((argumentNode isKindOf: RBLiteralValueNode)
-						and: [ (argumentNode value isKindOf: String)
-								and: [ argumentNode value asSymbol isUnary ] ])
-						ifTrue: [ ((aLookup receiver at: '@A')
-								lookupMethod: argumentNode value asSymbol
-								arguments: #()) result ]
-						ifFalse: [ TypUnknownType new ] ].
-			aLookup receiver
+	<typMigrated>
+	| a r |
+	a := aLookup arguments at: 1.
+	r := (a hasValue and: [ a value isString ])
+		ifTrue: [ ((aLookup receiver at: '@A')
+				lookupMethod: a value asSymbol
+				arguments: #()) result ]
+		ifFalse: [ a result ].
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			(aLookup root receiver
 				copyWithParameters:
 					{(aLookup receiver at: '@B').
-					elementType} ];
-		yourself
+					r})
+		arguments:
+			{{Symbol typAsType.
+			(BlockClosure
+				typAsFunctionTypeWithResult: TypUnknownType new
+				arguments: {(aLookup receiver at: '@A')})} typAsType}
 ]
 
 { #category : #shadow }
