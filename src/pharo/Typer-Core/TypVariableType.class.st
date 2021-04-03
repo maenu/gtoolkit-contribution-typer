@@ -81,6 +81,13 @@ TypVariableType >> printOn: aStream skipping: anIdentitySet [
 ]
 
 { #category : #accessing }
+TypVariableType >> result [
+	^ TypUnknownType new
+		addOrigin: (TypDescriptionOrigin description: 'result of variable type');
+		yourself
+]
+
+{ #category : #accessing }
 TypVariableType >> type [
 	^ type
 ]

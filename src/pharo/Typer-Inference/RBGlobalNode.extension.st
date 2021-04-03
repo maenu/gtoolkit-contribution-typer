@@ -19,5 +19,7 @@ RBGlobalNode >> typInfTypeRecursive [
 	(self binding isGlobalClassNameBinding
 		or: [ self binding isGlobalVariable ])
 		ifTrue: [ ^ self binding value typInfSelfType ].
-	^ self typInfDefiningType lookupVariable: name asSymbol
+	self typInfHasDefiningType
+		ifTrue: [ ^ self typInfDefiningType lookupVariable: name asSymbol ].
+	^ self binding assoc value typInfSelfType
 ]

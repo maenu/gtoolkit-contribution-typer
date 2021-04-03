@@ -161,7 +161,9 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 	(anIdentitySet includes: self)
 		ifTrue: [ aStream << '.'.
 			^ self ].
-	types_ := types copy.
+	types_ := types
+		rehash;
+		copy.
 	aStream << '{'.
 	types_
 		detect: [ :e | e = TypNilType new ]
@@ -192,6 +194,11 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 			e printOn: aStream skipping: anIdentitySet , {self}.
 			types_ ifNotEmpty: [ aStream << ',' ] ].
 	aStream << '}'
+]
+
+{ #category : #accessing }
+TypUnionType >> result [
+	^ (types select: #isFunction thenCollect: #result) typAsType
 ]
 
 { #category : #accessing }
