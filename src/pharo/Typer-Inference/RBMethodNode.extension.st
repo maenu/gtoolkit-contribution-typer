@@ -26,7 +26,7 @@ RBMethodNode >> typInfReceiver [
 { #category : #'*Typer-Inference' }
 RBMethodNode >> typInfTemporaryProfile [
 	<typTypeResultAs: 'SequenceableCollection<Association<RBProgramNode,TypType>>'>
-	^ (self allChildren select: #isValue)
+	^ (self allChildren select: [ :e | e children isEmpty ])
 		collect: [ :e | e -> e typInfType ]
 ]
 

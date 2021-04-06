@@ -73,9 +73,8 @@ TypUnionType >> asNonNullable [
 TypUnionType >> asNullable [
 	^ self isNullable
 		ifTrue: [ self ]
-		ifFalse: [ (types , {TypNilType new})
-				typAsTypeaddOrigin:
-					(TypConversionOrigin type: self selector: #asNullable arguments: #());
+		ifFalse: [ (types , {TypNilType new}) typAsType
+				addOrigin: (TypConversionOrigin type: self selector: #asNullable arguments: #());
 				yourself ]
 ]
 

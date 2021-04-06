@@ -20,7 +20,7 @@ TypGtTypeBodyStyler >> style: aText ast: anAst [
 	ast := coder rbAST.
 	[ ast typInfType ]
 		on: Error
-		do: [ :e | Halt once ].
+		do: [ :e | Halt  once ].
 	super style: aText ast: ast
 ]
 

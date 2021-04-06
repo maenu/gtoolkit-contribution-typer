@@ -16,14 +16,39 @@ TypParameterOrigin class >> type: aType name: aString [
 ]
 
 { #category : #accessing }
+TypParameterOrigin >> = anObject [
+	super = anObject
+		ifFalse: [ ^ false ].
+	anObject type = type
+		ifFalse: [ ^ false ].
+	^ anObject name = name
+]
+
+{ #category : #accessing }
+TypParameterOrigin >> hash [
+	^ (super hash bitXor: type hash) bitXor: name hash
+]
+
+{ #category : #accessing }
 TypParameterOrigin >> initializeType: aType name: aString [
 	type := aType.
 	name := aString
 ]
 
 { #category : #accessing }
+TypParameterOrigin >> name [
+	^ name
+]
+
+{ #category : #accessing }
 TypParameterOrigin >> printOn: aStream [
-	type printOn: aStream.
-	aStream nextPutAll: ' at: '.
-	name printOn: aStream
+	aStream
+		nextPutAll: name;
+		nextPutAll: ' of '.
+	type printOn: aStream
+]
+
+{ #category : #accessing }
+TypParameterOrigin >> type [
+	^ type
 ]

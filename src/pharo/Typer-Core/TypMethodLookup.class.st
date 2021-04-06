@@ -62,3 +62,13 @@ TypMethodLookup >> hash [
 TypMethodLookup >> initializeArguments: aCollection [
 	arguments := aCollection
 ]
+
+{ #category : #accessing }
+TypMethodLookup >> printOn: aStream [
+	aStream
+		nextPut: ${;
+		nextPutAll: (' ' join: (arguments collect: #asString));
+		nextPut: $};
+		nextPut: $ .
+	super printOn: aStream
+]

@@ -15,6 +15,23 @@ TypDescriptionOrigin class >> description: aString [
 ]
 
 { #category : #accessing }
+TypDescriptionOrigin >> = anObject [
+	super = anObject
+		ifFalse: [ ^ false ].
+	^ anObject description = description
+]
+
+{ #category : #accessing }
+TypDescriptionOrigin >> description [
+	^ description
+]
+
+{ #category : #accessing }
+TypDescriptionOrigin >> hash [
+	^ super hash bitXor: description hash
+]
+
+{ #category : #accessing }
 TypDescriptionOrigin >> initializeDescription: aString [
 	description := aString
 ]
