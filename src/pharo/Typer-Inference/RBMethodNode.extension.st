@@ -10,24 +10,18 @@ RBMethodNode >> typInfArgumentType: anArgumentNode [
 { #category : #'*Typer-Inference' }
 RBMethodNode >> typInfMethod [
 	^ self
-		propertyAt: #typInfMethod
-		ifAbsentPut: [ self typInfReceiver
+		propertyAt: 'typInfMethod-' , TypInfSelf value asString
+		ifAbsentPut: [ TypInfSelf value
 				lookupMethod: selector asSymbol
 				arguments: (arguments collect: #typInfType) ]
 ]
 
 { #category : #'*Typer-Inference' }
-RBMethodNode >> typInfReceiver [
-	^ self
-		propertyAt: #typInfReceiver
-		ifAbsentPut: [ self methodClass typAsType ]
-]
-
-{ #category : #'*Typer-Inference' }
 RBMethodNode >> typInfTemporaryProfile [
 	<typTypeResultAs: 'SequenceableCollection<Association<RBProgramNode,TypType>>'>
-	^ (self allChildren select: #isValue)
-		collect: [ :e | e -> e typInfType ]
+	^ self allChildren
+		select: [ :e | e children isEmpty ]
+		thenCollect: [ :e | e -> e typInfType ]
 ]
 
 { #category : #'*Typer-Inference' }
@@ -36,7 +30,7 @@ RBMethodNode >> typInfTypeRecursive [
 	| iterations maxIterations oldTemporaryProfiles newTemporaryProfile visitor types |
 	self
 		typInfTypeReset;
-		propertyAt: #typFixPoint put: false.
+		propertyAt: #typFixPoint, '-' , TypInfSelf value asString put: false.
 	iterations := 0.
 	maxIterations := 3.
 	oldTemporaryProfiles := Set new.
@@ -60,14 +54,14 @@ RBMethodNode >> typInfTypeRecursive [
 	oldTemporaryProfile := newTemporaryProfile.
 	newTemporaryProfile := self typInfTemporaryProfile.
 	oldTemporaryProfile = newTemporaryProfile
-		ifTrue: [ self propertyAt: #typFixPoint put: true ].
+		ifTrue: [ self propertyAt: #typFixPoint, '-' , TypInfSelf value asString put: true ].
 	(oldTemporaryProfiles includes: newTemporaryProfile) not
 		and: [ iterations < maxIterations ] ] whileTrue.
 	types := (self allChildren select: #isReturn)
 		collect: #typInfType
 		as: OrderedCollection.
 	self lastIsReturn
-		ifFalse: [ types add: self typInfReceiver ].
+		ifFalse: [ types add: TypInfSelf value ].
 	visitor := TypInfSignalsAlwaysVisitor new.
 	self acceptVisitor: visitor.
 	^ CompiledMethod

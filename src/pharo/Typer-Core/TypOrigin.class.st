@@ -1,19 +1,17 @@
 Class {
 	#name : #TypOrigin,
 	#superclass : #Object,
-	#instVars : [
-		'origins'
-	],
 	#category : #'Typer-Core-Type'
 }
 
 { #category : #accessing }
-TypOrigin >> add: anOrigin [
-	origins add: anOrigin
+TypOrigin >> = anObject [
+	anObject == self
+		ifTrue: [ ^ true ].
+	^ anObject class = self class
 ]
 
 { #category : #accessing }
-TypOrigin >> initialize [
-	super initialize.
-	origins := OrderedCollection new
+TypOrigin >> hash [
+	^ self class hash
 ]

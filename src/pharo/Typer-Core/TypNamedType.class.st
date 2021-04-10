@@ -136,6 +136,11 @@ TypNamedType >> name [
 	^ name
 ]
 
+{ #category : #accessing }
+TypNamedType >> parameters [
+	^ self superType parameters
+]
+
 { #category : #printing }
 TypNamedType >> printOn: aStream skipping: anIdentitySet [
 	(anIdentitySet includes: self)

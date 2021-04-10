@@ -52,7 +52,8 @@ TypPropertyLookup >> initializeReceiver: aType selector: aSymbol [
 TypPropertyLookup >> printOn: aStream [
 	receiver printOn: aStream.
 	aStream nextPutAll: '>>'.
-	selector printOn: aStream
+	selector printOn: aStream.
+	super printOn: aStream
 ]
 
 { #category : #accessing }

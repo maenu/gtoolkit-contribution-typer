@@ -17,7 +17,7 @@ TypInfMethodLookupResolver >> resolve: aLookup [
 	(classDescription lookupSelector: selector)
 		ifNil: [ ^ self unknown ]
 		ifNotNil: [ :e | 
-			^ e typInfType
+			^ (e typInfTypeIn: aLookup root receiver)
 				addOrigin: aLookup asOrigin;
 				yourself ]
 ]

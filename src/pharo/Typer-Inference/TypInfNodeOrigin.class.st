@@ -14,9 +14,26 @@ TypInfNodeOrigin class >> node: aNode [
 		yourself
 ]
 
+{ #category : #accessing }
+TypInfNodeOrigin >> = anObject [
+	super = anObject
+		ifFalse: [ ^ false ].
+	^ anObject node = node
+]
+
+{ #category : #accessing }
+TypInfNodeOrigin >> hash [
+	^ super hash bitXor: node hash
+]
+
 { #category : #initialization }
 TypInfNodeOrigin >> initializeNode: aNode [
 	node := aNode
+]
+
+{ #category : #accessing }
+TypInfNodeOrigin >> node [
+	^ node
 ]
 
 { #category : #printing }

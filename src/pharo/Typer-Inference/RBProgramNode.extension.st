@@ -20,12 +20,17 @@ RBProgramNode >> typInfNil [
 RBProgramNode >> typInfType [
 	<typTypeResultAs: 'TypType'>
 	^ self
-		propertyAt: #typInfType
+		propertyAt: 'typInfType-' , TypInfSelf value asString
 		ifAbsent: [ "need to set property to default to unknown on recursive calls"
 			self
-				propertyAt: #typInfType put: self typInfUnknown;
-				propertyAt: #typInfType
+				propertyAt: 'typInfType-' , TypInfSelf value asString put: self typInfUnknown;
+				propertyAt: 'typInfType-' , TypInfSelf value asString
 					put: (self typInfAnnotateType: self typInfTypeRecursive) ]
+]
+
+{ #category : #'*Typer-Inference' }
+RBProgramNode >> typInfTypeIn: aType [
+	^ TypInfSelf value: aType during: [ self typInfType ]
 ]
 
 { #category : #'*Typer-Inference' }
@@ -37,7 +42,11 @@ RBProgramNode >> typInfTypeRecursive [
 { #category : #'*Typer-Inference' }
 RBProgramNode >> typInfTypeReset [
 	properties
-		ifNotNil: [ (properties keys select: [ :e | e beginsWith: #typInf ])
+		ifNotNil: [ (properties keys
+				select: [ :e | 
+					(e beginsWith: #typInf)
+						and: [ TypInfSelf value isNil
+								or: [ e endsWith: '-' , TypInfSelf value asString ] ] ])
 				do: [ :e | self removeProperty: e ] ].
 	self children do: #typInfTypeReset
 ]

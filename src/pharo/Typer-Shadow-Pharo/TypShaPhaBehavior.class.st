@@ -15,7 +15,7 @@ TypShaPhaBehavior >> mAllSubclasses: aLookup [
 	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			(SequenceableCollection typAsType
+			(OrderedCollection typAsType
 				copyWithParameters: {Behavior typAsType})
 ]
 

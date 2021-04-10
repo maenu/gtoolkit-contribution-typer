@@ -48,5 +48,5 @@ RBMessageNode >> typGtFiltersToTypeWithShadow [
 { #category : #'*Typer-GToolkit' }
 RBMessageNode >> typGtInvokedMethods [
 	^ super typGtInvokedMethods
-		, (self typInfReceiver lookupSelector: self selector)
+		, (TypInfSelf value lookupSelector: self selector)
 ]

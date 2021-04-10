@@ -59,5 +59,6 @@ TypTypeLookup >> initializeClassDescription: anObject [
 
 { #category : #accessing }
 TypTypeLookup >> printOn: aStream [
-	aStream nextPutAll: classDescription name
+	aStream nextPutAll: classDescription name.
+	super printOn: aStream
 ]

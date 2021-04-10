@@ -8,7 +8,7 @@ Class {
 		'priority',
 		'instance'
 	],
-	#category : #'Typer-Shadow'
+	#category : #'Typer-Shadow-Lookup'
 }
 
 { #category : #'class initialization' }

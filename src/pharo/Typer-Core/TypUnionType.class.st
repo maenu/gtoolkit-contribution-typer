@@ -73,9 +73,8 @@ TypUnionType >> asNonNullable [
 TypUnionType >> asNullable [
 	^ self isNullable
 		ifTrue: [ self ]
-		ifFalse: [ (types , {TypNilType new})
-				typAsTypeaddOrigin:
-					(TypConversionOrigin type: self selector: #asNullable arguments: #());
+		ifFalse: [ (types , {TypNilType new}) typAsType
+				addOrigin: (TypConversionOrigin type: self selector: #asNullable arguments: #());
 				yourself ]
 ]
 
@@ -188,6 +187,7 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 				and: [ type_ hasSuperType and: [ type_ superType isUnion not ] ])
 				ifTrue: [ type_ superType printOn: aStream.
 					types_ removeAll ] ].
+	types_ rehash.
 	types_ copy
 		do: [ :e | 
 			types_ remove: e.

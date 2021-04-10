@@ -15,6 +15,28 @@ TypLookupOrigin class >> lookup: aLookup [
 ]
 
 { #category : #accessing }
+TypLookupOrigin >> = anObject [
+	super = anObject
+		ifFalse: [ ^ false ].
+	^ anObject lookup = lookup
+]
+
+{ #category : #accessing }
+TypLookupOrigin >> hash [
+	^ super hash bitXor: lookup hash
+]
+
+{ #category : #accessing }
 TypLookupOrigin >> initializeLookup: aLookup [
 	lookup := aLookup
+]
+
+{ #category : #accessing }
+TypLookupOrigin >> lookup [
+	^ lookup
+]
+
+{ #category : #accessing }
+TypLookupOrigin >> printOn: aStream [
+	lookup printOn: aStream
 ]

@@ -68,6 +68,12 @@ TypLookup >> postCopy [
 ]
 
 { #category : #accessing }
+TypLookup >> printOn: aStream [
+	aStream nextPutAll: ' | '.
+	parent printOn: aStream
+]
+
+{ #category : #accessing }
 TypLookup >> push: aResolver [
 	stack push: aResolver
 ]
