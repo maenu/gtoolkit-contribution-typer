@@ -37,6 +37,21 @@ TypVariableType >> > aType [
 	^ superType >= aType
 ]
 
+{ #category : #polymorphic }
+TypVariableType >> at: aString [
+	^ superType at: aString
+]
+
+{ #category : #polymorphic }
+TypVariableType >> at: aString put: aType [
+	^ superType at: aString put: aType
+]
+
+{ #category : #polymorphic }
+TypVariableType >> classDescription [
+	^ superType classDescription
+]
+
 { #category : #comparing }
 TypVariableType >> hash [
 	^ (super hash bitXor: name hash) bitXor: superType hash
@@ -80,11 +95,9 @@ TypVariableType >> printOn: aStream skipping: anIdentitySet [
 			superType printOn: aStream skipping: anIdentitySet , {self} ]
 ]
 
-{ #category : #accessing }
+{ #category : #polymorphic }
 TypVariableType >> result [
-	^ TypUnknownType new
-		addOrigin: (TypDescriptionOrigin description: 'result of variable type');
-		yourself
+	^ superType result
 ]
 
 { #category : #accessing }

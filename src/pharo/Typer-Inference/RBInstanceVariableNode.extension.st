@@ -4,7 +4,7 @@ Extension { #name : #RBInstanceVariableNode }
 RBInstanceVariableNode >> typInfDefiningType [
 	<typTypeResultAs: 'Type'>
 	self assert: [ self typInfHasDefiningType ].
-	^ self methodNode typInfReceiver
+	^ TypInfSelf value
 ]
 
 { #category : #'*Typer-Inference' }

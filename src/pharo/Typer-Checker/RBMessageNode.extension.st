@@ -24,7 +24,7 @@ RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 { #category : #'*Typer-Checker' }
 RBMessageNode >> typCheCheckMethod [
 	| receiverType |
-	receiverType := self typInfReceiver.
+	receiverType := TypInfSelf value.
 	receiverType isUnknown
 		ifTrue: [ ^ self ].
 	(receiverType asNonNullable canUnderstand: self selector)
@@ -38,7 +38,7 @@ RBMessageNode >> typCheCheckMethod [
 { #category : #'*Typer-Checker' }
 RBMessageNode >> typCheCheckReceiver [
 	| receiverType |
-	receiverType := self typInfReceiver.
+	receiverType := TypInfSelf value.
 	receiverType isUnknown
 		ifTrue: [ ^ self ].
 	(receiverType canUnderstand: self selector)

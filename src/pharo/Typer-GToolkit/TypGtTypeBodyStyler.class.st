@@ -18,10 +18,15 @@ TypGtTypeBodyStyler >> coder: aCoder [
 TypGtTypeBodyStyler >> style: aText ast: anAst [
 	| ast |
 	ast := coder rbAST.
-	[ ast typInfType ]
+	[ ast isMethod
+		ifTrue: [ TypInfSelf
+				value: ast compiledMethod methodClass typAsType
+				during: [ ast typInfType.
+					super style: aText ast: ast ] ]
+		ifFalse: [ ast typInfType.
+			super style: aText ast: ast ] ]
 		on: Error
-		do: [ :e | Halt  once ].
-	super style: aText ast: ast
+		do: [ :e | Halt once ]
 ]
 
 { #category : #private }

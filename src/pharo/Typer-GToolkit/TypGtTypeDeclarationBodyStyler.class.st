@@ -6,15 +6,15 @@ Class {
 
 { #category : #visiting }
 TypGtTypeDeclarationBodyStyler >> visitArgumentNode: aNode [
-	super visitArgumentNode: aNode.
-	(aNode parent isBlock or: [ aNode parent isSequence or: [ aNode parent isMethod ] ])
-		ifTrue: [ self styleValueNode: aNode ]
+	(aNode parent isBlock
+		or: [ aNode parent isSequence or: [ aNode parent isMethod ] ])
+		ifTrue: [ self styleValueNode: aNode ].
+	super visitArgumentNode: aNode
 ]
 
 { #category : #visiting }
 TypGtTypeDeclarationBodyStyler >> visitMethodNode: aNode [
 	| position |
-	super visitMethodNode: aNode.
 	position := aNode arguments isEmpty
 		ifTrue: [ aNode selector size ]
 		ifFalse: [ aNode arguments last stop ].
@@ -24,5 +24,6 @@ TypGtTypeDeclarationBodyStyler >> visitMethodNode: aNode [
 		with:
 			{(TypGtTypeAttribute new
 				type_: aNode typInfType result;
-				yourself)}
+				yourself)}.
+	super visitMethodNode: aNode
 ]

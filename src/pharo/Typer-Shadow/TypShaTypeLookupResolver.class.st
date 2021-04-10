@@ -13,5 +13,6 @@ TypShaTypeLookupResolver >> resolve: aLookup [
 				collect: [ :f | 
 					(f resolveType: aLookup)
 						addOrigin: aLookup asOrigin;
+						addOrigin: (TypDescriptionOrigin description: f class name);
 						yourself ])
 ]

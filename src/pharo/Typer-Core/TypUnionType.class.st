@@ -187,6 +187,7 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 				and: [ type_ hasSuperType and: [ type_ superType isUnion not ] ])
 				ifTrue: [ type_ superType printOn: aStream.
 					types_ removeAll ] ].
+	types_ rehash.
 	types_ copy
 		do: [ :e | 
 			types_ remove: e.

@@ -4,3 +4,8 @@ Extension { #name : #CompiledMethod }
 CompiledMethod >> typInfType [
 	^ self ast typInfType
 ]
+
+{ #category : #'*Typer-Inference' }
+CompiledMethod >> typInfTypeIn: aType [
+	^ self ast typInfTypeIn: aType
+]
