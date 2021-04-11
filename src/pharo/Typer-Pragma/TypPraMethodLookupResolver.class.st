@@ -5,13 +5,16 @@ Class {
 }
 
 { #category : #accessing }
+TypPraMethodLookupResolver >> canResolve: aLookup [
+	^ aLookup receiver isNamed
+		and: [ aLookup receiver hasClassDescription ]
+]
+
+{ #category : #accessing }
 TypPraMethodLookupResolver >> resolve: aLookup [
 	| classDescription method pragmas argumentPragmas resultPragma signalsAlwaysPragma arguments result signalsAlways |
+	self assert: [ self canResolve: aLookup ].
 	aLookup push: self.
-	aLookup receiver isNamed
-		ifFalse: [ ^ self unknown ].
-	aLookup receiver hasClassDescription
-		ifFalse: [ ^ self unknown ].
 	classDescription := aLookup receiver classDescription.
 	method := (classDescription lookupSelector: aLookup selector)
 		ifNil: [ ^ self unknown ].

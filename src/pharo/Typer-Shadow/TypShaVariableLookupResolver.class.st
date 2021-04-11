@@ -5,12 +5,15 @@ Class {
 }
 
 { #category : #accessing }
+TypShaVariableLookupResolver >> canResolve: aLookup [
+	^ aLookup receiver isNamed
+		and: [ aLookup receiver hasClassDescription ]
+]
+
+{ #category : #accessing }
 TypShaVariableLookupResolver >> resolve: aLookup [
+	self assert: [ self canResolve: aLookup ].
 	aLookup push: self.
-	aLookup receiver isNamed
-		ifFalse: [ ^ self unknown ].
-	aLookup receiver hasClassDescription
-		ifFalse: [ ^ self unknown ].
 	^ self
 		reduce:
 			(aLookup receiver classDescription typShaShadows

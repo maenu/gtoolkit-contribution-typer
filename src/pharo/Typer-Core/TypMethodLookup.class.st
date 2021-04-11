@@ -64,6 +64,12 @@ TypMethodLookup >> initializeArguments: aCollection [
 ]
 
 { #category : #accessing }
+TypMethodLookup >> postCopy [
+	super postCopy.
+	arguments := arguments copy
+]
+
+{ #category : #accessing }
 TypMethodLookup >> printOn: aStream [
 	aStream
 		nextPut: ${;

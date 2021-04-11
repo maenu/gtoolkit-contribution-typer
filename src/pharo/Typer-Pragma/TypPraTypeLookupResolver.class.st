@@ -5,8 +5,14 @@ Class {
 }
 
 { #category : #accessing }
+TypPraTypeLookupResolver >> canResolve: aLookup [
+	^ true
+]
+
+{ #category : #accessing }
 TypPraTypeLookupResolver >> resolve: aLookup [
 	| classDescription pragmas parameters bindings superTypeBindings |
+	self assert: [ self canResolve: aLookup ].
 	aLookup push: self.
 	classDescription := aLookup classDescription.
 	pragmas := (classDescription lookupSelector: #initialize)

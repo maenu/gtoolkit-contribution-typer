@@ -18,6 +18,11 @@ TypLookup >> = anObject [
 ]
 
 { #category : #accessing }
+TypLookup >> asCollection [
+	^ {self}
+]
+
+{ #category : #accessing }
 TypLookup >> asOrigin [
 	^ TypLookupOrigin lookup: self
 ]

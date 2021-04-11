@@ -5,19 +5,19 @@ Class {
 }
 
 { #category : #accessing }
+TypInfMethodLookupResolver >> canResolve: aLookup [
+	^ aLookup receiver isNamed
+		and: [ aLookup receiver hasClassDescription
+				and:
+					[ aLookup receiver classDescription includesSelector: aLookup selector ] ]
+]
+
+{ #category : #accessing }
 TypInfMethodLookupResolver >> resolve: aLookup [
-	| classDescription selector |
+	self assert: [ self canResolve: aLookup ].
 	aLookup push: self.
-	aLookup receiver isNamed
-		ifFalse: [ ^ self unknown ].
-	aLookup receiver hasClassDescription
-		ifFalse: [ ^ self unknown ].
-	classDescription := aLookup receiver classDescription.
-	selector := aLookup selector.
-	(classDescription lookupSelector: selector)
-		ifNil: [ ^ self unknown ]
-		ifNotNil: [ :e | 
-			^ (e typInfTypeIn: aLookup root receiver)
-				addOrigin: aLookup asOrigin;
-				yourself ]
+	^ (aLookup receiver classDescription >> aLookup selector
+		typInfTypeIn: aLookup root receiver)
+		addOrigin: aLookup asOrigin;
+		yourself
 ]

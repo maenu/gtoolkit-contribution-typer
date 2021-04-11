@@ -5,28 +5,27 @@ Class {
 }
 
 { #category : #accessing }
+TypInfVariableLookupResolver >> canResolve: aLookup [
+	^ aLookup receiver isNamed
+		and: [ aLookup receiver hasClassDescription
+				and: [ (aLookup receiver classDescription hasSlotNamed: aLookup selector)
+						or: [ aLookup receiver classDescription allClassVarNames
+								includes: aLookup selector ] ] ]
+]
+
+{ #category : #accessing }
 TypInfVariableLookupResolver >> resolve: aLookup [
-	| classDescription selector |
+	self assert: [ self canResolve: aLookup ].
 	aLookup push: self.
-	aLookup receiver isNamed
-		ifFalse: [ ^ self unknown ].
-	aLookup receiver hasClassDescription
-		ifFalse: [ ^ self unknown ].
-	classDescription := aLookup receiver classDescription.
-	selector := aLookup selector.
-	classDescription allSlots
-		detect: [ :e | e name = selector ]
-		ifFound: [ :e | 
-			^ (e assignmentNodes collect: #typInfType) typAsType
+	(aLookup receiver classDescription hasSlotNamed: aLookup selector)
+		ifTrue: [ ^ ((aLookup receiver classDescription slotNamed: aLookup selector)
+				assignmentNodes collect: #typInfType) typAsType
 				addOrigin: aLookup asOrigin;
 				yourself ].
 	self flag: '...or we just take the type of the value?'.
-	classDescription isInstanceSide
-		ifTrue: [ classDescription allClassVariables
-				detect: [ :e | e name = selector ]
-				ifFound: [ :e | 
-					^ (e assignmentNodes collect: #typInfType) typAsType
-						addOrigin: aLookup asOrigin;
-						yourself ] ].
-	^ self unknown
+	^ ((aLookup receiver classDescription allClassVariables
+		detect: [ :e | e name = aLookup selector ]) assignmentNodes
+		collect: #typInfType) typAsType
+		addOrigin: aLookup asOrigin;
+		yourself
 ]

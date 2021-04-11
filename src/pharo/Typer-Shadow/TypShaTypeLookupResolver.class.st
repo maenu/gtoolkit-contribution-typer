@@ -5,7 +5,13 @@ Class {
 }
 
 { #category : #accessing }
+TypShaTypeLookupResolver >> canResolve: aLookup [
+	^ true
+]
+
+{ #category : #accessing }
 TypShaTypeLookupResolver >> resolve: aLookup [
+	self assert: [ self canResolve: aLookup ].
 	aLookup push: self.
 	^ self
 		reduce:
