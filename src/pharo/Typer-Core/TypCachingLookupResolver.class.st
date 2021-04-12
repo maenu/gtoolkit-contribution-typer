@@ -25,8 +25,7 @@ TypCachingLookupResolver >> reset [
 TypCachingLookupResolver >> resolve: aLookup [
 	^ cache
 		at: aLookup
-		ifAbsent: [ aLookup push: self.
-			cache
+		ifAbsent: [ cache
 				at: aLookup put: self unknown;
 				at: aLookup put: (resolver resolve: aLookup) ]
 ]

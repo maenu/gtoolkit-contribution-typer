@@ -7,7 +7,6 @@ Class {
 { #category : #resolving }
 TypDepthLookupResolver >> resolve: aLookup [
 	| results result |
-	aLookup push: self.
 	result := resolver resolve: aLookup.
 	results := OrderedCollection with: result.
 	(result isUnknown and: [ aLookup hasSuper ])

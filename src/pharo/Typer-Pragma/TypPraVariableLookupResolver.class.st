@@ -14,7 +14,6 @@ TypPraVariableLookupResolver >> canResolve: aLookup [
 TypPraVariableLookupResolver >> resolve: aLookup [
 	| pragmas pragma |
 	self assert: [ self canResolve: aLookup ].
-	aLookup push: self.
 	pragmas := (aLookup receiver classDescription
 		lookupSelector: #initialize)
 		ifNil: [ ^ self unknown ]

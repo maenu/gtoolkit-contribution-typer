@@ -16,7 +16,6 @@ TypInfVariableLookupResolver >> canResolve: aLookup [
 { #category : #accessing }
 TypInfVariableLookupResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
-	aLookup push: self.
 	(aLookup receiver classDescription hasSlotNamed: aLookup selector)
 		ifTrue: [ ^ ((aLookup receiver classDescription slotNamed: aLookup selector)
 				assignmentNodes collect: #typInfType) typAsType

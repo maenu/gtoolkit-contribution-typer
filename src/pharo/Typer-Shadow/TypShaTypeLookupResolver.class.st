@@ -12,7 +12,6 @@ TypShaTypeLookupResolver >> canResolve: aLookup [
 { #category : #accessing }
 TypShaTypeLookupResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
-	aLookup push: self.
 	^ self
 		reduce:
 			(aLookup root classDescription typShaShadows

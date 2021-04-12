@@ -31,6 +31,7 @@ TypTypeLookup >> classDescription [
 TypTypeLookup >> copyAsSuper [
 	self assert: [ self hasSuper ].
 	^ self copy
+		initializeParent: self;
 		initializeClassDescription: classDescription superclass;
 		yourself
 ]

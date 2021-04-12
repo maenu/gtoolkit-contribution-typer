@@ -10,7 +10,7 @@ Class {
 
 { #category : #initialization }
 TypPraExaParametricClass >> initialize [
-	<typParameters: '@A,@B'>
+	<typTypeParameters: '@A,@B'>
 	<typTypeVariable: #x as: '@A'>
 	<typTypeVariable: #y as: '@B'>
 	super initialize

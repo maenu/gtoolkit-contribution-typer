@@ -15,7 +15,6 @@ TypInfMethodLookupResolver >> canResolve: aLookup [
 { #category : #accessing }
 TypInfMethodLookupResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
-	aLookup push: self.
 	^ (aLookup receiver classDescription >> aLookup selector
 		typInfTypeIn: aLookup root receiver)
 		addOrigin: aLookup asOrigin;

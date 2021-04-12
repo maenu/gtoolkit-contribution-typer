@@ -34,6 +34,5 @@ TypBreadthLookupResolver >> reset [
 
 { #category : #accessing }
 TypBreadthLookupResolver >> resolve: aLookup [
-	aLookup push: self.
 	^ self reduce: (resolvers collect: [ :e | e resolve: aLookup copy ])
 ]

@@ -6,7 +6,6 @@ Class {
 
 { #category : #accessing }
 TypSpreadLookupResolver >> resolve: aLookup [
-	aLookup push: self.
 	^ (aLookup asCollection collect: [ :e | resolver resolve: e ])
 		typAsType
 ]

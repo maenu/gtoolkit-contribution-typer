@@ -12,7 +12,6 @@ TypInfTypeLookupResolver >> canResolve: aLookup [
 { #category : #accessing }
 TypInfTypeLookupResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
-	aLookup push: self.
 	^ aLookup classDescription typAsNamedType
 		addOrigin: aLookup asOrigin;
 		yourself
