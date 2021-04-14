@@ -2,7 +2,7 @@ Extension { #name : #RBAssignmentNode }
 
 { #category : #'*Typer-Dynamic' }
 RBAssignmentNode >> typDynAssign: anObject [
-	<typTypeArgument: 1 as: 'Object'>
+	<typPraArguments: 'Object'>
 	SharedRandom globalGenerator next
 		< (1 - (self typDynAssigns weights size / 200))
 		ifTrue: [ self typDynAssigns add: anObject typInfSelfType ].
@@ -12,8 +12,10 @@ RBAssignmentNode >> typDynAssign: anObject [
 
 { #category : #'*Typer-Dynamic' }
 RBAssignmentNode >> typDynAssigns [
-	<typTypeResultAs: 'TypDynUnionType'>
-	^ (self propertyAt: #typDynAssigns ifAbsentPut: [ TypDynUnionType new ]) "typCastAs TypDynUnionType"
+	<typPraResult: 'TypDynUnionType'>
+	^ self
+		propertyAt: #typDynAssigns
+		ifAbsentPut: [ TypDynUnionType new ]	"typCastAs TypDynUnionType"
 ]
 
 { #category : #'*Typer-Dynamic' }

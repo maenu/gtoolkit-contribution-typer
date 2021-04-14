@@ -2,7 +2,7 @@ Extension { #name : #GtPharoSourceCoder }
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
-	<typTypeArgument: 1 as: 'Integer'>
+	<typPraArguments: 'Integer'>
 	| node |
 	node := self typGtRbNodeAt: anInteger.
 	node isNil
@@ -18,7 +18,7 @@ GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtBrowseToTypeWithPragmaAt: anInteger [
-	<typTypeArgument: 1 as: 'Integer'>
+	<typPraArguments: 'Integer'>
 	| node |
 	node := self typGtRbNodeAt: anInteger.
 	node isNil
@@ -30,7 +30,7 @@ GtPharoSourceCoder >> typGtBrowseToTypeWithPragmaAt: anInteger [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtBrowseToTypeWithShadowAt: anInteger [
-	<typTypeArgument: 1 as: 'Integer'>
+	<typPraArguments: 'Integer'>
 	| node |
 	node := self typGtRbNodeAt: anInteger.
 	node isNil
@@ -86,7 +86,7 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtRbNodeAt: anInteger [
-	<typTypeResultAs: '{!,RBProgramNode}'>
+	<typPraResult: '{!,RBProgramNode}'>
 	^ self rbAST
 		bestNodeFor: (anInteger to: anInteger)
 		on: Error

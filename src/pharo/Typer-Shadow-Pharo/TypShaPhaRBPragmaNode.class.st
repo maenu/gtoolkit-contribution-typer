@@ -7,7 +7,6 @@ Class {
 { #category : #shadow }
 TypShaPhaRBPragmaNode class >> mSelectorArguments: aLookup [
 	<typShaMethod: 'selector:arguments:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: RBPragmaNode typAsType
 		arguments:
@@ -24,6 +23,5 @@ TypShaPhaRBPragmaNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBPragmaNode >> mSelector: aLookup [
 	<typShaMethod: 'selector'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Symbol typAsType
 ]

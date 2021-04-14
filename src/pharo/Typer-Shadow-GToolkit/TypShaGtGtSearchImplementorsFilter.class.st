@@ -7,7 +7,6 @@ Class {
 { #category : #shadow }
 TypShaGtGtSearchImplementorsFilter class >> mSelector: aLookup [
 	<typShaMethod: 'selector:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
 		arguments: {Symbol typAsType}

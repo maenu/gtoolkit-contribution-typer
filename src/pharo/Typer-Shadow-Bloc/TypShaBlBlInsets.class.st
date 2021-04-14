@@ -7,7 +7,6 @@ Class {
 { #category : #shadow }
 TypShaBlBlInsets class >> mTopRightBottomLeft: aLookup [
 	<typShaMethod: 'top:right:bottom:left:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
 		arguments: {Number typAsType}

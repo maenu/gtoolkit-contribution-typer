@@ -12,7 +12,6 @@ TypShaBrBrTextCursorAttribute class >> shadowedClass [
 { #category : #shadow }
 TypShaBrBrTextCursorAttribute >> mEnterAction: aLookup [
 	<typShaMethod: 'enterAction:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
@@ -28,7 +27,6 @@ TypShaBrBrTextCursorAttribute >> mEnterAction: aLookup [
 { #category : #shadow }
 TypShaBrBrTextCursorAttribute >> mLeaveAction: aLookup [
 	<typShaMethod: 'leaveAction:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:

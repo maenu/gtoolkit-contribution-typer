@@ -7,7 +7,6 @@ Class {
 { #category : #shadow }
 TypShaPhaRBParser class >> mParseFaultyMethod: aLookup [
 	<typShaMethod: 'parseFaultyMethod:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: RBMethodNode typAsType
 		arguments: {String typAsType}

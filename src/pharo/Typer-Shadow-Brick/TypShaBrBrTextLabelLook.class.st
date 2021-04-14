@@ -12,7 +12,6 @@ TypShaBrBrTextLabelLook class >> shadowedClass [
 { #category : #shadow }
 TypShaBrBrTextLabelLook >> mFontSize: aLookup [
 	<typShaMethod: 'fontSize:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {Number typAsType}
@@ -21,7 +20,6 @@ TypShaBrBrTextLabelLook >> mFontSize: aLookup [
 { #category : #shadow }
 TypShaBrBrTextLabelLook >> mForeground: aLookup [
 	<typShaMethod: 'foreground:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:

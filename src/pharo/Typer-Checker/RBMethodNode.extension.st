@@ -2,7 +2,7 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheColor [
-	<typTypeResultAs: 'Color'>
+	<typPraResult: 'Color'>
 	self typCheHasIncompatibilities
 		ifTrue: [ ^ Color red ].
 	self typCheHasMissingMethods
@@ -16,7 +16,7 @@ RBMethodNode >> typCheColor [
 
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasIncompatibilities [
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
 	^ self typCheHasIncompatibleArguments
 		or: [ self typCheHasIncompatibleAssignments
 				or: [ self typCheHasIncompatibleReturns ] ]
@@ -24,74 +24,81 @@ RBMethodNode >> typCheHasIncompatibilities [
 
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasIncompatibleArguments [
-	<typTypeResultAs: 'Boolean'>
-	((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode"
+	<typPraResult: 'Boolean'>
+	((self allChildren select: #isMessage) reject: #isCascade)
 		do: [ :e | 
 			e arguments
 				withIndexDo: [ :f :i | 
 					[ e typCheCheckArgumentCompatibilityAt: i ]
 						on: TypCheIncompatibleTypeError
-						do: [ :g | g traceCr.^ true ] ] ].
+						do: [ :g | 
+							g traceCr.
+							^ true ] ] ].	"typParameters RBMessageNode"
 	^ false
 ]
 
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasIncompatibleAssignments [
-	<typTypeResultAs: 'Boolean'>
-	(self allChildren select: #isAssignment) "typParameters RBAssignmentNode"
+	<typPraResult: 'Boolean'>
+	(self allChildren select: #isAssignment)
 		do: [ :e | 
 			[ e typCheCheckCompatibility ]
 				on: TypCheIncompatibleTypeError
-				do: [ ^ true ] ].
+				do: [ ^ true ] ].	"typParameters RBAssignmentNode"
 	^ false
 ]
 
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasIncompatibleReturns [
-	<typTypeResultAs: 'Boolean'>
-	(self allChildren select: #isReturn) "typParameters RBReturnNode"
+	<typPraResult: 'Boolean'>
+	(self allChildren select: #isReturn)
 		do: [ :e | 
 			[ e typCheCheckCompatibility ]
 				on: TypCheIncompatibleTypeError
-				do: [ ^ true ] ].
+				do: [ ^ true ] ].	"typParameters RBReturnNode"
 	^ false
 ]
 
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasMissingMethods [
-	<typTypeResultAs: 'Boolean'>
-	((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode"
+	<typPraResult: 'Boolean'>
+	((self allChildren select: #isMessage) reject: #isCascade)
 		do: [ :e | 
 			[ e typCheCheckMethod ]
 				on: TypCheNoMethodError
-				do: [ ^ true ] ].
+				do: [ ^ true ] ].	"typParameters RBMessageNode"
 	^ false
 ]
 
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasNullableArguments [
-	<typTypeResultAs: 'Boolean'>
-	^ ((((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode" flatCollect: #arguments) select: [ :e | e typInfType isNullable ])
+	<typPraResult: 'Boolean'>
+	^ ((((self allChildren select: #isMessage) reject: #isCascade)
+		flatCollect: #arguments) select: [ :e | e typInfType isNullable ])
 		anySatisfy: [ :e | 
 			| e_ i expected actual |
-			e_ := (e parent) "typCastAs RBMessageNode".
+			e_ := e parent.	"typCastAs RBMessageNode"
 			i := e_ arguments detectIndex: [ :f | f == e ].
 			expected := e_ typInfTypeForArgumentAt: i.
 			actual := e typInfType.
-			(expected >= actual) not and: [ expected >= actual asNonNullable ] ]
+			(expected >= actual) not and: [ expected >= actual asNonNullable ] ]	"typParameters RBMessageNode"
 ]
 
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasNullableReceivers [
-	<typTypeResultAs: 'Boolean'>
-	^ ((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode" anySatisfy: [ :e | e receiver typInfType isNullable and: [ (e receiver typInfType canUnderstand: e selector) not ] ]
+	<typPraResult: 'Boolean'>
+	^ ((self allChildren select: #isMessage) reject: #isCascade)
+		anySatisfy: [ :e | 
+			e receiver typInfType isNullable
+				and: [ (e receiver typInfType canUnderstand: e selector) not ] ]	"typParameters RBMessageNode"
 ]
 
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasNullableReturns [
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
 	^ (self allChildren select: #isReturn)
-		anySatisfy: [ :e "typCastAs RBReturnNode" | 
+		anySatisfy: [ :e"typCastAs RBReturnNode"
+			 | 
 			[ e typCheCheckNullables.
 			false ]
 				on: TypCheNullableTypeError
@@ -100,13 +107,15 @@ RBMethodNode >> typCheHasNullableReturns [
 
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasNullables [
-	<typTypeResultAs: 'Boolean'>
-	^ self typCheHasNullableReceivers or: [ self typCheHasNullableArguments  or: [ self typCheHasNullableReturns ] ]
+	<typPraResult: 'Boolean'>
+	^ self typCheHasNullableReceivers
+		or: [ self typCheHasNullableArguments
+				or: [ self typCheHasNullableReturns ] ]
 ]
 
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasUnknownArguments [
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
 	1 to: self numArgs do: [ :e | 
 		(self typInfTypeForArgumentAt: e) isUnknown
 			ifTrue: [ ^ true ] ].
@@ -115,31 +124,32 @@ RBMethodNode >> typCheHasUnknownArguments [
 
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasUnknownArgumentsPassed [
-	<typTypeResultAs: 'Boolean'>
-	((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode"
+	<typPraResult: 'Boolean'>
+	((self allChildren select: #isMessage) reject: #isCascade)
 		do: [ :e | 
 			e arguments
 				withIndexDo: [ :f :i | 
 					(e typInfTypeForArgumentAt: i) isUnknown
-						ifTrue: [ ^ true ] ] ].
+						ifTrue: [ ^ true ] ] ].	"typParameters RBMessageNode"
 	^ false
 ]
 
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasUnknownReceivers [
-	<typTypeResultAs: 'Boolean'>
-	^ ((self allChildren select: #isMessage) reject: #isCascade) "typParameters RBMessageNode" anySatisfy: [ :e | e receiver typInfType isUnknown ]
+	<typPraResult: 'Boolean'>
+	^ ((self allChildren select: #isMessage) reject: #isCascade)
+		anySatisfy: [ :e | e receiver typInfType isUnknown ]	"typParameters RBMessageNode"
 ]
 
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasUnknownResult [
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
 	^ self typInfResult isUnknown
 ]
 
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasUnknownTemporaries [
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
 	^ (self allChildren
 		select: [ :e | 
 			e isTemp
@@ -150,6 +160,10 @@ RBMethodNode >> typCheHasUnknownTemporaries [
 
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasUnknowns [
-	<typTypeResultAs: 'Boolean'>
-	^ self typCheHasUnknownArgumentsPassed or: [ self typCheHasUnknownReceivers or: [ self typCheHasUnknownResult or: [ self typCheHasUnknownArguments or: [ self typCheHasUnknownTemporaries ] ] ] ]
+	<typPraResult: 'Boolean'>
+	^ self typCheHasUnknownArgumentsPassed
+		or: [ self typCheHasUnknownReceivers
+				or: [ self typCheHasUnknownResult
+						or: [ self typCheHasUnknownArguments
+								or: [ self typCheHasUnknownTemporaries ] ] ] ]
 ]

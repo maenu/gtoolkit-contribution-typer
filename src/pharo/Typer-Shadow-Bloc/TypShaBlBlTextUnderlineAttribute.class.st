@@ -12,7 +12,6 @@ TypShaBlBlTextUnderlineAttribute class >> shadowedClass [
 { #category : #shadow }
 TypShaBlBlTextUnderlineAttribute >> mPaint: aLookup [
 	<typShaMethod: 'paint:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:

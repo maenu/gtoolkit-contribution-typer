@@ -12,15 +12,15 @@ Class {
 
 { #category : #comparing }
 TypType >> < aType [
-	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
+	<typPraArguments: 'TypType'>
 	^ aType > self
 ]
 
 { #category : #comparing }
 TypType >> <= aType [
-	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
+	<typPraArguments: 'TypType'>
 	^ aType >= self
 ]
 
@@ -43,8 +43,8 @@ TypType >> = anObject [
 
 { #category : #comparing }
 TypType >> > aType [
-	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
+	<typPraArguments: 'TypType'>
 	aType = self
 		ifTrue: [ ^ false ].
 	aType hasSuperType
@@ -54,8 +54,8 @@ TypType >> > aType [
 
 { #category : #comparing }
 TypType >> >= aType [
-	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
+	<typPraArguments: 'TypType'>
 	^ self > aType or: [ self = aType ]
 ]
 
@@ -68,8 +68,8 @@ TypType >> addOrigin: anOrigin [
 
 { #category : #converting }
 TypType >> asCompatibleWith: aType [
-	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
+	<typPraArguments: 'TypType'>
 	self flag: 'TODO only real usage in union type, odd one out'.
 	aType isVariable
 		ifTrue: [ ^ aType ].
@@ -92,17 +92,16 @@ TypType >> asCompatibleWith: aType [
 
 { #category : #converting }
 TypType >> asNonNullable [
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
 	^ self
 ]
 
 { #category : #converting }
 TypType >> asNullable [
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
 	^ {TypNilType new.
 	self} typAsType
-		addOrigin:
-			(TypConversionOrigin type: self selector: #asNullable arguments: #());
+		addOrigin: (TypConversionOrigin type: self selector: #asNullable arguments: #());
 		yourself
 ]
 
@@ -138,7 +137,7 @@ TypType >> hash [
 
 { #category : #initialization }
 TypType >> initialize [
-	<typTypeVariable: 'superType' as: '{!,TypType}'>
+	<typPraVariable: 'superType' as: '{!,TypType}'>
 	super initialize.
 	origins := OrderedCollection new.
 	hasValue := false
@@ -146,19 +145,19 @@ TypType >> initialize [
 
 { #category : #testing }
 TypType >> isFunction [
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
 	^ false
 ]
 
 { #category : #testing }
 TypType >> isNamed [
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
 	^ false
 ]
 
 { #category : #testing }
 TypType >> isNil [
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
 	^ false
 ]
 
@@ -169,25 +168,25 @@ TypType >> isNullable [
 
 { #category : #testing }
 TypType >> isParametric [
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
 	^ false
 ]
 
 { #category : #testing }
 TypType >> isUnion [
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
 	^ false
 ]
 
 { #category : #testing }
 TypType >> isUnknown [
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
 	^ false
 ]
 
 { #category : #testing }
 TypType >> isVariable [
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
 	^ false
 ]
 
@@ -231,14 +230,14 @@ TypType >> printOn: aStream skipping: anIdentitySet [
 
 { #category : #accessing }
 TypType >> superType [
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
 	self assert: [ self hasSuperType ].
-	^ superType "typCastAs TypType"
+	^ superType	"typCastAs TypType"
 ]
 
 { #category : #accessing }
 TypType >> superType: aType [
-	<typTypeArgument: 1 as: 'TypType'>
+	<typPraArguments: 'TypType'>
 	superType := aType
 ]
 

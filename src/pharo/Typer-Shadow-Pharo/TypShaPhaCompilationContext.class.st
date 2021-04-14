@@ -12,7 +12,6 @@ TypShaPhaCompilationContext class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaCompilationContext >> mBindings: aLookup [
 	<typShaMethod: 'bindings:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {Dictionary typAsType}
@@ -21,7 +20,6 @@ TypShaPhaCompilationContext >> mBindings: aLookup [
 { #category : #shadow }
 TypShaPhaCompilationContext >> mClass: aLookup [
 	<typShaMethod: 'class:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {ClassDescription typAsType}
@@ -30,7 +28,6 @@ TypShaPhaCompilationContext >> mClass: aLookup [
 { #category : #shadow }
 TypShaPhaCompilationContext >> mForSyntaxHighlighting: aLookup [
 	<typShaMethod: 'forSyntaxHighlighting:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {Boolean typAsType}
@@ -39,7 +36,6 @@ TypShaPhaCompilationContext >> mForSyntaxHighlighting: aLookup [
 { #category : #shadow }
 TypShaPhaCompilationContext >> mRequestor: aLookup [
 	<typShaMethod: 'requestor:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {TypUnknownType new asNullable}

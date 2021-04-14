@@ -10,15 +10,15 @@ Class {
 
 { #category : #initialization }
 TypPraExaParametricClass >> initialize [
-	<typTypeParameters: '@A,@B'>
-	<typTypeVariable: #x as: '@A'>
-	<typTypeVariable: #y as: '@B'>
+	<typPraParameters: '@A,@B'>
+	<typPraVariable: #x as: '@A'>
+	<typPraVariable: #y as: '@B'>
 	super initialize
 ]
 
 { #category : #'as yet unclassified' }
 TypPraExaParametricClass >> some: arg1 [
-	<typTypeArgument: 1 as: '@A'>
-	<typTypeResultAs: '@B'>
+	<typPraResult: '@B'>
+	<typPraArguments: '@A'>
 	self subclassResponsibility
 ]

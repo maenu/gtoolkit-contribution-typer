@@ -7,7 +7,6 @@ Class {
 { #category : #shadow }
 TypShaGtGtCoderTextStyler class >> mForCoder: aLookup [
 	<typShaMethod: 'forCoder:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
 		arguments: {GtPharoMethodCoder typAsType}
@@ -21,7 +20,6 @@ TypShaGtGtCoderTextStyler class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtCoderTextStyler >> mExtraStyleAst: aLookup [
 	<typShaMethod: 'extraStyle:ast:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
@@ -32,7 +30,6 @@ TypShaGtGtCoderTextStyler >> mExtraStyleAst: aLookup [
 { #category : #shadow }
 TypShaGtGtCoderTextStyler >> mStyleAst: aLookup [
 	<typShaMethod: 'style:ast:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
@@ -42,6 +39,6 @@ TypShaGtGtCoderTextStyler >> mStyleAst: aLookup [
 
 { #category : #accessing }
 TypShaGtGtCoderTextStyler >> vCoder: aLookup [
-	<typShaForVariable: #coder>
+	<typShaVariable: #coder>
 	^ GtPharoMethodCoder typAsType
 ]

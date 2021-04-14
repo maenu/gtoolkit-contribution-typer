@@ -12,7 +12,6 @@ TypShaPhaOCLiteralVariable class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaOCLiteralVariable >> mAssoc: aLookup [
 	<typShaMethod: 'assoc'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(Association typAsType
@@ -24,35 +23,30 @@ TypShaPhaOCLiteralVariable >> mAssoc: aLookup [
 { #category : #shadow }
 TypShaPhaOCLiteralVariable >> mIsClassVariable: aLookup [
 	<typShaMethod: 'isClassVariable'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaOCLiteralVariable >> mIsFromSharedPool: aLookup [
 	<typShaMethod: 'isFromSharedPool'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaOCLiteralVariable >> mIsGlobalClassNameBinding: aLookup [
 	<typShaMethod: 'isGlobalClassNameBinding'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaOCLiteralVariable >> mIsGlobalVariable: aLookup [
 	<typShaMethod: 'isGlobalVariable'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaOCLiteralVariable >> mScope: aLookup [
 	<typShaMethod: 'scope'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: OCAbstractScope typAsType
 ]

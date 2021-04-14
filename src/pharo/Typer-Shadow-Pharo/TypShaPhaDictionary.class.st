@@ -12,7 +12,6 @@ TypShaPhaDictionary class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaDictionary >> mAnyOne: aLookup [
 	<typShaMethod: 'anyOne'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
 ]
@@ -20,7 +19,6 @@ TypShaPhaDictionary >> mAnyOne: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mAsOrderedDictionary: aLookup [
 	<typShaMethod: 'asOrderedDictionary'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(OrderedDictionary typAsType
@@ -32,7 +30,6 @@ TypShaPhaDictionary >> mAsOrderedDictionary: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mAssociations: aLookup [
 	<typShaMethod: 'associations'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(Array typAsType
@@ -46,7 +43,6 @@ TypShaPhaDictionary >> mAssociations: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mAssociationsDo: aLookup [
 	<typShaMethod: 'associationsDo:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver
 		arguments:
@@ -62,7 +58,6 @@ TypShaPhaDictionary >> mAssociationsDo: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mAt: aLookup [
 	<typShaMethod: 'at:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
 		arguments: {(aLookup receiver at: '@B')}
@@ -71,7 +66,6 @@ TypShaPhaDictionary >> mAt: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mAtIfAbsent: aLookup [
 	<typShaMethod: 'at:ifAbsent:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			{(aLookup receiver at: '@A').
@@ -84,7 +78,6 @@ TypShaPhaDictionary >> mAtIfAbsent: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mAtIfAbsentPut: aLookup [
 	<typShaMethod: 'at:ifAbsentPut:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
 		arguments:
@@ -96,7 +89,6 @@ TypShaPhaDictionary >> mAtIfAbsentPut: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mAtIfPresentIfAbsent: aLookup [
 	<typShaMethod: 'at:ifPresent:ifAbsent:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			{(aLookup arguments at: 2) result.
@@ -114,7 +106,6 @@ TypShaPhaDictionary >> mAtIfPresentIfAbsent: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mAtPut: aLookup [
 	<typShaMethod: 'at:put:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
 		arguments:
@@ -125,7 +116,6 @@ TypShaPhaDictionary >> mAtPut: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mBinary214: aLookup [
 	<typShaMethod: ','>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(aLookup receiver
@@ -140,7 +130,6 @@ TypShaPhaDictionary >> mBinary214: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mCollect: aLookup [
 	<typShaMethod: 'collect:'>
-	<typMigrated>
 	| a r |
 	a := aLookup arguments at: 1.
 	r := (a hasValue and: [ a value isString ])
@@ -164,7 +153,6 @@ TypShaPhaDictionary >> mCollect: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mIncludes: aLookup [
 	<typShaMethod: 'includes:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {(aLookup receiver at: '@A')}
@@ -173,7 +161,6 @@ TypShaPhaDictionary >> mIncludes: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mIncludesKey: aLookup [
 	<typShaMethod: 'includesKey:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {(aLookup receiver at: '@B')}
@@ -182,7 +169,6 @@ TypShaPhaDictionary >> mIncludesKey: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mKeys: aLookup [
 	<typShaMethod: 'keys'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(Collection typAsType
@@ -192,7 +178,6 @@ TypShaPhaDictionary >> mKeys: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mKeysAndValuesDo: aLookup [
 	<typShaMethod: 'keysAndValuesDo:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver
 		arguments:
@@ -206,7 +191,6 @@ TypShaPhaDictionary >> mKeysAndValuesDo: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mRemoveKeyIfAbsent: aLookup [
 	<typShaMethod: 'removeKey:ifAbsent:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			{(aLookup receiver at: '@A').
@@ -219,7 +203,6 @@ TypShaPhaDictionary >> mRemoveKeyIfAbsent: aLookup [
 { #category : #shadow }
 TypShaPhaDictionary >> mValues: aLookup [
 	<typShaMethod: 'values'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(Collection typAsType

@@ -12,7 +12,6 @@ TypShaBrBrButton class >> shadowedClass [
 { #category : #shadow }
 TypShaBrBrButton >> mAction: aLookup [
 	<typShaMethod: 'action:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {BlockClosure typAsType}
@@ -21,7 +20,6 @@ TypShaBrBrButton >> mAction: aLookup [
 { #category : #shadow }
 TypShaBrBrButton >> mIcon: aLookup [
 	<typShaMethod: 'icon:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {BlElement typAsType}

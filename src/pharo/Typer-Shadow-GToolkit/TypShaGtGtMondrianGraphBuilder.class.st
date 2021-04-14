@@ -12,7 +12,6 @@ TypShaGtGtMondrianGraphBuilder class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtMondrianGraphBuilder >> mStencil: aLookup [
 	<typShaMethod: 'stencil:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:

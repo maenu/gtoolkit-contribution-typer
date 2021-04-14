@@ -7,7 +7,7 @@ RBInstanceVariableNode >> typGtCanType [
 
 { #category : #'*Typer-GToolkit' }
 RBInstanceVariableNode >> typGtFiltersToTypeWithPragma [
-	<typTypeResultAs: 'GtCoderMethodsFilter'>
+	<typPraResult: 'GtCoderMethodsFilter'>
 	^ (TypGtCoderTypeFilter new
 		type: self methodNode methodClass typAsType;
 		yourself)
@@ -19,7 +19,7 @@ RBInstanceVariableNode >> typGtFiltersToTypeWithPragma [
 
 { #category : #'*Typer-GToolkit' }
 RBInstanceVariableNode >> typGtFiltersToTypeWithShadow [
-	<typTypeResultAs: 'GtCoderMethodsFilter'>
+	<typPraResult: 'GtCoderMethodsFilter'>
 	| type clazz shadows variableType |
 	type := self methodNode methodClass typAsType.
 	clazz := (type isNamed and: [ type hasClassDescription ])

@@ -60,7 +60,7 @@ TypShaShadow class >> resolveVariable: aLookup [
 
 { #category : #'as yet unclassified' }
 TypShaShadow class >> shadowedClass [
-	<typTypeResultAs: 'MetaClass'>
+	<typPraResult: 'MetaClass'>
 	self subclassResponsibility
 ]
 
@@ -101,6 +101,6 @@ TypShaShadow >> resolveVariable: aLookup [
 
 { #category : #accessing }
 TypShaShadow >> shadowedClass [
-	<typTypeResultAs: 'Class'>
+	<typPraResult: 'Class'>
 	^ self class shadowedClass instanceSide
 ]

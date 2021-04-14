@@ -12,7 +12,6 @@ TypShaPhaRBMessageNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBMessageNode >> mArguments: aLookup [
 	<typShaMethod: 'arguments'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -22,7 +21,6 @@ TypShaPhaRBMessageNode >> mArguments: aLookup [
 { #category : #shadow }
 TypShaPhaRBMessageNode >> mKeywordsIntervals: aLookup [
 	<typShaMethod: 'keywordsIntervals'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -32,20 +30,17 @@ TypShaPhaRBMessageNode >> mKeywordsIntervals: aLookup [
 { #category : #shadow }
 TypShaPhaRBMessageNode >> mNumArgs: aLookup [
 	<typShaMethod: 'numArgs'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaRBMessageNode >> mReceiver: aLookup [
 	<typShaMethod: 'receiver'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: RBValueNode typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaRBMessageNode >> mSelector: aLookup [
 	<typShaMethod: 'selector'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Symbol typAsType
 ]

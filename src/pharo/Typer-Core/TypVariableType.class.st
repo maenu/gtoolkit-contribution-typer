@@ -10,7 +10,7 @@ Class {
 
 { #category : #'instance creation' }
 TypVariableType class >> named: aString [
-	<typTypeArgument: 1 as: 'String'>
+	<typPraArguments: 'String'>
 	^ self new
 		initializeName: aString;
 		yourself
@@ -18,8 +18,7 @@ TypVariableType class >> named: aString [
 
 { #category : #'instance creation' }
 TypVariableType class >> named: aString superType: aType [
-	<typTypeArgument: 1 as: 'String'>
-	<typTypeArgument: 2 as: 'TypType'>
+	<typPraArguments: 'String,TypType'>
 	^ (self named: aString)
 		superType: aType;
 		yourself
@@ -59,16 +58,16 @@ TypVariableType >> hash [
 
 { #category : #initialization }
 TypVariableType >> initialize [
-	<typTypeVariable: 'name' as: 'String'>
-	<typTypeVariable: 'scope' as: '{!,TypType}'>
-	<typTypeVariable: 'superType' as: 'TypType'>
+	<typPraVariable: 'name' as: 'String'>
+	<typPraVariable: 'scope' as: '{!,TypType}'>
+	<typPraVariable: 'superType' as: 'TypType'>
 	super initialize.
 	superType := ProtoObject typAsType
 ]
 
 { #category : #accessing }
 TypVariableType >> initializeName: aString [
-	<typTypeArgument: 1 as: 'String'>
+	<typPraArguments: 'String'>
 	self assert: [ aString size > 1 ].
 	self assert: [ aString first = $@ ].
 	name := aString

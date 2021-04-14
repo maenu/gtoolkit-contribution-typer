@@ -12,7 +12,6 @@ TypShaPhaRBBlockNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBBlockNode >> mArguments: aLookup [
 	<typShaMethod: 'arguments'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -22,7 +21,6 @@ TypShaPhaRBBlockNode >> mArguments: aLookup [
 { #category : #shadow }
 TypShaPhaRBBlockNode >> mBody: aLookup [
 	<typShaMethod: 'body'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: RBSequenceNode typAsType
 ]

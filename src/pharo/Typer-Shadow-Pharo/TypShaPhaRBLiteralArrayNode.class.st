@@ -12,7 +12,6 @@ TypShaPhaRBLiteralArrayNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBLiteralArrayNode >> mContents: aLookup [
 	<typShaMethod: 'contents'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType

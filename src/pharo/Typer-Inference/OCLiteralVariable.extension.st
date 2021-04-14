@@ -7,8 +7,8 @@ OCLiteralVariable >> typInfIsFromSharedPool [
 
 { #category : #'*Typer-Inference' }
 OCLiteralVariable >> typInfSharedPool [
-	<typTypeResultAs: 'ClassDescription'>
+	<typPraResult: 'ClassDescription'>
 	self assert: [ self typInfIsFromSharedPool ].
-	^ (self scope "typCastAs OCClassScope") getClass instanceSide sharedPools
-		detect: [ :e | e classVarNames includes: self assoc key ]
+	^ self scope getClass instanceSide sharedPools
+		detect: [ :e | e classVarNames includes: self assoc key ]	"typCastAs OCClassScope"
 ]

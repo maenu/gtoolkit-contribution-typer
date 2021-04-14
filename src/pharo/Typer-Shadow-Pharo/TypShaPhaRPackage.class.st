@@ -12,7 +12,6 @@ TypShaPhaRPackage class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRPackage >> mDefinedClasses: aLookup [
 	<typShaMethod: 'definedClasses'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Collection typAsType copyWithParameters: {Class typAsType})
 ]
@@ -20,7 +19,6 @@ TypShaPhaRPackage >> mDefinedClasses: aLookup [
 { #category : #shadow }
 TypShaPhaRPackage >> mMethods: aLookup [
 	<typShaMethod: 'methods'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Collection typAsType copyWithParameters: {CompiledMethod typAsType})
 ]

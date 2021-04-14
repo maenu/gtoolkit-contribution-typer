@@ -12,7 +12,6 @@ TypShaGtGtPhlowView class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtPhlowView >> mActionStencil: aLookup [
 	<typShaMethod: 'actionStencil:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {(BlockClosure typAsFunctionTypeWithResult: BlElement typAsType)}

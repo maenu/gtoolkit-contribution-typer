@@ -12,7 +12,6 @@ TypShaGtGtPharoCompletionStrategy class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtPharoCompletionStrategy >> mActionsForAt: aLookup [
 	<typShaMethod: 'actionsFor:at:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -25,7 +24,6 @@ TypShaGtGtPharoCompletionStrategy >> mActionsForAt: aLookup [
 { #category : #shadow }
 TypShaGtGtPharoCompletionStrategy >> mClassOrMetaClass: aLookup [
 	<typShaMethod: 'classOrMetaClass:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {ClassDescription typAsType}
@@ -34,14 +32,12 @@ TypShaGtGtPharoCompletionStrategy >> mClassOrMetaClass: aLookup [
 { #category : #shadow }
 TypShaGtGtPharoCompletionStrategy >> mIndex: aLookup [
 	<typShaMethod: 'index'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
 ]
 
 { #category : #shadow }
 TypShaGtGtPharoCompletionStrategy >> mNodeForIn: aLookup [
 	<typShaMethod: 'nodeFor:in:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtPharoProgramNode typAsType asNullable
 		arguments:
@@ -52,7 +48,6 @@ TypShaGtGtPharoCompletionStrategy >> mNodeForIn: aLookup [
 { #category : #shadow }
 TypShaGtGtPharoCompletionStrategy >> mSelectorsForReceiverMatching: aLookup [
 	<typShaMethod: 'selectorsForReceiver:matching:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -64,6 +59,6 @@ TypShaGtGtPharoCompletionStrategy >> mSelectorsForReceiverMatching: aLookup [
 
 { #category : #'as yet unclassified' }
 TypShaGtGtPharoCompletionStrategy >> vMaxItems: aLookup [
-	<typShaForVariable: #maxItems>
+	<typShaVariable: #maxItems>
 	^ Integer typAsType
 ]

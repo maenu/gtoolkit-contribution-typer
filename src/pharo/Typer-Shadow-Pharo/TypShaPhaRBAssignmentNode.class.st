@@ -12,14 +12,12 @@ TypShaPhaRBAssignmentNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBAssignmentNode >> mValue: aLookup [
 	<typShaMethod: 'value'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: RBValueNode typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaRBAssignmentNode >> mVariable: aLookup [
 	<typShaMethod: 'variable'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: RBVariableNode typAsType
 ]

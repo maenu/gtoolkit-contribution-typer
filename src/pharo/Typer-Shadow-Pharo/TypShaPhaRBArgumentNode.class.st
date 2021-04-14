@@ -12,7 +12,6 @@ TypShaPhaRBArgumentNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBArgumentNode >> mWhoDefines: aLookup [
 	<typShaMethod: 'whoDefines:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			{RBMethodNode typAsType.

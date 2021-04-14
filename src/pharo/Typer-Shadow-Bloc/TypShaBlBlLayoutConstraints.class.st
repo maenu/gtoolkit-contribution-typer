@@ -12,7 +12,6 @@ TypShaBlBlLayoutConstraints class >> shadowedClass [
 { #category : #shadow }
 TypShaBlBlLayoutConstraints >> mHorizontal: aLookup [
 	<typShaMethod: 'horizontal'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: BlLayoutConstraintsAxis typAsType
 ]
@@ -20,7 +19,6 @@ TypShaBlBlLayoutConstraints >> mHorizontal: aLookup [
 { #category : #shadow }
 TypShaBlBlLayoutConstraints >> mVertical: aLookup [
 	<typShaMethod: 'vertical'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: BlLayoutConstraintsAxis typAsType
 ]

@@ -7,7 +7,6 @@ Class {
 { #category : #shadow }
 TypShaGtGtNoStorageStrategy class >> mUniqueInstance: aLookup [
 	<typShaMethod: 'uniqueInstance'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
 ]

@@ -12,7 +12,6 @@ TypShaPhaNumber class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaNumber >> mBinary233: aLookup [
 	<typShaMethod: '-'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			{aLookup receiver.
@@ -23,7 +22,6 @@ TypShaPhaNumber >> mBinary233: aLookup [
 { #category : #shadow }
 TypShaPhaNumber >> mBinary235: aLookup [
 	<typShaMethod: '+'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			{aLookup receiver.
@@ -34,7 +32,6 @@ TypShaPhaNumber >> mBinary235: aLookup [
 { #category : #shadow }
 TypShaPhaNumber >> mTimesCollect: aLookup [
 	<typShaMethod: 'timesCollect:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(OrderedCollection typAsType
@@ -55,7 +52,6 @@ TypShaPhaNumber >> mTimesCollect: aLookup [
 { #category : #shadow }
 TypShaPhaNumber >> mTo: aLookup [
 	<typShaMethod: 'to:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(Interval typAsType
@@ -68,7 +64,6 @@ TypShaPhaNumber >> mTo: aLookup [
 { #category : #shadow }
 TypShaPhaNumber >> mToDo: aLookup [
 	<typShaMethod: 'to:do:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver
 		arguments:

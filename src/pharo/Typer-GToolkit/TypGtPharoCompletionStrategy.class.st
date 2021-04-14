@@ -18,13 +18,13 @@ TypGtPharoCompletionStrategy >> actionsFor: aGtAst at: anInteger [
 
 { #category : #accessing }
 TypGtPharoCompletionStrategy >> coder [
-	<typTypeResultAs: 'TypGtMethodCoder'>
+	<typPraResult: 'TypGtMethodCoder'>
 	^ coder
 ]
 
 { #category : #accessing }
 TypGtPharoCompletionStrategy >> coder: anObject [
-	<typTypeArgument: 1 as: 'TypGtMethodCoder'>
+	<typPraArguments: 'TypGtMethodCoder'>
 	coder := anObject
 ]
 

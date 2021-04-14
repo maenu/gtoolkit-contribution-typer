@@ -7,7 +7,6 @@ Class {
 { #category : #shadow }
 TypShaPhaCharacter class >> mValue: aLookup [
 	<typShaMethod: 'value:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
 		arguments: {Integer typAsType}
@@ -21,6 +20,5 @@ TypShaPhaCharacter class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaCharacter >> mIsUppercase: aLookup [
 	<typShaMethod: 'isUppercase'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]

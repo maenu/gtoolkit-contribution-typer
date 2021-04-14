@@ -15,24 +15,24 @@ TypCheNoMethodError >> color [
 
 { #category : #accessing }
 TypCheNoMethodError >> selector [
-	<typTypeResultAs: 'Symbol'>
+	<typPraResult: 'Symbol'>
 	^ selector
 ]
 
 { #category : #accessing }
 TypCheNoMethodError >> selector: anObject [
-	<typTypeArgument: 1 as: 'Symbol'>
+	<typPraArguments: 'Symbol'>
 	selector := anObject
 ]
 
 { #category : #accessing }
 TypCheNoMethodError >> type [
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
 	^ type
 ]
 
 { #category : #accessing }
 TypCheNoMethodError >> type: anObject [
-	<typTypeArgument: 1 as: 'TypType'>
+	<typPraArguments: 'TypType'>
 	type := anObject
 ]

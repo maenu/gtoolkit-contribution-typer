@@ -4,8 +4,8 @@ Extension { #name : #RBProgramNode }
 RBProgramNode >> typInfAnnotateType: aType [
 	"Annotates aType according to my comments used for casting and setting parameters."
 
-	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
+	<typPraArguments: 'TypType'>
 	^ self comments inject: aType into: [ :r :e | e typInfType: r ]
 ]
 
@@ -18,12 +18,13 @@ RBProgramNode >> typInfNil [
 
 { #category : #'*Typer-Inference' }
 RBProgramNode >> typInfType [
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
 	^ self
 		propertyAt: 'typInfType-' , TypInfSelf value asString
 		ifAbsent: [ "need to set property to default to unknown on recursive calls"
 			self
-				propertyAt: 'typInfType-' , TypInfSelf value asString put: self typInfUnknown;
+				propertyAt: 'typInfType-' , TypInfSelf value asString
+					put: self typInfUnknown;
 				propertyAt: 'typInfType-' , TypInfSelf value asString
 					put: (self typInfAnnotateType: self typInfTypeRecursive) ]
 ]
@@ -35,7 +36,7 @@ RBProgramNode >> typInfTypeIn: aType [
 
 { #category : #'*Typer-Inference' }
 RBProgramNode >> typInfTypeRecursive [
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
 	^ self typInfUnknown
 ]
 

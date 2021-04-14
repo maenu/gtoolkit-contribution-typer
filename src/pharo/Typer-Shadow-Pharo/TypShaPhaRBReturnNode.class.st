@@ -12,6 +12,5 @@ TypShaPhaRBReturnNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBReturnNode >> mValue: aLookup [
 	<typShaMethod: 'value'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: RBValueNode typAsType
 ]

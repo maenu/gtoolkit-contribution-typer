@@ -12,7 +12,6 @@ TypShaPhaUndefinedObject class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaUndefinedObject >> mIfNil: aLookup [
 	<typShaMethod: 'ifNil:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup arguments at: 1) result
 		arguments: {BlockClosure typAsType}
@@ -21,7 +20,6 @@ TypShaPhaUndefinedObject >> mIfNil: aLookup [
 { #category : #shadow }
 TypShaPhaUndefinedObject >> mIfNotNil: aLookup [
 	<typShaMethod: 'ifNotNil:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:

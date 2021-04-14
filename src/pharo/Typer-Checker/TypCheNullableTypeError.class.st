@@ -14,12 +14,12 @@ TypCheNullableTypeError >> color [
 
 { #category : #accessing }
 TypCheNullableTypeError >> type [
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
 	^ type
 ]
 
 { #category : #accessing }
 TypCheNullableTypeError >> type: anObject [
-	<typTypeArgument: 1 as: 'TypType'>
+	<typPraArguments: 'TypType'>
 	type := anObject
 ]

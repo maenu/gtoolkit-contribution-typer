@@ -7,7 +7,6 @@ Class {
 { #category : #shadow }
 TypShaPhaAnnouncement class >> mBinary77: aLookup [
 	<typShaMethod: ','>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {Announcement class typAsType}

@@ -2,7 +2,7 @@ Extension { #name : #Object }
 
 { #category : #'*Typer-Inference' }
 Object >> typInfSelfType [
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
 	^ self class typAsType
 		value: self;
 		yourself

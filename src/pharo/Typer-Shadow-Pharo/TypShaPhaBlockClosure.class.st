@@ -12,7 +12,6 @@ TypShaPhaBlockClosure class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaBlockClosure >> mCull: aLookup [
 	<typShaMethod: 'cull:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver result
 		arguments: aLookup receiver arguments
@@ -21,7 +20,6 @@ TypShaPhaBlockClosure >> mCull: aLookup [
 { #category : #shadow }
 TypShaPhaBlockClosure >> mCullCull: aLookup [
 	<typShaMethod: 'cull:cull:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver result
 		arguments: aLookup receiver arguments
@@ -30,7 +28,6 @@ TypShaPhaBlockClosure >> mCullCull: aLookup [
 { #category : #shadow }
 TypShaPhaBlockClosure >> mCullCullCull: aLookup [
 	<typShaMethod: 'cull:cull:cull:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver result
 		arguments: aLookup receiver arguments
@@ -39,7 +36,6 @@ TypShaPhaBlockClosure >> mCullCullCull: aLookup [
 { #category : #shadow }
 TypShaPhaBlockClosure >> mCullCullCullCull: aLookup [
 	<typShaMethod: 'cull:cull:cull:cull:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver result
 		arguments: aLookup receiver arguments
@@ -48,7 +44,6 @@ TypShaPhaBlockClosure >> mCullCullCullCull: aLookup [
 { #category : #shadow }
 TypShaPhaBlockClosure >> mEnsure: aLookup [
 	<typShaMethod: 'ensure:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver result
 		arguments: {BlockClosure typAsType}
@@ -57,7 +52,6 @@ TypShaPhaBlockClosure >> mEnsure: aLookup [
 { #category : #shadow }
 TypShaPhaBlockClosure >> mOnDo: aLookup [
 	<typShaMethod: 'on:do:'>
-	<typMigrated>
 	| a b |
 	a := aLookup arguments at: 1.
 	b := (a hasValue and: [ a value isClass ])
@@ -77,7 +71,6 @@ TypShaPhaBlockClosure >> mOnDo: aLookup [
 { #category : #shadow }
 TypShaPhaBlockClosure >> mValue: aLookup [
 	<typShaMethod: 'value:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver result
 		arguments: aLookup receiver arguments
@@ -86,7 +79,6 @@ TypShaPhaBlockClosure >> mValue: aLookup [
 { #category : #shadow }
 TypShaPhaBlockClosure >> mValueValue: aLookup [
 	<typShaMethod: 'value:value:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver result
 		arguments: aLookup receiver arguments
@@ -95,7 +87,6 @@ TypShaPhaBlockClosure >> mValueValue: aLookup [
 { #category : #shadow }
 TypShaPhaBlockClosure >> mValueValueValue: aLookup [
 	<typShaMethod: 'value:value:value:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver result
 		arguments: aLookup receiver arguments
@@ -104,7 +95,6 @@ TypShaPhaBlockClosure >> mValueValueValue: aLookup [
 { #category : #shadow }
 TypShaPhaBlockClosure >> mValueValueValueValue: aLookup [
 	<typShaMethod: 'value:value:value:value:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver result
 		arguments: aLookup receiver arguments
@@ -113,7 +103,6 @@ TypShaPhaBlockClosure >> mValueValueValueValue: aLookup [
 { #category : #shadow }
 TypShaPhaBlockClosure >> mWhileFalse: aLookup [
 	<typShaMethod: 'whileFalse:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {BlockClosure typAsType}
@@ -122,7 +111,6 @@ TypShaPhaBlockClosure >> mWhileFalse: aLookup [
 { #category : #shadow }
 TypShaPhaBlockClosure >> mWhileTrue: aLookup [
 	<typShaMethod: 'whileTrue:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypNilType new
 		arguments: {BlockClosure typAsType}

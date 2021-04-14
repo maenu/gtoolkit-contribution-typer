@@ -12,7 +12,6 @@ TypShaPhaRBSequenceNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBSequenceNode >> mStatements: aLookup [
 	<typShaMethod: 'statements'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -22,7 +21,6 @@ TypShaPhaRBSequenceNode >> mStatements: aLookup [
 { #category : #shadow }
 TypShaPhaRBSequenceNode >> mTemporaries: aLookup [
 	<typShaMethod: 'temporaries'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType

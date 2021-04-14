@@ -12,7 +12,6 @@ TypShaPhaMetaLink class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaMetaLink >> mArguments: aLookup [
 	<typShaMethod: 'arguments:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
@@ -23,7 +22,6 @@ TypShaPhaMetaLink >> mArguments: aLookup [
 { #category : #shadow }
 TypShaPhaMetaLink >> mControl: aLookup [
 	<typShaMethod: 'control:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {Symbol typAsType}
@@ -32,7 +30,6 @@ TypShaPhaMetaLink >> mControl: aLookup [
 { #category : #shadow }
 TypShaPhaMetaLink >> mMetaObject: aLookup [
 	<typShaMethod: 'metaObject:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
@@ -43,7 +40,6 @@ TypShaPhaMetaLink >> mMetaObject: aLookup [
 { #category : #shadow }
 TypShaPhaMetaLink >> mSelector: aLookup [
 	<typShaMethod: 'selector:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {Symbol typAsType}

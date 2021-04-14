@@ -42,9 +42,7 @@ TypGtCheckBodyStyler >> style: aText ast: anAst [
 
 { #category : #visiting }
 TypGtCheckBodyStyler >> styleFrom: anInteger to: anotherInteger color: aColor [
-	<typTypeArgument: 1 as: 'Integer'>
-	<typTypeArgument: 2 as: 'Integer'>
-	<typTypeArgument: 3 as: 'Color'>
+	<typPraArguments: 'Integer,Integer,Color'>
 	self
 		styleFrom: anInteger
 		to: anotherInteger
@@ -56,15 +54,13 @@ TypGtCheckBodyStyler >> styleFrom: anInteger to: anotherInteger color: aColor [
 
 { #category : #visiting }
 TypGtCheckBodyStyler >> styleNode: aNode color: aColor [
-	<typTypeArgument: 1 as: 'RBProgramNode'>
-	<typTypeArgument: 2 as: 'Color'>
+	<typPraArguments: 'RBProgramNode,Color'>
 	self styleFrom: aNode start to: aNode stop color: aColor
 ]
 
 { #category : #accessing }
 TypGtCheckBodyStyler >> styleSelectorOf: aNode color: aColor [
-	<typTypeArgument: 1 as: '{RBMethodNode,RBMessageNode}'>
-	<typTypeArgument: 2 as: 'Color'>
+	<typPraArguments: '{RBMethodNode,RBMessageNode},Color'>
 	aNode keywordsIntervals
 		do: [ :e | self styleFrom: e first to: e last color: aColor ]
 ]

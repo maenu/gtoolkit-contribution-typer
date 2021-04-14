@@ -12,7 +12,6 @@ TypShaGtGtCoderMethodAnnouncement class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtCoderMethodAnnouncement >> mCoder: aLookup [
 	<typShaMethod: 'coder:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {GtMethodsCoder typAsType}

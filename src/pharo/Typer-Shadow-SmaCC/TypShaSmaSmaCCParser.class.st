@@ -7,7 +7,6 @@ Class {
 { #category : #shadow }
 TypShaSmaSmaCCParser class >> mParse: aLookup [
 	<typShaMethod: 'parse:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {String typAsType}

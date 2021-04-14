@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #accessing }
+TypRewriter >> aaaaaa [
+	<tsaadv>
+	^ 10
+]
+
+{ #category : #accessing }
 TypRewriter >> rewriteCopyWithParameters [
 	<gtExample>
 	^ ((RPackageOrganizer default packages
@@ -123,6 +129,159 @@ TypRewriter >> rewriteMethodLookupIndex [
 ]
 
 { #category : #accessing }
+TypRewriter >> rewritePragmaArguments [
+	<gtExample>
+	^ #typTypeArgument:as: gtPragmas
+		do: [ :m | 
+			| n a |
+			n := m parseTree.
+			a := (1 to: m numArgs) collect: [ :e | '?' ].
+			n pragmas copy
+				select: [ :e | e selector = #typTypeArgument:as: ]
+				thenDo: [ :e | 
+					| i |
+					i := e arguments first value.
+					(i between: 1 and: a size)
+						ifTrue: [ a at: i put: e arguments second value ].
+					n pragmas remove: e.
+					n body removeNode: e ].
+			n body
+				addNodeFirst:
+					(RBPragmaNode
+						selector: #typPraArguments:
+						keywordsPositions: #(0)
+						arguments: {(RBLiteralValueNode value: (',' join: a))}).
+			m origin compile: n formattedCode classified: m protocol ]
+]
+
+{ #category : #accessing }
+TypRewriter >> rewritePragmaArgumentsCleanup [
+	<gtExample>
+	^ #typPraArguments: gtPragmas
+		do: [ :m | 
+			| n |
+			n := m parseTree.
+			(n pragmas select: [ :e | e selector = #typPraArguments: ])
+				copyWithoutFirst
+				do: [ :e | 
+					n pragmas remove: e.
+					n body removeNode: e ].
+			m origin compile: n formattedCode classified: m protocol ]
+]
+
+{ #category : #accessing }
+TypRewriter >> rewritePragmaParameters [
+	<gtExample>
+	^ #typTypeParameters: gtPragmas
+		do: [ :m | 
+			| rewriter ok method |
+			rewriter := RBParseTreeRewriter new.
+			rewriter
+				replaceTree:
+					(RBPatternPragmaNode
+						selector: #typTypeParameters:
+						keywordsPositions: #(0)
+						arguments: {(RBPatternVariableNode identifierNamed: '`@t' at: 0)})
+					withTree:
+					(RBPatternPragmaNode
+							selector: #typPraParameters:
+							keywordsPositions: #(0)
+							arguments: {(RBPatternVariableNode identifierNamed: '`@t' at: 0)});
+				executeTree: m parseTree.
+			ok := rewriter executeTree: m parseTree.
+			ok
+				ifTrue:
+					[ m origin compile: rewriter tree formattedCode classified: m protocol ].
+			ok ]
+]
+
+{ #category : #accessing }
+TypRewriter >> rewritePragmaSuperTypeBindTo [
+	<gtExample>
+	^ #typSuperTypeBind:to: gtPragmas
+		do: [ :m | 
+			| rewriter ok method |
+			rewriter := RBParseTreeRewriter new.
+			rewriter
+				replaceTree:
+					(RBPatternPragmaNode
+						selector: #typSuperTypeBind:to:
+						keywordsPositions: #(0 0)
+						arguments:
+							{(RBPatternVariableNode identifierNamed: '`@n' at: 0).
+							(RBPatternVariableNode identifierNamed: '`@t' at: 0)})
+					withTree:
+					(RBPatternPragmaNode
+							selector: #typPraSuperTypeBind:to:
+							keywordsPositions: #(0 0)
+							arguments:
+								{(RBPatternVariableNode identifierNamed: '`@n' at: 0).
+								(RBPatternVariableNode identifierNamed: '`@t' at: 0)});
+				executeTree: m parseTree.
+			ok := rewriter executeTree: m parseTree.
+			ok
+				ifTrue:
+					[ m origin compile: rewriter tree formattedCode classified: m protocol ].
+			ok ]
+]
+
+{ #category : #accessing }
+TypRewriter >> rewritePragmaTypeResult [
+	<gtExample>
+	^ #typTypeResultAs: gtPragmas
+		do: [ :m | 
+			| rewriter ok method |
+			rewriter := RBParseTreeRewriter new.
+			rewriter
+				replaceTree:
+					(RBPatternPragmaNode
+						selector: #typTypeResultAs:
+						keywordsPositions: #(0)
+						arguments: {(RBPatternVariableNode identifierNamed: '`@t' at: 0)})
+					withTree:
+					(RBPatternPragmaNode
+							selector: #typPraResult:
+							keywordsPositions: #(0)
+							arguments: {(RBPatternVariableNode identifierNamed: '`@t' at: 0)});
+				executeTree: m parseTree.
+			ok := rewriter executeTree: m parseTree.
+			ok
+				ifTrue:
+					[ m origin compile: rewriter tree formattedCode classified: m protocol ].
+			ok ]
+]
+
+{ #category : #accessing }
+TypRewriter >> rewritePragmaVariable [
+	<gtExample>
+	^ #typTypeVariable:as: gtPragmas
+		do: [ :m | 
+			| rewriter ok method |
+			rewriter := RBParseTreeRewriter new.
+			rewriter
+				replaceTree:
+					(RBPatternPragmaNode
+						selector: #typTypeVariable:as:
+						keywordsPositions: #(0 0)
+						arguments:
+							{(RBPatternVariableNode identifierNamed: '`@n' at: 0).
+							(RBPatternVariableNode identifierNamed: '`@t' at: 0)})
+					withTree:
+					(RBPatternPragmaNode
+							selector: #typPraVariable:as:
+							keywordsPositions: #(0 0)
+							arguments:
+								{(RBPatternVariableNode identifierNamed: '`@n' at: 0).
+								(RBPatternVariableNode identifierNamed: '`@t' at: 0)});
+				executeTree: m parseTree.
+			ok := rewriter executeTree: m parseTree.
+			ok
+				ifTrue:
+					[ m origin compile: rewriter tree formattedCode classified: m protocol ].
+			ok ]
+]
+
+{ #category : #accessing }
 TypRewriter >> rewriteShadow: aMethod at: anInteger [
 	| cut selector code |
 	cut := aMethod selector copyFrom: 4 to: aMethod selector size.
@@ -206,6 +365,37 @@ TypRewriter >> rewriteShadowMethods [
 ]
 
 { #category : #accessing }
+TypRewriter >> rewriteShadowMigrated [
+	<gtExample>
+	#typShaForVariable: gtPragmas do: [:m | m ].
+	^ ((RPackageOrganizer default packages
+		select: [ :e | e name beginsWith: 'Typer' ]) flatCollect: #methods)
+		select: [ :e | 
+			| rewriter ok method |
+			rewriter := RBParseTreeRewriter new.
+			rewriter replace: '`@r copyWithParameters: {''@A'' -> `@a} asDictionary' with: '`@r copyWithParameters: {`@a}'.
+			ok := rewriter executeTree: e parseTree.
+			ok
+				ifTrue:
+					[ e origin compile: rewriter tree formattedCode classified: e protocol ].
+			ok ]
+]
+
+{ #category : #accessing }
+TypRewriter >> rewriteShadowMigratedCleanup [
+	<gtExample>
+	^ #typMigrated gtPragmas
+		do: [ :m | 
+			| n |
+			n := m parseTree.
+			(n pragmas select: [ :e | e selector = #typMigrated ])
+				do: [ :e | 
+					n pragmas remove: e.
+					n body removeNode: e ].
+			m origin compile: n formattedCode classified: m protocol ]
+]
+
+{ #category : #accessing }
 TypRewriter >> rewriteShadowSelector: aSymbol at: anInteger [
 	aSymbol isUnary
 		ifTrue: [ ^ ('m' , aSymbol capitalized , ':') asSymbol ].
@@ -227,6 +417,32 @@ TypRewriter >> rewriteShadowSelectors [
 		select:
 			[ :e | (e selector beginsWith: '___') or: [ e selector beginsWith: '~~~' ] ])
 		collectWithIndex: [ :e :i | self rewriteShadow: e at: i ]
+]
+
+{ #category : #accessing }
+TypRewriter >> rewriteShadowVariable [
+	<gtExample>
+	^ #typShaForVariable: gtPragmas
+		do: [ :m | 
+			| rewriter ok method |
+			rewriter := RBParseTreeRewriter new.
+			rewriter
+				replaceTree:
+					(RBPatternPragmaNode
+						selector: #typShaForVariable:
+						keywordsPositions: #(0)
+						arguments: {(RBPatternVariableNode identifierNamed: '`@t' at: 0)})
+					withTree:
+					(RBPatternPragmaNode
+							selector: #typShaVariable:
+							keywordsPositions: #(0)
+							arguments: {(RBPatternVariableNode identifierNamed: '`@t' at: 0)});
+				executeTree: m parseTree.
+			ok := rewriter executeTree: m parseTree.
+			ok
+				ifTrue:
+					[ m origin compile: rewriter tree formattedCode classified: m protocol ].
+			ok ]
 ]
 
 { #category : #accessing }

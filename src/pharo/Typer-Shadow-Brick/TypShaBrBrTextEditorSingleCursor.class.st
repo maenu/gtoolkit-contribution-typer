@@ -12,6 +12,5 @@ TypShaBrBrTextEditorSingleCursor class >> shadowedClass [
 { #category : #shadow }
 TypShaBrBrTextEditorSingleCursor >> mPosition: aLookup [
 	<typShaMethod: 'position'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
 ]

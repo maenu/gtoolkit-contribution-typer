@@ -12,7 +12,6 @@ TypShaBlBlText class >> shadowedClass [
 { #category : #shadow }
 TypShaBlBlText >> mAttribute: aLookup [
 	<typShaMethod: 'attribute:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {BlTextAttribute typAsType}
@@ -21,7 +20,6 @@ TypShaBlBlText >> mAttribute: aLookup [
 { #category : #shadow }
 TypShaBlBlText >> mAttributesAt: aLookup [
 	<typShaMethod: 'attributesAt:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -32,7 +30,6 @@ TypShaBlBlText >> mAttributesAt: aLookup [
 { #category : #shadow }
 TypShaBlBlText >> mClearAttributes: aLookup [
 	<typShaMethod: 'clearAttributes:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
@@ -44,7 +41,6 @@ TypShaBlBlText >> mClearAttributes: aLookup [
 { #category : #shadow }
 TypShaBlBlText >> mFromTo: aLookup [
 	<typShaMethod: 'from:to:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: BlText typAsType
 		arguments:

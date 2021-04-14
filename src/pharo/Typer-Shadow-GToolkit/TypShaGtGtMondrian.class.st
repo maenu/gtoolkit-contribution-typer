@@ -12,7 +12,6 @@ TypShaGtGtMondrian class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtMondrian >> mEdges: aLookup [
 	<typShaMethod: 'edges'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtMondrianEdgeBuilder typAsType
 ]
@@ -20,7 +19,6 @@ TypShaGtGtMondrian >> mEdges: aLookup [
 { #category : #shadow }
 TypShaGtGtMondrian >> mLayout: aLookup [
 	<typShaMethod: 'layout'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtMondrianLayoutBuilder typAsType
 ]
@@ -28,7 +26,6 @@ TypShaGtGtMondrian >> mLayout: aLookup [
 { #category : #shadow }
 TypShaGtGtMondrian >> mNodes: aLookup [
 	<typShaMethod: 'nodes'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtMondrianNodeBuilder typAsType
 ]

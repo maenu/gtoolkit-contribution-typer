@@ -12,7 +12,6 @@ TypShaGtGtPharoProgramNode class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtPharoProgramNode >> mActionForSelectorStartingWithAt: aLookup [
 	<typShaMethod: 'actionForSelector:startingWith:at:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtCompletionAction typAsType
 		arguments:
@@ -24,7 +23,6 @@ TypShaGtGtPharoProgramNode >> mActionForSelectorStartingWithAt: aLookup [
 { #category : #shadow }
 TypShaGtGtPharoProgramNode >> mCompletionActionsFor: aLookup [
 	<typShaMethod: 'completionActionsFor:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -35,6 +33,5 @@ TypShaGtGtPharoProgramNode >> mCompletionActionsFor: aLookup [
 { #category : #shadow }
 TypShaGtGtPharoProgramNode >> mSource: aLookup [
 	<typShaMethod: 'source'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]

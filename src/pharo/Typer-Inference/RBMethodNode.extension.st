@@ -18,7 +18,7 @@ RBMethodNode >> typInfMethod [
 
 { #category : #'*Typer-Inference' }
 RBMethodNode >> typInfTemporaryProfile [
-	<typTypeResultAs: 'SequenceableCollection<Association<RBProgramNode,TypType>>'>
+	<typPraResult: 'SequenceableCollection<Association<RBProgramNode,TypType>>'>
 	^ self allChildren
 		select: [ :e | e children isEmpty ]
 		thenCollect: [ :e | e -> e typInfType ]
@@ -26,11 +26,12 @@ RBMethodNode >> typInfTemporaryProfile [
 
 { #category : #'*Typer-Inference' }
 RBMethodNode >> typInfTypeRecursive [
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
 	| iterations maxIterations oldTemporaryProfiles newTemporaryProfile visitor types |
 	self
 		typInfTypeReset;
-		propertyAt: #typFixPoint, '-' , TypInfSelf value asString put: false.
+		propertyAt: #typFixPoint , '-' , TypInfSelf value asString
+			put: false.
 	iterations := 0.
 	maxIterations := 3.
 	oldTemporaryProfiles := Set new.
@@ -54,7 +55,9 @@ RBMethodNode >> typInfTypeRecursive [
 	oldTemporaryProfile := newTemporaryProfile.
 	newTemporaryProfile := self typInfTemporaryProfile.
 	oldTemporaryProfile = newTemporaryProfile
-		ifTrue: [ self propertyAt: #typFixPoint, '-' , TypInfSelf value asString put: true ].
+		ifTrue: [ self
+				propertyAt: #typFixPoint , '-' , TypInfSelf value asString
+				put: true ].
 	(oldTemporaryProfiles includes: newTemporaryProfile) not
 		and: [ iterations < maxIterations ] ] whileTrue.
 	types := (self allChildren select: #isReturn)

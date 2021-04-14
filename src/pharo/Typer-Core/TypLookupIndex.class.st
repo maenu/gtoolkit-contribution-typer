@@ -12,7 +12,7 @@ Class {
 
 { #category : #accessing }
 TypLookupIndex class >> instance [
-	<typTypeResultAs: 'TypLookupIndex'>
+	<typPraResult: 'TypLookupIndex'>
 	self subclassResponsibility
 ]
 
@@ -31,7 +31,7 @@ TypLookupIndex class >> resetAll [
 
 { #category : #initialization }
 TypLookupIndex >> initialize [
-	<typTypeVariable: 'resolver' as: 'TypLookupResolver'>
+	<typPraVariable: 'resolver' as: 'TypLookupResolver'>
 	super initialize.
 	SystemAnnouncer uniqueInstance weak
 		when: ClassAnnouncement , MethodAnnouncement
@@ -41,7 +41,7 @@ TypLookupIndex >> initialize [
 
 { #category : #accessing }
 TypLookupIndex >> initializeResolver: anObject [
-	<typTypeArgument: 1 as: 'TypLookupResolver'>
+	<typPraArguments: 'TypLookupResolver'>
 	resolver := anObject
 ]
 

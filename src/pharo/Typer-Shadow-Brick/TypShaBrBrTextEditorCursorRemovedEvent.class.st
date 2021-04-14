@@ -12,7 +12,6 @@ TypShaBrBrTextEditorCursorRemovedEvent class >> shadowedClass [
 { #category : #shadow }
 TypShaBrBrTextEditorCursorRemovedEvent >> mCursor: aLookup [
 	<typShaMethod: 'cursor'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: BrTextEditorSingleCursor typAsType
 ]

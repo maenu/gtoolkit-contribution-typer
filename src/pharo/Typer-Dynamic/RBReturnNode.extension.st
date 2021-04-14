@@ -27,7 +27,7 @@ RBReturnNode >> typDynRemoveLink [
 
 { #category : #'*Typer-Dynamic' }
 RBReturnNode >> typDynReturn: anObject [
-	<typTypeArgument: 1 as: 'Object'>
+	<typPraArguments: 'Object'>
 	SharedRandom globalGenerator next
 		< (1 - (self typDynReturns weights size / 200))
 		ifTrue: [ self typDynReturns add: anObject typInfSelfType ].
@@ -37,8 +37,8 @@ RBReturnNode >> typDynReturn: anObject [
 
 { #category : #'*Typer-Dynamic' }
 RBReturnNode >> typDynReturns [
-	<typTypeResultAs: 'TypDynUnionType'>
-	^ (self propertyAt: #typDynReturns) "typCastAs TypDynUnionType"
+	<typPraResult: 'TypDynUnionType'>
+	^ self propertyAt: #typDynReturns	"typCastAs TypDynUnionType"
 ]
 
 { #category : #'*Typer-Dynamic' }

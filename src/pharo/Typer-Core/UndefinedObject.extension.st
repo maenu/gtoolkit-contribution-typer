@@ -2,7 +2,7 @@ Extension { #name : #UndefinedObject }
 
 { #category : #'*Typer-Core' }
 UndefinedObject class >> typAsType [
-	<typTypeResultAs: 'TypNilType'>
+	<typPraResult: 'TypNilType'>
 	^ TypNilType new
 		addOrigin:
 			(TypDescriptionOrigin

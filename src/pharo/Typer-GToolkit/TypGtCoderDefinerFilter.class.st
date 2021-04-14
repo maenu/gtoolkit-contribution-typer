@@ -9,26 +9,26 @@ Class {
 
 { #category : #testing }
 TypGtCoderDefinerFilter >> includesMethod: aCompiledMethod [
-	<typTypeArgument: 1 as: 'CompiledMethod()->Object'>
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
+	<typPraArguments: 'CompiledMethod()->Object'>
 	^ (aCompiledMethod methodClass hasInstVarNamed: name)
 		or: [ aCompiledMethod methodClass instanceSide hasClassVarNamed: name ]
 ]
 
 { #category : #accessing }
 TypGtCoderDefinerFilter >> initialize [
-	<typTypeVariable: 'name' as: 'String'>
+	<typPraVariable: 'name' as: 'String'>
 	super initialize
 ]
 
 { #category : #accessing }
 TypGtCoderDefinerFilter >> name [
-	<typTypeResultAs: 'String'>
+	<typPraResult: 'String'>
 	^ name
 ]
 
 { #category : #accessing }
 TypGtCoderDefinerFilter >> name: anObject [
-	<typTypeArgument: 1 as: 'String'>
+	<typPraArguments: 'String'>
 	name := anObject
 ]

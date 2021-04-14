@@ -100,7 +100,7 @@ TypFunctionType >> > aType [
 
 { #category : #accessing }
 TypFunctionType >> arguments [
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
+	<typPraResult: 'SequenceableCollection<TypType>'>
 	^ (1 to: argumentsSize)
 		withIndexCollect: [ :e :i | self at: '@' , i asString ]
 ]
@@ -136,8 +136,8 @@ TypFunctionType >> hash [
 
 { #category : #initialization }
 TypFunctionType >> initialize [
-	<typTypeVariable: 'argumentsSize' as: 'Integer'>
-	<typTypeVariable: 'argumentsOptional' as: 'Boolean'>
+	<typPraVariable: 'argumentsSize' as: 'Integer'>
+	<typPraVariable: 'argumentsOptional' as: 'Boolean'>
 	super initialize
 ]
 
@@ -192,7 +192,7 @@ TypFunctionType >> printOn: aStream skipping: anIdentitySet [
 
 { #category : #accessing }
 TypFunctionType >> result [
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
 	^ self at: '@0'
 ]
 

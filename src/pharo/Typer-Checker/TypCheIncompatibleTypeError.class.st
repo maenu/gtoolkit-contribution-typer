@@ -10,13 +10,13 @@ Class {
 
 { #category : #accessing }
 TypCheIncompatibleTypeError >> actual [
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
 	^ actual
 ]
 
 { #category : #accessing }
 TypCheIncompatibleTypeError >> actual: anObject [
-	<typTypeArgument: 1 as: 'TypType'>
+	<typPraArguments: 'TypType'>
 	actual := anObject
 ]
 
@@ -27,13 +27,13 @@ TypCheIncompatibleTypeError >> color [
 
 { #category : #accessing }
 TypCheIncompatibleTypeError >> expected [
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
 	^ expected
 ]
 
 { #category : #accessing }
 TypCheIncompatibleTypeError >> expected: anObject [
-	<typTypeArgument: 1 as: 'TypType'>
+	<typPraArguments: 'TypType'>
 	expected := anObject
 ]
 

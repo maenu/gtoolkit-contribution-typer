@@ -12,7 +12,6 @@ TypShaPhaStream class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaStream >> mBinary380: aLookup [
 	<typShaMethod: '<<'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
@@ -23,7 +22,6 @@ TypShaPhaStream >> mBinary380: aLookup [
 { #category : #shadow }
 TypShaPhaStream >> mNextPutAll: aLookup [
 	<typShaMethod: 'nextPutAll:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup arguments first
 		arguments: {Collection typAsType}

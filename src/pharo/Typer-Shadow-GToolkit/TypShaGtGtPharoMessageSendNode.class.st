@@ -12,7 +12,6 @@ TypShaGtGtPharoMessageSendNode class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtPharoMessageSendNode >> mReceiver: aLookup [
 	<typShaMethod: 'receiver'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtPharoValueNode typAsType
 ]

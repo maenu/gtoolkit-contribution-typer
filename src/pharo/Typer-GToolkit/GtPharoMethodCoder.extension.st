@@ -2,7 +2,7 @@ Extension { #name : #GtPharoMethodCoder }
 
 { #category : #'*Typer-GToolkit' }
 GtPharoMethodCoder >> typGtBrowseImplementorsAt: anInteger [
-	<typTypeArgument: 1 as: 'Integer'>
+	<typPraArguments: 'Integer'>
 	| node |
 	node := self typGtRbNodeAt: anInteger.
 	node isNil

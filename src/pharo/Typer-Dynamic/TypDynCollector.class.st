@@ -12,17 +12,19 @@ Class {
 
 { #category : #accessing }
 TypDynCollector >> collectIn: aCollection doing: aBlock [
-	<typTypeArgument: 1 as: 'Collection<CompiledMethod()->Object>'>
-	<typTypeArgument: 2 as: 'BlockClosure()->Object'>
-	<typTypeResultAs: 'Association<Association<Object,TypDynResolver<TypLookup>>,TypDynResolver<TypLookup>>'>
+	<typPraResult:
+		'Association<Association<Object,TypDynResolver<TypLookup>>,TypDynResolver<TypLookup>>'>
+	<typPraArguments: 'Collection<CompiledMethod()->Object>,BlockClosure()->Object'>
 	| methodResults variableTypes result |
-	result := nil "typCastAs {!,Object}".
-	methodResults := Dictionary new "typParameters Association<ClassDescription,Symbol>,TypMethodResolver<TypMethodLookup>".
-	variableTypes := Dictionary new "typParameters Association<ClassDescription,Symbol>,TypVariableResolver<TypVariableLookup>".
-	asts := aCollection collect: [ :e | e ast
-		doSemanticAnalysis;
-		typInfTypeReset;
-		typDynInstall ].
+	result := nil.	"typCastAs {!,Object}"
+	methodResults := Dictionary new.	"typParameters Association<ClassDescription,Symbol>,TypMethodResolver<TypMethodLookup>"
+	variableTypes := Dictionary new.	"typParameters Association<ClassDescription,Symbol>,TypVariableResolver<TypVariableLookup>"
+	asts := aCollection
+		collect: [ :e | 
+			e ast
+				doSemanticAnalysis;
+				typInfTypeReset;
+				typDynInstall ].
 	[ result := aBlock value.
 	methodResults := self collectMethodResultsIn: asts.
 	variableTypes := self collectVariableTypesIn: asts ]
@@ -40,10 +42,9 @@ TypDynCollector >> collectIn: aCollection doing: aBlock [
 
 { #category : #accessing }
 TypDynCollector >> collectIn: aCollection running: someTestCases [
-	<typTypeArgument: 1 as: 'Collection<CompiledMethod()->Object>'>
-	<typTypeArgument: 2 as: 'Collection<TestCase class>'>
-	<typTypeResultAs:
+	<typPraResult:
 		'Association<Association<Object,TypDynResolver<TypLookup>>,TypDynResolver<TypLookup>>'>
+	<typPraArguments: 'Collection<CompiledMethod()->Object>,Collection<TestCase class>'>
 	| methodResults variableTypes result |
 	result := TestResult new.
 	methodResults := Dictionary new.	"typParameters Association<ClassDescription,Symbol>,TypMethodResolver<TypMethodLookup>"
@@ -77,9 +78,9 @@ TypDynCollector >> collectIn: aCollection running: someTestCases [
 
 { #category : #accessing }
 TypDynCollector >> collectMethodResultsIn: aCollection [
-	<typTypeArgument: 1 as: 'Collection<RBMethodNode>'>
-	<typTypeResultAs:
+	<typPraResult:
 		'Dictionary<Association<ClassDescription,Symbol>,TypMethodLookupResult>'>
+	<typPraArguments: 'Collection<RBMethodNode>'>
 	^ ((aCollection
 		collect: [ :e | e methodClass -> e selector -> e typDynAsMethodLookupResult ])
 		reject: [ :e | e value isNil ]) asDictionary
@@ -87,9 +88,8 @@ TypDynCollector >> collectMethodResultsIn: aCollection [
 
 { #category : #accessing }
 TypDynCollector >> collectVariableTypesIn: aCollection [
-	<typTypeArgument: 1 as: 'Collection<RBMethodNode>'>
-	<typTypeResultAs:
-		'Dictionary<Association<ClassDescription,Symbol>,TypType>'>
+	<typPraResult: 'Dictionary<Association<ClassDescription,Symbol>,TypType>'>
+	<typPraArguments: 'Collection<RBMethodNode>'>
 	^ ((aCollection
 		flatCollect: [ :e | e typDynTypesForVariables associations ])
 		groupedBy: #key)

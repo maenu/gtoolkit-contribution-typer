@@ -2,7 +2,7 @@ Extension { #name : #Collection }
 
 { #category : #'*Typer-Core' }
 Collection >> typAsType [
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
 	| types |
 	types := TypUnionType asTypes: self.
 	types ifEmpty: [ ^ TypUnknownType new ].

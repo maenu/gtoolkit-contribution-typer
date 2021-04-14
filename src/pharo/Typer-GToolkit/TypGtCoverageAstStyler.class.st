@@ -6,8 +6,7 @@ Class {
 
 { #category : #accessing }
 TypGtCoverageAstStyler >> styleNode: aNode [
-	<typTypeArgument: 1 as: 'RBProgramNode'>
-	<typTypeArgument: 2 as: 'Color'>
+	<typPraArguments: 'RBProgramNode'>
 	aNode
 		propertyAt: #tagExecuted
 		ifPresent: [ :c | 

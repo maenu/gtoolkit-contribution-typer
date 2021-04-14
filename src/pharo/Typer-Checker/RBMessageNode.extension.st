@@ -2,7 +2,7 @@ Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer-Checker' }
 RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
-	<typTypeArgument: 1 as: 'Integer'>
+	<typPraArguments: 'Integer'>
 	| argument expected actual |
 	argument := self arguments at: anInteger.
 	expected := self typInfTypeForArgumentAt: anInteger.
@@ -13,7 +13,8 @@ RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 		ifTrue: [ ^ self ].
 	(actual isFunction
 		and: [ actual result isUnknown
-			or: [ argument isBlock and: [ argument signalsAlways = true or: [ argument body lastIsReturn ] ] ] ])
+				or: [ argument isBlock
+						and: [ argument signalsAlways = true or: [ argument body lastIsReturn ] ] ] ])
 		ifTrue: [ ^ self ].
 	TypCheIncompatibleTypeError new
 		expected: expected;

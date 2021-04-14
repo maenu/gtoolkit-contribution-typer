@@ -6,21 +6,21 @@ Class {
 
 { #category : #accessing }
 TypGtTypeCursorBodyStyler >> coder [
-	<typTypeResultAs: 'TypGtMethodCoder'>
+	<typPraResult: 'TypGtMethodCoder'>
 	^ coder
 ]
 
 { #category : #accessing }
 TypGtTypeCursorBodyStyler >> coder: anObject [
-	<typTypeArgument: 1 as: 'TypGtMethodCoder'>
+	<typPraArguments: 'TypGtMethodCoder'>
 	coder := anObject
 ]
 
 { #category : #visiting }
 TypGtTypeCursorBodyStyler >> styleValueNode: aNode [
-	<typTypeArgument: 1 as: 'RBValueNode'>
+	<typPraArguments: 'RBValueNode'>
 	self
-		styleFrom: aNode start 
+		styleFrom: aNode start
 		to: aNode stop
 		with:
 			{(TypGtTypeCursorAttribute new

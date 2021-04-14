@@ -12,7 +12,6 @@ TypShaPhaTestSuite class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaTestSuite >> mRun: aLookup [
 	<typShaMethod: 'run:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {TestResult typAsType}

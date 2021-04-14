@@ -2,8 +2,8 @@ Extension { #name : #TypFunctionType }
 
 { #category : #'*Typer-Checker' }
 TypFunctionType >> typCheHasArgumentsCompatibleWithThoseOf: aType [
-	<typTypeArgument: 1 as: 'TypFunctionType'>
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
+	<typPraArguments: 'TypFunctionType'>
 	| size |
 	size := argumentsOptional
 		ifTrue: [ aType argumentsSize ]

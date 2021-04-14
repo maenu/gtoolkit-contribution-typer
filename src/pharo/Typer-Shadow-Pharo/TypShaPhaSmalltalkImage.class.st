@@ -12,7 +12,6 @@ TypShaPhaSmalltalkImage class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaSmalltalkImage >> mGlobals: aLookup [
 	<typShaMethod: 'globals'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: SystemDictionary typAsType
 ]

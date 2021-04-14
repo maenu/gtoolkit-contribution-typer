@@ -9,8 +9,8 @@ Class {
 
 { #category : #testing }
 TypGtCoderTypeFilter >> includesMethod: aCompiledMethod [
-	<typTypeArgument: 1 as: 'CompiledMethod'>
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
+	<typPraArguments: 'CompiledMethod'>
 	^ (type canUnderstand: aCompiledMethod selector)
 		and: [ (type lookupSelector: aCompiledMethod selector)
 				includes: aCompiledMethod ]
@@ -18,18 +18,18 @@ TypGtCoderTypeFilter >> includesMethod: aCompiledMethod [
 
 { #category : #initialization }
 TypGtCoderTypeFilter >> initialize [
-	<typTypeVariable: 'type' as: 'TypType'>
+	<typPraVariable: 'type' as: 'TypType'>
 	super initialize
 ]
 
 { #category : #accessing }
 TypGtCoderTypeFilter >> type [
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
 	^ type
 ]
 
 { #category : #accessing }
 TypGtCoderTypeFilter >> type: anObject [
-	<typTypeArgument: 1 as: 'TypType'>
+	<typPraArguments: 'TypType'>
 	type := anObject
 ]

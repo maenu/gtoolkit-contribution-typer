@@ -12,17 +12,14 @@ TypShaPhaBehavior class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaBehavior >> mAllSubclasses: aLookup [
 	<typShaMethod: 'allSubclasses'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			(OrderedCollection typAsType
-				copyWithParameters: {Behavior typAsType})
+			(OrderedCollection typAsType copyWithParameters: {Behavior typAsType})
 ]
 
 { #category : #shadow }
 TypShaPhaBehavior >> mBinary83: aLookup [
 	<typShaMethod: '>>'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: CompiledMethod typAsType
 		arguments: {Symbol typAsType}
@@ -31,7 +28,6 @@ TypShaPhaBehavior >> mBinary83: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mCanUnderstand: aLookup [
 	<typShaMethod: 'canUnderstand:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {Symbol typAsType}
@@ -40,7 +36,6 @@ TypShaPhaBehavior >> mCanUnderstand: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mClassVarNames: aLookup [
 	<typShaMethod: 'classVarNames'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Set typAsType copyWithParameters: {String typAsType})
 ]
@@ -48,7 +43,6 @@ TypShaPhaBehavior >> mClassVarNames: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mCompile: aLookup [
 	<typShaMethod: 'compile:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Symbol typAsType
 		arguments: {String typAsType}
@@ -57,7 +51,6 @@ TypShaPhaBehavior >> mCompile: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mCompiledMethodAt: aLookup [
 	<typShaMethod: 'compiledMethodAt:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: CompiledMethod typAsType
 		arguments: {Symbol typAsType}
@@ -66,7 +59,6 @@ TypShaPhaBehavior >> mCompiledMethodAt: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mIncludesBehavior: aLookup [
 	<typShaMethod: 'includesBehavior:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {Behavior typAsType}
@@ -75,7 +67,6 @@ TypShaPhaBehavior >> mIncludesBehavior: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mIncludesSelector: aLookup [
 	<typShaMethod: 'includesSelector:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {Symbol typAsType}
@@ -84,7 +75,6 @@ TypShaPhaBehavior >> mIncludesSelector: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mInheritsFrom: aLookup [
 	<typShaMethod: 'inheritsFrom:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {ClassDescription typAsType}
@@ -93,7 +83,6 @@ TypShaPhaBehavior >> mInheritsFrom: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mInstVarNames: aLookup [
 	<typShaMethod: 'instVarNames'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -103,14 +92,12 @@ TypShaPhaBehavior >> mInstVarNames: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mIsAbstract: aLookup [
 	<typShaMethod: 'isAbstract'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaBehavior >> mLookupSelector: aLookup [
 	<typShaMethod: 'lookupSelector:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: CompiledMethod typAsType
 		arguments: {Symbol typAsType}
@@ -119,7 +106,6 @@ TypShaPhaBehavior >> mLookupSelector: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mMethodNamed: aLookup [
 	<typShaMethod: 'methodNamed:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: CompiledMethod typAsType
 		arguments: {Symbol typAsType}
@@ -128,7 +114,6 @@ TypShaPhaBehavior >> mMethodNamed: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mMethods: aLookup [
 	<typShaMethod: 'methods'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Collection typAsType copyWithParameters: {CompiledMethod typAsType})
 ]
@@ -136,14 +121,12 @@ TypShaPhaBehavior >> mMethods: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mName: aLookup [
 	<typShaMethod: 'name'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaBehavior >> mSelectors: aLookup [
 	<typShaMethod: 'selectors'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Collection typAsType copyWithParameters: {Symbol typAsType})
 ]
@@ -151,7 +134,6 @@ TypShaPhaBehavior >> mSelectors: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mSuperclass: aLookup [
 	<typShaMethod: 'superclass'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver classDescription superclass classSide typAsType
 ]
@@ -159,7 +141,6 @@ TypShaPhaBehavior >> mSuperclass: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mWhichClassDefinesClassVar: aLookup [
 	<typShaMethod: 'whichClassDefinesClassVar:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Class typAsType
 		arguments: {String typAsType}
@@ -168,7 +149,6 @@ TypShaPhaBehavior >> mWhichClassDefinesClassVar: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mWhichClassDefinesInstVar: aLookup [
 	<typShaMethod: 'whichClassDefinesInstVar:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: ClassDescription typAsType
 		arguments: {String typAsType}
@@ -177,7 +157,6 @@ TypShaPhaBehavior >> mWhichClassDefinesInstVar: aLookup [
 { #category : #shadow }
 TypShaPhaBehavior >> mWithAllSuperclasses: aLookup [
 	<typShaMethod: 'withAllSuperclasses'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType

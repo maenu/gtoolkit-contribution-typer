@@ -99,9 +99,9 @@ Name
 
 { #category : #accessing }
 TypTypeParser class >> parse: aString [
-	<typTypeArgument: 1 as: 'String'>
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
-	^ (super parse: aString) "typCastAs SequenceableCollection<TypType>"
+	<typPraResult: 'SequenceableCollection<TypType>'>
+	<typPraArguments: 'String'>
+	^ super parse: aString	"typCastAs SequenceableCollection<TypType>"
 ]
 
 { #category : #generated }

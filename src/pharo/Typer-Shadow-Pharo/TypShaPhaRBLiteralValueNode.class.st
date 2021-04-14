@@ -7,7 +7,6 @@ Class {
 { #category : #shadow }
 TypShaPhaRBLiteralValueNode class >> mValue: aLookup [
 	<typShaMethod: 'value:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
 		arguments:

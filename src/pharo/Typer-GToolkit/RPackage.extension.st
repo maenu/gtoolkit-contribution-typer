@@ -46,8 +46,8 @@ RPackage >> typGtNodeCoverage [
 { #category : #'*Typer-GToolkit' }
 RPackage >> typGtView2For: aView [
 	<gtView>
-	<typTypeArgument: 1 as: 'GtPhlowProtoView'>
-	<typTypeResultAs: 'GtPhlowProtoView'>
+	<typPraResult: 'GtPhlowProtoView'>
+	<typPraArguments: 'GtPhlowProtoView'>
 	^ aView mondrian
 		title: 'Typer2' translated;
 		priority: 51;
@@ -74,7 +74,8 @@ RPackage >> typGtView2For: aView [
 								yourself);
 						yourself ];
 				connect: methods
-					toAll: [ :f | f ast typGtInvokedMethods select: [ :g | methods includes: g ] ].
+					toAll:
+						[ :f | f ast typGtInvokedMethods select: [ :g | methods includes: g ] ].
 			e layout circle ];
 		yourself
 ]
@@ -82,8 +83,8 @@ RPackage >> typGtView2For: aView [
 { #category : #'*Typer-GToolkit' }
 RPackage >> typGtViewFor: aView [
 	<gtView>
-	<typTypeArgument: 1 as: 'GtPhlowProtoView'>
-	<typTypeResultAs: 'GtPhlowProtoView'>
+	<typPraResult: 'GtPhlowProtoView'>
+	<typPraArguments: 'GtPhlowProtoView'>
 	^ aView mondrian
 		title: 'Typer' translated;
 		priority: 50;
@@ -94,7 +95,10 @@ RPackage >> typGtViewFor: aView [
 				stencil: [ :f | f typGtElementInPackage: self ];
 				with: classes_.
 			e edges
-				connectTo: [ :f | f allSuperclasses detect: [ :g | classes_ includes: g ] ifNone: [ nil ] ].
+				connectTo: [ :f | 
+					f allSuperclasses
+						detect: [ :g | classes_ includes: g ]
+						ifNone: [ nil ] ].
 			e layout force charge: -5000 ];
 		yourself
 ]

@@ -12,7 +12,6 @@ TypShaPhaOrderedCollection class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaOrderedCollection >> mAddFirst: aLookup [
 	<typShaMethod: 'addFirst:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup arguments at: 1)
 		arguments: {(aLookup receiver at: '@A')}
@@ -21,7 +20,6 @@ TypShaPhaOrderedCollection >> mAddFirst: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedCollection >> mAtPut: aLookup [
 	<typShaMethod: 'at:put:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
 		arguments:
@@ -32,7 +30,6 @@ TypShaPhaOrderedCollection >> mAtPut: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedCollection >> mRemoveLast: aLookup [
 	<typShaMethod: 'removeLast'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
 ]

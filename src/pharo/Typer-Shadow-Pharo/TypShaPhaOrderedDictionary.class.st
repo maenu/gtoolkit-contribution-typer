@@ -12,7 +12,6 @@ TypShaPhaOrderedDictionary class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mAnyOne: aLookup [
 	<typShaMethod: 'anyOne'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
 ]
@@ -20,7 +19,6 @@ TypShaPhaOrderedDictionary >> mAnyOne: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mAsOrderedDictionary: aLookup [
 	<typShaMethod: 'asOrderedDictionary'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(OrderedDictionary typAsType
@@ -32,7 +30,6 @@ TypShaPhaOrderedDictionary >> mAsOrderedDictionary: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mAssociations: aLookup [
 	<typShaMethod: 'associations'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(Array typAsType
@@ -46,7 +43,6 @@ TypShaPhaOrderedDictionary >> mAssociations: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mAssociationsDo: aLookup [
 	<typShaMethod: 'associationsDo:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver
 		arguments:
@@ -62,7 +58,6 @@ TypShaPhaOrderedDictionary >> mAssociationsDo: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mAt: aLookup [
 	<typShaMethod: 'at:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
 		arguments: {(aLookup receiver at: '@B')}
@@ -71,7 +66,6 @@ TypShaPhaOrderedDictionary >> mAt: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mAtIfAbsentPut: aLookup [
 	<typShaMethod: 'at:ifAbsentPut:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
 		arguments:
@@ -83,7 +77,6 @@ TypShaPhaOrderedDictionary >> mAtIfAbsentPut: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mAtIfPresentIfAbsent: aLookup [
 	<typShaMethod: 'at:ifPresent:ifAbsent:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			{(aLookup arguments at: 2) result.
@@ -101,7 +94,6 @@ TypShaPhaOrderedDictionary >> mAtIfPresentIfAbsent: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mAtPut: aLookup [
 	<typShaMethod: 'at:put:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
 		arguments:
@@ -112,7 +104,6 @@ TypShaPhaOrderedDictionary >> mAtPut: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mBinary276: aLookup [
 	<typShaMethod: ','>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(aLookup receiver
@@ -127,7 +118,6 @@ TypShaPhaOrderedDictionary >> mBinary276: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mCollect: aLookup [
 	<typShaMethod: 'collect:'>
-	<typMigrated>
 	| a r |
 	a := aLookup arguments at: 1.
 	r := (a hasValue and: [ a value isString ])
@@ -151,7 +141,6 @@ TypShaPhaOrderedDictionary >> mCollect: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mIncludes: aLookup [
 	<typShaMethod: 'includes:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {(aLookup receiver at: '@A')}
@@ -160,7 +149,6 @@ TypShaPhaOrderedDictionary >> mIncludes: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mIncludesKey: aLookup [
 	<typShaMethod: 'includesKey:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {(aLookup receiver at: '@B')}
@@ -169,10 +157,8 @@ TypShaPhaOrderedDictionary >> mIncludesKey: aLookup [
 { #category : #shadow }
 TypShaPhaOrderedDictionary >> mKeys: aLookup [
 	<typShaMethod: 'keys'>
-	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult:
-			(Array typAsType copyWithParameters: {(aLookup receiver at: '@B')})
+		typAsFunctionTypeWithResult: (Array typAsType copyWithParameters: {(aLookup receiver at: '@B')})
 ]
 
 { #category : #accessing }

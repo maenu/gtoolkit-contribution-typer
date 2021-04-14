@@ -7,10 +7,10 @@ Class {
 { #category : #shadow }
 TypShaGtGtMethodsCoder class >> mForMethods: aLookup [
 	<typShaMethod: 'forMethods:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
-		arguments: {(Collection typAsType copyWithParameters: {CompiledMethod typAsType})}
+		arguments:
+			{(Collection typAsType copyWithParameters: {CompiledMethod typAsType})}
 ]
 
 { #category : #'as yet unclassified' }
@@ -21,7 +21,6 @@ TypShaGtGtMethodsCoder class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtMethodsCoder >> mAnnounce: aLookup [
 	<typShaMethod: 'announce:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {Announcement typAsType}
@@ -29,14 +28,14 @@ TypShaGtGtMethodsCoder >> mAnnounce: aLookup [
 
 { #category : #accessing }
 TypShaGtGtMethodsCoder >> vMethodCoders: aLookup [
-	<typShaForVariable: #methodCoders>
+	<typShaVariable: #methodCoders>
 	^ SequenceableCollection typAsType
 		copyWithParameters: {GtPharoMethodCoder typAsType}
 ]
 
 { #category : #'as yet unclassified' }
 TypShaGtGtMethodsCoder >> vMethods: aLookup [
-	<typShaForVariable: #methods>
+	<typShaVariable: #methods>
 	^ SequenceableCollection typAsType
 		copyWithParameters: {CompiledMethod typAsType}
 ]

@@ -7,7 +7,6 @@ Class {
 { #category : #shadow }
 TypShaGtGtSearchMethodGroupResult class >> mForFilter: aLookup [
 	<typShaMethod: 'forFilter:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
 		arguments: {GtSearchMethodsFilter typAsType}

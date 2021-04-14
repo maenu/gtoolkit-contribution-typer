@@ -7,7 +7,7 @@ RBMethodNode >> typGtCanType [
 
 { #category : #'*Typer-GToolkit' }
 RBMethodNode >> typGtFiltersToTypeWithShadow [
-	<typTypeResultAs: 'GtCoderMethodsFilter'>
+	<typPraResult: 'GtCoderMethodsFilter'>
 	| clazz shadows argumentTypes resultType |
 	clazz := self methodClass.
 	argumentTypes := self numArgs

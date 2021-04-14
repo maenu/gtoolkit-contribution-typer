@@ -21,8 +21,8 @@ TypDynUnionType class >> types: aCollection weights: anotherCollection [
 
 { #category : #copying }
 TypDynUnionType >> , aType [
-	<typTypeArgument: 1 as: 'TypDynUnionType'>
-	<typTypeResultAs: 'TypDynUnionType'>
+	<typPraResult: 'TypDynUnionType'>
+	<typPraArguments: 'TypDynUnionType'>
 	| copy |
 	copy := self copy.
 	copy addAll: aType.
@@ -31,8 +31,8 @@ TypDynUnionType >> , aType [
 
 { #category : #accessing }
 TypDynUnionType >> add: anObject [
-	<typTypeArgument: 1 as: 'TypType'>
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
+	<typPraArguments: 'TypType'>
 	weights add: anObject.
 	types add: anObject.
 	^ anObject
@@ -40,7 +40,7 @@ TypDynUnionType >> add: anObject [
 
 { #category : #enumerating }
 TypDynUnionType >> addAll: aTypes [
-	<typTypeArgument: 1 as: 'TypDynUnionType'>
+	<typPraArguments: 'TypDynUnionType'>
 	types addAll: aTypes types.
 	weights addAll: aTypes weights.
 	^ aTypes
@@ -60,14 +60,14 @@ TypDynUnionType >> collect: aBlock [
 
 { #category : #accessing }
 TypDynUnionType >> initialize [
-	<typTypeVariable: 'weights' as: 'SequenceableCollection<TypType>'>
+	<typPraVariable: 'weights' as: 'SequenceableCollection<TypType>'>
 	super initialize.
-	weights := OrderedCollection new "typParameters TypType"
+	weights := OrderedCollection new	"typParameters TypType"
 ]
 
 { #category : #accessing }
 TypDynUnionType >> initializeTypes: anObject weights: anotherObject [
-	<typTypeArgument: 2 as: 'SequenceableCollection<TypType>'>
+	<typPraArguments: '?,SequenceableCollection<TypType>'>
 	super initializeTypes: anObject.
 	weights := anotherObject
 ]
@@ -80,13 +80,13 @@ TypDynUnionType >> postCopy [
 
 { #category : #initialization }
 TypDynUnionType >> summary [
-	<typTypeResultAs: 'OrderedDictionary<TypType,Integer>'>
+	<typPraResult: 'OrderedDictionary<TypType,Integer>'>
 	^ (((weights groupedBy: #yourself) collect: #size) associations
 		sorted: [ :a :b | a value > b value ]) asOrderedDictionary
 ]
 
 { #category : #accessing }
 TypDynUnionType >> weights [
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
+	<typPraResult: 'SequenceableCollection<TypType>'>
 	^ weights copy
 ]

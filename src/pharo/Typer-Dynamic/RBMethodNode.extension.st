@@ -2,7 +2,7 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynAsMethodLookupResult [
-	<typTypeResultAs: '{!,TypMethodLookupResult}'>
+	<typPraResult: '{!,TypMethodLookupResult}'>
 	| arguments_ result |
 	arguments_ := (self method numArgs
 		timesCollect: [ :i | self typDynTypeForArgumentAt: i ])
@@ -18,13 +18,13 @@ RBMethodNode >> typDynAsMethodLookupResult [
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynAssignNodes [
-	<typTypeResultAs: 'SequenceableCollection<RBAssignmentNode>'>
+	<typPraResult: 'SequenceableCollection<RBAssignmentNode>'>
 	^ self assignmentNodes reject: [ :e | e variable isTemp ]
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynInstall [
-	<typTypeResultAs: 'RBMethodNode'>
+	<typPraResult: 'RBMethodNode'>
 	| link |
 	self typDynUninstall.
 	link := MetaLink new
@@ -43,13 +43,13 @@ RBMethodNode >> typDynInstall [
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynInvocations [
-	<typTypeResultAs: 'TypDynUnionType'>
-	^ (self propertyAt: #typDynInvocations) "typCastAs TypDynUnionType"
+	<typPraResult: 'TypDynUnionType'>
+	^ self propertyAt: #typDynInvocations	"typCastAs TypDynUnionType"
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynInvokeIn: aContext [
-	<typTypeArgument: 1 as: 'Context'>
+	<typPraArguments: 'Context'>
 	SharedRandom globalGenerator next
 		< (1 - (self typDynInvocations weights size / 200))
 		ifTrue: [ self typDynInvocations
@@ -76,8 +76,8 @@ RBMethodNode >> typDynRemoveLink [
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynReturnNodes [
-	<typTypeResultAs: 'SequenceableCollection<RBReturnNode>'>
-	^ (self allChildren select: #isReturn) "typParameters RBReturnNode"
+	<typPraResult: 'SequenceableCollection<RBReturnNode>'>
+	^ self allChildren select: #isReturn	"typParameters RBReturnNode"
 ]
 
 { #category : #'*Typer-Dynamic' }
@@ -95,24 +95,24 @@ RBMethodNode >> typDynStashed [
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypeForArgumentAt: anInteger [
-	<typTypeArgument: 1 as: 'Integer'>
-	<typTypeResultAs: 'TypDynUnionType'>
-	^ (self typDynInvocations , self typDynStashed)
-		collect: [ :f | (f "typCastAs TypDynMessage") argumentTypes at: anInteger ]
+	<typPraResult: 'TypDynUnionType'>
+	<typPraArguments: 'Integer'>
+	^ self typDynInvocations , self typDynStashed
+		collect: [ :f | f argumentTypes at: anInteger	"typCastAs TypDynMessage" ]
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypeForResult [
-	<typTypeResultAs: 'TypUnionType'>
-	^ (self typDynReturnNodes collect: [ :e | e typDynReturns , e typDynStashed ]) "typParameters TypDynUnionType"
+	<typPraResult: 'TypUnionType'>
+	^ (self typDynReturnNodes
+		collect: [ :e | e typDynReturns , e typDynStashed ])
 		inject: TypDynUnionType new
-		into: [ :a :b | a , b ]
+		into: [ :a :b | a , b ]	"typParameters TypDynUnionType"
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForClassVariables [
-	<typTypeResultAs:
-		'Dictionary<Association<ClassDescription,Symbol>,TypDynUnionType>'>
+	<typPraResult: 'Dictionary<Association<ClassDescription,Symbol>,TypDynUnionType>'>
 	^ self
 		typDynTypesForVariablesSelectedWith: [ :e | e variable binding isClassVariable ]
 		definedBy: [ self methodClass classSide ]
@@ -120,15 +120,15 @@ RBMethodNode >> typDynTypesForClassVariables [
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForInstanceVariables [
-	<typTypeResultAs:
-		'Dictionary<Association<ClassDescription,Symbol>,TypDynUnionType>'>
-	^ self typDynTypesForVariablesSelectedWith: [ :e | e variable isInstance ] definedBy: [ self methodClass ]
+	<typPraResult: 'Dictionary<Association<ClassDescription,Symbol>,TypDynUnionType>'>
+	^ self
+		typDynTypesForVariablesSelectedWith: [ :e | e variable isInstance ]
+		definedBy: [ self methodClass ]
 ]
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForPoolVariables [
-	<typTypeResultAs:
-		'Dictionary<Association<ClassDescription,Symbol>,TypDynUnionType>'>
+	<typPraResult: 'Dictionary<Association<ClassDescription,Symbol>,TypDynUnionType>'>
 	^ self
 		typDynTypesForVariablesSelectedWith: [ :e | e variable binding typInfIsFromSharedPool ]
 		definedBy: [ :e | e binding typInfSharedPool ]
@@ -138,8 +138,7 @@ RBMethodNode >> typDynTypesForPoolVariables [
 RBMethodNode >> typDynTypesForVariables [
 	"keys are unique as defining class and name are unique accross different variable kinds, concat dictionaries is fine"
 
-	<typTypeResultAs:
-		'Dictionary<Association<ClassDescription,Symbol>,TypDynUnionType>'>
+	<typPraResult: 'Dictionary<Association<ClassDescription,Symbol>,TypDynUnionType>'>
 	^ self typDynTypesForPoolVariables
 		, self typDynTypesForInstanceVariables
 		, self typDynTypesForClassVariables
@@ -147,11 +146,15 @@ RBMethodNode >> typDynTypesForVariables [
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynTypesForVariablesSelectedWith: aBlock definedBy: anotherBlock [
-	<typTypeArgument: 1 as: 'BlockClosure(RBAssignmentNode)->Boolean'>
-	<typTypeArgument: 2 as: 'BlockClosure[RBVariableNode]->ClassDescription'>
-	<typTypeResultAs: 'Dictionary<Association<ClassDescription,Symbol>,TypDynUnionType>'>
-	^ ((((self typDynAssignNodes select: aBlock) collect: [ :e | (anotherBlock cull: e variable) -> e variable name asSymbol -> (e typDynAssigns , e typDynStashed)]) groupedBy: #key)
-		collect: [ :e | e collect: #value ]) collect: [ :e | e inject: TypDynUnionType new into: [ :a :b | a , b ] ]
+	<typPraResult: 'Dictionary<Association<ClassDescription,Symbol>,TypDynUnionType>'>
+	<typPraArguments:
+		'BlockClosure(RBAssignmentNode)->Boolean,BlockClosure[RBVariableNode]->ClassDescription'>
+	^ ((((self typDynAssignNodes select: aBlock)
+		collect: [ :e | 
+			(anotherBlock cull: e variable) -> e variable name asSymbol
+				-> (e typDynAssigns , e typDynStashed) ]) groupedBy: #key)
+		collect: [ :e | e collect: #value ])
+		collect: [ :e | e inject: TypDynUnionType new into: [ :a :b | a , b ] ]
 ]
 
 { #category : #'*Typer-Dynamic' }

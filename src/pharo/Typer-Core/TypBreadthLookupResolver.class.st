@@ -16,13 +16,13 @@ TypBreadthLookupResolver class >> resolvers: aCollection [
 
 { #category : #initialization }
 TypBreadthLookupResolver >> initialize [
-	<typTypeVariable: 'resolvers' as: 'SequenceableCollection<TypLookupResolver>'>
+	<typPraVariable: 'resolvers' as: 'SequenceableCollection<TypLookupResolver>'>
 	super initialize
 ]
 
 { #category : #accessing }
 TypBreadthLookupResolver >> initializeResolvers: anObject [
-	<typTypeArgument: 1 as: 'SequenceableCollection<TypLookupResolver>'>
+	<typPraArguments: 'SequenceableCollection<TypLookupResolver>'>
 	resolvers := anObject
 ]
 

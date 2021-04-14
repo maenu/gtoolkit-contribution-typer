@@ -9,8 +9,8 @@ Class {
 
 { #category : #converting }
 TypUnionType class >> asTypes: aCollection [
-	<typTypeArgument: 1 as: 'Collection<TypType>'>
-	<typTypeResultAs: 'Set<TypType>'>
+	<typPraResult: 'Set<TypType>'>
+	<typPraArguments: 'Collection<TypType>'>
 	| remains nil_ |
 	remains := aCollection
 		flatCollect: [ :e | 
@@ -34,7 +34,7 @@ TypUnionType class >> asTypes: aCollection [
 
 { #category : #generated }
 TypUnionType class >> types: aCollection [
-	<typTypeArgument: 1 as: 'Collection<TypType>'>
+	<typPraArguments: 'Collection<TypType>'>
 	^ self new
 		initializeTypes: (self asTypes: aCollection);
 		yourself
@@ -124,13 +124,13 @@ TypUnionType >> hash [
 
 { #category : #accessing }
 TypUnionType >> initialize [
-	<typTypeVariable: 'types' as: 'Set<TypType>'>
-	super initialize.
+	<typPraVariable: 'types' as: 'Set<TypType>'>
+	super initialize
 ]
 
 { #category : #accessing }
 TypUnionType >> initializeTypes: anObject [
-	<typTypeArgument: 1 as: 'Set<TypType>'>
+	<typPraArguments: 'Set<TypType>'>
 	self
 		assert: [ | types_ |
 			types_ := self class asTypes: anObject.
@@ -200,6 +200,6 @@ TypUnionType >> result [
 
 { #category : #accessing }
 TypUnionType >> types [
-	<typTypeResultAs: 'Set<TypType>'>
+	<typPraResult: 'Set<TypType>'>
 	^ types
 ]

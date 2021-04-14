@@ -11,6 +11,6 @@ TypShaPhaSystemAnnouncer class >> shadowedClass [
 
 { #category : #'as yet unclassified' }
 TypShaPhaSystemAnnouncer class >> vAnnouncer: aLookup [
-	<typShaForVariable: #announcer>
+	<typShaVariable: #announcer>
 	^ SystemAnnouncer typAsType
 ]

@@ -2,8 +2,7 @@ Extension { #name : #GtPharoProgramNode }
 
 { #category : #'*Typer-GToolkit' }
 GtPharoProgramNode >> typGtCompletionActionsFor: aStrategy in: anRbNode [
-	<typTypeArgument: 1 as: 'TypGtPharoCompletionStrategy'>
-	<typTypeArgument: 2 as: 'RBProgramNode'>
-	<typTypeResultAs: 'SequenceableCollection<GtCompletionAction>'>
+	<typPraResult: 'SequenceableCollection<GtCompletionAction>'>
+	<typPraArguments: 'TypGtPharoCompletionStrategy,RBProgramNode'>
 	^ self completionActionsFor: aStrategy
 ]

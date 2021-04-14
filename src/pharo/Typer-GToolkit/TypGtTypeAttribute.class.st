@@ -9,7 +9,7 @@ Class {
 
 { #category : #initialization }
 TypGtTypeAttribute >> initialize [
-	<typTypeVariable: 'type' as: 'TypType'>
+	<typPraVariable: 'type' as: 'TypType'>
 	super initialize.
 	self
 		beAppend;
@@ -31,12 +31,12 @@ TypGtTypeAttribute >> initialize [
 
 { #category : #accessing }
 TypGtTypeAttribute >> type_ [
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
 	^ type
 ]
 
 { #category : #accessing }
 TypGtTypeAttribute >> type_: anObject [
-	<typTypeArgument: 1 as: 'TypType'>
+	<typPraArguments: 'TypType'>
 	type := anObject
 ]

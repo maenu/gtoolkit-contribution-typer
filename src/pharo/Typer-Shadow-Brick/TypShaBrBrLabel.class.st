@@ -12,7 +12,6 @@ TypShaBrBrLabel class >> shadowedClass [
 { #category : #shadow }
 TypShaBrBrLabel >> mText: aLookup [
 	<typShaMethod: 'text:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:

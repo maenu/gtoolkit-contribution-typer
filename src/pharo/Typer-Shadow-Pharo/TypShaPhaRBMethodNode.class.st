@@ -12,7 +12,6 @@ TypShaPhaRBMethodNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBMethodNode >> mAddPragma: aLookup [
 	<typShaMethod: 'addPragma:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {RBPragmaNode typAsType}
@@ -21,7 +20,6 @@ TypShaPhaRBMethodNode >> mAddPragma: aLookup [
 { #category : #shadow }
 TypShaPhaRBMethodNode >> mAllChildren: aLookup [
 	<typShaMethod: 'allChildren'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -31,7 +29,6 @@ TypShaPhaRBMethodNode >> mAllChildren: aLookup [
 { #category : #shadow }
 TypShaPhaRBMethodNode >> mArguments: aLookup [
 	<typShaMethod: 'arguments'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -41,7 +38,6 @@ TypShaPhaRBMethodNode >> mArguments: aLookup [
 { #category : #shadow }
 TypShaPhaRBMethodNode >> mBody: aLookup [
 	<typShaMethod: 'body'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: RBSequenceNode typAsType
 ]
@@ -49,7 +45,6 @@ TypShaPhaRBMethodNode >> mBody: aLookup [
 { #category : #shadow }
 TypShaPhaRBMethodNode >> mCompilationContext: aLookup [
 	<typShaMethod: 'compilationContext:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {CompilationContext typAsType}
@@ -58,14 +53,12 @@ TypShaPhaRBMethodNode >> mCompilationContext: aLookup [
 { #category : #shadow }
 TypShaPhaRBMethodNode >> mIsPrimitive: aLookup [
 	<typShaMethod: 'isPrimitive'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaRBMethodNode >> mMethod: aLookup [
 	<typShaMethod: 'method'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: CompiledMethod typAsType
 ]
@@ -73,7 +66,6 @@ TypShaPhaRBMethodNode >> mMethod: aLookup [
 { #category : #shadow }
 TypShaPhaRBMethodNode >> mMethodClass: aLookup [
 	<typShaMethod: 'methodClass'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: ClassDescription typAsType
 ]
@@ -81,14 +73,12 @@ TypShaPhaRBMethodNode >> mMethodClass: aLookup [
 { #category : #shadow }
 TypShaPhaRBMethodNode >> mNumArgs: aLookup [
 	<typShaMethod: 'numArgs'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaRBMethodNode >> mPragmas: aLookup [
 	<typShaMethod: 'pragmas'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -98,7 +88,6 @@ TypShaPhaRBMethodNode >> mPragmas: aLookup [
 { #category : #shadow }
 TypShaPhaRBMethodNode >> mRemovePragma: aLookup [
 	<typShaMethod: 'removePragma:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {RBPragmaNode typAsType}
@@ -107,6 +96,5 @@ TypShaPhaRBMethodNode >> mRemovePragma: aLookup [
 { #category : #shadow }
 TypShaPhaRBMethodNode >> mSelector: aLookup [
 	<typShaMethod: 'selector'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Symbol typAsType
 ]

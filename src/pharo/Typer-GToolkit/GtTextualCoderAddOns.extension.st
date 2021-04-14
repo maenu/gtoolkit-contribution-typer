@@ -2,7 +2,7 @@ Extension { #name : #GtTextualCoderAddOns }
 
 { #category : #'*Typer-GToolkit' }
 GtTextualCoderAddOns >> typGtReplaceStylerOfType: aClass with: aStyler [
-	<typTypeArgument: 1 as: 'GtCoderBodyStyler class'>
+	<typPraArguments: 'GtCoderBodyStyler class,?'>
 	| i |
 	i := stylers detectIndex: [ :e | e class == aClass ].
 	stylers at: i put: aStyler

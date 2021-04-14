@@ -1,27 +1,26 @@
 Extension { #name : #Pragma }
 
 { #category : #'*Typer-Pragma' }
-Pragma >> typPraArgumentPutInject: aType [
-	aType
-		at: '@' , arguments first asString
-		put: arguments second typAsType.
+Pragma >> typPraArguments: aType [
+	arguments second typAsTypes
+		withIndexDo: [ :t :i | aType at: '@' , i asString put: t ].
 	^ aType
 ]
 
 { #category : #'*Typer-Pragma' }
-Pragma >> typPraIsArgumentPut [
-	^ selector = #typPraArgument:put:
+Pragma >> typPraIsArguments [
+	^ selector = #typPraArguments:
 ]
 
 { #category : #'*Typer-Pragma' }
 Pragma >> typPraIsMethod [
 	^ self typPraIsResult
-		or: [ self typPraIsArgumentPut or: [ self typPraIsSignalsAlways ] ]
+		or: [ self typPraIsArguments or: [ self typPraIsSignalsAlways ] ]
 ]
 
 { #category : #'*Typer-Pragma' }
-Pragma >> typPraIsParameter [ 
-	^ selector = #typPraParameter:
+Pragma >> typPraIsParameters [ 
+	^ selector = #typPraParameters:
 ]
 
 { #category : #'*Typer-Pragma' }
@@ -41,7 +40,7 @@ Pragma >> typPraIsSuperTypeBindTo [
 
 { #category : #'*Typer-Pragma' }
 Pragma >> typPraIsType [
-	^ self typPraIsParameter or: [ self typPraIsSuperTypeBindTo ]
+	^ self typPraIsParameters or: [ self typPraIsSuperTypeBindTo ]
 ]
 
 { #category : #'*Typer-Pragma' }
@@ -50,16 +49,11 @@ Pragma >> typPraIsVariable: aString [
 ]
 
 { #category : #'*Typer-Pragma' }
-Pragma >> typPraIsVariableAs [
- ^ selector = #typPraVariable:as:
-]
-
-{ #category : #'*Typer-Pragma' }
 Pragma >> typPraMethodInject: aType [
 	self typPraIsResult
 		ifTrue: [ ^ self typPraResultInject: aType ].
-	self typPraIsArgumentPut
-		ifTrue: [ ^ self typPraArgumentPutInject: aType ].
+	self typPraIsArguments
+		ifTrue: [ ^ self typPraArguments: aType ].
 	self typPraIsSignalsAlways
 		ifTrue: [ ^ self typPraSignalsAlwaysInject: aType ].
 	^ aType
@@ -99,7 +93,7 @@ Pragma >> typPraSuperTypeBindToInject: aType [
 
 { #category : #'*Typer-Pragma' }
 Pragma >> typPraTypeInject: aType [
-	self typPraIsParameter
+	self typPraIsParameters
 		ifTrue: [ ^ self typPraParametersInject: aType ].
 	self typPraIsSuperTypeBindTo
 		ifTrue: [ ^ self typPraSuperTypeBindToInject: aType ].

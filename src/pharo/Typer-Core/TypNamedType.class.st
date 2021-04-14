@@ -11,7 +11,7 @@ Class {
 
 { #category : #'instance creation' }
 TypNamedType class >> classDescription: aClassDescription [
-	<typTypeArgument: 1 as: 'ClassDescription'>
+	<typPraArguments: 'ClassDescription'>
 	^ self new
 		initializeClassDescription: aClassDescription;
 		yourself
@@ -19,7 +19,7 @@ TypNamedType class >> classDescription: aClassDescription [
 
 { #category : #'instance creation' }
 TypNamedType class >> named: aString [
-	<typTypeArgument: 1 as: 'String'>
+	<typPraArguments: 'String'>
 	^ self new
 		initializeName: aString;
 		yourself
@@ -66,7 +66,7 @@ TypNamedType >> at: aString put: aType [
 
 { #category : #converting }
 TypNamedType >> classDescription [
-	<typTypeResultAs: 'ClassDescription'>
+	<typPraResult: 'ClassDescription'>
 	self assert: [ self hasClassDescription ].
 	^ classDescription
 ]
@@ -82,9 +82,10 @@ TypNamedType >> copyWithParameters: aCollection [
 
 { #category : #testing }
 TypNamedType >> hasClassDescription [
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
 	^ hasClassDescription
-		ifNil: [ hasClassDescription := [ classDescription := (Character space split: name) first asClass.
+		ifNil: [ hasClassDescription := [ classDescription := (Character space
+				split: name) first asClass.
 			true ]
 				on: NotFound
 				do: [ false ] ]
@@ -104,15 +105,15 @@ TypNamedType >> hash [
 
 { #category : #initialization }
 TypNamedType >> initialize [
-	<typTypeVariable: 'name' as: 'String'>
-	<typTypeVariable: 'classDescription' as: '{!,ClassDescription}'>
-	<typTypeVariable: 'hasClassDescription' as: '{!,Boolean}'>
+	<typPraVariable: 'name' as: 'String'>
+	<typPraVariable: 'classDescription' as: '{!,ClassDescription}'>
+	<typPraVariable: 'hasClassDescription' as: '{!,Boolean}'>
 	super initialize
 ]
 
 { #category : #accessing }
 TypNamedType >> initializeClassDescription: aClassDescription [
-	<typTypeArgument: 1 as: 'ClassDescription'>
+	<typPraArguments: 'ClassDescription'>
 	classDescription := aClassDescription.
 	name := classDescription name.
 	hasClassDescription := true
@@ -120,7 +121,7 @@ TypNamedType >> initializeClassDescription: aClassDescription [
 
 { #category : #accessing }
 TypNamedType >> initializeName: anObject [
-	<typTypeArgument: 1 as: 'String'>
+	<typPraArguments: 'String'>
 	name := anObject.
 	hasClassDescription := nil
 ]
@@ -132,7 +133,7 @@ TypNamedType >> isNamed [
 
 { #category : #accessing }
 TypNamedType >> name [
-	<typTypeResultAs: 'String'>
+	<typPraResult: 'String'>
 	^ name
 ]
 

@@ -12,7 +12,6 @@ TypShaBlBlKeyCombinationBuilder class >> shadowedClass [
 { #category : #shadow }
 TypShaBlBlKeyCombinationBuilder >> mBuild: aLookup [
 	<typShaMethod: 'build'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: BlKeyCombination typAsType
 ]
@@ -20,7 +19,6 @@ TypShaBlBlKeyCombinationBuilder >> mBuild: aLookup [
 { #category : #shadow }
 TypShaBlBlKeyCombinationBuilder >> mKey: aLookup [
 	<typShaMethod: 'key:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {BlKeyboardKey typAsType}

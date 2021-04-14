@@ -7,7 +7,6 @@ Class {
 { #category : #shadow }
 TypShaBlBlKeyCombination class >> mBuilder: aLookup [
 	<typShaMethod: 'builder'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: BlKeyCombinationBuilder typAsType
 ]

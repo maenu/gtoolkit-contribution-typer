@@ -12,7 +12,6 @@ TypShaGtGtPhlowMondrianView class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtPhlowMondrianView >> mPainting: aLookup [
 	<typShaMethod: 'painting:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:

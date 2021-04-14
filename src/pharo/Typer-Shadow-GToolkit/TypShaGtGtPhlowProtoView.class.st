@@ -12,7 +12,6 @@ TypShaGtGtPhlowProtoView class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtPhlowProtoView >> mExplicit: aLookup [
 	<typShaMethod: 'explicit'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtPhlowExplicitView typAsType
 ]
@@ -20,7 +19,6 @@ TypShaGtGtPhlowProtoView >> mExplicit: aLookup [
 { #category : #shadow }
 TypShaGtGtPhlowProtoView >> mMondrian: aLookup [
 	<typShaMethod: 'mondrian'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtPhlowMondrianView typAsType
 ]
@@ -28,7 +26,6 @@ TypShaGtGtPhlowProtoView >> mMondrian: aLookup [
 { #category : #shadow }
 TypShaGtGtPhlowProtoView >> mPriority: aLookup [
 	<typShaMethod: 'priority:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {Number typAsType}
@@ -37,7 +34,6 @@ TypShaGtGtPhlowProtoView >> mPriority: aLookup [
 { #category : #shadow }
 TypShaGtGtPhlowProtoView >> mTitle: aLookup [
 	<typShaMethod: 'title:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {String typAsType}

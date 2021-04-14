@@ -23,13 +23,13 @@ TypDynMessage >> = anObject [
 
 { #category : #accessing }
 TypDynMessage >> argumentTypes [
-	<typTypeResultAs: 'SequenceableCollection<TypType>'>
+	<typPraResult: 'SequenceableCollection<TypType>'>
 	^ argumentTypes
 ]
 
 { #category : #accessing }
 TypDynMessage >> argumentTypes: anObject [
-	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
+	<typPraArguments: 'SequenceableCollection<TypType>'>
 	argumentTypes := anObject
 ]
 
@@ -42,9 +42,9 @@ TypDynMessage >> hash [
 
 { #category : #accessing }
 TypDynMessage >> initialize [
-	<typTypeVariable: 'argumentTypes' as: 'SequenceableCollection<TypType>'>
-	<typTypeVariable: 'receiverType' as: 'TypType'>
-	<typTypeVariable: 'selector' as: 'Symbol'>
+	<typPraVariable: 'argumentTypes' as: 'SequenceableCollection<TypType>'>
+	<typPraVariable: 'receiverType' as: 'TypType'>
+	<typPraVariable: 'selector' as: 'Symbol'>
 	super initialize
 ]
 
@@ -63,24 +63,24 @@ TypDynMessage >> printOn: aStream [
 
 { #category : #accessing }
 TypDynMessage >> receiver [
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
 	^ receiverType
 ]
 
 { #category : #accessing }
 TypDynMessage >> receiverType: anObject [
-	<typTypeArgument: 1 as: 'TypType'>
+	<typPraArguments: 'TypType'>
 	receiverType := anObject
 ]
 
 { #category : #accessing }
 TypDynMessage >> selector [
-	<typTypeResultAs: 'Symbol'>
+	<typPraResult: 'Symbol'>
 	^ selector
 ]
 
 { #category : #accessing }
 TypDynMessage >> selector: anObject [
-	<typTypeArgument: 1 as: 'Symbol'>
+	<typPraArguments: 'Symbol'>
 	selector := anObject
 ]

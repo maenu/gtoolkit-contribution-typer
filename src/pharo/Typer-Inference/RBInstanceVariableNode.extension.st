@@ -2,7 +2,7 @@ Extension { #name : #RBInstanceVariableNode }
 
 { #category : #'*Typer-Inference' }
 RBInstanceVariableNode >> typInfDefiningType [
-	<typTypeResultAs: 'Type'>
+	<typPraResult: 'Type'>
 	self assert: [ self typInfHasDefiningType ].
 	^ TypInfSelf value
 ]

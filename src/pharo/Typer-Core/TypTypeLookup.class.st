@@ -23,7 +23,7 @@ TypTypeLookup >> = anObject [
 
 { #category : #accessing }
 TypTypeLookup >> classDescription [
-	<typTypeResultAs: 'ClassDescription'>
+	<typPraResult: 'ClassDescription'>
 	^ classDescription
 ]
 
@@ -48,13 +48,13 @@ TypTypeLookup >> hash [
 
 { #category : #initialization }
 TypTypeLookup >> initialize [
-	<typTypeVariable: 'classDescription' as: 'ClassDescription'>
+	<typPraVariable: 'classDescription' as: 'ClassDescription'>
 	super initialize
 ]
 
 { #category : #accessing }
 TypTypeLookup >> initializeClassDescription: anObject [
-	<typTypeArgument: 1 as: 'ClassDescription'>
+	<typPraArguments: 'ClassDescription'>
 	classDescription := anObject
 ]
 

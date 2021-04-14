@@ -12,7 +12,6 @@ TypShaPhaMonitor class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaMonitor >> mCritical: aLookup [
 	<typShaMethod: 'critical:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup arguments at: 1) result
 		arguments: {BlockClosure typAsType}

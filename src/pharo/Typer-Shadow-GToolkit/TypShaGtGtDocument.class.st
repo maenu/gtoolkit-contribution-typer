@@ -12,14 +12,12 @@ TypShaGtGtDocument class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtDocument >> mAsElement: aLookup [
 	<typShaMethod: 'asElement'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: BlElement typAsType
 ]
 
 { #category : #shadow }
 TypShaGtGtDocument >> mStrategy: aLookup [
 	<typShaMethod: 'strategy:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {GtStorageStrategy typAsType}
@@ -28,7 +26,6 @@ TypShaGtGtDocument >> mStrategy: aLookup [
 { #category : #shadow }
 TypShaGtGtDocument >> mText: aLookup [
 	<typShaMethod: 'text:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:

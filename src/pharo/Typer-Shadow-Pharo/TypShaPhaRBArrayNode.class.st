@@ -12,7 +12,6 @@ TypShaPhaRBArrayNode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaRBArrayNode >> mStatements: aLookup [
 	<typShaMethod: 'statements'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType

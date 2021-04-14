@@ -2,13 +2,12 @@ Extension { #name : #GtPharoUnaryMessageNode }
 
 { #category : #'*Typer-GToolkit' }
 GtPharoUnaryMessageNode >> typGtCompletionActionsFor: aStrategy in: anRbNode [
-	<typTypeArgument: 1 as: 'TypGtPharoCompletionStrategy'>
-	<typTypeArgument: 2 as: 'RBMessageNode'>
-	<typTypeResultAs: 'SequenceableCollection<GtCompletionAction>'>
+	<typPraResult: 'SequenceableCollection<GtCompletionAction>'>
+	<typPraArguments: 'TypGtPharoCompletionStrategy,RBMessageNode'>
 	| startingText index type clazz |
 	index := aStrategy index.
 	self selectorPart stopPosition = index
-		ifFalse: [ ^ #() "typParameters GtCompletionAction" ].
+		ifFalse: [ ^ #()	"typParameters GtCompletionAction" ].
 	startingText := self selectorPart value.
 	type := self parent receiver
 		typGtGuessType: aStrategy

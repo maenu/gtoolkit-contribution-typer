@@ -50,8 +50,8 @@ TypPropertyLookup >> hash [
 
 { #category : #initialization }
 TypPropertyLookup >> initialize [
-	<typTypeVariable: 'selector' as: 'Symbol'>
-	<typTypeVariable: 'receiverType' as: 'TypType'>
+	<typPraVariable: 'selector' as: 'Symbol'>
+	<typPraVariable: 'receiverType' as: 'TypType'>
 	super initialize
 ]
 
@@ -71,12 +71,12 @@ TypPropertyLookup >> printOn: aStream [
 
 { #category : #accessing }
 TypPropertyLookup >> receiver [
-	<typTypeResultAs: 'TypType'>
+	<typPraResult: 'TypType'>
 	^ receiver
 ]
 
 { #category : #accessing }
 TypPropertyLookup >> selector [
-	<typTypeResultAs:  'Symbol'>
+	<typPraResult: 'Symbol'>
 	^ selector
 ]

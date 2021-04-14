@@ -7,7 +7,6 @@ Class {
 { #category : #shadow }
 TypShaBrBrLook class >> mBinary26: aLookup [
 	<typShaMethod: '+'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: BrLook typAsType
 		arguments:

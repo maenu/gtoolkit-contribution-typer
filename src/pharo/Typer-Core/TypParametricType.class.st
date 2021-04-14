@@ -87,7 +87,7 @@ TypParametricType >> at: aString put: aType [
 
 { #category : #copying }
 TypParametricType >> copyWithParameters: aCollection [
-	<typTypeArgument: 1 as: 'SequenceableCollection<TypType>'>
+	<typPraArguments: 'SequenceableCollection<TypType>'>
 	^ self copy
 		initializeParameters:
 			((1 to: (aCollection size min: parameters size))

@@ -12,7 +12,6 @@ TypShaPhaClass class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaClass >> mAddClassVarNamed: aLookup [
 	<typShaMethod: 'addClassVarNamed:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {String typAsType}
@@ -21,7 +20,6 @@ TypShaPhaClass >> mAddClassVarNamed: aLookup [
 { #category : #accessing }
 TypShaPhaClass >> mBasicNew: aLookup [
 	<typShaMethod: 'basicNew'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver classDescription instanceSide typAsType
 ]
@@ -29,7 +27,6 @@ TypShaPhaClass >> mBasicNew: aLookup [
 { #category : #shadow }
 TypShaPhaClass >> mClassVarNamed: aLookup [
 	<typShaMethod: 'classVarNamed:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {String typAsType}
@@ -38,7 +35,6 @@ TypShaPhaClass >> mClassVarNamed: aLookup [
 { #category : #shadow }
 TypShaPhaClass >> mHasClassVarNamed: aLookup [
 	<typShaMethod: 'hasClassVarNamed:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {String typAsType}
@@ -47,7 +43,6 @@ TypShaPhaClass >> mHasClassVarNamed: aLookup [
 { #category : #accessing }
 TypShaPhaClass >> mNew: aLookup [
 	<typShaMethod: 'new'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver classDescription instanceSide typAsType
 ]
@@ -55,7 +50,6 @@ TypShaPhaClass >> mNew: aLookup [
 { #category : #shadow }
 TypShaPhaClass >> mSharedPools: aLookup [
 	<typShaMethod: 'sharedPools'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Collection typAsType copyWithParameters: {Class typAsType})
 ]
@@ -63,9 +57,7 @@ TypShaPhaClass >> mSharedPools: aLookup [
 { #category : #shadow }
 TypShaPhaClass >> mSubclassInstanceVariableNamesClassVariableNamesPackage: aLookup [
 	<typShaMethod: 'subclass:instanceVariableNames:classVariableNames:package:'>
-	<typMigrated>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult:
-			aLookup receiver classDescription typAsType
+		typAsFunctionTypeWithResult: aLookup receiver classDescription typAsType
 		arguments: {String typAsType}
 ]

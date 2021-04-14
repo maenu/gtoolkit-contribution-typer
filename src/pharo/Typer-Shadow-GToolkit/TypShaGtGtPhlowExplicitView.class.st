@@ -12,7 +12,6 @@ TypShaGtGtPhlowExplicitView class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtPhlowExplicitView >> mStencil: aLookup [
 	<typShaMethod: 'stencil:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {(BlockClosure typAsFunctionTypeWithResult: BlElement typAsType)}

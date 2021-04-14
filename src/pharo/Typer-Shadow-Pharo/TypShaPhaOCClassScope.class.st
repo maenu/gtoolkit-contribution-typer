@@ -12,7 +12,6 @@ TypShaPhaOCClassScope class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaOCClassScope >> mGetClass: aLookup [
 	<typShaMethod: 'getClass'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: ClassDescription typAsType
 ]

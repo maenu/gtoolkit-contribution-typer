@@ -7,7 +7,6 @@ Class {
 { #category : #shadow }
 TypShaPhaTestCase class >> mSuite: aLookup [
 	<typShaMethod: 'suite'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: TestSuite typAsType
 ]
 

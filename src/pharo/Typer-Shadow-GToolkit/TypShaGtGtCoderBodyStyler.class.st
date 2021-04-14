@@ -12,7 +12,6 @@ TypShaGtGtCoderBodyStyler class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtCoderBodyStyler >> mStyleFromToWith: aLookup [
 	<typShaMethod: 'styleFrom:to:with:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
@@ -25,7 +24,6 @@ TypShaGtGtCoderBodyStyler >> mStyleFromToWith: aLookup [
 { #category : #shadow }
 TypShaGtGtCoderBodyStyler >> mVisitArgumentNode: aLookup [
 	<typShaMethod: 'visitArgumentNode:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {RBArgumentNode typAsType}
@@ -34,7 +32,6 @@ TypShaGtGtCoderBodyStyler >> mVisitArgumentNode: aLookup [
 { #category : #shadow }
 TypShaGtGtCoderBodyStyler >> mVisitArrayNode: aLookup [
 	<typShaMethod: 'visitArrayNode:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {RBArrayNode typAsType}
@@ -43,7 +40,6 @@ TypShaGtGtCoderBodyStyler >> mVisitArrayNode: aLookup [
 { #category : #shadow }
 TypShaGtGtCoderBodyStyler >> mVisitAssignmentNode: aLookup [
 	<typShaMethod: 'visitAssignmentNode:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {RBAssignmentNode typAsType}
@@ -52,7 +48,6 @@ TypShaGtGtCoderBodyStyler >> mVisitAssignmentNode: aLookup [
 { #category : #shadow }
 TypShaGtGtCoderBodyStyler >> mVisitBlockNode: aLookup [
 	<typShaMethod: 'visitBlockNode:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {RBBlockNode typAsType}
@@ -61,7 +56,6 @@ TypShaGtGtCoderBodyStyler >> mVisitBlockNode: aLookup [
 { #category : #shadow }
 TypShaGtGtCoderBodyStyler >> mVisitGlobalNode: aLookup [
 	<typShaMethod: 'visitGlobalNode:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {RBGlobalNode typAsType}
@@ -70,7 +64,6 @@ TypShaGtGtCoderBodyStyler >> mVisitGlobalNode: aLookup [
 { #category : #shadow }
 TypShaGtGtCoderBodyStyler >> mVisitInstanceVariableNode: aLookup [
 	<typShaMethod: 'visitInstanceVariableNode:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {RBInstanceVariableNode typAsType}
@@ -79,7 +72,6 @@ TypShaGtGtCoderBodyStyler >> mVisitInstanceVariableNode: aLookup [
 { #category : #shadow }
 TypShaGtGtCoderBodyStyler >> mVisitLiteralArrayNode: aLookup [
 	<typShaMethod: 'visitLiteralArrayNode:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {RBLiteralArrayNode typAsType}
@@ -88,7 +80,6 @@ TypShaGtGtCoderBodyStyler >> mVisitLiteralArrayNode: aLookup [
 { #category : #shadow }
 TypShaGtGtCoderBodyStyler >> mVisitLiteralNode: aLookup [
 	<typShaMethod: 'visitLiteralNode:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {RBLiteralNode typAsType}
@@ -97,7 +88,6 @@ TypShaGtGtCoderBodyStyler >> mVisitLiteralNode: aLookup [
 { #category : #shadow }
 TypShaGtGtCoderBodyStyler >> mVisitMessageNode: aLookup [
 	<typShaMethod: 'visitMessageNode:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {RBMessageNode typAsType}
@@ -106,7 +96,6 @@ TypShaGtGtCoderBodyStyler >> mVisitMessageNode: aLookup [
 { #category : #shadow }
 TypShaGtGtCoderBodyStyler >> mVisitMethodNode: aLookup [
 	<typShaMethod: 'visitMethodNode:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {RBMethodNode typAsType}
@@ -115,7 +104,6 @@ TypShaGtGtCoderBodyStyler >> mVisitMethodNode: aLookup [
 { #category : #shadow }
 TypShaGtGtCoderBodyStyler >> mVisitReturnNode: aLookup [
 	<typShaMethod: 'visitReturnNode:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {RBReturnNode typAsType}
@@ -124,7 +112,6 @@ TypShaGtGtCoderBodyStyler >> mVisitReturnNode: aLookup [
 { #category : #shadow }
 TypShaGtGtCoderBodyStyler >> mVisitSelfNode: aLookup [
 	<typShaMethod: 'visitSelfNode:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {RBSelfNode typAsType}
@@ -133,7 +120,6 @@ TypShaGtGtCoderBodyStyler >> mVisitSelfNode: aLookup [
 { #category : #shadow }
 TypShaGtGtCoderBodyStyler >> mVisitSuperNode: aLookup [
 	<typShaMethod: 'visitSuperNode:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {RBSuperNode typAsType}
@@ -142,7 +128,6 @@ TypShaGtGtCoderBodyStyler >> mVisitSuperNode: aLookup [
 { #category : #shadow }
 TypShaGtGtCoderBodyStyler >> mVisitTemporaryNode: aLookup [
 	<typShaMethod: 'visitTemporaryNode:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {RBTemporaryNode typAsType}
@@ -151,7 +136,6 @@ TypShaGtGtCoderBodyStyler >> mVisitTemporaryNode: aLookup [
 { #category : #shadow }
 TypShaGtGtCoderBodyStyler >> mVisitThisContextNode: aLookup [
 	<typShaMethod: 'visitThisContextNode:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType new
 		arguments: {RBThisContextNode typAsType}
@@ -159,6 +143,6 @@ TypShaGtGtCoderBodyStyler >> mVisitThisContextNode: aLookup [
 
 { #category : #'as yet unclassified' }
 TypShaGtGtCoderBodyStyler >> vText: aLookup [
-	<typShaForVariable: #text>
+	<typShaVariable: #text>
 	^ BlText typAsType
 ]

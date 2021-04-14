@@ -12,7 +12,6 @@ TypShaPhaCompiledMethod class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaCompiledMethod >> mAssignmentNodes: aLookup [
 	<typShaMethod: 'assignmentNodes'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(Collection typAsType copyWithParameters: {RBAssignmentNode typAsType})
@@ -21,21 +20,18 @@ TypShaPhaCompiledMethod >> mAssignmentNodes: aLookup [
 { #category : #shadow }
 TypShaPhaCompiledMethod >> mAst: aLookup [
 	<typShaMethod: 'ast'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: RBMethodNode typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaCompiledMethod >> mIsAbstract: aLookup [
 	<typShaMethod: 'isAbstract'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaCompiledMethod >> mMethodClass: aLookup [
 	<typShaMethod: 'methodClass'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: ClassDescription typAsType
 ]
@@ -43,14 +39,12 @@ TypShaPhaCompiledMethod >> mMethodClass: aLookup [
 { #category : #shadow }
 TypShaPhaCompiledMethod >> mNumArgs: aLookup [
 	<typShaMethod: 'numArgs'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaCompiledMethod >> mPragmas: aLookup [
 	<typShaMethod: 'pragmas'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -60,7 +54,6 @@ TypShaPhaCompiledMethod >> mPragmas: aLookup [
 { #category : #shadow }
 TypShaPhaCompiledMethod >> mReflectiveMethod: aLookup [
 	<typShaMethod: 'reflectiveMethod'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: ReflectiveMethod typAsType asNullable
 ]
@@ -68,14 +61,12 @@ TypShaPhaCompiledMethod >> mReflectiveMethod: aLookup [
 { #category : #shadow }
 TypShaPhaCompiledMethod >> mSelector: aLookup [
 	<typShaMethod: 'selector'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Symbol typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaCompiledMethod >> mSourceCode: aLookup [
 	<typShaMethod: 'sourceCode'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]
 

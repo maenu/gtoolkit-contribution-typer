@@ -12,7 +12,6 @@ TypShaPhaAssociation class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaAssociation >> mKey: aLookup [
 	<typShaMethod: 'key'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
 ]
@@ -20,7 +19,6 @@ TypShaPhaAssociation >> mKey: aLookup [
 { #category : #shadow }
 TypShaPhaAssociation >> mValue: aLookup [
 	<typShaMethod: 'value'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: '@B')
 ]

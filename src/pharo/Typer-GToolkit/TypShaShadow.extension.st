@@ -2,8 +2,8 @@ Extension { #name : #TypShaShadow }
 
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtNewShadowFor: aClass [
-	<typTypeArgument: 1 as: 'ClassDescription'>
-	<typTypeResultAs: 'TypShaShadow class'>
+	<typPraResult: 'TypShaShadow class'>
+	<typPraArguments: 'ClassDescription'>
 	| shadow |
 	shadow := TypShaShadow
 		subclass: 'Sha_' , aClass instanceSide name
@@ -19,10 +19,8 @@ TypShaShadow class >> typGtNewShadowFor: aClass [
 
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowClassInstanceMethod: aSymbol arguments: someTypes result: aType [
-	<typTypeArgument: 1 as: 'Symbol'>
-	<typTypeArgument: 2 as: 'SequenceableCollection<TypType>'>
-	<typTypeArgument: 3 as: 'TypType'>
-	<typTypeResultAs: 'CompiledMethod()->Object'>
+	<typPraResult: 'CompiledMethod()->Object'>
+	<typPraArguments: 'Symbol,SequenceableCollection<TypType>,TypType'>
 	| name_ |
 	name_ := (aSymbol isBinary
 		ifTrue: [ '~~~' , aSymbol ]
@@ -62,9 +60,8 @@ TypShaShadow class >> typGtShadowClassInstanceMethod: aSymbol arguments: someTyp
 
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowClassInstanceVariable: aSymbol type: aType [
-	<typTypeArgument: 1 as: 'Symbol'>
-	<typTypeArgument: 2 as: 'TypType'>
-	<typTypeResultAs: 'CompiledMethod()->Object'>
+	<typPraResult: 'CompiledMethod()->Object'>
+	<typPraArguments: 'Symbol,TypType'>
 	| name_ method |
 	name_ := '___' , aSymbol.
 	(self class hasInstVarNamed: name_)
@@ -94,9 +91,8 @@ TypShaShadow class >> typGtShadowClassInstanceVariable: aSymbol type: aType [
 
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowClassVariable: aSymbol type: aType [
-	<typTypeArgument: 1 as: 'Symbol'>
-	<typTypeArgument: 2 as: 'TypType'>
-	<typTypeResultAs: 'CompiledMethod()->Object'>
+	<typPraResult: 'CompiledMethod()->Object'>
+	<typPraArguments: 'Symbol,TypType'>
 	| name_ method |
 	name_ := '___' , aSymbol.
 	(self hasClassVarNamed: name_)
@@ -107,7 +103,8 @@ TypShaShadow class >> typGtShadowClassVariable: aSymbol type: aType [
 					'initialize
 	super initialize' ].
 	method := self class compiledMethodAt: #initialize.
-	(method ast variableWriteNodes anySatisfy: [ :e | e variable name = name_ ])
+	(method ast variableWriteNodes
+		anySatisfy: [ :e | e variable name = name_ ])
 		ifFalse: [ self
 				compile:
 					method sourceCode
@@ -125,18 +122,17 @@ TypShaShadow class >> typGtShadowClassVariable: aSymbol type: aType [
 
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowFor: aClass [
-	<typTypeArgument: 1 as: 'ClassDescription'>
-	<typTypeResultAs: 'SequenceableCollection<TypShaShadow class>'>
-	^ self allSubclasses "typParameters TypShaShadow class"
-		select: [ :e | e shadowedClass == aClass classSide ]
+	<typPraResult: 'SequenceableCollection<TypShaShadow class>'>
+	<typPraArguments: 'ClassDescription'>
+	^ self allSubclasses
+		select:
+			[ :e | "typParameters TypShaShadow class" e shadowedClass == aClass classSide ]
 ]
 
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowInstanceMethod: aSymbol arguments: someTypes result: aType [
-	<typTypeArgument: 1 as: 'Symbol'>
-	<typTypeArgument: 2 as: 'SequenceableCollection<TypType>'>
-	<typTypeArgument: 3 as: 'TypType'>
-	<typTypeResultAs: 'CompiledMethod()->Object'>
+	<typPraResult: 'CompiledMethod()->Object'>
+	<typPraArguments: 'Symbol,SequenceableCollection<TypType>,TypType'>
 	| name_ |
 	name_ := (aSymbol isBinary
 		ifTrue: [ '~~~' , aSymbol ]
@@ -176,9 +172,8 @@ TypShaShadow class >> typGtShadowInstanceMethod: aSymbol arguments: someTypes re
 
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowInstanceVariable: aSymbol type: aType [
-	<typTypeArgument: 1 as: 'Symbol'>
-	<typTypeArgument: 2 as: 'TypType'>
-	<typTypeResultAs: 'CompiledMethod()->Object'>
+	<typPraResult: 'CompiledMethod()->Object'>
+	<typPraArguments: 'Symbol,TypType'>
 	| name_ method |
 	name_ := '___' , aSymbol.
 	(self hasInstVarNamed: name_)

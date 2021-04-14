@@ -12,6 +12,5 @@ TypShaPhaCompiledCode class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaCompiledCode >> mIsPrimitive: aLookup [
 	<typShaMethod: 'isPrimitive'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]

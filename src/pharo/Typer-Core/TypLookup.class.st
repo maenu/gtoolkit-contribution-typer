@@ -33,7 +33,7 @@ TypLookup >> copyAsSuper [
 
 { #category : #testing }
 TypLookup >> hasSuper [
-	<typTypeResultAs: 'Boolean'>
+	<typPraResult: 'Boolean'>
 	self subclassResponsibility
 ]
 

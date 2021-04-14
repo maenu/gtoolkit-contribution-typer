@@ -12,7 +12,6 @@ TypShaGtGtMethodCoderAddOns class >> shadowedClass [
 { #category : #shadow }
 TypShaGtGtMethodCoderAddOns >> mAddMainActionIconAction: aLookup [
 	<typShaMethod: 'addMainAction:icon:action:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
@@ -24,7 +23,6 @@ TypShaGtGtMethodCoderAddOns >> mAddMainActionIconAction: aLookup [
 { #category : #shadow }
 TypShaGtGtMethodCoderAddOns >> mAddShortcut: aLookup [
 	<typShaMethod: 'addShortcut:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {BlShortcut typAsType}
@@ -33,7 +31,6 @@ TypShaGtGtMethodCoderAddOns >> mAddShortcut: aLookup [
 { #category : #shadow }
 TypShaGtGtMethodCoderAddOns >> mAddStyler: aLookup [
 	<typShaMethod: 'addStyler:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: {GtRBASTStyler typAsType}
@@ -42,7 +39,6 @@ TypShaGtGtMethodCoderAddOns >> mAddStyler: aLookup [
 { #category : #shadow }
 TypShaGtGtMethodCoderAddOns >> mStylers: aLookup [
 	<typShaMethod: 'stylers'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -51,13 +47,13 @@ TypShaGtGtMethodCoderAddOns >> mStylers: aLookup [
 
 { #category : #'as yet unclassified' }
 TypShaGtGtMethodCoderAddOns >> vModified: aLookup [
-	<typShaForVariable: #modified>
+	<typShaVariable: #modified>
 	^ Set typAsType copyWithParameters: {Symbol typAsType}
 ]
 
 { #category : #accessing }
 TypShaGtGtMethodCoderAddOns >> vStylers: aLookup [
-	<typShaForVariable: #stylers>
+	<typShaVariable: #stylers>
 	^ SequenceableCollection typAsType
 		copyWithParameters: {GtRBASTStyler typAsType}
 ]

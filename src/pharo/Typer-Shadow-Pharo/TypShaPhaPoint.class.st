@@ -12,6 +12,5 @@ TypShaPhaPoint class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaPoint >> mAbs: aLookup [
 	<typShaMethod: 'abs'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Number typAsType
 ]

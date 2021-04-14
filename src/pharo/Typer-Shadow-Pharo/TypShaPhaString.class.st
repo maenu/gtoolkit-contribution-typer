@@ -12,14 +12,12 @@ TypShaPhaString class >> shadowedClass [
 { #category : #shadow }
 TypShaPhaString >> mAsClass: aLookup [
 	<typShaMethod: 'asClass'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: Class typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaString >> mAsClassInEnvironmentIfAbsent: aLookup [
 	<typShaMethod: 'asClassInEnvironment:ifAbsent:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			{Class typAsType.
@@ -32,14 +30,12 @@ TypShaPhaString >> mAsClassInEnvironmentIfAbsent: aLookup [
 { #category : #shadow }
 TypShaPhaString >> mAsPackage: aLookup [
 	<typShaMethod: 'asPackage'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: RPackage typAsType
 ]
 
 { #category : #shadow }
 TypShaPhaString >> mIncludesSubstring: aLookup [
 	<typShaMethod: 'includesSubstring:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {String typAsType}
@@ -48,7 +44,6 @@ TypShaPhaString >> mIncludesSubstring: aLookup [
 { #category : #shadow }
 TypShaPhaString >> mJoin: aLookup [
 	<typShaMethod: 'join:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: String typAsType
 		arguments: {(Collection typAsType copyWithParameters: {String typAsType})}
@@ -57,7 +52,6 @@ TypShaPhaString >> mJoin: aLookup [
 { #category : #shadow }
 TypShaPhaString >> mKeywords: aLookup [
 	<typShaMethod: 'keywords'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -67,7 +61,6 @@ TypShaPhaString >> mKeywords: aLookup [
 { #category : #shadow }
 TypShaPhaString >> mSplit: aLookup [
 	<typShaMethod: 'split:'>
-	<typMigrated>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
@@ -78,7 +71,6 @@ TypShaPhaString >> mSplit: aLookup [
 { #category : #shadow }
 TypShaPhaString >> mTranslated: aLookup [
 	<typShaMethod: 'translated'>
-	<typMigrated>
 	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]
 

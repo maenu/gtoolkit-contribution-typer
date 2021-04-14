@@ -10,32 +10,32 @@ Class {
 
 { #category : #accessing }
 TypGtTypeCursorAttribute >> attribute [
-	<typTypeResultAs: 'BrTextAdornmentAttribute'>
+	<typPraResult: 'BrTextAdornmentAttribute'>
 	^ attribute
 ]
 
 { #category : #accessing }
 TypGtTypeCursorAttribute >> attribute: anObject [
-	<typTypeArgument: 1 as: 'BrTextAdornmentAttribute'>
+	<typPraArguments: 'BrTextAdornmentAttribute'>
 	attribute := anObject
 ]
 
 { #category : #accessing }
 TypGtTypeCursorAttribute >> coder [
-	<typTypeResultAs: 'TypGtMethodCoder'>
+	<typPraResult: 'TypGtMethodCoder'>
 	^ coder
 ]
 
 { #category : #accessing }
 TypGtTypeCursorAttribute >> coder: anObject [
-	<typTypeArgument: 1 as: 'TypGtMethodCoder'>
+	<typPraArguments: 'TypGtMethodCoder'>
 	coder := anObject
 ]
 
 { #category : #initialization }
 TypGtTypeCursorAttribute >> initialize [
-	<typTypeVariable: 'attribute' as: 'BrTextAdornmentAttribute'>
-	<typTypeVariable: 'coder' as: 'TypGtMethodCoder'>
+	<typPraVariable: 'attribute' as: 'BrTextAdornmentAttribute'>
+	<typPraVariable: 'coder' as: 'TypGtMethodCoder'>
 	super initialize.
 	self
 		enterAction: [ :aTextEditor :anEvent | 

@@ -31,12 +31,12 @@ TypInfTemporaryExecutionOrderVisitor class >> typesFor: aNode in: anotherNode de
 
 { #category : #visiting }
 TypInfTemporaryExecutionOrderVisitor >> initialize [
-	<typTypeVariable: 'node' as: 'RBTemporaryNode'>
-	<typTypeVariable: 'definer' as: '{!,RBSequenceNode}'>
-	<typTypeVariable: 'types' as: 'OrderedCollection<TypType>'>
-	<typTypeVariable: 'stopped' as: 'Boolean'>
+	<typPraVariable: 'node' as: 'RBTemporaryNode'>
+	<typPraVariable: 'definer' as: '{!,RBSequenceNode}'>
+	<typPraVariable: 'types' as: 'OrderedCollection<TypType>'>
+	<typPraVariable: 'stopped' as: 'Boolean'>
 	super initialize.
-	types := OrderedCollection new "typParameters TypType".
+	types := OrderedCollection new.	"typParameters TypType"
 	stopped := false
 ]
 
