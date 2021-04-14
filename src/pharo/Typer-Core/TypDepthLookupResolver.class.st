@@ -4,12 +4,19 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
+{ #category : #accessing }
+TypDepthLookupResolver >> canResolve: aLookup [
+	^ (resolver canResolve: aLookup)
+		or: [ aLookup hasSuper and: [ self canResolve: aLookup copyAsSuper ] ]
+]
+
 { #category : #resolving }
 TypDepthLookupResolver >> resolve: aLookup [
 	| results result |
+	self assert: [ self canResolve: aLookup ].
 	result := resolver resolve: aLookup.
 	results := OrderedCollection with: result.
-	(result isUnknown and: [ aLookup hasSuper ])
+	aLookup hasSuper
 		ifTrue: [ results add: (self resolve: aLookup copyAsSuper) ].
 	^ self reduce: results
 ]

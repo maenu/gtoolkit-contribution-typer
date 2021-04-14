@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #accessing }
+TypLookupResolver >> canResolve: aLookup [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
 TypLookupResolver >> reduce: aCollection [
 	aCollection ifEmpty: [ ^ self unknown ].
 	aCollection sort.

@@ -7,6 +7,14 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
+{ #category : #accessing }
+TypCachingLookupResolver >> canResolve: aLookup [
+	^ cache
+		at: aLookup
+		ifPresent: [ true ]
+		ifAbsent: [ resolver canResolve: aLookup ]
+]
+
 { #category : #initialization }
 TypCachingLookupResolver >> initialize [
 	<typPraVariable: 'resolver' as: 'TypLookupResolver'>
@@ -23,6 +31,7 @@ TypCachingLookupResolver >> reset [
 
 { #category : #accessing }
 TypCachingLookupResolver >> resolve: aLookup [
+	self assert: [ self canResolve: aLookup ].
 	^ cache
 		at: aLookup
 		ifAbsent: [ cache

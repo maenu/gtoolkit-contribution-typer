@@ -14,6 +14,11 @@ TypBreadthLookupResolver class >> resolvers: aCollection [
 		yourself
 ]
 
+{ #category : #accessing }
+TypBreadthLookupResolver >> canResolve: aLookup [
+	^ resolvers anySatisfy: [ :e | e canResolve: aLookup ]
+]
+
 { #category : #initialization }
 TypBreadthLookupResolver >> initialize [
 	<typPraVariable: 'resolvers' as: 'SequenceableCollection<TypLookupResolver>'>
@@ -34,5 +39,10 @@ TypBreadthLookupResolver >> reset [
 
 { #category : #accessing }
 TypBreadthLookupResolver >> resolve: aLookup [
-	^ self reduce: (resolvers collect: [ :e | e resolve: aLookup copy ])
+	self assert: [ self canResolve: aLookup ].
+	^ self
+		reduce:
+			(resolvers
+				select: [ :e | e canResolve: aLookup ]
+				thenCollect: [ :e | e resolve: aLookup copy ])
 ]
