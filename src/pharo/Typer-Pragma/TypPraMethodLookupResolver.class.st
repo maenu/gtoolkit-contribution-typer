@@ -9,11 +9,11 @@ TypPraMethodLookupResolver >> canResolve: aLookup [
 	^ aLookup receiver isNamed
 		and: [ aLookup receiver hasClassDescription
 				and:
-					[ aLookup receiver classDescription includesSelector: aLookup selector ] ]
+					[ aLookup receiver classDescription typPraHasMethod: aLookup selector ] ]
 ]
 
 { #category : #accessing }
 TypPraMethodLookupResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
-	^ (aLookup receiver classDescription >> aLookup selector) typPraType
+	^ aLookup receiver classDescription typPraMethod: aLookup selector
 ]

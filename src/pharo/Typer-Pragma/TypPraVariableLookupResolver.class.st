@@ -8,25 +8,13 @@ Class {
 TypPraVariableLookupResolver >> canResolve: aLookup [
 	^ aLookup receiver isNamed
 		and: [ aLookup receiver hasClassDescription
-				and:
-					[ aLookup receiver classDescription includesSelector: #initialize ] ]
+				and: [ aLookup receiver hasClassDescription
+						typPraHasVariable: aLookup selector ] ]
 ]
 
 { #category : #accessing }
 TypPraVariableLookupResolver >> resolve: aLookup [
-	| pragmas pragma |
 	self assert: [ self canResolve: aLookup ].
-	pragmas := (aLookup receiver classDescription
-		lookupSelector: #initialize)
-		ifNil: [ ^ self unknown ]
-		ifNotNil: #typPraAllPragmas.
-	pragma := pragmas
-		detect: [ :e | 
-			e selector = #typTypeVariable:as:
-				and: [ e arguments first = aLookup selector ] ]
-		ifNone: [ ^ self unknown ].
 	self flag: 'FIXME parameters not covered yet, scopes'.
-	^ pragma arguments second typAsType
-		addOrigin: aLookup asOrigin;
-		yourself
+	^ aLookup receiver classDescription typPraVariable: aLookup selector
 ]

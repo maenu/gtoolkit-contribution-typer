@@ -16,8 +16,8 @@ CompiledMethod >> typPraHasTypePragmas [
 ]
 
 { #category : #'*Typer-Pragma' }
-CompiledMethod >> typPraHasVariablePragmas [
-	^ self pragmas anySatisfy: #typPraIsVariable
+CompiledMethod >> typPraHasVariablePragma: aString [
+	^ self pragmas anySatisfy: [ :e | e typPraIsVariable: aString ]
 ]
 
 { #category : #'*Typer-Pragma' }
@@ -36,4 +36,11 @@ CompiledMethod >> typPraType [
 { #category : #'*Typer-Pragma' }
 CompiledMethod >> typPraTypeInject: aType [
 	^ self pragmas inject: aType into: [ :t :p | p typPraTypeInject: t ]
+]
+
+{ #category : #'*Typer-Pragma' }
+CompiledMethod >> typPraVariable: aString [
+	^ self pragmas
+		detect: [ :e | e typPraIsVariable: aString ]
+		ifFound: #typPraVariable
 ]

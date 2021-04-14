@@ -45,6 +45,16 @@ Pragma >> typPraIsType [
 ]
 
 { #category : #'*Typer-Pragma' }
+Pragma >> typPraIsVariable: aString [
+	^ selector = #typPraVariable:as: and: [ arguments first = aString ]
+]
+
+{ #category : #'*Typer-Pragma' }
+Pragma >> typPraIsVariableAs [
+ ^ selector = #typPraVariable:as:
+]
+
+{ #category : #'*Typer-Pragma' }
 Pragma >> typPraMethodInject: aType [
 	self typPraIsResult
 		ifTrue: [ ^ self typPraResultInject: aType ].
@@ -94,4 +104,9 @@ Pragma >> typPraTypeInject: aType [
 	self typPraIsSuperTypeBindTo
 		ifTrue: [ ^ self typPraSuperTypeBindToInject: aType ].
 	^ aType
+]
+
+{ #category : #'*Typer-Pragma' }
+Pragma >> typPraVariable [
+	^ arguments second typAsType
 ]
