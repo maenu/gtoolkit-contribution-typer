@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypPraTypeLookupResolver >> canResolve: aLookup [
-	^ true
+	^ aLookup classDescription typPraHasType
 ]
 
 { #category : #accessing }

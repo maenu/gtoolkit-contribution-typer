@@ -7,7 +7,9 @@ Class {
 { #category : #accessing }
 TypPraVariableLookupResolver >> canResolve: aLookup [
 	^ aLookup receiver isNamed
-		and: [ aLookup receiver hasClassDescription ]
+		and: [ aLookup receiver hasClassDescription
+				and:
+					[ aLookup receiver classDescription includesSelector: #initialize ] ]
 ]
 
 { #category : #accessing }

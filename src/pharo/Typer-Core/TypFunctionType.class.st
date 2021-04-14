@@ -200,3 +200,8 @@ TypFunctionType >> result [
 TypFunctionType >> signalsAlways [
 	^ signalsAlways
 ]
+
+{ #category : #accessing }
+TypFunctionType >> signalsAlways: aBoolean [
+	signalsAlways := aBoolean
+]

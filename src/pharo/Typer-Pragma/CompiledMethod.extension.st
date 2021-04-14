@@ -6,41 +6,31 @@ CompiledMethod >> typPraAllPragmas [
 ]
 
 { #category : #'*Typer-Pragma' }
-CompiledMethod >> typPraArguments [
-	| arguments |
-	arguments := (1 to: self numArgs)
-		collect: [ :i | TypUnknownType new ].
-	self pragmas
-		select: [ :e | e selector = #typTypeArgument:as: ]
-		thenDo:
-			[ :e | arguments at: e arguments first put: e arguments second typAsType ].
-	^ arguments
+CompiledMethod >> typPraHasMethodPragmas [
+	^ self pragmas anySatisfy: #typPraIsMethod
 ]
 
 { #category : #'*Typer-Pragma' }
-CompiledMethod >> typPraResult [
-	^ self pragmas
-		detect: [ :e | e selector = #typTypeResultAs: ]
-		ifFound: [ :e | e arguments first typAsType ]
-		ifNone: [ TypUnknownType new ]
+CompiledMethod >> typPraHasTypePragmas [
+	^ self pragmas anySatisfy: #typPraIsType
 ]
 
 { #category : #'*Typer-Pragma' }
-CompiledMethod >> typPraSignalsAlways [
-	^ self pragmas
-		detect: [ :e | e selector = #typSignalsAlways: ]
-		ifFound: [ :e | e arguments first ]
-		ifNone: [ nil ]
+CompiledMethod >> typPraHasVariablePragmas [
+	^ self pragmas anySatisfy: #typPraIsVariable
 ]
 
 { #category : #'*Typer-Pragma' }
 CompiledMethod >> typPraType [
-	^ TypFunctionType
-		classDescription: self class
-		result: self typPraResult
-		arguments: self typPraArguments
-		argumentsOptional: false
-		signalsAlways: self typPraSignalsAlways
+	^ self pragmas
+		inject:
+			(TypFunctionType
+				classDescription: self class
+				result: TypUnknownType new
+				arguments: ((1 to: self numArgs) collect: [ :i | TypUnknownType new ])
+				argumentsOptional: false
+				signalsAlways: nil)
+		into: [ :t :p | p typPraMethodInject: t ]
 ]
 
 { #category : #'*Typer-Pragma' }
