@@ -25,12 +25,16 @@ TypMethodLookupIndex class >> instance [
 
 { #category : #accessing }
 TypMethodLookupIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aCollection [
-	^ resolver
-		resolve:
-			(TypMethodLookup
-				receiver: aType
-				selector: aSymbol
-				arguments: aCollection)
+	| lookup |
+	lookup := TypMethodLookup
+		receiver: aType
+		selector: aSymbol
+		arguments: aCollection.
+	(resolver canResolve: lookup)
+		ifFalse: [ ^ TypUnknownType new
+				addOrigin: (TypLookupOrigin lookup: lookup);
+				yourself ].
+	^ resolver resolve: lookup
 ]
 
 { #category : #initialization }

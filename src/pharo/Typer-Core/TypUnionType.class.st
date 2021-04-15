@@ -56,6 +56,20 @@ TypUnionType >> > aType [
 	^ aType types allSatisfy: [ :e | self >= e ]
 ]
 
+{ #category : #accessing }
+TypUnionType >> arguments [
+	| arguments |
+	arguments := OrderedCollection new.
+	types
+		do: [ :e | 
+			e arguments
+				withIndexDo: [ :f :i | 
+					[ i < arguments size ]
+						whileFalse: [ arguments add: OrderedCollection new ].
+					(arguments at: i) add: f ] ].
+	^ arguments collect: #typAsType
+]
+
 { #category : #converting }
 TypUnionType >> asNonNullable [
 	^ self isNullable
@@ -78,11 +92,18 @@ TypUnionType >> asNullable [
 				yourself ]
 ]
 
+{ #category : #accessing }
+TypUnionType >> at: aString [
+	^ (types collect: [ :e | e at: aString ]) typAsType
+]
+
 { #category : #testing }
 TypUnionType >> hasSuperType [
 	superType
 		ifNil: [ | remains nil_ unknown current |
-			remains := types copy.
+			remains := types
+				rehash;
+				copy.
 			nil_ := remains includes: TypNilType new.
 			nil_
 				ifTrue: [ remains remove: TypNilType new ].
@@ -114,7 +135,7 @@ TypUnionType >> hasSuperType [
 			unknown
 				ifTrue: [ remains add: TypUnknownType new ].
 			superType := remains typAsType ].
-	^ superType isUnion not or: [ superType types size < types size ]
+	^ superType isUnion not or: [ superType types ~= types ]
 ]
 
 { #category : #comparing }

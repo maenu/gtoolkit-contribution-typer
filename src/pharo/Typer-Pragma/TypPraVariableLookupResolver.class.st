@@ -8,7 +8,7 @@ Class {
 TypPraVariableLookupResolver >> canResolve: aLookup [
 	^ aLookup receiver isNamed
 		and: [ aLookup receiver hasClassDescription
-				and: [ aLookup receiver hasClassDescription
+				and: [ aLookup receiver classDescription
 						typPraHasVariable: aLookup selector ] ]
 ]
 

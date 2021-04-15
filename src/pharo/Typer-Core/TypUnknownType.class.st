@@ -11,7 +11,7 @@ TypUnknownType >> > aType [
 
 { #category : #accessing }
 TypUnknownType >> arguments [
-	^ self
+	^ #()
 ]
 
 { #category : #polymorphic }

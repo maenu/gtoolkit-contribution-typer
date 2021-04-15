@@ -18,6 +18,6 @@ TypShaTypeLookupResolver >> resolve: aLookup [
 				collect: [ :f | 
 					(f resolveType: aLookup)
 						addOrigin: (TypLookupOrigin lookup: aLookup);
-						addOrigin: (TypShaMethodOrigin method: f class >> #resolveType:);
+						addOrigin: (TypShaMethodOrigin method: (f class lookupSelector: #resolveType:));
 						yourself ])
 ]

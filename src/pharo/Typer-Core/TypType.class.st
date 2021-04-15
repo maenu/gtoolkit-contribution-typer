@@ -128,8 +128,6 @@ TypType >> hasValue [
 TypType >> hash [
 	| hash |
 	hash := nil hash bitXor: 23.
-	self hasValue
-		ifTrue: [ hash := hash bitXor: self value hash ].
 	self hasSuperType
 		ifTrue: [ hash := hash bitXor: self superType hash ].
 	^ hash
