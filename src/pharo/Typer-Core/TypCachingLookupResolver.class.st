@@ -35,6 +35,10 @@ TypCachingLookupResolver >> resolve: aLookup [
 	^ cache
 		at: aLookup
 		ifAbsent: [ cache
-				at: aLookup put: self unknown;
+				at: aLookup
+					put:
+					(TypUnknownType new
+						addOrigin: (TypLookupCacheDefaultOrigin lookup: aLookup);
+						yourself);
 				at: aLookup put: (resolver resolve: aLookup) ]
 ]

@@ -38,5 +38,6 @@ TypLookupOrigin >> lookup [
 
 { #category : #accessing }
 TypLookupOrigin >> printOn: aStream [
+	aStream nextPutAll: 'lookup '.
 	lookup printOn: aStream
 ]

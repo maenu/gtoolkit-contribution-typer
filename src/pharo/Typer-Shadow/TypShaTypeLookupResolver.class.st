@@ -17,7 +17,7 @@ TypShaTypeLookupResolver >> resolve: aLookup [
 			(aLookup root classDescription typShaShadows
 				collect: [ :f | 
 					(f resolveType: aLookup)
-						addOrigin: aLookup asOrigin;
-						addOrigin: (TypDescriptionOrigin description: f class name);
+						addOrigin: (TypLookupOrigin lookup: aLookup);
+						addOrigin: (TypShaMethodOrigin method: f class >> #resolveType:);
 						yourself ])
 ]

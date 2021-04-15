@@ -16,5 +16,7 @@ TypPraVariableLookupResolver >> canResolve: aLookup [
 TypPraVariableLookupResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
 	self flag: 'FIXME parameters not covered yet, scopes'.
-	^ aLookup receiver classDescription typPraVariable: aLookup selector
+	^ (aLookup receiver classDescription typPraVariable: aLookup selector)
+		addOrigin: (TypLookupOrigin lookup: aLookup);
+		yourself
 ]

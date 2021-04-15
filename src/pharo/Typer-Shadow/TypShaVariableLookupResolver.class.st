@@ -16,8 +16,5 @@ TypShaVariableLookupResolver >> resolve: aLookup [
 	^ self
 		reduce:
 			(aLookup receiver classDescription typShaShadows
-				flatCollect: [ :e | 
-					(e resolveVariable: aLookup)
-						do: [ :f | f addOrigin: aLookup asOrigin ];
-						yourself ])
+				flatCollect: [ :e | e resolveVariable: aLookup ])
 ]

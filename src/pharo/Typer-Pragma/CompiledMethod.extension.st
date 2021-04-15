@@ -24,12 +24,14 @@ CompiledMethod >> typPraHasVariablePragma: aString [
 CompiledMethod >> typPraType [
 	^ self pragmas
 		inject:
-			(TypFunctionType
+			((TypFunctionType
 				classDescription: self class
 				result: TypUnknownType new
 				arguments: ((1 to: self numArgs) collect: [ :i | TypUnknownType new ])
 				argumentsOptional: false
 				signalsAlways: nil)
+				addOrigin: (TypPraMethodOrigin method: self);
+				yourself)
 		into: [ :t :p | p typPraMethodInject: t ]
 ]
 

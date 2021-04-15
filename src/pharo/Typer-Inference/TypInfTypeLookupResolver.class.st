@@ -13,6 +13,4 @@ TypInfTypeLookupResolver >> canResolve: aLookup [
 TypInfTypeLookupResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
 	^ aLookup classDescription typAsNamedType
-		addOrigin: aLookup asOrigin;
-		yourself
 ]

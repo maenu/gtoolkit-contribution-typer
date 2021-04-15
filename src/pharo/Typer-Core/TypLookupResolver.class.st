@@ -11,11 +11,15 @@ TypLookupResolver >> canResolve: aLookup [
 
 { #category : #accessing }
 TypLookupResolver >> reduce: aCollection [
-	aCollection ifEmpty: [ ^ self unknown ].
+	aCollection
+		ifEmpty: [ ^ TypUnknownType new
+				addOrigin: (TypLookupAlternativeOrigin alternatives: #());
+				yourself ].
 	aCollection sort.
 	^ aCollection first
 		addOrigin:
-			(TypLookupAlternativeOrigin alternatives: aCollection copyWithoutFirst)
+			(TypLookupAlternativeOrigin alternatives: aCollection copyWithoutFirst);
+		yourself
 ]
 
 { #category : #initialization }
@@ -26,11 +30,4 @@ TypLookupResolver >> reset [
 { #category : #accessing }
 TypLookupResolver >> resolve: aLookup [
 	self subclassResponsibility
-]
-
-{ #category : #accessing }
-TypLookupResolver >> unknown [
-	^ TypUnknownType new
-		addOrigin: (TypDescriptionOrigin description: 'no type found');
-		yourself
 ]

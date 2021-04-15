@@ -15,5 +15,7 @@ TypPraMethodLookupResolver >> canResolve: aLookup [
 { #category : #accessing }
 TypPraMethodLookupResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
-	^ aLookup receiver classDescription typPraMethod: aLookup selector
+	^ (aLookup receiver classDescription typPraMethod: aLookup selector)
+		addOrigin: (TypLookupOrigin lookup: aLookup);
+		yourself
 ]

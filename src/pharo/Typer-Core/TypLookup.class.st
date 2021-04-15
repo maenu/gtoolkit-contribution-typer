@@ -21,11 +21,6 @@ TypLookup >> asCollection [
 	^ {self}
 ]
 
-{ #category : #accessing }
-TypLookup >> asOrigin [
-	^ TypLookupOrigin lookup: self
-]
-
 { #category : #copying }
 TypLookup >> copyAsSuper [
 	self subclassResponsibility

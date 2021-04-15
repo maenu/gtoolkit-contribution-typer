@@ -13,4 +13,6 @@ TypPraTypeLookupResolver >> canResolve: aLookup [
 TypPraTypeLookupResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
 	^ aLookup classDescription typPraType
+		addOrigin: (TypLookupOrigin lookup: aLookup);
+		yourself
 ]
