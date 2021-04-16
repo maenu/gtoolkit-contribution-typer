@@ -42,7 +42,6 @@ CompiledMethod >> typPraTypeInject: aType [
 
 { #category : #'*Typer-Pragma' }
 CompiledMethod >> typPraVariable: aString [
-	^ self pragmas
-		detect: [ :e | e typPraIsVariable: aString ]
-		ifFound: #typPraVariable
+	^ (self pragmas detect: [ :e | e typPraIsVariable: aString ])
+		typPraVariable
 ]

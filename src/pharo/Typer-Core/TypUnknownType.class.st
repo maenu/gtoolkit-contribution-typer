@@ -10,8 +10,8 @@ TypUnknownType >> > aType [
 ]
 
 { #category : #accessing }
-TypUnknownType >> arguments [
-	^ #()
+TypUnknownType >> argumentAt: aNumber [
+	^ self
 ]
 
 { #category : #polymorphic }

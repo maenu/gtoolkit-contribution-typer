@@ -73,7 +73,12 @@ TypParametricType >> asCompatibleWith: aType [
 
 { #category : #accessing }
 TypParametricType >> at: aString [
-	^ parameters at: aString ifAbsent: [ TypUnknownType new ]
+	^ parameters at: aString
+]
+
+{ #category : #accessing }
+TypParametricType >> at: aString ifAbsent: aBlock [
+	^ parameters at: aString ifAbsent: aBlock
 ]
 
 { #category : #accessing }

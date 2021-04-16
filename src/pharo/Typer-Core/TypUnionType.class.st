@@ -57,17 +57,8 @@ TypUnionType >> > aType [
 ]
 
 { #category : #accessing }
-TypUnionType >> arguments [
-	| arguments |
-	arguments := OrderedCollection new.
-	types
-		do: [ :e | 
-			e arguments
-				withIndexDo: [ :f :i | 
-					[ i < arguments size ]
-						whileFalse: [ arguments add: OrderedCollection new ].
-					(arguments at: i) add: f ] ].
-	^ arguments collect: #typAsType
+TypUnionType >> argumentAt: aNumber [
+	^ (types collect: [ :e | e argumentAt: aNumber ]) typAsType
 ]
 
 { #category : #converting }
@@ -94,7 +85,16 @@ TypUnionType >> asNullable [
 
 { #category : #accessing }
 TypUnionType >> at: aString [
-	^ (types collect: [ :e | e at: aString ]) typAsType
+	^ (types
+		collect: [ :e | e at: aString ifAbsent: [ TypUnknownType new ] ])
+		typAsType
+]
+
+{ #category : #accessing }
+TypUnionType >> at: aString ifAbsent: aBlock [
+	^ (types
+		collect: [ :e | e at: aString ifAbsent: aBlock ])
+		typAsType
 ]
 
 { #category : #testing }

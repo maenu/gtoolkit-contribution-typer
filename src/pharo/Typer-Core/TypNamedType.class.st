@@ -60,6 +60,13 @@ TypNamedType >> at: aString [
 ]
 
 { #category : #polymorphic }
+TypNamedType >> at: aString ifAbsent: aBlock [
+	self hasSuperType
+		ifFalse: [ ^ aBlock value ].
+	^ self superType at: aString ifAbsent: aBlock
+]
+
+{ #category : #polymorphic }
 TypNamedType >> at: aString put: aType [
 	^ self superType at: aString put: aType
 ]

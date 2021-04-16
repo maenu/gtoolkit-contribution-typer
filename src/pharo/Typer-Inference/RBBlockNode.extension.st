@@ -7,10 +7,10 @@ RBBlockNode >> typInfArgumentType: anArgumentNode [
 		ifFalse: [ ^ self typInfUnknown ].
 	i := parent arguments indexOf: self.
 	j := arguments indexOf: anArgumentNode.
-	argument := parent typInfMethod arguments at: i.
+	argument := parent typInfMethod argumentAt: i.
 	argument isFunction
 		ifFalse: [ ^ self typInfUnknown ].
-	^ argument arguments at: j
+	^ argument argumentAt: j
 ]
 
 { #category : #'*Typer-Inference' }

@@ -2,7 +2,7 @@ Extension { #name : #Pragma }
 
 { #category : #'*Typer-Pragma' }
 Pragma >> typPraArguments: aType [
-	arguments second typAsTypes
+	arguments first typAsTypes
 		withIndexDo: [ :t :i | aType at: '@' , i asString put: t ].
 	^ aType
 ]

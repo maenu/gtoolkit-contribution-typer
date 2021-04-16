@@ -87,15 +87,24 @@ TypFunctionType >> > aType [
 			size := argumentsSize min: aType argumentsSize.
 			size = 0
 				ifTrue: [ ^ true ].
-			^ ((self arguments copyFrom: 1 to: size)
-				with: (aType arguments copyFrom: 1 to: size)
-				collect: [ :a :b | a >= b ]) allSatisfy: #yourself ].
+			^ (1 to: size)
+				allSatisfy: [ :e | (self argumentAt: e) >= (aType argumentAt: e) ] ].
 	aType argumentsOptional
 		ifTrue: [ ^ false ].
 	argumentsSize = aType argumentsSize
 		ifFalse: [ ^ false ].
-	^ (self arguments with: aType arguments collect: [ :a :b | a >= b ])
-		allSatisfy: #yourself
+	^ (1 to: argumentsSize)
+		allSatisfy: [ :e | (self argumentAt: e) >= (aType argumentAt: e) ]
+]
+
+{ #category : #accessing }
+TypFunctionType >> argumentAt: aNumber [
+	^ self at: '@' , aNumber asString
+]
+
+{ #category : #accessing }
+TypFunctionType >> argumentAt: aNumber ifAbsent: aBlock [
+	^ self at: '@' , aNumber asString ifAbsent: aBlock
 ]
 
 { #category : #accessing }
@@ -176,9 +185,9 @@ TypFunctionType >> printOn: aStream skipping: anIdentitySet [
 			(argumentsOptional
 				ifTrue: [ '[' ]
 				ifFalse: [ '(' ]).
-	self arguments
-		withIndexDo: [ :e :i | 
-			e printOn: aStream skipping: anIdentitySet , {self}.
+	(1 to: argumentsSize)
+		do: [ :i | 
+			(self argumentAt: i) printOn: aStream skipping: anIdentitySet , {self}.
 			i < argumentsSize
 				ifTrue: [ aStream << ',' ] ].
 	aStream

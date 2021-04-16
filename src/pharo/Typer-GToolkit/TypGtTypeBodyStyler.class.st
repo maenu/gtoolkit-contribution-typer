@@ -20,13 +20,13 @@ TypGtTypeBodyStyler >> style: aText ast: anAst [
 	ast := coder rbAST.
 	[ ast isMethod
 		ifTrue: [ TypInfSelf
-				value: ast compiledMethod methodClass typAsType
+				value: ast methodClass typAsType
 				during: [ ast typInfType.
 					super style: aText ast: ast ] ]
 		ifFalse: [ ast typInfType.
 			super style: aText ast: ast ] ]
 		on: Error
-		do: [ :e | Halt once ]
+		do: [ :e | Halt   once ]
 ]
 
 { #category : #private }
