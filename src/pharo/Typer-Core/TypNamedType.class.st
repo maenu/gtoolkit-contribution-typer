@@ -144,7 +144,7 @@ TypNamedType >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : #polymorphic }
 TypNamedType >> parameters [
 	^ self superType parameters
 ]

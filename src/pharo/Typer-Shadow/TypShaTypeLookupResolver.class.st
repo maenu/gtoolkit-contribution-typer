@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaTypeLookupResolver >> canResolve: aLookup [
-	^ true
+	^ aLookup classDescription typShaShadows isNotEmpty
 ]
 
 { #category : #accessing }
@@ -14,7 +14,7 @@ TypShaTypeLookupResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
 	^ self
 		reduce:
-			(aLookup root classDescription typShaShadows
+			(aLookup classDescription typShaShadows
 				collect: [ :f | 
 					(f resolveType: aLookup)
 						addOrigin: (TypLookupOrigin lookup: aLookup);

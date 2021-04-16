@@ -56,7 +56,7 @@ TypUnionType >> > aType [
 	^ aType types allSatisfy: [ :e | self >= e ]
 ]
 
-{ #category : #accessing }
+{ #category : #polymorphic }
 TypUnionType >> argumentAt: aNumber [
 	^ (types collect: [ :e | e argumentAt: aNumber ]) typAsType
 ]
@@ -83,14 +83,14 @@ TypUnionType >> asNullable [
 				yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : #polymorphic }
 TypUnionType >> at: aString [
 	^ (types
 		collect: [ :e | e at: aString ifAbsent: [ TypUnknownType new ] ])
 		typAsType
 ]
 
-{ #category : #accessing }
+{ #category : #polymorphic }
 TypUnionType >> at: aString ifAbsent: aBlock [
 	^ (types
 		collect: [ :e | e at: aString ifAbsent: aBlock ])
@@ -214,7 +214,7 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 	aStream << '}'
 ]
 
-{ #category : #accessing }
+{ #category : #polymorphic }
 TypUnionType >> result [
 	^ (types select: #isFunction thenCollect: #result) typAsType
 ]

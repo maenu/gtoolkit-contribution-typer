@@ -9,7 +9,7 @@ TypUnknownType >> > aType [
 	^ aType isUnknown not
 ]
 
-{ #category : #accessing }
+{ #category : #polymorphic }
 TypUnknownType >> argumentAt: aNumber [
 	^ self
 ]

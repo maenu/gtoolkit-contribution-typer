@@ -26,7 +26,7 @@ TypGtTypeBodyStyler >> style: aText ast: anAst [
 		ifFalse: [ ast typInfType.
 			super style: aText ast: ast ] ]
 		on: Error
-		do: [ :e | Halt   once ]
+		do: [ :e | Halt once ]
 ]
 
 { #category : #private }
