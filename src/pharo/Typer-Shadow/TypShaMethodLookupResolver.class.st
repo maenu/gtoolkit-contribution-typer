@@ -8,7 +8,8 @@ Class {
 TypShaMethodLookupResolver >> canResolve: aLookup [
 	^ aLookup receiver isNamed
 		and: [ aLookup receiver hasClassDescription
-				and: [ aLookup receiver classDescription typShaShadows isNotEmpty ] ]
+				and: [ aLookup receiver classDescription typShaShadows
+						anySatisfy: [ :e | e canResolveMethod: aLookup ] ] ]
 ]
 
 { #category : #accessing }

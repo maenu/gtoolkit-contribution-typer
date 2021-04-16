@@ -7,6 +7,23 @@ Class {
 	#category : #'Typer-Shadow-Lookup'
 }
 
+{ #category : #accessing }
+TypShaShadow class >> canResolveMethod: aLookup [
+	^ self class methods
+		anySatisfy: [ :e | e typShaResolvesMethod: aLookup selector ]
+]
+
+{ #category : #accessing }
+TypShaShadow class >> canResolveType: aLookup [
+	^ self class includesMethod: #resolveType:
+]
+
+{ #category : #accessing }
+TypShaShadow class >> canResolveVariable: aLookup [
+	^ self class methods
+		anySatisfy: [ :e | e typShaResolvesVariable: aLookup selector ]
+]
+
 { #category : #'class initialization' }
 TypShaShadow class >> instance [
 	^ instance ifNil: [ instance := self new initialize ]
@@ -55,6 +72,23 @@ TypShaShadow class >> resolveVariable: aLookup [
 TypShaShadow class >> shadowedClass [
 	<typPraResult: 'MetaClass'>
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+TypShaShadow >> canResolveMethod: aLookup [
+	^ self class methods
+		anySatisfy: [ :e | e typShaResolvesMethod: aLookup selector ]
+]
+
+{ #category : #accessing }
+TypShaShadow >> canResolveType: aLookup [
+	^ self class includesMethod: #resolveType:
+]
+
+{ #category : #accessing }
+TypShaShadow >> canResolveVariable: aLookup [
+	^ self class methods
+		anySatisfy: [ :e | e typShaResolvesVariable: aLookup selector ]
 ]
 
 { #category : #accessing }

@@ -2,5 +2,5 @@ Extension { #name : #RBSuperNode }
 
 { #category : #'*Typer-Inference' }
 RBSuperNode >> typInfTypeRecursive [
-	^ TypInfSelf value superType
+	^ TypInfSelf value ifNil: [ TypUnknownType new ] ifNotNil: #superType
 ]

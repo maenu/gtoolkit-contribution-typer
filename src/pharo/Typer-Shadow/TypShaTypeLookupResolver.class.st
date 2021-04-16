@@ -6,7 +6,8 @@ Class {
 
 { #category : #accessing }
 TypShaTypeLookupResolver >> canResolve: aLookup [
-	^ aLookup classDescription typShaShadows isNotEmpty
+	^ aLookup classDescription typShaShadows
+		anySatisfy: [ :e | e canResolveType: aLookup ]
 ]
 
 { #category : #accessing }
