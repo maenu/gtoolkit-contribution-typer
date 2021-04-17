@@ -29,6 +29,6 @@ TypShaPhaStream >> mNextPutAll: aLookup [
 
 { #category : #accessing }
 TypShaPhaStream >> resolveType: aLookup [
-	^ aLookup classDescription
+	^ aLookup root classDescription
 		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
 ]

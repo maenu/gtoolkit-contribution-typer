@@ -25,6 +25,11 @@ TypVariableLookupIndex class >> instance [
 
 { #category : #accessing }
 TypVariableLookupIndex >> lookupReceiver: aType selector: aSymbol [
-	^ resolver
-		resolve: (TypVariableLookup receiver: aType selector: aSymbol)
+	| lookup |
+	lookup := TypVariableLookup receiver: aType selector: aSymbol.
+	(resolver canResolve: lookup)
+		ifFalse: [ ^ TypUnknownType new
+				addOrigin: (TypLookupOrigin lookup: lookup);
+				yourself ].
+	^ resolver resolve: lookup
 ]

@@ -19,6 +19,6 @@ TypShaGtGtSearchMethodGroupResult class >> shadowedClass [
 
 { #category : #converting }
 TypShaGtGtSearchMethodGroupResult >> resolveType: aLookup [
-	^ aLookup classDescription
+	^ aLookup root classDescription
 		typAsParametricTypeWithParameters: {('@A' -> CompiledMethod typAsType)} asOrderedDictionary
 ]

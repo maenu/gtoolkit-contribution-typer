@@ -15,7 +15,7 @@ TypShaShadow class >> canResolveMethod: aLookup [
 
 { #category : #accessing }
 TypShaShadow class >> canResolveType: aLookup [
-	^ self class includesMethod: #resolveType:
+	^ self class includesSelector: #resolveType:
 ]
 
 { #category : #accessing }
@@ -54,7 +54,7 @@ TypShaShadow class >> resolveMethod: aLookup [
 
 { #category : #accessing }
 TypShaShadow class >> resolveType: aLookup [
-	^ aLookup classDescription typAsNamedType
+	^ aLookup root classDescription typAsNamedType
 ]
 
 { #category : #accessing }
@@ -82,7 +82,7 @@ TypShaShadow >> canResolveMethod: aLookup [
 
 { #category : #accessing }
 TypShaShadow >> canResolveType: aLookup [
-	^ self class includesMethod: #resolveType:
+	^ self class includesSelector: #resolveType:
 ]
 
 { #category : #accessing }
@@ -104,7 +104,7 @@ TypShaShadow >> resolveMethod: aLookup [
 
 { #category : #converting }
 TypShaShadow >> resolveType: aLookup [
-	^ aLookup classDescription typAsNamedType
+	^ aLookup root classDescription typAsNamedType
 ]
 
 { #category : #accessing }

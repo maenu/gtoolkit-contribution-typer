@@ -505,6 +505,6 @@ TypShaPhaCollection >> mSize: aLookup [
 
 { #category : #accessing }
 TypShaPhaCollection >> resolveType: aLookup [
-	^ aLookup classDescription
+	^ aLookup root classDescription
 		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
 ]

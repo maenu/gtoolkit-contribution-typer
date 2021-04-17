@@ -118,6 +118,6 @@ TypShaPhaBlockClosure >> mWhileTrue: aLookup [
 
 { #category : #accessing }
 TypShaPhaBlockClosure >> resolveType: aLookup [
-	^ aLookup classDescription
+	^ aLookup root classDescription
 		typAsFunctionTypeWithResult: TypUnknownType new
 ]

@@ -36,6 +36,6 @@ TypShaPhaOrderedCollection >> mRemoveLast: aLookup [
 
 { #category : #converting }
 TypShaPhaOrderedCollection >> resolveType: aLookup [
-	^ aLookup classDescription
+	^ aLookup root classDescription
 		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
 ]

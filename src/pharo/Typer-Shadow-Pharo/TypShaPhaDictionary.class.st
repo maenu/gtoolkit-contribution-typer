@@ -211,7 +211,7 @@ TypShaPhaDictionary >> mValues: aLookup [
 
 { #category : #accessing }
 TypShaPhaDictionary >> resolveType: aLookup [
-	^ aLookup classDescription
+	^ aLookup root classDescription
 		typAsParametricTypeWithParameters:
 			{('@B' -> '@B' typAsVariableType).
 			('@A' -> '@A' typAsVariableType)} asOrderedDictionary

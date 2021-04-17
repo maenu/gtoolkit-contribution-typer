@@ -72,6 +72,6 @@ TypShaPhaCompiledMethod >> mSourceCode: aLookup [
 
 { #category : #accessing }
 TypShaPhaCompiledMethod >> resolveType: aLookup [
-	^ aLookup classDescription
+	^ aLookup root classDescription
 		typAsFunctionTypeWithResult: TypUnknownType new
 ]

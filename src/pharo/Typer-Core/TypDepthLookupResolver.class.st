@@ -12,8 +12,15 @@ TypDepthLookupResolver >> canResolve: aLookup [
 
 { #category : #resolving }
 TypDepthLookupResolver >> resolve: aLookup [
+	| lookup types |
 	self assert: [ self canResolve: aLookup ].
-	(resolver canResolve: aLookup)
-		ifTrue: [ ^ resolver resolve: aLookup ].
-	^ self resolve: aLookup copyAsSuper
+	types := OrderedCollection new.
+	lookup := aLookup.
+	(resolver canResolve: lookup)
+		ifTrue: [ types add: (resolver resolve: lookup) ].
+	[ lookup hasSuper ]
+		whileTrue: [ lookup := lookup copyAsSuper.
+			(resolver canResolve: lookup)
+				ifTrue: [ types add: (resolver resolve: lookup) ] ].
+	^ self reduce: types
 ]

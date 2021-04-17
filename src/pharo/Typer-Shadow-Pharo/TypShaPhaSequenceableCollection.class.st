@@ -182,6 +182,6 @@ TypShaPhaSequenceableCollection >> mWithIndexSelect: aLookup [
 
 { #category : #converting }
 TypShaPhaSequenceableCollection >> resolveType: aLookup [
-	^ aLookup classDescription
+	^ aLookup root classDescription
 		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
 ]

@@ -26,7 +26,12 @@ RBProgramNode >> typInfType [
 				propertyAt: 'typInfType-' , TypInfSelf value asString
 					put: self typInfUnknown;
 				propertyAt: 'typInfType-' , TypInfSelf value asString
-					put: (self typInfAnnotateType: self typInfTypeRecursive) ]
+					put:
+					(self
+						typInfAnnotateType:
+							(self typInfTypeRecursive
+								addOrigin: (TypInfNodeOrigin node: self);
+								yourself)) ]
 ]
 
 { #category : #'*Typer-Inference' }
