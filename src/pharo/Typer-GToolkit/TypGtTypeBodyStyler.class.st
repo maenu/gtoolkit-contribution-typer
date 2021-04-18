@@ -31,7 +31,7 @@ TypGtTypeBodyStyler >> style: aText ast: anAst [
 
 { #category : #private }
 TypGtTypeBodyStyler >> styleFrom: from to: to with: attributes [
-	(from <= text size and: [ to <= text size ])
+	(from <= text size and: [ to <= text size and: [ from <= to ] ])
 		ifTrue: [ super styleFrom: from to: to with: attributes ]
 ]
 

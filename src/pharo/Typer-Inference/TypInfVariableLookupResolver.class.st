@@ -9,8 +9,8 @@ TypInfVariableLookupResolver >> canResolve: aLookup [
 	^ aLookup receiver isNamed
 		and: [ aLookup receiver hasClassDescription
 				and: [ (aLookup receiver classDescription hasSlotNamed: aLookup selector)
-						or: [ aLookup receiver classDescription allClassVarNames
-								includes: aLookup selector ] ] ]
+						or: [ aLookup receiver classDescription instanceSide allClassVariables
+								anySatisfy: [ :e | e name = aLookup selector ] ] ] ]
 ]
 
 { #category : #accessing }
@@ -20,7 +20,7 @@ TypInfVariableLookupResolver >> resolve: aLookup [
 		ifTrue: [ ^ ((aLookup receiver classDescription slotNamed: aLookup selector)
 				assignmentNodes collect: #typInfType) typAsType ].
 	self flag: '...or we just take the type of the value?'.
-	^ ((aLookup receiver classDescription allClassVariables
+	^ ((aLookup receiver classDescription instanceSide allClassVariables
 		detect: [ :e | e name = aLookup selector ]) assignmentNodes
 		collect: #typInfType) typAsType
 ]

@@ -39,10 +39,17 @@ TypBreadthLookupResolver >> reset [
 
 { #category : #accessing }
 TypBreadthLookupResolver >> resolve: aLookup [
+	| results |
 	self assert: [ self canResolve: aLookup ].
-	^ self
-		reduce:
-			(resolvers
-				select: [ :e | e canResolve: aLookup ]
-				thenCollect: [ :e | e resolve: aLookup copy ])
+	results := OrderedCollection new.
+	resolvers
+		do: [ :e | 
+			(e canResolve: aLookup)
+				ifTrue: [ [ results add: (e resolve: aLookup copy) ]
+						on: Error
+						do: [ :f | 
+							f emit.
+							self
+								flag: 'FIXME keep a reference to error vor inspection, beacon?' ] ] ].
+	^ self reduce: results
 ]

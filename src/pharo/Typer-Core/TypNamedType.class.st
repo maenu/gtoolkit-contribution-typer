@@ -157,6 +157,11 @@ TypNamedType >> printOn: aStream skipping: anIdentitySet [
 	aStream << name asString
 ]
 
+{ #category : #polymorphic }
+TypNamedType >> result [
+	^ self superType result
+]
+
 { #category : #accessing }
 TypNamedType >> superType [
 	self assert: [ self hasSuperType ].
