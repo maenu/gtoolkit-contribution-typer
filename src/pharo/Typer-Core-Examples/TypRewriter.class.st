@@ -5,12 +5,6 @@ Class {
 }
 
 { #category : #accessing }
-TypRewriter >> aaaaaa [
-	<tsaadv>
-	^ 10
-]
-
-{ #category : #accessing }
 TypRewriter >> rewriteCopyWithParameters [
 	<gtExample>
 	^ ((RPackageOrganizer default packages

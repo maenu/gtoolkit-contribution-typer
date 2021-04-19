@@ -43,10 +43,12 @@ RBMethodNode >> typInfTypeRecursive [
 	newTemporaryProfile
 		do: [ :e | 
 			e value isUnknown
-				ifFalse: [ e key propertyAt: #typInfType put: e value ] ].
+				ifFalse: [ e key
+						propertyAt: #typInfType , '-' , TypInfSelf value asString
+						put: e value ] ].
 	(self allChildren
 		copyWithoutAll: (newTemporaryProfile collect: #key) , {self})
-		do: [ :e | e typInfType ].
+		do: #typInfType.
 	(newTemporaryProfile collect: #key)
 		do: [ :e | 
 			e

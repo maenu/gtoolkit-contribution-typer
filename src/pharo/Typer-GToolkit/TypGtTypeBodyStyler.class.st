@@ -1,7 +1,7 @@
 Class {
 	#name : #TypGtTypeBodyStyler,
 	#superclass : #GtRBASTStyler,
-	#traits : 'TRBProgramNodeVisitor',
+	#traits : 'TRBProgramNodeVisitor - {#visitArgumentNodes:. #visitTemporaryDeclarationNode:}',
 	#classTraits : 'TRBProgramNodeVisitor classTrait',
 	#instVars : [
 		'coder'
@@ -44,11 +44,4 @@ TypGtTypeBodyStyler >> styleValueNode: aNode [
 			{(TypGtTypeAttribute new
 				type_: aNode typInfType;
 				yourself)}
-]
-
-{ #category : #visiting }
-TypGtTypeBodyStyler >> visitPragmaNode: aNode [
-	"Avoid annotating pragma arguments by empty implementation."
-
-	
 ]

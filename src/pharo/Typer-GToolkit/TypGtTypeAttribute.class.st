@@ -21,7 +21,7 @@ TypGtTypeAttribute >> initialize [
 						right: 0
 						bottom: 0
 						left: 5);
-				look:
+				aptitude:
 					(BrGlamorousLabelLook new
 						foreground: Color gray;
 						yourself);
