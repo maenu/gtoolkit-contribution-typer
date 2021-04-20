@@ -170,6 +170,16 @@ TypUnionType >> isUnion [
 ]
 
 { #category : #accessing }
+TypUnionType >> lookupMethod: aSymbol arguments: aCollection [
+	^ (types collect: [ :e | e lookupMethod: aSymbol arguments: aCollection ]) typAsType
+]
+
+{ #category : #accessing }
+TypUnionType >> lookupVariable: aSymbol [
+	^ (types collect: [ :e | e lookupVariable: aSymbol ]) typAsType
+]
+
+{ #category : #accessing }
 TypUnionType >> postCopy [
 	super postCopy.
 	types := types copy

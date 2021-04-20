@@ -11,15 +11,13 @@ TypMethodLookupIndex class >> instance [
 				initializeResolver:
 					(TypCachingLookupResolver
 						resolver:
-							(TypSpreadLookupResolver
+							(TypDepthLookupResolver
 								resolver:
-									(TypDepthLookupResolver
-										resolver:
-											(TypBreadthLookupResolver
-												resolvers:
-													{TypPraMethodLookupResolver new.
-													TypShaMethodLookupResolver new.
-													TypInfMethodLookupResolver new}))));
+									(TypBreadthLookupResolver
+										resolvers:
+											{TypPraMethodLookupResolver new.
+											TypShaMethodLookupResolver new.
+											TypInfMethodLookupResolver new})));
 				yourself ]
 ]
 

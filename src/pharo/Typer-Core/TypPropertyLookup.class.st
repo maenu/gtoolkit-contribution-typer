@@ -18,18 +18,6 @@ TypPropertyLookup >> = anObject [
 ]
 
 { #category : #accessing }
-TypPropertyLookup >> asCollection [
-	receiver isUnion
-		ifFalse: [ ^ super asCollection ].
-	^ receiver types
-		collect: [ :e | 
-			self copy
-				initializeParent: self;
-				initializeReceiver: e selector: selector;
-				yourself ]
-]
-
-{ #category : #accessing }
 TypPropertyLookup >> copyAsSuper [
 	self assert: [ self hasSuper ].
 	^ self copy

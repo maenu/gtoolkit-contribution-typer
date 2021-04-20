@@ -16,11 +16,6 @@ TypLookup >> = anObject [
 	^ anObject parent = parent
 ]
 
-{ #category : #accessing }
-TypLookup >> asCollection [
-	^ {self}
-]
-
 { #category : #copying }
 TypLookup >> copyAsSuper [
 	self subclassResponsibility
