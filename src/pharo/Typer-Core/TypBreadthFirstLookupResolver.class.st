@@ -1,5 +1,5 @@
 Class {
-	#name : #TypBreadthLookupResolver,
+	#name : #TypBreadthFirstLookupResolver,
 	#superclass : #TypLookupResolver,
 	#instVars : [
 		'resolvers'
@@ -8,48 +8,37 @@ Class {
 }
 
 { #category : #accessing }
-TypBreadthLookupResolver class >> resolvers: aCollection [
+TypBreadthFirstLookupResolver class >> resolvers: aCollection [
 	^ self new
 		initializeResolvers: aCollection;
 		yourself
 ]
 
 { #category : #accessing }
-TypBreadthLookupResolver >> canResolve: aLookup [
+TypBreadthFirstLookupResolver >> canResolve: aLookup [
 	^ resolvers anySatisfy: [ :e | e canResolve: aLookup ]
 ]
 
 { #category : #initialization }
-TypBreadthLookupResolver >> initialize [
+TypBreadthFirstLookupResolver >> initialize [
 	<typPraVariable: 'resolvers' as: 'SequenceableCollection<TypLookupResolver>'>
 	super initialize
 ]
 
 { #category : #accessing }
-TypBreadthLookupResolver >> initializeResolvers: anObject [
+TypBreadthFirstLookupResolver >> initializeResolvers: anObject [
 	<typPraArguments: 'SequenceableCollection<TypLookupResolver>'>
 	resolvers := anObject
 ]
 
 { #category : #initialization }
-TypBreadthLookupResolver >> reset [
+TypBreadthFirstLookupResolver >> reset [
 	super reset.
 	resolvers do: #reset
 ]
 
 { #category : #accessing }
-TypBreadthLookupResolver >> resolve: aLookup [
-	| results |
+TypBreadthFirstLookupResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
-	results := OrderedCollection new.
-	resolvers
-		do: [ :e | 
-			(e canResolve: aLookup)
-				ifTrue: [ [ results add: (e resolve: aLookup copy) ]
-						on: Error
-						do: [ :f | 
-							f emit.
-							self
-								flag: 'FIXME keep a reference to error vor inspection, beacon?' ] ] ].
-	^ self reduce: results
+	^ (resolvers detect: [ :e | e canResolve: aLookup ]) resolve: aLookup
 ]

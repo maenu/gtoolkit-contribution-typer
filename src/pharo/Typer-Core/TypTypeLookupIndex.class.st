@@ -11,9 +11,9 @@ TypTypeLookupIndex class >> instance [
 				initializeResolver:
 					(TypCachingLookupResolver
 						resolver:
-							(TypDepthLookupResolver
+							(TypDepthFirstLookupResolver
 								resolver:
-									(TypBreadthLookupResolver
+									(TypBreadthFirstLookupResolver
 										resolvers:
 											{TypPraTypeLookupResolver new.
 											TypShaTypeLookupResolver new.
