@@ -13,7 +13,7 @@ RPackageTag >> typGtCoverageFor: aView context: aDictionary [
 					c vertical fitContent ];
 				addChildren:
 					{(BrLabel new
-						look: BrGlamorousLabelLook;
+						aptitude: BrGlamorousLabelLook;
 						text: 'methods';
 						yourself).
 					self typGtMethodCoverage typGtAsCoverageElement.

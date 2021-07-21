@@ -13,12 +13,12 @@ ClassDescription >> typGtCoverageFor: aView context: aDictionary [
 					c vertical fitContent ];
 				addChildren:
 					{(BrLabel new
-						look: BrGlamorousLabelLook;
+						aptitude: BrGlamorousLabelLook;
 						text: 'methods';
 						yourself).
 					self typGtMethodCoverage typGtAsCoverageElement.
 					(BrLabel new
-						look: BrGlamorousLabelLook;
+						aptitude: BrGlamorousLabelLook;
 						text: 'nodes';
 						yourself).
 					self typGtNodeCoverage typGtAsCoverageElement};

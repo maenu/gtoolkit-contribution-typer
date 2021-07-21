@@ -12,6 +12,7 @@ BaselineOfTyper >> baseline: spec [
 		do: [ spec
 				package: 'Typer-Core';
 				package: 'Typer-Core-Examples';
+				package: 'Typer-Core-Utility';
 				package: 'Typer-Checker';
 				package: 'Typer-Inference';
 				package: 'Typer-Pragma';

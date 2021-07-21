@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'link'
 	],
-	#category : #'Typer-Core-Examples'
+	#category : #'Typer-Core-Utility'
 }
 
 { #category : #accessing }
@@ -34,9 +34,7 @@ TypCoverage >> run [
 								propertyAt: #tagExecuted put: false;
 								link: link ] ] ].
 	result := (GtExplicitExampleGroup
-		withAll:
-			('Typer-Core-Examples' asPackage gtExamplesContained
-				reject: [ :e | e methodClass = self class instanceSide ])) runAll.
+		withAll: 'Typer-Core-Examples' asPackage gtExamplesContained) runAll.
 	link uninstall.
 	^ result
 ]

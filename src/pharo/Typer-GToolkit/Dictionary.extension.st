@@ -7,22 +7,22 @@ Dictionary >> typGtAsCoverageElement [
 	notExecuted := self at: false ifAbsent: [ #() ].
 	notInstrumented := self at: nil ifAbsent: [ #() ].
 	executedButton := BrButton new
-		look: BrGlamorousButtonWithLabelLook;
+		aptitude: BrGlamorousButtonWithLabelAptitude;
 		label: executed size asString , ' executed';
 		action: [ :e | e phlow spawnObject: executed ];
 		yourself.
 	notExecutedButton := BrButton new
-		look: BrGlamorousButtonWithLabelLook;
+		aptitude: BrGlamorousButtonWithLabelAptitude;
 		label: notExecuted size asString , ' not executed';
 		action: [ :e | e phlow spawnObject: notExecuted ];
 		yourself.
 	notInstrumentedButton := BrButton new
-		look: BrGlamorousButtonWithLabelLook;
+		aptitude: BrGlamorousButtonWithLabelAptitude;
 		label: notInstrumented size asString , ' not instrumented';
 		action: [ :e | e phlow spawnObject: notInstrumented ];
 		yourself.
 	instrumentedLabel := BrLabel new
-		look: BrGlamorousLabelLook;
+		aptitude: BrGlamorousLabelAptitude;
 		text:
 			(([ 100 * executed size / (executed size + notExecuted size) ]
 				on: ZeroDivide
@@ -30,7 +30,7 @@ Dictionary >> typGtAsCoverageElement [
 				, '% coverage of instrumented';
 		yourself.
 	allLabel := BrLabel new
-		look: BrGlamorousLabelLook;
+		aptitude: BrGlamorousLabelAptitude;
 		text:
 			(([ 100 * executed size
 				/ (executed size + notExecuted size + notInstrumented size) ]
