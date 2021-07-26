@@ -189,6 +189,14 @@ TypType >> isVariable [
 ]
 
 { #category : #lookup }
+TypType >> lookupMethod: aSymbol [
+
+	| arguments |
+	arguments := aSymbol numArgs timesCollect: [ TypUnknownType new ].
+	^ self lookupMethod: aSymbol arguments: arguments
+]
+
+{ #category : #lookup }
 TypType >> lookupMethod: aSymbol arguments: aCollection [
 	^ TypMethodLookupIndex instance
 		lookupMethodReceiver: self

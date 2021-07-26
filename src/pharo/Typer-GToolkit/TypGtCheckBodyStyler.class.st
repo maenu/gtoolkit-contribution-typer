@@ -93,7 +93,7 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 				do: [ :e | self styleSelectorOf: aNode color: e color ] ].
 	aNode arguments
 		withIndexDo: [ :e :i | 
-			(e typInfType isUnknown or: [ (aNode typInfTypeForArgumentAt: i) isUnknown ])
+			(e typInfType isUnknown or: [ (aNode typInfMethod argumentAt: i) isUnknown ])
 				ifTrue: [ markUnknowns ifTrue: [ self styleNode: e color: Color blue ] ]
 				ifFalse: [ [ aNode typCheCheckArgumentCompatibilityAt: i ]
 						on: TypCheError

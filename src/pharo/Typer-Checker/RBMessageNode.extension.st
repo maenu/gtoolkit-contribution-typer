@@ -5,7 +5,7 @@ RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 	<typPraArguments: 'Integer'>
 	| argument expected actual |
 	argument := self arguments at: anInteger.
-	expected := self typInfTypeForArgumentAt: anInteger.
+	expected := self typInfMethod argumentAt: anInteger.
 	actual := argument typInfType.
 	(expected isUnknown or: [ actual isUnknown ])
 		ifTrue: [ ^ self ].
@@ -14,7 +14,7 @@ RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 	(actual isFunction
 		and: [ actual result isUnknown
 				or: [ argument isBlock
-						and: [ argument signalsAlways = true or: [ argument body lastIsReturn ] ] ] ])
+						and: [ argument typInfType signalsAlways = true or: [ argument body lastIsReturn ] ] ] ])
 		ifTrue: [ ^ self ].
 	TypCheIncompatibleTypeError new
 		expected: expected;

@@ -5,7 +5,7 @@ RBMessageNode >> typInfMethod [
 	^ self
 		propertyAt: 'typInfMethod-' , TypInfSelf value asString
 		ifAbsentPut: [ receiver typInfType
-				lookupMethod: selector asSymbol
+				lookupMethod: selector value asSymbol
 				arguments: (arguments collect: #typInfType) ]
 ]
 
