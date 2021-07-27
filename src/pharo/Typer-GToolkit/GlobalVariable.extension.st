@@ -1,13 +1,13 @@
-Extension { #name : #RBGlobalNode }
+Extension { #name : #GlobalVariable }
 
 { #category : #'*Typer-GToolkit' }
-RBGlobalNode >> typGtCanType [
+GlobalVariable >> typGtCanType [
 	<typPraResult: 'Boolean'>
 	^ self typInfHasDefiningType
 ]
 
 { #category : #'*Typer-GToolkit' }
-RBGlobalNode >> typGtFiltersToTypeWithPragma [
+GlobalVariable >> typGtFiltersToTypeWithPragma [
 	<typPraResult: 'GtCoderMethodsFilter'>
 	self assert: [ self typGtCanType ].
 	^ (TypGtCoderTypeFilter new
@@ -20,7 +20,7 @@ RBGlobalNode >> typGtFiltersToTypeWithPragma [
 ]
 
 { #category : #'*Typer-GToolkit' }
-RBGlobalNode >> typGtFiltersToTypeWithShadow [
+GlobalVariable >> typGtFiltersToTypeWithShadow [
 	<typPraResult: 'GtCoderMethodsFilter'>
 	| clazz variableType shadows |
 	self assert: [ self typGtCanType ].

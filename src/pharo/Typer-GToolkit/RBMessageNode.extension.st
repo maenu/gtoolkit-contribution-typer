@@ -47,6 +47,15 @@ RBMessageNode >> typGtFiltersToTypeWithShadow [
 
 { #category : #'*Typer-GToolkit' }
 RBMessageNode >> typGtInvokedMethods [
-	^ super typGtInvokedMethods
-		, (TypInfSelf value lookupMethod: self selector)
+
+	| methods receiverType |
+	methods := super typGtInvokedMethods.
+	receiverType := receiver typInfType.
+	(receiverType isNamed and: [ receiverType hasClassDescription ]) 
+		ifTrue: [ 
+			receiverType classDescription
+				classAndMethodFor: selector value
+				do: [ :c :m | ^ methods , { m } ]
+				ifAbsent: [  ] ].
+	^ methods
 ]

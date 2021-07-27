@@ -47,13 +47,12 @@ RBProgramNode >> typInfTypeRecursive [
 
 { #category : #'*Typer-Inference' }
 RBProgramNode >> typInfTypeReset [
-	properties
-		ifNotNil: [ (properties keys
-				select: [ :e | 
-					(e beginsWith: #typInf)
-						and: [ TypInfSelf value isNil
-								or: [ e endsWith: '-' , TypInfSelf value asString ] ] ])
-				do: [ :e | self removeProperty: e ] ].
+
+	properties ifNotNil: [ 
+		(properties keys select: [ :e | 
+			 (e beginsWith: #typInf) and: [ 
+				 e endsWith: '-' , TypInfSelf value asString ] ]) do: [ :e | 
+			self removeProperty: e ] ].
 	self children do: #typInfTypeReset
 ]
 

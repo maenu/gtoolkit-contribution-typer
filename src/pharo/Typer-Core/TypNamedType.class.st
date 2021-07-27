@@ -106,8 +106,10 @@ TypNamedType >> hasSuperType [
 ]
 
 { #category : #comparing }
-TypNamedType >> hash [
-	^ super hash bitXor: name hash
+TypNamedType >> hashSkipping: anIdentitySet [
+
+	(anIdentitySet includes: self) ifTrue: [ ^ self identityHash ].
+	^ (super hashSkipping: anIdentitySet) bitXor: name hash
 ]
 
 { #category : #initialization }

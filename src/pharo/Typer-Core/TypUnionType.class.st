@@ -139,8 +139,14 @@ TypUnionType >> hasSuperType [
 ]
 
 { #category : #comparing }
-TypUnionType >> hash [
-	^ super hash bitXor: types hash
+TypUnionType >> hashSkipping: anIdentitySet [
+
+	| visited |
+	(anIdentitySet includes: self) ifTrue: [ ^ self identityHash ].
+	visited := anIdentitySet , { self }.
+	^ types
+		  inject: (super hashSkipping: anIdentitySet)
+		  into: [ :r :e | r bitXor: (e hashSkipping: visited) ]
 ]
 
 { #category : #accessing }

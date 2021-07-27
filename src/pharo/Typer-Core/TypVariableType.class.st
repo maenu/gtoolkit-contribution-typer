@@ -52,8 +52,11 @@ TypVariableType >> classDescription [
 ]
 
 { #category : #comparing }
-TypVariableType >> hash [
-	^ (super hash bitXor: name hash) bitXor: superType hash
+TypVariableType >> hashSkipping: anIdentitySet [
+
+	(anIdentitySet includes: self) ifTrue: [ ^ self identityHash ].
+	^ ((super hashSkipping: anIdentitySet) bitXor: name hash) bitXor:
+		  (superType hashSkipping: anIdentitySet , { self })
 ]
 
 { #category : #initialization }

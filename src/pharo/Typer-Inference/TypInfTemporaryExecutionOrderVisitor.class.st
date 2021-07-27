@@ -11,14 +11,13 @@ Class {
 }
 
 { #category : #accessing }
-TypInfTemporaryExecutionOrderVisitor class >> typeForTemporary: aTemporaryNode [
+TypInfTemporaryExecutionOrderVisitor class >> typeForTemporary: aNode [
+
 	| definer |
-	self
-		assert: [ (aTemporaryNode isKindOf: RBTemporaryNode)
-				and: [ aTemporaryNode isDefinition not ] ].
-	definer := aTemporaryNode whoDefines: aTemporaryNode name.
-	^ (self typesFor: aTemporaryNode in: definer definer: definer)
-		typAsType
+	self assert: [ aNode isTempVariable ].
+	self assert: [ aNode isDefinition not ].
+	definer := aNode whoDefines: aNode name.
+	^ (self typesFor: aNode in: definer definer: definer) typAsType
 ]
 
 { #category : #accessing }
@@ -42,7 +41,7 @@ TypInfTemporaryExecutionOrderVisitor >> initialize [
 
 { #category : #accessing }
 TypInfTemporaryExecutionOrderVisitor >> initializeNode: aNode definer: anotherNode [
-	self assert: [ aNode isKindOf: RBTemporaryNode ].
+	self assert: [ aNode isTempVariable ].
 	self assert: [ aNode isDefinition not ].
 	node := aNode.
 	definer := anotherNode

@@ -1,12 +1,12 @@
-Extension { #name : #RBInstanceVariableNode }
+Extension { #name : #InstanceVariableSlot }
 
 { #category : #'*Typer-GToolkit' }
-RBInstanceVariableNode >> typGtCanType [
+InstanceVariableSlot >> typGtCanType [
 	^ true
 ]
 
 { #category : #'*Typer-GToolkit' }
-RBInstanceVariableNode >> typGtFiltersToTypeWithPragma [
+InstanceVariableSlot >> typGtFiltersToTypeWithPragma [
 	<typPraResult: 'GtCoderMethodsFilter'>
 	^ (TypGtCoderTypeFilter new
 		type: self methodNode methodClass typAsType;
@@ -18,7 +18,7 @@ RBInstanceVariableNode >> typGtFiltersToTypeWithPragma [
 ]
 
 { #category : #'*Typer-GToolkit' }
-RBInstanceVariableNode >> typGtFiltersToTypeWithShadow [
+InstanceVariableSlot >> typGtFiltersToTypeWithShadow [
 	<typPraResult: 'GtCoderMethodsFilter'>
 	| type clazz shadows variableType |
 	type := self methodNode methodClass typAsType.

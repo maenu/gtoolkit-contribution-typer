@@ -126,10 +126,19 @@ TypType >> hasValue [
 
 { #category : #accessing }
 TypType >> hash [
+
+	^ self hashSkipping: IdentitySet new
+]
+
+{ #category : #accessing }
+TypType >> hashSkipping: anIdentitySet [
+
 	| hash |
+	(anIdentitySet includes: self) ifTrue: [ ^ self identityHash ].
 	hash := nil hash bitXor: 23.
-	self hasSuperType
-		ifTrue: [ hash := hash bitXor: self superType hash ].
+	self hasSuperType ifTrue: [ 
+		hash := hash bitXor:
+			        (self superType hashSkipping: anIdentitySet , { self }) ].
 	^ hash
 ]
 

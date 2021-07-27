@@ -6,19 +6,19 @@ Class {
 
 { #category : #accessing }
 TypTypeLookupIndex class >> instance [
-	^ instance
-		ifNil: [ instance := self new
-				initializeResolver:
-					(TypCachingLookupResolver
-						resolver:
-							(TypDepthFirstLookupResolver
-								resolver:
-									(TypBreadthFirstLookupResolver
-										resolvers:
-											{TypPraTypeLookupResolver new.
-											TypShaTypeLookupResolver new.
-											TypInfTypeLookupResolver new})));
-				yourself ]
+
+	^ instance ifNil: [ 
+		  instance := self new
+			              initializeResolver:
+				              (TypCachingLookupResolver resolver:
+						               (TypBreadthFirstLookupResolver resolvers: { 
+									                (TypDepthFirstLookupResolver resolver:
+											                 (TypBreadthFirstLookupResolver resolvers:
+													                  { 
+														                  TypPraTypeLookupResolver new.
+														                  TypShaTypeLookupResolver new })).
+									                TypInfTypeLookupResolver new }));
+			              yourself ]
 ]
 
 { #category : #accessing }

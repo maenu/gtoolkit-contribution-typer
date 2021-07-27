@@ -45,39 +45,42 @@ RPackage >> typGtNodeCoverage [
 
 { #category : #'*Typer-GToolkit' }
 RPackage >> typGtView2For: aView [
+
 	<gtView>
 	<typPraResult: 'GtPhlowProtoView'>
 	<typPraArguments: 'GtPhlowProtoView'>
 	^ aView mondrian
-		title: 'Typer2' translated;
-		priority: 51;
-		painting: [ :e | 
-			| methods |
-			methods := self methods asSet.
-			e nodes
-				stencil: [ :f | 
-					BlElement new
-						geometry: BlCircle new;
-						size: 25 @ 25;
-						background: Color blue;
-						yourself ];
-				with: methods.
-			e edges
-				shape: [ BlParabollaArcElement new
-						curvatureFraction: 0.2;
-						border: (BlBorder paint: (Color gray alpha: 0.5) width: 25);
-						toHead:
-							(BlArrowheadSimpleArrow new
-								arrowLengthFraction: 25;
-								arrowNoseAngle: 60;
-								border: (BlBorder paint: (Color gray alpha: 0.5) width: 25);
-								yourself);
-						yourself ];
-				connect: methods
-					toAll:
-						[ :f | f ast typGtInvokedMethods select: [ :g | methods includes: g ] ].
-			e layout circle ];
-		yourself
+		  title: 'Typer2' translated;
+		  priority: 51;
+		  painting: [ :e | 
+			  | methods |
+			  methods := self methods asSet.
+			  e nodes
+				  stencil: [ :f | 
+					  BlElement new
+						  geometry: BlCircle new;
+						  size: 25 @ 25;
+						  background: Color blue;
+						  yourself ];
+				  with: methods.
+			  e edges
+				  shape: [ 
+					  BlParabollaArcElement new
+						  curvatureFraction: 0.2;
+						  border: (BlBorder paint: (Color gray alpha: 0.5) width: 25);
+						  toHead: (BlArrowheadSimpleArrow new
+								   arrowLengthFraction: 25;
+								   arrowNoseAngle: 60;
+								   border: (BlBorder paint: (Color gray alpha: 0.5) width: 25);
+								   yourself);
+						  yourself ];
+				  connect: methods toAll: [ :f | 
+				  TypInfSelf
+					  value: f methodClass typAsType
+					  during: [ 
+					  f ast typGtInvokedMethods select: [ :g | methods includes: g ] ] ].
+			  e layout circle ];
+		  yourself
 ]
 
 { #category : #'*Typer-GToolkit' }

@@ -102,8 +102,15 @@ TypParametricType >> copyWithParameters: aCollection [
 ]
 
 { #category : #comparing }
-TypParametricType >> hash [
-	^ super hash bitXor: parameters hash
+TypParametricType >> hashSkipping: anIdentitySet [
+
+	| visited |
+	(anIdentitySet includes: self) ifTrue: [ ^ self identityHash ].
+	visited := anIdentitySet , { self }.
+	^ parameters values
+		  inject:
+		  ((super hashSkipping: anIdentitySet) bitXor: parameters keys hash)
+		  into: [ :r :e | r bitXor: (e hashSkipping: visited) ]
 ]
 
 { #category : #initialization }

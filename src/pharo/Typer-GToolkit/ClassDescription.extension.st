@@ -84,7 +84,7 @@ ClassDescription >> typGtVariableElementFor: aSymbol [
 			  c vertical exact: 16 "typCastAs BlLayoutCommonConstraintsAxis" ];
 		  aptitude: (BrGlamorousWithTooltipAptitude content: [ 
 					   BrLabel new
-						   look: BrGlamorousLabelAptitude;
+						   aptitude: BrGlamorousLabelAptitude;
 						   padding: (BlInsets all: 5);
 						   text: aSymbol;
 						   yourself ]);
@@ -120,7 +120,7 @@ ClassDescription >> typGtVariablesElementInPackage: aPackage [
 			   width: 1);
 		  aptitude: (BrGlamorousWithTooltipAptitude content: [ 
 				   BrLabel new
-					   look: BrGlamorousLabelAptitude;
+					   aptitude: BrGlamorousLabelAptitude;
 					   padding: (BlInsets all: 5);
 					   text: self name;
 					   yourself ]);

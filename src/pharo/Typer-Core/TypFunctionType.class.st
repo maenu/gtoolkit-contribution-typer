@@ -138,9 +138,11 @@ TypFunctionType >> asCompatibleWith: aType [
 ]
 
 { #category : #comparing }
-TypFunctionType >> hash [
-	^ (super hash bitXor: argumentsSize hash)
-		bitXor: argumentsOptional hash
+TypFunctionType >> hashSkipping: anIdentitySet [
+
+	(anIdentitySet includes: self) ifTrue: [ ^ self identityHash ].
+	^ ((super hashSkipping: anIdentitySet) bitXor: argumentsSize hash) 
+		  bitXor: argumentsOptional hash
 ]
 
 { #category : #initialization }
