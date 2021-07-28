@@ -68,26 +68,21 @@ TypType >> addOrigin: anOrigin [
 
 { #category : #converting }
 TypType >> asCompatibleWith: aType [
+
 	<typPraResult: 'TypType'>
 	<typPraArguments: 'TypType'>
 	self flag: 'TODO only real usage in union type, odd one out'.
-	aType isVariable
-		ifTrue: [ ^ aType ].
-	aType isUnknown
-		ifTrue: [ ^ aType ].
-	aType isNil
-		ifTrue: [ ^ self asNullable ].
-	self >= aType
-		ifTrue: [ ^ self ].
-	self hasSuperType
-		ifTrue: [ ^ self superType asCompatibleWith: aType ].
+	aType isVariable ifTrue: [ ^ aType ].
+	aType isUnknown ifTrue: [ ^ aType ].
+	aType isNil ifTrue: [ ^ self asNullable ].
+	self >= aType ifTrue: [ ^ self ].
+	self hasSuperType ifTrue: [ ^ self superType asCompatibleWith: aType ].
 	^ TypUnknownType new
-		addOrigin:
-			(TypConversionOrigin
-				type: self
-				selector: #asCompatibleWith:
-				arguments: {aType});
-		yourself
+		  addOrigin: (TypConversionOrigin
+				   type: self
+				   selector: #asCompatibleWith:
+				   arguments: { aType });
+		  yourself
 ]
 
 { #category : #converting }

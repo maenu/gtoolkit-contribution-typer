@@ -58,20 +58,21 @@ RPackage >> typGtView2For: aView [
 			  e nodes
 				  stencil: [ :f | 
 					  BlElement new
-						  geometry: BlCircle new;
 						  size: 25 @ 25;
 						  background: Color blue;
 						  yourself ];
 				  with: methods.
 			  e edges
+				  fromNearestBounds;
+				  toNearestBounds;
 				  shape: [ 
 					  BlParabollaArcElement new
 						  curvatureFraction: 0.2;
-						  border: (BlBorder paint: (Color gray alpha: 0.5) width: 25);
+						  border: (BlBorder paint: (Color gray alpha: 0.5) width: 5);
 						  toHead: (BlArrowheadSimpleArrow new
-								   arrowLengthFraction: 25;
+								   arrowLengthFraction: 3;
 								   arrowNoseAngle: 60;
-								   border: (BlBorder paint: (Color gray alpha: 0.5) width: 25);
+								   border: (BlBorder paint: (Color gray alpha: 0.5) width: 5);
 								   yourself);
 						  yourself ];
 				  connect: methods toAll: [ :f | 
@@ -79,7 +80,7 @@ RPackage >> typGtView2For: aView [
 					  value: f methodClass typAsType
 					  during: [ 
 					  f ast typGtInvokedMethods select: [ :g | methods includes: g ] ] ].
-			  e layout circle ];
+			  e layout force  charge: -5000 ];
 		  yourself
 ]
 

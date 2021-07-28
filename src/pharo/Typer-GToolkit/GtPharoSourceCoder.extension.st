@@ -42,17 +42,20 @@ GtPharoSourceCoder >> typGtBrowseToTypeWithShadowAt: anInteger [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
-	"self completionStrategy class == GtPharoCompletionStrategy
-		ifTrue: [ completionStrategy := completionStrategy
-				typGtAsTypGtPharoCompletionStrategyFor: self ].
-	addOns
+
+	"addOns
 		addStyler:
 			(TypGtTypeCursorBodyStyler new
 				coder: self;
 				yourself)."
 
 	<gtAstCoderAddOns: 10>
-	"anAddOns addStyler: (TypGtTypeValueBodyStyler new coder: self; yourself)."
+	self completionStrategy class == GtPharoCompletionStrategy ifTrue: [ 
+		completionStrategy := completionStrategy 
+			                      typGtAsTypGtPharoCompletionStrategyFor: self ].
+	anAddOns addStyler: (TypGtTypeValueBodyStyler new
+			 coder: self;
+			 yourself)
 	"anAddOns
 		addShortcut: TypGtBrowseImplementorsShortcut new;
 		addShortcut: TypGtBrowseToTypeWithPragmaShortcut new;
