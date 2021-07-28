@@ -42,6 +42,11 @@ TypVariableType >> at: aString [
 ]
 
 { #category : #polymorphic }
+TypVariableType >> at: aString ifAbsent: aBlock [
+	^ superType at: aString ifAbsent: aBlock
+]
+
+{ #category : #polymorphic }
 TypVariableType >> at: aString put: aType [
 	^ superType at: aString put: aType
 ]

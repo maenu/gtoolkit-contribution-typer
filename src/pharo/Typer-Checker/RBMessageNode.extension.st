@@ -24,22 +24,22 @@ RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 
 { #category : #'*Typer-Checker' }
 RBMessageNode >> typCheCheckMethod [
+
 	| receiverType |
-	receiverType := TypInfSelf value.
-	receiverType isUnknown
-		ifTrue: [ ^ self ].
-	(receiverType asNonNullable canUnderstand: self selector)
-		ifTrue: [ ^ self ].
+	receiverType := receiver typInfType.
+	receiverType isUnknown ifTrue: [ ^ self ].
+	(receiverType asNonNullable lookupMethod: selector value) isUnknown 
+		ifFalse: [ ^ self ].
 	TypCheNoMethodError new
 		type: receiverType;
-		selector: self selector;
+		selector: selector value;
 		signal
 ]
 
 { #category : #'*Typer-Checker' }
 RBMessageNode >> typCheCheckReceiver [
 	| receiverType |
-	receiverType := TypInfSelf value.
+	receiverType := receiver typInfType.
 	receiverType isUnknown
 		ifTrue: [ ^ self ].
 	(receiverType canUnderstand: self selector)

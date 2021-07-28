@@ -19,6 +19,12 @@ TypUnknownType >> at: anObject [
 	^ self
 ]
 
+{ #category : #polymorphic }
+TypUnknownType >> at: aString ifAbsent: aBlock [
+
+	^ self
+]
+
 { #category : #testing }
 TypUnknownType >> isUnknown [
 	^ true

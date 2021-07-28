@@ -6,13 +6,14 @@ CompiledMethod >> typGtElement [
 	^ BlElement new
 		  in: [ :e | 
 			  | color |
-			  color := self ast
-				           typInfType;
-				           typCheColor.
-			  (self ast typCheHasUnknownArguments not and: [ 
-				   self ast typCheHasUnknownResult not ])
-				  ifTrue: [ e background: color ]
-				  ifFalse: [ e background: color muchLighter ] ];
+			  TypInfSelf value: self methodClass typAsType during: [ 
+					  color := self ast
+						           typInfType;
+						           typCheColor.
+					  (self ast typCheHasUnknownArguments not and: [ 
+						   self ast typCheHasUnknownResult not ])
+						  ifTrue: [ e background: color ]
+						  ifFalse: [ e background: color muchLighter ] ] ];
 		  constraintsDo: [ :c | 
 			  c horizontal exact: 16. "typCastAs BlLayoutCommonConstraintsAxis"
 			  c vertical exact: 16 "typCastAs BlLayoutCommonConstraintsAxis" ];

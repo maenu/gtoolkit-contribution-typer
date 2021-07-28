@@ -56,8 +56,15 @@ TypShaPhaClass >> mSharedPools: aLookup [
 
 { #category : #shadow }
 TypShaPhaClass >> mSubclassInstanceVariableNamesClassVariableNamesPackage: aLookup [
-	<typShaMethod: 'subclass:instanceVariableNames:classVariableNames:package:'>
+
+	<typShaMethod:
+	'subclass:instanceVariableNames:classVariableNames:package:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiver classDescription typAsType
-		arguments: {String typAsType}
+		  typAsFunctionTypeWithResult:
+		  aLookup receiver classDescription typAsType
+		  arguments: { 
+				  String typAsType.
+				  String typAsType.
+				  String typAsType.
+				  String typAsType }
 ]

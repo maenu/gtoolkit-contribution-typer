@@ -163,14 +163,16 @@ TypShaPhaRBProgramNode >> mPropertyAt: aLookup [
 
 { #category : #shadow }
 TypShaPhaRBProgramNode >> mPropertyAtIfAbsentPut: aLookup [
+
 	<typShaMethod: 'propertyAt:ifAbsentPut:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult:
-			{TypUnknownType new.
-			(aLookup arguments at: 2) result} typAsType
-		arguments:
-			{TypUnknownType new.
-			BlockClosure typAsType}
+		  typAsFunctionTypeWithResult: { 
+				  TypUnknownType new.
+				  ((aLookup arguments at: 2) lookupMethod: #value) result }
+				  typAsType
+		  arguments: { 
+				  TypUnknownType new.
+				  BlockClosure typAsType }
 ]
 
 { #category : #shadow }
@@ -200,10 +202,13 @@ TypShaPhaRBProgramNode >> mPropertyAtIfPresentIfAbsent: aLookup [
 
 { #category : #shadow }
 TypShaPhaRBProgramNode >> mPropertyAtPut: aLookup [
+
 	<typShaMethod: 'propertyAt:put:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup arguments at: 2)
-		arguments: {TypUnknownType new}
+		  typAsFunctionTypeWithResult: (aLookup arguments at: 2)
+		  arguments: { 
+				  TypUnknownType new.
+				  TypUnknownType new }
 ]
 
 { #category : #shadow }

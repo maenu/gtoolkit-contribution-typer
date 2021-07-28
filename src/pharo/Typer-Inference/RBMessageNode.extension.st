@@ -3,7 +3,7 @@ Extension { #name : #RBMessageNode }
 { #category : #'*Typer-Inference' }
 RBMessageNode >> typInfMethod [
 	^ self
-		propertyAt: 'typInfMethod-' , TypInfSelf value asString
+		propertyAt: 'typInfMethod-' , receiver typInfType asString
 		ifAbsentPut: [ receiver typInfType
 				lookupMethod: selector value asSymbol
 				arguments: (arguments collect: #typInfType) ]

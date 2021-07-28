@@ -47,10 +47,13 @@ TypShaPhaSequenceableCollection >> mBeginsWith: aLookup [
 
 { #category : #shadow }
 TypShaPhaSequenceableCollection >> mCopyFromTo: aLookup [
+
 	<typShaMethod: 'copyFrom:to:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
-		arguments: {Integer typAsType}
+		  typAsFunctionTypeWithResult: aLookup root receiver
+		  arguments: { 
+				  Integer typAsType.
+				  Integer typAsType }
 ]
 
 { #category : #shadow }

@@ -11,15 +11,15 @@ TypShaBlBlShortcut class >> shadowedClass [
 
 { #category : #shadow }
 TypShaBlBlShortcut >> mAction: aLookup [
+
 	<typShaMethod: 'action:'>
-	CompiledMethod
-		typAsFunctionTypeWithResult: BlShortcut typAsType
-		arguments:
-			{(BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {BlElement typAsType}
-				argumentsOptional: true
-				signalsAlways: false)}
+	^ CompiledMethod
+		  typAsFunctionTypeWithResult: BlShortcut typAsType
+		  arguments: { (BlockClosure
+				   typAsFunctionTypeWithResult: TypUnknownType new
+				   arguments: { BlElement typAsType }
+				   argumentsOptional: true
+				   signalsAlways: false) }
 ]
 
 { #category : #shadow }

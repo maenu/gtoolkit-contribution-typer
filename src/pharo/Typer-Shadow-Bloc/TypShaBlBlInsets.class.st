@@ -6,10 +6,16 @@ Class {
 
 { #category : #shadow }
 TypShaBlBlInsets class >> mTopRightBottomLeft: aLookup [
+
 	<typShaMethod: 'top:right:bottom:left:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
-		arguments: {Number typAsType}
+		  typAsFunctionTypeWithResult:
+		  aLookup receiver classDescription instanceSide typAsType
+		  arguments: { 
+				  Number typAsType.
+				  Number typAsType.
+				  Number typAsType.
+				  Number typAsType }
 ]
 
 { #category : #'as yet unclassified' }

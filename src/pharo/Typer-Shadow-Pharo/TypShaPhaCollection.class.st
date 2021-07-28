@@ -92,13 +92,16 @@ TypShaPhaCollection >> mAnySatisfy: aLookup [
 
 { #category : #shadow }
 TypShaPhaCollection >> mAsDictionary: aLookup [
+
 	<typShaMethod: 'asDictionary'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult:
-			(Dictionary typAsType
-				copyWithParameters:
-					{((aLookup receiver at: '@A') at: '@A').
-					((aLookup receiver at: '@A') at: '@B')})
+	^ CompiledMethod typAsFunctionTypeWithResult:
+		  (Dictionary typAsType copyWithParameters: { 
+				   ((aLookup receiver at: '@A')
+					    at: '@A'
+					    ifAbsent: [ TypUnknownType new ]).
+				   ((aLookup receiver at: '@A')
+					    at: '@B'
+					    ifAbsent: [ TypUnknownType new ]) })
 ]
 
 { #category : #shadow }
@@ -126,8 +129,8 @@ TypShaPhaCollection >> mAsOrderedDictionary: aLookup [
 		typAsFunctionTypeWithResult:
 			(OrderedDictionary typAsType
 				copyWithParameters:
-					{((aLookup receiver at: '@A') at: '@A').
-					((aLookup receiver at: '@A') at: '@B')})
+					{((aLookup receiver at: '@A') at: '@A' ifAbsent: [ TypUnknownType new ]).
+					((aLookup receiver at: '@A') at: '@B' ifAbsent: [ TypUnknownType new ])})
 ]
 
 { #category : #shadow }
