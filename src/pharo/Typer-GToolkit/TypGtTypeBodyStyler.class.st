@@ -16,14 +16,16 @@ TypGtTypeBodyStyler >> coder: aCoder [
 
 { #category : #styling }
 TypGtTypeBodyStyler >> style: aText ast: anAst [
+
 	| ast |
 	ast := coder rbAST.
-	[ ast isMethod
-		ifTrue: [ TypInfSelf
-				value: ast methodClass typAsType
-				during: [ ast typInfType.
-					super style: aText ast: ast ] ]
-		ifFalse: [ ast typInfType.
+	[ 
+	TypInfSelf
+		value: (ast isMethod
+				 ifTrue: [ ast methodClass typAsType ]
+				 ifFalse: [ TypUnknownType new ])
+		during: [ 
+			ast typInfType.
 			super style: aText ast: ast ] ]
 		on: Error
 		do: [ :e | Halt once ]

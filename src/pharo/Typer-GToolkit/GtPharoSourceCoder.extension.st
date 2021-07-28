@@ -53,7 +53,7 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 	self completionStrategy class == GtPharoCompletionStrategy ifTrue: [ 
 		completionStrategy := completionStrategy 
 			                      typGtAsTypGtPharoCompletionStrategyFor: self ].
-	anAddOns addStyler: (TypGtTypeValueBodyStyler new
+	anAddOns addStyler: (TypGtTypeDeclarationBodyStyler new
 			 coder: self;
 			 yourself)
 	"anAddOns

@@ -2,15 +2,18 @@ Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer-Inference' }
 RBBlockNode >> typInfArgumentType: anArgumentNode [
+
 	| i j argument |
-	self typIsMessageArgument
-		ifFalse: [ ^ self typInfUnknown ].
+	self typIsMessageArgument ifFalse: [ ^ self typInfUnknown ].
 	i := parent arguments indexOf: self.
 	j := arguments indexOf: anArgumentNode.
 	argument := parent typInfMethod argumentAt: i.
-	argument isFunction
-		ifFalse: [ ^ self typInfUnknown ].
-	^ argument argumentAt: j
+	argument isUnion ifTrue: [ 
+		argument := argument types
+			            detect: #isFunction
+			            ifNone: [ ^ self typInfUnknown ] ].
+	argument isFunction ifTrue: [ ^ argument argumentAt: j ].
+	^ self typInfUnknown
 ]
 
 { #category : #'*Typer-Inference' }
