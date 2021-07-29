@@ -50,12 +50,12 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 				yourself)."
 
 	<gtAstCoderAddOns: 10>
-	self completionStrategy class == GtPharoCompletionStrategy ifTrue: [ 
+	"self completionStrategy class == GtPharoCompletionStrategy ifTrue: [ 
 		completionStrategy := completionStrategy 
 			                      typGtAsTypGtPharoCompletionStrategyFor: self ].
 	anAddOns addStyler: (TypGtTypeDeclarationBodyStyler new
 			 coder: self;
-			 yourself)
+			 yourself)"
 	"anAddOns
 		addShortcut: TypGtBrowseImplementorsShortcut new;
 		addShortcut: TypGtBrowseToTypeWithPragmaShortcut new;
