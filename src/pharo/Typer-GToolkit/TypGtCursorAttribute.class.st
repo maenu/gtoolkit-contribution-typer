@@ -1,5 +1,5 @@
 Class {
-	#name : #TypGtTypeCursorAttribute,
+	#name : #TypGtCursorAttribute,
 	#superclass : #BrTextCursorAttribute,
 	#instVars : [
 		'coder',
@@ -9,31 +9,31 @@ Class {
 }
 
 { #category : #accessing }
-TypGtTypeCursorAttribute >> attribute [
+TypGtCursorAttribute >> attribute [
 	<typPraResult: 'BrTextAdornmentAttribute'>
 	^ attribute
 ]
 
 { #category : #accessing }
-TypGtTypeCursorAttribute >> attribute: anObject [
+TypGtCursorAttribute >> attribute: anObject [
 	<typPraArguments: 'BrTextAdornmentAttribute'>
 	attribute := anObject
 ]
 
 { #category : #accessing }
-TypGtTypeCursorAttribute >> coder [
+TypGtCursorAttribute >> coder [
 	<typPraResult: 'TypGtMethodCoder'>
 	^ coder
 ]
 
 { #category : #accessing }
-TypGtTypeCursorAttribute >> coder: anObject [
+TypGtCursorAttribute >> coder: anObject [
 	<typPraArguments: 'TypGtMethodCoder'>
 	coder := anObject
 ]
 
 { #category : #initialization }
-TypGtTypeCursorAttribute >> initialize [
+TypGtCursorAttribute >> initialize [
 	<typPraVariable: 'attribute' as: 'BrTextAdornmentAttribute'>
 	<typPraVariable: 'coder' as: 'TypGtMethodCoder'>
 	super initialize.

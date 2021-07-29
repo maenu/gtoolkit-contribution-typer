@@ -1,22 +1,11 @@
 Class {
 	#name : #TypGtCheckBodyStyler,
-	#superclass : #GtRBASTStyler,
+	#superclass : #TypGtRbAstStyler,
 	#instVars : [
-		'coder',
 		'markUnknowns'
 	],
 	#category : #'Typer-GToolkit'
 }
-
-{ #category : #accessing }
-TypGtCheckBodyStyler >> coder [
-	^ coder
-]
-
-{ #category : #accessing }
-TypGtCheckBodyStyler >> coder: anObject [
-	coder := anObject
-]
 
 { #category : #initialization }
 TypGtCheckBodyStyler >> initialize [
@@ -34,22 +23,16 @@ TypGtCheckBodyStyler >> markUnknowns: anObject [
 	markUnknowns := anObject
 ]
 
-{ #category : #styling }
-TypGtCheckBodyStyler >> style: aText ast: anAst [
-	anAst typInfType.
-	super style: aText ast: anAst
-]
-
 { #category : #visiting }
 TypGtCheckBodyStyler >> styleFrom: anInteger to: anotherInteger color: aColor [
+
 	<typPraArguments: 'Integer,Integer,Color'>
 	self
 		styleFrom: anInteger
 		to: anotherInteger
 		with:
-			{(BlTextUnderlineAttribute new
-				color: (aColor alpha: 0.5);
-				yourself)}
+		{ (BlTextDecorationAttribute new underline color:
+			 (aColor alpha: 0.5)) }
 ]
 
 { #category : #visiting }
@@ -102,38 +85,33 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 
 { #category : #visiting }
 TypGtCheckBodyStyler >> visitMethodNode: aNode [
-	| position node |
+
+	| position |
 	super visitMethodNode: aNode.
-	node := aNode == coder rbAST
-		ifTrue: [ aNode ]
-		ifFalse: [ coder rbAST
-				typInfType;
-				yourself ].
-	node typCheHasUnknownResult
-		ifTrue: [ markUnknowns
-				ifTrue: [ self styleSelectorOf: node color: Color blue ] ].
-	position := node arguments isEmpty
-		ifTrue: [ node selector size ]
-		ifFalse: [ node arguments last stop ].
+	aNode typCheHasUnknownResult ifTrue: [ 
+		markUnknowns ifTrue: [ 
+			self styleSelectorOf: aNode color: Color blue ] ].
+	position := aNode arguments isEmpty
+		            ifTrue: [ aNode selector size ]
+		            ifFalse: [ aNode arguments last stop ].
 	self
 		styleFrom: position
 		to: position
-		with:
-			{(BrTextAdornmentDynamicAttribute new
-				beAppend;
-				stencil: [ BlElement new
-						background: node typCheColor;
-						constraintsDo: [ :c | 
-							c horizontal exact: 16.	"typCastAs BlLayoutCommonConstraintsAxis"
-							c vertical exact: 16	"typCastAs BlLayoutCommonConstraintsAxis" ];
-						margin:
-							(BlInsets
-								top: 0
-								right: 2
-								bottom: 0
-								left: 2);
-						yourself ];
-				yourself)}
+		with: { (BrTextAdornmentDynamicAttribute new
+				 beAppend;
+				 stencil: [ 
+					 BlElement new
+						 background: aNode typCheColor;
+						 constraintsDo: [ :c | 
+							 c horizontal exact: 16.
+							 c vertical exact: 16 ];
+						 margin: (BlInsets
+								  top: 0
+								  right: 2
+								  bottom: 0
+								  left: 2);
+						 yourself ];
+				 yourself) }
 ]
 
 { #category : #visiting }

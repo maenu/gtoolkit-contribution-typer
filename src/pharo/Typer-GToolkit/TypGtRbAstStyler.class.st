@@ -1,5 +1,5 @@
 Class {
-	#name : #TypGtTypeBodyStyler,
+	#name : #TypGtRbAstStyler,
 	#superclass : #GtRBASTStyler,
 	#traits : 'TRBProgramNodeVisitor - {#visitArgumentNodes:. #visitTemporaryDeclarationNode:}',
 	#classTraits : 'TRBProgramNodeVisitor classTrait',
@@ -10,12 +10,12 @@ Class {
 }
 
 { #category : #accessing }
-TypGtTypeBodyStyler >> coder: aCoder [
+TypGtRbAstStyler >> coder: aCoder [
 	coder := aCoder
 ]
 
 { #category : #styling }
-TypGtTypeBodyStyler >> style: aText ast: anAst [
+TypGtRbAstStyler >> style: aText ast: anAst [
 
 	| ast |
 	ast := coder rbAST.
@@ -32,18 +32,18 @@ TypGtTypeBodyStyler >> style: aText ast: anAst [
 ]
 
 { #category : #private }
-TypGtTypeBodyStyler >> styleFrom: from to: to with: attributes [
+TypGtRbAstStyler >> styleFrom: from to: to with: attributes [
 	(from <= text size and: [ to <= text size and: [ from <= to ] ])
 		ifTrue: [ super styleFrom: from to: to with: attributes ]
 ]
 
 { #category : #visiting }
-TypGtTypeBodyStyler >> styleValueNode: aNode [
+TypGtRbAstStyler >> styleValueNode: aNode [
 	self
 		styleFrom: aNode start
 		to: aNode stop
 		with:
-			{(TypGtTypeAttribute new
+			{(TypGtAttribute new
 				type_: aNode typInfType;
 				yourself)}
 ]

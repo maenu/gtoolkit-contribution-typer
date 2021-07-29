@@ -9,11 +9,13 @@ Class {
 
 { #category : #testing }
 TypGtCoderTypeFilter >> includesMethod: aCompiledMethod [
+
 	<typPraResult: 'Boolean'>
 	<typPraArguments: 'CompiledMethod'>
-	^ (type canUnderstand: aCompiledMethod selector)
-		and: [ (type lookupSelector: aCompiledMethod selector)
-				includes: aCompiledMethod ]
+	^ (type lookupMethod: aCompiledMethod selector) isUnknown not and: [ 
+		  self flag: 'FIXME how to get method?'.
+		  (type lookupMethod: aCompiledMethod selector) includes:
+			  aCompiledMethod ]
 ]
 
 { #category : #initialization }

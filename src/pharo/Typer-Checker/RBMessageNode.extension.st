@@ -42,7 +42,7 @@ RBMessageNode >> typCheCheckReceiver [
 	receiverType := receiver typInfType.
 	receiverType isUnknown
 		ifTrue: [ ^ self ].
-	(receiverType canUnderstand: self selector)
+	(receiverType lookupMethod: self selector) isUnknown
 		ifTrue: [ ^ self ].
 	receiverType isNullable
 		ifFalse: [ ^ self ].

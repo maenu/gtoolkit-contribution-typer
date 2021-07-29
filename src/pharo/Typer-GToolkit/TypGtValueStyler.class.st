@@ -1,11 +1,11 @@
 Class {
-	#name : #TypGtTypeValueBodyStyler,
-	#superclass : #TypGtTypeBodyStyler,
+	#name : #TypGtValueStyler,
+	#superclass : #TypGtRbAstStyler,
 	#category : #'Typer-GToolkit'
 }
 
 { #category : #visiting }
-TypGtTypeValueBodyStyler >> visitNode: aNode [
+TypGtValueStyler >> visitNode: aNode [
 	super visitNode: aNode.
 	aNode isValue ifTrue: [self styleValueNode: aNode]
 ]

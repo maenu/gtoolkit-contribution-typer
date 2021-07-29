@@ -1,11 +1,11 @@
 Class {
-	#name : #TypGtCoverageAstStyler,
-	#superclass : #GtRBASTStyler,
+	#name : #TypGtCoverageStyler,
+	#superclass : #TypGtRbAstStyler,
 	#category : #'Typer-GToolkit-Typer-GToolkit'
 }
 
 { #category : #accessing }
-TypGtCoverageAstStyler >> styleNode: aNode [
+TypGtCoverageStyler >> styleNode: aNode [
 	<typPraArguments: 'RBProgramNode'>
 	aNode
 		propertyAt: #tagExecuted
@@ -24,7 +24,7 @@ TypGtCoverageAstStyler >> styleNode: aNode [
 ]
 
 { #category : #accessing }
-TypGtCoverageAstStyler >> visitNode: aNode [
+TypGtCoverageStyler >> visitNode: aNode [
 	self styleNode: aNode.
 	super visitNode: aNode
 ]

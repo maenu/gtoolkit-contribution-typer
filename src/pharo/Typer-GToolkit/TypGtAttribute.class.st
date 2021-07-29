@@ -1,5 +1,5 @@
 Class {
-	#name : #TypGtTypeAttribute,
+	#name : #TypGtAttribute,
 	#superclass : #BrTextAdornmentDynamicAttribute,
 	#instVars : [
 		'type'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #initialization }
-TypGtTypeAttribute >> initialize [
+TypGtAttribute >> initialize [
 	<typPraVariable: 'type' as: 'TypType'>
 	super initialize.
 	self
@@ -30,13 +30,13 @@ TypGtTypeAttribute >> initialize [
 ]
 
 { #category : #accessing }
-TypGtTypeAttribute >> type_ [
+TypGtAttribute >> type_ [
 	<typPraResult: 'TypType'>
 	^ type
 ]
 
 { #category : #accessing }
-TypGtTypeAttribute >> type_: anObject [
+TypGtAttribute >> type_: anObject [
 	<typPraArguments: 'TypType'>
 	type := anObject
 ]

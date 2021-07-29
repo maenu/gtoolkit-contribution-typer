@@ -1,7 +1,7 @@
 Class {
 	#name : #TypGtTypeWithPragmaShortcut,
 	#superclass : #GtSourceCoderShortcut,
-	#category : #'Typer-GToolkit-Typer-GToolkit'
+	#category : #'Typer-GToolkit-Shortcut'
 }
 
 { #category : #accessing }

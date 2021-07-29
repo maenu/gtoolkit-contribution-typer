@@ -1,7 +1,7 @@
 Class {
 	#name : #TypGtBrowseImplementorsShortcut,
 	#superclass : #GtSourceCoderShortcut,
-	#category : #'Typer-GToolkit'
+	#category : #'Typer-GToolkit-Shortcut'
 }
 
 { #category : #accessing }
