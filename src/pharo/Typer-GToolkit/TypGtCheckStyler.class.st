@@ -1,5 +1,5 @@
 Class {
-	#name : #TypGtCheckBodyStyler,
+	#name : #TypGtCheckStyler,
 	#superclass : #TypGtRbAstStyler,
 	#instVars : [
 		'markUnknowns'
@@ -8,55 +8,55 @@ Class {
 }
 
 { #category : #initialization }
-TypGtCheckBodyStyler >> initialize [
+TypGtCheckStyler >> initialize [
 	super initialize.
 	markUnknowns := false
 ]
 
 { #category : #accessing }
-TypGtCheckBodyStyler >> markUnknowns [
+TypGtCheckStyler >> markUnknowns [
 	^ markUnknowns
 ]
 
 { #category : #accessing }
-TypGtCheckBodyStyler >> markUnknowns: anObject [
+TypGtCheckStyler >> markUnknowns: anObject [
 	markUnknowns := anObject
 ]
 
 { #category : #visiting }
-TypGtCheckBodyStyler >> styleFrom: anInteger to: anotherInteger color: aColor [
+TypGtCheckStyler >> styleFrom: anInteger to: anotherInteger color: aColor [
 
 	<typPraArguments: 'Integer,Integer,Color'>
 	self
 		styleFrom: anInteger
 		to: anotherInteger
-		with:
-		{ (BlTextDecorationAttribute new underline color:
-			 (aColor alpha: 0.5)) }
+		with: { (BlTextDecorationAttribute new underline
+				 color: (aColor alpha: 0.5);
+				 thickness: 2) }
 ]
 
 { #category : #visiting }
-TypGtCheckBodyStyler >> styleNode: aNode color: aColor [
+TypGtCheckStyler >> styleNode: aNode color: aColor [
 	<typPraArguments: 'RBProgramNode,Color'>
 	self styleFrom: aNode start to: aNode stop color: aColor
 ]
 
 { #category : #accessing }
-TypGtCheckBodyStyler >> styleSelectorOf: aNode color: aColor [
+TypGtCheckStyler >> styleSelectorOf: aNode color: aColor [
 	<typPraArguments: '{RBMethodNode,RBMessageNode},Color'>
 	aNode keywordsIntervals
 		do: [ :e | self styleFrom: e first to: e last color: aColor ]
 ]
 
 { #category : #visiting }
-TypGtCheckBodyStyler >> visitArgumentNode: aNode [
+TypGtCheckStyler >> visitArgumentNode: aNode [
 	super visitArgumentNode: aNode.
 	aNode typInfType isUnknown
 		ifTrue: [ markUnknowns ifTrue: [ self styleNode: aNode color: Color blue ] ]
 ]
 
 { #category : #visiting }
-TypGtCheckBodyStyler >> visitAssignmentNode: aNode [
+TypGtCheckStyler >> visitAssignmentNode: aNode [
 	super visitAssignmentNode: aNode.
 	aNode value typInfType isUnknown
 		ifTrue: [ markUnknowns ifTrue: [ self styleNode: aNode value color: Color blue ] ]
@@ -66,7 +66,7 @@ TypGtCheckBodyStyler >> visitAssignmentNode: aNode [
 ]
 
 { #category : #visiting }
-TypGtCheckBodyStyler >> visitMessageNode: aNode [
+TypGtCheckStyler >> visitMessageNode: aNode [
 	super visitMessageNode: aNode.
 	aNode receiver typInfType isUnknown
 		ifTrue: [ markUnknowns ifTrue: [ self styleNode: aNode color: Color blue ] ]
@@ -84,38 +84,16 @@ TypGtCheckBodyStyler >> visitMessageNode: aNode [
 ]
 
 { #category : #visiting }
-TypGtCheckBodyStyler >> visitMethodNode: aNode [
+TypGtCheckStyler >> visitMethodNode: aNode [
 
-	| position |
 	super visitMethodNode: aNode.
 	aNode typCheHasUnknownResult ifTrue: [ 
 		markUnknowns ifTrue: [ 
-			self styleSelectorOf: aNode color: Color blue ] ].
-	position := aNode arguments isEmpty
-		            ifTrue: [ aNode selector size ]
-		            ifFalse: [ aNode arguments last stop ].
-	self
-		styleFrom: position
-		to: position
-		with: { (BrTextAdornmentDynamicAttribute new
-				 beAppend;
-				 stencil: [ 
-					 BlElement new
-						 background: aNode typCheColor;
-						 constraintsDo: [ :c | 
-							 c horizontal exact: 16.
-							 c vertical exact: 16 ];
-						 margin: (BlInsets
-								  top: 0
-								  right: 2
-								  bottom: 0
-								  left: 2);
-						 yourself ];
-				 yourself) }
+			self styleSelectorOf: aNode color: Color blue ] ]
 ]
 
 { #category : #visiting }
-TypGtCheckBodyStyler >> visitReturnNode: aNode [
+TypGtCheckStyler >> visitReturnNode: aNode [
 	super visitReturnNode: aNode.
 	aNode typInfType isUnknown
 		ifTrue: [ markUnknowns
@@ -127,7 +105,7 @@ TypGtCheckBodyStyler >> visitReturnNode: aNode [
 ]
 
 { #category : #visiting }
-TypGtCheckBodyStyler >> visitTemporaryNode: aNode [
+TypGtCheckStyler >> visitTemporaryNode: aNode [
 	super visitTemporaryNode: aNode.
 	(aNode isDefinition and: [ aNode typInfType isUnknown ])
 		ifTrue: [ markUnknowns

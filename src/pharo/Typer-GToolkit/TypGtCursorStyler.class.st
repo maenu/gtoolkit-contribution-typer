@@ -5,17 +5,17 @@ Class {
 }
 
 { #category : #visiting }
-TypGtCursorStyler >> styleValueNode: aNode [
+TypGtCursorStyler >> styleNode: aNode [
+
 	<typPraArguments: 'RBValueNode'>
 	self
 		styleFrom: aNode start
 		to: aNode stop
-		with:
-			{(TypGtCursorAttribute new
-				coder: coder;
-				attribute:
-					(TypGtAttribute new
-						type_: aNode typInfType;
-						yourself);
-				yourself)}
+		with: { (TypGtCursorAttribute new
+				 coder: coder;
+				 node: aNode;
+				 attribute: (TypGtAttribute new
+						  type_: aNode typInfType;
+						  yourself);
+				 yourself) }
 ]

@@ -3,7 +3,8 @@ Class {
 	#superclass : #BrTextCursorAttribute,
 	#instVars : [
 		'coder',
-		'attribute'
+		'attribute',
+		'node'
 	],
 	#category : #'Typer-GToolkit'
 }
@@ -34,24 +35,27 @@ TypGtCursorAttribute >> coder: anObject [
 
 { #category : #initialization }
 TypGtCursorAttribute >> initialize [
+
 	<typPraVariable: 'attribute' as: 'BrTextAdornmentAttribute'>
 	<typPraVariable: 'coder' as: 'TypGtMethodCoder'>
 	super initialize.
 	self
 		enterAction: [ :aTextEditor :anEvent | 
-			| node |
-			node := coder rbAST
-				bestNodeFor: (anEvent cursor position to: anEvent cursor position).
-			(aTextEditor text from: node stop to: node stop)
-				attribute: attribute.
-			aTextEditor invalidate: node stop to: node stop.
-			aTextEditor update: node stop to: node stop ];
+			node stop <= aTextEditor text size ifTrue: [ 
+					(aTextEditor text from: node stop to: node stop) attribute:
+							attribute ] ];
 		leaveAction: [ :aTextEditor :anEvent | 
-			| node |
-			node := coder rbAST
-				bestNodeFor: (anEvent cursor position to: anEvent cursor position).
-			(aTextEditor text from: node stop to: node stop)
-				clearAttributes: [ :e | e == attribute ].
-			aTextEditor invalidate: node stop to: node stop.
-			aTextEditor update: node stop to: node stop ]
+			aTextEditor text removeAttribute: attribute ]
+]
+
+{ #category : #accessing }
+TypGtCursorAttribute >> node [
+	<typPraResult: 'RBProgramNode'>
+	^ node
+]
+
+{ #category : #accessing }
+TypGtCursorAttribute >> node: anObject [
+	<typPraArguments: 'RBProgramNode'>
+	node := anObject
 ]

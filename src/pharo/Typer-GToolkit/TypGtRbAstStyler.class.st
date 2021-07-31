@@ -38,7 +38,7 @@ TypGtRbAstStyler >> styleFrom: from to: to with: attributes [
 ]
 
 { #category : #visiting }
-TypGtRbAstStyler >> styleValueNode: aNode [
+TypGtRbAstStyler >> styleNode: aNode [
 	self
 		styleFrom: aNode start
 		to: aNode stop

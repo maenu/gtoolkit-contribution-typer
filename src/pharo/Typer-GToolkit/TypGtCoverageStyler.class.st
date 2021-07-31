@@ -6,6 +6,7 @@ Class {
 
 { #category : #accessing }
 TypGtCoverageStyler >> styleNode: aNode [
+
 	<typPraArguments: 'RBProgramNode'>
 	aNode
 		propertyAt: #tagExecuted
@@ -13,13 +14,9 @@ TypGtCoverageStyler >> styleNode: aNode [
 			self
 				styleFrom: aNode start
 				to: aNode stop
-				with:
-					{(BlTextBackgroundAttribute new
-						paint:
-							((c
-								ifTrue: [ Color green ]
-								ifFalse: [ Color red ]) alpha: 0.3) asBlPaint;
-						yourself)} ]
+				with: { (BlTextHighlightAttribute paint: ((c
+							   ifTrue: [ Color green ]
+							   ifFalse: [ Color red ]) alpha: 0.3) asBlPaint) } ]
 		ifAbsent: [  ]
 ]
 

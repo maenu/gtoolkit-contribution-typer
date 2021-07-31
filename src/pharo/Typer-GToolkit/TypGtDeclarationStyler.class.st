@@ -7,7 +7,7 @@ Class {
 { #category : #visiting }
 TypGtDeclarationStyler >> visitArgumentVariableNode: aNode [
 
-	aNode isDefinition ifTrue: [ self styleValueNode: aNode ].
+	aNode isDefinition ifTrue: [ self styleNode: aNode ].
 	super visitArgumentVariableNode: aNode
 ]
 
