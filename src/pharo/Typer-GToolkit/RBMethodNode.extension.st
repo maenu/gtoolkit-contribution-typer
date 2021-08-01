@@ -35,6 +35,15 @@ RBMethodNode >> typGtFiltersToTypeWithShadow [
 ]
 
 { #category : #'*Typer-GToolkit' }
+RBMethodNode >> typGtSelf [
+
+	^ self
+		  propertyAt: 'typGtSelf'
+		  ifAbsent: [ 
+		  self propertyAt: 'typGtSelf' put: self methodClass typAsType ]
+]
+
+{ #category : #'*Typer-GToolkit' }
 RBMethodNode >> typGtTypeWithPragma [
 	| arguments_ result_ variables_ |
 	arguments_ := self numArgs

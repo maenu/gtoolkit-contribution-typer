@@ -44,9 +44,10 @@ GtPharoSourceCoder >> typGtBrowseToTypeWithShadowAt: anInteger [
 GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 
 	<gtAstCoderAddOns: 10>
-	self completionStrategy class == GtPharoCompletionStrategy ifTrue: [ 
-		completionStrategy := completionStrategy 
-			                      typGtAsTypGtPharoCompletionStrategyFor: self ].
+	self completionStrategy:
+		(self completionStrategy typGtAsCompletionStrategy
+			 coder: self;
+			 yourself).
 	anAddOns
 		addStyler: (TypGtDeclarationStyler new
 				 coder: self;

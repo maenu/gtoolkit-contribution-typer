@@ -7,15 +7,6 @@ Class {
 	#category : #'Typer-GToolkit'
 }
 
-{ #category : #private }
-TypGtPharoCompletionStrategy >> actionsFor: aGtAst at: anInteger [
-	| gtNode rbPosition rbNode |
-	gtNode := self nodeFor: anInteger in: aGtAst.
-	rbPosition := anInteger - gtNode source size.
-	rbNode := coder rbAST bestNodeFor: (rbPosition to: rbPosition).
-	^ gtNode ifNil: [ #() "typParameters GtCompletionAction" ] ifNotNil: [ :node | node typGtCompletionActionsFor: self in: rbNode ]
-]
-
 { #category : #accessing }
 TypGtPharoCompletionStrategy >> coder [
 	<typPraResult: 'TypGtMethodCoder'>
@@ -26,6 +17,19 @@ TypGtPharoCompletionStrategy >> coder [
 TypGtPharoCompletionStrategy >> coder: anObject [
 	<typPraArguments: 'TypGtMethodCoder'>
 	coder := anObject
+]
+
+{ #category : #accessing }
+TypGtPharoCompletionStrategy >> completionActionsFor: aText at: positionInteger max: maxInteger requested: aBoolean [
+
+	| node |
+	maxItems := maxInteger.
+	index := positionInteger.
+	wasRequested := aBoolean.
+	node := coder rbAST bestNodeFor: (index to: index).
+	^ (self parseSource: aText asString)
+		  ifNil: [ #(  ) ]
+		  ifNotNil: [ :tree | tree typGtCompletionActionsFor: self in: node ]
 ]
 
 { #category : #'private-selector' }
@@ -43,9 +47,8 @@ TypGtPharoCompletionStrategy >> selectorsForReceiver: aBehavior matching: aStrin
 	^ tree weightedFirst: maxItems startingWith: aString
 ]
 
-{ #category : #'as yet unclassified' }
-TypGtPharoCompletionStrategy >> typGtAsTypGtPharoCompletionStrategyFor: aCoder [
+{ #category : #accessing }
+TypGtPharoCompletionStrategy >> typGtAsCompletionStrategy [
+
 	^ self
-		coder: aCoder;
-		yourself
 ]

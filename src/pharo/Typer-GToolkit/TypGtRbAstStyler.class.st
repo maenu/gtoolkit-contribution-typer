@@ -20,13 +20,9 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 	| ast |
 	ast := coder rbAST.
 	[ 
-	TypInfSelf
-		value: (ast isMethod
-				 ifTrue: [ ast methodClass typAsType ]
-				 ifFalse: [ TypUnknownType new ])
-		during: [ 
-			ast typInfType.
-			super style: aText ast: ast ] ]
+	TypInfSelf value: ast typGtSelf during: [ 
+		ast typInfType.
+		super style: aText ast: ast ] ]
 		on: Error
 		do: [ :e | Halt once ]
 ]

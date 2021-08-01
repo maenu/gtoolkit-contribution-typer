@@ -10,3 +10,12 @@ RBProgramNode >> typGtCanType [
 RBProgramNode >> typGtInvokedMethods [
 	^ self children flatCollect: #typGtInvokedMethods as: IdentitySet
 ]
+
+{ #category : #'*Typer-GToolkit' }
+RBProgramNode >> typGtSelf [
+
+	parent ifNotNil: [ ^ parent typGtSelf ].
+	^ self
+		  propertyAt: 'typGtSelf'
+		  ifAbsent: [ self propertyAt: 'typGtSelf' put: self typInfUnknown ]
+]
