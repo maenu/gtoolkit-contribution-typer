@@ -12,10 +12,17 @@ TypGtCoderTypeFilter >> includesMethod: aCompiledMethod [
 
 	<typPraResult: 'Boolean'>
 	<typPraArguments: 'CompiledMethod'>
-	^ (type lookupMethod: aCompiledMethod selector) isUnknown not and: [ 
-		  self flag: 'FIXME how to get method?'.
-		  (type lookupMethod: aCompiledMethod selector) includes:
-			  aCompiledMethod ]
+	| methodType |
+	methodType := aCompiledMethod typGtSelf.
+	type isUnion
+		ifTrue: [ 
+			type types
+				detect: [ :e | e <= methodType ]
+				ifFound: [  ]
+				ifNone: [ ^ false ] ]
+		ifFalse: [ type <= methodType ifFalse: [ ^ false ] ].
+	Halt once.
+	^ (type lookupMethod: aCompiledMethod selector) isUnknown not
 ]
 
 { #category : #initialization }

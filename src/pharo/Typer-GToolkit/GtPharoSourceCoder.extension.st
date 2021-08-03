@@ -2,18 +2,17 @@ Extension { #name : #GtPharoSourceCoder }
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
+
 	<typPraArguments: 'Integer'>
 	| node |
 	node := self typGtRbNodeAt: anInteger.
-	node isNil
-		ifTrue: [ ^ self ].
-	node isMessage
-		ifFalse: [ ^ self ].
-	self
-		notifyObjectSpawn:
-			(TypGtCoderTypeFilter new
-				type: node receiver typInfType;
-				yourself) & (GtSearchImplementorsFilter selector: node selector)
+	node isNil ifTrue: [ ^ self ].
+	node isMessage ifFalse: [ ^ self ].
+	self notifyObjectSpawn:
+		(GtSearchImplementorsFilter selector: node selector)
+		& (TypGtCoderTypeFilter new
+				 type: (node receiver typInfTypeIn: node typGtSelf);
+				 yourself)
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -60,11 +59,11 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 				 yourself);
 		addStyler: (TypGtCursorStyler new
 				 coder: self;
-				 yourself)
-	"anAddOns
+				 yourself);
 		addShortcut: TypGtBrowseImplementorsShortcut new;
 		addShortcut: TypGtBrowseToTypeWithPragmaShortcut new;
-		addShortcut: TypGtBrowseToTypeWithShadowShortcut new;
+		addShortcut: TypGtBrowseToTypeWithShadowShortcut new
+	"anAddOns
 		addMainAction: 'Types' translated
 			icon: BrGlamorousIcons inspect
 			action: [ | declaration |
@@ -88,9 +87,7 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtRbNodeAt: anInteger [
+
 	<typPraResult: '{!,RBProgramNode}'>
-	^ self rbAST
-		bestNodeFor: (anInteger to: anInteger)
-		on: Error
-		do: [ :f | f return ]
+	^ self rbAST bestNodeFor: (anInteger to: anInteger)
 ]

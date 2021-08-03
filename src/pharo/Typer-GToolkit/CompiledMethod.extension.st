@@ -26,3 +26,9 @@ CompiledMethod >> typGtElement [
 		  when: BlClickEvent do: [ :f | f target phlow spawnObject: self ];
 		  yourself
 ]
+
+{ #category : #'*Typer-GToolkit' }
+CompiledMethod >> typGtSelf [
+
+	^ self methodClass typAsType
+]

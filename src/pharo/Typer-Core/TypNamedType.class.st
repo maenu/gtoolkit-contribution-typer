@@ -56,6 +56,8 @@ TypNamedType >> > aType [
 
 { #category : #polymorphic }
 TypNamedType >> at: aString [
+
+	self hasSuperType ifFalse: [ ^ TypUnknownType new ].
 	^ self superType at: aString
 ]
 
@@ -161,6 +163,8 @@ TypNamedType >> printOn: aStream skipping: anIdentitySet [
 
 { #category : #polymorphic }
 TypNamedType >> result [
+
+	self hasSuperType ifFalse: [ ^ TypUnknownType new ].
 	^ self superType result
 ]
 

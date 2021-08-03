@@ -12,7 +12,8 @@ RBBlockNode >> typInfArgumentType: anArgumentNode [
 		argument := argument types
 			            detect: #isFunction
 			            ifNone: [ ^ self typInfUnknown ] ].
-	argument isFunction ifTrue: [ ^ argument argumentAt: j ].
+	(argument isFunction and: [ argument argumentsSize >= j ]) ifTrue: [ 
+		^ argument argumentAt: j ].
 	^ self typInfUnknown
 ]
 
