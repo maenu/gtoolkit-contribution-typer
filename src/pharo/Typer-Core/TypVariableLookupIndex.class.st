@@ -17,7 +17,8 @@ TypVariableLookupIndex class >> instance [
 													                  { 
 														                  TypPraVariableLookupResolver new.
 														                  TypShaVariableLookupResolver new })).
-									                TypInfVariableLookupResolver new }));
+									                (TypDepthFirstLookupResolver resolver:
+											                 TypInfVariableLookupResolver new) }));
 			              yourself ]
 ]
 

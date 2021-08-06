@@ -21,7 +21,6 @@ TypGtCoderTypeFilter >> includesMethod: aCompiledMethod [
 				ifFound: [  ]
 				ifNone: [ ^ false ] ]
 		ifFalse: [ type <= methodType ifFalse: [ ^ false ] ].
-	Halt once.
 	^ (type lookupMethod: aCompiledMethod selector) isUnknown not
 ]
 

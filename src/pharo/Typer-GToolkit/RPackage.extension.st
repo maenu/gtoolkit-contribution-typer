@@ -2,28 +2,30 @@ Extension { #name : #RPackage }
 
 { #category : #'*Typer-GToolkit' }
 RPackage >> typGtCoverageFor: aView context: aDictionary [
+
 	<gtPackageView>
 	^ aView explicit
-		title: 'Coverage';
-		priority: 50;
-		stencil: [ BlElement new
-				layout: BlLinearLayout vertical;
-				constraintsDo: [ :c | 
-					c horizontal fitContent.
-					c vertical fitContent ];
-				addChildren:
-					{(BrLabel new
-						look: BrGlamorousLabelLook;
-						text: 'methods';
-						yourself).
-					self typGtMethodCoverage typGtAsCoverageElement.
-					(BrLabel new
-						look: BrGlamorousLabelLook;
-						text: 'nodes';
-						yourself).
-					self typGtNodeCoverage typGtAsCoverageElement};
-				yourself ];
-		yourself
+		  title: 'Coverage';
+		  priority: 50;
+		  stencil: [ 
+			  BlElement new
+				  layout: BlLinearLayout vertical;
+				  constraintsDo: [ :c | 
+					  c horizontal fitContent.
+					  c vertical fitContent ];
+				  addChildren: { 
+						  (BrLabel new
+							   aptitude: BrGlamorousLabelLook;
+							   text: 'methods';
+							   yourself).
+						  self typGtMethodCoverage typGtAsCoverageElement.
+						  (BrLabel new
+							   aptitude: BrGlamorousLabelLook;
+							   text: 'nodes';
+							   yourself).
+						  self typGtNodeCoverage typGtAsCoverageElement };
+				  yourself ];
+		  yourself
 ]
 
 { #category : #'*Typer-GToolkit' }

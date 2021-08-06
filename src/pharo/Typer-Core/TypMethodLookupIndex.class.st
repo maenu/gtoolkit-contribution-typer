@@ -17,7 +17,8 @@ TypMethodLookupIndex class >> instance [
 													                  { 
 														                  TypPraMethodLookupResolver new.
 														                  TypShaMethodLookupResolver new })).
-									                TypInfMethodLookupResolver new }));
+									                (TypDepthFirstLookupResolver resolver:
+											                 TypInfMethodLookupResolver new) }));
 			              yourself ]
 ]
 
