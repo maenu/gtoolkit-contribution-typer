@@ -49,25 +49,25 @@ RBMethodNode >> typGtTypeWithPragma [
 	| arguments_ result_ variables_ |
 	arguments_ := self numArgs timesCollect: [ :i | 
 		              self pragmas
-			              detect: [ :e | e selector = #typTypeArgument:as: ]
+			              detect: [ :e | e selector = #typPraArguments: ]
 			              ifFound: [ :e | 
 				              self removePragma: e.
 				              e ]
 			              ifNone: [ 
 				              RBPragmaNode
-					              selector: #typTypeArgument:as:
+					              selector: #typPraArguments:
 					              arguments: { 
 							              (RBLiteralValueNode value: i).
 							              (RBLiteralValueNode value:
-								               (self typInfMethod argumentAt: i) asString) } ] ].
+								               (',' join: (self typInfMethod arguments collect: #asString)) )} ] ].
 	result_ := self pragmas
-		           detect: [ :e | e selector = #typTypeResultAs: ]
+		           detect: [ :e | e selector = #typPraResult: ]
 		           ifFound: [ :e | 
 			           self removePragma: e.
 			           e ]
 		           ifNone: [ 
 			           RBPragmaNode
-				           selector: #typTypeResultAs:
+				           selector: #typPraResult:
 				           arguments:
 				           { (RBLiteralValueNode value:
 					            self typInfMethod result asString) } ].
@@ -75,13 +75,13 @@ RBMethodNode >> typGtTypeWithPragma [
 	self selector = #initialize ifTrue: [ 
 		variables_ := self methodClass instVarNames collect: [ :e | 
 			              self pragmas
-				              detect: [ :f | f selector = #typTypeVariable:as: ]
+				              detect: [ :f | f selector = #typPraVariable:as: ]
 				              ifFound: [ :f | 
 					              self removePragma: f.
 					              f ]
 				              ifNone: [ 
 					              RBPragmaNode
-						              selector: #typTypeVariable:as:
+						              selector: #typPraVariable:as:
 						              arguments: { 
 								              (RBLiteralValueNode value: e asString).
 								              (RBLiteralValueNode value:

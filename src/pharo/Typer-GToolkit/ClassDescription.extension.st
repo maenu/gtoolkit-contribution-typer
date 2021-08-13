@@ -54,7 +54,7 @@ ClassDescription >> typGtMethodsElementInPackage: aPackage [
 			   width: 1);
 		  aptitude: (BrGlamorousWithTooltipAptitude content: [ 
 				   BrLabel new
-					   look: BrGlamorousLabelAptitude;
+					   aptitude: BrGlamorousLabelAptitude;
 					   padding: (BlInsets all: 5);
 					   text: self name;
 					   yourself ]);

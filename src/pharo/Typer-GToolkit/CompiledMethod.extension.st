@@ -19,11 +19,11 @@ CompiledMethod >> typGtElement [
 			  c vertical exact: 16 "typCastAs BlLayoutCommonConstraintsAxis" ];
 		  aptitude: (BrGlamorousWithTooltipAptitude content: [ 
 				   BrLabel new
-					   look: BrGlamorousLabelAptitude;
+					   aptitude: BrGlamorousLabelAptitude;
 					   padding: (BlInsets all: 5);
 					   text: self selector;
 					   yourself ]);
-		  when: BlClickEvent do: [ :f | f target phlow spawnObject: self ];
+		  when: BlClickEvent do: [ :f | f consumed: true. f target phlow spawnObject: self ];
 		  yourself
 ]
 

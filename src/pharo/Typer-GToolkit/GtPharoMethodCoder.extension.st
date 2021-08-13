@@ -8,9 +8,11 @@ GtPharoMethodCoder >> typGtInitializeMethodAddOnsFor: anAst into: anAddOns [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoMethodCoder >> typGtTypeWithPragma [
-	self
-		sourceCode:
-			(self rbAST
-				typGtTypeWithPragma;
-				formattedCode)
+
+	| ast |
+	ast := self rbAST.
+	TypInfSelf value: ast typGtSelf during: [ 
+		self sourceCode: (GtCoderExplicitSourceCode new source: (ast
+					  typGtTypeWithPragma;
+					  formattedCode)) ]
 ]

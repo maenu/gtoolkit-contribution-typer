@@ -36,7 +36,7 @@ TypShaPhaClassDescription >> mHasInstVarNamed: aLookup [
 TypShaPhaClassDescription >> mInstanceSide: aLookup [
 	<typShaMethod: 'instanceSide'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide
+		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
 ]
 
 { #category : #shadow }

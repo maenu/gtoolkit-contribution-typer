@@ -115,6 +115,9 @@ TypParametricType >> hashSkipping: anIdentitySet [
 
 { #category : #initialization }
 TypParametricType >> initialize [
+
+	<typPraResult: 'TypParametricType'>
+	<typPraVariable: 'parameters' as: 'OrderedDictionary<String,TypType>'>
 	super initialize.
 	parameters := OrderedDictionary new
 ]
