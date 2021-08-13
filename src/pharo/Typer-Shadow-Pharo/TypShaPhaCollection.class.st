@@ -345,26 +345,31 @@ TypShaPhaCollection >> mIfEmpty: aLookup [
 
 { #category : #shadow }
 TypShaPhaCollection >> mIfEmptyIfNotEmpty: aLookup [
+
 	<typShaMethod: 'ifEmpty:ifNotEmpty:'>
+	<typPraArguments: 'TypMethodLookup'>
+	<typPraResult: 'TypFunctionType'>
 	| a r |
 	a := aLookup arguments at: 2.
 	r := (a hasValue and: [ a value isString ])
-		ifTrue:
-			[ (aLookup root receiver lookupMethod: a value asSymbol arguments: #())
-				result ]
-		ifFalse: [ a result ].
+		     ifTrue: [ 
+			     (aLookup root receiver
+				      lookupMethod: a value asSymbol
+				      arguments: #(  )) result ]
+		     ifFalse: [ a result ].
 	^ CompiledMethod
-		typAsFunctionTypeWithResult:
-			{(aLookup arguments at: 1) result.
-			r} typAsType
-		arguments:
-			{BlockClosure typAsType.
-			{Symbol typAsType.
-			(BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {aLookup receiver}
-				argumentsOptional: true
-				signalsAlways: false)} typAsType}
+		  typAsFunctionTypeWithResult: { 
+				  (aLookup arguments at: 1) result.
+				  r } typAsType
+		  arguments: { 
+				  BlockClosure typAsType.
+				  { 
+					  Symbol typAsType.
+					  (BlockClosure
+						   typAsFunctionTypeWithResult: TypUnknownType new
+						   arguments: { aLookup receiver }
+						   argumentsOptional: true
+						   signalsAlways: false) } typAsType }
 ]
 
 { #category : #shadow }

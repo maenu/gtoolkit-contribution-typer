@@ -7,31 +7,33 @@ RBMethodNode >> typGtCanType [
 
 { #category : #'*Typer-GToolkit' }
 RBMethodNode >> typGtFiltersToTypeWithShadow [
-	<typPraResult: 'GtCoderMethodsFilter'>
+
 	| clazz shadows argumentTypes resultType |
 	clazz := self methodClass.
-	argumentTypes := self numArgs
-		timesCollect: [ :i | self typInfMethod argumentAt: i ].
+	argumentTypes := self numArgs timesCollect: [ :i | 
+		                 self typInfMethod argumentAt: i ].
 	resultType := self typInfMethod result.
 	shadows := (TypShaShadow typGtShadowFor: clazz)
-		ifEmpty: [ {(TypShaShadow typGtNewShadowFor: clazz)} ]
-		ifNotEmpty: #yourself.
-	^ (shadows
-		collect: [ :e | 
-			| method |
-			method := clazz isClassSide
-				ifTrue: [ e
-						typGtShadowClassInstanceMethod: self selector
-						arguments: argumentTypes
-						result: resultType ]
-				ifFalse: [ e
-						typGtShadowInstanceMethod: self selector
-						arguments: argumentTypes
-						result: resultType ].
-			^ (TypGtCoderTypeFilter new
-				type: method methodClass typAsType;
-				yourself) & (GtSearchImplementorsFilter selector: method selector) ])
-		reduce: [ :a :b | a | b ]
+		           ifEmpty: [ { (TypShaShadow typGtNewShadowFor: clazz) } ]
+		           ifNotEmpty: #yourself.
+	^ (shadows collect: [ :e | 
+		   | method |
+		   method := clazz isClassSide
+			             ifTrue: [ 
+				             e
+					             typGtShadowClassInstanceMethod: self selector
+					             arguments: argumentTypes
+					             result: resultType ]
+			             ifFalse: [ 
+				             e
+					             typGtShadowInstanceMethod: self selector
+					             arguments: argumentTypes
+					             result: resultType ].
+		   ^ (TypGtCoderTypeFilter new
+			      type: method methodClass typAsType;
+			      yourself)
+		     & (GtSearchImplementorsFilter selector: method selector) ]) 
+		  reduce: [ :a :b | a | b ]
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -47,19 +49,17 @@ RBMethodNode >> typGtSelf [
 RBMethodNode >> typGtTypeWithPragma [
 
 	| arguments_ result_ variables_ |
-	arguments_ := self numArgs timesCollect: [ :i | 
-		              self pragmas
-			              detect: [ :e | e selector = #typPraArguments: ]
-			              ifFound: [ :e | 
-				              self removePragma: e.
-				              e ]
-			              ifNone: [ 
-				              RBPragmaNode
-					              selector: #typPraArguments:
-					              arguments: { 
-							              (RBLiteralValueNode value: i).
-							              (RBLiteralValueNode value:
-								               (',' join: (self typInfMethod arguments collect: #asString)) )} ] ].
+	arguments_ := self pragmas
+		              detect: [ :e | e selector = #typPraArguments: ]
+		              ifFound: [ :e | 
+			              self removePragma: e.
+			              e ]
+		              ifNone: [ 
+			              RBPragmaNode
+				              selector: #typPraArguments:
+				              arguments: { (RBLiteralValueNode value:
+						               (',' join:
+							                (self typInfMethod arguments collect: #asString))) } ].
 	result_ := self pragmas
 		           detect: [ :e | e selector = #typPraResult: ]
 		           ifFound: [ :e | 

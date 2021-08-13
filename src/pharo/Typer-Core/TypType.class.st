@@ -100,6 +100,14 @@ TypType >> asNullable [
 		yourself
 ]
 
+{ #category : #copying }
+TypType >> copyWithValue: anObject [
+
+	^ self copy
+		  value: anObject;
+		  yourself
+]
+
 { #category : #accessing }
 TypType >> gtOriginsFor: aView [
 	<gtView>

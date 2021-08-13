@@ -26,3 +26,9 @@ TypGtDeclarationStyler >> visitMethodNode: aNode [
 				 type_: aNode typInfType result;
 				 yourself) }
 ]
+
+{ #category : #accessing }
+TypGtDeclarationStyler >> visitTemporaryDeclarationNode: aNode [
+	self styleNode: aNode.
+	super visitTemporaryDeclarationNode: aNode
+]
