@@ -14,7 +14,7 @@ Class {
 TypInfTemporaryExecutionOrderVisitor class >> typeForTemporary: aNode [
 
 	| definer |
-	self assert: [ aNode isTempVariable ].
+	self assert: [ aNode isVariable ].
 	self assert: [ aNode isDefinition not ].
 	definer := aNode whoDefines: aNode name.
 	^ (self typesFor: aNode in: definer definer: definer) typAsType
