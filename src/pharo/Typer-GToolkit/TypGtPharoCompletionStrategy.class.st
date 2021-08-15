@@ -15,7 +15,7 @@ TypGtPharoCompletionStrategy >> coder [
 
 { #category : #accessing }
 TypGtPharoCompletionStrategy >> coder: anObject [
-	<typPraArguments: 'TypGtMethodCoder'>
+
 	coder := anObject
 ]
 

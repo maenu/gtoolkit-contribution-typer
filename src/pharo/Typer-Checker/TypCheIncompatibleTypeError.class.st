@@ -37,6 +37,16 @@ TypCheIncompatibleTypeError >> expected: anObject [
 	expected := anObject
 ]
 
+{ #category : #accessing }
+TypCheIncompatibleTypeError >> messageText [
+
+	messageText ifNil: [ 
+		messageText := 'Expected {1}, but was {2}' format: { 
+				               expected asString.
+				               actual asString } ].
+	^ super messageText
+]
+
 { #category : #printing }
 TypCheIncompatibleTypeError >> printOn: aStream [
 	super printOn: aStream.

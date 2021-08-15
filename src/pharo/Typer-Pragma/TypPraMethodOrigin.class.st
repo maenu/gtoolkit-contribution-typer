@@ -27,3 +27,14 @@ TypPraMethodOrigin >> printOn: aStream [
 		nextPutAll: '>>'.
 	method selector printOn: aStream
 ]
+
+{ #category : #accessing }
+TypPraMethodOrigin >> typGtSourceFor: aView [
+
+	<gtView>
+	^ aView forward
+		  title: 'Method';
+		  priority: 1;
+		  object: [ method ];
+		  view: #gtSourceFor:
+]
