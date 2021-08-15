@@ -24,63 +24,66 @@ TypGtCheckStyler >> markUnknowns: anObject [
 ]
 
 { #category : #visiting }
-TypGtCheckStyler >> styleFrom: anInteger to: anotherInteger color: aColor [
+TypGtCheckStyler >> styleFrom: anInteger to: anotherInteger attribute: anAttribute [
 
-	<typPraArguments: 'Integer,Integer,Color'>
-	self
-		styleFrom: anInteger
-		to: anotherInteger
-		with: { (BlTextDecorationAttribute new underline
-				 color: (aColor alpha: 0.5);
-				 thickness: 2) }
+	<typPraArguments: 'Integer,Integer,BlTextAttribute'>
+	self styleFrom: anInteger to: anotherInteger with: { anAttribute }
 ]
 
 { #category : #visiting }
-TypGtCheckStyler >> styleNode: aNode color: aColor [
-	<typPraArguments: 'RBProgramNode,Color'>
-	self styleFrom: aNode start to: aNode stop color: aColor
+TypGtCheckStyler >> styleNode: aNode error: aTypCheError [
+
+	self shouldBeImplemented
 ]
 
-{ #category : #accessing }
-TypGtCheckStyler >> styleSelectorOf: aNode color: aColor [
-	<typPraArguments: '{RBMethodNode,RBMessageNode},Color'>
-	aNode keywordsIntervals
-		do: [ :e | self styleFrom: e first to: e last color: aColor ]
+{ #category : #visiting }
+TypGtCheckStyler >> styleNodeUnknown: aNode because: aString [
+
+	self shouldBeImplemented
 ]
 
 { #category : #visiting }
 TypGtCheckStyler >> visitArgumentNode: aNode [
+
 	super visitArgumentNode: aNode.
-	aNode typInfType isUnknown
-		ifTrue: [ markUnknowns ifTrue: [ self styleNode: aNode color: Color blue ] ]
+	aNode typInfType isUnknown ifTrue: [ 
+		markUnknowns ifTrue: [ self styleNodeUnknown: aNode because: 'Argument is unknown' ] ]
 ]
 
 { #category : #visiting }
 TypGtCheckStyler >> visitAssignmentNode: aNode [
 	super visitAssignmentNode: aNode.
 	aNode value typInfType isUnknown
-		ifTrue: [ markUnknowns ifTrue: [ self styleNode: aNode value color: Color blue ] ]
+		ifTrue: [ markUnknowns ifTrue: [ self styleNodeUnknown: aNode value because: 'Value is unknown' ] ]
 		ifFalse: [ [ aNode typCheCheckCompatibility ]
 				on: TypCheError
-				do: [ :e | self styleNode: aNode value color: e color ] ]
+				do: [ :e | self styleNode: aNode value error: e ] ]
 ]
 
 { #category : #visiting }
 TypGtCheckStyler >> visitMessageNode: aNode [
+
 	super visitMessageNode: aNode.
 	aNode receiver typInfType isUnknown
-		ifTrue: [ markUnknowns ifTrue: [ self styleNode: aNode color: Color blue ] ]
-		ifFalse: [ [ aNode typCheCheckMethod.
+		ifTrue: [ 
+			markUnknowns ifTrue: [ 
+				self styleNodeUnknown: aNode because: 'Receiver is unknown' ] ]
+		ifFalse: [ 
+			[ 
+			aNode typCheCheckMethod.
 			aNode typCheCheckReceiver ]
 				on: TypCheError
-				do: [ :e | self styleSelectorOf: aNode color: e color ] ].
-	aNode arguments
-		withIndexDo: [ :e :i | 
-			(e typInfType isUnknown or: [ (aNode typInfMethod argumentAt: i) isUnknown ])
-				ifTrue: [ markUnknowns ifTrue: [ self styleNode: e color: Color blue ] ]
-				ifFalse: [ [ aNode typCheCheckArgumentCompatibilityAt: i ]
-						on: TypCheError
-						do: [ :f | self styleNode: e color: f color ] ] ]
+				do: [ :e | self styleNode: aNode error: e ] ].
+	aNode arguments withIndexDo: [ :e :i | 
+		(e typInfType isUnknown or: [ 
+			 (aNode typInfMethod argumentAt: i) isUnknown ])
+			ifTrue: [ 
+				markUnknowns ifTrue: [ 
+					self styleNodeUnknown: e because: 'Argument is unknown' ] ]
+			ifFalse: [ 
+				[ aNode typCheCheckArgumentCompatibilityAt: i ]
+					on: TypCheError
+					do: [ :f | self styleNode: e error: f ] ] ]
 ]
 
 { #category : #visiting }
@@ -89,25 +92,28 @@ TypGtCheckStyler >> visitMethodNode: aNode [
 	super visitMethodNode: aNode.
 	aNode typCheHasUnknownResult ifTrue: [ 
 		markUnknowns ifTrue: [ 
-			self styleSelectorOf: aNode color: Color blue ] ]
+			self styleNodeUnknown: aNode because: 'Result is unknown' ] ]
 ]
 
 { #category : #visiting }
 TypGtCheckStyler >> visitReturnNode: aNode [
+
 	super visitReturnNode: aNode.
 	aNode typInfType isUnknown
-		ifTrue: [ markUnknowns
-				ifTrue: [ self styleNode: aNode color: Color blue ] ]
-		ifFalse: [ [ aNode typCheCheckCompatibility.
+		ifTrue: [ markUnknowns ifTrue: [ self styleNodeUnknown: aNode because: 'Return is unknown'] ]
+		ifFalse: [ 
+			[ 
+			aNode typCheCheckCompatibility.
 			aNode typCheCheckNullables ]
 				on: TypCheError
-				do: [ :e | self styleNode: aNode color: e color ] ]
+				do: [ :e | self styleNode: aNode error: e ] ]
 ]
 
 { #category : #visiting }
 TypGtCheckStyler >> visitTemporaryNode: aNode [
+
 	super visitTemporaryNode: aNode.
-	(aNode isDefinition and: [ aNode typInfType isUnknown ])
-		ifTrue: [ markUnknowns
-				ifTrue: [ self styleNode: aNode color: Color blue ] ]
+	(aNode isDefinition and: [ aNode typInfType isUnknown ]) ifTrue: [ 
+		markUnknowns ifTrue: [ 
+			self styleNodeUnknown: aNode because: 'Temp is unknown' ] ]
 ]

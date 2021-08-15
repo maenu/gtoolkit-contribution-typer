@@ -23,7 +23,7 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 	TypInfSelf value: ast typGtSelf during: [ 
 		ast typInfType.
 		super style: aText ast: ast ] ]
-		on: Error
+		on: Error 
 		do: [ :e | Halt once ]
 ]
 

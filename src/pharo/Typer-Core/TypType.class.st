@@ -147,7 +147,11 @@ TypType >> hashSkipping: anIdentitySet [
 
 { #category : #initialization }
 TypType >> initialize [
+
 	<typPraVariable: 'superType' as: '{!,TypType}'>
+	<typPraVariable: 'value' as: '{!,Object}'>
+	<typPraVariable: 'hasValue' as: 'Boolean'>
+	<typPraVariable: 'origins' as: 'SequenceableCollection<TypOrigin>'>
 	super initialize.
 	origins := OrderedCollection new.
 	hasValue := false
@@ -267,6 +271,8 @@ TypType >> value [
 
 { #category : #accessing }
 TypType >> value: anObject [
+
+	<typPraArguments: '{!,Object}'>
 	hasValue := true.
 	value := anObject
 ]

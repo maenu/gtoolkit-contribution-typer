@@ -106,5 +106,6 @@ RPackage >> typGtViewFor: aView [
 						detect: [ :g | classes_ includes: g ]
 						ifNone: [ nil ] ].
 			e layout force charge: -5000 ];
+		actionUpdateButton;
 		yourself
 ]
