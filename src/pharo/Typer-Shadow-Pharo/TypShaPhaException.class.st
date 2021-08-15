@@ -13,7 +13,7 @@ TypShaPhaException class >> shadowedClass [
 TypShaPhaException >> mSignal: aLookup [
 	<typShaMethod: 'signal'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiver copy
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments: #()
 		argumentsOptional: false
 		signalsAlways: true

@@ -41,7 +41,7 @@ TypInfTemporaryExecutionOrderVisitor >> initialize [
 
 { #category : #accessing }
 TypInfTemporaryExecutionOrderVisitor >> initializeNode: aNode definer: anotherNode [
-	self assert: [ aNode isTempVariable ].
+	self assert: [ aNode isVariable ].
 	self assert: [ aNode isDefinition not ].
 	node := aNode.
 	definer := anotherNode

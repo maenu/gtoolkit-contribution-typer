@@ -57,9 +57,9 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 		addStyler: (TypGtCoverageStyler new
 				 coder: self;
 				 yourself);
-		addStyler: (TypGtCursorStyler new
+		"addStyler: (TypGtCursorStyler new
 				 coder: self;
-				 yourself);
+				 yourself);"
 		addShortcut: TypGtBrowseImplementorsShortcut new;
 		addShortcut: TypGtBrowseToTypeWithPragmaShortcut new;
 		addShortcut: TypGtBrowseToTypeWithShadowShortcut new

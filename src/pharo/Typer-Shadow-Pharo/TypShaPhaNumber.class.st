@@ -14,7 +14,7 @@ TypShaPhaNumber >> mBinary233: aLookup [
 	<typShaMethod: '-'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			{aLookup receiver.
+			{aLookup root receiver.
 			(aLookup arguments at: 1)} typAsType
 		arguments: {Number typAsType}
 ]
@@ -24,7 +24,7 @@ TypShaPhaNumber >> mBinary235: aLookup [
 	<typShaMethod: '+'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			{aLookup receiver.
+			{aLookup root receiver.
 			(aLookup arguments at: 1)} typAsType
 		arguments: {Number typAsType}
 ]
@@ -56,7 +56,7 @@ TypShaPhaNumber >> mTo: aLookup [
 		typAsFunctionTypeWithResult:
 			(Interval typAsType
 				copyWithParameters:
-					{{aLookup receiver.
+					{{aLookup root receiver.
 					(aLookup arguments at: 1)} typAsType})
 		arguments: {Number typAsType}
 ]
@@ -65,12 +65,12 @@ TypShaPhaNumber >> mTo: aLookup [
 TypShaPhaNumber >> mToDo: aLookup [
 	<typShaMethod: 'to:do:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiver
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{Number typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
 				arguments:
-					{{aLookup receiver.
+					{{aLookup root receiver.
 					(aLookup arguments at: 1)} typAsType})}
 ]

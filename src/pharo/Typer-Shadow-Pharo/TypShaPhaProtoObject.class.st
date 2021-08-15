@@ -45,7 +45,7 @@ TypShaPhaProtoObject >> mIfNil: aLookup [
 	<typShaMethod: 'ifNil:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			{aLookup receiver asNonNullable.
+			{aLookup root receiver asNonNullable.
 			aLookup arguments first result} typAsType
 		arguments: {BlockClosure typAsType}
 ]
@@ -70,7 +70,7 @@ TypShaPhaProtoObject >> mIfNilIfNotNil: aLookup [
 			{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {aLookup receiver asNonNullable}
+				arguments: {aLookup root receiver asNonNullable}
 				argumentsOptional: true
 				signalsAlways: false)} typAsType}
 ]
@@ -91,7 +91,7 @@ TypShaPhaProtoObject >> mIfNotNil: aLookup [
 			{{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {aLookup receiver asNonNullable}
+				arguments: {aLookup root receiver asNonNullable}
 				argumentsOptional: true
 				signalsAlways: false)} typAsType}
 ]

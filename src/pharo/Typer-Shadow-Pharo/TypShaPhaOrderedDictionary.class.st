@@ -44,7 +44,7 @@ TypShaPhaOrderedDictionary >> mAssociations: aLookup [
 TypShaPhaOrderedDictionary >> mAssociationsDo: aLookup [
 	<typShaMethod: 'associationsDo:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiver
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new

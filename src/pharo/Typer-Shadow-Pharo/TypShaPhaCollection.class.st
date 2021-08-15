@@ -338,7 +338,7 @@ TypShaPhaCollection >> mIfEmpty: aLookup [
 	<typShaMethod: 'ifEmpty:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			{aLookup receiver.
+			{aLookup root receiver.
 			(aLookup arguments at: 1) result} typAsType
 		arguments: {BlockClosure typAsType}
 ]
@@ -367,7 +367,7 @@ TypShaPhaCollection >> mIfEmptyIfNotEmpty: aLookup [
 					  Symbol typAsType.
 					  (BlockClosure
 						   typAsFunctionTypeWithResult: TypUnknownType new
-						   arguments: { aLookup receiver }
+						   arguments: { aLookup root receiver }
 						   argumentsOptional: true
 						   signalsAlways: false) } typAsType }
 ]
@@ -390,7 +390,7 @@ TypShaPhaCollection >> mIfNotEmpty: aLookup [
 			{{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {aLookup receiver}
+				arguments: {aLookup root receiver}
 				argumentsOptional: true
 				signalsAlways: false)} typAsType}
 ]

@@ -8,7 +8,7 @@ Class {
 TypShaPhaSequenceableCollection class >> mOfSize: aLookup [
 	<typShaMethod: 'ofSize:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
+		typAsFunctionTypeWithResult: aLookup root receiver classDescription instanceSide typAsType
 		arguments: {Integer typAsType}
 ]
 
@@ -133,7 +133,7 @@ TypShaPhaSequenceableCollection >> mReversed: aLookup [
 TypShaPhaSequenceableCollection >> mSort: aLookup [
 	<typShaMethod: 'sort:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiver
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: Boolean typAsType
@@ -161,7 +161,7 @@ TypShaPhaSequenceableCollection >> mWithIndexCollect: aLookup [
 TypShaPhaSequenceableCollection >> mWithIndexDo: aLookup [
 	<typShaMethod: 'withIndexDo:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiver
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
@@ -174,7 +174,7 @@ TypShaPhaSequenceableCollection >> mWithIndexDo: aLookup [
 TypShaPhaSequenceableCollection >> mWithIndexSelect: aLookup [
 	<typShaMethod: 'withIndexSelect:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiver
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: Boolean typAsType

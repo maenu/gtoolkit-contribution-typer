@@ -15,34 +15,37 @@ RBMessageNode >> typGtFiltersToTypeWithPragma [
 
 { #category : #'*Typer-GToolkit' }
 RBMessageNode >> typGtFiltersToTypeWithShadow [
+
 	<typPraResult: 'GtCoderMethodsFilter'>
 	| type clazz shadows argumentTypes resultType |
-	type := self receiver typInfType.
-	clazz := (type isNamed and: [ type hasClassDescription ])
-		ifTrue: [ type classDescription ]
-		ifFalse: [ Object ].
-	argumentTypes := self numArgs
-		timesCollect: [ :i | self typInfMethod argumentAt: i ].
-	resultType := self typInfMethod result.
+	TypInfSelf value: self typGtSelf during: [ 
+		type := self receiver typInfType.
+		clazz := (type isNamed and: [ type hasClassDescription ])
+			         ifTrue: [ type classDescription ]
+			         ifFalse: [ Object ].
+		argumentTypes := self numArgs timesCollect: [ :i | 
+			                 self typInfMethod argumentAt: i ].
+		resultType := self typInfMethod result ].
 	shadows := (TypShaShadow typGtShadowFor: clazz)
-		ifEmpty: [ {(TypShaShadow typGtNewShadowFor: clazz)} ]
-		ifNotEmpty: #yourself.
-	^ (shadows
-		collect: [ :e | 
-			| method |
-			method := clazz isClassSide
-				ifTrue: [ e
-						typGtShadowClassInstanceMethod: self selector
-						arguments: argumentTypes
-						result: resultType ]
-				ifFalse: [ e
-						typGtShadowInstanceMethod: self selector
-						arguments: argumentTypes
-						result: resultType ].
-			^ (TypGtCoderTypeFilter new
-				type: method methodClass typAsType;
-				yourself) & (GtSearchImplementorsFilter selector: method selector) ])
-		reduce: [ :a :b | a | b ]
+		           ifEmpty: [ { (TypShaShadow typGtNewShadowFor: clazz) } ]
+		           ifNotEmpty: #yourself.
+	^ (shadows collect: [ :e | 
+		   | method |
+		   method := clazz isClassSide
+			             ifTrue: [ 
+				             e
+					             typGtShadowClassInstanceMethod: self selector
+					             arguments: argumentTypes
+					             result: resultType ]
+			             ifFalse: [ 
+				             e
+					             typGtShadowInstanceMethod: self selector
+					             arguments: argumentTypes
+					             result: resultType ].
+		   ^ (GtSearchImplementorsFilter selector: method selector)
+		     & (TypGtCoderTypeFilter new
+				      type: method methodClass typAsType;
+				      yourself) ]) reduce: [ :a :b | a | b ]
 ]
 
 { #category : #'*Typer-GToolkit' }

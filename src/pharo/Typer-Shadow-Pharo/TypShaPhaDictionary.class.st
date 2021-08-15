@@ -44,7 +44,7 @@ TypShaPhaDictionary >> mAssociations: aLookup [
 TypShaPhaDictionary >> mAssociationsDo: aLookup [
 	<typShaMethod: 'associationsDo:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiver
+		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType new
@@ -177,15 +177,15 @@ TypShaPhaDictionary >> mKeys: aLookup [
 
 { #category : #shadow }
 TypShaPhaDictionary >> mKeysAndValuesDo: aLookup [
+
 	<typShaMethod: 'keysAndValuesDo:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiver
-		arguments:
-			{(BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments:
-					{(aLookup receiver at: '@B').
-					(aLookup receiver at: '@A')})}
+		  typAsFunctionTypeWithResult: aLookup root receiver
+		  arguments: { (BlockClosure
+				   typAsFunctionTypeWithResult: TypUnknownType new
+				   arguments: { 
+						   (aLookup receiver at: '@B').
+						   (aLookup receiver at: '@A') }) }
 ]
 
 { #category : #shadow }

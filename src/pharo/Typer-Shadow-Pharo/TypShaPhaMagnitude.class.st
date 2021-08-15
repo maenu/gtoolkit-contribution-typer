@@ -38,7 +38,17 @@ TypShaPhaMagnitude >> mMax: aLookup [
 	<typShaMethod: 'max:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			{aLookup receiver.
+			{aLookup root receiver.
+			(aLookup arguments at: 1)} typAsType
+		arguments: {Magnitude typAsType}
+]
+
+{ #category : #shadow }
+TypShaPhaMagnitude >> mMin: aLookup [
+	<typShaMethod: 'min:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult:
+			{aLookup root receiver.
 			(aLookup arguments at: 1)} typAsType
 		arguments: {Magnitude typAsType}
 ]

@@ -55,7 +55,7 @@ TypShaPhaObject >> mBinary256: aLookup [
 		typAsFunctionTypeWithResult:
 			(Association typAsType
 				copyWithParameters:
-					{aLookup receiver.
+					{aLookup root receiver.
 					(aLookup arguments at: 1)})
 		arguments: {(aLookup arguments at: 1)}
 ]
