@@ -80,8 +80,8 @@ TypFunctionType >> > aType [
 	(aType isFunction and: [ aType name = name ])
 		ifFalse: [ ^ super > aType ].
 	self flag: 'FIXME should we really ignore result?'.
-	aType result <= self result
-		ifFalse: [ ^ false ].
+	aType result > self result
+		ifTrue: [ ^ false ].
 	argumentsOptional
 		ifTrue: [ | size |
 			size := argumentsSize min: aType argumentsSize.

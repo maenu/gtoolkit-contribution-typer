@@ -6,6 +6,9 @@ Class {
 
 { #category : #accessing }
 TypLookupResolver >> canResolve: aLookup [
+
+	<typPraArguments: 'TypLookup'>
+	<typPraResult: 'Boolean'>
 	self subclassResponsibility
 ]
 
