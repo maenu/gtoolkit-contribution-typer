@@ -68,12 +68,22 @@ TypShaPhaBlockClosure >> mOnDo: aLookup [
 				arguments: {b})}
 ]
 
-{ #category : #shadow }
-TypShaPhaBlockClosure >> mValue: aLookup [
+{ #category : #accessing }
+TypShaPhaBlockClosure >> mValue2: aLookup [
+
 	<typShaMethod: 'value:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiver result
-		arguments: aLookup receiver arguments
+		  typAsFunctionTypeWithResult: aLookup receiver result
+		  arguments: aLookup receiver arguments
+]
+
+{ #category : #shadow }
+TypShaPhaBlockClosure >> mValue: aLookup [
+
+	<typShaMethod: 'value'>
+	^ CompiledMethod
+		  typAsFunctionTypeWithResult: aLookup receiver result
+		  arguments: #(  )
 ]
 
 { #category : #shadow }

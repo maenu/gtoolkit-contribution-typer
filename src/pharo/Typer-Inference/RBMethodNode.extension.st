@@ -9,11 +9,14 @@ RBMethodNode >> typInfArgumentType: anArgumentNode [
 
 { #category : #'*Typer-Inference' }
 RBMethodNode >> typInfMethod [
+
+	<typPraResult: 'TypFunctionType'>
 	^ self
-		propertyAt: 'typInfMethod-' , TypInfSelf value asString
-		ifAbsentPut: [ TypInfSelf value
-				lookupMethod: selector asSymbol
-				arguments: (arguments collect: #typInfType) ]
+		  propertyAt: 'typInfMethod-' , TypInfSelf value asString
+		  ifAbsentPut: [ 
+			  TypInfSelf value
+				  lookupMethod: selector asSymbol
+				  arguments: (arguments collect: #typInfType) ]
 ]
 
 { #category : #'*Typer-Inference' }

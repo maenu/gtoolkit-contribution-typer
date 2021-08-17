@@ -7,7 +7,8 @@ Class {
 { #category : #accessing }
 TypInfSelf class >> value [
 
+	<typPraResult: 'TypType'>
 	^ super value ifNil: [ 
-		  Halt once.  
+		  Halt once.
 		  TypUnknownType new ]
 ]

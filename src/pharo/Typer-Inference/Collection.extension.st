@@ -2,10 +2,9 @@ Extension { #name : #Collection }
 
 { #category : #'*Typer-Inference' }
 Collection >> typInfSelfType [
-	| type |
-	type := super typInfSelfType.
-	^ type
-		copyWithParameters: {(self typInfSelfTypeSamples collect: #typAsType) typAsType}
+
+	^ (self class typAsType copyWithValue: self) copyWithParameters:
+		  { (self typInfSelfTypeSamples collect: #typInfSelfType) typAsType }
 ]
 
 { #category : #'*Typer-Inference' }

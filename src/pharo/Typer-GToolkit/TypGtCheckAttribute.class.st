@@ -4,10 +4,22 @@ Class {
 	#instVars : [
 		'subject',
 		'color',
-		'message'
+		'message',
+		'node'
 	],
 	#category : #'Typer-GToolkit-Typer-GToolkit'
 }
+
+{ #category : #accessing }
+TypGtCheckAttribute class >> node: aNode subject: anObject color: aColor message: aString [
+
+	^ self new
+		  initializeNode: aNode
+		  subject: anObject
+		  color: aColor
+		  message: aString;
+		  yourself
+]
 
 { #category : #accessing }
 TypGtCheckAttribute class >> subject: anObject color: aColor message: aString [
@@ -41,6 +53,15 @@ TypGtCheckAttribute >> initialize [
 				when: BlClickEvent
 				do: [ :e | e target phlow spawnObject: subject ];
 				yourself ]
+]
+
+{ #category : #accessing }
+TypGtCheckAttribute >> initializeNode: aNode subject: anObject color: aColor message: aString [
+
+	node := aNode.
+	subject := anObject.
+	color := aColor.
+	message := aString
 ]
 
 { #category : #accessing }

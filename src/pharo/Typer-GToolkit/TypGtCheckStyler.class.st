@@ -1,27 +1,8 @@
 Class {
 	#name : #TypGtCheckStyler,
 	#superclass : #TypGtRbAstStyler,
-	#instVars : [
-		'markUnknowns'
-	],
 	#category : #'Typer-GToolkit'
 }
-
-{ #category : #initialization }
-TypGtCheckStyler >> initialize [
-	super initialize.
-	markUnknowns := true
-]
-
-{ #category : #accessing }
-TypGtCheckStyler >> markUnknowns [
-	^ markUnknowns
-]
-
-{ #category : #accessing }
-TypGtCheckStyler >> markUnknowns: anObject [
-	markUnknowns := anObject
-]
 
 { #category : #visiting }
 TypGtCheckStyler >> styleFrom: anInteger to: anotherInteger attribute: anAttribute [
@@ -37,6 +18,7 @@ TypGtCheckStyler >> styleNode: aNode error: anError message: aString [
 		styleFrom: aNode stop
 		to: aNode stop
 		attribute: (TypGtCheckAttribute
+				 node: aNode
 				 subject: anError
 				 color: anError color
 				 message: aString)
@@ -48,11 +30,11 @@ TypGtCheckStyler >> styleNodeUnknown: aNode message: aString [
 	self
 		styleFrom: aNode stop
 		to: aNode stop
-		attribute:
-		(TypGtCheckAttribute
-			 subject: aNode
-			 color: Color blue
-			 message: aString)
+		attribute: (TypGtCheckAttribute
+				 node: aNode
+				 subject: aNode
+				 color: Color blue
+				 message: aString)
 ]
 
 { #category : #visiting }
@@ -60,7 +42,7 @@ TypGtCheckStyler >> visitArgumentNode: aNode [
 
 	super visitArgumentNode: aNode.
 	aNode typInfType isUnknown ifTrue: [ 
-		markUnknowns ifTrue: [ self styleNodeUnknown: aNode message: 'Argument is unknown' ] ]
+		self styleNodeUnknown: aNode message: 'Argument is unknown' ]
 ]
 
 { #category : #visiting }
@@ -69,8 +51,7 @@ TypGtCheckStyler >> visitAssignmentNode: aNode [
 	super visitAssignmentNode: aNode.
 	aNode value typInfType isUnknown
 		ifTrue: [ 
-			markUnknowns ifTrue: [ 
-				self styleNodeUnknown: aNode value message: 'Value is unknown' ] ]
+		self styleNodeUnknown: aNode value message: 'Value is unknown' ]
 		ifFalse: [ 
 			[ aNode typCheCheckCompatibility ]
 				on: TypCheError
@@ -87,8 +68,7 @@ TypGtCheckStyler >> visitMessageNode: aNode [
 	super visitMessageNode: aNode.
 	aNode receiver typInfType isUnknown
 		ifTrue: [ 
-			markUnknowns ifTrue: [ 
-				self styleNodeUnknown: aNode message: 'Receiver is unknown' ] ]
+		self styleNodeUnknown: aNode message: 'Receiver is unknown' ]
 		ifFalse: [ 
 			[ aNode typCheCheckMethod ]
 				on: TypCheError
@@ -101,9 +81,7 @@ TypGtCheckStyler >> visitMessageNode: aNode [
 	aNode arguments withIndexDo: [ :e :i | 
 		(e typInfType isUnknown or: [ 
 			 (aNode typInfMethod argumentAt: i) isUnknown ])
-			ifTrue: [ 
-				markUnknowns ifTrue: [ 
-					self styleNodeUnknown: e message: 'Argument is unknown' ] ]
+			ifTrue: [ self styleNodeUnknown: e message: 'Argument is unknown' ]
 			ifFalse: [ 
 				[ aNode typCheCheckArgumentCompatibilityAt: i ]
 					on: TypCheError
@@ -120,8 +98,7 @@ TypGtCheckStyler >> visitMethodNode: aNode [
 
 	super visitMethodNode: aNode.
 	aNode typCheHasUnknownResult ifTrue: [ 
-		markUnknowns ifTrue: [ 
-			self styleNodeUnknown: aNode message: 'Result is unknown' ] ]
+		self styleNodeUnknown: aNode message: 'Result is unknown' ]
 ]
 
 { #category : #visiting }
@@ -129,9 +106,7 @@ TypGtCheckStyler >> visitReturnNode: aNode [
 
 	super visitReturnNode: aNode.
 	aNode typInfType isUnknown
-		ifTrue: [ 
-			markUnknowns ifTrue: [ 
-				self styleNodeUnknown: aNode message: 'Return is unknown' ] ]
+		ifTrue: [ self styleNodeUnknown: aNode message: 'Return is unknown' ]
 		ifFalse: [ 
 			[ aNode typCheCheckCompatibility ]
 				on: TypCheError
@@ -154,6 +129,5 @@ TypGtCheckStyler >> visitTemporaryNode: aNode [
 
 	super visitTemporaryNode: aNode.
 	(aNode isDefinition and: [ aNode typInfType isUnknown ]) ifTrue: [ 
-		markUnknowns ifTrue: [ 
-			self styleNodeUnknown: aNode message: 'Temp is unknown' ] ]
+		self styleNodeUnknown: aNode message: 'Temp is unknown' ]
 ]

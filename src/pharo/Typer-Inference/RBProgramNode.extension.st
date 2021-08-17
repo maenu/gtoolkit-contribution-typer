@@ -51,7 +51,7 @@ RBProgramNode >> typInfTypeReset [
 	properties ifNotNil: [ 
 		(properties keys select: [ :e | e beginsWith: #typInf ]) do: [ :e | 
 			self removeProperty: e ] ].
-	self children do: #typInfTypeReset
+	self children reject: #isNil thenDo: #typInfTypeReset
 ]
 
 { #category : #'*Typer-Inference' }
