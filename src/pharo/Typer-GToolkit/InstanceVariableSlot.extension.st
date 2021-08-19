@@ -6,18 +6,6 @@ InstanceVariableSlot >> typGtCanType [
 ]
 
 { #category : #'*Typer-GToolkit' }
-InstanceVariableSlot >> typGtFiltersToTypeWithPragma [
-	<typPraResult: 'GtCoderMethodsFilter'>
-	^ (TypGtCoderTypeFilter new
-		type: self methodNode methodClass typAsType;
-		yourself)
-		&
-			(TypGtCoderDefinerFilter new
-				name: self name;
-				yourself) & (GtSearchImplementorsFilter selector: #initialize)
-]
-
-{ #category : #'*Typer-GToolkit' }
 InstanceVariableSlot >> typGtShadowMethod [
 
 	| shadow |

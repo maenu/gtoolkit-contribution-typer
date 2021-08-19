@@ -6,14 +6,6 @@ RBMessageNode >> typGtCanType [
 ]
 
 { #category : #'*Typer-GToolkit' }
-RBMessageNode >> typGtFiltersToTypeWithPragma [
-	<typPraResult: 'GtCoderMethodsFilter'>
-	^ (TypGtCoderTypeFilter new
-		type: self receiver typInfType;
-		yourself) & (GtSearchImplementorsFilter selector: self selector)
-]
-
-{ #category : #'*Typer-GToolkit' }
 RBMessageNode >> typGtInvokedMethods [
 
 	| methods receiverType |

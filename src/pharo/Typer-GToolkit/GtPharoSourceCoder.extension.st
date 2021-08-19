@@ -28,17 +28,6 @@ GtPharoSourceCoder >> typGtBrowseToTypeWithPragmaAt: anInteger [
 ]
 
 { #category : #'*Typer-GToolkit' }
-GtPharoSourceCoder >> typGtBrowseToTypeWithShadowAt: anInteger [
-
-	<typPraArguments: 'Integer'>
-	| node |
-	node := self typGtRbNodeAt: anInteger.
-	node isNil ifTrue: [ ^ self ].
-	node typGtCanType ifFalse: [ ^ self ].
-	self notifyObjectSpawn: node typGtShadowMethod
-]
-
-{ #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 
 	<gtAstCoderAddOns: 10>
@@ -60,8 +49,8 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 				 coder: self;
 				 yourself);"
 		addShortcut: TypGtBrowseImplementorsShortcut new;
-		addShortcut: TypGtBrowseToTypeWithPragmaShortcut new;
-		addShortcut: TypGtBrowseToTypeWithShadowShortcut new
+		addShortcut: TypGtTypeWithPragmaShortcut new;
+		addShortcut: TypGtTypeWithShadowShortcut new
 	"anAddOns
 		addMainAction: 'Types' translated
 			icon: BrGlamorousIcons inspect
@@ -89,4 +78,15 @@ GtPharoSourceCoder >> typGtRbNodeAt: anInteger [
 
 	<typPraResult: '{!,RBProgramNode}'>
 	^ self rbAST bestNodeFor: (anInteger to: anInteger)
+]
+
+{ #category : #'*Typer-GToolkit' }
+GtPharoSourceCoder >> typGtTypeWithShadowAt: anInteger [
+
+	<typPraArguments: 'Integer'>
+	| node |
+	node := self typGtRbNodeAt: anInteger.
+	node isNil ifTrue: [ ^ self ].
+	node typGtCanType ifFalse: [ ^ self ].
+	self notifyObjectSpawn: node typGtShadowMethod
 ]
