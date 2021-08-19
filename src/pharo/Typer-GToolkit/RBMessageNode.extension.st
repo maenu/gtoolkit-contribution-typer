@@ -14,41 +14,6 @@ RBMessageNode >> typGtFiltersToTypeWithPragma [
 ]
 
 { #category : #'*Typer-GToolkit' }
-RBMessageNode >> typGtFiltersToTypeWithShadow [
-
-	<typPraResult: 'GtCoderMethodsFilter'>
-	| type clazz shadows argumentTypes resultType |
-	TypInfSelf value: self typGtSelf during: [ 
-		type := self receiver typInfType.
-		clazz := (type isNamed and: [ type hasClassDescription ])
-			         ifTrue: [ type classDescription ]
-			         ifFalse: [ Object ].
-		argumentTypes := self numArgs timesCollect: [ :i | 
-			                 self typInfMethod argumentAt: i ].
-		resultType := self typInfMethod result ].
-	shadows := (TypShaShadow typGtShadowFor: clazz)
-		           ifEmpty: [ { (TypShaShadow typGtNewShadowFor: clazz) } ]
-		           ifNotEmpty: #yourself.
-	^ (shadows collect: [ :e | 
-		   | method |
-		   method := clazz isClassSide
-			             ifTrue: [ 
-				             e
-					             typGtShadowClassInstanceMethod: self selector
-					             arguments: argumentTypes
-					             result: resultType ]
-			             ifFalse: [ 
-				             e
-					             typGtShadowInstanceMethod: self selector
-					             arguments: argumentTypes
-					             result: resultType ].
-		   ^ (GtSearchImplementorsFilter selector: method selector)
-		     & (TypGtCoderTypeFilter new
-				      type: method methodClass typAsType;
-				      yourself) ]) reduce: [ :a :b | a | b ]
-]
-
-{ #category : #'*Typer-GToolkit' }
 RBMessageNode >> typGtInvokedMethods [
 
 	| methods receiverType |
@@ -61,4 +26,30 @@ RBMessageNode >> typGtInvokedMethods [
 				do: [ :c :m | ^ methods , { m } ]
 				ifAbsent: [  ] ].
 	^ methods
+]
+
+{ #category : #'*Typer-GToolkit' }
+RBMessageNode >> typGtShadowMethod [
+
+	| receiverType argumentTypes resultType clazz shadow |
+	self assert: [ self typGtCanType ].
+	TypInfSelf value: self typGtSelf during: [ 
+		receiverType := self receiver typInfType.
+		argumentTypes := self typInfMethod arguments.
+		resultType := self typInfMethod result ].
+	clazz := (receiverType isNamed and: [ 
+		          receiverType hasClassDescription ])
+		         ifTrue: [ receiverType classDescription ]
+		         ifFalse: [ Object ].
+	shadow := (TypShaShadow typGtShadowFor: clazz instanceSide)
+		          ifEmpty: [ 
+		          TypShaShadow typGtNewShadowFor: clazz instanceSide ]
+		          ifNotEmpty: #first.
+	^ shadow classSide
+		  typGtShadowMethod: selector value
+		  result: resultType
+		  arguments: argumentTypes
+		  in: (clazz isInstanceSide
+				   ifTrue: [ shadow ]
+				   ifFalse: [ shadow class ])
 ]

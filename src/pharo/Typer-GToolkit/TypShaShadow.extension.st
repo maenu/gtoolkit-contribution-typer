@@ -18,185 +18,100 @@ TypShaShadow class >> typGtNewShadowFor: aClass [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypShaShadow class >> typGtShadowClassInstanceMethod: aSymbol arguments: someTypes result: aType [
-	<typPraResult: 'CompiledMethod()->Object'>
-	<typPraArguments: 'Symbol,SequenceableCollection<TypType>,TypType'>
-	| name_ |
-	name_ := (aSymbol isBinary
-		ifTrue: [ '~~~' , aSymbol ]
-		ifFalse: [ '___' , aSymbol ]) asSymbol.
-	(self class includesSelector: name_)
-		ifFalse: [ | header argumentBody |
-			header := (name_ isKeyword or: name_ isBinary)
-				ifTrue: [ ' '
-						join:
-							(name_ keywords
-								withIndexCollect: [ :e :i | e , ' _' , (96 + i) asCharacter asString ]) ]
-				ifFalse: [ name_ ].
-			argumentBody := someTypes
-				ifEmpty: [ 'TypNoTypeError signal' ]
-				ifNotEmpty: [ ':i :a :s :r | {'
-						,
-							(' . '
-								join:
-									(someTypes
-										withIndexCollect: [ :e :i | '''' , aType asString , ''' typAsType' ]))
-						, '} at: i' ].
-			self class
-				compile:
-					header
-						,
-							'
-	^ TypMethodLookupResult new
-		argumentTypes: [ ' , argumentBody
-						,
-							' ];
-		resultType: [ :a :s :r | ''' , aType asString
-						,
-							''' typAsType ];
-		yourself' ].
-	^ self class compiledMethodAt: name_
-]
-
-{ #category : #'*Typer-GToolkit' }
-TypShaShadow class >> typGtShadowClassInstanceVariable: aSymbol type: aType [
-	<typPraResult: 'CompiledMethod()->Object'>
-	<typPraArguments: 'Symbol,TypType'>
-	| name_ method |
-	name_ := '___' , aSymbol.
-	(self class hasInstVarNamed: name_)
-		ifFalse: [ self class addInstVarNamed: name_ ].
-	(self class includesSelector: #initialize)
-		ifFalse: [ self class
-				compile:
-					'initialize
-	super initialize' ].
-	method := self class compiledMethodAt: #initialize.
-	(method ast instanceVariableWriteNodes
-		anySatisfy: [ :e | e variable name = name_ ])
-		ifFalse: [ self
-				compile:
-					method sourceCode
-						,
-							'.
-	' , name_
-						,
-							' := TypVariableLookupResult new
-		type: [ :a :s :r | ''' , aType asString
-						,
-							''' typAsType ];
-		yourself' ].
-	^ self class compiledMethodAt: #initialize
-]
-
-{ #category : #'*Typer-GToolkit' }
-TypShaShadow class >> typGtShadowClassVariable: aSymbol type: aType [
-	<typPraResult: 'CompiledMethod()->Object'>
-	<typPraArguments: 'Symbol,TypType'>
-	| name_ method |
-	name_ := '___' , aSymbol.
-	(self hasClassVarNamed: name_)
-		ifFalse: [ self addClassVarNamed: name_ ].
-	(self class includesSelector: #initialize)
-		ifFalse: [ self class
-				compile:
-					'initialize
-	super initialize' ].
-	method := self class compiledMethodAt: #initialize.
-	(method ast variableWriteNodes
-		anySatisfy: [ :e | e variable name = name_ ])
-		ifFalse: [ self
-				compile:
-					method sourceCode
-						,
-							'.
-	' , name_
-						,
-							' := TypVariableLookupResult new
-		type: [ :a :s :r | ''' , aType asString
-						,
-							''' typAsType ];
-		yourself' ].
-	^ self class compiledMethodAt: #initialize
-]
-
-{ #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowFor: aClass [
+
 	<typPraResult: 'SequenceableCollection<TypShaShadow class>'>
 	<typPraArguments: 'ClassDescription'>
-	^ self allSubclasses
-		select:
-			[ :e | "typParameters TypShaShadow class" e shadowedClass == aClass classSide ]
+	^ self allSubclasses select: [ :e | 
+		  e shadowedClass == aClass classSide ]
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypShaShadow class >> typGtShadowInstanceMethod: aSymbol arguments: someTypes result: aType [
-	<typPraResult: 'CompiledMethod()->Object'>
-	<typPraArguments: 'Symbol,SequenceableCollection<TypType>,TypType'>
-	| name_ |
-	name_ := (aSymbol isBinary
-		ifTrue: [ '~~~' , aSymbol ]
-		ifFalse: [ '___' , aSymbol ]) asSymbol.
-	(self includesSelector: name_)
-		ifFalse: [ | header argumentBody |
-			header := (name_ isKeyword or: name_ isBinary)
-				ifTrue: [ ' '
-						join:
-							(name_ keywords
-								withIndexCollect: [ :e :i | e , ' _' , (96 + i) asCharacter asString ]) ]
-				ifFalse: [ name_ ].
-			argumentBody := someTypes
-				ifEmpty: [ 'TypNoTypeError signal' ]
-				ifNotEmpty: [ ':i :a :s :r | {'
-						,
-							(' . '
-								join:
-									(someTypes
-										withIndexCollect: [ :e :i | '''' , aType asString , ''' typAsType' ]))
-						, '} at: i' ].
-			self
-				compile:
-					header
-						,
-							'
-	^ TypMethodLookupResult new
-		argumentTypes: [ ' , argumentBody
-						,
-							' ];
-		resultType: [ :a :s :r | ''' , aType asString
-						,
-							''' typAsType ];
-		yourself' ].
-	^ self compiledMethodAt: name_
+TypShaShadow class >> typGtShadowMethod: aSymbol result: aType arguments: someTypes in: aClass [
+
+	<typPraArguments: 'Symbol,TypType,SequenceableCollection<TypType>,ClassDescription'>
+	| methods newSelector |
+	methods := aClass methods select: [ :e | 
+		           e typShaResolvesMethod: aSymbol ].
+	methods ifNotEmpty: [ ^ methods ].
+	newSelector := self typGtShadowMethodNewSelector: aSymbol in: aClass.
+	aClass compile: ('{1} aLookup
+	<typShaMethod: ''{2}''>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: ''{3}''
+		arguments: {{4}}' format: { 
+				 newSelector.
+				 aSymbol.
+				 aType.
+				 (' . ' join:
+					  (someTypes collect: [ :e | '''{1}'' typAsType' format: { e } ])) }).
+	^ { (aClass compiledMethodAt: newSelector) }
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypShaShadow class >> typGtShadowInstanceVariable: aSymbol type: aType [
-	<typPraResult: 'CompiledMethod()->Object'>
-	<typPraArguments: 'Symbol,TypType'>
-	| name_ method |
-	name_ := '___' , aSymbol.
-	(self hasInstVarNamed: name_)
-		ifFalse: [ self addInstVarNamed: name_ ].
-	(self includesSelector: #initialize)
-		ifFalse: [ self
-				compile:
-					'initialize
-	super initialize' ].
-	method := self compiledMethodAt: #initialize.
-	(method ast instanceVariableWriteNodes
-		anySatisfy: [ :e | e variable name = name_ ])
-		ifFalse: [ self
-				compile:
-					method sourceCode
-						,
-							'.
-	' , name_
-						,
-							' := TypVariableLookupResult new
-		type: [ :a :s :r | ''' , aType asString
-						,
-							''' typAsType ];
-		yourself' ].
-	^ self compiledMethodAt: #initialize
+TypShaShadow class >> typGtShadowMethodNewSelector: aSymbol in: aClass [
+
+	| newN newSelector |
+	newSelector := self typGtShadowMethodSelector: aSymbol postfix: ''.
+	newN := 1.
+	[ aClass includesSelector: newSelector ] whileTrue: [ 
+		newSelector := self typGtShadowMethodSelector: aSymbol postfix: newN.
+		newN := newN + 1 ].
+	^ newSelector
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypShaShadow class >> typGtShadowMethodSelector: aSymbol postfix: anObject [
+
+	aSymbol isUnary ifTrue: [ 
+		^ 'm{1}{2}:' format: { 
+				  aSymbol capitalized.
+				  anObject } ].
+	aSymbol isBinary ifTrue: [ ^ 'mBinary{1}:' format: { anObject } ].
+	^ 'm{1}{2}:' format: { 
+			  ('' join: (aSymbol keywords collect: [ :e | 
+					    e capitalized copyFrom: 1 to: e size - 1 ])).
+			  anObject }
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypShaShadow class >> typGtShadowVariable: aSymbol type: aType in: aClass [
+
+	<typPraArguments: 'Symbol,TypType,ClassDescription'>
+	| methods newSelector |
+	methods := self class methods select: [ :e | 
+		           e typShaResolvesVariable: aSymbol ].
+	methods ifNotEmpty: [ ^ methods ].
+	newSelector := self
+		               typGtShadowVariableNewSelector: aSymbol
+		               in: self class.
+	self class compile: ('{1} aLookup
+	<typShaVariable: ''{2}''>
+	^ ''{3}'' typAsType' format: { 
+				 newSelector.
+				 aSymbol.
+				 aType }).
+	^ { (self class compiledMethodAt: newSelector) }
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypShaShadow class >> typGtShadowVariableNewSelector: aSymbol in: aClass [
+
+	| newN newSelector |
+	newSelector := self typGtShadowVariableSelector: aSymbol postfix: ''.
+	newN := 1.
+	[ aClass includesSelector: newSelector ] whileTrue: [ 
+		newSelector := self
+			               typGtShadowVariableSelector: aSymbol
+			               postfix: newN.
+		newN := newN + 1 ].
+	^ newSelector
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypShaShadow class >> typGtShadowVariableSelector: aSymbol postfix: anObject [
+
+	^ 'v{1}{2}:' format: { 
+			  aSymbol capitalized.
+			  anObject }
 ]

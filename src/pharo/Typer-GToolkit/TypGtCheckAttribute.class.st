@@ -22,14 +22,6 @@ TypGtCheckAttribute class >> node: aNode subject: anObject color: aColor message
 ]
 
 { #category : #accessing }
-TypGtCheckAttribute class >> subject: anObject color: aColor message: aString [
-
-	^ self new
-		  initializeSubject: anObject color: aColor message: aString;
-		  yourself
-]
-
-{ #category : #accessing }
 TypGtCheckAttribute >> initialize [
 
 	super initialize.
@@ -59,14 +51,6 @@ TypGtCheckAttribute >> initialize [
 TypGtCheckAttribute >> initializeNode: aNode subject: anObject color: aColor message: aString [
 
 	node := aNode.
-	subject := anObject.
-	color := aColor.
-	message := aString
-]
-
-{ #category : #accessing }
-TypGtCheckAttribute >> initializeSubject: anObject color: aColor message: aString [
-
 	subject := anObject.
 	color := aColor.
 	message := aString

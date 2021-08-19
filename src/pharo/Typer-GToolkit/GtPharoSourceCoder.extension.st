@@ -29,14 +29,13 @@ GtPharoSourceCoder >> typGtBrowseToTypeWithPragmaAt: anInteger [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtBrowseToTypeWithShadowAt: anInteger [
+
 	<typPraArguments: 'Integer'>
 	| node |
 	node := self typGtRbNodeAt: anInteger.
-	node isNil
-		ifTrue: [ ^ self ].
-	node typGtCanType
-		ifFalse: [ ^ self ].
-	self notifyObjectSpawn: node typGtFiltersToTypeWithShadow
+	node isNil ifTrue: [ ^ self ].
+	node typGtCanType ifFalse: [ ^ self ].
+	self notifyObjectSpawn: node typGtShadowMethod
 ]
 
 { #category : #'*Typer-GToolkit' }

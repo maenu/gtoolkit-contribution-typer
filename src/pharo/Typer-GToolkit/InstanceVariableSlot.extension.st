@@ -18,28 +18,17 @@ InstanceVariableSlot >> typGtFiltersToTypeWithPragma [
 ]
 
 { #category : #'*Typer-GToolkit' }
-InstanceVariableSlot >> typGtFiltersToTypeWithShadow [
-	<typPraResult: 'GtCoderMethodsFilter'>
-	| type clazz shadows variableType |
-	type := self methodNode methodClass typAsType.
-	clazz := (type isNamed and: [ type hasClassDescription ])
-		ifTrue: [ type classDescription ]
-		ifFalse: [ Object ].
-	variableType := self typInfType.
-	shadows := (TypShaShadow typGtShadowFor: clazz)
-		ifEmpty: [ {(TypShaShadow typGtNewShadowFor: clazz)} ]
-		ifNotEmpty: #yourself.
-	^ (shadows
-		collect: [ :e | 
-			| method |
-			method := clazz isClassSide
-				ifTrue: [ e
-						typGtShadowClassInstanceVariable: self name asSymbol
-						type: variableType ]
-				ifFalse:
-					[ e typGtShadowInstanceVariable: self name asSymbol type: variableType ].
-			^ (TypGtCoderTypeFilter new
-				type: method methodClass typAsType;
-				yourself) & (GtSearchImplementorsFilter selector: method selector) ])
-		reduce: [ :a :b | a | b ]
+InstanceVariableSlot >> typGtShadowMethod [
+
+	| shadow |
+	self assert: [ self typGtCanType ].
+	shadow := (TypShaShadow typGtShadowFor: owningClass instanceSide)
+		          ifEmpty: [ TypShaShadow typGtNewShadowFor: owningClass ]
+		          ifNotEmpty: #first.
+	^ shadow
+		  typGtShadowVariable: name asSymbol
+		  type: (owningClass typAsType lookupVariable: name asSymbol)
+		  in: (owningClass isInstanceSide
+				   ifTrue: [ shadow ]
+				   ifFalse: [ shadow class ])
 ]
