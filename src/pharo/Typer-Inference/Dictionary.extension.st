@@ -9,7 +9,7 @@ Dictionary >> typInfSelfType [
 	self typInfSelfTypeSamples collect: #typInfSelfType thenDo: [ :e | 
 		b add: (e at: '@B').
 		a add: (e at: '@A') ].
-	^ (self class typAsType copyWithValue: self) copyWithParameters: { 
+	^ self class typAsType copyWithParameters: { 
 			  b typAsType.
 			  a typAsType }
 ]

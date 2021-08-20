@@ -9,10 +9,11 @@ Class {
 
 { #category : #testing }
 TypGtCoderDefinerFilter >> includesMethod: aCompiledMethod [
+
 	<typPraResult: 'Boolean'>
-	<typPraArguments: 'CompiledMethod()->Object'>
-	^ (aCompiledMethod methodClass hasInstVarNamed: name)
-		or: [ aCompiledMethod methodClass instanceSide hasClassVarNamed: name ]
+	<typPraArguments: 'CompiledMethod()->?'>
+	^ (aCompiledMethod methodClass hasInstVarNamed: name) or: [ 
+		  aCompiledMethod methodClass instanceSide hasClassVarNamed: name ]
 ]
 
 { #category : #accessing }

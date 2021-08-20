@@ -3,7 +3,7 @@ Extension { #name : #Collection }
 { #category : #'*Typer-Inference' }
 Collection >> typInfSelfType [
 
-	^ (self class typAsType copyWithValue: self) copyWithParameters:
+	^ self class typAsType copyWithParameters:
 		  { (self typInfSelfTypeSamples collect: #typInfSelfType) typAsType }
 ]
 

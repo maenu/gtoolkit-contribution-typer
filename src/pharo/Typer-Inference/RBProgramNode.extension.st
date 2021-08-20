@@ -49,7 +49,7 @@ RBProgramNode >> typInfTypeRecursive [
 RBProgramNode >> typInfTypeReset [
 
 	properties ifNotNil: [ 
-		(properties keys select: [ :e | e beginsWith: #typInf ]) do: [ :e | 
+		(properties keys select: [ :e | e beginsWith: #typ ]) do: [ :e | 
 			self removeProperty: e ] ].
 	self children reject: #isNil thenDo: #typInfTypeReset
 ]

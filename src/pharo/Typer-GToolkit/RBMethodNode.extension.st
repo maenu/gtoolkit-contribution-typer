@@ -53,20 +53,18 @@ RBMethodNode >> typGtTypeWithPragma [
 						               selector: #typPraArguments:
 						               arguments: { (RBLiteralValueNode value:
 								                (',' join:
-									                 (self typInfMethod arguments collect:
+									                 (self typInfType arguments collect:
 										                  #asString))) }) } ] ].
 	result_ := self pragmas
 		           detect: [ :e | e selector = #typPraResult: ]
 		           ifFound: [ :e | 
 			           self removePragma: e.
 			           e ]
-		           ifNone: [ 
-			           self lastIsReturn ifFalse: [ 
-				           RBPragmaNode
+		           ifNone: [ RBPragmaNode
 					           selector: #typPraResult:
 					           arguments:
 					           { (RBLiteralValueNode value:
-						            self typInfMethod result asString) } ] ].
+						            self typInfType result asString) } ].
 	variables_ := {  }. "typCastAs SequenceableCollection<RBPragmaNode>"
 	self selector = #initialize ifTrue: [ 
 		variables_ := self methodClass instVarNames collect: [ :e | 

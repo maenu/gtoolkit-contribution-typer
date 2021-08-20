@@ -37,5 +37,5 @@ TypInfSignalsAlwaysVisitor >> visitMessageNode: aNode [
 		ifTrue: [ signalsAlways := true ].
 	s = nil
 		ifTrue: [ signalsAlways = false
-				ifTrue: [ signalsAlways = nil ] ]
+				ifTrue: [ signalsAlways := nil ] ]
 ]

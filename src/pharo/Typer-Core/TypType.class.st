@@ -93,11 +93,17 @@ TypType >> asNonNullable [
 
 { #category : #converting }
 TypType >> asNullable [
+
 	<typPraResult: 'TypType'>
-	^ {TypNilType new.
-	self} typAsType
-		addOrigin: (TypConversionOrigin type: self selector: #asNullable arguments: #());
-		yourself
+	^ { 
+		  TypNilType new.
+		  self } typAsType
+		  addOrigin:
+			  (TypConversionOrigin
+				   type: self
+				   selector: #asNullable
+				   arguments: #(  ));
+		  yourself
 ]
 
 { #category : #copying }
@@ -136,6 +142,8 @@ TypType >> hash [
 { #category : #accessing }
 TypType >> hashSkipping: anIdentitySet [
 
+	<typPraArguments: 'IdentitySet<TypType>'>
+	<typPraResult: 'Integer'>
 	| hash |
 	(anIdentitySet includes: self) ifTrue: [ ^ self identityHash ].
 	hash := nil hash bitXor: 23.
@@ -259,7 +267,6 @@ TypType >> superType [
 
 { #category : #accessing }
 TypType >> superType: aType [
-	<typPraArguments: 'TypType'>
 	superType := aType
 ]
 
@@ -272,7 +279,6 @@ TypType >> value [
 { #category : #accessing }
 TypType >> value: anObject [
 
-	<typPraArguments: '{!,Object}'>
 	hasValue := true.
 	value := anObject
 ]

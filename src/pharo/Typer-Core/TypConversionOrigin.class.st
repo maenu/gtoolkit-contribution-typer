@@ -39,8 +39,17 @@ TypConversionOrigin >> hash [
 ]
 
 { #category : #accessing }
+TypConversionOrigin >> initialize [
+
+	<typPraVariable: 'type' as: 'TypType'>
+	<typPraVariable: 'selector' as: 'Symbol'>
+	<typPraVariable: 'arguments' as: 'SequenceableCollection<?>'>
+	super initialize
+]
+
+{ #category : #accessing }
 TypConversionOrigin >> initializeType: aType selector: aSymbol arguments: aCollection [
-	type := type.
+	type := aType.
 	selector := aSymbol.
 	arguments := aCollection
 ]
