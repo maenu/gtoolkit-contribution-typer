@@ -128,7 +128,19 @@ TypFunctionType >> asCompatibleWith: aType [
 	^ copy
 ]
 
-{ #category : #accessing }
+{ #category : #copying }
+TypFunctionType >> copyWithArguments: someTypes [
+
+	^ self copyWithParameters: { self result } , someTypes
+]
+
+{ #category : #copying }
+TypFunctionType >> copyWithResult: aType [
+
+	^ self copyWithAt: '@0' put: aType
+]
+
+{ #category : #copying }
 TypFunctionType >> copyWithSignalsAlways: aBooleanOrNil [
 
 	^ self copy

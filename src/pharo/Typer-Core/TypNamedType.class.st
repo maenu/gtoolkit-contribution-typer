@@ -57,6 +57,8 @@ TypNamedType >> > aType [
 { #category : #polymorphic }
 TypNamedType >> at: aString [
 
+	self flag: 'TODO add proper origin'.
+	self hasSuperType ifFalse: [ ^ TypUnknownType new ].
 	^ self superType at: aString
 ]
 
