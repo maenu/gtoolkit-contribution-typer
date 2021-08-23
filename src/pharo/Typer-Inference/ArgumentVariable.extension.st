@@ -17,7 +17,7 @@ ArgumentVariable >> typInfTypeRecursiveIn: aNode [
 			(parent isMessage and: [ parent arguments includes: aNode ]) 
 				ifTrue: [ 
 					useTypes add:
-						(parent typInfMethod argumentAt:
+						(parent typInfMethod arguments at:
 							 (parent arguments indexOf: aNode)) ].
 			(parent isAssignment and: [ parent value = aNode ]) ifTrue: [ 
 				useTypes add: parent variable typInfType ] ] ].

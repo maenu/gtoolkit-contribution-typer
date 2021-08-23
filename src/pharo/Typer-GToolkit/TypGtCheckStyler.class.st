@@ -80,7 +80,7 @@ TypGtCheckStyler >> visitMessageNode: aNode [
 					self styleNode: aNode error: e message: 'Receiver could be nil' ] ].
 	aNode arguments withIndexDo: [ :e :i | 
 		(e typInfType isUnknown or: [ 
-			 (aNode typInfMethod argumentAt: i) isUnknown ])
+			 (aNode typInfMethod arguments at: i) isUnknown ])
 			ifTrue: [ self styleNodeUnknown: e message: 'Argument is unknown' ]
 			ifFalse: [ 
 				[ aNode typCheCheckArgumentCompatibilityAt: i ]

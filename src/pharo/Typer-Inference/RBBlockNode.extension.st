@@ -7,13 +7,13 @@ RBBlockNode >> typInfArgumentType: anArgumentNode [
 	self typIsMessageArgument ifFalse: [ ^ self typInfUnknown ].
 	i := parent arguments indexOf: self.
 	j := arguments indexOf: anArgumentNode.
-	argument := parent typInfMethod argumentAt: i.
+	argument := parent typInfMethod arguments at: i.
 	argument isUnion ifTrue: [ 
 		argument := argument types
 			            detect: #isFunction
 			            ifNone: [ ^ self typInfUnknown ] ].
 	(argument isFunction and: [ argument argumentsSize >= j ]) ifTrue: [ 
-		^ argument argumentAt: j ].
+		^ argument arguments at: j ].
 	^ self typInfUnknown
 ]
 

@@ -106,10 +106,18 @@ TypType >> asNullable [
 ]
 
 { #category : #copying }
+TypType >> copyWithSuperType: aType [
+
+	^ self copy
+		  initializeSuperType: aType;
+		  yourself
+]
+
+{ #category : #copying }
 TypType >> copyWithValue: anObject [
 
 	^ self copy
-		  value: anObject;
+		  initializeValue: anObject;
 		  yourself
 ]
 
@@ -162,6 +170,19 @@ TypType >> initialize [
 	super initialize.
 	origins := OrderedCollection new.
 	hasValue := false
+]
+
+{ #category : #initialization }
+TypType >> initializeSuperType: aType [
+
+	superType := aType
+]
+
+{ #category : #initialization }
+TypType >> initializeValue: anObject [
+
+	hasValue := true.
+	value := anObject
 ]
 
 { #category : #testing }
@@ -265,19 +286,7 @@ TypType >> superType [
 ]
 
 { #category : #accessing }
-TypType >> superType: aType [
-	superType := aType
-]
-
-{ #category : #accessing }
 TypType >> value [
 	self assert: [ self hasValue ].
 	^ value
-]
-
-{ #category : #accessing }
-TypType >> value: anObject [
-
-	hasValue := true.
-	value := anObject
 ]

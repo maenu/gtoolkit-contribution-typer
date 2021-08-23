@@ -11,15 +11,15 @@ TypShaPhaSystemDictionary class >> shadowedClass [
 
 { #category : #accessing }
 TypShaPhaSystemDictionary >> resolveType: aLookup [
+
 	| type |
 	type := aLookup root classDescription typAsNamedType.
-	(type hasSuperType and: [ type superType isParametric ])
-		ifTrue: [ type
-				superType:
-					(type superType
-						copyWithParameters:
-							{Symbol typAsType.
-							{Class typAsType.
-							TypUnknownType new} typAsType}) ].
+	(type hasSuperType and: [ type superType isParametric ]) ifTrue: [ 
+		type := type copyWithSuperType:
+			        (type superType copyWithParameters: { 
+					         Symbol typAsType.
+					         { 
+						         Class typAsType.
+						         TypUnknownType new } typAsType }) ].
 	^ type
 ]

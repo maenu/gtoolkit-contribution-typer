@@ -10,18 +10,13 @@ TypUnknownType >> > aType [
 ]
 
 { #category : #polymorphic }
-TypUnknownType >> argumentAt: aNumber [
-	^ self
+TypUnknownType >> arguments [
+
+	^ Array new: 32 withAll: self
 ]
 
 { #category : #polymorphic }
 TypUnknownType >> at: anObject [
-	^ self
-]
-
-{ #category : #polymorphic }
-TypUnknownType >> at: aString ifAbsent: aBlock [
-
 	^ self
 ]
 

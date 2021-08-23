@@ -79,7 +79,7 @@ RBMethodNode >> typCheHasNullableArguments [
 			| e_ i expected actual |
 			e_ := e parent.	"typCastAs RBMessageNode"
 			i := e_ arguments detectIndex: [ :f | f == e ].
-			expected := e_ typInfMethod argumentAt: i.
+			expected := e_ typInfMethod arguments at: i.
 			actual := e typInfType.
 			(expected >= actual) not and: [ expected >= actual asNonNullable ] ]	"typParameters RBMessageNode"
 ]
@@ -118,7 +118,7 @@ RBMethodNode >> typCheHasNullables [
 RBMethodNode >> typCheHasUnknownArguments [
 	<typPraResult: 'Boolean'>
 	1 to: self numArgs do: [ :e | 
-		(self typInfMethod argumentAt: e) isUnknown
+		(self typInfMethod arguments at: e) isUnknown
 			ifTrue: [ ^ true ] ].
 	^ false
 ]
@@ -130,7 +130,7 @@ RBMethodNode >> typCheHasUnknownArgumentsPassed [
 		do: [ :e | 
 			e arguments
 				withIndexDo: [ :f :i | 
-					(e typInfMethod argumentAt: i) isUnknown
+					(e typInfMethod arguments at: i) isUnknown
 						ifTrue: [ ^ true ] ] ].	"typParameters RBMessageNode"
 	^ false
 ]

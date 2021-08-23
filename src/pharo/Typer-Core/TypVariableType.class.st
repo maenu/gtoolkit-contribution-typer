@@ -2,8 +2,7 @@ Class {
 	#name : #TypVariableType,
 	#superclass : #TypType,
 	#instVars : [
-		'name',
-		'type'
+		'name'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -18,10 +17,11 @@ TypVariableType class >> named: aString [
 
 { #category : #'instance creation' }
 TypVariableType class >> named: aString superType: aType [
+
 	<typPraArguments: 'String,TypType'>
 	^ (self named: aString)
-		superType: aType;
-		yourself
+		  initializeSuperType: aType;
+		  yourself
 ]
 
 { #category : #comparing }
@@ -37,23 +37,25 @@ TypVariableType >> > aType [
 ]
 
 { #category : #polymorphic }
+TypVariableType >> arguments [
+
+	^ superType arguments
+]
+
+{ #category : #polymorphic }
 TypVariableType >> at: aString [
 	^ superType at: aString
 ]
 
 { #category : #polymorphic }
-TypVariableType >> at: aString ifAbsent: aBlock [
-	^ superType at: aString ifAbsent: aBlock
-]
-
-{ #category : #polymorphic }
-TypVariableType >> at: aString put: aType [
-	^ superType at: aString put: aType
-]
-
-{ #category : #polymorphic }
 TypVariableType >> classDescription [
 	^ superType classDescription
+]
+
+{ #category : #polymorphic }
+TypVariableType >> copyWithAt: aString put: aType [
+
+	^ self copyWithSuperType: (superType copyWithAt: aString put: aType)
 ]
 
 { #category : #comparing }
@@ -105,15 +107,4 @@ TypVariableType >> printOn: aStream skipping: anIdentitySet [
 { #category : #polymorphic }
 TypVariableType >> result [
 	^ superType result
-]
-
-{ #category : #accessing }
-TypVariableType >> type [
-	^ type
-]
-
-{ #category : #accessing }
-TypVariableType >> type: anObject [
-	self assert: [ type isNil ].
-	type := anObject
 ]

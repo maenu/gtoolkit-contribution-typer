@@ -96,12 +96,8 @@ TypShaPhaCollection >> mAsDictionary: aLookup [
 	<typShaMethod: 'asDictionary'>
 	^ CompiledMethod typAsFunctionTypeWithResult:
 		  (Dictionary typAsType copyWithParameters: { 
-				   ((aLookup receiver at: '@A')
-					    at: '@A'
-					    ifAbsent: [ TypUnknownType new ]).
-				   ((aLookup receiver at: '@A')
-					    at: '@B'
-					    ifAbsent: [ TypUnknownType new ]) })
+				   ((aLookup receiver at: '@A') at: '@A').
+				   ((aLookup receiver at: '@A') at: '@B') })
 ]
 
 { #category : #shadow }
@@ -124,13 +120,12 @@ TypShaPhaCollection >> mAsOrderedCollection: aLookup [
 
 { #category : #shadow }
 TypShaPhaCollection >> mAsOrderedDictionary: aLookup [
+
 	<typShaMethod: 'asOrderedDictionary'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult:
-			(OrderedDictionary typAsType
-				copyWithParameters:
-					{((aLookup receiver at: '@A') at: '@A' ifAbsent: [ TypUnknownType new ]).
-					((aLookup receiver at: '@A') at: '@B' ifAbsent: [ TypUnknownType new ])})
+	^ CompiledMethod typAsFunctionTypeWithResult:
+		  (OrderedDictionary typAsType copyWithParameters: { 
+				   ((aLookup receiver at: '@A') at: '@A').
+				   ((aLookup receiver at: '@A') at: '@B') })
 ]
 
 { #category : #shadow }
@@ -150,16 +145,15 @@ TypShaPhaCollection >> mAt: aLookup [
 
 { #category : #shadow }
 TypShaPhaCollection >> mBinary170: aLookup [
+
 	<typShaMethod: ','>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult:
-			(aLookup root receiver copy
-				at: '@A'
-					put:
-					{(aLookup receiver at: '@A').
-					((aLookup arguments at: 1) at: '@A')} typAsType;
-				yourself)
-		arguments: {Collection typAsType}
+		  typAsFunctionTypeWithResult: (aLookup root receiver
+				   copyWithAt: '@A' put: { 
+						   (aLookup receiver at: '@A').
+						   ((aLookup arguments at: 1) at: '@A') } typAsType;
+				   yourself)
+		  arguments: { Collection typAsType }
 ]
 
 { #category : #shadow }

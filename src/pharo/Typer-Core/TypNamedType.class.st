@@ -57,20 +57,7 @@ TypNamedType >> > aType [
 { #category : #polymorphic }
 TypNamedType >> at: aString [
 
-	self hasSuperType ifFalse: [ ^ TypUnknownType new ].
 	^ self superType at: aString
-]
-
-{ #category : #polymorphic }
-TypNamedType >> at: aString ifAbsent: aBlock [
-	self hasSuperType
-		ifFalse: [ ^ aBlock value ].
-	^ self superType at: aString ifAbsent: aBlock
-]
-
-{ #category : #polymorphic }
-TypNamedType >> at: aString put: aType [
-	^ self superType at: aString put: aType
 ]
 
 { #category : #converting }
@@ -81,11 +68,20 @@ TypNamedType >> classDescription [
 ]
 
 { #category : #polymorphic }
+TypNamedType >> copyWithAt: aString put: aType [
+
+	^ self copyWithSuperType:
+		  (self superType copyWithAt: aString put: aType)
+]
+
+{ #category : #polymorphic }
 TypNamedType >> copyWithParameters: aCollection [
+
 	| copy |
 	copy := self copy.
-	copy hasSuperType
-		ifTrue: [ copy superType: (copy superType copyWithParameters: aCollection) ].
+	copy hasSuperType ifTrue: [ 
+		copy initializeSuperType:
+			(copy superType copyWithParameters: aCollection) ].
 	^ copy
 ]
 

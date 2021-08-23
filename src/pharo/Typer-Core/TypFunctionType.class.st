@@ -88,23 +88,13 @@ TypFunctionType >> > aType [
 			size = 0
 				ifTrue: [ ^ true ].
 			^ (1 to: size)
-				allSatisfy: [ :e | (self argumentAt: e) >= (aType argumentAt: e) ] ].
+				allSatisfy: [ :e | (self arguments at: e) >= (aType arguments at: e) ] ].
 	aType argumentsOptional
 		ifTrue: [ ^ false ].
 	argumentsSize = aType argumentsSize
 		ifFalse: [ ^ false ].
 	^ (1 to: argumentsSize)
-		allSatisfy: [ :e | (self argumentAt: e) >= (aType argumentAt: e) ]
-]
-
-{ #category : #accessing }
-TypFunctionType >> argumentAt: aNumber [
-	^ self at: '@' , aNumber asString
-]
-
-{ #category : #accessing }
-TypFunctionType >> argumentAt: aNumber ifAbsent: aBlock [
-	^ self at: '@' , aNumber asString ifAbsent: aBlock
+		allSatisfy: [ :e | (self arguments at: e) >= (aType arguments at: e) ]
 ]
 
 { #category : #accessing }
@@ -126,15 +116,26 @@ TypFunctionType >> argumentsSize [
 
 { #category : #converting }
 TypFunctionType >> asCompatibleWith: aType [
+
 	| copy |
-	(aType isFunction
-		and: [ argumentsSize = aType argumentsSize
-				and: [ argumentsOptional = aType argumentsOptional ] ])
-		ifFalse: [ ^ super asCompatibleWith: aType ].
+	(aType isFunction and: [ 
+		 argumentsSize = aType argumentsSize and: [ 
+			 argumentsOptional = aType argumentsOptional ] ]) ifFalse: [ 
+		^ super asCompatibleWith: aType ].
 	copy := self copy.
-	parameters
-		keysAndValuesDo: [ :n :t | copy at: n put: (t asCompatibleWith: (aType at: n)) ].
+	parameters keysAndValuesDo: [ :n :t | 
+		copy := copy copyWithAt: n put: (t asCompatibleWith: (aType at: n)) ].
 	^ copy
+]
+
+{ #category : #accessing }
+TypFunctionType >> copyWithSignalsAlways: aBooleanOrNil [
+
+	^ self copy
+		  initializeArgumentsSize: argumentsSize
+		  argumentsOptional: argumentsOptional
+		  signalsAlways: aBooleanOrNil;
+		  yourself
 ]
 
 { #category : #comparing }
@@ -189,7 +190,7 @@ TypFunctionType >> printOn: aStream skipping: anIdentitySet [
 				ifFalse: [ '(' ]).
 	(1 to: argumentsSize)
 		do: [ :i | 
-			(self argumentAt: i) printOn: aStream skipping: anIdentitySet , {self}.
+			(self arguments at: i) printOn: aStream skipping: anIdentitySet , {self}.
 			i < argumentsSize
 				ifTrue: [ aStream << ',' ] ].
 	aStream
@@ -210,9 +211,4 @@ TypFunctionType >> result [
 { #category : #accessing }
 TypFunctionType >> signalsAlways [
 	^ signalsAlways
-]
-
-{ #category : #accessing }
-TypFunctionType >> signalsAlways: aBoolean [
-	signalsAlways := aBoolean
 ]

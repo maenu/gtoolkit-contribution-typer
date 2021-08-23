@@ -61,13 +61,14 @@ TypParametricType >> > aType [
 
 { #category : #converting }
 TypParametricType >> asCompatibleWith: aType [
+
 	| copy |
-	(aType isParametric
-		and: [ name = aType name and: [ parameters = aType parameters ] ])
+	(aType isParametric and: [ 
+		 name = aType name and: [ parameters = aType parameters ] ]) 
 		ifFalse: [ ^ super asCompatibleWith: aType ].
 	copy := self copy.
-	parameters
-		keysAndValuesDo: [ :n :t | copy at: n put: (t asCompatibleWith: (aType at: n)) ].
+	parameters keysAndValuesDo: [ :n :t | 
+		copy := copy copyWithAt: n put: (t asCompatibleWith: (aType at: n)) ].
 	^ copy
 ]
 
@@ -76,18 +77,16 @@ TypParametricType >> at: aString [
 	^ parameters at: aString
 ]
 
-{ #category : #accessing }
-TypParametricType >> at: aString ifAbsent: aBlock [
-	^ parameters at: aString ifAbsent: aBlock
-]
+{ #category : #copying }
+TypParametricType >> copyWithAt: aString put: aType [
 
-{ #category : #accessing }
-TypParametricType >> at: aString put: aType [
-	superType := nil.	"must be nilled as change in binding might invalidate super type"
-	(aType isVariable and: [ aType type isNil ])
-		ifTrue: [ aType type: self ].
-	aType addOrigin: (TypParameterOrigin type: self name: aString).
-	^ parameters at: aString put: aType
+	| copyParameters |
+	copyParameters := OrderedCollection new.
+	parameters keysAndValuesDo: [ :n :t | 
+		copyParameters add: (n = aString
+				 ifTrue: [ aType ]
+				 ifFalse: [ t ]) ].
+	^ self copyWithParameters: copyParameters
 ]
 
 { #category : #copying }
@@ -124,13 +123,11 @@ TypParametricType >> initialize [
 
 { #category : #accessing }
 TypParametricType >> initializeParameters: anOrderedDictionary [
+
 	self assert: [ anOrderedDictionary isNotEmpty ].
 	parameters := anOrderedDictionary.
-	parameters
-		keysAndValuesDo: [ :n :t | 
-			(t isVariable and: [ t type isNil ])
-				ifTrue: [ t type: self ].
-			t addOrigin: (TypParameterOrigin type: self name: n) ].
+	parameters keysAndValuesDo: [ :n :t | 
+		t addOrigin: (TypParameterOrigin type: self name: n) ].
 	superType := nil
 ]
 

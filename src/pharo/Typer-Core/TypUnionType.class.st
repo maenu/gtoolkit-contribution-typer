@@ -33,7 +33,7 @@ TypUnionType class >> asTypes: aCollection [
 	^ remains
 ]
 
-{ #category : #generated }
+{ #category : #'instance creation' }
 TypUnionType class >> types: aCollection [
 	<typPraArguments: 'Collection<TypType>'>
 	^ self new
@@ -58,8 +58,17 @@ TypUnionType >> > aType [
 ]
 
 { #category : #polymorphic }
-TypUnionType >> argumentAt: aNumber [
-	^ (types collect: [ :e | e argumentAt: aNumber ]) typAsType
+TypUnionType >> arguments [
+
+	| arguments n |
+	arguments := types collect: #arguments.
+	n := (arguments collect: #size) max.
+	^ (1 to: n) collect: [ :i | 
+		  | types_ |
+		  types_ := Set new.
+		  arguments do: [ :e | 
+			  i <= e size ifTrue: [ types_ add: (e at: i) ] ].
+		  types_ typAsType ]
 ]
 
 { #category : #converting }
@@ -86,16 +95,8 @@ TypUnionType >> asNullable [
 
 { #category : #polymorphic }
 TypUnionType >> at: aString [
-	^ (types
-		collect: [ :e | e at: aString ifAbsent: [ TypUnknownType new ] ])
-		typAsType
-]
 
-{ #category : #polymorphic }
-TypUnionType >> at: aString ifAbsent: aBlock [
-	^ (types
-		collect: [ :e | e at: aString ifAbsent: aBlock ])
-		typAsType
+	^ (types collect: [ :e | e at: aString ]) typAsType
 ]
 
 { #category : #testing }
@@ -238,7 +239,8 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 
 { #category : #polymorphic }
 TypUnionType >> result [
-	^ (types select: #isFunction thenCollect: #result) typAsType
+
+	^ (types collect: #result) typAsType
 ]
 
 { #category : #accessing }

@@ -2,9 +2,8 @@ Extension { #name : #Pragma }
 
 { #category : #'*Typer-Pragma' }
 Pragma >> typPraArguments: aType [
-	arguments first typAsTypes
-		withIndexDo: [ :t :i | aType at: '@' , i asString put: t ].
-	^ aType
+
+	^ aType copyWithArguments: arguments first typAsTypes
 ]
 
 { #category : #'*Typer-Pragma' }
@@ -61,34 +60,35 @@ Pragma >> typPraMethodInject: aType [
 
 { #category : #'*Typer-Pragma' }
 Pragma >> typPraParametersInject: aType [
+
 	| type |
 	type := TypParametricType
-		classDescription: aType classDescription
-		parameters:
-			(arguments first typAsTypes
-				collect: [ :f | f name -> f ]
-				as: OrderedDictionary).
-	aType hasSuperType
-		ifTrue: [ type superType: aType superType ].
+		        classDescription: aType classDescription
+		        parameters: (arguments first typAsTypes
+				         collect: [ :f | f name -> f ]
+				         as: OrderedDictionary).
+	aType hasSuperType ifTrue: [ 
+		type := type copyWithSuperType: aType superType ].
 	^ type
 ]
 
 { #category : #'*Typer-Pragma' }
 Pragma >> typPraResultInject: aType [
-	aType at: '@0' put: arguments first typAsType.
-	^ aType
+
+	^ aType copyWithResult: arguments first typAsType
 ]
 
 { #category : #'*Typer-Pragma' }
 Pragma >> typPraSignalsAlwaysInject: aType [
-	aType signalsAlways: arguments first.
-	^ aType
+
+	^ aType copyWithSignalsAlways: arguments first
 ]
 
 { #category : #'*Typer-Pragma' }
 Pragma >> typPraSuperTypeBindToInject: aType [
-	aType superType at: arguments first put: arguments second typAsType.
-	^ aType
+
+	^ aType copyWithSuperType:
+		  (aType superType copyWithAt: arguments first put: arguments second)
 ]
 
 { #category : #'*Typer-Pragma' }

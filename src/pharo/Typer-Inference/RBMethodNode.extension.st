@@ -4,7 +4,7 @@ Extension { #name : #RBMethodNode }
 RBMethodNode >> typInfArgumentType: anArgumentNode [
 	| i |
 	i := arguments detectIndex: [ :e | e == anArgumentNode ].
-	^ self typInfMethod argumentAt: i
+	^ self typInfMethod arguments at: i
 ]
 
 { #category : #'*Typer-Inference' }

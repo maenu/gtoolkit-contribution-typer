@@ -20,7 +20,5 @@ TypVariableTypeCopyingExamples >> copyIsShallow [
 	self assert: original superType == copy superType.
 	self assert: original name isNotNil.
 	self assert: original name == copy name.
-	self assert: original type isNotNil.
-	self assert: original type == copy type.
 	^ copy
 ]
