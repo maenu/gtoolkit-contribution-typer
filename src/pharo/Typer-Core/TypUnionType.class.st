@@ -2,7 +2,8 @@ Class {
 	#name : #TypUnionType,
 	#superclass : #TypType,
 	#instVars : [
-		'types'
+		'types',
+		'hasSuperType'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -99,43 +100,48 @@ TypUnionType >> at: aString ifAbsent: aBlock [
 
 { #category : #testing }
 TypUnionType >> hasSuperType [
-	superType
-		ifNil: [ | remains nil_ unknown current |
-			remains := types
-				rehash;
-				copy.
-			nil_ := remains includes: TypNilType new.
-			nil_
-				ifTrue: [ remains remove: TypNilType new ].
-			unknown := remains includes: TypUnknownType new.
-			unknown
-				ifTrue: [ remains remove: TypUnknownType new ].
-			remains
-				ifEmpty: [ superType := self.
-					^ false ].
-			current := remains
-				rehash;
-				remove: remains anyOne.
-			(remains isEmpty and: [ current hasSuperType ])
-				ifTrue: [ current := current superType ].
-			[ remains isEmpty ]
-				whileFalse: [ | next common |
-					next := remains remove: remains anyOne.
-					common := current asCompatibleWith: next.
-					common isNil
-						ifTrue: [ nil_ := true ]
-						ifFalse: [ common isUnknown
-								ifTrue: [ unknown := true ]
-								ifFalse: [ common = current
-										ifFalse: [ current := common.
-											remains add: current ] ] ] ].
-			remains := Set with: current.
-			(nil_ and: [ (current >= TypNilType new) not ])
-				ifTrue: [ remains add: TypNilType new ].
-			unknown
-				ifTrue: [ remains add: TypUnknownType new ].
-			superType := remains typAsType ].
-	^ superType isUnion not or: [ superType types ~= types ]
+
+	| remains hasNil nilType hasUnknown unknownType current superType_ |
+	superType ifNotNil: [ ^ true ].
+	hasNil := false.
+	hasUnknown := false.
+	remains := types asIdentitySet.
+	remains do: [ :e | 
+		e isNil ifTrue: [ 
+			hasNil := true.
+			nilType := e ].
+		e isUnknown ifTrue: [ 
+			hasUnknown := true.
+			unknownType := e ] ].
+	hasNil ifTrue: [ remains remove: nilType ].
+	hasUnknown ifTrue: [ remains remove: unknownType ].
+	remains ifEmpty: [ ^ false ].
+	current := remains remove: remains anyOne.
+	(remains isEmpty and: [ current hasSuperType ]) ifTrue: [ 
+		current := current superType ].
+	[ remains isEmpty ] whileFalse: [ 
+		| next common |
+		next := remains remove: remains anyOne.
+		common := current asCompatibleWith: next.
+		common isNil ifTrue: [ 
+			hasNil := true.
+			nilType := common ].
+		common isUnknown ifTrue: [ 
+			hasUnknown := true.
+			unknownType := common ].
+		(common isUnknown not and: [ 
+			 common isNil not and: [ common ~= current ] ]) ifTrue: [ 
+			current := common.
+			remains add: current ] ].
+	remains := IdentitySet with: current.
+	(hasNil and: [ (current >= nilType) not ]) ifTrue: [ 
+		remains add: nilType ].
+	hasUnknown ifTrue: [ remains add: unknownType ].
+	superType_ := remains typAsType.
+	(superType_ isUnion not or: [ superType_ types ~= types ]) ifTrue: [ 
+		superType := superType_.
+		^ true ].
+	^ false
 ]
 
 { #category : #comparing }

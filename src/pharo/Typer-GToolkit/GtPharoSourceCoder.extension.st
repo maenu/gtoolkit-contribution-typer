@@ -16,21 +16,9 @@ GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 ]
 
 { #category : #'*Typer-GToolkit' }
-GtPharoSourceCoder >> typGtBrowseToTypeWithPragmaAt: anInteger [
-	<typPraArguments: 'Integer'>
-	| node |
-	node := self typGtRbNodeAt: anInteger.
-	node isNil
-		ifTrue: [ ^ self ].
-	node typGtCanType
-		ifFalse: [ ^ self ].
-	self notifyObjectSpawn: node typGtFiltersToTypeWithPragma
-]
-
-{ #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 
-	<gtAstCoderAddOns: 10>
+	"<gtAstCoderAddOns: 10>"
 	self completionStrategy:
 		(self completionStrategy typGtAsCompletionStrategy
 			 coder: self;

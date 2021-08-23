@@ -31,14 +31,12 @@ TypCachingLookupResolver >> reset [
 
 { #category : #accessing }
 TypCachingLookupResolver >> resolve: aLookup [
+
 	self assert: [ self canResolve: aLookup ].
-	^ cache
-		at: aLookup
-		ifAbsent: [ cache
-				at: aLookup
-					put:
-					(TypUnknownType new
-						addOrigin: (TypLookupCacheDefaultOrigin lookup: aLookup);
-						yourself);
-				at: aLookup put: (resolver resolve: aLookup) ]
+	^ cache at: aLookup ifAbsent: [ 
+		  cache
+			  at: aLookup put: (TypUnknownType new
+					   addOrigin: (TypLookupCacheDefaultOrigin lookup: aLookup);
+					   yourself);
+			  at: aLookup put: (resolver resolve: aLookup) ]
 ]

@@ -124,6 +124,7 @@ TypNamedType >> initialize [
 
 { #category : #accessing }
 TypNamedType >> initializeClassDescription: aClassDescription [
+
 	<typPraArguments: 'ClassDescription'>
 	classDescription := aClassDescription.
 	name := classDescription name.
@@ -132,7 +133,9 @@ TypNamedType >> initializeClassDescription: aClassDescription [
 
 { #category : #accessing }
 TypNamedType >> initializeName: anObject [
+
 	<typPraArguments: 'String'>
+	classDescription := nil.
 	name := anObject.
 	hasClassDescription := nil
 ]

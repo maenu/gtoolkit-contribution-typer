@@ -61,8 +61,7 @@ TypType >> >= aType [
 
 { #category : #accessing }
 TypType >> addOrigin: anOrigin [
-	(origins includes: anOrigin)
-		ifTrue: [ ^ self ].
+
 	origins add: anOrigin
 ]
 
