@@ -24,11 +24,11 @@ TypTypeLookupIndex class >> instance [
 
 { #category : #accessing }
 TypTypeLookupIndex >> lookupClassDescription: aClassDescription [
+
 	| lookup |
 	lookup := TypTypeLookup classDescription: aClassDescription.
-	(resolver canResolve: lookup)
-		ifFalse: [ ^ TypUnknownType new
-				addOrigin: (TypLookupOrigin lookup: lookup);
-				yourself ].
+	(resolver canResolve: lookup) ifFalse: [ 
+		^ TypUnknownType new copyWithOrigins:
+			  { (TypLookupOrigin lookup: lookup) } ].
 	^ resolver resolve: lookup
 ]

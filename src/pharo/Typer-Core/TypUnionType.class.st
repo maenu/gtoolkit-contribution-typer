@@ -73,24 +73,28 @@ TypUnionType >> arguments [
 
 { #category : #converting }
 TypUnionType >> asNonNullable [
+
 	^ self isNullable
-		ifTrue: [ (types copyWithout: TypNilType new) typAsType
-				addOrigin:
-					(TypConversionOrigin
-						type: self
-						selector: #asNonNullable
-						arguments: #());
-				yourself ]
-		ifFalse: [ self ]
+		  ifTrue: [ 
+			  (types copyWithout: TypNilType new) typAsType copyWithOrigins:
+				  { (TypConversionOrigin
+					   type: self
+					   selector: #asNonNullable
+					   arguments: #(  )) } ]
+		  ifFalse: [ self ]
 ]
 
 { #category : #converting }
 TypUnionType >> asNullable [
+
 	^ self isNullable
-		ifTrue: [ self ]
-		ifFalse: [ (types , {TypNilType new}) typAsType
-				addOrigin: (TypConversionOrigin type: self selector: #asNullable arguments: #());
-				yourself ]
+		  ifTrue: [ self ]
+		  ifFalse: [ 
+			  (types , { TypNilType new }) typAsType copyWithOrigins:
+				  { (TypConversionOrigin
+					   type: self
+					   selector: #asNullable
+					   arguments: #(  )) } ]
 ]
 
 { #category : #polymorphic }

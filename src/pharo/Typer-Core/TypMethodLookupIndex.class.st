@@ -32,9 +32,8 @@ TypMethodLookupIndex >> lookupMethodReceiver: aType selector: aSymbol arguments:
 		          selector: aSymbol
 		          arguments: aCollection.
 	(resolver canResolve: lookup) ifFalse: [ 
-		^ TypUnknownType new
-			  addOrigin: (TypLookupOrigin lookup: lookup);
-			  yourself ].
+		^ TypUnknownType new copyWithOrigins:
+			  { (TypLookupOrigin lookup: lookup) } ].
 	^ resolver resolve: lookup
 ]
 

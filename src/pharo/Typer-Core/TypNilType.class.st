@@ -21,9 +21,11 @@ TypNilType >> asCompatibleWith: aType [
 
 { #category : #converting }
 TypNilType >> asNonNullable [
-	^ TypUnknownType new
-		addOrigin: (TypConversionOrigin type: self selector: #asNonNullable arguments: #());
-		yourself
+
+	^ TypUnknownType new copyWithOrigins: { (TypConversionOrigin
+			   type: self
+			   selector: #asNonNullable
+			   arguments: #(  )) }
 ]
 
 { #category : #converting }

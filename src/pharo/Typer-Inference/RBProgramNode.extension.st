@@ -11,27 +11,25 @@ RBProgramNode >> typInfAnnotateType: aType [
 
 { #category : #'*Typer-Inference' }
 RBProgramNode >> typInfNil [
-	^ TypNilType new
-		addOrigin: (TypInfNodeOrigin node: self);
-		yourself
+
+	^ TypNilType new copyWithOrigins: { (TypInfNodeOrigin node: self) }
 ]
 
 { #category : #'*Typer-Inference' }
 RBProgramNode >> typInfType [
+
 	<typPraResult: 'TypType'>
 	^ self
-		propertyAt: 'typInfType-' , TypInfSelf value asString
-		ifAbsent: [ "need to set property to default to unknown on recursive calls"
-			self
-				propertyAt: 'typInfType-' , TypInfSelf value asString
-					put: self typInfUnknown;
-				propertyAt: 'typInfType-' , TypInfSelf value asString
-					put:
-					(self
-						typInfAnnotateType:
-							(self typInfTypeRecursive
-								addOrigin: (TypInfNodeOrigin node: self);
-								yourself)) ]
+		  propertyAt: 'typInfType-' , TypInfSelf value asString
+		  ifAbsent: [ "need to set property to default to unknown on recursive calls"
+			  self
+				  propertyAt: 'typInfType-' , TypInfSelf value asString
+				  put: self typInfUnknown;
+				  propertyAt: 'typInfType-' , TypInfSelf value asString
+				  put:
+					  (self typInfAnnotateType:
+							   (self typInfTypeRecursive copyWithOrigins:
+									    { (TypInfNodeOrigin node: self) })) ]
 ]
 
 { #category : #'*Typer-Inference' }
@@ -56,7 +54,7 @@ RBProgramNode >> typInfTypeReset [
 
 { #category : #'*Typer-Inference' }
 RBProgramNode >> typInfUnknown [
-	^ TypUnknownType new
-		addOrigin: (TypInfNodeOrigin node: self);
-		yourself
+
+	^ TypUnknownType new copyWithOrigins:
+		  { (TypInfNodeOrigin node: self) }
 ]

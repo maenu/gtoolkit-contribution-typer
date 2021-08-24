@@ -59,12 +59,6 @@ TypType >> >= aType [
 	^ self > aType or: [ self = aType ]
 ]
 
-{ #category : #accessing }
-TypType >> addOrigin: anOrigin [
-
-	origins add: anOrigin
-]
-
 { #category : #converting }
 TypType >> asCompatibleWith: aType [
 
@@ -76,12 +70,10 @@ TypType >> asCompatibleWith: aType [
 	aType isNil ifTrue: [ ^ self asNullable ].
 	self >= aType ifTrue: [ ^ self ].
 	self hasSuperType ifTrue: [ ^ self superType asCompatibleWith: aType ].
-	^ TypUnknownType new
-		  addOrigin: (TypConversionOrigin
-				   type: self
-				   selector: #asCompatibleWith:
-				   arguments: { aType });
-		  yourself
+	^ TypUnknownType new copyWithOrigins: { (TypConversionOrigin
+			   type: self
+			   selector: #asCompatibleWith:
+			   arguments: { aType }) }
 ]
 
 { #category : #converting }
@@ -96,12 +88,17 @@ TypType >> asNullable [
 	<typPraResult: 'TypType'>
 	^ { 
 		  TypNilType new.
-		  self } typAsType
-		  addOrigin:
-			  (TypConversionOrigin
-				   type: self
-				   selector: #asNullable
-				   arguments: #(  ));
+		  self } typAsType copyWithOrigins: { (TypConversionOrigin
+			   type: self
+			   selector: #asNullable
+			   arguments: #(  )) }
+]
+
+{ #category : #copying }
+TypType >> copyWithOrigins: someOrigins [
+
+	^ self copy
+		  initializeOrigins: someOrigins;
 		  yourself
 ]
 
@@ -170,6 +167,12 @@ TypType >> initialize [
 	super initialize.
 	origins := OrderedCollection new.
 	hasValue := false
+]
+
+{ #category : #initialization }
+TypType >> initializeOrigins: someOrigins [
+
+	origins addAll: someOrigins
 ]
 
 { #category : #initialization }
@@ -253,11 +256,6 @@ TypType >> lookupVariable: aSymbol [
 	^ TypVariableLookupIndex instance
 		lookupReceiver: self
 		selector: aSymbol
-]
-
-{ #category : #accessing }
-TypType >> origins [
-	^ origins
 ]
 
 { #category : #accessing }

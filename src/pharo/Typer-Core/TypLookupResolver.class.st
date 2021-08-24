@@ -14,15 +14,14 @@ TypLookupResolver >> canResolve: aLookup [
 
 { #category : #accessing }
 TypLookupResolver >> reduce: aCollection [
-	aCollection
-		ifEmpty: [ ^ TypUnknownType new
-				addOrigin: (TypLookupAlternativeOrigin alternatives: #());
-				yourself ].
+
+	aCollection ifEmpty: [ 
+		^ TypUnknownType new copyWithOrigins:
+			  { (TypLookupAlternativeOrigin alternatives: #(  )) } ].
 	aCollection sort.
-	^ aCollection first
-		addOrigin:
-			(TypLookupAlternativeOrigin alternatives: aCollection copyWithoutFirst);
-		yourself
+	^ aCollection first copyWithOrigins:
+		  { (TypLookupAlternativeOrigin alternatives:
+			   aCollection copyWithoutFirst) }
 ]
 
 { #category : #initialization }

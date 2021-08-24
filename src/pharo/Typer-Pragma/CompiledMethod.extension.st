@@ -22,17 +22,17 @@ CompiledMethod >> typPraHasVariablePragma: aString [
 
 { #category : #'*Typer-Pragma' }
 CompiledMethod >> typPraType [
+
 	^ self pragmas
-		inject:
-			((TypFunctionType
-				classDescription: self class
-				result: TypUnknownType new
-				arguments: ((1 to: self numArgs) collect: [ :i | TypUnknownType new ])
-				argumentsOptional: false
-				signalsAlways: nil)
-				addOrigin: (TypPraMethodOrigin method: self);
-				yourself)
-		into: [ :t :p | p typPraMethodInject: t ]
+		  inject: ((TypFunctionType
+				    classDescription: self class
+				    result: TypUnknownType new
+				    arguments:
+				    ((1 to: self numArgs) collect: [ :i | TypUnknownType new ])
+				    argumentsOptional: false
+				    signalsAlways: nil) copyWithOrigins:
+				   { (TypPraMethodOrigin method: self) })
+		  into: [ :t :p | p typPraMethodInject: t ]
 ]
 
 { #category : #'*Typer-Pragma' }
