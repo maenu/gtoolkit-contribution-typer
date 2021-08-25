@@ -9,7 +9,7 @@ TypParametricTypeCopyingExamples >> copyIsNearlyShallow [
 	<gtExample>
 	| original copy |
 	original := TypParametricTypeInitializingExamples new classDescriptionParameters.
-	original
+	original parameters
 		at: original parameters keys first
 		put:
 			(TypNamedTypeInitializingExamples new classDescription).

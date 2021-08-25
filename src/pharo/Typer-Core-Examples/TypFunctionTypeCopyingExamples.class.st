@@ -6,13 +6,14 @@ Class {
 
 { #category : #accessing }
 TypFunctionTypeCopyingExamples >> copyIsNearlyShallow [
+
 	<gtExample>
 	| original copy |
-	original := TypFunctionTypeInitializingExamples new classDescriptionArgumentsSizeArgumentsOptionalBindings.
-	original
-		at: original parameters keys first
-		put:
-			(TypNamedTypeInitializingExamples new classDescription).
+	original := TypFunctionTypeInitializingExamples new
+		            classDescriptionArgumentsSizeArgumentsOptionalBindings.
+	original parameters
+		at: '@0'
+		put: TypNamedTypeInitializingExamples new classDescription.
 	"ensure superType"
 	original superType.
 	copy := original copy.
