@@ -23,7 +23,7 @@ TypDynCollector >> collectIn: aCollection doing: aBlock [
 		collect: [ :e | 
 			e ast
 				doSemanticAnalysis;
-				typInfTypeReset;
+				typInfInvalidate;
 				typDynInstall ].
 	[ result := aBlock value.
 	methodResults := self collectMethodResultsIn: asts.
@@ -53,7 +53,7 @@ TypDynCollector >> collectIn: aCollection running: someTestCases [
 		collect: [ :e | 
 			e ast
 				doSemanticAnalysis;
-				typInfTypeReset;
+				typInfInvalidate;
 				typDynInstall ].
 	TestCase class announcer when: TestCaseEnded send: #stash to: self.
 	[ someTestCases

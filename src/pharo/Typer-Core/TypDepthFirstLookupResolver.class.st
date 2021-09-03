@@ -4,7 +4,7 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
-{ #category : #accessing }
+{ #category : #resolving }
 TypDepthFirstLookupResolver >> canResolve: aLookup [
 	^ (resolver canResolve: aLookup)
 		or: [ aLookup hasSuper and: [ self canResolve: aLookup copyAsSuper ] ]

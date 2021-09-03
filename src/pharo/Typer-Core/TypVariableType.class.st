@@ -61,9 +61,8 @@ TypVariableType >> copyWithAt: aString put: aType [
 { #category : #comparing }
 TypVariableType >> hashSkipping: anIdentitySet [
 
-	(anIdentitySet includes: self) ifTrue: [ ^ self identityHash ].
-	^ ((super hashSkipping: anIdentitySet) bitXor: name hash) bitXor:
-		  (superType hashSkipping: anIdentitySet , { self })
+	(anIdentitySet includes: self) ifTrue: [ ^ 43 ].
+	^ (43 bitXor: name hash) bitXor: (super hashSkipping: anIdentitySet)
 ]
 
 { #category : #initialization }
@@ -81,6 +80,18 @@ TypVariableType >> initializeName: aString [
 	self assert: [ aString size > 1 ].
 	self assert: [ aString first = $@ ].
 	name := aString
+]
+
+{ #category : #invalidation }
+TypVariableType >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
+
+	^ superType isInvalidatedByClassAnnouncement: aClassAnnouncement
+]
+
+{ #category : #invalidation }
+TypVariableType >> isInvalidatedByMethodAnnouncement: aMethodAnnouncement [
+
+	^ superType isInvalidatedByMethodAnnouncement: aMethodAnnouncement
 ]
 
 { #category : #testing }

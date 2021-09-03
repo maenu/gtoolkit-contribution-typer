@@ -31,6 +31,13 @@ TypInfNodeOrigin >> initializeNode: aNode [
 	node := aNode
 ]
 
+{ #category : #invalidation }
+TypInfNodeOrigin >> invalidate [
+
+	super invalidate.
+	node withAllParents first typInfInvalidate
+]
+
 { #category : #accessing }
 TypInfNodeOrigin >> node [
 	^ node

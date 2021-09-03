@@ -4,6 +4,14 @@ Class {
 	#category : #'Typer-Core-Type'
 }
 
+{ #category : #'instance creation' }
+TypUnknownType class >> origin: anOrigin [
+
+	^ self new
+		  initializeOrigins: { anOrigin };
+		  yourself
+]
+
 { #category : #comparing }
 TypUnknownType >> > aType [
 	^ aType isUnknown not

@@ -123,6 +123,26 @@ TypRewriter >> rewriteMethodLookupIndex [
 ]
 
 { #category : #accessing }
+TypRewriter >> rewriteNilNewCopyWithOrigins [
+
+	<gtExample>
+	^ ((RPackageOrganizer default packages select: [ :e | 
+		    e name beginsWith: 'Typer' ]) flatCollect: #methods) select: [ 
+		  :e | 
+		  | rewriter ok method |
+		  rewriter := RBParseTreeRewriter new.
+		  rewriter
+			  replace: 'TypNilType new copyWithOrigins: { `@o }'
+			  with: 'TypNilType origin: `@o'.
+		  ok := rewriter executeTree: e parseTree.
+		  ok ifTrue: [ 
+			  e origin
+				  compile: rewriter tree formattedCode
+				  classified: e protocol ].
+		  ok ]
+]
+
+{ #category : #accessing }
 TypRewriter >> rewritePragmaArguments [
 	<gtExample>
 	^ #typTypeArgument:as: gtPragmas
@@ -437,6 +457,26 @@ TypRewriter >> rewriteShadowVariable [
 				ifTrue:
 					[ m origin compile: rewriter tree formattedCode classified: m protocol ].
 			ok ]
+]
+
+{ #category : #accessing }
+TypRewriter >> rewriteUnknownNewCopyWithOrigins [
+
+	<gtExample>
+	^ ((RPackageOrganizer default packages select: [ :e | 
+		    e name beginsWith: 'Typer' ]) flatCollect: #methods) select: [ 
+		  :e | 
+		  | rewriter ok method |
+		  rewriter := RBParseTreeRewriter new.
+		  rewriter
+			  replace: 'TypUnknownType new copyWithOrigins: { `@o }'
+			  with: 'TypUnknownType origin: `@o'.
+		  ok := rewriter executeTree: e parseTree.
+		  ok ifTrue: [ 
+			  e origin
+				  compile: rewriter tree formattedCode
+				  classified: e protocol ].
+		  ok ]
 ]
 
 { #category : #accessing }

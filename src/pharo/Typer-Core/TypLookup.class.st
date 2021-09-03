@@ -37,6 +37,18 @@ TypLookup >> initializeParent: aLookup [
 	parent := aLookup
 ]
 
+{ #category : #invalidation }
+TypLookup >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
+
+	^ false
+]
+
+{ #category : #invalidation }
+TypLookup >> isInvalidatedByMethodAnnouncement: aMethodAnnouncement [
+
+	^ false
+]
+
 { #category : #accessing }
 TypLookup >> parent [
 	^ parent

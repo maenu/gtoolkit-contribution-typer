@@ -2,11 +2,9 @@ Extension { #name : #Collection }
 
 { #category : #'*Typer-Core' }
 Collection >> typAsType [
+
 	<typPraResult: 'TypType'>
-	| types |
-	types := TypUnionType asTypes: self.
-	types ifEmpty: [ ^ TypUnknownType new ].
-	types size = 1
-		ifTrue: [ ^ types anyOne ].
-	^ TypUnionType types: types
+	self ifEmpty: [ ^ TypUnknownType new ].
+	self size = 1 ifTrue: [ ^ self anyOne ].
+	^ TypUnionType types: self asSet
 ]

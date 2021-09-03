@@ -15,3 +15,9 @@ TypOrigin >> = anObject [
 TypOrigin >> hash [
 	^ self class hash
 ]
+
+{ #category : #invalidation }
+TypOrigin >> invalidate [
+
+	
+]

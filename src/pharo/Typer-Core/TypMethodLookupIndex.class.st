@@ -32,13 +32,12 @@ TypMethodLookupIndex >> lookupMethodReceiver: aType selector: aSymbol arguments:
 		          selector: aSymbol
 		          arguments: aCollection.
 	(resolver canResolve: lookup) ifFalse: [ 
-		^ TypUnknownType new copyWithOrigins:
-			  { (TypLookupOrigin lookup: lookup) } ].
+		^ TypUnknownType origin: (TypLookupOrigin lookup: lookup) ].
 	^ resolver resolve: lookup
 ]
 
 { #category : #initialization }
 TypMethodLookupIndex >> reset [
 	super reset.
-	ASTCache default do: #typInfTypeReset
+	ASTCache default do: #typInfInvalidate
 ]

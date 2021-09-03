@@ -8,44 +8,19 @@ Class {
 	#category : #'Typer-Core-Type'
 }
 
-{ #category : #converting }
-TypUnionType class >> asTypes: aCollection [
-	<typPraResult: 'Set<TypType>'>
-	<typPraArguments: 'Collection<TypType>'>
-	| remains nil_ |
-	remains := aCollection
-		flatCollect: [ :e | 
-			e isUnion
-				ifTrue: [ e types	"typCastAs TypUnionType" ]
-				ifFalse: [ {e}	"typCastAs Collection<TypType>" ] ]
-		as: Set.
-	nil_ := remains includes: TypNilType new.
-	nil_
-		ifTrue: [ remains remove: TypNilType new ].
-	remains := remains
-		reject: [ :e | 
-			(remains
-				copyWithoutAll:
-					{e.
-					TypUnknownType new}) anySatisfy: [ :f | f >= e ] ].
-	nil_
-		ifTrue: [ remains add: TypNilType new ].
-	^ remains
-]
-
 { #category : #'instance creation' }
 TypUnionType class >> types: aCollection [
-	<typPraArguments: 'Collection<TypType>'>
+	<typPraArguments: 'Set<TypType>'>
 	^ self new
-		initializeTypes: (self asTypes: aCollection);
+		initializeTypes: aCollection;
 		yourself
 ]
 
 { #category : #comparing }
 TypUnionType >> = anObject [
-	super = anObject
-		ifFalse: [ ^ false ].
-	^ types asSet = anObject types asSet
+
+	super = anObject ifFalse: [ ^ false ].
+	^ types = anObject types
 ]
 
 { #category : #comparing }
@@ -74,27 +49,23 @@ TypUnionType >> arguments [
 { #category : #converting }
 TypUnionType >> asNonNullable [
 
-	^ self isNullable
-		  ifTrue: [ 
-			  (types copyWithout: TypNilType new) typAsType copyWithOrigins:
-				  { (TypConversionOrigin
-					   type: self
-					   selector: #asNonNullable
-					   arguments: #(  )) } ]
-		  ifFalse: [ self ]
+	self isNullable ifFalse: [ ^ self ].
+	^ (types reject: #isNil) typAsType copyWithOrigins:
+		  { (TypConversionOrigin
+			   type: self
+			   selector: #asNonNullable
+			   arguments: #(  )) }
 ]
 
 { #category : #converting }
 TypUnionType >> asNullable [
 
-	^ self isNullable
-		  ifTrue: [ self ]
-		  ifFalse: [ 
-			  (types , { TypNilType new }) typAsType copyWithOrigins:
-				  { (TypConversionOrigin
-					   type: self
-					   selector: #asNullable
-					   arguments: #(  )) } ]
+	self isNullable ifTrue: [ ^ self ].
+	^ (types , { TypNilType new }) typAsType copyWithOrigins:
+		  { (TypConversionOrigin
+			   type: self
+			   selector: #asNullable
+			   arguments: #(  )) }
 ]
 
 { #category : #polymorphic }
@@ -106,20 +77,14 @@ TypUnionType >> at: aString [
 { #category : #testing }
 TypUnionType >> hasSuperType [
 
-	| remains hasNil nilType hasUnknown unknownType current superType_ |
+	| remains nilTypes unknownTypes current superType_ |
 	superType ifNotNil: [ ^ true ].
-	hasNil := false.
-	hasUnknown := false.
 	remains := types asIdentitySet.
-	remains do: [ :e | 
-		e isNil ifTrue: [ 
-			hasNil := true.
-			nilType := e ].
-		e isUnknown ifTrue: [ 
-			hasUnknown := true.
-			unknownType := e ] ].
-	hasNil ifTrue: [ remains remove: nilType ].
-	hasUnknown ifTrue: [ remains remove: unknownType ].
+	nilTypes := remains select: #isNil.
+	unknownTypes := remains select: #isUnknown.
+	remains
+		removeAll: nilTypes;
+		removeAll: unknownTypes.
 	remains ifEmpty: [ ^ false ].
 	current := remains remove: remains anyOne.
 	(remains isEmpty and: [ current hasSuperType ]) ifTrue: [ 
@@ -128,20 +93,13 @@ TypUnionType >> hasSuperType [
 		| next common |
 		next := remains remove: remains anyOne.
 		common := current asCompatibleWith: next.
-		common isNil ifTrue: [ 
-			hasNil := true.
-			nilType := common ].
-		common isUnknown ifTrue: [ 
-			hasUnknown := true.
-			unknownType := common ].
-		(common isUnknown not and: [ 
-			 common isNil not and: [ common ~= current ] ]) ifTrue: [ 
+		common = current ifFalse: [ 
 			current := common.
 			remains add: current ] ].
 	remains := IdentitySet with: current.
-	(hasNil and: [ (current >= nilType) not ]) ifTrue: [ 
-		remains add: nilType ].
-	hasUnknown ifTrue: [ remains add: unknownType ].
+	remains
+		addAll: nilTypes;
+		addAll: unknownTypes.
 	superType_ := remains typAsType.
 	(superType_ isUnion not or: [ superType_ types ~= types ]) ifTrue: [ 
 		superType := superType_.
@@ -152,12 +110,10 @@ TypUnionType >> hasSuperType [
 { #category : #comparing }
 TypUnionType >> hashSkipping: anIdentitySet [
 
-	| visited |
-	(anIdentitySet includes: self) ifTrue: [ ^ self identityHash ].
-	visited := anIdentitySet , { self }.
+	(anIdentitySet includes: self) ifTrue: [ ^ 47 ].
 	^ types
-		  inject: (super hashSkipping: anIdentitySet)
-		  into: [ :r :e | r bitXor: (e hashSkipping: visited) ]
+		  inject: (47 bitXor: (super hashSkipping: anIdentitySet))
+		  into: [ :r :e | r bitXor: (e hashSkipping: anIdentitySet) ]
 ]
 
 { #category : #accessing }
@@ -168,17 +124,36 @@ TypUnionType >> initialize [
 
 { #category : #accessing }
 TypUnionType >> initializeTypes: anObject [
+
 	<typPraArguments: 'Set<TypType>'>
-	self
-		assert: [ | types_ |
-			types_ := self class asTypes: anObject.
-			types_ size > 1 and: [ types_ = anObject ] ].
+	self assert: [ anObject size > 1 ].
 	types := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #invalidation }
+TypUnionType >> invalidate [
+
+	super invalidate.
+	types do: #invalidate
+]
+
+{ #category : #invalidation }
+TypUnionType >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
+
+	^ types anySatisfy: [ :e | 
+		  e isInvalidatedByClassAnnouncement: aClassAnnouncement ]
+]
+
+{ #category : #invalidation }
+TypUnionType >> isInvalidatedByMethodAnnouncement: aMethodAnnouncement [
+
+	^ types anySatisfy: [ :e | 
+		  e isInvalidatedByMethodAnnouncement: aMethodAnnouncement ]
+]
+
+{ #category : #accessing }
 TypUnionType >> isNullable [
-	^ types includes: TypNilType new
+	^ types anySatisfy: #isNil
 ]
 
 { #category : #testing }
@@ -204,40 +179,42 @@ TypUnionType >> postCopy [
 
 { #category : #printing }
 TypUnionType >> printOn: aStream skipping: anIdentitySet [
-	| types_ |
-	(anIdentitySet includes: self)
-		ifTrue: [ aStream << '.'.
-			^ self ].
-	types_ := types asIdentitySet.
+
+	| remains hasNil nilType hasUnknown unknownType |
+	(anIdentitySet includes: self) ifTrue: [ 
+		aStream << '.'.
+		^ self ].
+	anIdentitySet add: self.
+	remains := types asIdentitySet.
 	aStream << '{'.
-	types_
-		detect: [ :e | e = TypNilType new ]
+	remains
+		detect: #isNil
 		ifFound: [ :e | 
-			types_ remove: e.
-			e printOn: aStream skipping: anIdentitySet , {self}.
-			types_ ifNotEmpty: [ aStream << ',' ] ]
+			e printOn: aStream skipping: anIdentitySet.
+			remains ifNotEmpty: [ aStream << ',' ] ]
 		ifNone: [  ].
-	types_
-		detect: [ :e | e = TypUnknownType new ]
+	remains := remains reject: #isNil.
+	remains
+		detect: #isUnknown
 		ifFound: [ :e | 
-			types_ remove: e.
-			e printOn: aStream skipping: anIdentitySet , {self}.
-			types_ ifNotEmpty: [ aStream << ',' ] ]
+			e printOn: aStream skipping: anIdentitySet.
+			remains ifNotEmpty: [ aStream << ',' ] ]
 		ifNone: [  ].
-	types_ size > 1
-		ifTrue: [ | type_ |
-			type_ := types_ = types
-				ifTrue: [ self ]
-				ifFalse: [ types_ typAsType ].
-			(type_ isUnion
-				and: [ type_ hasSuperType and: [ type_ superType isUnion not ] ])
-				ifTrue: [ type_ superType printOn: aStream.
-					types_ removeAll ] ].
-	types_
-		do: [ :e | 
-			types_ remove: e.
-			e printOn: aStream skipping: anIdentitySet , {self}.
-			types_ ifNotEmpty: [ aStream << ',' ] ].
+	remains := remains reject: #isUnknown.
+	remains size > 1 ifTrue: [ 
+		| type |
+		type := remains size = types size
+			        ifTrue: [ self ]
+			        ifFalse: [ remains typAsType ].
+		(type isUnion and: [ 
+			 type hasSuperType and: [ type superType isUnion not ] ]) ifTrue: [ 
+			type superType printOn: aStream.
+			remains removeAll ] ].
+	remains copy do: [ :e | 
+		e printOn: aStream skipping: anIdentitySet.
+		remains
+			remove: e;
+			ifNotEmpty: [ aStream << ',' ] ].
 	aStream << '}'
 ]
 

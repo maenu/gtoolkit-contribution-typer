@@ -58,6 +58,13 @@ TypTypeLookup >> initializeClassDescription: anObject [
 	classDescription := anObject
 ]
 
+{ #category : #invalidation }
+TypTypeLookup >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
+
+	^ classDescription = aClassAnnouncement classAffected or: [ 
+		  classDescription inheritsFrom: aClassAnnouncement classAffected ]
+]
+
 { #category : #accessing }
 TypTypeLookup >> printOn: aStream [
 	aStream nextPutAll: classDescription name.

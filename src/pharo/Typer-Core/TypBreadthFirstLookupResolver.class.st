@@ -7,14 +7,14 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 TypBreadthFirstLookupResolver class >> resolvers: aCollection [
 	^ self new
 		initializeResolvers: aCollection;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : #resolving }
 TypBreadthFirstLookupResolver >> canResolve: aLookup [
 	^ resolvers anySatisfy: [ :e | e canResolve: aLookup ]
 ]
@@ -25,19 +25,26 @@ TypBreadthFirstLookupResolver >> initialize [
 	super initialize
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 TypBreadthFirstLookupResolver >> initializeResolvers: anObject [
 	<typPraArguments: 'SequenceableCollection<TypLookupResolver>'>
 	resolvers := anObject
 ]
 
-{ #category : #initialization }
+{ #category : #invalidation }
+TypBreadthFirstLookupResolver >> invalidateOn: aClassOrMethodAnnouncement [
+
+	super invalidateOn: aClassOrMethodAnnouncement.
+	resolvers do: [ :e | e invalidateOn: aClassOrMethodAnnouncement ]
+]
+
+{ #category : #resetting }
 TypBreadthFirstLookupResolver >> reset [
 	super reset.
 	resolvers do: #reset
 ]
 
-{ #category : #accessing }
+{ #category : #resolving }
 TypBreadthFirstLookupResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
 	^ (resolvers detect: [ :e | e canResolve: aLookup ]) resolve: aLookup

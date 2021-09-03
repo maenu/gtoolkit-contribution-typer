@@ -108,8 +108,8 @@ TypNamedType >> hasSuperType [
 { #category : #comparing }
 TypNamedType >> hashSkipping: anIdentitySet [
 
-	(anIdentitySet includes: self) ifTrue: [ ^ self identityHash ].
-	^ (super hashSkipping: anIdentitySet) bitXor: name hash
+	(anIdentitySet includes: self) ifTrue: [ ^ 31 ].
+	^ (31 bitXor: name hash) bitXor: (super hashSkipping: anIdentitySet)
 ]
 
 { #category : #initialization }
@@ -136,6 +136,15 @@ TypNamedType >> initializeName: anObject [
 	classDescription := nil.
 	name := anObject.
 	hasClassDescription := nil
+]
+
+{ #category : #accessing }
+TypNamedType >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
+
+	self hasClassDescription ifFalse: [ ^ false ].
+	^ self classDescription = aClassAnnouncement classAffected or: [ 
+		  self classDescription inheritsFrom:
+			  aClassAnnouncement classAffected ]
 ]
 
 { #category : #testing }

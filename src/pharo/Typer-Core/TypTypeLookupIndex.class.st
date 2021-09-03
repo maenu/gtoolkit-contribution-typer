@@ -28,7 +28,6 @@ TypTypeLookupIndex >> lookupClassDescription: aClassDescription [
 	| lookup |
 	lookup := TypTypeLookup classDescription: aClassDescription.
 	(resolver canResolve: lookup) ifFalse: [ 
-		^ TypUnknownType new copyWithOrigins:
-			  { (TypLookupOrigin lookup: lookup) } ].
+		^ TypUnknownType origin: (TypLookupOrigin lookup: lookup) ].
 	^ resolver resolve: lookup
 ]

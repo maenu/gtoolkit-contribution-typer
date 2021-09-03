@@ -153,9 +153,9 @@ TypFunctionType >> copyWithSignalsAlways: aBooleanOrNil [
 { #category : #comparing }
 TypFunctionType >> hashSkipping: anIdentitySet [
 
-	(anIdentitySet includes: self) ifTrue: [ ^ self identityHash ].
-	^ ((super hashSkipping: anIdentitySet) bitXor: argumentsSize hash) 
-		  bitXor: argumentsOptional hash
+	(anIdentitySet includes: self) ifTrue: [ ^ 41 ].
+	^ ((41 bitXor: argumentsSize hash) bitXor: argumentsOptional hash) 
+		  bitXor: (super hashSkipping: anIdentitySet)
 ]
 
 { #category : #initialization }

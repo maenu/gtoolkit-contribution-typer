@@ -12,7 +12,7 @@ RBMethodNode >> typInfMethod [
 
 	<typPraResult: 'TypFunctionType'>
 	^ self
-		  propertyAt: 'typInfMethod-' , TypInfSelf value asString
+		  propertyAt: 'typInfMethod-' , TypInfSelf value hash asString
 		  ifAbsentPut: [ 
 			  TypInfSelf value
 				  lookupMethod: selector asSymbol
@@ -29,52 +29,46 @@ RBMethodNode >> typInfTemporaryProfile [
 
 { #category : #'*Typer-Inference' }
 RBMethodNode >> typInfTypeRecursive [
+
 	<typPraResult: 'TypType'>
-	| iterations maxIterations oldTemporaryProfiles newTemporaryProfile visitor types |
+	| iterations maxIterations oldTemporaryProfiles newTemporaryProfile visitor types identifier |
+	identifier := TypInfSelf value hash asString.
 	self
-		typInfTypeReset;
-		propertyAt: #typFixPoint , '-' , TypInfSelf value asString
-			put: false.
+		typInfInvalidate;
+		propertyAt: 'typFixPoint-' , identifier put: false.
 	iterations := 0.
 	maxIterations := 3.
 	oldTemporaryProfiles := Set new.
 	newTemporaryProfile := self typInfTemporaryProfile.
-	[ | oldTemporaryProfile |
+	[ 
+	| oldTemporaryProfile |
 	iterations := iterations + 1.
 	oldTemporaryProfiles add: newTemporaryProfile.
-	self typInfTypeReset.
-	newTemporaryProfile
-		do: [ :e | 
-			e value isUnknown
-				ifFalse: [ e key
-						propertyAt: #typInfType , '-' , TypInfSelf value asString
-						put: e value ] ].
-	(self allChildren
-		copyWithoutAll: (newTemporaryProfile collect: #key) , {self})
-		do: #typInfType.
-	(newTemporaryProfile collect: #key)
-		do: [ :e | 
-			e
-				typInfTypeReset;
-				typInfType ].
+	self typInfInvalidate.
+	newTemporaryProfile do: [ :e | 
+		e value isUnknown ifFalse: [ 
+			e key propertyAt: 'typInfType-' , identifier put: e value ] ].
+	(self allChildren copyWithoutAll:
+		 (newTemporaryProfile collect: #key) , { self }) do: #typInfType.
+	(newTemporaryProfile collect: #key) do: [ :e | 
+		e
+			typInfInvalidate;
+			typInfType ].
 	oldTemporaryProfile := newTemporaryProfile.
 	newTemporaryProfile := self typInfTemporaryProfile.
-	oldTemporaryProfile = newTemporaryProfile
-		ifTrue: [ self
-				propertyAt: #typFixPoint , '-' , TypInfSelf value asString
-				put: true ].
-	(oldTemporaryProfiles includes: newTemporaryProfile) not
-		and: [ iterations < maxIterations ] ] whileTrue.
+	oldTemporaryProfile = newTemporaryProfile ifTrue: [ 
+		self propertyAt: 'typFixPoint-' , identifier put: true ].
+	(oldTemporaryProfiles includes: newTemporaryProfile) not and: [ 
+		iterations < maxIterations ] ] whileTrue.
 	types := (self allChildren select: #isReturn)
-		collect: #typInfType
-		as: OrderedCollection.
-	self lastIsReturn
-		ifFalse: [ types add: TypInfSelf value ].
+		         collect: #typInfType
+		         as: OrderedCollection.
+	self lastIsReturn ifFalse: [ types add: TypInfSelf value ].
 	visitor := TypInfSignalsAlwaysVisitor new.
 	self acceptVisitor: visitor.
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: types typAsType
-		arguments: (arguments collect: #typInfType)
-		argumentsOptional: false
-		signalsAlways: visitor signalsAlways
+		  typAsFunctionTypeWithResult: types typAsType
+		  arguments: (arguments collect: #typInfType)
+		  argumentsOptional: false
+		  signalsAlways: visitor signalsAlways
 ]

@@ -4,7 +4,7 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
-{ #category : #accessing }
+{ #category : #resolving }
 TypLookupResolver >> canResolve: aLookup [
 
 	<typPraArguments: 'TypLookup'>
@@ -12,24 +12,18 @@ TypLookupResolver >> canResolve: aLookup [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
-TypLookupResolver >> reduce: aCollection [
+{ #category : #invalidation }
+TypLookupResolver >> invalidateOn: aClassOrMethodAnnouncement [
 
-	aCollection ifEmpty: [ 
-		^ TypUnknownType new copyWithOrigins:
-			  { (TypLookupAlternativeOrigin alternatives: #(  )) } ].
-	aCollection sort.
-	^ aCollection first copyWithOrigins:
-		  { (TypLookupAlternativeOrigin alternatives:
-			   aCollection copyWithoutFirst) }
+	
 ]
 
-{ #category : #initialization }
+{ #category : #resetting }
 TypLookupResolver >> reset [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #resolving }
 TypLookupResolver >> resolve: aLookup [
 	self subclassResponsibility
 ]

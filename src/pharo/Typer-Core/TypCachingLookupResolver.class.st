@@ -7,7 +7,7 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
-{ #category : #accessing }
+{ #category : #resolving }
 TypCachingLookupResolver >> canResolve: aLookup [
 	^ cache
 		at: aLookup
@@ -23,19 +23,36 @@ TypCachingLookupResolver >> initialize [
 	cache := Dictionary new
 ]
 
+{ #category : #invalidation }
+TypCachingLookupResolver >> invalidateOn: aClassOrMethodAnnouncement [
+
+	super invalidateOn: aClassOrMethodAnnouncement.
+	cache keysAndValuesRemove: [ :lookup :type | 
+		| invalidate |
+		invalidate := false.
+		(aClassOrMethodAnnouncement typInvalidates: lookup) ifTrue: [ 
+			invalidate := true ].
+		(aClassOrMethodAnnouncement typInvalidates: type) ifTrue: [ 
+			invalidate := true.
+			type invalidate ].
+		invalidate ]
+]
+
 { #category : #initialization }
 TypCachingLookupResolver >> reset [
 	super reset.
 	cache removeAll
 ]
 
-{ #category : #accessing }
+{ #category : #resolving }
 TypCachingLookupResolver >> resolve: aLookup [
 
 	self assert: [ self canResolve: aLookup ].
 	^ cache at: aLookup ifAbsent: [ 
 		  cache
-			  at: aLookup put: (TypUnknownType new copyWithOrigins:
-						   { (TypLookupCacheDefaultOrigin lookup: aLookup) });
+			  at: aLookup
+			  put:
+				  (TypUnknownType origin:
+						   (TypLookupCacheDefaultOrigin lookup: aLookup));
 			  at: aLookup put: (resolver resolve: aLookup) ]
 ]

@@ -10,22 +10,32 @@ RBProgramNode >> typInfAnnotateType: aType [
 ]
 
 { #category : #'*Typer-Inference' }
+RBProgramNode >> typInfInvalidate [
+
+	properties ifNotNil: [ 
+		(properties keys select: [ :e | e beginsWith: 'typ' ]) do: [ :e | 
+			self removeProperty: e ] ].
+	self children reject: #isNil thenDo: #typInfInvalidate
+]
+
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typInfNil [
 
-	^ TypNilType new copyWithOrigins: { (TypInfNodeOrigin node: self) }
+	^ TypNilType origin: (TypInfNodeOrigin node: self)
 ]
 
 { #category : #'*Typer-Inference' }
 RBProgramNode >> typInfType [
 
 	<typPraResult: 'TypType'>
+	| identifier |
+	identifier := TypInfSelf value hash asString.
 	^ self
-		  propertyAt: 'typInfType-' , TypInfSelf value asString
+		  propertyAt: 'typInfType-' , identifier
 		  ifAbsent: [ "need to set property to default to unknown on recursive calls"
 			  self
-				  propertyAt: 'typInfType-' , TypInfSelf value asString
-				  put: self typInfUnknown;
-				  propertyAt: 'typInfType-' , TypInfSelf value asString
+				  propertyAt: 'typInfType-' , identifier put: self typInfUnknown;
+				  propertyAt: 'typInfType-' , identifier
 				  put:
 					  (self typInfAnnotateType:
 							   (self typInfTypeRecursive copyWithOrigins:
@@ -44,17 +54,7 @@ RBProgramNode >> typInfTypeRecursive [
 ]
 
 { #category : #'*Typer-Inference' }
-RBProgramNode >> typInfTypeReset [
-
-	properties ifNotNil: [ 
-		(properties keys select: [ :e | e beginsWith: #typ ]) do: [ :e | 
-			self removeProperty: e ] ].
-	self children reject: #isNil thenDo: #typInfTypeReset
-]
-
-{ #category : #'*Typer-Inference' }
 RBProgramNode >> typInfUnknown [
 
-	^ TypUnknownType new copyWithOrigins:
-		  { (TypInfNodeOrigin node: self) }
+	^ TypUnknownType origin: (TypInfNodeOrigin node: self)
 ]

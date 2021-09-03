@@ -70,10 +70,10 @@ TypType >> asCompatibleWith: aType [
 	aType isNil ifTrue: [ ^ self asNullable ].
 	self >= aType ifTrue: [ ^ self ].
 	self hasSuperType ifTrue: [ ^ self superType asCompatibleWith: aType ].
-	^ TypUnknownType new copyWithOrigins: { (TypConversionOrigin
+	^ TypUnknownType origin: (TypConversionOrigin
 			   type: self
 			   selector: #asCompatibleWith:
-			   arguments: { aType }) }
+			   arguments: { aType })
 ]
 
 { #category : #converting }
@@ -148,13 +148,10 @@ TypType >> hashSkipping: anIdentitySet [
 
 	<typPraArguments: 'IdentitySet<TypType>'>
 	<typPraResult: 'Integer'>
-	| hash |
-	(anIdentitySet includes: self) ifTrue: [ ^ self identityHash ].
-	hash := nil hash bitXor: 23.
-	self hasSuperType ifTrue: [ 
-		hash := hash bitXor:
-			        (self superType hashSkipping: anIdentitySet , { self }) ].
-	^ hash
+	(anIdentitySet includes: self) ifTrue: [ ^ 23 ].
+	anIdentitySet add: self.
+	self hasSuperType ifFalse: [ ^ 23 ].
+	^ 23 bitXor: (self superType hashSkipping: anIdentitySet)
 ]
 
 { #category : #initialization }
@@ -188,9 +185,27 @@ TypType >> initializeValue: anObject [
 	value := anObject
 ]
 
+{ #category : #invalidation }
+TypType >> invalidate [
+
+	origins do: #invalidate
+]
+
 { #category : #testing }
 TypType >> isFunction [
 	<typPraResult: 'Boolean'>
+	^ false
+]
+
+{ #category : #invalidation }
+TypType >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
+
+	^ false
+]
+
+{ #category : #invalidation }
+TypType >> isInvalidatedByMethodAnnouncement: aMethodAnnouncement [
+
 	^ false
 ]
 

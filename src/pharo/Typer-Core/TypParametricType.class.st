@@ -103,13 +103,11 @@ TypParametricType >> copyWithParameters: aCollection [
 { #category : #comparing }
 TypParametricType >> hashSkipping: anIdentitySet [
 
-	| visited |
-	(anIdentitySet includes: self) ifTrue: [ ^ self identityHash ].
-	visited := anIdentitySet , { self }.
+	(anIdentitySet includes: self) ifTrue: [ ^ 37 ].
 	^ parameters values
-		  inject:
-		  ((super hashSkipping: anIdentitySet) bitXor: parameters keys hash)
-		  into: [ :r :e | r bitXor: (e hashSkipping: visited) ]
+		  inject: ((37 bitXor: parameters keys hash) bitXor:
+				   (super hashSkipping: anIdentitySet))
+		  into: [ :r :e | r bitXor: (e hashSkipping: anIdentitySet) ]
 ]
 
 { #category : #initialization }
@@ -132,6 +130,22 @@ TypParametricType >> initializeParameters: anOrderedDictionary [
 			put:
 			(t copyWithOrigins: { (TypParameterOrigin type: self name: n) }) ].
 	superType := nil
+]
+
+{ #category : #invalidation }
+TypParametricType >> invalidate [
+
+	super invalidate.
+	parameters do: #invalidate
+]
+
+{ #category : #accessing }
+TypParametricType >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
+
+	(super isInvalidatedByClassAnnouncement: aClassAnnouncement) ifTrue: [ 
+		^ true ].
+	^ parameters anySatisfy: [ :e | 
+		  e isInvalidatedByClassAnnouncement: aClassAnnouncement ]
 ]
 
 { #category : #testing }

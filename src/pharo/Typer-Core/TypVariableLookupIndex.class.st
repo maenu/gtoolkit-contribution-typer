@@ -28,7 +28,6 @@ TypVariableLookupIndex >> lookupReceiver: aType selector: aSymbol [
 	| lookup |
 	lookup := TypVariableLookup receiver: aType selector: aSymbol.
 	(resolver canResolve: lookup) ifFalse: [ 
-		^ TypUnknownType new copyWithOrigins:
-			  { (TypLookupOrigin lookup: lookup) } ].
+		^ TypUnknownType origin: (TypLookupOrigin lookup: lookup) ].
 	^ resolver resolve: lookup
 ]

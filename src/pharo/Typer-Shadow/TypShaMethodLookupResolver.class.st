@@ -1,6 +1,6 @@
 Class {
 	#name : #TypShaMethodLookupResolver,
-	#superclass : #TypLookupResolver,
+	#superclass : #TypShaLookupResolver,
 	#category : #'Typer-Shadow-Lookup'
 }
 

@@ -14,6 +14,14 @@ TypNilType class >> named: aString [
 	self shouldNotImplement
 ]
 
+{ #category : #'instance creation' }
+TypNilType class >> origin: anOrigin [
+
+	^ self new
+		  initializeOrigins: { anOrigin };
+		  yourself
+]
+
 { #category : #converting }
 TypNilType >> asCompatibleWith: aType [
 	^ aType asNullable
@@ -22,10 +30,10 @@ TypNilType >> asCompatibleWith: aType [
 { #category : #converting }
 TypNilType >> asNonNullable [
 
-	^ TypUnknownType new copyWithOrigins: { (TypConversionOrigin
+	^ TypUnknownType origin: (TypConversionOrigin
 			   type: self
 			   selector: #asNonNullable
-			   arguments: #(  )) }
+			   arguments: #(  ))
 ]
 
 { #category : #converting }

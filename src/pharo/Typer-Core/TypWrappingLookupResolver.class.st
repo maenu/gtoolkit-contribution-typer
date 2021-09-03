@@ -7,19 +7,26 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 TypWrappingLookupResolver class >> resolver: aResolver [
 	^ self new
 		initializeResolver: aResolver;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 TypWrappingLookupResolver >> initializeResolver: aResolver [
 	resolver := aResolver
 ]
 
-{ #category : #accessing }
+{ #category : #invalidation }
+TypWrappingLookupResolver >> invalidateOn: aClassOrMethodAnnouncement [
+
+	super invalidateOn: aClassOrMethodAnnouncement.
+	resolver invalidateOn: aClassOrMethodAnnouncement
+]
+
+{ #category : #resetting }
 TypWrappingLookupResolver >> reset [
 	super reset.
 	resolver reset

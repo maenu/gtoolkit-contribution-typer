@@ -16,14 +16,14 @@ TypLookupIndex class >> instance [
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : #resetting }
 TypLookupIndex class >> reset [
 	<script>
 	instance ifNotNil: #reset.
 	instance := nil
 ]
 
-{ #category : #initialization }
+{ #category : #resetting }
 TypLookupIndex class >> resetAll [
 	<script>
 	self withAllSubclassesDo: #reset
@@ -31,21 +31,28 @@ TypLookupIndex class >> resetAll [
 
 { #category : #initialization }
 TypLookupIndex >> initialize [
+
 	<typPraVariable: 'resolver' as: 'TypLookupResolver'>
 	super initialize.
 	SystemAnnouncer uniqueInstance weak
 		when: ClassAnnouncement , MethodAnnouncement
-		send: #reset
+		send: #invalidateOn:
 		to: self
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 TypLookupIndex >> initializeResolver: anObject [
 	<typPraArguments: 'TypLookupResolver'>
 	resolver := anObject
 ]
 
-{ #category : #initialization }
+{ #category : #resetting }
+TypLookupIndex >> invalidateOn: aClassOrMethodAnnouncement [
+
+	resolver invalidateOn: aClassOrMethodAnnouncement
+]
+
+{ #category : #resetting }
 TypLookupIndex >> reset [
 	resolver reset
 ]

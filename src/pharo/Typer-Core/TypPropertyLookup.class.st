@@ -49,6 +49,12 @@ TypPropertyLookup >> initializeReceiver: aType selector: aSymbol [
 	selector := aSymbol
 ]
 
+{ #category : #invalidation }
+TypPropertyLookup >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
+
+	^ receiver isInvalidatedByClassAnnouncement: aClassAnnouncement
+]
+
 { #category : #accessing }
 TypPropertyLookup >> printOn: aStream [
 	receiver printOn: aStream.
