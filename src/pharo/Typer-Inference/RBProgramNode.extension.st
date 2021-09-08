@@ -10,6 +10,12 @@ RBProgramNode >> typInfAnnotateType: aType [
 ]
 
 { #category : #'*Typer-Inference' }
+RBProgramNode >> typInfAstNode [
+
+	^ TypInfAstNode node: self
+]
+
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typInfInvalidate [
 
 	properties ifNotNil: [ 
@@ -21,7 +27,7 @@ RBProgramNode >> typInfInvalidate [
 { #category : #'*Typer-Inference' }
 RBProgramNode >> typInfNil [
 
-	^ TypNilType origin: (TypInfNodeOrigin node: self)
+	^ self typInfAstNode addDependent: TypNilType new path: #typInfNil
 ]
 
 { #category : #'*Typer-Inference' }
@@ -36,10 +42,9 @@ RBProgramNode >> typInfType [
 			  self
 				  propertyAt: 'typInfType-' , identifier put: self typInfUnknown;
 				  propertyAt: 'typInfType-' , identifier
-				  put:
-					  (self typInfAnnotateType:
-							   (self typInfTypeRecursive copyWithOrigins:
-									    { (TypInfNodeOrigin node: self) })) ]
+				  put: (self typInfAnnotateType: (self typInfAstNode
+								    addDependent: self typInfTypeRecursive
+								    path: #typInfTypeRecursive)) ]
 ]
 
 { #category : #'*Typer-Inference' }
@@ -56,5 +61,7 @@ RBProgramNode >> typInfTypeRecursive [
 { #category : #'*Typer-Inference' }
 RBProgramNode >> typInfUnknown [
 
-	^ TypUnknownType origin: (TypInfNodeOrigin node: self)
+	^ self typInfAstNode
+		  addDependent: TypUnknownType new
+		  path: #typInfUnknown
 ]

@@ -10,15 +10,15 @@ TypTypeLookupIndex class >> instance [
 	^ instance ifNil: [ 
 		  instance := self new
 			              initializeResolver:
-				              (TypCachingLookupResolver resolver:
-						               (TypBreadthFirstLookupResolver resolvers: { 
-									                (TypDepthFirstLookupResolver resolver:
-											                 (TypBreadthFirstLookupResolver resolvers:
+				              (TypCachingResolver resolver:
+						               (TypBreadthFirstResolver resolvers: { 
+									                (TypDepthFirstResolver resolver:
+											                 (TypBreadthFirstResolver resolvers:
 													                  { 
-														                  TypPraTypeLookupResolver new.
-														                  TypShaTypeLookupResolver new })).
-									                (TypDepthFirstLookupResolver resolver:
-											                 TypInfTypeLookupResolver new) }));
+														                  TypPraTypeResolver new.
+														                  TypShaTypeResolver new })).
+									                (TypDepthFirstResolver resolver:
+											                 TypInfTypeResolver new) }));
 			              yourself ]
 ]
 
@@ -26,8 +26,11 @@ TypTypeLookupIndex class >> instance [
 TypTypeLookupIndex >> lookupClassDescription: aClassDescription [
 
 	| lookup |
-	lookup := TypTypeLookup classDescription: aClassDescription.
+	lookup := self
+		          addDependent:
+		          (TypTypeLookup classDescription: aClassDescription)
+		          path: #lookup.
 	(resolver canResolve: lookup) ifFalse: [ 
-		^ TypUnknownType origin: (TypLookupOrigin lookup: lookup) ].
+		^ lookup addDependent: TypUnknownType new path: #default ].
 	^ resolver resolve: lookup
 ]

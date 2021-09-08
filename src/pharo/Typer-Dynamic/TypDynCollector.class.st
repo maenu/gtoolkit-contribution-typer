@@ -31,11 +31,11 @@ TypDynCollector >> collectIn: aCollection doing: aBlock [
 		ensure: [ "asts do: #typDynUninstall" ].
 	^ result
 		->
-			(TypDynLookupResolver new
+			(TypDynResolver new
 				results: methodResults;
 				yourself)
 		->
-			(TypDynLookupResolver new
+			(TypDynResolver new
 				results: variableTypes;
 				yourself)
 ]
@@ -67,11 +67,11 @@ TypDynCollector >> collectIn: aCollection running: someTestCases [
 			asts := nil ].
 	^ result
 		->
-			(TypDynLookupResolver new
+			(TypDynResolver new
 				results: methodResults;
 				yourself)
 		->
-			(TypDynLookupResolver new
+			(TypDynResolver new
 				results: variableTypes;
 				yourself)
 ]

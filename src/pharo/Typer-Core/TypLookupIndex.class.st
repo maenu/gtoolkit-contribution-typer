@@ -1,6 +1,6 @@
 Class {
 	#name : #TypLookupIndex,
-	#superclass : #Object,
+	#superclass : #TypNode,
 	#instVars : [
 		'resolver'
 	],

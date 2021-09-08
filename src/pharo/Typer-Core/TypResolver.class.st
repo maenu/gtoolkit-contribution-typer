@@ -1,11 +1,11 @@
 Class {
-	#name : #TypLookupResolver,
-	#superclass : #Object,
+	#name : #TypResolver,
+	#superclass : #TypNode,
 	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #resolving }
-TypLookupResolver >> canResolve: aLookup [
+TypResolver >> canResolve: aLookup [
 
 	<typPraArguments: 'TypLookup'>
 	<typPraResult: 'Boolean'>
@@ -13,17 +13,17 @@ TypLookupResolver >> canResolve: aLookup [
 ]
 
 { #category : #invalidation }
-TypLookupResolver >> invalidateOn: aClassOrMethodAnnouncement [
+TypResolver >> invalidateOn: aClassOrMethodAnnouncement [
 
 	
 ]
 
 { #category : #resetting }
-TypLookupResolver >> reset [
+TypResolver >> reset [
 	
 ]
 
 { #category : #resolving }
-TypLookupResolver >> resolve: aLookup [
+TypResolver >> resolve: aLookup [
 	self subclassResponsibility
 ]

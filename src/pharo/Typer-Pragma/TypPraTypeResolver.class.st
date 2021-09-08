@@ -1,16 +1,16 @@
 Class {
-	#name : #TypPraTypeLookupResolver,
-	#superclass : #TypLookupResolver,
+	#name : #TypPraTypeResolver,
+	#superclass : #TypResolver,
 	#category : #'Typer-Pragma'
 }
 
 { #category : #accessing }
-TypPraTypeLookupResolver >> canResolve: aLookup [
+TypPraTypeResolver >> canResolve: aLookup [
 	^ aLookup classDescription typPraHasType
 ]
 
 { #category : #accessing }
-TypPraTypeLookupResolver >> resolve: aLookup [
+TypPraTypeResolver >> resolve: aLookup [
 
 	self assert: [ self canResolve: aLookup ].
 	^ aLookup classDescription typPraType copyWithOrigins:

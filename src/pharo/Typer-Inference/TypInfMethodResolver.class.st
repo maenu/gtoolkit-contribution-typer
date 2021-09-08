@@ -1,11 +1,11 @@
 Class {
-	#name : #TypInfMethodLookupResolver,
-	#superclass : #TypLookupResolver,
+	#name : #TypInfMethodResolver,
+	#superclass : #TypResolver,
 	#category : #'Typer-Inference'
 }
 
 { #category : #accessing }
-TypInfMethodLookupResolver >> canResolve: aLookup [
+TypInfMethodResolver >> canResolve: aLookup [
 	^ aLookup receiver isNamed
 		and: [ aLookup receiver hasClassDescription
 				and:
@@ -13,7 +13,7 @@ TypInfMethodLookupResolver >> canResolve: aLookup [
 ]
 
 { #category : #accessing }
-TypInfMethodLookupResolver >> resolve: aLookup [
+TypInfMethodResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
 	^ aLookup receiver classDescription >> aLookup selector
 		typInfTypeIn: aLookup root receiver

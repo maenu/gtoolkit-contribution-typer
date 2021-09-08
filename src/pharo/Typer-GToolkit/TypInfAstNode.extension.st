@@ -1,7 +1,7 @@
-Extension { #name : #TypInfNodeOrigin }
+Extension { #name : #TypInfAstNode }
 
 { #category : #'*Typer-GToolkit' }
-TypInfNodeOrigin >> typGtSourceCodeFor: aView [
+TypInfAstNode >> typGtSourceCodeFor: aView [
 
 	<gtView>
 	^ aView forward
@@ -12,7 +12,7 @@ TypInfNodeOrigin >> typGtSourceCodeFor: aView [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypInfNodeOrigin >> typGtSourceFor: aView [
+TypInfAstNode >> typGtSourceFor: aView [
 
 	<gtView>
 	node methodNode ifNil: [ ^ aView empty ].

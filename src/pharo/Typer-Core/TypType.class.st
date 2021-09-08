@@ -1,6 +1,6 @@
 Class {
 	#name : #TypType,
-	#superclass : #Object,
+	#superclass : #TypNode,
 	#instVars : [
 		'superType',
 		'origins',
@@ -70,10 +70,9 @@ TypType >> asCompatibleWith: aType [
 	aType isNil ifTrue: [ ^ self asNullable ].
 	self >= aType ifTrue: [ ^ self ].
 	self hasSuperType ifTrue: [ ^ self superType asCompatibleWith: aType ].
-	^ TypUnknownType origin: (TypConversionOrigin
-			   type: self
-			   selector: #asCompatibleWith:
-			   arguments: { aType })
+	^ self
+		  addDependent: TypUnknownType new
+		  path: [ :e | e asCompatibleWith: aType ]
 ]
 
 { #category : #converting }
@@ -86,12 +85,11 @@ TypType >> asNonNullable [
 TypType >> asNullable [
 
 	<typPraResult: 'TypType'>
-	^ { 
-		  TypNilType new.
-		  self } typAsType copyWithOrigins: { (TypConversionOrigin
-			   type: self
-			   selector: #asNullable
-			   arguments: #(  )) }
+	^ self
+		  addDependent: { 
+				  TypNilType new.
+				  self } typAsType
+		  path: #asNullable
 ]
 
 { #category : #copying }
@@ -275,6 +273,7 @@ TypType >> lookupVariable: aSymbol [
 
 { #category : #accessing }
 TypType >> postCopy [
+
 	super postCopy.
 	origins := origins copy
 ]

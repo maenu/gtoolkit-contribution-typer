@@ -1,6 +1,6 @@
 Class {
-	#name : #TypDynLookupResolver,
-	#superclass : #TypLookupResolver,
+	#name : #TypDynResolver,
+	#superclass : #TypResolver,
 	#instVars : [
 		'results'
 	],
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-TypDynLookupResolver >> resolve: aLookup [
+TypDynResolver >> resolve: aLookup [
 	<typPraResult: 'SequenceableCollection<TypLookupResult>'>
 	<typPraArguments: 'TypObjectLookup'>
 	^ (aLookup receiver isNamed
@@ -26,13 +26,13 @@ TypDynLookupResolver >> resolve: aLookup [
 ]
 
 { #category : #accessing }
-TypDynLookupResolver >> results [
+TypDynResolver >> results [
 	<typPraResult: 'Dictionary<Association<ClassDescription,Symbol>,TypLookupResult>'>
 	^ results
 ]
 
 { #category : #accessing }
-TypDynLookupResolver >> results: anObject [
+TypDynResolver >> results: anObject [
 	<typPraArguments: 'Dictionary<Association<ClassDescription,Symbol>,TypLookupResult>'>
 	results := anObject
 ]

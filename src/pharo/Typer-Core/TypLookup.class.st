@@ -1,6 +1,6 @@
 Class {
 	#name : #TypLookup,
-	#superclass : #Object,
+	#superclass : #TypNode,
 	#instVars : [
 		'parent'
 	],

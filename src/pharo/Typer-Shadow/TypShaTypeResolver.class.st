@@ -1,17 +1,17 @@
 Class {
-	#name : #TypShaTypeLookupResolver,
-	#superclass : #TypShaLookupResolver,
+	#name : #TypShaTypeResolver,
+	#superclass : #TypShaResolver,
 	#category : #'Typer-Shadow-Lookup'
 }
 
 { #category : #accessing }
-TypShaTypeLookupResolver >> canResolve: aLookup [
+TypShaTypeResolver >> canResolve: aLookup [
 	^ aLookup classDescription typShaShadows
 		anySatisfy: [ :e | e canResolveType: aLookup ]
 ]
 
 { #category : #accessing }
-TypShaTypeLookupResolver >> resolve: aLookup [
+TypShaTypeResolver >> resolve: aLookup [
 
 	self assert: [ self canResolve: aLookup ].
 	^ self reduce:

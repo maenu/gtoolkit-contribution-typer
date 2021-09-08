@@ -1,16 +1,16 @@
 Class {
-	#name : #TypInfTypeLookupResolver,
-	#superclass : #TypLookupResolver,
+	#name : #TypInfTypeResolver,
+	#superclass : #TypResolver,
 	#category : #'Typer-Inference'
 }
 
 { #category : #accessing }
-TypInfTypeLookupResolver >> canResolve: aLookup [
+TypInfTypeResolver >> canResolve: aLookup [
 	^ true
 ]
 
 { #category : #accessing }
-TypInfTypeLookupResolver >> resolve: aLookup [
+TypInfTypeResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
 	^ aLookup classDescription typAsNamedType
 ]

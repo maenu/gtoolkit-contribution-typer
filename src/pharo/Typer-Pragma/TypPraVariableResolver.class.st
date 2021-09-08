@@ -1,11 +1,11 @@
 Class {
-	#name : #TypPraVariableLookupResolver,
-	#superclass : #TypLookupResolver,
+	#name : #TypPraVariableResolver,
+	#superclass : #TypResolver,
 	#category : #'Typer-Pragma'
 }
 
 { #category : #accessing }
-TypPraVariableLookupResolver >> canResolve: aLookup [
+TypPraVariableResolver >> canResolve: aLookup [
 	^ aLookup receiver isNamed
 		and: [ aLookup receiver hasClassDescription
 				and: [ aLookup receiver classDescription
@@ -13,7 +13,7 @@ TypPraVariableLookupResolver >> canResolve: aLookup [
 ]
 
 { #category : #accessing }
-TypPraVariableLookupResolver >> resolve: aLookup [
+TypPraVariableResolver >> resolve: aLookup [
 
 	self assert: [ self canResolve: aLookup ].
 	^ (aLookup receiver classDescription typPraVariable: aLookup selector) 

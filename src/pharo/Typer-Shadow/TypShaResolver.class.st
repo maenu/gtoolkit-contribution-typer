@@ -1,11 +1,11 @@
 Class {
-	#name : #TypShaLookupResolver,
-	#superclass : #TypLookupResolver,
+	#name : #TypShaResolver,
+	#superclass : #TypResolver,
 	#category : #'Typer-Shadow-Lookup'
 }
 
 { #category : #accessing }
-TypShaLookupResolver >> reduce: aCollection [
+TypShaResolver >> reduce: aCollection [
 
 	aCollection ifEmpty: [ 
 		^ TypUnknownType origin:

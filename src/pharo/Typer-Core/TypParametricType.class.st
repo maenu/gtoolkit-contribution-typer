@@ -125,10 +125,8 @@ TypParametricType >> initializeParameters: anOrderedDictionary [
 	self assert: [ anOrderedDictionary isNotEmpty ].
 	parameters := OrderedDictionary new.
 	anOrderedDictionary keysAndValuesDo: [ :n :t | 
-		parameters
-			at: n
-			put:
-			(t copyWithOrigins: { (TypParameterOrigin type: self name: n) }) ].
+		self addDependent: t path: [ :e | e at: n ].
+		parameters at: n put: t ].
 	superType := nil
 ]
 

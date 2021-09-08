@@ -1,6 +1,6 @@
 Class {
-	#name : #TypCachingLookupResolver,
-	#superclass : #TypWrappingLookupResolver,
+	#name : #TypCachingResolver,
+	#superclass : #TypWrappingResolver,
 	#instVars : [
 		'cache'
 	],
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #resolving }
-TypCachingLookupResolver >> canResolve: aLookup [
+TypCachingResolver >> canResolve: aLookup [
 	^ cache
 		at: aLookup
 		ifPresent: [ true ]
@@ -16,7 +16,7 @@ TypCachingLookupResolver >> canResolve: aLookup [
 ]
 
 { #category : #initialization }
-TypCachingLookupResolver >> initialize [
+TypCachingResolver >> initialize [
 	<typPraVariable: 'resolver' as: 'TypLookupResolver'>
 	<typPraVariable: 'cache' as: 'Dictionary<TypLookup,SequenceableCollection<TypLookupResult>>'>
 	super initialize.
@@ -24,7 +24,7 @@ TypCachingLookupResolver >> initialize [
 ]
 
 { #category : #invalidation }
-TypCachingLookupResolver >> invalidateOn: aClassOrMethodAnnouncement [
+TypCachingResolver >> invalidateOn: aClassOrMethodAnnouncement [
 
 	super invalidateOn: aClassOrMethodAnnouncement.
 	cache keysAndValuesRemove: [ :lookup :type | 
@@ -39,20 +39,18 @@ TypCachingLookupResolver >> invalidateOn: aClassOrMethodAnnouncement [
 ]
 
 { #category : #initialization }
-TypCachingLookupResolver >> reset [
+TypCachingResolver >> reset [
 	super reset.
 	cache removeAll
 ]
 
 { #category : #resolving }
-TypCachingLookupResolver >> resolve: aLookup [
+TypCachingResolver >> resolve: aLookup [
 
 	self assert: [ self canResolve: aLookup ].
 	^ cache at: aLookup ifAbsent: [ 
 		  cache
 			  at: aLookup
-			  put:
-				  (TypUnknownType origin:
-						   (TypLookupCacheDefaultOrigin lookup: aLookup));
+			  put: (TypUnknownType origin: (TypLookupOrigin lookup: aLookup));
 			  at: aLookup put: (resolver resolve: aLookup) ]
 ]

@@ -1,22 +1,22 @@
 Class {
-	#name : #TypShaVariableLookupResolver,
-	#superclass : #TypShaLookupResolver,
+	#name : #TypShaMethodResolver,
+	#superclass : #TypShaResolver,
 	#category : #'Typer-Shadow-Lookup'
 }
 
 { #category : #accessing }
-TypShaVariableLookupResolver >> canResolve: aLookup [
+TypShaMethodResolver >> canResolve: aLookup [
 	^ aLookup receiver isNamed
 		and: [ aLookup receiver hasClassDescription
 				and: [ aLookup receiver classDescription typShaShadows
-						anySatisfy: [ :e | e canResolveVariable: aLookup ] ] ]
+						anySatisfy: [ :e | e canResolveMethod: aLookup ] ] ]
 ]
 
 { #category : #accessing }
-TypShaVariableLookupResolver >> resolve: aLookup [
+TypShaMethodResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
 	^ self
 		reduce:
 			(aLookup receiver classDescription typShaShadows
-				flatCollect: [ :e | e resolveVariable: aLookup ])
+				flatCollect: [ :e | e resolveMethod: aLookup ])
 ]

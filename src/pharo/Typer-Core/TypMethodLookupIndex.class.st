@@ -11,15 +11,15 @@ TypMethodLookupIndex class >> instance [
 	^ instance ifNil: [ 
 		  instance := self new
 			              initializeResolver:
-				              (TypCachingLookupResolver resolver:
-						               (TypBreadthFirstLookupResolver resolvers: { 
-									                (TypDepthFirstLookupResolver resolver:
-											                 (TypBreadthFirstLookupResolver resolvers:
+				              (TypCachingResolver resolver:
+						               (TypBreadthFirstResolver resolvers: { 
+									                (TypDepthFirstResolver resolver:
+											                 (TypBreadthFirstResolver resolvers:
 													                  { 
-														                  TypPraMethodLookupResolver new.
-														                  TypShaMethodLookupResolver new })).
-									                (TypDepthFirstLookupResolver resolver:
-											                 TypInfMethodLookupResolver new) }));
+														                  TypPraMethodResolver new.
+														                  TypShaMethodResolver new })).
+									                (TypDepthFirstResolver resolver:
+											                 TypInfMethodResolver new) }));
 			              yourself ]
 ]
 
@@ -27,12 +27,14 @@ TypMethodLookupIndex class >> instance [
 TypMethodLookupIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aCollection [
 
 	| lookup |
-	lookup := TypMethodLookup
-		          receiver: aType
-		          selector: aSymbol
-		          arguments: aCollection.
+	lookup := self
+		          addDependent: (TypMethodLookup
+				           receiver: aType
+				           selector: aSymbol
+				           arguments: aCollection)
+		          path: #lookup.
 	(resolver canResolve: lookup) ifFalse: [ 
-		^ TypUnknownType origin: (TypLookupOrigin lookup: lookup) ].
+		^ lookup addDependent: TypUnknownType new path: #default ].
 	^ resolver resolve: lookup
 ]
 
