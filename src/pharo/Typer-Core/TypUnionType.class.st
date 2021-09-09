@@ -9,10 +9,10 @@ Class {
 }
 
 { #category : #'instance creation' }
-TypUnionType class >> types: aCollection [
+TypUnionType class >> types: aSet [
 	<typPraArguments: 'Set<TypType>'>
 	^ self new
-		initializeTypes: aCollection;
+		initializeTypes: aSet;
 		yourself
 ]
 
@@ -75,7 +75,7 @@ TypUnionType >> hasSuperType [
 
 	| remains nilTypes unknownTypes current superType_ |
 	superType ifNotNil: [ ^ true ].
-	remains := types asIdentitySet.
+	remains := types asIdentitySet copy.
 	nilTypes := remains select: #isNil.
 	unknownTypes := remains select: #isUnknown.
 	remains

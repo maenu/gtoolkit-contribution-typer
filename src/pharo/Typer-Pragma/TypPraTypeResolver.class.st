@@ -19,6 +19,6 @@ TypPraTypeResolver >> resolve: aLookup [
 		addDependent: aLookup label: #resolve:;
 		addDependent: resolved
 		label: #pragma
-		data: aLookup classDescription class >> #initialize.
+		data: aLookup classDescription >> #initialize.
 	^ aLookup addDependent: resolved label: #resolved data: self
 ]

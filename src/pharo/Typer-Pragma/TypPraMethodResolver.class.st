@@ -23,6 +23,6 @@ TypPraMethodResolver >> resolve: aLookup [
 		addDependent: aLookup label: #resolve:;
 		addDependent: resolved
 		label: #pragma
-		data: aLookup receiver classDescription class >> aLookup selector.
+		data: aLookup receiver classDescription >> aLookup selector.
 	^ aLookup addDependent: resolved label: #resolved data: self
 ]
