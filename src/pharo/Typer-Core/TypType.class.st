@@ -3,7 +3,6 @@ Class {
 	#superclass : #TypNode,
 	#instVars : [
 		'superType',
-		'origins',
 		'value',
 		'hasValue'
 	],
@@ -94,14 +93,6 @@ TypType >> asNullable [
 ]
 
 { #category : #copying }
-TypType >> copyWithOrigins: someOrigins [
-
-	^ self copy
-		  initializeOrigins: someOrigins;
-		  yourself
-]
-
-{ #category : #copying }
 TypType >> copyWithSuperType: aType [
 
 	^ self copy
@@ -115,15 +106,6 @@ TypType >> copyWithValue: anObject [
 	^ self copy
 		  initializeValue: anObject;
 		  yourself
-]
-
-{ #category : #accessing }
-TypType >> gtOriginsFor: aView [
-	<gtView>
-	^ aView forward
-		title: 'Origins';
-		object: [ origins ];
-		view: #gtItemsFor:
 ]
 
 { #category : #testing }
@@ -159,16 +141,8 @@ TypType >> initialize [
 	<typPraVariable: 'superType' as: '{!,TypType}'>
 	<typPraVariable: 'value' as: '{!,Object}'>
 	<typPraVariable: 'hasValue' as: 'Boolean'>
-	<typPraVariable: 'origins' as: 'SequenceableCollection<TypOrigin>'>
 	super initialize.
-	origins := OrderedCollection new.
 	hasValue := false
-]
-
-{ #category : #initialization }
-TypType >> initializeOrigins: someOrigins [
-
-	origins addAll: someOrigins
 ]
 
 { #category : #initialization }
@@ -187,7 +161,6 @@ TypType >> initializeValue: anObject [
 { #category : #invalidation }
 TypType >> invalidate [
 
-	origins do: #invalidate
 ]
 
 { #category : #testing }
@@ -270,13 +243,6 @@ TypType >> lookupVariable: aSymbol [
 	^ TypVariableIndex instance
 		lookupReceiver: self
 		selector: aSymbol
-]
-
-{ #category : #accessing }
-TypType >> postCopy [
-
-	super postCopy.
-	origins := origins copy
 ]
 
 { #category : #printing }

@@ -14,14 +14,6 @@ TypNilType class >> named: aString [
 	self shouldNotImplement
 ]
 
-{ #category : #'instance creation' }
-TypNilType class >> origin: anOrigin [
-
-	^ self new
-		  initializeOrigins: { anOrigin };
-		  yourself
-]
-
 { #category : #converting }
 TypNilType >> asCompatibleWith: aType [
 	^ aType asNullable
