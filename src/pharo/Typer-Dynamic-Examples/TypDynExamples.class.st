@@ -9,7 +9,7 @@ TypDynExamples >> neoJsonCore [
 	<gtExample>
 	<typPraResult: 'Association<TestResult,Collection<CompiledMethod()->Object>>'>
 	| methods collector testResult association |
-	TypLookupIndex resetAll.
+	TypIndex resetAll.
 	methods := #'Neo-JSON-Core' asPackage methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
@@ -20,12 +20,12 @@ TypDynExamples >> neoJsonCore [
 				do: [ :e"typCastAs TestCase class"
 					 | e suite run: testResult ]
 				displayingProgress: 'Running test case' ].
-	TypMethodLookupIndex instance resolver resolver resolvers first
+	TypMethodIndex instance resolver resolver resolvers first
 		resolver resolvers add: association key value.
-	TypVariableLookupIndex instance resolver resolver resolvers first
+	TypVariableIndex instance resolver resolver resolvers first
 		resolver resolvers add: association value.
-	TypMethodLookupIndex instance reset.
-	TypVariableLookupIndex instance reset.
+	TypMethodIndex instance reset.
+	TypVariableIndex instance reset.
 	^ testResult -> association key value -> association value
 		-> #'Neo-JSON-Core' asPackage methods
 ]
@@ -35,7 +35,7 @@ TypDynExamples >> refactoring [
 	<gtExample>
 	<typPraResult: 'Association<TestResult,Collection<CompiledMethod()->Object>>'>
 	| methods collector testResult association |
-	TypLookupIndex resetAll.
+	TypIndex resetAll.
 	methods := self refactoringNonTestPackages flatCollect: #methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
@@ -46,12 +46,12 @@ TypDynExamples >> refactoring [
 				do: [ :e"typCastAs TestCase class"
 					 | e suite run: testResult ]
 				displayingProgress: 'Running test case' ].
-	TypMethodLookupIndex instance resolver resolver resolvers first
+	TypMethodIndex instance resolver resolver resolvers first
 		resolver resolvers add: association key value.
-	TypVariableLookupIndex instance resolver resolver resolvers first
+	TypVariableIndex instance resolver resolver resolvers first
 		resolver resolvers add: association value.
-	TypMethodLookupIndex instance reset.
-	TypVariableLookupIndex instance reset.
+	TypMethodIndex instance reset.
+	TypVariableIndex instance reset.
 	^ testResult -> association key value -> association value
 		-> (self refactoringNonTestPackages flatCollect: #methods)
 ]
@@ -61,7 +61,7 @@ TypDynExamples >> refactoring2Transformations [
 	<gtExample>
 	<typPraResult: 'Association<TestResult,Collection<CompiledMethod()->Object>>'>
 	| methods collector testResult association |
-	TypLookupIndex resetAll.
+	TypIndex resetAll.
 	methods := #'Refactoring2-Transformations' asPackage methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
@@ -72,12 +72,12 @@ TypDynExamples >> refactoring2Transformations [
 				do: [ :e"typCastAs TestCase class"
 					 | e suite run: testResult ]
 				displayingProgress: 'Running test case' ].
-	TypMethodLookupIndex instance resolver resolver resolvers first
+	TypMethodIndex instance resolver resolver resolvers first
 		resolver resolvers add: association key value.
-	TypVariableLookupIndex instance resolver resolver resolvers first
+	TypVariableIndex instance resolver resolver resolvers first
 		resolver resolvers add: association value.
-	TypMethodLookupIndex instance reset.
-	TypVariableLookupIndex instance reset.
+	TypMethodIndex instance reset.
+	TypVariableIndex instance reset.
 	^ testResult -> association key value -> association value
 		-> #'Refactoring2-Transformations' asPackage methods
 ]
@@ -87,7 +87,7 @@ TypDynExamples >> refactoringCore [
 	<gtExample>
 	<typPraResult: 'Association<TestResult,Collection<CompiledMethod()->Object>>'>
 	| methods collector testResult association |
-	TypLookupIndex resetAll.
+	TypIndex resetAll.
 	methods := #'Refactoring-Core' asPackage methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
@@ -98,12 +98,12 @@ TypDynExamples >> refactoringCore [
 				do: [ :e"typCastAs TestCase class"
 					 | e suite run: testResult ]
 				displayingProgress: 'Running test case' ].
-	TypMethodLookupIndex instance resolver resolver resolvers first
+	TypMethodIndex instance resolver resolver resolvers first
 		resolver resolvers add: association key value.
-	TypVariableLookupIndex instance resolver resolver resolvers first
+	TypVariableIndex instance resolver resolver resolvers first
 		resolver resolvers add: association value.
-	TypMethodLookupIndex instance reset.
-	TypVariableLookupIndex instance reset.
+	TypMethodIndex instance reset.
+	TypVariableIndex instance reset.
 	^ testResult -> association key value -> association value
 		-> #'Refactoring-Core' asPackage methods
 ]
@@ -113,7 +113,7 @@ TypDynExamples >> refactoringCoreSmall [
 	<gtExample>
 	<typPraResult: 'Association<TestResult,Collection<CompiledMethod()->Object>>'>
 	| methods collector testResult association |
-	TypLookupIndex resetAll.
+	TypIndex resetAll.
 	methods := #'Refactoring-Core' asPackage methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
@@ -124,12 +124,12 @@ TypDynExamples >> refactoringCoreSmall [
 				do: [ :e"typCastAs TestCase class"
 					 | e suite run: testResult ]
 				displayingProgress: 'Running test case' ].
-	TypMethodLookupIndex instance resolver resolver resolvers first
+	TypMethodIndex instance resolver resolver resolvers first
 		resolver resolvers add: association key value.
-	TypVariableLookupIndex instance resolver resolver resolvers first
+	TypVariableIndex instance resolver resolver resolvers first
 		resolver resolvers add: association value.
-	TypMethodLookupIndex instance reset.
-	TypVariableLookupIndex instance reset.
+	TypMethodIndex instance reset.
+	TypVariableIndex instance reset.
 	^ testResult -> association key value -> association value
 		-> #'Refactoring-Core' asPackage methods
 ]

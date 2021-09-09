@@ -27,7 +27,7 @@ RBProgramNode >> typInfInvalidate [
 { #category : #'*Typer-Inference' }
 RBProgramNode >> typInfNil [
 
-	^ self typInfAstNode addDependent: TypNilType new path: #typInfNil
+	^ self typInfAstNode addDependent: TypNilType new label: #typInfNil
 ]
 
 { #category : #'*Typer-Inference' }
@@ -44,7 +44,7 @@ RBProgramNode >> typInfType [
 				  propertyAt: 'typInfType-' , identifier
 				  put: (self typInfAnnotateType: (self typInfAstNode
 								    addDependent: self typInfTypeRecursive
-								    path: #typInfTypeRecursive)) ]
+								    label: #typInfTypeRecursive)) ]
 ]
 
 { #category : #'*Typer-Inference' }
@@ -63,5 +63,5 @@ RBProgramNode >> typInfUnknown [
 
 	^ self typInfAstNode
 		  addDependent: TypUnknownType new
-		  path: #typInfUnknown
+		  label: #typInfUnknown
 ]

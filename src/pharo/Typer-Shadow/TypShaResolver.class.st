@@ -5,13 +5,17 @@ Class {
 }
 
 { #category : #accessing }
-TypShaResolver >> reduce: aCollection [
+TypShaResolver >> resolve: aLookup reduce: aCollection [
 
+	| resolved |
 	aCollection ifEmpty: [ 
-		^ TypUnknownType origin:
-			  (TypLookupAlternativeOrigin alternatives: #(  )) ].
+		^ aLookup
+			  addDependent: TypUnknownType new
+			  label: #default
+			  data: self ].
 	aCollection sort.
-	^ aCollection first copyWithOrigins:
-		  { (TypLookupAlternativeOrigin alternatives:
-			   aCollection copyWithoutFirst) }
+	resolved := aCollection first.
+	aCollection copyWithoutFirst do: [ :e | 
+		self addDependent: e label: #alternative data: resolved ].
+	^ aLookup addDependent: resolved label: #resolved data: self
 ]

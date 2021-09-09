@@ -1,11 +1,11 @@
 Class {
-	#name : #TypMethodLookupIndex,
-	#superclass : #TypLookupIndex,
+	#name : #TypMethodIndex,
+	#superclass : #TypIndex,
 	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #accessing }
-TypMethodLookupIndex class >> instance [
+TypMethodIndex class >> instance [
 
 	<typPraResult: 'TypMethodLookupIndex'>
 	^ instance ifNil: [ 
@@ -24,7 +24,7 @@ TypMethodLookupIndex class >> instance [
 ]
 
 { #category : #accessing }
-TypMethodLookupIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aCollection [
+TypMethodIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aCollection [
 
 	| lookup |
 	lookup := self
@@ -32,14 +32,14 @@ TypMethodLookupIndex >> lookupMethodReceiver: aType selector: aSymbol arguments:
 				           receiver: aType
 				           selector: aSymbol
 				           arguments: aCollection)
-		          path: #lookup.
+		          label: #lookup.
 	(resolver canResolve: lookup) ifFalse: [ 
-		^ lookup addDependent: TypUnknownType new path: #default ].
+		^ lookup addDependent: TypUnknownType new label: #default ].
 	^ resolver resolve: lookup
 ]
 
 { #category : #initialization }
-TypMethodLookupIndex >> reset [
+TypMethodIndex >> reset [
 	super reset.
 	ASTCache default do: #typInfInvalidate
 ]

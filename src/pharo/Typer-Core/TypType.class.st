@@ -72,7 +72,8 @@ TypType >> asCompatibleWith: aType [
 	self hasSuperType ifTrue: [ ^ self superType asCompatibleWith: aType ].
 	^ self
 		  addDependent: TypUnknownType new
-		  path: [ :e | e asCompatibleWith: aType ]
+		  label: #asCompatibleWith:
+		  data: { aType }
 ]
 
 { #category : #converting }
@@ -89,7 +90,7 @@ TypType >> asNullable [
 		  addDependent: { 
 				  TypNilType new.
 				  self } typAsType
-		  path: #asNullable
+		  label: #asNullable
 ]
 
 { #category : #copying }
@@ -258,7 +259,7 @@ TypType >> lookupMethod: aSymbol [
 
 { #category : #lookup }
 TypType >> lookupMethod: aSymbol arguments: aCollection [
-	^ TypMethodLookupIndex instance
+	^ TypMethodIndex instance
 		lookupMethodReceiver: self
 		selector: aSymbol
 		arguments: aCollection
@@ -266,7 +267,7 @@ TypType >> lookupMethod: aSymbol arguments: aCollection [
 
 { #category : #lookup }
 TypType >> lookupVariable: aSymbol [
-	^ TypVariableLookupIndex instance
+	^ TypVariableIndex instance
 		lookupReceiver: self
 		selector: aSymbol
 ]

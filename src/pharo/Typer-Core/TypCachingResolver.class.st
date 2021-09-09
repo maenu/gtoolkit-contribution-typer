@@ -48,9 +48,10 @@ TypCachingResolver >> reset [
 TypCachingResolver >> resolve: aLookup [
 
 	self assert: [ self canResolve: aLookup ].
+	self addDependent: aLookup label: #resolve:.
 	^ cache at: aLookup ifAbsent: [ 
 		  cache
 			  at: aLookup
-			  put: (TypUnknownType origin: (TypLookupOrigin lookup: aLookup));
+			  put: (self addDependent: TypUnknownType new label: #default);
 			  at: aLookup put: (resolver resolve: aLookup) ]
 ]

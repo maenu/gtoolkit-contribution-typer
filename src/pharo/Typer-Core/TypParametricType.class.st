@@ -125,7 +125,7 @@ TypParametricType >> initializeParameters: anOrderedDictionary [
 	self assert: [ anOrderedDictionary isNotEmpty ].
 	parameters := OrderedDictionary new.
 	anOrderedDictionary keysAndValuesDo: [ :n :t | 
-		self addDependent: t path: [ :e | e at: n ].
+		self addDependent: t label: n.
 		parameters at: n put: t ].
 	superType := nil
 ]

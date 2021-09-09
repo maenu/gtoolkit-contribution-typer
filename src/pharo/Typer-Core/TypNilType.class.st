@@ -30,7 +30,7 @@ TypNilType >> asCompatibleWith: aType [
 { #category : #converting }
 TypNilType >> asNonNullable [
 
-	^ self addDependent: TypUnknownType new path: #asNonNullable
+	^ self addDependent: TypUnknownType new label: #asNonNullable
 ]
 
 { #category : #converting }

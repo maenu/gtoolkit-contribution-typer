@@ -14,9 +14,19 @@ TypShaMethodResolver >> canResolve: aLookup [
 
 { #category : #accessing }
 TypShaMethodResolver >> resolve: aLookup [
+
 	self assert: [ self canResolve: aLookup ].
+	self addDependent: aLookup label: #resolve:.
 	^ self
-		reduce:
-			(aLookup receiver classDescription typShaShadows
-				flatCollect: [ :e | e resolveMethod: aLookup ])
+		  resolve: aLookup
+		  reduce:
+			  (aLookup receiver classDescription typShaShadows flatCollect: [ 
+				   :e | 
+				   e class methods
+					   select: [ :f | f typShaResolvesMethod: aLookup selector ]
+					   thenCollect: [ :f | 
+						   self
+							   addDependent: (e perform: f selector with: aLookup)
+							   label: #shadow
+							   data: f ] ])
 ]

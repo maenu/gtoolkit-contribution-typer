@@ -4,18 +4,20 @@ Class {
 	#instVars : [
 		'dependency',
 		'dependent',
-		'path'
+		'label',
+		'data'
 	],
 	#category : #'Typer-Core-Type'
 }
 
 { #category : #'instance creation' }
-TypEdge class >> dependency: aType dependent: anotherType path: aValuable [
+TypEdge class >> dependency: aType dependent: anotherType label: aString data: anObject [
 
 	^ self new
 		  initializeDependency: aType
 		  dependent: anotherType
-		  path: aValuable;
+		  label: aString
+		  data: anObject;
 		  yourself
 ]
 
@@ -32,15 +34,10 @@ TypEdge >> dependent [
 ]
 
 { #category : #initialization }
-TypEdge >> initializeDependency: aType dependent: anotherType path: aValuable [
+TypEdge >> initializeDependency: aType dependent: anotherType label: aString data: anObject [
 
 	dependency := aType.
 	dependent := anotherType.
-	path := aValuable
-]
-
-{ #category : #accessing }
-TypEdge >> path [
-
-	^ path
+	label := aString.
+	data := anObject
 ]

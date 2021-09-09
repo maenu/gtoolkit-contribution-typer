@@ -28,15 +28,12 @@ ClassDescription >> typPraMethod: aSymbol [
 ClassDescription >> typPraType [
 
 	self assert: [ self typPraHasType ].
-	^ (self >> #initialize typPraTypeInject: self typAsNamedType) 
-		  copyWithOrigins:
-		  { (TypPraMethodOrigin method: self >> #initialize) }
+	^ self >> #initialize typPraTypeInject: self typAsNamedType
 ]
 
 { #category : #'*Typer-Pragma' }
 ClassDescription >> typPraVariable: aString [
 
 	self assert: [ self typPraHasVariable: aString ].
-	^ (self >> #initialize typPraVariable: aString) copyWithOrigins:
-		  { (TypPraMethodOrigin method: self >> #initialize) }
+	^ self >> #initialize typPraVariable: aString
 ]

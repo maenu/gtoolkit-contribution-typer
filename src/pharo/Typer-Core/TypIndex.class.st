@@ -1,5 +1,5 @@
 Class {
-	#name : #TypLookupIndex,
+	#name : #TypIndex,
 	#superclass : #TypNode,
 	#instVars : [
 		'resolver'
@@ -11,26 +11,26 @@ Class {
 }
 
 { #category : #accessing }
-TypLookupIndex class >> instance [
+TypIndex class >> instance [
 	<typPraResult: 'TypLookupIndex'>
 	self subclassResponsibility
 ]
 
 { #category : #resetting }
-TypLookupIndex class >> reset [
+TypIndex class >> reset [
 	<script>
 	instance ifNotNil: #reset.
 	instance := nil
 ]
 
 { #category : #resetting }
-TypLookupIndex class >> resetAll [
+TypIndex class >> resetAll [
 	<script>
 	self withAllSubclassesDo: #reset
 ]
 
 { #category : #initialization }
-TypLookupIndex >> initialize [
+TypIndex >> initialize [
 
 	<typPraVariable: 'resolver' as: 'TypLookupResolver'>
 	super initialize.
@@ -41,18 +41,18 @@ TypLookupIndex >> initialize [
 ]
 
 { #category : #initialization }
-TypLookupIndex >> initializeResolver: anObject [
+TypIndex >> initializeResolver: anObject [
 	<typPraArguments: 'TypLookupResolver'>
 	resolver := anObject
 ]
 
 { #category : #resetting }
-TypLookupIndex >> invalidateOn: aClassOrMethodAnnouncement [
+TypIndex >> invalidateOn: aClassOrMethodAnnouncement [
 
 	resolver invalidateOn: aClassOrMethodAnnouncement
 ]
 
 { #category : #resetting }
-TypLookupIndex >> reset [
+TypIndex >> reset [
 	resolver reset
 ]

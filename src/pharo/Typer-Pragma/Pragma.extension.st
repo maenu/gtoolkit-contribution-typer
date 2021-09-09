@@ -1,7 +1,7 @@
 Extension { #name : #Pragma }
 
 { #category : #'*Typer-Pragma' }
-Pragma >> typPraArguments: aType [
+Pragma >> typPraArgumentsInject: aType [
 
 	^ aType copyWithArguments: arguments first typAsTypes
 ]
@@ -52,7 +52,7 @@ Pragma >> typPraMethodInject: aType [
 	self typPraIsResult
 		ifTrue: [ ^ self typPraResultInject: aType ].
 	self typPraIsArguments
-		ifTrue: [ ^ self typPraArguments: aType ].
+		ifTrue: [ ^ self typPraArgumentsInject: aType ].
 	self typPraIsSignalsAlways
 		ifTrue: [ ^ self typPraSignalsAlwaysInject: aType ].
 	^ aType

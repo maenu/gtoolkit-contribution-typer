@@ -42,30 +42,8 @@ TypShaShadow class >> resetAll [
 ]
 
 { #category : #accessing }
-TypShaShadow class >> resolveMethod: aLookup [
-
-	^ self class methods
-		  select: [ :e | e typShaResolvesMethod: aLookup selector ]
-		  thenCollect: [ :e | 
-			  (self perform: e selector with: aLookup) copyWithOrigins: { 
-					  (TypLookupOrigin lookup: aLookup).
-					  (TypShaMethodOrigin method: self class >> e selector) } ]
-]
-
-{ #category : #accessing }
 TypShaShadow class >> resolveType: aLookup [
 	^ aLookup root classDescription typAsNamedType
-]
-
-{ #category : #accessing }
-TypShaShadow class >> resolveVariable: aLookup [
-
-	^ self class methods
-		  select: [ :e | e typShaResolvesVariable: aLookup selector ]
-		  thenCollect: [ :e | 
-			  (self perform: e selector with: aLookup) copyWithOrigins: { 
-					  (TypLookupOrigin lookup: aLookup).
-					  (TypShaMethodOrigin method: self class >> e selector) } ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -91,31 +69,9 @@ TypShaShadow >> canResolveVariable: aLookup [
 		anySatisfy: [ :e | e typShaResolvesVariable: aLookup selector ]
 ]
 
-{ #category : #accessing }
-TypShaShadow >> resolveMethod: aLookup [
-
-	^ self class methods
-		  select: [ :e | e typShaResolvesMethod: aLookup selector ]
-		  thenCollect: [ :e | 
-			  (self perform: e selector with: aLookup) copyWithOrigins: { 
-					  (TypLookupOrigin lookup: aLookup).
-					  (TypShaMethodOrigin method: self class >> e selector) } ]
-]
-
 { #category : #converting }
 TypShaShadow >> resolveType: aLookup [
 	^ aLookup root classDescription typAsNamedType
-]
-
-{ #category : #accessing }
-TypShaShadow >> resolveVariable: aLookup [
-
-	^ self class methods
-		  select: [ :e | e typShaResolvesVariable: aLookup selector ]
-		  thenCollect: [ :e | 
-			  (self perform: e selector with: aLookup) copyWithOrigins: { 
-					  (TypLookupOrigin lookup: aLookup).
-					  (TypShaMethodOrigin method: self class >> e selector) } ]
 ]
 
 { #category : #accessing }

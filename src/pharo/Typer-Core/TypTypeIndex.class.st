@@ -1,11 +1,11 @@
 Class {
-	#name : #TypVariableLookupIndex,
-	#superclass : #TypLookupIndex,
+	#name : #TypTypeIndex,
+	#superclass : #TypIndex,
 	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #accessing }
-TypVariableLookupIndex class >> instance [
+TypTypeIndex class >> instance [
 
 	^ instance ifNil: [ 
 		  instance := self new
@@ -15,22 +15,22 @@ TypVariableLookupIndex class >> instance [
 									                (TypDepthFirstResolver resolver:
 											                 (TypBreadthFirstResolver resolvers:
 													                  { 
-														                  TypPraVariableResolver new.
-														                  TypShaVariableResolver new })).
+														                  TypPraTypeResolver new.
+														                  TypShaTypeResolver new })).
 									                (TypDepthFirstResolver resolver:
-											                 TypInfVariableResolver new) }));
+											                 TypInfTypeResolver new) }));
 			              yourself ]
 ]
 
 { #category : #accessing }
-TypVariableLookupIndex >> lookupReceiver: aType selector: aSymbol [
+TypTypeIndex >> lookupClassDescription: aClassDescription [
 
 	| lookup |
 	lookup := self
 		          addDependent:
-		          (TypVariableLookup receiver: aType selector: aSymbol)
-		          path: #lookup.
+		          (TypTypeLookup classDescription: aClassDescription)
+		          label: #lookup.
 	(resolver canResolve: lookup) ifFalse: [ 
-		^ lookup addDependent: TypUnknownType new path: #default ].
+		^ lookup addDependent: TypUnknownType new label: #default ].
 	^ resolver resolve: lookup
 ]

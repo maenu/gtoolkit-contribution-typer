@@ -27,10 +27,19 @@ TypNode >> addDependent: aDependency [
 ]
 
 { #category : #accessing }
-TypNode >> addDependent: aNode path: aValuable [
+TypNode >> addDependent: aNode label: aString [
 
-	^ self addDependent:
-		  (TypEdge dependency: self dependent: aNode path: aValuable)
+	^ self addDependent: aNode label: aString data: nil
+]
+
+{ #category : #accessing }
+TypNode >> addDependent: aNode label: aString data: anObject [
+
+	^ self addDependent: (TypEdge
+			   dependency: self
+			   dependent: aNode
+			   label: aString
+			   data: anObject)
 ]
 
 { #category : #accessing }
@@ -57,6 +66,6 @@ TypNode >> initialize [
 TypNode >> postCopy [
 
 	super postCopy.
-	dependencies removeAll.
-	dependents removeAll
+	dependencies := IdentitySet new.
+	dependents := IdentitySet new
 ]

@@ -52,7 +52,7 @@ TypUnionType >> asNonNullable [
 	self isNullable ifFalse: [ ^ self ].
 	^ self
 		  addDependent: (types reject: #isNil) typAsType
-		  path: #asNonNullable
+		  label: #asNonNullable
 ]
 
 { #category : #converting }
@@ -61,7 +61,7 @@ TypUnionType >> asNullable [
 	self isNullable ifTrue: [ ^ self ].
 	^ self
 		  addDependent: (types , { TypNilType new }) typAsType
-		  path: #asNullable
+		  label: #asNullable
 ]
 
 { #category : #polymorphic }

@@ -14,10 +14,12 @@ TypShaTypeResolver >> canResolve: aLookup [
 TypShaTypeResolver >> resolve: aLookup [
 
 	self assert: [ self canResolve: aLookup ].
-	^ self reduce:
-		  (aLookup classDescription typShaShadows collect: [ :f | 
-			   (f resolveType: aLookup) copyWithOrigins: { 
-					   (TypLookupOrigin lookup: aLookup).
-					   (TypShaMethodOrigin method:
-						    (f class lookupSelector: #resolveType:)) } ])
+	self addDependent: aLookup label: #resolve:.
+	^ self
+		  resolve: aLookup
+		  reduce: (aLookup classDescription typShaShadows collect: [ :e | 
+				   self
+					   addDependent: (e resolveType: aLookup)
+					   label: #shadow
+					   data: (e class lookupSelector: #resolveType:) ])
 ]
