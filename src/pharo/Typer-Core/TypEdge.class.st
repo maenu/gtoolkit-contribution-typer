@@ -22,6 +22,12 @@ TypEdge class >> dependency: aType dependent: anotherType label: aString data: a
 ]
 
 { #category : #accessing }
+TypEdge >> data [
+
+	^ data
+]
+
+{ #category : #accessing }
 TypEdge >> dependency [
 
 	^ dependency
@@ -40,4 +46,10 @@ TypEdge >> initializeDependency: aType dependent: anotherType label: aString dat
 	dependent := anotherType.
 	label := aString.
 	data := anObject
+]
+
+{ #category : #accessing }
+TypEdge >> label [
+
+	^ label
 ]

@@ -25,18 +25,13 @@ TypType >> <= aType [
 
 { #category : #accessing }
 TypType >> = anObject [
-	self == anObject
-		ifTrue: [ ^ true ].
-	self class = anObject class
-		ifFalse: [ ^ false ].
-	self hasValue = anObject hasValue
-		ifFalse: [ ^ false ].
-	(self hasValue and: [ self value ~= anObject value ])
-		ifTrue: [ ^ false ].
-	self hasSuperType = anObject hasSuperType
-		ifFalse: [ ^ false ].
-	self hasSuperType
-		ifFalse: [ ^ true ].
+
+	super = anObject ifFalse: [ ^ false ].
+	self hasValue = anObject hasValue ifFalse: [ ^ false ].
+	(self hasValue and: [ self value ~= anObject value ]) ifTrue: [ 
+		^ false ].
+	self hasSuperType = anObject hasSuperType ifFalse: [ ^ false ].
+	self hasSuperType ifFalse: [ ^ true ].
 	^ self superType = anObject superType
 ]
 
@@ -121,7 +116,7 @@ TypType >> hasValue [
 { #category : #accessing }
 TypType >> hash [
 
-	^ self hashSkipping: IdentitySet new
+	^ super hash bitXor: (self hashSkipping: IdentitySet new)
 ]
 
 { #category : #accessing }
