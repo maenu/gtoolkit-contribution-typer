@@ -1,20 +1,20 @@
 Class {
-	#name : #TypTypeScanner,
-	#superclass : #SmaCCScanner,
-	#category : #'Typer-Core-Parser'
+	#name : 'TypTypeScanner',
+	#superclass : 'SmaCCScanner',
+	#category : 'Typer-Core-Parser'
 }
 
-{ #category : #generated }
+{ #category : 'generated' }
 TypTypeScanner >> emptySymbolTokenId [
 	^ 28
 ]
 
-{ #category : #generated }
+{ #category : 'generated' }
 TypTypeScanner >> errorTokenId [
 	^ 29
 ]
 
-{ #category : #generated }
+{ #category : 'generated' }
 TypTypeScanner >> scanForToken [
 	self step.
 	currentCharacter == $!
@@ -38,7 +38,7 @@ TypTypeScanner >> scanForToken [
 	^ self scanForTokenX4
 ]
 
-{ #category : #generated }
+{ #category : 'generated' }
 TypTypeScanner >> scanForTokenX1 [
 	(self scanForString: 'class')
 		ifTrue: [ self recordMatch: #(15).
@@ -49,7 +49,7 @@ TypTypeScanner >> scanForTokenX1 [
 	^ self reportLastMatch
 ]
 
-{ #category : #generated }
+{ #category : 'generated' }
 TypTypeScanner >> scanForTokenX2 [
 	self recordMatch: #(6).
 	self step.
@@ -58,7 +58,7 @@ TypTypeScanner >> scanForTokenX2 [
 	^ self reportLastMatch
 ]
 
-{ #category : #generated }
+{ #category : 'generated' }
 TypTypeScanner >> scanForTokenX3 [
 	self step.
 	currentCharacter == $>
@@ -66,7 +66,7 @@ TypTypeScanner >> scanForTokenX3 [
 	^ self reportLastMatch
 ]
 
-{ #category : #generated }
+{ #category : 'generated' }
 TypTypeScanner >> scanForTokenX4 [
 	currentCharacter == $@
 		ifTrue: [ ^ self recordAndReportMatch: #(10) ].

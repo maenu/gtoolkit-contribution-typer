@@ -1,5 +1,5 @@
 Class {
-	#name : #TypInfSelf,
-	#superclass : #DynamicVariable,
-	#category : #'Typer-Inference'
+	#name : 'TypInfSelf',
+	#superclass : 'DynamicVariable',
+	#category : 'Typer-Inference'
 }

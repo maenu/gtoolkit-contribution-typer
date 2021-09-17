@@ -1,24 +1,14 @@
 Class {
-	#name : #TypNode,
-	#superclass : #Object,
+	#name : 'TypNode',
+	#superclass : 'Object',
 	#instVars : [
 		'dependencies',
 		'dependents'
 	],
-	#category : #'Typer-Core-Type'
+	#category : 'Typer-Core-Type'
 }
 
-{ #category : #accessing }
-TypNode >> = anObject [
-
-	anObject == self ifTrue: [ ^ true ].
-	anObject class = self class ifFalse: [ ^ false ].
-	anObject dependencies = dependencies ifFalse: [ ^ false ].
-	anObject dependents = dependents ifFalse: [ ^ false ].
-	^ true
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNode >> addDependency: aDependency [
 
 	self assert: [ aDependency dependency includesDependent: aDependency ].
@@ -26,7 +16,7 @@ TypNode >> addDependency: aDependency [
 	dependencies add: aDependency
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNode >> addDependent: aDependency [
 
 	self assert: [ aDependency dependency == self ].
@@ -36,13 +26,13 @@ TypNode >> addDependent: aDependency [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNode >> addDependent: aNode label: aString [
 
 	^ self addDependent: aNode label: aString data: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNode >> addDependent: aNode label: aString data: anObject [
 
 	^ self addDependent: (TypEdge
@@ -52,19 +42,19 @@ TypNode >> addDependent: aNode label: aString data: anObject [
 			   data: anObject)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNode >> dependencies [
 
 	^ dependencies
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNode >> dependents [
 
 	^ dependents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNode >> gtGraphOn: aView [
 
 	<gtView>
@@ -122,25 +112,19 @@ TypNode >> gtGraphOn: aView [
 			  m ]
 ]
 
-{ #category : #accessing }
-TypNode >> hash [
-
-	^ dependencies hash bitXor: dependents hash
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNode >> includesDependency: aDependency [
 
 	^ dependencies includes: aDependency
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNode >> includesDependent: aDependency [
 
 	^ dependents includes: aDependency
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNode >> initialize [
 
 	super initialize.
@@ -148,7 +132,7 @@ TypNode >> initialize [
 	dependents := IdentitySet new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNode >> postCopy [
 
 	super postCopy.

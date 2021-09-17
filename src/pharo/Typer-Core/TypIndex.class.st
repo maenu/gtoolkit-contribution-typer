@@ -1,35 +1,35 @@
 Class {
-	#name : #TypIndex,
-	#superclass : #TypNode,
+	#name : 'TypIndex',
+	#superclass : 'TypNode',
 	#instVars : [
 		'resolver'
 	],
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'Typer-Core-Lookup'
+	#category : 'Typer-Core-Lookup'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypIndex class >> instance [
 	<typPraResult: 'TypLookupIndex'>
 	self subclassResponsibility
 ]
 
-{ #category : #resetting }
+{ #category : 'resetting' }
 TypIndex class >> reset [
 	<script>
 	instance ifNotNil: #reset.
 	instance := nil
 ]
 
-{ #category : #resetting }
+{ #category : 'resetting' }
 TypIndex class >> resetAll [
 	<script>
 	self withAllSubclassesDo: #reset
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TypIndex >> initialize [
 
 	<typPraVariable: 'resolver' as: 'TypLookupResolver'>
@@ -40,19 +40,19 @@ TypIndex >> initialize [
 		to: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TypIndex >> initializeResolver: anObject [
 	<typPraArguments: 'TypLookupResolver'>
 	resolver := anObject
 ]
 
-{ #category : #resetting }
+{ #category : 'resetting' }
 TypIndex >> invalidateOn: aClassOrMethodAnnouncement [
 
 	resolver invalidateOn: aClassOrMethodAnnouncement
 ]
 
-{ #category : #resetting }
+{ #category : 'resetting' }
 TypIndex >> reset [
 	resolver reset
 ]

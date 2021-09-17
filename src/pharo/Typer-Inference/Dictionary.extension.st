@@ -1,6 +1,6 @@
-Extension { #name : #Dictionary }
+Extension { #name : 'Dictionary' }
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 Dictionary >> typInfSelfType [
 
 	| b a |
@@ -14,7 +14,7 @@ Dictionary >> typInfSelfType [
 			  a typAsType }
 ]
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 Dictionary >> typInfSelfTypeSamples [
 
 	| pool |

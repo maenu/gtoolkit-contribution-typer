@@ -1,6 +1,6 @@
-Extension { #name : #ArgumentVariable }
+Extension { #name : 'ArgumentVariable' }
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 ArgumentVariable >> typInfTypeRecursiveIn: aNode [
 
 	| type useTypes |

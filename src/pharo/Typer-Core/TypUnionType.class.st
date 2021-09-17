@@ -1,14 +1,14 @@
 Class {
-	#name : #TypUnionType,
-	#superclass : #TypType,
+	#name : 'TypUnionType',
+	#superclass : 'TypType',
 	#instVars : [
 		'types',
 		'hasSuperType'
 	],
-	#category : #'Typer-Core-Type'
+	#category : 'Typer-Core-Type'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TypUnionType class >> types: aSet [
 	<typPraArguments: 'Set<TypType>'>
 	^ self new
@@ -16,14 +16,14 @@ TypUnionType class >> types: aSet [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TypUnionType >> = anObject [
 
 	super = anObject ifFalse: [ ^ false ].
 	^ types = anObject types
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TypUnionType >> > aType [
 	aType isUnion
 		ifFalse: [ ^ types anySatisfy: [ :e | e >= aType ] ].
@@ -32,7 +32,7 @@ TypUnionType >> > aType [
 	^ aType types allSatisfy: [ :e | self >= e ]
 ]
 
-{ #category : #polymorphic }
+{ #category : 'polymorphic' }
 TypUnionType >> arguments [
 
 	| arguments n |
@@ -46,7 +46,7 @@ TypUnionType >> arguments [
 		  types_ typAsType ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 TypUnionType >> asNonNullable [
 
 	self isNullable ifFalse: [ ^ self ].
@@ -55,7 +55,7 @@ TypUnionType >> asNonNullable [
 		  label: #asNonNullable
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 TypUnionType >> asNullable [
 
 	self isNullable ifTrue: [ ^ self ].
@@ -64,13 +64,13 @@ TypUnionType >> asNullable [
 		  label: #asNullable
 ]
 
-{ #category : #polymorphic }
+{ #category : 'polymorphic' }
 TypUnionType >> at: aString [
 
 	^ (types collect: [ :e | e at: aString ]) typAsType
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TypUnionType >> hasSuperType [
 
 	| remains nilTypes unknownTypes current superType_ |
@@ -103,7 +103,7 @@ TypUnionType >> hasSuperType [
 	^ false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TypUnionType >> hashSkipping: anIdentitySet [
 
 	(anIdentitySet includes: self) ifTrue: [ ^ 47 ].
@@ -112,13 +112,13 @@ TypUnionType >> hashSkipping: anIdentitySet [
 		  into: [ :r :e | r bitXor: (e hashSkipping: anIdentitySet) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypUnionType >> initialize [
 	<typPraVariable: 'types' as: 'Set<TypType>'>
 	super initialize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypUnionType >> initializeTypes: anObject [
 
 	<typPraArguments: 'Set<TypType>'>
@@ -126,54 +126,54 @@ TypUnionType >> initializeTypes: anObject [
 	types := anObject
 ]
 
-{ #category : #invalidation }
+{ #category : 'invalidation' }
 TypUnionType >> invalidate [
 
 	super invalidate.
 	types do: #invalidate
 ]
 
-{ #category : #invalidation }
+{ #category : 'invalidation' }
 TypUnionType >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
 
 	^ types anySatisfy: [ :e | 
 		  e isInvalidatedByClassAnnouncement: aClassAnnouncement ]
 ]
 
-{ #category : #invalidation }
+{ #category : 'invalidation' }
 TypUnionType >> isInvalidatedByMethodAnnouncement: aMethodAnnouncement [
 
 	^ types anySatisfy: [ :e | 
 		  e isInvalidatedByMethodAnnouncement: aMethodAnnouncement ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypUnionType >> isNullable [
 	^ types anySatisfy: #isNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TypUnionType >> isUnion [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypUnionType >> lookupMethod: aSymbol arguments: aCollection [
 	^ (types collect: [ :e | e lookupMethod: aSymbol arguments: aCollection ]) typAsType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypUnionType >> lookupVariable: aSymbol [
 	^ (types collect: [ :e | e lookupVariable: aSymbol ]) typAsType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypUnionType >> postCopy [
 	super postCopy.
 	types := types copy
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TypUnionType >> printOn: aStream skipping: anIdentitySet [
 
 	| remains hasNil nilType hasUnknown unknownType |
@@ -214,13 +214,13 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 	aStream << '}'
 ]
 
-{ #category : #polymorphic }
+{ #category : 'polymorphic' }
 TypUnionType >> result [
 
 	^ (types collect: #result) typAsType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypUnionType >> types [
 	<typPraResult: 'Set<TypType>'>
 	^ types

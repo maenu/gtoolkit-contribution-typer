@@ -1,6 +1,6 @@
-Extension { #name : #Variable }
+Extension { #name : 'Variable' }
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 Variable >> typInfTypeRecursiveIn: aNode [
 
 	^ aNode typInfUnknown

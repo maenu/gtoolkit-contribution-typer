@@ -1,13 +1,13 @@
 Class {
-	#name : #TypCachingResolver,
-	#superclass : #TypWrappingResolver,
+	#name : 'TypCachingResolver',
+	#superclass : 'TypWrappingResolver',
 	#instVars : [
 		'cache'
 	],
-	#category : #'Typer-Core-Lookup'
+	#category : 'Typer-Core-Lookup'
 }
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 TypCachingResolver >> canResolve: aLookup [
 	^ cache
 		at: aLookup
@@ -15,7 +15,7 @@ TypCachingResolver >> canResolve: aLookup [
 		ifAbsent: [ resolver canResolve: aLookup ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TypCachingResolver >> initialize [
 	<typPraVariable: 'resolver' as: 'TypLookupResolver'>
 	<typPraVariable: 'cache' as: 'Dictionary<TypLookup,SequenceableCollection<TypLookupResult>>'>
@@ -23,7 +23,7 @@ TypCachingResolver >> initialize [
 	cache := Dictionary new
 ]
 
-{ #category : #invalidation }
+{ #category : 'invalidation' }
 TypCachingResolver >> invalidateOn: aClassOrMethodAnnouncement [
 
 	super invalidateOn: aClassOrMethodAnnouncement.
@@ -38,13 +38,13 @@ TypCachingResolver >> invalidateOn: aClassOrMethodAnnouncement [
 		invalidate ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TypCachingResolver >> reset [
 	super reset.
 	cache removeAll
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 TypCachingResolver >> resolve: aLookup [
 
 	self assert: [ self canResolve: aLookup ].

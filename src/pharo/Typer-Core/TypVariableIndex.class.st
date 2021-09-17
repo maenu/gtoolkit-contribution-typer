@@ -1,10 +1,10 @@
 Class {
-	#name : #TypVariableIndex,
-	#superclass : #TypIndex,
-	#category : #'Typer-Core-Lookup'
+	#name : 'TypVariableIndex',
+	#superclass : 'TypIndex',
+	#category : 'Typer-Core-Lookup'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypVariableIndex class >> instance [
 
 	^ instance ifNil: [ 
@@ -22,7 +22,7 @@ TypVariableIndex class >> instance [
 			              yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypVariableIndex >> lookupReceiver: aType selector: aSymbol [
 
 	| lookup |

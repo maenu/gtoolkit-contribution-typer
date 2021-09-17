@@ -1,10 +1,10 @@
 Class {
-	#name : #TypMethodIndex,
-	#superclass : #TypIndex,
-	#category : #'Typer-Core-Lookup'
+	#name : 'TypMethodIndex',
+	#superclass : 'TypIndex',
+	#category : 'Typer-Core-Lookup'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypMethodIndex class >> instance [
 
 	<typPraResult: 'TypMethodLookupIndex'>
@@ -23,7 +23,7 @@ TypMethodIndex class >> instance [
 			              yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypMethodIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aCollection [
 
 	| lookup |
@@ -38,7 +38,7 @@ TypMethodIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aColl
 	^ resolver resolve: lookup
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TypMethodIndex >> reset [
 	super reset.
 	ASTCache default do: #typInfInvalidate

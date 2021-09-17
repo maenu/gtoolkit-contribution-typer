@@ -1,6 +1,6 @@
-Extension { #name : #RBBlockNode }
+Extension { #name : 'RBBlockNode' }
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 RBBlockNode >> typInfArgumentType: anArgumentNode [
 
 	| i j argument |
@@ -17,7 +17,7 @@ RBBlockNode >> typInfArgumentType: anArgumentNode [
 	^ self typInfUnknown
 ]
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 RBBlockNode >> typInfTypeRecursive [
 	| visitor |
 	visitor := TypInfSignalsAlwaysVisitor new.
@@ -29,7 +29,7 @@ RBBlockNode >> typInfTypeRecursive [
 		signalsAlways: visitor signalsAlways
 ]
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 RBBlockNode >> typIsMessageArgument [
 	^ parent isMessage and: [ parent arguments includes: self ]
 ]

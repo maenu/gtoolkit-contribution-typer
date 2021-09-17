@@ -1,6 +1,6 @@
-Extension { #name : #RBMessageNode }
+Extension { #name : 'RBMessageNode' }
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 RBMessageNode >> typInfMethod [
 
 	<typPraResult: 'TypFunctionType'>
@@ -12,7 +12,7 @@ RBMessageNode >> typInfMethod [
 				  arguments: (arguments collect: #typInfType) ]
 ]
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 RBMessageNode >> typInfTypeRecursive [
 	^ self typInfMethod result
 ]

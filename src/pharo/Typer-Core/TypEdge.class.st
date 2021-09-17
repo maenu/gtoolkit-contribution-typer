@@ -1,16 +1,16 @@
 Class {
-	#name : #TypEdge,
-	#superclass : #Object,
+	#name : 'TypEdge',
+	#superclass : 'Object',
 	#instVars : [
 		'dependency',
 		'dependent',
 		'label',
 		'data'
 	],
-	#category : #'Typer-Core-Type'
+	#category : 'Typer-Core-Type'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TypEdge class >> dependency: aType dependent: anotherType label: aString data: anObject [
 
 	^ self new
@@ -21,25 +21,25 @@ TypEdge class >> dependency: aType dependent: anotherType label: aString data: a
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypEdge >> data [
 
 	^ data
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypEdge >> dependency [
 
 	^ dependency
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypEdge >> dependent [
 
 	^ dependent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TypEdge >> initializeDependency: aType dependent: anotherType label: aString data: anObject [
 
 	dependency := aType.
@@ -48,7 +48,7 @@ TypEdge >> initializeDependency: aType dependent: anotherType label: aString dat
 	data := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypEdge >> label [
 
 	^ label

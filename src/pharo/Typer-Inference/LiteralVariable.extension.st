@@ -1,6 +1,6 @@
-Extension { #name : #LiteralVariable }
+Extension { #name : 'LiteralVariable' }
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 LiteralVariable >> typInfSelfType [
 
 	^ self class typAsParametricTypeWithParameters: { 

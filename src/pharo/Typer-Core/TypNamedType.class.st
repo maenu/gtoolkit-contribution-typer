@@ -1,15 +1,15 @@
 Class {
-	#name : #TypNamedType,
-	#superclass : #TypType,
+	#name : 'TypNamedType',
+	#superclass : 'TypType',
 	#instVars : [
 		'name',
 		'classDescription',
 		'hasClassDescription'
 	],
-	#category : #'Typer-Core-Type'
+	#category : 'Typer-Core-Type'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TypNamedType class >> classDescription: aClassDescription [
 	<typPraArguments: 'ClassDescription'>
 	^ self new
@@ -17,7 +17,7 @@ TypNamedType class >> classDescription: aClassDescription [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TypNamedType class >> named: aString [
 	<typPraArguments: 'String'>
 	^ self new
@@ -25,20 +25,20 @@ TypNamedType class >> named: aString [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNamedType class >> newFrom: aType [
 	self assert: [ aType isKindOf: self ].
 	^ self named: aType name
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TypNamedType >> = anObject [
 	super = anObject
 		ifFalse: [ ^ false ].
 	^ name = anObject name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNamedType >> > aType [
 	aType = self
 		ifTrue: [ ^ false ].
@@ -54,7 +54,7 @@ TypNamedType >> > aType [
 	^ self superType > aType superType
 ]
 
-{ #category : #polymorphic }
+{ #category : 'polymorphic' }
 TypNamedType >> at: aString [
 
 	self flag: 'TODO add proper origin'.
@@ -62,21 +62,21 @@ TypNamedType >> at: aString [
 	^ self superType at: aString
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 TypNamedType >> classDescription [
 	<typPraResult: 'ClassDescription'>
 	self assert: [ self hasClassDescription ].
 	^ classDescription
 ]
 
-{ #category : #polymorphic }
+{ #category : 'polymorphic' }
 TypNamedType >> copyWithAt: aString put: aType [
 
 	^ self copyWithSuperType:
 		  (self superType copyWithAt: aString put: aType)
 ]
 
-{ #category : #polymorphic }
+{ #category : 'polymorphic' }
 TypNamedType >> copyWithParameters: aCollection [
 
 	| copy |
@@ -87,7 +87,7 @@ TypNamedType >> copyWithParameters: aCollection [
 	^ copy
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TypNamedType >> hasClassDescription [
 	<typPraResult: 'Boolean'>
 	^ hasClassDescription
@@ -98,21 +98,21 @@ TypNamedType >> hasClassDescription [
 				do: [ false ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNamedType >> hasSuperType [
 	^ superType isNotNil
 		or: [ self hasClassDescription
 				and: [ self classDescription superclass isNotNil ] ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TypNamedType >> hashSkipping: anIdentitySet [
 
 	(anIdentitySet includes: self) ifTrue: [ ^ 31 ].
 	^ (31 bitXor: name hash) bitXor: (super hashSkipping: anIdentitySet)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TypNamedType >> initialize [
 	<typPraVariable: 'name' as: 'String'>
 	<typPraVariable: 'classDescription' as: '{!,ClassDescription}'>
@@ -120,7 +120,7 @@ TypNamedType >> initialize [
 	super initialize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNamedType >> initializeClassDescription: aClassDescription [
 
 	<typPraArguments: 'ClassDescription'>
@@ -129,7 +129,7 @@ TypNamedType >> initializeClassDescription: aClassDescription [
 	hasClassDescription := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNamedType >> initializeName: anObject [
 
 	<typPraArguments: 'String'>
@@ -138,7 +138,7 @@ TypNamedType >> initializeName: anObject [
 	hasClassDescription := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNamedType >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
 
 	self hasClassDescription ifFalse: [ ^ false ].
@@ -147,23 +147,23 @@ TypNamedType >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
 			  aClassAnnouncement classAffected ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TypNamedType >> isNamed [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNamedType >> name [
 	<typPraResult: 'String'>
 	^ name
 ]
 
-{ #category : #polymorphic }
+{ #category : 'polymorphic' }
 TypNamedType >> parameters [
 	^ self superType parameters
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TypNamedType >> printOn: aStream skipping: anIdentitySet [
 	(anIdentitySet includes: self)
 		ifTrue: [ aStream << '.'.
@@ -171,14 +171,14 @@ TypNamedType >> printOn: aStream skipping: anIdentitySet [
 	aStream << name asString
 ]
 
-{ #category : #polymorphic }
+{ #category : 'polymorphic' }
 TypNamedType >> result [
 
 	self hasSuperType ifFalse: [ ^ TypUnknownType new ].
 	^ self superType result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypNamedType >> superType [
 	self assert: [ self hasSuperType ].
 	^ superType

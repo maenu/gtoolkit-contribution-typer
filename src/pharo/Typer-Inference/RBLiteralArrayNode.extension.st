@@ -1,6 +1,6 @@
-Extension { #name : #RBLiteralArrayNode }
+Extension { #name : 'RBLiteralArrayNode' }
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 RBLiteralArrayNode >> typInfTypeRecursive [
 
 	^ (Array typAsType copyWithParameters:

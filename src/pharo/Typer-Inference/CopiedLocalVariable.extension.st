@@ -1,6 +1,6 @@
-Extension { #name : #CopiedLocalVariable }
+Extension { #name : 'CopiedLocalVariable' }
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 CopiedLocalVariable >> typInfTypeRecursiveIn: aNode [
 
 	^ originalVar typInfTypeRecursiveIn: aNode

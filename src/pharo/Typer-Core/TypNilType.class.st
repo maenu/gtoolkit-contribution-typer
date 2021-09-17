@@ -1,47 +1,47 @@
 Class {
-	#name : #TypNilType,
-	#superclass : #TypNamedType,
-	#category : #'Typer-Core-Type'
+	#name : 'TypNilType',
+	#superclass : 'TypNamedType',
+	#category : 'Typer-Core-Type'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TypNilType class >> classDescription: aClassDescription [
 	self shouldNotImplement
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TypNilType class >> named: aString [
 	self shouldNotImplement
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 TypNilType >> asCompatibleWith: aType [
 	^ aType asNullable
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 TypNilType >> asNonNullable [
 
 	^ self addDependent: TypUnknownType new label: #asNonNullable
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 TypNilType >> asNullable [
 	^ self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TypNilType >> initialize [
 	super initialize.
 	self initializeClassDescription: UndefinedObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TypNilType >> isNil [
 	^ true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TypNilType >> printOn: aStream skipping: anIdentitySet [
 	(anIdentitySet includes: self)
 		ifTrue: [ aStream << '.'.
