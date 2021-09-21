@@ -39,9 +39,6 @@ RBProgramNode >> typInfType [
 	^ self
 		  propertyAt: 'typInfType-' , identifier
 		  ifAbsent: [ "need to set property to default to unknown on recursive calls"
-	NonInteractiveTranscript stdout
-		show: identifier;
-		cr.
 			  self
 				  propertyAt: 'typInfType-' , identifier put: self typInfUnknown;
 				  propertyAt: 'typInfType-' , identifier
