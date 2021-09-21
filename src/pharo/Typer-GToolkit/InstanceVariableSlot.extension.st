@@ -1,11 +1,11 @@
-Extension { #name : #InstanceVariableSlot }
+Extension { #name : 'InstanceVariableSlot' }
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 InstanceVariableSlot >> typGtCanType [
 	^ true
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 InstanceVariableSlot >> typGtShadowMethod [
 
 	| shadow |

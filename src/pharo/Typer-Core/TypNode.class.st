@@ -43,6 +43,55 @@ TypNode >> addDependent: aNode label: aString data: anObject [
 ]
 
 { #category : 'accessing' }
+TypNode >> asElementIn: aMondrian [
+
+	^ BrButton new
+		  aptitude: BrGlamorousButtonWithLabelAptitude
+			  + BrGlamorousFocusableShadowAptitude
+			  + ((BrGlamorousWithTooltipAptitude content: [ 
+						    BrToolbar new
+							    aptitude: BrGlamorousToolbarAptitude;
+							    addItem: (BrButton new
+									     aptitude: BrGlamorousButtonWithLabelAptitude;
+									     label: ('dependents {1}' format: { dependents size });
+									     action: [ 
+										     | nodes edges |
+										     nodes := dependents collect: #dependent.
+										     edges := dependents copy.
+										     aMondrian nodes
+											     stencil: [ :e | e asElementIn: aMondrian ];
+											     with: nodes.
+										     aMondrian edges
+											     stencil: [ :e | e asElementIn: aMondrian ];
+											     connect: edges from: #dependency to: #dependent.
+										     aMondrian layout custom: TypGtGraphForceBasedLayout new ];
+									     yourself);
+							    addItem: (BrButton new
+									     aptitude: BrGlamorousButtonWithLabelAptitude;
+									     label:
+										     ('dependencies {1}' format: { dependencies size });
+									     action: [ 
+										     | nodes edges |
+										     nodes := dependencies collect: #dependency.
+										     edges := dependencies copy.
+										     aMondrian nodes
+											     stencil: [ :e | e asElementIn: aMondrian ];
+											     with: nodes.
+										     aMondrian edges
+											     stencil: [ :e | e asElementIn: aMondrian ];
+											     connect: edges from: #dependency to: #dependent.
+										     aMondrian layout custom: TypGtGraphForceBasedLayout new ];
+									     yourself);
+							    yourself ])
+					   showDelay: 100 milliSeconds;
+					   hideDelay: 100 milliSeconds;
+					   yourself);
+		  label: self asString;
+		  action: [ :e | e phlow spawnObject: self ];
+		  yourself
+]
+
+{ #category : 'accessing' }
 TypNode >> dependencies [
 
 	^ dependencies
@@ -58,57 +107,26 @@ TypNode >> dependents [
 TypNode >> gtGraphOn: aView [
 
 	<gtView>
-	^ aView mondrian
+	^ aView typGtMondrian
 		  title: 'Graph';
 		  priority: 10;
 		  painting: [ :m | 
-			  | nodes edges remains |
+			  | nodes edges |
 			  nodes := IdentitySet new.
 			  edges := IdentitySet new.
-			  remains := OrderedCollection with: self.
-			  [ remains isEmpty ] whileFalse: [ 
-					  | current |
-					  current := remains removeLast.
-					  nodes add: current.
-					  current dependencies do: [ :e | 
-							  edges add: e.
-							  (nodes includes: e dependency) ifFalse: [ 
-									  remains add: e dependency ] ] ].
+			  self withAllDependencies do: [ :e | 
+					  nodes add: e.
+					  edges addAll: e dependents ].
+			  self withAllDependents do: [ :e | 
+					  nodes add: e.
+					  edges addAll: e dependencies ].
 			  m nodes
-				  stencil: [ :e | 
-					  BlShrinkingTextElement new
-						  constraintsDo: [ :c | 
-							  c horizontal exact: 100.
-							  c vertical exact: 15 ];
-						  text: e asString asRopedText;
-						  background: (e == self
-								   ifTrue: [ Color orange alpha: 0.5 ]
-								   ifFalse: [ Color transparent ]);
-						  yourself ];
+				  stencil: [ :e | e asElementIn: m ];
 				  with: nodes.
 			  m edges
-				  fromNearestBounds;
-				  toNearestBounds;
-				  stencil: [ :e | 
-					  BlParabollaArcElement new
-						  when: BlClickEvent do: [ :f | 
-							  f consumed: true.
-							  f target phlow spawnObject: e ];
-						  addChild: (BlShrinkingTextElement new
-								   constraintsDo: [ :c | 
-									   c horizontal exact: 100.
-									   c vertical exact: 15 ];
-								   text: e label asRopedText;
-								   yourself);
-						  zIndex: -1;
-						  curvatureFraction: 0.3;
-						  border: (BlBorder paint: (Color orange alpha: 0.5) width: 2);
-						  toHead: (BlArrowheadSimpleArrow new border: (BlBorder builder
-									    paint: (Color orange alpha: 0.5);
-									    width: 2;
-									    build)) ];
+				  stencil: [ :e | e asElementIn: m ];
 				  connect: edges from: #dependency to: #dependent.
-			  m layout force charge: -50000.
+			  m layout custom: TypGtGraphForceBasedLayout new.
 			  m ]
 ]
 
@@ -138,4 +156,36 @@ TypNode >> postCopy [
 	super postCopy.
 	dependencies := IdentitySet new.
 	dependents := IdentitySet new
+]
+
+{ #category : 'accessing' }
+TypNode >> withAllDependencies [
+
+	| nodes remains |
+	nodes := IdentitySet new.
+	remains := Stack with: self.
+	[ remains isEmpty ] whileFalse: [ 
+		| current |
+		current := remains pop.
+		nodes add: current.
+		current dependencies
+			reject: [ :e | nodes includes: e dependency ]
+			thenDo: [ :e | remains push: e dependency ] ].
+	^ nodes
+]
+
+{ #category : 'accessing' }
+TypNode >> withAllDependents [
+
+	| nodes remains |
+	nodes := IdentitySet new.
+	remains := Stack with: self.
+	[ remains isEmpty ] whileFalse: [ 
+		| current |
+		current := remains pop.
+		nodes add: current.
+		current dependents
+			reject: [ :e | nodes includes: e dependent ]
+			thenDo: [ :e | remains push: e dependent ] ].
+	^ nodes
 ]

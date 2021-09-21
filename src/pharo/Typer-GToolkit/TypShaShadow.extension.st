@@ -1,6 +1,6 @@
-Extension { #name : #TypShaShadow }
+Extension { #name : 'TypShaShadow' }
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 TypShaShadow class >> typGtNewShadowFor: aClass [
 	<typPraResult: 'TypShaShadow class'>
 	<typPraArguments: 'ClassDescription'>
@@ -17,7 +17,7 @@ TypShaShadow class >> typGtNewShadowFor: aClass [
 	^ shadow
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowFor: aClass [
 
 	<typPraResult: 'SequenceableCollection<TypShaShadow class>'>
@@ -26,7 +26,7 @@ TypShaShadow class >> typGtShadowFor: aClass [
 		  e shadowedClass == aClass classSide ]
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowMethod: aSymbol result: aType arguments: someTypes in: aClass [
 
 	<typPraArguments: 'Symbol,TypType,SequenceableCollection<TypType>,ClassDescription'>
@@ -48,7 +48,7 @@ TypShaShadow class >> typGtShadowMethod: aSymbol result: aType arguments: someTy
 	^ { (aClass compiledMethodAt: newSelector) }
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowMethodNewSelector: aSymbol in: aClass [
 
 	| newN newSelector |
@@ -60,7 +60,7 @@ TypShaShadow class >> typGtShadowMethodNewSelector: aSymbol in: aClass [
 	^ newSelector
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowMethodSelector: aSymbol postfix: anObject [
 
 	aSymbol isUnary ifTrue: [ 
@@ -74,7 +74,7 @@ TypShaShadow class >> typGtShadowMethodSelector: aSymbol postfix: anObject [
 			  anObject }
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowVariable: aSymbol type: aType in: aClass [
 
 	<typPraArguments: 'Symbol,TypType,ClassDescription'>
@@ -94,7 +94,7 @@ TypShaShadow class >> typGtShadowVariable: aSymbol type: aType in: aClass [
 	^ { (self class compiledMethodAt: newSelector) }
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowVariableNewSelector: aSymbol in: aClass [
 
 	| newN newSelector |
@@ -108,7 +108,7 @@ TypShaShadow class >> typGtShadowVariableNewSelector: aSymbol in: aClass [
 	^ newSelector
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowVariableSelector: aSymbol postfix: anObject [
 
 	^ 'v{1}{2}:' format: { 

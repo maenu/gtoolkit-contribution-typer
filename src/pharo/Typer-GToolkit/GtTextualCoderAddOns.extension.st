@@ -1,6 +1,6 @@
-Extension { #name : #GtTextualCoderAddOns }
+Extension { #name : 'GtTextualCoderAddOns' }
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 GtTextualCoderAddOns >> typGtReplaceStylerOfType: aClass with: aStyler [
 	<typPraArguments: 'GtCoderBodyStyler class,?'>
 	| i |

@@ -1,17 +1,17 @@
 Class {
-	#name : #TypGtDeclarationStyler,
-	#superclass : #TypGtRbAstStyler,
-	#category : #'Typer-GToolkit'
+	#name : 'TypGtDeclarationStyler',
+	#superclass : 'TypGtRbAstStyler',
+	#category : 'Typer-GToolkit'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypGtDeclarationStyler >> visitArgumentVariableNode: aNode [
 
 	aNode isDefinition ifTrue: [ self styleNode: aNode ].
 	super visitArgumentVariableNode: aNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypGtDeclarationStyler >> visitMethodNode: aNode [
 
 	| position |
@@ -27,7 +27,7 @@ TypGtDeclarationStyler >> visitMethodNode: aNode [
 				 yourself) }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypGtDeclarationStyler >> visitTemporaryDeclarationNode: aNode [
 	self styleNode: aNode.
 	super visitTemporaryDeclarationNode: aNode

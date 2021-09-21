@@ -1,11 +1,11 @@
-Extension { #name : #RBMessageNode }
+Extension { #name : 'RBMessageNode' }
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 RBMessageNode >> typGtCanType [
 	^ true
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 RBMessageNode >> typGtInvokedMethods [
 
 	| methods receiverType |
@@ -20,7 +20,7 @@ RBMessageNode >> typGtInvokedMethods [
 	^ methods
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 RBMessageNode >> typGtShadowMethod [
 
 	| receiverType argumentTypes resultType clazz shadow |

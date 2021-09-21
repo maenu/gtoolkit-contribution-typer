@@ -1,6 +1,6 @@
-Extension { #name : #GtPharoUnaryMessageNode }
+Extension { #name : 'GtPharoUnaryMessageNode' }
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 GtPharoUnaryMessageNode >> typGtCompletionActionsFor: aStrategy in: anRbNode [
 
 	<typPraResult: 'SequenceableCollection<GtCompletionAction>'>

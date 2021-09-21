@@ -1,6 +1,6 @@
-Extension { #name : #Variable }
+Extension { #name : 'Variable' }
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 Variable >> typGtCanType [
 
 	^ false

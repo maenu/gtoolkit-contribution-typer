@@ -1,17 +1,17 @@
 Class {
-	#name : #TypGtCheckStyler,
-	#superclass : #TypGtRbAstStyler,
-	#category : #'Typer-GToolkit'
+	#name : 'TypGtCheckStyler',
+	#superclass : 'TypGtRbAstStyler',
+	#category : 'Typer-GToolkit'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypGtCheckStyler >> styleFrom: anInteger to: anotherInteger attribute: anAttribute [
 
 	<typPraArguments: 'Integer,Integer,BlTextAttribute'>
 	self styleFrom: anInteger to: anotherInteger with: { anAttribute }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypGtCheckStyler >> styleNode: aNode error: anError message: aString [
 
 	self
@@ -24,7 +24,7 @@ TypGtCheckStyler >> styleNode: aNode error: anError message: aString [
 				 message: aString)
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypGtCheckStyler >> styleNodeUnknown: aNode message: aString [
 
 	self
@@ -37,7 +37,7 @@ TypGtCheckStyler >> styleNodeUnknown: aNode message: aString [
 				 message: aString)
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypGtCheckStyler >> visitArgumentNode: aNode [
 
 	super visitArgumentNode: aNode.
@@ -45,7 +45,7 @@ TypGtCheckStyler >> visitArgumentNode: aNode [
 		self styleNodeUnknown: aNode message: 'Argument is unknown' ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypGtCheckStyler >> visitAssignmentNode: aNode [
 
 	super visitAssignmentNode: aNode.
@@ -62,7 +62,7 @@ TypGtCheckStyler >> visitAssignmentNode: aNode [
 						message: 'Assignment is incompatible' ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypGtCheckStyler >> visitMessageNode: aNode [
 
 	super visitMessageNode: aNode.
@@ -93,7 +93,7 @@ TypGtCheckStyler >> visitMessageNode: aNode [
 							('Argument {1} is incompatible' format: { i asString }) ] ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypGtCheckStyler >> visitMethodNode: aNode [
 
 	super visitMethodNode: aNode.
@@ -101,7 +101,7 @@ TypGtCheckStyler >> visitMethodNode: aNode [
 		self styleNodeUnknown: aNode message: 'Result is unknown' ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypGtCheckStyler >> visitReturnNode: aNode [
 
 	super visitReturnNode: aNode.
@@ -124,7 +124,7 @@ TypGtCheckStyler >> visitReturnNode: aNode [
 						message: 'Return nullness is incompatible' ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypGtCheckStyler >> visitTemporaryNode: aNode [
 
 	super visitTemporaryNode: aNode.

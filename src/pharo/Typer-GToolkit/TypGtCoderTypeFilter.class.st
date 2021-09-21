@@ -1,13 +1,13 @@
 Class {
-	#name : #TypGtCoderTypeFilter,
-	#superclass : #GtSearchMethodsFilter,
+	#name : 'TypGtCoderTypeFilter',
+	#superclass : 'GtSearchMethodsFilter',
 	#instVars : [
 		'type'
 	],
-	#category : #'Typer-GToolkit'
+	#category : 'Typer-GToolkit'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 TypGtCoderTypeFilter >> includesMethod: aCompiledMethod [
 
 	<typPraResult: 'Boolean'>
@@ -24,19 +24,19 @@ TypGtCoderTypeFilter >> includesMethod: aCompiledMethod [
 	^ (type lookupMethod: aCompiledMethod selector) isUnknown not
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TypGtCoderTypeFilter >> initialize [
 	<typPraVariable: 'type' as: 'TypType'>
 	super initialize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypGtCoderTypeFilter >> type [
 	<typPraResult: 'TypType'>
 	^ type
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypGtCoderTypeFilter >> type: anObject [
 	<typPraArguments: 'TypType'>
 	type := anObject

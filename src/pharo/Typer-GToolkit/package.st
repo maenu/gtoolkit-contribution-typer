@@ -1,1 +1,1 @@
-Package { #name : #'Typer-GToolkit' }
+Package { #name : 'Typer-GToolkit' }

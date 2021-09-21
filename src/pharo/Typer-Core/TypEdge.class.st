@@ -22,6 +22,40 @@ TypEdge class >> dependency: aType dependent: anotherType label: aString data: a
 ]
 
 { #category : 'accessing' }
+TypEdge >> asElementIn: aMondrian [
+
+	| color border |
+	color := Color gray alpha: 0.5.
+	border := BlBorder builder
+		          paint: color;
+		          width: 2;
+		          build.
+	^ BlParabollaArcElement new
+		  when: BlClickEvent do: [ :f | 
+			  f consumed: true.
+			  f target phlow spawnObject: self ];
+		  layout: BlFrameLayout new;
+		  addChild: (BrLabel new
+				   constraintsDo: [ :c | 
+					   c frame horizontal alignCenter.
+					   c frame vertical alignCenter ];
+				   beSmallSize;
+				   aptitude: BrGlamorousLabelAptitude;
+				   text: label asRopedText;
+				   yourself);
+		  zIndex: -1;
+		  clipChildren: false;
+		  curvatureFraction: 0.1;
+		  border: border;
+		  toHead: (BlArrowheadTriangle new
+				   scale: 2;
+				   border: border;
+				   background: color;
+				   yourself);
+		  yourself
+]
+
+{ #category : 'accessing' }
 TypEdge >> data [
 
 	^ data

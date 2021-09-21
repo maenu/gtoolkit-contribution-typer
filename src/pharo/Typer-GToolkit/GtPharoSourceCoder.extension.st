@@ -1,6 +1,6 @@
-Extension { #name : #GtPharoSourceCoder }
+Extension { #name : 'GtPharoSourceCoder' }
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 
 	<typPraArguments: 'Integer'>
@@ -15,7 +15,7 @@ GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 				 yourself)
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 
 	"<gtAstCoderAddOns: 10>"
@@ -61,14 +61,14 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 			self styleText ]"
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtRbNodeAt: anInteger [
 
 	<typPraResult: '{!,RBProgramNode}'>
 	^ self rbAST bestNodeFor: (anInteger to: anInteger)
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtTypeWithShadowAt: anInteger [
 
 	<typPraArguments: 'Integer'>

@@ -1,6 +1,6 @@
-Extension { #name : #ClassDescription }
+Extension { #name : 'ClassDescription' }
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 ClassDescription >> typGtCoverageFor: aView context: aDictionary [
 	<gtClassView>
 	^ aView explicit
@@ -26,14 +26,14 @@ ClassDescription >> typGtCoverageFor: aView context: aDictionary [
 		yourself
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 ClassDescription >> typGtMethodCoverage [
 	^ ((self methods , self classSide methods collect: #ast)
 		groupedBy: [ :e | e propertyAt: #tagExecuted ifAbsent: [ nil ] ])
 		asDictionary
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 ClassDescription >> typGtMethodsElementInPackage: aPackage [
 
 	| methods width |
@@ -62,7 +62,7 @@ ClassDescription >> typGtMethodsElementInPackage: aPackage [
 		  yourself
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 ClassDescription >> typGtNodeCoverage [
 	^ ((self methods , self classSide methods
 		flatCollect: [ :e | e ast allChildren , {e ast} ])
@@ -70,7 +70,7 @@ ClassDescription >> typGtNodeCoverage [
 		asDictionary
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 ClassDescription >> typGtVariableElementFor: aSymbol [
 
 	| type |
@@ -92,12 +92,12 @@ ClassDescription >> typGtVariableElementFor: aSymbol [
 		  yourself
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 ClassDescription >> typGtVariableNames [
 	^ self instVarNames
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 ClassDescription >> typGtVariablesElementInPackage: aPackage [
 
 	| variables width |

@@ -1,11 +1,11 @@
-Extension { #name : #RBMethodNode }
+Extension { #name : 'RBMethodNode' }
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 RBMethodNode >> typGtCanType [
 	^ true
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 RBMethodNode >> typGtSelf [
 
 	^ self
@@ -14,7 +14,7 @@ RBMethodNode >> typGtSelf [
 		  self propertyAt: 'typGtSelf' put: self methodClass typAsType ]
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 RBMethodNode >> typGtShadowMethod [
 
 	| argumentTypes resultType clazz shadow |
@@ -36,7 +36,7 @@ RBMethodNode >> typGtShadowMethod [
 				   ifFalse: [ shadow class ])
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 RBMethodNode >> typGtTypeWithPragma [
 
 	| arguments_ result_ variables_ |

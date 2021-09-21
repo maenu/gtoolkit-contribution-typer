@@ -1,6 +1,6 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 CompiledMethod >> typGtElement [
 
 	^ BlElement new
@@ -27,7 +27,7 @@ CompiledMethod >> typGtElement [
 		  yourself
 ]
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 CompiledMethod >> typGtSelf [
 
 	^ self methodClass typAsType

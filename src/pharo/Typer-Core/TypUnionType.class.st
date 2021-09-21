@@ -176,7 +176,7 @@ TypUnionType >> postCopy [
 { #category : 'printing' }
 TypUnionType >> printOn: aStream skipping: anIdentitySet [
 
-	| remains hasNil nilType hasUnknown unknownType |
+	| remains |
 	(anIdentitySet includes: self) ifTrue: [ 
 		aStream << '.'.
 		^ self ].
@@ -187,16 +187,16 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 		detect: #isNil
 		ifFound: [ :e | 
 			e printOn: aStream skipping: anIdentitySet.
+			remains := remains reject: #isNil.
 			remains ifNotEmpty: [ aStream << ',' ] ]
 		ifNone: [  ].
-	remains := remains reject: #isNil.
 	remains
 		detect: #isUnknown
 		ifFound: [ :e | 
 			e printOn: aStream skipping: anIdentitySet.
+			remains := remains reject: #isUnknown.
 			remains ifNotEmpty: [ aStream << ',' ] ]
 		ifNone: [  ].
-	remains := remains reject: #isUnknown.
 	remains size > 1 ifTrue: [ 
 		| type |
 		type := remains size = types size

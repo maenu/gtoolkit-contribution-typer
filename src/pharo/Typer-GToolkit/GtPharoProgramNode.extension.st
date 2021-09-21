@@ -1,6 +1,6 @@
-Extension { #name : #GtPharoProgramNode }
+Extension { #name : 'GtPharoProgramNode' }
 
-{ #category : #'*Typer-GToolkit' }
+{ #category : '*Typer-GToolkit' }
 GtPharoProgramNode >> typGtCompletionActionsFor: aStrategy in: anRbNode [
 	<typPraResult: 'SequenceableCollection<GtCompletionAction>'>
 	<typPraArguments: 'TypGtPharoCompletionStrategy,RBProgramNode'>
