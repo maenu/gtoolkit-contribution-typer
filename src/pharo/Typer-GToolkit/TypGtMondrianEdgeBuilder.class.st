@@ -25,7 +25,6 @@ TypGtMondrianEdgeBuilder >> privateConnect: aCollection from: aFromBlock to: aTo
 	aCollection do: [ :e | 
 		existing
 			detect: [ :f | (f userData at: #typGtEdge) == e ]
-			ifFound: [ Halt now ]
 			ifNone: [ remains add: e ] ].
 	^ super privateConnect: remains from: aFromBlock to: aToBlock
 ]
