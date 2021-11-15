@@ -1,10 +1,10 @@
 Class {
-	#name : #TypRewriter,
-	#superclass : #Object,
-	#category : #'Typer-Core-Utility'
+	#name : 'TypRewriter',
+	#superclass : 'Object',
+	#category : 'Typer-Core-Utility'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewriteCopyWithParameters [
 	<gtExample>
 	^ ((RPackageOrganizer default packages
@@ -20,7 +20,7 @@ TypRewriter >> rewriteCopyWithParameters [
 			ok ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewriteLookupIndex [
 	<gtExample>
 	^ ((RPackageOrganizer default packages
@@ -71,7 +71,7 @@ TypRewriter >> rewriteLookupIndex [
 			ok ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewriteMethodLookupIndex [
 	<gtExample>
 	^ ((RPackageOrganizer default packages
@@ -122,7 +122,7 @@ TypRewriter >> rewriteMethodLookupIndex [
 			ok ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewriteNilNewCopyWithOrigins [
 
 	<gtExample>
@@ -142,7 +142,7 @@ TypRewriter >> rewriteNilNewCopyWithOrigins [
 		  ok ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewritePragmaArguments [
 	<gtExample>
 	^ #typTypeArgument:as: gtPragmas
@@ -168,7 +168,7 @@ TypRewriter >> rewritePragmaArguments [
 			m origin compile: n formattedCode classified: m protocol ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewritePragmaArgumentsCleanup [
 	<gtExample>
 	^ #typPraArguments: gtPragmas
@@ -183,7 +183,7 @@ TypRewriter >> rewritePragmaArgumentsCleanup [
 			m origin compile: n formattedCode classified: m protocol ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewritePragmaParameters [
 	<gtExample>
 	^ #typTypeParameters: gtPragmas
@@ -209,7 +209,7 @@ TypRewriter >> rewritePragmaParameters [
 			ok ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewritePragmaSuperTypeBindTo [
 	<gtExample>
 	^ #typSuperTypeBind:to: gtPragmas
@@ -239,7 +239,7 @@ TypRewriter >> rewritePragmaSuperTypeBindTo [
 			ok ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewritePragmaTypeResult [
 	<gtExample>
 	^ #typTypeResultAs: gtPragmas
@@ -265,7 +265,7 @@ TypRewriter >> rewritePragmaTypeResult [
 			ok ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewritePragmaVariable [
 	<gtExample>
 	^ #typTypeVariable:as: gtPragmas
@@ -295,7 +295,7 @@ TypRewriter >> rewritePragmaVariable [
 			ok ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewriteShadow: aMethod at: anInteger [
 	| cut selector code |
 	cut := aMethod selector copyFrom: 4 to: aMethod selector size.
@@ -315,7 +315,7 @@ TypRewriter >> rewriteShadow: aMethod at: anInteger [
 	^ aMethod removeFromSystem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewriteShadowMethodReturn: e [
 	| rewriter |
 	rewriter := RBParseTreeRewriter new.
@@ -353,7 +353,7 @@ TypRewriter >> rewriteShadowMethodReturn: e [
 		ifFalse: [ e ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewriteShadowMethodReturns [
 	<gtExample>
 	^ ((TypShaShadow withAllSubclasses flatCollect: #methods)
@@ -362,7 +362,7 @@ TypRewriter >> rewriteShadowMethodReturns [
 		collect: [ :e | self rewriteShadowMethodReturn: e ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewriteShadowMethods [
 	<gtExample>
 	^ ((RPackageOrganizer default packages
@@ -378,7 +378,7 @@ TypRewriter >> rewriteShadowMethods [
 			ok ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewriteShadowMigrated [
 	<gtExample>
 	#typShaForVariable: gtPragmas do: [:m | m ].
@@ -395,7 +395,7 @@ TypRewriter >> rewriteShadowMigrated [
 			ok ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewriteShadowMigratedCleanup [
 	<gtExample>
 	^ #typMigrated gtPragmas
@@ -409,7 +409,7 @@ TypRewriter >> rewriteShadowMigratedCleanup [
 			m origin compile: n formattedCode classified: m protocol ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewriteShadowSelector: aSymbol at: anInteger [
 	aSymbol isUnary
 		ifTrue: [ ^ ('m' , aSymbol capitalized , ':') asSymbol ].
@@ -421,7 +421,7 @@ TypRewriter >> rewriteShadowSelector: aSymbol at: anInteger [
 		, ':') asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewriteShadowSelectors [
 	<gtExample>
 	^ (((TypShaShadow allSubclasses
@@ -433,7 +433,7 @@ TypRewriter >> rewriteShadowSelectors [
 		collectWithIndex: [ :e :i | self rewriteShadow: e at: i ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewriteShadowVariable [
 	<gtExample>
 	^ #typShaForVariable: gtPragmas
@@ -459,7 +459,7 @@ TypRewriter >> rewriteShadowVariable [
 			ok ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewriteUnknownNewCopyWithOrigins [
 
 	<gtExample>
@@ -479,7 +479,7 @@ TypRewriter >> rewriteUnknownNewCopyWithOrigins [
 		  ok ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypRewriter >> rewriteVariableLookupIndex [
 	<gtExample>
 	^ ((RPackageOrganizer default packages

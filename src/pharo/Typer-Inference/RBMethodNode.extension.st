@@ -11,12 +11,16 @@ RBMethodNode >> typInfArgumentType: anArgumentNode [
 RBMethodNode >> typInfMethod [
 
 	<typPraResult: 'TypFunctionType'>
+	| identifier |
+	identifier := 'typInfMethod-' , TypInfSelf value hash asString.
 	^ self
-		  propertyAt: 'typInfMethod-' , TypInfSelf value hash asString
-		  ifAbsentPut: [ 
-			  TypInfSelf value
-				  lookupMethod: selector asSymbol
-				  arguments: (arguments collect: #typInfType) ]
+		  propertyAt: identifier
+		  ifAbsent: [ "need to set property to default to unknown on recursive calls"
+			  self
+				  propertyAt: identifier put: self typInfUnknown;
+				  propertyAt: identifier put: (TypInfSelf value
+						   lookupMethod: selector asSymbol
+						   arguments: (arguments collect: #typInfType)) ]
 ]
 
 { #category : '*Typer-Inference' }

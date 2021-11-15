@@ -40,6 +40,8 @@ TypMethodIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aColl
 
 { #category : 'initialization' }
 TypMethodIndex >> reset [
+
 	super reset.
-	ASTCache default do: #typInfInvalidate
+	ASTCache default do: #typInfInvalidate.
+	TypInfAstNode invalidate
 ]

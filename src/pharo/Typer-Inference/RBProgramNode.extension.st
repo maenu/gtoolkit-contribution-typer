@@ -35,13 +35,13 @@ RBProgramNode >> typInfType [
 
 	<typPraResult: 'TypType'>
 	| identifier |
-	identifier := TypInfSelf value hash asString.
+	identifier := 'typInfType-' , TypInfSelf value hash asString.
 	^ self
-		  propertyAt: 'typInfType-' , identifier
+		  propertyAt: identifier
 		  ifAbsent: [ "need to set property to default to unknown on recursive calls"
 			  self
-				  propertyAt: 'typInfType-' , identifier put: self typInfUnknown;
-				  propertyAt: 'typInfType-' , identifier
+				  propertyAt: identifier put: self typInfUnknown;
+				  propertyAt: identifier
 				  put: (self typInfAnnotateType: (self typInfAstNode
 								    addDependent: self typInfTypeRecursive
 								    label: #typInfTypeRecursive)) ]

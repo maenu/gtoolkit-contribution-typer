@@ -159,6 +159,31 @@ TypNode >> postCopy [
 ]
 
 { #category : 'accessing' }
+TypNode >> removeAllDependents [
+
+	dependents copy do: [ :e | self removeDependent: e ]
+]
+
+{ #category : 'accessing' }
+TypNode >> removeDependency: aDependency [
+
+	self assert: [ dependencies includes: aDependency ].
+	self assert: [ 
+		(aDependency dependency includesDependent: aDependency) not ].
+	dependencies remove: aDependency
+]
+
+{ #category : 'accessing' }
+TypNode >> removeDependent: aDependency [
+
+	self assert: [ dependents includes: aDependency ].
+	dependents remove: aDependency.
+	^ aDependency dependent
+		  removeDependency: aDependency;
+		  yourself
+]
+
+{ #category : 'accessing' }
 TypNode >> withAllDependencies [
 
 	| nodes remains |

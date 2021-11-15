@@ -17,6 +17,12 @@ TypInfImplementorsCache class >> instance [
 ]
 
 { #category : 'accessing' }
+TypInfImplementorsCache class >> reset [
+
+	instance := nil
+]
+
+{ #category : 'accessing' }
 TypInfImplementorsCache >> build [
 
 	cache removeAll.

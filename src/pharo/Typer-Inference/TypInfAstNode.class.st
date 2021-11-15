@@ -17,6 +17,12 @@ TypInfAstNode class >> initialize [
 ]
 
 { #category : 'accessing' }
+TypInfAstNode class >> invalidate [
+
+	index removeAll
+]
+
+{ #category : 'accessing' }
 TypInfAstNode class >> node: aNode [
 
 	^ index at: aNode ifAbsentPut: [ 

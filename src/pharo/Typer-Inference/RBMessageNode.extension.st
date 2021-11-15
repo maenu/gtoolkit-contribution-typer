@@ -4,12 +4,16 @@ Extension { #name : 'RBMessageNode' }
 RBMessageNode >> typInfMethod [
 
 	<typPraResult: 'TypFunctionType'>
+	| identifier |
+	identifier := 'typInfMethod-' , receiver typInfType hash asString.
 	^ self
-		  propertyAt: 'typInfMethod-' , receiver typInfType asString
-		  ifAbsentPut: [ 
-			  receiver typInfType
-				  lookupMethod: selector value asSymbol
-				  arguments: (arguments collect: #typInfType) ]
+		  propertyAt: identifier
+		  ifAbsent: [ "need to set property to default to unknown on recursive calls"
+			  self
+				  propertyAt: identifier put: self typInfUnknown;
+				  propertyAt: identifier put: (receiver typInfType
+						   lookupMethod: selector value asSymbol
+						   arguments: (arguments collect: #typInfType)) ]
 ]
 
 { #category : '*Typer-Inference' }

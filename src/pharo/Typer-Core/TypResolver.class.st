@@ -4,6 +4,18 @@ Class {
 	#category : 'Typer-Core-Lookup'
 }
 
+{ #category : 'accessing' }
+TypResolver class >> reset [
+
+	self allInstancesDo: #reset
+]
+
+{ #category : 'accessing' }
+TypResolver class >> resetAll [
+	<script>
+	self withAllSubclassesDo: #reset
+]
+
 { #category : 'resolving' }
 TypResolver >> canResolve: aLookup [
 
@@ -18,9 +30,9 @@ TypResolver >> invalidateOn: aClassOrMethodAnnouncement [
 	
 ]
 
-{ #category : 'resetting' }
+{ #category : 'accessing' }
 TypResolver >> reset [
-	
+	self removeAllDependents
 ]
 
 { #category : 'resolving' }
