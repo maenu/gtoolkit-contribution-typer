@@ -1,6 +1,6 @@
-Extension { #name : 'RBProgramNode' }
+Extension { #name : #RBProgramNode }
 
-{ #category : '*Typer-Inference' }
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typInfAnnotateType: aType [
 	"Annotates aType according to my comments used for casting and setting parameters."
 
@@ -9,13 +9,13 @@ RBProgramNode >> typInfAnnotateType: aType [
 	^ self comments inject: aType into: [ :r :e | e typInfType: r ]
 ]
 
-{ #category : '*Typer-Inference' }
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typInfAstNode [
 
 	^ TypInfAstNode node: self
 ]
 
-{ #category : '*Typer-Inference' }
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typInfInvalidate [
 
 	properties ifNotNil: [ 
@@ -24,13 +24,13 @@ RBProgramNode >> typInfInvalidate [
 	self children reject: #isNil thenDo: #typInfInvalidate
 ]
 
-{ #category : '*Typer-Inference' }
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typInfNil [
 
 	^ self typInfAstNode addDependent: TypNilType new label: #typInfNil
 ]
 
-{ #category : '*Typer-Inference' }
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typInfType [
 
 	<typPraResult: 'TypType'>
@@ -47,18 +47,18 @@ RBProgramNode >> typInfType [
 								    label: #typInfTypeRecursive)) ]
 ]
 
-{ #category : '*Typer-Inference' }
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typInfTypeIn: aType [
 	^ TypInfSelf value: aType during: [ self typInfType ]
 ]
 
-{ #category : '*Typer-Inference' }
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typInfTypeRecursive [
 	<typPraResult: 'TypType'>
 	^ self typInfUnknown
 ]
 
-{ #category : '*Typer-Inference' }
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typInfUnknown [
 
 	^ self typInfAstNode

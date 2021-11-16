@@ -1,6 +1,6 @@
-Extension { #name : 'TemporaryVariable' }
+Extension { #name : #TemporaryVariable }
 
-{ #category : '*Typer-Inference' }
+{ #category : #'*Typer-Inference' }
 TemporaryVariable >> typInfTypeRecursiveIn: aNode [
 
 	aNode isDefinition ifTrue: [ 

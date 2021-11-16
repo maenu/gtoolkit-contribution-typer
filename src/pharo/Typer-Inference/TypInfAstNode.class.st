@@ -1,6 +1,6 @@
 Class {
-	#name : 'TypInfAstNode',
-	#superclass : 'TypNode',
+	#name : #TypInfAstNode,
+	#superclass : #TypNode,
 	#instVars : [
 		'node'
 	],
@@ -10,19 +10,19 @@ Class {
 	#category : 'Typer-Inference'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 TypInfAstNode class >> initialize [
 
 	index := WeakKeyDictionary new
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypInfAstNode class >> invalidate [
 
 	index removeAll
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypInfAstNode class >> node: aNode [
 
 	^ index at: aNode ifAbsentPut: [ 
@@ -31,7 +31,7 @@ TypInfAstNode class >> node: aNode [
 			  yourself ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypInfAstNode >> = anObject [
 
 	anObject == self ifTrue: [ ^ true ].
@@ -39,7 +39,7 @@ TypInfAstNode >> = anObject [
 	^ anObject node = node
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypInfAstNode >> asElementIn: aMondrian [
 
 	| coder |
@@ -63,29 +63,29 @@ TypInfAstNode >> asElementIn: aMondrian [
 		  yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypInfAstNode >> hash [
 
 	^ node hash
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 TypInfAstNode >> initializeNode: aNode [
 	node := aNode
 ]
 
-{ #category : 'invalidation' }
+{ #category : #invalidation }
 TypInfAstNode >> invalidate [
 
 	node withAllParents first typInfInvalidate
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypInfAstNode >> node [
 	^ node
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 TypInfAstNode >> printOn: aStream [
 	node printOn: aStream
 ]

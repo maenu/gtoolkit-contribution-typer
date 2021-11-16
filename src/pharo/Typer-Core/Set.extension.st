@@ -1,6 +1,6 @@
-Extension { #name : 'Set' }
+Extension { #name : #Set }
 
-{ #category : '*Typer-Core' }
+{ #category : #'*Typer-Core' }
 Set >> typAsType [
 
 	<typPraResult: 'TypType'>

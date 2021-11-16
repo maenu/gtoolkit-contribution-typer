@@ -1,29 +1,29 @@
 Class {
-	#name : 'TypType',
-	#superclass : 'TypNode',
+	#name : #TypType,
+	#superclass : #TypNode,
 	#instVars : [
 		'superType',
 		'value',
 		'hasValue'
 	],
-	#category : 'Typer-Core-Type'
+	#category : #'Typer-Core-Type'
 }
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 TypType >> < aType [
 	<typPraResult: 'Boolean'>
 	<typPraArguments: 'TypType'>
 	^ aType > self
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 TypType >> <= aType [
 	<typPraResult: 'Boolean'>
 	<typPraArguments: 'TypType'>
 	^ aType >= self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypType >> = anObject [
 
 	anObject == self ifTrue: [ ^ true ].
@@ -36,7 +36,7 @@ TypType >> = anObject [
 	^ self superType = anObject superType
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 TypType >> > aType [
 	<typPraResult: 'Boolean'>
 	<typPraArguments: 'TypType'>
@@ -47,14 +47,14 @@ TypType >> > aType [
 	^ self >= aType superType
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 TypType >> >= aType [
 	<typPraResult: 'Boolean'>
 	<typPraArguments: 'TypType'>
 	^ self > aType or: [ self = aType ]
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 TypType >> asCompatibleWith: aType [
 
 	<typPraResult: 'TypType'>
@@ -71,13 +71,13 @@ TypType >> asCompatibleWith: aType [
 		  data: { aType }
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 TypType >> asNonNullable [
 	<typPraResult: 'TypType'>
 	^ self
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 TypType >> asNullable [
 
 	<typPraResult: 'TypType'>
@@ -88,7 +88,7 @@ TypType >> asNullable [
 		  label: #asNullable
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 TypType >> copyWithSuperType: aType [
 
 	^ self copy
@@ -96,7 +96,7 @@ TypType >> copyWithSuperType: aType [
 		  yourself
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 TypType >> copyWithValue: anObject [
 
 	^ self copy
@@ -104,23 +104,23 @@ TypType >> copyWithValue: anObject [
 		  yourself
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 TypType >> hasSuperType [
 	^ superType isNotNil
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypType >> hasValue [
 	^ hasValue
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypType >> hash [
 
 	^ self hashSkipping: IdentitySet new
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypType >> hashSkipping: anIdentitySet [
 
 	<typPraArguments: 'IdentitySet<TypType>'>
@@ -131,7 +131,7 @@ TypType >> hashSkipping: anIdentitySet [
 	^ 23 bitXor: (self superType hashSkipping: anIdentitySet)
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 TypType >> initialize [
 
 	<typPraVariable: 'superType' as: '{!,TypType}'>
@@ -141,92 +141,92 @@ TypType >> initialize [
 	hasValue := false
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 TypType >> initializeSuperType: aType [
 
 	superType := aType
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 TypType >> initializeValue: anObject [
 
 	hasValue := true.
 	value := anObject
 ]
 
-{ #category : 'invalidation' }
+{ #category : #invalidation }
 TypType >> invalidate [
 
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 TypType >> isFunction [
 	<typPraResult: 'Boolean'>
 	^ false
 ]
 
-{ #category : 'invalidation' }
+{ #category : #invalidation }
 TypType >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
 
 	^ false
 ]
 
-{ #category : 'invalidation' }
+{ #category : #invalidation }
 TypType >> isInvalidatedByMethodAnnouncement: aMethodAnnouncement [
 
 	^ false
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 TypType >> isNamed [
 	<typPraResult: 'Boolean'>
 	^ false
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 TypType >> isNil [
 	<typPraResult: 'Boolean'>
 	^ false
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 TypType >> isNullable [
 	^ self isNil
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 TypType >> isParametric [
 	<typPraResult: 'Boolean'>
 	^ false
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 TypType >> isUnion [
 	<typPraResult: 'Boolean'>
 	^ false
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 TypType >> isUnknown [
 	<typPraResult: 'Boolean'>
 	^ false
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 TypType >> isVariable [
 	<typPraResult: 'Boolean'>
 	^ false
 ]
 
-{ #category : 'lookup' }
+{ #category : #lookup }
 TypType >> lookupMethod: aSymbol [
 
 	| arguments |
-	arguments := aSymbol numArgs timesCollect: [ TypUnknownType new ].
+	arguments := aSymbol numArgs typTimesCollect: [ TypUnknownType new ].
 	^ self lookupMethod: aSymbol arguments: arguments
 ]
 
-{ #category : 'lookup' }
+{ #category : #lookup }
 TypType >> lookupMethod: aSymbol arguments: aCollection [
 	^ TypMethodIndex instance
 		lookupMethodReceiver: self
@@ -234,33 +234,33 @@ TypType >> lookupMethod: aSymbol arguments: aCollection [
 		arguments: aCollection
 ]
 
-{ #category : 'lookup' }
+{ #category : #lookup }
 TypType >> lookupVariable: aSymbol [
 	^ TypVariableIndex instance
 		lookupReceiver: self
 		selector: aSymbol
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 TypType >> printOn: aStream [
 	self printOn: aStream skipping: IdentitySet new
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 TypType >> printOn: aStream skipping: anIdentitySet [
 	"Respects skipping set to not print recursive type infinitely."
 
 	self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypType >> superType [
 	<typPraResult: 'TypType'>
 	self assert: [ self hasSuperType ].
 	^ superType	"typCastAs TypType"
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypType >> value [
 	self assert: [ self hasValue ].
 	^ value

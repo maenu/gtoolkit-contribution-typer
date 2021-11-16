@@ -1,13 +1,13 @@
 Class {
-	#name : 'TypLookup',
-	#superclass : 'TypNode',
+	#name : #TypLookup,
+	#superclass : #TypNode,
 	#instVars : [
 		'parent'
 	],
 	#category : 'Typer-Core-Lookup'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypLookup >> = anObject [
 	anObject == self
 		ifTrue: [ ^ true ].
@@ -16,51 +16,51 @@ TypLookup >> = anObject [
 	^ anObject parent = parent
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 TypLookup >> copyAsSuper [
 	self subclassResponsibility
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 TypLookup >> hasSuper [
 	<typPraResult: 'Boolean'>
 	self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypLookup >> hash [
 	^ parent hash
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypLookup >> initializeParent: aLookup [
 	parent := aLookup
 ]
 
-{ #category : 'invalidation' }
+{ #category : #invalidation }
 TypLookup >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
 
 	^ false
 ]
 
-{ #category : 'invalidation' }
+{ #category : #invalidation }
 TypLookup >> isInvalidatedByMethodAnnouncement: aMethodAnnouncement [
 
 	^ false
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypLookup >> parent [
 	^ parent
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypLookup >> printOn: aStream [
 	aStream nextPutAll: ' | '.
 	parent printOn: aStream
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypLookup >> root [
 	^ parent ifNil: self ifNotNil: #root
 ]

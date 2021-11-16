@@ -1,1 +1,1 @@
-Package { #name : 'Typer-Core-Utility' }
+Package { #name : #'Typer-Core-Utility' }

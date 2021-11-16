@@ -5,7 +5,7 @@ RBMethodNode >> typDynAsMethodLookupResult [
 	<typPraResult: '{!,TypMethodLookupResult}'>
 	| arguments_ result |
 	arguments_ := (self method numArgs
-		timesCollect: [ :i | self typDynTypeForArgumentAt: i ])
+		typTimesCollect: [ :i | self typDynTypeForArgumentAt: i ])
 		collect: #asNonDynType.
 	result := self typDynTypeForResult asNonDynType.
 	^ result isUnknown

@@ -1,6 +1,6 @@
-Extension { #name : 'RBAssignmentNode' }
+Extension { #name : #RBAssignmentNode }
 
-{ #category : '*Typer-Inference' }
+{ #category : #'*Typer-Inference' }
 RBAssignmentNode >> typInfTypeRecursive [
 	^ value typInfType
 ]

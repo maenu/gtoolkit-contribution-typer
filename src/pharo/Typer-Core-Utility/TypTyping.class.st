@@ -1,10 +1,10 @@
 Class {
-	#name : 'TypTyping',
-	#superclass : 'Object',
-	#category : 'Typer-Core-Utility'
+	#name : #TypTyping,
+	#superclass : #Object,
+	#category : #'Typer-Core-Utility'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypTyping >> debugTypeMethods [
 
 	<gtExample>
@@ -24,13 +24,20 @@ TypTyping >> debugTypeMethods [
 	^ results
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
+TypTyping >> typeAllMethods [
+	<gtExample>
+	^ [CompiledMethod allInstancesDo: [ :e | 
+		(e typInfTypeIn: e methodClass typAsType) ]] timeToRun
+]
+
+{ #category : #accessing }
 TypTyping >> typeMethods [
 	<gtExample>
 	| methods results |
 	results := OrderedCollection new.
 	methods := CompiledMethod allInstances.
-	1 to: 10 do: [ :i | 
+	1 to: 100 do: [ :i | 
 		| method |
 		method := methods atRandom.
 		results add: (method typInfTypeIn: method methodClass typAsType) ].

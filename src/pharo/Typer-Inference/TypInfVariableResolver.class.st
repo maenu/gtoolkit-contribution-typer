@@ -1,10 +1,10 @@
 Class {
-	#name : 'TypInfVariableResolver',
-	#superclass : 'TypResolver',
+	#name : #TypInfVariableResolver,
+	#superclass : #TypResolver,
 	#category : 'Typer-Inference'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypInfVariableResolver >> canResolve: aLookup [
 	^ aLookup receiver isNamed
 		and: [ aLookup receiver hasClassDescription
@@ -13,7 +13,7 @@ TypInfVariableResolver >> canResolve: aLookup [
 								anySatisfy: [ :e | e name = aLookup selector ] ] ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypInfVariableResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
 	(aLookup receiver classDescription hasSlotNamed: aLookup selector)

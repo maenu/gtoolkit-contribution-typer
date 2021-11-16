@@ -1,6 +1,6 @@
-Extension { #name : 'SelfVariable' }
+Extension { #name : #SelfVariable }
 
-{ #category : '*Typer-Inference' }
+{ #category : #'*Typer-Inference' }
 SelfVariable >> typInfTypeRecursiveIn: aNode [
 
 	^ TypInfSelf value

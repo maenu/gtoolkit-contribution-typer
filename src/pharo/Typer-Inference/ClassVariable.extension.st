@@ -1,6 +1,6 @@
-Extension { #name : 'ClassVariable' }
+Extension { #name : #ClassVariable }
 
-{ #category : '*Typer-Inference' }
+{ #category : #'*Typer-Inference' }
 ClassVariable >> typInfTypeRecursiveIn: aNode [
 
 	^ owningClass typAsType lookupVariable: name asSymbol

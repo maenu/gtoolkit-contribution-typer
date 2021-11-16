@@ -1,6 +1,6 @@
 Class {
-	#name : 'TypInfTemporaryExecutionOrderVisitor',
-	#superclass : 'RBProgramNodeVisitor',
+	#name : #TypInfTemporaryExecutionOrderVisitor,
+	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'node',
 		'definer',
@@ -10,7 +10,7 @@ Class {
 	#category : 'Typer-Inference'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypInfTemporaryExecutionOrderVisitor class >> typeForTemporary: aNode [
 
 	| definer |
@@ -20,7 +20,7 @@ TypInfTemporaryExecutionOrderVisitor class >> typeForTemporary: aNode [
 	^ (self typesFor: aNode in: definer definer: definer) typAsType
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypInfTemporaryExecutionOrderVisitor class >> typesFor: aNode in: anotherNode definer: yetAnotherNode [
 	^ self new
 		initializeNode: aNode definer: yetAnotherNode;
@@ -28,7 +28,7 @@ TypInfTemporaryExecutionOrderVisitor class >> typesFor: aNode in: anotherNode de
 		types
 ]
 
-{ #category : 'visiting' }
+{ #category : #visiting }
 TypInfTemporaryExecutionOrderVisitor >> initialize [
 	<typPraVariable: 'node' as: 'RBTemporaryNode'>
 	<typPraVariable: 'definer' as: '{!,RBSequenceNode}'>
@@ -39,7 +39,7 @@ TypInfTemporaryExecutionOrderVisitor >> initialize [
 	stopped := false
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypInfTemporaryExecutionOrderVisitor >> initializeNode: aNode definer: anotherNode [
 	self assert: [ aNode isVariable ].
 	self assert: [ aNode isDefinition not ].
@@ -47,7 +47,7 @@ TypInfTemporaryExecutionOrderVisitor >> initializeNode: aNode definer: anotherNo
 	definer := anotherNode
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypInfTemporaryExecutionOrderVisitor >> node: aNode [
 	self
 		assert:
@@ -56,12 +56,12 @@ TypInfTemporaryExecutionOrderVisitor >> node: aNode [
 	definer := node whoDefines: node name
 ]
 
-{ #category : 'generated' }
+{ #category : #generated }
 TypInfTemporaryExecutionOrderVisitor >> types [
 	^ types
 ]
 
-{ #category : 'visiting' }
+{ #category : #visiting }
 TypInfTemporaryExecutionOrderVisitor >> visitArrayNode: anArrayNode [
 	"blocks can at the earliest time be evaluated after the non-block children"
 
@@ -71,7 +71,7 @@ TypInfTemporaryExecutionOrderVisitor >> visitArrayNode: anArrayNode [
 		do: [ :each | self visitNode: each ]
 ]
 
-{ #category : 'visiting' }
+{ #category : #visiting }
 TypInfTemporaryExecutionOrderVisitor >> visitAssignmentNode: aNode [
 	self visitNode: aNode value.
 	stopped
@@ -83,7 +83,7 @@ TypInfTemporaryExecutionOrderVisitor >> visitAssignmentNode: aNode [
 	self visitNode: aNode variable
 ]
 
-{ #category : 'visiting' }
+{ #category : #visiting }
 TypInfTemporaryExecutionOrderVisitor >> visitBlockNode: aBlockNode [
 	"can ignore stopping, must always consider type after, using the node which is not in there, as we start from sequence nodes."
 
@@ -98,7 +98,7 @@ TypInfTemporaryExecutionOrderVisitor >> visitBlockNode: aBlockNode [
 				definer: (node whoDefines: node name))
 ]
 
-{ #category : 'visiting' }
+{ #category : #visiting }
 TypInfTemporaryExecutionOrderVisitor >> visitMessageNode: aMessageNode [
 	"blocks can at the earliest time be evaluated after the receiver and non-block arguments"
 
@@ -115,7 +115,7 @@ TypInfTemporaryExecutionOrderVisitor >> visitMessageNode: aMessageNode [
 		ifTrue: [ self visitNode: aMessageNode receiver ]
 ]
 
-{ #category : 'visiting' }
+{ #category : #visiting }
 TypInfTemporaryExecutionOrderVisitor >> visitNode: aNode [
 	stopped
 		ifTrue: [ ^ self ].
@@ -125,7 +125,7 @@ TypInfTemporaryExecutionOrderVisitor >> visitNode: aNode [
 	super visitNode: aNode
 ]
 
-{ #category : 'visiting' }
+{ #category : #visiting }
 TypInfTemporaryExecutionOrderVisitor >> visitSequenceNode: aSequenceNode [
 	aSequenceNode == definer
 		ifTrue: [ types

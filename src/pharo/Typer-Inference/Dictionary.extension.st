@@ -1,6 +1,6 @@
-Extension { #name : 'Dictionary' }
+Extension { #name : #Dictionary }
 
-{ #category : '*Typer-Inference' }
+{ #category : #'*Typer-Inference' }
 Dictionary >> typInfSelfType [
 
 	| b a |
@@ -14,11 +14,11 @@ Dictionary >> typInfSelfType [
 			  a typAsType }
 ]
 
-{ #category : '*Typer-Inference' }
+{ #category : #'*Typer-Inference' }
 Dictionary >> typInfSelfTypeSamples [
 
 	| pool |
 	self size < 128 ifTrue: [ ^ self associations ].
 	pool := self associations copy asOrderedCollection.
-	^ 128 timesCollect: [ pool remove: pool atRandom ]
+	^ 128 typTimesCollect: [ pool remove: pool atRandom ]
 ]

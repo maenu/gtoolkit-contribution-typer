@@ -1,6 +1,6 @@
-Extension { #name : 'ClassAnnouncement' }
+Extension { #name : #ClassAnnouncement }
 
-{ #category : '*Typer-Core' }
+{ #category : #'*Typer-Core' }
 ClassAnnouncement >> typInvalidates: aLookupOrType [
 
 	^ aLookupOrType isInvalidatedByClassAnnouncement: self

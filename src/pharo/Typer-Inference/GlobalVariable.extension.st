@@ -1,6 +1,6 @@
-Extension { #name : 'GlobalVariable' }
+Extension { #name : #GlobalVariable }
 
-{ #category : '*Typer-Inference' }
+{ #category : #'*Typer-Inference' }
 GlobalVariable >> typInfTypeRecursiveIn: aNode [
 
 	^ value typInfSelfType

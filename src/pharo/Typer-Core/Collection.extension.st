@@ -1,6 +1,6 @@
-Extension { #name : 'Collection' }
+Extension { #name : #Collection }
 
-{ #category : '*Typer-Core' }
+{ #category : #'*Typer-Core' }
 Collection >> typAsType [
 
 	^ self asSet typAsType
