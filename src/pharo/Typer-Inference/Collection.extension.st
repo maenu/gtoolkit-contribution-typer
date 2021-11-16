@@ -1,13 +1,13 @@
-Extension { #name : #Collection }
+Extension { #name : 'Collection' }
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 Collection >> typInfSelfType [
 
 	^ self class typAsType copyWithParameters:
 		  { (self typInfSelfTypeSamples collect: #typInfSelfType) typAsType }
 ]
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 Collection >> typInfSelfTypeSamples [
 	| pool |
 	self size < 128

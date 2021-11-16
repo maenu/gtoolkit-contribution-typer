@@ -1,13 +1,13 @@
-Extension { #name : #RBMethodNode }
+Extension { #name : 'RBMethodNode' }
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 RBMethodNode >> typInfArgumentType: anArgumentNode [
 	| i |
 	i := arguments detectIndex: [ :e | e == anArgumentNode ].
 	^ self typInfMethod arguments at: i
 ]
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 RBMethodNode >> typInfMethod [
 
 	<typPraResult: 'TypFunctionType'>
@@ -23,7 +23,7 @@ RBMethodNode >> typInfMethod [
 						   arguments: (arguments collect: #typInfType)) ]
 ]
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 RBMethodNode >> typInfTemporaryProfile [
 	<typPraResult: 'SequenceableCollection<Association<RBProgramNode,TypType>>'>
 	^ self allChildren
@@ -31,16 +31,15 @@ RBMethodNode >> typInfTemporaryProfile [
 		thenCollect: [ :e | e -> e typInfType ]
 ]
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 RBMethodNode >> typInfTypeRecursive [
 
 	<typPraResult: 'TypType'>
 	|  visitor types identifier |
 	identifier := TypInfSelf value hash asString.
-	self
+	body
 		typInfInvalidate;
-		typInfType;
-		propertyAt: 'typFixPoint-' , identifier put: nil.
+		typInfType.
 	types := (self allChildren select: #isReturn)
 		         collect: #typInfType
 		         as: OrderedCollection.
@@ -54,7 +53,7 @@ RBMethodNode >> typInfTypeRecursive [
 		  signalsAlways: visitor signalsAlways
 ]
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 RBMethodNode >> typInfTypeRecursiveOld [
 
 	<typPraResult: 'TypType'>

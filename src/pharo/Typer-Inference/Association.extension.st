@@ -1,6 +1,6 @@
-Extension { #name : #Association }
+Extension { #name : 'Association' }
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 Association >> typInfSelfType [
 	| type |
 	type := super typInfSelfType.

@@ -1,6 +1,6 @@
-Extension { #name : #SuperVariable }
+Extension { #name : 'SuperVariable' }
 
-{ #category : #'*Typer-Inference' }
+{ #category : '*Typer-Inference' }
 SuperVariable >> typInfTypeRecursiveIn: aNode [
 
 	| type |

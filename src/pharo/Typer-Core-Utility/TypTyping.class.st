@@ -1,37 +1,42 @@
 Class {
-	#name : #TypTyping,
-	#superclass : #Object,
-	#category : #'Typer-Core-Utility'
+	#name : 'TypTyping',
+	#superclass : 'Object',
+	#category : 'Typer-Core-Utility'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypTyping >> debugTypeMethods [
 
 	<gtExample>
 	| methods results |
 	results := OrderedCollection new.
 	methods := CompiledMethod allInstances.
-	1 to: 10 do: [ :i | 
+	1 to: 100 do: [ :i | 
 		| method process semaphore |
 		method := methods atRandom.
 		semaphore := Semaphore new.
 		process := [ 
-		           method typInfTypeIn: method methodClass typAsType.
-		           semaphore signal ] fork.
-		(semaphore wait: 2000 milliSeconds) ifTrue: [ 
+		           [ 
+		           [ method typInfTypeIn: method methodClass typAsType ]
+			           on: Exception
+			           do: [ :e | 
+				           e
+					           freeze;
+					           debug ] ] ensure: [ semaphore signal ] ] fork.
+		(semaphore wait: 1000 milliSeconds) ifTrue: [ 
 			process suspend.
 			results add: process ] ].
 	^ results
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypTyping >> typeAllMethods [
 	<gtExample>
 	^ [CompiledMethod allInstancesDo: [ :e | 
 		(e typInfTypeIn: e methodClass typAsType) ]] timeToRun
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypTyping >> typeMethods [
 	<gtExample>
 	| methods results |
