@@ -1,6 +1,6 @@
-Extension { #name : #MethodAnnouncement }
+Extension { #name : 'MethodAnnouncement' }
 
-{ #category : #'*Typer-Core' }
+{ #category : '*Typer-Core' }
 MethodAnnouncement >> typInvalidates: aLookupOrType [
 
 	^ aLookupOrType isInvalidatedByMethodAnnouncement: self

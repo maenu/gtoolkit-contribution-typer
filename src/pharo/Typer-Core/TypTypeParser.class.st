@@ -1,15 +1,15 @@
 Class {
-	#name : #TypTypeParser,
-	#superclass : #SmaCCParser,
+	#name : 'TypTypeParser',
+	#superclass : 'SmaCCParser',
 	#category : 'Typer-Core-Parser'
 }
 
-{ #category : #'generated-accessing' }
+{ #category : 'generated-accessing' }
 TypTypeParser class >> cacheId [
 	^'2021-03-20T18:04:51.724039+01:00'
 ]
 
-{ #category : #generated }
+{ #category : 'generated' }
 TypTypeParser class >> definitionComment [
 "%prefix Typ;
 %start Types;
@@ -97,14 +97,14 @@ Name
 	;"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypTypeParser class >> parse: aString [
 	<typPraResult: 'SequenceableCollection<TypType>'>
 	<typPraArguments: 'String'>
 	^ super parse: aString	"typCastAs SequenceableCollection<TypType>"
 ]
 
-{ #category : #generated }
+{ #category : 'generated' }
 TypTypeParser class >> reduceTable [
 ^#(
 	#(20 1 #reduceActionForNilType1: 625665 false ) 
@@ -131,22 +131,22 @@ TypTypeParser class >> reduceTable [
 	).
 ]
 
-{ #category : #'generated-accessing' }
+{ #category : 'generated-accessing' }
 TypTypeParser class >> scannerClass [
 	^TypTypeScanner
 ]
 
-{ #category : #generated }
+{ #category : 'generated' }
 TypTypeParser class >> startingStateForTypes [
 	^ 1
 ]
 
-{ #category : #generated }
+{ #category : 'generated' }
 TypTypeParser class >> symbolNames [
 	^ #('"!"' '"("' '")"' '","' '"->"' '"<"' '"<="' '">"' '"?"' '"@"' '"["' '"]"' '"{"' '"}"' '<name>' 'B e g i n' 'Types' 'Type' 'UnknownType' 'NilType' 'VariableType' 'NamedType' 'ParametricType' 'FunctionType' 'UnionType' 'EmptyTypes' 'Name' 'E O F' 'error')
 ]
 
-{ #category : #generated }
+{ #category : 'generated' }
 TypTypeParser class >> transitionTable [
 ^#(
 #[1 0 9 0 1 0 13 0 9 0 17 0 10 0 21 0 13 0 25 0 15 0 29 0 17 0 33 0 18 0 33 0 19 0 33 0 20 0 33 0 21 0 33 0 22 0 33 0 23 0 33 0 24 0 33 0 25 0 65 0 27] 
@@ -189,12 +189,12 @@ TypTypeParser class >> transitionTable [
 	).
 ]
 
-{ #category : #'generated-reduction actions' }
+{ #category : 'generated-reduction actions' }
 TypTypeParser >> reduceActionForEmptyTypes2: nodes [
 	^ {}
 ]
 
-{ #category : #'generated-reduction actions' }
+{ #category : 'generated-reduction actions' }
 TypTypeParser >> reduceActionForFunctionType1: nodes [
 	^ TypFunctionType
 		named: (nodes at: 1)
@@ -204,7 +204,7 @@ TypTypeParser >> reduceActionForFunctionType1: nodes [
 		signalsAlways: nil
 ]
 
-{ #category : #'generated-reduction actions' }
+{ #category : 'generated-reduction actions' }
 TypTypeParser >> reduceActionForFunctionType2: nodes [
 	^ TypFunctionType
 		named: (nodes at: 1)
@@ -214,24 +214,24 @@ TypTypeParser >> reduceActionForFunctionType2: nodes [
 		signalsAlways: nil
 ]
 
-{ #category : #'generated-reduction actions' }
+{ #category : 'generated-reduction actions' }
 TypTypeParser >> reduceActionForName1: nodes [
 	^ (nodes at: 1) value
 ]
 
-{ #category : #'generated-reduction actions' }
+{ #category : 'generated-reduction actions' }
 TypTypeParser >> reduceActionForNamedType1: nodes [
 	^ [ (nodes at: 1) asClass typAsType ]
 		on: NotFound
 		do: [ TypNamedType named: (nodes at: 1) ]
 ]
 
-{ #category : #'generated-reduction actions' }
+{ #category : 'generated-reduction actions' }
 TypTypeParser >> reduceActionForNilType1: nodes [
 	^ TypNilType new
 ]
 
-{ #category : #'generated-reduction actions' }
+{ #category : 'generated-reduction actions' }
 TypTypeParser >> reduceActionForParametricType1: nodes [
 	| type |
 	type := [ (nodes at: 1) asClass typAsType ]
@@ -242,32 +242,32 @@ TypTypeParser >> reduceActionForParametricType1: nodes [
 		ifFalse: [ type ]
 ]
 
-{ #category : #'generated-reduction actions' }
+{ #category : 'generated-reduction actions' }
 TypTypeParser >> reduceActionForTypes1: nodes [
 	^ {(nodes at: 1)}
 ]
 
-{ #category : #'generated-reduction actions' }
+{ #category : 'generated-reduction actions' }
 TypTypeParser >> reduceActionForTypes2: nodes [
 	^ (nodes at: 1) , {(nodes at: 3)}
 ]
 
-{ #category : #'generated-reduction actions' }
+{ #category : 'generated-reduction actions' }
 TypTypeParser >> reduceActionForUnionType1: nodes [
 	^ TypUnionType types: (nodes at: 2)
 ]
 
-{ #category : #'generated-reduction actions' }
+{ #category : 'generated-reduction actions' }
 TypTypeParser >> reduceActionForUnknownType1: nodes [
 	^ TypUnknownType new
 ]
 
-{ #category : #'generated-reduction actions' }
+{ #category : 'generated-reduction actions' }
 TypTypeParser >> reduceActionForVariableType1: nodes [
 	^ TypVariableType named: '@' , (nodes at: 2)
 ]
 
-{ #category : #'generated-reduction actions' }
+{ #category : 'generated-reduction actions' }
 TypTypeParser >> reduceActionForVariableType2: nodes [
 	^ TypVariableType named: '@' , (nodes at: 2) superType: (nodes at: 4)
 ]

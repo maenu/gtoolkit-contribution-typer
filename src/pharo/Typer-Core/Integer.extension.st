@@ -1,6 +1,6 @@
-Extension { #name : #Integer }
+Extension { #name : 'Integer' }
 
-{ #category : #'*Typer-Core' }
+{ #category : '*Typer-Core' }
 Integer >> typTimesCollect: aBlock [
 
 	^ (1 to: self) collect: aBlock

@@ -1,6 +1,6 @@
 Class {
-	#name : #TypFunctionType,
-	#superclass : #TypParametricType,
+	#name : 'TypFunctionType',
+	#superclass : 'TypParametricType',
 	#instVars : [
 		'argumentsSize',
 		'argumentsOptional',
@@ -9,12 +9,12 @@ Class {
 	#category : 'Typer-Core-Type'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypFunctionType class >> classDescription: aClassDescription parameters: aSequenceableCollection [
 	self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypFunctionType class >> classDescription: aClassDescription result: aType arguments: anOrderedCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean [
 	| parameters |
 	parameters := OrderedDictionary new.
@@ -30,12 +30,12 @@ TypFunctionType class >> classDescription: aClassDescription result: aType argum
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypFunctionType class >> named: aString parameters: aSequenceableCollection [
 	self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypFunctionType class >> named: aString result: aType arguments: anOrderedCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean [
 	| parameters |
 	parameters := OrderedDictionary new.
@@ -51,7 +51,7 @@ TypFunctionType class >> named: aString result: aType arguments: anOrderedCollec
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypFunctionType class >> newFrom: aType [
 	self assert: [ aType isKindOf: self ].
 	^ self
@@ -62,7 +62,7 @@ TypFunctionType class >> newFrom: aType [
 		signalsAlways: aType signalsAlways
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TypFunctionType >> = aType [
 	super = aType
 		ifFalse: [ ^ false ].
@@ -71,7 +71,7 @@ TypFunctionType >> = aType [
 	^ argumentsOptional = aType argumentsOptional
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TypFunctionType >> > aType [
 	aType = self
 		ifTrue: [ ^ false ].
@@ -97,24 +97,24 @@ TypFunctionType >> > aType [
 		allSatisfy: [ :e | (self arguments at: e) >= (aType arguments at: e) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypFunctionType >> arguments [
 	<typPraResult: 'SequenceableCollection<TypType>'>
 	^ (1 to: argumentsSize)
 		withIndexCollect: [ :e :i | self at: '@' , i asString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypFunctionType >> argumentsOptional [
 	^ argumentsOptional
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypFunctionType >> argumentsSize [
 	^ argumentsSize
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 TypFunctionType >> asCompatibleWith: aType [
 
 	| copy |
@@ -128,19 +128,19 @@ TypFunctionType >> asCompatibleWith: aType [
 	^ copy
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 TypFunctionType >> copyWithArguments: someTypes [
 
 	^ self copyWithParameters: { self result } , someTypes
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 TypFunctionType >> copyWithResult: aType [
 
 	^ self copyWithAt: '@0' put: aType
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 TypFunctionType >> copyWithSignalsAlways: aBooleanOrNil [
 
 	^ self copy
@@ -150,7 +150,7 @@ TypFunctionType >> copyWithSignalsAlways: aBooleanOrNil [
 		  yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TypFunctionType >> hashSkipping: anIdentitySet [
 
 	(anIdentitySet includes: self) ifTrue: [ ^ 41 ].
@@ -158,14 +158,14 @@ TypFunctionType >> hashSkipping: anIdentitySet [
 		  bitXor: (super hashSkipping: anIdentitySet)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TypFunctionType >> initialize [
 	<typPraVariable: 'argumentsSize' as: 'Integer'>
 	<typPraVariable: 'argumentsOptional' as: 'Boolean'>
 	super initialize
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean signalsAlways: anotherBoolean [
 	self assert: [ anInteger isInteger ].
 	self assert: [ anInteger >= 0 ].
@@ -174,7 +174,7 @@ TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolea
 	signalsAlways := anotherBoolean
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TypFunctionType >> initializeParameters: anOrderedDictionary [
 	self
 		assert: [ anOrderedDictionary associations
@@ -184,12 +184,12 @@ TypFunctionType >> initializeParameters: anOrderedDictionary [
 	super initializeParameters: anOrderedDictionary
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TypFunctionType >> isFunction [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypFunctionType >> printOn: aStream skipping: anIdentitySet [
 	(anIdentitySet includes: self)
 		ifTrue: [ aStream << '.'.
@@ -214,13 +214,13 @@ TypFunctionType >> printOn: aStream skipping: anIdentitySet [
 	self result printOn: aStream skipping: anIdentitySet , {self}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypFunctionType >> result [
 	<typPraResult: 'TypType'>
 	^ self at: '@0'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypFunctionType >> signalsAlways [
 	^ signalsAlways
 ]

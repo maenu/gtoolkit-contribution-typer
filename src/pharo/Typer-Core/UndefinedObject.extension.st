@@ -1,6 +1,6 @@
-Extension { #name : #UndefinedObject }
+Extension { #name : 'UndefinedObject' }
 
-{ #category : #'*Typer-Core' }
+{ #category : '*Typer-Core' }
 UndefinedObject class >> typAsType [
 	<typPraResult: 'TypNilType'>
 	^ TypNilType new

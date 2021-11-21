@@ -1,32 +1,32 @@
 Class {
-	#name : #TypWrappingResolver,
-	#superclass : #TypResolver,
+	#name : 'TypWrappingResolver',
+	#superclass : 'TypResolver',
 	#instVars : [
 		'resolver'
 	],
 	#category : 'Typer-Core-Lookup'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TypWrappingResolver class >> resolver: aResolver [
 	^ self new
 		initializeResolver: aResolver;
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TypWrappingResolver >> initializeResolver: aResolver [
 	resolver := aResolver
 ]
 
-{ #category : #invalidation }
+{ #category : 'invalidation' }
 TypWrappingResolver >> invalidateOn: aClassOrMethodAnnouncement [
 
 	super invalidateOn: aClassOrMethodAnnouncement.
 	resolver invalidateOn: aClassOrMethodAnnouncement
 ]
 
-{ #category : #resetting }
+{ #category : 'resetting' }
 TypWrappingResolver >> reset [
 	super reset.
 	resolver reset

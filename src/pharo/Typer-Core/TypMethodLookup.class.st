@@ -25,15 +25,15 @@ Internal Representation and Key Implementation Points.
     Implementation Points
 "
 Class {
-	#name : #TypMethodLookup,
-	#superclass : #TypPropertyLookup,
+	#name : 'TypMethodLookup',
+	#superclass : 'TypPropertyLookup',
 	#instVars : [
 		'arguments'
 	],
 	#category : 'Typer-Core-Lookup'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection [
 	^ self new
 		initializeReceiver: aType selector: aSymbol;
@@ -41,35 +41,35 @@ TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollectio
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypMethodLookup >> = anObject [
 	super = anObject
 		ifFalse: [ ^ false ].
 	^ anObject arguments = arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypMethodLookup >> arguments [
 	^ arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypMethodLookup >> hash [
 	^ super hash bitXor: arguments hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypMethodLookup >> initializeArguments: aCollection [
 	arguments := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypMethodLookup >> postCopy [
 	super postCopy.
 	arguments := arguments copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypMethodLookup >> printOn: aStream [
 	aStream
 		nextPut: ${;

@@ -1,10 +1,10 @@
 Class {
-	#name : #TypTypeIndex,
-	#superclass : #TypIndex,
+	#name : 'TypTypeIndex',
+	#superclass : 'TypIndex',
 	#category : 'Typer-Core-Lookup'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypTypeIndex class >> instance [
 
 	^ instance ifNil: [ 
@@ -22,7 +22,7 @@ TypTypeIndex class >> instance [
 			              yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypTypeIndex >> lookupClassDescription: aClassDescription [
 
 	| lookup |

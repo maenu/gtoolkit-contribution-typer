@@ -1,22 +1,22 @@
 Class {
-	#name : #TypResolver,
-	#superclass : #TypNode,
+	#name : 'TypResolver',
+	#superclass : 'TypNode',
 	#category : 'Typer-Core-Lookup'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypResolver class >> reset [
 
 	self allInstancesDo: #reset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypResolver class >> resetAll [
 	<script>
 	self withAllSubclassesDo: #reset
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 TypResolver >> canResolve: aLookup [
 
 	<typPraArguments: 'TypLookup'>
@@ -24,18 +24,18 @@ TypResolver >> canResolve: aLookup [
 	self subclassResponsibility
 ]
 
-{ #category : #invalidation }
+{ #category : 'invalidation' }
 TypResolver >> invalidateOn: aClassOrMethodAnnouncement [
 
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypResolver >> reset [
 	self removeAllDependents
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 TypResolver >> resolve: aLookup [
 	self subclassResponsibility
 ]
