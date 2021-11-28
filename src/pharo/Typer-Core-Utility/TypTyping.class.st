@@ -1,44 +1,19 @@
 Class {
-	#name : 'TypTyping',
-	#superclass : 'Object',
+	#name : #TypTyping,
+	#superclass : #Object,
 	#classInstVars : [
 		'probes'
 	],
-	#category : 'Typer-Core-Utility'
+	#category : #'Typer-Core-Utility'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypTyping class >> probes [
 
 	^ probes ifNil: [ probes := IdentitySet new ]
 ]
 
-{ #category : 'accessing' }
-TypTyping >> debugTypeMethods [
-
-	<gtExample>
-	| methods results |
-	results := OrderedCollection new.
-	methods := CompiledMethod allInstances.
-	1 to: 100 do: [ :i | 
-		| method process semaphore |
-		method := methods atRandom.
-		semaphore := Semaphore new.
-		process := [ 
-		           [ 
-		           [ method typInfTypeIn: method methodClass typAsType ]
-			           on: Exception
-			           do: [ :e | 
-				           e
-					           freeze;
-					           debug ] ] ensure: [ semaphore signal ] ] fork.
-		(semaphore wait: 1000 milliSeconds) ifTrue: [ 
-			process suspend.
-			results add: process ] ].
-	^ results
-]
-
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypTyping >> memoryProbe [
 
 	<gtExample>
@@ -48,29 +23,45 @@ TypTyping >> memoryProbe [
 		  SpaceTally new systemWideSpaceTally }
 ]
 
-{ #category : 'accessing' }
-TypTyping >> monitorMemory [
+{ #category : #accessing }
+TypTyping >> monitorMemoryAllMethods [
 
 	<gtExample>
-	| probes |
+	^ self
+		  monitorMemoryMethods: CompiledMethod allInstances
+		  timeout: 5 seconds
+]
+
+{ #category : #accessing }
+TypTyping >> monitorMemoryMethods: aCollection timeout: aDuration [
+
+	| probes result tally |
 	probes := Dictionary new.
 	probes at: 'pre-load' put: self memoryProbe.
-	self stressMemory.
+	tally := MessageTally on: [ 
+		         result := aCollection collect: [ :e | 
+			                   self typeMethod: e timeout: aDuration ] ].
 	probes at: 'post-load' put: self memoryProbe.
 	Smalltalk garbageCollect.
 	probes at: 'post-gc' put: self memoryProbe.
-	^ probes
+	^ { 
+		  result.
+		  tally.
+		  probes }
 ]
 
-{ #category : 'accessing' }
-TypTyping >> monitorMemory10 [
+{ #category : #accessing }
+TypTyping >> monitorMemorySomeMethods [
 
 	<gtExample>
-	5 timesRepeat: [ self class probes add: self monitorMemory ].
-	^ self class probes
+	| all methods |
+	all := CompiledMethod allInstances.
+	methods := IdentitySet new.
+	[ methods size < 100 ] whileTrue: [ methods add: all atRandom ].
+	^ self monitorMemoryMethods: methods timeout: 5 seconds
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypTyping >> reset [
 
 	<gtExample>
@@ -87,43 +78,43 @@ TypTyping >> reset [
 	^ self class probes
 ]
 
-{ #category : 'accessing' }
-TypTyping >> stressMemory [
+{ #category : #accessing }
+TypTyping >> typeAllMethods [
 
 	<gtExample>
-	| semaphore process |
+	| methods n d |
+	methods := CompiledMethod allInstances.
+	n := methods size.
+	d := NewValueHolder value: 0.
+	[ 
+	methods do: [ :e | 
+		| result |
+		result := self typeMethod: e timeout: 5 seconds.
+		d value: d value + (1 / n) ] ] forkNamed: 'typeAllMethods'.
+	^ d
+]
+
+{ #category : #accessing }
+TypTyping >> typeMethod: aMethod timeout: aDuration [
+
+	| semaphore process error timeout result |
+	timeout := false.
 	semaphore := Semaphore new.
 	process := [ 
 	           [ 
-	           [ TypTyping new typeMethods ]
+	           [ 
+	           result := aMethod typInfTypeSelf:
+		                     aMethod methodClass typAsType ]
 		           on: Exception
 		           do: [ :e | 
-			           e
-				           freeze;
-				           debug ] ] ensure: [ semaphore signal ] ] fork.
-	semaphore
-		wait: 60 seconds
-		onCompletion: [  ]
-		onTimeout: [ process terminate ].
-	^ nil
-]
-
-{ #category : 'accessing' }
-TypTyping >> typeAllMethods [
-	<gtExample>
-	^ [CompiledMethod allInstancesDo: [ :e | 
-		(e typInfTypeIn: e methodClass typAsType) ]] timeToRun
-]
-
-{ #category : 'accessing' }
-TypTyping >> typeMethods [
-	<gtExample>
-	| methods results |
-	results := OrderedCollection new.
-	methods := CompiledMethod allInstances.
-	1 to: 100 do: [ :i | 
-		| method |
-		method := methods atRandom.
-		results add: (method typInfTypeIn: method methodClass typAsType) ].
-	^ results
+			           e freeze.
+			           error := e ] ] ensure: [ semaphore signal ] ] fork.
+	semaphore wait: aDuration onCompletion: [  ] onTimeout: [ 
+		process suspend.
+		timeout := true ].
+	timeout ifTrue: [ 
+		^ TypMethodMeasurement method: aMethod process: process ].
+	error ifNotNil: [ 
+		^ TypMethodMeasurement method: aMethod error: error ].
+	^ TypMethodMeasurement method: aMethod result: result
 ]

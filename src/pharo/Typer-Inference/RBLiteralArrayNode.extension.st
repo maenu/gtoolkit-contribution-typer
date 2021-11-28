@@ -1,9 +1,9 @@
-Extension { #name : 'RBLiteralArrayNode' }
+Extension { #name : #RBLiteralArrayNode }
 
-{ #category : '*Typer-Inference' }
-RBLiteralArrayNode >> typInfTypeRecursive [
+{ #category : #'*Typer-Inference' }
+RBLiteralArrayNode >> typInfTypeRecursiveSelf: aType [
 
 	^ (Array typAsType copyWithParameters:
-		   { (contents collect: #typInfType) typAsType }) copyWithValue:
-		  self value
+		   { (contents collect: [ :e | e typInfTypeSelf: aType ]) typAsType }) 
+		  copyWithValue: self value
 ]

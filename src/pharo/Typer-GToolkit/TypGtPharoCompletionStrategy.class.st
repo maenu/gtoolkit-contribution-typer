@@ -1,25 +1,25 @@
 Class {
-	#name : 'TypGtPharoCompletionStrategy',
-	#superclass : 'GtPharoCompletionStrategy',
+	#name : #TypGtPharoCompletionStrategy,
+	#superclass : #GtPharoCompletionStrategy,
 	#instVars : [
 		'coder'
 	],
 	#category : 'Typer-GToolkit'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtPharoCompletionStrategy >> coder [
 	<typPraResult: 'TypGtMethodCoder'>
 	^ coder
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtPharoCompletionStrategy >> coder: anObject [
 
 	coder := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtPharoCompletionStrategy >> completionActionsFor: aText at: positionInteger max: maxInteger requested: aBoolean [
 
 	| node |
@@ -32,7 +32,7 @@ TypGtPharoCompletionStrategy >> completionActionsFor: aText at: positionInteger 
 		  ifNotNil: [ :tree | tree typGtCompletionActionsFor: self in: node ]
 ]
 
-{ #category : 'private-selector' }
+{ #category : #'private-selector' }
 TypGtPharoCompletionStrategy >> selectorsForReceiver: aBehavior matching: aString [
 	| tree |
 	tree := aBehavior
@@ -47,7 +47,7 @@ TypGtPharoCompletionStrategy >> selectorsForReceiver: aBehavior matching: aStrin
 	^ tree weightedFirst: maxItems startingWith: aString
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtPharoCompletionStrategy >> typGtAsCompletionStrategy [
 
 	^ self

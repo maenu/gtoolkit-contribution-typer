@@ -1,10 +1,10 @@
-Extension { #name : 'SuperVariable' }
+Extension { #name : #SuperVariable }
 
-{ #category : '*Typer-Inference' }
-SuperVariable >> typInfTypeRecursiveIn: aNode [
+{ #category : #'*Typer-Inference' }
+SuperVariable >> typInfTypeRecursiveIn: aNode self: aType [
 
-	| type |
-	type := TypInfSelf value.
-	type hasSuperType ifTrue: [ ^ type superType ].
-	^ aNode typInfUnknown
+	aType hasSuperType ifTrue: [ ^ aType superType ].
+	self flag: 'TODO can this ever happen?'.
+	Halt once.
+	^ aNode typInfUnknownSelf: aType
 ]

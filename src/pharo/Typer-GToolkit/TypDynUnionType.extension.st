@@ -1,6 +1,6 @@
-Extension { #name : 'TypDynUnionType' }
+Extension { #name : #TypDynUnionType }
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 TypDynUnionType >> typGtItemsFor: aView [
 	<typPraResult: 'GtPhlowView'>
 	<gtView>

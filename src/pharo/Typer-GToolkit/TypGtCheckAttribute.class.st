@@ -1,6 +1,6 @@
 Class {
-	#name : 'TypGtCheckAttribute',
-	#superclass : 'BrTextAdornmentDynamicAttribute',
+	#name : #TypGtCheckAttribute,
+	#superclass : #BrTextAdornmentDynamicAttribute,
 	#instVars : [
 		'subject',
 		'color',
@@ -10,7 +10,7 @@ Class {
 	#category : 'Typer-GToolkit-Typer-GToolkit'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtCheckAttribute class >> node: aNode subject: anObject color: aColor message: aString [
 
 	^ self new
@@ -21,7 +21,7 @@ TypGtCheckAttribute class >> node: aNode subject: anObject color: aColor message
 		  yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtCheckAttribute >> initialize [
 
 	super initialize.
@@ -47,7 +47,7 @@ TypGtCheckAttribute >> initialize [
 				yourself ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtCheckAttribute >> initializeNode: aNode subject: anObject color: aColor message: aString [
 
 	node := aNode.

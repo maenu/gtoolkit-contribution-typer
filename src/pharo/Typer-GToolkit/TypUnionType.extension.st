@@ -1,6 +1,6 @@
-Extension { #name : 'TypUnionType' }
+Extension { #name : #TypUnionType }
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 TypUnionType >> typGtItemsFor: aView [
 	<typPraResult: 'GtPhlowView'>
 	<gtView>

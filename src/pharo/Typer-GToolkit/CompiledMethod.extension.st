@@ -1,19 +1,18 @@
-Extension { #name : 'CompiledMethod' }
+Extension { #name : #CompiledMethod }
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 CompiledMethod >> typGtElement [
 
 	^ BlElement new
 		  in: [ :e | 
 			  | color |
-			  TypInfSelf value: self methodClass typAsType during: [ 
-					  color := self ast
-						           typInfType;
-						           typCheColor.
-					  (self ast typCheHasUnknownArguments not and: [ 
-						   self ast typCheHasUnknownResult not ])
-						  ifTrue: [ e background: color ]
-						  ifFalse: [ e background: color muchLighter ] ] ];
+			  color := self ast
+				           typInfTypeSelf: self methodClass typAsType;
+				           typCheColor.
+			  (self ast typCheHasUnknownArguments not and: [ 
+				   self ast typCheHasUnknownResult not ])
+				  ifTrue: [ e background: color ]
+				  ifFalse: [ e background: color muchLighter ] ];
 		  constraintsDo: [ :c | 
 			  c horizontal exact: 16. "typCastAs BlLayoutCommonConstraintsAxis"
 			  c vertical exact: 16 "typCastAs BlLayoutCommonConstraintsAxis" ];
@@ -23,12 +22,8 @@ CompiledMethod >> typGtElement [
 					   padding: (BlInsets all: 5);
 					   text: self selector;
 					   yourself ]);
-		  when: BlClickEvent do: [ :f | f consumed: true. f target phlow spawnObject: self ];
+		  when: BlClickEvent do: [ :f | 
+		  f consumed: true.
+		  f target phlow spawnObject: self ];
 		  yourself
-]
-
-{ #category : '*Typer-GToolkit' }
-CompiledMethod >> typGtSelf [
-
-	^ self methodClass typAsType
 ]

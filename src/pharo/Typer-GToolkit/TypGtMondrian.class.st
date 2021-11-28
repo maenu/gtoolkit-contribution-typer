@@ -1,22 +1,22 @@
 Class {
-	#name : 'TypGtMondrian',
-	#superclass : 'GtMondrian',
+	#name : #TypGtMondrian,
+	#superclass : #GtMondrian,
 	#category : 'Typer-GToolkit'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtMondrian >> edges [
 
 	^ TypGtMondrianEdgeBuilder new mondrian: self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtMondrian >> includesNode: anObject [
 
 	^ self topStep includesNode: anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtMondrian >> initialize [
 
 	| root |
@@ -29,7 +29,7 @@ TypGtMondrian >> initialize [
 			 yourself)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtMondrian >> nodes [
 
 	^ TypGtMondrianNodeBuilder new mondrian: self

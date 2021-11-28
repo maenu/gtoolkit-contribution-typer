@@ -1,6 +1,6 @@
 Class {
-	#name : 'TypInfImplementorsCache',
-	#superclass : 'Object',
+	#name : #TypInfImplementorsCache,
+	#superclass : #Object,
 	#instVars : [
 		'cache'
 	],
@@ -10,19 +10,19 @@ Class {
 	#category : 'Typer-Inference'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypInfImplementorsCache class >> instance [
 
 	^ instance ifNil: [ instance := self new ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypInfImplementorsCache class >> reset [
 
 	instance := nil
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypInfImplementorsCache >> build [
 
 	cache removeAll.
@@ -34,13 +34,13 @@ TypInfImplementorsCache >> build [
 				ifAbsentPut: [ IdentitySet with: m ] ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypInfImplementorsCache >> implementors: aSymbol [
 
 	^ cache at: aSymbol ifAbsentPut: [ aSymbol implementors ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypInfImplementorsCache >> initialize [
 
 	super initialize.

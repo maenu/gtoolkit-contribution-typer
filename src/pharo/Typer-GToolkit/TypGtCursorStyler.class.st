@@ -1,10 +1,10 @@
 Class {
-	#name : 'TypGtCursorStyler',
-	#superclass : 'TypGtValueStyler',
+	#name : #TypGtCursorStyler,
+	#superclass : #TypGtValueStyler,
 	#category : 'Typer-GToolkit'
 }
 
-{ #category : 'visiting' }
+{ #category : #visiting }
 TypGtCursorStyler >> styleNode: aNode [
 
 	<typPraArguments: 'RBValueNode'>

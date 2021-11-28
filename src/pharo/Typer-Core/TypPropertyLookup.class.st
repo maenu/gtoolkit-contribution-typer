@@ -1,6 +1,6 @@
 Class {
-	#name : 'TypPropertyLookup',
-	#superclass : 'TypLookup',
+	#name : #TypPropertyLookup,
+	#superclass : #TypLookup,
 	#instVars : [
 		'selector',
 		'receiver'
@@ -8,7 +8,7 @@ Class {
 	#category : 'Typer-Core-Lookup'
 }
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 TypPropertyLookup >> = anObject [
 	super = anObject
 		ifFalse: [ ^ false ].
@@ -17,7 +17,7 @@ TypPropertyLookup >> = anObject [
 	^ anObject receiver = receiver
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypPropertyLookup >> copyAsSuper [
 	self assert: [ self hasSuper ].
 	^ self copy
@@ -26,36 +26,36 @@ TypPropertyLookup >> copyAsSuper [
 		yourself
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 TypPropertyLookup >> hasSuper [
 	^ receiver hasSuperType
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 TypPropertyLookup >> hash [
 	^ (super hash bitXor: selector hash) bitXor: receiver hash
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 TypPropertyLookup >> initialize [
 	<typPraVariable: 'selector' as: 'Symbol'>
 	<typPraVariable: 'receiverType' as: 'TypType'>
 	super initialize
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypPropertyLookup >> initializeReceiver: aType selector: aSymbol [
 	receiver := aType.
 	selector := aSymbol
 ]
 
-{ #category : 'invalidation' }
+{ #category : #invalidation }
 TypPropertyLookup >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
 
 	^ receiver isInvalidatedByClassAnnouncement: aClassAnnouncement
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypPropertyLookup >> printOn: aStream [
 	receiver printOn: aStream.
 	aStream nextPutAll: '>>'.
@@ -63,13 +63,13 @@ TypPropertyLookup >> printOn: aStream [
 	super printOn: aStream
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypPropertyLookup >> receiver [
 	<typPraResult: 'TypType'>
 	^ receiver
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypPropertyLookup >> selector [
 	<typPraResult: 'Symbol'>
 	^ selector

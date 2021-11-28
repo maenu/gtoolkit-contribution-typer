@@ -1,10 +1,10 @@
 Class {
-	#name : 'TypGtValueStyler',
-	#superclass : 'TypGtRbAstStyler',
+	#name : #TypGtValueStyler,
+	#superclass : #TypGtRbAstStyler,
 	#category : 'Typer-GToolkit'
 }
 
-{ #category : 'visiting' }
+{ #category : #visiting }
 TypGtValueStyler >> visitNode: aNode [
 
 	super visitNode: aNode.

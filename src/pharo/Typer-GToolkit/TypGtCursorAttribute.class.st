@@ -1,6 +1,6 @@
 Class {
-	#name : 'TypGtCursorAttribute',
-	#superclass : 'BrTextCursorAttribute',
+	#name : #TypGtCursorAttribute,
+	#superclass : #BrTextCursorAttribute,
 	#instVars : [
 		'coder',
 		'attribute',
@@ -9,31 +9,31 @@ Class {
 	#category : 'Typer-GToolkit'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtCursorAttribute >> attribute [
 	<typPraResult: 'BrTextAdornmentAttribute'>
 	^ attribute
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtCursorAttribute >> attribute: anObject [
 	<typPraArguments: 'BrTextAdornmentAttribute'>
 	attribute := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtCursorAttribute >> coder [
 	<typPraResult: 'TypGtMethodCoder'>
 	^ coder
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtCursorAttribute >> coder: anObject [
 	<typPraArguments: 'TypGtMethodCoder'>
 	coder := anObject
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 TypGtCursorAttribute >> initialize [
 
 	<typPraVariable: 'attribute' as: 'BrTextAdornmentAttribute'>
@@ -48,13 +48,13 @@ TypGtCursorAttribute >> initialize [
 			aTextEditor text removeAttribute: attribute ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtCursorAttribute >> node [
 	<typPraResult: 'RBProgramNode'>
 	^ node
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtCursorAttribute >> node: anObject [
 	<typPraArguments: 'RBProgramNode'>
 	node := anObject

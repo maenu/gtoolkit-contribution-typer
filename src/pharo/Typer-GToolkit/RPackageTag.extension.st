@@ -1,6 +1,6 @@
-Extension { #name : 'RPackageTag' }
+Extension { #name : #RPackageTag }
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 RPackageTag >> typGtCoverageFor: aView context: aDictionary [
 	<gtPackageTagView>
 	^ aView explicit
@@ -26,7 +26,7 @@ RPackageTag >> typGtCoverageFor: aView context: aDictionary [
 		yourself
 ]
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 RPackageTag >> typGtMethodCoverage [
 	| result |
 	result := Dictionary new
@@ -41,7 +41,7 @@ RPackageTag >> typGtMethodCoverage [
 	^ result
 ]
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 RPackageTag >> typGtNodeCoverage [
 	| result |
 	result := Dictionary new

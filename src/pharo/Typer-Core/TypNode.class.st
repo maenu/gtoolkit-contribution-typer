@@ -1,14 +1,14 @@
 Class {
-	#name : 'TypNode',
-	#superclass : 'Object',
+	#name : #TypNode,
+	#superclass : #Object,
 	#instVars : [
 		'dependencies',
 		'dependents'
 	],
-	#category : 'Typer-Core-Type'
+	#category : #'Typer-Core-Type'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypNode >> addDependency: aDependency [
 
 	self assert: [ aDependency dependency includesDependent: aDependency ].
@@ -16,7 +16,7 @@ TypNode >> addDependency: aDependency [
 	dependencies add: aDependency
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypNode >> addDependent: aDependency [
 
 	self assert: [ aDependency dependency == self ].
@@ -26,13 +26,13 @@ TypNode >> addDependent: aDependency [
 		  yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypNode >> addDependent: aNode label: aString [
 
 	^ self addDependent: aNode label: aString data: nil
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypNode >> addDependent: aNode label: aString data: anObject [
 
 	^ self addDependent: (TypEdge
@@ -42,7 +42,7 @@ TypNode >> addDependent: aNode label: aString data: anObject [
 			   data: anObject)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypNode >> asElementIn: aMondrian [
 
 	^ BrButton new
@@ -91,19 +91,19 @@ TypNode >> asElementIn: aMondrian [
 		  yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypNode >> dependencies [
 
 	^ dependencies
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypNode >> dependents [
 
 	^ dependents
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypNode >> gtGraphOn: aView [
 
 	<gtView>
@@ -130,27 +130,27 @@ TypNode >> gtGraphOn: aView [
 			  m ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypNode >> includesDependency: aDependency [
 
 	^ dependencies includes: aDependency
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypNode >> includesDependent: aDependency [
 
 	^ dependents includes: aDependency
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypNode >> initialize [
 
 	super initialize.
-	dependencies := IdentitySet new.
-	dependents := IdentitySet new
+	dependencies := Set new.
+	dependents := Set new
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypNode >> postCopy [
 
 	super postCopy.
@@ -158,13 +158,13 @@ TypNode >> postCopy [
 	dependents := IdentitySet new
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypNode >> removeAllDependents [
 
 	dependents copy do: [ :e | self removeDependent: e ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypNode >> removeDependency: aDependency [
 
 	self assert: [ dependencies includes: aDependency ].
@@ -173,7 +173,7 @@ TypNode >> removeDependency: aDependency [
 	dependencies remove: aDependency
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypNode >> removeDependent: aDependency [
 
 	self assert: [ dependents includes: aDependency ].
@@ -183,7 +183,7 @@ TypNode >> removeDependent: aDependency [
 		  yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypNode >> withAllDependencies [
 
 	| nodes remains |
@@ -199,7 +199,7 @@ TypNode >> withAllDependencies [
 	^ nodes
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypNode >> withAllDependents [
 
 	| nodes remains |

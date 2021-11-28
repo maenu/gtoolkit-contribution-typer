@@ -1,64 +1,53 @@
-Extension { #name : 'RBMethodNode' }
+Extension { #name : #RBMethodNode }
 
-{ #category : '*Typer-Inference' }
-RBMethodNode >> typInfArgumentType: anArgumentNode [
+{ #category : #'*Typer-Inference' }
+RBMethodNode >> typInfArgumentType: anArgumentNode self: aType [
+
 	| i |
 	i := arguments detectIndex: [ :e | e == anArgumentNode ].
-	^ self typInfMethod arguments at: i
+	^ (self typInfMethodSelf: aType) arguments at: i
 ]
 
-{ #category : '*Typer-Inference' }
+{ #category : #'*Typer-Inference' }
 RBMethodNode >> typInfMethod [
 
+	^ self typInfMethodSelf: self typInfSelf
+]
+
+{ #category : #'*Typer-Inference' }
+RBMethodNode >> typInfMethodSelf: aType [
+
 	<typPraResult: 'TypFunctionType'>
-	| identifier |
-	identifier := 'typInfMethod-' , TypInfSelf value hash asString.
+	| prefix |
+	prefix := 'typInf-' , aType hash asString , '-method'.
 	^ self
-		  propertyAt: identifier
+		  propertyAt: prefix
 		  ifAbsent: [ "need to set property to default to unknown on recursive calls"
 			  self
-				  propertyAt: identifier put: self typInfUnknown;
-				  propertyAt: identifier put: (TypInfSelf value
+				  propertyAt: prefix put: (self typInfUnknownSelf: aType);
+				  propertyAt: prefix put: (aType
 						   lookupMethod: selector asSymbol
-						   arguments: (arguments collect: #typInfType)) ]
+						   arguments:
+							   (arguments collect: [ :e | e typInfTypeSelf: aType ])) ]
 ]
 
-{ #category : '*Typer-Inference' }
-RBMethodNode >> typInfTemporaryProfile [
-	<typPraResult: 'SequenceableCollection<Association<RBProgramNode,TypType>>'>
+{ #category : #'*Typer-Inference' }
+RBMethodNode >> typInfOldTemporaryProfileSelf: aType [
+
+	<typPraResult:
+	'SequenceableCollection<Association<RBProgramNode,TypType>>'>
 	^ self allChildren
-		select: [ :e | e children isEmpty ]
-		thenCollect: [ :e | e -> e typInfType ]
+		  select: [ :e | e children isEmpty ]
+		  thenCollect: [ :e | e -> (e typInfTypeSelf: aType) ]
 ]
 
-{ #category : '*Typer-Inference' }
-RBMethodNode >> typInfTypeRecursive [
+{ #category : #'*Typer-Inference' }
+RBMethodNode >> typInfOldTypeRecursive [
 
 	<typPraResult: 'TypType'>
-	|  visitor types identifier |
-	identifier := TypInfSelf value hash asString.
-	body
-		typInfInvalidate;
-		typInfType.
-	types := (self allChildren select: #isReturn)
-		         collect: #typInfType
-		         as: OrderedCollection.
-	self lastIsReturn ifFalse: [ types add: TypInfSelf value ].
-	visitor := TypInfSignalsAlwaysVisitor new.
-	self acceptVisitor: visitor.
-	^ CompiledMethod
-		  typAsFunctionTypeWithResult: types typAsType
-		  arguments: (arguments collect: #typInfType)
-		  argumentsOptional: false
-		  signalsAlways: visitor signalsAlways
-]
-
-{ #category : '*Typer-Inference' }
-RBMethodNode >> typInfTypeRecursiveOld [
-
-	<typPraResult: 'TypType'>
-	| iterations maxIterations oldTemporaryProfiles newTemporaryProfile visitor types identifier |
-	identifier := TypInfSelf value hash asString.
+	| selfType iterations maxIterations oldTemporaryProfiles newTemporaryProfile visitor types identifier |
+	selfType := nil.
+	identifier := selfType hash asString.
 	self
 		typInfInvalidate;
 		propertyAt: 'typFixPoint-' , identifier put: false.
@@ -89,12 +78,43 @@ RBMethodNode >> typInfTypeRecursiveOld [
 	types := (self allChildren select: #isReturn)
 		         collect: #typInfType
 		         as: OrderedCollection.
-	self lastIsReturn ifFalse: [ types add: TypInfSelf value ].
+	self lastIsReturn ifFalse: [ types add: selfType ].
 	visitor := TypInfSignalsAlwaysVisitor new.
 	self acceptVisitor: visitor.
 	^ CompiledMethod
 		  typAsFunctionTypeWithResult: types typAsType
 		  arguments: (arguments collect: #typInfType)
+		  argumentsOptional: false
+		  signalsAlways: visitor signalsAlways
+]
+
+{ #category : #'*Typer-Inference' }
+RBMethodNode >> typInfSelf [
+
+	^ self
+		  propertyAt: 'typInf-self'
+		  ifAbsent: [ 
+		  self propertyAt: 'typInf-self' put: self methodClass typAsType ]
+]
+
+{ #category : #'*Typer-Inference' }
+RBMethodNode >> typInfTypeRecursiveSelf: aType [
+
+	<typPraResult: 'TypType'>
+	| visitor types identifier |
+	identifier := aType hash asString.
+	body
+		typInfInvalidateSelf: aType;
+		typInfTypeSelf: aType.
+	types := (self allChildren select: #isReturn)
+		         collect: [ :e | e typInfTypeSelf: aType ]
+		         as: OrderedCollection.
+	self lastIsReturn ifFalse: [ types add: aType ].
+	visitor := TypInfSignalsAlwaysVisitor new.
+	self acceptVisitor: visitor.
+	^ CompiledMethod
+		  typAsFunctionTypeWithResult: types typAsType
+		  arguments: (arguments collect: [ :e | e typInfTypeSelf: aType ])
 		  argumentsOptional: false
 		  signalsAlways: visitor signalsAlways
 ]

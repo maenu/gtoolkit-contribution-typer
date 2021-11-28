@@ -1,6 +1,6 @@
-Extension { #name : 'GtGraphConstraints' }
+Extension { #name : #GtGraphConstraints }
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 GtGraphConstraints >> typGtBeIdentityNodes [
 
 	objectsToNodesCache := objectsToNodesCache as: IdentityDictionary

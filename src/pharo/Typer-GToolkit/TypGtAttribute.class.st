@@ -1,13 +1,13 @@
 Class {
-	#name : 'TypGtAttribute',
-	#superclass : 'BrTextAdornmentDynamicAttribute',
+	#name : #TypGtAttribute,
+	#superclass : #BrTextAdornmentDynamicAttribute,
 	#instVars : [
 		'type'
 	],
 	#category : 'Typer-GToolkit'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 TypGtAttribute >> initialize [
 
 	<typPraVariable: 'type' as: 'TypType'>
@@ -29,13 +29,13 @@ TypGtAttribute >> initialize [
 				yourself ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtAttribute >> type_ [
 	<typPraResult: 'TypType'>
 	^ type
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtAttribute >> type_: anObject [
 	<typPraArguments: 'TypType'>
 	type := anObject

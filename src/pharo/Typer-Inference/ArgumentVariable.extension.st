@@ -1,13 +1,13 @@
-Extension { #name : 'ArgumentVariable' }
+Extension { #name : #ArgumentVariable }
 
-{ #category : '*Typer-Inference' }
-ArgumentVariable >> typInfTypeRecursiveIn: aNode [
+{ #category : #'*Typer-Inference' }
+ArgumentVariable >> typInfTypeRecursiveIn: aNode self: aType [
 
 	| type sendNodes sendSelectors sendClasses useTypes |
 	aNode isDefinition ifFalse: [ 
-		^ ((aNode whoDefines: name) arguments detect: [ :e | e = aNode ])
-			  typInfType ].
-	type := aNode parent typInfArgumentType: aNode.
+		^ ((aNode whoDefines: name) arguments detect: [ :e | e = aNode ]) 
+			  typInfTypeSelf: aType ].
+	type := aNode parent typInfArgumentType: aNode self: aType.
 	type isUnknown ifFalse: [ ^ type ].
 
 	sendNodes := (aNode whoDefines: name) sendNodes select: [ :e | 
@@ -29,11 +29,10 @@ ArgumentVariable >> typInfTypeRecursiveIn: aNode [
 			parent := e parent.
 			(parent isMessage and: [ parent arguments includes: aNode ]) 
 				ifTrue: [ 
-					useTypes add:
-						(parent typInfMethod arguments at:
+					useTypes add: ((parent typInfMethodSelf: aType) arguments at:
 							 (parent arguments indexOf: aNode)) ].
 			(parent isAssignment and: [ parent value = aNode ]) ifTrue: [ 
-				useTypes add: parent variable typInfType ] ] ].
-	useTypes ifEmpty: [ ^ aNode typInfUnknown ].
+				useTypes add: (parent variable typInfTypeSelf: aType) ] ] ].
+	useTypes ifEmpty: [ ^ aNode typInfUnknownSelf: aType ].
 	^ useTypes typAsType
 ]

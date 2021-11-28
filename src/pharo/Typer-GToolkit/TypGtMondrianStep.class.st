@@ -1,10 +1,10 @@
 Class {
-	#name : 'TypGtMondrianStep',
-	#superclass : 'GtMondrianStep',
+	#name : #TypGtMondrianStep,
+	#superclass : #GtMondrianStep,
 	#category : 'Typer-GToolkit'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtMondrianStep >> includesNode: anObject [
 
 	^ self root graph
@@ -13,13 +13,13 @@ TypGtMondrianStep >> includesNode: anObject [
 		  ifAbsent: [ false ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtMondrianStep >> nodeAt: anObject ifAbsent: aBlock [
 
 	^ self root graph nodeAt: anObject ifAbsent: aBlock
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtMondrianStep >> nodeAt: anObject put: aNode [
 
 	^ self root graph nodeAt: anObject put: aNode

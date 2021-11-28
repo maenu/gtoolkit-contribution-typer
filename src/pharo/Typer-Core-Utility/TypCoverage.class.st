@@ -1,13 +1,13 @@
 Class {
-	#name : 'TypCoverage',
-	#superclass : 'Object',
+	#name : #TypCoverage,
+	#superclass : #Object,
 	#instVars : [
 		'link'
 	],
 	#category : 'Typer-Core-Utility'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypCoverage >> initialize [
 	super initialize.
 	link := MetaLink new
@@ -16,7 +16,7 @@ TypCoverage >> initialize [
 		yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypCoverage >> run [
 
 	<gtExample>

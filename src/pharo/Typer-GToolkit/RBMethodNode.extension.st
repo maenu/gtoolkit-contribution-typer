@@ -1,27 +1,18 @@
-Extension { #name : 'RBMethodNode' }
+Extension { #name : #RBMethodNode }
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 RBMethodNode >> typGtCanType [
 	^ true
 ]
 
-{ #category : '*Typer-GToolkit' }
-RBMethodNode >> typGtSelf [
-
-	^ self
-		  propertyAt: 'typGtSelf'
-		  ifAbsent: [ 
-		  self propertyAt: 'typGtSelf' put: self methodClass typAsType ]
-]
-
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 RBMethodNode >> typGtShadowMethod [
 
-	| argumentTypes resultType clazz shadow |
+	| method_ argumentTypes resultType clazz shadow |
 	self assert: [ self typGtCanType ].
-	TypInfSelf value: self typGtSelf during: [ 
-		argumentTypes := self typInfMethod arguments.
-		resultType := self typInfMethod result ].
+	method_ := self typInfMethod.
+	argumentTypes := method_ arguments.
+	resultType := method_ result.
 	clazz := self methodClass.
 	shadow := (TypShaShadow typGtShadowFor: clazz instanceSide)
 		          ifEmpty: [ 
@@ -36,10 +27,12 @@ RBMethodNode >> typGtShadowMethod [
 				   ifFalse: [ shadow class ])
 ]
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 RBMethodNode >> typGtTypeWithPragma [
 
-	| arguments_ result_ variables_ |
+	| type self_ arguments_ result_ variables_ |
+	self_ := self typInfSelf.
+	type := self typInfTypeSelf: self_.
 	arguments_ := self pragmas
 		              detect: [ :e | e selector = #typPraArguments: ]
 		              ifFound: [ :e | 
@@ -52,19 +45,17 @@ RBMethodNode >> typGtTypeWithPragma [
 					              { (RBPragmaNode
 						               selector: #typPraArguments:
 						               arguments: { (RBLiteralValueNode value:
-								                (',' join:
-									                 (self typInfType arguments collect:
-										                  #asString))) }) } ] ].
+								                (',' join: (type arguments collect: #asString))) }) } ] ].
 	result_ := self pragmas
 		           detect: [ :e | e selector = #typPraResult: ]
 		           ifFound: [ :e | 
 			           self removePragma: e.
 			           e ]
-		           ifNone: [ RBPragmaNode
-					           selector: #typPraResult:
-					           arguments:
-					           { (RBLiteralValueNode value:
-						            self typInfType result asString) } ].
+		           ifNone: [ 
+			           RBPragmaNode
+				           selector: #typPraResult:
+				           arguments:
+				           { (RBLiteralValueNode value: type result asString) } ].
 	variables_ := {  }. "typCastAs SequenceableCollection<RBPragmaNode>"
 	self selector = #initialize ifTrue: [ 
 		variables_ := self methodClass instVarNames collect: [ :e | 
@@ -79,8 +70,7 @@ RBMethodNode >> typGtTypeWithPragma [
 						              arguments: { 
 								              (RBLiteralValueNode value: e asString).
 								              (RBLiteralValueNode value:
-									               (TypInfSelf value lookupVariable: e asSymbol)
-										               asString) } ] ] ].
+									               (self_ lookupVariable: e asSymbol) asString) } ] ] ].
 	arguments_ do: [ :e | self addPragma: e ].
 	self addPragma: result_.
 	variables_ do: [ :e | self addPragma: e ]

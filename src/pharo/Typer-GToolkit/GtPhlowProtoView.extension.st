@@ -1,6 +1,6 @@
-Extension { #name : 'GtPhlowProtoView' }
+Extension { #name : #GtPhlowProtoView }
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 GtPhlowProtoView >> typGtMondrian [
 
 	^ TypGtPhlowMondrianView new

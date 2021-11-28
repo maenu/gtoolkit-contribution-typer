@@ -1,41 +1,40 @@
 Class {
-	#name : 'TypInfSignalsAlwaysVisitor',
-	#superclass : 'RBProgramNodeVisitor',
+	#name : #TypInfSignalsAlwaysVisitor,
+	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'signalsAlways'
 	],
-	#category : 'Typer-Inference'
+	#category : #'Typer-Inference'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 TypInfSignalsAlwaysVisitor >> initialize [
 	super initialize.
 	signalsAlways := false
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypInfSignalsAlwaysVisitor >> signalsAlways [
 	^ signalsAlways
 ]
 
-{ #category : 'visiting' }
+{ #category : #visiting }
 TypInfSignalsAlwaysVisitor >> visitBlockNode: aNode [
 	"noop"
 
 	
 ]
 
-{ #category : 'visiting' }
+{ #category : #visiting }
 TypInfSignalsAlwaysVisitor >> visitMessageNode: aNode [
+
 	| method s |
 	super visitMessageNode: aNode.
 	method := aNode typInfMethod.
 	s := method isFunction
-		ifTrue: [ method signalsAlways ]
-		ifFalse: [ nil ].
-	s = true
-		ifTrue: [ signalsAlways := true ].
-	s = nil
-		ifTrue: [ signalsAlways = false
-				ifTrue: [ signalsAlways := nil ] ]
+		     ifTrue: [ method signalsAlways ]
+		     ifFalse: [ nil ].
+	s = true ifTrue: [ signalsAlways := true ].
+	s = nil ifTrue: [ 
+		signalsAlways = false ifTrue: [ signalsAlways := nil ] ]
 ]

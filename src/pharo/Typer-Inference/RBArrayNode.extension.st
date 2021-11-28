@@ -1,8 +1,8 @@
-Extension { #name : 'RBArrayNode' }
+Extension { #name : #RBArrayNode }
 
-{ #category : '*Typer-Inference' }
-RBArrayNode >> typInfTypeRecursive [
+{ #category : #'*Typer-Inference' }
+RBArrayNode >> typInfTypeRecursiveSelf: aType [
 
 	^ Array typAsType copyWithParameters:
-		  { (statements collect: #typInfType) typAsType }
+		  { (statements collect: [ :e | e typInfTypeSelf: aType ]) typAsType }
 ]

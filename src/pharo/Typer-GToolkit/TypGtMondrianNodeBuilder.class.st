@@ -1,10 +1,10 @@
 Class {
-	#name : 'TypGtMondrianNodeBuilder',
-	#superclass : 'GtMondrianNodeBuilder',
+	#name : #TypGtMondrianNodeBuilder,
+	#superclass : #GtMondrianNodeBuilder,
 	#category : 'Typer-GToolkit-Typer-GToolkit'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtMondrianNodeBuilder >> with: aCollection [
 
 	| elements |

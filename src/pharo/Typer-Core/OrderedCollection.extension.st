@@ -1,6 +1,6 @@
-Extension { #name : 'OrderedCollection' }
+Extension { #name : #OrderedCollection }
 
-{ #category : '*Typer-Core' }
+{ #category : #'*Typer-Core' }
 OrderedCollection >> typDiff: aCollection [
 
 	| selfIndex otherIndex classNames result |

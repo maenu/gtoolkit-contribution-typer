@@ -1,6 +1,6 @@
-Extension { #name : 'RPackage' }
+Extension { #name : #RPackage }
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 RPackage >> typGtCoverageFor: aView context: aDictionary [
 
 	<gtPackageView>
@@ -28,7 +28,7 @@ RPackage >> typGtCoverageFor: aView context: aDictionary [
 		  yourself
 ]
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 RPackage >> typGtMethodCoverage [
 	^ (self methods
 		groupedBy: [ :e | 
@@ -38,14 +38,14 @@ RPackage >> typGtMethodCoverage [
 				ifAbsent: [ nil ] ]) asDictionary
 ]
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 RPackage >> typGtNodeCoverage [
 	^ ((self methods flatCollect: [ :e | e ast allChildren , {e ast} ])
 		groupedBy: [ :e | e propertyAt: #tagExecuted ifAbsent: [ nil ] ])
 		asDictionary
 ]
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 RPackage >> typGtView2For: aView [
 
 	<gtView>
@@ -77,16 +77,14 @@ RPackage >> typGtView2For: aView [
 								   border: (BlBorder paint: (Color gray alpha: 0.5) width: 5);
 								   yourself);
 						  yourself ];
-				  connect: methods toAll: [ :f | 
-				  TypInfSelf
-					  value: f methodClass typAsType
-					  during: [ 
-					  f ast typGtInvokedMethods select: [ :g | methods includes: g ] ] ].
-			  e layout force  charge: -5000 ];
+				  connect: methods
+				  toAll: [ :f | 
+				  f ast typGtInvokedMethods select: [ :g | methods includes: g ] ].
+			  e layout force charge: -5000 ];
 		  yourself
 ]
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 RPackage >> typGtViewFor: aView [
 	<gtView>
 	<typPraResult: 'GtPhlowProtoView'>

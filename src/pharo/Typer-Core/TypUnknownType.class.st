@@ -1,31 +1,31 @@
 Class {
-	#name : 'TypUnknownType',
-	#superclass : 'TypType',
+	#name : #TypUnknownType,
+	#superclass : #TypType,
 	#category : 'Typer-Core-Type'
 }
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 TypUnknownType >> > aType [
 	^ aType isUnknown not
 ]
 
-{ #category : 'polymorphic' }
+{ #category : #polymorphic }
 TypUnknownType >> arguments [
 
 	^ Array new: 32 withAll: self
 ]
 
-{ #category : 'polymorphic' }
+{ #category : #polymorphic }
 TypUnknownType >> at: anObject [
 	^ self
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 TypUnknownType >> isUnknown [
 	^ true
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypUnknownType >> printOn: aStream skipping: anIdentitySet [
 	(anIdentitySet includes: self)
 		ifTrue: [ aStream << '.'.
@@ -33,7 +33,7 @@ TypUnknownType >> printOn: aStream skipping: anIdentitySet [
 	aStream << '?'
 ]
 
-{ #category : 'polymorphic' }
+{ #category : #polymorphic }
 TypUnknownType >> result [
 	^ self
 ]

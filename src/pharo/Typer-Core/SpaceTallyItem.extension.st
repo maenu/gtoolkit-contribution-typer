@@ -1,6 +1,6 @@
-Extension { #name : 'SpaceTallyItem' }
+Extension { #name : #SpaceTallyItem }
 
-{ #category : '*Typer-Core' }
+{ #category : #'*Typer-Core' }
 SpaceTallyItem >> typDiff: anItem [
 
 	^ self class
@@ -10,14 +10,14 @@ SpaceTallyItem >> typDiff: anItem [
 		  spaceForInstances: anItem spaceForInstances - spaceForInstances
 ]
 
-{ #category : '*Typer-Core' }
+{ #category : #'*Typer-Core' }
 SpaceTallyItem >> typIsZero [
 
 	^ codeSize = 0 and: [ 
 		  instanceCount = 0 and: [ spaceForInstances = 0 ] ]
 ]
 
-{ #category : '*Typer-Core' }
+{ #category : #'*Typer-Core' }
 SpaceTallyItem class >> typNil: aClassName [
 
 	^ self new

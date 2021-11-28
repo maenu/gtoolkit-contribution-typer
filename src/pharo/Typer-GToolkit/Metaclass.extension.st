@@ -1,6 +1,6 @@
-Extension { #name : 'Metaclass' }
+Extension { #name : #Metaclass }
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 Metaclass >> typGtVariableNames [
 	^ super typGtVariableNames , self instanceSide classVarNames
 ]

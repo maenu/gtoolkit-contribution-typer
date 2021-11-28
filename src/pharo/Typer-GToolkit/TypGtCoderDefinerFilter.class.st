@@ -1,13 +1,13 @@
 Class {
-	#name : 'TypGtCoderDefinerFilter',
-	#superclass : 'GtSearchMethodsFilter',
+	#name : #TypGtCoderDefinerFilter,
+	#superclass : #GtSearchMethodsFilter,
 	#instVars : [
 		'name'
 	],
 	#category : 'Typer-GToolkit'
 }
 
-{ #category : 'testing' }
+{ #category : #testing }
 TypGtCoderDefinerFilter >> includesMethod: aCompiledMethod [
 
 	<typPraResult: 'Boolean'>
@@ -16,19 +16,19 @@ TypGtCoderDefinerFilter >> includesMethod: aCompiledMethod [
 		  aCompiledMethod methodClass instanceSide hasClassVarNamed: name ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtCoderDefinerFilter >> initialize [
 	<typPraVariable: 'name' as: 'String'>
 	super initialize
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtCoderDefinerFilter >> name [
 	<typPraResult: 'String'>
 	^ name
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtCoderDefinerFilter >> name: anObject [
 	<typPraArguments: 'String'>
 	name := anObject

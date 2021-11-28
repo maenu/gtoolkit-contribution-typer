@@ -2,20 +2,40 @@ Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer-Checker' }
 RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
+
 	<typPraArguments: 'Integer'>
 	| argument expected actual |
 	argument := self arguments at: anInteger.
 	expected := self typInfMethod arguments at: anInteger.
 	actual := argument typInfType.
-	(expected isUnknown or: [ actual isUnknown ])
-		ifTrue: [ ^ self ].
-	expected asNonNullable >= actual asNonNullable
-		ifTrue: [ ^ self ].
-	(actual isFunction
-		and: [ actual result isUnknown
-				or: [ argument isBlock
-						and: [ argument typInfType signalsAlways = true or: [ argument body lastIsReturn ] ] ] ])
-		ifTrue: [ ^ self ].
+	(expected isUnknown or: [ actual isUnknown ]) ifTrue: [ ^ self ].
+	expected asNonNullable >= actual asNonNullable ifTrue: [ ^ self ].
+	(actual isFunction and: [ 
+		 actual result isUnknown or: [ 
+			 argument isBlock and: [ 
+				 argument typInfType signalsAlways = true or: [ 
+					 argument body lastIsReturn ] ] ] ]) ifTrue: [ ^ self ].
+	TypCheIncompatibleTypeError new
+		expected: expected;
+		actual: actual;
+		signal
+]
+
+{ #category : #'*Typer-Checker' }
+RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger self: aType [
+
+	<typPraArguments: 'Integer'>
+	| argument expected actual |
+	argument := self arguments at: anInteger.
+	expected := (self typInfMethodSelf: aType) arguments at: anInteger.
+	actual := argument typInfTypeSelf: aType.
+	(expected isUnknown or: [ actual isUnknown ]) ifTrue: [ ^ self ].
+	expected asNonNullable >= actual asNonNullable ifTrue: [ ^ self ].
+	(actual isFunction and: [ 
+		 actual result isUnknown or: [ 
+			 argument isBlock and: [ 
+				 (argument typInfTypeSelf: aType) signalsAlways = true or: [ 
+					 argument body lastIsReturn ] ] ] ]) ifTrue: [ ^ self ].
 	TypCheIncompatibleTypeError new
 		expected: expected;
 		actual: actual;
@@ -38,14 +58,13 @@ RBMessageNode >> typCheCheckMethod [
 
 { #category : #'*Typer-Checker' }
 RBMessageNode >> typCheCheckReceiver [
+
 	| receiverType |
 	receiverType := receiver typInfType.
-	receiverType isUnknown
-		ifTrue: [ ^ self ].
-	(receiverType lookupMethod: self selector) isUnknown
-		ifTrue: [ ^ self ].
-	receiverType isNullable
-		ifFalse: [ ^ self ].
+	receiverType isUnknown ifTrue: [ ^ self ].
+	(receiverType lookupMethod: self selector) isUnknown ifTrue: [ 
+		^ self ].
+	receiverType isNullable ifFalse: [ ^ self ].
 	TypCheNullableTypeError new
 		type: receiverType;
 		signal

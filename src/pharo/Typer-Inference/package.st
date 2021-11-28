@@ -1,1 +1,1 @@
-Package { #name : 'Typer-Inference' }
+Package { #name : #'Typer-Inference' }

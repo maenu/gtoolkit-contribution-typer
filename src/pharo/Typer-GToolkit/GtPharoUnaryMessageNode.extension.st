@@ -1,6 +1,6 @@
-Extension { #name : 'GtPharoUnaryMessageNode' }
+Extension { #name : #GtPharoUnaryMessageNode }
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 GtPharoUnaryMessageNode >> typGtCompletionActionsFor: aStrategy in: anRbNode [
 
 	<typPraResult: 'SequenceableCollection<GtCompletionAction>'>
@@ -10,7 +10,7 @@ GtPharoUnaryMessageNode >> typGtCompletionActionsFor: aStrategy in: anRbNode [
 	selectorPart stopPosition = index ifFalse: [ 
 		^ #(  ) "typParameters GtCompletionAction" ].
 	startingText := selectorPart value.
-	type := anRbNode typInfTypeIn: anRbNode typGtSelf.
+	type := anRbNode typInfType.
 	self flag: 'TODO can be less restrictive here'.
 	clazz := (type isNamed and: [ type hasClassDescription ])
 		         ifTrue: [ type classDescription ]

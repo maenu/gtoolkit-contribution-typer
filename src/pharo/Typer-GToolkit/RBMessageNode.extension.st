@@ -1,11 +1,11 @@
-Extension { #name : 'RBMessageNode' }
+Extension { #name : #RBMessageNode }
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 RBMessageNode >> typGtCanType [
 	^ true
 ]
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 RBMessageNode >> typGtInvokedMethods [
 
 	| methods receiverType |
@@ -20,15 +20,15 @@ RBMessageNode >> typGtInvokedMethods [
 	^ methods
 ]
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 RBMessageNode >> typGtShadowMethod [
 
-	| receiverType argumentTypes resultType clazz shadow |
+	| method_ receiverType argumentTypes resultType clazz shadow |
 	self assert: [ self typGtCanType ].
-	TypInfSelf value: self typGtSelf during: [ 
-		receiverType := self receiver typInfType.
-		argumentTypes := self typInfMethod arguments.
-		resultType := self typInfMethod result ].
+	method_ := self typInfMethod.
+	receiverType := self receiver typInfType.
+	argumentTypes := method_ arguments.
+	resultType := method_ result.
 	clazz := (receiverType isNamed and: [ 
 		          receiverType hasClassDescription ])
 		         ifTrue: [ receiverType classDescription ]

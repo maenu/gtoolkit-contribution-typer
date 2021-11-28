@@ -1,10 +1,10 @@
 Class {
-	#name : 'TypGtMondrianEdgeBuilder',
-	#superclass : 'GtMondrianEdgeBuilder',
+	#name : #TypGtMondrianEdgeBuilder,
+	#superclass : #GtMondrianEdgeBuilder,
 	#category : 'Typer-GToolkit'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtMondrianEdgeBuilder >> edgeElementFor: anObject from: fromElement to: toElement [
 
 	| element |
@@ -16,7 +16,7 @@ TypGtMondrianEdgeBuilder >> edgeElementFor: anObject from: fromElement to: toEle
 	^ element
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtMondrianEdgeBuilder >> privateConnect: aCollection from: aFromBlock to: aToBlock [
 
 	| existing remains |

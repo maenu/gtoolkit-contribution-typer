@@ -1,13 +1,13 @@
 Class {
-	#name : 'TypVariableType',
-	#superclass : 'TypType',
+	#name : #TypVariableType,
+	#superclass : #TypType,
 	#instVars : [
 		'name'
 	],
 	#category : 'Typer-Core-Type'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 TypVariableType class >> named: aString [
 	<typPraArguments: 'String'>
 	^ self new
@@ -15,7 +15,7 @@ TypVariableType class >> named: aString [
 		yourself
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 TypVariableType class >> named: aString superType: aType [
 
 	<typPraArguments: 'String,TypType'>
@@ -24,48 +24,48 @@ TypVariableType class >> named: aString superType: aType [
 		  yourself
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 TypVariableType >> = anObject [
 	super = anObject
 		ifFalse: [ ^ false ].
 	^ name = anObject name
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 TypVariableType >> > aType [
 	^ superType >= aType
 ]
 
-{ #category : 'polymorphic' }
+{ #category : #polymorphic }
 TypVariableType >> arguments [
 
 	^ superType arguments
 ]
 
-{ #category : 'polymorphic' }
+{ #category : #polymorphic }
 TypVariableType >> at: aString [
 	^ superType at: aString
 ]
 
-{ #category : 'polymorphic' }
+{ #category : #polymorphic }
 TypVariableType >> classDescription [
 	^ superType classDescription
 ]
 
-{ #category : 'polymorphic' }
+{ #category : #polymorphic }
 TypVariableType >> copyWithAt: aString put: aType [
 
 	^ self copyWithSuperType: (superType copyWithAt: aString put: aType)
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 TypVariableType >> hashSkipping: anIdentitySet [
 
 	(anIdentitySet includes: self) ifTrue: [ ^ 43 ].
 	^ (43 bitXor: name hash) bitXor: (super hashSkipping: anIdentitySet)
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 TypVariableType >> initialize [
 	<typPraVariable: 'name' as: 'String'>
 	<typPraVariable: 'scope' as: '{!,TypType}'>
@@ -74,7 +74,7 @@ TypVariableType >> initialize [
 	superType := ProtoObject typAsType
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypVariableType >> initializeName: aString [
 	<typPraArguments: 'String'>
 	self assert: [ aString size > 1 ].
@@ -82,29 +82,29 @@ TypVariableType >> initializeName: aString [
 	name := aString
 ]
 
-{ #category : 'invalidation' }
+{ #category : #invalidation }
 TypVariableType >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
 
 	^ superType isInvalidatedByClassAnnouncement: aClassAnnouncement
 ]
 
-{ #category : 'invalidation' }
+{ #category : #invalidation }
 TypVariableType >> isInvalidatedByMethodAnnouncement: aMethodAnnouncement [
 
 	^ superType isInvalidatedByMethodAnnouncement: aMethodAnnouncement
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 TypVariableType >> isVariable [
 	^ true
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypVariableType >> name [
 	^ name
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 TypVariableType >> printOn: aStream skipping: anIdentitySet [
 	(anIdentitySet includes: self)
 		ifTrue: [ aStream << '.'.
@@ -115,7 +115,7 @@ TypVariableType >> printOn: aStream skipping: anIdentitySet [
 			superType printOn: aStream skipping: anIdentitySet , {self} ]
 ]
 
-{ #category : 'polymorphic' }
+{ #category : #polymorphic }
 TypVariableType >> result [
 	^ superType result
 ]

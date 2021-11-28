@@ -1,18 +1,18 @@
 Class {
-	#name : 'TypParametricType',
-	#superclass : 'TypNamedType',
+	#name : #TypParametricType,
+	#superclass : #TypNamedType,
 	#instVars : [
 		'parameters'
 	],
 	#category : 'Typer-Core-Type'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 TypParametricType class >> classDescription: aClassDescription [
 	self shouldNotImplement
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypParametricType class >> classDescription: aClassDescription parameters: anOrderedDictionary [
 	^ self new
 		initializeClassDescription: aClassDescription;
@@ -20,12 +20,12 @@ TypParametricType class >> classDescription: aClassDescription parameters: anOrd
 		yourself
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 TypParametricType class >> named: aString [
 	self shouldNotImplement
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypParametricType class >> named: aString parameters: anOrderedDictionary [
 	^ self new
 		initializeName: aString;
@@ -33,20 +33,20 @@ TypParametricType class >> named: aString parameters: anOrderedDictionary [
 		yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypParametricType class >> newFrom: aType [
 	self assert: [ aType isKindOf: self ].
 	^ self named: aType name parameters: aType parameters copy
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 TypParametricType >> = aType [
 	super = aType
 		ifFalse: [ ^ false ].
 	^ parameters = aType parameters
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 TypParametricType >> > aType [
 	aType = self
 		ifTrue: [ ^ false ].
@@ -59,7 +59,7 @@ TypParametricType >> > aType [
 	^ parameters keys allSatisfy: [ :e | (self at: e) >= (aType at: e) ]
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 TypParametricType >> asCompatibleWith: aType [
 
 	| copy |
@@ -72,12 +72,12 @@ TypParametricType >> asCompatibleWith: aType [
 	^ copy
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypParametricType >> at: aString [
 	^ parameters at: aString
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 TypParametricType >> copyWithAt: aString put: aType [
 
 	| copyParameters |
@@ -89,7 +89,7 @@ TypParametricType >> copyWithAt: aString put: aType [
 	^ self copyWithParameters: copyParameters
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 TypParametricType >> copyWithParameters: aCollection [
 	<typPraArguments: 'SequenceableCollection<TypType>'>
 	^ self copy
@@ -100,7 +100,7 @@ TypParametricType >> copyWithParameters: aCollection [
 		yourself
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 TypParametricType >> hashSkipping: anIdentitySet [
 
 	(anIdentitySet includes: self) ifTrue: [ ^ 37 ].
@@ -110,7 +110,7 @@ TypParametricType >> hashSkipping: anIdentitySet [
 		  into: [ :r :e | r bitXor: (e hashSkipping: anIdentitySet) ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 TypParametricType >> initialize [
 
 	<typPraResult: 'TypParametricType'>
@@ -119,7 +119,7 @@ TypParametricType >> initialize [
 	parameters := OrderedDictionary new
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypParametricType >> initializeParameters: anOrderedDictionary [
 
 	self assert: [ anOrderedDictionary isNotEmpty ].
@@ -130,14 +130,14 @@ TypParametricType >> initializeParameters: anOrderedDictionary [
 	superType := nil
 ]
 
-{ #category : 'invalidation' }
+{ #category : #invalidation }
 TypParametricType >> invalidate [
 
 	super invalidate.
 	parameters do: #invalidate
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypParametricType >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
 
 	(super isInvalidatedByClassAnnouncement: aClassAnnouncement) ifTrue: [ 
@@ -146,23 +146,23 @@ TypParametricType >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
 		  e isInvalidatedByClassAnnouncement: aClassAnnouncement ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 TypParametricType >> isParametric [
 	^ true
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypParametricType >> parameters [
 	^ parameters
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 TypParametricType >> postCopy [
 	super postCopy.
 	parameters := parameters copy
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 TypParametricType >> printOn: aStream skipping: anIdentitySet [
 	(anIdentitySet includes: self)
 		ifTrue: [ aStream << '.'.
@@ -177,7 +177,7 @@ TypParametricType >> printOn: aStream skipping: anIdentitySet [
 	aStream << '>'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypParametricType >> superType [
 	superType ifNotNil: [ ^ superType ].
 	superType := super superType.

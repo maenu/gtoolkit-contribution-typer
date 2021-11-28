@@ -1,10 +1,10 @@
 Class {
-	#name : 'TypGtGraphForceBasedLayout',
-	#superclass : 'GtGraphForceBasedLayout',
+	#name : #TypGtGraphForceBasedLayout,
+	#superclass : #GtGraphForceBasedLayout,
 	#category : 'Typer-GToolkit'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtGraphForceBasedLayout >> prepareNodes: someElements [
 
 	super prepareNodes: someElements.
@@ -12,7 +12,7 @@ TypGtGraphForceBasedLayout >> prepareNodes: someElements [
 		self set: e charge: (e extent max / 2) squared negated ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TypGtGraphForceBasedLayout >> runLayoutSimply [
 	nbIterations = 0
 		ifTrue: [ 

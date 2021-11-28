@@ -1,6 +1,6 @@
-Extension { #name : 'GtPharoCompletionStrategy' }
+Extension { #name : #GtPharoCompletionStrategy }
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 GtPharoCompletionStrategy >> typGtAsCompletionStrategy [
 
 	| strategy |

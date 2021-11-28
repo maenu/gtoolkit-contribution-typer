@@ -1,6 +1,6 @@
-Extension { #name : 'TypInfAstNode' }
+Extension { #name : #TypInfAstNode }
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 TypInfAstNode >> typGtSourceCodeFor: aView [
 
 	<gtView>
@@ -11,7 +11,7 @@ TypInfAstNode >> typGtSourceCodeFor: aView [
 		  view: #gtSourceCodeFor:
 ]
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 TypInfAstNode >> typGtSourceFor: aView [
 
 	<gtView>

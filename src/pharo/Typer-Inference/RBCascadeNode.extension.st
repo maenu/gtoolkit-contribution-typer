@@ -1,6 +1,7 @@
-Extension { #name : 'RBCascadeNode' }
+Extension { #name : #RBCascadeNode }
 
-{ #category : '*Typer-Inference' }
-RBCascadeNode >> typInfTypeRecursive [
-	^ (messages collect: #typInfType) last
+{ #category : #'*Typer-Inference' }
+RBCascadeNode >> typInfTypeRecursiveSelf: aType [
+
+	^ (messages collect: [ :e | e typInfTypeSelf: aType ]) last
 ]

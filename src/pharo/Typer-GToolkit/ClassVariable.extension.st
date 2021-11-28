@@ -1,13 +1,13 @@
-Extension { #name : 'ClassVariable' }
+Extension { #name : #ClassVariable }
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 ClassVariable >> typGtCanType [
 
 	<typPraResult: 'Boolean'>
 	^ true
 ]
 
-{ #category : '*Typer-GToolkit' }
+{ #category : #'*Typer-GToolkit' }
 ClassVariable >> typGtShadowMethod [
 
 	| shadow |

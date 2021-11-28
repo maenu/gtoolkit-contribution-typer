@@ -1,6 +1,6 @@
-Extension { #name : 'String' }
+Extension { #name : #String }
 
-{ #category : '*Typer-Inference' }
+{ #category : #'*Typer-Inference' }
 String >> typInfSelfType [
 
 	^ self class typAsType copyWithValue: self
