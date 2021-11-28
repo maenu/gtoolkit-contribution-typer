@@ -22,27 +22,6 @@ RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 ]
 
 { #category : #'*Typer-Checker' }
-RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger self: aType [
-
-	<typPraArguments: 'Integer'>
-	| argument expected actual |
-	argument := self arguments at: anInteger.
-	expected := (self typInfMethodSelf: aType) arguments at: anInteger.
-	actual := argument typInfTypeSelf: aType.
-	(expected isUnknown or: [ actual isUnknown ]) ifTrue: [ ^ self ].
-	expected asNonNullable >= actual asNonNullable ifTrue: [ ^ self ].
-	(actual isFunction and: [ 
-		 actual result isUnknown or: [ 
-			 argument isBlock and: [ 
-				 (argument typInfTypeSelf: aType) signalsAlways = true or: [ 
-					 argument body lastIsReturn ] ] ] ]) ifTrue: [ ^ self ].
-	TypCheIncompatibleTypeError new
-		expected: expected;
-		actual: actual;
-		signal
-]
-
-{ #category : #'*Typer-Checker' }
 RBMessageNode >> typCheCheckMethod [
 
 	| receiverType |

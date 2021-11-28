@@ -86,21 +86,6 @@ RBMethodNode >> typCheHasNullableArguments [
 ]
 
 { #category : #'*Typer-Checker' }
-RBMethodNode >> typCheHasNullableArgumentsSelf: aType [
-
-	<typPraResult: 'Boolean'>
-	^ ((((self allChildren select: #isMessage) reject: #isCascade) 
-		    flatCollect: #arguments) select: [ :e | 
-		   (e typInfTypeSelf: aType) isNullable ]) anySatisfy: [ :e | "typParameters RBMessageNode"
-		  | e_ i expected actual |
-		  e_ := e parent. "typCastAs RBMessageNode"
-		  i := e_ arguments detectIndex: [ :f | f == e ].
-		  expected := (e_ typInfMethodSelf: aType) arguments at: i.
-		  actual := e typInfTypeSelf: aType.
-		  (expected >= actual) not and: [ expected >= actual asNonNullable ] ]
-]
-
-{ #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasNullableReceivers [
 
 	<typPraResult: 'Boolean'>
@@ -152,27 +137,6 @@ RBMethodNode >> typCheHasUnknownArgumentsPassed [
 ]
 
 { #category : #'*Typer-Checker' }
-RBMethodNode >> typCheHasUnknownArgumentsPassedSelf: aType [
-
-	<typPraResult: 'Boolean'>
-	((self allChildren select: #isMessage) reject: #isCascade) do: [ :e | 
-		e arguments withIndexDo: [ :f :i | 
-			((e typInfMethodSelf: aType) arguments at: i) isUnknown ifTrue: [ 
-				^ true ] ] ]. "typParameters RBMessageNode"
-	^ false
-]
-
-{ #category : #'*Typer-Checker' }
-RBMethodNode >> typCheHasUnknownArgumentsSelf: aType [
-
-	<typPraResult: 'Boolean'>
-	1 to: self numArgs do: [ :e | 
-		((self typInfMethodSelf: aType) arguments at: e) isUnknown ifTrue: [ 
-			^ true ] ].
-	^ false
-]
-
-{ #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasUnknownReceivers [
 
 	<typPraResult: 'Boolean'>
@@ -185,12 +149,6 @@ RBMethodNode >> typCheHasUnknownReceivers [
 RBMethodNode >> typCheHasUnknownResult [
 	<typPraResult: 'Boolean'>
 	^ self typInfMethod result isUnknown
-]
-
-{ #category : #'*Typer-Checker' }
-RBMethodNode >> typCheHasUnknownResultSelf: aType [
-	<typPraResult: 'Boolean'>
-	^ (self typInfMethodSelf: aType) result isUnknown
 ]
 
 { #category : #'*Typer-Checker' }
