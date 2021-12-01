@@ -7,7 +7,7 @@ Class {
 		'label',
 		'data'
 	],
-	#category : 'Typer-Core-Type'
+	#category : #'Typer-Core-Type'
 }
 
 { #category : #'instance creation' }
@@ -86,4 +86,10 @@ TypEdge >> initializeDependency: aType dependent: anotherType label: aString dat
 TypEdge >> label [
 
 	^ label
+]
+
+{ #category : #accessing }
+TypEdge >> printOn: aStream [
+
+	aStream nextPutAll: label
 ]

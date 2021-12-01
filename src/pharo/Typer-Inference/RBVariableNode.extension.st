@@ -1,7 +1,7 @@
 Extension { #name : #RBVariableNode }
 
 { #category : #'*Typer-Inference' }
-RBVariableNode >> typInfTypeRecursiveSelf: aType [
+RBVariableNode >> typInfTypeRecursiveIn: aContext [
 
-	^ variable typInfTypeRecursiveIn: self self: aType
+	^ variable typInfType: self in: aContext
 ]

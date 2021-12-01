@@ -84,7 +84,11 @@ TypMethodMeasurement >> isTimeout [
 { #category : #accessing }
 TypMethodMeasurement >> printOn: aStream [
 
-	self isSuccess ifTrue: [ ^ aStream nextPutAll: 'success' ].
-	self isError ifTrue: [ ^ aStream nextPutAll: 'error' ].
+	self isSuccess ifTrue: [ 
+		aStream nextPutAll: 'success, '.
+		^ result printOn: aStream ].
+	self isError ifTrue: [ 
+		aStream nextPutAll: 'error, '.
+		^ error printOn: aStream ].
 	self isTimeout ifTrue: [ ^ aStream nextPutAll: 'timeout' ]
 ]

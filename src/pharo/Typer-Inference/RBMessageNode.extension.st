@@ -1,30 +1,17 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer-Inference' }
-RBMessageNode >> typInfMethod [
-
-	^ self typInfMethodSelf: self typInfSelf
-]
-
-{ #category : #'*Typer-Inference' }
-RBMessageNode >> typInfMethodSelf: aType [
+RBMessageNode >> typInfMethodIn: aContext [
 
 	<typPraResult: 'TypFunctionType'>
-	| prefix |
-	prefix := 'typInf-' , aType hash asString , '-method'.
-	^ self
-		  propertyAt: prefix
-		  ifAbsent: [ "need to set property to default to unknown on recursive calls"
-			  self
-				  propertyAt: prefix put: (self typInfUnknownSelf: aType);
-				  propertyAt: prefix put: ((receiver typInfTypeSelf: aType)
-						   lookupMethod: selector value asSymbol
-						   arguments:
-							   (arguments collect: [ :e | e typInfTypeSelf: aType ])) ]
+	^ aContext methodAt: self ifAbsentPut: [ 
+		  (receiver typInfTypeIn: aContext)
+			  lookupMethod: selector value asSymbol
+			  arguments: (arguments collect: [ :e | e typInfTypeIn: aContext ]) ]
 ]
 
 { #category : #'*Typer-Inference' }
-RBMessageNode >> typInfTypeRecursiveSelf: aType [
+RBMessageNode >> typInfTypeRecursiveIn: aContext [
 
-	^ (self typInfMethodSelf: aType) result
+	^ (self typInfMethodIn: aContext) result
 ]

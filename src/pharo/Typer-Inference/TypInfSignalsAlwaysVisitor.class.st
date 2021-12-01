@@ -2,15 +2,38 @@ Class {
 	#name : #TypInfSignalsAlwaysVisitor,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
-		'signalsAlways'
+		'signalsAlways',
+		'context'
 	],
 	#category : #'Typer-Inference'
 }
+
+{ #category : #accessing }
+TypInfSignalsAlwaysVisitor class >> context: aContext [
+
+	^ self new
+		  initializeContext: aContext;
+		  yourself
+]
+
+{ #category : #'as yet unclassified' }
+TypInfSignalsAlwaysVisitor class >> signalsAlwaysOf: aNode in: aContext [
+
+	^ (self context: aContext)
+		  visitNode: aNode;
+		  signalsAlways
+]
 
 { #category : #initialization }
 TypInfSignalsAlwaysVisitor >> initialize [
 	super initialize.
 	signalsAlways := false
+]
+
+{ #category : #initialization }
+TypInfSignalsAlwaysVisitor >> initializeContext: aContext [
+
+	context := aContext
 ]
 
 { #category : #accessing }
@@ -30,7 +53,7 @@ TypInfSignalsAlwaysVisitor >> visitMessageNode: aNode [
 
 	| method s |
 	super visitMessageNode: aNode.
-	method := aNode typInfMethod.
+	method := aNode typInfMethodIn: context.
 	s := method isFunction
 		     ifTrue: [ method signalsAlways ]
 		     ifFalse: [ nil ].

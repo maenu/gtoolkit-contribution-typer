@@ -5,7 +5,7 @@ Class {
 		'types',
 		'hasSuperType'
 	],
-	#category : 'Typer-Core-Type'
+	#category : #'Typer-Core-Type'
 }
 
 { #category : #'instance creation' }
@@ -134,17 +134,19 @@ TypUnionType >> invalidate [
 ]
 
 { #category : #invalidation }
-TypUnionType >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
+TypUnionType >> invalidateOnClass: aClassAnnouncement [
 
-	^ types anySatisfy: [ :e | 
-		  e isInvalidatedByClassAnnouncement: aClassAnnouncement ]
+	(types anySatisfy: [ :e | e invalidateOnClass: aClassAnnouncement ]) 
+		ifFalse: [ ^ false ].
+	self invalidate.
+	^ true
 ]
 
 { #category : #invalidation }
-TypUnionType >> isInvalidatedByMethodAnnouncement: aMethodAnnouncement [
+TypUnionType >> invalidateOnMethod: aMethodAnnouncement [
 
 	^ types anySatisfy: [ :e | 
-		  e isInvalidatedByMethodAnnouncement: aMethodAnnouncement ]
+		  e invalidateOnMethod: aMethodAnnouncement ]
 ]
 
 { #category : #accessing }

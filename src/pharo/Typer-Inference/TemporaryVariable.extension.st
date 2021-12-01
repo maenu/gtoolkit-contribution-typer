@@ -1,16 +1,16 @@
 Extension { #name : #TemporaryVariable }
 
 { #category : #'*Typer-Inference' }
-TemporaryVariable >> typInfTypeRecursiveIn: aNode self: aType [
+TemporaryVariable >> typInfType: aNode in: aContext [
 
 	aNode isDefinition ifTrue: [ 
 		^ (((aNode whoDefines: name) assignmentNodes select: [ :e | 
 			    e variable = aNode ]) collect: [ :e | 
-			   e value typInfTypeSelf: aType ])
-			  ifEmpty: [ aNode typInfNilSelf: aType ]
-			  ifNotEmpty: [ :e | e typInfTypeSelf: aType ] ].
-	aNode isWrite ifTrue: [ ^ aNode parent value typInfTypeSelf: aType ].
+			   e value typInfTypeIn: aContext ])
+			  ifEmpty: [ aContext nil: aNode ]
+			  ifNotEmpty: [ :e | e typInfTypeIn: aContext ] ].
+	aNode isWrite ifTrue: [ ^ aNode parent value typInfTypeIn: aContext ].
 	^ TypInfTemporaryExecutionOrderVisitor
-		  typeForTemporary: aNode
-		  self: aType
+		  typeOf: aNode
+		  in: aContext
 ]

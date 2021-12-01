@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'resolvers'
 	],
-	#category : 'Typer-Core-Lookup'
+	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #'instance creation' }
@@ -32,10 +32,17 @@ TypBreadthFirstResolver >> initializeResolvers: anObject [
 ]
 
 { #category : #invalidation }
-TypBreadthFirstResolver >> invalidateOn: aClassOrMethodAnnouncement [
+TypBreadthFirstResolver >> invalidateOnClass: aClassAnnouncement [
 
-	super invalidateOn: aClassOrMethodAnnouncement.
-	resolvers do: [ :e | e invalidateOn: aClassOrMethodAnnouncement ]
+	super invalidateOnClass: aClassAnnouncement.
+	resolvers do: [ :e | e invalidateOnClass: aClassAnnouncement ]
+]
+
+{ #category : #invalidation }
+TypBreadthFirstResolver >> invalidateOnMethod: aMethodAnnouncement [
+
+	super invalidateOnMethod: aMethodAnnouncement.
+	resolvers do: [ :e | e invalidateOnMethod: aMethodAnnouncement ]
 ]
 
 { #category : #resetting }

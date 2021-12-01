@@ -1,11 +1,11 @@
 Extension { #name : #Association }
 
 { #category : #'*Typer-Inference' }
-Association >> typInfSelfType [
+Association >> typInfType [
 	| type |
-	type := super typInfSelfType.
+	type := super typInfType.
 	^ type
 		copyWithParameters:
-			{key typInfSelfType.
-			value typInfSelfType}
+			{key typInfType.
+			value typInfType}
 ]

@@ -1,7 +1,7 @@
 Class {
 	#name : #TypResolver,
 	#superclass : #TypNode,
-	#category : 'Typer-Core-Lookup'
+	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #accessing }
@@ -25,7 +25,13 @@ TypResolver >> canResolve: aLookup [
 ]
 
 { #category : #invalidation }
-TypResolver >> invalidateOn: aClassOrMethodAnnouncement [
+TypResolver >> invalidateOnClass: aClassAnnouncement [
+
+	
+]
+
+{ #category : #invalidation }
+TypResolver >> invalidateOnMethod: aMethodAnnouncement [
 
 	
 ]

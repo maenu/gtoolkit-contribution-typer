@@ -1,7 +1,7 @@
 Extension { #name : #RBReturnNode }
 
 { #category : #'*Typer-Inference' }
-RBReturnNode >> typInfTypeRecursiveSelf: aType [
+RBReturnNode >> typInfTypeRecursiveIn: aContext [
 
-	^ value typInfTypeSelf: aType
+	^ value typInfTypeIn: aContext
 ]

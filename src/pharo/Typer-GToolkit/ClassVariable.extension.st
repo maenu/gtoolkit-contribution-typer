@@ -17,6 +17,6 @@ ClassVariable >> typGtShadowMethod [
 		          ifNotEmpty: #first.
 	^ shadow
 		  typGtShadowVariable: name asSymbol
-		  type: value typInfSelfType
+		  type: value typInfType
 		  in: shadow class
 ]

@@ -6,7 +6,7 @@ Class {
 		'classDescription',
 		'hasClassDescription'
 	],
-	#category : 'Typer-Core-Type'
+	#category : #'Typer-Core-Type'
 }
 
 { #category : #'instance creation' }
@@ -139,12 +139,14 @@ TypNamedType >> initializeName: anObject [
 ]
 
 { #category : #accessing }
-TypNamedType >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
+TypNamedType >> invalidateOnClass: aClassAnnouncement [
 
 	self hasClassDescription ifFalse: [ ^ false ].
-	^ self classDescription = aClassAnnouncement classAffected or: [ 
-		  self classDescription inheritsFrom:
-			  aClassAnnouncement classAffected ]
+	(self classDescription = aClassAnnouncement classAffected or: [ 
+		 self classDescription inheritsFrom:
+			 aClassAnnouncement classAffected ]) ifFalse: [ ^ false ].
+	self invalidate.
+	^ true
 ]
 
 { #category : #testing }

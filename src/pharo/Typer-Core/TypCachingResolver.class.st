@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'cache'
 	],
-	#category : 'Typer-Core-Lookup'
+	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #resolving }
@@ -24,18 +24,21 @@ TypCachingResolver >> initialize [
 ]
 
 { #category : #invalidation }
-TypCachingResolver >> invalidateOn: aClassOrMethodAnnouncement [
+TypCachingResolver >> invalidateOnClass: aClassAnnouncement [
 
-	super invalidateOn: aClassOrMethodAnnouncement.
+	super invalidateOnClass: aClassAnnouncement.
 	cache keysAndValuesRemove: [ :lookup :type | 
-		| invalidate |
-		invalidate := false.
-		(aClassOrMethodAnnouncement typInvalidates: lookup) ifTrue: [ 
-			invalidate := true ].
-		(aClassOrMethodAnnouncement typInvalidates: type) ifTrue: [ 
-			invalidate := true.
-			type invalidate ].
-		invalidate ]
+		(lookup invalidateOnClass: aClassAnnouncement) or: [ 
+			type invalidateOnClass: aClassAnnouncement ] ]
+]
+
+{ #category : #invalidation }
+TypCachingResolver >> invalidateOnMethod: aMethodAnnouncement [
+
+	super invalidateOnMethod: aMethodAnnouncement.
+	cache keysAndValuesRemove: [ :lookup :type | 
+		(lookup invalidateOnMethod: aMethodAnnouncement) or: [ 
+			type invalidateOnMethod: aMethodAnnouncement ] ]
 ]
 
 { #category : #initialization }

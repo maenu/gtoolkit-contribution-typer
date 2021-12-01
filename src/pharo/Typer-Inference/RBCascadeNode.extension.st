@@ -1,7 +1,7 @@
 Extension { #name : #RBCascadeNode }
 
 { #category : #'*Typer-Inference' }
-RBCascadeNode >> typInfTypeRecursiveSelf: aType [
+RBCascadeNode >> typInfTypeRecursiveIn: aContext [
 
-	^ (messages collect: [ :e | e typInfTypeSelf: aType ]) last
+	^ (messages collect: [ :e | e typInfTypeIn: aContext ]) last
 ]

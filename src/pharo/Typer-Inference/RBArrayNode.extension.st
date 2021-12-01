@@ -1,8 +1,9 @@
 Extension { #name : #RBArrayNode }
 
 { #category : #'*Typer-Inference' }
-RBArrayNode >> typInfTypeRecursiveSelf: aType [
+RBArrayNode >> typInfTypeRecursiveIn: aContext [
 
 	^ Array typAsType copyWithParameters:
-		  { (statements collect: [ :e | e typInfTypeSelf: aType ]) typAsType }
+		  { (statements collect: [ :e | e typInfTypeIn: aContext ])
+			  typAsType }
 ]

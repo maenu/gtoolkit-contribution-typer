@@ -1,13 +1,13 @@
 Extension { #name : #ArgumentVariable }
 
 { #category : #'*Typer-Inference' }
-ArgumentVariable >> typInfTypeRecursiveIn: aNode self: aType [
+ArgumentVariable >> typInfType: aNode in: aContext [
 
 	| type sendNodes sendSelectors sendClasses useTypes |
 	aNode isDefinition ifFalse: [ 
 		^ ((aNode whoDefines: name) arguments detect: [ :e | e = aNode ]) 
-			  typInfTypeSelf: aType ].
-	type := aNode parent typInfArgumentType: aNode self: aType.
+			  typInfTypeIn: aContext ].
+	type := aNode parent typInfArgumentTypeOf: aNode in: aContext.
 	type isUnknown ifFalse: [ ^ type ].
 
 	sendNodes := (aNode whoDefines: name) sendNodes select: [ :e | 
@@ -29,10 +29,10 @@ ArgumentVariable >> typInfTypeRecursiveIn: aNode self: aType [
 			parent := e parent.
 			(parent isMessage and: [ parent arguments includes: aNode ]) 
 				ifTrue: [ 
-					useTypes add: ((parent typInfMethodSelf: aType) arguments at:
+					useTypes add: ((parent typInfMethodIn: aContext) arguments at:
 							 (parent arguments indexOf: aNode)) ].
 			(parent isAssignment and: [ parent value = aNode ]) ifTrue: [ 
-				useTypes add: (parent variable typInfTypeSelf: aType) ] ] ].
-	useTypes ifEmpty: [ ^ aNode typInfUnknownSelf: aType ].
+				useTypes add: (parent variable typInfTypeIn: aContext) ] ] ].
+	useTypes ifEmpty: [ ^ aContext unknown: aNode ].
 	^ useTypes typAsType
 ]

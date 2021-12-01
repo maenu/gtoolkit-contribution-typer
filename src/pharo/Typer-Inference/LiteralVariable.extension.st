@@ -1,9 +1,9 @@
 Extension { #name : #LiteralVariable }
 
 { #category : #'*Typer-Inference' }
-LiteralVariable >> typInfSelfType [
+LiteralVariable >> typInfType [
 
 	^ self class typAsParametricTypeWithParameters: { 
 			  ('@B' -> Symbol typAsType).
-			  ('@A' -> value typInfSelfType) } asOrderedDictionary
+			  ('@A' -> value typInfType) } asOrderedDictionary
 ]

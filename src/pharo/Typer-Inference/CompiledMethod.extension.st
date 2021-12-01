@@ -1,12 +1,12 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*Typer-Inference' }
-CompiledMethod >> typInfSelf [
-
-	^ self methodClass typAsType
+CompiledMethod >> typInfTypeIn: aContext [
+	^ self ast typInfTypeIn: aContext
 ]
 
 { #category : #'*Typer-Inference' }
-CompiledMethod >> typInfTypeSelf: aType [
-	^ self ast typInfTypeSelf: aType
+CompiledMethod >> typInfTypeInSelf [
+
+	^ self ast typInfTypeInSelf
 ]

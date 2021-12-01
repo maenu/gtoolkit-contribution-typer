@@ -5,7 +5,7 @@ Class {
 		'selector',
 		'receiver'
 	],
-	#category : 'Typer-Core-Lookup'
+	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #comparing }
@@ -50,9 +50,9 @@ TypPropertyLookup >> initializeReceiver: aType selector: aSymbol [
 ]
 
 { #category : #invalidation }
-TypPropertyLookup >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
+TypPropertyLookup >> invalidateOnClass: aClassAnnouncement [
 
-	^ receiver isInvalidatedByClassAnnouncement: aClassAnnouncement
+	^ receiver invalidateOnClass: aClassAnnouncement
 ]
 
 { #category : #accessing }

@@ -1,7 +1,7 @@
 Extension { #name : #GlobalVariable }
 
 { #category : #'*Typer-Inference' }
-GlobalVariable >> typInfTypeRecursiveIn: aNode self: aType [
+GlobalVariable >> typInfType: aNode in: aContext [
 
-	^ value typInfSelfType
+	^ value typInfType
 ]

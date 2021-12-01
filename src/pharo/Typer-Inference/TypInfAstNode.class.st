@@ -2,8 +2,7 @@ Class {
 	#name : #TypInfAstNode,
 	#superclass : #TypNode,
 	#instVars : [
-		'node',
-		'selfType'
+		'node'
 	],
 	#classInstVars : [
 		'index'
@@ -33,21 +32,11 @@ TypInfAstNode class >> node: aNode [
 ]
 
 { #category : #accessing }
-TypInfAstNode class >> node: aNode self: aType [
-
-	^ index at: aNode -> aType ifAbsentPut: [ 
-		  self new
-			  initializeNode: aNode self: aType;
-			  yourself ]
-]
-
-{ #category : #accessing }
 TypInfAstNode >> = anObject [
 
 	anObject == self ifTrue: [ ^ true ].
 	anObject class = self class ifFalse: [ ^ false ].
-	anObject node = node ifFalse: [ ^ false ].
-	^ anObject selfType = selfType
+	^ anObject node = node
 ]
 
 { #category : #accessing }
@@ -77,20 +66,13 @@ TypInfAstNode >> asElementIn: aMondrian [
 { #category : #accessing }
 TypInfAstNode >> hash [
 
-	^ node hash bitXor: selfType hash
+	^ self class hash bitXor: node hash
 ]
 
 { #category : #initialization }
-TypInfAstNode >> initializeNode: aNode self: aType [
+TypInfAstNode >> initializeNode: aNode [
 
-	node := aNode.
-	selfType := aType
-]
-
-{ #category : #invalidation }
-TypInfAstNode >> invalidate [
-
-	node withAllParents first typInfInvalidateSelf: selfType
+	node := aNode
 ]
 
 { #category : #accessing }
@@ -100,11 +82,6 @@ TypInfAstNode >> node [
 
 { #category : #printing }
 TypInfAstNode >> printOn: aStream [
+
 	node printOn: aStream
-]
-
-{ #category : #accessing }
-TypInfAstNode >> selfType [
-
-	^ selfType
 ]

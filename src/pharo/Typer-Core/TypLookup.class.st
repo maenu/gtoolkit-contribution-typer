@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'parent'
 	],
-	#category : 'Typer-Core-Lookup'
+	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #accessing }
@@ -38,13 +38,13 @@ TypLookup >> initializeParent: aLookup [
 ]
 
 { #category : #invalidation }
-TypLookup >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
+TypLookup >> invalidateOnClass: aClassAnnouncement [
 
 	^ false
 ]
 
 { #category : #invalidation }
-TypLookup >> isInvalidatedByMethodAnnouncement: aMethodAnnouncement [
+TypLookup >> invalidateOnMethod: aMethodAnnouncement [
 
 	^ false
 ]

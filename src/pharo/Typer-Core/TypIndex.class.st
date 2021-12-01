@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : 'Typer-Core-Lookup'
+	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #accessing }
@@ -35,9 +35,8 @@ TypIndex >> initialize [
 	<typPraVariable: 'resolver' as: 'TypLookupResolver'>
 	super initialize.
 	SystemAnnouncer uniqueInstance weak
-		when: ClassAnnouncement , MethodAnnouncement
-		send: #invalidateOn:
-		to: self
+		when: ClassAnnouncement send: #invalidateOnClass: to: self;
+		when: MethodAnnouncement send: #invalidateOnMethod: to: self
 ]
 
 { #category : #initialization }
@@ -47,9 +46,15 @@ TypIndex >> initializeResolver: anObject [
 ]
 
 { #category : #resetting }
-TypIndex >> invalidateOn: aClassOrMethodAnnouncement [
+TypIndex >> invalidateOnClass: aClassAnnouncement [
 
-	resolver invalidateOn: aClassOrMethodAnnouncement
+	resolver invalidateOnClass: aClassAnnouncement
+]
+
+{ #category : #resetting }
+TypIndex >> invalidateOnMethod: aMethodAnnouncement [
+
+	resolver invalidateOnMethod: aMethodAnnouncement
 ]
 
 { #category : #resetting }

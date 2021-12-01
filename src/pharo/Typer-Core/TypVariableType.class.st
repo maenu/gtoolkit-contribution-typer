@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : 'Typer-Core-Type'
+	#category : #'Typer-Core-Type'
 }
 
 { #category : #'instance creation' }
@@ -83,15 +83,17 @@ TypVariableType >> initializeName: aString [
 ]
 
 { #category : #invalidation }
-TypVariableType >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
+TypVariableType >> invalidateOnClass: aClassAnnouncement [
 
-	^ superType isInvalidatedByClassAnnouncement: aClassAnnouncement
+	(superType invalidateOnClass: aClassAnnouncement) ifFalse: [ ^ false ].
+	self invalidate.
+	^ true
 ]
 
 { #category : #invalidation }
-TypVariableType >> isInvalidatedByMethodAnnouncement: aMethodAnnouncement [
+TypVariableType >> invalidateOnMethod: aMethodAnnouncement [
 
-	^ superType isInvalidatedByMethodAnnouncement: aMethodAnnouncement
+	^ superType invalidateOnMethod: aMethodAnnouncement
 ]
 
 { #category : #testing }

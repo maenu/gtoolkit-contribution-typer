@@ -1,37 +1,29 @@
 Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer-Inference' }
-RBBlockNode >> typInfArgumentType: anArgumentNode self: aType [
+RBBlockNode >> typInfArgumentTypeOf: anArgumentNode in: aContext [
 
 	| i j argument |
-	self typInfIsMessageArgument ifFalse: [ 
-		^ self typInfUnknownSelf: aType ].
+	self typInfIsMessageArgument ifFalse: [ ^ aContext unknown: self ].
 	i := parent arguments indexOf: self.
 	j := arguments indexOf: anArgumentNode.
-	argument := (parent typInfMethodSelf: aType) arguments at: i.
+	argument := (parent typInfMethodIn: aContext) arguments at: i.
 	argument isUnion ifTrue: [ 
 		argument := argument types
 			            detect: #isFunction
-			            ifNone: [ ^ self typInfUnknownSelf: aType ] ].
+			            ifNone: [ ^ aContext unknown: self ] ].
 	(argument isFunction and: [ argument argumentsSize >= j ]) ifTrue: [ 
 		^ argument arguments at: j ].
-	^ self typInfUnknownSelf: aType
+	^ aContext unknown: self
 ]
 
 { #category : #'*Typer-Inference' }
-RBBlockNode >> typInfIsMessageArgument [
-	^ parent isMessage and: [ parent arguments includes: self ]
-]
+RBBlockNode >> typInfTypeRecursiveIn: aContext [
 
-{ #category : #'*Typer-Inference' }
-RBBlockNode >> typInfTypeRecursiveSelf: aType [
-
-	| visitor |
-	visitor := TypInfSignalsAlwaysVisitor new.
-	self acceptVisitor: visitor.
 	^ BlockClosure
-		  typAsFunctionTypeWithResult: (body typInfTypeSelf: aType)
-		  arguments: (arguments collect: [ :e | e typInfTypeSelf: aType ])
+		  typAsFunctionTypeWithResult: (body typInfTypeIn: aContext)
+		  arguments: (arguments collect: [ :e | e typInfTypeIn: aContext ])
 		  argumentsOptional: false
-		  signalsAlways: visitor signalsAlways
+		  signalsAlways:
+		  (TypInfSignalsAlwaysVisitor signalsAlwaysOf: self in: aContext)
 ]

@@ -1,6 +1,9 @@
 Class {
 	#name : #TypInfMethodResolver,
 	#superclass : #TypResolver,
+	#instVars : [
+		'contexts'
+	],
 	#category : #'Typer-Inference'
 }
 
@@ -12,10 +15,34 @@ TypInfMethodResolver >> canResolve: aLookup [
 					[ aLookup receiver classDescription includesSelector: aLookup selector ] ]
 ]
 
+{ #category : #initialization }
+TypInfMethodResolver >> initialize [
+
+	super initialize.
+	contexts := Dictionary new
+]
+
+{ #category : #accessing }
+TypInfMethodResolver >> invalidateOnClass: aClassAnnouncement [
+	
+	contexts removeAll
+]
+
+{ #category : #accessing }
+TypInfMethodResolver >> invalidateOnMethod: aMethodAnnouncement [
+
+	contexts removeAll
+]
+
 { #category : #accessing }
 TypInfMethodResolver >> resolve: aLookup [
 
+	| context |
 	self assert: [ self canResolve: aLookup ].
+	context := contexts
+		           at: aLookup
+		           ifAbsentPut: [ 
+		           TypInfAstContext self: aLookup root receiver ].
 	^ aLookup receiver classDescription >> aLookup selector 
-		  typInfTypeSelf: aLookup root receiver
+		  typInfTypeIn: context
 ]

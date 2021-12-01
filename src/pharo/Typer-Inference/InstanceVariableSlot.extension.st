@@ -1,7 +1,7 @@
 Extension { #name : #InstanceVariableSlot }
 
 { #category : #'*Typer-Inference' }
-InstanceVariableSlot >> typInfTypeRecursiveIn: aNode self: aType [
+InstanceVariableSlot >> typInfType: aNode in: aContext [
 
 	^ owningClass typAsType lookupVariable: name asSymbol
 ]

@@ -57,7 +57,7 @@ TypTyping >> monitorMemorySomeMethods [
 	| all methods |
 	all := CompiledMethod allInstances.
 	methods := IdentitySet new.
-	[ methods size < 100 ] whileTrue: [ methods add: all atRandom ].
+	[ methods size < 1 ] whileTrue: [ methods add: all atRandom ].
 	^ self monitorMemoryMethods: methods timeout: 5 seconds
 ]
 
@@ -103,8 +103,7 @@ TypTyping >> typeMethod: aMethod timeout: aDuration [
 	process := [ 
 	           [ 
 	           [ 
-	           result := aMethod typInfTypeSelf:
-		                     aMethod methodClass typAsType ]
+	           result := aMethod typInfTypeInSelf ]
 		           on: Exception
 		           do: [ :e | 
 			           e freeze.
@@ -117,4 +116,19 @@ TypTyping >> typeMethod: aMethod timeout: aDuration [
 	error ifNotNil: [ 
 		^ TypMethodMeasurement method: aMethod error: error ].
 	^ TypMethodMeasurement method: aMethod result: result
+]
+
+{ #category : #accessing }
+TypTyping >> typeSomeMethods [
+
+	<gtExample>
+	| all methods |
+	ASTCache reset.
+	TypIndex resetAll.
+	TypResolver resetAll.
+	TypInfImplementorsCache reset.
+	all := CompiledMethod allInstances.
+	methods := IdentitySet new.
+	[ methods size < 1 ] whileTrue: [ methods add: all atRandom ].
+	^ methods collect: [ :e | self typeMethod: e timeout: 30 seconds ]
 ]

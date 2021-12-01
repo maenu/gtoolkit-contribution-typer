@@ -6,7 +6,7 @@ Class {
 		'value',
 		'hasValue'
 	],
-	#category : 'Typer-Core-Type'
+	#category : #'Typer-Core-Type'
 }
 
 { #category : #comparing }
@@ -159,21 +159,21 @@ TypType >> invalidate [
 
 ]
 
+{ #category : #invalidation }
+TypType >> invalidateOnClass: aClassAnnouncement [
+
+	^ false
+]
+
+{ #category : #invalidation }
+TypType >> invalidateOnMethod: aMethodAnnouncement [
+
+	^ false
+]
+
 { #category : #testing }
 TypType >> isFunction [
 	<typPraResult: 'Boolean'>
-	^ false
-]
-
-{ #category : #invalidation }
-TypType >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
-
-	^ false
-]
-
-{ #category : #invalidation }
-TypType >> isInvalidatedByMethodAnnouncement: aMethodAnnouncement [
-
 	^ false
 ]
 

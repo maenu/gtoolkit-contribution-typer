@@ -1,7 +1,7 @@
 Extension { #name : #ThisContextVariable }
 
 { #category : #'*Typer-Inference' }
-ThisContextVariable >> typInfTypeRecursiveIn: aNode self: aType [
+ThisContextVariable >> typInfType: aNode in: aContext [
 
 	^ Context typAsType
 ]

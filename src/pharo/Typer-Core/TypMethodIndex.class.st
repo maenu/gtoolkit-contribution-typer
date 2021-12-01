@@ -1,7 +1,7 @@
 Class {
 	#name : #TypMethodIndex,
 	#superclass : #TypIndex,
-	#category : 'Typer-Core-Lookup'
+	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #accessing }
@@ -42,6 +42,5 @@ TypMethodIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aColl
 TypMethodIndex >> reset [
 
 	super reset.
-	ASTCache default do: #typInfInvalidate.
 	TypInfAstNode invalidate
 ]

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'parameters'
 	],
-	#category : 'Typer-Core-Type'
+	#category : #'Typer-Core-Type'
 }
 
 { #category : #'instance creation' }
@@ -138,12 +138,13 @@ TypParametricType >> invalidate [
 ]
 
 { #category : #accessing }
-TypParametricType >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
+TypParametricType >> invalidateOnClass: aClassAnnouncement [
 
-	(super isInvalidatedByClassAnnouncement: aClassAnnouncement) ifTrue: [ 
+	(super invalidateOnClass: aClassAnnouncement) ifTrue: [ 
+		self invalidate.
 		^ true ].
 	^ parameters anySatisfy: [ :e | 
-		  e isInvalidatedByClassAnnouncement: aClassAnnouncement ]
+		  e invalidateOnClass: aClassAnnouncement ]
 ]
 
 { #category : #testing }

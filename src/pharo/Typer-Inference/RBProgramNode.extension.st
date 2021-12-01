@@ -1,7 +1,7 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*Typer-Inference' }
-RBProgramNode >> typInfAnnotateType: aType [
+RBProgramNode >> typInfAnnotated: aType [
 	"Annotates aType according to my comments used for casting and setting parameters."
 
 	<typPraResult: 'TypType'>
@@ -10,73 +10,32 @@ RBProgramNode >> typInfAnnotateType: aType [
 ]
 
 { #category : #'*Typer-Inference' }
-RBProgramNode >> typInfAstNodeSelf: aType [
+RBProgramNode >> typInfIsMessageArgument [
 
-	^ TypInfAstNode node: self self: aType
+	^ parent isNotNil and: [ 
+		  parent isMessage and: [ parent arguments includes: self ] ]
 ]
 
 { #category : #'*Typer-Inference' }
-RBProgramNode >> typInfInvalidateSelf: aType [
-
-	| prefix |
-	prefix := 'typInf-' , aType hash asString , '-'.
-	properties ifNotNil: [ 
-		(properties keys select: [ :e | e beginsWith: prefix ]) do: [ :e | 
-			self removeProperty: e ] ].
-	self children
-		reject: #isNil
-		thenDo: [ :e | e typInfInvalidateSelf: aType ]
-]
-
-{ #category : #'*Typer-Inference' }
-RBProgramNode >> typInfNilSelf: aType [
-
-	^ (self typInfAstNodeSelf: aType)
-		  addDependent: TypNilType new
-		  label: #typInfNil
-]
-
-{ #category : #'*Typer-Inference' }
-RBProgramNode >> typInfSelf [
-
-	parent ifNotNil: [ ^ parent typInfSelf ].
-	^ self typInfUnknownSelf: nil
-]
-
-{ #category : #'*Typer-Inference' }
-RBProgramNode >> typInfType [
-
-	^ self typInfTypeSelf: self typInfSelf
-]
-
-{ #category : #'*Typer-Inference' }
-RBProgramNode >> typInfTypeRecursiveSelf: aType [
+RBProgramNode >> typInfTypeIn: aContext [
 
 	<typPraResult: 'TypType'>
-	^ self typInfUnknownSelf: aType
+	^ aContext nodeAt: self ifAbsentPut: [ 
+		  (TypInfAstNode node: self)
+			  addDependent:
+			  (self typInfAnnotated: (self typInfTypeRecursiveIn: aContext))
+			  label: #typInfTypeRecursive ]
 ]
 
 { #category : #'*Typer-Inference' }
-RBProgramNode >> typInfTypeSelf: aType [
+RBProgramNode >> typInfTypeInSelf [
+
+	^ self typInfTypeIn: (TypInfAstContext self: nil)
+]
+
+{ #category : #'*Typer-Inference' }
+RBProgramNode >> typInfTypeRecursiveIn: aContext [
 
 	<typPraResult: 'TypType'>
-	| prefix |
-	prefix := 'typInf-' , aType hash asString , '-type'.
-	^ self
-		  propertyAt: prefix
-		  ifAbsent: [ "need to set property to default to unknown on recursive calls"
-			  self
-				  propertyAt: prefix put: (self typInfUnknownSelf: aType);
-				  propertyAt: prefix
-				  put: (self typInfAnnotateType: ((self typInfAstNodeSelf: aType)
-								    addDependent: (self typInfTypeRecursiveSelf: aType)
-								    label: #typInfTypeRecursive)) ]
-]
-
-{ #category : #'*Typer-Inference' }
-RBProgramNode >> typInfUnknownSelf: aType [
-
-	^ (self typInfAstNodeSelf: aType)
-		  addDependent: TypUnknownType new
-		  label: #typInfUnknown
+	^ aContext unknown: self
 ]

@@ -55,9 +55,9 @@ RBMethodNode >> typDynInvokeIn: aContext [
 		ifTrue: [ self typDynInvocations
 				add:
 					(TypDynMessage new
-						receiverType: aContext receiver typInfSelfType;
+						receiverType: aContext receiver typInfType;
 						selector: aContext method selector;
-						argumentTypes: (aContext arguments collect: #typInfSelfType);
+						argumentTypes: (aContext arguments collect: #typInfType);
 						yourself) ].
 	self typDynInvocations weights size >= 100
 		ifTrue: [ self typDynRemoveLink ]

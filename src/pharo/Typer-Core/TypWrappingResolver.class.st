@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'resolver'
 	],
-	#category : 'Typer-Core-Lookup'
+	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #'instance creation' }
@@ -20,10 +20,17 @@ TypWrappingResolver >> initializeResolver: aResolver [
 ]
 
 { #category : #invalidation }
-TypWrappingResolver >> invalidateOn: aClassOrMethodAnnouncement [
+TypWrappingResolver >> invalidateOnClass: aClassAnnouncement [
 
-	super invalidateOn: aClassOrMethodAnnouncement.
-	resolver invalidateOn: aClassOrMethodAnnouncement
+	super invalidateOnClass: aClassAnnouncement.
+	resolver invalidateOnClass: aClassAnnouncement
+]
+
+{ #category : #invalidation }
+TypWrappingResolver >> invalidateOnMethod: aMethodAnnouncement [
+
+	super invalidateOnMethod: aMethodAnnouncement.
+	resolver invalidateOnMethod: aMethodAnnouncement
 ]
 
 { #category : #resetting }

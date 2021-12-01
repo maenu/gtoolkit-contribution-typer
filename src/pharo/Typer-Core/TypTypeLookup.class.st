@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'classDescription'
 	],
-	#category : 'Typer-Core-Lookup'
+	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #accessing }
@@ -59,7 +59,7 @@ TypTypeLookup >> initializeClassDescription: anObject [
 ]
 
 { #category : #invalidation }
-TypTypeLookup >> isInvalidatedByClassAnnouncement: aClassAnnouncement [
+TypTypeLookup >> invalidateOnClass: aClassAnnouncement [
 
 	^ classDescription = aClassAnnouncement classAffected or: [ 
 		  classDescription inheritsFrom: aClassAnnouncement classAffected ]
