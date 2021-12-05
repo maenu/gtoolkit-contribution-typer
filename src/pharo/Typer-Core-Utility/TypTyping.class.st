@@ -101,14 +101,19 @@ TypTyping >> typeMethod: aMethod timeout: aDuration [
 	semaphore := Semaphore new.
 	process := [ 
 	           [ 
-	           [ result := TypInfMethodNodeStack value: Stack new during: [aMethod typInfTypeInSelf] ]
+	           [ 
+	           result := aMethod typInfTypeInSelf ]
 		           on: Exception
 		           do: [ :e | 
 			           (e isKindOf: OCUndeclaredVariableWarning)
 				           ifTrue: [ e resume: e declareUndefined ]
 				           ifFalse: [ 
-					           e freeze.
-					           error := e ] ] ] ensure: [ semaphore signal ] ] fork.
+					           (e isKindOf: OCShadowVariableWarning)
+						           ifTrue: [ e resume ]
+						           ifFalse: [ 
+							           e freeze.
+							           error := e ] ] ] ] ensure: [ semaphore signal ] ]
+		           fork.
 	semaphore wait: aDuration onCompletion: [  ] onTimeout: [ 
 		process suspend.
 		timeout := true ].

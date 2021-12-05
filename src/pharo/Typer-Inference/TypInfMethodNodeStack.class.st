@@ -1,36 +1,23 @@
 Class {
 	#name : #TypInfMethodNodeStack,
-	#superclass : #DynamicVariable,
+	#superclass : #ProcessLocalVariable,
 	#category : #'Typer-Inference'
 }
 
-{ #category : #api }
-TypInfMethodNodeStack class >> during: aBlock [
-
-	^ self value: Stack new during: aBlock
-]
-
-{ #category : #testing }
-TypInfMethodNodeStack class >> includes: aNode [
-
-	^ self value identityIncludes: aNode
-]
-
-{ #category : #adding }
-TypInfMethodNodeStack class >> pop [
-
-	^ self value pop
-]
-
-{ #category : #adding }
-TypInfMethodNodeStack class >> push: aNode [
-
-	^ self value push: aNode
-]
-
 { #category : #'as yet unclassified' }
-TypInfMethodNodeStack class >> push: aNode during: aBlock [
+TypInfMethodNodeStack class >> push: aNode during: aBlock or: anotherBlock [
 
-	self push: aNode.
-	^ aBlock ensure: [ self pop ]
+	| stack |
+	stack := self stack.
+	(stack includes: aNode) ifTrue: [ ^ anotherBlock value ].
+	stack push: aNode.
+	^ aBlock ensure: [ stack pop ]
+]
+
+{ #category : #accessing }
+TypInfMethodNodeStack class >> stack [
+
+	^ self value ifNil: [ 
+		  self value: Stack new.
+		  self value ]
 ]

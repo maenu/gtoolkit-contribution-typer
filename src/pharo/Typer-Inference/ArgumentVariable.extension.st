@@ -29,8 +29,9 @@ ArgumentVariable >> typInfType: aNode in: aContext [
 			parent := e parent.
 			(parent isMessage and: [ parent arguments includes: aNode ]) 
 				ifTrue: [ 
-					useTypes add: ((parent typInfMethodIn: aContext) arguments at:
-							 (parent arguments indexOf: aNode)) ].
+					useTypes add: ((parent typInfMethodIn: aContext) arguments
+							 at: (parent arguments indexOf: aNode)
+							 ifAbsent: [ aContext unknown: aNode ]) ].
 			(parent isAssignment and: [ parent value = aNode ]) ifTrue: [ 
 				useTypes add: (parent variable typInfTypeIn: aContext) ] ] ].
 	useTypes ifEmpty: [ ^ aContext unknown: aNode ].

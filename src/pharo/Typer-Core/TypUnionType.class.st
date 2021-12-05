@@ -70,6 +70,13 @@ TypUnionType >> at: aString [
 	^ (types collect: [ :e | e at: aString ]) typAsType
 ]
 
+{ #category : #accessing }
+TypUnionType >> copyWithParameters: aCollection [
+
+	^ (self types collect: [ :e | e copyWithParameters: aCollection ])
+		  typAsType
+]
+
 { #category : #testing }
 TypUnionType >> hasSuperType [
 
