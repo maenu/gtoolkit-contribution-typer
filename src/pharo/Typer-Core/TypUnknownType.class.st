@@ -1,7 +1,7 @@
 Class {
 	#name : #TypUnknownType,
 	#superclass : #TypType,
-	#category : 'Typer-Core-Type'
+	#category : #'Typer-Core-Type'
 }
 
 { #category : #comparing }
@@ -18,6 +18,12 @@ TypUnknownType >> arguments [
 { #category : #polymorphic }
 TypUnknownType >> at: anObject [
 	^ self
+]
+
+{ #category : #accessing }
+TypUnknownType >> copyWithParameters: aCollection [
+
+	^ self copy
 ]
 
 { #category : #testing }

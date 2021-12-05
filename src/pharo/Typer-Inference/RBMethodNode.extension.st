@@ -27,27 +27,26 @@ RBMethodNode >> typInfTypeInSelf [
 RBMethodNode >> typInfTypeRecursiveIn: aContext [
 
 	<typPraResult: 'TypType'>
-	self
-		assert: [ TypInfMethodNodeStack value isNotNil ]
-		description:
-		'use TypInfMethodNodeStack during: [ aMethod typInfTypeSelf ]'.
-	(TypInfMethodNodeStack includes: self) ifTrue: [ 
-		^ CompiledMethod
-			  typAsFunctionTypeWithResult: (aContext unknown: self)
-			  arguments: (arguments collect: [ :e | aContext unknown: self ])
-			  argumentsOptional: false
-			  signalsAlways: nil ].
-	TypInfMethodNodeStack push: self during: [ 
-		| types |
-		body typInfTypeIn: aContext.
-		types := (self allChildren select: #isReturn)
-			         collect: [ :e | e typInfTypeIn: aContext ]
-			         as: OrderedCollection.
-		self lastIsReturn ifFalse: [ types add: aContext self ].
-		^ CompiledMethod
-			  typAsFunctionTypeWithResult: types typAsType
-			  arguments: (arguments collect: [ :e | e typInfTypeIn: aContext ])
-			  argumentsOptional: false
-			  signalsAlways:
-			  (TypInfSignalsAlwaysVisitor signalsAlwaysOf: self in: aContext) ]
+	^ TypInfMethodNodeStack
+		  push: self
+		  during: [ 
+			  | types |
+			  body typInfTypeIn: aContext.
+			  types := (self allChildren select: #isReturn)
+				           collect: [ :e | e typInfTypeIn: aContext ]
+				           as: OrderedCollection.
+			  self lastIsReturn ifFalse: [ types add: aContext self ].
+			  CompiledMethod
+				  typAsFunctionTypeWithResult: types typAsType
+				  arguments:
+				  (arguments collect: [ :e | e typInfTypeIn: aContext ])
+				  argumentsOptional: false
+				  signalsAlways:
+				  (TypInfSignalsAlwaysVisitor signalsAlwaysOf: self in: aContext) ]
+		  or: [ 
+			  CompiledMethod
+				  typAsFunctionTypeWithResult: (aContext unknown: self)
+				  arguments: (arguments collect: [ :e | aContext unknown: e ])
+				  argumentsOptional: false
+				  signalsAlways: nil ]
 ]
