@@ -88,7 +88,7 @@ TypTyping >> typeAllMethods [
 	[ 
 	methods do: [ :e | 
 		| result |
-		result := self typeMethod: e timeout: 5 seconds.
+		result := self typeMethod: e timeout: 30 seconds.
 		d value: d value + (1 / n) ] ] forkNamed: 'typeAllMethods'.
 	^ d
 ]
@@ -96,13 +96,13 @@ TypTyping >> typeAllMethods [
 { #category : #accessing }
 TypTyping >> typeMethod: aMethod timeout: aDuration [
 
-	| semaphore process error timeout result |
+	| start end semaphore process error timeout result |
+	start := DateAndTime now.
 	timeout := false.
 	semaphore := Semaphore new.
 	process := [ 
 	           [ 
-	           [ 
-	           result := aMethod typInfTypeInSelf ]
+	           [ result := aMethod typInfTypeInSelf ]
 		           on: Exception
 		           do: [ :e | 
 			           (e isKindOf: OCUndeclaredVariableWarning)
@@ -117,11 +117,21 @@ TypTyping >> typeMethod: aMethod timeout: aDuration [
 	semaphore wait: aDuration onCompletion: [  ] onTimeout: [ 
 		process suspend.
 		timeout := true ].
+	end := DateAndTime now.
 	timeout ifTrue: [ 
-		^ TypMethodMeasurement method: aMethod process: process ].
+		^ TypMethodMeasurement
+			  method: aMethod
+			  duration: end - start
+			  process: process ].
 	error ifNotNil: [ 
-		^ TypMethodMeasurement method: aMethod error: error ].
-	^ TypMethodMeasurement method: aMethod result: result
+		^ TypMethodMeasurement
+			  method: aMethod
+			  duration: end - start
+			  error: error ].
+	^ TypMethodMeasurement
+		  method: aMethod
+		  duration: end - start
+		  result: result
 ]
 
 { #category : #accessing }
@@ -134,6 +144,6 @@ TypTyping >> typeSomeMethods [
 	TypInfImplementorsCache reset.
 	all := CompiledMethod allInstances.
 	methods := IdentitySet new.
-	[ methods size < 1 ] whileTrue: [ methods add: all atRandom ].
+	[ methods size < 3000 ] whileTrue: [ methods add: all atRandom ].
 	^ methods asOrderedCollection collect: [ :e | self typeMethod: e timeout: 30 seconds ]
 ]
