@@ -134,19 +134,9 @@ TypUnionType >> initializeTypes: anObject [
 ]
 
 { #category : #invalidation }
-TypUnionType >> invalidate [
-
-	super invalidate.
-	types do: #invalidate
-]
-
-{ #category : #invalidation }
 TypUnionType >> invalidateOnClass: aClassAnnouncement [
 
-	(types anySatisfy: [ :e | e invalidateOnClass: aClassAnnouncement ]) 
-		ifFalse: [ ^ false ].
-	self invalidate.
-	^ true
+	^ types anySatisfy: [ :e | e invalidateOnClass: aClassAnnouncement ]
 ]
 
 { #category : #invalidation }

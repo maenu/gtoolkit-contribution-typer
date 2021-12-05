@@ -13,12 +13,13 @@ Class {
 { #category : #initialization }
 TypInfAstNode class >> initialize [
 
-	index := WeakKeyDictionary new
+	index := WeakIdentityKeyDictionary new
 ]
 
 { #category : #accessing }
 TypInfAstNode class >> invalidate [
 
+	<script>
 	index removeAll
 ]
 

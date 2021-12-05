@@ -85,9 +85,7 @@ TypVariableType >> initializeName: aString [
 { #category : #invalidation }
 TypVariableType >> invalidateOnClass: aClassAnnouncement [
 
-	(superType invalidateOnClass: aClassAnnouncement) ifFalse: [ ^ false ].
-	self invalidate.
-	^ true
+	^ superType invalidateOnClass: aClassAnnouncement
 ]
 
 { #category : #invalidation }

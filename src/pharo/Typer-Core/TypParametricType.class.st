@@ -131,20 +131,11 @@ TypParametricType >> initializeParameters: anOrderedDictionary [
 ]
 
 { #category : #invalidation }
-TypParametricType >> invalidate [
-
-	super invalidate.
-	parameters do: #invalidate
-]
-
-{ #category : #accessing }
 TypParametricType >> invalidateOnClass: aClassAnnouncement [
 
-	(super invalidateOnClass: aClassAnnouncement) ifTrue: [ 
-		self invalidate.
-		^ true ].
-	^ parameters anySatisfy: [ :e | 
-		  e invalidateOnClass: aClassAnnouncement ]
+	^ (super invalidateOnClass: aClassAnnouncement) or: [ 
+		  parameters anySatisfy: [ :e | 
+			  e invalidateOnClass: aClassAnnouncement ] ]
 ]
 
 { #category : #testing }

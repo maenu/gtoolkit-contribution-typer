@@ -5,15 +5,10 @@ Class {
 }
 
 { #category : #accessing }
-TypResolver class >> invalidate [
-
-	self allInstancesDo: #invalidate
-]
-
-{ #category : #accessing }
 TypResolver class >> invalidateAll [
+
 	<script>
-	self withAllSubclassesDo: #invalidate
+	self allInstancesDo: #invalidate
 ]
 
 { #category : #resolving }

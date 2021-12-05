@@ -9,11 +9,13 @@ Class {
 
 { #category : #accessing }
 TypInfVariableResolver >> canResolve: aLookup [
-	^ aLookup receiver isNamed
-		and: [ aLookup receiver hasClassDescription
-				and: [ (aLookup receiver classDescription hasSlotNamed: aLookup selector)
-						or: [ aLookup receiver classDescription instanceSide allClassVariables
-								anySatisfy: [ :e | e name = aLookup selector ] ] ] ]
+
+	aLookup receiver isNamed ifFalse: [ ^ false ].
+	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
+	^ (aLookup receiver classDescription hasSlotNamed: aLookup selector) 
+		  or: [ 
+			  aLookup receiver classDescription instanceSide allClassVariables 
+				  anySatisfy: [ :e | e name = aLookup selector ] ]
 ]
 
 { #category : #initialization }
@@ -23,13 +25,21 @@ TypInfVariableResolver >> initialize [
 	contexts := Dictionary new
 ]
 
-{ #category : #accessing }
+{ #category : #invalidation }
+TypInfVariableResolver >> invalidate [
+
+	super invalidate.
+	TypInfAstNode invalidate.
+	contexts removeAll
+]
+
+{ #category : #invalidation }
 TypInfVariableResolver >> invalidateOnClass: aClassAnnouncement [
 
 	contexts removeAll
 ]
 
-{ #category : #accessing }
+{ #category : #invalidation }
 TypInfVariableResolver >> invalidateOnMethod: aMethodAnnouncement [
 
 	contexts removeAll

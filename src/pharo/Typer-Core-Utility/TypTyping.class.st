@@ -20,9 +20,7 @@ TypTyping >> invalidate [
 	| probes |
 	probes := OrderedCollection new.
 	probes add: 'pre-reset' -> self memoryProbe.
-	ASTCache reset.
 	TypIndex invalidateAll.
-	TypResolver invalidateAll.
 	TypInfImplementorsCache invalidate.
 	Smalltalk garbageCollect.
 	probes add: 'post-reset' -> self memoryProbe.
@@ -140,7 +138,6 @@ TypTyping >> typeSomeMethods [
 	<gtExample>
 	| all methods |
 	TypIndex invalidateAll.
-	TypResolver invalidateAll.
 	TypInfImplementorsCache invalidate.
 	all := CompiledMethod allInstances.
 	methods := IdentitySet new.

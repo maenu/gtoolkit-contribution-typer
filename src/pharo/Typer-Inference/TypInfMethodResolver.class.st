@@ -26,16 +26,17 @@ TypInfMethodResolver >> initialize [
 TypInfMethodResolver >> invalidate [
 
 	super invalidate.
+	TypInfAstNode invalidate.
 	contexts removeAll
 ]
 
-{ #category : #accessing }
+{ #category : #invalidation }
 TypInfMethodResolver >> invalidateOnClass: aClassAnnouncement [
 	
 	contexts removeAll
 ]
 
-{ #category : #accessing }
+{ #category : #invalidation }
 TypInfMethodResolver >> invalidateOnMethod: aMethodAnnouncement [
 
 	contexts removeAll

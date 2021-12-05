@@ -155,11 +155,6 @@ TypType >> initializeValue: anObject [
 ]
 
 { #category : #invalidation }
-TypType >> invalidate [
-
-]
-
-{ #category : #invalidation }
 TypType >> invalidateOnClass: aClassAnnouncement [
 
 	^ false

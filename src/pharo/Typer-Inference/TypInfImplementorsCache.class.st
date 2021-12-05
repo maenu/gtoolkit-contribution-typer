@@ -19,6 +19,7 @@ TypInfImplementorsCache class >> instance [
 { #category : #accessing }
 TypInfImplementorsCache class >> invalidate [
 
+	<script>
 	instance := nil
 ]
 

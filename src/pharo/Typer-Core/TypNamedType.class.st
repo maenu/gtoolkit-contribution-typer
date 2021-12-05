@@ -138,14 +138,13 @@ TypNamedType >> initializeName: anObject [
 	hasClassDescription := nil
 ]
 
-{ #category : #accessing }
+{ #category : #invalidation }
 TypNamedType >> invalidateOnClass: aClassAnnouncement [
 
 	self hasClassDescription ifFalse: [ ^ false ].
 	(self classDescription = aClassAnnouncement classAffected or: [ 
 		 self classDescription inheritsFrom:
 			 aClassAnnouncement classAffected ]) ifFalse: [ ^ false ].
-	self invalidate.
 	^ true
 ]
 

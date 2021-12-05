@@ -18,6 +18,7 @@ TypIndex class >> instance [
 
 { #category : #invalidation }
 TypIndex class >> invalidate [
+
 	<script>
 	instance ifNotNil: #invalidate.
 	instance := nil
@@ -25,6 +26,7 @@ TypIndex class >> invalidate [
 
 { #category : #invalidation }
 TypIndex class >> invalidateAll [
+
 	<script>
 	self withAllSubclassesDo: #invalidate
 ]
