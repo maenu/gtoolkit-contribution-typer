@@ -35,12 +35,19 @@ TypInfMethodResolver >> invalidateOnMethod: aMethodAnnouncement [
 ]
 
 { #category : #accessing }
+TypInfMethodResolver >> reset [
+
+	super reset.
+	contexts removeAll
+]
+
+{ #category : #accessing }
 TypInfMethodResolver >> resolve: aLookup [
 
 	| context |
 	self assert: [ self canResolve: aLookup ].
 	context := contexts
-		           at: aLookup
+		           at: aLookup root receiver -> aLookup selector
 		           ifAbsentPut: [ 
 		           TypInfAstContext self: aLookup root receiver ].
 	^ aLookup receiver classDescription >> aLookup selector 

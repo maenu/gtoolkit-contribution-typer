@@ -3,8 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'selfType',
-		'nodes',
-		'methods'
+		'nodes'
 	],
 	#category : #'Typer-Inference'
 }
@@ -21,28 +20,13 @@ TypInfAstContext class >> self: aType [
 TypInfAstContext >> initialize [
 
 	super initialize.
-	nodes := IdentityDictionary new.
-	methods := IdentityDictionary new
+	nodes := IdentityDictionary new
 ]
 
 { #category : #initialization }
 TypInfAstContext >> initializeSelf: aType [
 
 	selfType := aType
-]
-
-{ #category : #utilities }
-TypInfAstContext >> methodAt: aNode [
-
-	^ methods at: aNode ifAbsent: [ self unknown: aNode ]
-]
-
-{ #category : #utilities }
-TypInfAstContext >> methodAt: aNode ifAbsentPut: aBlock [
-
-	^ methods at: aNode ifAbsentPut: [ 
-		  methods at: aNode put: (self unknown: aNode).
-		  aBlock value ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -53,18 +37,10 @@ TypInfAstContext >> nil: aNode [
 			   label: #typInfNil)
 ]
 
-{ #category : #utilities }
-TypInfAstContext >> nodeAt: aNode [
+{ #category : #accessing }
+TypInfAstContext >> printOn: aStream [
 
-	^ nodes at: aNode ifAbsent: [ self unknown: aNode ]
-]
-
-{ #category : #utilities }
-TypInfAstContext >> nodeAt: aNode ifAbsentPut: aBlock [
-
-	^ nodes at: aNode ifAbsentPut: [ 
-		  nodes at: aNode put: (self unknown: aNode).
-		  aBlock value ]
+	selfType printOn: aStream
 ]
 
 { #category : #'as yet unclassified' }
@@ -73,10 +49,21 @@ TypInfAstContext >> self [
 	^ selfType
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
+TypInfAstContext >> type: aNode [
+
+	^ nodes at: aNode ifAbsentPut: [ 
+		  nodes at: aNode put: (self unknown: aNode).
+		  (TypInfAstNode node: aNode)
+			  addDependent:
+			  (aNode typInfAnnotated: (aNode typInfTypeRecursiveIn: self))
+			  label: #typInfTypeRecursive ]
+]
+
+{ #category : #accessing }
 TypInfAstContext >> unknown: aNode [
 
-	^ nodes at: aNode put: ((TypInfAstNode node: self)
+	^ nodes at: aNode put: ((TypInfAstNode node: aNode)
 			   addDependent: (aNode typInfAnnotated: TypUnknownType new)
 			   label: #typInfUnknown)
 ]

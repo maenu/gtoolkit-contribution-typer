@@ -66,16 +66,15 @@ TypTyping >> reset [
 
 	<gtExample>
 	| probes |
-	probes := Dictionary new.
-	probes at: 'pre-reset' put: self memoryProbe.
+	probes := OrderedCollection new.
+	probes add: 'pre-reset' -> self memoryProbe.
 	ASTCache reset.
 	TypIndex resetAll.
 	TypResolver resetAll.
 	TypInfImplementorsCache reset.
 	Smalltalk garbageCollect.
-	probes at: 'post-reset' put: self memoryProbe.
-	self class probes add: probes.
-	^ self class probes
+	probes add: 'post-reset' -> self memoryProbe.
+	^ probes
 ]
 
 { #category : #accessing }
@@ -102,12 +101,14 @@ TypTyping >> typeMethod: aMethod timeout: aDuration [
 	semaphore := Semaphore new.
 	process := [ 
 	           [ 
-	           [ 
-	           result := aMethod typInfTypeInSelf ]
+	           [ result := TypInfMethodNodeStack value: Stack new during: [aMethod typInfTypeInSelf] ]
 		           on: Exception
 		           do: [ :e | 
-			           e freeze.
-			           error := e ] ] ensure: [ semaphore signal ] ] fork.
+			           (e isKindOf: OCUndeclaredVariableWarning)
+				           ifTrue: [ e resume: e declareUndefined ]
+				           ifFalse: [ 
+					           e freeze.
+					           error := e ] ] ] ensure: [ semaphore signal ] ] fork.
 	semaphore wait: aDuration onCompletion: [  ] onTimeout: [ 
 		process suspend.
 		timeout := true ].
@@ -123,12 +124,11 @@ TypTyping >> typeSomeMethods [
 
 	<gtExample>
 	| all methods |
-	ASTCache reset.
 	TypIndex resetAll.
 	TypResolver resetAll.
 	TypInfImplementorsCache reset.
 	all := CompiledMethod allInstances.
 	methods := IdentitySet new.
 	[ methods size < 1 ] whileTrue: [ methods add: all atRandom ].
-	^ methods collect: [ :e | self typeMethod: e timeout: 30 seconds ]
+	^ methods asOrderedCollection collect: [ :e | self typeMethod: e timeout: 30 seconds ]
 ]

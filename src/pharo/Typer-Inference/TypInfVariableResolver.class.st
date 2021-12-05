@@ -41,7 +41,7 @@ TypInfVariableResolver >> resolve: aLookup [
 	| context |
 	self assert: [ self canResolve: aLookup ].
 	context := contexts
-		           at: aLookup
+		           at: aLookup receiver -> aLookup selector
 		           ifAbsentPut: [ TypInfAstContext self: aLookup receiver ].
 	(aLookup receiver classDescription hasSlotNamed: aLookup selector) 
 		ifTrue: [ 

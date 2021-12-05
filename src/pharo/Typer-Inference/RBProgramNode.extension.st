@@ -20,17 +20,7 @@ RBProgramNode >> typInfIsMessageArgument [
 RBProgramNode >> typInfTypeIn: aContext [
 
 	<typPraResult: 'TypType'>
-	^ aContext nodeAt: self ifAbsentPut: [ 
-		  (TypInfAstNode node: self)
-			  addDependent:
-			  (self typInfAnnotated: (self typInfTypeRecursiveIn: aContext))
-			  label: #typInfTypeRecursive ]
-]
-
-{ #category : #'*Typer-Inference' }
-RBProgramNode >> typInfTypeInSelf [
-
-	^ self typInfTypeIn: (TypInfAstContext self: nil)
+	^ aContext type: self
 ]
 
 { #category : #'*Typer-Inference' }
