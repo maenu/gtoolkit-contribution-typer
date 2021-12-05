@@ -38,17 +38,17 @@ TypBreadthFirstResolver >> invalidate [
 ]
 
 { #category : #invalidation }
-TypBreadthFirstResolver >> invalidateOnClass: aClassAnnouncement [
+TypBreadthFirstResolver >> invalidateOnClassChange: aClassAnnouncement [
 
-	super invalidateOnClass: aClassAnnouncement.
-	resolvers do: [ :e | e invalidateOnClass: aClassAnnouncement ]
+	super invalidateOnClassChange: aClassAnnouncement.
+	resolvers do: [ :e | e invalidateOnClassChange: aClassAnnouncement ]
 ]
 
 { #category : #invalidation }
-TypBreadthFirstResolver >> invalidateOnMethod: aMethodAnnouncement [
+TypBreadthFirstResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	super invalidateOnMethod: aMethodAnnouncement.
-	resolvers do: [ :e | e invalidateOnMethod: aMethodAnnouncement ]
+	super invalidateOnMethodChange: aMethodAnnouncement.
+	resolvers do: [ :e | e invalidateOnMethodChange: aMethodAnnouncement ]
 ]
 
 { #category : #resolving }

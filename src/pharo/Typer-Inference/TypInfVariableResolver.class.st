@@ -34,14 +34,26 @@ TypInfVariableResolver >> invalidate [
 ]
 
 { #category : #invalidation }
-TypInfVariableResolver >> invalidateOnClass: aClassAnnouncement [
+TypInfVariableResolver >> invalidateOnClassChange: aClassAnnouncement [
 
+	self flag: 'TODO be more clever'.
+	"
+	cache keysAndValuesRemove: [ :lookup :type | 
+		(lookup invalidateOnClass: aClassAnnouncement) or: [ 
+			type invalidateOnClass: aClassAnnouncement ] ]
+	"
 	contexts removeAll
 ]
 
 { #category : #invalidation }
-TypInfVariableResolver >> invalidateOnMethod: aMethodAnnouncement [
+TypInfVariableResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 
+	self flag: 'TODO be more clever'.
+	"
+	cache keysAndValuesRemove: [ :lookup :type | 
+		(lookup invalidateOnMethod: aMethodAnnouncement) or: [ 
+			type invalidateOnMethod: aMethodAnnouncement ] ]
+	"
 	contexts removeAll
 ]
 

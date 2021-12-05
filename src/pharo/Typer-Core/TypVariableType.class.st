@@ -83,15 +83,15 @@ TypVariableType >> initializeName: aString [
 ]
 
 { #category : #invalidation }
-TypVariableType >> invalidateOnClass: aClassAnnouncement [
+TypVariableType >> isAffectedByClassChange: aClassAnnouncement [
 
-	^ superType invalidateOnClass: aClassAnnouncement
+	^ superType isAffectedByClassChange: aClassAnnouncement
 ]
 
 { #category : #invalidation }
-TypVariableType >> invalidateOnMethod: aMethodAnnouncement [
+TypVariableType >> isAffectedByMethodChange: aMethodAnnouncement [
 
-	^ superType invalidateOnMethod: aMethodAnnouncement
+	^ superType isAffectedByMethodChange: aMethodAnnouncement
 ]
 
 { #category : #testing }

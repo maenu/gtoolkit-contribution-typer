@@ -26,15 +26,15 @@ TypWrappingResolver >> invalidate [
 ]
 
 { #category : #invalidation }
-TypWrappingResolver >> invalidateOnClass: aClassAnnouncement [
+TypWrappingResolver >> invalidateOnClassChange: aClassAnnouncement [
 
-	super invalidateOnClass: aClassAnnouncement.
-	resolver invalidateOnClass: aClassAnnouncement
+	super invalidateOnClassChange: aClassAnnouncement.
+	resolver invalidateOnClassChange: aClassAnnouncement
 ]
 
 { #category : #invalidation }
-TypWrappingResolver >> invalidateOnMethod: aMethodAnnouncement [
+TypWrappingResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	super invalidateOnMethod: aMethodAnnouncement.
-	resolver invalidateOnMethod: aMethodAnnouncement
+	super invalidateOnMethodChange: aMethodAnnouncement.
+	resolver invalidateOnMethodChange: aMethodAnnouncement
 ]

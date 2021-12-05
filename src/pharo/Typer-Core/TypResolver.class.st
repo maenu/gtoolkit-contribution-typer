@@ -25,13 +25,13 @@ TypResolver >> invalidate [
 ]
 
 { #category : #invalidation }
-TypResolver >> invalidateOnClass: aClassAnnouncement [
+TypResolver >> invalidateOnClassChange: aClassAnnouncement [
 
 	
 ]
 
 { #category : #invalidation }
-TypResolver >> invalidateOnMethod: aMethodAnnouncement [
+TypResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 
 	
 ]

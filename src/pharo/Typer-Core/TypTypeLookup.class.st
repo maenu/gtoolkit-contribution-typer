@@ -59,7 +59,7 @@ TypTypeLookup >> initializeClassDescription: anObject [
 ]
 
 { #category : #invalidation }
-TypTypeLookup >> invalidateOnClass: aClassAnnouncement [
+TypTypeLookup >> isAffectedByClassChange: aClassAnnouncement [
 
 	^ classDescription = aClassAnnouncement classAffected or: [ 
 		  classDescription inheritsFrom: aClassAnnouncement classAffected ]

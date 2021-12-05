@@ -155,13 +155,13 @@ TypType >> initializeValue: anObject [
 ]
 
 { #category : #invalidation }
-TypType >> invalidateOnClass: aClassAnnouncement [
+TypType >> isAffectedByClassChange: aClassAnnouncement [
 
 	^ false
 ]
 
 { #category : #invalidation }
-TypType >> invalidateOnMethod: aMethodAnnouncement [
+TypType >> isAffectedByMethodChange: aMethodAnnouncement [
 
 	^ false
 ]

@@ -37,8 +37,8 @@ TypIndex >> initialize [
 	<typPraVariable: 'resolver' as: 'TypLookupResolver'>
 	super initialize.
 	SystemAnnouncer uniqueInstance weak
-		when: ClassAnnouncement send: #invalidateOnClass: to: self;
-		when: MethodAnnouncement send: #invalidateOnMethod: to: self
+		when: ClassAnnouncement send: #invalidateOnClassChange: to: self;
+		when: MethodAnnouncement send: #invalidateOnMethodChange: to: self
 ]
 
 { #category : #initialization }
@@ -53,13 +53,13 @@ TypIndex >> invalidate [
 ]
 
 { #category : #invalidation }
-TypIndex >> invalidateOnClass: aClassAnnouncement [
+TypIndex >> invalidateOnClassChange: aClassAnnouncement [
 
-	resolver invalidateOnClass: aClassAnnouncement
+	resolver invalidateOnClassChange: aClassAnnouncement
 ]
 
 { #category : #invalidation }
-TypIndex >> invalidateOnMethod: aMethodAnnouncement [
+TypIndex >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	resolver invalidateOnMethod: aMethodAnnouncement
+	resolver invalidateOnMethodChange: aMethodAnnouncement
 ]

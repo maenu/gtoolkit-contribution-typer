@@ -31,14 +31,26 @@ TypInfMethodResolver >> invalidate [
 ]
 
 { #category : #invalidation }
-TypInfMethodResolver >> invalidateOnClass: aClassAnnouncement [
+TypInfMethodResolver >> invalidateOnClassChange: aClassAnnouncement [
 	
+	self flag: 'TODO be more clever'.
+	"
+	cache keysAndValuesRemove: [ :lookup :type | 
+		(lookup invalidateOnClass: aClassAnnouncement) or: [ 
+			type invalidateOnClass: aClassAnnouncement ] ]
+	"
 	contexts removeAll
 ]
 
 { #category : #invalidation }
-TypInfMethodResolver >> invalidateOnMethod: aMethodAnnouncement [
+TypInfMethodResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 
+	self flag: 'TODO be more clever'.
+	"
+	cache keysAndValuesRemove: [ :lookup :type | 
+		(lookup invalidateOnMethod: aMethodAnnouncement) or: [ 
+			type invalidateOnMethod: aMethodAnnouncement ] ]
+	"
 	contexts removeAll
 ]
 

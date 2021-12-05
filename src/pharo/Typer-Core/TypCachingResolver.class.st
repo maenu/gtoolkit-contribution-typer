@@ -30,21 +30,21 @@ TypCachingResolver >> invalidate [
 ]
 
 { #category : #invalidation }
-TypCachingResolver >> invalidateOnClass: aClassAnnouncement [
+TypCachingResolver >> invalidateOnClassChange: aClassAnnouncement [
 
-	super invalidateOnClass: aClassAnnouncement.
+	super invalidateOnClassChange: aClassAnnouncement.
 	cache keysAndValuesRemove: [ :lookup :type | 
-		(lookup invalidateOnClass: aClassAnnouncement) or: [ 
-			type invalidateOnClass: aClassAnnouncement ] ]
+		(lookup isAffectedByClassChange: aClassAnnouncement) or: [ 
+			type isAffectedByClassChange: aClassAnnouncement ] ]
 ]
 
 { #category : #invalidation }
-TypCachingResolver >> invalidateOnMethod: aMethodAnnouncement [
+TypCachingResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	super invalidateOnMethod: aMethodAnnouncement.
+	super invalidateOnMethodChange: aMethodAnnouncement.
 	cache keysAndValuesRemove: [ :lookup :type | 
-		(lookup invalidateOnMethod: aMethodAnnouncement) or: [ 
-			type invalidateOnMethod: aMethodAnnouncement ] ]
+		(lookup isAffectedByMethodChange: aMethodAnnouncement) or: [ 
+			type isAffectedByMethodChange: aMethodAnnouncement ] ]
 ]
 
 { #category : #resolving }

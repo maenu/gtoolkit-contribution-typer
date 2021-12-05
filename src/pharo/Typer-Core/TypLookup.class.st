@@ -38,13 +38,13 @@ TypLookup >> initializeParent: aLookup [
 ]
 
 { #category : #invalidation }
-TypLookup >> invalidateOnClass: aClassAnnouncement [
+TypLookup >> isAffectedByClassChange: aClassAnnouncement [
 
 	^ false
 ]
 
 { #category : #invalidation }
-TypLookup >> invalidateOnMethod: aMethodAnnouncement [
+TypLookup >> isAffectedByMethodChange: aMethodAnnouncement [
 
 	^ false
 ]
