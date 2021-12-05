@@ -23,6 +23,13 @@ TypInfMethodResolver >> initialize [
 ]
 
 { #category : #accessing }
+TypInfMethodResolver >> invalidate [
+
+	super invalidate.
+	contexts removeAll
+]
+
+{ #category : #accessing }
 TypInfMethodResolver >> invalidateOnClass: aClassAnnouncement [
 	
 	contexts removeAll
@@ -31,13 +38,6 @@ TypInfMethodResolver >> invalidateOnClass: aClassAnnouncement [
 { #category : #accessing }
 TypInfMethodResolver >> invalidateOnMethod: aMethodAnnouncement [
 
-	contexts removeAll
-]
-
-{ #category : #accessing }
-TypInfMethodResolver >> reset [
-
-	super reset.
 	contexts removeAll
 ]
 

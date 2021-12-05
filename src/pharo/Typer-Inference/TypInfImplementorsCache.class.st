@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : 'Typer-Inference'
+	#category : #'Typer-Inference'
 }
 
 { #category : #accessing }
@@ -17,7 +17,7 @@ TypInfImplementorsCache class >> instance [
 ]
 
 { #category : #accessing }
-TypInfImplementorsCache class >> reset [
+TypInfImplementorsCache class >> invalidate [
 
 	instance := nil
 ]

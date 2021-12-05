@@ -32,6 +32,12 @@ TypBreadthFirstResolver >> initializeResolvers: anObject [
 ]
 
 { #category : #invalidation }
+TypBreadthFirstResolver >> invalidate [
+	super invalidate.
+	resolvers do: #invalidate
+]
+
+{ #category : #invalidation }
 TypBreadthFirstResolver >> invalidateOnClass: aClassAnnouncement [
 
 	super invalidateOnClass: aClassAnnouncement.
@@ -43,12 +49,6 @@ TypBreadthFirstResolver >> invalidateOnMethod: aMethodAnnouncement [
 
 	super invalidateOnMethod: aMethodAnnouncement.
 	resolvers do: [ :e | e invalidateOnMethod: aMethodAnnouncement ]
-]
-
-{ #category : #resetting }
-TypBreadthFirstResolver >> reset [
-	super reset.
-	resolvers do: #reset
 ]
 
 { #category : #resolving }

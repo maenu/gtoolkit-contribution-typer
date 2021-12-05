@@ -20,6 +20,12 @@ TypWrappingResolver >> initializeResolver: aResolver [
 ]
 
 { #category : #invalidation }
+TypWrappingResolver >> invalidate [
+	super invalidate.
+	resolver invalidate
+]
+
+{ #category : #invalidation }
 TypWrappingResolver >> invalidateOnClass: aClassAnnouncement [
 
 	super invalidateOnClass: aClassAnnouncement.
@@ -31,10 +37,4 @@ TypWrappingResolver >> invalidateOnMethod: aMethodAnnouncement [
 
 	super invalidateOnMethod: aMethodAnnouncement.
 	resolver invalidateOnMethod: aMethodAnnouncement
-]
-
-{ #category : #resetting }
-TypWrappingResolver >> reset [
-	super reset.
-	resolver reset
 ]

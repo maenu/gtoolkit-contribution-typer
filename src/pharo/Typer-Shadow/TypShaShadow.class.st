@@ -30,15 +30,15 @@ TypShaShadow class >> instance [
 ]
 
 { #category : #initialization }
-TypShaShadow class >> reset [
+TypShaShadow class >> invalidate [
 	<script>
 	instance := nil
 ]
 
 { #category : #initialization }
-TypShaShadow class >> resetAll [
+TypShaShadow class >> invalidateAll [
 	<script>
-	self allSubclassesDo: #reset
+	self allSubclassesDo: #invalidate
 ]
 
 { #category : #accessing }

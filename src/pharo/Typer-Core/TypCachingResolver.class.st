@@ -23,6 +23,12 @@ TypCachingResolver >> initialize [
 	cache := Dictionary new
 ]
 
+{ #category : #initialization }
+TypCachingResolver >> invalidate [
+	super invalidate.
+	cache removeAll
+]
+
 { #category : #invalidation }
 TypCachingResolver >> invalidateOnClass: aClassAnnouncement [
 
@@ -39,12 +45,6 @@ TypCachingResolver >> invalidateOnMethod: aMethodAnnouncement [
 	cache keysAndValuesRemove: [ :lookup :type | 
 		(lookup invalidateOnMethod: aMethodAnnouncement) or: [ 
 			type invalidateOnMethod: aMethodAnnouncement ] ]
-]
-
-{ #category : #initialization }
-TypCachingResolver >> reset [
-	super reset.
-	cache removeAll
 ]
 
 { #category : #resolving }

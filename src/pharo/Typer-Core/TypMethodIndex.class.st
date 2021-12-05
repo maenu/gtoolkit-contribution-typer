@@ -23,6 +23,13 @@ TypMethodIndex class >> instance [
 			              yourself ]
 ]
 
+{ #category : #initialization }
+TypMethodIndex >> invalidate [
+
+	super invalidate.
+	TypInfAstNode invalidate
+]
+
 { #category : #accessing }
 TypMethodIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aCollection [
 
@@ -36,11 +43,4 @@ TypMethodIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aColl
 	(resolver canResolve: lookup) ifFalse: [ 
 		^ lookup addDependent: TypUnknownType new label: #default ].
 	^ resolver resolve: lookup
-]
-
-{ #category : #initialization }
-TypMethodIndex >> reset [
-
-	super reset.
-	TypInfAstNode invalidate
 ]

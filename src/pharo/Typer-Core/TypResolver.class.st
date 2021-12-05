@@ -5,15 +5,15 @@ Class {
 }
 
 { #category : #accessing }
-TypResolver class >> reset [
+TypResolver class >> invalidate [
 
-	self allInstancesDo: #reset
+	self allInstancesDo: #invalidate
 ]
 
 { #category : #accessing }
-TypResolver class >> resetAll [
+TypResolver class >> invalidateAll [
 	<script>
-	self withAllSubclassesDo: #reset
+	self withAllSubclassesDo: #invalidate
 ]
 
 { #category : #resolving }
@@ -22,6 +22,11 @@ TypResolver >> canResolve: aLookup [
 	<typPraArguments: 'TypLookup'>
 	<typPraResult: 'Boolean'>
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+TypResolver >> invalidate [
+	self removeAllDependents
 ]
 
 { #category : #invalidation }
@@ -34,11 +39,6 @@ TypResolver >> invalidateOnClass: aClassAnnouncement [
 TypResolver >> invalidateOnMethod: aMethodAnnouncement [
 
 	
-]
-
-{ #category : #accessing }
-TypResolver >> reset [
-	self removeAllDependents
 ]
 
 { #category : #resolving }

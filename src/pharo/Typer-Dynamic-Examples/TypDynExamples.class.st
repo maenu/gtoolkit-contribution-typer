@@ -9,7 +9,7 @@ TypDynExamples >> neoJsonCore [
 	<gtExample>
 	<typPraResult: 'Association<TestResult,Collection<CompiledMethod()->Object>>'>
 	| methods collector testResult association |
-	TypIndex resetAll.
+	TypIndex invalidateAll.
 	methods := #'Neo-JSON-Core' asPackage methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
@@ -24,8 +24,8 @@ TypDynExamples >> neoJsonCore [
 		resolver resolvers add: association key value.
 	TypVariableIndex instance resolver resolver resolvers first
 		resolver resolvers add: association value.
-	TypMethodIndex instance reset.
-	TypVariableIndex instance reset.
+	TypMethodIndex instance invalidate.
+	TypVariableIndex instance invalidate.
 	^ testResult -> association key value -> association value
 		-> #'Neo-JSON-Core' asPackage methods
 ]
@@ -35,7 +35,7 @@ TypDynExamples >> refactoring [
 	<gtExample>
 	<typPraResult: 'Association<TestResult,Collection<CompiledMethod()->Object>>'>
 	| methods collector testResult association |
-	TypIndex resetAll.
+	TypIndex invalidateAll.
 	methods := self refactoringNonTestPackages flatCollect: #methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
@@ -50,8 +50,8 @@ TypDynExamples >> refactoring [
 		resolver resolvers add: association key value.
 	TypVariableIndex instance resolver resolver resolvers first
 		resolver resolvers add: association value.
-	TypMethodIndex instance reset.
-	TypVariableIndex instance reset.
+	TypMethodIndex instance invalidate.
+	TypVariableIndex instance invalidate.
 	^ testResult -> association key value -> association value
 		-> (self refactoringNonTestPackages flatCollect: #methods)
 ]
@@ -61,7 +61,7 @@ TypDynExamples >> refactoring2Transformations [
 	<gtExample>
 	<typPraResult: 'Association<TestResult,Collection<CompiledMethod()->Object>>'>
 	| methods collector testResult association |
-	TypIndex resetAll.
+	TypIndex invalidateAll.
 	methods := #'Refactoring2-Transformations' asPackage methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
@@ -76,8 +76,8 @@ TypDynExamples >> refactoring2Transformations [
 		resolver resolvers add: association key value.
 	TypVariableIndex instance resolver resolver resolvers first
 		resolver resolvers add: association value.
-	TypMethodIndex instance reset.
-	TypVariableIndex instance reset.
+	TypMethodIndex instance invalidate.
+	TypVariableIndex instance invalidate.
 	^ testResult -> association key value -> association value
 		-> #'Refactoring2-Transformations' asPackage methods
 ]
@@ -87,7 +87,7 @@ TypDynExamples >> refactoringCore [
 	<gtExample>
 	<typPraResult: 'Association<TestResult,Collection<CompiledMethod()->Object>>'>
 	| methods collector testResult association |
-	TypIndex resetAll.
+	TypIndex invalidateAll.
 	methods := #'Refactoring-Core' asPackage methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
@@ -102,8 +102,8 @@ TypDynExamples >> refactoringCore [
 		resolver resolvers add: association key value.
 	TypVariableIndex instance resolver resolver resolvers first
 		resolver resolvers add: association value.
-	TypMethodIndex instance reset.
-	TypVariableIndex instance reset.
+	TypMethodIndex instance invalidate.
+	TypVariableIndex instance invalidate.
 	^ testResult -> association key value -> association value
 		-> #'Refactoring-Core' asPackage methods
 ]
@@ -113,7 +113,7 @@ TypDynExamples >> refactoringCoreSmall [
 	<gtExample>
 	<typPraResult: 'Association<TestResult,Collection<CompiledMethod()->Object>>'>
 	| methods collector testResult association |
-	TypIndex resetAll.
+	TypIndex invalidateAll.
 	methods := #'Refactoring-Core' asPackage methods.
 	collector := TypDynCollector new.
 	testResult := TestResult new.
@@ -128,8 +128,8 @@ TypDynExamples >> refactoringCoreSmall [
 		resolver resolvers add: association key value.
 	TypVariableIndex instance resolver resolver resolvers first
 		resolver resolvers add: association value.
-	TypMethodIndex instance reset.
-	TypVariableIndex instance reset.
+	TypMethodIndex instance invalidate.
+	TypVariableIndex instance invalidate.
 	^ testResult -> association key value -> association value
 		-> #'Refactoring-Core' asPackage methods
 ]

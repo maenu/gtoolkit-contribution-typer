@@ -16,17 +16,17 @@ TypIndex class >> instance [
 	self subclassResponsibility
 ]
 
-{ #category : #resetting }
-TypIndex class >> reset [
+{ #category : #invalidation }
+TypIndex class >> invalidate [
 	<script>
-	instance ifNotNil: #reset.
+	instance ifNotNil: #invalidate.
 	instance := nil
 ]
 
-{ #category : #resetting }
-TypIndex class >> resetAll [
+{ #category : #invalidation }
+TypIndex class >> invalidateAll [
 	<script>
-	self withAllSubclassesDo: #reset
+	self withAllSubclassesDo: #invalidate
 ]
 
 { #category : #initialization }
@@ -45,19 +45,19 @@ TypIndex >> initializeResolver: anObject [
 	resolver := anObject
 ]
 
-{ #category : #resetting }
+{ #category : #invalidation }
+TypIndex >> invalidate [
+	resolver invalidate
+]
+
+{ #category : #invalidation }
 TypIndex >> invalidateOnClass: aClassAnnouncement [
 
 	resolver invalidateOnClass: aClassAnnouncement
 ]
 
-{ #category : #resetting }
+{ #category : #invalidation }
 TypIndex >> invalidateOnMethod: aMethodAnnouncement [
 
 	resolver invalidateOnMethod: aMethodAnnouncement
-]
-
-{ #category : #resetting }
-TypIndex >> reset [
-	resolver reset
 ]

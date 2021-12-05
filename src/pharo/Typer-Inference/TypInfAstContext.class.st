@@ -20,7 +20,7 @@ TypInfAstContext class >> self: aType [
 TypInfAstContext >> initialize [
 
 	super initialize.
-	nodes := IdentityDictionary new
+	nodes := WeakIdentityKeyDictionary new
 ]
 
 { #category : #initialization }

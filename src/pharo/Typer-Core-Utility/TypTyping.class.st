@@ -14,6 +14,22 @@ TypTyping class >> probes [
 ]
 
 { #category : #accessing }
+TypTyping >> invalidate [
+
+	<gtExample>
+	| probes |
+	probes := OrderedCollection new.
+	probes add: 'pre-reset' -> self memoryProbe.
+	ASTCache reset.
+	TypIndex invalidateAll.
+	TypResolver invalidateAll.
+	TypInfImplementorsCache invalidate.
+	Smalltalk garbageCollect.
+	probes add: 'post-reset' -> self memoryProbe.
+	^ probes
+]
+
+{ #category : #accessing }
 TypTyping >> memoryProbe [
 
 	<gtExample>
@@ -59,22 +75,6 @@ TypTyping >> monitorMemorySomeMethods [
 	methods := IdentitySet new.
 	[ methods size < 1 ] whileTrue: [ methods add: all atRandom ].
 	^ self monitorMemoryMethods: methods timeout: 5 seconds
-]
-
-{ #category : #accessing }
-TypTyping >> reset [
-
-	<gtExample>
-	| probes |
-	probes := OrderedCollection new.
-	probes add: 'pre-reset' -> self memoryProbe.
-	ASTCache reset.
-	TypIndex resetAll.
-	TypResolver resetAll.
-	TypInfImplementorsCache reset.
-	Smalltalk garbageCollect.
-	probes add: 'post-reset' -> self memoryProbe.
-	^ probes
 ]
 
 { #category : #accessing }
@@ -139,9 +139,9 @@ TypTyping >> typeSomeMethods [
 
 	<gtExample>
 	| all methods |
-	TypIndex resetAll.
-	TypResolver resetAll.
-	TypInfImplementorsCache reset.
+	TypIndex invalidateAll.
+	TypResolver invalidateAll.
+	TypInfImplementorsCache invalidate.
 	all := CompiledMethod allInstances.
 	methods := IdentitySet new.
 	[ methods size < 3000 ] whileTrue: [ methods add: all atRandom ].
