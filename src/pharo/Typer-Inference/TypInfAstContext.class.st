@@ -29,6 +29,18 @@ TypInfAstContext >> initializeSelf: aType [
 	selfType := aType
 ]
 
+{ #category : #accessing }
+TypInfAstContext >> isAffectedByClassChange: aClassAnnouncement [
+
+	^ selfType <= aClassAnnouncement classAffected typAsType
+]
+
+{ #category : #accessing }
+TypInfAstContext >> isAffectedByMethodChange: aClassAnnouncement [
+
+	^ selfType <= aClassAnnouncement classAffected typAsType
+]
+
 { #category : #'as yet unclassified' }
 TypInfAstContext >> nil: aNode [
 

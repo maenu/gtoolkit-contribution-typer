@@ -4,7 +4,8 @@ Class {
 	#traits : 'TRBProgramNodeVisitor - {#visitArgumentNodes:. #visitTemporaryDeclarationNode:}',
 	#classTraits : 'TRBProgramNodeVisitor classTrait',
 	#instVars : [
-		'coder'
+		'coder',
+		'typeContext'
 	],
 	#category : #'Typer-GToolkit'
 }
@@ -19,8 +20,12 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 
 	| ast |
 	ast := coder rbAST.
+	typeContext ifNil: [ 
+		typeContext := TypInfAstContext self: (ast isMethod
+				                ifTrue: [ ast methodClass typAsType ]
+				                ifFalse: [ nil ]) ].  
 	[ 
-	ast typInfType.
+	ast typInfTypeIn: typeContext.
 	super style: aText ast: ast ]
 		on: Error
 		do: [ :e | Halt once ]
@@ -39,6 +44,6 @@ TypGtRbAstStyler >> styleNode: aNode [
 		styleFrom: aNode start
 		to: aNode stop
 		with: { (TypGtAttribute new
-				 type_: aNode typInfType;
+				 type_: (aNode typInfTypeIn: typeContext);
 				 yourself) }
 ]

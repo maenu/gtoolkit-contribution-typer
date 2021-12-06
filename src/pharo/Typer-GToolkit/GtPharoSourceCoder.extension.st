@@ -18,7 +18,7 @@ GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 
-	"<gtAstCoderAddOns: 10>"
+	<gtAstCoderAddOns: 10>
 	self completionStrategy:
 		(self completionStrategy typGtAsCompletionStrategy
 			 coder: self;
@@ -27,12 +27,12 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 		addStyler: (TypGtDeclarationStyler new
 				 coder: self;
 				 yourself);
-		addStyler: (TypGtCheckStyler new
+		"addStyler: (TypGtCheckStyler new
 				 coder: self;
 				 yourself);
 		addStyler: (TypGtCoverageStyler new
 				 coder: self;
-				 yourself);
+				 yourself);"
 		"addStyler: (TypGtCursorStyler new
 				 coder: self;
 				 yourself);"

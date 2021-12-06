@@ -8,9 +8,7 @@ TemporaryVariable >> typInfType: aNode in: aContext [
 			    e variable = aNode ]) collect: [ :e | 
 			   e value typInfTypeIn: aContext ])
 			  ifEmpty: [ aContext nil: aNode ]
-			  ifNotEmpty: [ :e | e typInfTypeIn: aContext ] ].
+			  ifNotEmpty: #typAsType ].
 	aNode isWrite ifTrue: [ ^ aNode parent value typInfTypeIn: aContext ].
-	^ TypInfTemporaryExecutionOrderVisitor
-		  typeOf: aNode
-		  in: aContext
+	^ TypInfTemporaryExecutionOrderVisitor typeOf: aNode in: aContext
 ]

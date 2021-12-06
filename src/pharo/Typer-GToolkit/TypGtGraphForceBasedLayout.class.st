@@ -1,7 +1,7 @@
 Class {
 	#name : #TypGtGraphForceBasedLayout,
 	#superclass : #GtGraphForceBasedLayout,
-	#category : 'Typer-GToolkit'
+	#category : #'Typer-GToolkit-Mondrian'
 }
 
 { #category : #accessing }

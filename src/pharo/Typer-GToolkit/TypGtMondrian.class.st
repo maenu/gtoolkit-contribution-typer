@@ -1,7 +1,7 @@
 Class {
 	#name : #TypGtMondrian,
 	#superclass : #GtMondrian,
-	#category : 'Typer-GToolkit'
+	#category : #'Typer-GToolkit-Mondrian'
 }
 
 { #category : #accessing }

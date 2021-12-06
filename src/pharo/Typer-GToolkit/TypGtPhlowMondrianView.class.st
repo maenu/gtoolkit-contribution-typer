@@ -1,7 +1,7 @@
 Class {
 	#name : #TypGtPhlowMondrianView,
 	#superclass : #GtPhlowMondrianView,
-	#category : 'Typer-GToolkit'
+	#category : #'Typer-GToolkit-Mondrian'
 }
 
 { #category : #accessing }
