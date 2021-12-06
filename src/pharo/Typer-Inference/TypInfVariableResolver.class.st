@@ -36,42 +36,51 @@ TypInfVariableResolver >> invalidate [
 { #category : #invalidation }
 TypInfVariableResolver >> invalidateOnClassChange: aClassAnnouncement [
 
-	self flag: 'TODO be more clever'.
-	"
-	cache keysAndValuesRemove: [ :lookup :type | 
-		(lookup invalidateOnClass: aClassAnnouncement) or: [ 
-			type invalidateOnClass: aClassAnnouncement ] ]
-	"
-	contexts removeAll
+	| class |
+	class := aClassAnnouncement classAffected.
+	contexts keysAndValuesRemove: [ :association :context | 
+		| receiver selector |
+		receiver := association key.
+		selector := association value.
+		class typAsType >= receiver or: [ 
+			(association key isAffectedByClassChange: aClassAnnouncement) or: [ 
+				context isAffectedByClassChange: aClassAnnouncement ] ] ]
 ]
 
 { #category : #invalidation }
 TypInfVariableResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	self flag: 'TODO be more clever'.
-	"
-	cache keysAndValuesRemove: [ :lookup :type | 
-		(lookup invalidateOnMethod: aMethodAnnouncement) or: [ 
-			type invalidateOnMethod: aMethodAnnouncement ] ]
-	"
-	contexts removeAll
+	| method |
+	method := aMethodAnnouncement methodAffected.
+	contexts keysAndValuesRemove: [ :association :context | 
+		| receiver selector |
+		receiver := association key.
+		selector := association value.
+		(method selector = selector and: [ 
+			 method methodClass typAsType >= receiver ]) or: [ 
+			(association key isAffectedByMethodChange: aMethodAnnouncement) 
+				or: [ context isAffectedByMethodChange: aMethodAnnouncement ] ] ]
 ]
 
 { #category : #accessing }
 TypInfVariableResolver >> resolve: aLookup [
 
-	| context |
+	| context classVariable |
 	self assert: [ self canResolve: aLookup ].
 	context := contexts
 		           at: aLookup receiver -> aLookup selector
 		           ifAbsentPut: [ TypInfAstContext self: aLookup receiver ].
+	"instance variable"
 	(aLookup receiver classDescription hasSlotNamed: aLookup selector) 
 		ifTrue: [ 
 			^ ((aLookup receiver classDescription slotNamed: aLookup selector)
 				   assignmentNodes collect: [ :e | e typInfTypeIn: context ])
 				  typAsType ].
-	self flag: '...or we just take the type of the value?'.
-	^ ((aLookup receiver classDescription instanceSide allClassVariables 
-		    detect: [ :e | e name = aLookup selector ]) assignmentNodes 
-		   collect: [ :e | e typInfTypeIn: context ]) typAsType
+	"class variable"
+	classVariable := aLookup receiver classDescription instanceSide
+		                 allClassVariables detect: [ :e | 
+		                 e name = aLookup selector ].
+	classVariable value ifNotNil: [ :e | ^ e typInfType ].
+	^ (classVariable assignmentNodes collect: [ :e | 
+		   e typInfTypeIn: context ]) typAsType
 ]

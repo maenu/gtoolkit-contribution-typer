@@ -33,25 +33,30 @@ TypInfMethodResolver >> invalidate [
 { #category : #invalidation }
 TypInfMethodResolver >> invalidateOnClassChange: aClassAnnouncement [
 	
-	self flag: 'TODO be more clever'.
-	"
-	cache keysAndValuesRemove: [ :lookup :type | 
-		(lookup invalidateOnClass: aClassAnnouncement) or: [ 
-			type invalidateOnClass: aClassAnnouncement ] ]
-	"
-	contexts removeAll
+	| class |
+	class := aClassAnnouncement classAffected.
+	contexts keysAndValuesRemove: [ :association :context | 
+		| receiver selector |
+		receiver := association key.
+		selector := association value.
+		class typAsType >= receiver or: [ 
+			(association key isAffectedByClassChange: aClassAnnouncement) or: [ 
+				context isAffectedByClassChange: aClassAnnouncement ] ] ]
 ]
 
 { #category : #invalidation }
 TypInfMethodResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	self flag: 'TODO be more clever'.
-	"
-	cache keysAndValuesRemove: [ :lookup :type | 
-		(lookup invalidateOnMethod: aMethodAnnouncement) or: [ 
-			type invalidateOnMethod: aMethodAnnouncement ] ]
-	"
-	contexts removeAll
+	| method |
+	method := aMethodAnnouncement methodAffected.
+	contexts keysAndValuesRemove: [ :association :context | 
+		| receiver selector |
+		receiver := association key.
+		selector := association value.
+		(method selector = selector and: [ 
+			 method methodClass typAsType >= receiver ]) or: [ 
+			(association key isAffectedByMethodChange: aMethodAnnouncement) 
+				or: [ context isAffectedByMethodChange: aMethodAnnouncement ] ] ]
 ]
 
 { #category : #accessing }

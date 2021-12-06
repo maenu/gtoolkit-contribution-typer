@@ -6,7 +6,7 @@ Class {
 		'argumentsOptional',
 		'signalsAlways'
 	],
-	#category : 'Typer-Core-Type'
+	#category : #'Typer-Core-Type'
 }
 
 { #category : #accessing }
@@ -79,7 +79,6 @@ TypFunctionType >> > aType [
 		ifTrue: [ ^ self >= (aType as: self class) ].
 	(aType isFunction and: [ aType name = name ])
 		ifFalse: [ ^ super > aType ].
-	self flag: 'FIXME should we really ignore result?'.
 	aType result > self result
 		ifTrue: [ ^ false ].
 	argumentsOptional

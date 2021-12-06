@@ -141,6 +141,6 @@ TypTyping >> typeSomeMethods [
 	TypInfImplementorsCache invalidate.
 	all := CompiledMethod allInstances.
 	methods := IdentitySet new.
-	[ methods size < 3000 ] whileTrue: [ methods add: all atRandom ].
+	[ methods size < 3 ] whileTrue: [ methods add: all atRandom ].
 	^ methods asOrderedCollection collect: [ :e | self typeMethod: e timeout: 30 seconds ]
 ]

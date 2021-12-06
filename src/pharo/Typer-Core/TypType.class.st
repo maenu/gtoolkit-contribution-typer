@@ -59,7 +59,6 @@ TypType >> asCompatibleWith: aType [
 
 	<typPraResult: 'TypType'>
 	<typPraArguments: 'TypType'>
-	self flag: 'TODO only real usage in union type, odd one out'.
 	aType isVariable ifTrue: [ ^ aType ].
 	aType isUnknown ifTrue: [ ^ aType ].
 	aType isNil ifTrue: [ ^ self asNullable ].
