@@ -5,15 +5,27 @@ Class {
 		'selfType',
 		'nodes'
 	],
+	#classInstVars : [
+		'index'
+	],
 	#category : #'Typer-Inference'
 }
+
+{ #category : #initialization }
+TypInfAstContext class >> initialize [
+
+	"weak reference to indexed types ensures eventual consistency "
+
+	index := WeakIdentityKeyDictionary new
+]
 
 { #category : #'as yet unclassified' }
 TypInfAstContext class >> self: aType [
 
-	^ self new
-		  initializeSelf: aType;
-		  yourself
+	^ index at: aType ifAbsentPut: [ 
+		  self new
+			  initializeSelf: aType;
+			  yourself ]
 ]
 
 { #category : #initialization }
@@ -54,6 +66,12 @@ TypInfAstContext >> nil: aNode [
 TypInfAstContext >> printOn: aStream [
 
 	selfType printOn: aStream
+]
+
+{ #category : #removing }
+TypInfAstContext >> removeKey: aNode [
+
+	nodes removeKey: aNode ifAbsent: [ "noop" ]
 ]
 
 { #category : #'as yet unclassified' }

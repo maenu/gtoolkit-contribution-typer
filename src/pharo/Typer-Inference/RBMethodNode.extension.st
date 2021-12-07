@@ -23,6 +23,17 @@ RBMethodNode >> typInfMethodIn: aContext [
 ]
 
 { #category : #'*Typer-Inference' }
+RBMethodNode >> typInfProfileIn: aContext [
+
+	"for some reason allChildren includes duplicates, hence the asIdentitySet"
+
+	^ (self allChildren asIdentitySet
+		   select: [ :e | e children isEmpty ]
+		   thenCollect: [ :e | e -> (e typInfTypeIn: aContext) ]) as:
+		  IdentityDictionary
+]
+
+{ #category : #'*Typer-Inference' }
 RBMethodNode >> typInfTypeInSelf [
 
 	^ self typInfTypeIn: self typInfContextInSelf
@@ -35,19 +46,34 @@ RBMethodNode >> typInfTypeRecursiveIn: aContext [
 	^ TypInfMethodNodeStack
 		  push: self
 		  during: [ 
-			  | types |
-			  body typInfTypeIn: aContext.
-			  types := (self allChildren select: #isReturn)
-				           collect: [ :e | e typInfTypeIn: aContext ]
-				           as: OrderedCollection.
-			  self lastIsReturn ifFalse: [ types add: aContext self ].
+			  | iterations maxIterations profiles newProfile signalsAlways returns |
+			  iterations := 0.
+			  maxIterations := 3.
+			  profiles := Set new.
+			  newProfile := Dictionary new.
+			  [ 
+			  (profiles includes: newProfile) not and: [ 
+				  iterations < maxIterations ] ] whileTrue: [ 
+				  iterations := iterations + 1.
+				  profiles add: newProfile.
+				  (self allChildren copyWithoutAll: newProfile keys , { self }) 
+					  do: [ :e | aContext removeKey: e ].
+				  body typInfTypeIn: aContext.
+				  newProfile keys , { self } do: [ :e | aContext removeKey: e ].
+				  newProfile := self typInfProfileIn: aContext ].
+			  returns := (self allChildren
+				              select: #isReturn
+				              thenCollect: [ :e | e typInfTypeIn: aContext ]) as:
+				             OrderedCollection.
+			  self lastIsReturn ifFalse: [ returns add: aContext self ].
+			  signalsAlways := TypInfSignalsAlwaysVisitor
+				                   signalsAlwaysOf: self
+				                   in: aContext.
 			  CompiledMethod
-				  typAsFunctionTypeWithResult: types typAsType
-				  arguments:
-				  (arguments collect: [ :e | e typInfTypeIn: aContext ])
+				  typAsFunctionTypeWithResult: returns typAsType
+				  arguments: (arguments collect: #typInfType)
 				  argumentsOptional: false
-				  signalsAlways:
-				  (TypInfSignalsAlwaysVisitor signalsAlwaysOf: self in: aContext) ]
+				  signalsAlways: signalsAlways ]
 		  or: [ 
 			  CompiledMethod
 				  typAsFunctionTypeWithResult: (aContext unknown: self)
