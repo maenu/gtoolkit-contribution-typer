@@ -9,6 +9,12 @@ RBMethodNode >> typInfArgumentTypeOf: anArgumentNode in: aContext [
 ]
 
 { #category : #'*Typer-Inference' }
+RBMethodNode >> typInfContextInSelf [
+
+	^ TypInfAstContext self: self methodClass typAsType
+]
+
+{ #category : #'*Typer-Inference' }
 RBMethodNode >> typInfMethodIn: aContext [
 
 	^ aContext self
@@ -19,8 +25,7 @@ RBMethodNode >> typInfMethodIn: aContext [
 { #category : #'*Typer-Inference' }
 RBMethodNode >> typInfTypeInSelf [
 
-	^ self typInfTypeIn:
-		  (TypInfAstContext self: self methodClass typAsType)
+	^ self typInfTypeIn: self typInfContextInSelf
 ]
 
 { #category : #'*Typer-Inference' }

@@ -4,32 +4,15 @@ Class {
 	#instVars : [
 		'node'
 	],
-	#classInstVars : [
-		'index'
-	],
 	#category : #'Typer-Inference'
 }
-
-{ #category : #initialization }
-TypInfAstNode class >> initialize [
-
-	index := WeakIdentityKeyDictionary new
-]
-
-{ #category : #accessing }
-TypInfAstNode class >> invalidate [
-
-	<script>
-	index removeAll
-]
 
 { #category : #accessing }
 TypInfAstNode class >> node: aNode [
 
-	^ index at: aNode ifAbsentPut: [ 
-		  self new
-			  initializeNode: aNode;
-			  yourself ]
+	^ self new
+		  initializeNode: aNode;
+		  yourself
 ]
 
 { #category : #accessing }

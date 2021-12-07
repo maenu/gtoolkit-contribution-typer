@@ -74,7 +74,14 @@ TypParametricType >> asCompatibleWith: aType [
 
 { #category : #accessing }
 TypParametricType >> at: aString [
-	^ parameters at: aString
+
+	^ self at: aString ifAbsent: [ self superType at: aString ]
+]
+
+{ #category : #accessing }
+TypParametricType >> at: aString ifAbsent: aBlock [
+
+	^ parameters at: aString ifAbsent: aBlock
 ]
 
 { #category : #copying }

@@ -20,10 +20,7 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 
 	| ast |
 	ast := coder rbAST.
-	typeContext ifNil: [ 
-		typeContext := TypInfAstContext self: (ast isMethod
-				                ifTrue: [ ast methodClass typAsType ]
-				                ifFalse: [ nil ]) ].  
+	typeContext := ast typInfContextInSelf.
 	[ 
 	ast typInfTypeIn: typeContext.
 	super style: aText ast: ast ]
@@ -44,6 +41,6 @@ TypGtRbAstStyler >> styleNode: aNode [
 		styleFrom: aNode start
 		to: aNode stop
 		with: { (TypGtAttribute new
-				 type_: (aNode typInfTypeIn: typeContext);
+				 type_: (typeContext type: aNode);
 				 yourself) }
 ]

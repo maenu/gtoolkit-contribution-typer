@@ -36,17 +36,18 @@ TypInfAstContext >> isAffectedByClassChange: aClassAnnouncement [
 ]
 
 { #category : #accessing }
-TypInfAstContext >> isAffectedByMethodChange: aClassAnnouncement [
+TypInfAstContext >> isAffectedByMethodChange: aMethodAnnouncement [
 
-	^ selfType <= aClassAnnouncement classAffected typAsType
+	^ selfType <= aMethodAnnouncement methodAffected methodClass typAsType
 ]
 
 { #category : #'as yet unclassified' }
 TypInfAstContext >> nil: aNode [
 
-	^ nodes at: aNode put: ((TypInfAstNode node: aNode)
-			   addDependent: (aNode typInfAnnotated: TypNilType new)
-			   label: #typInfNil)
+	^ nodes at: aNode ifAbsentPut: [ 
+		  (TypInfAstNode node: aNode)
+			  addDependent: (aNode typInfAnnotated: TypNilType new)
+			  label: #typInfNil ]
 ]
 
 { #category : #accessing }
@@ -65,7 +66,7 @@ TypInfAstContext >> self [
 TypInfAstContext >> type: aNode [
 
 	^ nodes at: aNode ifAbsentPut: [ 
-		  nodes at: aNode put: (self unknown: aNode).
+		  self unknown: aNode.
 		  (TypInfAstNode node: aNode)
 			  addDependent:
 			  (aNode typInfAnnotated: (aNode typInfTypeRecursiveIn: self))
@@ -75,7 +76,8 @@ TypInfAstContext >> type: aNode [
 { #category : #accessing }
 TypInfAstContext >> unknown: aNode [
 
-	^ nodes at: aNode put: ((TypInfAstNode node: aNode)
-			   addDependent: (aNode typInfAnnotated: TypUnknownType new)
-			   label: #typInfUnknown)
+	^ nodes at: aNode ifAbsentPut: [ 
+		  (TypInfAstNode node: aNode)
+			  addDependent: (aNode typInfAnnotated: TypUnknownType new)
+			  label: #typInfUnknown ]
 ]

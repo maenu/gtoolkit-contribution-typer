@@ -12,10 +12,10 @@ TypInfVariableResolver >> canResolve: aLookup [
 
 	aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
-	^ (aLookup receiver classDescription hasSlotNamed: aLookup selector) 
-		  or: [ 
-			  aLookup receiver classDescription instanceSide allClassVariables 
-				  anySatisfy: [ :e | e name = aLookup selector ] ]
+	(aLookup receiver classDescription hasSlotNamed: aLookup selector) 
+		ifTrue: [ ^ true ].
+	^ aLookup receiver classDescription instanceSide allClassVariables 
+		  anySatisfy: [ :e | e name = aLookup selector ]
 ]
 
 { #category : #initialization }
@@ -29,7 +29,6 @@ TypInfVariableResolver >> initialize [
 TypInfVariableResolver >> invalidate [
 
 	super invalidate.
-	TypInfAstNode invalidate.
 	contexts removeAll
 ]
 
@@ -65,22 +64,23 @@ TypInfVariableResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 { #category : #accessing }
 TypInfVariableResolver >> resolve: aLookup [
 
-	| context classVariable |
+	| classDescription context |
 	self assert: [ self canResolve: aLookup ].
+	classDescription := aLookup receiver classDescription.
 	context := contexts
 		           at: aLookup receiver -> aLookup selector
 		           ifAbsentPut: [ TypInfAstContext self: aLookup receiver ].
 	"instance variable"
-	(aLookup receiver classDescription hasSlotNamed: aLookup selector) 
-		ifTrue: [ 
-			^ ((aLookup receiver classDescription slotNamed: aLookup selector)
-				   assignmentNodes collect: [ :e | e typInfTypeIn: context ])
-				  typAsType ].
+	classDescription
+		slotNamed: aLookup selector
+		ifFound: [ :e | ^ e typInfAssignedTypeIn: context ].
 	"class variable"
-	classVariable := aLookup receiver classDescription instanceSide
-		                 allClassVariables detect: [ :e | 
-		                 e name = aLookup selector ].
-	classVariable value ifNotNil: [ :e | ^ e typInfType ].
-	^ (classVariable assignmentNodes collect: [ :e | 
-		   e typInfTypeIn: context ]) typAsType
+	classDescription instanceSide allClassVariables
+		detect: [ :e | e name = aLookup selector ]
+		ifFound: [ :e | 
+			^ e value
+				  ifNil: [ e typInfAssignedTypeIn: context ]
+				  ifNotNil: [ e value typInfType ] ].
+	self error:
+		'neither class nor instance variable, should not have been accepted in the first place'
 ]

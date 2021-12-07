@@ -23,13 +23,6 @@ TypMethodIndex class >> instance [
 			              yourself ]
 ]
 
-{ #category : #initialization }
-TypMethodIndex >> invalidate [
-
-	super invalidate.
-	TypInfAstNode invalidate
-]
-
 { #category : #accessing }
 TypMethodIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aCollection [
 

@@ -9,10 +9,11 @@ Class {
 
 { #category : #accessing }
 TypInfMethodResolver >> canResolve: aLookup [
-	^ aLookup receiver isNamed
-		and: [ aLookup receiver hasClassDescription
-				and:
-					[ aLookup receiver classDescription includesSelector: aLookup selector ] ]
+
+	aLookup receiver isNamed ifFalse: [ ^ false ].
+	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
+	^ aLookup receiver classDescription includesSelector:
+		  aLookup selector
 ]
 
 { #category : #initialization }
@@ -22,11 +23,10 @@ TypInfMethodResolver >> initialize [
 	contexts := Dictionary new
 ]
 
-{ #category : #accessing }
+{ #category : #invalidation }
 TypInfMethodResolver >> invalidate [
 
 	super invalidate.
-	TypInfAstNode invalidate.
 	contexts removeAll
 ]
 
