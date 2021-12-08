@@ -216,7 +216,8 @@ TypType >> isVariable [
 TypType >> lookupMethod: aSymbol [
 
 	| arguments |
-	arguments := aSymbol numArgs typTimesCollect: [ TypUnknownType new ].
+	arguments := aSymbol numArgs typTimesCollect: [ :e | 
+		             TypUnknownType new ].
 	^ self lookupMethod: aSymbol arguments: arguments
 ]
 

@@ -17,19 +17,15 @@ TypFunctionTypeNullnessExamples >> asNonNullable [
 
 { #category : #accessing }
 TypFunctionTypeNullnessExamples >> asNullable [
+
 	<gtExample>
 	| type nullable |
 	type := TypFunctionTypeInitializingExamples new
-		classDescriptionArgumentsSizeArgumentsOptionalBindings.
+		        classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	nullable := type asNullable.
-	self
-		assert:
-			nullable
-				=
-					(TypUnionType
-						types:
-							{TypNilType new.
-							type}).
+	self assert: nullable = (TypUnionType types: { 
+				 TypNilType new.
+				 type } asSet).
 	^ nullable
 ]
 

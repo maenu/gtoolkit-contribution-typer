@@ -20,7 +20,7 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 
 	| ast |
 	ast := coder rbAST.
-	typeContext := ast typInfContextInSelf.     
+	typeContext := ast typInfContextInSelf.        
 	[ 
 	ast typInfTypeIn: typeContext.
 	super style: aText ast: ast ]

@@ -27,7 +27,7 @@ TypVariableTypeNullnessExamples >> asNullable [
 					(TypUnionType
 						types:
 							{TypNilType new.
-							type}).
+							type} asSet).
 	^ nullable
 ]
 

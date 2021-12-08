@@ -7,77 +7,74 @@ Class {
 }
 
 { #category : #accessing }
-TypUnionTypeInitializingExamples >> asTypesFlattensUnionTypes [
+TypUnionTypeInitializingExamples >> typAsTypeFlattensUnionTypes [
+
 	<gtExample>
 	self
-		assert:
-			(TypUnionType
-				asTypes:
-					{(TypNamedType classDescription: ProtoObject).
-					(TypUnionType
-						types:
-							{TypNilType new.
-							TypUnknownType new})})
-		equals:
-			{(TypNamedType classDescription: ProtoObject).
-			TypNilType new.
-			TypUnknownType new} asSet.
+		assert: { 
+				(TypUnionType types: { 
+						 (TypNamedType classDescription: Integer).
+						 (TypNamedType classDescription: Number) } asSet).
+				(TypNamedType classDescription: Integer).
+				TypNilType new } typAsType
+		equals: (TypUnionType types: { 
+					 (TypNamedType classDescription: Integer).
+					 (TypNamedType classDescription: Number).
+					 TypNilType new } asSet).
 	^ nil
 ]
 
 { #category : #accessing }
-TypUnionTypeInitializingExamples >> asTypesKeepsNilType [
+TypUnionTypeInitializingExamples >> typAsTypeKeepsNilType [
+
 	<gtExample>
 	self
-		assert:
-			(TypUnionType
-				asTypes:
-					{(TypNamedType classDescription: ProtoObject).
-					TypNilType new})
-		equals:
-			{(TypNamedType classDescription: ProtoObject).
-			TypNilType new} asSet.
+		assert: { 
+				(TypNamedType classDescription: Integer).
+				TypNilType new } typAsType
+		equals: (TypUnionType types: { 
+					 (TypNamedType classDescription: Integer).
+					 TypNilType new } asSet).
 	^ nil
 ]
 
 { #category : #accessing }
-TypUnionTypeInitializingExamples >> asTypesKeepsUnknownType [
+TypUnionTypeInitializingExamples >> typAsTypeKeepsSubTypes [
+
 	<gtExample>
 	self
-		assert:
-			(TypUnionType
-				asTypes:
-					{(TypNamedType classDescription: ProtoObject).
-					TypUnknownType new})
-		equals:
-			{(TypNamedType classDescription: ProtoObject).
-			TypUnknownType new} asSet.
+		assert: { 
+				(TypNamedType classDescription: Integer).
+				(TypNamedType classDescription: Number) } typAsType
+		equals: (TypUnionType types: { 
+					 (TypNamedType classDescription: Integer).
+					 (TypNamedType classDescription: Number) } asSet).
 	^ nil
 ]
 
 { #category : #accessing }
-TypUnionTypeInitializingExamples >> asTypesRemovesDuplicates [
+TypUnionTypeInitializingExamples >> typAsTypeKeepsUnknownType [
+
 	<gtExample>
 	self
-		assert:
-			(TypUnionType
-				asTypes:
-					{TypUnknownType new.
-					TypUnknownType new})
-		equals: {TypUnknownType new} asSet.
+		assert: { 
+				(TypNamedType classDescription: Integer).
+				TypUnknownType new } typAsType
+		equals: (TypUnionType types: { 
+					 (TypNamedType classDescription: Integer).
+					 TypUnknownType new } asSet).
 	^ nil
 ]
 
 { #category : #accessing }
-TypUnionTypeInitializingExamples >> asTypesRemovesSubTypes [
+TypUnionTypeInitializingExamples >> typAsTypeRemovesDuplicates [
+
 	<gtExample>
 	self
-		assert:
-			(TypUnionType
-				asTypes:
-					{TypNamedType classDescription: Integer.
-					TypNamedType classDescription: Number})
-		equals: {TypNamedType classDescription: Number} asSet.
+		assert: { 
+				(TypNamedType classDescription: Integer).
+				(TypNamedType classDescription: Integer) } typAsType
+		equals: (TypNamedType classDescription: Integer).
 	^ nil
 ]
 
@@ -95,7 +92,7 @@ TypUnionTypeInitializingExamples >> typesMany [
 	type := TypUnionType
 		types:
 			{TypUnknownType new.
-			TypNilType new}.
+			TypNilType new} asSet.
 	self
 		assert: type types
 		equals:

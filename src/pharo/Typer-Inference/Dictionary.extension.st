@@ -6,7 +6,7 @@ Dictionary >> typInfSelfTypeSamples [
 	| pool |
 	self size < 128 ifTrue: [ ^ self associations ].
 	pool := self associations copy asOrderedCollection.
-	^ 128 typTimesCollect: [ pool remove: pool atRandom ]
+	^ 128 typTimesCollect: [ :e | pool remove: pool atRandom ]
 ]
 
 { #category : #'*Typer-Inference' }

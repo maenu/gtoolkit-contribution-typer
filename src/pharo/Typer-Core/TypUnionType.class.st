@@ -129,6 +129,7 @@ TypUnionType >> initialize [
 TypUnionType >> initializeTypes: anObject [
 
 	<typPraArguments: 'Set<TypType>'>
+	self assert: [ anObject isKindOf: Set ].
 	self assert: [ anObject size > 1 ].
 	types := anObject
 ]
