@@ -19,6 +19,12 @@ TypInfAstContext class >> initialize [
 	index := WeakIdentityKeyDictionary new
 ]
 
+{ #category : #invalidation }
+TypInfAstContext class >> invalidate [
+
+	index ifNotNil: #removeAll
+]
+
 { #category : #'as yet unclassified' }
 TypInfAstContext class >> self: aType [
 

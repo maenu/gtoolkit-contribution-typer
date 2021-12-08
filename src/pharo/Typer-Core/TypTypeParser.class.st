@@ -1,12 +1,12 @@
 Class {
 	#name : #TypTypeParser,
 	#superclass : #SmaCCParser,
-	#category : 'Typer-Core-Parser'
+	#category : #'Typer-Core-Parser'
 }
 
 { #category : #'generated-accessing' }
 TypTypeParser class >> cacheId [
-	^'2021-03-20T18:04:51.724039+01:00'
+	^'2021-12-08T14:25:42.645632+01:00'
 ]
 
 { #category : #generated }
@@ -84,7 +84,7 @@ FunctionType
 	;
 UnionType
 	: ""{"" Types 'types' ""}""
-		{ TypUnionType types: types }
+		{ TypUnionType types: types asSet }
 	;
 EmptyTypes
 	: Types 'types'
@@ -107,27 +107,27 @@ TypTypeParser class >> parse: aString [
 { #category : #generated }
 TypTypeParser class >> reduceTable [
 ^#(
-	#(20 1 #reduceActionForNilType1: 625665 false ) 
-	#(19 1 #reduceActionForUnknownType1: 577537 false ) 
-	#(27 1 #reduceActionForName1: 1724417 false ) 
-	#(17 1 #reduceActionForTypes1: 241665 false ) 
-	#(18 1 #liftFirstValue: 334849 false ) 
-	#(18 1 #liftFirstValue: 334850 false ) 
-	#(18 1 #liftFirstValue: 334851 false ) 
-	#(18 1 #liftFirstValue: 334855 false ) 
-	#(18 1 #liftFirstValue: 334854 false ) 
-	#(18 1 #liftFirstValue: 334853 false ) 
-	#(18 1 #liftFirstValue: 334852 false ) 
-	#(22 1 #reduceActionForNamedType1: 847873 false ) 
-	#(21 2 #reduceActionForVariableType1: 665601 false ) 
-	#(26 0 #reduceActionForEmptyTypes2: 1670146 false ) 
-	#(25 3 #reduceActionForUnionType1: 1598465 false ) 
-	#(17 3 #reduceActionForTypes2: 241666 false ) 
-	#(26 1 #liftFirstValue: 1670145 false ) 
-	#(21 4 #reduceActionForVariableType2: 665602 false ) 
-	#(23 4 #reduceActionForParametricType1: 958465 false ) 
-	#(24 6 #reduceActionForFunctionType2: 1216514 false ) 
-	#(24 6 #reduceActionForFunctionType1: 1216513 false )
+	#(20 1 #reduceActionForNilType1: 625665 false) 
+	#(19 1 #reduceActionForUnknownType1: 577537 false) 
+	#(27 1 #reduceActionForName1: 1730561 false) 
+	#(17 1 #reduceActionForTypes1: 241665 false) 
+	#(18 1 #liftFirstValue: 334849 false) 
+	#(18 1 #liftFirstValue: 334850 false) 
+	#(18 1 #liftFirstValue: 334851 false) 
+	#(18 1 #liftFirstValue: 334855 false) 
+	#(18 1 #liftFirstValue: 334854 false) 
+	#(18 1 #liftFirstValue: 334853 false) 
+	#(18 1 #liftFirstValue: 334852 false) 
+	#(22 1 #reduceActionForNamedType1: 847873 false) 
+	#(21 2 #reduceActionForVariableType1: 665601 false) 
+	#(26 0 #reduceActionForEmptyTypes2: 1676290 false) 
+	#(25 3 #reduceActionForUnionType1: 1598465 false) 
+	#(17 3 #reduceActionForTypes2: 241666 false) 
+	#(26 1 #liftFirstValue: 1676289 false) 
+	#(21 4 #reduceActionForVariableType2: 665602 false) 
+	#(23 4 #reduceActionForParametricType1: 958465 false) 
+	#(24 6 #reduceActionForFunctionType2: 1216514 false) 
+	#(24 6 #reduceActionForFunctionType1: 1216513 false)
 	).
 ]
 
@@ -138,12 +138,17 @@ TypTypeParser class >> scannerClass [
 
 { #category : #generated }
 TypTypeParser class >> startingStateForTypes [
+
 	^ 1
 ]
 
 { #category : #generated }
 TypTypeParser class >> symbolNames [
-	^ #('"!"' '"("' '")"' '","' '"->"' '"<"' '"<="' '">"' '"?"' '"@"' '"["' '"]"' '"{"' '"}"' '<name>' 'B e g i n' 'Types' 'Type' 'UnknownType' 'NilType' 'VariableType' 'NamedType' 'ParametricType' 'FunctionType' 'UnionType' 'EmptyTypes' 'Name' 'E O F' 'error')
+
+	^ #( '"!"' '"("' '")"' '","' '"->"' '"<"' '"<="' '">"' '"?"' '"@"'
+	     '"["' '"]"' '"{"' '"}"' '<name>' 'B e g i n' 'Types' 'Type'
+	     'UnknownType' 'NilType' 'VariableType' 'NamedType' 'ParametricType'
+	     'FunctionType' 'UnionType' 'EmptyTypes' 'Name' 'E O F' 'error' )
 ]
 
 { #category : #generated }
@@ -191,83 +196,96 @@ TypTypeParser class >> transitionTable [
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForEmptyTypes2: nodes [
-	^ {}
+
+	^ {  }
 ]
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForFunctionType1: nodes [
+
 	^ TypFunctionType
-		named: (nodes at: 1)
-		result: (nodes at: 6)
-		arguments: (nodes at: 3)
-		argumentsOptional: true
-		signalsAlways: nil
+		  named: (nodes at: 1)
+		  result: (nodes at: 6)
+		  arguments: (nodes at: 3)
+		  argumentsOptional: true
+		  signalsAlways: nil
 ]
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForFunctionType2: nodes [
+
 	^ TypFunctionType
-		named: (nodes at: 1)
-		result: (nodes at: 6)
-		arguments: (nodes at: 3)
-		argumentsOptional: false
-		signalsAlways: nil
+		  named: (nodes at: 1)
+		  result: (nodes at: 6)
+		  arguments: (nodes at: 3)
+		  argumentsOptional: false
+		  signalsAlways: nil
 ]
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForName1: nodes [
+
 	^ (nodes at: 1) value
 ]
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForNamedType1: nodes [
+
 	^ [ (nodes at: 1) asClass typAsType ]
-		on: NotFound
-		do: [ TypNamedType named: (nodes at: 1) ]
+		  on: NotFound
+		  do: [ TypNamedType named: (nodes at: 1) ]
 ]
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForNilType1: nodes [
+
 	^ TypNilType new
 ]
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForParametricType1: nodes [
+
 	| type |
 	type := [ (nodes at: 1) asClass typAsType ]
-		on: NotFound
-		do: [ TypNamedType named: (nodes at: 1) ].
+		        on: NotFound
+		        do: [ TypNamedType named: (nodes at: 1) ].
 	^ type isParametric
-		ifTrue: [ type copyWithParameters: (nodes at: 3) ]
-		ifFalse: [ type ]
+		  ifTrue: [ type copyWithParameters: (nodes at: 3) ]
+		  ifFalse: [ type ]
 ]
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForTypes1: nodes [
-	^ {(nodes at: 1)}
+
+	^ { (nodes at: 1) }
 ]
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForTypes2: nodes [
-	^ (nodes at: 1) , {(nodes at: 3)}
+
+	^ (nodes at: 1) , { (nodes at: 3) }
 ]
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForUnionType1: nodes [
-	^ TypUnionType types: (nodes at: 2)
+
+	^ TypUnionType types: (nodes at: 2) asSet
 ]
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForUnknownType1: nodes [
+
 	^ TypUnknownType new
 ]
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForVariableType1: nodes [
+
 	^ TypVariableType named: '@' , (nodes at: 2)
 ]
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForVariableType2: nodes [
+
 	^ TypVariableType named: '@' , (nodes at: 2) superType: (nodes at: 4)
 ]

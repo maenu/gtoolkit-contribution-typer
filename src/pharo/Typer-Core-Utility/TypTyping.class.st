@@ -21,6 +21,7 @@ TypTyping >> invalidate [
 	probes := OrderedCollection new.
 	probes add: 'pre-reset' -> self memoryProbe.
 	TypIndex invalidateAll.
+	TypInfAstContext invalidate.
 	TypInfImplementorsCache invalidate.
 	Smalltalk garbageCollect.
 	probes add: 'post-reset' -> self memoryProbe.
@@ -138,9 +139,10 @@ TypTyping >> typeSomeMethods [
 	<gtExample>
 	| all methods |
 	TypIndex invalidateAll.
+	TypInfAstContext invalidate.
 	TypInfImplementorsCache invalidate.
 	all := CompiledMethod allInstances.
 	methods := IdentitySet new.
-	[ methods size < 3 ] whileTrue: [ methods add: all atRandom ].
+	[ methods size < 30 ] whileTrue: [ methods add: all atRandom ].
 	^ methods asOrderedCollection collect: [ :e | self typeMethod: e timeout: 30 seconds ]
 ]

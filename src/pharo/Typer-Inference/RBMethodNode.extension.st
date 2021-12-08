@@ -71,7 +71,8 @@ RBMethodNode >> typInfTypeRecursiveIn: aContext [
 				                   in: aContext.
 			  CompiledMethod
 				  typAsFunctionTypeWithResult: returns typAsType
-				  arguments: (arguments collect: #typInfType)
+				  arguments:
+				  (arguments collect: [ :e | e typInfTypeIn: aContext ])
 				  argumentsOptional: false
 				  signalsAlways: signalsAlways ]
 		  or: [ 

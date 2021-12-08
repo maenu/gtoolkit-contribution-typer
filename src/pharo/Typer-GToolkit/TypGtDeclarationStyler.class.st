@@ -20,7 +20,7 @@ TypGtDeclarationStyler >> visitMethodNode: aNode [
 		            ifFalse: [ aNode arguments last stop ].
 	super visitMethodNode: aNode.
 	self styleFrom: position to: position with: { (TypGtAttribute new
-			 type_: aNode typInfType result;
+			 type_: (typeContext type: aNode) result;
 			 yourself) }
 ]
 
