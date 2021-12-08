@@ -4,7 +4,7 @@ Extension { #name : #Collection }
 Collection >> typInfSelfTypeSamples [
 
 	| pool |
-	self size < 128 ifTrue: [ ^ self ].
+	self size < 128 ifTrue: [ ^ self asOrderedCollection ].
 	pool := self copy asOrderedCollection.
 	^ 128 typTimesCollect: [ :e | pool remove: pool atRandom ]
 ]

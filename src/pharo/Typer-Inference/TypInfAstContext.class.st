@@ -57,7 +57,7 @@ TypInfAstContext >> isAffectedByMethodChange: aMethodAnnouncement [
 TypInfAstContext >> nil: aNode [
 
 	^ nodes at: aNode ifAbsentPut: [ 
-		  (TypInfAstNode node: aNode)
+		  (TypInfAstNode node: aNode context: self)
 			  addDependent: (aNode typInfAnnotated: TypNilType new)
 			  label: #typInfNil ]
 ]
@@ -85,7 +85,7 @@ TypInfAstContext >> type: aNode [
 
 	^ nodes at: aNode ifAbsentPut: [ 
 		  self unknown: aNode.
-		  (TypInfAstNode node: aNode)
+		  (TypInfAstNode node: aNode context: self)
 			  addDependent:
 			  (aNode typInfAnnotated: (aNode typInfTypeRecursiveIn: self))
 			  label: #typInfTypeRecursive ]
@@ -95,7 +95,7 @@ TypInfAstContext >> type: aNode [
 TypInfAstContext >> unknown: aNode [
 
 	^ nodes at: aNode ifAbsentPut: [ 
-		  (TypInfAstNode node: aNode)
+		  (TypInfAstNode node: aNode context: self)
 			  addDependent: (aNode typInfAnnotated: TypUnknownType new)
 			  label: #typInfUnknown ]
 ]

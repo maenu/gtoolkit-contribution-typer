@@ -2,16 +2,17 @@ Class {
 	#name : #TypInfAstNode,
 	#superclass : #TypNode,
 	#instVars : [
-		'node'
+		'node',
+		'context'
 	],
 	#category : #'Typer-Inference'
 }
 
 { #category : #accessing }
-TypInfAstNode class >> node: aNode [
+TypInfAstNode class >> node: aNode context: aContext [
 
 	^ self new
-		  initializeNode: aNode;
+		  initializeNode: aNode context: aContext;
 		  yourself
 ]
 
@@ -20,7 +21,8 @@ TypInfAstNode >> = anObject [
 
 	anObject == self ifTrue: [ ^ true ].
 	anObject class = self class ifFalse: [ ^ false ].
-	^ anObject node = node
+	anObject node = node ifFalse: [ ^ false ].
+	^ anObject context = context
 ]
 
 { #category : #accessing }
@@ -48,15 +50,21 @@ TypInfAstNode >> asElementIn: aMondrian [
 ]
 
 { #category : #accessing }
+TypInfAstNode >> context [
+	^ context
+]
+
+{ #category : #accessing }
 TypInfAstNode >> hash [
 
-	^ self class hash bitXor: node hash
+	^ (self class hash bitXor: node hash) bitXor: context hash
 ]
 
 { #category : #initialization }
-TypInfAstNode >> initializeNode: aNode [
+TypInfAstNode >> initializeNode: aNode context: aContext [
 
-	node := aNode
+	node := aNode.
+	context := aContext
 ]
 
 { #category : #accessing }

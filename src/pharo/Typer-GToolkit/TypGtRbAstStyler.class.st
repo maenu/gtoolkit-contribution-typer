@@ -19,10 +19,10 @@ TypGtRbAstStyler >> coder: aCoder [
 TypGtRbAstStyler >> style: aText ast: anAst [
 
 	| ast |
-	ast := coder rbAST.
-	typeContext := ast typInfContextInSelf.        
+	ast := coder rbAST. 
+	typeContext := ast typInfContextInSelf.
 	[ 
-	ast typInfTypeIn: typeContext.
+	ast typInfTypeIn: typeContext. 
 	super style: aText ast: ast ]
 		on: Error
 		do: [ :e | Halt once ]
