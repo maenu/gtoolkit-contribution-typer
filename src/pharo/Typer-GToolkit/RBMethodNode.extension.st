@@ -10,7 +10,7 @@ RBMethodNode >> typGtShadowMethod [
 
 	| method_ argumentTypes resultType clazz shadow |
 	self assert: [ self typGtCanType ].
-	method_ := self typInfMethod.
+	method_ := self typInfMethodInSelf.
 	argumentTypes := method_ arguments.
 	resultType := method_ result.
 	clazz := self methodClass.

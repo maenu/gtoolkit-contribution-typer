@@ -10,6 +10,12 @@ RBProgramNode >> typInfAnnotated: aType [
 ]
 
 { #category : #'*Typer-Inference' }
+RBProgramNode >> typInfContextInSelf [
+
+	^ TypInfAstContext self: self methodNode methodClass typAsType
+]
+
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typInfIsMessageArgument [
 
 	^ parent isNotNil and: [ 
@@ -21,6 +27,12 @@ RBProgramNode >> typInfTypeIn: aContext [
 
 	<typPraResult: 'TypType'>
 	^ aContext type: self
+]
+
+{ #category : #'*Typer-Inference' }
+RBProgramNode >> typInfTypeInSelf [
+
+	^ self typInfTypeIn: self typInfContextInSelf
 ]
 
 { #category : #'*Typer-Inference' }

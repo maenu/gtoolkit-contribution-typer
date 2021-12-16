@@ -10,7 +10,7 @@ RBMessageNode >> typGtInvokedMethods [
 
 	| methods receiverType |
 	methods := super typGtInvokedMethods.
-	receiverType := receiver typInfType.
+	receiverType := receiver typInfTypeInSelf.
 	(receiverType isNamed and: [ receiverType hasClassDescription ]) 
 		ifTrue: [ 
 			receiverType classDescription
@@ -25,8 +25,8 @@ RBMessageNode >> typGtShadowMethod [
 
 	| method_ receiverType argumentTypes resultType clazz shadow |
 	self assert: [ self typGtCanType ].
-	method_ := self typInfMethod.
-	receiverType := self receiver typInfType.
+	method_ := self typInfMethodInSelf.
+	receiverType := self receiver typInfTypeInSelf.
 	argumentTypes := method_ arguments.
 	resultType := method_ result.
 	clazz := (receiverType isNamed and: [ 

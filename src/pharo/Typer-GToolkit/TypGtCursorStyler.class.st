@@ -1,7 +1,7 @@
 Class {
 	#name : #TypGtCursorStyler,
 	#superclass : #TypGtValueStyler,
-	#category : 'Typer-GToolkit'
+	#category : #'Typer-GToolkit'
 }
 
 { #category : #visiting }
@@ -15,7 +15,7 @@ TypGtCursorStyler >> styleNode: aNode [
 				 coder: coder;
 				 node: aNode;
 				 attribute: (TypGtAttribute new
-						  type_: aNode typInfType;
+						  type_: aNode typInfTypeInSelf;
 						  yourself);
 				 yourself) }
 ]

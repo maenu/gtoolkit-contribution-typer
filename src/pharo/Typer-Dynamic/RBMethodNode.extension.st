@@ -2,18 +2,19 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Dynamic' }
 RBMethodNode >> typDynAsMethodLookupResult [
+
 	<typPraResult: '{!,TypMethodLookupResult}'>
 	| arguments_ result |
-	arguments_ := (self method numArgs
-		typTimesCollect: [ :i | self typDynTypeForArgumentAt: i ])
-		collect: #asNonDynType.
+	arguments_ := (self method numArgs typTimesCollect: [ :i | 
+		               self typDynTypeForArgumentAt: i ]) collect:
+		              #asNonDynType.
 	result := self typDynTypeForResult asNonDynType.
 	^ result isUnknown
-		ifTrue: [ nil ]
-		ifFalse: [ TypFunctionType new
-				argumentTypes: [ :i | arguments_ at: i ];
-				resultType: [ result ];
-				yourself ]
+		  ifTrue: [ nil ]
+		  ifFalse: [ 
+			  CompiledMethod
+				  typAsFunctionTypeWithResult: result
+				  arguments: arguments ]
 ]
 
 { #category : #'*Typer-Dynamic' }
@@ -55,9 +56,9 @@ RBMethodNode >> typDynInvokeIn: aContext [
 		ifTrue: [ self typDynInvocations
 				add:
 					(TypDynMessage new
-						receiverType: aContext receiver typInfType;
+						receiverType: aContext receiver typInfTypeInSelf;
 						selector: aContext method selector;
-						argumentTypes: (aContext arguments collect: #typInfType);
+						argumentTypes: (aContext arguments collect: #typInfTypeInSelf);
 						yourself) ].
 	self typDynInvocations weights size >= 100
 		ifTrue: [ self typDynRemoveLink ]

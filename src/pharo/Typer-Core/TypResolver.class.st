@@ -8,7 +8,7 @@ Class {
 TypResolver class >> invalidateAll [
 
 	<script>
-	self allInstancesDo: #invalidate
+	self allSubInstancesDo: #invalidate
 ]
 
 { #category : #resolving }

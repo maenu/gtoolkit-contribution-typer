@@ -8,6 +8,13 @@ Class {
 	#category : #'Typer-Core-Type'
 }
 
+{ #category : #invalidation }
+TypNode class >> invalidateAll [
+
+	<script>
+	^ self allSubInstancesDo: #removeAllDependents
+]
+
 { #category : #accessing }
 TypNode >> addDependency: aDependency [
 

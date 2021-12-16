@@ -44,7 +44,7 @@ TypGtCheckStyler >> styleNodeUnknown: aNode message: aString [
 TypGtCheckStyler >> visitArgumentNode: aNode [
 
 	super visitArgumentNode: aNode.
-	aNode typInfType isUnknown ifTrue: [ 
+	aNode typInfTypeInSelf isUnknown ifTrue: [ 
 		self styleNodeUnknown: aNode message: 'Argument is unknown' ]
 ]
 
@@ -52,7 +52,7 @@ TypGtCheckStyler >> visitArgumentNode: aNode [
 TypGtCheckStyler >> visitAssignmentNode: aNode [
 
 	super visitAssignmentNode: aNode.
-	aNode typInfType isUnknown
+	aNode typInfTypeInSelf isUnknown
 		ifTrue: [ 
 		self styleNodeUnknown: aNode value message: 'Value is unknown' ]
 		ifFalse: [ 
@@ -69,7 +69,7 @@ TypGtCheckStyler >> visitAssignmentNode: aNode [
 TypGtCheckStyler >> visitMessageNode: aNode [
 
 	super visitMessageNode: aNode.
-	aNode receiver typInfType isUnknown
+	aNode receiver typInfTypeInSelf isUnknown
 		ifTrue: [ 
 		self styleNodeUnknown: aNode message: 'Receiver is unknown' ]
 		ifFalse: [ 
@@ -82,7 +82,7 @@ TypGtCheckStyler >> visitMessageNode: aNode [
 				do: [ :e | 
 					self styleNode: aNode error: e message: 'Receiver could be nil' ] ].
 	aNode arguments withIndexDo: [ :e :i | 
-		(e typInfType isUnknown or: [ 
+		(e typInfTypeInSelf isUnknown or: [ 
 			 ((aNode typInfMethodIn: context) arguments at: i) isUnknown ])
 			ifTrue: [ self styleNodeUnknown: e message: 'Argument is unknown' ]
 			ifFalse: [ 
@@ -108,7 +108,7 @@ TypGtCheckStyler >> visitMethodNode: aNode [
 TypGtCheckStyler >> visitReturnNode: aNode [
 
 	super visitReturnNode: aNode.
-	aNode typInfType isUnknown
+	aNode typInfTypeInSelf isUnknown
 		ifTrue: [ self styleNodeUnknown: aNode message: 'Return is unknown' ]
 		ifFalse: [ 
 			[ aNode typCheCheckCompatibility ]
@@ -131,6 +131,6 @@ TypGtCheckStyler >> visitReturnNode: aNode [
 TypGtCheckStyler >> visitTemporaryNode: aNode [
 
 	super visitTemporaryNode: aNode.
-	(aNode isDefinition and: [ aNode typInfType isUnknown ]) ifTrue: [ 
+	(aNode isDefinition and: [ aNode typInfTypeInSelf isUnknown ]) ifTrue: [ 
 		self styleNodeUnknown: aNode message: 'Temp is unknown' ]
 ]

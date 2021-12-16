@@ -4,15 +4,15 @@ Extension { #name : #RBAssignmentNode }
 RBAssignmentNode >> typCheCheckCompatibility [
 
 	| expected actual |
-	expected := self variable typInfType.
-	actual := self value typInfType.
+	expected := self variable typInfTypeInSelf.
+	actual := self value typInfTypeInSelf.
 	(expected isUnknown or: [ actual isUnknown ]) ifTrue: [ ^ self ].
 	expected >= actual ifTrue: [ ^ self ].
 	(actual isFunction and: [ 
 		 self value isBlock and: [ 
 			 | block |
 			 block := self value. "typCastAs RBBlockNode"
-			 (block typInfType signalsAlways = true or: [ 
+			 (block typInfTypeInSelf signalsAlways = true or: [ 
 				  block body lastIsReturn ]) and: [ 
 				 | functions |
 				 functions := expected isUnion

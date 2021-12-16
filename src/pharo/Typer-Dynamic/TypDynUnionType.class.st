@@ -12,11 +12,12 @@ TypDynUnionType class >> types: aCollection [
 	self shouldNotImplement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypDynUnionType class >> types: aCollection weights: anotherCollection [
-	^ self new
-		initializeTypes: (self asTypes: aCollection) weights: anotherCollection;
-		yourself
+
+	^ (self types: aCollection)
+		  initializeWeights: anotherCollection;
+		  yourself
 ]
 
 { #category : #copying }
@@ -66,9 +67,8 @@ TypDynUnionType >> initialize [
 ]
 
 { #category : #accessing }
-TypDynUnionType >> initializeTypes: anObject weights: anotherObject [
-	<typPraArguments: '?,SequenceableCollection<TypType>'>
-	super initializeTypes: anObject.
+TypDynUnionType >> initializeWeights: anotherObject [
+
 	weights := anotherObject
 ]
 

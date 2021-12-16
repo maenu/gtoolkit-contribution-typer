@@ -9,17 +9,17 @@ RBMethodNode >> typInfArgumentTypeOf: anArgumentNode in: aContext [
 ]
 
 { #category : #'*Typer-Inference' }
-RBMethodNode >> typInfContextInSelf [
-
-	^ TypInfAstContext self: self methodClass typAsType
-]
-
-{ #category : #'*Typer-Inference' }
 RBMethodNode >> typInfMethodIn: aContext [
 
 	^ aContext self
 		  lookupMethod: selector value asSymbol
 		  arguments: (arguments collect: [ :e | e typInfTypeIn: aContext ])
+]
+
+{ #category : #'*Typer-Inference' }
+RBMethodNode >> typInfMethodInSelf [
+
+	^ self typInfMethodIn: self typInfContextInSelf
 ]
 
 { #category : #'*Typer-Inference' }
@@ -31,12 +31,6 @@ RBMethodNode >> typInfProfileIn: aContext [
 		   select: [ :e | e children isEmpty ]
 		   thenCollect: [ :e | e -> (e typInfTypeIn: aContext) ]) as:
 		  IdentityDictionary
-]
-
-{ #category : #'*Typer-Inference' }
-RBMethodNode >> typInfTypeInSelf [
-
-	^ self typInfTypeIn: self typInfContextInSelf
 ]
 
 { #category : #'*Typer-Inference' }

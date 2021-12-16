@@ -1,17 +1,8 @@
 Class {
 	#name : #TypTyping,
 	#superclass : #Object,
-	#classInstVars : [
-		'probes'
-	],
 	#category : #'Typer-Core-Utility'
 }
-
-{ #category : #accessing }
-TypTyping class >> probes [
-
-	^ probes ifNil: [ probes := IdentitySet new ]
-]
 
 { #category : #accessing }
 TypTyping >> invalidate [
@@ -20,7 +11,11 @@ TypTyping >> invalidate [
 	| probes |
 	probes := OrderedCollection new.
 	probes add: 'pre-reset' -> self memoryProbe.
+	TypNode invalidateAll.
 	TypIndex invalidateAll.
+	TypResolver invalidateAll.
+	TypShaShadow invalidateAll.
+	TypInfMethodNodeStack resetSoleInstance.
 	TypInfAstContext invalidate.
 	TypInfImplementorsCache invalidate.
 	Smalltalk garbageCollect.

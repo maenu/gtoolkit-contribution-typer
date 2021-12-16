@@ -20,3 +20,11 @@ OrderedCollection >> typDiff: aCollection [
 		dItem typIsZero ifFalse: [ result add: dItem ] ].
 	^ result sort: [ :a :b | a spaceForInstances > b spaceForInstances ]
 ]
+
+{ #category : #'*Typer-Core' }
+OrderedCollection >> typInTyper [
+
+	^ (self select: [ :e | 
+		   e analyzedClassName asClass package name beginsWith: 'Typer' ]) 
+		  sorted: [ :a :b | a spaceForInstances > b spaceForInstances ]
+]

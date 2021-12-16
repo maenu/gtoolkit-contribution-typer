@@ -11,14 +11,14 @@ GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 	self notifyObjectSpawn:
 		(GtSearchImplementorsFilter selector: node selector)
 		& (TypGtCoderTypeFilter new
-				 type: node receiver typInfType;
+				 type: node receiver typInfTypeInSelf;
 				 yourself)
 ]
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 
-	<gtAstCoderAddOns: 10>
+	"<gtAstCoderAddOns: 10>"
 	self completionStrategy:
 		(self completionStrategy typGtAsCompletionStrategy
 			 coder: self;

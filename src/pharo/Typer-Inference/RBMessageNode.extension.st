@@ -9,6 +9,12 @@ RBMessageNode >> typInfMethodIn: aContext [
 ]
 
 { #category : #'*Typer-Inference' }
+RBMessageNode >> typInfMethodInSelf [
+
+	^ self typInfMethodIn: self typInfContextInSelf
+]
+
+{ #category : #'*Typer-Inference' }
 RBMessageNode >> typInfTypeRecursiveIn: aContext [
 
 	receiver typInfTypeIn: aContext.
