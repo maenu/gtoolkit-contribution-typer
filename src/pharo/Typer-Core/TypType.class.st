@@ -64,10 +64,7 @@ TypType >> asCompatibleWith: aType [
 	aType isNil ifTrue: [ ^ self asNullable ].
 	self >= aType ifTrue: [ ^ self ].
 	self hasSuperType ifTrue: [ ^ self superType asCompatibleWith: aType ].
-	^ self
-		  addDependent: TypUnknownType new
-		  label: #asCompatibleWith:
-		  data: { aType }
+	^ TypUnknownType new
 ]
 
 { #category : #converting }
@@ -80,11 +77,9 @@ TypType >> asNonNullable [
 TypType >> asNullable [
 
 	<typPraResult: 'TypType'>
-	^ self
-		  addDependent: { 
-				  TypNilType new.
-				  self } typAsType
-		  label: #asNullable
+	^ { 
+		  TypNilType new.
+		  self } typAsType
 ]
 
 { #category : #copying }

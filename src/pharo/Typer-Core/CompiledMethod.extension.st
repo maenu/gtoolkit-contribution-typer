@@ -1,7 +1,7 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*Typer-Core' }
-CompiledMethod >> typInfSelfTypeSamples [
+CompiledMethod >> typInfTypes [
 
-	^ #( 1 )
+	^ { Integer typAsType }
 ]

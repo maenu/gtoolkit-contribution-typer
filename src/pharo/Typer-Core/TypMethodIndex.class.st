@@ -27,13 +27,10 @@ TypMethodIndex class >> instance [
 TypMethodIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aCollection [
 
 	| lookup |
-	lookup := self
-		          addDependent: (TypMethodLookup
-				           receiver: aType
-				           selector: aSymbol
-				           arguments: aCollection)
-		          label: #lookup.
-	(resolver canResolve: lookup) ifFalse: [ 
-		^ lookup addDependent: TypUnknownType new label: #default ].
+	lookup := TypMethodLookup
+		          receiver: aType
+		          selector: aSymbol
+		          arguments: aCollection.
+	(resolver canResolve: lookup) ifFalse: [ ^ unknown ].
 	^ resolver resolve: lookup
 ]

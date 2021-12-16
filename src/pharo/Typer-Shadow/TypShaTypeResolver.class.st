@@ -14,12 +14,8 @@ TypShaTypeResolver >> canResolve: aLookup [
 TypShaTypeResolver >> resolve: aLookup [
 
 	self assert: [ self canResolve: aLookup ].
-	self addDependent: aLookup label: #resolve:.
 	^ self
 		  resolve: aLookup
 		  reduce: (aLookup classDescription typShaShadows collect: [ :e | 
-				   self
-					   addDependent: (e resolveType: aLookup)
-					   label: #shadow
-					   data: (e class lookupSelector: #resolveType:) ])
+				   e resolveType: aLookup ])
 ]

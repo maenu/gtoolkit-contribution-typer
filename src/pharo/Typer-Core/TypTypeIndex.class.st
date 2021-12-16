@@ -1,7 +1,7 @@
 Class {
 	#name : #TypTypeIndex,
 	#superclass : #TypIndex,
-	#category : 'Typer-Core-Lookup'
+	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #accessing }
@@ -26,11 +26,7 @@ TypTypeIndex class >> instance [
 TypTypeIndex >> lookupClassDescription: aClassDescription [
 
 	| lookup |
-	lookup := self
-		          addDependent:
-		          (TypTypeLookup classDescription: aClassDescription)
-		          label: #lookup.
-	(resolver canResolve: lookup) ifFalse: [ 
-		^ lookup addDependent: TypUnknownType new label: #default ].
+	lookup := TypTypeLookup classDescription: aClassDescription.
+	(resolver canResolve: lookup) ifFalse: [ ^ unknown ].
 	^ resolver resolve: lookup
 ]

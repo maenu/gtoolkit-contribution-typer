@@ -67,8 +67,8 @@ TypTyping >> monitorMemorySomeMethods [
 	| all methods |
 	all := CompiledMethod allInstances.
 	methods := IdentitySet new.
-	[ methods size < 1 ] whileTrue: [ methods add: all atRandom ].
-	^ self monitorMemoryMethods: methods timeout: 5 seconds
+	[ methods size < 30 ] whileTrue: [ methods add: all atRandom ].
+	^ self monitorMemoryMethods: methods timeout: 30 seconds
 ]
 
 { #category : #accessing }

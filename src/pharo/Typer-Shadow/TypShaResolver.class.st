@@ -7,15 +7,9 @@ Class {
 { #category : #accessing }
 TypShaResolver >> resolve: aLookup reduce: aCollection [
 
-	| resolved |
-	aCollection ifEmpty: [ 
-		^ aLookup
-			  addDependent: TypUnknownType new
-			  label: #default
-			  data: self ].
+	aCollection ifEmpty: [ ^ TypUnknownType new ].
 	aCollection sort.
-	resolved := aCollection first.
-	aCollection copyWithoutFirst do: [ :e | 
-		self addDependent: e label: #alternative data: resolved ].
-	^ aLookup addDependent: resolved label: #resolved data: self
+	self flag:
+		'TODO make more of alternatives instead of just taking first'.
+	^ aCollection first
 ]

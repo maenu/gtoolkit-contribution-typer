@@ -3,7 +3,9 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'selfType',
-		'nodes'
+		'nodes',
+		'unknown',
+		'null'
 	],
 	#classInstVars : [
 		'index'
@@ -38,7 +40,9 @@ TypInfAstContext class >> self: aType [
 TypInfAstContext >> initialize [
 
 	super initialize.
-	nodes := WeakIdentityKeyDictionary new
+	nodes := WeakIdentityKeyDictionary new.
+	unknown := TypUnknownType new.
+	null := TypNilType new
 ]
 
 { #category : #initialization }
@@ -59,13 +63,12 @@ TypInfAstContext >> isAffectedByMethodChange: aMethodAnnouncement [
 	^ selfType <= aMethodAnnouncement methodAffected methodClass typAsType
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypInfAstContext >> nil: aNode [
 
-	^ nodes at: aNode ifAbsentPut: [ 
-		  (TypInfAstNode node: aNode context: self)
-			  addDependent: (aNode typInfAnnotated: TypNilType new)
-			  label: #typInfNil ]
+	^ nodes
+		  at: aNode
+		  ifAbsentPut: [ aNode typInfAnnotated: null ]
 ]
 
 { #category : #accessing }
@@ -89,19 +92,15 @@ TypInfAstContext >> self [
 { #category : #utilities }
 TypInfAstContext >> type: aNode [
 
-	^ nodes at: aNode ifAbsentPut: [ 
-		  self unknown: aNode.
-		  (TypInfAstNode node: aNode context: self)
-			  addDependent:
-			  (aNode typInfAnnotated: (aNode typInfTypeRecursiveIn: self))
-			  label: #typInfTypeRecursive ]
+	^ nodes at: aNode ifAbsent: [ 
+		  nodes
+			  at: aNode put: unknown;
+			  at: aNode
+			  put: (aNode typInfAnnotated: (aNode typInfTypeRecursiveIn: self)) ]
 ]
 
 { #category : #accessing }
 TypInfAstContext >> unknown: aNode [
 
-	^ nodes at: aNode ifAbsentPut: [ 
-		  (TypInfAstNode node: aNode context: self)
-			  addDependent: (aNode typInfAnnotated: TypUnknownType new)
-			  label: #typInfUnknown ]
+	^ nodes at: aNode ifAbsentPut: [ aNode typInfAnnotated: unknown ]
 ]

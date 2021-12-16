@@ -12,13 +12,6 @@ TypPraTypeResolver >> canResolve: aLookup [
 { #category : #accessing }
 TypPraTypeResolver >> resolve: aLookup [
 
-	| resolved |
 	self assert: [ self canResolve: aLookup ].
-	resolved := aLookup classDescription typPraType.
-	self
-		addDependent: aLookup label: #resolve:;
-		addDependent: resolved
-		label: #pragma
-		data: aLookup classDescription >> #initialize.
-	^ aLookup addDependent: resolved label: #resolved data: self
+	^ aLookup classDescription typPraType
 ]

@@ -2,7 +2,8 @@ Class {
 	#name : #TypCachingResolver,
 	#superclass : #TypWrappingResolver,
 	#instVars : [
-		'cache'
+		'cache',
+		'unknown'
 	],
 	#category : #'Typer-Core-Lookup'
 }
@@ -17,10 +18,13 @@ TypCachingResolver >> canResolve: aLookup [
 
 { #category : #initialization }
 TypCachingResolver >> initialize [
+
 	<typPraVariable: 'resolver' as: 'TypLookupResolver'>
-	<typPraVariable: 'cache' as: 'Dictionary<TypLookup,SequenceableCollection<TypLookupResult>>'>
+	<typPraVariable: 'cache' as:
+	'Dictionary<TypLookup,SequenceableCollection<TypLookupResult>>'>
 	super initialize.
-	cache := Dictionary new
+	cache := Dictionary new.
+	unknown := TypUnknownType new
 ]
 
 { #category : #initialization }
@@ -51,10 +55,8 @@ TypCachingResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 TypCachingResolver >> resolve: aLookup [
 
 	self assert: [ self canResolve: aLookup ].
-	self addDependent: aLookup label: #resolve:.
 	^ cache at: aLookup ifAbsent: [ 
 		  cache
-			  at: aLookup
-			  put: (self addDependent: TypUnknownType new label: #default);
+			  at: aLookup put: unknown;
 			  at: aLookup put: (resolver resolve: aLookup) ]
 ]

@@ -1,7 +1,7 @@
 Class {
 	#name : #TypNilType,
 	#superclass : #TypNamedType,
-	#category : 'Typer-Core-Type'
+	#category : #'Typer-Core-Type'
 }
 
 { #category : #'instance creation' }
@@ -22,7 +22,7 @@ TypNilType >> asCompatibleWith: aType [
 { #category : #converting }
 TypNilType >> asNonNullable [
 
-	^ self addDependent: TypUnknownType new label: #asNonNullable
+	^ TypUnknownType new
 ]
 
 { #category : #converting }

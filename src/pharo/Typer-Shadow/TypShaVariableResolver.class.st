@@ -16,7 +16,6 @@ TypShaVariableResolver >> canResolve: aLookup [
 TypShaVariableResolver >> resolve: aLookup [
 
 	self assert: [ self canResolve: aLookup ].
-	self addDependent: aLookup label: #resolve:.
 	^ self
 		  resolve: aLookup
 		  reduce:
@@ -24,9 +23,5 @@ TypShaVariableResolver >> resolve: aLookup [
 				   :e | 
 				   e class methods
 					   select: [ :f | f typShaResolvesVariable: aLookup selector ]
-					   thenCollect: [ :f | 
-						   self
-							   addDependent: (e perform: f selector with: aLookup)
-							   label: #shadow
-							   data: f ] ])
+					   thenCollect: [ :f | e perform: f selector with: aLookup ] ])
 ]

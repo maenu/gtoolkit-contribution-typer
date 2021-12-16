@@ -1,7 +1,7 @@
 Class {
 	#name : #TypVariableIndex,
 	#superclass : #TypIndex,
-	#category : 'Typer-Core-Lookup'
+	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #accessing }
@@ -26,11 +26,7 @@ TypVariableIndex class >> instance [
 TypVariableIndex >> lookupReceiver: aType selector: aSymbol [
 
 	| lookup |
-	lookup := self
-		          addDependent:
-		          (TypVariableLookup receiver: aType selector: aSymbol)
-		          label: #lookup.
-	(resolver canResolve: lookup) ifFalse: [ 
-		^ lookup addDependent: TypUnknownType new label: #default ].
+	lookup := TypVariableLookup receiver: aType selector: aSymbol.
+	(resolver canResolve: lookup) ifFalse: [ ^ unknown ].
 	^ resolver resolve: lookup
 ]
