@@ -23,7 +23,7 @@ TypUnknownType >> at: anObject [
 { #category : #accessing }
 TypUnknownType >> copyWithParameters: aCollection [
 
-	^ self copy
+	^ self
 ]
 
 { #category : #testing }

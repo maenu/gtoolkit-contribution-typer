@@ -18,8 +18,7 @@ TypNode class >> invalidateAll [
 { #category : #accessing }
 TypNode >> addIncoming: anEdge [
 
-	self assert: [ anEdge origin includesOutgoing: anEdge ].
-	self assert: [ anEdge target == self ].
+	self assert: [ anEdge origin outgoing includes: anEdge ].
 	incoming add: anEdge
 ]
 
@@ -51,7 +50,7 @@ TypNode >> asElementIn: aMondrian [
 							    aptitude: BrGlamorousToolbarAptitude;
 							    addItem: (BrButton new
 									     aptitude: BrGlamorousButtonWithLabelAptitude;
-									     label: ('dependents {1}' format: { outgoing size });
+									     label: ('out {1}' format: { outgoing size });
 									     action: [ 
 										     | nodes edges |
 										     nodes := outgoing collect: #target.
@@ -67,7 +66,7 @@ TypNode >> asElementIn: aMondrian [
 							    addItem: (BrButton new
 									     aptitude: BrGlamorousButtonWithLabelAptitude;
 									     label:
-										     ('dependencies {1}' format: { incoming size });
+										     ('in {1}' format: { incoming size });
 									     action: [ 
 										     | nodes edges |
 										     nodes := incoming collect: #origin.
@@ -87,18 +86,6 @@ TypNode >> asElementIn: aMondrian [
 		  label: self asString;
 		  action: [ :e | e phlow spawnObject: self ];
 		  yourself
-]
-
-{ #category : #accessing }
-TypNode >> includesIncoming: anEdge [
-
-	^ incoming includes: anEdge
-]
-
-{ #category : #accessing }
-TypNode >> includesOutgoing: anEdge [
-
-	^ outgoing includes: anEdge
 ]
 
 { #category : #accessing }
@@ -138,16 +125,13 @@ TypNode >> removeAllOutgoing [
 { #category : #accessing }
 TypNode >> removeIncoming: anEdge [
 
-	self assert: [ incoming includes: anEdge ].
-	self assert: [ 
-		(anEdge origin includesOutgoing: anEdge) not ].
+	self assert: [ (anEdge origin outgoing includes: anEdge) not ].
 	incoming remove: anEdge
 ]
 
 { #category : #accessing }
 TypNode >> removeOutgoing: anEdge [
 
-	self assert: [ outgoing includes: anEdge ].
 	outgoing remove: anEdge.
 	^ anEdge target
 		  removeIncoming: anEdge;

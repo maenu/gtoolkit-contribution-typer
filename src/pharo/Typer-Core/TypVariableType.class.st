@@ -71,7 +71,7 @@ TypVariableType >> initialize [
 	<typPraVariable: 'scope' as: '{!,TypType}'>
 	<typPraVariable: 'superType' as: 'TypType'>
 	super initialize.
-	superType := ProtoObject typAsType
+	self initializeSuperType:  ProtoObject typAsType
 ]
 
 { #category : #accessing }

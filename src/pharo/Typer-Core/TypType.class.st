@@ -64,7 +64,7 @@ TypType >> asCompatibleWith: aType [
 	aType isNil ifTrue: [ ^ self asNullable ].
 	self >= aType ifTrue: [ ^ self ].
 	self hasSuperType ifTrue: [ ^ self superType asCompatibleWith: aType ].
-	^ TypUnknownType new
+	^ self addOutgoingTarget: TypUnknownType new data: #asCompatibleWith:
 ]
 
 { #category : #converting }
@@ -77,9 +77,10 @@ TypType >> asNonNullable [
 TypType >> asNullable [
 
 	<typPraResult: 'TypType'>
-	^ { 
-		  TypNilType new.
-		  self } typAsType
+	^ self outgoingAt: #asNullable ifAbsentPut: [ 
+		  { 
+			  TypNilType new.
+			  self } typAsType ]
 ]
 
 { #category : #copying }
@@ -93,9 +94,10 @@ TypType >> copyWithSuperType: aType [
 { #category : #copying }
 TypType >> copyWithValue: anObject [
 
-	^ self copy
-		  initializeValue: anObject;
-		  yourself
+	^ self outgoingAt: #copyWithValue: -> anObject ifAbsentPut: [ 
+		  self copy
+			  initializeValue: anObject;
+			  yourself ]
 ]
 
 { #category : #testing }
@@ -138,7 +140,8 @@ TypType >> initialize [
 { #category : #initialization }
 TypType >> initializeSuperType: aType [
 
-	superType := aType
+	superType := aType.
+	self outgoingAt: #superType ensure: aType
 ]
 
 { #category : #initialization }
@@ -231,6 +234,31 @@ TypType >> lookupVariable: aSymbol [
 		selector: aSymbol
 ]
 
+{ #category : #converting }
+TypType >> outgoingAt: anObject ensure: aNode [
+
+	outgoing
+		detect: [ :e | e data = anObject ]
+		ifFound: [ :e | 
+			e target = aNode
+				ifTrue: [ ^ aNode ]
+				ifFalse: [ self removeOutgoing: e ] ]
+		ifNone: [ "noop" ].
+	^ self addOutgoing:
+		  (TypEdge origin: self target: aNode data: anObject)
+]
+
+{ #category : #converting }
+TypType >> outgoingAt: anObject ifAbsentPut: aBlock [
+
+	self flag:
+		'TODO could improve linear scan to constant by maintaining index'.
+	^ outgoing
+		  detect: [ :e | e data = anObject ]
+		  ifFound: #target
+		  ifNone: [ self addOutgoingTarget: aBlock value data: anObject ]
+]
+
 { #category : #printing }
 TypType >> printOn: aStream [
 	self printOn: aStream skipping: IdentitySet new
@@ -245,9 +273,10 @@ TypType >> printOn: aStream skipping: anIdentitySet [
 
 { #category : #accessing }
 TypType >> superType [
+
 	<typPraResult: 'TypType'>
 	self assert: [ self hasSuperType ].
-	^ superType	"typCastAs TypType"
+	^ superType "typCastAs TypType"
 ]
 
 { #category : #accessing }

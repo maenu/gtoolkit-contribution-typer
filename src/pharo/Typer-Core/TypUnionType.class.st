@@ -49,15 +49,19 @@ TypUnionType >> arguments [
 { #category : #converting }
 TypUnionType >> asNonNullable [
 
-	self isNullable ifFalse: [ ^ self ].
-	^ (types reject: #isNil) typAsType
+	^ self outgoingAt: #asNonNullable ifAbsentPut: [ 
+		  self isNullable
+			  ifTrue: [ (types reject: #isNil) typAsType ]
+			  ifFalse: [ self ] ]
 ]
 
 { #category : #converting }
 TypUnionType >> asNullable [
 
-	self isNullable ifTrue: [ ^ self ].
-	^ (types , { TypNilType new }) typAsType
+	^ self outgoingAt: #asNullable ifAbsentPut: [ 
+		  self isNullable
+			  ifTrue: [ self ]
+			  ifFalse: [ (types , { TypNilType new }) typAsType ] ]
 ]
 
 { #category : #polymorphic }
@@ -101,7 +105,7 @@ TypUnionType >> hasSuperType [
 		addAll: unknownTypes.
 	superType_ := remains typAsType.
 	(superType_ isUnion not or: [ superType_ types ~= types ]) ifTrue: [ 
-		superType := superType_.
+		self initializeSuperType: superType_.
 		^ true ].
 	^ false
 ]

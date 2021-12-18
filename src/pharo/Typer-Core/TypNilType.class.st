@@ -22,7 +22,7 @@ TypNilType >> asCompatibleWith: aType [
 { #category : #converting }
 TypNilType >> asNonNullable [
 
-	^ TypUnknownType new
+	^ self outgoingAt: #asNonNullable ifAbsentPut: [ TypUnknownType new ]
 ]
 
 { #category : #converting }

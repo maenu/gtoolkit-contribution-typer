@@ -62,14 +62,14 @@ TypParametricType >> > aType [
 { #category : #converting }
 TypParametricType >> asCompatibleWith: aType [
 
-	| copy |
+	| copy copyParameters |
 	(aType isParametric and: [ 
 		 name = aType name and: [ parameters = aType parameters ] ]) 
 		ifFalse: [ ^ super asCompatibleWith: aType ].
-	copy := self copy.
+	copyParameters := OrderedDictionary new.
 	parameters keysAndValuesDo: [ :n :t | 
-		copy := copy copyWithAt: n put: (t asCompatibleWith: (aType at: n)) ].
-	^ copy
+		copyParameters at: n put: (t asCompatibleWith: (aType at: n)) ].
+	^ self copyWithParameters: copyParameters
 ]
 
 { #category : #accessing }
@@ -132,8 +132,9 @@ TypParametricType >> initializeParameters: anOrderedDictionary [
 	self assert: [ anOrderedDictionary isNotEmpty ].
 	parameters := OrderedDictionary new.
 	anOrderedDictionary keysAndValuesDo: [ :n :t | 
+		self outgoingAt: n ensure: t.
 		parameters at: n put: t ].
-	superType := nil
+	self initializeSuperType: nil
 ]
 
 { #category : #invalidation }
@@ -177,11 +178,12 @@ TypParametricType >> printOn: aStream skipping: anIdentitySet [
 
 { #category : #accessing }
 TypParametricType >> superType [
+
 	superType ifNotNil: [ ^ superType ].
 	superType := super superType.
-	(superType isParametric
-		and: [ parameters keys includesAll: superType parameters keys ])
-		ifTrue: [ superType := superType
-				copyWithParameters: (superType parameters keys collect: [ :e | self at: e ]) ].
+	(superType isParametric and: [ 
+		 parameters keys includesAll: superType parameters keys ]) ifTrue: [ 
+		self initializeSuperType: (superType copyWithParameters:
+				 (superType parameters keys collect: [ :e | self at: e ])) ].
 	^ superType
 ]
