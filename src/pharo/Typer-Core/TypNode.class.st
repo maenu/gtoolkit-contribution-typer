@@ -2,8 +2,8 @@ Class {
 	#name : #TypNode,
 	#superclass : #Object,
 	#instVars : [
-		'dependencies',
-		'dependents'
+		'incoming',
+		'outgoing'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -12,41 +12,32 @@ Class {
 TypNode class >> invalidateAll [
 
 	<script>
-	^ self allSubInstancesDo: #removeAllDependents
+	^ self allSubInstancesDo: #removeAllOutgoing
 ]
 
 { #category : #accessing }
-TypNode >> addDependency: aDependency [
+TypNode >> addIncoming: anEdge [
 
-	self assert: [ aDependency dependency includesDependent: aDependency ].
-	self assert: [ aDependency dependent == self ].
-	dependencies add: aDependency
+	self assert: [ anEdge origin includesOutgoing: anEdge ].
+	self assert: [ anEdge target == self ].
+	incoming add: anEdge
 ]
 
 { #category : #accessing }
-TypNode >> addDependent: aDependency [
+TypNode >> addOutgoing: anEdge [
 
-	self assert: [ aDependency dependency == self ].
-	dependents add: aDependency.
-	^ aDependency dependent
-		  addDependency: aDependency;
+	self assert: [ anEdge origin == self ].
+	outgoing add: anEdge.
+	^ anEdge target
+		  addIncoming: anEdge;
 		  yourself
 ]
 
 { #category : #accessing }
-TypNode >> addDependent: aNode label: aString [
+TypNode >> addOutgoingTarget: aNode data: anObject [
 
-	^ self addDependent: aNode label: aString data: nil
-]
-
-{ #category : #accessing }
-TypNode >> addDependent: aNode label: aString data: anObject [
-
-	^ self addDependent: (TypEdge
-			   dependency: self
-			   dependent: aNode
-			   label: aString
-			   data: anObject)
+	^ self addOutgoing:
+		  (TypEdge origin: self target: aNode data: anObject)
 ]
 
 { #category : #accessing }
@@ -60,33 +51,33 @@ TypNode >> asElementIn: aMondrian [
 							    aptitude: BrGlamorousToolbarAptitude;
 							    addItem: (BrButton new
 									     aptitude: BrGlamorousButtonWithLabelAptitude;
-									     label: ('dependents {1}' format: { dependents size });
+									     label: ('dependents {1}' format: { outgoing size });
 									     action: [ 
 										     | nodes edges |
-										     nodes := dependents collect: #dependent.
-										     edges := dependents copy.
+										     nodes := outgoing collect: #target.
+										     edges := outgoing copy.
 										     aMondrian nodes
 											     stencil: [ :e | e asElementIn: aMondrian ];
 											     with: nodes.
 										     aMondrian edges
 											     stencil: [ :e | e asElementIn: aMondrian ];
-											     connect: edges from: #dependency to: #dependent.
+											     connect: edges from: #origin to: #target.
 										     aMondrian layout custom: TypGtGraphForceBasedLayout new ];
 									     yourself);
 							    addItem: (BrButton new
 									     aptitude: BrGlamorousButtonWithLabelAptitude;
 									     label:
-										     ('dependencies {1}' format: { dependencies size });
+										     ('dependencies {1}' format: { incoming size });
 									     action: [ 
 										     | nodes edges |
-										     nodes := dependencies collect: #dependency.
-										     edges := dependencies copy.
+										     nodes := incoming collect: #origin.
+										     edges := incoming copy.
 										     aMondrian nodes
 											     stencil: [ :e | e asElementIn: aMondrian ];
 											     with: nodes.
 										     aMondrian edges
 											     stencil: [ :e | e asElementIn: aMondrian ];
-											     connect: edges from: #dependency to: #dependent.
+											     connect: edges from: #origin to: #target.
 										     aMondrian layout custom: TypGtGraphForceBasedLayout new ];
 									     yourself);
 							    yourself ])
@@ -99,72 +90,72 @@ TypNode >> asElementIn: aMondrian [
 ]
 
 { #category : #accessing }
-TypNode >> dependencies [
+TypNode >> includesIncoming: anEdge [
 
-	^ dependencies
+	^ incoming includes: anEdge
 ]
 
 { #category : #accessing }
-TypNode >> dependents [
+TypNode >> includesOutgoing: anEdge [
 
-	^ dependents
+	^ outgoing includes: anEdge
 ]
 
 { #category : #accessing }
-TypNode >> includesDependency: aDependency [
+TypNode >> incoming [
 
-	^ dependencies includes: aDependency
-]
-
-{ #category : #accessing }
-TypNode >> includesDependent: aDependency [
-
-	^ dependents includes: aDependency
+	^ incoming
 ]
 
 { #category : #accessing }
 TypNode >> initialize [
 
 	super initialize.
-	dependencies := Set new.
-	dependents := Set new
+	incoming := Set new.
+	outgoing := Set new
+]
+
+{ #category : #accessing }
+TypNode >> outgoing [
+
+	^ outgoing
 ]
 
 { #category : #accessing }
 TypNode >> postCopy [
 
 	super postCopy.
-	dependencies := IdentitySet new.
-	dependents := IdentitySet new
+	incoming := IdentitySet new.
+	outgoing := IdentitySet new
 ]
 
 { #category : #accessing }
-TypNode >> removeAllDependents [
+TypNode >> removeAllOutgoing [
 
-	dependents copy do: [ :e | self removeDependent: e ]
+	outgoing copy do: [ :e | self removeOutgoing: e ]
 ]
 
 { #category : #accessing }
-TypNode >> removeDependency: aDependency [
+TypNode >> removeIncoming: anEdge [
 
-	self assert: [ dependencies includes: aDependency ].
+	self assert: [ incoming includes: anEdge ].
 	self assert: [ 
-		(aDependency dependency includesDependent: aDependency) not ].
-	dependencies remove: aDependency
+		(anEdge origin includesOutgoing: anEdge) not ].
+	incoming remove: anEdge
 ]
 
 { #category : #accessing }
-TypNode >> removeDependent: aDependency [
+TypNode >> removeOutgoing: anEdge [
 
-	self assert: [ dependents includes: aDependency ].
-	dependents remove: aDependency.
-	^ aDependency dependent
-		  removeDependency: aDependency;
+	self assert: [ outgoing includes: anEdge ].
+	outgoing remove: anEdge.
+	^ anEdge target
+		  removeIncoming: anEdge;
 		  yourself
 ]
 
 { #category : #accessing }
-TypNode >> withAllDependencies [
+TypNode >> withAllIncoming [
 
 	| nodes remains |
 	nodes := IdentitySet new.
@@ -173,14 +164,14 @@ TypNode >> withAllDependencies [
 		| current |
 		current := remains pop.
 		nodes add: current.
-		current dependencies
-			reject: [ :e | nodes includes: e dependency ]
-			thenDo: [ :e | remains push: e dependency ] ].
+		current incoming
+			reject: [ :e | nodes includes: e origin ]
+			thenDo: [ :e | remains push: e origin ] ].
 	^ nodes
 ]
 
 { #category : #accessing }
-TypNode >> withAllDependents [
+TypNode >> withAllOutgoing [
 
 	| nodes remains |
 	nodes := IdentitySet new.
@@ -189,8 +180,8 @@ TypNode >> withAllDependents [
 		| current |
 		current := remains pop.
 		nodes add: current.
-		current dependents
-			reject: [ :e | nodes includes: e dependent ]
-			thenDo: [ :e | remains push: e dependent ] ].
+		current outgoing
+			reject: [ :e | nodes includes: e target ]
+			thenDo: [ :e | remains push: e target ] ].
 	^ nodes
 ]

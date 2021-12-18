@@ -2,23 +2,27 @@ Class {
 	#name : #TypEdge,
 	#superclass : #Object,
 	#instVars : [
-		'dependency',
-		'dependent',
-		'label',
-		'data'
+		'data',
+		'origin',
+		'target'
 	],
 	#category : #'Typer-Core-Type'
 }
 
 { #category : #'instance creation' }
-TypEdge class >> dependency: aType dependent: anotherType label: aString data: anObject [
+TypEdge class >> origin: aNode target: anotherNode data: anObject [
 
 	^ self new
-		  initializeDependency: aType
-		  dependent: anotherType
-		  label: aString
-		  data: anObject;
+		  initializeOrigin: aNode target: anotherNode data: anObject;
 		  yourself
+]
+
+{ #category : #accessing }
+TypEdge >> = anObject [
+
+	super = anObject ifFalse: [ ^ false ].
+	^ origin = anObject origin and: [ 
+		  target = anObject target and: [ data = anObject data ] ]
 ]
 
 { #category : #accessing }
@@ -41,7 +45,7 @@ TypEdge >> asElementIn: aMondrian [
 					   c frame vertical alignCenter ];
 				   beSmallSize;
 				   aptitude: BrGlamorousLabelAptitude;
-				   text: label asRopedText;
+				   text: data asString asRopedText;
 				   yourself);
 		  zIndex: -1;
 		  clipChildren: false;
@@ -62,34 +66,33 @@ TypEdge >> data [
 ]
 
 { #category : #accessing }
-TypEdge >> dependency [
+TypEdge >> hash [
 
-	^ dependency
-]
-
-{ #category : #accessing }
-TypEdge >> dependent [
-
-	^ dependent
+	^ ((self  class  hash bitXor: origin hash)  bitXor: target hash)   bitXor: data hash
 ]
 
 { #category : #initialization }
-TypEdge >> initializeDependency: aType dependent: anotherType label: aString data: anObject [
+TypEdge >> initializeOrigin: aNode target: anotherNode data: anObject [
 
-	dependency := aType.
-	dependent := anotherType.
-	label := aString.
+	origin := aNode.
+	target := anotherNode.
 	data := anObject
 ]
 
 { #category : #accessing }
-TypEdge >> label [
+TypEdge >> origin [
 
-	^ label
+	^ origin
 ]
 
 { #category : #accessing }
 TypEdge >> printOn: aStream [
 
-	aStream nextPutAll: label
+	data printOn: aStream
+]
+
+{ #category : #accessing }
+TypEdge >> target [
+
+	^ target
 ]

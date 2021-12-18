@@ -11,6 +11,7 @@ TypTyping >> invalidate [
 	| probes |
 	probes := OrderedCollection new.
 	probes add: 'pre-reset' -> self memoryProbe.
+	ASTCache reset.
 	TypNode invalidateAll.
 	TypIndex invalidateAll.
 	TypResolver invalidateAll.
@@ -69,6 +70,25 @@ TypTyping >> monitorMemorySomeMethods [
 	methods := IdentitySet new.
 	[ methods size < 30 ] whileTrue: [ methods add: all atRandom ].
 	^ self monitorMemoryMethods: methods timeout: 30 seconds
+]
+
+{ #category : #accessing }
+TypTyping >> parseAllAsts [
+
+	<gtExample>
+	| probes asts |
+	probes := OrderedCollection new.
+	ASTCache reset.
+	Smalltalk garbageCollect.
+	probes add: self memoryProbe.
+	asts := CompiledMethod allInstances collect: [ :e | 
+		        [ e ast ]
+			        on: Error
+			        do: #yourself ].
+	Smalltalk garbageCollect.
+	probes add: self memoryProbe.
+	probes add: asts.
+	^ probes
 ]
 
 { #category : #accessing }
@@ -133,11 +153,10 @@ TypTyping >> typeSomeMethods [
 
 	<gtExample>
 	| all methods |
-	TypIndex invalidateAll.
-	TypInfAstContext invalidate.
-	TypInfImplementorsCache invalidate.
 	all := CompiledMethod allInstances.
 	methods := IdentitySet new.
 	[ methods size < 30 ] whileTrue: [ methods add: all atRandom ].
-	^ methods asOrderedCollection collect: [ :e | self typeMethod: e timeout: 30 seconds ]
+	all := nil.
+	^ methods asOrderedCollection collect: [ :e | 
+		  self typeMethod: e timeout: 30 seconds ]
 ]

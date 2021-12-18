@@ -21,7 +21,7 @@ TypResolver >> canResolve: aLookup [
 
 { #category : #accessing }
 TypResolver >> invalidate [
-	self removeAllDependents
+	self removeAllOutgoing
 ]
 
 { #category : #invalidation }

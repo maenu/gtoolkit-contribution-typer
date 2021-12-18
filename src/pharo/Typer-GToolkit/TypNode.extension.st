@@ -11,18 +11,18 @@ TypNode >> gtGraphOn: aView [
 			  | nodes edges |
 			  nodes := IdentitySet new.
 			  edges := IdentitySet new.
-			  (self withAllDependencies asOrderedCollection takeFirst: 32) do: [ :e | 
+			  (self withAllIncoming asOrderedCollection takeFirst: 32) do: [ :e | 
 					  nodes add: e.
-					  edges addAll: e dependents ].
-			  (self withAllDependents asOrderedCollection takeFirst: 32) do: [ :e | 
+					  edges addAll: e outgoing ].
+			  (self withAllOutgoing asOrderedCollection takeFirst: 32) do: [ :e | 
 					  nodes add: e.
-					  edges addAll: e dependencies ].
+					  edges addAll: e incoming ].
 			  m nodes
 				  stencil: [ :e | e asElementIn: m ];
 				  with: nodes.
 			  m edges
 				  stencil: [ :e | e asElementIn: m ];
-				  connect: edges from: #dependency to: #dependent.
+				  connect: edges from: #origin to: #target.
 			  m layout custom: TypGtGraphForceBasedLayout new.
 			  m ]
 ]
