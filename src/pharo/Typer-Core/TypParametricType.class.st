@@ -66,9 +66,9 @@ TypParametricType >> asCompatibleWith: aType [
 	(aType isParametric and: [ 
 		 name = aType name and: [ parameters = aType parameters ] ]) 
 		ifFalse: [ ^ super asCompatibleWith: aType ].
-	copyParameters := OrderedDictionary new.
+	copyParameters := OrderedCollection new.
 	parameters keysAndValuesDo: [ :n :t | 
-		copyParameters at: n put: (t asCompatibleWith: (aType at: n)) ].
+		copyParameters add: (t asCompatibleWith: (aType at: n)) ].
 	^ self copyWithParameters: copyParameters
 ]
 
