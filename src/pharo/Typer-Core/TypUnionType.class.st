@@ -131,7 +131,11 @@ TypUnionType >> initializeTypes: anObject [
 	<typPraArguments: 'Set<TypType>'>
 	self assert: [ anObject isKindOf: Set ].
 	self assert: [ anObject size > 1 ].
-	types := anObject
+	anObject = types ifTrue: [ ^ self ].
+	types ifNotNil: [ self outgoingRemoveAt: #types ].
+	types := anObject.
+	types ifNotNil: [ 
+		types do: [ :e | self addOutgoingTarget: e data: #types ] ]
 ]
 
 { #category : #invalidation }

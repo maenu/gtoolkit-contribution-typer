@@ -140,8 +140,10 @@ TypType >> initialize [
 { #category : #initialization }
 TypType >> initializeSuperType: aType [
 
+	aType = superType ifTrue: [ ^ self ].
+	superType ifNotNil: [ self outgoingRemoveAt: #superType ].
 	superType := aType.
-	self outgoingAt: #superType ensure: aType
+	superType ifNotNil: [ self outgoingAt: #superType ensure: superType ]
 ]
 
 { #category : #initialization }
@@ -240,7 +242,7 @@ TypType >> outgoingAt: anObject ensure: aNode [
 	outgoing
 		detect: [ :e | e data = anObject ]
 		ifFound: [ :e | 
-			e target = aNode
+			e target == aNode
 				ifTrue: [ ^ aNode ]
 				ifFalse: [ self removeOutgoing: e ] ]
 		ifNone: [ "noop" ].
@@ -257,6 +259,14 @@ TypType >> outgoingAt: anObject ifAbsentPut: aBlock [
 		  detect: [ :e | e data = anObject ]
 		  ifFound: #target
 		  ifNone: [ self addOutgoingTarget: aBlock value data: anObject ]
+]
+
+{ #category : #accessing }
+TypType >> outgoingRemoveAt: anObject [
+
+	outgoing
+		select: [ :e | e data = anObject ]
+		thenDo: [ :e | self removeOutgoing: e ]
 ]
 
 { #category : #printing }

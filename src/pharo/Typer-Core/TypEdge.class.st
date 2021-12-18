@@ -20,9 +20,10 @@ TypEdge class >> origin: aNode target: anotherNode data: anObject [
 { #category : #accessing }
 TypEdge >> = anObject [
 
-	super = anObject ifFalse: [ ^ false ].
-	^ origin = anObject origin and: [ 
-		  target = anObject target and: [ data = anObject data ] ]
+	self == anObject ifTrue: [ ^ true ].
+	self class == anObject class ifFalse: [ ^ false ].
+	^ origin == anObject origin and: [ 
+		  target == anObject target and: [ data = anObject data ] ]
 ]
 
 { #category : #accessing }
@@ -68,7 +69,8 @@ TypEdge >> data [
 { #category : #accessing }
 TypEdge >> hash [
 
-	^ ((self  class  hash bitXor: origin hash)  bitXor: target hash)   bitXor: data hash
+	^ ((self class hash bitXor: origin identityHash) bitXor:
+		   target identityHash) bitXor: data hash
 ]
 
 { #category : #initialization }
