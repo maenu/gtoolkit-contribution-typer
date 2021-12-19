@@ -277,9 +277,11 @@ TypType >> printOn: aStream [
 
 { #category : #printing }
 TypType >> printOn: aStream skipping: anIdentitySet [
-	"Respects skipping set to not print recursive type infinitely."
 
-	self subclassResponsibility
+	(anIdentitySet includes: self) ifTrue: [ 
+		aStream << '.'.
+		^ self ].
+	self hasValue ifTrue: [ value printOn: aStream ]
 ]
 
 { #category : #accessing }

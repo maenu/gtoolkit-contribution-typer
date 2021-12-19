@@ -174,10 +174,13 @@ TypNamedType >> parameters [
 
 { #category : #printing }
 TypNamedType >> printOn: aStream skipping: anIdentitySet [
-	(anIdentitySet includes: self)
-		ifTrue: [ aStream << '.'.
-			^ self ].
-	aStream << name asString
+
+	(anIdentitySet includes: self) ifTrue: [ 
+		aStream << '.'.
+		^ self ].
+	self hasValue
+		ifTrue: [ value printOn: aStream ]
+		ifFalse: [ aStream << name asString ]
 ]
 
 { #category : #polymorphic }

@@ -35,16 +35,15 @@ TypUnionType >> > aType [
 { #category : #polymorphic }
 TypUnionType >> arguments [
 
-	^ self outgoingAt: #arguments ifAbsentPut: [ 
-		  | arguments n |
-		  arguments := types collect: #arguments.
-		  n := (arguments collect: #size) max.
-		  (1 to: n) collect: [ :i | 
-			  | types_ |
-			  types_ := Set new.
-			  arguments do: [ :e | 
-				  i <= e size ifTrue: [ types_ add: (e at: i) ] ].
-			  types_ typAsType ] ]
+	| arguments n |
+	arguments := types collect: #arguments.
+	n := (arguments collect: #size) max.
+	^ (1 to: n) collect: [ :i | 
+		  | types_ |
+		  types_ := Set new.
+		  arguments do: [ :e | 
+			  i <= e size ifTrue: [ types_ add: (e at: i) ] ].
+		  types_ typAsType ]
 ]
 
 { #category : #converting }

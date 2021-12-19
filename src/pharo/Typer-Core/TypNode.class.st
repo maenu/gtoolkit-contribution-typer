@@ -12,7 +12,7 @@ Class {
 TypNode class >> invalidateAll [
 
 	<script>
-	^ self allSubInstancesDo: #removeAllOutgoing
+	^ self allSubInstancesDo: #removeAllEdges
 ]
 
 { #category : #accessing }
@@ -114,6 +114,13 @@ TypNode >> postCopy [
 	super postCopy.
 	incoming := IdentitySet new.
 	outgoing := IdentitySet new
+]
+
+{ #category : #accessing }
+TypNode >> removeAllEdges [
+
+	incoming removeAll.
+	outgoing removeAll
 ]
 
 { #category : #accessing }
