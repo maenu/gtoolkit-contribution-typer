@@ -142,11 +142,14 @@ TypFunctionType >> copyWithResult: aType [
 { #category : #copying }
 TypFunctionType >> copyWithSignalsAlways: aBooleanOrNil [
 
-	^ self copy
-		  initializeArgumentsSize: argumentsSize
-		  argumentsOptional: argumentsOptional
-		  signalsAlways: aBooleanOrNil;
-		  yourself
+	^ self
+		  outgoingAt: #copyWithSignalsAlways: -> aBooleanOrNil
+		  ifAbsentPut: [ 
+			  self copy
+				  initializeArgumentsSize: argumentsSize
+				  argumentsOptional: argumentsOptional
+				  signalsAlways: aBooleanOrNil;
+				  yourself ]
 ]
 
 { #category : #comparing }

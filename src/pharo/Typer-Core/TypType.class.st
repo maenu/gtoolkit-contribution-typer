@@ -86,9 +86,10 @@ TypType >> asNullable [
 { #category : #copying }
 TypType >> copyWithSuperType: aType [
 
-	^ self copy
-		  initializeSuperType: aType;
-		  yourself
+	^ self outgoingAt: #copyWithSuperType: -> aType ifAbsentPut: [ 
+		  self copy
+			  initializeSuperType: aType;
+			  yourself ]
 ]
 
 { #category : #copying }

@@ -55,7 +55,12 @@ TypVariableType >> classDescription [
 { #category : #polymorphic }
 TypVariableType >> copyWithAt: aString put: aType [
 
-	^ self copyWithSuperType: (superType copyWithAt: aString put: aType)
+	^ self
+		  outgoingAt: #copyWithAt:put: -> { 
+				  aString.
+				  aType }
+		  ifAbsentPut: [ 
+		  self copyWithSuperType: (superType copyWithAt: aString put: aType) ]
 ]
 
 { #category : #comparing }

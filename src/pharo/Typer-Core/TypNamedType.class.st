@@ -72,19 +72,27 @@ TypNamedType >> classDescription [
 { #category : #polymorphic }
 TypNamedType >> copyWithAt: aString put: aType [
 
-	^ self copyWithSuperType:
-		  (self superType copyWithAt: aString put: aType)
+	^ self
+		  outgoingAt: #copyWithAt:put: -> { 
+				  aString.
+				  aType }
+		  ifAbsentPut: [ 
+			  self copyWithSuperType:
+				  (self superType copyWithAt: aString put: aType) ]
 ]
 
 { #category : #polymorphic }
 TypNamedType >> copyWithParameters: aCollection [
 
-	| copy |
-	copy := self copy.
-	copy hasSuperType ifTrue: [ 
-		copy initializeSuperType:
-			(copy superType copyWithParameters: aCollection) ].
-	^ copy
+	^ self
+		  outgoingAt: #copyWithParameters: -> aCollection
+		  ifAbsentPut: [ 
+			  | copy |
+			  copy := self copy.
+			  copy hasSuperType ifTrue: [ 
+				  copy initializeSuperType:
+					  (copy superType copyWithParameters: aCollection) ].
+			  copy ]
 ]
 
 { #category : #testing }

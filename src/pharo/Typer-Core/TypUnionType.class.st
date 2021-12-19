@@ -35,15 +35,16 @@ TypUnionType >> > aType [
 { #category : #polymorphic }
 TypUnionType >> arguments [
 
-	| arguments n |
-	arguments := types collect: #arguments.
-	n := (arguments collect: #size) max.
-	^ (1 to: n) collect: [ :i | 
-		  | types_ |
-		  types_ := Set new.
-		  arguments do: [ :e | 
-			  i <= e size ifTrue: [ types_ add: (e at: i) ] ].
-		  types_ typAsType ]
+	^ self outgoingAt: #arguments ifAbsentPut: [ 
+		  | arguments n |
+		  arguments := types collect: #arguments.
+		  n := (arguments collect: #size) max.
+		  (1 to: n) collect: [ :i | 
+			  | types_ |
+			  types_ := Set new.
+			  arguments do: [ :e | 
+				  i <= e size ifTrue: [ types_ add: (e at: i) ] ].
+			  types_ typAsType ] ]
 ]
 
 { #category : #converting }
@@ -67,14 +68,19 @@ TypUnionType >> asNullable [
 { #category : #polymorphic }
 TypUnionType >> at: aString [
 
-	^ (types collect: [ :e | e at: aString ]) typAsType
+	^ self
+		  outgoingAt: #at: -> aString
+		  ifAbsentPut: [ (types collect: [ :e | e at: aString ]) typAsType ]
 ]
 
 { #category : #accessing }
 TypUnionType >> copyWithParameters: aCollection [
 
-	^ (self types collect: [ :e | e copyWithParameters: aCollection ])
-		  typAsType
+	^ self
+		  outgoingAt: #copyWithParameters: -> aCollection
+		  ifAbsentPut: [ 
+			  (types collect: [ :e | e copyWithParameters: aCollection ])
+				  typAsType ]
 ]
 
 { #category : #testing }
@@ -162,12 +168,23 @@ TypUnionType >> isUnion [
 
 { #category : #accessing }
 TypUnionType >> lookupMethod: aSymbol arguments: aCollection [
-	^ (types collect: [ :e | e lookupMethod: aSymbol arguments: aCollection ]) typAsType
+
+	^ self
+		  outgoingAt: #lookupMethod:arguments: -> { 
+				  aSymbol.
+				  aCollection }
+		  ifAbsentPut: [ 
+			  (types collect: [ :e | 
+				   e lookupMethod: aSymbol arguments: aCollection ]) typAsType ]
 ]
 
 { #category : #accessing }
 TypUnionType >> lookupVariable: aSymbol [
-	^ (types collect: [ :e | e lookupVariable: aSymbol ]) typAsType
+
+	^ self
+		  outgoingAt: #lookupVariable: -> aSymbol
+		  ifAbsentPut: [ 
+		  (types collect: [ :e | e lookupVariable: aSymbol ]) typAsType ]
 ]
 
 { #category : #accessing }
@@ -220,7 +237,9 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 { #category : #polymorphic }
 TypUnionType >> result [
 
-	^ (types collect: #result) typAsType
+	^ self
+		  outgoingAt: #result
+		  ifAbsentPut: [ (types collect: #result) typAsType ]
 ]
 
 { #category : #accessing }

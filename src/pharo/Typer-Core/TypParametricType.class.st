@@ -87,24 +87,33 @@ TypParametricType >> at: aString ifAbsent: aBlock [
 { #category : #copying }
 TypParametricType >> copyWithAt: aString put: aType [
 
-	| copyParameters |
-	copyParameters := OrderedCollection new.
-	parameters keysAndValuesDo: [ :n :t | 
-		copyParameters add: (n = aString
-				 ifTrue: [ aType ]
-				 ifFalse: [ t ]) ].
-	^ self copyWithParameters: copyParameters
+	^ self
+		  outgoingAt: #copyWithAt:put: -> { 
+				  aString.
+				  aType }
+		  ifAbsentPut: [ 
+			  | copyParameters |
+			  copyParameters := OrderedCollection new.
+			  parameters keysAndValuesDo: [ :n :t | 
+				  copyParameters add: (n = aString
+						   ifTrue: [ aType ]
+						   ifFalse: [ t ]) ].
+			  self copyWithParameters: copyParameters ]
 ]
 
 { #category : #copying }
 TypParametricType >> copyWithParameters: aCollection [
+
 	<typPraArguments: 'SequenceableCollection<TypType>'>
-	^ self copy
-		initializeParameters:
-			((1 to: (aCollection size min: parameters size))
-				collect: [ :i | (parameters keys at: i) -> (aCollection at: i) ])
-				asOrderedDictionary;
-		yourself
+	^ self
+		  outgoingAt: #copyWithParameters: -> aCollection
+		  ifAbsentPut: [ 
+			  self copy
+				  initializeParameters:
+					  ((1 to: (aCollection size min: parameters size)) collect: [ :i | 
+							   (parameters keys at: i) -> (aCollection at: i) ])
+						  asOrderedDictionary;
+				  yourself ]
 ]
 
 { #category : #comparing }
