@@ -10,10 +10,12 @@ Class {
 
 { #category : #'instance creation' }
 TypUnionType class >> types: aSet [
+
 	<typPraArguments: 'Set<TypType>'>
-	^ self new
-		initializeTypes: aSet;
-		yourself
+	^ index at: thisContext arguments ifAbsentPut: [ 
+		  self new
+			  initializeTypes: aSet;
+			  yourself ]
 ]
 
 { #category : #comparing }

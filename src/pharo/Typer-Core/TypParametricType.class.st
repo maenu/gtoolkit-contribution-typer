@@ -14,10 +14,12 @@ TypParametricType class >> classDescription: aClassDescription [
 
 { #category : #accessing }
 TypParametricType class >> classDescription: aClassDescription parameters: anOrderedDictionary [
-	^ self new
-		initializeClassDescription: aClassDescription;
-		initializeParameters: anOrderedDictionary;
-		yourself
+
+	^ index at: thisContext arguments ifAbsentPut: [ 
+		  self new
+			  initializeClassDescription: aClassDescription;
+			  initializeParameters: anOrderedDictionary;
+			  yourself ]
 ]
 
 { #category : #'instance creation' }
@@ -27,10 +29,12 @@ TypParametricType class >> named: aString [
 
 { #category : #accessing }
 TypParametricType class >> named: aString parameters: anOrderedDictionary [
-	^ self new
-		initializeName: aString;
-		initializeParameters: anOrderedDictionary;
-		yourself
+
+	^ index at: thisContext arguments ifAbsentPut: [ 
+		  self new
+			  initializeName: aString;
+			  initializeParameters: anOrderedDictionary;
+			  yourself ]
 ]
 
 { #category : #accessing }

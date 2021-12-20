@@ -4,8 +4,23 @@ Class {
 	#instVars : [
 		'superType'
 	],
+	#classInstVars : [
+		'index'
+	],
 	#category : #'Typer-Core-Type'
 }
+
+{ #category : #initialization }
+TypType class >> at: aKey ifAbsentPut: aBlock [
+
+	^ index at: aKey ifAbsentPut: aBlock
+]
+
+{ #category : #initialization }
+TypType class >> initialize [
+
+	index := WeakValueDictionary new
+]
 
 { #category : #comparing }
 TypType >> < aType [

@@ -11,18 +11,22 @@ Class {
 
 { #category : #'instance creation' }
 TypNamedType class >> classDescription: aClassDescription [
+
 	<typPraArguments: 'ClassDescription'>
-	^ self new
-		initializeClassDescription: aClassDescription;
-		yourself
+	^ index at: aClassDescription ifAbsentPut: [ 
+		  self new
+			  initializeClassDescription: aClassDescription;
+			  yourself ]
 ]
 
 { #category : #'instance creation' }
 TypNamedType class >> named: aString [
+
 	<typPraArguments: 'String'>
-	^ self new
-		initializeName: aString;
-		yourself
+	^ index at: aString ifAbsentPut: [ 
+		  self new
+			  initializeName: aString;
+			  yourself ]
 ]
 
 { #category : #accessing }

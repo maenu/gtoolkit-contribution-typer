@@ -16,18 +16,20 @@ TypFunctionType class >> classDescription: aClassDescription parameters: aSequen
 
 { #category : #accessing }
 TypFunctionType class >> classDescription: aClassDescription result: aType arguments: anOrderedCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean [
-	| parameters |
-	parameters := OrderedDictionary new.
-	parameters at: '@0' put: aType.
-	anOrderedCollection
-		withIndexDo: [ :e :i | parameters at: '@' , i asString put: e ].
-	^ self new
-		initializeClassDescription: aClassDescription;
-		initializeParameters: parameters;
-		initializeArgumentsSize: parameters size - 1
-			argumentsOptional: aBoolean
-			signalsAlways: anotherBoolean;
-		yourself
+
+	^ index at: thisContext arguments ifAbsentPut: [ 
+		  | parameters |
+		  parameters := OrderedDictionary new.
+		  parameters at: '@0' put: aType.
+		  anOrderedCollection withIndexDo: [ :e :i | 
+			  parameters at: '@' , i asString put: e ].
+		  self new
+			  initializeClassDescription: aClassDescription;
+			  initializeParameters: parameters;
+			  initializeArgumentsSize: parameters size - 1
+			  argumentsOptional: aBoolean
+			  signalsAlways: anotherBoolean;
+			  yourself ]
 ]
 
 { #category : #accessing }
@@ -37,18 +39,20 @@ TypFunctionType class >> named: aString parameters: aSequenceableCollection [
 
 { #category : #accessing }
 TypFunctionType class >> named: aString result: aType arguments: anOrderedCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean [
-	| parameters |
-	parameters := OrderedDictionary new.
-	parameters at: '@0' put: aType.
-	anOrderedCollection
-		withIndexDo: [ :e :i | parameters at: '@' , i asString put: e ].
-	^ self new
-		initializeName: aString;
-		initializeParameters: parameters;
-		initializeArgumentsSize: parameters size - 1
-			argumentsOptional: aBoolean
-			signalsAlways: anotherBoolean;
-		yourself
+
+	^ index at: thisContext arguments ifAbsentPut: [ 
+		  | parameters |
+		  parameters := OrderedDictionary new.
+		  parameters at: '@0' put: aType.
+		  anOrderedCollection withIndexDo: [ :e :i | 
+			  parameters at: '@' , i asString put: e ].
+		  self new
+			  initializeName: aString;
+			  initializeParameters: parameters;
+			  initializeArgumentsSize: parameters size - 1
+			  argumentsOptional: aBoolean
+			  signalsAlways: anotherBoolean;
+			  yourself ]
 ]
 
 { #category : #accessing }

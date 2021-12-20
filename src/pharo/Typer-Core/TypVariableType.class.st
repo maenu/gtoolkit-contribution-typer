@@ -1,6 +1,6 @@
 Class {
 	#name : #TypVariableType,
-	#superclass : #TypType,
+	#superclass : #TypSuperType,
 	#instVars : [
 		'name'
 	],
@@ -9,19 +9,23 @@ Class {
 
 { #category : #'instance creation' }
 TypVariableType class >> named: aString [
+
 	<typPraArguments: 'String'>
-	^ self new
-		initializeName: aString;
-		yourself
+	^ index at: thisContext arguments ifAbsentPut: [ 
+		  self new
+			  initializeName: aString;
+			  yourself ]
 ]
 
 { #category : #'instance creation' }
 TypVariableType class >> named: aString superType: aType [
 
 	<typPraArguments: 'String,TypType'>
-	^ (self named: aString)
-		  initializeSuperType: aType;
-		  yourself
+	^ index at: thisContext arguments ifAbsentPut: [ 
+		  self new
+			  initializeName: aString;
+			  initializeSuperType: aType;
+			  yourself ]
 ]
 
 { #category : #comparing }
@@ -32,45 +36,10 @@ TypVariableType >> = anObject [
 ]
 
 { #category : #comparing }
-TypVariableType >> > aType [
-	^ superType >= aType
-]
-
-{ #category : #polymorphic }
-TypVariableType >> arguments [
-
-	^ superType arguments
-]
-
-{ #category : #polymorphic }
-TypVariableType >> at: aString [
-	^ superType at: aString
-]
-
-{ #category : #polymorphic }
-TypVariableType >> copyWithAt: aString put: aType [
-
-	^ self
-		  outgoingAt: #copyWithAt:put: -> { 
-				  aString.
-				  aType }
-		  ifAbsentPut: [ 
-		  self copyWithSuperType: (superType copyWithAt: aString put: aType) ]
-]
-
-{ #category : #comparing }
 TypVariableType >> hashSkipping: anIdentitySet [
 
 	(anIdentitySet includes: self) ifTrue: [ ^ 43 ].
 	^ (43 bitXor: name hash) bitXor: (super hashSkipping: anIdentitySet)
-]
-
-{ #category : #initialization }
-TypVariableType >> initialize [
-	<typPraVariable: 'name' as: 'String'>
-	<typPraVariable: 'superType' as: 'TypType'>
-	super initialize.
-	self initializeSuperType:  ProtoObject typAsType
 ]
 
 { #category : #accessing }
@@ -79,18 +48,6 @@ TypVariableType >> initializeName: aString [
 	self assert: [ aString size > 1 ].
 	self assert: [ aString first = $@ ].
 	name := aString
-]
-
-{ #category : #invalidation }
-TypVariableType >> isAffectedByClassChange: aClassAnnouncement [
-
-	^ superType isAffectedByClassChange: aClassAnnouncement
-]
-
-{ #category : #invalidation }
-TypVariableType >> isAffectedByMethodChange: aMethodAnnouncement [
-
-	^ superType isAffectedByMethodChange: aMethodAnnouncement
 ]
 
 { #category : #testing }
@@ -109,12 +66,7 @@ TypVariableType >> printOn: aStream skipping: anIdentitySet [
 		ifTrue: [ aStream << '.'.
 			^ self ].
 	aStream nextPutAll: name asString.
-	superType = ProtoObject typAsType
-		ifFalse: [ aStream nextPutAll: '<='.
+	superType hasSuperType
+		ifTrue: [ aStream nextPutAll: '<='.
 			superType printOn: aStream skipping: anIdentitySet , {self} ]
-]
-
-{ #category : #polymorphic }
-TypVariableType >> result [
-	^ superType result
 ]

@@ -1,6 +1,6 @@
 Class {
 	#name : #TypValueType,
-	#superclass : #TypType,
+	#superclass : #TypSuperType,
 	#instVars : [
 		'value'
 	],
@@ -10,10 +10,11 @@ Class {
 { #category : #accessing }
 TypValueType class >> value: anObject superType: aType [
 
-	^ self new
-		  initializeValue: anObject;
-		  initializeSuperType: aType;
-		  yourself
+	^ index at: thisContext arguments ifAbsentPut: [ 
+		  self new
+			  initializeValue: anObject;
+			  initializeSuperType: aType;
+			  yourself ]
 ]
 
 { #category : #accessing }
@@ -29,15 +30,6 @@ TypValueType >> = anObject [
 TypValueType >> hash [
 
 	^ super hash bitXor: value hash
-]
-
-{ #category : #accessing }
-TypValueType >> initialize [
-
-	<typPraVariable: 'value' as: '{!,Object}'>
-	<typPraVariable: 'superType' as: 'TypType'>
-	super initialize.
-	self initializeSuperType: ProtoObject typAsType
 ]
 
 { #category : #accessing }
@@ -59,12 +51,6 @@ TypValueType >> printOn: aStream skipping: anIdentitySet [
 		aStream << '.'.
 		^ self ].
 	value printOn: aStream
-]
-
-{ #category : #accessing }
-TypValueType >> result [
-
-	^ superType result
 ]
 
 { #category : #accessing }
