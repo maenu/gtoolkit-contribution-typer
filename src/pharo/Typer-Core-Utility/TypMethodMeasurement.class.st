@@ -109,3 +109,9 @@ TypMethodMeasurement >> printOn: aStream [
 		^ error printOn: aStream ].
 	self isTimeout ifTrue: [ ^ aStream nextPutAll: 'timeout' ]
 ]
+
+{ #category : #accessing }
+TypMethodMeasurement >> terminate [
+
+	process ifNotNil: #terminate
+]

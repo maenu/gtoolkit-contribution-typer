@@ -56,7 +56,7 @@ TypShaPhaProtoObject >> mIfNilIfNotNil: aLookup [
 	| a1 a2 r2 |
 	a1 := aLookup arguments at: 1.
 	a2 := aLookup arguments at: 2.
-	r2 := (a2 hasValue and: [ a2 value isString ])
+	r2 := (a2 isValue and: [ a2 value isString ])
 		ifTrue: [ (aLookup root receiver asNonNullable
 				lookupMethod: a2 value asSymbol
 				arguments: {aLookup root receiver asNonNullable}) result ]
@@ -80,7 +80,7 @@ TypShaPhaProtoObject >> mIfNotNil: aLookup [
 	<typShaMethod: 'ifNotNil:'>
 	| a r |
 	a := aLookup arguments at: 1.
-	r := (a hasValue and: [ a value isString ])
+	r := (a isValue and: [ a value isString ])
 		ifTrue: [ (aLookup root receiver asNonNullable
 				lookupMethod: a value asSymbol
 				arguments: {aLookup root receiver}) result ]

@@ -3,5 +3,5 @@ Extension { #name : #String }
 { #category : #'*Typer-Inference' }
 String >> typInfType [
 
-	^ self class typAsType copyWithValue: self
+	^ TypValueType value: self superType: self class typAsType
 ]

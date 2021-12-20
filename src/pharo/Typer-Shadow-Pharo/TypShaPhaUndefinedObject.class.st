@@ -23,7 +23,7 @@ TypShaPhaUndefinedObject >> mIfNotNil: aLookup [
 	<typShaMethod: 'ifNotNil:'>
 	| a r |
 	a := aLookup arguments at: 1.
-	r := (a hasValue and: [ a value isString ])
+	r := (a isValue and: [ a value isString ])
 		     ifTrue: [ 
 			     (aLookup root receiver
 				      lookupMethod: a value asSymbol

@@ -105,7 +105,7 @@ TypShaPhaObject >> mPerform: aLookup [
 	<typShaMethod: 'perform:'>
 	| a r |
 	a := aLookup arguments at: 1.
-	r := (a hasValue and: [ a value isSymbol ])
+	r := (a isValue and: [ a value isSymbol ])
 		ifTrue:
 			[ (aLookup root receiver lookupMethod: a value arguments: #()) result ]
 		ifFalse: [ TypUnknownType new ].
@@ -119,7 +119,7 @@ TypShaPhaObject >> mPerformWithEnoughArguments: aLookup [
 	<typShaMethod: 'perform:withEnoughArguments:'>
 	| a r |
 	a := aLookup arguments at: 1.
-	r := (a hasValue and: [ a value isSymbol ])
+	r := (a isValue and: [ a value isSymbol ])
 		ifTrue: [ (aLookup root receiver
 				lookupMethod: a value
 				arguments: aLookup arguments) result ]

@@ -54,7 +54,7 @@ TypShaPhaBlockClosure >> mOnDo: aLookup [
 	<typShaMethod: 'on:do:'>
 	| a b |
 	a := aLookup arguments at: 1.
-	b := (a hasValue and: [ a value isClass ])
+	b := (a isValue and: [ a value isClass ])
 		ifTrue: [ a value instanceSide typAsType ]
 		ifFalse: [ Exception typAsType ].
 	^ CompiledMethod

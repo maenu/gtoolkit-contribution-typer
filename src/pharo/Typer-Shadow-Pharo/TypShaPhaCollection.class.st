@@ -161,7 +161,7 @@ TypShaPhaCollection >> mCollect: aLookup [
 	<typShaMethod: 'collect:'>
 	| a r |
 	a := aLookup arguments at: 1.
-	r := (a hasValue and: [ a value isString ])
+	r := (a isValue and: [ a value isString ])
 		ifTrue: [ ((aLookup root receiver at: '@A')
 				lookupMethod: a value asSymbol
 				arguments: #()) result ]
@@ -226,7 +226,7 @@ TypShaPhaCollection >> mDetectIfFoundIfNone: aLookup [
 	<typShaMethod: 'detect:ifFound:ifNone:'>
 	| a r |
 	a := aLookup arguments at: 2.
-	r := (a hasValue and: [ a value isString ])
+	r := (a isValue and: [ a value isString ])
 		ifTrue: [ ((aLookup receiver at: '@A')
 				lookupMethod: a value asSymbol
 				arguments: #()) result ]
@@ -281,7 +281,7 @@ TypShaPhaCollection >> mFlatCollect: aLookup [
 	<typShaMethod: 'flatCollect:'>
 	| a r |
 	a := aLookup arguments at: 1.
-	r := (a hasValue and: [ a value isString ])
+	r := (a isValue and: [ a value isString ])
 		ifTrue: [ ((aLookup receiver at: '@A')
 				lookupMethod: a value asSymbol
 				arguments: #()) result ]
@@ -300,7 +300,7 @@ TypShaPhaCollection >> mGroupedBy: aLookup [
 	<typShaMethod: 'groupedBy:'>
 	| a r |
 	a := aLookup arguments at: 1.
-	r := (a hasValue and: [ a value isString ])
+	r := (a isValue and: [ a value isString ])
 		ifTrue: [ ((aLookup receiver at: '@A')
 				lookupMethod: a value asSymbol
 				arguments: #()) result ]
@@ -345,7 +345,7 @@ TypShaPhaCollection >> mIfEmptyIfNotEmpty: aLookup [
 	<typPraResult: 'TypFunctionType'>
 	| a r |
 	a := aLookup arguments at: 2.
-	r := (a hasValue and: [ a value isString ])
+	r := (a isValue and: [ a value isString ])
 		     ifTrue: [ 
 			     (aLookup root receiver
 				      lookupMethod: a value asSymbol
@@ -371,7 +371,7 @@ TypShaPhaCollection >> mIfNotEmpty: aLookup [
 	<typShaMethod: 'ifNotEmpty:'>
 	| a r |
 	a := aLookup arguments at: 1.
-	r := (a hasValue and: [ a value isString ])
+	r := (a isValue and: [ a value isString ])
 		ifTrue:
 			[ (aLookup root receiver lookupMethod: a value asSymbol arguments: #())
 				result ]

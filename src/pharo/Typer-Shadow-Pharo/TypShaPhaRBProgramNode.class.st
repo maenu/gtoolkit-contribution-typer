@@ -180,7 +180,7 @@ TypShaPhaRBProgramNode >> mPropertyAtIfPresentIfAbsent: aLookup [
 	<typShaMethod: 'propertyAt:ifPresent:ifAbsent:'>
 	| a r |
 	a := aLookup arguments at: 2.
-	r := (a hasValue and: [ a value isSymbol ])
+	r := (a isValue and: [ a value isSymbol ])
 		ifTrue: [ (aLookup root receiver
 				lookupMethod: a value
 				arguments: {TypUnknownType new}) result ]

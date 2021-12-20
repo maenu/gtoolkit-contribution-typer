@@ -2,9 +2,7 @@ Class {
 	#name : #TypType,
 	#superclass : #TypNode,
 	#instVars : [
-		'superType',
-		'value',
-		'hasValue'
+		'superType'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -28,9 +26,6 @@ TypType >> = anObject [
 
 	anObject == self ifTrue: [ ^ true ].
 	anObject class = self class ifFalse: [ ^ false ].
-	self hasValue = anObject hasValue ifFalse: [ ^ false ].
-	(self hasValue and: [ self value ~= anObject value ]) ifTrue: [ 
-		^ false ].
 	self hasSuperType = anObject hasSuperType ifFalse: [ ^ false ].
 	self hasSuperType ifFalse: [ ^ true ].
 	^ self superType = anObject superType
@@ -92,23 +87,9 @@ TypType >> copyWithSuperType: aType [
 			  yourself ]
 ]
 
-{ #category : #copying }
-TypType >> copyWithValue: anObject [
-
-	^ self outgoingAt: #copyWithValue: -> anObject ifAbsentPut: [ 
-		  self copy
-			  initializeValue: anObject;
-			  yourself ]
-]
-
 { #category : #testing }
 TypType >> hasSuperType [
 	^ superType isNotNil
-]
-
-{ #category : #accessing }
-TypType >> hasValue [
-	^ hasValue
 ]
 
 { #category : #accessing }
@@ -132,10 +113,7 @@ TypType >> hashSkipping: anIdentitySet [
 TypType >> initialize [
 
 	<typPraVariable: 'superType' as: '{!,TypType}'>
-	<typPraVariable: 'value' as: '{!,Object}'>
-	<typPraVariable: 'hasValue' as: 'Boolean'>
-	super initialize.
-	hasValue := false
+	super initialize
 ]
 
 { #category : #initialization }
@@ -145,13 +123,6 @@ TypType >> initializeSuperType: aType [
 	superType ifNotNil: [ self outgoingRemoveAt: #superType ].
 	superType := aType.
 	superType ifNotNil: [ self outgoingAt: #superType ensure: superType ]
-]
-
-{ #category : #initialization }
-TypType >> initializeValue: anObject [
-
-	hasValue := true.
-	value := anObject
 ]
 
 { #category : #invalidation }
@@ -204,6 +175,12 @@ TypType >> isUnion [
 { #category : #testing }
 TypType >> isUnknown [
 	<typPraResult: 'Boolean'>
+	^ false
+]
+
+{ #category : #accessing }
+TypType >> isValue [
+
 	^ false
 ]
 
@@ -278,10 +255,7 @@ TypType >> printOn: aStream [
 { #category : #printing }
 TypType >> printOn: aStream skipping: anIdentitySet [
 
-	(anIdentitySet includes: self) ifTrue: [ 
-		aStream << '.'.
-		^ self ].
-	self hasValue ifTrue: [ value printOn: aStream ]
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -290,10 +264,4 @@ TypType >> superType [
 	<typPraResult: 'TypType'>
 	self assert: [ self hasSuperType ].
 	^ superType "typCastAs TypType"
-]
-
-{ #category : #accessing }
-TypType >> value [
-	self assert: [ self hasValue ].
-	^ value
 ]

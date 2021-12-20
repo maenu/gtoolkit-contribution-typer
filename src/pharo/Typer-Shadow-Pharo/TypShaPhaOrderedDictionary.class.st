@@ -120,7 +120,7 @@ TypShaPhaOrderedDictionary >> mCollect: aLookup [
 	<typShaMethod: 'collect:'>
 	| a r |
 	a := aLookup arguments at: 1.
-	r := (a hasValue and: [ a value isString ])
+	r := (a isValue and: [ a value isString ])
 		ifTrue: [ ((aLookup receiver at: '@A')
 				lookupMethod: a value asSymbol
 				arguments: #()) result ]

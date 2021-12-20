@@ -12,6 +12,7 @@ TypTyping >> invalidate [
 	probes := OrderedCollection new.
 	probes add: 'pre-reset' -> self memoryProbe.
 	ASTCache reset.
+	TKTCommonQueueWorkerPool allInstancesDo: #removeFailedTasks.
 	TypNode invalidateAll.
 	TypIndex invalidateAll.
 	TypResolver invalidateAll.
@@ -96,16 +97,14 @@ TypTyping >> parseAllAsts [
 TypTyping >> typeAllMethods [
 
 	<gtExample>
-	| methods n d |
+	| results methods |
+	results := OrderedCollection new.
 	methods := CompiledMethod allInstances.
-	n := methods size.
-	d := NewValueHolder value: 0.
 	[ 
 	methods do: [ :e | 
-		| result |
-		result := self typeMethod: e timeout: 30 seconds.
-		d value: d value + (1 / n) ] ] forkNamed: 'typeAllMethods'.
-	^ d
+		results add: (self typeMethod: e timeout: 30 seconds) ] ] 
+		forkNamed: 'typeAllMethods'.
+	^ results
 ]
 
 { #category : #accessing }

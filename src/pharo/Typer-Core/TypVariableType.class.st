@@ -48,11 +48,6 @@ TypVariableType >> at: aString [
 ]
 
 { #category : #polymorphic }
-TypVariableType >> classDescription [
-	^ superType classDescription
-]
-
-{ #category : #polymorphic }
 TypVariableType >> copyWithAt: aString put: aType [
 
 	^ self
@@ -73,7 +68,6 @@ TypVariableType >> hashSkipping: anIdentitySet [
 { #category : #initialization }
 TypVariableType >> initialize [
 	<typPraVariable: 'name' as: 'String'>
-	<typPraVariable: 'scope' as: '{!,TypType}'>
 	<typPraVariable: 'superType' as: 'TypType'>
 	super initialize.
 	self initializeSuperType:  ProtoObject typAsType
