@@ -1,6 +1,6 @@
 Class {
 	#name : #TypGtRbAstStyler,
-	#superclass : #GtRBASTStyler,
+	#superclass : #GtCoderAstStyler,
 	#traits : 'TRBProgramNodeVisitor - {#visitArgumentNodes:. #visitTemporaryDeclarationNode:}',
 	#classTraits : 'TRBProgramNodeVisitor classTrait',
 	#instVars : [
@@ -19,12 +19,12 @@ TypGtRbAstStyler >> coder: aCoder [
 TypGtRbAstStyler >> style: aText ast: anAst [
 
 	| ast |
-	ast := coder rbAST. 
-	typeContext := ast  typInfContextInSelf. 
-	[  
-	ast typInfTypeIn: typeContext.  
+	ast := coder rbAST.
+	typeContext := ast typInfContextInSelf.
+	[ 
+	ast typInfTypeIn: typeContext.
 	super style: aText ast: ast ]
-		on: Error 
+		on: Error
 		do: [ :e | Halt once ]
 ]
 
