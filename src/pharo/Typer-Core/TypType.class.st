@@ -22,6 +22,21 @@ TypType class >> initialize [
 	index := WeakValueDictionary new
 ]
 
+{ #category : #invalidation }
+TypType class >> invalidate [
+
+	<script>
+	index removeAll
+]
+
+{ #category : #invalidation }
+TypType class >> invalidateAll [
+
+	<script>
+	self invalidate.
+	self withAllSubclassesDo: #invalidate
+]
+
 { #category : #comparing }
 TypType >> < aType [
 	<typPraResult: 'Boolean'>

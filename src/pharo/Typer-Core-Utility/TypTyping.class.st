@@ -12,8 +12,11 @@ TypTyping >> invalidate [
 	probes := OrderedCollection new.
 	probes add: 'pre-reset' -> self memoryProbe.
 	ASTCache reset.
-	TKTCommonQueueWorkerPool allInstancesDo: #removeFailedTasks.
+	GtPlaygroundEvaluatedCodeButtonAttribute allSubInstancesDo: [ :e | 
+		e result: nil ].
+	TKTCommonQueueWorkerPool allSubInstancesDo: #removeFailedTasks.
 	TypNode invalidateAll.
+	TypType invalidateAll.
 	TypIndex invalidateAll.
 	TypResolver invalidateAll.
 	TypShaShadow invalidateAll.

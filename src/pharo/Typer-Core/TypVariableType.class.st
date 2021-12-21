@@ -11,21 +11,19 @@ Class {
 TypVariableType class >> named: aString [
 
 	<typPraArguments: 'String'>
-	^ index at: thisContext arguments ifAbsentPut: [ 
-		  self new
-			  initializeName: aString;
-			  yourself ]
+	^ self new
+		  initializeName: aString;
+		  yourself
 ]
 
 { #category : #'instance creation' }
 TypVariableType class >> named: aString superType: aType [
 
 	<typPraArguments: 'String,TypType'>
-	^ index at: thisContext arguments ifAbsentPut: [ 
-		  self new
-			  initializeName: aString;
-			  initializeSuperType: aType;
-			  yourself ]
+	^ self new
+		  initializeName: aString;
+		  initializeSuperType: aType;
+		  yourself
 ]
 
 { #category : #comparing }

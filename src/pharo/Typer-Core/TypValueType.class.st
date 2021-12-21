@@ -27,9 +27,10 @@ TypValueType >> = anObject [
 ]
 
 { #category : #accessing }
-TypValueType >> hash [
+TypValueType >> hashSkipping: anIdentitySet [
 
-	^ super hash bitXor: value hash
+	(anIdentitySet includes: self) ifTrue: [ ^ 53 ].
+	^ (53 bitXor: value hash) bitXor: (super hashSkipping: anIdentitySet)
 ]
 
 { #category : #accessing }
