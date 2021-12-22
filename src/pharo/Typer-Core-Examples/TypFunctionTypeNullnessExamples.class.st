@@ -24,7 +24,7 @@ TypFunctionTypeNullnessExamples >> asNullable [
 		        classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	nullable := type asNullable.
 	self assert: nullable = (TypUnionType types: { 
-				 TypNilType new.
+				 TypNilType instance.
 				 type } asSet).
 	^ nullable
 ]

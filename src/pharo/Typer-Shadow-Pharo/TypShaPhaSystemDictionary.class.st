@@ -20,6 +20,6 @@ TypShaPhaSystemDictionary >> resolveType: aLookup [
 					         Symbol typAsType.
 					         { 
 						         Class typAsType.
-						         TypUnknownType new } typAsType }) ].
+						         TypUnknownType instance } typAsType }) ].
 	^ type
 ]

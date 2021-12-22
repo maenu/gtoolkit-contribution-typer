@@ -155,10 +155,11 @@ TypShaPhaRBProgramNode >> mParents: aLookup [
 
 { #category : #shadow }
 TypShaPhaRBProgramNode >> mPropertyAt: aLookup [
+
 	<typShaMethod: 'propertyAt:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: TypUnknownType new
-		arguments: {String typAsType}
+		  typAsFunctionTypeWithResult: TypUnknownType instance
+		  arguments: { String typAsType }
 ]
 
 { #category : #shadow }
@@ -167,37 +168,40 @@ TypShaPhaRBProgramNode >> mPropertyAtIfAbsentPut: aLookup [
 	<typShaMethod: 'propertyAt:ifAbsentPut:'>
 	^ CompiledMethod
 		  typAsFunctionTypeWithResult: { 
-				  TypUnknownType new.
+				  TypUnknownType instance.
 				  ((aLookup arguments at: 2) lookupMethod: #value) result }
 				  typAsType
 		  arguments: { 
-				  TypUnknownType new.
+				  TypUnknownType instance.
 				  BlockClosure typAsType }
 ]
 
 { #category : #shadow }
 TypShaPhaRBProgramNode >> mPropertyAtIfPresentIfAbsent: aLookup [
+
 	<typShaMethod: 'propertyAt:ifPresent:ifAbsent:'>
 	| a r |
 	a := aLookup arguments at: 2.
 	r := (a isValue and: [ a value isSymbol ])
-		ifTrue: [ (aLookup root receiver
-				lookupMethod: a value
-				arguments: {TypUnknownType new}) result ]
-		ifFalse: [ a result ].
+		     ifTrue: [ 
+			     (aLookup root receiver
+				      lookupMethod: a value
+				      arguments: { TypUnknownType instance }) result ]
+		     ifFalse: [ a result ].
 	^ CompiledMethod
-		typAsFunctionTypeWithResult:
-			{r.
-			(aLookup arguments at: 3) result} typAsType
-		arguments:
-			{String typAsType.
-			{Symbol typAsType.
-			(BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {TypUnknownType new}
-				argumentsOptional: true
-				signalsAlways: false)} typAsType.
-			BlockClosure typAsType}
+		  typAsFunctionTypeWithResult: { 
+				  r.
+				  (aLookup arguments at: 3) result } typAsType
+		  arguments: { 
+				  String typAsType.
+				  { 
+					  Symbol typAsType.
+					  (BlockClosure
+						   typAsFunctionTypeWithResult: TypUnknownType instance
+						   arguments: { TypUnknownType instance }
+						   argumentsOptional: true
+						   signalsAlways: false) } typAsType.
+				  BlockClosure typAsType }
 ]
 
 { #category : #shadow }
@@ -207,8 +211,8 @@ TypShaPhaRBProgramNode >> mPropertyAtPut: aLookup [
 	^ CompiledMethod
 		  typAsFunctionTypeWithResult: (aLookup arguments at: 2)
 		  arguments: { 
-				  TypUnknownType new.
-				  TypUnknownType new }
+				  TypUnknownType instance.
+				  TypUnknownType instance }
 ]
 
 { #category : #shadow }
@@ -221,14 +225,15 @@ TypShaPhaRBProgramNode >> mRemoveLink: aLookup [
 
 { #category : #shadow }
 TypShaPhaRBProgramNode >> mRemovePropertyIfAbsent: aLookup [
+
 	<typShaMethod: 'removeProperty:ifAbsent:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult:
-			{TypUnknownType new.
-			(aLookup arguments at: 2) result} typAsType
-		arguments:
-			{String typAsType.
-			BlockClosure typAsType}
+		  typAsFunctionTypeWithResult: { 
+				  TypUnknownType instance.
+				  (aLookup arguments at: 2) result } typAsType
+		  arguments: { 
+				  String typAsType.
+				  BlockClosure typAsType }
 ]
 
 { #category : #shadow }

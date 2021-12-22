@@ -69,22 +69,24 @@ TypShaPhaSequenceableCollection >> mDetectIndex: aLookup [
 
 { #category : #shadow }
 TypShaPhaSequenceableCollection >> mDetectIndexIfNone: aLookup [
+
 	<typShaMethod: 'detectIndex:ifNone:'>
 	| a |
 	a := aLookup arguments at: 2.
 	^ CompiledMethod
-		typAsFunctionTypeWithResult:
-			{Integer typAsType.
-			(a isFunction
-				ifTrue: [ a result ]
-				ifFalse: [ a ])} typAsType
-		arguments:
-			{(BlockClosure
-				typAsFunctionTypeWithResult: Boolean typAsType
-				arguments: {(aLookup receiver at: '@A')}).
-			{TypUnknownType new.
-			(BlockClosure typAsFunctionTypeWithResult: Boolean typAsType)}
-				typAsType}
+		  typAsFunctionTypeWithResult: { 
+				  Integer typAsType.
+				  (a isFunction
+					   ifTrue: [ a result ]
+					   ifFalse: [ a ]) } typAsType
+		  arguments: { 
+				  (BlockClosure
+					   typAsFunctionTypeWithResult: Boolean typAsType
+					   arguments: { (aLookup receiver at: '@A') }).
+				  { 
+					  TypUnknownType instance.
+					  (BlockClosure typAsFunctionTypeWithResult: Boolean typAsType) }
+					  typAsType }
 ]
 
 { #category : #shadow }
@@ -144,30 +146,30 @@ TypShaPhaSequenceableCollection >> mSort: aLookup [
 
 { #category : #shadow }
 TypShaPhaSequenceableCollection >> mWithIndexCollect: aLookup [
+
 	<typShaMethod: 'withIndexCollect:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult:
-			(aLookup receiver
-				copyWithParameters: {(aLookup arguments at: 1) result})
-		arguments:
-			{(BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments:
-					{(aLookup receiver at: '@A').
-					Integer typAsType})}
+		  typAsFunctionTypeWithResult:
+			  (aLookup receiver copyWithParameters:
+				   { (aLookup arguments at: 1) result })
+		  arguments: { (BlockClosure
+				   typAsFunctionTypeWithResult: TypUnknownType instance
+				   arguments: { 
+						   (aLookup receiver at: '@A').
+						   Integer typAsType }) }
 ]
 
 { #category : #shadow }
 TypShaPhaSequenceableCollection >> mWithIndexDo: aLookup [
+
 	<typShaMethod: 'withIndexDo:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
-		arguments:
-			{(BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments:
-					{(aLookup receiver at: '@A').
-					Integer typAsType})}
+		  typAsFunctionTypeWithResult: aLookup root receiver
+		  arguments: { (BlockClosure
+				   typAsFunctionTypeWithResult: TypUnknownType instance
+				   arguments: { 
+						   (aLookup receiver at: '@A').
+						   Integer typAsType }) }
 ]
 
 { #category : #shadow }

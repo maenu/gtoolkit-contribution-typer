@@ -63,7 +63,7 @@ TypUnionType >> asNullable [
 	^ self outgoingAt: #asNullable ifAbsentPut: [ 
 		  self isNullable
 			  ifTrue: [ self ]
-			  ifFalse: [ (types , { TypNilType new }) typAsType ] ]
+			  ifFalse: [ (types , { TypNilType instance }) typAsType ] ]
 ]
 
 { #category : #polymorphic }

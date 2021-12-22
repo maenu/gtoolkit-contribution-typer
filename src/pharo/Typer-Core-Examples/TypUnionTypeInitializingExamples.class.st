@@ -16,11 +16,11 @@ TypUnionTypeInitializingExamples >> typAsTypeFlattensUnionTypes [
 						 (TypNamedType classDescription: Integer).
 						 (TypNamedType classDescription: Number) } asSet).
 				(TypNamedType classDescription: Integer).
-				TypNilType new } typAsType
+				TypNilType instance } typAsType
 		equals: (TypUnionType types: { 
 					 (TypNamedType classDescription: Integer).
 					 (TypNamedType classDescription: Number).
-					 TypNilType new } asSet).
+					 TypNilType instance } asSet).
 	^ nil
 ]
 
@@ -31,10 +31,10 @@ TypUnionTypeInitializingExamples >> typAsTypeKeepsNilType [
 	self
 		assert: { 
 				(TypNamedType classDescription: Integer).
-				TypNilType new } typAsType
+				TypNilType instance } typAsType
 		equals: (TypUnionType types: { 
 					 (TypNamedType classDescription: Integer).
-					 TypNilType new } asSet).
+					 TypNilType instance } asSet).
 	^ nil
 ]
 
@@ -59,10 +59,10 @@ TypUnionTypeInitializingExamples >> typAsTypeKeepsUnknownType [
 	self
 		assert: { 
 				(TypNamedType classDescription: Integer).
-				TypUnknownType new } typAsType
+				TypUnknownType instance } typAsType
 		equals: (TypUnionType types: { 
 					 (TypNamedType classDescription: Integer).
-					 TypUnknownType new } asSet).
+					 TypUnknownType instance } asSet).
 	^ nil
 ]
 
@@ -87,37 +87,37 @@ TypUnionTypeInitializingExamples >> typesEmpty [
 
 { #category : #accessing }
 TypUnionTypeInitializingExamples >> typesMany [
+
 	<gtExample>
 	| type |
-	type := TypUnionType
-		types:
-			{TypUnknownType new.
-			TypNilType new} asSet.
-	self
-		assert: type types
-		equals:
-			{TypUnknownType new.
-			TypNilType new} asSet.
+	type := TypUnionType types: { 
+			        TypUnknownType instance.
+			        TypNilType instance } asSet.
+	self assert: type types equals: { 
+			TypUnknownType instance.
+			TypNilType instance } asSet.
 	^ type
 ]
 
 { #category : #accessing }
 TypUnionTypeInitializingExamples >> typesNonNormalized [
+
 	<gtExample>
 	self
-		assert: [ TypUnionType
-				types:
-					{TypUnknownType new.
-					TypUnknownType new} ]
+		assert: [ 
+			TypUnionType types: { 
+					TypUnknownType instance.
+					TypUnknownType instance } ]
 		signals: AssertionFailure.
 	^ nil
 ]
 
 { #category : #accessing }
 TypUnionTypeInitializingExamples >> typesOne [
+
 	<gtExample>
 	self
-		assert: [ TypUnionType types: {TypUnknownType new} ]
+		assert: [ TypUnionType types: { TypUnknownType instance } ]
 		signals: AssertionFailure.
 	^ nil
 ]

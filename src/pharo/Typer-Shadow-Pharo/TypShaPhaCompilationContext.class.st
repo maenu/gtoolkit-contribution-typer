@@ -35,8 +35,9 @@ TypShaPhaCompilationContext >> mForSyntaxHighlighting: aLookup [
 
 { #category : #shadow }
 TypShaPhaCompilationContext >> mRequestor: aLookup [
+
 	<typShaMethod: 'requestor:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
-		arguments: {TypUnknownType new asNullable}
+		  typAsFunctionTypeWithResult: aLookup root receiver
+		  arguments: { TypUnknownType instance asNullable }
 ]

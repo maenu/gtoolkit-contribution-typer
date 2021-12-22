@@ -8,9 +8,10 @@ Class {
 
 { #category : #accessing }
 TypUnknownTypeInitializingExamples >> new [
+
 	<gtExample>
 	| type |
-	type := TypUnknownType new.
+	type := TypUnknownType instance.
 	self assert: type hasSuperType not.
 	^ type
 ]

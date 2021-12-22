@@ -1,8 +1,25 @@
 Class {
 	#name : #TypUnknownType,
 	#superclass : #TypType,
+	#classInstVars : [
+		'instance'
+	],
 	#category : #'Typer-Core-Type'
 }
+
+{ #category : #accessing }
+TypUnknownType class >> instance [
+
+	^ instance ifNil: [ instance := self new ]
+]
+
+{ #category : #invalidation }
+TypUnknownType class >> invalidate [
+
+	<script>
+	super invalidate.
+	instance := nil
+]
 
 { #category : #comparing }
 TypUnknownType >> > aType [

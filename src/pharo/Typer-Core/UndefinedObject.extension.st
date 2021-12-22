@@ -2,6 +2,7 @@ Extension { #name : #UndefinedObject }
 
 { #category : #'*Typer-Core' }
 UndefinedObject class >> typAsType [
+
 	<typPraResult: 'TypNilType'>
-	^ TypNilType new
+	^ TypNilType instance
 ]

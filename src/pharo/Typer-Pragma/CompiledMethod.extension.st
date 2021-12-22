@@ -26,9 +26,9 @@ CompiledMethod >> typPraType [
 	^ self pragmas
 		  inject: (TypFunctionType
 				   classDescription: self class
-				   result: TypUnknownType new
+				   result: TypUnknownType instance
 				   arguments:
-				   ((1 to: self numArgs) collect: [ :i | TypUnknownType new ])
+				   ((1 to: self numArgs) collect: [ :i | TypUnknownType instance ])
 				   argumentsOptional: false
 				   signalsAlways: nil)
 		  into: [ :t :p | p typPraMethodInject: t ]

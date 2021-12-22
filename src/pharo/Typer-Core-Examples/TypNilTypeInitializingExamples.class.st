@@ -29,9 +29,10 @@ TypNilTypeInitializingExamples >> namedWithoutClassDescription [
 
 { #category : #accessing }
 TypNilTypeInitializingExamples >> new [
+
 	<gtExample>
 	| type |
-	type := TypNilType new.
+	type := TypNilType instance.
 	self assert: type name equals: 'UndefinedObject'.
 	self assert: type hasClassDescription.
 	self assert: type classDescription equals: UndefinedObject.

@@ -16,19 +16,15 @@ TypParametricTypeNullnessExamples >> asNonNullable [
 
 { #category : #accessing }
 TypParametricTypeNullnessExamples >> asNullable [
+
 	<gtExample>
 	| type nullable |
 	type := TypParametricTypeInitializingExamples new
-		classDescriptionParameters.
+		        classDescriptionParameters.
 	nullable := type asNullable.
-	self
-		assert:
-			nullable
-				=
-					(TypUnionType
-						types:
-							{TypNilType new.
-							type} asSet).
+	self assert: nullable = (TypUnionType types: { 
+				 TypNilType instance.
+				 type } asSet).
 	^ nullable
 ]
 

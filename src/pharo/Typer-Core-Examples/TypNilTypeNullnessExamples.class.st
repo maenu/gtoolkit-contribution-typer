@@ -6,11 +6,12 @@ Class {
 
 { #category : #accessing }
 TypNilTypeNullnessExamples >> asNonNullable [
+
 	<gtExample>
 	| type nonNullable |
 	type := TypNilTypeInitializingExamples new new.
 	nonNullable := type asNonNullable.
-	self assert: nonNullable = TypUnknownType new.
+	self assert: nonNullable = TypUnknownType instance.
 	^ nonNullable
 ]
 

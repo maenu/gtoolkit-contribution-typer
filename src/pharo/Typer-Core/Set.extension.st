@@ -5,7 +5,7 @@ Set >> typAsType [
 
 	<typPraResult: 'TypType'>
 	| reduced |
-	self ifEmpty: [ ^ TypUnknownType new ].
+	self ifEmpty: [ ^ TypUnknownType instance ].
 	reduced := Set new.
 	self do: [ :e | 
 		e isUnion

@@ -24,7 +24,7 @@ TypCachingResolver >> initialize [
 	'Dictionary<TypLookup,SequenceableCollection<TypLookupResult>>'>
 	super initialize.
 	cache := Dictionary new.
-	unknown := TypUnknownType new
+	unknown := TypUnknownType instance
 ]
 
 { #category : #initialization }

@@ -1,7 +1,7 @@
 Class {
 	#name : #TypRewriter,
 	#superclass : #Object,
-	#category : 'Typer-Core-Utility'
+	#category : #'Typer-Core-Utility'
 }
 
 { #category : #accessing }
@@ -120,6 +120,26 @@ TypRewriter >> rewriteMethodLookupIndex [
 				ifTrue:
 					[ e origin compile: rewriter tree formattedCode classified: e protocol ].
 			ok ]
+]
+
+{ #category : #accessing }
+TypRewriter >> rewriteNilInstance [
+
+	<gtExample>
+	^ ((RPackageOrganizer default packages select: [ :e | 
+		    e name beginsWith: 'Typer' ]) flatCollect: #methods) select: [ 
+		  :e | 
+		  | rewriter ok method |
+		  rewriter := RBParseTreeRewriter new.
+		  rewriter
+			  replace: 'TypNilType new'
+			  with: 'TypNilType instance'.
+		  ok := rewriter executeTree: e parseTree.
+		  ok ifTrue: [ 
+			  e origin
+				  compile: rewriter tree formattedCode
+				  classified: e protocol ].
+		  ok ]
 ]
 
 { #category : #accessing }
@@ -457,6 +477,26 @@ TypRewriter >> rewriteShadowVariable [
 				ifTrue:
 					[ m origin compile: rewriter tree formattedCode classified: m protocol ].
 			ok ]
+]
+
+{ #category : #accessing }
+TypRewriter >> rewriteUnknownInstance [
+
+	<gtExample>
+	^ ((RPackageOrganizer default packages select: [ :e | 
+		    e name beginsWith: 'Typer' ]) flatCollect: #methods) select: [ 
+		  :e | 
+		  | rewriter ok method |
+		  rewriter := RBParseTreeRewriter new.
+		  rewriter
+			  replace: 'TypUnknownType new'
+			  with: 'TypUnknownType instance'.
+		  ok := rewriter executeTree: e parseTree.
+		  ok ifTrue: [ 
+			  e origin
+				  compile: rewriter tree formattedCode
+				  classified: e protocol ].
+		  ok ]
 ]
 
 { #category : #accessing }

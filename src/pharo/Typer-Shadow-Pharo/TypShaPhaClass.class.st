@@ -26,10 +26,11 @@ TypShaPhaClass >> mBasicNew: aLookup [
 
 { #category : #shadow }
 TypShaPhaClass >> mClassVarNamed: aLookup [
+
 	<typShaMethod: 'classVarNamed:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: TypUnknownType new
-		arguments: {String typAsType}
+		  typAsFunctionTypeWithResult: TypUnknownType instance
+		  arguments: { String typAsType }
 ]
 
 { #category : #shadow }

@@ -29,13 +29,13 @@ TypShaBlBlText >> mAttributesAt: aLookup [
 
 { #category : #shadow }
 TypShaBlBlText >> mClearAttributes: aLookup [
+
 	<typShaMethod: 'clearAttributes:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
-		arguments:
-			{(BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {BlTextAttribute typAsType})}
+		  typAsFunctionTypeWithResult: aLookup root receiver
+		  arguments: { (BlockClosure
+				   typAsFunctionTypeWithResult: TypUnknownType instance
+				   arguments: { BlTextAttribute typAsType }) }
 ]
 
 { #category : #shadow }

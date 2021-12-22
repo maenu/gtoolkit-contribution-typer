@@ -34,7 +34,7 @@ TypShaPhaUndefinedObject >> mIfNotNil: aLookup [
 		  arguments: { { 
 				  Symbol typAsType.
 				  (BlockClosure
-					   typAsFunctionTypeWithResult: TypUnknownType new
+					   typAsFunctionTypeWithResult: TypUnknownType instance
 					   arguments: { aLookup root receiver asNonNullable }
 					   argumentsOptional: true
 					   signalsAlways: false) } typAsType }

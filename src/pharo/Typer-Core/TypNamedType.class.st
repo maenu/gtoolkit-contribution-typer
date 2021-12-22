@@ -62,7 +62,7 @@ TypNamedType >> > aType [
 TypNamedType >> at: aString [
 
 	self flag: 'TODO add proper origin'.
-	self hasSuperType ifFalse: [ ^ TypUnknownType new ].
+	self hasSuperType ifFalse: [ ^ TypUnknownType instance ].
 	^ self superType at: aString
 ]
 
@@ -188,7 +188,7 @@ TypNamedType >> printOn: aStream skipping: anIdentitySet [
 { #category : #polymorphic }
 TypNamedType >> result [
 
-	self hasSuperType ifFalse: [ ^ TypUnknownType new ].
+	self hasSuperType ifFalse: [ ^ TypUnknownType instance ].
 	^ self superType result
 ]
 

@@ -16,7 +16,7 @@ TypShaBlBlShortcut >> mAction: aLookup [
 	^ CompiledMethod
 		  typAsFunctionTypeWithResult: BlShortcut typAsType
 		  arguments: { (BlockClosure
-				   typAsFunctionTypeWithResult: TypUnknownType new
+				   typAsFunctionTypeWithResult: TypUnknownType instance
 				   arguments: { BlElement typAsType }
 				   argumentsOptional: true
 				   signalsAlways: false) }

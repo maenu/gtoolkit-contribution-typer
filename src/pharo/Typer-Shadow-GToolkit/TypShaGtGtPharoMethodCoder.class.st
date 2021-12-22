@@ -26,13 +26,13 @@ TypShaGtGtPharoMethodCoder >> mCompiledMethod: aLookup [
 
 { #category : #shadow }
 TypShaGtGtPharoMethodCoder >> mCursorPositionDo: aLookup [
+
 	<typShaMethod: 'cursorPositionDo:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
-		arguments:
-			{(BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {Integer typAsType})}
+		  typAsFunctionTypeWithResult: aLookup root receiver
+		  arguments: { (BlockClosure
+				   typAsFunctionTypeWithResult: TypUnknownType instance
+				   arguments: { Integer typAsType }) }
 ]
 
 { #category : #shadow }

@@ -41,8 +41,8 @@ TypInfAstContext >> initialize [
 
 	super initialize.
 	nodes := WeakIdentityKeyDictionary new.
-	unknown := TypUnknownType new.
-	null := TypNilType new
+	unknown := TypUnknownType instance.
+	null := TypNilType instance
 ]
 
 { #category : #initialization }

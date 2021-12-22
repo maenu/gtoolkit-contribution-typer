@@ -51,21 +51,22 @@ TypShaPhaBlockClosure >> mEnsure: aLookup [
 
 { #category : #shadow }
 TypShaPhaBlockClosure >> mOnDo: aLookup [
+
 	<typShaMethod: 'on:do:'>
 	| a b |
 	a := aLookup arguments at: 1.
 	b := (a isValue and: [ a value isClass ])
-		ifTrue: [ a value instanceSide typAsType ]
-		ifFalse: [ Exception typAsType ].
+		     ifTrue: [ a value instanceSide typAsType ]
+		     ifFalse: [ Exception typAsType ].
 	^ CompiledMethod
-		typAsFunctionTypeWithResult:
-			{aLookup receiver result.
-			(aLookup arguments at: 2) result} typAsType
-		arguments:
-			{Exception class typAsType.
-			(BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {b})}
+		  typAsFunctionTypeWithResult: { 
+				  aLookup receiver result.
+				  (aLookup arguments at: 2) result } typAsType
+		  arguments: { 
+				  Exception class typAsType.
+				  (BlockClosure
+					   typAsFunctionTypeWithResult: TypUnknownType instance
+					   arguments: { b }) }
 ]
 
 { #category : #accessing }
@@ -120,14 +121,16 @@ TypShaPhaBlockClosure >> mWhileFalse: aLookup [
 
 { #category : #shadow }
 TypShaPhaBlockClosure >> mWhileTrue: aLookup [
+
 	<typShaMethod: 'whileTrue:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: TypNilType new
-		arguments: {BlockClosure typAsType}
+		  typAsFunctionTypeWithResult: TypNilType instance
+		  arguments: { BlockClosure typAsType }
 ]
 
 { #category : #accessing }
 TypShaPhaBlockClosure >> resolveType: aLookup [
-	^ aLookup root classDescription
-		typAsFunctionTypeWithResult: TypUnknownType new
+
+	^ aLookup root classDescription typAsFunctionTypeWithResult:
+		  TypUnknownType instance
 ]

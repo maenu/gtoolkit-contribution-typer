@@ -21,13 +21,13 @@ TypShaBlBlElement >> mBackground: aLookup [
 
 { #category : #shadow }
 TypShaBlBlElement >> mConstraintsDo: aLookup [
+
 	<typShaMethod: 'constraintsDo:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
-		arguments:
-			{(BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {BlLayoutConstraints typAsType})}
+		  typAsFunctionTypeWithResult: aLookup root receiver
+		  arguments: { (BlockClosure
+				   typAsFunctionTypeWithResult: TypUnknownType instance
+				   arguments: { BlLayoutConstraints typAsType }) }
 ]
 
 { #category : #shadow }

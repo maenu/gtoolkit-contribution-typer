@@ -16,18 +16,14 @@ TypUnknownTypeNullnessExamples >> asNonNullable [
 
 { #category : #accessing }
 TypUnknownTypeNullnessExamples >> asNullable [
+
 	<gtExample>
 	| type nullable |
 	type := TypUnknownTypeInitializingExamples new new.
 	nullable := type asNullable.
-	self
-		assert:
-			nullable
-				=
-					(TypUnionType
-						types:
-							{TypNilType new.
-							type} asSet).
+	self assert: nullable = (TypUnionType types: { 
+				 TypNilType instance.
+				 type } asSet).
 	^ nullable
 ]
 

@@ -11,18 +11,20 @@ TypShaPhaProtoObject class >> shadowedClass [
 
 { #category : #shadow }
 TypShaPhaProtoObject >> mBinary284: aLookup [
+
 	<typShaMethod: '=='>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {TypUnknownType new asNullable}
+		  typAsFunctionTypeWithResult: Boolean typAsType
+		  arguments: { TypUnknownType instance asNullable }
 ]
 
 { #category : #shadow }
 TypShaPhaProtoObject >> mBinary288: aLookup [
+
 	<typShaMethod: '~~'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {TypUnknownType new asNullable}
+		  typAsFunctionTypeWithResult: Boolean typAsType
+		  arguments: { TypUnknownType instance asNullable }
 ]
 
 { #category : #shadow }
@@ -52,48 +54,51 @@ TypShaPhaProtoObject >> mIfNil: aLookup [
 
 { #category : #shadow }
 TypShaPhaProtoObject >> mIfNilIfNotNil: aLookup [
+
 	<typShaMethod: 'ifNil:ifNotNil:'>
 	| a1 a2 r2 |
 	a1 := aLookup arguments at: 1.
 	a2 := aLookup arguments at: 2.
 	r2 := (a2 isValue and: [ a2 value isString ])
-		ifTrue: [ (aLookup root receiver asNonNullable
-				lookupMethod: a2 value asSymbol
-				arguments: {aLookup root receiver asNonNullable}) result ]
-		ifFalse: [ a2 result ].
+		      ifTrue: [ 
+			      (aLookup root receiver asNonNullable
+				       lookupMethod: a2 value asSymbol
+				       arguments: { aLookup root receiver asNonNullable }) result ]
+		      ifFalse: [ a2 result ].
 	^ CompiledMethod
-		typAsFunctionTypeWithResult:
-			{a1 result.
-			r2} typAsType
-		arguments:
-			{BlockClosure typAsType.
-			{Symbol typAsType.
-			(BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {aLookup root receiver asNonNullable}
-				argumentsOptional: true
-				signalsAlways: false)} typAsType}
+		  typAsFunctionTypeWithResult: { 
+				  a1 result.
+				  r2 } typAsType
+		  arguments: { 
+				  BlockClosure typAsType.
+				  { 
+					  Symbol typAsType.
+					  (BlockClosure
+						   typAsFunctionTypeWithResult: TypUnknownType instance
+						   arguments: { aLookup root receiver asNonNullable }
+						   argumentsOptional: true
+						   signalsAlways: false) } typAsType }
 ]
 
 { #category : #shadow }
 TypShaPhaProtoObject >> mIfNotNil: aLookup [
+
 	<typShaMethod: 'ifNotNil:'>
 	| a r |
 	a := aLookup arguments at: 1.
 	r := (a isValue and: [ a value isString ])
-		ifTrue: [ (aLookup root receiver asNonNullable
-				lookupMethod: a value asSymbol
-				arguments: {aLookup root receiver}) result ]
-		ifFalse: [ a result ].
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: r
-		arguments:
-			{{Symbol typAsType.
-			(BlockClosure
-				typAsFunctionTypeWithResult: TypUnknownType new
-				arguments: {aLookup root receiver asNonNullable}
-				argumentsOptional: true
-				signalsAlways: false)} typAsType}
+		     ifTrue: [ 
+			     (aLookup root receiver asNonNullable
+				      lookupMethod: a value asSymbol
+				      arguments: { aLookup root receiver }) result ]
+		     ifFalse: [ a result ].
+	^ CompiledMethod typAsFunctionTypeWithResult: r arguments: { { 
+			  Symbol typAsType.
+			  (BlockClosure
+				   typAsFunctionTypeWithResult: TypUnknownType instance
+				   arguments: { aLookup root receiver asNonNullable }
+				   argumentsOptional: true
+				   signalsAlways: false) } typAsType }
 ]
 
 { #category : #shadow }

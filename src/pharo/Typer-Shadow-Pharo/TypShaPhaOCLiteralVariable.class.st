@@ -11,13 +11,12 @@ TypShaPhaOCLiteralVariable class >> shadowedClass [
 
 { #category : #shadow }
 TypShaPhaOCLiteralVariable >> mAssoc: aLookup [
+
 	<typShaMethod: 'assoc'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult:
-			(Association typAsType
-				copyWithParameters:
-					{String typAsType.
-					TypUnknownType new})
+	^ CompiledMethod typAsFunctionTypeWithResult:
+		  (Association typAsType copyWithParameters: { 
+				   String typAsType.
+				   TypUnknownType instance })
 ]
 
 { #category : #shadow }

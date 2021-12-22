@@ -6,10 +6,11 @@ Class {
 
 { #category : #shadow }
 TypShaSmaSmaCCParser class >> mParse: aLookup [
+
 	<typShaMethod: 'parse:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: TypUnknownType new
-		arguments: {String typAsType}
+		  typAsFunctionTypeWithResult: TypUnknownType instance
+		  arguments: { String typAsType }
 ]
 
 { #category : #'as yet unclassified' }

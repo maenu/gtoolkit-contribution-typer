@@ -20,10 +20,11 @@ TypShaGtGtMethodsCoder class >> shadowedClass [
 
 { #category : #shadow }
 TypShaGtGtMethodsCoder >> mAnnounce: aLookup [
+
 	<typShaMethod: 'announce:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: TypUnknownType new
-		arguments: {Announcement typAsType}
+		  typAsFunctionTypeWithResult: TypUnknownType instance
+		  arguments: { Announcement typAsType }
 ]
 
 { #category : #accessing }

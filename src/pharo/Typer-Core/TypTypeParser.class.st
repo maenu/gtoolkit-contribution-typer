@@ -239,7 +239,7 @@ TypTypeParser >> reduceActionForNamedType1: nodes [
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForNilType1: nodes [
 
-	^ TypNilType new
+	^ TypNilType instance
 ]
 
 { #category : #'generated-reduction actions' }
@@ -275,7 +275,7 @@ TypTypeParser >> reduceActionForUnionType1: nodes [
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForUnknownType1: nodes [
 
-	^ TypUnknownType new
+	^ TypUnknownType instance
 ]
 
 { #category : #'generated-reduction actions' }

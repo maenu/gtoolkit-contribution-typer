@@ -34,18 +34,20 @@ TypShaPhaObject >> mAssert: aLookup [
 
 { #category : #shadow }
 TypShaPhaObject >> mBinary248: aLookup [
+
 	<typShaMethod: '='>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {TypUnknownType new asNullable}
+		  typAsFunctionTypeWithResult: Boolean typAsType
+		  arguments: { TypUnknownType instance asNullable }
 ]
 
 { #category : #shadow }
 TypShaPhaObject >> mBinary255: aLookup [
+
 	<typShaMethod: '~='>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {TypUnknownType new asNullable}
+		  typAsFunctionTypeWithResult: Boolean typAsType
+		  arguments: { TypUnknownType instance asNullable }
 ]
 
 { #category : #shadow }
@@ -74,10 +76,11 @@ TypShaPhaObject >> mHash: aLookup [
 
 { #category : #shadow }
 TypShaPhaObject >> mInstVarNamed: aLookup [
+
 	<typShaMethod: 'instVarNamed:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: TypUnknownType new asNullable
-		arguments: {String typAsType}
+		  typAsFunctionTypeWithResult: TypUnknownType instance asNullable
+		  arguments: { String typAsType }
 ]
 
 { #category : #shadow }
@@ -102,33 +105,35 @@ TypShaPhaObject >> mIsNotNil: aLookup [
 
 { #category : #shadow }
 TypShaPhaObject >> mPerform: aLookup [
+
 	<typShaMethod: 'perform:'>
 	| a r |
 	a := aLookup arguments at: 1.
 	r := (a isValue and: [ a value isSymbol ])
-		ifTrue:
-			[ (aLookup root receiver lookupMethod: a value arguments: #()) result ]
-		ifFalse: [ TypUnknownType new ].
+		     ifTrue: [ 
+			     (aLookup root receiver lookupMethod: a value arguments: #(  ))
+				     result ]
+		     ifFalse: [ TypUnknownType instance ].
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: r
-		arguments: {Symbol typAsType}
+		  typAsFunctionTypeWithResult: r
+		  arguments: { Symbol typAsType }
 ]
 
 { #category : #shadow }
 TypShaPhaObject >> mPerformWithEnoughArguments: aLookup [
+
 	<typShaMethod: 'perform:withEnoughArguments:'>
 	| a r |
 	a := aLookup arguments at: 1.
 	r := (a isValue and: [ a value isSymbol ])
-		ifTrue: [ (aLookup root receiver
-				lookupMethod: a value
-				arguments: aLookup arguments) result ]
-		ifFalse: [ TypUnknownType new ].
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: r
-		arguments:
-			{Symbol typAsType.
-			SequenceableCollection typAsType}
+		     ifTrue: [ 
+			     (aLookup root receiver
+				      lookupMethod: a value
+				      arguments: aLookup arguments) result ]
+		     ifFalse: [ TypUnknownType instance ].
+	^ CompiledMethod typAsFunctionTypeWithResult: r arguments: { 
+			  Symbol typAsType.
+			  SequenceableCollection typAsType }
 ]
 
 { #category : #shadow }

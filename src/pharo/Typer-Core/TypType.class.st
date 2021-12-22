@@ -89,7 +89,9 @@ TypType >> asCompatibleWith: aType [
 	aType isNil ifTrue: [ ^ self asNullable ].
 	self >= aType ifTrue: [ ^ self ].
 	self hasSuperType ifTrue: [ ^ self superType asCompatibleWith: aType ].
-	^ self addOutgoingTarget: TypUnknownType new data: #asCompatibleWith:
+	^ self
+		  addOutgoingTarget: TypUnknownType instance
+		  data: #asCompatibleWith:
 ]
 
 { #category : #converting }
@@ -104,7 +106,7 @@ TypType >> asNullable [
 	<typPraResult: 'TypType'>
 	^ self outgoingAt: #asNullable ifAbsentPut: [ 
 		  { 
-			  TypNilType new.
+			  TypNilType instance.
 			  self } typAsType ]
 ]
 
@@ -225,7 +227,7 @@ TypType >> lookupMethod: aSymbol [
 
 	| arguments |
 	arguments := aSymbol numArgs typTimesCollect: [ :e | 
-		             TypUnknownType new ].
+		             TypUnknownType instance ].
 	^ self lookupMethod: aSymbol arguments: arguments
 ]
 

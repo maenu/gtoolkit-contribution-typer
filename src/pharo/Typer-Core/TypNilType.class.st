@@ -1,12 +1,29 @@
 Class {
 	#name : #TypNilType,
 	#superclass : #TypNamedType,
+	#classInstVars : [
+		'instance'
+	],
 	#category : #'Typer-Core-Type'
 }
 
 { #category : #'instance creation' }
 TypNilType class >> classDescription: aClassDescription [
 	self shouldNotImplement
+]
+
+{ #category : #accessing }
+TypNilType class >> instance [
+
+	^ instance ifNil: [ instance := self new ]
+]
+
+{ #category : #invalidation }
+TypNilType class >> invalidate [
+
+	<script>
+	super invalidate.
+	instance := nil
 ]
 
 { #category : #'instance creation' }
@@ -22,7 +39,9 @@ TypNilType >> asCompatibleWith: aType [
 { #category : #converting }
 TypNilType >> asNonNullable [
 
-	^ self outgoingAt: #asNonNullable ifAbsentPut: [ TypUnknownType new ]
+	^ self
+		  outgoingAt: #asNonNullable
+		  ifAbsentPut: [ TypUnknownType instance ]
 ]
 
 { #category : #converting }
