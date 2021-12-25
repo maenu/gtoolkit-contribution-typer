@@ -9,7 +9,7 @@ TypParametricTypePrintingExamples >> asString [
 	<gtExample>
 	| type |
 	type := TypParametricTypeInitializingExamples new classDescriptionParameters.
-	self assert: type asString equals: 'Integer<@A>'.
+	self assert: type asString equals: 'Integer<#A>'.
 	^ type
 ]
 

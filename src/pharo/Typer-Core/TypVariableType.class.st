@@ -41,11 +41,11 @@ TypVariableType >> hashSkipping: anIdentitySet [
 ]
 
 { #category : #initialization }
-TypVariableType >> initializeName: aString [
-	<typPraArguments: 'String'>
-	self assert: [ aString size > 1 ].
-	self assert: [ aString first = $@ ].
-	name := aString
+TypVariableType >> initializeName: aSymbol [
+
+	<typPraArguments: 'Symbol'>
+	self assert: [ aSymbol isNotEmpty ].
+	name := aSymbol
 ]
 
 { #category : #testing }
@@ -60,11 +60,12 @@ TypVariableType >> name [
 
 { #category : #printing }
 TypVariableType >> printOn: aStream skipping: anIdentitySet [
-	(anIdentitySet includes: self)
-		ifTrue: [ aStream << '.'.
-			^ self ].
-	aStream nextPutAll: name asString.
-	superType hasSuper
-		ifTrue: [ aStream nextPutAll: '<='.
-			superType printOn: aStream skipping: anIdentitySet , {self} ]
+
+	(anIdentitySet includes: self) ifTrue: [ 
+		aStream << '.'.
+		^ self ].
+	name printOn: aStream.
+	superType hasSuper ifTrue: [ 
+		aStream nextPutAll: '<='.
+		superType printOn: aStream skipping: anIdentitySet , { self } ]
 ]

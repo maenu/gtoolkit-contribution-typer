@@ -21,7 +21,7 @@ TypShaPhaCollection class >> mWithAll: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(aLookup receiver classDescription instanceSide typAsType
-				withParameters: {((aLookup arguments at: 1) at: '@A')})
+				withParameters: {((aLookup arguments at: 1) at: #A)})
 		arguments: {Collection typAsType}
 ]
 
@@ -48,7 +48,7 @@ TypShaPhaCollection >> mAdd: aLookup [
 	<typShaMethod: 'add:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup arguments at: 1)
-		arguments: {(aLookup receiver at: '@A')}
+		arguments: {(aLookup receiver at: #A)}
 ]
 
 { #category : #shadow }
@@ -58,7 +58,7 @@ TypShaPhaCollection >> mAddAll: aLookup [
 		typAsFunctionTypeWithResult: (aLookup arguments at: 1)
 		arguments:
 			{(Collection typAsType
-				withParameters: {(aLookup receiver at: '@A')})}
+				withParameters: {(aLookup receiver at: #A)})}
 ]
 
 { #category : #shadow }
@@ -70,14 +70,14 @@ TypShaPhaCollection >> mAllSatisfy: aLookup [
 			{{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: Boolean typAsType
-				arguments: {(aLookup receiver at: '@A')})} typAsType}
+				arguments: {(aLookup receiver at: #A)})} typAsType}
 ]
 
 { #category : #shadow }
 TypShaPhaCollection >> mAnyOne: aLookup [
 	<typShaMethod: 'anyOne'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
+		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
 ]
 
 { #category : #shadow }
@@ -89,7 +89,7 @@ TypShaPhaCollection >> mAnySatisfy: aLookup [
 			{{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: Boolean typAsType
-				arguments: {(aLookup receiver at: '@A')})} typAsType}
+				arguments: {(aLookup receiver at: #A)})} typAsType}
 ]
 
 { #category : #shadow }
@@ -98,8 +98,8 @@ TypShaPhaCollection >> mAsDictionary: aLookup [
 	<typShaMethod: 'asDictionary'>
 	^ CompiledMethod typAsFunctionTypeWithResult:
 		  (Dictionary typAsType withParameters: { 
-				   ((aLookup receiver at: '@A') at: '@A').
-				   ((aLookup receiver at: '@A') at: '@B') })
+				   ((aLookup receiver at: #A) at: #A).
+				   ((aLookup receiver at: #A) at: #B) })
 ]
 
 { #category : #shadow }
@@ -108,7 +108,7 @@ TypShaPhaCollection >> mAsIdentitySet: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(IdentitySet typAsType
-				withParameters: {(aLookup receiver at: '@A')})
+				withParameters: {(aLookup receiver at: #A)})
 ]
 
 { #category : #shadow }
@@ -117,7 +117,7 @@ TypShaPhaCollection >> mAsOrderedCollection: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(OrderedCollection typAsType
-				withParameters: {(aLookup receiver at: '@A')})
+				withParameters: {(aLookup receiver at: #A)})
 ]
 
 { #category : #shadow }
@@ -126,22 +126,22 @@ TypShaPhaCollection >> mAsOrderedDictionary: aLookup [
 	<typShaMethod: 'asOrderedDictionary'>
 	^ CompiledMethod typAsFunctionTypeWithResult:
 		  (OrderedDictionary typAsType withParameters: { 
-				   ((aLookup receiver at: '@A') at: '@A').
-				   ((aLookup receiver at: '@A') at: '@B') })
+				   ((aLookup receiver at: #A) at: #A).
+				   ((aLookup receiver at: #A) at: #B) })
 ]
 
 { #category : #shadow }
 TypShaPhaCollection >> mAsSet: aLookup [
 	<typShaMethod: 'asSet'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (Set typAsType withParameters: {(aLookup receiver at: '@A')})
+		typAsFunctionTypeWithResult: (Set typAsType withParameters: {(aLookup receiver at: #A)})
 ]
 
 { #category : #shadow }
 TypShaPhaCollection >> mAt: aLookup [
 	<typShaMethod: 'at:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
+		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
 		arguments: {Integer typAsType}
 ]
 
@@ -151,9 +151,9 @@ TypShaPhaCollection >> mBinary170: aLookup [
 	<typShaMethod: ','>
 	^ CompiledMethod
 		  typAsFunctionTypeWithResult: (aLookup root receiver
-				   withAt: '@A' put: { 
-						   (aLookup receiver at: '@A').
-						   ((aLookup arguments at: 1) at: '@A') } typAsType;
+				   withAt: #A put: { 
+						   (aLookup receiver at: #A).
+						   ((aLookup arguments at: 1) at: #A) } typAsType;
 				   yourself)
 		  arguments: { Collection typAsType }
 ]
@@ -166,7 +166,7 @@ TypShaPhaCollection >> mCollect: aLookup [
 	a := aLookup arguments at: 1.
 	r := (a isValue and: [ a value isString ])
 		     ifTrue: [ 
-			     ((aLookup root receiver at: '@A')
+			     ((aLookup root receiver at: #A)
 				      lookupMethod: a value asSymbol
 				      arguments: #(  )) result ]
 		     ifFalse: [ a result ].
@@ -177,7 +177,7 @@ TypShaPhaCollection >> mCollect: aLookup [
 				  Symbol typAsType.
 				  (BlockClosure
 					   typAsFunctionTypeWithResult: TypUnknownType instance
-					   arguments: { (aLookup root receiver at: '@A') }) } typAsType }
+					   arguments: { (aLookup root receiver at: #A) }) } typAsType }
 ]
 
 { #category : #shadow }
@@ -185,7 +185,7 @@ TypShaPhaCollection >> mCopyWithout: aLookup [
 	<typShaMethod: 'copyWithout:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
-		arguments: {(aLookup receiver at: '@A')}
+		arguments: {(aLookup receiver at: #A)}
 ]
 
 { #category : #shadow }
@@ -200,12 +200,12 @@ TypShaPhaCollection >> mCopyWithoutAll: aLookup [
 TypShaPhaCollection >> mDetect: aLookup [
 	<typShaMethod: 'detect:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
+		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
 		arguments:
 			{{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: Boolean typAsType
-				arguments: {(aLookup receiver at: '@A')})} typAsType}
+				arguments: {(aLookup receiver at: #A)})} typAsType}
 ]
 
 { #category : #shadow }
@@ -219,12 +219,12 @@ TypShaPhaCollection >> mDetectIfFound: aLookup [
 					  Symbol typAsType.
 					  (BlockClosure
 						   typAsFunctionTypeWithResult: Boolean typAsType
-						   arguments: { (aLookup receiver at: '@A') }) } typAsType.
+						   arguments: { (aLookup receiver at: #A) }) } typAsType.
 				  { 
 					  Symbol typAsType.
 					  (BlockClosure
 						   typAsFunctionTypeWithResult: TypUnknownType instance
-						   arguments: { (aLookup receiver at: '@A') }
+						   arguments: { (aLookup receiver at: #A) }
 						   argumentsOptional: true
 						   signalsAlways: false) } typAsType }
 ]
@@ -237,7 +237,7 @@ TypShaPhaCollection >> mDetectIfFoundIfNone: aLookup [
 	a := aLookup arguments at: 2.
 	r := (a isValue and: [ a value isString ])
 		     ifTrue: [ 
-			     ((aLookup receiver at: '@A')
+			     ((aLookup receiver at: #A)
 				      lookupMethod: a value asSymbol
 				      arguments: #(  )) result ]
 		     ifFalse: [ a result ].
@@ -250,12 +250,12 @@ TypShaPhaCollection >> mDetectIfFoundIfNone: aLookup [
 					  Symbol typAsType.
 					  (BlockClosure
 						   typAsFunctionTypeWithResult: Boolean typAsType
-						   arguments: { (aLookup receiver at: '@A') }) } typAsType.
+						   arguments: { (aLookup receiver at: #A) }) } typAsType.
 				  { 
 					  Symbol typAsType.
 					  (BlockClosure
 						   typAsFunctionTypeWithResult: TypUnknownType instance
-						   arguments: { (aLookup receiver at: '@A') }
+						   arguments: { (aLookup receiver at: #A) }
 						   argumentsOptional: true
 						   signalsAlways: false) } typAsType.
 				  BlockClosure typAsType }
@@ -266,13 +266,13 @@ TypShaPhaCollection >> mDetectIfNone: aLookup [
 	<typShaMethod: 'detect:ifNone:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			{(aLookup receiver at: '@A').
+			{(aLookup receiver at: #A).
 			(aLookup arguments at: 2) result} typAsType
 		arguments:
 			{{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: Boolean typAsType
-				arguments: {(aLookup receiver at: '@A')})} typAsType.
+				arguments: {(aLookup receiver at: #A)})} typAsType.
 			BlockClosure typAsType}
 ]
 
@@ -286,7 +286,7 @@ TypShaPhaCollection >> mDo: aLookup [
 				  Symbol typAsType.
 				  (BlockClosure
 					   typAsFunctionTypeWithResult: TypUnknownType instance
-					   arguments: { (aLookup root receiver at: '@A') }) } typAsType }
+					   arguments: { (aLookup root receiver at: #A) }) } typAsType }
 ]
 
 { #category : #shadow }
@@ -297,18 +297,18 @@ TypShaPhaCollection >> mFlatCollect: aLookup [
 	a := aLookup arguments at: 1.
 	r := (a isValue and: [ a value isString ])
 		     ifTrue: [ 
-			     ((aLookup receiver at: '@A')
+			     ((aLookup receiver at: #A)
 				      lookupMethod: a value asSymbol
 				      arguments: #(  )) result ]
 		     ifFalse: [ a result ].
 	^ CompiledMethod
 		  typAsFunctionTypeWithResult:
-		  (aLookup root receiver withParameters: { (r at: '@A') })
+		  (aLookup root receiver withParameters: { (r at: #A) })
 		  arguments: { { 
 				  Symbol typAsType.
 				  (BlockClosure
 					   typAsFunctionTypeWithResult: TypUnknownType instance
-					   arguments: { (aLookup receiver at: '@A') }) } typAsType }
+					   arguments: { (aLookup receiver at: #A) }) } typAsType }
 ]
 
 { #category : #shadow }
@@ -319,7 +319,7 @@ TypShaPhaCollection >> mGroupedBy: aLookup [
 	a := aLookup arguments at: 1.
 	r := (a isValue and: [ a value isString ])
 		     ifTrue: [ 
-			     ((aLookup receiver at: '@A')
+			     ((aLookup receiver at: #A)
 				      lookupMethod: a value asSymbol
 				      arguments: #(  )) result ]
 		     ifFalse: [ a result ].
@@ -328,12 +328,12 @@ TypShaPhaCollection >> mGroupedBy: aLookup [
 			  (OrderedDictionary typAsType withParameters: { 
 					   r.
 					   (Collection typAsType withParameters:
-						    { (aLookup receiver at: '@A') }) })
+						    { (aLookup receiver at: #A) }) })
 		  arguments: { { 
 				  Symbol typAsType.
 				  (BlockClosure
 					   typAsFunctionTypeWithResult: TypUnknownType instance
-					   arguments: { (aLookup receiver at: '@A') }) } typAsType }
+					   arguments: { (aLookup receiver at: #A) }) } typAsType }
 ]
 
 { #category : #shadow }
@@ -413,7 +413,7 @@ TypShaPhaCollection >> mIncludes: aLookup [
 	<typShaMethod: 'includes:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {(aLookup receiver at: '@A')}
+		arguments: {(aLookup receiver at: #A)}
 ]
 
 { #category : #shadow }
@@ -423,7 +423,7 @@ TypShaPhaCollection >> mIncludesAll: aLookup [
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments:
 			{(Collection typAsType
-				withParameters: {(aLookup receiver at: '@A')})}
+				withParameters: {(aLookup receiver at: #A)})}
 ]
 
 { #category : #shadow }
@@ -440,7 +440,7 @@ TypShaPhaCollection >> mInjectInto: aLookup [
 					   typAsFunctionTypeWithResult: TypUnknownType instance
 					   arguments: { 
 							   (aLookup arguments at: 1).
-							   (aLookup receiver at: '@A') }) }
+							   (aLookup receiver at: #A) }) }
 ]
 
 { #category : #shadow }
@@ -471,9 +471,9 @@ TypShaPhaCollection >> mReduce: aLookup [
 				   typAsFunctionTypeWithResult: TypUnknownType instance
 				   arguments: { 
 						   { 
-							   (aLookup receiver at: '@A').
+							   (aLookup receiver at: #A).
 							   (aLookup arguments at: 1) result } typAsType.
-						   (aLookup receiver at: '@A') }) }
+						   (aLookup receiver at: #A) }) }
 ]
 
 { #category : #shadow }
@@ -485,15 +485,15 @@ TypShaPhaCollection >> mReject: aLookup [
 			{{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: Boolean typAsType
-				arguments: {(aLookup receiver at: '@A')})} typAsType}
+				arguments: {(aLookup receiver at: #A)})} typAsType}
 ]
 
 { #category : #shadow }
 TypShaPhaCollection >> mRemove: aLookup [
 	<typShaMethod: 'remove:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
-		arguments: {(aLookup receiver at: '@A')}
+		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
+		arguments: {(aLookup receiver at: #A)}
 ]
 
 { #category : #shadow }
@@ -504,7 +504,7 @@ TypShaPhaCollection >> mRemoveIfAbsent: aLookup [
 			{(aLookup arguments at: 1).
 			(aLookup arguments at: 2) result} typAsType
 		arguments:
-			{(aLookup receiver at: '@A').
+			{(aLookup receiver at: #A).
 			BlockClosure typAsType}
 ]
 
@@ -517,7 +517,7 @@ TypShaPhaCollection >> mSelect: aLookup [
 			{{Symbol typAsType.
 			(BlockClosure
 				typAsFunctionTypeWithResult: Boolean typAsType
-				arguments: {(aLookup receiver at: '@A')})} typAsType}
+				arguments: {(aLookup receiver at: #A)})} typAsType}
 ]
 
 { #category : #shadow }
@@ -529,5 +529,5 @@ TypShaPhaCollection >> mSize: aLookup [
 { #category : #accessing }
 TypShaPhaCollection >> resolveType: aLookup [
 	^ aLookup root classDescription
-		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
+		typAsParametricTypeWithParameters: {(#A -> #A typAsVariableType)} asOrderedDictionary
 ]

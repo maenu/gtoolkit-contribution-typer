@@ -12,7 +12,7 @@ TypRewriter >> rewriteCopyWithParameters [
 		select: [ :e | 
 			| rewriter ok method |
 			rewriter := RBParseTreeRewriter new.
-			rewriter replace: '`@r copyWithParameters: {''@A'' -> `@a} asDictionary' with: '`@r copyWithParameters: {`@a}'.
+			rewriter replace: '`@r copyWithParameters: {#A -> `@a} asDictionary' with: '`@r copyWithParameters: {`@a}'.
 			ok := rewriter executeTree: e parseTree.
 			ok
 				ifTrue:
@@ -163,17 +163,55 @@ TypRewriter >> rewriteNilNewCopyWithOrigins [
 ]
 
 { #category : #accessing }
+TypRewriter >> rewriteParameterASyntax [
+
+	<gtExample>
+	| sink |
+	sink := AsyncCollectionSink forCollection: OrderedCollection new.
+	((('Typer' gtPackageMatches & '@A' gtSubstringMatch select: [ :e | 
+		   e methodClass ~= self class ]) result collect: [ :e | 
+		  | sourceCode |
+		  sourceCode := e sourceCode.
+		  sourceCode := sourceCode copyReplaceAll: '''''@A''''' with: '#A'.
+		  sourceCode := sourceCode copyReplaceAll: '''@A''' with: '#A'.
+		  sourceCode := sourceCode copyReplaceAll: '@A' with: '#A'.
+		  e origin compile: sourceCode classified: e protocol.
+		  e origin >> e selector ]) forward: sink) wait.
+	^ sink collection
+]
+
+{ #category : #accessing }
+TypRewriter >> rewriteParameterBSyntax [
+
+	<gtExample>
+	| sink |
+	sink := AsyncCollectionSink forCollection: OrderedCollection new.
+	((('Typer' gtPackageMatches & '@B' gtSubstringMatch select: [ :e | 
+		   e methodClass ~= self class ]) result collect: [ :e | 
+		  | sourceCode |
+		  sourceCode := e sourceCode.
+		  sourceCode := sourceCode copyReplaceAll: '''''@B''''' with: '#B'.
+		  sourceCode := sourceCode copyReplaceAll: '''@B''' with: '#B'.
+		  sourceCode := sourceCode copyReplaceAll: '@B' with: '#B'.
+		  e origin compile: sourceCode classified: e protocol.
+		  e origin >> e selector ]) forward: sink) wait.
+	^ sink collection
+]
+
+{ #category : #accessing }
 TypRewriter >> rewriteParameterSyntax [
 
 	<gtExample>
-	^ ((RPackageOrganizer default packages select: [ :e | 
-		    e name beginsWith: 'Typer' ]) flatCollect: #methods) do: [ :e | 
-		    Halt once. 
-		  e origin
-			  compile: ((e sourceCode copyReplaceAll: '''@A''' with: '#A')
-					   copyReplaceAll: '''@B'''
-					   with: '#B')
-			  classified: e protocol ]
+	| sink |
+	sink := AsyncCollectionSink forCollection: OrderedCollection new.
+	((('Typer' gtPackageMatches & '#A' gtSubstringMatch) result 
+		  collect: [ :e | 
+			  e origin
+				  compile: ((e sourceCode copyReplaceAll: '#A' with: '#A')
+						   copyReplaceAll: '''@B'''
+						   with: '#B')
+				  classified: e protocol ]) forward: sink) wait.
+	^ sink collection
 ]
 
 { #category : #accessing }
@@ -404,7 +442,7 @@ TypRewriter >> rewriteShadowMethods [
 		select: [ :e | 
 			| rewriter ok method |
 			rewriter := RBParseTreeRewriter new.
-			rewriter replace: '`@r copyWithParameters: {''@A'' -> `@a} asDictionary' with: '`@r copyWithParameters: {`@a}'.
+			rewriter replace: '`@r copyWithParameters: {#A -> `@a} asDictionary' with: '`@r copyWithParameters: {`@a}'.
 			ok := rewriter executeTree: e parseTree.
 			ok
 				ifTrue:
@@ -421,7 +459,7 @@ TypRewriter >> rewriteShadowMigrated [
 		select: [ :e | 
 			| rewriter ok method |
 			rewriter := RBParseTreeRewriter new.
-			rewriter replace: '`@r copyWithParameters: {''@A'' -> `@a} asDictionary' with: '`@r copyWithParameters: {`@a}'.
+			rewriter replace: '`@r copyWithParameters: {#A -> `@a} asDictionary' with: '`@r copyWithParameters: {`@a}'.
 			ok := rewriter executeTree: e parseTree.
 			ok
 				ifTrue:

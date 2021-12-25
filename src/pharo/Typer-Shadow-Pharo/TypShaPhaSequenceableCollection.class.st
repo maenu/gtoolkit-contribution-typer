@@ -21,7 +21,7 @@ TypShaPhaSequenceableCollection class >> shadowedClass [
 TypShaPhaSequenceableCollection >> mAt: aLookup [
 	<typShaMethod: 'at:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
+		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
 		arguments: {Integer typAsType}
 ]
 
@@ -30,7 +30,7 @@ TypShaPhaSequenceableCollection >> mAtIfAbsent: aLookup [
 	<typShaMethod: 'at:ifAbsent:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			{(aLookup receiver at: '@A').
+			{(aLookup receiver at: #A).
 			(aLookup arguments at: 2) result} typAsType
 		arguments:
 			{Integer typAsType.
@@ -64,7 +64,7 @@ TypShaPhaSequenceableCollection >> mDetectIndex: aLookup [
 		arguments:
 			{(BlockClosure
 				typAsFunctionTypeWithResult: Boolean typAsType
-				arguments: {(aLookup receiver at: '@A')})}
+				arguments: {(aLookup receiver at: #A)})}
 ]
 
 { #category : #shadow }
@@ -82,7 +82,7 @@ TypShaPhaSequenceableCollection >> mDetectIndexIfNone: aLookup [
 		  arguments: { 
 				  (BlockClosure
 					   typAsFunctionTypeWithResult: Boolean typAsType
-					   arguments: { (aLookup receiver at: '@A') }).
+					   arguments: { (aLookup receiver at: #A) }).
 				  { 
 					  TypUnknownType instance.
 					  (BlockClosure typAsFunctionTypeWithResult: Boolean typAsType) }
@@ -101,7 +101,7 @@ TypShaPhaSequenceableCollection >> mEndsWith: aLookup [
 TypShaPhaSequenceableCollection >> mFirst: aLookup [
 	<typShaMethod: 'first'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
+		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
 ]
 
 { #category : #shadow }
@@ -109,7 +109,7 @@ TypShaPhaSequenceableCollection >> mIndexOf: aLookup [
 	<typShaMethod: 'indexOf:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Integer typAsType
-		arguments: {(aLookup receiver at: '@A')}
+		arguments: {(aLookup receiver at: #A)}
 ]
 
 { #category : #shadow }
@@ -122,7 +122,7 @@ TypShaPhaSequenceableCollection >> mIsEmpty: aLookup [
 TypShaPhaSequenceableCollection >> mLast: aLookup [
 	<typShaMethod: 'last'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
+		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
 ]
 
 { #category : #shadow }
@@ -140,8 +140,8 @@ TypShaPhaSequenceableCollection >> mSort: aLookup [
 			{(BlockClosure
 				typAsFunctionTypeWithResult: Boolean typAsType
 				arguments:
-					{(aLookup receiver at: '@A').
-					(aLookup receiver at: '@A')})}
+					{(aLookup receiver at: #A).
+					(aLookup receiver at: #A)})}
 ]
 
 { #category : #shadow }
@@ -155,7 +155,7 @@ TypShaPhaSequenceableCollection >> mWithIndexCollect: aLookup [
 		  arguments: { (BlockClosure
 				   typAsFunctionTypeWithResult: TypUnknownType instance
 				   arguments: { 
-						   (aLookup receiver at: '@A').
+						   (aLookup receiver at: #A).
 						   Integer typAsType }) }
 ]
 
@@ -168,7 +168,7 @@ TypShaPhaSequenceableCollection >> mWithIndexDo: aLookup [
 		  arguments: { (BlockClosure
 				   typAsFunctionTypeWithResult: TypUnknownType instance
 				   arguments: { 
-						   (aLookup receiver at: '@A').
+						   (aLookup receiver at: #A).
 						   Integer typAsType }) }
 ]
 
@@ -181,12 +181,12 @@ TypShaPhaSequenceableCollection >> mWithIndexSelect: aLookup [
 			{(BlockClosure
 				typAsFunctionTypeWithResult: Boolean typAsType
 				arguments:
-					{(aLookup receiver at: '@A').
+					{(aLookup receiver at: #A).
 					Integer typAsType})}
 ]
 
 { #category : #converting }
 TypShaPhaSequenceableCollection >> resolveType: aLookup [
 	^ aLookup root classDescription
-		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
+		typAsParametricTypeWithParameters: {(#A -> #A typAsVariableType)} asOrderedDictionary
 ]

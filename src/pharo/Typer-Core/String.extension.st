@@ -11,9 +11,3 @@ String >> typAsTypes [
 	<typPraResult: 'SequenceableCollection<TypType>'>
 	^ TypTypeParser parse: self
 ]
-
-{ #category : #'*Typer-Core' }
-String >> typAsVariableType [
-	<typPraResult: 'TypVariableType'>
-	^ self typAsType	"typCastAs TypVariableType"
-]

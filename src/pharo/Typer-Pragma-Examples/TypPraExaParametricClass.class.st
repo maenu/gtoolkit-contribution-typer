@@ -11,7 +11,7 @@ Class {
 { #category : #initialization }
 TypPraExaParametricClass >> initialize [
 
-	<typPraParameters: '@A,@B'>
+	<typPraParameters: '#A,#B'>
 	<typPraVariable: #x as: #A>
 	<typPraVariable: #y as: #B>
 	super initialize

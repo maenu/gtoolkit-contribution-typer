@@ -165,7 +165,7 @@ TypTyping >> typeSomeMethods [
 	| all methods |
 	all := CompiledMethod allInstances.
 	methods := IdentitySet new.
-	[ methods size < 30 ] whileTrue: [ methods add: all atRandom ].
+	[ methods size < 3 ] whileTrue: [ methods add: all atRandom ].
 	all := nil.
 	^ methods asOrderedCollection collect: [ :e | 
 		  self typeMethod: e timeout: 30 seconds ]

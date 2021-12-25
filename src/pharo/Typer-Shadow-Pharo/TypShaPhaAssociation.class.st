@@ -13,20 +13,20 @@ TypShaPhaAssociation class >> shadowedClass [
 TypShaPhaAssociation >> mKey: aLookup [
 	<typShaMethod: 'key'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiver at: '@A')
+		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
 ]
 
 { #category : #shadow }
 TypShaPhaAssociation >> mValue: aLookup [
 	<typShaMethod: 'value'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiver at: '@B')
+		typAsFunctionTypeWithResult: (aLookup receiver at: #B)
 ]
 
 { #category : #accessing }
 TypShaPhaAssociation >> resolveType: aLookup [
 	^ aLookup root classDescription
 		typAsParametricTypeWithParameters:
-			{('@A' -> '@A' typAsVariableType).
-			('@B' -> '@B' typAsVariableType)} asOrderedDictionary
+			{(#A -> #A typAsVariableType).
+			(#B -> #B typAsVariableType)} asOrderedDictionary
 ]

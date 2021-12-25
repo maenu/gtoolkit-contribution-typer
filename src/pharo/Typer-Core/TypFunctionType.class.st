@@ -29,7 +29,7 @@ TypFunctionType class >> classDescription: aClassDescription result: aType argum
 			  parameters := OrderedDictionary new.
 			  parameters at: #'0' put: aType.
 			  aCollection withIndexDo: [ :e :i | 
-				  parameters at: i symbol put: e ].
+				  parameters at: i asString asSymbol put: e ].
 			  self new
 				  initializeClassDescription: aClassDescription;
 				  initializeParameters: parameters;
@@ -119,7 +119,7 @@ TypFunctionType >> > aType [
 TypFunctionType >> arguments [
 
 	<typPraResult: 'SequenceableCollection<TypType>'>
-	^ argumentsSize typTimesCollect: [ :i | self at: i asSymbol ]
+	^ argumentsSize typTimesCollect: [ :i | self at: i asString asSymbol ]
 ]
 
 { #category : #accessing }

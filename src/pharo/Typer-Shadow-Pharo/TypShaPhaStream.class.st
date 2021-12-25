@@ -16,7 +16,7 @@ TypShaPhaStream >> mBinary380: aLookup [
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{(Collection typAsType
-				withParameters: {(aLookup receiver at: '@A')})}
+				withParameters: {(aLookup receiver at: #A)})}
 ]
 
 { #category : #shadow }
@@ -30,5 +30,5 @@ TypShaPhaStream >> mNextPutAll: aLookup [
 { #category : #accessing }
 TypShaPhaStream >> resolveType: aLookup [
 	^ aLookup root classDescription
-		typAsParametricTypeWithParameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary
+		typAsParametricTypeWithParameters: {(#A -> #A typAsVariableType)} asOrderedDictionary
 ]
