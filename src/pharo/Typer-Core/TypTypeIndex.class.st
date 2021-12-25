@@ -8,14 +8,16 @@ Class {
 TypTypeIndex class >> instance [
 
 	^ instance ifNil: [ 
-		  instance := self new initializeResolver:
-			              (TypBreadthFirstResolver resolvers: { 
-					               (TypDepthFirstResolver resolver:
-						                (TypBreadthFirstResolver resolvers: { 
-								                 TypPraTypeResolver new.
-								                 TypShaTypeResolver new })).
-					               (TypDepthFirstResolver resolver:
-						                TypInfTypeResolver new) }) ]
+		  instance := self new
+			              initializeResolver:
+				              (TypBreadthFirstResolver resolvers: { 
+							               (TypDepthFirstResolver resolver:
+									                (TypBreadthFirstResolver resolvers: { 
+												                 TypPraTypeResolver new.
+												                 TypShaTypeResolver new })).
+							               (TypDepthFirstResolver resolver:
+									                TypInfTypeResolver new) });
+			              yourself ]
 ]
 
 { #category : #accessing }

@@ -4,6 +4,6 @@ Extension { #name : #LiteralVariable }
 LiteralVariable >> typInfType [
 
 	^ self class typAsParametricTypeWithParameters: { 
-			  ('@B' -> Symbol typAsType).
-			  ('@A' -> value typInfType) } asOrderedDictionary
+			  (#B -> Symbol typAsType).
+			  (#A -> value typInfType) } asOrderedDictionary
 ]

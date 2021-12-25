@@ -7,6 +7,14 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
+{ #category : #'as yet unclassified' }
+TypDepthFirstResolver class >> resolver: aResolver [
+
+	^ self new
+		  initializeResolver: aResolver;
+		  yourself
+]
+
 { #category : #resolving }
 TypDepthFirstResolver >> canResolve: aLookup [
 	^ (resolver canResolve: aLookup)

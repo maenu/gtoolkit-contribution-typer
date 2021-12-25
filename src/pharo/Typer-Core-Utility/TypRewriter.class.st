@@ -163,6 +163,20 @@ TypRewriter >> rewriteNilNewCopyWithOrigins [
 ]
 
 { #category : #accessing }
+TypRewriter >> rewriteParameterSyntax [
+
+	<gtExample>
+	^ ((RPackageOrganizer default packages select: [ :e | 
+		    e name beginsWith: 'Typer' ]) flatCollect: #methods) do: [ :e | 
+		    Halt once. 
+		  e origin
+			  compile: ((e sourceCode copyReplaceAll: '''@A''' with: '#A')
+					   copyReplaceAll: '''@B'''
+					   with: '#B')
+			  classified: e protocol ]
+]
+
+{ #category : #accessing }
 TypRewriter >> rewritePragmaArguments [
 	<gtExample>
 	^ #typTypeArgument:as: gtPragmas
