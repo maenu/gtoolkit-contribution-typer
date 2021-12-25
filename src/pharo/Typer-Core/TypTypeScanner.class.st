@@ -21,13 +21,13 @@ TypTypeScanner >> scanForToken [
 
 	self step.
 	currentCharacter == $! ifTrue: [ ^ self recordAndReportMatch: #( 1 ) ].
-	currentCharacter == $( ifTrue: [ ^ self recordAndReportMatch: #( 2 ) ].
-	currentCharacter == $) ifTrue: [ ^ self recordAndReportMatch: #( 3 ) ].
-	currentCharacter == $, ifTrue: [ ^ self recordAndReportMatch: #( 4 ) ].
+	currentCharacter == $# ifTrue: [ ^ self recordAndReportMatch: #( 2 ) ].
+	currentCharacter == $( ifTrue: [ ^ self recordAndReportMatch: #( 3 ) ].
+	currentCharacter == $) ifTrue: [ ^ self recordAndReportMatch: #( 4 ) ].
+	currentCharacter == $, ifTrue: [ ^ self recordAndReportMatch: #( 5 ) ].
 	currentCharacter == $- ifTrue: [ ^ self scanForTokenX3 ].
 	currentCharacter == $< ifTrue: [ ^ self scanForTokenX2 ].
-	currentCharacter == $> ifTrue: [ ^ self recordAndReportMatch: #( 8 ) ].
-	currentCharacter == $? ifTrue: [ ^ self recordAndReportMatch: #( 9 ) ].
+	currentCharacter == $> ifTrue: [ ^ self recordAndReportMatch: #( 9 ) ].
 	^ self scanForTokenX4
 ]
 
@@ -46,9 +46,9 @@ TypTypeScanner >> scanForTokenX1 [
 { #category : #generated }
 TypTypeScanner >> scanForTokenX2 [
 
-	self recordMatch: #( 6 ).
+	self recordMatch: #( 7 ).
 	self step.
-	currentCharacter == $= ifTrue: [ ^ self recordAndReportMatch: #( 7 ) ].
+	currentCharacter == $= ifTrue: [ ^ self recordAndReportMatch: #( 8 ) ].
 	^ self reportLastMatch
 ]
 
@@ -56,14 +56,14 @@ TypTypeScanner >> scanForTokenX2 [
 TypTypeScanner >> scanForTokenX3 [
 
 	self step.
-	currentCharacter == $> ifTrue: [ ^ self recordAndReportMatch: #( 5 ) ].
+	currentCharacter == $> ifTrue: [ ^ self recordAndReportMatch: #( 6 ) ].
 	^ self reportLastMatch
 ]
 
 { #category : #generated }
 TypTypeScanner >> scanForTokenX4 [
 
-	currentCharacter == $@ ifTrue: [ 
+	currentCharacter == $? ifTrue: [ 
 		^ self recordAndReportMatch: #( 10 ) ].
 	currentCharacter == $[ ifTrue: [ 
 		^ self recordAndReportMatch: #( 11 ) ].

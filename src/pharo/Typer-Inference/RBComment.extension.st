@@ -7,7 +7,7 @@ RBComment >> typInfType: aType [
 				typAsType ].
 	(aType isNamed and: [contents beginsWith: 'typParameters '])
 		ifTrue: [ ^ aType
-				copyWithParameters:
+				withParameters:
 					(contents copyFrom: 'typParameters ' size + 1 to: contents size)
 						typAsTypes ].
 	^ aType

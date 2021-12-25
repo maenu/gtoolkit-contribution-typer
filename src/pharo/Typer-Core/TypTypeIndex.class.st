@@ -27,6 +27,6 @@ TypTypeIndex >> lookupClassDescription: aClassDescription [
 
 	| lookup |
 	lookup := TypTypeLookup classDescription: aClassDescription.
-	(resolver canResolve: lookup) ifFalse: [ ^ unknown ].
+	(resolver canResolve: lookup) ifFalse: [ ^ TypUnknownType instance ].
 	^ resolver resolve: lookup
 ]

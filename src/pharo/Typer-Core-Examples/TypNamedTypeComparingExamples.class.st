@@ -10,7 +10,7 @@ TypNamedTypeComparingExamples >> equality [
 	| type copy superType |
 	type := TypNamedTypeInitializingExamples new classDescription.
 	copy := type copy.
-	superType := type superType.
+	superType := type super.
 	self assert: type = type.
 	self assert: type = copy.
 	self assert: type hash = type hash.
@@ -26,7 +26,7 @@ TypNamedTypeComparingExamples >> monotony [
 	| type copy superType |
 	type := TypNamedTypeInitializingExamples new classDescription.
 	copy := type copy.
-	superType := type superType.
+	superType := type super.
 	self assert: (type > type) not.
 	self assert: (type > copy) not.
 	self assert: (copy > type) not.

@@ -15,7 +15,7 @@ TypShaPhaRBMessageNode >> mArguments: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {RBValueNode typAsType})
+				withParameters: {RBValueNode typAsType})
 ]
 
 { #category : #shadow }
@@ -24,7 +24,7 @@ TypShaPhaRBMessageNode >> mKeywordsIntervals: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {(Interval typAsType copyWithParameters: {Integer typAsType})})
+				withParameters: {(Interval typAsType withParameters: {Integer typAsType})})
 ]
 
 { #category : #shadow }

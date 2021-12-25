@@ -37,18 +37,12 @@ TypUnknownType >> at: anObject [
 	^ self
 ]
 
-{ #category : #accessing }
-TypUnknownType >> copyWithParameters: aCollection [
-
-	^ self
-]
-
 { #category : #testing }
 TypUnknownType >> isUnknown [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
 TypUnknownType >> printOn: aStream skipping: anIdentitySet [
 	(anIdentitySet includes: self)
 		ifTrue: [ aStream << '.'.
@@ -58,5 +52,16 @@ TypUnknownType >> printOn: aStream skipping: anIdentitySet [
 
 { #category : #polymorphic }
 TypUnknownType >> result [
+
 	^ self
+]
+
+{ #category : #polymorphic }
+TypUnknownType >> withParameters: aCollection [
+
+	^ self
+		  outgoingAt: { 
+				  #withParameters:.
+				  aCollection }
+		  ifAbsentPut: [ self ]
 ]

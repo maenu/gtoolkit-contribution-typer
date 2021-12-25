@@ -52,7 +52,7 @@ TypShaPhaClass >> mNew: aLookup [
 TypShaPhaClass >> mSharedPools: aLookup [
 	<typShaMethod: 'sharedPools'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (Collection typAsType copyWithParameters: {Class typAsType})
+		typAsFunctionTypeWithResult: (Collection typAsType withParameters: {Class typAsType})
 ]
 
 { #category : #shadow }

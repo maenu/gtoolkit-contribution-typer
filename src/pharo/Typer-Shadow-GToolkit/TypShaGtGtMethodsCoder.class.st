@@ -10,7 +10,7 @@ TypShaGtGtMethodsCoder class >> mForMethods: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
 		arguments:
-			{(Collection typAsType copyWithParameters: {CompiledMethod typAsType})}
+			{(Collection typAsType withParameters: {CompiledMethod typAsType})}
 ]
 
 { #category : #'as yet unclassified' }
@@ -31,12 +31,12 @@ TypShaGtGtMethodsCoder >> mAnnounce: aLookup [
 TypShaGtGtMethodsCoder >> vMethodCoders: aLookup [
 	<typShaVariable: #methodCoders>
 	^ SequenceableCollection typAsType
-		copyWithParameters: {GtPharoMethodCoder typAsType}
+		withParameters: {GtPharoMethodCoder typAsType}
 ]
 
 { #category : #'as yet unclassified' }
 TypShaGtGtMethodsCoder >> vMethods: aLookup [
 	<typShaVariable: #methods>
 	^ SequenceableCollection typAsType
-		copyWithParameters: {CompiledMethod typAsType}
+		withParameters: {CompiledMethod typAsType}
 ]

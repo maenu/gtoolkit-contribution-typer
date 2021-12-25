@@ -15,7 +15,7 @@ TypShaPhaRBBlockNode >> mArguments: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {RBArgumentNode typAsType})
+				withParameters: {RBArgumentNode typAsType})
 ]
 
 { #category : #shadow }

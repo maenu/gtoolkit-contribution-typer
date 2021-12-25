@@ -14,8 +14,8 @@ TypShaPhaByteArray >> resolveType: aLookup [
 
 	| type |
 	type := aLookup root classDescription typAsNamedType.
-	(type hasSuperType and: [ type superType isParametric ]) ifTrue: [ 
-		type := type copyWithSuperType:
-			        (type superType copyWithParameters: { Integer typAsType }) ].
+	(type hasSuper and: [ type super isParametric ]) ifTrue: [ 
+		type := type withSuper:
+			        (type super withParameters: { Integer typAsType }) ].
 	^ type
 ]

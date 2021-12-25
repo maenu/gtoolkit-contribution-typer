@@ -17,35 +17,35 @@ TypValueType class >> value: anObject superType: aType [
 			  yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : #comparing }
 TypValueType >> = anObject [
 
 	anObject == self ifTrue: [ ^ true ].
 	anObject class = self class ifFalse: [ ^ false ].
 	value = anObject value ifFalse: [ ^ false ].
-	^ self superType = anObject superType
+	^ self super = anObject super
 ]
 
-{ #category : #accessing }
+{ #category : #comparing }
 TypValueType >> hashSkipping: anIdentitySet [
 
 	(anIdentitySet includes: self) ifTrue: [ ^ 53 ].
 	^ (53 bitXor: value hash) bitXor: (super hashSkipping: anIdentitySet)
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 TypValueType >> initializeValue: anObject [
 
 	value := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 TypValueType >> isValue [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
 TypValueType >> printOn: aStream skipping: anIdentitySet [
 
 	(anIdentitySet includes: self) ifTrue: [ 

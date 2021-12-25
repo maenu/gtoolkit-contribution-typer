@@ -23,7 +23,7 @@ TypShaPhaRBMethodNode >> mAllChildren: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {RBProgramNode typAsType})
+				withParameters: {RBProgramNode typAsType})
 ]
 
 { #category : #shadow }
@@ -32,7 +32,7 @@ TypShaPhaRBMethodNode >> mArguments: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {RBArgumentNode typAsType})
+				withParameters: {RBArgumentNode typAsType})
 ]
 
 { #category : #shadow }
@@ -82,7 +82,7 @@ TypShaPhaRBMethodNode >> mPragmas: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {RBPragmaNode typAsType})
+				withParameters: {RBPragmaNode typAsType})
 ]
 
 { #category : #shadow }

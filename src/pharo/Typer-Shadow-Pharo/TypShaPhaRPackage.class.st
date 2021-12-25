@@ -13,12 +13,12 @@ TypShaPhaRPackage class >> shadowedClass [
 TypShaPhaRPackage >> mDefinedClasses: aLookup [
 	<typShaMethod: 'definedClasses'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (Collection typAsType copyWithParameters: {Class typAsType})
+		typAsFunctionTypeWithResult: (Collection typAsType withParameters: {Class typAsType})
 ]
 
 { #category : #shadow }
 TypShaPhaRPackage >> mMethods: aLookup [
 	<typShaMethod: 'methods'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (Collection typAsType copyWithParameters: {CompiledMethod typAsType})
+		typAsFunctionTypeWithResult: (Collection typAsType withParameters: {CompiledMethod typAsType})
 ]

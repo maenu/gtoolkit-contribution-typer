@@ -18,7 +18,7 @@ TypParametricTypePrintingExamples >> asStringRecursive [
 	<gtExample>
 	| type |
 	type := TypParametricTypeInitializingExamples new classDescriptionParameters.
-	type parameters at: '@A' put: type.
+	type parameters at: #A put: type.
 	self assert: type asString equals: 'Integer<.>'.
 	^ type
 ]

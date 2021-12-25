@@ -9,7 +9,7 @@ TypVariableTypePrintingExamples >> asString [
 	<gtExample>
 	| type |
 	type := TypVariableTypeInitializingExamples new named.
-	self assert: type asString equals: '@A'.
+	self assert: type asString equals: '#A'.
 	^ type
 ]
 
@@ -18,6 +18,6 @@ TypVariableTypePrintingExamples >> asStringWithSuperType [
 	<gtExample>
 	| type |
 	type := TypVariableTypeInitializingExamples new namedSuperType.
-	self assert: type asString equals: '@A<=String'.
+	self assert: type asString equals: '#A<=String'.
 	^ type
 ]

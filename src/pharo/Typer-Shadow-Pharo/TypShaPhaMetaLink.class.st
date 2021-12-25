@@ -16,7 +16,7 @@ TypShaPhaMetaLink >> mArguments: aLookup [
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{(SequenceableCollection typAsType
-				copyWithParameters: {Symbol typAsType})}
+				withParameters: {Symbol typAsType})}
 ]
 
 { #category : #shadow }

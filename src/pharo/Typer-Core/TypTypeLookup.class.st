@@ -21,24 +21,30 @@ TypTypeLookup >> = anObject [
 	^ classDescription = anObject classDescription
 ]
 
+{ #category : #copying }
+TypTypeLookup >> asSuper [
+
+	self assert: [ self hasSuper ].
+	^ self outgoingAt: #super ifAbsentPut: [ 
+		  self flag: 'TODO no copy, use class-side index'.
+		  self copy
+			  initializeSuper: self;
+			  initializeClassDescription: classDescription superclass;
+			  yourself ]
+]
+
 { #category : #accessing }
 TypTypeLookup >> classDescription [
 	<typPraResult: 'ClassDescription'>
 	^ classDescription
 ]
 
-{ #category : #copying }
-TypTypeLookup >> copyAsSuper [
-	self assert: [ self hasSuper ].
-	^ self copy
-		initializeParent: self;
-		initializeClassDescription: classDescription superclass;
-		yourself
-]
-
 { #category : #testing }
 TypTypeLookup >> hasSuper [
-	^ classDescription superclass isNotNil and: [ classDescription superclass ~= classDescription and: [ (classDescription superclass inheritsFrom: classDescription) not ] ]
+
+	^ classDescription superclass isNotNil and: [ 
+		  classDescription superclass ~= classDescription and: [ 
+			  (classDescription superclass inheritsFrom: classDescription) not ] ]
 ]
 
 { #category : #comparing }

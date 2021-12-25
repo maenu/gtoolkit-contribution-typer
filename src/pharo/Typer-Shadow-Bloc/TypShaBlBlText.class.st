@@ -23,7 +23,7 @@ TypShaBlBlText >> mAttributesAt: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {BlTextAttribute typAsType})
+				withParameters: {BlTextAttribute typAsType})
 		arguments: {Integer typAsType}
 ]
 

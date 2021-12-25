@@ -15,7 +15,7 @@ TypShaGtGtPharoCompletionStrategy >> mActionsForAt: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {GtCompletionAction typAsType})
+				withParameters: {GtCompletionAction typAsType})
 		arguments:
 			{GtPharoMethodNode typAsType.
 			Integer typAsType}
@@ -51,7 +51,7 @@ TypShaGtGtPharoCompletionStrategy >> mSelectorsForReceiverMatching: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {String typAsType})
+				withParameters: {String typAsType})
 		arguments:
 			{Behavior typAsType.
 			String typAsType}

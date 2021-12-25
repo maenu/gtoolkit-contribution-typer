@@ -11,7 +11,7 @@ TypFunctionTypeComparingExamples >> equality [
 	type := TypFunctionTypeInitializingExamples new
 		classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	copy := type copy.
-	superType := type superType.
+	superType := type super.
 	self assert: type = type.
 	self assert: type = copy.
 	self assert: type hash = type hash.
@@ -28,7 +28,7 @@ TypFunctionTypeComparingExamples >> monotony [
 	type := TypFunctionTypeInitializingExamples new
 		classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	copy := type copy.
-	superType := type superType.
+	superType := type super.
 	self assert: (type > type) not.
 	self assert: (type > copy) not.
 	self assert: (copy > type) not.

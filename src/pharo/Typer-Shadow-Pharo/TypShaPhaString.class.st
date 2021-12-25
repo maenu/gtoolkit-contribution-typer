@@ -46,7 +46,7 @@ TypShaPhaString >> mJoin: aLookup [
 	<typShaMethod: 'join:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: String typAsType
-		arguments: {(Collection typAsType copyWithParameters: {String typAsType})}
+		arguments: {(Collection typAsType withParameters: {String typAsType})}
 ]
 
 { #category : #shadow }
@@ -55,7 +55,7 @@ TypShaPhaString >> mKeywords: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {String typAsType})
+				withParameters: {String typAsType})
 ]
 
 { #category : #shadow }
@@ -64,7 +64,7 @@ TypShaPhaString >> mSplit: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {(aLookup arguments at: 1)})
+				withParameters: {(aLookup arguments at: 1)})
 		arguments: {SequenceableCollection typAsType}
 ]
 
@@ -79,8 +79,8 @@ TypShaPhaString >> resolveType: aLookup [
 
 	| type |
 	type := aLookup root classDescription typAsNamedType.
-	(type hasSuperType and: [ type superType isParametric ]) ifTrue: [ 
-		type := type copyWithSuperType:
-			        (type superType copyWithParameters: { Character typAsType }) ].
+	(type hasSuper and: [ type super isParametric ]) ifTrue: [ 
+		type := type withSuper:
+			        (type super withParameters: { Character typAsType }) ].
 	^ type
 ]

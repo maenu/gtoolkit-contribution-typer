@@ -10,10 +10,8 @@ Class {
 
 { #category : #resolving }
 TypCachingResolver >> canResolve: aLookup [
-	^ cache
-		at: aLookup
-		ifPresent: [ true ]
-		ifAbsent: [ resolver canResolve: aLookup ]
+
+	^ resolver canResolve: aLookup
 ]
 
 { #category : #initialization }
@@ -54,9 +52,7 @@ TypCachingResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 { #category : #resolving }
 TypCachingResolver >> resolve: aLookup [
 
-	self assert: [ self canResolve: aLookup ].
-	^ cache at: aLookup ifAbsent: [ 
-		  cache
-			  at: aLookup put: unknown;
-			  at: aLookup put: (resolver resolve: aLookup) ]
+	^ self outgoingAt: aLookup ifPresent: #yourself ifAbsentPut: [ 
+		  self outgoingAt: aLookup ensure: unknown.
+		  resolver resolve: aLookup ]
 ]

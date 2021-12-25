@@ -27,6 +27,6 @@ TypVariableIndex >> lookupReceiver: aType selector: aSymbol [
 
 	| lookup |
 	lookup := TypVariableLookup receiver: aType selector: aSymbol.
-	(resolver canResolve: lookup) ifFalse: [ ^ unknown ].
+	(resolver canResolve: lookup) ifFalse: [ ^ TypUnknownType instance ].
 	^ resolver resolve: lookup
 ]

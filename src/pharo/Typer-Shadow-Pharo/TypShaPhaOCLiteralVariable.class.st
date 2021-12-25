@@ -14,7 +14,7 @@ TypShaPhaOCLiteralVariable >> mAssoc: aLookup [
 
 	<typShaMethod: 'assoc'>
 	^ CompiledMethod typAsFunctionTypeWithResult:
-		  (Association typAsType copyWithParameters: { 
+		  (Association typAsType withParameters: { 
 				   String typAsType.
 				   TypUnknownType instance })
 ]

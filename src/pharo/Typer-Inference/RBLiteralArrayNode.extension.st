@@ -8,7 +8,7 @@ RBLiteralArrayNode >> typInfTypeRecursiveIn: aContext [
 		  ifFalse: [ 
 			  TypValueType
 				  value: self value
-				  superType: (Array typAsType copyWithParameters:
+				  superType: (Array typAsType withParameters:
 						   { (contents collect: [ :e | e typInfTypeIn: aContext ])
 							   typAsType }) ]
 ]

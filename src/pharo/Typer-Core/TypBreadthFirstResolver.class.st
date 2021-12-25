@@ -53,6 +53,10 @@ TypBreadthFirstResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 
 { #category : #resolving }
 TypBreadthFirstResolver >> resolve: aLookup [
+
+	<typEdge>
+	| resolver |
 	self assert: [ self canResolve: aLookup ].
-	^ (resolvers detect: [ :e | e canResolve: aLookup ]) resolve: aLookup
+	resolver := resolvers detect: [ :e | e canResolve: aLookup ].
+	^ resolver resolve: aLookup
 ]

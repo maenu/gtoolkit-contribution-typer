@@ -9,7 +9,7 @@ Dictionary >> typInfType [
 	self typInfTypes do: [ :e | 
 		b add: (e at: '@B').
 		a add: (e at: '@A') ].
-	^ self class typAsType copyWithParameters: { 
+	^ self class typAsType withParameters: { 
 			  b typAsType.
 			  a typAsType }
 ]

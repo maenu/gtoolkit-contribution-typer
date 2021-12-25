@@ -42,7 +42,7 @@ TypNamedType >> = anObject [
 	^ name = anObject name
 ]
 
-{ #category : #accessing }
+{ #category : #comparing }
 TypNamedType >> > aType [
 	aType = self
 		ifTrue: [ ^ false ].
@@ -53,50 +53,29 @@ TypNamedType >> > aType [
 		ifFalse: [ ^ super > aType ].
 	aType classDescription = self classDescription
 		ifFalse: [ ^ aType classDescription inheritsFrom: self classDescription ].
-	(self hasSuperType and: [ aType hasSuperType ])
+	(self hasSuper and: [ aType hasSuper ])
 		ifFalse: [ ^ false ].
-	^ self superType > aType superType
+	^ self super > aType super
 ]
 
 { #category : #polymorphic }
 TypNamedType >> at: aString [
 
-	self flag: 'TODO add proper origin'.
-	self hasSuperType ifFalse: [ ^ TypUnknownType instance ].
-	^ self superType at: aString
+	^ self
+		  outgoingAt: { 
+				  #at:.
+				  aString }
+		  ifAbsentPut: [ 
+			  self hasSuper
+				  ifTrue: [ self super at: aString ]
+				  ifFalse: [ TypUnknownType instance ] ]
 ]
 
-{ #category : #converting }
+{ #category : #accessing }
 TypNamedType >> classDescription [
 	<typPraResult: 'ClassDescription'>
 	self assert: [ self hasClassDescription ].
 	^ classDescription
-]
-
-{ #category : #polymorphic }
-TypNamedType >> copyWithAt: aString put: aType [
-
-	^ self
-		  outgoingAt: #copyWithAt:put: -> { 
-				  aString.
-				  aType }
-		  ifAbsentPut: [ 
-			  self copyWithSuperType:
-				  (self superType copyWithAt: aString put: aType) ]
-]
-
-{ #category : #polymorphic }
-TypNamedType >> copyWithParameters: aCollection [
-
-	^ self
-		  outgoingAt: #copyWithParameters: -> aCollection
-		  ifAbsentPut: [ 
-			  | copy |
-			  copy := self copy.
-			  copy hasSuperType ifTrue: [ 
-				  copy initializeSuperType:
-					  (copy superType copyWithParameters: aCollection) ].
-			  copy ]
 ]
 
 { #category : #testing }
@@ -110,8 +89,8 @@ TypNamedType >> hasClassDescription [
 				do: [ false ] ]
 ]
 
-{ #category : #accessing }
-TypNamedType >> hasSuperType [
+{ #category : #testing }
+TypNamedType >> hasSuper [
 	^ superType isNotNil
 		or: [ self hasClassDescription
 				and: [ self classDescription superclass isNotNil ] ]
@@ -132,7 +111,7 @@ TypNamedType >> initialize [
 	super initialize
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 TypNamedType >> initializeClassDescription: aClassDescription [
 
 	<typPraArguments: 'ClassDescription'>
@@ -141,7 +120,7 @@ TypNamedType >> initializeClassDescription: aClassDescription [
 	hasClassDescription := true
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 TypNamedType >> initializeName: anObject [
 
 	<typPraArguments: 'String'>
@@ -173,7 +152,7 @@ TypNamedType >> name [
 
 { #category : #polymorphic }
 TypNamedType >> parameters [
-	^ self superType parameters
+	^ self super parameters
 ]
 
 { #category : #printing }
@@ -188,13 +167,37 @@ TypNamedType >> printOn: aStream skipping: anIdentitySet [
 { #category : #polymorphic }
 TypNamedType >> result [
 
-	self hasSuperType ifFalse: [ ^ TypUnknownType instance ].
-	^ self superType result
+	self hasSuper ifFalse: [ ^ TypUnknownType instance ].
+	^ self super result
 ]
 
 { #category : #accessing }
-TypNamedType >> superType [
-	self assert: [ self hasSuperType ].
+TypNamedType >> super [
+	self assert: [ self hasSuper ].
 	^ superType
 		ifNil: [ superType := classDescription superclass typAsType ]
+]
+
+{ #category : #polymorphic }
+TypNamedType >> withAt: aString put: aType [
+
+	<typEdge>
+	^ self withSuper: (self super withAt: aString put: aType)
+]
+
+{ #category : #polymorphic }
+TypNamedType >> withParameters: aCollection [
+
+	^ self
+		  outgoingAt: { 
+				  #withParameters:.
+				  aCollection }
+		  ifAbsentPut: [ 
+			  | copy |
+			  self flag: 'TODO should use index lookup, not copy'.
+			  copy := self copy.
+			  copy hasSuper ifTrue: [ 
+				  copy initializeSuperType:
+					  (copy super withParameters: aCollection) ].
+			  copy ]
 ]

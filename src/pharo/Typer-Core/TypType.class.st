@@ -11,12 +11,6 @@ Class {
 }
 
 { #category : #initialization }
-TypType class >> at: aKey ifAbsentPut: aBlock [
-
-	^ index at: aKey ifAbsentPut: aBlock
-]
-
-{ #category : #initialization }
 TypType class >> initialize [
 
 	index := WeakValueDictionary new
@@ -51,14 +45,14 @@ TypType >> <= aType [
 	^ aType >= self
 ]
 
-{ #category : #accessing }
+{ #category : #comparing }
 TypType >> = anObject [
 
 	anObject == self ifTrue: [ ^ true ].
 	anObject class = self class ifFalse: [ ^ false ].
-	self hasSuperType = anObject hasSuperType ifFalse: [ ^ false ].
-	self hasSuperType ifFalse: [ ^ true ].
-	^ self superType = anObject superType
+	self hasSuper = anObject hasSuper ifFalse: [ ^ false ].
+	self hasSuper ifFalse: [ ^ true ].
+	^ self super = anObject super
 ]
 
 { #category : #comparing }
@@ -67,9 +61,9 @@ TypType >> > aType [
 	<typPraArguments: 'TypType'>
 	aType = self
 		ifTrue: [ ^ false ].
-	aType hasSuperType
+	aType hasSuper
 		ifFalse: [ ^ false ].
-	^ self >= aType superType
+	^ self >= aType super
 ]
 
 { #category : #comparing }
@@ -84,61 +78,62 @@ TypType >> asCompatibleWith: aType [
 
 	<typPraResult: 'TypType'>
 	<typPraArguments: 'TypType'>
-	aType isVariable ifTrue: [ ^ aType ].
-	aType isUnknown ifTrue: [ ^ aType ].
-	aType isNil ifTrue: [ ^ self asNullable ].
-	self >= aType ifTrue: [ ^ self ].
-	self hasSuperType ifTrue: [ ^ self superType asCompatibleWith: aType ].
 	^ self
-		  addOutgoingTarget: TypUnknownType instance
-		  data: #asCompatibleWith:
+		  outgoingAt: { 
+				  #asCompatibleWith:.
+				  aType }
+		  ifAbsentPut: [ 
+			  aType isVariable
+				  ifTrue: [ aType ]
+				  ifFalse: [ 
+					  aType isUnknown
+						  ifTrue: [ aType ]
+						  ifFalse: [ 
+							  aType isNil
+								  ifTrue: [ self asNullable ]
+								  ifFalse: [ 
+									  self >= aType
+										  ifTrue: [ self ]
+										  ifFalse: [ TypUnknownType instance ] ] ] ] ]
 ]
 
 { #category : #converting }
 TypType >> asNonNullable [
+
 	<typPraResult: 'TypType'>
-	^ self
+	^ self outgoingAt: { #asNonNullable } ifAbsentPut: [ self ]
 ]
 
 { #category : #converting }
 TypType >> asNullable [
 
 	<typPraResult: 'TypType'>
-	^ self outgoingAt: #asNullable ifAbsentPut: [ 
+	^ self outgoingAt: { #asNullable } ifAbsentPut: [ 
 		  { 
 			  TypNilType instance.
 			  self } typAsType ]
 ]
 
-{ #category : #copying }
-TypType >> copyWithSuperType: aType [
-
-	^ self outgoingAt: #copyWithSuperType: -> aType ifAbsentPut: [ 
-		  self copy
-			  initializeSuperType: aType;
-			  yourself ]
-]
-
 { #category : #testing }
-TypType >> hasSuperType [
+TypType >> hasSuper [
 	^ superType isNotNil
 ]
 
-{ #category : #accessing }
+{ #category : #comparing }
 TypType >> hash [
 
 	^ self hashSkipping: IdentitySet new
 ]
 
-{ #category : #accessing }
+{ #category : #comparing }
 TypType >> hashSkipping: anIdentitySet [
 
 	<typPraArguments: 'IdentitySet<TypType>'>
 	<typPraResult: 'Integer'>
 	(anIdentitySet includes: self) ifTrue: [ ^ 23 ].
 	anIdentitySet add: self.
-	self hasSuperType ifFalse: [ ^ 23 ].
-	^ 23 bitXor: (self superType hashSkipping: anIdentitySet)
+	self hasSuper ifFalse: [ ^ 23 ].
+	^ 23 bitXor: (self super hashSkipping: anIdentitySet)
 ]
 
 { #category : #initialization }
@@ -152,9 +147,9 @@ TypType >> initialize [
 TypType >> initializeSuperType: aType [
 
 	aType = superType ifTrue: [ ^ self ].
-	superType ifNotNil: [ self outgoingRemoveAt: #superType ].
+	superType ifNotNil: [ self outgoingRemoveAt: #super ].
 	superType := aType.
-	superType ifNotNil: [ self outgoingAt: #superType ensure: superType ]
+	superType ifNotNil: [ self outgoingAt: #super ensure: superType ]
 ]
 
 { #category : #invalidation }
@@ -210,7 +205,7 @@ TypType >> isUnknown [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 TypType >> isValue [
 
 	^ false
@@ -246,39 +241,6 @@ TypType >> lookupVariable: aSymbol [
 		selector: aSymbol
 ]
 
-{ #category : #converting }
-TypType >> outgoingAt: anObject ensure: aNode [
-
-	outgoing
-		detect: [ :e | e data = anObject ]
-		ifFound: [ :e | 
-			e target == aNode
-				ifTrue: [ ^ aNode ]
-				ifFalse: [ self removeOutgoing: e ] ]
-		ifNone: [ "noop" ].
-	^ self addOutgoing:
-		  (TypEdge origin: self target: aNode data: anObject)
-]
-
-{ #category : #converting }
-TypType >> outgoingAt: anObject ifAbsentPut: aBlock [
-
-	self flag:
-		'TODO could improve linear scan to constant by maintaining index'.
-	^ outgoing
-		  detect: [ :e | e data = anObject ]
-		  ifFound: #target
-		  ifNone: [ self addOutgoingTarget: aBlock value data: anObject ]
-]
-
-{ #category : #accessing }
-TypType >> outgoingRemoveAt: anObject [
-
-	outgoing
-		select: [ :e | e data = anObject ]
-		thenDo: [ :e | self removeOutgoing: e ]
-]
-
 { #category : #printing }
 TypType >> printOn: aStream [
 	self printOn: aStream skipping: IdentitySet new
@@ -291,9 +253,23 @@ TypType >> printOn: aStream skipping: anIdentitySet [
 ]
 
 { #category : #accessing }
-TypType >> superType [
+TypType >> super [
 
 	<typPraResult: 'TypType'>
-	self assert: [ self hasSuperType ].
+	self assert: [ self hasSuper ].
 	^ superType "typCastAs TypType"
+]
+
+{ #category : #converting }
+TypType >> withSuper: aType [
+
+	^ self
+		  outgoingAt: { 
+				  #withSuper:.
+				  aType }
+		  ifAbsentPut: [ 
+			  self flag: 'TODO should use index lookup, not copy'.
+			  self copy
+				  initializeSuperType: aType;
+				  yourself ]
 ]

@@ -27,9 +27,9 @@ TypFunctionType class >> classDescription: aClassDescription result: aType argum
 		  ifAbsentPut: [ 
 			  | parameters |
 			  parameters := OrderedDictionary new.
-			  parameters at: '@0' put: aType.
+			  parameters at: #'0' put: aType.
 			  aCollection withIndexDo: [ :e :i | 
-				  parameters at: '@' , i asString put: e ].
+				  parameters at: i symbol put: e ].
 			  self new
 				  initializeClassDescription: aClassDescription;
 				  initializeParameters: parameters;
@@ -57,9 +57,10 @@ TypFunctionType class >> named: aString result: aType arguments: aCollection arg
 		  ifAbsentPut: [ 
 			  | parameters |
 			  parameters := OrderedDictionary new.
-			  parameters at: '@0' put: aType.
+			  parameters at: #'0' put: aType.
 			  aCollection withIndexDo: [ :e :i | 
-				  parameters at: '@' , i asString put: e ].
+				  parameters at: i asSymbol
+				 put: e ].
 			  self new
 				  initializeName: aString;
 				  initializeParameters: parameters;
@@ -116,9 +117,9 @@ TypFunctionType >> > aType [
 
 { #category : #accessing }
 TypFunctionType >> arguments [
+
 	<typPraResult: 'SequenceableCollection<TypType>'>
-	^ (1 to: argumentsSize)
-		withIndexCollect: [ :e :i | self at: '@' , i asString ]
+	^ argumentsSize typTimesCollect: [ :i | self at: i asSymbol ]
 ]
 
 { #category : #accessing }
@@ -134,40 +135,24 @@ TypFunctionType >> argumentsSize [
 { #category : #converting }
 TypFunctionType >> asCompatibleWith: aType [
 
-	| copy |
-	(aType isFunction and: [ 
-		 argumentsSize = aType argumentsSize and: [ 
-			 argumentsOptional = aType argumentsOptional ] ]) ifFalse: [ 
-		^ super asCompatibleWith: aType ].
-	copy := self copy.
-	parameters keysAndValuesDo: [ :n :t | 
-		copy := copy copyWithAt: n put: (t asCompatibleWith: (aType at: n)) ].
-	^ copy
-]
-
-{ #category : #copying }
-TypFunctionType >> copyWithArguments: someTypes [
-
-	^ self copyWithParameters: { self result } , someTypes
-]
-
-{ #category : #copying }
-TypFunctionType >> copyWithResult: aType [
-
-	^ self copyWithAt: '@0' put: aType
-]
-
-{ #category : #copying }
-TypFunctionType >> copyWithSignalsAlways: aBooleanOrNil [
-
 	^ self
-		  outgoingAt: #copyWithSignalsAlways: -> aBooleanOrNil
+		  outgoingAt: { 
+				  #asCompatibleWith:.
+				  aType }
 		  ifAbsentPut: [ 
-			  self copy
-				  initializeArgumentsSize: argumentsSize
-				  argumentsOptional: argumentsOptional
-				  signalsAlways: aBooleanOrNil;
-				  yourself ]
+			  (aType isFunction and: [ 
+				   argumentsSize = aType argumentsSize and: [ 
+					   argumentsOptional = aType argumentsOptional ] ])
+				  ifTrue: [ 
+					  | copy |
+					  copy := self copy.
+					  parameters keysAndValuesDo: [ :n :t | 
+						  self flag: 'TODO loop is ugly'.
+						  copy := copy
+							          withAt: n
+							          put: (t asCompatibleWith: (aType at: n)) ].
+					  copy ]
+				  ifFalse: [ super asCompatibleWith: aType ] ]
 ]
 
 { #category : #comparing }
@@ -199,8 +184,8 @@ TypFunctionType >> initializeParameters: anOrderedDictionary [
 	self
 		assert: [ anOrderedDictionary associations
 				allSatisfy: [ :e | 
-					e key = '@0'
-						or: [ e value isVariable not or: [ e value name ~= '@0' ] ] ] ].
+					e key = #'0'
+						or: [ e value isVariable not or: [ e value name ~= #'0' ] ] ] ].
 	super initializeParameters: anOrderedDictionary
 ]
 
@@ -209,7 +194,7 @@ TypFunctionType >> isFunction [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
 TypFunctionType >> printOn: aStream skipping: anIdentitySet [
 	(anIdentitySet includes: self)
 		ifTrue: [ aStream << '.'.
@@ -237,10 +222,46 @@ TypFunctionType >> printOn: aStream skipping: anIdentitySet [
 { #category : #accessing }
 TypFunctionType >> result [
 	<typPraResult: 'TypType'>
-	^ self at: '@0'
+	^ self at: #'0'
 ]
 
 { #category : #accessing }
 TypFunctionType >> signalsAlways [
 	^ signalsAlways
+]
+
+{ #category : #converting }
+TypFunctionType >> withArguments: someTypes [
+
+	^ self
+		  outgoingAt: { 
+				  #withArguments:.
+				  someTypes }
+		  ifAbsentPut: [ self withParameters: { self result } , someTypes ]
+]
+
+{ #category : #converting }
+TypFunctionType >> withResult: aType [
+
+	^ self
+		  outgoingAt: { 
+				  #withResult:.
+				  aType }
+		  ifAbsentPut: [ self withAt: #'0' put: aType ]
+]
+
+{ #category : #converting }
+TypFunctionType >> withSignalsAlways: aBooleanOrNil [
+
+	^ self
+		  outgoingAt: { 
+				  #withSignalsAlways:.
+				  aBooleanOrNil }
+		  ifAbsentPut: [ 
+			  self flag: 'TODO should use index lookup, not copy'.
+			  self copy
+				  initializeArgumentsSize: argumentsSize
+				  argumentsOptional: argumentsOptional
+				  signalsAlways: aBooleanOrNil;
+				  yourself ]
 ]

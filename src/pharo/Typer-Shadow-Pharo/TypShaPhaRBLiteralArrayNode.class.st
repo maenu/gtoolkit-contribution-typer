@@ -15,5 +15,5 @@ TypShaPhaRBLiteralArrayNode >> mContents: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {RBLiteralNode typAsType})
+				withParameters: {RBLiteralNode typAsType})
 ]

@@ -31,6 +31,6 @@ TypMethodIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aColl
 		          receiver: aType
 		          selector: aSymbol
 		          arguments: aCollection.
-	(resolver canResolve: lookup) ifFalse: [ ^ unknown ].
+	(resolver canResolve: lookup) ifFalse: [ ^ TypUnknownType instance ].
 	^ resolver resolve: lookup
 ]

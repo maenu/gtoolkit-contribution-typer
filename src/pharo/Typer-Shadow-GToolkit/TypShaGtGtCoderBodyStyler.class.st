@@ -18,7 +18,7 @@ TypShaGtGtCoderBodyStyler >> mStyleFromToWith: aLookup [
 			{Integer typAsType.
 			Integer typAsType.
 			(SequenceableCollection typAsType
-				copyWithParameters: {BlTextAttribute typAsType})}
+				withParameters: {BlTextAttribute typAsType})}
 ]
 
 { #category : #shadow }

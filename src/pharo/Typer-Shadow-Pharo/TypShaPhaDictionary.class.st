@@ -22,7 +22,7 @@ TypShaPhaDictionary >> mAsOrderedDictionary: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(OrderedDictionary typAsType
-				copyWithParameters:
+				withParameters:
 					{(aLookup receiver at: '@B').
 					(aLookup receiver at: '@A')})
 ]
@@ -33,9 +33,9 @@ TypShaPhaDictionary >> mAssociations: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(Array typAsType
-				copyWithParameters:
+				withParameters:
 					{(Association typAsType
-						copyWithParameters:
+						withParameters:
 							{(aLookup receiver at: '@B').
 							(aLookup receiver at: '@A')})})
 ]
@@ -48,7 +48,7 @@ TypShaPhaDictionary >> mAssociationsDo: aLookup [
 		  typAsFunctionTypeWithResult: aLookup root receiver
 		  arguments: { (BlockClosure
 				   typAsFunctionTypeWithResult: TypUnknownType instance
-				   arguments: { (Association typAsType copyWithParameters: { 
+				   arguments: { (Association typAsType withParameters: { 
 							    (aLookup receiver at: '@B').
 							    (aLookup receiver at: '@A') }) }) }
 ]
@@ -118,7 +118,7 @@ TypShaPhaDictionary >> mBinary214: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(aLookup receiver
-				copyWithParameters:
+				withParameters:
 					{{(aLookup receiver at: '@B').
 					((aLookup arguments at: 1) at: '@B')} typAsType.
 					{(aLookup receiver at: '@A').
@@ -140,7 +140,7 @@ TypShaPhaDictionary >> mCollect: aLookup [
 		     ifFalse: [ a result ].
 	^ CompiledMethod
 		  typAsFunctionTypeWithResult:
-			  (aLookup root receiver copyWithParameters: { 
+			  (aLookup root receiver withParameters: { 
 					   (aLookup receiver at: '@B').
 					   r })
 		  arguments: { { 
@@ -172,7 +172,7 @@ TypShaPhaDictionary >> mKeys: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(Collection typAsType
-				copyWithParameters: {(aLookup receiver at: '@B')})
+				withParameters: {(aLookup receiver at: '@B')})
 ]
 
 { #category : #shadow }
@@ -206,7 +206,7 @@ TypShaPhaDictionary >> mValues: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(Collection typAsType
-				copyWithParameters: {(aLookup receiver at: '@A')})
+				withParameters: {(aLookup receiver at: '@A')})
 ]
 
 { #category : #accessing }

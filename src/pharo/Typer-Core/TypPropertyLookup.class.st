@@ -18,17 +18,20 @@ TypPropertyLookup >> = anObject [
 ]
 
 { #category : #accessing }
-TypPropertyLookup >> copyAsSuper [
+TypPropertyLookup >> asSuper [
+
 	self assert: [ self hasSuper ].
-	^ self copy
-		initializeParent: self;
-		initializeReceiver: receiver superType selector: selector;
-		yourself
+	^ self outgoingAt: #super ifAbsentPut: [ 
+		  self flag: 'TODO no copy, use class-side index'.
+		  self copy
+			  initializeSuper: self;
+			  initializeReceiver: receiver super selector: selector;
+			  yourself ]
 ]
 
 { #category : #testing }
 TypPropertyLookup >> hasSuper [
-	^ receiver hasSuperType
+	^ receiver hasSuper
 ]
 
 { #category : #comparing }

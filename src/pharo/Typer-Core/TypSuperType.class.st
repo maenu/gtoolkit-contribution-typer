@@ -22,27 +22,6 @@ TypSuperType >> at: aString [
 	^ superType at: aString
 ]
 
-{ #category : #accessing }
-TypSuperType >> copyWithAt: aString put: aType [
-
-	^ self
-		  outgoingAt: #copyWithAt:put: -> { 
-				  aString.
-				  aType }
-		  ifAbsentPut: [ 
-		  self copyWithSuperType: (superType copyWithAt: aString put: aType) ]
-]
-
-{ #category : #copying }
-TypSuperType >> copyWithParameters: aCollection [
-
-	^ self
-		  outgoingAt: #copyWithParameters: -> aCollection
-		  ifAbsentPut: [ 
-		  self copyWithSuperType:
-			  (superType copyWithParameters: aCollection) ]
-]
-
 { #category : #initialization }
 TypSuperType >> initialize [
 
@@ -68,4 +47,29 @@ TypSuperType >> isAffectedByMethodChange: aMethodAnnouncement [
 TypSuperType >> result [
 
 	^ superType result
+]
+
+{ #category : #polymorphic }
+TypSuperType >> withAt: aString put: aType [
+
+	^ self
+		  outgoingAt: { 
+				  #withAt:put:.
+				  aString.
+				  aType }
+		  ifAbsentPut: [ 
+			  self flag: 'TODO should use index lookup, not copy'.
+			  self withSuper: (superType withAt: aString put: aType) ]
+]
+
+{ #category : #polymorphic }
+TypSuperType >> withParameters: aCollection [
+
+	^ self
+		  outgoingAt: { 
+				  #withParameters:.
+				  aCollection }
+		  ifAbsentPut: [ 
+			  self flag: 'TODO should use index lookup, not copy'.
+			  self withSuper: (superType withParameters: aCollection) ]
 ]

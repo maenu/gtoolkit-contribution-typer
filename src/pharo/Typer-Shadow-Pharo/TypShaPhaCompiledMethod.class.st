@@ -14,7 +14,7 @@ TypShaPhaCompiledMethod >> mAssignmentNodes: aLookup [
 	<typShaMethod: 'assignmentNodes'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			(Collection typAsType copyWithParameters: {RBAssignmentNode typAsType})
+			(Collection typAsType withParameters: {RBAssignmentNode typAsType})
 ]
 
 { #category : #shadow }
@@ -48,7 +48,7 @@ TypShaPhaCompiledMethod >> mPragmas: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {Pragma typAsType})
+				withParameters: {Pragma typAsType})
 ]
 
 { #category : #shadow }

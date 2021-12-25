@@ -56,7 +56,7 @@ TypShaPhaObject >> mBinary256: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(Association typAsType
-				copyWithParameters:
+				withParameters:
 					{aLookup root receiver.
 					(aLookup arguments at: 1)})
 		arguments: {(aLookup arguments at: 1)}
@@ -141,7 +141,7 @@ TypShaPhaObject >> mPrintOn: aLookup [
 	<typShaMethod: 'printOn:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup root receiver
-		arguments: {(Stream typAsType copyWithParameters: {Character typAsType})}
+		arguments: {(Stream typAsType withParameters: {Character typAsType})}
 ]
 
 { #category : #shadow }

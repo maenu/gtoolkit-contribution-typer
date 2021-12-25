@@ -2,8 +2,7 @@ Class {
 	#name : #TypIndex,
 	#superclass : #TypNode,
 	#instVars : [
-		'resolver',
-		'unknown'
+		'resolver'
 	],
 	#classInstVars : [
 		'instance'
@@ -37,7 +36,6 @@ TypIndex >> initialize [
 
 	<typPraVariable: 'resolver' as: 'TypLookupResolver'>
 	super initialize.
-	unknown := TypUnknownType instance.
 	SystemAnnouncer uniqueInstance weak
 		when: ClassAnnouncement send: #invalidateOnClassChange: to: self;
 		when: MethodAnnouncement send: #invalidateOnMethodChange: to: self

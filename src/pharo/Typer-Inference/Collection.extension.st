@@ -3,7 +3,7 @@ Extension { #name : #Collection }
 { #category : #'*Typer-Inference' }
 Collection >> typInfType [
 
-	^ self class typAsType copyWithParameters:
+	^ self class typAsType withParameters:
 		  { self typInfTypes typAsType }
 ]
 

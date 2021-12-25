@@ -8,11 +8,17 @@ Class {
 	#category : #'Typer-Core-Type'
 }
 
+{ #category : #compiler }
+TypNode class >> compiler [
+
+	^ super compiler addPlugin: TypTypeCompilerAstPlugin
+]
+
 { #category : #invalidation }
 TypNode class >> invalidateAll [
 
 	<script>
-	^ self allSubInstancesDo: #removeAllEdges
+	^ self allSubInstancesDo: #removeAllOutgoing
 ]
 
 { #category : #accessing }
@@ -98,8 +104,8 @@ TypNode >> incoming [
 TypNode >> initialize [
 
 	super initialize.
-	incoming := Set new.
-	outgoing := Set new
+	incoming := IdentitySet new.
+	outgoing := IdentitySet new
 ]
 
 { #category : #accessing }
@@ -108,19 +114,56 @@ TypNode >> outgoing [
 	^ outgoing
 ]
 
+{ #category : #converting }
+TypNode >> outgoingAt: anObject ensure: aNode [
+
+	self flag:
+		'TODO could improve linear scan to constant by maintaining index'.
+	outgoing
+		select: [ :e | e data = anObject ]
+		thenDo: [ :e | self removeOutgoing: e ].
+	^ self addOutgoingTarget: aNode data: anObject
+]
+
+{ #category : #converting }
+TypNode >> outgoingAt: anObject ifAbsentPut: aBlock [
+
+	self flag:
+		'TODO could improve linear scan to constant by maintaining index'.
+	^ outgoing
+		  detect: [ :e | e data = anObject ]
+		  ifFound: #target
+		  ifNone: [ self addOutgoingTarget: aBlock value data: anObject ]
+]
+
+{ #category : #accessing }
+TypNode >> outgoingAt: anObject ifPresent: aBlock ifAbsentPut: anotherBlock [
+
+	self flag:
+		'TODO could improve linear scan to constant by maintaining index'.
+	^ outgoing
+		  detect: [ :e | e data = anObject ]
+		  ifFound: aBlock
+		  ifNone: [ 
+		  self addOutgoingTarget: anotherBlock value data: anObject ]
+]
+
+{ #category : #accessing }
+TypNode >> outgoingRemoveAt: anObject [
+
+	self flag:
+		'TODO could improve linear scan to constant by maintaining index'.
+	outgoing
+		select: [ :e | e data = anObject ]
+		thenDo: [ :e | self removeOutgoing: e ]
+]
+
 { #category : #accessing }
 TypNode >> postCopy [
 
 	super postCopy.
 	incoming := IdentitySet new.
 	outgoing := IdentitySet new
-]
-
-{ #category : #accessing }
-TypNode >> removeAllEdges [
-
-	incoming removeAll.
-	outgoing removeAll
 ]
 
 { #category : #accessing }
@@ -143,36 +186,4 @@ TypNode >> removeOutgoing: anEdge [
 	^ anEdge target
 		  removeIncoming: anEdge;
 		  yourself
-]
-
-{ #category : #accessing }
-TypNode >> withAllIncoming [
-
-	| nodes remains |
-	nodes := IdentitySet new.
-	remains := Stack with: self.
-	[ remains isEmpty ] whileFalse: [ 
-		| current |
-		current := remains pop.
-		nodes add: current.
-		current incoming
-			reject: [ :e | nodes includes: e origin ]
-			thenDo: [ :e | remains push: e origin ] ].
-	^ nodes
-]
-
-{ #category : #accessing }
-TypNode >> withAllOutgoing [
-
-	| nodes remains |
-	nodes := IdentitySet new.
-	remains := Stack with: self.
-	[ remains isEmpty ] whileFalse: [ 
-		| current |
-		current := remains pop.
-		nodes add: current.
-		current outgoing
-			reject: [ :e | nodes includes: e target ]
-			thenDo: [ :e | remains push: e target ] ].
-	^ nodes
 ]

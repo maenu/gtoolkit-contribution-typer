@@ -3,7 +3,7 @@ Extension { #name : #Pragma }
 { #category : #'*Typer-Pragma' }
 Pragma >> typPraArgumentsInject: aType [
 
-	^ aType copyWithArguments: arguments first typAsTypes
+	^ aType withArguments: arguments first typAsTypes
 ]
 
 { #category : #'*Typer-Pragma' }
@@ -67,28 +67,28 @@ Pragma >> typPraParametersInject: aType [
 		        parameters: (arguments first typAsTypes
 				         collect: [ :f | f name -> f ]
 				         as: OrderedDictionary).
-	aType hasSuperType ifTrue: [ 
-		type := type copyWithSuperType: aType superType ].
+	aType hasSuper ifTrue: [ 
+		type := type withSuper: aType super ].
 	^ type
 ]
 
 { #category : #'*Typer-Pragma' }
 Pragma >> typPraResultInject: aType [
 
-	^ aType copyWithResult: arguments first typAsType
+	^ aType withResult: arguments first typAsType
 ]
 
 { #category : #'*Typer-Pragma' }
 Pragma >> typPraSignalsAlwaysInject: aType [
 
-	^ aType copyWithSignalsAlways: arguments first
+	^ aType withSignalsAlways: arguments first
 ]
 
 { #category : #'*Typer-Pragma' }
 Pragma >> typPraSuperTypeBindToInject: aType [
 
-	^ aType copyWithSuperType:
-		  (aType superType copyWithAt: arguments first put: arguments second)
+	^ aType withSuper:
+		  (aType super withAt: arguments first put: arguments second)
 ]
 
 { #category : #'*Typer-Pragma' }

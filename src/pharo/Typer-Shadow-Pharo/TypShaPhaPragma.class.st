@@ -15,7 +15,7 @@ TypShaPhaPragma >> mArguments: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters:
+				withParameters:
 					{{String typAsType.
 					Symbol typAsType.
 					Number typAsType.

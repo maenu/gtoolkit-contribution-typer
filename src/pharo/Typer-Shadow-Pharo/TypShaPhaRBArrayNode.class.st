@@ -15,5 +15,5 @@ TypShaPhaRBArrayNode >> mStatements: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {RBProgramNode typAsType})
+				withParameters: {RBProgramNode typAsType})
 ]

@@ -11,7 +11,7 @@ TypShaPhaCollection class >> mWith: aLookup [
 	^ CompiledMethod
 		  typAsFunctionTypeWithResult:
 			  (aLookup receiver classDescription instanceSide typAsType 
-				   copyWithParameters: { (aLookup arguments at: 1) })
+				   withParameters: { (aLookup arguments at: 1) })
 		  arguments: { TypUnknownType instance asNullable }
 ]
 
@@ -21,7 +21,7 @@ TypShaPhaCollection class >> mWithAll: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(aLookup receiver classDescription instanceSide typAsType
-				copyWithParameters: {((aLookup arguments at: 1) at: '@A')})
+				withParameters: {((aLookup arguments at: 1) at: '@A')})
 		arguments: {Collection typAsType}
 ]
 
@@ -32,7 +32,7 @@ TypShaPhaCollection class >> mWithWith: aLookup [
 	^ CompiledMethod
 		  typAsFunctionTypeWithResult:
 			  (aLookup receiver classDescription instanceSide typAsType 
-				   copyWithParameters: { aLookup arguments typAsType })
+				   withParameters: { aLookup arguments typAsType })
 		  arguments: { 
 				  TypUnknownType instance.
 				  TypUnknownType instance }
@@ -58,7 +58,7 @@ TypShaPhaCollection >> mAddAll: aLookup [
 		typAsFunctionTypeWithResult: (aLookup arguments at: 1)
 		arguments:
 			{(Collection typAsType
-				copyWithParameters: {(aLookup receiver at: '@A')})}
+				withParameters: {(aLookup receiver at: '@A')})}
 ]
 
 { #category : #shadow }
@@ -97,7 +97,7 @@ TypShaPhaCollection >> mAsDictionary: aLookup [
 
 	<typShaMethod: 'asDictionary'>
 	^ CompiledMethod typAsFunctionTypeWithResult:
-		  (Dictionary typAsType copyWithParameters: { 
+		  (Dictionary typAsType withParameters: { 
 				   ((aLookup receiver at: '@A') at: '@A').
 				   ((aLookup receiver at: '@A') at: '@B') })
 ]
@@ -108,7 +108,7 @@ TypShaPhaCollection >> mAsIdentitySet: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(IdentitySet typAsType
-				copyWithParameters: {(aLookup receiver at: '@A')})
+				withParameters: {(aLookup receiver at: '@A')})
 ]
 
 { #category : #shadow }
@@ -117,7 +117,7 @@ TypShaPhaCollection >> mAsOrderedCollection: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(OrderedCollection typAsType
-				copyWithParameters: {(aLookup receiver at: '@A')})
+				withParameters: {(aLookup receiver at: '@A')})
 ]
 
 { #category : #shadow }
@@ -125,7 +125,7 @@ TypShaPhaCollection >> mAsOrderedDictionary: aLookup [
 
 	<typShaMethod: 'asOrderedDictionary'>
 	^ CompiledMethod typAsFunctionTypeWithResult:
-		  (OrderedDictionary typAsType copyWithParameters: { 
+		  (OrderedDictionary typAsType withParameters: { 
 				   ((aLookup receiver at: '@A') at: '@A').
 				   ((aLookup receiver at: '@A') at: '@B') })
 ]
@@ -134,7 +134,7 @@ TypShaPhaCollection >> mAsOrderedDictionary: aLookup [
 TypShaPhaCollection >> mAsSet: aLookup [
 	<typShaMethod: 'asSet'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (Set typAsType copyWithParameters: {(aLookup receiver at: '@A')})
+		typAsFunctionTypeWithResult: (Set typAsType withParameters: {(aLookup receiver at: '@A')})
 ]
 
 { #category : #shadow }
@@ -151,7 +151,7 @@ TypShaPhaCollection >> mBinary170: aLookup [
 	<typShaMethod: ','>
 	^ CompiledMethod
 		  typAsFunctionTypeWithResult: (aLookup root receiver
-				   copyWithAt: '@A' put: { 
+				   withAt: '@A' put: { 
 						   (aLookup receiver at: '@A').
 						   ((aLookup arguments at: 1) at: '@A') } typAsType;
 				   yourself)
@@ -172,7 +172,7 @@ TypShaPhaCollection >> mCollect: aLookup [
 		     ifFalse: [ a result ].
 	^ CompiledMethod
 		  typAsFunctionTypeWithResult:
-		  (aLookup root receiver copyWithParameters: { r })
+		  (aLookup root receiver withParameters: { r })
 		  arguments: { { 
 				  Symbol typAsType.
 				  (BlockClosure
@@ -303,7 +303,7 @@ TypShaPhaCollection >> mFlatCollect: aLookup [
 		     ifFalse: [ a result ].
 	^ CompiledMethod
 		  typAsFunctionTypeWithResult:
-		  (aLookup root receiver copyWithParameters: { (r at: '@A') })
+		  (aLookup root receiver withParameters: { (r at: '@A') })
 		  arguments: { { 
 				  Symbol typAsType.
 				  (BlockClosure
@@ -325,9 +325,9 @@ TypShaPhaCollection >> mGroupedBy: aLookup [
 		     ifFalse: [ a result ].
 	^ CompiledMethod
 		  typAsFunctionTypeWithResult:
-			  (OrderedDictionary typAsType copyWithParameters: { 
+			  (OrderedDictionary typAsType withParameters: { 
 					   r.
-					   (Collection typAsType copyWithParameters:
+					   (Collection typAsType withParameters:
 						    { (aLookup receiver at: '@A') }) })
 		  arguments: { { 
 				  Symbol typAsType.
@@ -423,7 +423,7 @@ TypShaPhaCollection >> mIncludesAll: aLookup [
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments:
 			{(Collection typAsType
-				copyWithParameters: {(aLookup receiver at: '@A')})}
+				withParameters: {(aLookup receiver at: '@A')})}
 ]
 
 { #category : #shadow }

@@ -12,6 +12,6 @@ TypUnknownTypeInitializingExamples >> new [
 	<gtExample>
 	| type |
 	type := TypUnknownType instance.
-	self assert: type hasSuperType not.
+	self assert: type hasSuper not.
 	^ type
 ]

@@ -35,7 +35,7 @@ TypShaPhaNumber >> mTimesCollect: aLookup [
 	<typShaMethod: 'timesCollect:'>
 	^ CompiledMethod
 		  typAsFunctionTypeWithResult:
-			  (OrderedCollection typAsType copyWithParameters:
+			  (OrderedCollection typAsType withParameters:
 				   { (aLookup arguments collect: [ :e | 
 					    e isFunction
 						    ifTrue: [ e result ]
@@ -53,7 +53,7 @@ TypShaPhaNumber >> mTo: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(Interval typAsType
-				copyWithParameters:
+				withParameters:
 					{{aLookup root receiver.
 					(aLookup arguments at: 1)} typAsType})
 		arguments: {Number typAsType}

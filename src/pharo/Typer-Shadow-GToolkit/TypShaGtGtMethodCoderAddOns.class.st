@@ -42,18 +42,18 @@ TypShaGtGtMethodCoderAddOns >> mStylers: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {GtRBASTStyler typAsType})
+				withParameters: {GtRBASTStyler typAsType})
 ]
 
 { #category : #'as yet unclassified' }
 TypShaGtGtMethodCoderAddOns >> vModified: aLookup [
 	<typShaVariable: #modified>
-	^ Set typAsType copyWithParameters: {Symbol typAsType}
+	^ Set typAsType withParameters: {Symbol typAsType}
 ]
 
 { #category : #accessing }
 TypShaGtGtMethodCoderAddOns >> vStylers: aLookup [
 	<typShaVariable: #stylers>
 	^ SequenceableCollection typAsType
-		copyWithParameters: {GtRBASTStyler typAsType}
+		withParameters: {GtRBASTStyler typAsType}
 ]

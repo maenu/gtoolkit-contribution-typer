@@ -15,7 +15,7 @@ TypShaPhaRBProgramNode >> mAllChildren: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {RBProgramNode typAsType})
+				withParameters: {RBProgramNode typAsType})
 ]
 
 { #category : #shadow }
@@ -24,7 +24,7 @@ TypShaPhaRBProgramNode >> mAssignmentNodes: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {RBAssignmentNode typAsType})
+				withParameters: {RBAssignmentNode typAsType})
 ]
 
 { #category : #shadow }
@@ -32,7 +32,7 @@ TypShaPhaRBProgramNode >> mBestNodeFor: aLookup [
 	<typShaMethod: 'bestNodeFor:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: RBProgramNode typAsType asNullable
-		arguments: {(Interval typAsType copyWithParameters: {Integer typAsType})}
+		arguments: {(Interval typAsType withParameters: {Integer typAsType})}
 ]
 
 { #category : #shadow }
@@ -41,7 +41,7 @@ TypShaPhaRBProgramNode >> mChildren: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {RBProgramNode typAsType})
+				withParameters: {RBProgramNode typAsType})
 ]
 
 { #category : #shadow }
@@ -50,7 +50,7 @@ TypShaPhaRBProgramNode >> mComments: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {RBComment typAsType})
+				withParameters: {RBComment typAsType})
 ]
 
 { #category : #shadow }
@@ -66,7 +66,7 @@ TypShaPhaRBProgramNode >> mInstanceVariableWriteNodes: aLookup [
 	<typShaMethod: 'instanceVariableWriteNodes'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			(Collection typAsType copyWithParameters: {RBAssignmentNode typAsType})
+			(Collection typAsType withParameters: {RBAssignmentNode typAsType})
 ]
 
 { #category : #shadow }
@@ -150,7 +150,7 @@ TypShaPhaRBProgramNode >> mParents: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {RBProgramNode typAsType})
+				withParameters: {RBProgramNode typAsType})
 ]
 
 { #category : #shadow }
@@ -253,7 +253,7 @@ TypShaPhaRBProgramNode >> mVariableWriteNodes: aLookup [
 	<typShaMethod: 'variableWriteNodes'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			(Collection typAsType copyWithParameters: {RBAssignmentNode typAsType})
+			(Collection typAsType withParameters: {RBAssignmentNode typAsType})
 ]
 
 { #category : #shadow }

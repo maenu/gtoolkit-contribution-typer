@@ -16,7 +16,7 @@ TypShaPhaStream >> mBinary380: aLookup [
 		typAsFunctionTypeWithResult: aLookup root receiver
 		arguments:
 			{(Collection typAsType
-				copyWithParameters: {(aLookup receiver at: '@A')})}
+				withParameters: {(aLookup receiver at: '@A')})}
 ]
 
 { #category : #shadow }

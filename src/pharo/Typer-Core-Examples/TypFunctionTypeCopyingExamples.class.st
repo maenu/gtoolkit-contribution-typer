@@ -12,14 +12,14 @@ TypFunctionTypeCopyingExamples >> copyIsNearlyShallow [
 	original := TypFunctionTypeInitializingExamples new
 		            classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	original parameters
-		at: '@0'
+		at: #'0'
 		put: TypNamedTypeInitializingExamples new classDescription.
 	"ensure superType"
-	original superType.
+	original super.
 	copy := original copy.
 	self assert: original ~~ copy.
-	self assert: original superType isNotNil.
-	self assert: original superType == copy superType.
+	self assert: original super isNotNil.
+	self assert: original super == copy super.
 	self assert: original name isNotNil.
 	self assert: original name == copy name.
 	self assert: original parameters isNotNil.
@@ -37,24 +37,24 @@ TypFunctionTypeCopyingExamples >> copyWithParameters [
 	original := TypFunctionTypeInitializingExamples new
 		classDescriptionArgumentsSizeArgumentsOptionalBindings.
 	"ensure superType"
-	original superType.
+	original super.
 	copy := original
-		copyWithParameters:
+		withParameters:
 			{TypNamedTypeInitializingExamples new namedWithoutClassDescription.
 			TypNilTypeInitializingExamples new new}.
 	self assert: original ~~ copy.
-	self assert: original superType isNotNil.
-	self assert: original superType = copy superType.
+	self assert: original super isNotNil.
+	self assert: original super = copy super.
 	self assert: original name isNotNil.
 	self assert: original name == copy name.
 	self assert: original parameters isNotNil.
 	self assert: original parameters ~~ copy parameters.
 	self assert: original parameters keys = copy parameters keys.
 	self
-		assert: (copy at: '@0')
+		assert: (copy at: #'0')
 		equals: TypNamedTypeInitializingExamples new namedWithoutClassDescription.
 	self
-		assert: (copy at: '@1')
+		assert: (copy at: #'1')
 		equals: TypNilTypeInitializingExamples new new.
 	^ copy
 ]

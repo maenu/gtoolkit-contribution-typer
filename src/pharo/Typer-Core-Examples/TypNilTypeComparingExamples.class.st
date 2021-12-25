@@ -9,7 +9,7 @@ TypNilTypeComparingExamples >> equality [
 	<gtExample>
 	| type superType |
 	type := TypNilTypeInitializingExamples new new.
-	superType := type superType.
+	superType := type super.
 	self assert: type = type.
 	self assert: type hash = type hash.
 	self assert: type ~= superType.
@@ -22,7 +22,7 @@ TypNilTypeComparingExamples >> monotony [
 	<gtExample>
 	| type superType |
 	type := TypNilTypeInitializingExamples new new.
-	superType := type superType.
+	superType := type super.
 	self assert: (type > type) not.
 	self assert: (type > superType) not.
 	self assert: superType > type.

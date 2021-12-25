@@ -40,7 +40,7 @@ TypVariableType >> hashSkipping: anIdentitySet [
 	^ (43 bitXor: name hash) bitXor: (super hashSkipping: anIdentitySet)
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 TypVariableType >> initializeName: aString [
 	<typPraArguments: 'String'>
 	self assert: [ aString size > 1 ].
@@ -64,7 +64,7 @@ TypVariableType >> printOn: aStream skipping: anIdentitySet [
 		ifTrue: [ aStream << '.'.
 			^ self ].
 	aStream nextPutAll: name asString.
-	superType hasSuperType
+	superType hasSuper
 		ifTrue: [ aStream nextPutAll: '<='.
 			superType printOn: aStream skipping: anIdentitySet , {self} ]
 ]

@@ -14,8 +14,8 @@ TypNamedTypeInitializingExamples >> classDescription [
 	self assert: type name equals: 'Integer'.
 	self assert: type hasClassDescription.
 	self assert: type classDescription equals: Integer.
-	self assert: type hasSuperType.
-	self assert: type superType equals: (TypNamedType classDescription: Number).
+	self assert: type hasSuper.
+	self assert: type super equals: (TypNamedType classDescription: Number).
 	^ type
 ]
 
@@ -27,8 +27,8 @@ TypNamedTypeInitializingExamples >> namedWithClassDescription [
 	self assert: type name equals: 'Integer'.
 	self assert: type hasClassDescription.
 	self assert: type classDescription equals: Integer.
-	self assert: type hasSuperType.
-	self assert: type superType equals: (TypNamedType classDescription: Number).
+	self assert: type hasSuper.
+	self assert: type super equals: (TypNamedType classDescription: Number).
 	^ type
 ]
 
@@ -40,7 +40,7 @@ TypNamedTypeInitializingExamples >> namedWithoutClassDescription [
 	self assert: type name equals: 'Nothing'.
 	self assert: type hasClassDescription not.
 	self assert: [ type classDescription ] signals: AssertionFailure.
-	self assert: type hasSuperType not.
-	self assert: [ type superType ] signals: AssertionFailure.
+	self assert: type hasSuper not.
+	self assert: [ type super ] signals: AssertionFailure.
 	^ type
 ]

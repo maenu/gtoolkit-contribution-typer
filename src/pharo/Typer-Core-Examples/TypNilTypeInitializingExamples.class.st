@@ -36,9 +36,9 @@ TypNilTypeInitializingExamples >> new [
 	self assert: type name equals: 'UndefinedObject'.
 	self assert: type hasClassDescription.
 	self assert: type classDescription equals: UndefinedObject.
-	self assert: type hasSuperType.
+	self assert: type hasSuper.
 	self
-		assert: type superType
+		assert: type super
 		equals: (TypNamedType classDescription: Object).
 	^ type
 ]

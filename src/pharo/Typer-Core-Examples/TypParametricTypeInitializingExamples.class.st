@@ -21,17 +21,17 @@ TypParametricTypeInitializingExamples >> classDescriptionParameters [
 	| type |
 	type := TypParametricType
 		classDescription: Integer
-		parameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary.
+		parameters: {(#A -> #A typAsVariableType)} asOrderedDictionary.
 	self assert: type name equals: 'Integer'.
 	self assert: type hasClassDescription.
 	self assert: type classDescription equals: Integer.
-	self assert: type hasSuperType.
+	self assert: type hasSuper.
 	self
-		assert: type superType
+		assert: type super
 		equals: (TypNamedType classDescription: Number).
 	self
 		assert: type parameters
-		equals: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary.
+		equals: {(#A -> #A typAsVariableType)} asOrderedDictionary.
 	^ type
 ]
 
@@ -50,13 +50,13 @@ TypParametricTypeInitializingExamples >> namedWithClassDescriptionParameters [
 	| type |
 	type := TypParametricType
 		named: 'Integer'
-		parameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary.
+		parameters: {(#A -> #A typAsVariableType)} asOrderedDictionary.
 	self assert: type name equals: 'Integer'.
 	self assert: type hasClassDescription.
 	self assert: type classDescription equals: Integer.
-	self assert: type hasSuperType.
+	self assert: type hasSuper.
 	self
-		assert: type superType
+		assert: type super
 		equals: (TypNamedType classDescription: Number).
 	^ type
 ]
@@ -76,11 +76,11 @@ TypParametricTypeInitializingExamples >> namedWithoutClassDescriptionParameters 
 	| type |
 	type := TypParametricType
 		named: 'Nothing'
-		parameters: {('@A' -> '@A' typAsVariableType)} asOrderedDictionary.
+		parameters: {(#A -> #A typAsVariableType)} asOrderedDictionary.
 	self assert: type name equals: 'Nothing'.
 	self assert: type hasClassDescription not.
 	self assert: [ type classDescription ] signals: AssertionFailure.
-	self assert: type hasSuperType not.
-	self assert: [ type superType ] signals: AssertionFailure.
+	self assert: type hasSuper not.
+	self assert: [ type super ] signals: AssertionFailure.
 	^ type
 ]

@@ -26,7 +26,7 @@ TypShaGtGtPharoProgramNode >> mCompletionActionsFor: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {GtCompletionAction typAsType})
+				withParameters: {GtCompletionAction typAsType})
 		arguments: {GtPharoCompletionStrategy typAsType}
 ]
 

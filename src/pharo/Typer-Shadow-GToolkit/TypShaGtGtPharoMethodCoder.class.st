@@ -72,7 +72,7 @@ TypShaGtGtPharoMethodCoder >> mUpdateMethod: aLookup [
 TypShaGtGtPharoMethodCoder >> vAstCache: aLookup [
 	<typShaVariable: #astCache>
 	^ Association typAsType
-		copyWithParameters:
+		withParameters:
 			{String typAsType.
 			RBMethodNode typAsType}
 ]

@@ -150,7 +150,7 @@ TypShaPhaSequenceableCollection >> mWithIndexCollect: aLookup [
 	<typShaMethod: 'withIndexCollect:'>
 	^ CompiledMethod
 		  typAsFunctionTypeWithResult:
-			  (aLookup receiver copyWithParameters:
+			  (aLookup receiver withParameters:
 				   { (aLookup arguments at: 1) result })
 		  arguments: { (BlockClosure
 				   typAsFunctionTypeWithResult: TypUnknownType instance

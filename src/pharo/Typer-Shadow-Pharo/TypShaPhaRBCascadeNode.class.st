@@ -15,5 +15,5 @@ TypShaPhaRBCascadeNode >> mMessages: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {RBMessageNode typAsType})
+				withParameters: {RBMessageNode typAsType})
 ]

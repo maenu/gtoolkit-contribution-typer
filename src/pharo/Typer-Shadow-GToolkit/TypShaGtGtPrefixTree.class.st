@@ -25,7 +25,7 @@ TypShaGtGtPrefixTree >> mWeightedFirstStartingWith: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {String typAsType})
+				withParameters: {String typAsType})
 		arguments:
 			{Integer typAsType.
 			String typAsType}

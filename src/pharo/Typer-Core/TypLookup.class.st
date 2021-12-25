@@ -2,7 +2,7 @@ Class {
 	#name : #TypLookup,
 	#superclass : #TypNode,
 	#instVars : [
-		'parent'
+		'superLookup'
 	],
 	#category : #'Typer-Core-Lookup'
 }
@@ -13,11 +13,11 @@ TypLookup >> = anObject [
 		ifTrue: [ ^ true ].
 	anObject class = self class
 		ifFalse: [ ^ false ].
-	^ anObject parent = parent
+	^ anObject super = superLookup
 ]
 
 { #category : #copying }
-TypLookup >> copyAsSuper [
+TypLookup >> asSuper [
 	self subclassResponsibility
 ]
 
@@ -29,12 +29,12 @@ TypLookup >> hasSuper [
 
 { #category : #accessing }
 TypLookup >> hash [
-	^ parent hash
+	^ superLookup hash
 ]
 
 { #category : #accessing }
-TypLookup >> initializeParent: aLookup [
-	parent := aLookup
+TypLookup >> initializeSuper: aLookup [
+	superLookup := aLookup
 ]
 
 { #category : #invalidation }
@@ -50,17 +50,17 @@ TypLookup >> isAffectedByMethodChange: aMethodAnnouncement [
 ]
 
 { #category : #accessing }
-TypLookup >> parent [
-	^ parent
-]
-
-{ #category : #accessing }
 TypLookup >> printOn: aStream [
 	aStream nextPutAll: ' | '.
-	parent printOn: aStream
+	superLookup printOn: aStream
 ]
 
 { #category : #accessing }
 TypLookup >> root [
-	^ parent ifNil: self ifNotNil: #root
+	^ superLookup ifNil: self ifNotNil: #root
+]
+
+{ #category : #accessing }
+TypLookup >> super [
+	^ superLookup
 ]

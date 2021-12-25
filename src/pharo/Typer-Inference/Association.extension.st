@@ -5,7 +5,7 @@ Association >> typInfType [
 	| type |
 	type := super typInfType.
 	^ type
-		copyWithParameters:
+		withParameters:
 			{key typInfType.
 			value typInfType}
 ]

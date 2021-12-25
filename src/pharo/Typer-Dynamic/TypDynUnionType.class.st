@@ -49,7 +49,8 @@ TypDynUnionType >> addAll: aTypes [
 
 { #category : #converting }
 TypDynUnionType >> asNonDynType [
-	^ types typAsType
+
+	^ self outgoingAt: { #asNonDynType } ifAbsentPut: [ types typAsType ]
 ]
 
 { #category : #enumerating }

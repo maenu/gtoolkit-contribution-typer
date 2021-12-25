@@ -19,11 +19,11 @@ TypFunctionTypeInitializingExamples >> classDescriptionArgumentsSizeArgumentsOpt
 	self assert: type name equals: 'Integer'.
 	self assert: type hasClassDescription.
 	self assert: type classDescription equals: Integer.
-	self assert: type hasSuperType.
+	self assert: type hasSuper.
 	self
-		assert: type superType
+		assert: type super
 		equals: (TypNamedType classDescription: Number).
-	self assert: type parameters keys equals: {'@0' . '@1'}.
+	self assert: type parameters keys equals: {#'0' . #'1'}.
 	self assert: type argumentsOptional equals: true.
 	self assert: type argumentsSize equals: 1.
 	self
@@ -40,7 +40,7 @@ TypFunctionTypeInitializingExamples >> classDescriptionArgumentsSizeArgumentsOpt
 TypFunctionTypeInitializingExamples >> classDescriptionParameters [
 	<gtExample>
 	self
-		assert: [ TypFunctionType classDescription: Integer parameters: {'@A'} ]
+		assert: [ TypFunctionType classDescription: Integer parameters: {#A} ]
 		signals: ShouldNotImplement.
 	^ nil
 ]
@@ -58,11 +58,11 @@ TypFunctionTypeInitializingExamples >> namedArgumentsSizeArgumentsOptionalBindin
 	self assert: type name equals: 'Integer'.
 	self assert: type hasClassDescription.
 	self assert: type classDescription equals: Integer.
-	self assert: type hasSuperType.
+	self assert: type hasSuper.
 	self
-		assert: type superType
+		assert: type super
 		equals: (TypNamedType classDescription: Number).
-	self assert: type parameters keys equals: {'@0' . '@1'}.
+	self assert: type parameters keys equals: {#'0' . #'1'}.
 	self assert: type argumentsOptional equals: true.
 	self assert: type argumentsSize equals: 1.
 	self
@@ -75,11 +75,11 @@ TypFunctionTypeInitializingExamples >> namedArgumentsSizeArgumentsOptionalBindin
 	^ type
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypFunctionTypeInitializingExamples >> namedParameters [
 	<gtExample>
 	self
-		assert: [ TypFunctionType named: 'Integer' parameters: {'@A'} ]
+		assert: [ TypFunctionType named: 'Integer' parameters: {#A} ]
 		signals: ShouldNotImplement.
 	^ nil
 ]

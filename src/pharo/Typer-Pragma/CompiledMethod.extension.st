@@ -28,7 +28,7 @@ CompiledMethod >> typPraType [
 				   classDescription: self class
 				   result: TypUnknownType instance
 				   arguments:
-				   ((1 to: self numArgs) collect: [ :i | TypUnknownType instance ])
+				   (self numArgs typTimesCollect: [ :i | TypUnknownType instance ])
 				   argumentsOptional: false
 				   signalsAlways: nil)
 		  into: [ :t :p | p typPraMethodInject: t ]

@@ -27,7 +27,7 @@ TypUnionTypeComparingExamples >> monotony [
 	type := {(TypNamedType classDescription: String).
 	(TypNamedType classDescription: Integer)} typAsType.
 	copy := type copy.
-	superType := type superType.
+	superType := type super.
 	self assert: (type > type) not.
 	self assert: (type > copy) not.
 	self assert: (copy > type) not.

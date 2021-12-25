@@ -66,58 +66,32 @@ TypParametricType >> > aType [
 { #category : #converting }
 TypParametricType >> asCompatibleWith: aType [
 
-	| copy copyParameters |
-	(aType isParametric and: [ 
-		 name = aType name and: [ parameters = aType parameters ] ]) 
-		ifFalse: [ ^ super asCompatibleWith: aType ].
-	copyParameters := OrderedCollection new.
-	parameters keysAndValuesDo: [ :n :t | 
-		copyParameters add: (t asCompatibleWith: (aType at: n)) ].
-	^ self copyWithParameters: copyParameters
+	^ self
+		  outgoingAt: { 
+				  #asCompatibleWith:.
+				  aType }
+		  ifAbsentPut: [ 
+			  (aType isParametric and: [ 
+				   name = aType name and: [ parameters = aType parameters ] ])
+				  ifTrue: [ 
+					  | copyParameters |
+					  copyParameters := OrderedCollection new.
+					  parameters keysAndValuesDo: [ :n :t | 
+						  copyParameters add: (t asCompatibleWith: (aType at: n)) ].
+					  self withParameters: copyParameters ]
+				  ifFalse: [ super asCompatibleWith: aType ] ]
 ]
 
 { #category : #accessing }
 TypParametricType >> at: aString [
 
-	^ self at: aString ifAbsent: [ self superType at: aString ]
+	^ self at: aString ifAbsent: [ self super at: aString ]
 ]
 
 { #category : #accessing }
 TypParametricType >> at: aString ifAbsent: aBlock [
 
 	^ parameters at: aString ifAbsent: aBlock
-]
-
-{ #category : #copying }
-TypParametricType >> copyWithAt: aString put: aType [
-
-	^ self
-		  outgoingAt: #copyWithAt:put: -> { 
-				  aString.
-				  aType }
-		  ifAbsentPut: [ 
-			  | copyParameters |
-			  copyParameters := OrderedCollection new.
-			  parameters keysAndValuesDo: [ :n :t | 
-				  copyParameters add: (n = aString
-						   ifTrue: [ aType ]
-						   ifFalse: [ t ]) ].
-			  self copyWithParameters: copyParameters ]
-]
-
-{ #category : #copying }
-TypParametricType >> copyWithParameters: aCollection [
-
-	<typPraArguments: 'SequenceableCollection<TypType>'>
-	^ self
-		  outgoingAt: #copyWithParameters: -> aCollection
-		  ifAbsentPut: [ 
-			  self copy
-				  initializeParameters:
-					  ((1 to: (aCollection size min: parameters size)) collect: [ :i | 
-							   (parameters keys at: i) -> (aCollection at: i) ])
-						  asOrderedDictionary;
-				  yourself ]
 ]
 
 { #category : #comparing }
@@ -139,7 +113,7 @@ TypParametricType >> initialize [
 	parameters := OrderedDictionary new
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 TypParametricType >> initializeParameters: anOrderedDictionary [
 
 	self assert: [ anOrderedDictionary isNotEmpty ].
@@ -165,13 +139,8 @@ TypParametricType >> isParametric [
 
 { #category : #accessing }
 TypParametricType >> parameters [
-	^ parameters
-]
 
-{ #category : #copying }
-TypParametricType >> postCopy [
-	super postCopy.
-	parameters := parameters copy
+	^ parameters copy
 ]
 
 { #category : #printing }
@@ -190,13 +159,50 @@ TypParametricType >> printOn: aStream skipping: anIdentitySet [
 ]
 
 { #category : #accessing }
-TypParametricType >> superType [
+TypParametricType >> super [
 
 	superType ifNotNil: [ ^ superType ].
-	superType := super superType.
+	superType := super super.
 	(superType isParametric and: [ 
 		 parameters keys includesAll: superType parameters keys ]) ifTrue: [ 
-		self initializeSuperType: (superType copyWithParameters:
+		self initializeSuperType: (superType withParameters:
 				 (superType parameters keys collect: [ :e | self at: e ])) ].
 	^ superType
+]
+
+{ #category : #converting }
+TypParametricType >> withAt: aString put: aType [
+
+	^ self
+		  outgoingAt: { 
+				  #withAt:put:.
+				  aString.
+				  aType }
+		  ifAbsentPut: [ 
+			  | copyParameters |
+			  self flag: 'TODO should use index lookup, not copy'.
+			  copyParameters := OrderedCollection new.
+			  parameters keysAndValuesDo: [ :n :t | 
+				  copyParameters add: (n = aString
+						   ifTrue: [ aType ]
+						   ifFalse: [ t ]) ].
+			  self withParameters: copyParameters ]
+]
+
+{ #category : #converting }
+TypParametricType >> withParameters: aCollection [
+
+	<typPraArguments: 'SequenceableCollection<TypType>'>
+	^ self
+		  outgoingAt: { 
+				  #withParameters:.
+				  aCollection }
+		  ifAbsentPut: [ 
+			  self flag: 'TODO should use index lookup, not copy'.
+			  self copy
+				  initializeParameters:
+					  ((1 to: (aCollection size min: parameters size)) collect: [ :i | 
+							   (parameters keys at: i) -> (aCollection at: i) ])
+						  asOrderedDictionary;
+				  yourself ]
 ]

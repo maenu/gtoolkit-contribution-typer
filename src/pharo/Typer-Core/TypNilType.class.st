@@ -33,20 +33,26 @@ TypNilType class >> named: aString [
 
 { #category : #converting }
 TypNilType >> asCompatibleWith: aType [
-	^ aType asNullable
+
+	^ self
+		  outgoingAt: { 
+				  #asCompatibleWith:.
+				  aType }
+		  ifAbsentPut: [ aType asNullable ]
 ]
 
 { #category : #converting }
 TypNilType >> asNonNullable [
 
 	^ self
-		  outgoingAt: #asNonNullable
+		  outgoingAt: { #asNonNullable }
 		  ifAbsentPut: [ TypUnknownType instance ]
 ]
 
 { #category : #converting }
 TypNilType >> asNullable [
-	^ self
+
+	^ self outgoingAt: { #asNullable } ifAbsentPut: [ self ]
 ]
 
 { #category : #initialization }

@@ -10,7 +10,7 @@ TypVariableTypeComparingExamples >> equality [
 	| type copy superType |
 	type := TypVariableTypeInitializingExamples new named.
 	copy := type copy.
-	superType := type superType.
+	superType := type super.
 	self assert: type = type.
 	self assert: type = copy.
 	self assert: type hash = type hash.
@@ -26,7 +26,7 @@ TypVariableTypeComparingExamples >> monotony [
 	| type copy superType |
 	type := TypVariableTypeInitializingExamples new named.
 	copy := type copy.
-	superType := type superType.
+	superType := type super.
 	self flag: 'TODO should it really be bigger than itself?'.
 	self assert: type > type.
 	self assert: type > copy.

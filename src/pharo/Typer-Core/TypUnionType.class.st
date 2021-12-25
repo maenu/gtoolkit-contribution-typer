@@ -51,7 +51,7 @@ TypUnionType >> arguments [
 { #category : #converting }
 TypUnionType >> asNonNullable [
 
-	^ self outgoingAt: #asNonNullable ifAbsentPut: [ 
+	^ self outgoingAt: { #asNonNullable } ifAbsentPut: [ 
 		  self isNullable
 			  ifTrue: [ (types reject: #isNil) typAsType ]
 			  ifFalse: [ self ] ]
@@ -60,7 +60,7 @@ TypUnionType >> asNonNullable [
 { #category : #converting }
 TypUnionType >> asNullable [
 
-	^ self outgoingAt: #asNullable ifAbsentPut: [ 
+	^ self outgoingAt: { #asNullable } ifAbsentPut: [ 
 		  self isNullable
 			  ifTrue: [ self ]
 			  ifFalse: [ (types , { TypNilType instance }) typAsType ] ]
@@ -70,22 +70,14 @@ TypUnionType >> asNullable [
 TypUnionType >> at: aString [
 
 	^ self
-		  outgoingAt: #at: -> aString
+		  outgoingAt: { 
+				  #at:.
+				  aString }
 		  ifAbsentPut: [ (types collect: [ :e | e at: aString ]) typAsType ]
 ]
 
-{ #category : #accessing }
-TypUnionType >> copyWithParameters: aCollection [
-
-	^ self
-		  outgoingAt: #copyWithParameters: -> aCollection
-		  ifAbsentPut: [ 
-			  (types collect: [ :e | e copyWithParameters: aCollection ])
-				  typAsType ]
-]
-
 { #category : #testing }
-TypUnionType >> hasSuperType [
+TypUnionType >> hasSuper [
 
 	| remains nilTypes unknownTypes current superType_ |
 	superType ifNotNil: [ ^ true ].
@@ -97,8 +89,8 @@ TypUnionType >> hasSuperType [
 		removeAll: unknownTypes.
 	remains ifEmpty: [ ^ false ].
 	current := remains remove: remains anyOne.
-	(remains isEmpty and: [ current hasSuperType ]) ifTrue: [ 
-		current := current superType ].
+	(remains isEmpty and: [ current hasSuper ]) ifTrue: [ 
+		current := current super ].
 	[ remains isEmpty ] whileFalse: [ 
 		| next common |
 		next := remains remove: remains anyOne.
@@ -126,13 +118,13 @@ TypUnionType >> hashSkipping: anIdentitySet [
 		  into: [ :r :e | r bitXor: (e hashSkipping: anIdentitySet) ]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 TypUnionType >> initialize [
 	<typPraVariable: 'types' as: 'Set<TypType>'>
 	super initialize
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 TypUnionType >> initializeTypes: anObject [
 
 	<typPraArguments: 'Set<TypType>'>
@@ -157,7 +149,7 @@ TypUnionType >> isAffectedByMethodChange: aMethodAnnouncement [
 	^ types anySatisfy: [ :e | e isAffectedByMethodChange: aMethodAnnouncement ]
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 TypUnionType >> isNullable [
 	^ types anySatisfy: #isNil
 ]
@@ -167,11 +159,12 @@ TypUnionType >> isUnion [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : #lookup }
 TypUnionType >> lookupMethod: aSymbol arguments: aCollection [
 
 	^ self
-		  outgoingAt: #lookupMethod:arguments: -> { 
+		  outgoingAt: { 
+				  #lookupMethod:arguments:.
 				  aSymbol.
 				  aCollection }
 		  ifAbsentPut: [ 
@@ -179,19 +172,15 @@ TypUnionType >> lookupMethod: aSymbol arguments: aCollection [
 				   e lookupMethod: aSymbol arguments: aCollection ]) typAsType ]
 ]
 
-{ #category : #accessing }
+{ #category : #lookup }
 TypUnionType >> lookupVariable: aSymbol [
 
 	^ self
-		  outgoingAt: #lookupVariable: -> aSymbol
+		  outgoingAt: { 
+				  #lookupVariable:.
+				  aSymbol }
 		  ifAbsentPut: [ 
 		  (types collect: [ :e | e lookupVariable: aSymbol ]) typAsType ]
-]
-
-{ #category : #accessing }
-TypUnionType >> postCopy [
-	super postCopy.
-	types := types copy
 ]
 
 { #category : #printing }
@@ -224,8 +213,8 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 			        ifTrue: [ self ]
 			        ifFalse: [ remains typAsType ].
 		(type isUnion and: [ 
-			 type hasSuperType and: [ type superType isUnion not ] ]) ifTrue: [ 
-			type superType printOn: aStream.
+			 type hasSuper and: [ type super isUnion not ] ]) ifTrue: [ 
+			type super printOn: aStream.
 			remains removeAll ] ].
 	remains copy do: [ :e | 
 		e printOn: aStream skipping: anIdentitySet.
@@ -239,12 +228,25 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 TypUnionType >> result [
 
 	^ self
-		  outgoingAt: #result
+		  outgoingAt: { #result }
 		  ifAbsentPut: [ (types collect: #result) typAsType ]
 ]
 
 { #category : #accessing }
 TypUnionType >> types [
+
 	<typPraResult: 'Set<TypType>'>
-	^ types
+	^ types copy
+]
+
+{ #category : #polymorphic }
+TypUnionType >> withParameters: aCollection [
+
+	^ self
+		  outgoingAt: { 
+				  #withParameters:.
+				  aCollection }
+		  ifAbsentPut: [ 
+			  self flag: 'TODO should use index lookup, not copy'.
+			  (types collect: [ :e | e withParameters: aCollection ]) typAsType ]
 ]

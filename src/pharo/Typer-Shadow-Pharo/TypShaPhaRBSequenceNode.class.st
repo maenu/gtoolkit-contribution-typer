@@ -15,7 +15,7 @@ TypShaPhaRBSequenceNode >> mStatements: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {RBProgramNode typAsType})
+				withParameters: {RBProgramNode typAsType})
 ]
 
 { #category : #shadow }
@@ -24,5 +24,5 @@ TypShaPhaRBSequenceNode >> mTemporaries: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
 			(SequenceableCollection typAsType
-				copyWithParameters: {RBTemporaryNode typAsType})
+				withParameters: {RBTemporaryNode typAsType})
 ]

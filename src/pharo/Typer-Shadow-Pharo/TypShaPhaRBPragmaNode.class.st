@@ -12,7 +12,7 @@ TypShaPhaRBPragmaNode class >> mSelectorArguments: aLookup [
 		arguments:
 			{Symbol typAsType.
 			(SequenceableCollection typAsType
-				copyWithParameters: {RBLiteralValueNode typAsType})}
+				withParameters: {RBLiteralValueNode typAsType})}
 ]
 
 { #category : #'as yet unclassified' }

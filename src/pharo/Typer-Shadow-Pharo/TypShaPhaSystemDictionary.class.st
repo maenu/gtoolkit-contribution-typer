@@ -14,9 +14,9 @@ TypShaPhaSystemDictionary >> resolveType: aLookup [
 
 	| type |
 	type := aLookup root classDescription typAsNamedType.
-	(type hasSuperType and: [ type superType isParametric ]) ifTrue: [ 
-		type := type copyWithSuperType:
-			        (type superType copyWithParameters: { 
+	(type hasSuper and: [ type super isParametric ]) ifTrue: [ 
+		type := type withSuper:
+			        (type super withParameters: { 
 					         Symbol typAsType.
 					         { 
 						         Class typAsType.

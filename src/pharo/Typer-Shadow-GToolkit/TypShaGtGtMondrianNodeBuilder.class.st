@@ -13,6 +13,6 @@ TypShaGtGtMondrianNodeBuilder class >> shadowedClass [
 TypShaGtGtMondrianNodeBuilder >> mWith: aLookup [
 	<typShaMethod: 'with:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: ((aLookup arguments at: 1) copyWithParameters: {BlElement typAsType})
+		typAsFunctionTypeWithResult: ((aLookup arguments at: 1) withParameters: {BlElement typAsType})
 		arguments: {Collection typAsType}
 ]
