@@ -135,24 +135,18 @@ TypFunctionType >> argumentsSize [
 { #category : #converting }
 TypFunctionType >> asCompatibleWith: aType [
 
-	^ self
-		  outgoingAt: { 
-				  #asCompatibleWith:.
-				  aType }
-		  ifAbsentPut: [ 
-			  (aType isFunction and: [ 
-				   argumentsSize = aType argumentsSize and: [ 
-					   argumentsOptional = aType argumentsOptional ] ])
-				  ifTrue: [ 
-					  | copy |
-					  copy := self copy.
-					  parameters keysAndValuesDo: [ :n :t | 
-						  self flag: 'TODO loop is ugly'.
-						  copy := copy
-							          withAt: n
-							          put: (t asCompatibleWith: (aType at: n)) ].
-					  copy ]
-				  ifFalse: [ super asCompatibleWith: aType ] ]
+	<typEdge>
+	^ (aType isFunction and: [ 
+		   argumentsSize = aType argumentsSize and: [ 
+			   argumentsOptional = aType argumentsOptional ] ])
+		  ifTrue: [ 
+			  | copy |
+			  copy := self copy.
+			  parameters keysAndValuesDo: [ :n :t | 
+				  self flag: 'TODO loop is ugly'.
+				  copy := copy withAt: n put: (t asCompatibleWith: (aType at: n)) ].
+			  copy ]
+		  ifFalse: [ super asCompatibleWith: aType ]
 ]
 
 { #category : #comparing }
@@ -233,35 +227,25 @@ TypFunctionType >> signalsAlways [
 { #category : #converting }
 TypFunctionType >> withArguments: someTypes [
 
-	^ self
-		  outgoingAt: { 
-				  #withArguments:.
-				  someTypes }
-		  ifAbsentPut: [ self withParameters: { self result } , someTypes ]
+	<typEdge>
+	^ self withParameters: { self result } , someTypes
 ]
 
 { #category : #converting }
 TypFunctionType >> withResult: aType [
 
-	^ self
-		  outgoingAt: { 
-				  #withResult:.
-				  aType }
-		  ifAbsentPut: [ self withAt: #'0' put: aType ]
+	<typEdge>
+	^ self withAt: #'0' put: aType
 ]
 
 { #category : #converting }
 TypFunctionType >> withSignalsAlways: aBooleanOrNil [
 
-	^ self
-		  outgoingAt: { 
-				  #withSignalsAlways:.
-				  aBooleanOrNil }
-		  ifAbsentPut: [ 
-			  self flag: 'TODO should use index lookup, not copy'.
-			  self copy
-				  initializeArgumentsSize: argumentsSize
-				  argumentsOptional: argumentsOptional
-				  signalsAlways: aBooleanOrNil;
-				  yourself ]
+	<typEdge>
+	self flag: 'TODO should use index lookup, not copy'.
+	^ self copy
+		  initializeArgumentsSize: argumentsSize
+		  argumentsOptional: argumentsOptional
+		  signalsAlways: aBooleanOrNil;
+		  yourself
 ]

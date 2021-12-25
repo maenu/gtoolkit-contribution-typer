@@ -51,29 +51,26 @@ TypUnionType >> arguments [
 { #category : #converting }
 TypUnionType >> asNonNullable [
 
-	^ self outgoingAt: { #asNonNullable } ifAbsentPut: [ 
-		  self isNullable
-			  ifTrue: [ (types reject: #isNil) typAsType ]
-			  ifFalse: [ self ] ]
+	<typEdge>
+	^ self isNullable
+		  ifTrue: [ (types reject: #isNil) typAsType ]
+		  ifFalse: [ self ]
 ]
 
 { #category : #converting }
 TypUnionType >> asNullable [
 
-	^ self outgoingAt: { #asNullable } ifAbsentPut: [ 
-		  self isNullable
-			  ifTrue: [ self ]
-			  ifFalse: [ (types , { TypNilType instance }) typAsType ] ]
+	<typEdge>
+	^ self isNullable
+		  ifTrue: [ self ]
+		  ifFalse: [ (types , { TypNilType instance }) typAsType ]
 ]
 
 { #category : #polymorphic }
 TypUnionType >> at: aString [
 
-	^ self
-		  outgoingAt: { 
-				  #at:.
-				  aString }
-		  ifAbsentPut: [ (types collect: [ :e | e at: aString ]) typAsType ]
+	<typEdge>
+	^ (types collect: [ :e | e at: aString ]) typAsType
 ]
 
 { #category : #testing }
@@ -162,25 +159,16 @@ TypUnionType >> isUnion [
 { #category : #lookup }
 TypUnionType >> lookupMethod: aSymbol arguments: aCollection [
 
-	^ self
-		  outgoingAt: { 
-				  #lookupMethod:arguments:.
-				  aSymbol.
-				  aCollection }
-		  ifAbsentPut: [ 
-			  (types collect: [ :e | 
-				   e lookupMethod: aSymbol arguments: aCollection ]) typAsType ]
+	<typEdge>
+	^ (types collect: [ :e | 
+		   e lookupMethod: aSymbol arguments: aCollection ]) typAsType
 ]
 
 { #category : #lookup }
 TypUnionType >> lookupVariable: aSymbol [
 
-	^ self
-		  outgoingAt: { 
-				  #lookupVariable:.
-				  aSymbol }
-		  ifAbsentPut: [ 
-		  (types collect: [ :e | e lookupVariable: aSymbol ]) typAsType ]
+	<typEdge>
+	^ (types collect: [ :e | e lookupVariable: aSymbol ]) typAsType
 ]
 
 { #category : #printing }
@@ -227,9 +215,8 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 { #category : #polymorphic }
 TypUnionType >> result [
 
-	^ self
-		  outgoingAt: { #result }
-		  ifAbsentPut: [ (types collect: #result) typAsType ]
+	<typEdge>
+	^ (types collect: #result) typAsType
 ]
 
 { #category : #accessing }
@@ -242,11 +229,7 @@ TypUnionType >> types [
 { #category : #polymorphic }
 TypUnionType >> withParameters: aCollection [
 
-	^ self
-		  outgoingAt: { 
-				  #withParameters:.
-				  aCollection }
-		  ifAbsentPut: [ 
-			  self flag: 'TODO should use index lookup, not copy'.
-			  (types collect: [ :e | e withParameters: aCollection ]) typAsType ]
+	<typEdge>
+	self flag: 'TODO should use index lookup, not copy'.
+	^ (types collect: [ :e | e withParameters: aCollection ]) typAsType
 ]

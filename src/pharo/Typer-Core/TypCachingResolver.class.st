@@ -15,17 +15,6 @@ TypCachingResolver >> canResolve: aLookup [
 ]
 
 { #category : #initialization }
-TypCachingResolver >> initialize [
-
-	<typPraVariable: 'resolver' as: 'TypLookupResolver'>
-	<typPraVariable: 'cache' as:
-	'Dictionary<TypLookup,SequenceableCollection<TypLookupResult>>'>
-	super initialize.
-	cache := Dictionary new.
-	unknown := TypUnknownType instance
-]
-
-{ #category : #initialization }
 TypCachingResolver >> invalidate [
 	super invalidate.
 	cache removeAll
@@ -52,7 +41,7 @@ TypCachingResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 { #category : #resolving }
 TypCachingResolver >> resolve: aLookup [
 
-	^ self outgoingAt: aLookup ifPresent: #yourself ifAbsentPut: [ 
-		  self outgoingAt: aLookup ensure: unknown.
-		  resolver resolve: aLookup ]
+	<typEdge>
+	self outgoingAt: aLookup ensure: TypUnknownType instance.
+	^ resolver resolve: aLookup
 ]

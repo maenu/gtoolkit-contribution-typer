@@ -20,13 +20,13 @@ TypPropertyLookup >> = anObject [
 { #category : #accessing }
 TypPropertyLookup >> asSuper [
 
+	<typEdge>
 	self assert: [ self hasSuper ].
-	^ self outgoingAt: #super ifAbsentPut: [ 
-		  self flag: 'TODO no copy, use class-side index'.
-		  self copy
-			  initializeSuper: self;
-			  initializeReceiver: receiver super selector: selector;
-			  yourself ]
+	self flag: 'TODO no copy, use class-side index'.
+	^ self copy
+		  initializeSuper: self;
+		  initializeReceiver: receiver super selector: selector;
+		  yourself
 ]
 
 { #category : #testing }

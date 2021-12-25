@@ -61,14 +61,10 @@ TypNamedType >> > aType [
 { #category : #polymorphic }
 TypNamedType >> at: aString [
 
-	^ self
-		  outgoingAt: { 
-				  #at:.
-				  aString }
-		  ifAbsentPut: [ 
-			  self hasSuper
-				  ifTrue: [ self super at: aString ]
-				  ifFalse: [ TypUnknownType instance ] ]
+	<typEdge>
+	^ self hasSuper
+		  ifTrue: [ self super at: aString ]
+		  ifFalse: [ TypUnknownType instance ]
 ]
 
 { #category : #accessing }
@@ -188,16 +184,11 @@ TypNamedType >> withAt: aString put: aType [
 { #category : #polymorphic }
 TypNamedType >> withParameters: aCollection [
 
-	^ self
-		  outgoingAt: { 
-				  #withParameters:.
-				  aCollection }
-		  ifAbsentPut: [ 
-			  | copy |
-			  self flag: 'TODO should use index lookup, not copy'.
-			  copy := self copy.
-			  copy hasSuper ifTrue: [ 
-				  copy initializeSuperType:
-					  (copy super withParameters: aCollection) ].
-			  copy ]
+	<typEdge>
+	| copy |
+	self flag: 'TODO should use index lookup, not copy'.
+	copy := self copy.
+	copy hasSuper ifTrue: [ 
+		copy initializeSuperType: (copy super withParameters: aCollection) ].
+	^ copy
 ]

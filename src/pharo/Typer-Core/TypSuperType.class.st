@@ -52,24 +52,15 @@ TypSuperType >> result [
 { #category : #polymorphic }
 TypSuperType >> withAt: aString put: aType [
 
-	^ self
-		  outgoingAt: { 
-				  #withAt:put:.
-				  aString.
-				  aType }
-		  ifAbsentPut: [ 
-			  self flag: 'TODO should use index lookup, not copy'.
-			  self withSuper: (superType withAt: aString put: aType) ]
+	<typEdge>
+	self flag: 'TODO should use index lookup, not copy'.
+	^ self withSuper: (superType withAt: aString put: aType)
 ]
 
 { #category : #polymorphic }
 TypSuperType >> withParameters: aCollection [
 
-	^ self
-		  outgoingAt: { 
-				  #withParameters:.
-				  aCollection }
-		  ifAbsentPut: [ 
-			  self flag: 'TODO should use index lookup, not copy'.
-			  self withSuper: (superType withParameters: aCollection) ]
+	<typEdge>
+	self flag: 'TODO should use index lookup, not copy'.
+	^ self withSuper: (superType withParameters: aCollection)
 ]

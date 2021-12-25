@@ -78,40 +78,37 @@ TypType >> asCompatibleWith: aType [
 
 	<typPraResult: 'TypType'>
 	<typPraArguments: 'TypType'>
-	^ self
-		  outgoingAt: { 
-				  #asCompatibleWith:.
-				  aType }
-		  ifAbsentPut: [ 
-			  aType isVariable
+	<typEdge>
+	^ aType isVariable
+		  ifTrue: [ aType ]
+		  ifFalse: [ 
+			  aType isUnknown
 				  ifTrue: [ aType ]
 				  ifFalse: [ 
-					  aType isUnknown
-						  ifTrue: [ aType ]
+					  aType isNil
+						  ifTrue: [ self asNullable ]
 						  ifFalse: [ 
-							  aType isNil
-								  ifTrue: [ self asNullable ]
-								  ifFalse: [ 
-									  self >= aType
-										  ifTrue: [ self ]
-										  ifFalse: [ TypUnknownType instance ] ] ] ] ]
+							  self >= aType
+								  ifTrue: [ self ]
+								  ifFalse: [ TypUnknownType instance ] ] ] ]
 ]
 
 { #category : #converting }
 TypType >> asNonNullable [
 
 	<typPraResult: 'TypType'>
-	^ self outgoingAt: { #asNonNullable } ifAbsentPut: [ self ]
+	<typEdge>
+	^ self
 ]
 
 { #category : #converting }
 TypType >> asNullable [
 
 	<typPraResult: 'TypType'>
-	^ self outgoingAt: { #asNullable } ifAbsentPut: [ 
-		  { 
-			  TypNilType instance.
-			  self } typAsType ]
+	<typEdge>
+	^ { 
+		  TypNilType instance.
+		  self } typAsType
 ]
 
 { #category : #testing }
@@ -263,13 +260,9 @@ TypType >> super [
 { #category : #converting }
 TypType >> withSuper: aType [
 
-	^ self
-		  outgoingAt: { 
-				  #withSuper:.
-				  aType }
-		  ifAbsentPut: [ 
-			  self flag: 'TODO should use index lookup, not copy'.
-			  self copy
-				  initializeSuperType: aType;
-				  yourself ]
+	<typEdge>
+	self flag: 'TODO should use index lookup, not copy'.  
+	^ self copy
+		  initializeSuperType: aType;
+		  yourself
 ]

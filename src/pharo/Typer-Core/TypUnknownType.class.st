@@ -59,9 +59,6 @@ TypUnknownType >> result [
 { #category : #polymorphic }
 TypUnknownType >> withParameters: aCollection [
 
+	<typEdge>
 	^ self
-		  outgoingAt: { 
-				  #withParameters:.
-				  aCollection }
-		  ifAbsentPut: [ self ]
 ]

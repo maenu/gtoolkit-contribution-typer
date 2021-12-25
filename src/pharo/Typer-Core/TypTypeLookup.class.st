@@ -24,13 +24,13 @@ TypTypeLookup >> = anObject [
 { #category : #copying }
 TypTypeLookup >> asSuper [
 
+	<typEdge>
 	self assert: [ self hasSuper ].
-	^ self outgoingAt: #super ifAbsentPut: [ 
-		  self flag: 'TODO no copy, use class-side index'.
-		  self copy
-			  initializeSuper: self;
-			  initializeClassDescription: classDescription superclass;
-			  yourself ]
+	self flag: 'TODO no copy, use class-side index'.
+	^ self copy
+		  initializeSuper: self;
+		  initializeClassDescription: classDescription superclass;
+		  yourself
 ]
 
 { #category : #accessing }
