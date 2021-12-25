@@ -10,3 +10,9 @@ CompiledMethod >> typInfTypeInSelf [
 
 	^ self ast typInfTypeInSelf
 ]
+
+{ #category : #'*Typer-Inference' }
+CompiledMethod >> typInfTypes [
+
+	^ { Integer typAsType }
+]

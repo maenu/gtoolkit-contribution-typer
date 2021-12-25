@@ -121,11 +121,11 @@ TypParametricType >> initializeParameters: anOrderedDictionary [
 ]
 
 { #category : #invalidation }
-TypParametricType >> isAffectedByClassChange: aClassAnnouncement [
+TypParametricType >> invalidateOnClassChange: aClassAnnouncement [
 
-	^ (super isAffectedByClassChange: aClassAnnouncement) or: [ 
+	^ (super invalidateOnClassChange: aClassAnnouncement) or: [ 
 		  parameters anySatisfy: [ :e | 
-			  e isAffectedByClassChange: aClassAnnouncement ] ]
+			  e invalidateOnClassChange: aClassAnnouncement ] ]
 ]
 
 { #category : #testing }

@@ -21,6 +21,12 @@ TypNode class >> invalidateAll [
 	^ self allSubInstancesDo: #removeAllOutgoing
 ]
 
+{ #category : #testing }
+TypNode class >> isAbstract [
+
+	^ self == TypNode
+]
+
 { #category : #accessing }
 TypNode >> addIncoming: anEdge [
 
@@ -106,6 +112,24 @@ TypNode >> initialize [
 	super initialize.
 	incoming := IdentitySet new.
 	outgoing := IdentitySet new
+]
+
+{ #category : #invalidation }
+TypNode >> invalidate [
+
+	
+]
+
+{ #category : #invalidation }
+TypNode >> invalidateOnClassChange: aClassAnnouncement [
+
+	
+]
+
+{ #category : #invalidation }
+TypNode >> invalidateOnMethodChange: aMethodAnnouncement [
+
+	
 ]
 
 { #category : #accessing }

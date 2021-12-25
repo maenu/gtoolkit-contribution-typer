@@ -135,15 +135,15 @@ TypUnionType >> initializeTypes: anObject [
 ]
 
 { #category : #invalidation }
-TypUnionType >> isAffectedByClassChange: aClassAnnouncement [
+TypUnionType >> invalidateOnClassChange: aClassAnnouncement [
 
-	^ types anySatisfy: [ :e | e isAffectedByClassChange: aClassAnnouncement ]
+	^ types anySatisfy: [ :e | e invalidateOnClassChange: aClassAnnouncement ]
 ]
 
 { #category : #invalidation }
-TypUnionType >> isAffectedByMethodChange: aMethodAnnouncement [
+TypUnionType >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	^ types anySatisfy: [ :e | e isAffectedByMethodChange: aMethodAnnouncement ]
+	^ types anySatisfy: [ :e | e invalidateOnMethodChange: aMethodAnnouncement ]
 ]
 
 { #category : #testing }

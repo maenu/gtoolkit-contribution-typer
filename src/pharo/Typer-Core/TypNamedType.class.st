@@ -126,7 +126,7 @@ TypNamedType >> initializeName: anObject [
 ]
 
 { #category : #invalidation }
-TypNamedType >> isAffectedByClassChange: aClassAnnouncement [
+TypNamedType >> invalidateOnClassChange: aClassAnnouncement [
 
 	self hasClassDescription ifFalse: [ ^ false ].
 	(self classDescription = aClassAnnouncement classAffected or: [ 

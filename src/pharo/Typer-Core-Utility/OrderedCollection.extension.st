@@ -1,6 +1,6 @@
 Extension { #name : #OrderedCollection }
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Core-Utility' }
 OrderedCollection >> typDiff: aCollection [
 
 	| selfIndex otherIndex classNames result |
@@ -21,7 +21,7 @@ OrderedCollection >> typDiff: aCollection [
 	^ result sort: [ :a :b | a spaceForInstances > b spaceForInstances ]
 ]
 
-{ #category : #'*Typer-Core' }
+{ #category : #'*Typer-Core-Utility' }
 OrderedCollection >> typInTyper [
 
 	^ (self select: [ :e | 

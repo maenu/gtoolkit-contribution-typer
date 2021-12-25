@@ -42,8 +42,8 @@ TypInfVariableResolver >> invalidateOnClassChange: aClassAnnouncement [
 		receiver := association key.
 		selector := association value.
 		class typAsType >= receiver or: [ 
-			(association key isAffectedByClassChange: aClassAnnouncement) or: [ 
-				context isAffectedByClassChange: aClassAnnouncement ] ] ]
+			(association key invalidateOnClassChange: aClassAnnouncement) or: [ 
+				context invalidateOnClassChange: aClassAnnouncement ] ] ]
 ]
 
 { #category : #invalidation }
@@ -57,8 +57,8 @@ TypInfVariableResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 		selector := association value.
 		(method selector = selector and: [ 
 			 method methodClass typAsType >= receiver ]) or: [ 
-			(association key isAffectedByMethodChange: aMethodAnnouncement) 
-				or: [ context isAffectedByMethodChange: aMethodAnnouncement ] ] ]
+			(association key invalidateOnMethodChange: aMethodAnnouncement) 
+				or: [ context invalidateOnMethodChange: aMethodAnnouncement ] ] ]
 ]
 
 { #category : #accessing }

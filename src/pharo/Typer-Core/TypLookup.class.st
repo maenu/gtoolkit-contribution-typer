@@ -38,13 +38,13 @@ TypLookup >> initializeSuper: aLookup [
 ]
 
 { #category : #invalidation }
-TypLookup >> isAffectedByClassChange: aClassAnnouncement [
+TypLookup >> invalidateOnClassChange: aClassAnnouncement [
 
 	^ false
 ]
 
 { #category : #invalidation }
-TypLookup >> isAffectedByMethodChange: aMethodAnnouncement [
+TypLookup >> invalidateOnMethodChange: aMethodAnnouncement [
 
 	^ false
 ]

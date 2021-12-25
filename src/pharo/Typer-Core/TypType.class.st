@@ -150,13 +150,13 @@ TypType >> initializeSuperType: aType [
 ]
 
 { #category : #invalidation }
-TypType >> isAffectedByClassChange: aClassAnnouncement [
+TypType >> invalidateOnClassChange: aClassAnnouncement [
 
 	^ false
 ]
 
 { #category : #invalidation }
-TypType >> isAffectedByMethodChange: aMethodAnnouncement [
+TypType >> invalidateOnMethodChange: aMethodAnnouncement [
 
 	^ false
 ]
@@ -225,17 +225,17 @@ TypType >> lookupMethod: aSymbol [
 
 { #category : #lookup }
 TypType >> lookupMethod: aSymbol arguments: aCollection [
+
 	^ TypMethodIndex instance
-		lookupMethodReceiver: self
-		selector: aSymbol
-		arguments: aCollection
+		  lookupMethodReceiver: self
+		  selector: aSymbol
+		  arguments: aCollection
 ]
 
 { #category : #lookup }
 TypType >> lookupVariable: aSymbol [
-	^ TypVariableIndex instance
-		lookupReceiver: self
-		selector: aSymbol
+
+	^ TypVariableIndex instance lookupReceiver: self selector: aSymbol
 ]
 
 { #category : #printing }

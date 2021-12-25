@@ -52,13 +52,13 @@ TypInfAstContext >> initializeSelf: aType [
 ]
 
 { #category : #accessing }
-TypInfAstContext >> isAffectedByClassChange: aClassAnnouncement [
+TypInfAstContext >> invalidateOnClassChange: aClassAnnouncement [
 
 	^ selfType <= aClassAnnouncement classAffected typAsType
 ]
 
 { #category : #accessing }
-TypInfAstContext >> isAffectedByMethodChange: aMethodAnnouncement [
+TypInfAstContext >> invalidateOnMethodChange: aMethodAnnouncement [
 
 	^ selfType <= aMethodAnnouncement methodAffected methodClass typAsType
 ]

@@ -8,25 +8,18 @@ Class {
 TypTypeIndex class >> instance [
 
 	^ instance ifNil: [ 
-		  instance := self new
-			              initializeResolver:
-				              (TypCachingResolver resolver:
-						               (TypBreadthFirstResolver resolvers: { 
-									                (TypDepthFirstResolver resolver:
-											                 (TypBreadthFirstResolver resolvers:
-													                  { 
-														                  TypPraTypeResolver new.
-														                  TypShaTypeResolver new })).
-									                (TypDepthFirstResolver resolver:
-											                 TypInfTypeResolver new) }));
-			              yourself ]
+		  instance := self new initializeResolver:
+			              (TypBreadthFirstResolver resolvers: { 
+					               (TypDepthFirstResolver resolver:
+						                (TypBreadthFirstResolver resolvers: { 
+								                 TypPraTypeResolver new.
+								                 TypShaTypeResolver new })).
+					               (TypDepthFirstResolver resolver:
+						                TypInfTypeResolver new) }) ]
 ]
 
 { #category : #accessing }
 TypTypeIndex >> lookupClassDescription: aClassDescription [
 
-	| lookup |
-	lookup := TypTypeLookup classDescription: aClassDescription.
-	(resolver canResolve: lookup) ifFalse: [ ^ TypUnknownType instance ].
-	^ resolver resolve: lookup
+	^ self resolve: (TypTypeLookup classDescription: aClassDescription)
 ]

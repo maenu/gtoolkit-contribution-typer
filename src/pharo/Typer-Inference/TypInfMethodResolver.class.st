@@ -32,16 +32,17 @@ TypInfMethodResolver >> invalidate [
 
 { #category : #invalidation }
 TypInfMethodResolver >> invalidateOnClassChange: aClassAnnouncement [
-	
+
 	| class |
 	class := aClassAnnouncement classAffected.
 	contexts keysAndValuesRemove: [ :association :context | 
 		| receiver selector |
 		receiver := association key.
 		selector := association value.
+		self flag: 'FIXME figure out how invalidation should work'.
 		class typAsType >= receiver or: [ 
-			(association key isAffectedByClassChange: aClassAnnouncement) or: [ 
-				context isAffectedByClassChange: aClassAnnouncement ] ] ]
+			(receiver invalidateOnClassChange: aClassAnnouncement) or: [ 
+				context invalidateOnClassChange: aClassAnnouncement ] ] ]
 ]
 
 { #category : #invalidation }
@@ -55,8 +56,8 @@ TypInfMethodResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 		selector := association value.
 		(method selector = selector and: [ 
 			 method methodClass typAsType >= receiver ]) or: [ 
-			(association key isAffectedByMethodChange: aMethodAnnouncement) 
-				or: [ context isAffectedByMethodChange: aMethodAnnouncement ] ] ]
+			(association key invalidateOnMethodChange: aMethodAnnouncement) 
+				or: [ context invalidateOnMethodChange: aMethodAnnouncement ] ] ]
 ]
 
 { #category : #accessing }

@@ -63,3 +63,14 @@ TypIndex >> invalidateOnMethodChange: aMethodAnnouncement [
 
 	resolver invalidateOnMethodChange: aMethodAnnouncement
 ]
+
+{ #category : #accessing }
+TypIndex >> resolve: aLookup [
+
+	<typEdge>
+	^ (resolver canResolve: aLookup)
+		  ifTrue: [ 
+			  self outgoingAt: aLookup ensure: TypUnknownType instance.
+			  resolver resolve: aLookup ]
+		  ifFalse: [ TypUnknownType instance ]
+]

@@ -32,15 +32,15 @@ TypSuperType >> initialize [
 ]
 
 { #category : #invalidation }
-TypSuperType >> isAffectedByClassChange: aClassAnnouncement [
+TypSuperType >> invalidateOnClassChange: aClassAnnouncement [
 
-	^ superType isAffectedByClassChange: aClassAnnouncement
+	^ superType invalidateOnClassChange: aClassAnnouncement
 ]
 
 { #category : #invalidation }
-TypSuperType >> isAffectedByMethodChange: aMethodAnnouncement [
+TypSuperType >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	^ superType isAffectedByMethodChange: aMethodAnnouncement
+	^ superType invalidateOnMethodChange: aMethodAnnouncement
 ]
 
 { #category : #polymorphic }
