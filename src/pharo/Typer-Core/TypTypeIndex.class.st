@@ -25,3 +25,9 @@ TypTypeIndex >> lookupClassDescription: aClassDescription [
 
 	^ self resolve: (TypTypeLookup classDescription: aClassDescription)
 ]
+
+{ #category : #printing }
+TypTypeIndex >> printOn: aStream [
+
+	aStream nextPutAll: 'types'
+]

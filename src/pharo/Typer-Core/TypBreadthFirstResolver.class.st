@@ -27,8 +27,13 @@ TypBreadthFirstResolver >> initialize [
 
 { #category : #initialization }
 TypBreadthFirstResolver >> initializeResolvers: anObject [
+
 	<typPraArguments: 'SequenceableCollection<TypLookupResolver>'>
-	resolvers := anObject
+	anObject = resolvers ifTrue: [ ^ self ].
+	resolvers ifNotNil: [ self outgoingRemoveAt: #resolvers ].
+	resolvers := anObject.
+	resolvers ifNotNil: [ 
+		resolvers do: [ :e | self addOutgoingTarget: e data: #resolvers ] ]
 ]
 
 { #category : #invalidation }
@@ -49,6 +54,16 @@ TypBreadthFirstResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 
 	super invalidateOnMethodChange: aMethodAnnouncement.
 	resolvers do: [ :e | e invalidateOnMethodChange: aMethodAnnouncement ]
+]
+
+{ #category : #accessing }
+TypBreadthFirstResolver >> printOn: aStream [
+
+	aStream nextPutAll: '→{'.
+	resolvers withIndexDo: [ :e :i | 
+		e printOn: aStream.
+		i < resolvers size ifTrue: [ aStream nextPut: $, ] ].
+	aStream nextPut: $}
 ]
 
 { #category : #resolving }

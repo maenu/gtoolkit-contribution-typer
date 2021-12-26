@@ -29,3 +29,9 @@ TypMethodIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aColl
 			   selector: aSymbol
 			   arguments: aCollection asArray)
 ]
+
+{ #category : #printing }
+TypMethodIndex >> printOn: aStream [
+
+	aStream nextPutAll: 'methods'
+]

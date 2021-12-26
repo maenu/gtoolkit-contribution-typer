@@ -61,6 +61,12 @@ TypInfVariableResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 				or: [ context invalidateOnMethodChange: aMethodAnnouncement ] ] ]
 ]
 
+{ #category : #printing }
+TypInfVariableResolver >> printOn: aStream [
+
+	aStream nextPutAll: 'inf variable'
+]
+
 { #category : #accessing }
 TypInfVariableResolver >> resolve: aLookup [
 

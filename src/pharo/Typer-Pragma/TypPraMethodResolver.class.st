@@ -12,6 +12,12 @@ TypPraMethodResolver >> canResolve: aLookup [
 					[ aLookup receiver classDescription typPraHasMethod: aLookup selector ] ]
 ]
 
+{ #category : #printing }
+TypPraMethodResolver >> printOn: aStream [
+
+	aStream nextPutAll: 'pra method'
+]
+
 { #category : #accessing }
 TypPraMethodResolver >> resolve: aLookup [
 

@@ -51,6 +51,8 @@ TypLookup >> invalidateOnMethodChange: aMethodAnnouncement [
 
 { #category : #accessing }
 TypLookup >> printOn: aStream [
+
+	superLookup ifNil: [ ^ self ].
 	aStream nextPutAll: ' | '.
 	superLookup printOn: aStream
 ]

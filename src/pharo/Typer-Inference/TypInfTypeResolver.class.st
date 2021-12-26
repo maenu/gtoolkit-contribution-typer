@@ -1,12 +1,18 @@
 Class {
 	#name : #TypInfTypeResolver,
 	#superclass : #TypResolver,
-	#category : 'Typer-Inference'
+	#category : #'Typer-Inference'
 }
 
 { #category : #accessing }
 TypInfTypeResolver >> canResolve: aLookup [
 	^ true
+]
+
+{ #category : #printing }
+TypInfTypeResolver >> printOn: aStream [
+
+	aStream nextPutAll: 'inf type'
 ]
 
 { #category : #accessing }

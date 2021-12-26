@@ -12,6 +12,12 @@ TypPraVariableResolver >> canResolve: aLookup [
 						typPraHasVariable: aLookup selector ] ]
 ]
 
+{ #category : #printing }
+TypPraVariableResolver >> printOn: aStream [
+
+	aStream nextPutAll: 'pra variable'
+]
+
 { #category : #accessing }
 TypPraVariableResolver >> resolve: aLookup [
 

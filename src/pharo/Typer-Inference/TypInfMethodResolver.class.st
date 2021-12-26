@@ -60,6 +60,12 @@ TypInfMethodResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 				or: [ context invalidateOnMethodChange: aMethodAnnouncement ] ] ]
 ]
 
+{ #category : #printing }
+TypInfMethodResolver >> printOn: aStream [
+
+	aStream nextPutAll: 'inf method'
+]
+
 { #category : #accessing }
 TypInfMethodResolver >> resolve: aLookup [
 

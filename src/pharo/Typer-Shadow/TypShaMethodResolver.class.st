@@ -12,6 +12,12 @@ TypShaMethodResolver >> canResolve: aLookup [
 						anySatisfy: [ :e | e canResolveMethod: aLookup ] ] ]
 ]
 
+{ #category : #printing }
+TypShaMethodResolver >> printOn: aStream [
+
+	aStream nextPutAll: 'sha method'
+]
+
 { #category : #accessing }
 TypShaMethodResolver >> resolve: aLookup [
 

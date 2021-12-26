@@ -43,8 +43,10 @@ TypIndex >> initialize [
 
 { #category : #initialization }
 TypIndex >> initializeResolver: anObject [
+
 	<typPraArguments: 'TypLookupResolver'>
-	resolver := anObject
+	resolver := anObject.
+	self outgoingAt: #resolver ensure: resolver
 ]
 
 { #category : #invalidation }

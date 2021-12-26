@@ -10,6 +10,12 @@ TypShaTypeResolver >> canResolve: aLookup [
 		anySatisfy: [ :e | e canResolveType: aLookup ]
 ]
 
+{ #category : #printing }
+TypShaTypeResolver >> printOn: aStream [
+
+	aStream nextPutAll: 'sha type'
+]
+
 { #category : #accessing }
 TypShaTypeResolver >> resolve: aLookup [
 

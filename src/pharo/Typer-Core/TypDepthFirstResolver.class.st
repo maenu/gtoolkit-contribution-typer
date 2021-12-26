@@ -23,7 +23,9 @@ TypDepthFirstResolver >> canResolve: aLookup [
 
 { #category : #initialization }
 TypDepthFirstResolver >> initializeResolver: aResolver [
-	resolver := aResolver
+
+	resolver := aResolver.
+	self outgoingAt: #resolver ensure: resolver
 ]
 
 { #category : #invalidation }
@@ -44,6 +46,13 @@ TypDepthFirstResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 
 	super invalidateOnMethodChange: aMethodAnnouncement.
 	resolver invalidateOnMethodChange: aMethodAnnouncement
+]
+
+{ #category : #accessing }
+TypDepthFirstResolver >> printOn: aStream [
+
+	aStream nextPutAll: '↓'.
+	resolver printOn: aStream
 ]
 
 { #category : #resolving }

@@ -23,3 +23,9 @@ TypVariableIndex >> lookupReceiver: aType selector: aSymbol [
 
 	^ self resolve: (TypVariableLookup receiver: aType selector: aSymbol)
 ]
+
+{ #category : #printing }
+TypVariableIndex >> printOn: aStream [
+
+	aStream nextPutAll: 'variables'
+]

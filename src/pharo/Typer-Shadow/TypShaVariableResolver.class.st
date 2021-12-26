@@ -12,6 +12,12 @@ TypShaVariableResolver >> canResolve: aLookup [
 						anySatisfy: [ :e | e canResolveVariable: aLookup ] ] ]
 ]
 
+{ #category : #printing }
+TypShaVariableResolver >> printOn: aStream [
+
+	aStream nextPutAll: 'sha variable'
+]
+
 { #category : #accessing }
 TypShaVariableResolver >> resolve: aLookup [
 

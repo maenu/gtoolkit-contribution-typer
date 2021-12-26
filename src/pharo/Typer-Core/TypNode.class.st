@@ -11,7 +11,7 @@ Class {
 { #category : #compiler }
 TypNode class >> compiler [
 
-	^ super compiler addPlugin: TypTypeCompilerAstPlugin
+	^ super compiler addPlugin: TypEdgePragmaCompilerAstPlugin
 ]
 
 { #category : #invalidation }
