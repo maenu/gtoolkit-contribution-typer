@@ -24,6 +24,12 @@ TypEdgePragmaData >> = anObject [
 	^ anObject selector = selector and: [ anObject arguments = arguments ]
 ]
 
+{ #category : #accessing }
+TypEdgePragmaData >> arguments [
+
+	^ arguments
+]
+
 { #category : #comparing }
 TypEdgePragmaData >> hash [
 
@@ -46,4 +52,10 @@ TypEdgePragmaData >> printOn: aStream [
 		e printOn: aStream.
 		i < arguments size ifTrue: [ aStream nextPut: $, ] ].
 	aStream nextPut: $}
+]
+
+{ #category : #accessing }
+TypEdgePragmaData >> selector [
+
+	^ selector
 ]

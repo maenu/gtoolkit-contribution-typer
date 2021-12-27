@@ -90,7 +90,10 @@ TypType >> asCompatibleWith: aType [
 						  ifFalse: [ 
 							  self >= aType
 								  ifTrue: [ self ]
-								  ifFalse: [ TypUnknownType instance ] ] ] ]
+								  ifFalse: [ 
+									  self hasSuper
+										  ifTrue: [ self super asCompatibleWith: aType ]
+										  ifFalse: [ TypUnknownType instance ] ] ] ] ]
 ]
 
 { #category : #converting }
