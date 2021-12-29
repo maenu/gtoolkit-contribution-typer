@@ -8,10 +8,12 @@ TypNode >> gtGraphOn: aView [
 		  title: 'Graph';
 		  priority: 10;
 		  painting: [ :m | 
-			  | edges nodes |
-			  edges := outgoing , incoming.
-			  nodes := (outgoing collect: #target)
-			           , (incoming collect: #origin) , { self }.
+			  | outs ins edges nodes |
+			  outs := outgoing asArray takeFirst: 16.
+			  ins := incoming asArray takeFirst: 16.
+			  edges := outs , ins.
+			  nodes := (outs collect: #target) , (ins collect: #origin)
+			           , { self }.
 			  m nodes
 				  stencil: [ :e | e asElementIn: m ];
 				  with: nodes.
