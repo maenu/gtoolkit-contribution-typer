@@ -1,7 +1,7 @@
 Class {
 	#name : #TypGtRbAstStyler,
-	#superclass : #GtCoderAstStyler,
-	#traits : 'TRBProgramNodeVisitor - {#visitArgumentNodes:. #visitTemporaryDeclarationNode:}',
+	#superclass : #GtGenericPharoStyler,
+	#traits : 'TRBProgramNodeVisitor',
 	#classTraits : 'TRBProgramNodeVisitor classTrait',
 	#instVars : [
 		'coder',
@@ -21,17 +21,21 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 	| ast |
 	ast := coder rbAST.
 	typeContext := ast typInfContextInSelf.
+	text := aText.
 	[ 
-	ast typInfTypeIn: typeContext.
-	super style: aText ast: ast ]
+	ast typInfMethodIn: typeContext.
+	self visitNode: ast ]
 		on: Error
-		do: [ :e | Halt once ]
+		do: [ :e | Halt once ].
+	text := nil.
+	typeContext := nil
 ]
 
 { #category : #private }
 TypGtRbAstStyler >> styleFrom: from to: to with: attributes [
-	(from <= text size and: [ to <= text size and: [ from <= to ] ])
-		ifTrue: [ super styleFrom: from to: to with: attributes ]
+
+	(from <= text size and: [ to <= text size and: [ from <= to ] ]) 
+		ifTrue: [ text attributes: attributes from: from to: to ]
 ]
 
 { #category : #visiting }
@@ -40,7 +44,8 @@ TypGtRbAstStyler >> styleNode: aNode [
 	self
 		styleFrom: aNode start
 		to: aNode stop
-		with: { (TypGtAttribute new
-				 type_: (typeContext type: aNode);
-				 yourself) }
+		with:
+		{ (TypGtAttribute
+			 type: (typeContext type: aNode)
+			 object: typeContext) }
 ]

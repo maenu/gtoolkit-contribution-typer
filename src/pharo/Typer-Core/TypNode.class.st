@@ -206,8 +206,15 @@ TypNode >> removeIncoming: anEdge [
 { #category : #accessing }
 TypNode >> removeOutgoing: anEdge [
 
-	outgoing remove: anEdge.
+	outgoing remove: anEdge ifAbsent: [ ^ self ].
+	anEdge target typIsNode ifFalse: [ ^ self ].
 	^ anEdge target
 		  removeIncoming: anEdge;
 		  yourself
+]
+
+{ #category : #accessing }
+TypNode >> typIsNode [
+
+	^ true
 ]

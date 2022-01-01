@@ -1,11 +1,8 @@
 Class {
 	#name : #TypInfAstContext,
-	#superclass : #Object,
+	#superclass : #TypNode,
 	#instVars : [
-		'selfType',
-		'nodes',
-		'unknown',
-		'null'
+		'selfType'
 	],
 	#classInstVars : [
 		'index'
@@ -37,15 +34,6 @@ TypInfAstContext class >> self: aType [
 ]
 
 { #category : #initialization }
-TypInfAstContext >> initialize [
-
-	super initialize.
-	nodes := WeakIdentityKeyDictionary new.
-	unknown := TypUnknownType instance.
-	null := TypNilType instance
-]
-
-{ #category : #initialization }
 TypInfAstContext >> initializeSelf: aType [
 
 	selfType := aType
@@ -66,21 +54,14 @@ TypInfAstContext >> invalidateOnMethodChange: aMethodAnnouncement [
 { #category : #accessing }
 TypInfAstContext >> nil: aNode [
 
-	^ nodes
-		  at: aNode
-		  ifAbsentPut: [ aNode typInfAnnotated: null ]
+	<typEdge>
+	^ aNode typInfAnnotated: TypNilType instance
 ]
 
 { #category : #accessing }
 TypInfAstContext >> printOn: aStream [
 
 	selfType printOn: aStream
-]
-
-{ #category : #removing }
-TypInfAstContext >> removeKey: aNode [
-
-	nodes removeKey: aNode ifAbsent: [ "noop" ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -92,15 +73,17 @@ TypInfAstContext >> self [
 { #category : #utilities }
 TypInfAstContext >> type: aNode [
 
-	^ nodes at: aNode ifAbsent: [ 
-		  nodes
-			  at: aNode put: unknown;
-			  at: aNode
-			  put: (aNode typInfAnnotated: (aNode typInfTypeRecursiveIn: self)) ]
+	<typEdge>
+	self
+		outgoingAt:
+		(TypEdgePragmaData selector: #type: arguments: { aNode })
+		ensure: TypUnknownType instance.
+	^ aNode typInfAnnotated: (aNode typInfTypeRecursiveIn: self)
 ]
 
 { #category : #accessing }
 TypInfAstContext >> unknown: aNode [
 
-	^ nodes at: aNode ifAbsentPut: [ aNode typInfAnnotated: unknown ]
+	<typEdge>
+	^ aNode typInfAnnotated: TypUnknownType instance
 ]

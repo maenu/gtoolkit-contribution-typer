@@ -1,7 +1,7 @@
 Extension { #name : #TypNode }
 
 { #category : #'*Typer-GToolkit' }
-TypNode >> gtGraphOn: aView [
+TypNode >> gtGraphFor: aView [
 
 	<gtView>
 	^ aView typGtMondrian

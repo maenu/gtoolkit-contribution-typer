@@ -11,7 +11,7 @@ TypEdge >> gtDataFor: aView [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypEdge >> gtGraphOn: aView [
+TypEdge >> gtGraphFor: aView [
 
 	<gtView>
 	^ aView typGtMondrian

@@ -5,15 +5,32 @@ Class {
 		'node',
 		'context'
 	],
+	#classInstVars : [
+		'index'
+	],
 	#category : #'Typer-Inference'
 }
 
-{ #category : #accessing }
-TypInfAstNode class >> node: aNode context: aContext [
+{ #category : #initialization }
+TypInfAstNode class >> initialize [
 
-	^ self new
-		  initializeNode: aNode context: aContext;
-		  yourself
+	index := WeakValueDictionary new
+]
+
+{ #category : #invalidation }
+TypInfAstNode class >> invalidate [
+
+	<script>
+	index removeAll
+]
+
+{ #category : #accessing }
+TypInfAstNode class >> node: aNode [
+
+	^ index at: aNode ifAbsentPut: [ 
+		  self new
+			  initializeNode: aNode;
+			  yourself ]
 ]
 
 { #category : #accessing }
@@ -21,8 +38,7 @@ TypInfAstNode >> = anObject [
 
 	anObject == self ifTrue: [ ^ true ].
 	anObject class = self class ifFalse: [ ^ false ].
-	anObject node = node ifFalse: [ ^ false ].
-	^ anObject context = context
+	^ anObject node = node
 ]
 
 { #category : #accessing }
@@ -50,21 +66,15 @@ TypInfAstNode >> asElementIn: aMondrian [
 ]
 
 { #category : #accessing }
-TypInfAstNode >> context [
-	^ context
-]
-
-{ #category : #accessing }
 TypInfAstNode >> hash [
 
 	^ (self class hash bitXor: node hash) bitXor: context hash
 ]
 
 { #category : #initialization }
-TypInfAstNode >> initializeNode: aNode context: aContext [
+TypInfAstNode >> initializeNode: aNode [
 
-	node := aNode.
-	context := aContext
+	node := aNode
 ]
 
 { #category : #accessing }

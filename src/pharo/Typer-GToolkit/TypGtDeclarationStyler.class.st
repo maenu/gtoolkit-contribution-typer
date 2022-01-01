@@ -19,9 +19,13 @@ TypGtDeclarationStyler >> visitMethodNode: aNode [
 		            ifTrue: [ aNode selector size ]
 		            ifFalse: [ aNode arguments last stop ].
 	super visitMethodNode: aNode.
-	self styleFrom: position to: position with: { (TypGtAttribute new
-			 type_: (typeContext type: aNode) result;
-			 yourself) }
+	self
+		styleFrom: position
+		to: position
+		with:
+		{ (TypGtAttribute
+			 type: (typeContext type: aNode) result
+			 object: aNode) }
 ]
 
 { #category : #accessing }

@@ -76,6 +76,8 @@ TypEdge >> hash [
 { #category : #initialization }
 TypEdge >> initializeOrigin: aNode target: anotherNode data: anObject [
 
+	self assert: [ aNode typIsNode ].
+	self assert: [ anotherNode typIsNode ].
 	origin := aNode.
 	target := anotherNode.
 	data := anObject

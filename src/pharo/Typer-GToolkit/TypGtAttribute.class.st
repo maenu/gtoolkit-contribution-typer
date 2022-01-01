@@ -2,10 +2,19 @@ Class {
 	#name : #TypGtAttribute,
 	#superclass : #BrTextAdornmentDynamicAttribute,
 	#instVars : [
-		'type'
+		'type',
+		'object'
 	],
-	#category : 'Typer-GToolkit'
+	#category : #'Typer-GToolkit'
 }
+
+{ #category : #'as yet unclassified' }
+TypGtAttribute class >> type: aType object: anObject [
+
+	^ self new
+		  initializeType: aType object: anObject;
+		  yourself
+]
 
 { #category : #initialization }
 TypGtAttribute >> initialize [
@@ -25,18 +34,13 @@ TypGtAttribute >> initialize [
 				aptitude: (BrGlamorousLabelAptitude new
 						 foreground: Color gray;
 						 yourself);
-				when: BlClickEvent do: [ :e | e target phlow spawnObject: type ];
+				when: BlClickEvent do: [ :e | e target phlow spawnObject: object ];
 				yourself ]
 ]
 
-{ #category : #accessing }
-TypGtAttribute >> type_ [
-	<typPraResult: 'TypType'>
-	^ type
-]
+{ #category : #initialization }
+TypGtAttribute >> initializeType: aType object: anObject [
 
-{ #category : #accessing }
-TypGtAttribute >> type_: anObject [
-	<typPraArguments: 'TypType'>
-	type := anObject
+	type := aType.
+	object := anObject
 ]

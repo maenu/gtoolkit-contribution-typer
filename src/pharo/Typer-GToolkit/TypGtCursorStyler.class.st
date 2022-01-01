@@ -14,8 +14,6 @@ TypGtCursorStyler >> styleNode: aNode [
 		with: { (TypGtCursorAttribute new
 				 coder: coder;
 				 node: aNode;
-				 attribute: (TypGtAttribute new
-						  type_: aNode typInfTypeInSelf;
-						  yourself);
-				 yourself) }
+				 attribute:
+					 (TypGtAttribute type: aNode typInfTypeInSelf object: aNode)) }
 ]
