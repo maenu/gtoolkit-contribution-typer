@@ -20,10 +20,10 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 
 	| ast |
 	ast := coder rbAST.
-	typeContext := ast typInfContextInSelf.
-	text := aText.
-	[ 
-	ast typInfMethodIn: typeContext.
+	typeContext := ast typInfContextInSelf. 
+	text := aText.   
+	[  
+	ast typInfTypeIn: typeContext.
 	self visitNode: ast ]
 		on: Error
 		do: [ :e | Halt once ].
@@ -41,11 +41,11 @@ TypGtRbAstStyler >> styleFrom: from to: to with: attributes [
 { #category : #visiting }
 TypGtRbAstStyler >> styleNode: aNode [
 
+	| data edge |
+	data := TypEdgePragmaData selector: #type: arguments: { aNode }.
+	edge := typeContext outgoing detect: [ :e | e data = data ].
 	self
 		styleFrom: aNode start
 		to: aNode stop
-		with:
-		{ (TypGtAttribute
-			 type: (typeContext type: aNode)
-			 object: typeContext) }
+		with: { (TypGtAttribute type: edge target object: edge) }
 ]

@@ -53,7 +53,7 @@ RBMethodNode >> typInfTypeRecursiveIn: aContext [
 				  (self allChildren copyWithoutAll: newProfile keys , { self }) 
 					  do: [ :e | aContext outgoingRemoveAt: #type ].
 				  body typInfTypeIn: aContext.
-				  newProfile keys , { self } do: [ :e | aContext removeKey: e ].
+				  newProfile keys , { self } do: [ :e | aContext outgoingRemoveAt: e ].
 				  newProfile := self typInfProfileIn: aContext ].
 			  returns := (self allChildren
 				              select: #isReturn

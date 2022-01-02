@@ -18,7 +18,7 @@ GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 
-	<gtAstCoderAddOns: 10>
+	"<gtAstCoderAddOns: 10>"
 	self completionStrategy:
 		(self completionStrategy typGtAsCompletionStrategy
 			 coder: self;

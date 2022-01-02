@@ -14,6 +14,7 @@ Class {
 { #category : #initialization }
 TypInfAstNode class >> initialize [
 
+	<script>
 	index := WeakValueDictionary new
 ]
 
@@ -21,7 +22,7 @@ TypInfAstNode class >> initialize [
 TypInfAstNode class >> invalidate [
 
 	<script>
-	index removeAll
+	self initialize
 ]
 
 { #category : #accessing }

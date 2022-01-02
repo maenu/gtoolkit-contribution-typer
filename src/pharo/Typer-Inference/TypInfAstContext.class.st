@@ -15,13 +15,15 @@ TypInfAstContext class >> initialize [
 
 	"weak reference to indexed types ensures eventual consistency "
 
+	<script>
 	index := WeakIdentityKeyDictionary new
 ]
 
 { #category : #invalidation }
 TypInfAstContext class >> invalidate [
 
-	index ifNotNil: #removeAll
+	<script>
+	self initialize
 ]
 
 { #category : #'as yet unclassified' }
@@ -73,12 +75,22 @@ TypInfAstContext >> self [
 { #category : #utilities }
 TypInfAstContext >> type: aNode [
 
-	<typEdge>
-	self
-		outgoingAt:
-		(TypEdgePragmaData selector: #type: arguments: { aNode })
-		ensure: TypUnknownType instance.
-	^ aNode typInfAnnotated: (aNode typInfTypeRecursiveIn: self)
+	| data |
+	data := TypEdgePragmaData
+		        selector: thisContext selector
+		        arguments: thisContext arguments.
+	outgoing
+		detect: [ :e | e data = data ]
+		ifFound: [ :e | ^ e target ]
+		ifNone: [ 
+			| node type |
+			self outgoingAt: data ensure: TypUnknownType instance.
+			type := aNode typInfAnnotated: (aNode typInfTypeRecursiveIn: self).
+			self outgoingAt: data ensure: type.
+			node := TypInfAstNode node: aNode.
+			self outgoingAt: aNode ensure: node.
+			node outgoingAt: #type ensure: type.
+			^ type ]
 ]
 
 { #category : #accessing }

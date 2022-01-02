@@ -20,8 +20,12 @@ TypTyping >> invalidate [
 	GtCoderObjectSpawnRequest allSubInstancesDo: [ :e | e object: nil ].
 	GtPharoSourceCoderViewModel allSubInstancesDo: [ :e | 
 		e selfObject: nil ].
-	LeSharedSnippetContext allSubInstancesDo: [ :e | e selfObject: nil ].
 	GtTextualCoderViewModel allSubInstancesDo: #requestUpdateAddOns.
+	LeSharedSnippetContext allSubInstancesDo: [ :e | e selfObject: nil ].
+	LeDatabase allInstancesDo: #reload.
+	LeDatabasesRegistry cleanUp.
+	LeDatabasesRegistry uniqueInstance ensureDatabase.
+	GtHome allInstancesDo: #clearKnowledgeBase.
 	TypNode invalidateAll.
 	TypType invalidateAll.
 	TypIndex invalidateAll.
