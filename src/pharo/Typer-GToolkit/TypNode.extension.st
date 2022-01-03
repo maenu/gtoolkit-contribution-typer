@@ -11,9 +11,9 @@ TypNode >> gtGraphFor: aView [
 			  | outs ins edges nodes |
 			  outs := outgoing asArray takeFirst: 16.
 			  ins := incoming asArray takeFirst: 16.
-			  edges := outs , ins.
 			  nodes := (outs collect: #target) , (ins collect: #origin)
 			           , { self }.
+			  edges := nodes flatCollect: #edges.
 			  m nodes
 				  stencil: [ :e | e asElementIn: m ];
 				  with: nodes.

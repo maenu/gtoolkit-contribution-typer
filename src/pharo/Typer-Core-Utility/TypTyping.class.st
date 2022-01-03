@@ -32,6 +32,7 @@ TypTyping >> invalidate [
 	TypResolver invalidateAll.
 	TypShaShadow invalidateAll.
 	TypInfMethodNodeStack resetSoleInstance.
+	TypInfAstNode invalidate.
 	TypInfAstContext invalidate.
 	TypInfImplementorsCache invalidate.
 	Smalltalk garbageCollect.

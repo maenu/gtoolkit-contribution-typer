@@ -15,7 +15,7 @@ Class {
 TypInfAstNode class >> initialize [
 
 	<script>
-	index := WeakValueDictionary new
+	index := WeakIdentityKeyDictionary new
 ]
 
 { #category : #invalidation }
@@ -39,7 +39,7 @@ TypInfAstNode >> = anObject [
 
 	anObject == self ifTrue: [ ^ true ].
 	anObject class = self class ifFalse: [ ^ false ].
-	^ anObject node = node
+	^ anObject node == node
 ]
 
 { #category : #accessing }
@@ -69,7 +69,7 @@ TypInfAstNode >> asElementIn: aMondrian [
 { #category : #accessing }
 TypInfAstNode >> hash [
 
-	^ (self class hash bitXor: node hash) bitXor: context hash
+	^ (self class hash bitXor: node identityHash) bitXor: context hash
 ]
 
 { #category : #initialization }
@@ -86,5 +86,5 @@ TypInfAstNode >> node [
 { #category : #printing }
 TypInfAstNode >> printOn: aStream [
 
-	node printOn: aStream
+	aStream nextPutAll: (node printStringLimitedTo: 32)
 ]

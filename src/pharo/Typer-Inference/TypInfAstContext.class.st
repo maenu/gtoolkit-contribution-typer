@@ -75,22 +75,20 @@ TypInfAstContext >> self [
 { #category : #utilities }
 TypInfAstContext >> type: aNode [
 
-	| data |
-	data := TypEdgePragmaData
-		        selector: thisContext selector
-		        arguments: thisContext arguments.
-	outgoing
-		detect: [ :e | e data = data ]
-		ifFound: [ :e | ^ e target ]
-		ifNone: [ 
-			| node type |
-			self outgoingAt: data ensure: TypUnknownType instance.
-			type := aNode typInfAnnotated: (aNode typInfTypeRecursiveIn: self).
-			self outgoingAt: data ensure: type.
-			node := TypInfAstNode node: aNode.
-			self outgoingAt: aNode ensure: node.
-			node outgoingAt: #type ensure: type.
-			^ type ]
+	| node |
+	node := TypInfAstNode node: aNode.
+	^ self outgoingAt: node ifAbsentPut: [ 
+		  | type |
+		  self
+			  outgoingAt: { 
+					  #node.
+					  node }
+			  ensure: node.
+		  self outgoingAt: node ensure: TypUnknownType instance.
+		  type := aNode typInfAnnotated: (aNode typInfTypeRecursiveIn: self).
+		  self outgoingRemoveAt: node.
+		  node outgoingAt: self ensure: type.
+		  type ]
 ]
 
 { #category : #accessing }

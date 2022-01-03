@@ -101,6 +101,12 @@ TypNode >> asElementIn: aMondrian [
 ]
 
 { #category : #accessing }
+TypNode >> edges [
+
+	^ incoming , outgoing
+]
+
+{ #category : #accessing }
 TypNode >> incoming [
 
 	^ incoming
