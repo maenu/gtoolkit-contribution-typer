@@ -30,6 +30,12 @@ TypGtMondrian >> initialize [
 ]
 
 { #category : #accessing }
+TypGtMondrian >> layout [
+
+	^ TypGtMondrianLayoutBuilder new mondrian: self
+]
+
+{ #category : #accessing }
 TypGtMondrian >> nodes [
 
 	^ TypGtMondrianNodeBuilder new mondrian: self

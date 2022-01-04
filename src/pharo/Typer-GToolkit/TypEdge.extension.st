@@ -26,6 +26,5 @@ TypEdge >> gtGraphFor: aView [
 			  m edges
 				  stencil: [ :e | e asElementIn: m ];
 				  connect: { self } from: #origin to: #target.
-			  m layout custom: TypGtGraphForceBasedLayout new.
-			  m ]
+			  m layout force ]
 ]

@@ -22,7 +22,9 @@ TypTyping >> invalidate [
 		e selfObject: nil ].
 	GtTextualCoderViewModel allSubInstancesDo: #requestUpdateAddOns.
 	LeSharedSnippetContext allSubInstancesDo: [ :e | e selfObject: nil ].
-	LeDatabase allInstancesDo: #reload.
+	BlOverlayListener allInstancesDo: [ :e | 
+		e overlayElement removeEventHandler: e ].
+	"LeDatabase allInstancesDo: #reload."
 	LeDatabasesRegistry cleanUp.
 	LeDatabasesRegistry uniqueInstance ensureDatabase.
 	GtHome allInstancesDo: #clearKnowledgeBase.

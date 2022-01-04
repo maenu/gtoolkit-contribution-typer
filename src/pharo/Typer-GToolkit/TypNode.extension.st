@@ -13,13 +13,13 @@ TypNode >> gtGraphFor: aView [
 			  ins := incoming asArray takeFirst: 16.
 			  nodes := (outs collect: #target) , (ins collect: #origin)
 			           , { self }.
-			  edges := nodes flatCollect: #edges.
+			  edges := nodes flatCollect: #edges as: IdentitySet.
+			  edges := edges asArray takeFirst: 64.
 			  m nodes
 				  stencil: [ :e | e asElementIn: m ];
 				  with: nodes.
 			  m edges
 				  stencil: [ :e | e asElementIn: m ];
 				  connect: edges from: #origin to: #target.
-			  m layout custom: TypGtGraphForceBasedLayout new.
-			  m ]
+			  m layout force ]
 ]

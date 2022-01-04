@@ -65,6 +65,38 @@ TypMethodMeasurement >> finalize [
 ]
 
 { #category : #accessing }
+TypMethodMeasurement >> gtErrorFor: aView [
+
+	<gtView>
+	error ifNil: [ ^ aView empty ].
+	^ aView explicit
+		  title: 'Error';
+		  priority: 10;
+		  stencil: [ GtInspectorTool forObject: error ]
+]
+
+{ #category : #accessing }
+TypMethodMeasurement >> gtMethodFor: aView [
+
+	<gtView>
+	^ aView explicit
+		  title: 'Method';
+		  priority: 10;
+		  stencil: [ GtInspectorTool forObject: method ]
+]
+
+{ #category : #accessing }
+TypMethodMeasurement >> gtResultFor: aView [
+
+	<gtView>
+	result ifNil: [ ^ aView empty ].
+	^ aView explicit
+		  title: 'Result';
+		  priority: 10;
+		  stencil: [ GtInspectorTool forObject: result ]
+]
+
+{ #category : #accessing }
 TypMethodMeasurement >> initializeMethod: aMethod duration: aDuration result: aType error: anError process: aProcess [
 
 	method := aMethod.
