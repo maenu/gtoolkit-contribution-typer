@@ -73,12 +73,11 @@ TypNode >> asElementIn: aMondrian [
 										     aMondrian edges
 											     stencil: [ :e | e asElementIn: aMondrian ];
 											     connect: edges from: #origin to: #target.
-										     aMondrian layout custom: TypGtGraphForceBasedLayout new ];
+										     aMondrian layout force ];
 									     yourself);
 							    addItem: (BrButton new
 									     aptitude: BrGlamorousButtonWithLabelAptitude;
-									     label:
-										     ('in {1}' format: { incoming size });
+									     label: ('in {1}' format: { incoming size });
 									     action: [ 
 										     | nodes edges |
 										     nodes := incoming collect: #origin.
@@ -89,7 +88,7 @@ TypNode >> asElementIn: aMondrian [
 										     aMondrian edges
 											     stencil: [ :e | e asElementIn: aMondrian ];
 											     connect: edges from: #origin to: #target.
-										     aMondrian layout custom: TypGtGraphForceBasedLayout new ];
+										     aMondrian layout force ];
 									     yourself);
 							    yourself ])
 					   showDelay: 100 milliSeconds;
