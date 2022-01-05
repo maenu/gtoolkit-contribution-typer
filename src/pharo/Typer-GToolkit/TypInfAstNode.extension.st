@@ -6,7 +6,7 @@ TypInfAstNode >> typGtSourceCodeFor: aView [
 	<gtView>
 	^ aView forward
 		  title: 'Node';
-		  priority: 2;
+		  priority: 1;
 		  object: [ node ];
 		  view: #gtSourceCodeFor:
 ]
@@ -19,7 +19,7 @@ TypInfAstNode >> typGtSourceFor: aView [
 	node methodNode compiledMethod ifNil: [ ^ aView empty ].
 	^ aView forward
 		  title: 'Method';
-		  priority: 1;
+		  priority: 2;
 		  object: [ node methodNode compiledMethod ];
 		  view: #gtSourceFor:
 ]

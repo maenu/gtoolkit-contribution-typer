@@ -45,14 +45,6 @@ TypInfAstNode >> = anObject [
 { #category : #accessing }
 TypInfAstNode >> asElementIn: aMondrian [
 
-	| coder |
-	(node methodNode isNotNil and: [ 
-		 node methodNode compiledMethod isNotNil ])
-		ifTrue: [ 
-			coder := GtPharoMethodCoder forMethod:
-				         node methodNode compiledMethod ]
-		ifFalse: [ 
-		coder := GtPharoSnippetCoder forSource: node formattedCode ].
 	^ BlElement new
 		  layout: BlLinearLayout vertical;
 		  constraintsDo: [ :c | 
@@ -60,8 +52,10 @@ TypInfAstNode >> asElementIn: aMondrian [
 			  c vertical fitContent ];
 		  background: Color white;
 		  addAptitude: BrGlamorousFocusableShadowAptitude;
-		  addChild: (coder asCoderUIModel collapse asElement
-				   hExact: 500;
+		  addChild:
+			  ((GtPharoSnippetCoder forSource: node formattedCode)
+				   asCoderUIModel collapse asElement
+				   hExact: 350;
 				   yourself);
 		  yourself
 ]

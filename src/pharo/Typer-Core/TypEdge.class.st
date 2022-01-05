@@ -36,18 +36,7 @@ TypEdge >> asElementIn: aMondrian [
 		          width: 2;
 		          build.
 	^ BlParabollaArcElement new
-		  when: BlClickEvent do: [ :f | 
-			  f consumed: true.
-			  f target phlow spawnObject: self ];
 		  layout: BlFrameLayout new;
-		  addChild: (BrLabel new
-				   constraintsDo: [ :c | 
-					   c frame horizontal alignCenter.
-					   c frame vertical alignCenter ];
-				   beSmallSize;
-				   aptitude: BrGlamorousLabelAptitude;
-				   text: data asString asRopedText;
-				   yourself);
 		  zIndex: -1;
 		  clipChildren: false;
 		  curvatureFraction: 0.1;
@@ -57,6 +46,37 @@ TypEdge >> asElementIn: aMondrian [
 				   border: border;
 				   background: color;
 				   yourself);
+		  yourself
+]
+
+{ #category : #accessing }
+TypEdge >> asElementIn: aMondrian with: aCollection [
+
+	| label |
+	label := BrLabel new
+		         constraintsDo: [ :c | 
+			         c frame horizontal alignCenter.
+			         c frame vertical alignCenter ];
+		         beSmallSize;
+		         aptitude: BrGlamorousLabelAptitude;
+		         yourself.
+	aCollection size = 1
+		ifTrue: [ 
+			label
+				when: BlClickEvent do: [ :e | 
+					e consumed: true.
+					label phlow spawnObject: self ];
+				text: data asString asRopedText ]
+		ifFalse: [ 
+			label
+				when: BlClickEvent do: [ :e | 
+					e consumed: true.
+					label phlow spawnObject: aCollection ];
+				text: ('+{1} {2}' format: { 
+								 (aCollection size - 1).
+								 data }) asRopedText ].
+	^ (self asElementIn: aMondrian)
+		  addChild: label;
 		  yourself
 ]
 
@@ -81,6 +101,14 @@ TypEdge >> initializeOrigin: aNode target: anotherNode data: anObject [
 	origin := aNode.
 	target := anotherNode.
 	data := anObject
+]
+
+{ #category : #accessing }
+TypEdge >> nodes [
+
+	^ { 
+		  origin.
+		  target }
 ]
 
 { #category : #accessing }
