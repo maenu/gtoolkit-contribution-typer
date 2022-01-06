@@ -63,38 +63,55 @@ TypNode >> asElementIn: aMondrian [
 							    addItem: (BrButton new
 									     aptitude: BrGlamorousButtonWithLabelAptitude;
 									     label: ('out {1}' format: { outgoing size });
-									     action: [ 
-										     | nodes edges |
-										     nodes := outgoing collect: #target.
-										     edges := outgoing copy.
-										     aMondrian nodes
-											     stencil: [ :e | e asElementIn: aMondrian ];
-											     with: nodes.
-										     aMondrian edges
-											     stencil: [ :e | e asElementIn: aMondrian ];
-											     connect: edges from: #origin to: #target.
-										     aMondrian layout force ];
+									     action: [ :button | 
+										     | nodes existingNodes remainingNodes |
+										     existingNodes := aMondrian existingNodes.
+										     nodes := (outgoing collect: #target) difference:
+												              existingNodes.
+										     remainingNodes := nodes size.
+										     (nodes asArray takeFirst: 5) do: [ :e | 
+												     e paintOn: aMondrian ].
+										     remainingNodes > nodes size
+											     ifTrue: [ 
+												     button
+													     enable;
+													     label:
+														     ('out {1}' format:
+																      { (remainingNodes - nodes size) }) ]
+											     ifFalse: [ 
+												     button
+													     disable;
+													     label: 'out' ] ];
 									     yourself);
 							    addItem: (BrButton new
 									     aptitude: BrGlamorousButtonWithLabelAptitude;
 									     label: ('in {1}' format: { incoming size });
-									     action: [ 
-										     | nodes edges |
-										     nodes := incoming collect: #origin.
-										     edges := incoming copy.
-										     aMondrian nodes
-											     stencil: [ :e | e asElementIn: aMondrian ];
-											     with: nodes.
-										     aMondrian edges
-											     stencil: [ :e | e asElementIn: aMondrian ];
-											     connect: edges from: #origin to: #target.
-										     aMondrian layout force ];
+									     action: [ :button | 
+										     | nodes existingNodes remainingNodes |
+										     existingNodes := aMondrian existingNodes.
+										     nodes := (incoming collect: #origin) difference:
+												              existingNodes.
+										     remainingNodes := nodes size.
+										     (nodes asArray takeFirst: 5) do: [ :e | 
+												     e paintOn: aMondrian ].
+										     remainingNodes > nodes size
+											     ifTrue: [ 
+												     button
+													     enable;
+													     label:
+														     ('in {1}' format: { (remainingNodes - nodes size) }) ]
+											     ifFalse: [ 
+												     button
+													     disable;
+													     label: 'in' ] ];
 									     yourself);
 							    yourself ])
-					   showDelay: 100 milliSeconds;
-					   hideDelay: 100 milliSeconds;
+					   showDelay: 300 milliSeconds;
+					   hideDelay: 300 milliSeconds;
 					   yourself);
 		  label: self asString;
+		  border:
+		  (BlBorder paint: BrGlamorousColors darkBorderColor width: 3);
 		  action: [ :e | e phlow spawnObject: self ];
 		  yourself
 ]
@@ -135,6 +152,12 @@ TypNode >> invalidateOnClassChange: aClassAnnouncement [
 TypNode >> invalidateOnMethodChange: aMethodAnnouncement [
 
 	
+]
+
+{ #category : #accessing }
+TypNode >> neighbors [
+
+	^ (outgoing collect: #target) , (incoming collect: #origin)
 ]
 
 { #category : #accessing }
@@ -185,6 +208,33 @@ TypNode >> outgoingRemoveAt: anObject [
 	outgoing
 		select: [ :e | e data = anObject ]
 		thenDo: [ :e | self removeOutgoing: e ]
+]
+
+{ #category : #accessing }
+TypNode >> paintOn: aMondrian [
+
+	| edges nodes currentNodes nextNodes |
+	currentNodes := aMondrian existingNodes.
+	nodes := self neighbors , { self } difference: currentNodes.
+	nodes ifEmpty: [ ^ self ].
+	nextNodes := currentNodes , nodes , { self }.
+	edges := ((((nodes flatCollect: #incoming) select: [ :e | 
+		            nextNodes includes: e origin ])
+	           , ((nodes flatCollect: #outgoing) select: [ :e | 
+			            nextNodes includes: e target ]) groupedBy: #nodes)
+		          values asArray sort: [ :a :b | a size > b size ]) 
+		         takeFirst: 64.
+	nodes := (edges flatCollect: [ :e | e flatCollect: #nodes ]) 
+		         difference: currentNodes.
+	aMondrian nodes
+		stencil: [ :e | e asElementIn: aMondrian ];
+		with: nodes.
+	aMondrian edges
+		stencil: [ :e | e anyOne asElementIn: aMondrian with: e ];
+		connect: edges
+		from: [ :e | e anyOne origin ]
+		to: [ :e | e anyOne target ].
+	aMondrian layout force
 ]
 
 { #category : #accessing }

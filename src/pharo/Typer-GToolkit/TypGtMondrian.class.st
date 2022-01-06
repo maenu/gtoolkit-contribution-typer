@@ -11,6 +11,14 @@ TypGtMondrian >> edges [
 ]
 
 { #category : #accessing }
+TypGtMondrian >> existingNodes [
+
+	^ self root graph allNodeChildren
+		  collect: [ :e | e graph model ]
+		  as: IdentitySet
+]
+
+{ #category : #accessing }
 TypGtMondrian >> includesNode: anObject [
 
 	^ self topStep includesNode: anObject

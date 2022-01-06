@@ -29,22 +29,22 @@ TypEdge >> = anObject [
 { #category : #accessing }
 TypEdge >> asElementIn: aMondrian [
 
-	| color border |
-	color := Color gray alpha: 0.5.
-	border := BlBorder builder
-		          paint: color;
-		          width: 2;
-		          build.
 	^ BlParabollaArcElement new
 		  layout: BlFrameLayout new;
 		  zIndex: -1;
 		  clipChildren: false;
-		  curvatureFraction: 0.1;
-		  border: border;
+		  curvatureFraction: 0.2;
+		  border: (BlBorder builder
+				   paint: (Color black alpha: 0.2);
+				   width: 2;
+				   build);
 		  toHead: (BlArrowheadTriangle new
 				   scale: 2;
-				   border: border;
-				   background: color;
+				   border: (BlBorder builder
+						    paint: (Color black alpha: 0.2);
+						    width: 2;
+						    build);
+				   background: (Color black alpha: 0.2);
 				   yourself);
 		  yourself
 ]
@@ -115,6 +115,19 @@ TypEdge >> nodes [
 TypEdge >> origin [
 
 	^ origin
+]
+
+{ #category : #accessing }
+TypEdge >> paintOn: aMondrian [
+
+	aMondrian nodes
+		stencil: [ :e | e asElementIn: aMondrian ];
+		with: { 
+				origin.
+				target }.
+	aMondrian edges
+		stencil: [ :e | e asElementIn: aMondrian ];
+		connectFrom: origin to: target
 ]
 
 { #category : #accessing }
