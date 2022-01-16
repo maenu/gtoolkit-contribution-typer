@@ -19,5 +19,5 @@ RBProgramNode >> typGtNodeFor: aView [
 		  title: 'Typer Graph';
 		  priority: 10;
 		  object: [ TypInfAstNode node: self ];
-		  view: #gtGraphFor:
+		  view: #typGtGraphFor:
 ]

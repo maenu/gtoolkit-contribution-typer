@@ -27,60 +27,6 @@ TypEdge >> = anObject [
 ]
 
 { #category : #accessing }
-TypEdge >> asElementIn: aMondrian [
-
-	^ BlParabollaArcElement new
-		  layout: BlFrameLayout new;
-		  zIndex: -1;
-		  clipChildren: false;
-		  curvatureFraction: 0.2;
-		  border: (BlBorder builder
-				   paint: (Color black alpha: 0.2);
-				   width: 2;
-				   build);
-		  toHead: (BlArrowheadTriangle new
-				   scale: 2;
-				   border: (BlBorder builder
-						    paint: (Color black alpha: 0.2);
-						    width: 2;
-						    build);
-				   background: (Color black alpha: 0.2);
-				   yourself);
-		  yourself
-]
-
-{ #category : #accessing }
-TypEdge >> asElementIn: aMondrian with: aCollection [
-
-	| label |
-	label := BrLabel new
-		         constraintsDo: [ :c | 
-			         c frame horizontal alignCenter.
-			         c frame vertical alignCenter ];
-		         beSmallSize;
-		         aptitude: BrGlamorousLabelAptitude;
-		         yourself.
-	aCollection size = 1
-		ifTrue: [ 
-			label
-				when: BlClickEvent do: [ :e | 
-					e consumed: true.
-					label phlow spawnObject: self ];
-				text: data asString asRopedText ]
-		ifFalse: [ 
-			label
-				when: BlClickEvent do: [ :e | 
-					e consumed: true.
-					label phlow spawnObject: aCollection ];
-				text: ('+{1} {2}' format: { 
-								 (aCollection size - 1).
-								 data }) asRopedText ].
-	^ (self asElementIn: aMondrian)
-		  addChild: label;
-		  yourself
-]
-
-{ #category : #accessing }
 TypEdge >> data [
 
 	^ data
@@ -115,19 +61,6 @@ TypEdge >> nodes [
 TypEdge >> origin [
 
 	^ origin
-]
-
-{ #category : #accessing }
-TypEdge >> paintOn: aMondrian [
-
-	aMondrian nodes
-		stencil: [ :e | e asElementIn: aMondrian ];
-		with: { 
-				origin.
-				target }.
-	aMondrian edges
-		stencil: [ :e | e asElementIn: aMondrian ];
-		connectFrom: origin to: target
 ]
 
 { #category : #accessing }

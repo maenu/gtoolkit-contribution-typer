@@ -5,6 +5,14 @@ Class {
 }
 
 { #category : #accessing }
+TypGtMondrian >> asPannableElement [
+
+	^ super asPannableElement
+		  clipChildren: false;
+		  yourself
+]
+
+{ #category : #accessing }
 TypGtMondrian >> edges [
 
 	^ TypGtMondrianEdgeBuilder new mondrian: self

@@ -43,24 +43,6 @@ TypInfAstNode >> = anObject [
 ]
 
 { #category : #accessing }
-TypInfAstNode >> asElementIn: aMondrian [
-
-	^ BlElement new
-		  layout: BlLinearLayout vertical;
-		  constraintsDo: [ :c | 
-			  c horizontal fitContent.
-			  c vertical fitContent ];
-		  background: Color white;
-		  addAptitude: BrGlamorousFocusableShadowAptitude;
-		  addChild:
-			  ((GtPharoSnippetCoder forSource: node formattedCode)
-				   asCoderUIModel collapse asElement
-				   hExact: 350;
-				   yourself);
-		  yourself
-]
-
-{ #category : #accessing }
 TypInfAstNode >> hash [
 
 	^ (self class hash bitXor: node identityHash) bitXor: context hash
