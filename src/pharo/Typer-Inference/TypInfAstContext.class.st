@@ -78,17 +78,11 @@ TypInfAstContext >> type: aNode [
 	| node |
 	node := TypInfAstNode node: aNode.
 	^ self outgoingAt: node ifAbsentPut: [ 
-		  | type |
-		  self
-			  outgoingAt: { 
-					  #node.
-					  node }
-			  ensure: node.
 		  self outgoingAt: node ensure: TypUnknownType instance.
-		  type := aNode typInfAnnotated: (aNode typInfTypeRecursiveIn: self).
-		  self outgoingRemoveAt: node.
-		  node outgoingAt: self ensure: type.
-		  type ]
+		  node
+			  outgoingAt: self
+			  ensure:
+			  (aNode typInfAnnotated: (aNode typInfTypeRecursiveIn: self)) ]
 ]
 
 { #category : #accessing }

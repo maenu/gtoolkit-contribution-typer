@@ -3,19 +3,11 @@ Extension { #name : #TypInfAstNode }
 { #category : #'*Typer-GToolkit' }
 TypInfAstNode >> typGtAsElementIn: aMondrian [
 
-	^ BlElement new
-		  layout: BlLinearLayout vertical;
-		  constraintsDo: [ :c | 
-			  c horizontal fitContent.
-			  c vertical fitContent ];
-		  background: Color white;
-		  addAptitude: (TypGtStrongBorderAptitude color: self typGtColor);
-		  addChild:
-			  ((GtPharoSnippetCoder forSource: node formattedCode)
-				   asCoderUIModel collapse asElement
-				   hExact: 350;
-				   yourself);
-		  yourself
+	^ self
+		  typGtDecorate:
+			  (GtPharoSnippetCoder forSource: node formattedCode)
+				  asCoderUIModel collapse asElement
+		  in: aMondrian
 ]
 
 { #category : #'*Typer-GToolkit' }

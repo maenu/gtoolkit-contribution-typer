@@ -15,11 +15,52 @@ TypGtStrongBorderAptitude class >> color: aColor [
 { #category : #accessing }
 TypGtStrongBorderAptitude >> initializeColor: aColor [
 
-	| border |
+	| background border geometry |
+	background := Color white.
 	border := BlBorder paint: aColor width: 2.
-	self default border: border.
-	self focused border: border.
-	self hovered border: border.
-	self pressed border: border.
-	self disabled border: border
+	geometry := BlRoundedRectangleGeometry cornerRadius: 8.
+	self collapsed
+		background: background;
+		border: border;
+		geometry: geometry.
+	self default
+		background: background;
+		border: border;
+		geometry: geometry.
+	self deselected
+		background: background;
+		border: border;
+		geometry: geometry.
+	self disabled
+		background: background;
+		border: border;
+		geometry: geometry.
+	self enabled
+		background: background;
+		border: border;
+		geometry: geometry.
+	self expanded
+		background: background;
+		border: border;
+		geometry: geometry.
+	self focused
+		background: background;
+		border: border;
+		geometry: geometry.
+	self hovered
+		background: background;
+		border: border;
+		geometry: geometry.
+	self pressed
+		background: background;
+		border: border;
+		geometry: geometry.
+	self selected
+		background: background;
+		border: border;
+		geometry: geometry.
+	self unfocused
+		background: background;
+		border: border;
+		geometry: geometry
 ]
