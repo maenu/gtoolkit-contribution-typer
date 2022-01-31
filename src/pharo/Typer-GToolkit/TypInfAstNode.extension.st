@@ -6,7 +6,7 @@ TypInfAstNode >> typGtAsElementIn: aMondrian [
 	^ self
 		  typGtDecorate:
 			  (GtPharoSnippetCoder forSource: node formattedCode)
-				  asCoderUIModel collapse asElement
+				  asCoderViewModel collapse asElement
 		  in: aMondrian
 ]
 
