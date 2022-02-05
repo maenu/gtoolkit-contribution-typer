@@ -17,8 +17,8 @@ TypFunctionTypePrintingExamples >> asString [
 TypFunctionTypePrintingExamples >> asStringRecursive [
 	<gtExample>
 	| type |
-	type := TypFunctionTypeInitializingExamples new classDescriptionArgumentsSizeArgumentsOptionalBindings.
-	type parameters at: #'1' put: type.
+	type := TypFunctionTypeInitializingExamples new classDescriptionArgumentsSizeArgumentsOptionalBindings copy.
+	(type instVarNamed: #parameters) at: #'1' put: type.
 	self assert: type asString equals: 'Integer[.]->Boolean'.
 	^ type
 ]

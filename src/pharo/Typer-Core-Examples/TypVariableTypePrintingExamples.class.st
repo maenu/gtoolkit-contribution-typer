@@ -9,7 +9,7 @@ TypVariableTypePrintingExamples >> asString [
 	<gtExample>
 	| type |
 	type := TypVariableTypeInitializingExamples new named.
-	self assert: type asString equals: #A.
+	self assert: type asString equals: '#A'.
 	^ type
 ]
 

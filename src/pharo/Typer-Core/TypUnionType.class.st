@@ -171,6 +171,13 @@ TypUnionType >> lookupVariable: aSymbol [
 	^ (types collect: [ :e | e lookupVariable: aSymbol ]) typAsType
 ]
 
+{ #category : #copying }
+TypUnionType >> postCopy [
+
+	super postCopy.
+	types := types copy
+]
+
 { #category : #printing }
 TypUnionType >> printOn: aStream skipping: anIdentitySet [
 

@@ -139,6 +139,13 @@ TypParametricType >> parameters [
 	^ parameters copy
 ]
 
+{ #category : #copying }
+TypParametricType >> postCopy [
+
+	super postCopy.
+	parameters := parameters copy
+]
+
 { #category : #printing }
 TypParametricType >> printOn: aStream skipping: anIdentitySet [
 	(anIdentitySet includes: self)
@@ -167,14 +174,14 @@ TypParametricType >> super [
 ]
 
 { #category : #converting }
-TypParametricType >> withAt: aString put: aType [
+TypParametricType >> withAt: aSymbol put: aType [
 
 	<typEdge>
 	| copyParameters |
 	self flag: 'TODO should use index lookup, not copy'.
 	copyParameters := OrderedCollection new.
 	parameters keysAndValuesDo: [ :n :t | 
-		copyParameters add: (n = aString
+		copyParameters add: (n = aSymbol
 				 ifTrue: [ aType ]
 				 ifFalse: [ t ]) ].
 	^ self withParameters: copyParameters

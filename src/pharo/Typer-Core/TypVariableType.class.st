@@ -8,11 +8,11 @@ Class {
 }
 
 { #category : #'instance creation' }
-TypVariableType class >> named: aString [
+TypVariableType class >> named: aSymbol [
 
-	<typPraArguments: 'String'>
+	<typPraArguments: 'Symbol'>
 	^ self new
-		  initializeName: aString;
+		  initializeName: aSymbol;
 		  yourself
 ]
 

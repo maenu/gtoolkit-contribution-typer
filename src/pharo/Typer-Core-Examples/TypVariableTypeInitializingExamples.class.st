@@ -21,7 +21,7 @@ TypVariableTypeInitializingExamples >> named [
 TypVariableTypeInitializingExamples >> namedInvalid [
 	<gtExample>
 	self
-		assert: [ TypVariableType named: 'A' ]
+		assert: [ TypVariableType named: '' ]
 		signals: AssertionFailure.
 	^ nil
 ]

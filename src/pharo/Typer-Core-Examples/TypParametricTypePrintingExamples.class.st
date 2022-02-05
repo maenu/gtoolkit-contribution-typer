@@ -15,10 +15,12 @@ TypParametricTypePrintingExamples >> asString [
 
 { #category : #accessing }
 TypParametricTypePrintingExamples >> asStringRecursive [
+
 	<gtExample>
-	| type |
-	type := TypParametricTypeInitializingExamples new classDescriptionParameters.
-	type parameters at: #A put: type.
+	| type | 
+	type := TypParametricTypeInitializingExamples new
+		        classDescriptionParameters copy.
+	(type instVarNamed: #parameters) at: #A put: type.
 	self assert: type asString equals: 'Integer<.>'.
 	^ type
 ]

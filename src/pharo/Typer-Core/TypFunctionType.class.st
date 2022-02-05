@@ -59,7 +59,7 @@ TypFunctionType class >> named: aString result: aType arguments: aCollection arg
 			  parameters := OrderedDictionary new.
 			  parameters at: #'0' put: aType.
 			  aCollection withIndexDo: [ :e :i | 
-				  parameters at: i asSymbol
+				  parameters at: i asString asSymbol
 				 put: e ].
 			  self new
 				  initializeName: aString;
