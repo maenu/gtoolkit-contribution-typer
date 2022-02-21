@@ -6,21 +6,21 @@ Class {
 		'definer',
 		'types',
 		'stopped',
-		'context'
+		'selfType'
 	],
-	#category : #'Typer-Inference'
+	#category : #'Typer-Inference-Core'
 }
 
 { #category : #'as yet unclassified' }
-TypInfTemporaryExecutionOrderVisitor class >> node: aNode definer: anotherNode context: aContext [
+TypInfTemporaryExecutionOrderVisitor class >> node: aNode definer: anotherNode self: aType [
 
 	^ self new
-		  initializeNode: aNode definer: anotherNode context: aContext;
+		  initializeNode: aNode definer: anotherNode self: aType;
 		  yourself
 ]
 
 { #category : #accessing }
-TypInfTemporaryExecutionOrderVisitor class >> typeOf: aNode in: aContext [
+TypInfTemporaryExecutionOrderVisitor class >> typeOf: aNode self: aType [
 
 	| definer |
 	self assert: [ aNode isVariable ].
@@ -30,13 +30,13 @@ TypInfTemporaryExecutionOrderVisitor class >> typeOf: aNode in: aContext [
 		   typesOf: aNode
 		   in: definer
 		   definer: definer
-		   context: aContext) typAsType
+		   self: aType) typAsType
 ]
 
 { #category : #accessing }
-TypInfTemporaryExecutionOrderVisitor class >> typesOf: aNode in: anotherNode definer: yetAnotherNode context: aContext [
+TypInfTemporaryExecutionOrderVisitor class >> typesOf: aNode in: anotherNode definer: yetAnotherNode self: aType [
 
-	^ (self node: aNode definer: yetAnotherNode context: aContext)
+	^ (self node: aNode definer: yetAnotherNode self: aType)
 		  visitNode: anotherNode;
 		  types
 ]
@@ -53,13 +53,13 @@ TypInfTemporaryExecutionOrderVisitor >> initialize [
 ]
 
 { #category : #accessing }
-TypInfTemporaryExecutionOrderVisitor >> initializeNode: aNode definer: anotherNode context: aContext [
+TypInfTemporaryExecutionOrderVisitor >> initializeNode: aNode definer: anotherNode self: aType [
 
 	self assert: [ aNode isVariable ].
 	self assert: [ aNode isDefinition not ].
 	node := aNode.
 	definer := anotherNode.
-	context := aContext
+	selfType := aType
 ]
 
 { #category : #generated }
@@ -85,7 +85,7 @@ TypInfTemporaryExecutionOrderVisitor >> visitAssignmentNode: aNode [
 	aNode variable name = node name ifTrue: [ 
 		(aNode parentSuchAs: #isSequence) == definer ifTrue: [ 
 			types removeAll ].
-		types add: (aNode value typInfTypeIn: context) ].
+		types add: (aNode value typInfTypeIn: selfType) ].
 	self visitNode: aNode variable
 ]
 
@@ -100,7 +100,7 @@ TypInfTemporaryExecutionOrderVisitor >> visitBlockNode: aBlockNode [
 			 typesOf: node
 			 in: aBlockNode body
 			 definer: (node whoDefines: node name)
-			 context: context)
+			 self: selfType)
 ]
 
 { #category : #visiting }
@@ -136,6 +136,6 @@ TypInfTemporaryExecutionOrderVisitor >> visitSequenceNode: aSequenceNode [
 	aSequenceNode == definer ifTrue: [ 
 		types
 			removeAll;
-			add: (context nil: aSequenceNode) ].
+			add: aSequenceNode typInfNode typeNil ].
 	super visitSequenceNode: aSequenceNode
 ]

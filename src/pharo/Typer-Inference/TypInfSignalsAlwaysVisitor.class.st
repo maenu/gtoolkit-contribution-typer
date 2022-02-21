@@ -3,23 +3,23 @@ Class {
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'signalsAlways',
-		'context'
+		'selfType'
 	],
-	#category : #'Typer-Inference'
+	#category : #'Typer-Inference-Core'
 }
 
 { #category : #accessing }
-TypInfSignalsAlwaysVisitor class >> context: aContext [
+TypInfSignalsAlwaysVisitor class >> self: aType [
 
 	^ self new
-		  initializeContext: aContext;
+		  initializeSelf: aType;
 		  yourself
 ]
 
 { #category : #'as yet unclassified' }
-TypInfSignalsAlwaysVisitor class >> signalsAlwaysOf: aNode in: aContext [
+TypInfSignalsAlwaysVisitor class >> signalsAlwaysOf: aNode self: aType [
 
-	^ (self context: aContext)
+	^ (self self: aType)
 		  visitNode: aNode;
 		  signalsAlways
 ]
@@ -31,9 +31,9 @@ TypInfSignalsAlwaysVisitor >> initialize [
 ]
 
 { #category : #initialization }
-TypInfSignalsAlwaysVisitor >> initializeContext: aContext [
+TypInfSignalsAlwaysVisitor >> initializeSelf: aType [
 
-	context := aContext
+	selfType := aType
 ]
 
 { #category : #accessing }
@@ -53,7 +53,7 @@ TypInfSignalsAlwaysVisitor >> visitMessageNode: aNode [
 
 	| method s |
 	super visitMessageNode: aNode.
-	method := aNode typInfMethodIn: context.
+	method := aNode typInfMethodIn: selfType.
 	s := method isFunction
 		     ifTrue: [ method signalsAlways ]
 		     ifFalse: [ nil ].

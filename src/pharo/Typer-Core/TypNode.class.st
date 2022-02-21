@@ -18,37 +18,13 @@ TypNode class >> compiler [
 TypNode class >> invalidateAll [
 
 	<script>
-	^ self allSubInstancesDo: #removeAllOutgoing
+	^ self allSubInstancesDo: #outgoingRemoveAll
 ]
 
 { #category : #testing }
 TypNode class >> isAbstract [
 
 	^ self == TypNode
-]
-
-{ #category : #accessing }
-TypNode >> addIncoming: anEdge [
-
-	self assert: [ anEdge origin outgoing includes: anEdge ].
-	incoming add: anEdge
-]
-
-{ #category : #accessing }
-TypNode >> addOutgoing: anEdge [
-
-	self assert: [ anEdge origin == self ].
-	outgoing add: anEdge.
-	^ anEdge target
-		  addIncoming: anEdge;
-		  yourself
-]
-
-{ #category : #accessing }
-TypNode >> addOutgoingTarget: aNode data: anObject [
-
-	^ self addOutgoing:
-		  (TypEdge origin: self target: aNode data: anObject)
 ]
 
 { #category : #accessing }
@@ -61,6 +37,70 @@ TypNode >> edges [
 TypNode >> incoming [
 
 	^ incoming
+]
+
+{ #category : #accessing }
+TypNode >> incomingAdd: anEdge [
+
+	self assert: [ anEdge origin outgoing includes: anEdge ].
+	incoming add: anEdge
+]
+
+{ #category : #accessing }
+TypNode >> incomingAddOrigin: aNode data: anObject [
+
+	aNode outgoingAddTarget: self data: anObject.
+	^ aNode
+]
+
+{ #category : #converting }
+TypNode >> incomingAt: anObject [
+
+	^ incoming detect: [ :e | e data = anObject ]
+]
+
+{ #category : #converting }
+TypNode >> incomingAt: anObject ifAbsentPut: aBlock [
+
+	^ self incomingAt: anObject ifPresent: #origin ifAbsentPut: aBlock
+]
+
+{ #category : #accessing }
+TypNode >> incomingAt: anObject ifPresent: aBlock ifAbsentPut: anotherBlock [
+
+	^ incoming
+		  detect: [ :e | e data = anObject ]
+		  ifFound: aBlock
+		  ifNone: [ 
+		  anotherBlock value outgoingAddTarget: self data: anObject ]
+]
+
+{ #category : #converting }
+TypNode >> incomingAt: anObject put: aNode [
+
+	self incomingRemoveAt: anObject.
+	^ self incomingAddOrigin: aNode data: anObject
+]
+
+{ #category : #accessing }
+TypNode >> incomingRemove: anEdge [
+
+	self assert: [ (anEdge origin outgoing includes: anEdge) not ].
+	incoming remove: anEdge
+]
+
+{ #category : #accessing }
+TypNode >> incomingRemoveAll [
+
+	incoming copy do: [ :e | e origin outgoingRemove: e ]
+]
+
+{ #category : #accessing }
+TypNode >> incomingRemoveAt: anObject [
+
+	incoming
+		select: [ :e | e data = anObject ]
+		thenDo: [ :e | e origin outgoingRemove: e ]
 ]
 
 { #category : #accessing }
@@ -101,26 +141,32 @@ TypNode >> outgoing [
 	^ outgoing
 ]
 
-{ #category : #converting }
-TypNode >> outgoingAt: anObject ensure: aNode [
+{ #category : #accessing }
+TypNode >> outgoingAdd: anEdge [
 
-	self flag:
-		'TODO could improve linear scan to constant by maintaining index'.
-	outgoing
-		select: [ :e | e data = anObject ]
-		thenDo: [ :e | self removeOutgoing: e ].
-	^ self addOutgoingTarget: aNode data: anObject
+	self assert: [ anEdge origin == self ].
+	outgoing add: anEdge.
+	anEdge target incomingAdd: anEdge.
+	^ anEdge target
+]
+
+{ #category : #accessing }
+TypNode >> outgoingAddTarget: aNode data: anObject [
+
+	^ self outgoingAdd:
+		  (TypEdge origin: self target: aNode data: anObject)
+]
+
+{ #category : #converting }
+TypNode >> outgoingAt: anObject [
+
+	^ outgoing detect: [ :e | e data = anObject ]
 ]
 
 { #category : #converting }
 TypNode >> outgoingAt: anObject ifAbsentPut: aBlock [
 
-	self flag:
-		'TODO could improve linear scan to constant by maintaining index'.
-	^ outgoing
-		  detect: [ :e | e data = anObject ]
-		  ifFound: #target
-		  ifNone: [ self addOutgoingTarget: aBlock value data: anObject ]
+	^ self outgoingAt: anObject ifPresent: #target ifAbsentPut: aBlock
 ]
 
 { #category : #accessing }
@@ -132,7 +178,31 @@ TypNode >> outgoingAt: anObject ifPresent: aBlock ifAbsentPut: anotherBlock [
 		  detect: [ :e | e data = anObject ]
 		  ifFound: aBlock
 		  ifNone: [ 
-		  self addOutgoingTarget: anotherBlock value data: anObject ]
+		  self outgoingAddTarget: anotherBlock value data: anObject ]
+]
+
+{ #category : #converting }
+TypNode >> outgoingAt: anObject put: aNode [
+
+	self outgoingRemoveAt: anObject.
+	^ self outgoingAddTarget: aNode data: anObject
+]
+
+{ #category : #accessing }
+TypNode >> outgoingRemove: anEdge [
+
+	| target |
+	outgoing remove: anEdge ifAbsent: [ ^ self ].
+	target := anEdge target.
+	target typIsNode ifFalse: [ ^ self ].
+	target incomingRemove: anEdge.
+	^ target
+]
+
+{ #category : #accessing }
+TypNode >> outgoingRemoveAll [
+
+	outgoing copy do: [ :e | self outgoingRemove: e ]
 ]
 
 { #category : #accessing }
@@ -142,7 +212,7 @@ TypNode >> outgoingRemoveAt: anObject [
 		'TODO could improve linear scan to constant by maintaining index'.
 	outgoing
 		select: [ :e | e data = anObject ]
-		thenDo: [ :e | self removeOutgoing: e ]
+		thenDo: [ :e | self outgoingRemove: e ]
 ]
 
 { #category : #accessing }
@@ -151,29 +221,6 @@ TypNode >> postCopy [
 	super postCopy.
 	incoming := IdentitySet new.
 	outgoing := IdentitySet new
-]
-
-{ #category : #accessing }
-TypNode >> removeAllOutgoing [
-
-	outgoing copy do: [ :e | self removeOutgoing: e ]
-]
-
-{ #category : #accessing }
-TypNode >> removeIncoming: anEdge [
-
-	self assert: [ (anEdge origin outgoing includes: anEdge) not ].
-	incoming remove: anEdge
-]
-
-{ #category : #accessing }
-TypNode >> removeOutgoing: anEdge [
-
-	outgoing remove: anEdge ifAbsent: [ ^ self ].
-	anEdge target typIsNode ifFalse: [ ^ self ].
-	^ anEdge target
-		  removeIncoming: anEdge;
-		  yourself
 ]
 
 { #category : #accessing }

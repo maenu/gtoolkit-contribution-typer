@@ -5,7 +5,7 @@ Class {
 	#classTraits : 'TRBProgramNodeVisitor classTrait',
 	#instVars : [
 		'coder',
-		'typeContext'
+		'selfType'
 	],
 	#category : #'Typer-GToolkit'
 }
@@ -20,15 +20,15 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 
 	| ast |
 	ast := coder rbAST.
-	typeContext := ast typInfContextInSelf. 
+	selfType := ast methodClass typAsType. 
 	text := aText.   
 	[  
-	ast typInfTypeIn: typeContext.
+	ast typInfTypeIn: selfType.
 	self visitNode: ast ]
 		on: Error
 		do: [ :e | Halt once ].
 	text := nil.
-	typeContext := nil
+	selfType := nil
 ]
 
 { #category : #private }
@@ -42,8 +42,8 @@ TypGtRbAstStyler >> styleFrom: from to: to with: attributes [
 TypGtRbAstStyler >> styleNode: aNode [
 
 	| data edge |
-	data := TypEdgePragmaData selector: #type: arguments: { aNode }.
-	edge := typeContext outgoing detect: [ :e | e data = data ].
+	data := TypEdgePragmaData selector: #typeIn: arguments: { selfType }.
+	edge := selfType outgoing detect: [ :e | e data = data ].
 	self
 		styleFrom: aNode start
 		to: aNode stop

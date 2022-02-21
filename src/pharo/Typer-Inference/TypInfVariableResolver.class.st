@@ -1,11 +1,15 @@
 Class {
 	#name : #TypInfVariableResolver,
 	#superclass : #TypResolver,
-	#instVars : [
-		'contexts'
-	],
-	#category : #'Typer-Inference'
+	#category : #'Typer-Inference-Core'
 }
+
+{ #category : #'as yet unclassified' }
+TypInfVariableResolver >> assignedTypeOf: aVariable in: aType [
+
+	^ (aVariable assignmentNodes collect: [ :e | e value typInfTypeIn: aType ])
+		  typAsType
+]
 
 { #category : #accessing }
 TypInfVariableResolver >> canResolve: aLookup [
@@ -18,24 +22,11 @@ TypInfVariableResolver >> canResolve: aLookup [
 		  anySatisfy: [ :e | e name = aLookup selector ]
 ]
 
-{ #category : #initialization }
-TypInfVariableResolver >> initialize [
-
-	super initialize.
-	contexts := Dictionary new
-]
-
-{ #category : #invalidation }
-TypInfVariableResolver >> invalidate [
-
-	super invalidate.
-	contexts removeAll
-]
-
 { #category : #invalidation }
 TypInfVariableResolver >> invalidateOnClassChange: aClassAnnouncement [
 
-	| class |
+	self flag: 'FIXME'
+	"| class |
 	class := aClassAnnouncement classAffected.
 	contexts keysAndValuesRemove: [ :association :context | 
 		| receiver selector |
@@ -43,13 +34,14 @@ TypInfVariableResolver >> invalidateOnClassChange: aClassAnnouncement [
 		selector := association value.
 		class typAsType >= receiver or: [ 
 			(association key invalidateOnClassChange: aClassAnnouncement) or: [ 
-				context invalidateOnClassChange: aClassAnnouncement ] ] ]
+				context invalidateOnClassChange: aClassAnnouncement ] ] ]"
 ]
 
 { #category : #invalidation }
 TypInfVariableResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	| method |
+	self flag: 'FIXME'
+	"| method |
 	method := aMethodAnnouncement methodAffected.
 	contexts keysAndValuesRemove: [ :association :context | 
 		| receiver selector |
@@ -58,7 +50,7 @@ TypInfVariableResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 		(method selector = selector and: [ 
 			 method methodClass typAsType >= receiver ]) or: [ 
 			(association key invalidateOnMethodChange: aMethodAnnouncement) 
-				or: [ context invalidateOnMethodChange: aMethodAnnouncement ] ] ]
+				or: [ context invalidateOnMethodChange: aMethodAnnouncement ] ] ]"
 ]
 
 { #category : #printing }
@@ -70,22 +62,19 @@ TypInfVariableResolver >> printOn: aStream [
 { #category : #accessing }
 TypInfVariableResolver >> resolve: aLookup [
 
-	| classDescription context |
+	| classDescription |
 	self assert: [ self canResolve: aLookup ].
 	classDescription := aLookup receiver classDescription.
-	context := contexts
-		           at: aLookup receiver -> aLookup selector
-		           ifAbsentPut: [ TypInfAstContext self: aLookup receiver ].
 	"instance variable"
 	classDescription
 		slotNamed: aLookup selector
-		ifFound: [ :e | ^ e typInfAssignedTypeIn: context ].
+		ifFound: [ :e | ^ self assignedTypeOf: e in: aLookup receiver ].
 	"class variable"
 	classDescription instanceSide allClassVariables
 		detect: [ :e | e name = aLookup selector ]
 		ifFound: [ :e | 
 			^ e value
-				  ifNil: [ e typInfAssignedTypeIn: context ]
+				  ifNil: [ self assignedTypeOf: e in: aLookup receiver ]
 				  ifNotNil: [ e value typInfType ] ].
 	self error:
 		'neither class nor instance variable, should not have been accepted in the first place'

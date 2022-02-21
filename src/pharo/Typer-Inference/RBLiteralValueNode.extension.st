@@ -1,7 +1,7 @@
 Extension { #name : #RBLiteralValueNode }
 
 { #category : #'*Typer-Inference' }
-RBLiteralValueNode >> typInfTypeRecursiveIn: aContext [
+RBLiteralValueNode >> typInfFlow [
 
-	^ value typInfType
+	^ TypInfFlowLiteral node: self
 ]

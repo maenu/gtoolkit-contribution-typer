@@ -149,7 +149,7 @@ TypType >> initializeSuperType: aType [
 	aType = superType ifTrue: [ ^ self ].
 	superType ifNotNil: [ self outgoingRemoveAt: #super ].
 	superType := aType.
-	superType ifNotNil: [ self outgoingAt: #super ensure: superType ]
+	superType ifNotNil: [ self outgoingAt: #super put: superType ]
 ]
 
 { #category : #invalidation }

@@ -10,6 +10,12 @@ Class {
 }
 
 { #category : #'instance creation' }
+TypEdge class >> origin: aNode target: anotherNode [
+
+	^ self origin: aNode target: anotherNode data: nil
+]
+
+{ #category : #'instance creation' }
 TypEdge class >> origin: aNode target: anotherNode data: anObject [
 
 	^ self new

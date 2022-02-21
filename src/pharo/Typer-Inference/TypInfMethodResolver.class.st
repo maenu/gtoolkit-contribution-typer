@@ -1,10 +1,7 @@
 Class {
 	#name : #TypInfMethodResolver,
 	#superclass : #TypResolver,
-	#instVars : [
-		'contexts'
-	],
-	#category : #'Typer-Inference'
+	#category : #'Typer-Inference-Core'
 }
 
 { #category : #accessing }
@@ -16,24 +13,11 @@ TypInfMethodResolver >> canResolve: aLookup [
 		  aLookup selector
 ]
 
-{ #category : #initialization }
-TypInfMethodResolver >> initialize [
-
-	super initialize.
-	contexts := Dictionary new
-]
-
-{ #category : #invalidation }
-TypInfMethodResolver >> invalidate [
-
-	super invalidate.
-	contexts removeAll
-]
-
 { #category : #invalidation }
 TypInfMethodResolver >> invalidateOnClassChange: aClassAnnouncement [
 
-	| class |
+	self flag: 'FIXME'
+	"| class |
 	class := aClassAnnouncement classAffected.
 	contexts keysAndValuesRemove: [ :association :context | 
 		| receiver selector |
@@ -42,13 +26,14 @@ TypInfMethodResolver >> invalidateOnClassChange: aClassAnnouncement [
 		self flag: 'FIXME figure out how invalidation should work'.
 		class typAsType >= receiver or: [ 
 			(receiver invalidateOnClassChange: aClassAnnouncement) or: [ 
-				context invalidateOnClassChange: aClassAnnouncement ] ] ]
+				context invalidateOnClassChange: aClassAnnouncement ] ] ]"
 ]
 
 { #category : #invalidation }
 TypInfMethodResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	| method |
+	self flag: 'FIXME'
+	"| method |
 	method := aMethodAnnouncement methodAffected.
 	contexts keysAndValuesRemove: [ :association :context | 
 		| receiver selector |
@@ -57,7 +42,7 @@ TypInfMethodResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 		(method selector = selector and: [ 
 			 method methodClass typAsType >= receiver ]) or: [ 
 			(association key invalidateOnMethodChange: aMethodAnnouncement) 
-				or: [ context invalidateOnMethodChange: aMethodAnnouncement ] ] ]
+				or: [ context invalidateOnMethodChange: aMethodAnnouncement ] ] ]"
 ]
 
 { #category : #printing }
@@ -69,12 +54,7 @@ TypInfMethodResolver >> printOn: aStream [
 { #category : #accessing }
 TypInfMethodResolver >> resolve: aLookup [
 
-	| context |
 	self assert: [ self canResolve: aLookup ].
-	context := contexts
-		           at: aLookup root receiver -> aLookup selector
-		           ifAbsentPut: [ 
-		           TypInfAstContext self: aLookup root receiver ].
 	^ aLookup receiver classDescription >> aLookup selector 
-		  typInfTypeIn: context
+		  typInfTypeIn: aLookup root receiver
 ]

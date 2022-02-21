@@ -1,9 +1,7 @@
 Extension { #name : #RBArrayNode }
 
 { #category : #'*Typer-Inference' }
-RBArrayNode >> typInfTypeRecursiveIn: aContext [
+RBArrayNode >> typInfFlow [
 
-	^ Array typAsType withParameters:
-		  { (statements collect: [ :e | e typInfTypeIn: aContext ])
-			  typAsType }
+	^ TypInfFlowArray node: self
 ]

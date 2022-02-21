@@ -17,7 +17,7 @@ TypEdge >> typGtAsElementIn: aMondrian [
 		  layout: BlFrameLayout new;
 		  zIndex: -1;
 		  clipChildren: false;
-		  curvatureFraction: 0.2;
+		  curvatureFraction: 0.33;
 		  border: (BlBorder builder
 				   paint: (Color black alpha: 0.2);
 				   width: 2;
@@ -50,7 +50,7 @@ TypEdge >> typGtAsElementIn: aMondrian with: aCollection [
 				when: BlClickEvent do: [ :e | 
 					e consumed: true.
 					label phlow spawnObject: self ];
-				text: data asString asRopedText ]
+				text: self asString asRopedText ]
 		ifFalse: [ 
 			label
 				when: BlClickEvent do: [ :e | 
@@ -58,7 +58,7 @@ TypEdge >> typGtAsElementIn: aMondrian with: aCollection [
 					label phlow spawnObject: aCollection ];
 				text: ('+{1} {2}' format: { 
 								 (aCollection size - 1).
-								 data }) asRopedText ].
+								 self asString }) asRopedText ].
 	^ (self typGtAsElementIn: aMondrian)
 		  addChild: label;
 		  yourself

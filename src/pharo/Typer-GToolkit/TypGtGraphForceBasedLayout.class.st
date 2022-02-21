@@ -8,7 +8,7 @@ Class {
 TypGtGraphForceBasedLayout >> initialize [
 
 	super initialize.
-	charge := -5000.
-	length := 300.
-	strength := 0.5
+	strength := 10.
+	length := 100.
+	charge := -10000
 ]

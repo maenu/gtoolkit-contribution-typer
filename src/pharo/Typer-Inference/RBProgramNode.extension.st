@@ -10,34 +10,9 @@ RBProgramNode >> typInfAnnotated: aType [
 ]
 
 { #category : #'*Typer-Inference' }
-RBProgramNode >> typInfContextInSelf [
-
-	^ TypInfAstContext self: self methodNode methodClass typAsType
-]
-
-{ #category : #'*Typer-Inference' }
 RBProgramNode >> typInfIsMessageArgument [
 
+	self flag: 'REMOVE'.
 	^ parent isNotNil and: [ 
 		  parent isMessage and: [ parent arguments includes: self ] ]
-]
-
-{ #category : #'*Typer-Inference' }
-RBProgramNode >> typInfTypeIn: aContext [
-
-	<typPraResult: 'TypType'>
-	^ aContext type: self
-]
-
-{ #category : #'*Typer-Inference' }
-RBProgramNode >> typInfTypeInSelf [
-
-	^ self typInfTypeIn: self typInfContextInSelf
-]
-
-{ #category : #'*Typer-Inference' }
-RBProgramNode >> typInfTypeRecursiveIn: aContext [
-
-	<typPraResult: 'TypType'>
-	^ aContext unknown: self
 ]

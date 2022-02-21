@@ -18,6 +18,6 @@ RBProgramNode >> typGtNodeFor: aView [
 	^ aView forward
 		  title: 'Typer Graph';
 		  priority: 10;
-		  object: [ TypInfAstNode node: self ];
+		  object: [ TypInfFlowNode node: self ];
 		  view: #typGtGraphFor:
 ]

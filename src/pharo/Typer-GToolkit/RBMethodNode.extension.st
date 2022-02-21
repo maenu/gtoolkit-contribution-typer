@@ -31,7 +31,7 @@ RBMethodNode >> typGtShadowMethod [
 RBMethodNode >> typGtTypeWithPragma [
 
 	| context type arguments_ result_ variables_ |
-	context := self typInfContextInSelf.
+	context := self typInfSelf.
 	type := self typInfTypeIn: context.
 	arguments_ := self pragmas
 		              detect: [ :e | e selector = #typPraArguments: ]

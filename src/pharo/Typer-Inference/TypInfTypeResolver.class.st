@@ -1,11 +1,12 @@
 Class {
 	#name : #TypInfTypeResolver,
 	#superclass : #TypResolver,
-	#category : #'Typer-Inference'
+	#category : #'Typer-Inference-Core'
 }
 
 { #category : #accessing }
 TypInfTypeResolver >> canResolve: aLookup [
+
 	^ true
 ]
 
@@ -17,6 +18,7 @@ TypInfTypeResolver >> printOn: aStream [
 
 { #category : #accessing }
 TypInfTypeResolver >> resolve: aLookup [
+
 	self assert: [ self canResolve: aLookup ].
 	^ aLookup classDescription typAsNamedType
 ]

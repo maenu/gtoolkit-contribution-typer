@@ -46,7 +46,7 @@ TypIndex >> initializeResolver: anObject [
 
 	<typPraArguments: 'TypLookupResolver'>
 	resolver := anObject.
-	self outgoingAt: #resolver ensure: resolver
+	self outgoingAt: #resolver put: resolver
 ]
 
 { #category : #invalidation }
@@ -75,7 +75,7 @@ TypIndex >> resolve: aLookup [
 			  self
 				  outgoingAt:
 				  (TypEdgePragmaData selector: #resolve: arguments: { aLookup })
-				  ensure: TypUnknownType instance.
+				  put: TypUnknownType instance.
 			  resolver resolve: aLookup ]
 		  ifFalse: [ TypUnknownType instance ]
 ]

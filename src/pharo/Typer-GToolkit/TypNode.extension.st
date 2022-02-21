@@ -18,10 +18,6 @@ TypNode >> typGtColor [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypNode >> typGtDecorate: anObject [ 
-]
-
-{ #category : #'*Typer-GToolkit' }
 TypNode >> typGtDecorate: anElement in: aMondrian [
 
 	anElement

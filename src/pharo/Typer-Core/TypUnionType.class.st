@@ -131,7 +131,7 @@ TypUnionType >> initializeTypes: anObject [
 	types ifNotNil: [ self outgoingRemoveAt: #types ].
 	types := anObject.
 	types ifNotNil: [ 
-		types do: [ :e | self addOutgoingTarget: e data: #types ] ]
+		types do: [ :e | self outgoingAddTarget: e data: #types ] ]
 ]
 
 { #category : #invalidation }

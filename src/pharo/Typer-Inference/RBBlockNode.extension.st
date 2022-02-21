@@ -1,29 +1,26 @@
 Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer-Inference' }
-RBBlockNode >> typInfArgumentTypeOf: anArgumentNode in: aContext [
+RBBlockNode >> typInfArgumentTypeOf: anArgumentNode in: aType [
 
 	| i j argument |
-	self typInfIsMessageArgument ifFalse: [ ^ aContext unknown: self ].
+	self flag: 'REMOVE'.
+	self typInfIsMessageArgument ifFalse: [ 
+		^ self typInfNode typeUnknown ].
 	i := parent arguments indexOf: self.
 	j := arguments indexOf: anArgumentNode.
-	argument := (parent typInfMethodIn: aContext) arguments at: i.
+	argument := (parent typInfMethodIn: aType) arguments at: i.
 	argument isUnion ifTrue: [ 
 		argument := argument types
 			            detect: #isFunction
-			            ifNone: [ ^ aContext unknown: self ] ].
+			            ifNone: [ ^ self typInfNode typeUnknown ] ].
 	(argument isFunction and: [ argument argumentsSize >= j ]) ifTrue: [ 
 		^ argument arguments at: j ].
-	^ aContext unknown: self
+	^ self typInfNode typeUnknown
 ]
 
 { #category : #'*Typer-Inference' }
-RBBlockNode >> typInfTypeRecursiveIn: aContext [
+RBBlockNode >> typInfFlow [
 
-	^ BlockClosure
-		  typAsFunctionTypeWithResult: (body typInfTypeIn: aContext)
-		  arguments: (arguments collect: [ :e | e typInfTypeIn: aContext ])
-		  argumentsOptional: false
-		  signalsAlways:
-		  (TypInfSignalsAlwaysVisitor signalsAlwaysOf: self in: aContext)
+	^ TypInfFlowBlock node: self
 ]

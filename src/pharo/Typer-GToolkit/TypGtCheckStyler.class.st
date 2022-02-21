@@ -1,9 +1,6 @@
 Class {
 	#name : #TypGtCheckStyler,
 	#superclass : #TypGtRbAstStyler,
-	#instVars : [
-		'context'
-	],
 	#category : #'Typer-GToolkit'
 }
 
@@ -83,7 +80,7 @@ TypGtCheckStyler >> visitMessageNode: aNode [
 					self styleNode: aNode error: e message: 'Receiver could be nil' ] ].
 	aNode arguments withIndexDo: [ :e :i | 
 		(e typInfTypeInSelf isUnknown or: [ 
-			 ((aNode typInfMethodIn: context) arguments at: i) isUnknown ])
+			 ((aNode typInfMethodIn: selfType) arguments at: i) isUnknown ])
 			ifTrue: [ self styleNodeUnknown: e message: 'Argument is unknown' ]
 			ifFalse: [ 
 				[ aNode typCheCheckArgumentCompatibilityAt: i ]

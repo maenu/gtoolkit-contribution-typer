@@ -1,8 +1,7 @@
 Extension { #name : #RBSequenceNode }
 
 { #category : #'*Typer-Inference' }
-RBSequenceNode >> typInfTypeRecursiveIn: aContext [
+RBSequenceNode >> typInfFlow [
 
-	statements ifEmpty: [ ^ aContext nil: self ].
-	^ (statements collect: [ :e | e typInfTypeIn: aContext ]) last
+	^ TypInfFlowSequence node: self
 ]
