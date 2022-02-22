@@ -2,7 +2,8 @@ Class {
 	#name : #TypInfFlowNode,
 	#superclass : #TypNode,
 	#instVars : [
-		'node'
+		'node',
+		'state'
 	],
 	#category : #'Typer-Inference-Flow'
 }
@@ -15,39 +16,16 @@ TypInfFlowNode class >> node: aNode [
 		  yourself
 ]
 
-{ #category : #accessing }
-TypInfFlowNode >> = anObject [
+{ #category : #'as yet unclassified' }
+TypInfFlowNode >> burp [
 
-	anObject == self ifTrue: [ ^ true ].
-	anObject class = self class ifFalse: [ ^ false ].
-	anObject node == node ifFalse: [ ^ false ].
-	^ true
+	self outgoingFlow do: [ :e | e type: type ]
 ]
 
 { #category : #'as yet unclassified' }
-TypInfFlowNode >> controlFlowNodes [
+TypInfFlowNode >> incomingFlow [
 
-	| nodes queue |
-	nodes := IdentitySet new.
-	queue := LinkedList with: self.
-	[ queue isEmpty ] whileFalse: [ 
-		| current origins targets |
-		current := queue removeFirst.
-		origins := current incoming
-			           select: [ :e | e isKindOf: TypInfFlowEdge ]
-			           thenCollect: #origin.
-		targets := current outgoing
-			           select: [ :e | e isKindOf: TypInfFlowEdge ]
-			           thenCollect: #target.
-		queue addAll: ((origins , targets) asIdentitySet difference: nodes).
-		nodes add: current ].
-	^ nodes
-]
-
-{ #category : #accessing }
-TypInfFlowNode >> hash [
-
-	^ node identityHash
+	^ incoming select: [ :e | e isKindOf: TypInfFlowEdge ]
 ]
 
 { #category : #initialization }
@@ -71,6 +49,12 @@ TypInfFlowNode >> invalidateOnMethodChange: aMethodAnnouncement [
 ]
 
 { #category : #accessing }
+TypInfFlowNode >> next [
+
+	^ self outgoingAt: #next
+]
+
+{ #category : #accessing }
 TypInfFlowNode >> next: aNode [
 
 	^ self outgoingAt: #next put: aNode
@@ -81,6 +65,39 @@ TypInfFlowNode >> node [
 	^ node
 ]
 
+{ #category : #'as yet unclassified' }
+TypInfFlowNode >> nodesFlow [
+
+	| nodes queue |
+	nodes := IdentitySet new.
+	queue := LinkedList with: self.
+	[ queue isEmpty ] whileFalse: [ 
+		| current origins targets |
+		current := queue removeFirst.
+		origins := current incoming
+			           collect: #origin
+			           thenSelect: [ :e | e isKindOf: TypInfFlowNode ].
+		targets := current outgoing
+			           collect: #target
+			           thenSelect: [ :e | e isKindOf: TypInfFlowNode ].
+		queue addAll: ((origins , targets) asIdentitySet difference: nodes).
+		nodes add: current ].
+	^ nodes
+]
+
+{ #category : #accessing }
+TypInfFlowNode >> outgoingAddTarget: aNode data: anObject [
+
+	^ self outgoingAdd:
+		  (TypInfFlowEdge origin: self target: aNode data: anObject)
+]
+
+{ #category : #'as yet unclassified' }
+TypInfFlowNode >> outgoingFlow [
+
+	^ outgoing select: [ :e | e isKindOf: TypInfFlowEdge ]
+]
+
 { #category : #printing }
 TypInfFlowNode >> printOn: aStream [
 
@@ -88,54 +105,53 @@ TypInfFlowNode >> printOn: aStream [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfFlowNode >> returnSelfTo: aNode [
+TypInfFlowNode >> return [
+
+	^ self outgoingAt: #return
+]
+
+{ #category : #'as yet unclassified' }
+TypInfFlowNode >> return: aNode [
+
+	^ self outgoingAt: #return put: aNode
+]
+
+{ #category : #'as yet unclassified' }
+TypInfFlowNode >> returnSelf [
+
+	^ self outgoingAt: #returnSelf
+]
+
+{ #category : #'as yet unclassified' }
+TypInfFlowNode >> returnSelf: aNode [
 
 	^ self outgoingAt: #returnSelf put: aNode
 ]
 
 { #category : #'as yet unclassified' }
-TypInfFlowNode >> returnTo: aNode [
+TypInfFlowNode >> slurpAndBurp [
 
-	^ self outgoingAt: #return put: aNode
+	| oldType |
+	oldType := type.
+	type := self slurp.
+	self burp.
+	^ oldType = type
 ]
 
-{ #category : #generated }
+{ #category : #accessing }
+TypInfFlowNode >> state [
+
+	^ state
+]
+
+{ #category : #accessing }
+TypInfFlowNode >> state: anObject [
+
+	state := anObject
+]
+
+{ #category : #accessing }
 TypInfFlowNode >> type [
 
-	^ self outgoingAt: #type
-]
-
-{ #category : #generated }
-TypInfFlowNode >> type: aType [
-
-	^ self outgoingAt: #type put: aType
-]
-
-{ #category : #'as yet unclassified' }
-TypInfFlowNode >> typeIn: aType [
-
-	| data |
-	data := TypEdgePragmaData selector: #typeIn: arguments: { aType }.
-	^ outgoing
-		  detect: [ :e | e data = data ]
-		  ifFound: #target
-		  ifNone: [ 
-			  | type |
-			  self outgoingAt: data put: TypUnknownType instance.
-			  type := node typInfAnnotated: (node typInfTypeRecursiveIn: self).
-			  self outgoingAt: data put: type ]
-]
-
-{ #category : #'standard reduction rules' }
-TypInfFlowNode >> typeNil [
-
-	<typEdge>
-	^ node typInfAnnotated: TypNilType instance
-]
-
-{ #category : #'instance creation' }
-TypInfFlowNode >> typeUnknown [
-
-	<typEdge>
-	^ node typInfAnnotated: TypUnknownType instance
+	self subclassResponsibility
 ]

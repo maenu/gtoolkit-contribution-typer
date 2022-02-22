@@ -4,6 +4,12 @@ Class {
 	#category : #'Typer-Inference-Flow'
 }
 
+{ #category : #'as yet unclassified' }
+TypInfFlowAssign >> type [
+
+	^ state at: self write node variable put: (self incoming: #next) type
+]
+
 { #category : #writing }
 TypInfFlowAssign >> write [
 

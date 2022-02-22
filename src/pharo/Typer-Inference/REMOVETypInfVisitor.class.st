@@ -1,5 +1,5 @@
 Class {
-	#name : #TypInfVisitor,
+	#name : #REMOVETypInfVisitor,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'selfType',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #visiting }
-TypInfVisitor >> visitArgumentVariableNode: aNode [
+REMOVETypInfVisitor >> visitArgumentVariableNode: aNode [
 
 	| type sendNodes sendSelectors sendClasses useTypes |
 	aNode isDefinition ifFalse: [ 
@@ -47,7 +47,7 @@ TypInfVisitor >> visitArgumentVariableNode: aNode [
 ]
 
 { #category : #visiting }
-TypInfVisitor >> visitBlockNode: aBlockNode [
+REMOVETypInfVisitor >> visitBlockNode: aBlockNode [
 
 	^ BlockClosure
 		  typAsFunctionTypeWithResult: (self visitNode: aBlockNode body)
@@ -55,55 +55,13 @@ TypInfVisitor >> visitBlockNode: aBlockNode [
 		  (aBlockNode arguments collect: [ :e | self visitNode: e ])
 		  argumentsOptional: false
 		  signalsAlways:
-		  (TypInfSignalsAlwaysVisitor
+		  (REMOVETypInfSignalsAlwaysVisitor
 			   signalsAlwaysOf: aBlockNode
 			   self: selfType)
 ]
 
 { #category : #visiting }
-TypInfVisitor >> visitClassVariableNode: aNode [
-
-	^ aNode owningClass typAsType lookupVariable: aNode name asSymbol
-]
-
-{ #category : #visiting }
-TypInfVisitor >> visitGlobalVariableNode: aNode [
-
-	^ aNode value typInfType
-]
-
-{ #category : #visiting }
-TypInfVisitor >> visitInstanceVariableNode: aNode [
-
-	^ aNode owningClass typAsType lookupVariable: aNode name asSymbol
-]
-
-{ #category : #visiting }
-TypInfVisitor >> visitLiteralArrayNode: aLiteralArrayNode [
-
-	aLiteralArrayNode isForByteArray ifTrue: [ ^ ByteArray typAsType ].
-	^ TypValueType
-		  value: self value
-		  superType: (Array typAsType withParameters:
-				   { (aLiteralArrayNode contents collect: [ :e | 
-					    self visitNode: e ]) typAsType })
-]
-
-{ #category : #visiting }
-TypInfVisitor >> visitLiteralValueNode: aLiteralValueNode [
-
-	^ aLiteralValueNode value typInfType
-]
-
-{ #category : #visiting }
-TypInfVisitor >> visitMessageNode: aMessageNode [
-
-	super visitMessageNode: aMessageNode.
-	^ (aMessageNode typInfMethodIn: selfType) result
-]
-
-{ #category : #visiting }
-TypInfVisitor >> visitMethodNode: aMethodNode [
+REMOVETypInfVisitor >> visitMethodNode: aMethodNode [
 
 	self flag:
 		'FIXME clean up this is broken after context drop, e.g. type edges'.
@@ -138,7 +96,7 @@ TypInfVisitor >> visitMethodNode: aMethodNode [
 				  (aMethodNode arguments collect: [ :e | self visitNode: e ])
 				  argumentsOptional: false
 				  signalsAlways:
-				  (TypInfSignalsAlwaysVisitor signalsAlwaysOf: self self: selfType) ]
+				  (REMOVETypInfSignalsAlwaysVisitor signalsAlwaysOf: self self: selfType) ]
 		  or: [ 
 			  CompiledMethod
 				  typAsFunctionTypeWithResult: aMethodNode typInfNode typeUnknown
@@ -149,15 +107,7 @@ TypInfVisitor >> visitMethodNode: aMethodNode [
 ]
 
 { #category : #visiting }
-TypInfVisitor >> visitSequenceNode: aSequenceNode [
-
-	self visitTemporaryNodes: aSequenceNode temporaries.
-	aSequenceNode statements ifEmpty: [ ^ self typInfNode typeNil ].
-	^ (aSequenceNode statements collect: [ :e | self visitNode: e ]) last
-]
-
-{ #category : #visiting }
-TypInfVisitor >> visitTemporaryVariableNode: aNode [
+REMOVETypInfVisitor >> visitTemporaryVariableNode: aNode [
 
 	aNode isDefinition ifTrue: [ 
 		^ (((aNode whoDefines: aNode name) assignmentNodes select: [ :e | 
@@ -165,5 +115,5 @@ TypInfVisitor >> visitTemporaryVariableNode: aNode [
 			  ifEmpty: [ aNode typInfNode typeNil ]
 			  ifNotEmpty: #typAsType ].
 	aNode isWrite ifTrue: [ ^ self visitNode: aNode parent value ].
-	^ TypInfTemporaryExecutionOrderVisitor typeOf: aNode self: selfType
+	^ REMOVETypInfTemporaryExecutionOrderVisitor typeOf: aNode self: selfType
 ]

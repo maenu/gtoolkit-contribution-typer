@@ -18,7 +18,8 @@ TTypInfFlowWithArguments >> argumentAt: anInteger put: aNode [
 { #category : #accessing }
 TTypInfFlowWithArguments >> arguments [
 
-	^ (self incoming select: [ :e | e data isInteger ]) sorted
+	^ (self incoming select: [ :e | e data isInteger ]) sorted collect:
+		  #origin
 ]
 
 { #category : #accessing }

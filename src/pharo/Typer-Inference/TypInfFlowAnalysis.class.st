@@ -36,7 +36,7 @@ TypInfFlowAnalysis >> state [
 
 	| state |
 	state := IdentityDictionary new.
-	root controlFlowNodes do: [ :n | 
+	root nodesFlow do: [ :n | 
 		state at: n put: TypUnknownType instance ].
 	^ state
 ]

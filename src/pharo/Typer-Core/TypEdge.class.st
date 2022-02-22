@@ -23,6 +23,12 @@ TypEdge class >> origin: aNode target: anotherNode data: anObject [
 		  yourself
 ]
 
+{ #category : #comparing }
+TypEdge >> < anObject [
+
+	^ data < anObject data
+]
+
 { #category : #accessing }
 TypEdge >> = anObject [
 

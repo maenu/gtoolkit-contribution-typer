@@ -3,13 +3,15 @@ Class {
 	#superclass : #TypInfFlowNode,
 	#traits : 'TTypInfFlowWithArguments',
 	#classTraits : 'TTypInfFlowWithArguments classTrait',
+	#instVars : [
+		'method'
+	],
 	#category : #'Typer-Inference-Flow'
 }
 
 { #category : #accessing }
-TypInfFlowMessage >> method [
+TypInfFlowMessage >> lookup [
 
-	<typEdge>
 	^ self receiver type
 		  lookupMethod: node selector asSymbol
 		  arguments: (self arguments collect: #type)
@@ -25,4 +27,10 @@ TypInfFlowMessage >> receiver [
 TypInfFlowMessage >> receiver: aNode [
 
 	^ self incomingAt: #receiver put: aNode
+]
+
+{ #category : #accessing }
+TypInfFlowMessage >> result [
+
+	^ self lookup result
 ]

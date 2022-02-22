@@ -1,15 +1,15 @@
 Class {
-	#name : #TypInfSignalsAlwaysVisitor,
+	#name : #REMOVETypInfSignalsAlwaysVisitor,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'signalsAlways',
 		'selfType'
 	],
-	#category : #'Typer-Inference-Core'
+	#category : #'Typer-Inference-Flow'
 }
 
 { #category : #accessing }
-TypInfSignalsAlwaysVisitor class >> self: aType [
+REMOVETypInfSignalsAlwaysVisitor class >> self: aType [
 
 	^ self new
 		  initializeSelf: aType;
@@ -17,7 +17,7 @@ TypInfSignalsAlwaysVisitor class >> self: aType [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfSignalsAlwaysVisitor class >> signalsAlwaysOf: aNode self: aType [
+REMOVETypInfSignalsAlwaysVisitor class >> signalsAlwaysOf: aNode self: aType [
 
 	^ (self self: aType)
 		  visitNode: aNode;
@@ -25,31 +25,31 @@ TypInfSignalsAlwaysVisitor class >> signalsAlwaysOf: aNode self: aType [
 ]
 
 { #category : #initialization }
-TypInfSignalsAlwaysVisitor >> initialize [
+REMOVETypInfSignalsAlwaysVisitor >> initialize [
 	super initialize.
 	signalsAlways := false
 ]
 
 { #category : #initialization }
-TypInfSignalsAlwaysVisitor >> initializeSelf: aType [
+REMOVETypInfSignalsAlwaysVisitor >> initializeSelf: aType [
 
 	selfType := aType
 ]
 
 { #category : #accessing }
-TypInfSignalsAlwaysVisitor >> signalsAlways [
+REMOVETypInfSignalsAlwaysVisitor >> signalsAlways [
 	^ signalsAlways
 ]
 
 { #category : #visiting }
-TypInfSignalsAlwaysVisitor >> visitBlockNode: aNode [
+REMOVETypInfSignalsAlwaysVisitor >> visitBlockNode: aNode [
 	"noop"
 
 	
 ]
 
 { #category : #visiting }
-TypInfSignalsAlwaysVisitor >> visitMessageNode: aNode [
+REMOVETypInfSignalsAlwaysVisitor >> visitMessageNode: aNode [
 
 	| method s |
 	super visitMessageNode: aNode.

@@ -40,6 +40,12 @@ TypNode >> incoming [
 ]
 
 { #category : #accessing }
+TypNode >> incoming: anObject [
+
+	^ incoming detect: [ :e | e data = anObject ]
+]
+
+{ #category : #accessing }
 TypNode >> incomingAdd: anEdge [
 
 	self assert: [ anEdge origin outgoing includes: anEdge ].
@@ -56,13 +62,22 @@ TypNode >> incomingAddOrigin: aNode data: anObject [
 { #category : #converting }
 TypNode >> incomingAt: anObject [
 
-	^ incoming detect: [ :e | e data = anObject ]
+	^ (self incoming: anObject) origin
 ]
 
 { #category : #converting }
 TypNode >> incomingAt: anObject ifAbsentPut: aBlock [
 
 	^ self incomingAt: anObject ifPresent: #origin ifAbsentPut: aBlock
+]
+
+{ #category : #accessing }
+TypNode >> incomingAt: anObject ifPresent: aBlock ifAbsent: anotherBlock [
+
+	^ incoming
+		  detect: [ :e | e data = anObject ]
+		  ifFound: aBlock
+		  ifNone: anotherBlock
 ]
 
 { #category : #accessing }
@@ -78,7 +93,9 @@ TypNode >> incomingAt: anObject ifPresent: aBlock ifAbsentPut: anotherBlock [
 { #category : #converting }
 TypNode >> incomingAt: anObject put: aNode [
 
-	self incomingRemoveAt: anObject.
+	incoming detect: [ :e | e data = anObject ] ifFound: [ :e | 
+		e origin = aNode ifTrue: [ ^ aNode ].
+		e origin outgoingRemove: e ].
 	^ self incomingAddOrigin: aNode data: anObject
 ]
 
@@ -142,6 +159,12 @@ TypNode >> outgoing [
 ]
 
 { #category : #accessing }
+TypNode >> outgoing: anObject [
+
+	^ outgoing detect: [ :e | e data = anObject ]
+]
+
+{ #category : #accessing }
 TypNode >> outgoingAdd: anEdge [
 
 	self assert: [ anEdge origin == self ].
@@ -160,7 +183,7 @@ TypNode >> outgoingAddTarget: aNode data: anObject [
 { #category : #converting }
 TypNode >> outgoingAt: anObject [
 
-	^ outgoing detect: [ :e | e data = anObject ]
+	^ (self outgoing: anObject) target
 ]
 
 { #category : #converting }
@@ -170,10 +193,17 @@ TypNode >> outgoingAt: anObject ifAbsentPut: aBlock [
 ]
 
 { #category : #accessing }
+TypNode >> outgoingAt: anObject ifPresent: aBlock ifAbsent: anotherBlock [
+
+	^ outgoing
+		  detect: [ :e | e data = anObject ]
+		  ifFound: aBlock
+		  ifNone: anotherBlock
+]
+
+{ #category : #accessing }
 TypNode >> outgoingAt: anObject ifPresent: aBlock ifAbsentPut: anotherBlock [
 
-	self flag:
-		'TODO could improve linear scan to constant by maintaining index'.
 	^ outgoing
 		  detect: [ :e | e data = anObject ]
 		  ifFound: aBlock
@@ -184,7 +214,9 @@ TypNode >> outgoingAt: anObject ifPresent: aBlock ifAbsentPut: anotherBlock [
 { #category : #converting }
 TypNode >> outgoingAt: anObject put: aNode [
 
-	self outgoingRemoveAt: anObject.
+	outgoing detect: [ :e | e data = anObject ] ifFound: [ :e | 
+		e target = aNode ifTrue: [ ^ aNode ].
+		self outgoingRemove: e ].
 	^ self outgoingAddTarget: aNode data: anObject
 ]
 
@@ -208,8 +240,6 @@ TypNode >> outgoingRemoveAll [
 { #category : #accessing }
 TypNode >> outgoingRemoveAt: anObject [
 
-	self flag:
-		'TODO could improve linear scan to constant by maintaining index'.
 	outgoing
 		select: [ :e | e data = anObject ]
 		thenDo: [ :e | self outgoingRemove: e ]

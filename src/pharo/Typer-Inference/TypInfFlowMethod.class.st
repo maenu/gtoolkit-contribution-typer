@@ -17,3 +17,11 @@ TypInfFlowMethod >> execute: aNode [
 
 	^ self outgoingAt: #execute put: aNode
 ]
+
+{ #category : #accessing }
+TypInfFlowMethod >> lookup [
+
+	^ self self type
+		  lookupMethod: node selector asSymbol
+		  arguments: (self arguments collect: #type)
+]

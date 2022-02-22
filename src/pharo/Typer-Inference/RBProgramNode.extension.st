@@ -6,13 +6,5 @@ RBProgramNode >> typInfAnnotated: aType [
 
 	<typPraResult: 'TypType'>
 	<typPraArguments: 'TypType'>
-	^ self comments inject: aType into: [ :r :e | e typInfType: r ]
-]
-
-{ #category : #'*Typer-Inference' }
-RBProgramNode >> typInfIsMessageArgument [
-
-	self flag: 'REMOVE'.
-	^ parent isNotNil and: [ 
-		  parent isMessage and: [ parent arguments includes: self ] ]
+	^ self comments inject: aType into: [ :r :e | e typInfAnnotated: r ]
 ]

@@ -1,5 +1,5 @@
 Class {
-	#name : #TypInfFlowLiteral,
+	#name : #TypInfFlowConstant,
 	#superclass : #TypInfFlowNode,
 	#category : #'Typer-Inference-Flow'
 }

@@ -1,7 +1,7 @@
 Extension { #name : #RBComment }
 
 { #category : #'*Typer-Inference' }
-RBComment >> typInfType: aType [
+RBComment >> typInfAnnotated: aType [
 	(contents beginsWith: 'typCastAs ')
 		ifTrue: [ ^ (contents copyFrom: 'typCastAs ' size + 1 to: contents size)
 				typAsType ].
