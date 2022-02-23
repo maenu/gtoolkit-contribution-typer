@@ -8,7 +8,7 @@ Class {
 TypInfFlowAssign >> transfer: aState [
 
 	| type |
-	type := aState at: (self incoming: #next).
+	type := aState at: (self incomingAt: #next).
 	aState at: self write put: type.
 	aState at: self put: type
 ]

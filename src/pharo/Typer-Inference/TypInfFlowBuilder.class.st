@@ -179,7 +179,7 @@ TypInfFlowBuilder >> visitTemporaryVariableNode: aTemproraryNode [
 	| node |
 	node := super visitTemporaryVariableNode: aTemproraryNode.
 	aTemproraryNode isDefinition ifFalse: [ 
-		node read: (self nodeAt: aTemproraryNode definingNode) ].
+		node read: (self nodeAt: aTemproraryNode variable definingNode) ].
 	^ node
 ]
 

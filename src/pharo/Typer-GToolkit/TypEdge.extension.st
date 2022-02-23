@@ -1,16 +1,6 @@
 Extension { #name : #TypEdge }
 
 { #category : #'*Typer-GToolkit' }
-TypEdge >> gtDataFor: aView [
-
-	<gtView>
-	^ aView explicit
-		  title: 'Data';
-		  priority: 10;
-		  stencil: [ GtInspectorTool forObject: data ]
-]
-
-{ #category : #'*Typer-GToolkit' }
 TypEdge >> typGtAsElementIn: aMondrian [
 
 	^ BlParabollaArcElement new
@@ -62,6 +52,16 @@ TypEdge >> typGtAsElementIn: aMondrian with: aCollection [
 	^ (self typGtAsElementIn: aMondrian)
 		  addChild: label;
 		  yourself
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypEdge >> typGtDataFor: aView [
+
+	<gtView>
+	^ aView explicit
+		  title: 'Data';
+		  priority: 10;
+		  stencil: [ GtInspectorTool forObject: data ]
 ]
 
 { #category : #'*Typer-GToolkit' }

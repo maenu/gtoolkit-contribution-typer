@@ -72,10 +72,13 @@ TypIndex >> resolve: aLookup [
 	<typEdge>
 	^ (resolver canResolve: aLookup)
 		  ifTrue: [ 
-			  self
-				  outgoingAt:
-				  (TypEdgePragmaData selector: #resolve: arguments: { aLookup })
-				  put: TypUnknownType instance.
-			  resolver resolve: aLookup ]
+			  | data result |
+			  data := TypEdgePragmaData
+				          selector: #resolve:
+				          arguments: { aLookup }.
+			  self outgoingAt: data put: TypUnknownType instance.
+			  result := resolver resolve: aLookup.
+			  self outgoingRemoveAt: data.
+			  result ]
 		  ifFalse: [ TypUnknownType instance ]
 ]

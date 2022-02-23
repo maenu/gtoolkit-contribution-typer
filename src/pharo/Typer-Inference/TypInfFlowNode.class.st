@@ -2,7 +2,8 @@ Class {
 	#name : #TypInfFlowNode,
 	#superclass : #TypNode,
 	#instVars : [
-		'node'
+		'node',
+		'state'
 	],
 	#category : #'Typer-Inference-Flow'
 }
@@ -167,7 +168,6 @@ TypInfFlowNode >> slurp [
 { #category : #'as yet unclassified' }
 TypInfFlowNode >> slurpAndBurp [
 
-	| state |
 	self flowIncoming ifEmpty: [ ^ false ].
 	state := self slurp.
 	self transfer: state.
@@ -180,4 +180,15 @@ TypInfFlowNode >> transfer: aState [
 	"transfer the given state from in to out"
 
 	
+]
+
+{ #category : #'as yet unclassified' }
+TypInfFlowNode >> typGtStateFor: aView [
+
+	<gtView>
+	state ifNil: [ ^ aView empty ].
+	^ aView explicit
+		  title: 'Type';
+		  priority: 10;
+		  stencil: [ GtInspectorTool forObject: (state at: self) ]
 ]

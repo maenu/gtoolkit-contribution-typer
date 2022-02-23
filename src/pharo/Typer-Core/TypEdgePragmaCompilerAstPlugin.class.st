@@ -13,43 +13,30 @@ TypEdgePragmaCompilerAstPlugin class >> priority [
 { #category : #api }
 TypEdgePragmaCompilerAstPlugin >> transform [
 
-	(ast hasPragmaNamed: #typEdge) ifTrue: [ 
-		^ self transformOutgoingAtIfAbsentPut ].
-	(ast hasPragmaNamed: #typEdgeOutgoingEnsure) ifTrue: [ 
-		^ self typEdgeOutgoingAtEnsure ]
-]
-
-{ #category : #api }
-TypEdgePragmaCompilerAstPlugin >> transformOutgoingAtIfAbsentPut [
-
 	| rewriter |
+	(ast hasPragmaNamed: #typEdge) ifFalse: [ ^ self ].
 	ast := ast copy.
 	rewriter := RBParseTreeRewriter new
 		            replace: '| `@temporaries |
+							  		(`.@asserts) `{ :node | node isMessage and: [ node receiver isSelf and: [ node selector = #assert: ] ] }.
 							  		`.@statements.
 							  		^ `@return'
-		            with:
-			            '^ self outgoingAt: (TypEdgePragmaData selector: thisContext selector arguments: thisContext arguments) ifAbsentPut: [ | `@temporaries |
+		            with: '`.@asserts.
+						 	   ^ self outgoingAt: (TypEdgePragmaData selector: thisContext selector arguments: thisContext arguments) ifAbsentPut: [ | `@temporaries |
+						    	`.@statements.
+							 	`@return ]';
+		            yourself.
+	(rewriter executeTree: ast) ifFalse: [ 
+		rewriter := RBParseTreeRewriter new
+			            replace: '| `@temporaries |
+							  		`.@statements.
+							  		^ `@return'
+			            with:
+				            '^ self outgoingAt: (TypEdgePragmaData selector: thisContext selector arguments: thisContext arguments) ifAbsentPut: [ | `@temporaries |
 						    	`.@statements.
 								`@return ]';
-		            yourself.
-	(rewriter executeTree: ast) ifFalse: [ self error: 'invalid pattern' ].
-	ast doSemanticAnalysis
-]
-
-{ #category : #api }
-TypEdgePragmaCompilerAstPlugin >> typEdgeOutgoingAtEnsure [
-
-	| rewriter |
-	ast := ast copy.
-	rewriter := RBParseTreeRewriter new
-		            replace: '| `@temporaries |
-							  		`.@statements.
-							  		^ `@return'
-		            with: '| `@temporaries |
-							 `.@statements.
-							^ self outgoingAt: (TypEdgePragmaData selector: thisContext selector arguments: #()) ensure: (`@return)';
-		            yourself.
-	(rewriter executeTree: ast) ifFalse: [ self error: 'invalid pattern' ].
+			            yourself.
+		(rewriter executeTree: ast) ifFalse: [ 
+			self error: 'invalid pattern' ] ].
 	ast doSemanticAnalysis
 ]
