@@ -2,8 +2,7 @@ Class {
 	#name : #TypInfFlowNode,
 	#superclass : #TypNode,
 	#instVars : [
-		'node',
-		'state'
+		'node'
 	],
 	#category : #'Typer-Inference-Flow'
 }
@@ -17,15 +16,17 @@ TypInfFlowNode class >> node: aNode [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfFlowNode >> burp [
-
-	self outgoingFlow do: [ :e | e type: type ]
-]
-
-{ #category : #'as yet unclassified' }
 TypInfFlowNode >> incomingFlow [
 
 	^ incoming select: [ :e | e isKindOf: TypInfFlowEdge ]
+]
+
+{ #category : #accessing }
+TypInfFlowNode >> initialize: aState [
+
+	"compute initial state for node"
+
+	^ TypUnknownType instance
 ]
 
 { #category : #initialization }
@@ -128,30 +129,10 @@ TypInfFlowNode >> returnSelf: aNode [
 	^ self outgoingAt: #returnSelf put: aNode
 ]
 
-{ #category : #'as yet unclassified' }
-TypInfFlowNode >> slurpAndBurp [
-
-	| oldType |
-	oldType := type.
-	type := self slurp.
-	self burp.
-	^ oldType = type
-]
-
 { #category : #accessing }
-TypInfFlowNode >> state [
+TypInfFlowNode >> transfer: aState [
 
-	^ state
-]
+	"transfer the given state from in to out"
 
-{ #category : #accessing }
-TypInfFlowNode >> state: anObject [
-
-	state := anObject
-]
-
-{ #category : #accessing }
-TypInfFlowNode >> type [
-
-	self subclassResponsibility
+	
 ]

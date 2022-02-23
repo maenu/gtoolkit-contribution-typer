@@ -18,6 +18,17 @@ TypInfFlowBlock >> execute: aNode [
 	^ self outgoingAt: #execute put: aNode
 ]
 
+{ #category : #accessing }
+TypInfFlowBlock >> initialize: aState [
+
+	^ BlockClosure
+		  typAsFunctionTypeWithResult: TypUnknownType instance
+		  arguments:
+		  (node arguments collect: [ :e | TypUnknownType instance ])
+		  argumentsOptional: false
+		  signalsAlways: nil
+]
+
 { #category : #'as yet unclassified' }
 TypInfFlowBlock >> typInfArgumentTypeOf: anArgumentNode in: aType [
 

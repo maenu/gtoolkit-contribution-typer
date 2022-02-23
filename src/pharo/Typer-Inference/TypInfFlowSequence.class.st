@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : #accessing }
-TypInfFlowSequence >> type [
+TypInfFlowSequence >> initialize: aState [
 
 	^ TypNilType instance
 ]

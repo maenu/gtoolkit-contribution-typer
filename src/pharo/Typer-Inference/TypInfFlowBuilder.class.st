@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'root',
 		'current',
-		'nodes',
-		'variables'
+		'nodes'
 	],
 	#category : #'Typer-Inference-Flow'
 }
@@ -14,8 +13,13 @@ Class {
 TypInfFlowBuilder >> initialize [
 
 	super initialize.
-	nodes := IdentityDictionary new.
-	variables := Set new
+	nodes := IdentityDictionary new
+]
+
+{ #category : #accessing }
+TypInfFlowBuilder >> next: aNode [
+
+	current := current next: (self nodeAt: aNode)
 ]
 
 { #category : #accessing }
@@ -39,22 +43,7 @@ TypInfFlowBuilder >> stateSelf: aType [
 { #category : #accessing }
 TypInfFlowBuilder >> stateSelf: aType super: anotherType [
 
-	| state |
-	state := Dictionary new.
-	variables do: [ :e | state at: e put: TypUnknownType instance ].
-	variables
-		detect: #isSelfVariable
-		ifFound: [ :e | state at: e put: aType ].
-	variables
-		detect: #isSuperVariable
-		ifFound: [ :e | state at: e put: anotherType ].
-	variables
-		detect: #isThisContextVariable
-		ifFound: [ :e | state at: e put: Context typInfType ].
-	variables
-		select: #isGlobalVariable
-		thenDo: [ :e | state at: e put: e value typInfType ].
-	^ state
+	^ TypInfFlowState nodes: nodes values self: aType super: anotherType
 ]
 
 { #category : #visiting }
@@ -73,7 +62,7 @@ TypInfFlowBuilder >> visitArrayNode: anArrayNode [
 	| arguments |
 	arguments := anArrayNode statements collect: [ :n | 
 		             self visitNode: n ].
-	current := current next: (self nodeAt: anArrayNode).
+	self next: anArrayNode.
 	current arguments: arguments.
 	^ current
 ]
@@ -82,8 +71,7 @@ TypInfFlowBuilder >> visitArrayNode: anArrayNode [
 TypInfFlowBuilder >> visitAssignmentNode: anAssignmentNode [
 
 	self visitNode: anAssignmentNode value.
-	anAssignmentNode variable typInfFlowAddTo: variables.
-	current := current next: (self nodeAt: anAssignmentNode).
+	self next: anAssignmentNode.
 	current write: (self nodeAt: anAssignmentNode variable).
 	^ current
 ]
@@ -91,8 +79,7 @@ TypInfFlowBuilder >> visitAssignmentNode: anAssignmentNode [
 { #category : #visiting }
 TypInfFlowBuilder >> visitBlockNode: aBlockNode [
 
-	current := current next: (self nodeAt: aBlockNode).
-	aBlockNode arguments do: [ :e | e typInfFlowAddTo: variables ].
+	self next: aBlockNode.
 	current arguments:
 		(aBlockNode arguments collect: [ :n | self nodeAt: n ]).
 	self visitNode: aBlockNode body.
@@ -111,22 +98,15 @@ TypInfFlowBuilder >> visitLiteralArrayNode: aLiteralArrayNode [
 	| arguments |
 	arguments := aLiteralArrayNode contents collect: [ :n | 
 		             self visitNode: n ].
-	current := current next: (self nodeAt: aLiteralArrayNode).
+	self next: aLiteralArrayNode.
 	current arguments: arguments.
-	aLiteralArrayNode isForByteArray
-		ifTrue: [ current type: ByteArray typAsType ]
-		ifFalse: [ 
-			current type: (Array typAsType withParameters:
-					 { (arguments collect: #type) typAsType }) ].
 	^ current
 ]
 
 { #category : #visiting }
 TypInfFlowBuilder >> visitLiteralValueNode: aNode [
 
-	current := current next: (self nodeAt: aNode).
-	current type: aNode value typInfType.
-	^ current
+	^ self next: aNode
 ]
 
 { #category : #visiting }
@@ -137,7 +117,7 @@ TypInfFlowBuilder >> visitMessageNode: aMessageNode [
 		ifTrue: [ self visitNode: aMessageNode receiver ].
 	arguments := aMessageNode arguments collect: [ :n | 
 		             self visitNode: n ].
-	current := current next: (self nodeAt: aMessageNode).
+	self next: aMessageNode.
 	current arguments: arguments.
 	current receiver: (self nodeAt: aMessageNode receiver).
 	^ current
@@ -149,7 +129,6 @@ TypInfFlowBuilder >> visitMethodNode: aMethodNode [
 	self assert: [ root isNil ].
 	self assert: [ current isNil ].
 	root := self nodeAt: aMethodNode.
-	aMethodNode arguments do: [ :e | e typInfFlowAddTo: variables ].
 	current := root.
 	current arguments:
 		(aMethodNode arguments collect: [ :n | self nodeAt: n ]).
@@ -169,7 +148,6 @@ TypInfFlowBuilder >> visitReturnNode: aReturnNode [
 TypInfFlowBuilder >> visitSequenceNode: aSequenceNode [
 
 	current := current execute: (self nodeAt: aSequenceNode).
-	aSequenceNode temporaries do: [ :e | e typInfFlowAddTo: variables ].
 	current arguments:
 		(aSequenceNode temporaries collect: [ :n | self nodeAt: n ]).
 	aSequenceNode statements do: [ :n | self visitNode: n ]
@@ -188,6 +166,5 @@ TypInfFlowBuilder >> visitTemporaryVariableNode: aTemproraryNode [
 { #category : #visiting }
 TypInfFlowBuilder >> visitVariableNode: aVariableNode [
 
-	aVariableNode typInfFlowAddTo: variables.
-	^ current := current next: (self nodeAt: aVariableNode)
+	^ self next: aVariableNode
 ]

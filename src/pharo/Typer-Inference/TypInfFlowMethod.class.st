@@ -19,9 +19,26 @@ TypInfFlowMethod >> execute: aNode [
 ]
 
 { #category : #accessing }
-TypInfFlowMethod >> lookup [
+TypInfFlowMethod >> initialize: aState [
 
-	^ self self type
+	^ CompiledMethod
+		  typAsFunctionTypeWithResult: TypUnknownType instance
+		  arguments:
+		  (node arguments collect: [ :e | TypUnknownType instance ])
+		  argumentsOptional: false
+		  signalsAlways: nil
+]
+
+{ #category : #accessing }
+TypInfFlowMethod >> methodIn: aState [
+
+	^ aState self
 		  lookupMethod: node selector asSymbol
-		  arguments: (self arguments collect: #type)
+		  arguments: (self arguments collect: [ :e | aState at: e ])
+]
+
+{ #category : #accessing }
+TypInfFlowMethod >> transfer: aState [
+
+	aState at: self put: (self methodIn: aState)
 ]

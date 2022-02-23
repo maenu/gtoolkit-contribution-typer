@@ -5,9 +5,12 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypInfFlowAssign >> type [
+TypInfFlowAssign >> transfer: aState [
 
-	^ state at: self write node variable put: (self incoming: #next) type
+	| type |
+	type := aState at: (self incoming: #next).
+	aState at: self write put: type.
+	aState at: self put: type
 ]
 
 { #category : #writing }

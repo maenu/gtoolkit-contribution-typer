@@ -4,6 +4,12 @@ Class {
 	#category : #'Typer-Inference-Flow'
 }
 
+{ #category : #accessing }
+TypInfFlowVariable >> initialize: aState [
+
+	^ node variable typInfFlowInitialize: aState
+]
+
 { #category : #'meta-object-protocol' }
 TypInfFlowVariable >> read [
 
@@ -17,16 +23,12 @@ TypInfFlowVariable >> read: aNode [
 ]
 
 { #category : #private }
-TypInfFlowVariable >> slurp [
+TypInfFlowVariable >> transfer: aState [
 
-	^ node owningClass typAsType lookupVariable: node name asSymbol
-]
-
-{ #category : #private }
-TypInfFlowVariable >> type [
-
-	^ self
-		  incomingAt: #read
-		  ifPresent: [ :e | e node variable typInfFlowTypeIn: self ]
-		  ifAbsent: [ node variable typInfFlowTypeIn: self ]
+	| type |
+	type := self
+		        incomingAt: #read
+		        ifPresent: [ :e | e node variable typInfFlowTypeIn: aState ]
+		        ifAbsent: [ node variable typInfFlowTypeIn: aState ].
+	aState at: self put: type
 ]

@@ -6,9 +6,15 @@ Class {
 	#category : #'Typer-Inference-Flow'
 }
 
-{ #category : #'as yet unclassified' }
-TypInfFlowArray >> slurp [
+{ #category : #accessing }
+TypInfFlowArray >> initialize: aState [
 
-	^ Array typAsType withParameters:
-		  { (self arguments collect: #type) typAsType }
+	^ Array typAsType
+]
+
+{ #category : #'as yet unclassified' }
+TypInfFlowArray >> transfer: aState [
+
+	aState at: self put: (Array typAsType withParameters:
+			 { (self arguments collect: [ :e | aState at: e ]) typAsType })
 ]

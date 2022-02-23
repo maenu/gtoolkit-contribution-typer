@@ -1,13 +1,13 @@
 Extension { #name : #Variable }
 
 { #category : #'*Typer-Inference' }
-Variable >> typInfFlowAddTo: aSet [
+Variable >> typInfFlowInitialize: aState [
 
-	aSet add: self
+	^ TypUnknownType instance
 ]
 
 { #category : #'*Typer-Inference' }
 Variable >> typInfFlowTypeIn: aDictionary [
 
-	^ aDictionary at: self
+	^ TypUnknownType instance
 ]

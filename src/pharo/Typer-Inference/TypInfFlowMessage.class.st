@@ -10,11 +10,11 @@ Class {
 }
 
 { #category : #accessing }
-TypInfFlowMessage >> lookup [
+TypInfFlowMessage >> methodIn: aState [
 
-	^ self receiver type
+	^ (aState at: self receiver)
 		  lookupMethod: node selector asSymbol
-		  arguments: (self arguments collect: #type)
+		  arguments: (self arguments collect: [ :e | aState at: e ])
 ]
 
 { #category : #accessing }
@@ -30,7 +30,7 @@ TypInfFlowMessage >> receiver: aNode [
 ]
 
 { #category : #accessing }
-TypInfFlowMessage >> result [
+TypInfFlowMessage >> transfer: aState [
 
-	^ self lookup result
+	aState at: self put: (self methodIn: aState) result
 ]
