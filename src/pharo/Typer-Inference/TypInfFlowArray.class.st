@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : #accessing }
-TypInfFlowArray >> initialize: aState [
+TypInfFlowArray >> initialValueIn: aState [
 
 	^ Array typAsType
 ]

@@ -9,6 +9,26 @@ Class {
 	#category : #'Typer-Inference-Flow'
 }
 
+{ #category : #accessing }
+TypInfFlowBuilder >> analysis [
+
+	^ TypInfFlowAnalysis root: root state: self state
+]
+
+{ #category : #accessing }
+TypInfFlowBuilder >> analysisSelf: aType [
+
+	^ TypInfFlowAnalysis root: root state: (self stateSelf: aType)
+]
+
+{ #category : #accessing }
+TypInfFlowBuilder >> analysisSelf: aType super: anotherType [
+
+	^ TypInfFlowAnalysis
+		  root: root
+		  state: (self stateSelf: aType super: anotherType)
+]
+
 { #category : #initialization }
 TypInfFlowBuilder >> initialize [
 
@@ -19,7 +39,7 @@ TypInfFlowBuilder >> initialize [
 { #category : #accessing }
 TypInfFlowBuilder >> next: aNode [
 
-	current := current next: (self nodeAt: aNode)
+	^ current := current next: (self nodeAt: aNode)
 ]
 
 { #category : #accessing }
@@ -43,7 +63,7 @@ TypInfFlowBuilder >> stateSelf: aType [
 { #category : #accessing }
 TypInfFlowBuilder >> stateSelf: aType super: anotherType [
 
-	^ TypInfFlowState nodes: nodes values self: aType super: anotherType
+	^ TypInfFlowState self: aType super: anotherType
 ]
 
 { #category : #visiting }
@@ -52,7 +72,7 @@ TypInfFlowBuilder >> visitArgumentVariableNode: anArgumentNode [
 	| node |
 	node := super visitArgumentVariableNode: anArgumentNode.
 	anArgumentNode isDefinition ifFalse: [ 
-		node read: (self nodeAt: anArgumentNode definingNode) ].
+		node read: (self nodeAt: anArgumentNode variable definingNode) ].
 	^ node
 ]
 

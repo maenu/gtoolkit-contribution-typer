@@ -1,7 +1,7 @@
 Extension { #name : #GlobalVariable }
 
 { #category : #'*Typer-Inference' }
-GlobalVariable >> typInfFlowTypeIn: aDictionary [
+GlobalVariable >> typInfFlowValue: aNode in: aState [
 
-	^ value typInfType
+	^ value typAsType
 ]

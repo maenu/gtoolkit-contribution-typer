@@ -1,7 +1,7 @@
 Extension { #name : #ClassVariable }
 
 { #category : #'*Typer-Inference' }
-ClassVariable >> typInfFlowTypeIn: aDictionary [
+ClassVariable >> typInfFlowValue: aNode in: aState [
 
 	^ owningClass typAsType lookupVariable: name asSymbol
 ]

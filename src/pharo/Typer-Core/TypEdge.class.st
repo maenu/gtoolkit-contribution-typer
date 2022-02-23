@@ -29,6 +29,12 @@ TypEdge >> < anObject [
 	^ data < anObject data
 ]
 
+{ #category : #comparing }
+TypEdge >> <= anObject [
+
+	^ data = anObject data or: [ data < anObject data ]
+]
+
 { #category : #accessing }
 TypEdge >> = anObject [
 
@@ -36,6 +42,18 @@ TypEdge >> = anObject [
 	self class == anObject class ifFalse: [ ^ false ].
 	^ origin == anObject origin and: [ 
 		  target == anObject target and: [ data = anObject data ] ]
+]
+
+{ #category : #comparing }
+TypEdge >> > anObject [
+
+	^ data > anObject data
+]
+
+{ #category : #comparing }
+TypEdge >> >= anObject [
+
+	^ data = anObject data or: [ data > anObject data ]
 ]
 
 { #category : #accessing }

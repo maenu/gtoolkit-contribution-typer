@@ -19,7 +19,7 @@ TypInfFlowBlock >> execute: aNode [
 ]
 
 { #category : #accessing }
-TypInfFlowBlock >> initialize: aState [
+TypInfFlowBlock >> initialValueIn: aState [
 
 	^ BlockClosure
 		  typAsFunctionTypeWithResult: TypUnknownType instance
@@ -55,4 +55,15 @@ TypInfFlowBlock >> typInfIsMessageArgument [
 	self flag: 'REWRITE'.
 	^ parent isNotNil and: [ 
 		  parent isMessage and: [ parent arguments includes: self ] ]
+]
+
+{ #category : #visiting }
+TypInfFlowBlock >> visitBlockNode: aBlockNode [
+
+	^ BlockClosure
+		  typAsFunctionTypeWithResult: (self visitNode: aBlockNode body)
+		  arguments:
+		  (aBlockNode arguments collect: [ :e | self visitNode: e ])
+		  argumentsOptional: false
+		  signalsAlways: nil
 ]

@@ -1,13 +1,13 @@
 Extension { #name : #Variable }
 
 { #category : #'*Typer-Inference' }
-Variable >> typInfFlowInitialize: aState [
+Variable >> typInfFlowInitialValueIn: aState [
 
 	^ TypUnknownType instance
 ]
 
 { #category : #'*Typer-Inference' }
-Variable >> typInfFlowTypeIn: aDictionary [
+Variable >> typInfFlowValue: aNode in: aState [
 
 	^ TypUnknownType instance
 ]

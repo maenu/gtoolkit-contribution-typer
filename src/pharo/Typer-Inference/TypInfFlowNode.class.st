@@ -16,13 +16,64 @@ TypInfFlowNode class >> node: aNode [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfFlowNode >> incomingFlow [
+TypInfFlowNode >> burp: aState [
 
-	^ incoming select: [ :e | e isKindOf: TypInfFlowEdge ]
+	^ self flowOutgoing
+		  inject: false
+		  into: [ :r :e | r or: (e state: aState copy) ]
+]
+
+{ #category : #'as yet unclassified' }
+TypInfFlowNode >> flowEdges [
+
+	^ self flowIncoming , self flowOutgoing
+]
+
+{ #category : #'as yet unclassified' }
+TypInfFlowNode >> flowEdgesAll [
+
+	| edges |
+	edges := IdentitySet new.
+	self flowNodesAll do: [ :n | edges addAll: n flowEdges ].
+	^ edges
+]
+
+{ #category : #'as yet unclassified' }
+TypInfFlowNode >> flowIncoming [
+
+	^ incoming select: [ :e | 
+		  (e isKindOf: TypInfFlowEdge) and: [ e isFlow ] ]
+]
+
+{ #category : #'as yet unclassified' }
+TypInfFlowNode >> flowNodesAll [
+
+	| nodes queue |
+	nodes := IdentitySet new.
+	queue := LinkedList with: self.
+	[ queue isEmpty ] whileFalse: [ 
+		| current origins targets |
+		current := queue removeFirst.
+		origins := current incoming
+			           collect: #origin
+			           thenSelect: [ :e | e isKindOf: TypInfFlowNode ].
+		targets := current outgoing
+			           collect: #target
+			           thenSelect: [ :e | e isKindOf: TypInfFlowNode ].
+		queue addAll: ((origins , targets) asIdentitySet difference: nodes).
+		nodes add: current ].
+	^ nodes
+]
+
+{ #category : #'as yet unclassified' }
+TypInfFlowNode >> flowOutgoing [
+
+	^ outgoing select: [ :e | 
+		  (e isKindOf: TypInfFlowEdge) and: [ e isFlow ] ]
 ]
 
 { #category : #accessing }
-TypInfFlowNode >> initialize: aState [
+TypInfFlowNode >> initialValueIn: aState [
 
 	"compute initial state for node"
 
@@ -66,37 +117,11 @@ TypInfFlowNode >> node [
 	^ node
 ]
 
-{ #category : #'as yet unclassified' }
-TypInfFlowNode >> nodesFlow [
-
-	| nodes queue |
-	nodes := IdentitySet new.
-	queue := LinkedList with: self.
-	[ queue isEmpty ] whileFalse: [ 
-		| current origins targets |
-		current := queue removeFirst.
-		origins := current incoming
-			           collect: #origin
-			           thenSelect: [ :e | e isKindOf: TypInfFlowNode ].
-		targets := current outgoing
-			           collect: #target
-			           thenSelect: [ :e | e isKindOf: TypInfFlowNode ].
-		queue addAll: ((origins , targets) asIdentitySet difference: nodes).
-		nodes add: current ].
-	^ nodes
-]
-
 { #category : #accessing }
 TypInfFlowNode >> outgoingAddTarget: aNode data: anObject [
 
 	^ self outgoingAdd:
 		  (TypInfFlowEdge origin: self target: aNode data: anObject)
-]
-
-{ #category : #'as yet unclassified' }
-TypInfFlowNode >> outgoingFlow [
-
-	^ outgoing select: [ :e | e isKindOf: TypInfFlowEdge ]
 ]
 
 { #category : #printing }
@@ -127,6 +152,26 @@ TypInfFlowNode >> returnSelf [
 TypInfFlowNode >> returnSelf: aNode [
 
 	^ self outgoingAt: #returnSelf put: aNode
+]
+
+{ #category : #'as yet unclassified' }
+TypInfFlowNode >> slurp [
+
+	| ins state |
+	ins := self flowIncoming collect: #state as: LinkedList.
+	state := ins removeLast.
+	[ ins isEmpty ] whileFalse: [ state := state join: ins removeLast ].
+	^ state
+]
+
+{ #category : #'as yet unclassified' }
+TypInfFlowNode >> slurpAndBurp [
+
+	| state |
+	self flowIncoming ifEmpty: [ ^ false ].
+	state := self slurp.
+	self transfer: state.
+	^ self burp: state
 ]
 
 { #category : #accessing }

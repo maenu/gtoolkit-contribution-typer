@@ -1,7 +1,7 @@
 Extension { #name : #SelfVariable }
 
 { #category : #'*Typer-Inference' }
-SelfVariable >> typInfFlowInitialize: aState [
+SelfVariable >> typInfFlowInitialValueIn: aState [
 
 	^ aState self
 ]

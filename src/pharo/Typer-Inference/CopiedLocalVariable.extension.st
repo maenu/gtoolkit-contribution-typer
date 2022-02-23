@@ -1,7 +1,13 @@
 Extension { #name : #CopiedLocalVariable }
 
 { #category : #'*Typer-Inference' }
-CopiedLocalVariable >> typInfFlowTypeIn: aDictionary [
+CopiedLocalVariable >> typInfFlowInitialValueIn: aState [
 
-	^ originalVar typInfFlowTypeIn: aDictionary
+	^ originalVar typInfFlowInitialValueIn: aState
+]
+
+{ #category : #'*Typer-Inference' }
+CopiedLocalVariable >> typInfFlowValue: aNode in: aState [
+
+	^ originalVar typInfFlowValue: aNode in: aState
 ]

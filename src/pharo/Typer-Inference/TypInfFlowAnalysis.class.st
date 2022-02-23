@@ -2,41 +2,38 @@ Class {
 	#name : #TypInfFlowAnalysis,
 	#superclass : #Object,
 	#instVars : [
-		'root'
+		'root',
+		'state'
 	],
 	#category : #'Typer-Inference-Flow'
 }
 
 { #category : #accessing }
-TypInfFlowAnalysis class >> root: aNode [
+TypInfFlowAnalysis class >> root: aNode state: aState [
 
 	^ self new
-		  initializeRoot: aNode;
+		  initializeRoot: aNode state: aState;
 		  yourself
 ]
 
 { #category : #initialization }
-TypInfFlowAnalysis >> initializeRoot: aNode [
+TypInfFlowAnalysis >> initializeRoot: aNode state: aState [
 
-	root := aNode
+	root := aNode.
+	state := aState
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypInfFlowAnalysis >> run [
 
-	"for i ← 1 to N
-initialize node i
-while (sets are still changing)
-for i ← 1 to N
-recompute sets at node i"
-]
-
-{ #category : #'as yet unclassified' }
-TypInfFlowAnalysis >> state [
-
-	| state |
-	state := IdentityDictionary new.
-	root nodesFlow do: [ :n | 
-		state at: n put: TypUnknownType instance ].
-	^ state
+	| nodes n |
+	nodes := root flowNodesAll.
+	nodes do: [ :e | state at: e put: (e initialValueIn: self) ].
+	nodes do: [ :e | e state: state copy ].
+	n := 1000.
+	[ 
+	n := n - 1.
+	(nodes inject: false into: [ :r :e | r or: e slurpAndBurp ]) and: [ 
+		n > 0 ] ] whileTrue.
+	^ n
 ]

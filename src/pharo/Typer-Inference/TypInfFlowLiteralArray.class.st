@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : #accessing }
-TypInfFlowLiteralArray >> initialize: aState [
+TypInfFlowLiteralArray >> initialValueIn: aState [
 
 	"can pull child literals as it is literal itself"
 
@@ -15,6 +15,6 @@ TypInfFlowLiteralArray >> initialize: aState [
 		  ifTrue: [ ByteArray typAsType ]
 		  ifFalse: [ 
 			  Array typAsType withParameters:
-				  { (self arguments collect: [ :e | e initialize: aState ])
+				  { (self arguments collect: [ :e | e initialValueIn: aState ])
 					  typAsType } ]
 ]

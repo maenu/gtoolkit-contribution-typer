@@ -7,10 +7,12 @@ Class {
 { #category : #accessing }
 TypInfMethodResolver >> canResolve: aLookup [
 
-	aLookup receiver isNamed ifFalse: [ ^ false ].
+	"aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
 	^ aLookup receiver classDescription includesSelector:
-		  aLookup selector
+		  aLookup selector"
+
+	^ false
 ]
 
 { #category : #invalidation }

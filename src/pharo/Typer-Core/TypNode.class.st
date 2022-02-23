@@ -68,7 +68,7 @@ TypNode >> incomingAt: anObject [
 { #category : #converting }
 TypNode >> incomingAt: anObject ifAbsentPut: aBlock [
 
-	^ self incomingAt: anObject ifPresent: #origin ifAbsentPut: aBlock
+	^ self incomingAt: anObject ifPresent: #yourself ifAbsentPut: aBlock
 ]
 
 { #category : #accessing }
@@ -76,7 +76,7 @@ TypNode >> incomingAt: anObject ifPresent: aBlock ifAbsent: anotherBlock [
 
 	^ incoming
 		  detect: [ :e | e data = anObject ]
-		  ifFound: aBlock
+		  ifFound: [ :e | aBlock value: e origin ]
 		  ifNone: anotherBlock
 ]
 
@@ -85,7 +85,7 @@ TypNode >> incomingAt: anObject ifPresent: aBlock ifAbsentPut: anotherBlock [
 
 	^ incoming
 		  detect: [ :e | e data = anObject ]
-		  ifFound: aBlock
+		  ifFound: [ :e | aBlock value: e origin ]
 		  ifNone: [ 
 		  anotherBlock value outgoingAddTarget: self data: anObject ]
 ]
@@ -189,7 +189,7 @@ TypNode >> outgoingAt: anObject [
 { #category : #converting }
 TypNode >> outgoingAt: anObject ifAbsentPut: aBlock [
 
-	^ self outgoingAt: anObject ifPresent: #target ifAbsentPut: aBlock
+	^ self outgoingAt: anObject ifPresent: #yourself ifAbsentPut: aBlock
 ]
 
 { #category : #accessing }
@@ -197,7 +197,7 @@ TypNode >> outgoingAt: anObject ifPresent: aBlock ifAbsent: anotherBlock [
 
 	^ outgoing
 		  detect: [ :e | e data = anObject ]
-		  ifFound: aBlock
+		  ifFound: [ :e | aBlock value: e target ]
 		  ifNone: anotherBlock
 ]
 
@@ -206,7 +206,7 @@ TypNode >> outgoingAt: anObject ifPresent: aBlock ifAbsentPut: anotherBlock [
 
 	^ outgoing
 		  detect: [ :e | e data = anObject ]
-		  ifFound: aBlock
+		  ifFound: [ :e | aBlock value: e target ]
 		  ifNone: [ 
 		  self outgoingAddTarget: anotherBlock value data: anObject ]
 ]

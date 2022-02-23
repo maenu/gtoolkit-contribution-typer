@@ -14,12 +14,14 @@ TypInfVariableResolver >> assignedTypeOf: aVariable in: aType [
 { #category : #accessing }
 TypInfVariableResolver >> canResolve: aLookup [
 
-	aLookup receiver isNamed ifFalse: [ ^ false ].
+	"aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
 	(aLookup receiver classDescription hasSlotNamed: aLookup selector) 
 		ifTrue: [ ^ true ].
 	^ aLookup receiver classDescription instanceSide allClassVariables 
-		  anySatisfy: [ :e | e name = aLookup selector ]
+		  anySatisfy: [ :e | e name = aLookup selector ]"
+
+	^ false
 ]
 
 { #category : #invalidation }
