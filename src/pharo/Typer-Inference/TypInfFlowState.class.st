@@ -40,6 +40,21 @@ TypInfFlowState >> at: aNode put: aType [
 ]
 
 { #category : #accessing }
+TypInfFlowState >> diff: aState [
+
+	| diff |
+	diff := IdentityDictionary new.
+	index keysAndValuesDo: [ :n :t | 
+		| r |
+		r := aState at: n.
+		r = t ifFalse: [ 
+			diff at: n put: { 
+					t.
+					r } ] ].
+	^ diff
+]
+
+{ #category : #accessing }
 TypInfFlowState >> gtItemsFor: aView [
 
 	<gtView>

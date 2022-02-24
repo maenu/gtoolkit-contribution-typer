@@ -13,8 +13,8 @@ TypInfFlowArray >> initialValueIn: aState [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfFlowArray >> transfer: aState [
+TypInfFlowArray >> transfer [
 
-	aState at: self put: (Array typAsType withParameters:
-			 { (self arguments collect: [ :e | aState at: e ]) typAsType })
+	state at: self put: (Array typAsType withParameters:
+			 { (self arguments collect: [ :e | state at: e ]) typAsType })
 ]

@@ -30,7 +30,7 @@ TypInfFlowMessage >> receiver: aNode [
 ]
 
 { #category : #accessing }
-TypInfFlowMessage >> transfer: aState [
+TypInfFlowMessage >> transfer [
 
-	aState at: self put: (self methodIn: aState) result
+	state at: self put: (self methodIn: state) result
 ]

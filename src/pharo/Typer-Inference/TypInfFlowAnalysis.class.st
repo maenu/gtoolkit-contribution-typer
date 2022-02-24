@@ -30,7 +30,7 @@ TypInfFlowAnalysis >> run [
 	nodes := root flowNodesAll.
 	nodes do: [ :e | state at: e put: (e initialValueIn: state) ].
 	root flowEdgesAll do: [ :e | e state: state copy ].
-	n := 1000.
+	n := 100.
 	[ 
 	n := n - 1.
 	(nodes inject: false into: [ :r :e | r or: e slurpAndBurp ]) and: [ 

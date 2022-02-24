@@ -69,11 +69,10 @@ TypInfFlowBuilder >> stateSelf: aType super: anotherType [
 { #category : #visiting }
 TypInfFlowBuilder >> visitArgumentVariableNode: anArgumentNode [
 
-	| node |
-	node := super visitArgumentVariableNode: anArgumentNode.
+	super visitArgumentVariableNode: anArgumentNode.
 	anArgumentNode isDefinition ifFalse: [ 
-		node read: (self nodeAt: anArgumentNode variable definingNode) ].
-	^ node
+		current read: (self nodeAt: anArgumentNode variable definingNode) ].
+	^ current
 ]
 
 { #category : #visiting }
@@ -92,7 +91,7 @@ TypInfFlowBuilder >> visitAssignmentNode: anAssignmentNode [
 
 	self visitNode: anAssignmentNode value.
 	self next: anAssignmentNode.
-	current write: (self nodeAt: anAssignmentNode variable).
+	self visitNode: anAssignmentNode variable.
 	^ current
 ]
 
@@ -103,7 +102,7 @@ TypInfFlowBuilder >> visitBlockNode: aBlockNode [
 	current arguments:
 		(aBlockNode arguments collect: [ :n | self nodeAt: n ]).
 	self visitNode: aBlockNode body.
-	^ current := self nodeAt: aBlockNode
+	^ self next: aBlockNode
 ]
 
 { #category : #visiting }
@@ -153,7 +152,9 @@ TypInfFlowBuilder >> visitMethodNode: aMethodNode [
 	current arguments:
 		(aMethodNode arguments collect: [ :n | self nodeAt: n ]).
 	self visitNode: aMethodNode body.
-	aMethodNode lastIsReturn ifFalse: [ current returnSelf: root ].
+	aMethodNode lastIsReturn ifFalse: [ 
+		self next: RBVariableNode selfNode.
+		current return: root ].
 	^ root
 ]
 
@@ -176,11 +177,10 @@ TypInfFlowBuilder >> visitSequenceNode: aSequenceNode [
 { #category : #visiting }
 TypInfFlowBuilder >> visitTemporaryVariableNode: aTemproraryNode [
 
-	| node |
-	node := super visitTemporaryVariableNode: aTemproraryNode.
+	super visitTemporaryVariableNode: aTemproraryNode.
 	aTemproraryNode isDefinition ifFalse: [ 
-		node read: (self nodeAt: aTemproraryNode variable definingNode) ].
-	^ node
+		current read: (self nodeAt: aTemproraryNode variable definingNode) ].
+	^ current
 ]
 
 { #category : #visiting }

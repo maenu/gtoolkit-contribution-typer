@@ -5,22 +5,12 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypInfFlowAssign >> transfer: aState [
+TypInfFlowAssign >> transfer [
 
-	| type |
-	type := aState at: (self incomingAt: #next).
-	aState at: self write put: type.
-	aState at: self put: type
-]
-
-{ #category : #writing }
-TypInfFlowAssign >> write [
-
-	^ self outgoingAt: #write
-]
-
-{ #category : #writing }
-TypInfFlowAssign >> write: aNode [
-
-	^ self outgoingAt: #write put: aNode
+	| type variable |
+	type := state at: (self incomingAt: #next).
+	variable := self outgoingAt: #next.
+	state at: variable read put: type.
+	state at: variable put: type.
+	state at: self put: type
 ]

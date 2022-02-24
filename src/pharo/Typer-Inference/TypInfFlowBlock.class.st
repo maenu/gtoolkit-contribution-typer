@@ -29,6 +29,19 @@ TypInfFlowBlock >> initialValueIn: aState [
 		  signalsAlways: nil
 ]
 
+{ #category : #accessing }
+TypInfFlowBlock >> transfer [
+
+	| type |
+	type := BlockClosure
+		        typAsFunctionTypeWithResult:
+		        (state at: (self incomingAt: #next))
+		        arguments: (self arguments collect: [ :a | state at: a ])
+		        argumentsOptional: false
+		        signalsAlways: nil.
+	state at: self put: type
+]
+
 { #category : #'as yet unclassified' }
 TypInfFlowBlock >> typInfArgumentTypeOf: anArgumentNode in: aType [
 

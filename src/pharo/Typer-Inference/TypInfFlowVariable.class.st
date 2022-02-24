@@ -13,7 +13,7 @@ TypInfFlowVariable >> initialValueIn: aState [
 { #category : #'meta-object-protocol' }
 TypInfFlowVariable >> read [
 
-	^ self incomingAt: #read
+	^ self incomingAt: #read ifPresent: #yourself ifAbsent: [ self ]
 ]
 
 { #category : #'meta-object-protocol' }
@@ -23,15 +23,14 @@ TypInfFlowVariable >> read: aNode [
 ]
 
 { #category : #private }
-TypInfFlowVariable >> transfer: aState [
+TypInfFlowVariable >> transfer [
 
 	| type |
 	type := self
 		        incomingAt: #read
-		        ifPresent: [ :e | 
-		        e node variable typInfFlowValue: self in: aState ]
-		        ifAbsent: [ node variable typInfFlowValue: self in: aState ].
-	aState at: self put: type
+		        ifPresent: [ :e | state at: e ]
+		        ifAbsent: [ node variable typInfFlowValue: self in: state ].
+	state at: self put: type
 ]
 
 { #category : #visiting }

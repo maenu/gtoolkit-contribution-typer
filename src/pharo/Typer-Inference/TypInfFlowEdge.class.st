@@ -3,7 +3,8 @@ Class {
 	#superclass : #TypEdge,
 	#instVars : [
 		'state',
-		'changed'
+		'changed',
+		'log'
 	],
 	#category : #'Typer-Inference-Flow'
 }
@@ -12,7 +13,7 @@ Class {
 TypInfFlowEdge >> initialize [
 
 	super initialize.
-	changed := true
+	log := OrderedCollection new
 ]
 
 { #category : #testing }
@@ -24,7 +25,13 @@ TypInfFlowEdge >> isChanged [
 { #category : #testing }
 TypInfFlowEdge >> isFlow [
 
-	^ #( #next #execute #return #returnSelf #signal ) includes: data
+	^ #( #next #execute #return #signal ) includes: data
+]
+
+{ #category : #accessing }
+TypInfFlowEdge >> log [
+
+	^ log
 ]
 
 { #category : #accessing }
@@ -37,6 +44,7 @@ TypInfFlowEdge >> state [
 TypInfFlowEdge >> state: anObject [
 
 	changed := state ~= anObject.
+	changed ifTrue: [ log add: anObject ].
 	state := anObject.
 	^ changed
 ]

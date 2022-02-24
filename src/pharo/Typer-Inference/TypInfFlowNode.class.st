@@ -17,11 +17,11 @@ TypInfFlowNode class >> node: aNode [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfFlowNode >> burp: aState [
+TypInfFlowNode >> burp [
 
 	^ self flowOutgoing
 		  inject: false
-		  into: [ :r :e | r or: (e state: aState copy) ]
+		  into: [ :r :e | r or: (e state: state copy) ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -144,38 +144,25 @@ TypInfFlowNode >> return: aNode [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfFlowNode >> returnSelf [
-
-	^ self outgoingAt: #returnSelf
-]
-
-{ #category : #'as yet unclassified' }
-TypInfFlowNode >> returnSelf: aNode [
-
-	^ self outgoingAt: #returnSelf put: aNode
-]
-
-{ #category : #'as yet unclassified' }
 TypInfFlowNode >> slurp [
 
-	| ins state |
+	| ins |
 	ins := self flowIncoming collect: #state as: LinkedList.
 	state := ins removeLast.
-	[ ins isEmpty ] whileFalse: [ state := state join: ins removeLast ].
-	^ state
+	[ ins isEmpty ] whileFalse: [ state := state join: ins removeLast ]
 ]
 
 { #category : #'as yet unclassified' }
 TypInfFlowNode >> slurpAndBurp [
 
 	self flowIncoming ifEmpty: [ ^ false ].
-	state := self slurp.
-	self transfer: state.
-	^ self burp: state
+	self slurp.
+	self transfer.
+	^ self burp
 ]
 
 { #category : #accessing }
-TypInfFlowNode >> transfer: aState [
+TypInfFlowNode >> transfer [
 
 	"transfer the given state from in to out"
 

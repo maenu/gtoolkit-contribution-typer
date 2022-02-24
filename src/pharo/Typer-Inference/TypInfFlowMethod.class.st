@@ -38,9 +38,17 @@ TypInfFlowMethod >> methodIn: aState [
 ]
 
 { #category : #accessing }
-TypInfFlowMethod >> transfer: aState [
+TypInfFlowMethod >> transfer [
 
-	aState at: self put: (self methodIn: aState)
+	| type |
+	type := CompiledMethod
+		        typAsFunctionTypeWithResult: (incoming
+				         select: [ :e | e data = #return ]
+				         thenCollect: [ :e | state at: e origin ]) typAsType
+		        arguments: (self arguments collect: [ :a | state at: a ])
+		        argumentsOptional: false
+		        signalsAlways: nil.
+	state at: self put: type
 ]
 
 { #category : #visiting }
