@@ -34,8 +34,9 @@ TypInfFlowBlock >> transfer [
 
 	| type |
 	type := BlockClosure
-		        typAsFunctionTypeWithResult:
-		        (state at: (self incomingAt: #next))
+		        typAsFunctionTypeWithResult: (incoming
+				         select: [ :e | e data = #return ]
+				         thenCollect: [ :e | state at: e origin ]) typAsType
 		        arguments: (self arguments collect: [ :a | state at: a ])
 		        argumentsOptional: false
 		        signalsAlways: nil.

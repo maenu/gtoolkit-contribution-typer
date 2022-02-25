@@ -148,7 +148,7 @@ TypInfFlowNode >> slurp [
 
 	| ins |
 	ins := self flowIncoming collect: #state as: LinkedList.
-	state := ins removeLast.
+	state := ins removeLast copy.
 	[ ins isEmpty ] whileFalse: [ state := state join: ins removeLast ]
 ]
 

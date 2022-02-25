@@ -102,7 +102,7 @@ TypInfFlowBuilder >> visitBlockNode: aBlockNode [
 	current arguments:
 		(aBlockNode arguments collect: [ :n | self nodeAt: n ]).
 	self visitNode: aBlockNode body.
-	^ self next: aBlockNode
+	^ current return: (self nodeAt: aBlockNode)
 ]
 
 { #category : #visiting }

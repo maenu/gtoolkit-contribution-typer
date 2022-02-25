@@ -9,13 +9,6 @@ Class {
 	#category : #'Typer-Inference-Flow'
 }
 
-{ #category : #initialization }
-TypInfFlowEdge >> initialize [
-
-	super initialize.
-	log := OrderedCollection new
-]
-
 { #category : #testing }
 TypInfFlowEdge >> isChanged [
 
@@ -29,12 +22,6 @@ TypInfFlowEdge >> isFlow [
 ]
 
 { #category : #accessing }
-TypInfFlowEdge >> log [
-
-	^ log
-]
-
-{ #category : #accessing }
 TypInfFlowEdge >> state [
 
 	^ state
@@ -44,7 +31,6 @@ TypInfFlowEdge >> state [
 TypInfFlowEdge >> state: anObject [
 
 	changed := state ~= anObject.
-	changed ifTrue: [ log add: anObject ].
 	state := anObject.
 	^ changed
 ]
