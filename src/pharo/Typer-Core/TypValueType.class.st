@@ -36,7 +36,8 @@ TypValueType >> hashSkipping: anIdentitySet [
 { #category : #initialization }
 TypValueType >> initializeValue: anObject [
 
-	value := anObject
+	value := anObject.
+	hash := nil
 ]
 
 { #category : #testing }

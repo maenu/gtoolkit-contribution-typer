@@ -28,7 +28,7 @@ TypInfFlowAnalysis >> run [
 
 	| nodes n |
 	nodes := root flowNodesAll.
-	nodes do: [ :e | state at: e put: (e initialValueIn: state) ].
+	nodes do: [ :e | e initialize: state ].
 	root flowEdgesAll do: [ :e | e state: state copy ].
 	n := 100.
 	[ 

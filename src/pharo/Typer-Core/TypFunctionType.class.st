@@ -166,11 +166,13 @@ TypFunctionType >> initialize [
 
 { #category : #initialization }
 TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean signalsAlways: anotherBoolean [
+
 	self assert: [ anInteger isInteger ].
 	self assert: [ anInteger >= 0 ].
 	argumentsSize := anInteger.
 	argumentsOptional := aBoolean.
-	signalsAlways := anotherBoolean
+	signalsAlways := anotherBoolean.
+	hash := nil
 ]
 
 { #category : #initialization }

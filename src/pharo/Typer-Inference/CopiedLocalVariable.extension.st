@@ -1,13 +1,19 @@
 Extension { #name : #CopiedLocalVariable }
 
 { #category : #'*Typer-Inference' }
-CopiedLocalVariable >> typInfFlowInitialValueIn: aState [
+CopiedLocalVariable >> typInfFlowConstrain: aNode to: aType in: aState [
 
-	^ originalVar typInfFlowInitialValueIn: aState
+	originalVar typInfFlowConstrain: aNode to: aType in: aState
 ]
 
 { #category : #'*Typer-Inference' }
-CopiedLocalVariable >> typInfFlowValue: aNode in: aState [
+CopiedLocalVariable >> typInfFlowInitialize: aNode in: aState [
 
-	^ originalVar typInfFlowValue: aNode in: aState
+	originalVar typInfFlowInitialize: aNode in: aState
+]
+
+{ #category : #'*Typer-Inference' }
+CopiedLocalVariable >> typInfFlowTransfer: aNode in: aState [
+
+	originalVar typInfFlowTransfer: aNode in: aState
 ]

@@ -45,7 +45,8 @@ TypVariableType >> initializeName: aSymbol [
 
 	<typPraArguments: 'Symbol'>
 	self assert: [ aSymbol isNotEmpty ].
-	name := aSymbol
+	name := aSymbol.
+	hash := nil
 ]
 
 { #category : #testing }

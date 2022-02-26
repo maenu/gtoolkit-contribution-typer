@@ -7,9 +7,9 @@ Class {
 }
 
 { #category : #accessing }
-TypInfFlowArray >> initialValueIn: aState [
+TypInfFlowArray >> initialize: aState [
 
-	^ Array typAsType
+	aState at: self put: Array typAsType
 ]
 
 { #category : #'as yet unclassified' }

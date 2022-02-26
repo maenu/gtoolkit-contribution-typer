@@ -19,14 +19,14 @@ TypInfFlowBlock >> execute: aNode [
 ]
 
 { #category : #accessing }
-TypInfFlowBlock >> initialValueIn: aState [
+TypInfFlowBlock >> initialize: aState [
 
-	^ BlockClosure
-		  typAsFunctionTypeWithResult: TypUnknownType instance
-		  arguments:
-		  (node arguments collect: [ :e | TypUnknownType instance ])
-		  argumentsOptional: false
-		  signalsAlways: nil
+	aState at: self put: (BlockClosure
+			 typAsFunctionTypeWithResult: TypUnknownType instance
+			 arguments:
+			 (node arguments collect: [ :e | TypUnknownType instance ])
+			 argumentsOptional: false
+			 signalsAlways: nil)
 ]
 
 { #category : #accessing }

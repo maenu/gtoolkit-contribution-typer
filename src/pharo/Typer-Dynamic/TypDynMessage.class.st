@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'selector',
 		'argumentTypes',
-		'receiverType',
-		'hash'
+		'receiverType'
 	],
 	#category : #'Typer-Dynamic'
 }

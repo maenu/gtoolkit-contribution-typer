@@ -1,13 +1,31 @@
 Extension { #name : #Variable }
 
 { #category : #'*Typer-Inference' }
-Variable >> typInfFlowInitialValueIn: aState [
+Variable >> typInfFlowConstrain: aNode to: aType in: aState [
 
-	^ TypUnknownType instance
+	| type |
+	type := aState at: aNode.
+	(type isUnknown or: [ type > aType ]) ifFalse: [ ^ self ].
+	aState at: aNode put: aType.
+	aNode
+		incomingAt: #read
+		ifPresent: [ :e | e constrainTo: aType in: aState ]
+		ifAbsent: [ "noop" ]
 ]
 
 { #category : #'*Typer-Inference' }
-Variable >> typInfFlowValue: aNode in: aState [
+Variable >> typInfFlowInitialize: aNode in: aState [
 
-	^ TypUnknownType instance
+	aState at: aNode put: TypUnknownType instance
+]
+
+{ #category : #'*Typer-Inference' }
+Variable >> typInfFlowTransfer: aNode in: aState [
+
+	| type |
+	type := aNode
+		        incomingAt: #read
+		        ifPresent: [ :e | aState at: e ]
+		        ifAbsent: [ TypUnknownType instance ].
+	aState at: aNode put: type
 ]

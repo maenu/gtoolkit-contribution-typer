@@ -23,7 +23,7 @@ TypUnknownTypeNullnessExamples >> asNullable [
 	nullable := type asNullable.
 	self assert: nullable = (TypUnionType types: { 
 				 TypNilType instance.
-				 type } asSet).
+				 type } asIdentitySet).
 	^ nullable
 ]
 

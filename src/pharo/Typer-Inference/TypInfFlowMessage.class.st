@@ -3,9 +3,6 @@ Class {
 	#superclass : #TypInfFlowNode,
 	#traits : 'TTypInfFlowWithArguments',
 	#classTraits : 'TTypInfFlowWithArguments classTrait',
-	#instVars : [
-		'method'
-	],
 	#category : #'Typer-Inference-Flow'
 }
 
@@ -32,5 +29,18 @@ TypInfFlowMessage >> receiver: aNode [
 { #category : #accessing }
 TypInfFlowMessage >> transfer [
 
-	state at: self put: (self methodIn: state) result
+	| receiver method |
+	receiver := self receiver.
+	(state at: receiver) isUnknown ifTrue: [ 
+		| classes |
+		classes := TypInfImplementorsCache instance implementors:
+			           node selector.
+		(classes size between: 1 and: 8) ifTrue: [ 
+			receiver
+				constrainTo: (classes collect: #typAsType) typAsType
+				in: state ] ].
+	method := self methodIn: state.
+	self arguments withIndexDo: [ :e :i | 
+		e constrainTo: (method arguments at: i) in: state ].
+	state at: self put: method result
 ]

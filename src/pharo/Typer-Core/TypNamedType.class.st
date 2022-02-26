@@ -113,7 +113,8 @@ TypNamedType >> initializeClassDescription: aClassDescription [
 	<typPraArguments: 'ClassDescription'>
 	classDescription := aClassDescription.
 	name := classDescription name.
-	hasClassDescription := true
+	hasClassDescription := true.
+	hash := nil
 ]
 
 { #category : #initialization }
@@ -122,7 +123,8 @@ TypNamedType >> initializeName: anObject [
 	<typPraArguments: 'String'>
 	classDescription := nil.
 	name := anObject.
-	hasClassDescription := nil
+	hasClassDescription := nil.
+	hash := nil
 ]
 
 { #category : #invalidation }

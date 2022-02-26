@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #accessing }
-TypInfFlowLiteralValue >> initialValueIn: aState [
+TypInfFlowLiteralValue >> initialize: aState [
 
-	^ node value typInfType
+	aState at: self put: node value typInfType
 ]

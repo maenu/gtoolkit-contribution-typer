@@ -11,7 +11,7 @@ Class {
 { #category : #'instance creation' }
 TypUnionType class >> types: aSet [
 
-	<typPraArguments: 'Set<TypType>'>
+	<typPraArguments: 'IdentitySet<TypType>'>
 	^ index at: thisContext arguments ifAbsentPut: [ 
 		  self new
 			  initializeTypes: aSet;
@@ -78,7 +78,7 @@ TypUnionType >> hasSuper [
 
 	| remains nilTypes unknownTypes current superType_ |
 	superType ifNotNil: [ ^ true ].
-	remains := types asIdentitySet copy.
+	remains := types copy.
 	nilTypes := remains select: #isNil.
 	unknownTypes := remains select: #isUnknown.
 	remains
@@ -117,21 +117,22 @@ TypUnionType >> hashSkipping: anIdentitySet [
 
 { #category : #initialization }
 TypUnionType >> initialize [
-	<typPraVariable: 'types' as: 'Set<TypType>'>
+	<typPraVariable: 'types' as: 'IdentitySet<TypType>'>
 	super initialize
 ]
 
 { #category : #initialization }
 TypUnionType >> initializeTypes: anObject [
 
-	<typPraArguments: 'Set<TypType>'>
-	self assert: [ anObject isKindOf: Set ].
+	<typPraArguments: 'IdentitySet<TypType>'>
+	self assert: [ anObject isKindOf: IdentitySet ].
 	self assert: [ anObject size > 1 ].
 	anObject = types ifTrue: [ ^ self ].
 	types ifNotNil: [ self outgoingRemoveAt: #types ].
 	types := anObject.
 	types ifNotNil: [ 
-		types do: [ :e | self outgoingAddTarget: e data: #types ] ]
+		types do: [ :e | self outgoingAddTarget: e data: #types ] ]..
+	hash := nil
 ]
 
 { #category : #invalidation }
@@ -148,6 +149,7 @@ TypUnionType >> invalidateOnMethodChange: aMethodAnnouncement [
 
 { #category : #testing }
 TypUnionType >> isNullable [
+
 	^ types anySatisfy: #isNil
 ]
 
@@ -186,7 +188,7 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 		aStream << '.'.
 		^ self ].
 	anIdentitySet add: self.
-	remains := types asIdentitySet.
+	remains := types copy.
 	aStream << '{'.
 	remains
 		detect: #isNil
@@ -207,10 +209,10 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 		type := remains size = types size
 			        ifTrue: [ self ]
 			        ifFalse: [ remains typAsType ].
-		(type isUnion and: [ 
-			 type hasSuper and: [ type super isUnion not ] ]) ifTrue: [ 
-			type super printOn: aStream.
-			remains removeAll ] ].
+		(type isUnion and: [ type hasSuper and: [ type super isUnion not ] ]) 
+			ifTrue: [ 
+				type super printOn: aStream.
+				remains removeAll ] ].
 	remains copy do: [ :e | 
 		e printOn: aStream skipping: anIdentitySet.
 		remains

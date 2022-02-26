@@ -1,7 +1,12 @@
 Extension { #name : #ClassVariable }
 
 { #category : #'*Typer-Inference' }
-ClassVariable >> typInfFlowValue: aNode in: aState [
+ClassVariable >> typInfFlowTransfer: aNode in: aState [
 
-	^ owningClass typAsType lookupVariable: name asSymbol
+	| type |
+	type := aState at: aNode.
+	type isUnknown ifFalse: [ ^ type ].
+	aState
+		at: aNode
+		put: (owningClass typAsType lookupVariable: name asSymbol)
 ]

@@ -1,7 +1,13 @@
 Extension { #name : #GlobalVariable }
 
 { #category : #'*Typer-Inference' }
-GlobalVariable >> typInfFlowValue: aNode in: aState [
+GlobalVariable >> typInfFlowConstrain: aNode to: aType in: aState [
 
-	^ value typAsType
+	
+]
+
+{ #category : #'*Typer-Inference' }
+GlobalVariable >> typInfFlowTransfer: aNode in: aState [
+
+	aState at: aNode put: value typAsType
 ]

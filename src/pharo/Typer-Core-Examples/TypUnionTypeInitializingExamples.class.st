@@ -14,13 +14,13 @@ TypUnionTypeInitializingExamples >> typAsTypeFlattensUnionTypes [
 		assert: { 
 				(TypUnionType types: { 
 						 (TypNamedType classDescription: Integer).
-						 (TypNamedType classDescription: Number) } asSet).
+						 (TypNamedType classDescription: Number) } asIdentitySet).
 				(TypNamedType classDescription: Integer).
 				TypNilType instance } typAsType
 		equals: (TypUnionType types: { 
 					 (TypNamedType classDescription: Integer).
 					 (TypNamedType classDescription: Number).
-					 TypNilType instance } asSet).
+					 TypNilType instance } asIdentitySet).
 	^ nil
 ]
 
@@ -34,21 +34,7 @@ TypUnionTypeInitializingExamples >> typAsTypeKeepsNilType [
 				TypNilType instance } typAsType
 		equals: (TypUnionType types: { 
 					 (TypNamedType classDescription: Integer).
-					 TypNilType instance } asSet).
-	^ nil
-]
-
-{ #category : #accessing }
-TypUnionTypeInitializingExamples >> typAsTypeKeepsSubTypes [
-
-	<gtExample>
-	self
-		assert: { 
-				(TypNamedType classDescription: Integer).
-				(TypNamedType classDescription: Number) } typAsType
-		equals: (TypUnionType types: { 
-					 (TypNamedType classDescription: Integer).
-					 (TypNamedType classDescription: Number) } asSet).
+					 TypNilType instance } asIdentitySet).
 	^ nil
 ]
 
@@ -62,7 +48,7 @@ TypUnionTypeInitializingExamples >> typAsTypeKeepsUnknownType [
 				TypUnknownType instance } typAsType
 		equals: (TypUnionType types: { 
 					 (TypNamedType classDescription: Integer).
-					 TypUnknownType instance } asSet).
+					 TypUnknownType instance } asIdentitySet).
 	^ nil
 ]
 
@@ -92,10 +78,10 @@ TypUnionTypeInitializingExamples >> typesMany [
 	| type |
 	type := TypUnionType types: { 
 			        TypUnknownType instance.
-			        TypNilType instance } asSet.
+			        TypNilType instance } asIdentitySet.
 	self assert: type types equals: { 
 			TypUnknownType instance.
-			TypNilType instance } asSet.
+			TypNilType instance } asIdentitySet.
 	^ type
 ]
 

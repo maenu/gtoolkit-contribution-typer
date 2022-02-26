@@ -6,7 +6,7 @@ Class {
 
 { #category : #'generated-accessing' }
 TypTypeParser class >> cacheId [
-	^'2021-12-23T21:01:00.419484+01:00'
+	^'2022-02-26T11:43:06.31391+01:00'
 ]
 
 { #category : #generated }
@@ -82,7 +82,7 @@ FunctionType
 	;
 UnionType
 	: ""{"" Types 'types' ""}""
-		{ TypUnionType types: types asSet }
+		{ TypUnionType types: types asIdentitySet }
 	;
 EmptyTypes
 	: Types 'types'
@@ -107,7 +107,7 @@ TypTypeParser class >> reduceTable [
 ^#(
 	#(20 1 #reduceActionForNilType1: 625665 false) 
 	#(19 1 #reduceActionForUnknownType1: 577537 false) 
-	#(27 1 #reduceActionForName1: 1677313 false) 
+	#(27 1 #reduceActionForName1: 1685505 false) 
 	#(17 1 #reduceActionForTypes1: 241665 false) 
 	#(18 1 #liftFirstValue: 334849 false) 
 	#(18 1 #liftFirstValue: 334850 false) 
@@ -118,10 +118,10 @@ TypTypeParser class >> reduceTable [
 	#(18 1 #liftFirstValue: 334852 false) 
 	#(22 1 #reduceActionForNamedType1: 854017 false) 
 	#(21 2 #reduceActionForVariableType1: 665601 false) 
-	#(26 0 #reduceActionForEmptyTypes2: 1623042 false) 
+	#(26 0 #reduceActionForEmptyTypes2: 1631234 false) 
 	#(25 3 #reduceActionForUnionType1: 1545217 false) 
 	#(17 3 #reduceActionForTypes2: 241666 false) 
-	#(26 1 #liftFirstValue: 1623041 false) 
+	#(26 1 #liftFirstValue: 1631233 false) 
 	#(21 4 #reduceActionForVariableType2: 665602 false) 
 	#(23 4 #reduceActionForParametricType1: 964609 false) 
 	#(24 6 #reduceActionForFunctionType2: 1163266 false) 
@@ -265,7 +265,7 @@ TypTypeParser >> reduceActionForTypes2: nodes [
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForUnionType1: nodes [
 
-	^ TypUnionType types: (nodes at: 2) asSet
+	^ TypUnionType types: (nodes at: 2) asIdentitySet
 ]
 
 { #category : #'generated-reduction actions' }

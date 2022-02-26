@@ -19,14 +19,14 @@ TypInfFlowMethod >> execute: aNode [
 ]
 
 { #category : #accessing }
-TypInfFlowMethod >> initialValueIn: aState [
+TypInfFlowMethod >> initialize: aState [
 
-	^ CompiledMethod
-		  typAsFunctionTypeWithResult: TypUnknownType instance
-		  arguments:
-		  (node arguments collect: [ :e | TypUnknownType instance ])
-		  argumentsOptional: false
-		  signalsAlways: nil
+	aState at: self put: (CompiledMethod
+			 typAsFunctionTypeWithResult: TypUnknownType instance
+			 arguments:
+			 (node arguments collect: [ :e | TypUnknownType instance ])
+			 argumentsOptional: false
+			 signalsAlways: nil)
 ]
 
 { #category : #accessing }

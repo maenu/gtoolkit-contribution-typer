@@ -93,12 +93,21 @@ TypInfFlowState >> join: aState [
 	self assert: [ aState super = superType ].
 	self assert: [ aState index keys = index keys ].
 	result := self copy.
-	index keysDo: [ :n | 
-		({ 
-			 (index at: n).
-			 (aState at: n) } copyWithout: TypUnknownType instance) 
-			ifNotEmpty: [ :c | result at: n put: c typAsType ] ].
+	index keysAndValuesDo: [ :n :t | 
+		result at: n put: (self join: t with: (aState at: n)) ].
 	^ result
+]
+
+{ #category : #accessing }
+TypInfFlowState >> join: aType with: anotherType [
+
+	aType isUnknown ifTrue: [ ^ anotherType ].
+	anotherType isUnknown ifTrue: [ ^ aType ].
+	aType < anotherType ifTrue: [ ^ aType ].
+	anotherType < aType ifTrue: [ ^ anotherType ].
+	^ { 
+		  aType.
+		  anotherType } typAsType
 ]
 
 { #category : #copying }

@@ -117,7 +117,7 @@ TypParametricType >> initializeParameters: anOrderedDictionary [
 	anOrderedDictionary keysAndValuesDo: [ :n :t | 
 		self outgoingAt: n put: t.
 		parameters at: n put: t ].
-	self initializeSuperType: nil
+	self initializeSuperType: nil.
 ]
 
 { #category : #invalidation }

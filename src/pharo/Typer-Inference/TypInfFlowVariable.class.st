@@ -4,10 +4,16 @@ Class {
 	#category : #'Typer-Inference-Flow'
 }
 
-{ #category : #accessing }
-TypInfFlowVariable >> initialValueIn: aState [
+{ #category : #'as yet unclassified' }
+TypInfFlowVariable >> constrainTo: aType in: aState [
 
-	^ node variable typInfFlowInitialValueIn: aState
+	node variable typInfFlowConstrain: self to: aType in: aState
+]
+
+{ #category : #accessing }
+TypInfFlowVariable >> initialize: aState [
+
+	node variable typInfFlowInitialize: self in: aState
 ]
 
 { #category : #'meta-object-protocol' }
@@ -25,12 +31,7 @@ TypInfFlowVariable >> read: aNode [
 { #category : #private }
 TypInfFlowVariable >> transfer [
 
-	| type |
-	type := self
-		        incomingAt: #read
-		        ifPresent: [ :e | state at: e ]
-		        ifAbsent: [ node variable typInfFlowValue: self in: state ].
-	state at: self put: type
+	node variable typInfFlowTransfer: self in: state
 ]
 
 { #category : #visiting }

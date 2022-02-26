@@ -31,6 +31,11 @@ TypInfFlowEdge >> state [
 TypInfFlowEdge >> state: anObject [
 
 	changed := state ~= anObject.
+	changed ifTrue: [ 
+		log ifNil: [ log := LinkedList new ].
+		state
+			ifNil: [ log add: anObject ]
+			ifNotNil: [ log add: (state diff: anObject) ] ].
 	state := anObject.
 	^ changed
 ]

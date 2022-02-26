@@ -1,7 +1,7 @@
 Extension { #name : #ThisContextVariable }
 
 { #category : #'*Typer-Inference' }
-ThisContextVariable >> typInfFlowInitialValueIn: aState [
+ThisContextVariable >> typInfFlowInitialize: aNode in: aState [
 
-	^ Context typAsType
+	aState at: aNode put: Context typAsType
 ]

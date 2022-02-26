@@ -123,6 +123,8 @@ TypNode >> incomingRemoveAt: anObject [
 { #category : #accessing }
 TypNode >> initialize [
 
+	<typPraVariable: 'incoming' as: 'IdentitySet<TypEdge>'>
+	<typPraVariable: 'outgoing' as: 'IdentitySet<TypEdge>'>
 	super initialize.
 	incoming := IdentitySet new.
 	outgoing := IdentitySet new

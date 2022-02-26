@@ -16,12 +16,21 @@ TypInfFlowNode class >> node: aNode [
 		  yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypInfFlowNode >> burp [
 
 	^ self flowOutgoing
 		  inject: false
 		  into: [ :r :e | r or: (e state: state copy) ]
+]
+
+{ #category : #'as yet unclassified' }
+TypInfFlowNode >> constrainTo: aType in: aState [
+
+	| type |
+	type := aState at: self.
+	(type isUnknown or: [ type > aType ]) ifTrue: [ 
+		aState at: self put: aType ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -74,11 +83,11 @@ TypInfFlowNode >> flowOutgoing [
 ]
 
 { #category : #accessing }
-TypInfFlowNode >> initialValueIn: aState [
+TypInfFlowNode >> initialize: aState [
 
 	"compute initial state for node"
 
-	^ TypUnknownType instance
+	aState at: self put: TypUnknownType instance
 ]
 
 { #category : #initialization }
@@ -167,15 +176,4 @@ TypInfFlowNode >> transfer [
 	"transfer the given state from in to out"
 
 	
-]
-
-{ #category : #'as yet unclassified' }
-TypInfFlowNode >> typGtStateFor: aView [
-
-	<gtView>
-	state ifNil: [ ^ aView empty ].
-	^ aView explicit
-		  title: 'Type';
-		  priority: 10;
-		  stencil: [ GtInspectorTool forObject: (state at: self) ]
 ]

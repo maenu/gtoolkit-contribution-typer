@@ -70,3 +70,14 @@ TypInfFlowNode >> typGtSourceFor: aView [
 		  object: [ node methodNode compiledMethod ];
 		  view: #gtSourceFor:
 ]
+
+{ #category : #'*Typer-GToolkit' }
+TypInfFlowNode >> typGtTypeFor: aView [
+
+	<gtView>
+	state ifNil: [ ^ aView empty ].
+	^ aView explicit
+		  title: 'Type';
+		  priority: 10;
+		  stencil: [ GtInspectorTool forObject: (state at: self) ]
+]

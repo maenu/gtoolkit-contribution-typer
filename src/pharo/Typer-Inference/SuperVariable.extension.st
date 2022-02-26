@@ -1,7 +1,7 @@
 Extension { #name : #SuperVariable }
 
 { #category : #'*Typer-Inference' }
-SuperVariable >> typInfFlowInitialValueIn: aState [
+SuperVariable >> typInfFlowInitialize: aNode in: aState [
 
-	^ aState super
+	aState at: aNode put: aState super
 ]

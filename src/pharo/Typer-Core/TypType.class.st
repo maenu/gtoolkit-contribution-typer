@@ -2,7 +2,8 @@ Class {
 	#name : #TypType,
 	#superclass : #TypNode,
 	#instVars : [
-		'superType'
+		'superType',
+		'hash'
 	],
 	#classInstVars : [
 		'index'
@@ -50,8 +51,9 @@ TypType >> = anObject [
 
 	anObject == self ifTrue: [ ^ true ].
 	anObject class = self class ifFalse: [ ^ false ].
-	self hasSuper = anObject hasSuper ifFalse: [ ^ false ].
+	anObject hasSuper = self hasSuper ifFalse: [ ^ false ].
 	self hasSuper ifFalse: [ ^ true ].
+	anObject hash = self hash ifFalse: [ ^ false ].
 	^ self super = anObject super
 ]
 
@@ -122,7 +124,7 @@ TypType >> hasSuper [
 { #category : #comparing }
 TypType >> hash [
 
-	^ self hashSkipping: IdentitySet new
+	^ hash ifNil: [ hash := self hashSkipping: IdentitySet new ]
 ]
 
 { #category : #comparing }
@@ -140,7 +142,8 @@ TypType >> hashSkipping: anIdentitySet [
 TypType >> initialize [
 
 	<typPraVariable: 'superType' as: '{!,TypType}'>
-	super initialize
+	super initialize.
+	hash := nil
 ]
 
 { #category : #initialization }
@@ -149,7 +152,8 @@ TypType >> initializeSuperType: aType [
 	aType = superType ifTrue: [ ^ self ].
 	superType ifNotNil: [ self outgoingRemoveAt: #super ].
 	superType := aType.
-	superType ifNotNil: [ self outgoingAt: #super put: superType ]
+	superType ifNotNil: [ self outgoingAt: #super put: superType ].
+	hash := nil
 ]
 
 { #category : #invalidation }
