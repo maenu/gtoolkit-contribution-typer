@@ -1,7 +1,7 @@
-Extension { #name : #TypInfFlowNode }
+Extension { #name : #TypInfNode }
 
 { #category : #'*Typer-GToolkit' }
-TypInfFlowNode >> typGtAsElementIn: aMondrian [
+TypInfNode >> typGtAsElementIn: aMondrian [
 
 	^ self
 		  typGtDecorate:
@@ -11,7 +11,7 @@ TypInfFlowNode >> typGtAsElementIn: aMondrian [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypInfFlowNode >> typGtFlowFor: aView [
+TypInfNode >> typGtFlowFor: aView [
 
 	<gtView>
 	^ aView typGtMondrian
@@ -21,7 +21,7 @@ TypInfFlowNode >> typGtFlowFor: aView [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypInfFlowNode >> typGtFlowPaintOn: aMondrian [
+TypInfNode >> typGtFlowPaintOn: aMondrian [
 
 	| edges nodes currentNodes nextNodes |
 	currentNodes := aMondrian existingNodes.
@@ -48,7 +48,7 @@ TypInfFlowNode >> typGtFlowPaintOn: aMondrian [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypInfFlowNode >> typGtSourceCodeFor: aView [
+TypInfNode >> typGtSourceCodeFor: aView [
 
 	<gtView>
 	^ aView forward
@@ -59,7 +59,7 @@ TypInfFlowNode >> typGtSourceCodeFor: aView [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypInfFlowNode >> typGtSourceFor: aView [
+TypInfNode >> typGtSourceFor: aView [
 
 	<gtView>
 	node methodNode ifNil: [ ^ aView empty ].
@@ -72,7 +72,7 @@ TypInfFlowNode >> typGtSourceFor: aView [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypInfFlowNode >> typGtTypeFor: aView [
+TypInfNode >> typGtTypeFor: aView [
 
 	<gtView>
 	state ifNil: [ ^ aView empty ].

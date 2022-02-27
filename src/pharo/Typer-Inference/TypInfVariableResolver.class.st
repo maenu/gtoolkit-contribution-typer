@@ -7,21 +7,22 @@ Class {
 { #category : #'as yet unclassified' }
 TypInfVariableResolver >> assignedTypeOf: aVariable in: aType [
 
-	^ (aVariable assignmentNodes collect: [ :e | e value typInfTypeIn: aType ])
-		  typAsType
+	^ (aVariable assignmentNodes collect: [ :e | 
+		   TypInfMethodResolver instance
+			   nodeAt: e value
+			   self: aType
+			   super: aType super ]) typAsType
 ]
 
 { #category : #accessing }
 TypInfVariableResolver >> canResolve: aLookup [
 
-	"aLookup receiver isNamed ifFalse: [ ^ false ].
+	aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
 	(aLookup receiver classDescription hasSlotNamed: aLookup selector) 
 		ifTrue: [ ^ true ].
 	^ aLookup receiver classDescription instanceSide allClassVariables 
-		  anySatisfy: [ :e | e name = aLookup selector ]"
-
-	^ false
+		  anySatisfy: [ :e | e name = aLookup selector ]
 ]
 
 { #category : #invalidation }

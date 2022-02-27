@@ -24,18 +24,6 @@ TypInfImplementorsCache class >> invalidate [
 ]
 
 { #category : #accessing }
-TypInfImplementorsCache >> build [
-
-	cache removeAll.
-	SystemNavigation new allBehaviors do: [ :b | 
-		b methods do: [ :m | 
-			cache
-				at: m selector
-				ifPresent: [ :s | s add: m ]
-				ifAbsentPut: [ IdentitySet with: m ] ] ]
-]
-
-{ #category : #accessing }
 TypInfImplementorsCache >> implementors: aSymbol [
 
 	^ cache at: aSymbol ifAbsentPut: [ 

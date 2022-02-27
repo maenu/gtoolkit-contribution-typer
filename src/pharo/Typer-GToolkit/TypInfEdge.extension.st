@@ -1,7 +1,7 @@
-Extension { #name : #TypInfFlowEdge }
+Extension { #name : #TypInfEdge }
 
 { #category : #'*Typer-GToolkit' }
-TypInfFlowEdge >> typGtStateFor: aView [
+TypInfEdge >> typGtStateFor: aView [
 
 	<gtView>
 	state ifNil: [ ^ aView empty ].
@@ -13,7 +13,7 @@ TypInfFlowEdge >> typGtStateFor: aView [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypInfFlowEdge >> typGtTypeFor: aView [
+TypInfEdge >> typGtTypeFor: aView [
 
 	<gtView>
 	state ifNil: [ ^ aView empty ].

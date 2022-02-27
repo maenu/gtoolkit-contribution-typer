@@ -1,7 +1,7 @@
-Extension { #name : #TypInfFlowAnalysis }
+Extension { #name : #TypInfMethodNodeContext }
 
 { #category : #'*Typer-GToolkit' }
-TypInfFlowAnalysis >> typGtFlowFor: aView [
+TypInfMethodNodeContext >> typGtFlowFor: aView [
 
 	<gtView>
 	^ aView forward

@@ -1,82 +1,80 @@
 Class {
-	#name : #TypInfFlowBuilder,
-	#superclass : #RBProgramNodeVisitor,
+	#name : #TypInfMethodNodeContext,
+	#superclass : #TypNode,
+	#traits : 'TRBProgramNodeVisitor',
+	#classTraits : 'TRBProgramNodeVisitor classTrait',
 	#instVars : [
 		'root',
 		'current',
-		'nodes'
+		'nodes',
+		'state',
+		'stable'
 	],
-	#category : #'Typer-Inference-Flow'
+	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #accessing }
-TypInfFlowBuilder >> analysis [
+{ #category : #'as yet unclassified' }
+TypInfMethodNodeContext class >> node: aMethodNode self: aType super: anotherType [
 
-	^ TypInfFlowAnalysis root: root state: self state
-]
-
-{ #category : #accessing }
-TypInfFlowBuilder >> analysisSelf: aType [
-
-	^ TypInfFlowAnalysis root: root state: (self stateSelf: aType)
-]
-
-{ #category : #accessing }
-TypInfFlowBuilder >> analysisSelf: aType super: anotherType [
-
-	^ TypInfFlowAnalysis
-		  root: root
-		  state: (self stateSelf: aType super: anotherType)
+	^ self new
+		  initializeNode: aMethodNode self: aType super: anotherType;
+		  yourself
 ]
 
 { #category : #initialization }
-TypInfFlowBuilder >> initialize [
+TypInfMethodNodeContext >> initializeNode: aMethodNode self: aType super: anotherType [
 
-	super initialize.
-	nodes := IdentityDictionary new
+	| n nodes_ |
+	nodes := IdentityDictionary new.
+	aMethodNode acceptVisitor: self.
+	state := TypInfState self: aType super: anotherType.
+	n := 100.
+	nodes_ := nodes values.
+	nodes_ do: [ :e | e initialize: state ].
+	root flowEdgesAll do: [ :e | e state: state copy ].
+	[ 
+	n := n - 1.
+	(nodes_ inject: false into: [ :r :e | e slurpAndBurp or: r ]) and: [ 
+		n > 0 ] ] whileTrue.
+	nodes_ do: #seal.
+	stable := n > 0
 ]
 
 { #category : #accessing }
-TypInfFlowBuilder >> next: aNode [
+TypInfMethodNodeContext >> next: aNode [
 
 	^ current := current next: (self nodeAt: aNode)
 ]
 
 { #category : #accessing }
-TypInfFlowBuilder >> nodeAt: aNode [
+TypInfMethodNodeContext >> nodeAt: aNode [
 
 	^ nodes at: aNode ifAbsentPut: [ aNode typInfFlow ]
 ]
 
 { #category : #accessing }
-TypInfFlowBuilder >> state [
+TypInfMethodNodeContext >> nodes [
 
-	^ self stateSelf: root node methodClass typAsType
+	^ nodes
 ]
 
 { #category : #accessing }
-TypInfFlowBuilder >> stateSelf: aType [
+TypInfMethodNodeContext >> root [
 
-	^ self stateSelf: aType super: aType super
-]
-
-{ #category : #accessing }
-TypInfFlowBuilder >> stateSelf: aType super: anotherType [
-
-	^ TypInfFlowState self: aType super: anotherType
+	^ root
 ]
 
 { #category : #visiting }
-TypInfFlowBuilder >> visitArgumentVariableNode: anArgumentNode [
+TypInfMethodNodeContext >> visitArgumentVariableNode: anArgumentNode [
 
-	super visitArgumentVariableNode: anArgumentNode.
+	self visitLocalVariableNode: anArgumentNode.
 	anArgumentNode isDefinition ifFalse: [ 
 		current read: (self nodeAt: anArgumentNode variable definingNode) ].
 	^ current
 ]
 
 { #category : #visiting }
-TypInfFlowBuilder >> visitArrayNode: anArrayNode [
+TypInfMethodNodeContext >> visitArrayNode: anArrayNode [
 
 	| arguments |
 	arguments := anArrayNode statements collect: [ :n | 
@@ -87,7 +85,7 @@ TypInfFlowBuilder >> visitArrayNode: anArrayNode [
 ]
 
 { #category : #visiting }
-TypInfFlowBuilder >> visitAssignmentNode: anAssignmentNode [
+TypInfMethodNodeContext >> visitAssignmentNode: anAssignmentNode [
 
 	self visitNode: anAssignmentNode value.
 	self next: anAssignmentNode.
@@ -96,7 +94,7 @@ TypInfFlowBuilder >> visitAssignmentNode: anAssignmentNode [
 ]
 
 { #category : #visiting }
-TypInfFlowBuilder >> visitBlockNode: aBlockNode [
+TypInfMethodNodeContext >> visitBlockNode: aBlockNode [
 
 	self next: aBlockNode.
 	current arguments:
@@ -106,13 +104,13 @@ TypInfFlowBuilder >> visitBlockNode: aBlockNode [
 ]
 
 { #category : #visiting }
-TypInfFlowBuilder >> visitCascadeNode: aCascadeNode [
+TypInfMethodNodeContext >> visitCascadeNode: aCascadeNode [
 
 	^ (aCascadeNode messages collect: [ :e | self visitNode: e ]) last
 ]
 
 { #category : #visiting }
-TypInfFlowBuilder >> visitLiteralArrayNode: aLiteralArrayNode [
+TypInfMethodNodeContext >> visitLiteralArrayNode: aLiteralArrayNode [
 
 	| arguments |
 	arguments := aLiteralArrayNode contents collect: [ :n | 
@@ -123,13 +121,13 @@ TypInfFlowBuilder >> visitLiteralArrayNode: aLiteralArrayNode [
 ]
 
 { #category : #visiting }
-TypInfFlowBuilder >> visitLiteralValueNode: aNode [
+TypInfMethodNodeContext >> visitLiteralValueNode: aNode [
 
 	^ self next: aNode
 ]
 
 { #category : #visiting }
-TypInfFlowBuilder >> visitMessageNode: aMessageNode [
+TypInfMethodNodeContext >> visitMessageNode: aMessageNode [
 
 	| arguments |
 	(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ]) 
@@ -143,7 +141,7 @@ TypInfFlowBuilder >> visitMessageNode: aMessageNode [
 ]
 
 { #category : #visiting }
-TypInfFlowBuilder >> visitMethodNode: aMethodNode [
+TypInfMethodNodeContext >> visitMethodNode: aMethodNode [
 
 	self assert: [ root isNil ].
 	self assert: [ current isNil ].
@@ -159,14 +157,15 @@ TypInfFlowBuilder >> visitMethodNode: aMethodNode [
 ]
 
 { #category : #visiting }
-TypInfFlowBuilder >> visitReturnNode: aReturnNode [
+TypInfMethodNodeContext >> visitReturnNode: aReturnNode [
 
 	self visitNode: aReturnNode value.
+	self next: aReturnNode.
 	^ current return: root
 ]
 
 { #category : #visiting }
-TypInfFlowBuilder >> visitSequenceNode: aSequenceNode [
+TypInfMethodNodeContext >> visitSequenceNode: aSequenceNode [
 
 	current := current execute: (self nodeAt: aSequenceNode).
 	current arguments:
@@ -175,16 +174,16 @@ TypInfFlowBuilder >> visitSequenceNode: aSequenceNode [
 ]
 
 { #category : #visiting }
-TypInfFlowBuilder >> visitTemporaryVariableNode: aTemproraryNode [
+TypInfMethodNodeContext >> visitTemporaryVariableNode: aTemproraryNode [
 
-	super visitTemporaryVariableNode: aTemproraryNode.
+	self visitLocalVariableNode: aTemproraryNode.
 	aTemproraryNode isDefinition ifFalse: [ 
 		current read: (self nodeAt: aTemproraryNode variable definingNode) ].
 	^ current
 ]
 
 { #category : #visiting }
-TypInfFlowBuilder >> visitVariableNode: aVariableNode [
+TypInfMethodNodeContext >> visitVariableNode: aVariableNode [
 
 	^ self next: aVariableNode
 ]

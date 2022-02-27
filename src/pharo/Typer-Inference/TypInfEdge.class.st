@@ -1,41 +1,41 @@
 Class {
-	#name : #TypInfFlowEdge,
+	#name : #TypInfEdge,
 	#superclass : #TypEdge,
 	#instVars : [
 		'state',
 		'changed',
 		'log'
 	],
-	#category : #'Typer-Inference-Flow'
+	#category : #'Typer-Inference-Core'
 }
 
 { #category : #testing }
-TypInfFlowEdge >> isChanged [
+TypInfEdge >> isChanged [
 
 	^ changed
 ]
 
 { #category : #testing }
-TypInfFlowEdge >> isFlow [
+TypInfEdge >> isFlow [
 
 	^ #( #next #execute #return #signal ) includes: data
 ]
 
 { #category : #accessing }
-TypInfFlowEdge >> state [
+TypInfEdge >> state [
 
 	^ state
 ]
 
 { #category : #accessing }
-TypInfFlowEdge >> state: anObject [
+TypInfEdge >> state: anObject [
 
 	changed := state ~= anObject.
-	changed ifTrue: [ 
+	"changed ifTrue: [ 
 		log ifNil: [ log := LinkedList new ].
 		state
 			ifNil: [ log add: anObject ]
-			ifNotNil: [ log add: (state diff: anObject) ] ].
+			ifNotNil: [ log add: (state diff: anObject) ] ]."
 	state := anObject.
 	^ changed
 ]

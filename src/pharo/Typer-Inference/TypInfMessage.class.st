@@ -1,13 +1,13 @@
 Class {
-	#name : #TypInfFlowMessage,
-	#superclass : #TypInfFlowNode,
-	#traits : 'TTypInfFlowWithArguments',
-	#classTraits : 'TTypInfFlowWithArguments classTrait',
-	#category : #'Typer-Inference-Flow'
+	#name : #TypInfMessage,
+	#superclass : #TypInfNode,
+	#traits : 'TTypInfWithArguments',
+	#classTraits : 'TTypInfWithArguments classTrait',
+	#category : #'Typer-Inference-Core'
 }
 
 { #category : #accessing }
-TypInfFlowMessage >> methodIn: aState [
+TypInfMessage >> methodIn: aState [
 
 	^ (aState at: self receiver)
 		  lookupMethod: node selector asSymbol
@@ -15,19 +15,19 @@ TypInfFlowMessage >> methodIn: aState [
 ]
 
 { #category : #accessing }
-TypInfFlowMessage >> receiver [
+TypInfMessage >> receiver [
 
 	^ self incomingAt: #receiver
 ]
 
 { #category : #accessing }
-TypInfFlowMessage >> receiver: aNode [
+TypInfMessage >> receiver: aNode [
 
 	^ self incomingAt: #receiver put: aNode
 ]
 
 { #category : #accessing }
-TypInfFlowMessage >> transfer [
+TypInfMessage >> transfer [
 
 	| receiver method |
 	receiver := self receiver.

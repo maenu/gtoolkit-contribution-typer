@@ -24,9 +24,8 @@ CompiledMethod >> typPraHasVariablePragma: aString [
 CompiledMethod >> typPraType [
 
 	^ self pragmas
-		  inject: (TypFunctionType
-				   classDescription: self class
-				   result: TypUnknownType instance
+		  inject: (CompiledMethod
+				   typAsFunctionTypeWithResult: TypUnknownType instance
 				   arguments:
 				   (self numArgs typTimesCollect: [ :i | TypUnknownType instance ])
 				   argumentsOptional: false

@@ -1,29 +1,29 @@
 Trait {
-	#name : #TTypInfFlowWithArguments,
-	#category : #'Typer-Inference-Flow'
+	#name : #TTypInfWithArguments,
+	#category : #'Typer-Inference-Core'
 }
 
 { #category : #accessing }
-TTypInfFlowWithArguments >> argumentAt: anInteger [
+TTypInfWithArguments >> argumentAt: anInteger [
 
 	^ self incomingAt: anInteger
 ]
 
 { #category : #accessing }
-TTypInfFlowWithArguments >> argumentAt: anInteger put: aNode [
+TTypInfWithArguments >> argumentAt: anInteger put: aNode [
 
 	^ self incomingAt: anInteger put: aNode
 ]
 
 { #category : #accessing }
-TTypInfFlowWithArguments >> arguments [
+TTypInfWithArguments >> arguments [
 
 	^ (self incoming select: [ :e | e data isInteger ]) sorted collect:
 		  #origin
 ]
 
 { #category : #accessing }
-TTypInfFlowWithArguments >> arguments: aCollection [
+TTypInfWithArguments >> arguments: aCollection [
 
 	^ aCollection withIndexDo: [ :n :i | self argumentAt: i put: n ]
 ]

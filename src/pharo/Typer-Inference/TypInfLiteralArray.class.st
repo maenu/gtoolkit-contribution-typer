@@ -1,13 +1,13 @@
 Class {
-	#name : #TypInfFlowLiteralArray,
-	#superclass : #TypInfFlowNode,
-	#traits : 'TTypInfFlowWithArguments',
-	#classTraits : 'TTypInfFlowWithArguments classTrait',
-	#category : #'Typer-Inference-Flow'
+	#name : #TypInfLiteralArray,
+	#superclass : #TypInfNode,
+	#traits : 'TTypInfWithArguments',
+	#classTraits : 'TTypInfWithArguments classTrait',
+	#category : #'Typer-Inference-Core'
 }
 
 { #category : #accessing }
-TypInfFlowLiteralArray >> initialize: aState [
+TypInfLiteralArray >> initialize: aState [
 
 	"can pull child literals as it is literal itself"
 

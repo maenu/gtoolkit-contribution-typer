@@ -1,16 +1,16 @@
 Class {
-	#name : #TypInfFlowState,
+	#name : #TypInfState,
 	#superclass : #Object,
 	#instVars : [
 		'index',
 		'selfType',
 		'superType'
 	],
-	#category : #'Typer-Inference'
+	#category : #'Typer-Inference-Core'
 }
 
 { #category : #'as yet unclassified' }
-TypInfFlowState class >> self: aType super: anotherType [
+TypInfState class >> self: aType super: anotherType [
 
 	^ self new
 		  initializeSelf: aType super: anotherType;
@@ -18,7 +18,7 @@ TypInfFlowState class >> self: aType super: anotherType [
 ]
 
 { #category : #comparing }
-TypInfFlowState >> = anObject [
+TypInfState >> = anObject [
 
 	anObject == self ifTrue: [ ^ true ].
 	anObject class == self class ifFalse: [ ^ false ].
@@ -28,19 +28,19 @@ TypInfFlowState >> = anObject [
 ]
 
 { #category : #accessing }
-TypInfFlowState >> at: aNode [
+TypInfState >> at: aNode [
 
 	^ index at: aNode
 ]
 
 { #category : #accessing }
-TypInfFlowState >> at: aNode put: aType [
+TypInfState >> at: aNode put: aType [
 
 	^ index at: aNode put: aType
 ]
 
 { #category : #accessing }
-TypInfFlowState >> diff: aState [
+TypInfState >> diff: aState [
 
 	| diff |
 	diff := IdentityDictionary new.
@@ -55,7 +55,7 @@ TypInfFlowState >> diff: aState [
 ]
 
 { #category : #accessing }
-TypInfFlowState >> gtItemsFor: aView [
+TypInfState >> gtItemsFor: aView [
 
 	<gtView>
 	^ aView forward
@@ -66,19 +66,19 @@ TypInfFlowState >> gtItemsFor: aView [
 ]
 
 { #category : #comparing }
-TypInfFlowState >> hash [
+TypInfState >> hash [
 
 	^ (index hash bitXor: selfType hash) bitXor: superType hash
 ]
 
 { #category : #accessing }
-TypInfFlowState >> index [
+TypInfState >> index [
 
 	^ index
 ]
 
 { #category : #initialization }
-TypInfFlowState >> initializeSelf: aType super: anotherType [
+TypInfState >> initializeSelf: aType super: anotherType [
 
 	selfType := aType.
 	superType := anotherType.
@@ -86,7 +86,7 @@ TypInfFlowState >> initializeSelf: aType super: anotherType [
 ]
 
 { #category : #splitjoin }
-TypInfFlowState >> join: aState [
+TypInfState >> join: aState [
 
 	| result |
 	self assert: [ aState self = selfType ].
@@ -99,7 +99,7 @@ TypInfFlowState >> join: aState [
 ]
 
 { #category : #accessing }
-TypInfFlowState >> join: aType with: anotherType [
+TypInfState >> join: aType with: anotherType [
 
 	aType isUnknown ifTrue: [ ^ anotherType ].
 	anotherType isUnknown ifTrue: [ ^ aType ].
@@ -111,20 +111,20 @@ TypInfFlowState >> join: aType with: anotherType [
 ]
 
 { #category : #copying }
-TypInfFlowState >> postCopy [
+TypInfState >> postCopy [
 
 	super postCopy.
 	index := index copy
 ]
 
 { #category : #'as yet unclassified' }
-TypInfFlowState >> self [
+TypInfState >> self [
 
 	^ selfType
 ]
 
 { #category : #'as yet unclassified' }
-TypInfFlowState >> super [
+TypInfState >> super [
 
 	^ superType
 ]
