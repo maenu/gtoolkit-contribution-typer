@@ -23,7 +23,8 @@ TypTypeIndex class >> instance [
 { #category : #accessing }
 TypTypeIndex >> lookupClassDescription: aClassDescription [
 
-	^ self resolve: (TypTypeLookup classDescription: aClassDescription)
+	^ self resolve:
+		  (TypTypeLookup classDescription: aClassDescription super: nil)
 ]
 
 { #category : #printing }

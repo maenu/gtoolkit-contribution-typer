@@ -5,35 +5,20 @@ Class {
 		'selector',
 		'arguments'
 	],
-	#classInstVars : [
-		'index'
-	],
 	#category : #'Typer-Core-Type'
 }
-
-{ #category : #initialization }
-TypEdgePragmaKey class >> initialize [
-
-	index := WeakValueDictionary new
-]
-
-{ #category : #invalidation }
-TypEdgePragmaKey class >> invalidate [
-
-	<script>
-	index removeAll
-]
 
 { #category : #'instance creation' }
 TypEdgePragmaKey class >> selector: aSelector arguments: aCollection [
 
-	^ index
+	^ self index
 		  at: { 
-				  aSelector.
-				  aCollection }
+				  aSelector asSymbol.
+				  aCollection asArray }
 		  ifAbsentPut: [ 
 			  self new
-				  initializeSelector: aSelector arguments: aCollection;
+				  initializeSelector: aSelector asSymbol
+				  arguments: aCollection asArray;
 				  yourself ]
 ]
 

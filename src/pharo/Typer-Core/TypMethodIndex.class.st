@@ -27,7 +27,8 @@ TypMethodIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aColl
 	^ self resolve: (TypMethodLookup
 			   receiver: aType
 			   selector: aSymbol
-			   arguments: aCollection asArray)
+			   arguments: aCollection
+			   super: nil)
 ]
 
 { #category : #printing }

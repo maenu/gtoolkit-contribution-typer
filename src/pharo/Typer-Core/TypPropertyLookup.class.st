@@ -17,17 +17,6 @@ TypPropertyLookup >> = anObject [
 	^ anObject receiver = receiver
 ]
 
-{ #category : #accessing }
-TypPropertyLookup >> asSuper [
-
-	self assert: [ self hasSuper ].
-	self flag: 'TODO no copy, use class-side index'.
-	^ self copy
-		  initializeSuper: self;
-		  initializeReceiver: receiver super selector: selector;
-		  yourself
-]
-
 { #category : #testing }
 TypPropertyLookup >> hasSuper [
 	^ receiver hasSuper

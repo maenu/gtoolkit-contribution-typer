@@ -30,15 +30,24 @@ Class {
 	#instVars : [
 		'arguments'
 	],
-	#category : 'Typer-Core-Lookup'
+	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #accessing }
-TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection [
-	^ self new
-		initializeReceiver: aType selector: aSymbol;
-		initializeArguments: aCollection;
-		yourself
+TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection super: aLookup [
+
+	^ self index
+		  at: { 
+				  aType.
+				  aSymbol asSymbol.
+				  aCollection asArray.
+				  aLookup }
+		  ifAbsentPut: [ 
+			  self new
+				  initializeReceiver: aType selector: aSymbol asSymbol;
+				  initializeArguments: aCollection asArray;
+				  initializeSuper: aLookup;
+				  yourself ]
 ]
 
 { #category : #accessing }
@@ -51,6 +60,17 @@ TypMethodLookup >> = anObject [
 { #category : #accessing }
 TypMethodLookup >> arguments [
 	^ arguments
+]
+
+{ #category : #converting }
+TypMethodLookup >> asSuper [
+
+	self assert: [ self hasSuper ].
+	^ self class
+		  receiver: receiver super
+		  selector: selector
+		  arguments: arguments
+		  super: self
 ]
 
 { #category : #accessing }

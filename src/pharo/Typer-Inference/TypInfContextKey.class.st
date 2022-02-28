@@ -6,29 +6,13 @@ Class {
 		'selfType',
 		'superType'
 	],
-	#classInstVars : [
-		'index'
-	],
 	#category : #'Typer-Inference-Core'
 }
-
-{ #category : #initialization }
-TypInfContextKey class >> initialize [
-
-	index := WeakValueDictionary new
-]
-
-{ #category : #invalidation }
-TypInfContextKey class >> invalidate [
-
-	<script>
-	index removeAll
-]
 
 { #category : #'as yet unclassified' }
 TypInfContextKey class >> node: aNode self: aType super: anotherType [
 
-	^ index
+	^ self index
 		  at: { 
 				  aNode identityHash.
 				  aType.

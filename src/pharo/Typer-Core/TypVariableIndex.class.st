@@ -21,7 +21,7 @@ TypVariableIndex class >> instance [
 { #category : #accessing }
 TypVariableIndex >> lookupReceiver: aType selector: aSymbol [
 
-	^ self resolve: (TypVariableLookup receiver: aType selector: aSymbol)
+	^ self resolve: (TypVariableLookup receiver: aType selector: aSymbol super: nil)
 ]
 
 { #category : #printing }

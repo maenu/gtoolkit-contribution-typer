@@ -31,6 +31,7 @@ TypTyping >> invalidate [
 	TypNode invalidateAll.
 	TypType invalidateAll.
 	TypIndex invalidateAll.
+	TypEdgeKey invalidateAll.
 	TypResolver invalidateAll.
 	TypShaShadow invalidateAll.
 	TypInfImplementorsCache invalidate.

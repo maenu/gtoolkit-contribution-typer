@@ -7,11 +7,18 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
-{ #category : #accessing }
-TypTypeLookup class >> classDescription: aClassDescription [
-	^ self new
-		initializeClassDescription: aClassDescription;
-		yourself
+{ #category : #'as yet unclassified' }
+TypTypeLookup class >> classDescription: aClassDescription super: aLookup [
+
+	^ self index
+		  at: { 
+				  aClassDescription.
+				  aLookup }
+		  ifAbsentPut: [ 
+			  self new
+				  initializeClassDescription: aClassDescription;
+				  initializeSuper: aLookup;
+				  yourself ]
 ]
 
 { #category : #comparing }
@@ -25,11 +32,9 @@ TypTypeLookup >> = anObject [
 TypTypeLookup >> asSuper [
 
 	self assert: [ self hasSuper ].
-	self flag: 'TODO no copy, use class-side index'.
-	^ self copy
-		  initializeSuper: self;
-		  initializeClassDescription: classDescription superclass;
-		  yourself
+	^ self class
+		  classDescription: classDescription superclass
+		  super: self
 ]
 
 { #category : #accessing }
