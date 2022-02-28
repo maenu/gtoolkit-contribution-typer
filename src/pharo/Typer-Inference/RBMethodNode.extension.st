@@ -1,7 +1,7 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Inference' }
-RBMethodNode >> typInfFlow [
+RBMethodNode >> typInfNode [
 
 	^ TypInfMethod node: self
 ]

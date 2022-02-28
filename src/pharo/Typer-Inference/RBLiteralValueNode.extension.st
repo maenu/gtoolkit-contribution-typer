@@ -1,7 +1,7 @@
 Extension { #name : #RBLiteralValueNode }
 
 { #category : #'*Typer-Inference' }
-RBLiteralValueNode >> typInfFlow [
+RBLiteralValueNode >> typInfNode [
 
 	^ TypInfLiteralValue node: self
 ]

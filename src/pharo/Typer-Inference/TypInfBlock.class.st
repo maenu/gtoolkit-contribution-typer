@@ -40,7 +40,7 @@ TypInfBlock >> execute: aNode [
 { #category : #accessing }
 TypInfBlock >> initialize: aState [
 
-	aState at: self put: (BlockClosure
+	^ aState at: self put: (BlockClosure
 			 typAsFunctionTypeWithResult: TypUnknownType instance
 			 arguments:
 			 (node arguments collect: [ :e | TypUnknownType instance ])

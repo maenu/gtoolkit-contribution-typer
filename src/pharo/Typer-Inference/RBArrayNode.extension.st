@@ -1,7 +1,7 @@
 Extension { #name : #RBArrayNode }
 
 { #category : #'*Typer-Inference' }
-RBArrayNode >> typInfFlow [
+RBArrayNode >> typInfNode [
 
 	^ TypInfArray node: self
 ]

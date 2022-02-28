@@ -21,7 +21,7 @@ TypInfMethod >> execute: aNode [
 { #category : #accessing }
 TypInfMethod >> initialize: aState [
 
-	aState at: self put: (CompiledMethod
+	^ aState at: self put: (CompiledMethod
 			 typAsFunctionTypeWithResult: TypUnknownType instance
 			 arguments:
 			 (node arguments collect: [ :e | TypUnknownType instance ])

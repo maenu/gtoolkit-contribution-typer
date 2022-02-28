@@ -9,7 +9,7 @@ Class {
 { #category : #accessing }
 TypInfArray >> initialize: aState [
 
-	aState at: self put: Array typAsType
+	^ aState at: self put: Array typAsType
 ]
 
 { #category : #'as yet unclassified' }

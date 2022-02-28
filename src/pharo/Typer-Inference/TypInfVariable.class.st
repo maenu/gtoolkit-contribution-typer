@@ -13,7 +13,7 @@ TypInfVariable >> constrainTo: aType in: aState [
 { #category : #accessing }
 TypInfVariable >> initialize: aState [
 
-	node variable typInfFlowInitialize: self in: aState
+	^ node variable typInfFlowInitialize: self in: aState
 ]
 
 { #category : #'meta-object-protocol' }

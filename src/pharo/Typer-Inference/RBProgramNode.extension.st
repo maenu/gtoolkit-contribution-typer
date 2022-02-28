@@ -10,19 +10,22 @@ RBProgramNode >> typInfAnnotated: aType [
 ]
 
 { #category : #'*Typer-Inference' }
-RBProgramNode >> typInfContext [
+RBProgramNode >> typInfNode [
 
-	^ self typInfContextSelf: self methodNode methodClass typAsType
+	^ TypInfNode node: self
 ]
 
 { #category : #'*Typer-Inference' }
-RBProgramNode >> typInfContextSelf: aType [
+RBProgramNode >> typInfTypeSelf: aType [
 
-	^ self typInfContextSelf: aType super: aType super
+	^ self typInfTypeSelf: aType super: aType superOrNil
 ]
 
 { #category : #'*Typer-Inference' }
-RBProgramNode >> typInfContextSelf: aType super: anotherType [
+RBProgramNode >> typInfTypeSelf: aType super: anotherType [
 
-	^ TypInfMethodNodeLookup node: self self: aType super: anotherType
+	^ TypInfMethodResolver instance
+		  nodeAt: self
+		  self: aType
+		  super: anotherType
 ]

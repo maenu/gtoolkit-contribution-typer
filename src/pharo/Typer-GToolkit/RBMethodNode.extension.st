@@ -30,9 +30,9 @@ RBMethodNode >> typGtShadowMethod [
 { #category : #'*Typer-GToolkit' }
 RBMethodNode >> typGtTypeWithPragma [
 
-	| context type arguments_ result_ variables_ |
-	context := self typInfSelf.
-	type := self typInfTypeIn: context.
+	| self_ type arguments_ result_ variables_ |
+	self_ := self methodClass typAsType.
+	type := self typInfTypeSelf: self_.
 	arguments_ := self pragmas
 		              detect: [ :e | e selector = #typPraArguments: ]
 		              ifFound: [ :e | 
@@ -70,8 +70,7 @@ RBMethodNode >> typGtTypeWithPragma [
 						              arguments: { 
 								              (RBLiteralValueNode value: e asString).
 								              (RBLiteralValueNode value:
-									               (context self lookupVariable: e asSymbol)
-										               asString) } ] ] ].
+									               (self_ lookupVariable: e asSymbol) asString) } ] ] ].
 	arguments_ do: [ :e | self addPragma: e ].
 	self addPragma: result_.
 	variables_ do: [ :e | self addPragma: e ]

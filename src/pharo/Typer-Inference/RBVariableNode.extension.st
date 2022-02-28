@@ -1,7 +1,7 @@
 Extension { #name : #RBVariableNode }
 
 { #category : #'*Typer-Inference' }
-RBVariableNode >> typInfFlow [
+RBVariableNode >> typInfNode [
 
 	^ TypInfVariable node: self
 ]

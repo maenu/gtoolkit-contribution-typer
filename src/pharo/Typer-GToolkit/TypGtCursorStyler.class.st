@@ -8,12 +8,16 @@ Class {
 TypGtCursorStyler >> styleNode: aNode [
 
 	<typPraArguments: 'RBValueNode'>
+	| type |
+	type := TypInfMethodResolver instance
+		        nodeAt: aNode
+		        self: selfType
+		        super: selfType superOrNil.
 	self
 		styleFrom: aNode start
 		to: aNode stop
 		with: { (TypGtCursorAttribute new
 				 coder: coder;
 				 node: aNode;
-				 attribute:
-					 (TypGtAttribute type: aNode typInfTypeInSelf object: aNode)) }
+				 attribute: (TypGtAttribute type: type)) }
 ]

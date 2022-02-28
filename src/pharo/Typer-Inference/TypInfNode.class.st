@@ -87,7 +87,7 @@ TypInfNode >> initialize: aState [
 
 	"compute initial state for node"
 
-	aState at: self put: TypUnknownType instance
+	^ aState at: self put: TypUnknownType instance
 ]
 
 { #category : #initialization }
@@ -155,7 +155,7 @@ TypInfNode >> return: aNode [
 { #category : #'as yet unclassified' }
 TypInfNode >> seal [
 
-	self type: (state at: self)
+	state ifNotNil: [ self type: (state at: self) ]
 ]
 
 { #category : #'as yet unclassified' }

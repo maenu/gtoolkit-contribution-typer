@@ -14,14 +14,19 @@ TypGtDeclarationStyler >> visitArgumentVariableNode: aNode [
 { #category : #visiting }
 TypGtDeclarationStyler >> visitMethodNode: aNode [
 
-	| position |
+	| position type |
+	type := TypInfMethodResolver instance
+		        nodeAt: aNode
+		        self: selfType
+		        super: selfType superOrNil.
 	position := aNode arguments isEmpty
 		            ifTrue: [ aNode selector size ]
 		            ifFalse: [ aNode arguments last stop ].
 	super visitMethodNode: aNode.
-	self styleFrom: position to: position with: { (TypGtAttribute
-			 type: (aNode typInfNode typeIn: selfType) result
-			 object: aNode) }
+	self
+		styleFrom: position
+		to: position
+		with: { (TypGtAttribute type: type result) }
 ]
 
 { #category : #accessing }

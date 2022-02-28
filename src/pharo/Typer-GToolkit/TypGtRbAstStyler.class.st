@@ -20,10 +20,10 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 
 	| ast |
 	ast := coder rbAST.
-	selfType := ast methodClass typAsType. 
-	text := aText.   
-	[  
-	ast typInfTypeIn: selfType.
+	selfType := ast methodClass typAsType.
+	text := aText.
+	[ 
+	ast typInfTypeSelf: selfType.
 	self visitNode: ast ]
 		on: Error
 		do: [ :e | Halt once ].
@@ -41,11 +41,13 @@ TypGtRbAstStyler >> styleFrom: from to: to with: attributes [
 { #category : #visiting }
 TypGtRbAstStyler >> styleNode: aNode [
 
-	| data edge |
-	data := TypEdgePragmaData selector: #typeIn: arguments: { selfType }.
-	edge := selfType outgoing detect: [ :e | e data = data ].
+	| type |
+	type := TypInfMethodResolver instance
+		        nodeAt: aNode
+		        self: selfType
+		        super: selfType superOrNil.
 	self
 		styleFrom: aNode start
 		to: aNode stop
-		with: { (TypGtAttribute type: edge target object: edge) }
+		with: { (TypGtAttribute type: type) }
 ]

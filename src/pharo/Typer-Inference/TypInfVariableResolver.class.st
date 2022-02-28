@@ -8,10 +8,7 @@ Class {
 TypInfVariableResolver >> assignedTypeOf: aVariable in: aType [
 
 	^ (aVariable assignmentNodes collect: [ :e | 
-		   TypInfMethodResolver instance
-			   nodeAt: e value
-			   self: aType
-			   super: aType super ]) typAsType
+		   e value typInfTypeSelf: aType ]) typAsType
 ]
 
 { #category : #accessing }

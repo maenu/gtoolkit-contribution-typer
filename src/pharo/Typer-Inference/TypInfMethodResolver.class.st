@@ -100,7 +100,7 @@ TypInfMethodResolver >> resolve: aLookup [
 			  self
 				  nodeAt: node
 				  self: aLookup root receiver
-				  super: aLookup receiver super ]
+				  super: aLookup receiver superOrNil ]
 		  or: [ 
 			  CompiledMethod
 				  typAsFunctionTypeWithResult: TypUnknownType instance

@@ -1,7 +1,7 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer-Inference' }
-RBMessageNode >> typInfFlow [
+RBMessageNode >> typInfNode [
 
 	^ TypInfMessage node: self
 ]

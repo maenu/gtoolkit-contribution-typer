@@ -1,7 +1,7 @@
 Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer-Inference' }
-RBBlockNode >> typInfFlow [
+RBBlockNode >> typInfNode [
 
 	^ TypInfBlock node: self
 ]

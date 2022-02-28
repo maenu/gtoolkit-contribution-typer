@@ -264,6 +264,13 @@ TypType >> super [
 	^ superType "typCastAs TypType"
 ]
 
+{ #category : #'as yet unclassified' }
+TypType >> superOrNil [
+
+	self hasSuper ifFalse: [ ^ nil ].
+	^ self super
+]
+
 { #category : #converting }
 TypType >> withSuper: aType [
 

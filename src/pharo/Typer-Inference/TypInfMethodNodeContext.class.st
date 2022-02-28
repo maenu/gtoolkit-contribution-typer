@@ -49,7 +49,7 @@ TypInfMethodNodeContext >> next: aNode [
 { #category : #accessing }
 TypInfMethodNodeContext >> nodeAt: aNode [
 
-	^ nodes at: aNode ifAbsentPut: [ aNode typInfFlow ]
+	^ nodes at: aNode ifAbsentPut: [ aNode typInfNode ]
 ]
 
 { #category : #accessing }
