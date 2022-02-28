@@ -1,7 +1,7 @@
-Extension { #name : #String }
+Extension { #name : #Symbol }
 
 { #category : #'*Typer-Inference' }
-String >> typInfType [
+Symbol >> typInfType [
 
 	^ TypValueType value: self superType: self class typAsType
 ]

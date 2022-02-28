@@ -1,6 +1,6 @@
 Class {
 	#name : #TypInfContextKey,
-	#superclass : #Object,
+	#superclass : #TypEdgeKey,
 	#instVars : [
 		'node',
 		'selfType',

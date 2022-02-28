@@ -20,7 +20,6 @@ TypPropertyLookup >> = anObject [
 { #category : #accessing }
 TypPropertyLookup >> asSuper [
 
-	<typEdge>
 	self assert: [ self hasSuper ].
 	self flag: 'TODO no copy, use class-side index'.
 	^ self copy

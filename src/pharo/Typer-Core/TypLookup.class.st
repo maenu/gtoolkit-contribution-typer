@@ -1,6 +1,6 @@
 Class {
 	#name : #TypLookup,
-	#superclass : #TypNode,
+	#superclass : #TypEdgeKey,
 	#instVars : [
 		'superLookup'
 	],

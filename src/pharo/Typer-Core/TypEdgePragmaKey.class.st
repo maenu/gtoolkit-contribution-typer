@@ -1,6 +1,6 @@
 Class {
 	#name : #TypEdgePragmaKey,
-	#superclass : #Object,
+	#superclass : #TypEdgeKey,
 	#instVars : [
 		'selector',
 		'arguments'

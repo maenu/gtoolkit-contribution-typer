@@ -24,7 +24,6 @@ TypTypeLookup >> = anObject [
 { #category : #copying }
 TypTypeLookup >> asSuper [
 
-	<typEdge>
 	self assert: [ self hasSuper ].
 	self flag: 'TODO no copy, use class-side index'.
 	^ self copy
