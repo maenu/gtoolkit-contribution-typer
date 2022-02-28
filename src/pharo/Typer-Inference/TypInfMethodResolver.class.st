@@ -32,11 +32,18 @@ TypInfMethodResolver >> canResolve: aLookup [
 { #category : #accessing }
 TypInfMethodResolver >> contextAt: aMethodNodeLookup [
 
-	<typEdge>
-	^ TypInfMethodNodeContext
-		  node: aMethodNodeLookup node
-		  self: aMethodNodeLookup self
-		  super: aMethodNodeLookup super
+	^ self
+		  outgoingAt: aMethodNodeLookup
+		  ifPresent: #yourself
+		  ifAbsent: [ 
+			  | context |
+			  context := TypInfMethodNodeContext
+				             node: aMethodNodeLookup node
+				             self: aMethodNodeLookup self
+				             super: aMethodNodeLookup super.
+			  self outgoingAt: aMethodNodeLookup put: context.
+			  context run.
+			  context ]
 ]
 
 { #category : #invalidation }
@@ -94,18 +101,8 @@ TypInfMethodResolver >> resolve: aLookup [
 	| node |
 	self assert: [ self canResolve: aLookup ].
 	node := (aLookup receiver classDescription >> aLookup selector) ast.
-	^ TypInfMethodNodeStack
-		  push: node
-		  during: [ 
-			  self
-				  nodeAt: node
-				  self: aLookup root receiver
-				  super: aLookup receiver superOrNil ]
-		  or: [ 
-			  CompiledMethod
-				  typAsFunctionTypeWithResult: TypUnknownType instance
-				  arguments:
-				  (node arguments collect: [ :e | TypUnknownType instance ])
-				  argumentsOptional: false
-				  signalsAlways: nil ]
+	^ self
+		  nodeAt: node
+		  self: aLookup root receiver
+		  super: aLookup receiver superOrNil
 ]

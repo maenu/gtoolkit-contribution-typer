@@ -87,7 +87,8 @@ TypInfNode >> initialize: aState [
 
 	"compute initial state for node"
 
-	^ aState at: self put: TypUnknownType instance
+	state := aState.
+	^ state at: self put: TypUnknownType instance
 ]
 
 { #category : #initialization }
@@ -153,9 +154,15 @@ TypInfNode >> return: aNode [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfNode >> seal [
+TypInfNode >> returnBlock [
 
-	state ifNotNil: [ self type: (state at: self) ]
+	^ self outgoingAt: #returnBlock
+]
+
+{ #category : #'as yet unclassified' }
+TypInfNode >> returnBlock: aNode [
+
+	^ self outgoingAt: #returnBlock put: aNode
 ]
 
 { #category : #'as yet unclassified' }
@@ -187,7 +194,7 @@ TypInfNode >> transfer [
 { #category : #accessing }
 TypInfNode >> type [
 
-	^ self outgoingAt: #type
+	^ self outgoingAt: #type ifAbsentPut: [ state at: self ]
 ]
 
 { #category : #accessing }

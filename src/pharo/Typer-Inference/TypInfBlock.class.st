@@ -40,7 +40,8 @@ TypInfBlock >> execute: aNode [
 { #category : #accessing }
 TypInfBlock >> initialize: aState [
 
-	^ aState at: self put: (BlockClosure
+	state := aState.
+	^ state at: self put: (BlockClosure
 			 typAsFunctionTypeWithResult: TypUnknownType instance
 			 arguments:
 			 (node arguments collect: [ :e | TypUnknownType instance ])
@@ -54,7 +55,7 @@ TypInfBlock >> transfer [
 	| type |
 	type := BlockClosure
 		        typAsFunctionTypeWithResult: (incoming
-				         select: [ :e | e data = #return ]
+				         select: [ :e | e data = #returnBlock ]
 				         thenCollect: [ :e | state at: e origin ]) typAsType
 		        arguments: (self arguments collect: [ :a | state at: a ])
 		        argumentsOptional: false

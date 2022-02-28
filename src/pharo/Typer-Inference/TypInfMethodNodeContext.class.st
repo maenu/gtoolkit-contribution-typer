@@ -24,20 +24,11 @@ TypInfMethodNodeContext class >> node: aMethodNode self: aType super: anotherTyp
 { #category : #initialization }
 TypInfMethodNodeContext >> initializeNode: aMethodNode self: aType super: anotherType [
 
-	| n nodes_ |
 	nodes := IdentityDictionary new.
 	aMethodNode acceptVisitor: self.
 	state := TypInfState self: aType super: anotherType.
-	n := 100.
-	nodes_ := nodes values.
-	nodes_ do: [ :e | e initialize: state ].
-	root flowEdgesAll do: [ :e | e state: state copy ].
-	[ 
-	n := n - 1.
-	(nodes_ inject: false into: [ :r :e | e slurpAndBurp or: r ]) and: [ 
-		n > 0 ] ] whileTrue.
-	nodes_ do: #seal.
-	stable := n > 0
+	nodes valuesDo: [ :e | e initialize: state ].
+	root flowEdgesAll do: [ :e | e state: state copy ]
 ]
 
 { #category : #accessing }
@@ -62,6 +53,20 @@ TypInfMethodNodeContext >> nodes [
 TypInfMethodNodeContext >> root [
 
 	^ root
+]
+
+{ #category : #running }
+TypInfMethodNodeContext >> run [
+
+	| n nodes_ |
+	nodes_ := nodes values.
+	n := 100.
+	[ 
+	n := n - 1.
+	(nodes_ inject: false into: [ :r :e | e slurpAndBurp or: r ]) and: [ 
+		n > 0 ] ] whileTrue.
+	nodes_ do: #type.
+	stable := n > 0
 ]
 
 { #category : #visiting }
@@ -100,13 +105,14 @@ TypInfMethodNodeContext >> visitBlockNode: aBlockNode [
 	current arguments:
 		(aBlockNode arguments collect: [ :n | self nodeAt: n ]).
 	self visitNode: aBlockNode body.
-	^ current return: (self nodeAt: aBlockNode)
+	^ current returnBlock: (self nodeAt: aBlockNode)
 ]
 
 { #category : #visiting }
 TypInfMethodNodeContext >> visitCascadeNode: aCascadeNode [
 
-	^ (aCascadeNode messages collect: [ :e | self visitNode: e ]) last
+	aCascadeNode messages do: [ :e | self visitNode: e ].
+	^ self next: aCascadeNode
 ]
 
 { #category : #visiting }

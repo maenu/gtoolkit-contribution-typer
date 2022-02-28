@@ -13,7 +13,8 @@ TypInfVariable >> constrainTo: aType in: aState [
 { #category : #accessing }
 TypInfVariable >> initialize: aState [
 
-	^ node variable typInfFlowInitialize: self in: aState
+	state := aState.
+	^ node variable typInfFlowInitialize: self in: state
 ]
 
 { #category : #'meta-object-protocol' }
@@ -32,4 +33,16 @@ TypInfVariable >> read: aNode [
 TypInfVariable >> transfer [
 
 	node variable typInfFlowTransfer: self in: state
+]
+
+{ #category : #accessing }
+TypInfVariable >> type [
+
+	^ self outgoingAt: #type ifAbsentPut: [ 
+		  self flowIncoming
+			  ifEmpty: [ 
+				  (outgoing
+					   select: [ :e | e data = #read ]
+					   thenCollect: [ :e | e target type ]) typAsType ]
+			  ifNotEmpty: [ state at: self ] ]
 ]

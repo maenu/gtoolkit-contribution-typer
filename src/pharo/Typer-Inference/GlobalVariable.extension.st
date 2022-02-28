@@ -9,7 +9,5 @@ GlobalVariable >> typInfFlowConstrain: aNode to: aType in: aState [
 { #category : #'*Typer-Inference' }
 GlobalVariable >> typInfFlowTransfer: aNode in: aState [
 
-	aState at: aNode put: (value isClassOrTrait
-			 ifTrue: [ value typAsType ]
-			 ifFalse: [ value typInfType ])
+	aState at: aNode put: value typInfType
 ]
