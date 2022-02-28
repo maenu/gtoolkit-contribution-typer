@@ -1,7 +1,7 @@
-Extension { #name : #TypEdgePragmaData }
+Extension { #name : #TypEdgePragmaKey }
 
 { #category : #'*Typer-GToolkit' }
-TypEdgePragmaData >> gtArgumentsFor: aView [
+TypEdgePragmaKey >> gtArgumentsFor: aView [
 
 	<gtView>
 	arguments ifEmpty: [ ^ aView empty ].

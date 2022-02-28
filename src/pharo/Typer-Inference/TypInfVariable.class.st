@@ -42,7 +42,7 @@ TypInfVariable >> type [
 		  self flowIncoming
 			  ifEmpty: [ 
 				  (outgoing
-					   select: [ :e | e data = #read ]
+					   select: [ :e | e key = #read ]
 					   thenCollect: [ :e | e target type ]) typAsType ]
 			  ifNotEmpty: [ state at: self ] ]
 ]

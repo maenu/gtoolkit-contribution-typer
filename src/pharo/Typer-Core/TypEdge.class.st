@@ -2,9 +2,9 @@ Class {
 	#name : #TypEdge,
 	#superclass : #Object,
 	#instVars : [
-		'data',
 		'origin',
-		'target'
+		'target',
+		'key'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -12,27 +12,27 @@ Class {
 { #category : #'instance creation' }
 TypEdge class >> origin: aNode target: anotherNode [
 
-	^ self origin: aNode target: anotherNode data: nil
+	^ self origin: aNode target: anotherNode key: nil
 ]
 
 { #category : #'instance creation' }
-TypEdge class >> origin: aNode target: anotherNode data: anObject [
+TypEdge class >> origin: aNode target: anotherNode key: anObject [
 
 	^ self new
-		  initializeOrigin: aNode target: anotherNode data: anObject;
+		  initializeOrigin: aNode target: anotherNode key: anObject;
 		  yourself
 ]
 
 { #category : #comparing }
 TypEdge >> < anObject [
 
-	^ data < anObject data
+	^ key < anObject key
 ]
 
 { #category : #comparing }
 TypEdge >> <= anObject [
 
-	^ data = anObject data or: [ data < anObject data ]
+	^ key == anObject key or: [ key < anObject key ]
 ]
 
 { #category : #accessing }
@@ -41,42 +41,41 @@ TypEdge >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	self class == anObject class ifFalse: [ ^ false ].
 	^ origin == anObject origin and: [ 
-		  target == anObject target and: [ data = anObject data ] ]
+		  target == anObject target and: [ key == anObject key ] ]
 ]
 
 { #category : #comparing }
 TypEdge >> > anObject [
 
-	^ data > anObject data
+	^ key > anObject key
 ]
 
 { #category : #comparing }
 TypEdge >> >= anObject [
 
-	^ data = anObject data or: [ data > anObject data ]
-]
-
-{ #category : #accessing }
-TypEdge >> data [
-
-	^ data
+	^ key == anObject key or: [ key > anObject key ]
 ]
 
 { #category : #accessing }
 TypEdge >> hash [
 
-	^ ((self class hash bitXor: origin identityHash) bitXor:
-		   target identityHash) bitXor: data hash
+	^ (origin identityHash bitXor: target identityHash) bitXor: key identityHash
 ]
 
 { #category : #initialization }
-TypEdge >> initializeOrigin: aNode target: anotherNode data: anObject [
+TypEdge >> initializeOrigin: aNode target: anotherNode key: anObject [
 
 	self assert: [ aNode typIsNode ].
 	self assert: [ anotherNode typIsNode ].
 	origin := aNode.
 	target := anotherNode.
-	data := anObject
+	key := anObject
+]
+
+{ #category : #accessing }
+TypEdge >> key [
+
+	^ key
 ]
 
 { #category : #accessing }
@@ -96,7 +95,7 @@ TypEdge >> origin [
 { #category : #accessing }
 TypEdge >> printOn: aStream [
 
-	data printOn: aStream
+	key printOn: aStream
 ]
 
 { #category : #accessing }

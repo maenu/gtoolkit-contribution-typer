@@ -3,7 +3,9 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'incoming',
-		'outgoing'
+		'outgoing',
+		'incomingIndex',
+		'outgoingIndex'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -11,7 +13,7 @@ Class {
 { #category : #compiler }
 TypNode class >> compiler [
 
-	^ super compiler addPlugin: TypEdgePragmaCompilerAstPlugin
+	^ super compiler addPlugin: TypEdgePragmaCompilerPlugin
 ]
 
 { #category : #invalidation }
@@ -42,7 +44,7 @@ TypNode >> incoming [
 { #category : #accessing }
 TypNode >> incoming: anObject [
 
-	^ incoming detect: [ :e | e data = anObject ]
+	^ incomingIndex at: anObject
 ]
 
 { #category : #accessing }
@@ -53,9 +55,9 @@ TypNode >> incomingAdd: anEdge [
 ]
 
 { #category : #accessing }
-TypNode >> incomingAddOrigin: aNode data: anObject [
+TypNode >> incomingAddOrigin: aNode key: anObject [
 
-	aNode outgoingAddTarget: self data: anObject.
+	aNode outgoingAddTarget: self key: anObject.
 	^ aNode
 ]
 
@@ -74,36 +76,37 @@ TypNode >> incomingAt: anObject ifAbsentPut: aBlock [
 { #category : #accessing }
 TypNode >> incomingAt: anObject ifPresent: aBlock ifAbsent: anotherBlock [
 
-	^ incoming
-		  detect: [ :e | e data = anObject ]
-		  ifFound: [ :e | aBlock value: e origin ]
-		  ifNone: anotherBlock
+	^ incomingIndex
+		  at: anObject
+		  ifPresent: [ :e | aBlock value: e origin ]
+		  ifAbsent: anotherBlock
 ]
 
 { #category : #accessing }
 TypNode >> incomingAt: anObject ifPresent: aBlock ifAbsentPut: anotherBlock [
 
-	^ incoming
-		  detect: [ :e | e data = anObject ]
-		  ifFound: [ :e | aBlock value: e origin ]
-		  ifNone: [ 
-		  anotherBlock value outgoingAddTarget: self data: anObject ]
+	^ incomingIndex
+		  at: anObject
+		  ifPresent: [ :e | aBlock value: e origin ]
+		  ifAbsent: [ 
+		  anotherBlock value outgoingAddTarget: self key: anObject ]
 ]
 
 { #category : #converting }
 TypNode >> incomingAt: anObject put: aNode [
 
-	incoming detect: [ :e | e data = anObject ] ifFound: [ :e | 
+	incomingIndex at: anObject ifPresent: [ :e | 
 		e origin = aNode ifTrue: [ ^ aNode ].
 		e origin outgoingRemove: e ].
-	^ self incomingAddOrigin: aNode data: anObject
+	^ self incomingAddOrigin: aNode key: anObject
 ]
 
 { #category : #accessing }
 TypNode >> incomingRemove: anEdge [
 
 	self assert: [ (anEdge origin outgoing includes: anEdge) not ].
-	incoming remove: anEdge
+	incoming remove: anEdge.
+	incomingIndex remove: anEdge key
 ]
 
 { #category : #accessing }
@@ -115,9 +118,9 @@ TypNode >> incomingRemoveAll [
 { #category : #accessing }
 TypNode >> incomingRemoveAt: anObject [
 
-	incoming
-		select: [ :e | e data = anObject ]
-		thenDo: [ :e | e origin outgoingRemove: e ]
+	| edge |
+	edge := incomingIndex at: anObject.
+	edge origin outgoingRemove: edge
 ]
 
 { #category : #accessing }
@@ -125,9 +128,13 @@ TypNode >> initialize [
 
 	<typPraVariable: 'incoming' as: 'IdentitySet<TypEdge>'>
 	<typPraVariable: 'outgoing' as: 'IdentitySet<TypEdge>'>
+	<typPraVariable: 'incomingIndex' as: 'IdentityDictionary<?,TypEdge>'>
+	<typPraVariable: 'outgoingIndex' as: 'IdentityDictionary<?,TypEdge>'>
 	super initialize.
 	incoming := IdentitySet new.
-	outgoing := IdentitySet new
+	outgoing := IdentitySet new.
+	incomingIndex := IdentityDictionary new.
+	outgoingIndex := IdentityDictionary new
 ]
 
 { #category : #invalidation }
@@ -163,7 +170,7 @@ TypNode >> outgoing [
 { #category : #accessing }
 TypNode >> outgoing: anObject [
 
-	^ outgoing detect: [ :e | e data = anObject ]
+	^ outgoingIndex at: anObject
 ]
 
 { #category : #accessing }
@@ -176,10 +183,10 @@ TypNode >> outgoingAdd: anEdge [
 ]
 
 { #category : #accessing }
-TypNode >> outgoingAddTarget: aNode data: anObject [
+TypNode >> outgoingAddTarget: aNode key: anObject [
 
 	^ self outgoingAdd:
-		  (TypEdge origin: self target: aNode data: anObject)
+		  (TypEdge origin: self target: aNode key: anObject)
 ]
 
 { #category : #converting }
@@ -197,38 +204,38 @@ TypNode >> outgoingAt: anObject ifAbsentPut: aBlock [
 { #category : #accessing }
 TypNode >> outgoingAt: anObject ifPresent: aBlock ifAbsent: anotherBlock [
 
-	^ outgoing
-		  detect: [ :e | e data = anObject ]
-		  ifFound: [ :e | aBlock value: e target ]
-		  ifNone: anotherBlock
+	^ outgoingIndex
+		  at: anObject
+		  ifPresent: [ :e | aBlock value: e target ]
+		  ifAbsent: anotherBlock
 ]
 
 { #category : #accessing }
 TypNode >> outgoingAt: anObject ifPresent: aBlock ifAbsentPut: anotherBlock [
 
-	^ outgoing
-		  detect: [ :e | e data = anObject ]
-		  ifFound: [ :e | aBlock value: e target ]
-		  ifNone: [ 
-		  self outgoingAddTarget: anotherBlock value data: anObject ]
+	^ outgoingIndex
+		  at: anObject
+		  ifPresent: [ :e | aBlock value: e target ]
+		  ifAbsent: [ 
+		  self outgoingAddTarget: anotherBlock value key: anObject ]
 ]
 
 { #category : #converting }
 TypNode >> outgoingAt: anObject put: aNode [
 
-	outgoing detect: [ :e | e data = anObject ] ifFound: [ :e | 
+	outgoingIndex at: anObject ifPresent: [ :e | 
 		e target = aNode ifTrue: [ ^ aNode ].
 		self outgoingRemove: e ].
-	^ self outgoingAddTarget: aNode data: anObject
+	^ self outgoingAddTarget: aNode key: anObject
 ]
 
 { #category : #accessing }
 TypNode >> outgoingRemove: anEdge [
 
 	| target |
-	outgoing remove: anEdge ifAbsent: [ ^ self ].
+	outgoing remove: anEdge.
+	outgoingIndex removeKey: anEdge key.
 	target := anEdge target.
-	target typIsNode ifFalse: [ ^ self ].
 	target incomingRemove: anEdge.
 	^ target
 ]
@@ -242,9 +249,7 @@ TypNode >> outgoingRemoveAll [
 { #category : #accessing }
 TypNode >> outgoingRemoveAt: anObject [
 
-	outgoing
-		select: [ :e | e data = anObject ]
-		thenDo: [ :e | self outgoingRemove: e ]
+	outgoingIndex at: anObject ifPresent: [ :e | self outgoingRemove: e ]
 ]
 
 { #category : #accessing }
@@ -252,7 +257,9 @@ TypNode >> postCopy [
 
 	super postCopy.
 	incoming := IdentitySet new.
-	outgoing := IdentitySet new
+	outgoing := IdentitySet new.
+	incomingIndex := IdentityDictionary new.
+	outgoingIndex := IdentityDictionary new
 ]
 
 { #category : #accessing }

@@ -1,5 +1,5 @@
 Class {
-	#name : #TypInfMethodNodeContext,
+	#name : #TypInfContext,
 	#superclass : #TypNode,
 	#traits : 'TRBProgramNodeVisitor',
 	#classTraits : 'TRBProgramNodeVisitor classTrait',
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypInfMethodNodeContext class >> node: aMethodNode self: aType super: anotherType [
+TypInfContext class >> node: aMethodNode self: aType super: anotherType [
 
 	^ self new
 		  initializeNode: aMethodNode self: aType super: anotherType;
@@ -22,7 +22,7 @@ TypInfMethodNodeContext class >> node: aMethodNode self: aType super: anotherTyp
 ]
 
 { #category : #initialization }
-TypInfMethodNodeContext >> initializeNode: aMethodNode self: aType super: anotherType [
+TypInfContext >> initializeNode: aMethodNode self: aType super: anotherType [
 
 	nodes := IdentityDictionary new.
 	aMethodNode acceptVisitor: self.
@@ -32,31 +32,31 @@ TypInfMethodNodeContext >> initializeNode: aMethodNode self: aType super: anothe
 ]
 
 { #category : #accessing }
-TypInfMethodNodeContext >> next: aNode [
+TypInfContext >> next: aNode [
 
 	^ current := current next: (self nodeAt: aNode)
 ]
 
 { #category : #accessing }
-TypInfMethodNodeContext >> nodeAt: aNode [
+TypInfContext >> nodeAt: aNode [
 
 	^ nodes at: aNode ifAbsentPut: [ aNode typInfNode ]
 ]
 
 { #category : #accessing }
-TypInfMethodNodeContext >> nodes [
+TypInfContext >> nodes [
 
 	^ nodes
 ]
 
 { #category : #accessing }
-TypInfMethodNodeContext >> root [
+TypInfContext >> root [
 
 	^ root
 ]
 
 { #category : #running }
-TypInfMethodNodeContext >> run [
+TypInfContext >> run [
 
 	| n nodes_ |
 	nodes_ := nodes values.
@@ -70,7 +70,7 @@ TypInfMethodNodeContext >> run [
 ]
 
 { #category : #visiting }
-TypInfMethodNodeContext >> visitArgumentVariableNode: anArgumentNode [
+TypInfContext >> visitArgumentVariableNode: anArgumentNode [
 
 	self visitLocalVariableNode: anArgumentNode.
 	anArgumentNode isDefinition ifFalse: [ 
@@ -79,7 +79,7 @@ TypInfMethodNodeContext >> visitArgumentVariableNode: anArgumentNode [
 ]
 
 { #category : #visiting }
-TypInfMethodNodeContext >> visitArrayNode: anArrayNode [
+TypInfContext >> visitArrayNode: anArrayNode [
 
 	| arguments |
 	arguments := anArrayNode statements collect: [ :n | 
@@ -90,7 +90,7 @@ TypInfMethodNodeContext >> visitArrayNode: anArrayNode [
 ]
 
 { #category : #visiting }
-TypInfMethodNodeContext >> visitAssignmentNode: anAssignmentNode [
+TypInfContext >> visitAssignmentNode: anAssignmentNode [
 
 	self visitNode: anAssignmentNode value.
 	self next: anAssignmentNode.
@@ -99,7 +99,7 @@ TypInfMethodNodeContext >> visitAssignmentNode: anAssignmentNode [
 ]
 
 { #category : #visiting }
-TypInfMethodNodeContext >> visitBlockNode: aBlockNode [
+TypInfContext >> visitBlockNode: aBlockNode [
 
 	self next: aBlockNode.
 	current arguments:
@@ -109,14 +109,14 @@ TypInfMethodNodeContext >> visitBlockNode: aBlockNode [
 ]
 
 { #category : #visiting }
-TypInfMethodNodeContext >> visitCascadeNode: aCascadeNode [
+TypInfContext >> visitCascadeNode: aCascadeNode [
 
 	aCascadeNode messages do: [ :e | self visitNode: e ].
 	^ self next: aCascadeNode
 ]
 
 { #category : #visiting }
-TypInfMethodNodeContext >> visitLiteralArrayNode: aLiteralArrayNode [
+TypInfContext >> visitLiteralArrayNode: aLiteralArrayNode [
 
 	| arguments |
 	arguments := aLiteralArrayNode contents collect: [ :n | 
@@ -127,13 +127,13 @@ TypInfMethodNodeContext >> visitLiteralArrayNode: aLiteralArrayNode [
 ]
 
 { #category : #visiting }
-TypInfMethodNodeContext >> visitLiteralValueNode: aNode [
+TypInfContext >> visitLiteralValueNode: aNode [
 
 	^ self next: aNode
 ]
 
 { #category : #visiting }
-TypInfMethodNodeContext >> visitMessageNode: aMessageNode [
+TypInfContext >> visitMessageNode: aMessageNode [
 
 	| arguments |
 	(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ]) 
@@ -147,7 +147,7 @@ TypInfMethodNodeContext >> visitMessageNode: aMessageNode [
 ]
 
 { #category : #visiting }
-TypInfMethodNodeContext >> visitMethodNode: aMethodNode [
+TypInfContext >> visitMethodNode: aMethodNode [
 
 	self assert: [ root isNil ].
 	self assert: [ current isNil ].
@@ -163,7 +163,7 @@ TypInfMethodNodeContext >> visitMethodNode: aMethodNode [
 ]
 
 { #category : #visiting }
-TypInfMethodNodeContext >> visitReturnNode: aReturnNode [
+TypInfContext >> visitReturnNode: aReturnNode [
 
 	self visitNode: aReturnNode value.
 	self next: aReturnNode.
@@ -171,7 +171,7 @@ TypInfMethodNodeContext >> visitReturnNode: aReturnNode [
 ]
 
 { #category : #visiting }
-TypInfMethodNodeContext >> visitSequenceNode: aSequenceNode [
+TypInfContext >> visitSequenceNode: aSequenceNode [
 
 	current := current execute: (self nodeAt: aSequenceNode).
 	current arguments:
@@ -180,7 +180,7 @@ TypInfMethodNodeContext >> visitSequenceNode: aSequenceNode [
 ]
 
 { #category : #visiting }
-TypInfMethodNodeContext >> visitTemporaryVariableNode: aTemproraryNode [
+TypInfContext >> visitTemporaryVariableNode: aTemproraryNode [
 
 	self visitLocalVariableNode: aTemproraryNode.
 	aTemproraryNode isDefinition ifFalse: [ 
@@ -189,7 +189,7 @@ TypInfMethodNodeContext >> visitTemporaryVariableNode: aTemproraryNode [
 ]
 
 { #category : #visiting }
-TypInfMethodNodeContext >> visitVariableNode: aVariableNode [
+TypInfContext >> visitVariableNode: aVariableNode [
 
 	^ self next: aVariableNode
 ]

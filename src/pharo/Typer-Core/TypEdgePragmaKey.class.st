@@ -1,23 +1,44 @@
 Class {
-	#name : #TypEdgePragmaData,
+	#name : #TypEdgePragmaKey,
 	#superclass : #Object,
 	#instVars : [
 		'selector',
 		'arguments'
 	],
+	#classInstVars : [
+		'index'
+	],
 	#category : #'Typer-Core-Type'
 }
 
-{ #category : #'instance creation' }
-TypEdgePragmaData class >> selector: aSelector arguments: aCollection [
+{ #category : #initialization }
+TypEdgePragmaKey class >> initialize [
 
-	^ self new
-		  initializeSelector: aSelector arguments: aCollection;
-		  yourself
+	index := WeakValueDictionary new
+]
+
+{ #category : #invalidation }
+TypEdgePragmaKey class >> invalidate [
+
+	<script>
+	index removeAll
+]
+
+{ #category : #'instance creation' }
+TypEdgePragmaKey class >> selector: aSelector arguments: aCollection [
+
+	^ index
+		  at: { 
+				  aSelector.
+				  aCollection }
+		  ifAbsentPut: [ 
+			  self new
+				  initializeSelector: aSelector arguments: aCollection;
+				  yourself ]
 ]
 
 { #category : #comparing }
-TypEdgePragmaData >> = anObject [
+TypEdgePragmaKey >> = anObject [
 
 	anObject == self ifTrue: [ ^ true ].
 	anObject class == self class ifFalse: [ ^ false ].
@@ -25,26 +46,26 @@ TypEdgePragmaData >> = anObject [
 ]
 
 { #category : #accessing }
-TypEdgePragmaData >> arguments [
+TypEdgePragmaKey >> arguments [
 
 	^ arguments
 ]
 
 { #category : #comparing }
-TypEdgePragmaData >> hash [
+TypEdgePragmaKey >> hash [
 
 	^ (self class hash bitXor: selector hash) bitXor: arguments hash
 ]
 
 { #category : #initialization }
-TypEdgePragmaData >> initializeSelector: aSelector arguments: aCollection [
+TypEdgePragmaKey >> initializeSelector: aSelector arguments: aCollection [
 
 	selector := aSelector.
 	arguments := aCollection
 ]
 
 { #category : #printing }
-TypEdgePragmaData >> printOn: aStream [
+TypEdgePragmaKey >> printOn: aStream [
 
 	selector printOn: aStream.
 	aStream nextPutAll: ' {'.
@@ -55,7 +76,7 @@ TypEdgePragmaData >> printOn: aStream [
 ]
 
 { #category : #accessing }
-TypEdgePragmaData >> selector [
+TypEdgePragmaKey >> selector [
 
 	^ selector
 ]

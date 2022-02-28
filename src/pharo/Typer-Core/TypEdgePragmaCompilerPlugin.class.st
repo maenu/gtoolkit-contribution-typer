@@ -1,17 +1,17 @@
 Class {
-	#name : #TypEdgePragmaCompilerAstPlugin,
+	#name : #TypEdgePragmaCompilerPlugin,
 	#superclass : #OCCompilerASTPlugin,
 	#category : #'Typer-Core-Type'
 }
 
 { #category : #private }
-TypEdgePragmaCompilerAstPlugin class >> priority [
+TypEdgePragmaCompilerPlugin class >> priority [
 
 	^ 3
 ]
 
 { #category : #api }
-TypEdgePragmaCompilerAstPlugin >> transform [
+TypEdgePragmaCompilerPlugin >> transform [
 
 	| rewriter |
 	(ast hasPragmaNamed: #typEdge) ifFalse: [ ^ self ].
@@ -22,7 +22,7 @@ TypEdgePragmaCompilerAstPlugin >> transform [
 							  		`.@statements.
 							  		^ `@return'
 		            with: '`.@asserts.
-						 	   ^ self outgoingAt: (TypEdgePragmaData selector: thisContext selector arguments: thisContext arguments) ifAbsentPut: [ | `@temporaries |
+						 	   ^ self outgoingAt: (TypEdgePragmaKey selector: thisContext selector arguments: thisContext arguments) ifAbsentPut: [ | `@temporaries |
 						    	`.@statements.
 							 	`@return ]';
 		            yourself.
@@ -32,7 +32,7 @@ TypEdgePragmaCompilerAstPlugin >> transform [
 							  		`.@statements.
 							  		^ `@return'
 			            with:
-				            '^ self outgoingAt: (TypEdgePragmaData selector: thisContext selector arguments: thisContext arguments) ifAbsentPut: [ | `@temporaries |
+				            '^ self outgoingAt: (TypEdgePragmaKey selector: thisContext selector arguments: thisContext arguments) ifAbsentPut: [ | `@temporaries |
 						    	`.@statements.
 								`@return ]';
 			            yourself.

@@ -33,7 +33,7 @@ TypBreadthFirstResolver >> initializeResolvers: anObject [
 	resolvers ifNotNil: [ self outgoingRemoveAt: #resolvers ].
 	resolvers := anObject.
 	resolvers ifNotNil: [ 
-		resolvers do: [ :e | self outgoingAddTarget: e data: #resolvers ] ]
+		resolvers do: [ :e | self outgoingAddTarget: e key: #resolvers ] ]
 ]
 
 { #category : #invalidation }

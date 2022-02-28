@@ -73,7 +73,7 @@ TypIndex >> resolve: aLookup [
 	^ (resolver canResolve: aLookup)
 		  ifTrue: [ 
 			  | data result |
-			  data := TypEdgePragmaData
+			  data := TypEdgePragmaKey
 				          selector: #resolve:
 				          arguments: { aLookup }.
 			  self outgoingAt: data put: TypUnknownType instance.

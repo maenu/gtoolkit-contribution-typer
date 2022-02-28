@@ -18,7 +18,7 @@ TypInfEdge >> isChanged [
 { #category : #testing }
 TypInfEdge >> isFlow [
 
-	^ #( #next #execute #return #returnBlock #signal ) includes: data
+	^ #( #next #execute #return #returnBlock #signal ) includes: key
 ]
 
 { #category : #accessing }

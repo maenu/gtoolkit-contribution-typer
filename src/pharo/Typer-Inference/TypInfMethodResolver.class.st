@@ -30,20 +30,17 @@ TypInfMethodResolver >> canResolve: aLookup [
 ]
 
 { #category : #accessing }
-TypInfMethodResolver >> contextAt: aMethodNodeLookup [
+TypInfMethodResolver >> contextAt: aContextKey [
 
-	^ self
-		  outgoingAt: aMethodNodeLookup
-		  ifPresent: #yourself
-		  ifAbsent: [ 
-			  | context |
-			  context := TypInfMethodNodeContext
-				             node: aMethodNodeLookup node
-				             self: aMethodNodeLookup self
-				             super: aMethodNodeLookup super.
-			  self outgoingAt: aMethodNodeLookup put: context.
-			  context run.
-			  context ]
+	^ self outgoingAt: aContextKey ifPresent: #yourself ifAbsent: [ 
+		  | context |
+		  context := TypInfContext
+			             node: aContextKey node
+			             self: aContextKey self
+			             super: aContextKey super.
+		  self outgoingAt: aContextKey put: context.
+		  context run.
+		  context ]
 ]
 
 { #category : #invalidation }
@@ -81,11 +78,12 @@ TypInfMethodResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 { #category : #accessing }
 TypInfMethodResolver >> nodeAt: aNode self: aType super: anotherType [
 
-	| context |
-	context := self contextAt: (TypInfMethodNodeLookup
-			            node: aNode methodNode
-			            self: aType
-			            super: anotherType).
+	| key context |
+	key := TypInfContextKey
+		       node: aNode methodNode
+		       self: aType
+		       super: anotherType.
+	context := self contextAt: key.
 	^ (context nodeAt: aNode) type
 ]
 

@@ -129,10 +129,10 @@ TypInfNode >> node [
 ]
 
 { #category : #accessing }
-TypInfNode >> outgoingAddTarget: aNode data: anObject [
+TypInfNode >> outgoingAddTarget: aNode key: anObject [
 
 	^ self outgoingAdd:
-		  (TypInfEdge origin: self target: aNode data: anObject)
+		  (TypInfEdge origin: self target: aNode key: anObject)
 ]
 
 { #category : #printing }

@@ -55,16 +55,6 @@ TypEdge >> typGtAsElementIn: aMondrian with: aCollection [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypEdge >> typGtDataFor: aView [
-
-	<gtView>
-	^ aView explicit
-		  title: 'Data';
-		  priority: 10;
-		  stencil: [ GtInspectorTool forObject: data ]
-]
-
-{ #category : #'*Typer-GToolkit' }
 TypEdge >> typGtGraphFor: aView [
 
 	<gtView>
@@ -81,6 +71,16 @@ TypEdge >> typGtGraphFor: aView [
 				  stencil: [ :e | e typGtAsElementIn: m ];
 				  connect: { self } from: #origin to: #target.
 			  m layout force ]
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypEdge >> typGtKeyFor: aView [
+
+	<gtView>
+	^ aView explicit
+		  title: 'Data';
+		  priority: 10;
+		  stencil: [ GtInspectorTool forObject: key ]
 ]
 
 { #category : #'*Typer-GToolkit' }

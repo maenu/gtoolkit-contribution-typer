@@ -55,7 +55,7 @@ TypInfBlock >> transfer [
 	| type |
 	type := BlockClosure
 		        typAsFunctionTypeWithResult: (incoming
-				         select: [ :e | e data = #returnBlock ]
+				         select: [ :e | e key = #returnBlock ]
 				         thenCollect: [ :e | state at: e origin ]) typAsType
 		        arguments: (self arguments collect: [ :a | state at: a ])
 		        argumentsOptional: false
