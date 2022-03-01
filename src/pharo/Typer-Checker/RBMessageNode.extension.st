@@ -6,8 +6,8 @@ RBMessageNode >> typCheCheckArgumentCompatibilityAt: anInteger [
 	<typPraArguments: 'Integer'>
 	| argument expected actual |
 	argument := self arguments at: anInteger.
-	expected := self typInfMethodInSelf arguments at: anInteger.
-	actual := argument typInfTypeInSelf.
+	expected := self typInfMethodSelf arguments at: anInteger.
+	actual := argument typInfTypeSelf.
 	(expected isUnknown or: [ actual isUnknown ]) ifTrue: [ ^ self ].
 	expected asNonNullable >= actual asNonNullable ifTrue: [ ^ self ].
 	(actual isFunction and: [ 

@@ -16,6 +16,12 @@ RBProgramNode >> typInfNode [
 ]
 
 { #category : #'*Typer-Inference' }
+RBProgramNode >> typInfTypeSelf [
+
+	^ self typInfTypeSelf: self methodNode methodClass typAsType
+]
+
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typInfTypeSelf: aType [
 
 	^ self typInfTypeSelf: aType super: aType superOrNil

@@ -4,13 +4,13 @@ Extension { #name : #IdentitySet }
 IdentitySet >> typAsType [
 
 	<typPraResult: 'TypType'>
-	| reduced |
+	| flattened |
 	self ifEmpty: [ ^ TypUnknownType instance ].
-	reduced := IdentitySet new.
+	flattened := IdentitySet new.
 	self do: [ :e | 
 		e isUnion
-			ifTrue: [ reduced addAll: e types ]
-			ifFalse: [ reduced add: e ] ].
-	reduced size = 1 ifTrue: [ ^ reduced anyOne ].
-	^ TypUnionType types: reduced
+			ifTrue: [ flattened addAll: e types ]
+			ifFalse: [ flattened add: e ] ].
+	flattened size = 1 ifTrue: [ ^ flattened anyOne ].
+	^ TypUnionType types: flattened
 ]

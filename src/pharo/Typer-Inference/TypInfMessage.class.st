@@ -41,6 +41,9 @@ TypInfMessage >> transfer [
 				in: state ] ].
 	method := self methodIn: state.
 	self arguments withIndexDo: [ :e :i | 
-		e constrainTo: (method arguments at: i) in: state ].
+		e
+			constrainTo:
+			(method arguments at: i ifAbsent: [ TypUnknownType instance ])
+			in: state ].
 	state at: self put: method result
 ]

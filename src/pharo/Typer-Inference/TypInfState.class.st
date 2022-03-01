@@ -9,6 +9,12 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
+{ #category : #accessing }
+TypInfState class >> invalidate [
+
+	self allInstancesDo: #initialize
+]
+
 { #category : #'as yet unclassified' }
 TypInfState class >> self: aType super: anotherType [
 
@@ -77,12 +83,25 @@ TypInfState >> index [
 	^ index
 ]
 
+{ #category : #accessing }
+TypInfState >> initialize [
+
+	super initialize.
+	index := IdentityDictionary new
+]
+
 { #category : #initialization }
 TypInfState >> initializeSelf: aType super: anotherType [
 
 	selfType := aType.
 	superType := anotherType.
 	index := IdentityDictionary new
+]
+
+{ #category : #accessing }
+TypInfState >> invalidate [
+
+	index removeAll
 ]
 
 { #category : #splitjoin }

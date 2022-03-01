@@ -72,6 +72,18 @@ TypInfNode >> typGtSourceFor: aView [
 ]
 
 { #category : #'*Typer-GToolkit' }
+TypInfNode >> typGtStateFor: aView [
+
+	<gtView>
+	state ifNil: [ ^ aView empty ].
+	^ aView forward
+		  title: 'State';
+		  priority: 10;
+		  object: [ state ];
+		  view: #gtItemsFor:
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtTypeFor: aView [
 
 	<gtView>

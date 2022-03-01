@@ -21,9 +21,12 @@ TypTyping >> invalidate [
 	GtPharoSourceCoderViewModel allSubInstancesDo: [ :e | 
 		e selfObject: nil ].
 	GtTextualCoderViewModel allSubInstancesDo: #requestUpdateAddOns.
+	GtLocalVariablesBindings allInstancesDo: #initialize.
 	LeSharedSnippetContext allSubInstancesDo: [ :e | e selfObject: nil ].
 	BlOverlayListener allInstancesDo: [ :e | 
 		e overlayElement removeEventHandler: e ].
+	BlHandlerAnnouncerRegistry allInstancesDo: [ :e | 
+		e removeAllSuchThat: [ :f | f isKindOf: BlOverlayListener ] ].
 	"LeDatabase allInstancesDo: #reload."
 	LeDatabasesRegistry cleanUp.
 	LeDatabasesRegistry uniqueInstance ensureDatabase.
@@ -34,7 +37,12 @@ TypTyping >> invalidate [
 	TypEdgeKey invalidateAll.
 	TypResolver invalidateAll.
 	TypShaShadow invalidateAll.
+	TypInfState invalidate.
+	TypInfMethodResolver invalidate.
 	TypInfImplementorsCache invalidate.
+	TypInfMethodNodeStack resetSoleInstance.
+	"sometimes needs to rounds to clean up"
+	Smalltalk garbageCollect.
 	Smalltalk garbageCollect.
 	probes add: 'post-reset' -> self memoryProbe.
 	^ probes

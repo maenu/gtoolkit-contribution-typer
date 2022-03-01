@@ -32,15 +32,20 @@ TypInfMethodResolver >> canResolve: aLookup [
 { #category : #accessing }
 TypInfMethodResolver >> contextAt: aContextKey [
 
-	^ self outgoingAt: aContextKey ifPresent: #yourself ifAbsent: [ 
-		  | context |
-		  context := TypInfContext
-			             node: aContextKey node
-			             self: aContextKey self
-			             super: aContextKey super.
-		  self outgoingAt: aContextKey put: context.
-		  context run.
-		  context ]
+	| context |
+	context := TypInfContext
+		           node: aContextKey node
+		           self: aContextKey self
+		           super: aContextKey super.
+	^ TypInfMethodNodeStack
+		  push: aContextKey node
+		  max: 8
+		  during: [ 
+			  self outgoingAt: aContextKey ifPresent: #yourself ifAbsent: [ 
+				  self outgoingAt: aContextKey put: context.
+				  context run.
+				  context ] ]
+		  or: [ context ]
 ]
 
 { #category : #invalidation }
@@ -78,13 +83,25 @@ TypInfMethodResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 { #category : #accessing }
 TypInfMethodResolver >> nodeAt: aNode self: aType super: anotherType [
 
-	| key context |
+	| key |
 	key := TypInfContextKey
 		       node: aNode methodNode
 		       self: aType
 		       super: anotherType.
-	context := self contextAt: key.
-	^ (context nodeAt: aNode) type
+	^ TypInfMethodNodeStack
+		  push: key node
+		  max: 8
+		  during: [ 
+			  self outgoingAt: key ifPresent: #yourself ifAbsent: [ 
+				  | context |
+				  context := TypInfContext
+					             node: key node
+					             self: key self
+					             super: key super.
+				  self outgoingAt: key put: context.
+				  context run.
+				  (context nodeAt: aNode) type ] ]
+		  or: [ TypUnknownType instance ]
 ]
 
 { #category : #printing }

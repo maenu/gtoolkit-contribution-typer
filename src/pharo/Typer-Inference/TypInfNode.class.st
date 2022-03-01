@@ -28,6 +28,8 @@ TypInfNode >> burp [
 TypInfNode >> constrainTo: aType in: aState [
 
 	| type |
+	"root is not constraining"
+	aType >= ProtoObject typAsType ifTrue: [ ^ self ].
 	type := aState at: self.
 	(type isUnknown or: [ type > aType ]) ifTrue: [ 
 		aState at: self put: aType ]
