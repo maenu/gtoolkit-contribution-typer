@@ -59,6 +59,5 @@ TypUnknownType >> result [
 { #category : #polymorphic }
 TypUnknownType >> withParameters: aCollection [
 
-	<typEdge>
 	^ self
 ]

@@ -101,15 +101,12 @@ TypType >> asCompatibleWith: aType [
 { #category : #converting }
 TypType >> asNonNullable [
 
-	<typPraResult: 'TypType'>
-	<typEdge>
 	^ self
 ]
 
 { #category : #converting }
 TypType >> asNullable [
 
-	<typPraResult: 'TypType'>
 	<typEdge>
 	^ { 
 		  TypNilType instance.

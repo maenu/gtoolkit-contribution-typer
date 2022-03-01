@@ -66,6 +66,12 @@ TypNode >> incomingAt: anObject [
 ]
 
 { #category : #converting }
+TypNode >> incomingAt: anObject ifAbsent: aBlock [
+
+	^ self incomingAt: anObject ifPresent: #yourself ifAbsent: aBlock
+]
+
+{ #category : #converting }
 TypNode >> incomingAt: anObject ifAbsentPut: aBlock [
 
 	^ self incomingAt: anObject ifPresent: #yourself ifAbsentPut: aBlock
@@ -151,7 +157,8 @@ TypNode >> invalidateOnMethodChange: aMethodAnnouncement [
 { #category : #accessing }
 TypNode >> neighbors [
 
-	^ (outgoing collect: #target) , (incoming collect: #origin)
+	^ (outgoing collect: #target as: IdentitySet)
+	  , (incoming collect: #origin as: IdentitySet)
 ]
 
 { #category : #accessing }
@@ -186,6 +193,12 @@ TypNode >> outgoingAddTarget: aNode key: anObject [
 TypNode >> outgoingAt: anObject [
 
 	^ (self outgoing: anObject) target
+]
+
+{ #category : #converting }
+TypNode >> outgoingAt: anObject ifAbsent: aBlock [
+
+	^ self outgoingAt: anObject ifPresent: #yourself ifAbsent: aBlock
 ]
 
 { #category : #converting }

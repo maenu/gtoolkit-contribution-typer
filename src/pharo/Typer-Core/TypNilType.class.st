@@ -41,14 +41,12 @@ TypNilType >> asCompatibleWith: aType [
 { #category : #converting }
 TypNilType >> asNonNullable [
 
-	<typEdge>
 	^ TypUnknownType instance
 ]
 
 { #category : #converting }
 TypNilType >> asNullable [
 
-	<typEdge>
 	^ self
 ]
 

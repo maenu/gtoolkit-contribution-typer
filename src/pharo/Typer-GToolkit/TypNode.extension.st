@@ -101,7 +101,7 @@ TypNode >> typGtPaintOn: aMondrian [
 		            nextNodes includes: e origin ])
 	           , ((nodes flatCollect: #outgoing) select: [ :e | 
 			            nextNodes includes: e target ]) groupedBy: #nodes)
-		          values asArray sort: [ :a :b | a size > b size ]) 
+		          values asIdentitySet asArray sort: [ :a :b | a size > b size ]) 
 		         takeFirst: 64.
 	nodes := (edges flatCollect: [ :e | e flatCollect: #nodes ]) 
 		         difference: currentNodes.

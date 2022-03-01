@@ -58,7 +58,6 @@ TypDepthFirstResolver >> printOn: aStream [
 { #category : #resolving }
 TypDepthFirstResolver >> resolve: aLookup [
 
-	<typEdge>
 	self assert: [ self canResolve: aLookup ].
 	^ (resolver canResolve: aLookup)
 		  ifTrue: [ resolver resolve: aLookup ]

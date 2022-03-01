@@ -69,16 +69,10 @@ TypIndex >> invalidateOnMethodChange: aMethodAnnouncement [
 { #category : #accessing }
 TypIndex >> resolve: aLookup [
 
-	<typEdge>
-	^ (resolver canResolve: aLookup)
-		  ifTrue: [ 
-			  | data result |
-			  data := TypEdgePragmaKey
-				          selector: #resolve:
-				          arguments: { aLookup }.
-			  self outgoingAt: data put: TypUnknownType instance.
-			  result := resolver resolve: aLookup.
-			  self outgoingRemoveAt: data.
-			  result ]
-		  ifFalse: [ TypUnknownType instance ]
+	^ self outgoingAt: aLookup ifAbsent: [ 
+		  (resolver canResolve: aLookup)
+			  ifTrue: [ 
+				  self outgoingAt: aLookup put: TypUnknownType instance.
+				  self outgoingAt: aLookup put: (resolver resolve: aLookup) ]
+			  ifFalse: [ TypUnknownType instance ] ]
 ]

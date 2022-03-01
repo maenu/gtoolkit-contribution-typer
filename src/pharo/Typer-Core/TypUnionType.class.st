@@ -42,7 +42,7 @@ TypUnionType >> arguments [
 	n := (arguments collect: #size) max.
 	^ (1 to: n) collect: [ :i | 
 		  | types_ |
-		  types_ := Set new.
+		  types_ := IdentitySet new.
 		  arguments do: [ :e | 
 			  i <= e size ifTrue: [ types_ add: (e at: i) ] ].
 		  types_ typAsType ]
@@ -128,10 +128,7 @@ TypUnionType >> initializeTypes: anObject [
 	self assert: [ anObject isKindOf: IdentitySet ].
 	self assert: [ anObject size > 1 ].
 	anObject = types ifTrue: [ ^ self ].
-	types ifNotNil: [ self outgoingRemoveAt: #types ].
 	types := anObject.
-	types ifNotNil: [ 
-		types do: [ :e | self outgoingAddTarget: e key: #types ] ]..
 	hash := nil
 ]
 
@@ -231,7 +228,7 @@ TypUnionType >> result [
 { #category : #accessing }
 TypUnionType >> types [
 
-	<typPraResult: 'Set<TypType>'>
+	<typPraResult: 'IdentitySet<TypType>'>
 	^ types copy
 ]
 
@@ -239,6 +236,5 @@ TypUnionType >> types [
 TypUnionType >> withParameters: aCollection [
 
 	<typEdge>
-	self flag: 'TODO should use index lookup, not copy'.
 	^ (types collect: [ :e | e withParameters: aCollection ]) typAsType
 ]
