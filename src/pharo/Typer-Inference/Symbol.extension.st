@@ -3,5 +3,5 @@ Extension { #name : #Symbol }
 { #category : #'*Typer-Inference' }
 Symbol >> typInfType [
 
-	^ TypValueType value: self superType: self class typAsType
+	^ TypValueType value: self super: self class typAsType
 ]

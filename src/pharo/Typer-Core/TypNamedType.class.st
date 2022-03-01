@@ -13,26 +13,60 @@ Class {
 TypNamedType class >> classDescription: aClassDescription [
 
 	<typPraArguments: 'ClassDescription'>
-	^ index at: aClassDescription ifAbsentPut: [ 
-		  self new
-			  initializeClassDescription: aClassDescription;
-			  yourself ]
+	| instance |
+	instance := self new
+		            initializeClassDescription: aClassDescription;
+		            yourself.
+	^ self index
+		  at: { 
+				  aClassDescription name.
+				  instance superOrNil }
+		  ifAbsentPut: [ instance ]
+]
+
+{ #category : #'instance creation' }
+TypNamedType class >> classDescription: aClassDescription super: aType [
+
+	<typPraArguments: 'ClassDescription'>
+	^ self index
+		  at: { 
+				  aClassDescription name.
+				  aType }
+		  ifAbsentPut: [ 
+			  self new
+				  initializeClassDescription: aClassDescription;
+				  initializeSuper: aType;
+				  yourself ]
 ]
 
 { #category : #'instance creation' }
 TypNamedType class >> named: aString [
 
 	<typPraArguments: 'String'>
-	^ index at: aString ifAbsentPut: [ 
-		  self new
-			  initializeName: aString;
-			  yourself ]
+	| instance |
+	instance := self new
+		            initializeName: aString asString;
+		            yourself.
+	^ self index
+		  at: { 
+				  aString asString.
+				  instance superOrNil }
+		  ifAbsentPut: [ instance ]
 ]
 
-{ #category : #accessing }
-TypNamedType class >> newFrom: aType [
-	self assert: [ aType isKindOf: self ].
-	^ self named: aType name
+{ #category : #'as yet unclassified' }
+TypNamedType class >> named: aString super: aType [
+
+	<typPraArguments: 'String'>
+	^ self index
+		  at: { 
+				  aString asString.
+				  aType }
+		  ifAbsentPut: [ 
+			  self new
+				  initializeName: aString asString;
+				  initializeSuper: aType;
+				  yourself ]
 ]
 
 { #category : #comparing }
@@ -61,7 +95,6 @@ TypNamedType >> > aType [
 { #category : #polymorphic }
 TypNamedType >> at: aString [
 
-	<typEdge>
 	^ self hasSuper
 		  ifTrue: [ self super at: aString ]
 		  ifFalse: [ TypUnknownType instance ]
@@ -179,18 +212,20 @@ TypNamedType >> super [
 { #category : #polymorphic }
 TypNamedType >> withAt: aString put: aType [
 
-	<typEdge>
 	^ self withSuper: (self super withAt: aString put: aType)
 ]
 
 { #category : #polymorphic }
 TypNamedType >> withParameters: aCollection [
 
-	<typEdge>
-	| copy |
-	self flag: 'TODO should use index lookup, not copy'.
-	copy := self copy.
-	copy hasSuper ifTrue: [ 
-		copy initializeSuperType: (copy super withParameters: aCollection) ].
-	^ copy
+	self hasSuper ifFalse: [ ^ self ].
+	^ self withSuper: (self super withParameters: aCollection)
+]
+
+{ #category : #converting }
+TypNamedType >> withSuper: aType [
+
+	self hasClassDescription ifTrue: [ 
+		^ self class classDescription: self classDescription super: aType ].
+	^ self class named: name super: aType
 ]

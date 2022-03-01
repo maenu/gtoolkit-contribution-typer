@@ -11,19 +11,30 @@ Class {
 TypVariableType class >> named: aSymbol [
 
 	<typPraArguments: 'Symbol'>
-	^ self new
-		  initializeName: aSymbol;
-		  yourself
+	| instance |
+	instance := self new
+		            initializeName: aSymbol asSymbol;
+		            yourself.
+	^ self index
+		  at: { 
+				  aSymbol asSymbol.
+				  instance superOrNil }
+		  ifAbsentPut: [ instance ]
 ]
 
 { #category : #'instance creation' }
-TypVariableType class >> named: aString superType: aType [
+TypVariableType class >> named: aSymbol super: aType [
 
 	<typPraArguments: 'String,TypType'>
-	^ self new
-		  initializeName: aString;
-		  initializeSuperType: aType;
-		  yourself
+	^ self index
+		  at: { 
+				  aSymbol asSymbol.
+				  aType }
+		  ifAbsentPut: [ 
+			  self new
+				  initializeName: aSymbol asSymbol;
+				  initializeSuper: aType;
+				  yourself ]
 ]
 
 { #category : #comparing }
@@ -69,4 +80,10 @@ TypVariableType >> printOn: aStream skipping: anIdentitySet [
 	superType hasSuper ifTrue: [ 
 		aStream nextPutAll: '<='.
 		superType printOn: aStream skipping: anIdentitySet , { self } ]
+]
+
+{ #category : #converting }
+TypVariableType >> withSuper: aType [
+
+	^ self class named: name super: aType
 ]

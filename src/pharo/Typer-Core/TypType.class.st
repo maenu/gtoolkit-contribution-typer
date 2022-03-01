@@ -11,24 +11,23 @@ Class {
 	#category : #'Typer-Core-Type'
 }
 
-{ #category : #initialization }
-TypType class >> initialize [
+{ #category : #accessing }
+TypType class >> index [
 
-	index := WeakValueDictionary new
+	^ index ifNil: [ index := WeakValueDictionary new ]
 ]
 
 { #category : #invalidation }
 TypType class >> invalidate [
 
 	<script>
-	index removeAll
+	index := nil
 ]
 
 { #category : #invalidation }
 TypType class >> invalidateAll [
 
 	<script>
-	self invalidate.
 	self withAllSubclassesDo: #invalidate
 ]
 
@@ -73,29 +72,6 @@ TypType >> >= aType [
 	<typPraResult: 'Boolean'>
 	<typPraArguments: 'TypType'>
 	^ self > aType or: [ self = aType ]
-]
-
-{ #category : #converting }
-TypType >> asCompatibleWith: aType [
-
-	<typPraResult: 'TypType'>
-	<typPraArguments: 'TypType'>
-	<typEdge>
-	^ aType isVariable
-		  ifTrue: [ aType ]
-		  ifFalse: [ 
-			  aType isUnknown
-				  ifTrue: [ aType ]
-				  ifFalse: [ 
-					  aType isNil
-						  ifTrue: [ self asNullable ]
-						  ifFalse: [ 
-							  self >= aType
-								  ifTrue: [ self ]
-								  ifFalse: [ 
-									  self hasSuper
-										  ifTrue: [ self super asCompatibleWith: aType ]
-										  ifFalse: [ TypUnknownType instance ] ] ] ] ]
 ]
 
 { #category : #converting }
@@ -144,7 +120,7 @@ TypType >> initialize [
 ]
 
 { #category : #initialization }
-TypType >> initializeSuperType: aType [
+TypType >> initializeSuper: aType [
 
 	aType = superType ifTrue: [ ^ self ].
 	superType ifNotNil: [ self outgoingRemoveAt: #super ].
@@ -269,11 +245,26 @@ TypType >> superOrNil [
 ]
 
 { #category : #converting }
+TypType >> with: aType [
+
+	<typPraResult: 'TypType'>
+	<typPraArguments: 'TypType'>
+	aType isVariable ifTrue: [ ^ aType ].
+	aType isUnknown ifTrue: [ ^ aType ].
+	aType isNil ifTrue: [ ^ self asNullable ].
+	self >= aType ifTrue: [ ^ self ].
+	self hasSuper ifTrue: [ ^ self super with: aType ].
+	^ TypUnknownType instance
+]
+
+{ #category : #polymorphic }
+TypType >> withParameters: aCollection [
+
+	self subclassResponsibility
+]
+
+{ #category : #converting }
 TypType >> withSuper: aType [
 
-	<typEdge>
-	self flag: 'TODO should use index lookup, not copy'.  
-	^ self copy
-		  initializeSuperType: aType;
-		  yourself
+	self subclassResponsibility
 ]

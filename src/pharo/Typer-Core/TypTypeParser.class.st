@@ -285,5 +285,5 @@ TypTypeParser >> reduceActionForVariableType2: nodes [
 
 	^ TypVariableType
 		  named: (nodes at: 2) asSymbol
-		  superType: (nodes at: 4)
+		  super: (nodes at: 4)
 ]

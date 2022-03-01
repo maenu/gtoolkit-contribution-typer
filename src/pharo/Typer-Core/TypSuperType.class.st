@@ -28,7 +28,7 @@ TypSuperType >> initialize [
 	<typPraVariable: 'value' as: '{!,Object}'>
 	<typPraVariable: 'superType' as: 'TypType'>
 	super initialize.
-	self initializeSuperType: ProtoObject typAsType
+	self initializeSuper: ProtoObject typAsType
 ]
 
 { #category : #invalidation }
@@ -52,15 +52,11 @@ TypSuperType >> result [
 { #category : #polymorphic }
 TypSuperType >> withAt: aString put: aType [
 
-	<typEdge>
-	self flag: 'TODO should use index lookup, not copy'.
 	^ self withSuper: (superType withAt: aString put: aType)
 ]
 
 { #category : #polymorphic }
 TypSuperType >> withParameters: aCollection [
 
-	<typEdge>
-	self flag: 'TODO should use index lookup, not copy'.
 	^ self withSuper: (superType withParameters: aCollection)
 ]

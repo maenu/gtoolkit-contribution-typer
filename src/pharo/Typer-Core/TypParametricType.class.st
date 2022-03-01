@@ -9,38 +9,89 @@ Class {
 
 { #category : #'instance creation' }
 TypParametricType class >> classDescription: aClassDescription [
+
 	self shouldNotImplement
 ]
 
 { #category : #accessing }
 TypParametricType class >> classDescription: aClassDescription parameters: anOrderedDictionary [
 
-	^ index at: thisContext arguments ifAbsentPut: [ 
-		  self new
-			  initializeClassDescription: aClassDescription;
-			  initializeParameters: anOrderedDictionary;
-			  yourself ]
+	| instance |
+	instance := self new
+		            initializeClassDescription: aClassDescription;
+		            yourself.
+	^ self index
+		  at: { 
+				  aClassDescription name.
+				  anOrderedDictionary asOrderedDictionary.
+				  instance superOrNil }
+		  ifAbsentPut: [ instance ]
+]
+
+{ #category : #accessing }
+TypParametricType class >> classDescription: aClassDescription parameters: anOrderedDictionary super: aType [
+
+	^ self index
+		  at: { 
+				  aClassDescription name.
+				  anOrderedDictionary asOrderedDictionary.
+				  aType }
+		  ifAbsentPut: [ 
+			  self new
+				  initializeClassDescription: aClassDescription;
+				  initializeParameters: anOrderedDictionary;
+				  initializeSuper: aType;
+				  yourself ]
+]
+
+{ #category : #'instance creation' }
+TypParametricType class >> classDescription: aClassDescription super: aType [
+
+	self shouldNotImplement
 ]
 
 { #category : #'instance creation' }
 TypParametricType class >> named: aString [
+
 	self shouldNotImplement
 ]
 
 { #category : #accessing }
 TypParametricType class >> named: aString parameters: anOrderedDictionary [
 
-	^ index at: thisContext arguments ifAbsentPut: [ 
-		  self new
-			  initializeName: aString;
-			  initializeParameters: anOrderedDictionary;
-			  yourself ]
+	| instance |
+	instance := self new
+		            initializeName: aString asString;
+		            initializeParameters: anOrderedDictionary;
+		            yourself.
+	^ self index
+		  at: { 
+				  aString asString.
+				  anOrderedDictionary asOrderedDictionary.
+				  instance superOrNil }
+		  ifAbsentPut: [ instance ]
 ]
 
 { #category : #accessing }
-TypParametricType class >> newFrom: aType [
-	self assert: [ aType isKindOf: self ].
-	^ self named: aType name parameters: aType parameters copy
+TypParametricType class >> named: aString parameters: anOrderedDictionary super: aType [
+
+	^ self index
+		  at: { 
+				  aString asString.
+				  anOrderedDictionary asOrderedDictionary.
+				  aType }
+		  ifAbsentPut: [ 
+			  self new
+				  initializeName: aString asString;
+				  initializeParameters: anOrderedDictionary;
+				  initializeSuper: aType;
+				  yourself ]
+]
+
+{ #category : #'instance creation' }
+TypParametricType class >> named: aString super: aType [
+
+	self shouldNotImplement
 ]
 
 { #category : #comparing }
@@ -61,21 +112,6 @@ TypParametricType >> > aType [
 	(aType parameters keys includesAll: parameters keys)
 		ifFalse: [ ^ false ].
 	^ parameters keys allSatisfy: [ :e | (self at: e) >= (aType at: e) ]
-]
-
-{ #category : #converting }
-TypParametricType >> asCompatibleWith: aType [
-
-	<typEdge>
-	^ (aType isParametric and: [ 
-		   name = aType name and: [ parameters = aType parameters ] ])
-		  ifTrue: [ 
-			  | copyParameters |
-			  copyParameters := OrderedCollection new.
-			  parameters keysAndValuesDo: [ :n :t | 
-				  copyParameters add: (t asCompatibleWith: (aType at: n)) ].
-			  self withParameters: copyParameters ]
-		  ifFalse: [ super asCompatibleWith: aType ]
 ]
 
 { #category : #accessing }
@@ -113,11 +149,8 @@ TypParametricType >> initialize [
 TypParametricType >> initializeParameters: anOrderedDictionary [
 
 	self assert: [ anOrderedDictionary isNotEmpty ].
-	parameters := OrderedDictionary new.
-	anOrderedDictionary keysAndValuesDo: [ :n :t | 
-		self outgoingAt: n put: t.
-		parameters at: n put: t ].
-	self initializeSuperType: nil.
+	parameters := anOrderedDictionary.
+	self initializeSuper: nil
 ]
 
 { #category : #invalidation }
@@ -168,17 +201,29 @@ TypParametricType >> super [
 	superType := super super.
 	(superType isParametric and: [ 
 		 parameters keys includesAll: superType parameters keys ]) ifTrue: [ 
-		self initializeSuperType: (superType withParameters:
+		self initializeSuper: (superType withParameters:
 				 (superType parameters keys collect: [ :e | self at: e ])) ].
 	^ superType
 ]
 
 { #category : #converting }
+TypParametricType >> with: aType [
+
+	| copyParameters otherParameters |
+	(aType isParametric and: [ 
+		 name = aType name and: [ parameters = aType parameters ] ]) 
+		ifFalse: [ ^ super with: aType ].
+	otherParameters := aType parameters.
+	copyParameters := OrderedCollection new.
+	parameters keysAndValuesDo: [ :n :t | 
+		copyParameters add: (t with: (aType at: n)) ].
+	^ self withParameters: copyParameters
+]
+
+{ #category : #converting }
 TypParametricType >> withAt: aSymbol put: aType [
 
-	<typEdge>
 	| copyParameters |
-	self flag: 'TODO should use index lookup, not copy'.
 	copyParameters := OrderedCollection new.
 	parameters keysAndValuesDo: [ :n :t | 
 		copyParameters add: (n = aSymbol
@@ -190,13 +235,29 @@ TypParametricType >> withAt: aSymbol put: aType [
 { #category : #converting }
 TypParametricType >> withParameters: aCollection [
 
-	<typPraArguments: 'SequenceableCollection<TypType>'>
-	<typEdge>
-	self flag: 'TODO should use index lookup, not copy'.
-	^ self copy
-		  initializeParameters:
-			  ((1 to: (aCollection size min: parameters size)) collect: [ :i | 
-					   (parameters keys at: i) -> (aCollection at: i) ])
-				  asOrderedDictionary;
-		  yourself
+	| copyParameters |
+	copyParameters := ((1 to: (aCollection size min: parameters size)) 
+		                   collect: [ :i | 
+		                   (parameters keys at: i) -> (aCollection at: i) ])
+		                  asOrderedDictionary.
+	self hasClassDescription ifTrue: [ 
+		^ self class
+			  classDescription: self classDescription
+			  parameters: copyParameters
+			  super: self superOrNil ].
+	^ self class
+		  named: name
+		  parameters: copyParameters
+		  super: self superOrNil
+]
+
+{ #category : #converting }
+TypParametricType >> withSuper: aType [
+
+	self hasClassDescription ifTrue: [ 
+		^ self class
+			  classDescription: self classDescription
+			  parameters: parameters copy
+			  super: aType ].
+	^ self class named: name parameters: parameters copy super: aType
 ]

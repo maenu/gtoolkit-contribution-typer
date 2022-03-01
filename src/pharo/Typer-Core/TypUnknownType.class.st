@@ -61,3 +61,9 @@ TypUnknownType >> withParameters: aCollection [
 
 	^ self
 ]
+
+{ #category : #converting }
+TypUnknownType >> withSuper: aType [
+
+	^ self
+]

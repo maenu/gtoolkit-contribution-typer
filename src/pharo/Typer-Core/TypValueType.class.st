@@ -8,13 +8,17 @@ Class {
 }
 
 { #category : #accessing }
-TypValueType class >> value: anObject superType: aType [
+TypValueType class >> value: anObject super: aType [
 
-	^ index at: thisContext arguments ifAbsentPut: [ 
-		  self new
-			  initializeValue: anObject;
-			  initializeSuperType: aType;
-			  yourself ]
+	^ self index
+		  at: { 
+				  anObject identityHash.
+				  aType }
+		  ifAbsentPut: [ 
+			  self new
+				  initializeValue: anObject;
+				  initializeSuper: aType;
+				  yourself ]
 ]
 
 { #category : #comparing }
@@ -59,4 +63,10 @@ TypValueType >> printOn: aStream skipping: anIdentitySet [
 TypValueType >> value [
 
 	^ value
+]
+
+{ #category : #converting }
+TypValueType >> withSuper: aType [
+
+	^ self class value: value super: aType
 ]

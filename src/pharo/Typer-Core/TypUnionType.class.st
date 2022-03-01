@@ -9,12 +9,12 @@ Class {
 }
 
 { #category : #'instance creation' }
-TypUnionType class >> types: aSet [
+TypUnionType class >> types: anIdentitySet [
 
 	<typPraArguments: 'IdentitySet<TypType>'>
-	^ index at: thisContext arguments ifAbsentPut: [ 
+	^ self index at: anIdentitySet asIdentitySet ifAbsentPut: [ 
 		  self new
-			  initializeTypes: aSet;
+			  initializeTypes: anIdentitySet asIdentitySet;
 			  yourself ]
 ]
 
@@ -91,7 +91,7 @@ TypUnionType >> hasSuper [
 	[ remains isEmpty ] whileFalse: [ 
 		| next common |
 		next := remains remove: remains anyOne.
-		common := current asCompatibleWith: next.
+		common := current with: next.
 		common = current ifFalse: [ 
 			current := common.
 			remains add: current ] ].
@@ -101,7 +101,7 @@ TypUnionType >> hasSuper [
 		addAll: unknownTypes.
 	superType_ := remains typAsType.
 	(superType_ isUnion not or: [ superType_ types ~= types ]) ifTrue: [ 
-		self initializeSuperType: superType_.
+		self initializeSuper: superType_.
 		^ true ].
 	^ false
 ]
@@ -237,4 +237,10 @@ TypUnionType >> withParameters: aCollection [
 
 	<typEdge>
 	^ (types collect: [ :e | e withParameters: aCollection ]) typAsType
+]
+
+{ #category : #converting }
+TypUnionType >> withSuper: aType [
+
+	^ self
 ]

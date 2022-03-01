@@ -12,6 +12,12 @@ TypNilType class >> classDescription: aClassDescription [
 	self shouldNotImplement
 ]
 
+{ #category : #'instance creation' }
+TypNilType class >> classDescription: aClassDescription super: aType [
+
+	self shouldNotImplement
+]
+
 { #category : #accessing }
 TypNilType class >> instance [
 
@@ -31,11 +37,10 @@ TypNilType class >> named: aString [
 	self shouldNotImplement
 ]
 
-{ #category : #converting }
-TypNilType >> asCompatibleWith: aType [
+{ #category : #'instance creation' }
+TypNilType class >> named: aString super: aType [
 
-	<typEdge>
-	^ aType asNullable
+	self shouldNotImplement
 ]
 
 { #category : #converting }
@@ -67,4 +72,10 @@ TypNilType >> printOn: aStream skipping: anIdentitySet [
 		ifTrue: [ aStream << '.'.
 			^ self ].
 	aStream << '!'
+]
+
+{ #category : #converting }
+TypNilType >> with: aType [
+
+	^ aType asNullable
 ]

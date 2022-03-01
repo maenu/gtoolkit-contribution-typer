@@ -11,19 +11,47 @@ Class {
 
 { #category : #accessing }
 TypFunctionType class >> classDescription: aClassDescription parameters: aSequenceableCollection [
+
 	self shouldNotImplement
 ]
 
 { #category : #accessing }
 TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean [
 
-	^ index
+	| instance parameters |
+	parameters := OrderedDictionary new.
+	parameters at: #'0' put: aType.
+	aCollection withIndexDo: [ :e :i | 
+		parameters at: i asString asSymbol put: e ].
+	instance := self new
+		            initializeClassDescription: aClassDescription;
+		            initializeParameters: parameters;
+		            initializeArgumentsSize: parameters size - 1
+		            argumentsOptional: aBoolean
+		            signalsAlways: anotherBoolean;
+		            yourself.
+	^ self index
 		  at: { 
-				  aClassDescription.
+				  aClassDescription name.
 				  aType.
 				  aCollection asArray.
 				  aBoolean.
-				  anotherBoolean }
+				  anotherBoolean.
+				  instance superOrNil }
+		  ifAbsentPut: [ instance ]
+]
+
+{ #category : #accessing }
+TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean super: anotherType [
+
+	^ self index
+		  at: { 
+				  aClassDescription name.
+				  aType.
+				  aCollection asArray.
+				  aBoolean.
+				  anotherBoolean.
+				  anotherType }
 		  ifAbsentPut: [ 
 			  | parameters |
 			  parameters := OrderedDictionary new.
@@ -36,49 +64,67 @@ TypFunctionType class >> classDescription: aClassDescription result: aType argum
 				  initializeArgumentsSize: parameters size - 1
 				  argumentsOptional: aBoolean
 				  signalsAlways: anotherBoolean;
+				  initializeSuper: anotherType;
 				  yourself ]
 ]
 
 { #category : #accessing }
 TypFunctionType class >> named: aString parameters: aSequenceableCollection [
+
 	self shouldNotImplement
 ]
 
 { #category : #accessing }
 TypFunctionType class >> named: aString result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean [
 
-	^ index
+	| instance parameters |
+	parameters := OrderedDictionary new.
+	parameters at: #'0' put: aType.
+	aCollection withIndexDo: [ :e :i | 
+		parameters at: i asString asSymbol put: e ].
+	instance := self new
+		            initializeName: aString;
+		            initializeParameters: parameters;
+		            initializeArgumentsSize: parameters size - 1
+		            argumentsOptional: aBoolean
+		            signalsAlways: anotherBoolean;
+		            yourself.
+	^ self index
 		  at: { 
-				  aString.
+				  aString asString.
 				  aType.
 				  aCollection asArray.
 				  aBoolean.
-				  anotherBoolean }
+				  anotherBoolean.
+				  instance superOrNil }
+		  ifAbsentPut: [ instance ]
+]
+
+{ #category : #accessing }
+TypFunctionType class >> named: aString result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean super: anotherType [
+
+	^ self index
+		  at: { 
+				  aString asString.
+				  aType.
+				  aCollection asArray.
+				  aBoolean.
+				  anotherBoolean.
+				  anotherType }
 		  ifAbsentPut: [ 
 			  | parameters |
 			  parameters := OrderedDictionary new.
 			  parameters at: #'0' put: aType.
 			  aCollection withIndexDo: [ :e :i | 
-				  parameters at: i asString asSymbol
-				 put: e ].
+				  parameters at: i asString asSymbol put: e ].
 			  self new
 				  initializeName: aString;
 				  initializeParameters: parameters;
 				  initializeArgumentsSize: parameters size - 1
 				  argumentsOptional: aBoolean
 				  signalsAlways: anotherBoolean;
+				  initializeSuper: anotherType;
 				  yourself ]
-]
-
-{ #category : #accessing }
-TypFunctionType class >> newFrom: aType [
-	self assert: [ aType isKindOf: self ].
-	^ self
-		named: aType name
-		result: aType result
-		arguments: aType arguments copy
-		argumentsOptional: aType argumentsOptional
-		signalsAlways: aType signalsAlways
 ]
 
 { #category : #comparing }
@@ -130,23 +176,6 @@ TypFunctionType >> argumentsOptional [
 { #category : #accessing }
 TypFunctionType >> argumentsSize [
 	^ argumentsSize
-]
-
-{ #category : #converting }
-TypFunctionType >> asCompatibleWith: aType [
-
-	<typEdge>
-	^ (aType isFunction and: [ 
-		   argumentsSize = aType argumentsSize and: [ 
-			   argumentsOptional = aType argumentsOptional ] ])
-		  ifTrue: [ 
-			  | copy |
-			  copy := self copy.
-			  parameters keysAndValuesDo: [ :n :t | 
-				  self flag: 'TODO loop is ugly'.
-				  copy := copy withAt: n put: (t asCompatibleWith: (aType at: n)) ].
-			  copy ]
-		  ifFalse: [ super asCompatibleWith: aType ]
 ]
 
 { #category : #comparing }
@@ -229,25 +258,71 @@ TypFunctionType >> signalsAlways [
 { #category : #converting }
 TypFunctionType >> withArguments: someTypes [
 
-	<typEdge>
 	^ self withParameters: { self result } , someTypes
+]
+
+{ #category : #polymorphic }
+TypFunctionType >> withParameters: aCollection [
+
+	self hasClassDescription ifTrue: [ 
+		^ self class
+			  classDescription: self classDescription
+			  result: aCollection first
+			  arguments: aCollection allButFirst
+			  argumentsOptional: argumentsOptional
+			  signalsAlways: signalsAlways
+			  super: self superOrNil ].
+	^ self class
+		  named: name
+		  result: aCollection first
+		  arguments: aCollection allButFirst
+		  argumentsOptional: argumentsOptional
+		  signalsAlways: signalsAlways
+		  super: self superOrNil
 ]
 
 { #category : #converting }
 TypFunctionType >> withResult: aType [
 
-	<typEdge>
 	^ self withAt: #'0' put: aType
 ]
 
 { #category : #converting }
 TypFunctionType >> withSignalsAlways: aBooleanOrNil [
 
-	<typEdge>
-	self flag: 'TODO should use index lookup, not copy'.
-	^ self copy
-		  initializeArgumentsSize: argumentsSize
+	self hasClassDescription ifTrue: [ 
+		^ self class
+			  classDescription: self classDescription
+			  result: self result
+			  arguments: self arguments
+			  argumentsOptional: argumentsOptional
+			  signalsAlways: aBooleanOrNil
+			  super: self superOrNil ].
+	^ self class
+		  named: name
+		  result: self result
+		  arguments: self arguments
 		  argumentsOptional: argumentsOptional
-		  signalsAlways: aBooleanOrNil;
-		  yourself
+		  signalsAlways: aBooleanOrNil
+		  super: self superOrNil
+]
+
+{ #category : #converting }
+TypFunctionType >> withSuper: aType [
+
+	self hasClassDescription ifTrue: [ 
+		^ self class
+			  classDescription: self classDescription
+			  result: self result
+			  arguments: self arguments
+			  argumentsOptional: argumentsOptional
+			  signalsAlways: signalsAlways
+			  super: aType ].
+	^ self class
+		  named: name
+		  result: self result
+		  arguments: self arguments
+		  argumentsOptional: argumentsOptional
+		  signalsAlways: signalsAlways
+		  super: aType
 ]
