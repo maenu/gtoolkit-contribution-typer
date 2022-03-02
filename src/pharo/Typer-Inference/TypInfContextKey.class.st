@@ -54,6 +54,16 @@ TypInfContextKey >> node [
 	^ node
 ]
 
+{ #category : #accessing }
+TypInfContextKey >> printOn: aStream [
+
+	selfType printOn: aStream.
+	aStream nextPut: Character space.
+	superType printOn: aStream.
+	aStream nextPut: Character space.
+	node printOn: aStream
+]
+
 { #category : #'as yet unclassified' }
 TypInfContextKey >> self [
 

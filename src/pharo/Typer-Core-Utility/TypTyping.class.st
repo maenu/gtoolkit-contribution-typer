@@ -139,7 +139,7 @@ TypTyping >> typeMethod: aMethod timeout: aDuration [
 	semaphore := Semaphore new.
 	process := [ 
 	           [ 
-	           [ result := aMethod typInfTypeInSelf ]
+	           [ result := aMethod ast typInfTypeSelf ]
 		           on: Exception
 		           do: [ :e | 
 			           (e isKindOf: OCUndeclaredVariableWarning)

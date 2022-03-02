@@ -78,7 +78,7 @@ TypEdge >> typGtKeyFor: aView [
 
 	<gtView>
 	^ aView explicit
-		  title: 'Data';
+		  title: 'Key';
 		  priority: 10;
 		  stencil: [ GtInspectorTool forObject: key ]
 ]

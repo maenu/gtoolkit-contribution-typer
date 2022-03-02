@@ -13,7 +13,10 @@ Class {
 { #category : #accessing }
 TypInfImplementorsCache class >> instance [
 
-	^ instance ifNil: [ instance := self new ]
+	^ instance ifNil: [ 
+		  instance := self new
+			              build;
+			              yourself ]
 ]
 
 { #category : #accessing }
@@ -24,12 +27,24 @@ TypInfImplementorsCache class >> invalidate [
 ]
 
 { #category : #accessing }
+TypInfImplementorsCache >> build [
+
+	cache removeAll.
+	SystemNavigation new allBehaviors do: [ :b | 
+		b methods do: [ :m | 
+			cache
+				at: m selector
+				ifPresent: [ :s | s add: m methodClass ]
+				ifAbsentPut: [ WeakIdentitySet with: m methodClass ] ] ]
+]
+
+{ #category : #accessing }
 TypInfImplementorsCache >> implementors: aSymbol [
 
 	^ cache at: aSymbol ifAbsentPut: [ 
 		  (aSymbol implementors sorted: [ :a :b | 
 			   b methodClass inheritsFrom: a methodClass ])
-			  inject: Set new
+			  inject: WeakIdentitySet new
 			  into: [ :r :e | 
 				  r
 					  detect: [ :f | e methodClass inheritsFrom: f ]
