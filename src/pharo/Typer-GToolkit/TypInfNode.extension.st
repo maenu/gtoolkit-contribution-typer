@@ -25,12 +25,12 @@ TypInfNode >> typGtFlowPaintOn: aMondrian [
 
 	| edges nodes currentNodes nextNodes |
 	currentNodes := aMondrian existingNodes.
-	nodes := self flowNodesAll difference: currentNodes.
+	nodes := (self context outgoing collect: #target) difference: currentNodes.
 	nodes ifEmpty: [ ^ self ].
 	nextNodes := currentNodes , nodes , { self }.
-	edges := ((((nodes flatCollect: #flowIncoming) select: [ :e | 
+	edges := ((((nodes flatCollect: #incomingFlow) select: [ :e | 
 		            nextNodes includes: e origin ])
-	           , ((nodes flatCollect: #flowOutgoing) select: [ :e | 
+	           , ((nodes flatCollect: #outgoingFlow) select: [ :e | 
 			            nextNodes includes: e target ])) asIdentitySet asArray 
 		          groupedBy: #nodes) values asArray sort: [ :a :b | 
 		         a size > b size ].

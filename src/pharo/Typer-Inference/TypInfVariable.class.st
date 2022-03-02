@@ -39,7 +39,7 @@ TypInfVariable >> transfer [
 TypInfVariable >> type [
 
 	^ self outgoingAt: #type ifAbsentPut: [ 
-		  self flowIncoming
+		  self incomingFlow
 			  ifEmpty: [ 
 				  outgoing
 					  at: #read

@@ -24,7 +24,7 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 			 coder: self;
 			 yourself).
 	anAddOns
-		addStyler: (TypGtDeclarationStyler new
+		addStyler: (TypGtValueStyler new
 				 coder: self;
 				 yourself);
 		"addStyler: (TypGtCheckStyler new

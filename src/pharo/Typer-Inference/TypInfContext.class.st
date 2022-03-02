@@ -28,7 +28,9 @@ TypInfContext >> initializeNode: aMethodNode self: aType super: anotherType [
 	aMethodNode acceptVisitor: self.
 	state := TypInfState self: aType super: anotherType.
 	nodes valuesDo: [ :e | e initialize: state ].
-	root flowEdgesAll do: [ :e | e state: state copy ]
+	nodes keysAndValuesDo: [ :n :e | 
+		self outgoingAt: n put: e.
+		e outgoingFlow do: [ :f | f state: state copy ] ]
 ]
 
 { #category : #accessing }
@@ -160,6 +162,14 @@ TypInfContext >> visitMethodNode: aMethodNode [
 		self next: RBVariableNode selfNode.
 		current return: root ].
 	^ root
+]
+
+{ #category : #visiting }
+TypInfContext >> visitPragmaNode: aPragmaNode [
+
+	"noop"
+
+	
 ]
 
 { #category : #visiting }

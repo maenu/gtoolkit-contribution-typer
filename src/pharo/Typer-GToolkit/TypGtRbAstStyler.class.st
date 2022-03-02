@@ -22,11 +22,11 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 	ast := coder rbAST.
 	selfType := ast methodClass typAsType.
 	text := aText.
-	[ 
+	[  
 	ast typInfTypeSelf: selfType.
-	self visitNode: ast ]
+	self visitNode: ast ] 
 		on: Error
-		do: [ :e | Halt once ].
+		do: [ :e | Halt once ]. 
 	text := nil.
 	selfType := nil
 ]
@@ -50,4 +50,12 @@ TypGtRbAstStyler >> styleNode: aNode [
 		styleFrom: aNode start
 		to: aNode stop
 		with: { (TypGtAttribute type: type) }
+]
+
+{ #category : #visiting }
+TypGtRbAstStyler >> visitPragmaNode: aPragmaNode [
+
+	"noop"
+
+	
 ]

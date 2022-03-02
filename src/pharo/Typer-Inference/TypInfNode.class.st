@@ -19,7 +19,7 @@ TypInfNode class >> node: aNode [
 { #category : #accessing }
 TypInfNode >> burp [
 
-	^ self flowOutgoing
+	^ self outgoingFlow
 		  inject: false
 		  into: [ :r :e | r or: (e state: state copy) ]
 ]
@@ -35,52 +35,16 @@ TypInfNode >> constrainTo: aType in: aState [
 		aState at: self put: aType ]
 ]
 
-{ #category : #'as yet unclassified' }
-TypInfNode >> flowEdges [
+{ #category : #accessing }
+TypInfNode >> context [
 
-	^ self flowIncoming , self flowOutgoing
+	^ self incomingAt: node
 ]
 
 { #category : #'as yet unclassified' }
-TypInfNode >> flowEdgesAll [
-
-	| edges |
-	edges := IdentitySet new.
-	self flowNodesAll do: [ :n | edges addAll: n flowEdges ].
-	^ edges
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> flowIncoming [
+TypInfNode >> incomingFlow [
 
 	^ self incoming select: [ :e | 
-		  (e isKindOf: TypInfEdge) and: [ e isFlow ] ]
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> flowNodesAll [
-
-	| nodes queue |
-	nodes := IdentitySet new.
-	queue := LinkedList with: self.
-	[ queue isEmpty ] whileFalse: [ 
-		| current origins targets |
-		current := queue removeFirst.
-		origins := current incoming
-			           collect: #origin
-			           thenSelect: [ :e | e isKindOf: TypInfNode ].
-		targets := current outgoing
-			           collect: #target
-			           thenSelect: [ :e | e isKindOf: TypInfNode ].
-		queue addAll: ((origins , targets) asIdentitySet difference: nodes).
-		nodes add: current ].
-	^ nodes
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> flowOutgoing [
-
-	^ self outgoing select: [ :e | 
 		  (e isKindOf: TypInfEdge) and: [ e isFlow ] ]
 ]
 
@@ -137,6 +101,13 @@ TypInfNode >> outgoingAddTarget: aNode key: anObject [
 		  (TypInfEdge origin: self target: aNode key: anObject)
 ]
 
+{ #category : #'as yet unclassified' }
+TypInfNode >> outgoingFlow [
+
+	^ self outgoing select: [ :e | 
+		  (e isKindOf: TypInfEdge) and: [ e isFlow ] ]
+]
+
 { #category : #printing }
 TypInfNode >> printOn: aStream [
 
@@ -171,7 +142,7 @@ TypInfNode >> returnBlock: aNode [
 TypInfNode >> slurp [
 
 	| ins |
-	ins := self flowIncoming collect: #state as: LinkedList.
+	ins := self incomingFlow collect: #state as: LinkedList.
 	state := ins removeLast copy.
 	[ ins isEmpty ] whileFalse: [ state := state join: ins removeLast ]
 ]
@@ -179,7 +150,7 @@ TypInfNode >> slurp [
 { #category : #'as yet unclassified' }
 TypInfNode >> slurpAndBurp [
 
-	self flowIncoming ifEmpty: [ ^ false ].
+	self incomingFlow ifEmpty: [ ^ false ].
 	self slurp.
 	self transfer.
 	^ self burp

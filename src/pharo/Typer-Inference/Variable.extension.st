@@ -18,7 +18,7 @@ Variable >> typInfFlowConstrain: aNode to: aType in: aState [
 { #category : #'*Typer-Inference' }
 Variable >> typInfFlowInitialize: aNode in: aState [
 
-	aState at: aNode put: TypNilType instance
+	aState at: aNode put: TypUnknownType instance
 ]
 
 { #category : #'*Typer-Inference' }

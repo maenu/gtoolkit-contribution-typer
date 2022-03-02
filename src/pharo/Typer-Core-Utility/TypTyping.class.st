@@ -42,7 +42,7 @@ TypTyping >> invalidate [
 	TypInfImplementorsCache invalidate.
 	TypInfMethodNodeStack resetSoleInstance.
 	"sometimes needs to rounds to clean up"
-	Smalltalk garbageCollect.
+	1 second wait.
 	Smalltalk garbageCollect.
 	probes add: 'post-reset' -> self memoryProbe.
 	^ probes
