@@ -18,7 +18,7 @@ TypNode class >> compiler [
 TypNode class >> invalidateAll [
 
 	<script>
-	^ self allSubInstancesDo: #outgoingRemoveAll
+	^ self allSubInstancesDo: #invalidate
 ]
 
 { #category : #testing }
@@ -36,20 +36,25 @@ TypNode >> edges [
 { #category : #accessing }
 TypNode >> incoming [
 
-	^ incoming values
+	^ incoming values flatCollect: #yourself
 ]
 
 { #category : #accessing }
 TypNode >> incoming: anObject [
 
-	^ incoming at: anObject
+	^ (incoming at: anObject) anyOne
 ]
 
 { #category : #accessing }
 TypNode >> incomingAdd: anEdge [
 
-	self assert: [ anEdge origin outgoing includes: anEdge ].
-	incoming at: anEdge key put: anEdge
+	self assert: [ anEdge origin outgoingIncludes: anEdge ].
+	incoming
+		at: anEdge key
+		ifPresent: [ :e | 
+			e add: anEdge.
+			e ]
+		ifAbsentPut: [ IdentitySet with: anEdge ]
 ]
 
 { #category : #accessing }
@@ -82,7 +87,7 @@ TypNode >> incomingAt: anObject ifPresent: aBlock ifAbsent: anotherBlock [
 
 	^ incoming
 		  at: anObject
-		  ifPresent: [ :e | aBlock value: e origin ]
+		  ifPresent: [ :e | aBlock value: e anyOne origin ]
 		  ifAbsent: anotherBlock
 ]
 
@@ -91,7 +96,7 @@ TypNode >> incomingAt: anObject ifPresent: aBlock ifAbsentPut: anotherBlock [
 
 	^ incoming
 		  at: anObject
-		  ifPresent: [ :e | aBlock value: e origin ]
+		  ifPresent: [ :e | aBlock value: e anyOne origin ]
 		  ifAbsent: [ 
 		  anotherBlock value outgoingAddTarget: self key: anObject ]
 ]
@@ -99,31 +104,40 @@ TypNode >> incomingAt: anObject ifPresent: aBlock ifAbsentPut: anotherBlock [
 { #category : #converting }
 TypNode >> incomingAt: anObject put: aNode [
 
-	incoming at: anObject ifPresent: [ :e | 
-		e origin = aNode ifTrue: [ ^ aNode ].
-		e origin outgoingRemove: e ].
+	incoming at: anObject ifPresent: [ :c | 
+		c ifNotEmpty: [ 
+			| e |
+			e := c anyOne.
+			e origin = aNode ifTrue: [ ^ aNode ].
+			e origin outgoingRemove: e ] ].
 	^ self incomingAddOrigin: aNode key: anObject
+]
+
+{ #category : #testing }
+TypNode >> incomingIncludes: anEdge [
+
+	^ incoming
+		  at: anEdge key
+		  ifPresent: [ :e | e includes: anEdge ]
+		  ifAbsent: [ false ]
 ]
 
 { #category : #accessing }
 TypNode >> incomingRemove: anEdge [
 
-	self assert: [ (anEdge origin outgoing includes: anEdge) not ].
-	incoming removeKey: anEdge key ifAbsent: [ "noop" ]
-]
-
-{ #category : #accessing }
-TypNode >> incomingRemoveAll [
-
-	incoming copy do: [ :e | e origin outgoingRemove: e ]
+	self assert: [ (anEdge origin outgoingIncludes: anEdge) not ].
+	incoming
+		at: anEdge key
+		ifPresent: [ :e | e remove: anEdge ]
+		ifAbsent: [ "noop" ]
 ]
 
 { #category : #accessing }
 TypNode >> incomingRemoveAt: anObject [
 
-	| edge |
-	edge := incoming at: anObject.
-	edge origin outgoingRemove: edge
+	incoming
+		at: anObject
+		ifPresent: [ :e | e copy do: [ :f | f origin outgoingRemove: f ] ]
 ]
 
 { #category : #accessing }
@@ -139,7 +153,8 @@ TypNode >> initialize [
 { #category : #invalidation }
 TypNode >> invalidate [
 
-	
+	incoming removeAll.
+	outgoing removeAll
 ]
 
 { #category : #invalidation }
@@ -157,27 +172,32 @@ TypNode >> invalidateOnMethodChange: aMethodAnnouncement [
 { #category : #accessing }
 TypNode >> neighbors [
 
-	^ (outgoing collect: #target as: IdentitySet)
-	  , (incoming collect: #origin as: IdentitySet)
+	^ (self outgoing collect: #target as: IdentitySet)
+	  , (self incoming collect: #origin as: IdentitySet)
 ]
 
 { #category : #accessing }
 TypNode >> outgoing [
 
-	^ outgoing values
+	^ outgoing values flatCollect: #yourself
 ]
 
 { #category : #accessing }
 TypNode >> outgoing: anObject [
 
-	^ outgoing at: anObject
+	^ (outgoing at: anObject) anyOne
 ]
 
 { #category : #accessing }
 TypNode >> outgoingAdd: anEdge [
 
 	self assert: [ anEdge origin == self ].
-	outgoing at: anEdge key put: anEdge.
+	outgoing
+		at: anEdge key
+		ifPresent: [ :e | 
+			e add: anEdge.
+			e ]
+		ifAbsentPut: [ IdentitySet with: anEdge ].
 	anEdge target incomingAdd: anEdge.
 	^ anEdge target
 ]
@@ -212,7 +232,7 @@ TypNode >> outgoingAt: anObject ifPresent: aBlock ifAbsent: anotherBlock [
 
 	^ outgoing
 		  at: anObject
-		  ifPresent: [ :e | aBlock value: e target ]
+		  ifPresent: [ :e | aBlock value: e anyOne target ]
 		  ifAbsent: anotherBlock
 ]
 
@@ -221,7 +241,7 @@ TypNode >> outgoingAt: anObject ifPresent: aBlock ifAbsentPut: anotherBlock [
 
 	^ outgoing
 		  at: anObject
-		  ifPresent: [ :e | aBlock value: e target ]
+		  ifPresent: [ :e | aBlock value: e anyOne target ]
 		  ifAbsent: [ 
 		  self outgoingAddTarget: anotherBlock value key: anObject ]
 ]
@@ -229,32 +249,42 @@ TypNode >> outgoingAt: anObject ifPresent: aBlock ifAbsentPut: anotherBlock [
 { #category : #converting }
 TypNode >> outgoingAt: anObject put: aNode [
 
-	outgoing at: anObject ifPresent: [ :e | 
-		e target = aNode ifTrue: [ ^ aNode ].
-		self outgoingRemove: e ].
+	outgoing at: anObject ifPresent: [ :c | 
+		c ifNotEmpty: [ 
+			| e |
+			e := c anyOne.
+			e target = aNode ifTrue: [ ^ aNode ].
+			self outgoingRemove: e ] ].
 	^ self outgoingAddTarget: aNode key: anObject
+]
+
+{ #category : #testing }
+TypNode >> outgoingIncludes: anEdge [
+
+	^ outgoing
+		  at: anEdge key
+		  ifPresent: [ :e | e includes: anEdge ]
+		  ifAbsent: [ false ]
 ]
 
 { #category : #accessing }
 TypNode >> outgoingRemove: anEdge [
 
-	| target |
-	outgoing removeKey: anEdge key.
-	target := anEdge target.
-	target incomingRemove: anEdge.
-	^ target
-]
-
-{ #category : #accessing }
-TypNode >> outgoingRemoveAll [
-
-	outgoing copy do: [ :e | self outgoingRemove: e ]
+	outgoing
+		at: anEdge key
+		ifPresent: [ :e | e remove: anEdge ]
+		ifAbsent: [ "noop" ].
+	^ anEdge target
+		  incomingRemove: anEdge;
+		  yourself
 ]
 
 { #category : #accessing }
 TypNode >> outgoingRemoveAt: anObject [
 
-	outgoing at: anObject ifPresent: [ :e | self outgoingRemove: e ]
+	outgoing
+		at: anObject
+		ifPresent: [ :e | e copy do: [ :f | self outgoingRemove: f ] ]
 ]
 
 { #category : #accessing }

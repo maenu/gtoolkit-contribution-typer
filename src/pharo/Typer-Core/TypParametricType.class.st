@@ -19,6 +19,7 @@ TypParametricType class >> classDescription: aClassDescription parameters: anOrd
 	| instance |
 	instance := self new
 		            initializeClassDescription: aClassDescription;
+		            initializeParameters: anOrderedDictionary;
 		            yourself.
 	^ self index
 		  at: { 

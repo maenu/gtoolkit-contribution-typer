@@ -51,7 +51,9 @@ TypIndex >> initializeResolver: anObject [
 
 { #category : #invalidation }
 TypIndex >> invalidate [
-	resolver invalidate
+
+	resolver invalidate.
+	super invalidate
 ]
 
 { #category : #invalidation }

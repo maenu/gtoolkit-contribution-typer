@@ -53,7 +53,7 @@ TypInfNode >> flowEdgesAll [
 { #category : #'as yet unclassified' }
 TypInfNode >> flowIncoming [
 
-	^ incoming select: [ :e | 
+	^ self incoming select: [ :e | 
 		  (e isKindOf: TypInfEdge) and: [ e isFlow ] ]
 ]
 
@@ -80,7 +80,7 @@ TypInfNode >> flowNodesAll [
 { #category : #'as yet unclassified' }
 TypInfNode >> flowOutgoing [
 
-	^ outgoing select: [ :e | 
+	^ self outgoing select: [ :e | 
 		  (e isKindOf: TypInfEdge) and: [ e isFlow ] ]
 ]
 

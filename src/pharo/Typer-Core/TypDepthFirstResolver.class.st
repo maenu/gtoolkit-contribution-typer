@@ -30,8 +30,9 @@ TypDepthFirstResolver >> initializeResolver: aResolver [
 
 { #category : #invalidation }
 TypDepthFirstResolver >> invalidate [
-	super invalidate.
-	resolver invalidate
+
+	resolver invalidate.
+	super invalidate
 ]
 
 { #category : #invalidation }

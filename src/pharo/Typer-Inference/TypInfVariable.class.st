@@ -41,8 +41,10 @@ TypInfVariable >> type [
 	^ self outgoingAt: #type ifAbsentPut: [ 
 		  self flowIncoming
 			  ifEmpty: [ 
-				  (outgoing
-					   select: [ :e | e key = #read ]
-					   thenCollect: [ :e | e target type ]) typAsType ]
+				  outgoing
+					  at: #read
+					  ifPresent: [ :e | 
+					  (e collect: [ :f | f target type ]) typAsType ]
+					  ifAbsent: [ state at: self ] ]
 			  ifNotEmpty: [ state at: self ] ]
 ]

@@ -43,9 +43,9 @@ TypInfMethod >> transfer [
 
 	| type |
 	type := CompiledMethod
-		        typAsFunctionTypeWithResult: (incoming
-				         select: [ :e | e key = #return ]
-				         thenCollect: [ :e | state at: e origin ]) typAsType
+		        typAsFunctionTypeWithResult:
+			        ((incoming at: #return) collect: [ :e | state at: e origin ])
+				        typAsType
 		        arguments: (self arguments collect: [ :a | state at: a ])
 		        argumentsOptional: false
 		        signalsAlways: nil.

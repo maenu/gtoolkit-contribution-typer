@@ -30,11 +30,11 @@ TypNode >> typGtDecorate: anElement in: aMondrian [
 						  aptitude: BrGlamorousToolbarAptitude;
 						  addItem: (BrButton new
 								   aptitude: BrGlamorousButtonWithLabelAptitude;
-								   label: ('out {1}' format: { outgoing size });
+								   label: ('out {1}' format: { self outgoing size });
 								   action: [ :button | 
 									   | nodes existingNodes remainingNodes |
 									   existingNodes := aMondrian existingNodes.
-									   nodes := (outgoing collect: #target) difference:
+									   nodes := (self outgoing collect: #target) difference:
 											            existingNodes.
 									   remainingNodes := nodes size.
 									   (nodes asArray takeFirst: 5) do: [ :e | 
@@ -52,11 +52,11 @@ TypNode >> typGtDecorate: anElement in: aMondrian [
 								   yourself);
 						  addItem: (BrButton new
 								   aptitude: BrGlamorousButtonWithLabelAptitude;
-								   label: ('in {1}' format: { incoming size });
+								   label: ('in {1}' format: { self incoming size });
 								   action: [ :button | 
 									   | nodes existingNodes remainingNodes |
 									   existingNodes := aMondrian existingNodes.
-									   nodes := (incoming collect: #origin) difference:
+									   nodes := (self incoming collect: #origin) difference:
 											            existingNodes.
 									   remainingNodes := nodes size.
 									   (nodes asArray takeFirst: 5) do: [ :e | 

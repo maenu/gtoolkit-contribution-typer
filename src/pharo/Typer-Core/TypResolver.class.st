@@ -19,11 +19,6 @@ TypResolver >> canResolve: aLookup [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
-TypResolver >> invalidate [
-	self outgoingRemoveAll
-]
-
 { #category : #invalidation }
 TypResolver >> invalidateOnClassChange: aClassAnnouncement [
 

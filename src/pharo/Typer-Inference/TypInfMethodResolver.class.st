@@ -29,25 +29,6 @@ TypInfMethodResolver >> canResolve: aLookup [
 		  aLookup selector
 ]
 
-{ #category : #accessing }
-TypInfMethodResolver >> contextAt: aContextKey [
-
-	| context |
-	context := TypInfContext
-		           node: aContextKey node
-		           self: aContextKey self
-		           super: aContextKey super.
-	^ TypInfMethodNodeStack
-		  push: aContextKey node
-		  max: 8
-		  during: [ 
-			  self outgoingAt: aContextKey ifPresent: #yourself ifAbsent: [ 
-				  self outgoingAt: aContextKey put: context.
-				  context run.
-				  context ] ]
-		  or: [ context ]
-]
-
 { #category : #invalidation }
 TypInfMethodResolver >> invalidateOnClassChange: aClassAnnouncement [
 
@@ -92,15 +73,18 @@ TypInfMethodResolver >> nodeAt: aNode self: aType super: anotherType [
 		  push: key node
 		  max: 8
 		  during: [ 
-			  self outgoingAt: key ifPresent: #yourself ifAbsent: [ 
-				  | context |
-				  context := TypInfContext
-					             node: key node
-					             self: key self
-					             super: key super.
-				  self outgoingAt: key put: context.
-				  context run.
-				  (context nodeAt: aNode) type ] ]
+			  self
+				  outgoingAt: key
+				  ifPresent: [ :e | (e nodeAt: aNode) type ]
+				  ifAbsent: [ 
+					  | context |
+					  context := TypInfContext
+						             node: key node
+						             self: key self
+						             super: key super.
+					  self outgoingAt: key put: context.
+					  context run.
+					  (context nodeAt: aNode) type ] ]
 		  or: [ TypUnknownType instance ]
 ]
 

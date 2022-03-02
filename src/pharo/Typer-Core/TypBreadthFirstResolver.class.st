@@ -38,8 +38,9 @@ TypBreadthFirstResolver >> initializeResolvers: anObject [
 
 { #category : #invalidation }
 TypBreadthFirstResolver >> invalidate [
-	super invalidate.
-	resolvers do: #invalidate
+
+	resolvers do: #invalidate.
+	super invalidate
 ]
 
 { #category : #invalidation }

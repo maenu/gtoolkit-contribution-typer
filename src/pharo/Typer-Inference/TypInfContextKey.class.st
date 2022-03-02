@@ -18,9 +18,9 @@ TypInfContextKey class >> node: aNode self: aType super: anotherType [
 				  aType.
 				  anotherType }
 		  ifAbsentPut: [ 
-			  ^ self new
-				    initializeNode: aNode self: aType super: anotherType;
-				    yourself ]
+			  self new
+				  initializeNode: aNode self: aType super: anotherType;
+				  yourself ]
 ]
 
 { #category : #comparing }
