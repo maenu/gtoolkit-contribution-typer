@@ -7,6 +7,12 @@ Class {
 }
 
 { #category : #accessing }
+TypInfMessage >> method [
+
+	^ self methodIn: state
+]
+
+{ #category : #accessing }
 TypInfMessage >> methodIn: aState [
 
 	^ (aState at: self receiver)

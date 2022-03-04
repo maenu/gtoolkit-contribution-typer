@@ -1,6 +1,12 @@
 Extension { #name : #LiteralVariable }
 
 { #category : #'*Typer-Inference' }
+LiteralVariable >> typInfIsWrittenIn: aCompiledCode [
+
+	^ false "aCompiledCode writesRef: self"
+]
+
+{ #category : #'*Typer-Inference' }
 LiteralVariable >> typInfType [
 
 	^ self class typAsParametricTypeWithParameters: { 

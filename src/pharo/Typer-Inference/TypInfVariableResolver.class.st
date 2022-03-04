@@ -4,10 +4,10 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypInfVariableResolver >> assignedTypeOf: aVariable in: aType [
 
-	^ (aVariable assignmentNodes collect: [ :e | 
+	^ (aVariable typInfAssignmentNodes collect: [ :e | 
 		   e value typInfTypeSelf: aType ]) typAsType
 ]
 

@@ -48,6 +48,21 @@ TypInfWrappingState >> copy [
 	^ copy
 ]
 
+{ #category : #ui }
+TypInfWrappingState >> gtItemsFor: aView [
+
+	<gtView>
+	^ aView forward
+		  title: 'Index';
+		  priority: 10;
+		  object: [ 
+			  | flat |
+			  flat := IdentityDictionary new.
+			  self addTo: flat.
+			  flat ];
+		  view: #gtItemsFor:
+]
+
 { #category : #initialization }
 TypInfWrappingState >> initializeState: aState [
 

@@ -29,34 +29,34 @@ TypInfMethodIndex class >> invalidate [
 { #category : #accessing }
 TypInfMethodIndex >> build [
 
+	| behaviors |
 	cache removeAll.
-	SystemNavigation new allBehaviors do: [ :b | 
-		b instanceVariables do: [ :e | cache at: e put: IdentitySet new ].
-		b isClass ifTrue: [ 
-			b classVariables do: [ :e | cache at: e put: IdentitySet new ] ] ].
-	SystemNavigation new allBehaviors do: [ :b | 
+	"toposort superclasses before subclasses so #allSuperclasses are initialized"
+	behaviors := ProtoObject withAllSubclasses asOrderedCollection.
+	"ProtoObject is last for some reason"
+	behaviors addFirst: behaviors removeLast.
+	behaviors addAll: ProtoObject class withAllSubclasses.
+	behaviors do: [ :b | 
+		| variables |
+		variables := b instanceVariables asIdentitySet.
+		b isClass ifTrue: [ variables addAll: b classVariables ].
+		variables do: [ :v | cache at: v put: IdentitySet new ].
+		b allSuperclassesDo: [ :bb | variables addAll: (cache at: bb) ].
+		cache at: b put: variables.
 		b methods do: [ :m | 
-			m ast variableWriteNodes
-				collect: #variable
-				thenDo: [ :v | cache at: v ifPresent: [ :s | s add: m ] ].
+			variables
+				select: [ :v | v typInfIsWrittenIn: m ]
+				thenDo: [ :v | (cache at: v) add: m ].
 			cache
 				at: m selector
-				ifPresent: [ :s | s add: m methodClass ]
-				ifAbsentPut: [ IdentitySet with: m methodClass ] ] ]
+				ifPresent: [ :s | s add: b ]
+				ifAbsentPut: [ IdentitySet with: b ] ] ]
 ]
 
 { #category : #accessing }
 TypInfMethodIndex >> implementors: aSymbol [
 
-	^ cache at: aSymbol ifAbsentPut: [ 
-		  (aSymbol implementors sorted: [ :a :b | 
-			   b methodClass inheritsFrom: a methodClass ])
-			  inject: IdentitySet new
-			  into: [ :r :e | 
-				  r
-					  detect: [ :f | e methodClass inheritsFrom: f ]
-					  ifNone: [ r add: e methodClass ].
-				  r ] ]
+	^ cache at: aSymbol
 ]
 
 { #category : #accessing }
@@ -69,8 +69,5 @@ TypInfMethodIndex >> initialize [
 { #category : #generated }
 TypInfMethodIndex >> writers: aVariable [
 
-	^ cache at: aVariable ifAbsentPut: [ 
-		  (aVariable astNodes select: #isWrite)
-			  collect: [ :e | e methodNode compiledMethod ]
-			  as: IdentitySet ]
+	^ cache at: aVariable
 ]

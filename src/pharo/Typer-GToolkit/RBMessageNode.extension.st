@@ -25,8 +25,8 @@ RBMessageNode >> typGtShadowMethod [
 
 	| method_ receiverType argumentTypes resultType clazz shadow |
 	self assert: [ self typGtCanType ].
-	method_ := self typInfMethodInSelf.
-	receiverType := self receiver typInfTypeInSelf.
+	method_ := self typInfNode method.
+	receiverType := self receiver typInfTypeSelf.
 	argumentTypes := method_ arguments.
 	resultType := method_ result.
 	clazz := (receiverType isNamed and: [ 
@@ -38,7 +38,7 @@ RBMessageNode >> typGtShadowMethod [
 		          TypShaShadow typGtNewShadowFor: clazz instanceSide ]
 		          ifNotEmpty: #first.
 	^ shadow classSide
-		  typGtShadowMethod: selector value
+		  typGtShadowMethod: self selector
 		  result: resultType
 		  arguments: argumentTypes
 		  in: (clazz isInstanceSide

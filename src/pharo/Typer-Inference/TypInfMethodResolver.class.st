@@ -71,13 +71,18 @@ TypInfMethodResolver >> nodeAt: aNode self: aType super: anotherType [
 		       super: anotherType.
 	^ TypInfMethodNodeStack
 		  push: key node
-		  max: 3
+		  max: 7
 		  during: [ 
 			  self
 				  outgoingAt: key
 				  ifPresent: [ :e | (e nodeAt: aNode) type ]
 				  ifAbsent: [ 
 					  | context |
+					  outgoing keys
+						  detect: [ :e | 
+							  e node compiledMethod == key node compiledMethod and: [ 
+								  e self = key self and: [ e super = key super ] ] ]
+						  ifFound: [ :e | self flag: 'FIXME can happen, check  ast invalidation' ].
 					  context := TypInfContext
 						             node: key node
 						             self: key self

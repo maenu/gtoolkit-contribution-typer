@@ -24,7 +24,7 @@ TypGtAttribute >> initialize [
 		beAppend;
 		stencil: [ 
 			BrLabel new
-				text: type printString asRopedText glamorousCodeFontAndSize;
+				text: type printString asRopedText glamorousCodeFontAndSmallSize;
 				margin: (BlInsets
 						 top: -1
 						 right: 0
