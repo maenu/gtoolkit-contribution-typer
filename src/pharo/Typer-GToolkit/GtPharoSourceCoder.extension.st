@@ -28,17 +28,7 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 		addShortcut: TypGtBrowseImplementorsShortcut new;
 		addShortcut: TypGtTypeWithPragmaShortcut new;
 		addShortcut: TypGtTypeWithShadowShortcut new;
-		";
-		addMainAction: 'Unknowns' translated
-			icon: BrGlamorousIcons minimize
-			action: [ | checker |
-			checker := anAddOns stylers
-				detect: [ :e | e class == TypGtCheckBodyStyler ].
-			checker markUnknowns: checker markUnknowns not.
-			self styleText ]"
-		addMainAction: 'Types' translated
-		icon: BrGlamorousIcons inspect
-		action: [ "addStyler: (TypGtValueStyler new
+		"addStyler: (TypGtValueStyler new
 				 coder: self;
 				 yourself);""addStyler: (TypGtCheckStyler new
 				 coder: self;
@@ -47,14 +37,35 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 				 coder: self;
 				 yourself);""addStyler: (TypGtCursorStyler new
 				 coder: self;
-				 yourself);"
+				 yourself);
+		addMainAction: 'Unknowns' translated
+			icon: BrGlamorousIcons minimize
+			action: [ | checker |
+			checker := anAddOns stylers
+				detect: [ :e | e class == TypGtCheckBodyStyler ].
+			checker markUnknowns: checker markUnknowns not.
+			self styleText ]"
+		addMainAction: 'declarations' translated
+		icon: BrGlamorousIcons inspect
+		action: [ 
 			anAddOns stylers
-				detect: [ :e | e class == TypGtValueStyler ]
+				detect: [ :e | e isKindOf: TypGtRbAstStyler ]
+				ifFound: [ :e | anAddOns stylers remove: e ]
+				ifNone: [ 
+					anAddOns addStyler: (TypGtDeclarationStyler new
+								 coder: self;
+								 yourself) ].
+			self requestStyleSourceText ];
+		addMainAction: 'all' translated
+		icon: BrGlamorousIcons inspect
+		action: [ 
+			anAddOns stylers
+				detect: [ :e | e isKindOf: TypGtRbAstStyler ]
 				ifFound: [ :e | anAddOns stylers remove: e ]
 				ifNone: [ 
 					anAddOns addStyler: (TypGtValueStyler new
-								 coder: self;
-								 yourself) ].
+							 coder: self;
+							 yourself) ].
 			self requestStyleSourceText ]
 ]
 

@@ -18,8 +18,14 @@ TypInfState class >> invalidate [
 { #category : #'as yet unclassified' }
 TypInfState class >> self: aType super: anotherType [
 
+	^ self self: aType super: anotherType index: IdentityDictionary new
+]
+
+{ #category : #'as yet unclassified' }
+TypInfState class >> self: aType super: anotherType index: aDictionary [
+
 	^ self new
-		  initializeSelf: aType super: anotherType;
+		  initializeSelf: aType super: anotherType index: aDictionary;
 		  yourself
 ]
 
@@ -30,13 +36,7 @@ TypInfState >> = anObject [
 	anObject class == self class ifFalse: [ ^ false ].
 	anObject self = selfType ifFalse: [ ^ false ].
 	anObject super = superType ifFalse: [ ^ false ].
-	^ anObject index = index
-]
-
-{ #category : #adding }
-TypInfState >> addTo: aDictionary [
-
-	aDictionary addAll: index
+	^ anObject index = self index
 ]
 
 { #category : #accessing }
@@ -56,7 +56,7 @@ TypInfState >> copy [
 
 	"don't really copy, just wrap it"
 
-	^ TypInfWrappingState state: self
+	^ TypInfWrappingState state: self index: index copy
 ]
 
 { #category : #accessing }
@@ -105,11 +105,11 @@ TypInfState >> initialize [
 ]
 
 { #category : #initialization }
-TypInfState >> initializeSelf: aType super: anotherType [
+TypInfState >> initializeSelf: aType super: anotherType index: aDictionary [
 
 	selfType := aType.
 	superType := anotherType.
-	index := IdentityDictionary new
+	index := aDictionary
 ]
 
 { #category : #accessing }
@@ -125,7 +125,7 @@ TypInfState >> join: aState [
 	self assert: [ aState self = selfType ].
 	self assert: [ aState super = superType ].
 	result := self copy.
-	aState index keysAndValuesDo: [ :n :t | 
+	index keysAndValuesDo: [ :n :t | 
 		result at: n put: (self join: t with: (aState at: n)) ].
 	^ result
 ]
@@ -140,6 +140,13 @@ TypInfState >> join: aType with: anotherType [
 	^ { 
 		  aType.
 		  anotherType } typAsType
+]
+
+{ #category : #copying }
+TypInfState >> postCopy [
+
+	super postCopy.
+	index := index copy
 ]
 
 { #category : #'as yet unclassified' }

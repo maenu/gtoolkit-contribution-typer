@@ -24,15 +24,23 @@ TypGtAttribute >> initialize [
 		beAppend;
 		stencil: [ 
 			BrLabel new
-				text: type printString asRopedText glamorousCodeFontAndSmallSize;
-				margin: (BlInsets
-						 top: -1
-						 right: 0
-						 bottom: 0
-						 left: 5);
 				aptitude: (BrGlamorousLabelAptitude new
 						 foreground: Color gray;
 						 yourself);
+				text: type printString asRopedText glamorousCodeFont;
+				beTinySize;
+				hFitContent;
+				vFitContent;
+				padding: (BlInsets
+						 top: 0
+						 left: 2
+						 bottom: 0
+						 right: 2);
+				margin: (BlInsets
+						 top: 1
+						 left: 0
+						 bottom: -8
+						 right: 0);
 				when: BlClickEvent do: [ :e | e target phlow spawnObject: type ];
 				yourself ]
 ]

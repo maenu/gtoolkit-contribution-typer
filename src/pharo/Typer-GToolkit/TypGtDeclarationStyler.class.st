@@ -5,13 +5,6 @@ Class {
 }
 
 { #category : #visiting }
-TypGtDeclarationStyler >> visitArgumentVariableNode: aNode [
-
-	aNode isDefinition ifTrue: [ self styleNode: aNode ].
-	super visitArgumentVariableNode: aNode
-]
-
-{ #category : #visiting }
 TypGtDeclarationStyler >> visitMethodNode: aNode [
 
 	| position type |
@@ -30,7 +23,8 @@ TypGtDeclarationStyler >> visitMethodNode: aNode [
 ]
 
 { #category : #accessing }
-TypGtDeclarationStyler >> visitTemporaryDeclarationNode: aNode [
-	self styleNode: aNode.
-	super visitTemporaryDeclarationNode: aNode
+TypGtDeclarationStyler >> visitVariableNode: aNode [
+
+	aNode isDefinition ifTrue: [ self styleNode: aNode ].
+	super visitVariableNode: aNode
 ]

@@ -224,7 +224,6 @@ TypFunctionType >> printOn: aStream skipping: anIdentitySet [
 	(anIdentitySet includes: self)
 		ifTrue: [ aStream << '.'.
 			^ self ].
-	aStream << name asString.
 	aStream
 		<<
 			(argumentsOptional

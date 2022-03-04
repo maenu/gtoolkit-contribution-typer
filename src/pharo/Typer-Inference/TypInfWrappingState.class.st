@@ -8,24 +8,11 @@ Class {
 }
 
 { #category : #accessing }
-TypInfWrappingState class >> state: aState [
+TypInfWrappingState class >> state: aState index: aDictionary [
 
-	^ self new
+	^ (self self: aState self super: aState super index: aDictionary)
 		  initializeState: aState;
 		  yourself
-]
-
-{ #category : #comparing }
-TypInfWrappingState >> = anObject [
-
-	^ super = anObject and: [ state = anObject ]
-]
-
-{ #category : #adding }
-TypInfWrappingState >> addTo: aDictionary [
-
-	super addTo: aDictionary.
-	state addTo: aDictionary
 ]
 
 { #category : #accessing }
@@ -37,15 +24,9 @@ TypInfWrappingState >> at: aNode [
 { #category : #copying }
 TypInfWrappingState >> copy [
 
-	| copy |
 	index size / state size < 0.5 ifTrue: [ 
-		copy := TypInfWrappingState  state: state.
-		copy index addAll: index.
-		^ copy ].
-	copy := TypInfState self: selfType super: superType.
-	self addTo: copy index.
-	state addTo: copy index.
-	^ copy
+		^ TypInfWrappingState state: state index: index copy ].
+	^ TypInfState self: selfType super: superType index: self index
 ]
 
 { #category : #ui }
@@ -55,19 +36,29 @@ TypInfWrappingState >> gtItemsFor: aView [
 	^ aView forward
 		  title: 'Index';
 		  priority: 10;
-		  object: [ 
-			  | flat |
-			  flat := IdentityDictionary new.
-			  self addTo: flat.
-			  flat ];
+		  object: [ self index ];
 		  view: #gtItemsFor:
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
+TypInfWrappingState >> index [
+
+	^ state index copy
+		  addAll: index;
+		  yourself
+]
+
+{ #category : #'as yet unclassified' }
 TypInfWrappingState >> initializeState: aState [
 
-	state := aState.
-	self initializeSelf: state self super: state super
+	state := aState
+]
+
+{ #category : #initialization }
+TypInfWrappingState >> initializeState: aState index: aDictionary [
+
+	self initializeSelf: state self super: state super index: aDictionary.
+	state := aState
 ]
 
 { #category : #accessing }
