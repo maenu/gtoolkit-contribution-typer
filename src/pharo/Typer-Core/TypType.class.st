@@ -14,7 +14,7 @@ Class {
 { #category : #accessing }
 TypType class >> index [
 
-	^ index ifNil: [ index := WeakValueDictionary new ]
+	^ index ifNil: [ index := Dictionary new ]
 ]
 
 { #category : #invalidation }

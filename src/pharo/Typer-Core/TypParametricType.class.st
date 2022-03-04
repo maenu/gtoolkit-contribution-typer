@@ -170,7 +170,7 @@ TypParametricType >> isParametric [
 { #category : #accessing }
 TypParametricType >> parameters [
 
-	^ parameters copy
+	^ parameters
 ]
 
 { #category : #copying }
@@ -224,13 +224,9 @@ TypParametricType >> with: aType [
 { #category : #converting }
 TypParametricType >> withAt: aSymbol put: aType [
 
-	| copyParameters |
-	copyParameters := OrderedCollection new.
-	parameters keysAndValuesDo: [ :n :t | 
-		copyParameters add: (n = aSymbol
-				 ifTrue: [ aType ]
-				 ifFalse: [ t ]) ].
-	^ self withParameters: copyParameters
+	^ self withParameters: (parameters copy
+			   at: aSymbol put: aType;
+			   values)
 ]
 
 { #category : #converting }

@@ -71,7 +71,7 @@ TypInfMethodResolver >> nodeAt: aNode self: aType super: anotherType [
 		       super: anotherType.
 	^ TypInfMethodNodeStack
 		  push: key node
-		  max: 8
+		  max: 3
 		  during: [ 
 			  self
 				  outgoingAt: key

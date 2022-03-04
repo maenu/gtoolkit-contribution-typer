@@ -10,7 +10,7 @@ Class {
 { #category : #initialization }
 TypEdgeKey class >> index [
 
-	^ index ifNil: [ index := WeakValueDictionary new ]
+	^ index ifNil: [ index := Dictionary new ]
 ]
 
 { #category : #invalidation }

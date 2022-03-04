@@ -33,7 +33,7 @@ TypInfMessage >> transfer [
 	receiver := self receiver.
 	(state at: receiver) isUnknown ifTrue: [ 
 		| classes |
-		classes := TypInfImplementorsCache instance implementors:
+		classes := TypInfMethodIndex instance implementors:
 			           node selector.
 		(classes size between: 1 and: 8) ifTrue: [ 
 			receiver

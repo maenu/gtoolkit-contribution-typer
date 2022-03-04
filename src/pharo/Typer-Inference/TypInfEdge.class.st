@@ -30,7 +30,7 @@ TypInfEdge >> state [
 { #category : #accessing }
 TypInfEdge >> state: anObject [
 
-	state = anObject ifTrue: [ ^ changed := false ].
+	state == anObject ifTrue: [ ^ changed := false ].
 	"changed ifTrue: [ 
 		log ifNil: [ log := LinkedList new ].
 		state

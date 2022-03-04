@@ -18,40 +18,17 @@ GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 
-	"<gtAstCoderAddOns: 10>"
-	self completionStrategy:
+	"self completionStrategy:
 		(self completionStrategy typGtAsCompletionStrategy
 			 coder: self;
-			 yourself).
+			 yourself)."
+
+	<gtAstCoderAddOns: 10>
 	anAddOns
-		addStyler: (TypGtValueStyler new
-				 coder: self;
-				 yourself);
-		"addStyler: (TypGtCheckStyler new
-				 coder: self;
-				 yourself);
-		addStyler: (TypGtCoverageStyler new
-				 coder: self;
-				 yourself);"
-		"addStyler: (TypGtCursorStyler new
-				 coder: self;
-				 yourself);"
 		addShortcut: TypGtBrowseImplementorsShortcut new;
 		addShortcut: TypGtTypeWithPragmaShortcut new;
-		addShortcut: TypGtTypeWithShadowShortcut new
-	"anAddOns
-		addMainAction: 'Types' translated
-			icon: BrGlamorousIcons inspect
-			action: [ | declaration |
-			declaration := anAddOns stylers
-				anySatisfy: [ :e | e class == TypGtTypeDeclarationBodyStyler ].
-			declaration
-				ifTrue: [ anAddOns
-						typGtReplaceStylerOfType: TypGtTypeDeclarationBodyStyler
-						with: TypGtTypeValueBodyStyler new ]
-				ifFalse: [ anAddOns
-						typGtReplaceStylerOfType: TypGtTypeValueBodyStyler
-						with: TypGtTypeDeclarationBodyStyler new ] ];
+		addShortcut: TypGtTypeWithShadowShortcut new;
+		";
 		addMainAction: 'Unknowns' translated
 			icon: BrGlamorousIcons minimize
 			action: [ | checker |
@@ -59,6 +36,26 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 				detect: [ :e | e class == TypGtCheckBodyStyler ].
 			checker markUnknowns: checker markUnknowns not.
 			self styleText ]"
+		addMainAction: 'Types' translated
+		icon: BrGlamorousIcons inspect
+		action: [ "addStyler: (TypGtValueStyler new
+				 coder: self;
+				 yourself);""addStyler: (TypGtCheckStyler new
+				 coder: self;
+				 yourself);
+		addStyler: (TypGtCoverageStyler new
+				 coder: self;
+				 yourself);""addStyler: (TypGtCursorStyler new
+				 coder: self;
+				 yourself);"
+			anAddOns stylers
+				detect: [ :e | e class == TypGtValueStyler ]
+				ifFound: [ :e | anAddOns stylers remove: e ]
+				ifNone: [ 
+					anAddOns addStyler: (TypGtValueStyler new
+								 coder: self;
+								 yourself) ].
+			self requestStyleSourceText ]
 ]
 
 { #category : #'*Typer-GToolkit' }

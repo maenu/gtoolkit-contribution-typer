@@ -39,7 +39,7 @@ TypTyping >> invalidate [
 	TypShaShadow invalidateAll.
 	TypInfState invalidate.
 	TypInfMethodResolver invalidate.
-	TypInfImplementorsCache invalidate.
+	TypInfMethodIndex invalidate.
 	TypInfMethodNodeStack resetSoleInstance.
 	"sometimes needs to rounds to clean up"
 	1 second wait.

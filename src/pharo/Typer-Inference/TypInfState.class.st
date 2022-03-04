@@ -33,6 +33,12 @@ TypInfState >> = anObject [
 	^ anObject index = index
 ]
 
+{ #category : #adding }
+TypInfState >> addTo: aDictionary [
+
+	aDictionary addAll: index
+]
+
 { #category : #accessing }
 TypInfState >> at: aNode [
 
@@ -43,6 +49,14 @@ TypInfState >> at: aNode [
 TypInfState >> at: aNode put: aType [
 
 	^ index at: aNode put: aType
+]
+
+{ #category : #copying }
+TypInfState >> copy [
+
+	"don't really copy, just wrap it"
+
+	^ TypInfWrappingState state: self
 ]
 
 { #category : #accessing }
@@ -110,9 +124,8 @@ TypInfState >> join: aState [
 	| result |
 	self assert: [ aState self = selfType ].
 	self assert: [ aState super = superType ].
-	self assert: [ aState index keys = index keys ].
 	result := self copy.
-	index keysAndValuesDo: [ :n :t | 
+	aState index keysAndValuesDo: [ :n :t | 
 		result at: n put: (self join: t with: (aState at: n)) ].
 	^ result
 ]
@@ -129,17 +142,16 @@ TypInfState >> join: aType with: anotherType [
 		  anotherType } typAsType
 ]
 
-{ #category : #copying }
-TypInfState >> postCopy [
-
-	super postCopy.
-	index := index copy
-]
-
 { #category : #'as yet unclassified' }
 TypInfState >> self [
 
 	^ selfType
+]
+
+{ #category : #accessing }
+TypInfState >> size [
+
+	^ index size
 ]
 
 { #category : #'as yet unclassified' }

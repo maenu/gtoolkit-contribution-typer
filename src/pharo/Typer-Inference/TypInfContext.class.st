@@ -24,7 +24,10 @@ TypInfContext class >> node: aMethodNode self: aType super: anotherType [
 { #category : #initialization }
 TypInfContext >> initializeNode: aMethodNode self: aType super: anotherType [
 
-	nodes := IdentityDictionary new.
+	"ordered to have a cheap, close-to-topological sorting.
+	 makes the run more predictable"
+
+	nodes := OrderedIdentityDictionary new.
 	aMethodNode acceptVisitor: self.
 	state := TypInfState self: aType super: anotherType.
 	nodes valuesDo: [ :e | e initialize: state ].

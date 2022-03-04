@@ -167,7 +167,10 @@ TypInfNode >> transfer [
 { #category : #accessing }
 TypInfNode >> type [
 
-	^ self outgoingAt: #type ifAbsentPut: [ state at: self ]
+	^ self outgoingAt: #type ifAbsentPut: [ 
+		  state
+			  ifNil: [ TypUnknownType instance ]
+			  ifNotNil: [ state at: self ] ]
 ]
 
 { #category : #accessing }

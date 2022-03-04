@@ -18,7 +18,7 @@ Variable >> typInfFlowConstrain: aNode to: aType in: aState [
 { #category : #'*Typer-Inference' }
 Variable >> typInfFlowInitialize: aNode in: aState [
 
-	aState at: aNode put: TypUnknownType instance
+	aState at: aNode put: self typInfFromName
 ]
 
 { #category : #'*Typer-Inference' }
@@ -30,4 +30,18 @@ Variable >> typInfFlowTransfer: aNode in: aState [
 		        ifPresent: [ :e | aState at: e ]
 		        ifAbsent: [ TypUnknownType instance ].
 	aState at: aNode put: type
+]
+
+{ #category : #'*Typer-Inference' }
+Variable >> typInfFromName [
+
+	| className global |
+	(name beginsWith: 'an') ifTrue: [ className := name allButFirst: 2 ].
+	(name beginsWith: 'a') ifTrue: [ className := name allButFirst: 1 ].
+	className ifNil: [ ^ TypUnknownType instance ].
+	global := Smalltalk globals
+		          at: className asSymbol
+		          ifAbsent: [ ^ TypUnknownType instance ].
+	global isClass ifFalse: [ ^ TypUnknownType instance ].
+	^ global typAsType
 ]
