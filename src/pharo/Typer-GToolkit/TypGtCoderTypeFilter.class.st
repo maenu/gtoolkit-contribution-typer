@@ -13,7 +13,7 @@ TypGtCoderTypeFilter >> includesMethod: aCompiledMethod [
 	<typPraResult: 'Boolean'>
 	<typPraArguments: 'CompiledMethod()->?'>
 	| methodType |
-	methodType := aCompiledMethod typInfTypeInSelf.
+	methodType := aCompiledMethod ast typInfTypeSelf.
 	type isUnion
 		ifTrue: [ 
 			type types

@@ -5,7 +5,7 @@ RBReturnNode >> typCheCheckCompatibility [
 
 	| expected actual |
 	expected := self methodNode typInfMethodInSelf result.
-	actual := self value typInfTypeInSelf.
+	actual := self value typInfTypeSelf.
 	(expected isUnknown or: [ actual isUnknown ]) ifTrue: [ ^ self ].
 	(expected isNullable and: [ actual isNil ]) ifTrue: [ ^ self ].
 	expected >= actual asNonNullable ifTrue: [ ^ self ].
@@ -13,7 +13,7 @@ RBReturnNode >> typCheCheckCompatibility [
 		 self value isBlock and: [ 
 			 | block |
 			 block := self value. "typCastAs RBBlockNode"
-			 (block typInfTypeInSelf signalsAlways = true or: [ 
+			 (block typInfTypeSelf signalsAlways = true or: [ 
 				  block body lastIsReturn ]) and: [ 
 				 | functions |
 				 functions := expected isUnion
@@ -38,7 +38,7 @@ RBReturnNode >> typCheCheckNullables [
 
 	| expected actual |
 	expected := self methodNode typInfMethodInSelf result.
-	actual := self value typInfTypeInSelf.
+	actual := self value typInfTypeSelf.
 	(expected isUnknown or: [ 
 		 actual isUnknown or: [ 
 			 actual isNullable not or: [ expected >= actual ] ] ]) ifTrue: [ 

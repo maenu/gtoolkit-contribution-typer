@@ -11,7 +11,7 @@ GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 	self notifyObjectSpawn:
 		(GtSearchImplementorsFilter selector: node selector)
 		& (TypGtCoderTypeFilter new
-				 type: node receiver typInfTypeInSelf;
+				 type: node receiver typInfTypeSelf;
 				 yourself)
 ]
 

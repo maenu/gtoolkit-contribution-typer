@@ -439,7 +439,9 @@ TypShaPhaCollection >> mInjectInto: aLookup [
 				  (BlockClosure
 					   typAsFunctionTypeWithResult: TypUnknownType instance
 					   arguments: { 
-							   (aLookup arguments at: 1).
+							   { 
+								   (aLookup arguments at: 1).
+								   (aLookup arguments at: 2) result } typAsType.
 							   (aLookup receiver at: #A) }) }
 ]
 

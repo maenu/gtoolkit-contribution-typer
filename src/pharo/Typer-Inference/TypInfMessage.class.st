@@ -39,17 +39,13 @@ TypInfMessage >> transfer [
 	receiver := self receiver.
 	(state at: receiver) isUnknown ifTrue: [ 
 		| classes |
-		classes := TypInfMethodIndex instance implementors:
-			           node selector.
+		classes := TypInfMethodIndex instance implementors: node selector.
 		(classes size between: 1 and: 8) ifTrue: [ 
-			receiver
-				constrainTo: (classes collect: #typAsType) typAsType
-				in: state ] ].
+			self
+				constrain: receiver
+				to: (classes collect: #typAsType) typAsType ] ].
 	method := self methodIn: state.
 	self arguments withIndexDo: [ :e :i | 
-		e
-			constrainTo:
-			(method arguments at: i ifAbsent: [ TypUnknownType instance ])
-			in: state ].
+		method arguments at: i ifPresent: [ :a | self constrain: e to: a ] ].
 	state at: self put: method result
 ]

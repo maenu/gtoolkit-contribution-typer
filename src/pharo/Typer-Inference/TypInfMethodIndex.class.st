@@ -56,7 +56,7 @@ TypInfMethodIndex >> build [
 { #category : #accessing }
 TypInfMethodIndex >> implementors: aSymbol [
 
-	^ cache at: aSymbol
+	^ cache at: aSymbol ifAbsent: [ #(  ) ]
 ]
 
 { #category : #accessing }

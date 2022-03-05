@@ -23,8 +23,8 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 	selfType := ast methodClass typAsType.
 	text := aText.
 	[   
-	ast typInfTypeSelf: selfType.
-	self visitNode: ast ] 
+	ast typInfTypeSelf.  
+	self visitNode: ast ]  
 		on: Error
 		do: [ :e | Halt once ]. 
 	text := nil.
@@ -43,7 +43,7 @@ TypGtRbAstStyler >> styleNode: aNode [
 
 	| type attribute stop |
 	type := TypInfMethodResolver instance
-		        nodeAt: aNode
+		        typeAt: aNode
 		        self: selfType
 		        super: selfType superOrNil.
 	attribute := TypGtAttribute type: type.

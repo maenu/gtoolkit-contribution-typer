@@ -1,9 +1,9 @@
 Extension { #name : #GlobalVariable }
 
 { #category : #'*Typer-Inference' }
-GlobalVariable >> typInfFlowConstrain: aNode to: aType in: aState [
+GlobalVariable >> typInfFlowConstrain: aNode to: aType [
 
-	
+	^ aNode state at: aNode
 ]
 
 { #category : #'*Typer-Inference' }

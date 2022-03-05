@@ -5,9 +5,9 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypInfVariable >> constrainTo: aType in: aState [
+TypInfVariable >> constrainTo: aType [
 
-	node variable typInfFlowConstrain: self to: aType in: aState
+	^ node variable typInfFlowConstrain: self to: aType
 ]
 
 { #category : #accessing }

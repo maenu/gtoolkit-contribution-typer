@@ -29,6 +29,17 @@ TypInfMethodResolver >> canResolve: aLookup [
 		  aLookup selector
 ]
 
+{ #category : #accessing }
+TypInfMethodResolver >> contextAt: aMethodNode self: aType super: anotherType [
+
+	^ self
+		  outgoingAt:
+		  (TypInfContextKey node: aMethodNode self: aType super: anotherType)
+		  ifAbsentPut: [ 
+			  (TypInfContext node: aMethodNode self: aType super: anotherType)
+				  run ]
+]
+
 { #category : #invalidation }
 TypInfMethodResolver >> invalidateOnClassChange: aClassAnnouncement [
 
@@ -64,33 +75,8 @@ TypInfMethodResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 { #category : #accessing }
 TypInfMethodResolver >> nodeAt: aNode self: aType super: anotherType [
 
-	| key |
-	key := TypInfContextKey
-		       node: aNode methodNode
-		       self: aType
-		       super: anotherType.
-	^ TypInfMethodNodeStack
-		  push: key node
-		  max: 7
-		  during: [ 
-			  self
-				  outgoingAt: key
-				  ifPresent: [ :e | (e nodeAt: aNode) type ]
-				  ifAbsent: [ 
-					  | context |
-					  outgoing keys
-						  detect: [ :e | 
-							  e node compiledMethod == key node compiledMethod and: [ 
-								  e self = key self and: [ e super = key super ] ] ]
-						  ifFound: [ :e | self flag: 'FIXME can happen, check  ast invalidation' ].
-					  context := TypInfContext
-						             node: key node
-						             self: key self
-						             super: key super.
-					  self outgoingAt: key put: context.
-					  context run.
-					  (context nodeAt: aNode) type ] ]
-		  or: [ TypUnknownType instance ]
+	^ (self contextAt: aNode methodNode self: aType super: anotherType) 
+		  nodeAt: aNode
 ]
 
 { #category : #printing }
@@ -106,7 +92,18 @@ TypInfMethodResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
 	node := (aLookup receiver classDescription >> aLookup selector) ast.
 	^ self
-		  nodeAt: node
+		  typeAt: node
 		  self: aLookup root receiver
 		  super: aLookup receiver superOrNil
+]
+
+{ #category : #accessing }
+TypInfMethodResolver >> typeAt: aNode self: aType super: anotherType [
+
+	^ TypInfMethodNodeStack
+		  push: aNode methodNode
+		  max: 7
+		  during: [ 
+		  (self nodeAt: aNode self: aType super: anotherType) type ]
+		  or: [ TypUnknownType instance ]
 ]

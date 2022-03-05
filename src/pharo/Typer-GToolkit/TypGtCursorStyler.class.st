@@ -10,7 +10,7 @@ TypGtCursorStyler >> styleNode: aNode [
 	<typPraArguments: 'RBValueNode'>
 	| type |
 	type := TypInfMethodResolver instance
-		        nodeAt: aNode
+		        typeAt: aNode
 		        self: selfType
 		        super: selfType superOrNil.
 	self

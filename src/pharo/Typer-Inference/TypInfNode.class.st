@@ -25,14 +25,22 @@ TypInfNode >> burp [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfNode >> constrainTo: aType in: aState [
+TypInfNode >> constrain: aNode to: aType [
+
+	^ state at: aNode put: ((state at: aNode) constrainTo: aType)
+]
+
+{ #category : #'as yet unclassified' }
+TypInfNode >> constrainTo: aType [
 
 	| type |
+	type := state at: self.
 	"root is not constraining"
-	aType >= ProtoObject typAsType ifTrue: [ ^ self ].
-	type := aState at: self.
-	(type isUnknown or: [ type > aType ]) ifTrue: [ 
-		aState at: self put: aType ]
+	aType >= ProtoObject typAsType ifTrue: [ ^ type ].
+	type <= aType ifTrue: [ ^ type ].
+	state at: self put: type.
+	self outgoingFlow do: [ :e | e state at: self put: type ].
+	^ type
 ]
 
 { #category : #accessing }
@@ -150,10 +158,15 @@ TypInfNode >> slurp [
 { #category : #'as yet unclassified' }
 TypInfNode >> slurpAndBurp [
 
-	self incomingFlow ifEmpty: [ ^ false ].
-	self slurp.
+	self incomingFlow ifNotEmpty: [ self slurp ].
 	self transfer.
 	^ self burp
+]
+
+{ #category : #accessing }
+TypInfNode >> state [
+
+	^ state
 ]
 
 { #category : #accessing }

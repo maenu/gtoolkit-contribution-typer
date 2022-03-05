@@ -13,7 +13,7 @@ TypInfAssignment >> transfer [
 	variable := self outgoingAt: #next.
 	variableType := state at: variable.
 	self flag: 'is this always legal?'.
-	value constrainTo: variableType in: state.
+	self constrain: value to: variableType.
 	state at: variable read put: valueType.
 	state at: variable put: valueType.
 	state at: self put: valueType

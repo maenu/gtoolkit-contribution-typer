@@ -1,9 +1,9 @@
 Extension { #name : #ReservedVariable }
 
 { #category : #'*Typer-Inference' }
-ReservedVariable >> typInfFlowConstrain: aNode to: aType in: aState [
+ReservedVariable >> typInfFlowConstrain: aNode to: aType [
 
-	
+	^ aNode state at: aNode
 ]
 
 { #category : #'*Typer-Inference' }

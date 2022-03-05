@@ -9,7 +9,7 @@ TypGtDeclarationStyler >> visitMethodNode: aNode [
 
 	| position type |
 	type := TypInfMethodResolver instance
-		        nodeAt: aNode
+		        typeAt: aNode
 		        self: selfType
 		        super: selfType superOrNil.
 	position := aNode arguments isEmpty

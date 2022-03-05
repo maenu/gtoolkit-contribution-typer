@@ -8,7 +8,7 @@ GtPharoUnaryMessageNode >> typGtCompletionActionStreamFor: aStrategy in: anRbNod
 	index := aStrategy index.
 	selectorPart stopPosition = index ifFalse: [ ^ #(  ) asAsyncStream ].
 	startingText := selectorPart value.
-	type := anRbNode typInfTypeInSelf.
+	type := anRbNode typInfTypeSelf.
 	self flag: 'TODO can be less restrictive here'.
 	clazz := (type isNamed and: [ type hasClassDescription ])
 		         ifTrue: [ type classDescription ]

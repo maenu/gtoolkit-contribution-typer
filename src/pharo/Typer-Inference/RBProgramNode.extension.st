@@ -16,6 +16,27 @@ RBProgramNode >> typInfNode [
 ]
 
 { #category : #'*Typer-Inference' }
+RBProgramNode >> typInfNodeSelf [
+
+	^ self typInfNodeSelf: self methodNode methodClass typAsType
+]
+
+{ #category : #'*Typer-Inference' }
+RBProgramNode >> typInfNodeSelf: aType [
+
+	^ self typInfNodeSelf: aType super: aType superOrNil
+]
+
+{ #category : #'*Typer-Inference' }
+RBProgramNode >> typInfNodeSelf: aType super: anotherType [
+
+	^ TypInfMethodResolver instance
+		  nodeAt: self
+		  self: aType
+		  super: anotherType
+]
+
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typInfTypeSelf [
 
 	^ self typInfTypeSelf: self methodNode methodClass typAsType
@@ -31,7 +52,7 @@ RBProgramNode >> typInfTypeSelf: aType [
 RBProgramNode >> typInfTypeSelf: aType super: anotherType [
 
 	^ TypInfMethodResolver instance
-		  nodeAt: self
+		  typeAt: self
 		  self: aType
 		  super: anotherType
 ]

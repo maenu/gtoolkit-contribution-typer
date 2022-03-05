@@ -10,18 +10,19 @@ Variable >> typInfAssignmentNodes [
 ]
 
 { #category : #'*Typer-Inference' }
-Variable >> typInfFlowConstrain: aNode to: aType in: aState [
+Variable >> typInfFlowConstrain: aNode to: aType [
 
 	| type |
+	type := aNode state at: aNode.
 	"root is not constraining"
-	aType >= ProtoObject typAsType ifTrue: [ ^ self ].
-	type := aState at: aNode.
-	(type isUnknown or: [ type > aType ]) ifFalse: [ ^ self ].
-	aState at: aNode put: aType.
+	aType >= ProtoObject typAsType ifTrue: [ ^ type ].
+	type <= aType ifTrue: [ ^ type ].
+	aNode state at: aNode put: type.
 	aNode
 		incomingAt: #read
-		ifPresent: [ :e | e constrainTo: aType in: aState ]
-		ifAbsent: [ "noop" ]
+		ifPresent: [ :e | aNode constrain: e to: aType ]
+		ifAbsent: [ "noop" ].
+	^ type
 ]
 
 { #category : #'*Typer-Inference' }

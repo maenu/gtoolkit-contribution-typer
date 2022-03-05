@@ -33,7 +33,7 @@ TypInfState class >> self: aType super: anotherType index: aDictionary [
 TypInfState >> = anObject [
 
 	anObject == self ifTrue: [ ^ true ].
-	anObject class == self class ifFalse: [ ^ false ].
+	(anObject isKindOf: TypInfState) ifFalse: [ ^ false ].
 	anObject self = selfType ifFalse: [ ^ false ].
 	anObject super = superType ifFalse: [ ^ false ].
 	^ anObject index = self index
@@ -56,7 +56,7 @@ TypInfState >> copy [
 
 	"don't really copy, just wrap it"
 
-	^ TypInfWrappingState state: self index: index copy
+	^ TypInfWrappingState state: self
 ]
 
 { #category : #accessing }
@@ -64,7 +64,7 @@ TypInfState >> diff: aState [
 
 	| diff |
 	diff := IdentityDictionary new.
-	index keysAndValuesDo: [ :n :t | 
+	self index keysAndValuesDo: [ :n :t | 
 		| r |
 		r := aState at: n.
 		r = t ifFalse: [ 
@@ -140,13 +140,6 @@ TypInfState >> join: aType with: anotherType [
 	^ { 
 		  aType.
 		  anotherType } typAsType
-]
-
-{ #category : #copying }
-TypInfState >> postCopy [
-
-	super postCopy.
-	index := index copy
 ]
 
 { #category : #'as yet unclassified' }

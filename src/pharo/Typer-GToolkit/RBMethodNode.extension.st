@@ -32,7 +32,7 @@ RBMethodNode >> typGtTypeWithPragma [
 
 	| self_ type arguments_ result_ variables_ |
 	self_ := self methodClass typAsType.
-	type := self typInfTypeSelf: self_.
+	type := self typInfTypeSelf.
 	arguments_ := self pragmas
 		              detect: [ :e | e selector = #typPraArguments: ]
 		              ifFound: [ :e | 

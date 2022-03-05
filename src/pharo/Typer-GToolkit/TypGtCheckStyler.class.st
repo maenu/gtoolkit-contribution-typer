@@ -41,7 +41,7 @@ TypGtCheckStyler >> styleNodeUnknown: aNode message: aString [
 TypGtCheckStyler >> visitArgumentNode: aNode [
 
 	super visitArgumentNode: aNode.
-	aNode typInfTypeInSelf isUnknown ifTrue: [ 
+	aNode typInfTypeSelf isUnknown ifTrue: [ 
 		self styleNodeUnknown: aNode message: 'Argument is unknown' ]
 ]
 
@@ -49,7 +49,7 @@ TypGtCheckStyler >> visitArgumentNode: aNode [
 TypGtCheckStyler >> visitAssignmentNode: aNode [
 
 	super visitAssignmentNode: aNode.
-	aNode typInfTypeInSelf isUnknown
+	aNode typInfTypeSelf isUnknown
 		ifTrue: [ 
 		self styleNodeUnknown: aNode value message: 'Value is unknown' ]
 		ifFalse: [ 
@@ -66,7 +66,7 @@ TypGtCheckStyler >> visitAssignmentNode: aNode [
 TypGtCheckStyler >> visitMessageNode: aNode [
 
 	super visitMessageNode: aNode.
-	aNode receiver typInfTypeInSelf isUnknown
+	aNode receiver typInfTypeSelf isUnknown
 		ifTrue: [ 
 		self styleNodeUnknown: aNode message: 'Receiver is unknown' ]
 		ifFalse: [ 
@@ -79,7 +79,7 @@ TypGtCheckStyler >> visitMessageNode: aNode [
 				do: [ :e | 
 					self styleNode: aNode error: e message: 'Receiver could be nil' ] ].
 	aNode arguments withIndexDo: [ :e :i | 
-		(e typInfTypeInSelf isUnknown or: [ 
+		(e typInfTypeSelf isUnknown or: [ 
 			 ((aNode typInfMethodIn: selfType) arguments at: i) isUnknown ])
 			ifTrue: [ self styleNodeUnknown: e message: 'Argument is unknown' ]
 			ifFalse: [ 
@@ -105,7 +105,7 @@ TypGtCheckStyler >> visitMethodNode: aNode [
 TypGtCheckStyler >> visitReturnNode: aNode [
 
 	super visitReturnNode: aNode.
-	aNode typInfTypeInSelf isUnknown
+	aNode typInfTypeSelf isUnknown
 		ifTrue: [ self styleNodeUnknown: aNode message: 'Return is unknown' ]
 		ifFalse: [ 
 			[ aNode typCheCheckCompatibility ]
@@ -128,6 +128,6 @@ TypGtCheckStyler >> visitReturnNode: aNode [
 TypGtCheckStyler >> visitTemporaryNode: aNode [
 
 	super visitTemporaryNode: aNode.
-	(aNode isDefinition and: [ aNode typInfTypeInSelf isUnknown ]) ifTrue: [ 
+	(aNode isDefinition and: [ aNode typInfTypeSelf isUnknown ]) ifTrue: [ 
 		self styleNodeUnknown: aNode message: 'Temp is unknown' ]
 ]

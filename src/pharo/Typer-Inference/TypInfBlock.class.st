@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypInfBlock >> constrainTo: aType in: aState [
+TypInfBlock >> constrainTo: aType [
 
 	| type |
 	self flag: 'accept multiple function types?'.
@@ -16,13 +16,10 @@ TypInfBlock >> constrainTo: aType in: aState [
 		aType types
 			detect: #isFunction
 			ifFound: [ :t | type := t ]
-			ifNone: [ ^ super constrainTo: aType in: aState ] ].
-	type isFunction ifFalse: [ ^ super constrainTo: aType in: aState ].
+			ifNone: [ ^ super constrainTo: aType ] ].
+	type isFunction ifFalse: [ ^ super constrainTo: aType ].
 	self arguments withIndexDo: [ :n :i | 
-		n
-			constrainTo:
-			(type arguments at: i ifAbsent: [ TypUnknownType instance ])
-			in: aState ]
+		type arguments at: i ifPresent: [ :a | self constrain: n to: a ] ]
 ]
 
 { #category : #execution }

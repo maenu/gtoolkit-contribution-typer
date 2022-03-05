@@ -22,6 +22,12 @@ TypInfEdge >> isFlow [
 ]
 
 { #category : #accessing }
+TypInfEdge >> log [
+
+	^ log
+]
+
+{ #category : #accessing }
 TypInfEdge >> state [
 
 	^ state
@@ -30,12 +36,9 @@ TypInfEdge >> state [
 { #category : #accessing }
 TypInfEdge >> state: anObject [
 
-	state == anObject ifTrue: [ ^ changed := false ].
-	"changed ifTrue: [ 
-		log ifNil: [ log := LinkedList new ].
-		state
-			ifNil: [ log add: anObject ]
-			ifNotNil: [ log add: (state diff: anObject) ] ]."
+	state = anObject ifTrue: [ ^ changed := false ].
+	log ifNil: [ log := LinkedList new ].
+	log add: anObject.
 	state := anObject.
 	^ changed := true
 ]
