@@ -56,7 +56,7 @@ TypInfState >> copy [
 
 	"don't really copy, just wrap it"
 
-	^ TypInfWrappingState state: self
+	^ TypInfState self: selfType super: superType index: index copy "TypInfWrappingState state: self"
 ]
 
 { #category : #accessing }

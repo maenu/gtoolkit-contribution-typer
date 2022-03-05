@@ -46,6 +46,7 @@ TypInfMessage >> transfer [
 				to: (classes collect: #typAsType) typAsType ] ].
 	method := self methodIn: state.
 	self arguments withIndexDo: [ :e :i | 
-		method arguments at: i ifPresent: [ :a | self constrain: e to: a ] ].
+		i <= method arguments size ifTrue: [ 
+			self constrain: e to: (method arguments at: i) ] ].
 	state at: self put: method result
 ]

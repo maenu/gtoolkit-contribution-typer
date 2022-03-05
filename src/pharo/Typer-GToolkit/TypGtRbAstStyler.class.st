@@ -21,10 +21,10 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 	| ast |
 	ast := coder rbAST. 
 	selfType := ast methodClass typAsType.
-	text := aText.
-	[   
-	ast typInfTypeSelf.  
-	self visitNode: ast ]  
+	text := aText.  
+	[     
+	ast typInfTypeSelf.   
+	self visitNode: ast ]   
 		on: Error
 		do: [ :e | Halt once ]. 
 	text := nil.
@@ -46,6 +46,7 @@ TypGtRbAstStyler >> styleNode: aNode [
 		        typeAt: aNode
 		        self: selfType
 		        super: selfType superOrNil.
+	type isUnknown ifTrue: [ ^ self ].
 	attribute := TypGtAttribute type: type.
 	stop := aNode stop.
 	(stop < text size and: [ (text at: stop + 1) = Character space ]) 

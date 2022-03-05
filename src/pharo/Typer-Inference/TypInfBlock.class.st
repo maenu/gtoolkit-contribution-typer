@@ -10,7 +10,6 @@ Class {
 TypInfBlock >> constrainTo: aType [
 
 	| type |
-	self flag: 'accept multiple function types?'.
 	type := aType.
 	aType isUnion ifTrue: [ 
 		aType types
@@ -19,7 +18,13 @@ TypInfBlock >> constrainTo: aType [
 			ifNone: [ ^ super constrainTo: aType ] ].
 	type isFunction ifFalse: [ ^ super constrainTo: aType ].
 	self arguments withIndexDo: [ :n :i | 
-		type arguments at: i ifPresent: [ :a | self constrain: n to: a ] ]
+		i <= type arguments size ifTrue: [ 
+			self constrain: n to: (type arguments at: i) ] ].
+	self
+		incomingAt: #returnBlock
+		ifPresent: [ :r | self constrain: r to: type result ]
+		ifAbsent: [ "noop" ].
+	^ state at: self
 ]
 
 { #category : #execution }

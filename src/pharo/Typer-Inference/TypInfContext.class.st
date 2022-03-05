@@ -64,11 +64,13 @@ TypInfContext >> root [
 TypInfContext >> run [
 
 	| n nodes_ |
+	
+	
 	nodes_ := nodes values.
 	n := 100.
 	[ 
 	n := n - 1.
-	(nodes_ inject: false into: [ :r :e | e slurpAndBurp or: r ]) and: [ 
+	(nodes_ inject: false into: [ :r :e | e slurpAndBurp or: r ]) or: [ 
 		n > 0 ] ] whileTrue.
 	nodes_ do: #type.
 	stable := n > 0

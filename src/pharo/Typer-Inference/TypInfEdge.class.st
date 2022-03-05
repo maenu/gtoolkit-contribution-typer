@@ -9,6 +9,13 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
+{ #category : #accessing }
+TypInfEdge >> at: aNode put: aType [
+
+	changed := (state at: aNode) ~= aType.
+	^ state at: aNode put: aType
+]
+
 { #category : #testing }
 TypInfEdge >> isChanged [
 

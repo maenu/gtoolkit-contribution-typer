@@ -17,12 +17,12 @@ Variable >> typInfFlowConstrain: aNode to: aType [
 	"root is not constraining"
 	aType >= ProtoObject typAsType ifTrue: [ ^ type ].
 	type <= aType ifTrue: [ ^ type ].
-	aNode state at: aNode put: type.
+	aNode state at: aNode put: aType.
 	aNode
 		incomingAt: #read
 		ifPresent: [ :e | aNode constrain: e to: aType ]
 		ifAbsent: [ "noop" ].
-	^ type
+	^ aType
 ]
 
 { #category : #'*Typer-Inference' }
