@@ -19,15 +19,31 @@ TypInfNode class >> node: aNode [
 { #category : #accessing }
 TypInfNode >> burp [
 
-	^ self outgoingFlow
+	^ (self outgoingFlow reject: [ :e | e key = #constrain ])
 		  inject: false
 		  into: [ :r :e | r or: (e state: state copy) ]
 ]
 
 { #category : #'as yet unclassified' }
+TypInfNode >> constrain: aNode [
+
+	| add |
+	add := [ 
+	       self outgoingAdd:
+		       ((TypInfEdge origin: self target: aNode key: #constrain)
+			        state: (TypInfState self: state self super: state super);
+			        yourself) ].
+	^ outgoing
+		  at: #constrain
+		  ifPresent: [ :s | 
+		  s detect: [ :e | e target == aNode ] ifNone: add ]
+		  ifAbsent: add
+]
+
+{ #category : #'as yet unclassified' }
 TypInfNode >> constrain: aNode to: aType [
 
-	^ state at: aNode put: (aNode constrainTo: aType)
+	(self constrain: aNode) state at: aNode put: aType
 ]
 
 { #category : #accessing }
@@ -35,12 +51,13 @@ TypInfNode >> constrainTo: aType [
 
 	| type |
 	type := state at: self.
-	"root is not constraining"
-	aType >= ProtoObject typAsType ifTrue: [ ^ type ].
-	aType > type ifTrue: [ ^ type ].
-	type := state at: self put: (type with: aType).
-	self outgoingFlow do: [ :e | e at: self put: type ].
-	^ type
+	aType >= ProtoObject typAsType ifTrue: [ ^ false ].
+	aType >= type ifTrue: [ ^ false ].
+	type := type > aType
+		        ifTrue: [ aType ]
+		        ifFalse: [ type with: aType ].
+	state at: self put: type.
+	^ true
 ]
 
 { #category : #accessing }
@@ -53,7 +70,13 @@ TypInfNode >> context [
 TypInfNode >> incomingFlow [
 
 	^ self incoming select: [ :e | 
-		  (e isKindOf: TypInfEdge) and: [ e isFlow ] ]
+		  (e isKindOf: TypInfEdge) and: [ e isFlowIn ] ]
+]
+
+{ #category : #accessing }
+TypInfNode >> incomingNext [
+
+	^ self incomingAt: #next
 ]
 
 { #category : #accessing }
@@ -86,18 +109,6 @@ TypInfNode >> invalidateOnMethodChange: aMethodAnnouncement [
 ]
 
 { #category : #accessing }
-TypInfNode >> next [
-
-	^ self outgoingAt: #next
-]
-
-{ #category : #accessing }
-TypInfNode >> next: aNode [
-
-	^ self outgoingAt: #next put: aNode
-]
-
-{ #category : #accessing }
 TypInfNode >> node [
 	^ node
 ]
@@ -105,15 +116,52 @@ TypInfNode >> node [
 { #category : #accessing }
 TypInfNode >> outgoingAddTarget: aNode key: anObject [
 
-	^ self outgoingAdd:
-		  (TypInfEdge origin: self target: aNode key: anObject)
+	self outgoingAdd:
+		(TypInfEdge origin: self target: aNode key: anObject).
+	^ aNode
 ]
 
 { #category : #'as yet unclassified' }
 TypInfNode >> outgoingFlow [
 
 	^ self outgoing select: [ :e | 
-		  (e isKindOf: TypInfEdge) and: [ e isFlow ] ]
+		  (e isKindOf: TypInfEdge) and: [ e isFlowOut ] ]
+]
+
+{ #category : #accessing }
+TypInfNode >> outgoingNext [
+
+	^ self outgoingAt: #next
+]
+
+{ #category : #accessing }
+TypInfNode >> outgoingNext: aNode [
+
+	^ self outgoingAt: #next put: aNode
+]
+
+{ #category : #'as yet unclassified' }
+TypInfNode >> outgoingReturn [
+
+	^ self outgoingAt: #return
+]
+
+{ #category : #'as yet unclassified' }
+TypInfNode >> outgoingReturn: aNode [
+
+	^ self outgoingAt: #return put: aNode
+]
+
+{ #category : #'as yet unclassified' }
+TypInfNode >> outgoingReturnBlock [
+
+	^ self outgoingAt: #returnBlock
+]
+
+{ #category : #'as yet unclassified' }
+TypInfNode >> outgoingReturnBlock: aNode [
+
+	^ self outgoingAt: #returnBlock put: aNode
 ]
 
 { #category : #printing }
@@ -123,45 +171,23 @@ TypInfNode >> printOn: aStream [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfNode >> return [
-
-	^ self outgoingAt: #return
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> return: aNode [
-
-	^ self outgoingAt: #return put: aNode
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> returnBlock [
-
-	^ self outgoingAt: #returnBlock
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> returnBlock: aNode [
-
-	^ self outgoingAt: #returnBlock put: aNode
-]
-
-{ #category : #'as yet unclassified' }
 TypInfNode >> slurp [
 
 	| ins |
 	ins := self incomingFlow collect: #state as: LinkedList.
+	self flag:
+		'TODO differentiate between constrain and non-constrain, use #constrainTo:, delete edge?'.
 	state := ins removeLast copy.
 	[ ins isEmpty ] whileFalse: [ state := state join: ins removeLast ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypInfNode >> slurpAndBurp [
 
 	self incomingFlow ifEmpty: [ ^ false ].
 	^ self
 		  slurp;
-		  transfer;
+		  transfer; 
 		  burp
 ]
 
@@ -182,14 +208,11 @@ TypInfNode >> transfer [
 { #category : #accessing }
 TypInfNode >> type [
 
-	^ self outgoingAt: #type ifAbsentPut: [ 
-		  state
-			  ifNil: [ TypUnknownType instance ]
-			  ifNotNil: [ state at: self ] ]
+	^ state at: self
 ]
 
 { #category : #accessing }
-TypInfNode >> type: aNode [
+TypInfNode >> type: aType [
 
-	^ self outgoingAt: #type put: aNode
+	^ state at: self put: aType
 ]

@@ -4,26 +4,27 @@ Trait {
 }
 
 { #category : #accessing }
-TTypInfWithArguments >> argumentAt: anInteger [
+TTypInfWithArguments >> incomingArgumentAt: anInteger [
 
 	^ self incomingAt: anInteger
 ]
 
 { #category : #accessing }
-TTypInfWithArguments >> argumentAt: anInteger put: aNode [
+TTypInfWithArguments >> incomingArgumentAt: anInteger put: aNode [
 
 	^ self incomingAt: anInteger put: aNode
 ]
 
 { #category : #accessing }
-TTypInfWithArguments >> arguments [
+TTypInfWithArguments >> incomingArguments [
 
 	^ (self incoming select: [ :e | e key isInteger ]) sorted collect:
 		  #origin
 ]
 
 { #category : #accessing }
-TTypInfWithArguments >> arguments: aCollection [
+TTypInfWithArguments >> incomingArguments: aCollection [
 
-	^ aCollection withIndexDo: [ :n :i | self argumentAt: i put: n ]
+	^ aCollection withIndexDo: [ :n :i | 
+		  self incomingArgumentAt: i put: n ]
 ]

@@ -6,16 +6,10 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #execution }
-TypInfMethod >> execute [
+{ #category : #'as yet unclassified' }
+TypInfMethod >> incomingReturns [
 
-	^ self outgoingAt: #execute
-]
-
-{ #category : #execution }
-TypInfMethod >> execute: aNode [
-
-	^ self outgoingAt: #execute put: aNode
+	^ incoming at: #return ifAbsent: [ #(  ) ]
 ]
 
 { #category : #accessing }
@@ -31,11 +25,23 @@ TypInfMethod >> initialize: aState [
 ]
 
 { #category : #accessing }
-TypInfMethod >> methodIn: aState [
+TypInfMethod >> method [
 
-	^ aState self
+	^ state self
 		  lookupMethod: node selector asSymbol
-		  arguments: (self arguments collect: [ :e | aState at: e ])
+		  arguments: (self incomingArguments collect: [ :e | state at: e ])
+]
+
+{ #category : #execution }
+TypInfMethod >> ougoingExecute [
+
+	^ self outgoingAt: #execute
+]
+
+{ #category : #execution }
+TypInfMethod >> ougoingExecute: aNode [
+
+	^ self outgoingAt: #execute put: aNode
 ]
 
 { #category : #accessing }
@@ -44,9 +50,10 @@ TypInfMethod >> transfer [
 	| type |
 	type := CompiledMethod
 		        typAsFunctionTypeWithResult:
-			        ((incoming at: #return) collect: [ :e | state at: e origin ])
-				        typAsType
-		        arguments: (self arguments collect: [ :a | state at: a ])
+		        (self incomingReturns collect: [ :e | state at: e ])
+			        typAsType
+		        arguments:
+		        (self incomingArguments collect: [ :a | state at: a ])
 		        argumentsOptional: false
 		        signalsAlways: nil.
 	state at: self put: type

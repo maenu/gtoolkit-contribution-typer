@@ -71,12 +71,6 @@ TypNode >> incomingAt: anObject [
 ]
 
 { #category : #converting }
-TypNode >> incomingAt: anObject ifAbsent: aBlock [
-
-	^ self incomingAt: anObject ifPresent: #yourself ifAbsent: aBlock
-]
-
-{ #category : #converting }
 TypNode >> incomingAt: anObject ifAbsentPut: aBlock [
 
 	^ self incomingAt: anObject ifPresent: #yourself ifAbsentPut: aBlock
@@ -199,14 +193,14 @@ TypNode >> outgoingAdd: anEdge [
 			e ]
 		ifAbsentPut: [ IdentitySet with: anEdge ].
 	anEdge target incomingAdd: anEdge.
-	^ anEdge target
+	^ anEdge
 ]
 
 { #category : #accessing }
 TypNode >> outgoingAddTarget: aNode key: anObject [
 
-	^ self outgoingAdd:
-		  (TypEdge origin: self target: aNode key: anObject)
+	self outgoingAdd: (TypEdge origin: self target: aNode key: anObject).
+	^ aNode
 ]
 
 { #category : #converting }

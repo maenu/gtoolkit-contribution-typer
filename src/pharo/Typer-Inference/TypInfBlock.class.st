@@ -17,26 +17,16 @@ TypInfBlock >> constrainTo: aType [
 			ifFound: [ :t | type := t ]
 			ifNone: [ ^ super constrainTo: aType ] ].
 	type isFunction ifFalse: [ ^ super constrainTo: aType ].
-	self arguments withIndexDo: [ :n :i | 
+	self incomingArguments withIndexDo: [ :n :i | 
 		i <= type arguments size ifTrue: [ 
 			self constrain: n to: (type arguments at: i) ] ].
-	self
-		incomingAt: #returnBlock
-		ifPresent: [ :r | self constrain: r to: type result ]
-		ifAbsent: [ "noop" ].
-	^ state at: self
+	self constrain: self incomingReturnBlock to: type result
 ]
 
-{ #category : #execution }
-TypInfBlock >> execute [
+{ #category : #'as yet unclassified' }
+TypInfBlock >> incomingReturnBlock [
 
-	^ self outgoingAt: #execute
-]
-
-{ #category : #execution }
-TypInfBlock >> execute: aNode [
-
-	^ self outgoingAt: #execute put: aNode
+	^ self incomingAt: #returnBlock
 ]
 
 { #category : #accessing }
@@ -44,11 +34,23 @@ TypInfBlock >> initialize: aState [
 
 	state := aState.
 	^ state at: self put: (BlockClosure
-			 typAsFunctionTypeWithResult: TypUnknownType instance
-			 arguments:
-			 (node arguments collect: [ :e | TypUnknownType instance ])
-			 argumentsOptional: false
-			 signalsAlways: nil)
+			   typAsFunctionTypeWithResult: TypUnknownType instance
+			   arguments:
+			   (node arguments collect: [ :e | TypUnknownType instance ])
+			   argumentsOptional: false
+			   signalsAlways: nil)
+]
+
+{ #category : #execution }
+TypInfBlock >> ougoingExecute [
+
+	^ self outgoingAt: #execute
+]
+
+{ #category : #execution }
+TypInfBlock >> ougoingExecute: aNode [
+
+	^ self outgoingAt: #execute put: aNode
 ]
 
 { #category : #accessing }
@@ -57,9 +59,9 @@ TypInfBlock >> transfer [
 	| type |
 	type := BlockClosure
 		        typAsFunctionTypeWithResult:
-			        ((incoming at: #returnBlock) collect: [ :e | 
-				         state at: e origin ]) typAsType
-		        arguments: (self arguments collect: [ :a | state at: a ])
+		        (state at: self incomingReturnBlock)
+		        arguments:
+		        (self incomingArguments collect: [ :a | state at: a ])
 		        argumentsOptional: false
 		        signalsAlways: nil.
 	state at: self put: type

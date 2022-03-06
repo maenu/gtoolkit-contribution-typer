@@ -56,7 +56,7 @@ TypInfState >> copy [
 
 	"don't really copy, just wrap it"
 
-	^ TypInfState self: selfType super: superType index: index copy "TypInfWrappingState state: self"
+	^ TypInfWrappingState state: self
 ]
 
 { #category : #accessing }
@@ -121,25 +121,24 @@ TypInfState >> invalidate [
 { #category : #splitjoin }
 TypInfState >> join: aState [
 
-	| result |
+	| copy |
 	self assert: [ aState self = selfType ].
 	self assert: [ aState super = superType ].
-	result := self copy.
-	index keysAndValuesDo: [ :n :t | 
-		result at: n put: (self join: t with: (aState at: n)) ].
-	^ result
+	copy := self copy.
+	aState index keysAndValuesDo: [ :n :t | 
+		copy at: n put: (copy index
+				 at: n
+				 ifPresent: [ :tt | self join: t with: tt ]
+				 ifAbsent: [ t ]) ].
+	^ copy
 ]
 
 { #category : #accessing }
 TypInfState >> join: aType with: anotherType [
 
-	aType isUnknown ifTrue: [ ^ anotherType ].
-	anotherType isUnknown ifTrue: [ ^ aType ].
-	aType < anotherType ifTrue: [ ^ aType ].
-	anotherType < aType ifTrue: [ ^ anotherType ].
-	^ { 
-		  aType.
-		  anotherType } typAsType
+	aType > anotherType ifTrue: [ ^ anotherType ].
+	anotherType > aType ifTrue: [ ^ aType ].
+	^ aType with: anotherType
 ]
 
 { #category : #'as yet unclassified' }

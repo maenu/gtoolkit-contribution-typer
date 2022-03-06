@@ -9,13 +9,6 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #accessing }
-TypInfEdge >> at: aNode put: aType [
-
-	changed := (state at: aNode) ~= aType.
-	^ state at: aNode put: aType
-]
-
 { #category : #testing }
 TypInfEdge >> isChanged [
 
@@ -24,6 +17,18 @@ TypInfEdge >> isChanged [
 
 { #category : #testing }
 TypInfEdge >> isFlow [
+
+	^ #( #next #execute #return #returnBlock #signal #constrain ) includes: key
+]
+
+{ #category : #testing }
+TypInfEdge >> isFlowIn [
+
+	^ #( #next #execute #return #returnBlock #signal #constrain ) includes: key
+]
+
+{ #category : #testing }
+TypInfEdge >> isFlowOut [
 
 	^ #( #next #execute #return #returnBlock #signal ) includes: key
 ]
@@ -44,8 +49,8 @@ TypInfEdge >> state [
 TypInfEdge >> state: anObject [
 
 	state = anObject ifTrue: [ ^ changed := false ].
-	log ifNil: [ log := LinkedList new ].
-	log add: anObject.
+	"log ifNil: [ log := LinkedList new ].
+	log add: anObject."
 	state := anObject.
 	^ changed := true
 ]

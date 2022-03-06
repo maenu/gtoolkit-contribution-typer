@@ -102,7 +102,7 @@ TypInfMethodResolver >> typeAt: aNode self: aType super: anotherType [
 
 	^ TypInfMethodNodeStack
 		  push: aNode methodNode
-		  max: 7
+		  max: 8
 		  during: [ 
 		  (self nodeAt: aNode self: aType super: anotherType) type ]
 		  or: [ TypUnknownType instance ]

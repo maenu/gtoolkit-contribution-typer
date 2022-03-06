@@ -7,7 +7,20 @@ Class {
 { #category : #'as yet unclassified' }
 TypInfVariable >> constrainTo: aType [
 
-	^ node variable typInfFlowConstrain: self to: aType
+	super constrainTo: aType.
+	node variable typInfFlowConstrain: self to: aType
+]
+
+{ #category : #'meta-object-protocol' }
+TypInfVariable >> incomingRead [
+
+	^ self incomingAt: #read
+]
+
+{ #category : #'meta-object-protocol' }
+TypInfVariable >> incomingRead: aNode [
+
+	^ self incomingAt: #read put: aNode
 ]
 
 { #category : #accessing }
@@ -17,34 +30,20 @@ TypInfVariable >> initialize: aState [
 	^ node variable typInfFlowInitialize: self in: state
 ]
 
-{ #category : #'meta-object-protocol' }
-TypInfVariable >> read [
+{ #category : #'as yet unclassified' }
+TypInfVariable >> outgoingReads [
 
-	^ self incomingAt: #read ifPresent: #yourself ifAbsent: [ self ]
+	^ (outgoing at: #read) collect: #target
 ]
 
 { #category : #'meta-object-protocol' }
-TypInfVariable >> read: aNode [
+TypInfVariable >> readIfPresent: aBlock ifAbsent: anotherBlock [
 
-	^ self incomingAt: #read put: aNode
+	^ self incomingAt: #read ifPresent: aBlock ifAbsent: anotherBlock
 ]
 
 { #category : #private }
 TypInfVariable >> transfer [
 
 	node variable typInfFlowTransfer: self in: state
-]
-
-{ #category : #accessing }
-TypInfVariable >> type [
-
-	^ self outgoingAt: #type ifAbsentPut: [ 
-		  self incomingFlow
-			  ifEmpty: [ 
-				  outgoing
-					  at: #read
-					  ifPresent: [ :e | 
-					  (e collect: [ :f | f target type ]) typAsType ]
-					  ifAbsent: [ state at: self ] ]
-			  ifNotEmpty: [ state at: self ] ]
 ]

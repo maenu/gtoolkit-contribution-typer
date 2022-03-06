@@ -39,7 +39,7 @@ TypInfContext >> initializeNode: aMethodNode self: aType super: anotherType [
 { #category : #accessing }
 TypInfContext >> next: aNode [
 
-	^ current := current next: (self nodeAt: aNode)
+	^ current := current outgoingNext: (self nodeAt: aNode)
 ]
 
 { #category : #accessing }
@@ -64,15 +64,12 @@ TypInfContext >> root [
 TypInfContext >> run [
 
 	| n nodes_ |
-	
-	
 	nodes_ := nodes values.
 	n := 100.
 	[ 
 	n := n - 1.
-	(nodes_ inject: false into: [ :r :e | e slurpAndBurp or: r ]) or: [ 
+	(nodes_ inject: false into: [ :r :e | e slurpAndBurp or: r ]) and: [ 
 		n > 0 ] ] whileTrue.
-	nodes_ do: #type.
 	stable := n > 0
 ]
 
@@ -81,7 +78,8 @@ TypInfContext >> visitArgumentVariableNode: anArgumentNode [
 
 	self visitLocalVariableNode: anArgumentNode.
 	anArgumentNode isDefinition ifFalse: [ 
-		current read: (self nodeAt: anArgumentNode variable definingNode) ].
+		current incomingRead:
+			(self nodeAt: anArgumentNode variable definingNode) ].
 	^ current
 ]
 
@@ -92,7 +90,7 @@ TypInfContext >> visitArrayNode: anArrayNode [
 	arguments := anArrayNode statements collect: [ :n | 
 		             self visitNode: n ].
 	self next: anArrayNode.
-	current arguments: arguments.
+	current incomingArguments: arguments.
 	^ current
 ]
 
@@ -109,7 +107,7 @@ TypInfContext >> visitAssignmentNode: anAssignmentNode [
 TypInfContext >> visitBlockNode: aBlockNode [
 
 	self next: aBlockNode.
-	current arguments:
+	current incomingArguments:
 		(aBlockNode arguments collect: [ :n | self nodeAt: n ]).
 	self visitNode: aBlockNode body.
 	^ current returnBlock: (self nodeAt: aBlockNode)
@@ -129,7 +127,7 @@ TypInfContext >> visitLiteralArrayNode: aLiteralArrayNode [
 	arguments := aLiteralArrayNode contents collect: [ :n | 
 		             self visitNode: n ].
 	self next: aLiteralArrayNode.
-	current arguments: arguments.
+	current incomingArguments: arguments.
 	^ current
 ]
 
@@ -148,7 +146,7 @@ TypInfContext >> visitMessageNode: aMessageNode [
 	arguments := aMessageNode arguments collect: [ :n | 
 		             self visitNode: n ].
 	self next: aMessageNode.
-	current arguments: arguments.
+	current incomingArguments: arguments.
 	current receiver: (self nodeAt: aMessageNode receiver).
 	^ current
 ]
@@ -160,12 +158,12 @@ TypInfContext >> visitMethodNode: aMethodNode [
 	self assert: [ current isNil ].
 	root := self nodeAt: aMethodNode.
 	current := root.
-	current arguments:
+	current incomingArguments:
 		(aMethodNode arguments collect: [ :n | self nodeAt: n ]).
 	self visitNode: aMethodNode body.
 	aMethodNode lastIsReturn ifFalse: [ 
 		self next: RBVariableNode selfNode.
-		current return: root ].
+		current outgoingReturn: root ].
 	^ root
 ]
 
@@ -188,8 +186,8 @@ TypInfContext >> visitReturnNode: aReturnNode [
 { #category : #visiting }
 TypInfContext >> visitSequenceNode: aSequenceNode [
 
-	current := current execute: (self nodeAt: aSequenceNode).
-	current arguments:
+	current := current ougoingExecute: (self nodeAt: aSequenceNode).
+	current incomingArguments:
 		(aSequenceNode temporaries collect: [ :n | self nodeAt: n ]).
 	aSequenceNode statements do: [ :n | self visitNode: n ]
 ]
@@ -199,7 +197,7 @@ TypInfContext >> visitTemporaryVariableNode: aTemproraryNode [
 
 	self visitLocalVariableNode: aTemproraryNode.
 	aTemproraryNode isDefinition ifFalse: [ 
-		current read: (self nodeAt: aTemproraryNode variable definingNode) ].
+		current incomingRead: (self nodeAt: aTemproraryNode variable definingNode) ].
 	^ current
 ]
 

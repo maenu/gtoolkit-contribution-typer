@@ -430,19 +430,14 @@ TypShaPhaCollection >> mIncludesAll: aLookup [
 TypShaPhaCollection >> mInjectInto: aLookup [
 
 	<typShaMethod: 'inject:into:'>
-	^ CompiledMethod
-		  typAsFunctionTypeWithResult: { 
-				  (aLookup arguments at: 1).
-				  (aLookup arguments at: 2) result } typAsType
-		  arguments: { 
-				  (aLookup arguments at: 1).
-				  (BlockClosure
-					   typAsFunctionTypeWithResult: TypUnknownType instance
-					   arguments: { 
-							   { 
-								   (aLookup arguments at: 1).
-								   (aLookup arguments at: 2) result } typAsType.
-							   (aLookup receiver at: #A) }) }
+	| result |
+	result := (aLookup arguments at: 1) with:
+		          (aLookup arguments at: 2) result.
+	^ CompiledMethod typAsFunctionTypeWithResult: result arguments: { 
+			  result.
+			  (BlockClosure typAsFunctionTypeWithResult: result arguments: { 
+					   result.
+					   (aLookup receiver at: #A) }) }
 ]
 
 { #category : #shadow }
