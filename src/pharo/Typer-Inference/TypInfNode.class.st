@@ -19,7 +19,7 @@ TypInfNode class >> node: aNode [
 { #category : #accessing }
 TypInfNode >> burp [
 
-	^ (self outgoingFlow reject: [ :e | e key = #constrain ])
+	^ self outgoingFlow
 		  inject: false
 		  into: [ :r :e | r or: (e state: state copy) ]
 ]

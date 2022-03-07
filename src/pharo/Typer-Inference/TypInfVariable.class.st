@@ -10,7 +10,7 @@ TypInfVariable >> constrain: aNode to: aType in: aState [
 	| type |
 	type := super constrain: aNode to: aType in: aState.
 	aNode == self ifFalse: [ ^ type ].
-	^ node variable typInfFlowConstrain: self to: type in: aState
+	^ node variable typInfConstrain: self to: type in: aState
 ]
 
 { #category : #'meta-object-protocol' }
@@ -29,7 +29,7 @@ TypInfVariable >> incomingRead: aNode [
 TypInfVariable >> initialize: aState [
 
 	state := aState.
-	^ node variable typInfFlowInitialize: self in: state
+	^ node variable typInfInitialize: self in: state
 ]
 
 { #category : #'as yet unclassified' }
@@ -41,5 +41,5 @@ TypInfVariable >> outgoingReads [
 { #category : #private }
 TypInfVariable >> transfer [
 
-	node variable typInfFlowTransfer: self in: state
+	node variable typInfTransfer: self in: state
 ]

@@ -10,21 +10,9 @@ Variable >> typInfAssignmentNodes [
 ]
 
 { #category : #'*Typer-Inference' }
-Variable >> typInfFlowConstrain: aNode to: aType in: aState [
+Variable >> typInfConstrain: aNode to: aType in: aState [
 
-	^ aNode constrain: aNode to: aType in: aState
-]
-
-{ #category : #'*Typer-Inference' }
-Variable >> typInfFlowInitialize: aNode in: aState [
-
-	aState at: aNode put: self typInfFromName
-]
-
-{ #category : #'*Typer-Inference' }
-Variable >> typInfFlowTransfer: aNode in: aState [
-
-	
+	aNode constrain: aNode to: aType in: aState
 ]
 
 { #category : #'*Typer-Inference' }
@@ -37,6 +25,18 @@ Variable >> typInfFromName [
 	global := Smalltalk globals
 		          at: className asSymbol
 		          ifAbsent: [ ^ TypUnknownType instance ].
-	global isClass ifFalse: [ ^ TypUnknownType instance ].
+	global isClassOrTrait ifFalse: [ ^ TypUnknownType instance ].
 	^ global typAsType
+]
+
+{ #category : #'*Typer-Inference' }
+Variable >> typInfInitialize: aNode in: aState [
+
+	aState at: aNode put: self typInfFromName
+]
+
+{ #category : #'*Typer-Inference' }
+Variable >> typInfTransfer: aNode in: aState [
+
+	
 ]

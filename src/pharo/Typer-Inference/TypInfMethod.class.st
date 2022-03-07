@@ -53,7 +53,7 @@ TypInfMethod >> transfer [
 	| type |
 	type := CompiledMethod
 		        typAsFunctionTypeWithResult:
-		        (self incomingReturns collect: [ :e | state at: e ])
+		        (self incomingReturns collect: [ :f | state at: f ])
 			        typAsType
 		        arguments:
 		        (self incomingArguments collect: [ :a | state at: a ])
