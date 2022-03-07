@@ -14,8 +14,8 @@ TypInfNode >> typGtAsElementIn: aMondrian [
 TypInfNode >> typGtFlowFor: aView [
 
 	<gtView>
-	^ aView typGtMondrian
-		  title: 'Control Flow';
+	^ aView typGtMondrian 
+		  title: 'Control Flow'; 
 		  priority: 10;
 		  painting: [ :m | self typGtFlowPaintOn: m ]
 ]
@@ -25,7 +25,8 @@ TypInfNode >> typGtFlowPaintOn: aMondrian [
 
 	| edges nodes currentNodes nextNodes |
 	currentNodes := aMondrian existingNodes.
-	nodes := (self context outgoing collect: #target) difference: currentNodes.
+	nodes := (self context outgoing collect: #target) difference:
+		         currentNodes.
 	nodes ifEmpty: [ ^ self ].
 	nextNodes := currentNodes , nodes , { self }.
 	edges := ((((nodes flatCollect: #incomingFlow) select: [ :e | 
@@ -44,6 +45,13 @@ TypInfNode >> typGtFlowPaintOn: aMondrian [
 		connect: edges
 		from: [ :e | e anyOne origin ]
 		to: [ :e | e anyOne target ].
+	aMondrian edges
+		passive;
+		stencil: [ :e | e typGtAsElementIn: aMondrian with: { e } ];
+		connect:
+			((nodes flatCollect: #outgoing) select: [ :e | e key = #constrain ])
+		from: [ :e | e origin ]
+		to: [ :e | e target ].
 	aMondrian layout force
 ]
 
@@ -80,7 +88,7 @@ TypInfNode >> typGtStateFor: aView [
 		  title: 'State';
 		  priority: 10;
 		  object: [ state ];
-		  view: #gtItemsFor:
+		  view: #typGtItemsFor:
 ]
 
 { #category : #'*Typer-GToolkit' }

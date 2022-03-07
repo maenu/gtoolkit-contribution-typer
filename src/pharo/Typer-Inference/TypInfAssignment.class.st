@@ -12,10 +12,8 @@ TypInfAssignment >> transfer [
 	valueType := state at: value.
 	variable := self outgoingNext.
 	variableType := state at: variable.
-	variable
-		readIfPresent: [ :e | state at: e put: valueType ]
-		ifAbsent: [ "noop" ].
 	state at: variable put: valueType.
 	state at: self put: valueType.
-	self constrain: value to: variableType
+	self constrain: value to: variableType in: state.
+	self constrain: variable to: valueType in: state
 ]

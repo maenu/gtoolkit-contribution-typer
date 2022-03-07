@@ -10,9 +10,9 @@ Variable >> typInfAssignmentNodes [
 ]
 
 { #category : #'*Typer-Inference' }
-Variable >> typInfFlowConstrain: aNode to: aType [
+Variable >> typInfFlowConstrain: aNode to: aType in: aState [
 
-	
+	^ aNode constrain: aNode to: aType in: aState
 ]
 
 { #category : #'*Typer-Inference' }

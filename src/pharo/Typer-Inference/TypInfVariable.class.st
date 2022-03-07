@@ -4,11 +4,13 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #'as yet unclassified' }
-TypInfVariable >> constrainTo: aType [
+{ #category : #accessing }
+TypInfVariable >> constrain: aNode to: aType in: aState [
 
-	super constrainTo: aType.
-	node variable typInfFlowConstrain: self to: aType
+	| type |
+	type := super constrain: aNode to: aType in: aState.
+	aNode == self ifFalse: [ ^ type ].
+	^ node variable typInfFlowConstrain: self to: type in: aState
 ]
 
 { #category : #'meta-object-protocol' }
@@ -34,12 +36,6 @@ TypInfVariable >> initialize: aState [
 TypInfVariable >> outgoingReads [
 
 	^ (outgoing at: #read) collect: #target
-]
-
-{ #category : #'meta-object-protocol' }
-TypInfVariable >> readIfPresent: aBlock ifAbsent: anotherBlock [
-
-	^ self incomingAt: #read ifPresent: aBlock ifAbsent: anotherBlock
 ]
 
 { #category : #private }

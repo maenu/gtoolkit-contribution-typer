@@ -25,6 +25,18 @@ TypInfNode >> burp [
 ]
 
 { #category : #'as yet unclassified' }
+TypInfNode >> constrain [
+
+	incoming
+		at: #constrain
+		ifPresent: [ :s | 
+			state
+				at: self
+				put: (s collect: [ :e | e state at: self ]) typAsType ]
+		ifAbsent: [ "noop" ]
+]
+
+{ #category : #'as yet unclassified' }
 TypInfNode >> constrain: aNode [
 
 	| add |
@@ -41,23 +53,18 @@ TypInfNode >> constrain: aNode [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfNode >> constrain: aNode to: aType [
-
-	(self constrain: aNode) state at: aNode put: aType
-]
-
-{ #category : #accessing }
-TypInfNode >> constrainTo: aType [
+TypInfNode >> constrain: aNode to: aType in: aState [
 
 	| type |
-	type := state at: self.
-	aType >= ProtoObject typAsType ifTrue: [ ^ false ].
-	aType >= type ifTrue: [ ^ false ].
+	type := aState at: aNode.
+	aType >= ProtoObject typAsType ifTrue: [ ^ type ].
+	aType >= type ifTrue: [ ^ type ].
 	type := type > aType
 		        ifTrue: [ aType ]
 		        ifFalse: [ type with: aType ].
-	state at: self put: type.
-	^ true
+	aState at: aNode put: type.
+	(self constrain: aNode) state at: aNode put: type.
+	^ type
 ]
 
 { #category : #accessing }
@@ -173,12 +180,13 @@ TypInfNode >> printOn: aStream [
 { #category : #'as yet unclassified' }
 TypInfNode >> slurp [
 
-	| ins |
-	ins := self incomingFlow collect: #state as: LinkedList.
+	| states |
+	states := self incomingFlow collect: #state as: LinkedList.
 	self flag:
 		'TODO differentiate between constrain and non-constrain, use #constrainTo:, delete edge?'.
-	state := ins removeLast copy.
-	[ ins isEmpty ] whileFalse: [ state := state join: ins removeLast ]
+	state := states removeLast copy.
+	[ states isEmpty ] whileFalse: [ 
+		state := state join: states removeLast ]
 ]
 
 { #category : #accessing }
@@ -187,7 +195,8 @@ TypInfNode >> slurpAndBurp [
 	self incomingFlow ifEmpty: [ ^ false ].
 	^ self
 		  slurp;
-		  transfer; 
+		  transfer;
+		  constrain;
 		  burp
 ]
 

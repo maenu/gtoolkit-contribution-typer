@@ -27,6 +27,9 @@ TypInfContext >> initializeNode: aMethodNode self: aType super: anotherType [
 	"ordered to have a cheap, close-to-topological sorting.
 	 makes the run more predictable"
 
+	stable := nil.
+	root := nil.
+	current := nil.
 	nodes := OrderedIdentityDictionary new.
 	aMethodNode acceptVisitor: self.
 	state := TypInfState self: aType super: anotherType.
@@ -110,7 +113,7 @@ TypInfContext >> visitBlockNode: aBlockNode [
 	current incomingArguments:
 		(aBlockNode arguments collect: [ :n | self nodeAt: n ]).
 	self visitNode: aBlockNode body.
-	^ current returnBlock: (self nodeAt: aBlockNode)
+	^ current outgoingReturnBlock: (self nodeAt: aBlockNode)
 ]
 
 { #category : #visiting }
@@ -147,7 +150,7 @@ TypInfContext >> visitMessageNode: aMessageNode [
 		             self visitNode: n ].
 	self next: aMessageNode.
 	current incomingArguments: arguments.
-	current receiver: (self nodeAt: aMessageNode receiver).
+	current incomingReceiver: (self nodeAt: aMessageNode receiver).
 	^ current
 ]
 
@@ -180,7 +183,7 @@ TypInfContext >> visitReturnNode: aReturnNode [
 
 	self visitNode: aReturnNode value.
 	self next: aReturnNode.
-	^ current return: root
+	^ current outgoingReturn: root
 ]
 
 { #category : #visiting }

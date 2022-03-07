@@ -9,7 +9,7 @@ TypInfEdge >> typGtStateFor: aView [
 		  title: 'State';
 		  priority: 10;
 		  object: [ state ];
-		  view: #gtItemsFor:
+		  view: #typGtItemsFor:
 ]
 
 { #category : #'*Typer-GToolkit' }

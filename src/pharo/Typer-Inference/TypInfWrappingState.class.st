@@ -37,17 +37,6 @@ TypInfWrappingState >> copy [
 	^ TypInfState self: selfType super: superType index: self index
 ]
 
-{ #category : #ui }
-TypInfWrappingState >> gtItemsFor: aView [
-
-	<gtView>
-	^ aView forward
-		  title: 'Index';
-		  priority: 10;
-		  object: [ self index ];
-		  view: #gtItemsFor:
-]
-
 { #category : #accessing }
 TypInfWrappingState >> index [
 
@@ -60,17 +49,4 @@ TypInfWrappingState >> index [
 TypInfWrappingState >> initializeState: aState [
 
 	state := aState
-]
-
-{ #category : #initialization }
-TypInfWrappingState >> initializeState: aState index: aDictionary [
-
-	self initializeSelf: state self super: state super index: aDictionary.
-	state := aState
-]
-
-{ #category : #accessing }
-TypInfWrappingState >> size [
-
-	^ super size max: state size
 ]

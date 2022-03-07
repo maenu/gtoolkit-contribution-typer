@@ -74,17 +74,6 @@ TypInfState >> diff: aState [
 	^ diff
 ]
 
-{ #category : #accessing }
-TypInfState >> gtItemsFor: aView [
-
-	<gtView>
-	^ aView forward
-		  title: 'Index';
-		  priority: 10;
-		  object: [ index ];
-		  view: #gtItemsFor:
-]
-
 { #category : #comparing }
 TypInfState >> hash [
 
@@ -95,13 +84,6 @@ TypInfState >> hash [
 TypInfState >> index [
 
 	^ index
-]
-
-{ #category : #accessing }
-TypInfState >> initialize [
-
-	super initialize.
-	index := IdentityDictionary new
 ]
 
 { #category : #initialization }
@@ -150,7 +132,7 @@ TypInfState >> self [
 { #category : #accessing }
 TypInfState >> size [
 
-	^ index size
+	^ self index size
 ]
 
 { #category : #'as yet unclassified' }

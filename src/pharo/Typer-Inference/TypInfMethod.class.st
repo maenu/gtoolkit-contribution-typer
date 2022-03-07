@@ -6,10 +6,13 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypInfMethod >> incomingReturns [
 
-	^ incoming at: #return ifAbsent: [ #(  ) ]
+	^ incoming
+		  at: #return
+		  ifPresent: [ :s | s collect: #origin ]
+		  ifAbsent: [ #(  ) ]
 ]
 
 { #category : #accessing }
