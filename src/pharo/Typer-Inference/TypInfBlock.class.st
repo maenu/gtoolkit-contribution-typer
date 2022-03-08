@@ -7,19 +7,17 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypInfBlock >> constrain: aNode to: aType in: aState [
+TypInfBlock >> constrainTo: aType [
 
 	| type |
-	type := super constrain: aNode to: aType in: aState.
-	aNode == self ifFalse: [ ^ type ].
+	type := aType.
 	type isUnion ifTrue: [ 
 		aType types detect: #isFunction ifFound: [ :t | type := t ] ].
-	type isFunction ifFalse: [ ^ type ].
+	type isFunction ifFalse: [ ^ self ].
 	self incomingArguments withIndexDo: [ :n :i | 
 		i <= type arguments size ifTrue: [ 
-			self constrain: n to: (type arguments at: i) in: aState ] ].
-	self constrain: self incomingReturnBlock to: type result in: aState.
-	^ type
+			self constrain: n to: (type arguments at: i) ] ].
+	self constrain: self incomingReturnBlock to: type result
 ]
 
 { #category : #'as yet unclassified' }

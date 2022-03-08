@@ -20,5 +20,5 @@ TypInfEdge >> typGtTypeFor: aView [
 	^ aView explicit
 		  title: 'Type';
 		  priority: 10;
-		  stencil: [ GtInspectorTool forObject: (state at: origin) ]
+		  stencil: [ GtInspectorTool forObject: (state at: target) ]
 ]

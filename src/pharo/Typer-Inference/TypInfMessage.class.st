@@ -37,11 +37,10 @@ TypInfMessage >> transfer [
 		(classes size between: 1 and: 8) ifTrue: [ 
 			self
 				constrain: receiver
-				to: (classes collect: #typAsType) typAsType
-				in: state ] ].
+				to: (classes collect: #typAsType) typAsType ] ].
 	method := self method.
 	self incomingArguments withIndexDo: [ :e :i | 
 		i <= method arguments size ifTrue: [ 
-			self constrain: e to: (method arguments at: i) in: state ] ].
+			self constrain: e to: (method arguments at: i) ] ].
 	state at: self put: method result
 ]

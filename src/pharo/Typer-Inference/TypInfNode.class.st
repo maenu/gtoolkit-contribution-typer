@@ -30,41 +30,44 @@ TypInfNode >> constrain [
 	incoming
 		at: #constrain
 		ifPresent: [ :s | 
-			state
-				at: self
-				put: (s collect: [ :e | e state at: self ]) typAsType ]
+			s ifNotEmpty: [ self constrainTo: (s collect: #type) typAsType ] ]
 		ifAbsent: [ "noop" ]
 ]
 
 { #category : #'as yet unclassified' }
-TypInfNode >> constrain: aNode [
+TypInfNode >> constrain: aNode to: aType [
 
-	| add |
-	add := [ 
-	       self outgoingAdd:
-		       ((TypInfEdge origin: self target: aNode key: #constrain)
-			        state: (TypInfState self: state self super: state super);
-			        yourself) ].
-	^ outgoing
-		  at: #constrain
-		  ifPresent: [ :s | 
-		  s detect: [ :e | e target == aNode ] ifNone: add ]
-		  ifAbsent: add
+	| constrain |
+	state at: aNode put: aType.
+	constrain := [ 
+	             self outgoingAdd:
+		             ((TypInfConstrainEdge
+			               origin: self
+			               target: aNode
+			               key: #constrain)
+			              state:
+				              (TypInfState self: state self super: state super);
+			              yourself) ].
+	(outgoing
+		 at: #constrain
+		 ifPresent: [ :s | 
+		 s detect: [ :e | e target == aNode ] ifNone: constrain ]
+		 ifAbsent: constrain) type: aType
 ]
 
 { #category : #'as yet unclassified' }
-TypInfNode >> constrain: aNode to: aType in: aState [
+TypInfNode >> constrainTo: aType [
 
 	| type |
-	type := aState at: aNode.
-	aType >= ProtoObject typAsType ifTrue: [ ^ type ].
-	aType >= type ifTrue: [ ^ type ].
-	type := type > aType
+	type := state at: self.
+	aType >= type ifTrue: [ ^ self ].
+	type := aType < type
 		        ifTrue: [ aType ]
-		        ifFalse: [ type with: aType ].
-	aState at: aNode put: type.
-	(self constrain: aNode) state at: aNode put: type.
-	^ type
+		        ifFalse: [ 
+			        { 
+				        type.
+				        aType } typAsType ].
+	state at: self put: type
 ]
 
 { #category : #accessing }
@@ -77,7 +80,8 @@ TypInfNode >> context [
 TypInfNode >> incomingFlow [
 
 	^ self incoming select: [ :e | 
-		  (e isKindOf: TypInfEdge) and: [ e isFlowIn ] ]
+		  (e isKindOf: TypInfEdge) and: [ 
+			  e isFlow or: [ e key = #constrain ] ] ]
 ]
 
 { #category : #accessing }
@@ -132,7 +136,7 @@ TypInfNode >> outgoingAddTarget: aNode key: anObject [
 TypInfNode >> outgoingFlow [
 
 	^ self outgoing select: [ :e | 
-		  (e isKindOf: TypInfEdge) and: [ e isFlowOut ] ]
+		  (e isKindOf: TypInfEdge) and: [ e isFlow ] ]
 ]
 
 { #category : #accessing }
@@ -195,8 +199,8 @@ TypInfNode >> slurpAndBurp [
 	self incomingFlow ifEmpty: [ ^ false ].
 	^ self
 		  slurp;
-		  transfer;
 		  constrain;
+		  transfer;
 		  burp
 ]
 

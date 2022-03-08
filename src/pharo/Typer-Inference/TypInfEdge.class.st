@@ -21,18 +21,6 @@ TypInfEdge >> isFlow [
 	^ #( #next #execute #return #returnBlock #signal ) includes: key
 ]
 
-{ #category : #testing }
-TypInfEdge >> isFlowIn [
-
-	^ #( #next #execute #return #returnBlock #signal ) includes: key
-]
-
-{ #category : #testing }
-TypInfEdge >> isFlowOut [
-
-	^ #( #next #execute #return #returnBlock #signal ) includes: key
-]
-
 { #category : #accessing }
 TypInfEdge >> log [
 

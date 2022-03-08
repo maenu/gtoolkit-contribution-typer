@@ -1,7 +1,7 @@
 Extension { #name : #GlobalVariable }
 
 { #category : #'*Typer-Inference' }
-GlobalVariable >> typInfInitialize: aNode in: aState [
+GlobalVariable >> typInfInitialize: aNode [
 
-	aState at: aNode put: value typInfType
+	aNode initializeGlobal
 ]

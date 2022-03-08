@@ -1,22 +1,19 @@
 Extension { #name : #CopiedLocalVariable }
 
 { #category : #'*Typer-Inference' }
-CopiedLocalVariable >> typInfConstrain: aNode to: aType in: aState [
+CopiedLocalVariable >> typInfConstrain: aNode node: anotherNode to: aType [
 
-	super typInfConstrain: aNode to: aType in: aState.
-	originalVar typInfConstrain: aNode to: aType in: aState
+	originalVar typInfConstrain: aNode node: anotherNode to: aType
 ]
 
 { #category : #'*Typer-Inference' }
-CopiedLocalVariable >> typInfInitialize: aNode in: aState [
+CopiedLocalVariable >> typInfInitialize: aNode [
 
-	super typInfInitialize: aNode in: aState.
-	originalVar typInfInitialize: aNode in: aState
+	originalVar typInfInitialize: aNode
 ]
 
 { #category : #'*Typer-Inference' }
-CopiedLocalVariable >> typInfTransfer: aNode in: aState [
+CopiedLocalVariable >> typInfTransfer: aNode [
 
-	super typInfTransfer: aNode in: aState.
-	originalVar typInfTransfer: aNode in: aState
+	originalVar typInfTransfer: aNode
 ]

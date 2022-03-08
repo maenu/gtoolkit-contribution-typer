@@ -10,33 +10,25 @@ Variable >> typInfAssignmentNodes [
 ]
 
 { #category : #'*Typer-Inference' }
-Variable >> typInfConstrain: aNode to: aType in: aState [
+Variable >> typInfConstrain: aNode node: anotherNode to: aType [
 
-	aNode constrain: aNode to: aType in: aState
+	aNode constrainVariable: anotherNode to: aType
 ]
 
 { #category : #'*Typer-Inference' }
-Variable >> typInfFromName [
+Variable >> typInfConstrain: aNode to: aType [
 
-	| className global |
-	(name beginsWith: 'an') ifTrue: [ className := name allButFirst: 2 ].
-	(name beginsWith: 'a') ifTrue: [ className := name allButFirst: 1 ].
-	className ifNil: [ ^ TypUnknownType instance ].
-	global := Smalltalk globals
-		          at: className asSymbol
-		          ifAbsent: [ ^ TypUnknownType instance ].
-	global isClassOrTrait ifFalse: [ ^ TypUnknownType instance ].
-	^ global typAsType
+	aNode constrainVariableTo: aType
 ]
 
 { #category : #'*Typer-Inference' }
-Variable >> typInfInitialize: aNode in: aState [
+Variable >> typInfInitialize: aNode [
 
-	aState at: aNode put: self typInfFromName
+	aNode initializeVariable
 ]
 
 { #category : #'*Typer-Inference' }
-Variable >> typInfTransfer: aNode in: aState [
+Variable >> typInfTransfer: aNode [
 
 	
 ]

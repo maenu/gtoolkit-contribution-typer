@@ -1,7 +1,7 @@
 Extension { #name : #SelfVariable }
 
 { #category : #'*Typer-Inference' }
-SelfVariable >> typInfInitialize: aNode in: aState [
+SelfVariable >> typInfInitialize: aNode [
 
-	aState at: aNode put: aState self
+	aNode initializeSelf
 ]

@@ -14,6 +14,6 @@ TypInfAssignment >> transfer [
 	variableType := state at: variable.
 	state at: variable put: valueType.
 	state at: self put: valueType.
-	self constrain: value to: variableType in: state.
-	self constrain: variable to: valueType in: state
+	self constrain: value to: variableType.
+	self constrain: variable to: valueType
 ]
