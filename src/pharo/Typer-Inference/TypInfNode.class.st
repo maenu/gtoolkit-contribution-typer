@@ -31,6 +31,10 @@ TypInfNode >> constrain [
 		at: #constrain
 		ifPresent: [ :s | 
 			s ifNotEmpty: [ self constrainTo: (s collect: #type) typAsType ] ]
+		ifAbsent: [ "noop" ].
+	outgoing
+		at: #constrain
+		ifPresent: [ :s | s copy do: [ :e | self outgoingRemove: e ] ]
 		ifAbsent: [ "noop" ]
 ]
 
@@ -228,4 +232,10 @@ TypInfNode >> type [
 TypInfNode >> type: aType [
 
 	^ state at: self put: aType
+]
+
+{ #category : #'as yet unclassified' }
+TypInfNode >> typeAs: aType in: aState [
+
+	aState at: self put: aType
 ]

@@ -1,19 +1,9 @@
 Extension { #name : #LocalVariable }
 
 { #category : #'*Typer-Inference' }
-LocalVariable >> typInfConstrain: aNode node: anotherNode to: aType [
+LocalVariable >> typInfNode: aNode [
 
-	aNode constrainLocal: anotherNode to: aType
-]
-
-{ #category : #'*Typer-Inference' }
-LocalVariable >> typInfConstrain: aNode to: aType [
-
-	aNode constrainLocalTo: aType
-]
-
-{ #category : #'*Typer-Inference' }
-LocalVariable >> typInfTransfer: aNode [
-
-	aNode transferLocal
+	^ aNode isDefinition
+		  ifTrue: [ TypInfLocalDefinition node: aNode ]
+		  ifFalse: [ TypInfLocal node: aNode ]
 ]

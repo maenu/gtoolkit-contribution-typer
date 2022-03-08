@@ -77,16 +77,6 @@ TypInfContext >> run [
 ]
 
 { #category : #visiting }
-TypInfContext >> visitArgumentVariableNode: anArgumentNode [
-
-	self visitLocalVariableNode: anArgumentNode.
-	anArgumentNode isDefinition ifFalse: [ 
-		current incomingRead:
-			(self nodeAt: anArgumentNode variable definingNode) ].
-	^ current
-]
-
-{ #category : #visiting }
 TypInfContext >> visitArrayNode: anArrayNode [
 
 	| arguments |
@@ -138,6 +128,16 @@ TypInfContext >> visitLiteralArrayNode: aLiteralArrayNode [
 TypInfContext >> visitLiteralValueNode: aNode [
 
 	^ self next: aNode
+]
+
+{ #category : #visiting }
+TypInfContext >> visitLocalVariableNode: aLocalNode [
+
+	self visitTemporaryNode: aLocalNode.
+	aLocalNode isDefinition ifFalse: [ 
+		current incomingRead:
+			(self nodeAt: aLocalNode variable definingNode) ].
+	^ current
 ]
 
 { #category : #visiting }
@@ -193,15 +193,6 @@ TypInfContext >> visitSequenceNode: aSequenceNode [
 	current incomingArguments:
 		(aSequenceNode temporaries collect: [ :n | self nodeAt: n ]).
 	aSequenceNode statements do: [ :n | self visitNode: n ]
-]
-
-{ #category : #visiting }
-TypInfContext >> visitTemporaryVariableNode: aTemproraryNode [
-
-	self visitLocalVariableNode: aTemproraryNode.
-	aTemproraryNode isDefinition ifFalse: [ 
-		current incomingRead: (self nodeAt: aTemproraryNode variable definingNode) ].
-	^ current
 ]
 
 { #category : #visiting }

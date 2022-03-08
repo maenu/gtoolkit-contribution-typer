@@ -24,7 +24,7 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 	text := aText.
 	[ 
 	ast typInfTypeSelf.
-	self visitNode: ast ]
+	self visitNode: ast ] 
 		on: Error
 		do: [ :e | Halt once ].
 	text := nil. 
