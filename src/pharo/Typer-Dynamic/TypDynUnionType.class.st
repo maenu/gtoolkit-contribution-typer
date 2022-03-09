@@ -50,7 +50,6 @@ TypDynUnionType >> addAll: aTypes [
 { #category : #converting }
 TypDynUnionType >> asNonDynType [
 
-	<typEdge>
 	^ types typAsType
 ]
 

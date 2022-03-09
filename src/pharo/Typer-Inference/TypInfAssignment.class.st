@@ -12,7 +12,6 @@ TypInfAssignment >> transfer [
 	valueType := state at: value.
 	variable := self outgoingNext.
 	variableType := state at: variable.
-	state at: variable put: valueType.
 	state at: self put: valueType.
-	self constrain: variable to: valueType
+	variable set: valueType in: state
 ]

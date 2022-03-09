@@ -6,7 +6,7 @@ TypInfWrappingState >> typGtSelfItemsFor: aView [
 	<gtView>
 	^ aView forward
 		  title: 'Self Index';
-		  priority: 10;
+		  priority: 9;
 		  object: [  index ];
 		  view: #gtItemsFor:
 ]

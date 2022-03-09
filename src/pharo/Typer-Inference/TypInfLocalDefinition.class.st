@@ -16,7 +16,11 @@ TypInfLocalDefinition >> outgoingReads [
 { #category : #accessing }
 TypInfLocalDefinition >> transfer [
 
-	state
-		at: self
-		put: (self outgoingReads collect: [ :n | n state at: n ]) typAsType
+	state at: self put: TypNilType instance
+]
+
+{ #category : #accessing }
+TypInfLocalDefinition >> type [
+
+	^ (self outgoingReads collect: #type) typAsType
 ]

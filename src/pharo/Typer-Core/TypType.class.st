@@ -83,7 +83,6 @@ TypType >> asNonNullable [
 { #category : #converting }
 TypType >> asNullable [
 
-	<typEdge>
 	^ { 
 		  TypNilType instance.
 		  self } typAsType

@@ -431,8 +431,9 @@ TypShaPhaCollection >> mInjectInto: aLookup [
 
 	<typShaMethod: 'inject:into:'>
 	| result |
-	result := (aLookup arguments at: 1) with:
-		          (aLookup arguments at: 2) result.
+	result := { 
+		          (aLookup arguments at: 1).
+		          (aLookup arguments at: 2) result } typAsType.
 	^ CompiledMethod typAsFunctionTypeWithResult: result arguments: { 
 			  result.
 			  (BlockClosure typAsFunctionTypeWithResult: result arguments: { 

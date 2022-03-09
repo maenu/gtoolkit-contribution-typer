@@ -8,10 +8,3 @@ Variable >> typInfAssignmentNodes [
 			  select: [ :n | n variable == self and: [ n isWrite ] ]
 			  thenCollect: #parent ]
 ]
-
-{ #category : #'*Typer-Inference' }
-Variable >> typInfNode: aNode [
-
-	Halt once.
-	^ TypInfVariable node: aNode
-]

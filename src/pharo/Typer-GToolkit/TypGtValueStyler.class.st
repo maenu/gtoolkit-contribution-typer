@@ -5,6 +5,13 @@ Class {
 }
 
 { #category : #visiting }
+TypGtValueStyler >> visitBlockNode: aNode [
+
+	super visitBlockNode: aNode.
+	self styleNode: aNode
+]
+
+{ #category : #visiting }
 TypGtValueStyler >> visitMessageNode: aNode [
 
 	super visitMessageNode: aNode.

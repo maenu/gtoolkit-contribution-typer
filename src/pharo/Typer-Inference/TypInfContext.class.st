@@ -73,7 +73,8 @@ TypInfContext >> run [
 	n := n - 1.
 	(nodes_ inject: false into: [ :r :e | e slurpAndBurp or: r ]) and: [ 
 		n > 0 ] ] whileTrue.
-	stable := n > 0
+	stable := n > 0.
+	^ n
 ]
 
 { #category : #visiting }

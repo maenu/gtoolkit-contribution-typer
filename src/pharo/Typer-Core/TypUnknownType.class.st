@@ -29,7 +29,7 @@ TypUnknownType >> > aType [
 { #category : #polymorphic }
 TypUnknownType >> arguments [
 
-	^ Array new: 32 withAll: self
+	^ #(  )
 ]
 
 { #category : #polymorphic }

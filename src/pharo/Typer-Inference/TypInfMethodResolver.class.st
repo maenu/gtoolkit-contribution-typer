@@ -37,7 +37,8 @@ TypInfMethodResolver >> contextAt: aMethodNode self: aType super: anotherType [
 		  (TypInfContextKey node: aMethodNode self: aType super: anotherType)
 		  ifAbsentPut: [ 
 			  (TypInfContext node: aMethodNode self: aType super: anotherType)
-				  run ]
+				  run;
+				  yourself ]
 ]
 
 { #category : #invalidation }

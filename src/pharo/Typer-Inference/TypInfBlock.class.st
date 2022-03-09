@@ -7,20 +7,6 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypInfBlock >> constrainTo: aType [
-
-	| type |
-	type := aType.
-	type isUnion ifTrue: [ 
-		aType types detect: #isFunction ifFound: [ :t | type := t ] ].
-	type isFunction ifFalse: [ ^ self ].
-	self incomingArguments withIndexDo: [ :n :i | 
-		i <= type arguments size ifTrue: [ 
-			self constrain: n to: (type arguments at: i) ] ].
-	self constrain: self incomingReturnBlock to: type result
-]
-
-{ #category : #'as yet unclassified' }
 TypInfBlock >> incomingReturnBlock [
 
 	^ self incomingAt: #returnBlock
@@ -50,6 +36,18 @@ TypInfBlock >> ougoingExecute: aNode [
 	^ self outgoingAt: #execute put: aNode
 ]
 
+{ #category : #'as yet unclassified' }
+TypInfBlock >> set: aType in: aState [
+
+	| arguments |
+	super set: aType in: aState.
+	arguments := aType arguments.
+	self incomingArguments withIndexDo: [ :n :i | 
+		i <= arguments size ifTrue: [ 
+			n setCovariant: (arguments at: i) in: aState ] ].
+	self incomingReturnBlock setContravariant: aType result in: aState
+]
+
 { #category : #accessing }
 TypInfBlock >> transfer [
 
@@ -61,5 +59,5 @@ TypInfBlock >> transfer [
 		        (self incomingArguments collect: [ :a | state at: a ])
 		        argumentsOptional: false
 		        signalsAlways: nil.
-	state at: self put: type
+	self set: type in: state
 ]

@@ -4,9 +4,10 @@ Extension { #name : #TypInfState }
 TypInfState >> typGtItemsFor: aView [
 
 	<gtView>
-	^ aView forward
+	^ aView columnedTree
 		  title: 'Index';
-		  priority: 10;
-		  object: [ self index ];
-		  view: #gtItemsFor:
+		  priority: 1;
+		  items: [ self index associations ];
+		  column: 'Key' text: #key spawn: #key;
+		  column: 'Value' text: #value spawn: #value
 ]

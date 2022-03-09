@@ -3,7 +3,8 @@ Class {
 	#superclass : #TypNode,
 	#instVars : [
 		'node',
-		'state'
+		'state',
+		'changed'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -19,9 +20,9 @@ TypInfNode class >> node: aNode [
 { #category : #accessing }
 TypInfNode >> burp [
 
-	^ self outgoingFlow
-		  inject: false
-		  into: [ :r :e | r or: (e state: state copy) ]
+	^ (self outgoingFlow
+		   inject: false
+		   into: [ :r :e | r or: (e state: state copy) ]) or: changed
 ]
 
 { #category : #'as yet unclassified' }
@@ -30,7 +31,8 @@ TypInfNode >> constrain [
 	incoming
 		at: #constrain
 		ifPresent: [ :s | 
-			s ifNotEmpty: [ self constrainTo: (s collect: #type) typAsType ] ]
+			s ifNotEmpty: [ 
+				self setCovariant: (s collect: #type) typAsType in: state ] ]
 		ifAbsent: [ "noop" ].
 	outgoing
 		at: #constrain
@@ -42,7 +44,7 @@ TypInfNode >> constrain [
 TypInfNode >> constrain: aNode to: aType [
 
 	| constrain |
-	state at: aNode put: aType.
+	changed := true.
 	constrain := [ 
 	             self outgoingAdd:
 		             ((TypInfConstrainEdge
@@ -57,21 +59,6 @@ TypInfNode >> constrain: aNode to: aType [
 		 ifPresent: [ :s | 
 		 s detect: [ :e | e target == aNode ] ifNone: constrain ]
 		 ifAbsent: constrain) type: aType
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> constrainTo: aType [
-
-	| type |
-	type := state at: self.
-	aType >= type ifTrue: [ ^ self ].
-	type := aType < type
-		        ifTrue: [ aType ]
-		        ifFalse: [ 
-			        { 
-				        type.
-				        aType } typAsType ].
-	state at: self put: type
 ]
 
 { #category : #accessing }
@@ -186,12 +173,49 @@ TypInfNode >> printOn: aStream [
 ]
 
 { #category : #'as yet unclassified' }
+TypInfNode >> set: aType in: aState [
+
+	aState at: self put: aType
+]
+
+{ #category : #initialization }
+TypInfNode >> setContravariant: aType in: aState [
+
+	| type |
+	aType isUnknown ifTrue: [ ^ self ].
+	type := aState at: self.
+	aType <= type ifTrue: [ ^ self ].
+	type := aType > type
+		        ifTrue: [ aType ]
+		        ifFalse: [ 
+			        { 
+				        type.
+				        aType } typAsType ].
+	self set: type in: aState
+]
+
+{ #category : #initialization }
+TypInfNode >> setCovariant: aType in: aState [
+
+	| type |
+	aType isUnknown ifTrue: [ ^ self ].
+	type := aState at: self.
+	aType >= type ifTrue: [ ^ self ].
+	type := aType < type
+		        ifTrue: [ aType ]
+		        ifFalse: [ 
+			        { 
+				        type.
+				        aType } typAsType ].
+	self set: type in: aState
+]
+
+{ #category : #'as yet unclassified' }
 TypInfNode >> slurp [
 
 	| states |
+	changed := false.
 	states := self incomingFlow collect: #state as: LinkedList.
-	self flag:
-		'TODO differentiate between constrain and non-constrain, use #constrainTo:, delete edge?'.
 	state := states removeLast copy.
 	[ states isEmpty ] whileFalse: [ 
 		state := state join: states removeLast ]
@@ -203,7 +227,6 @@ TypInfNode >> slurpAndBurp [
 	self incomingFlow ifEmpty: [ ^ false ].
 	^ self
 		  slurp;
-		  constrain;
 		  transfer;
 		  burp
 ]
@@ -232,10 +255,4 @@ TypInfNode >> type [
 TypInfNode >> type: aType [
 
 	^ state at: self put: aType
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> typeAs: aType in: aState [
-
-	aState at: self put: aType
 ]

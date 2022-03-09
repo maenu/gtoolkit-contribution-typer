@@ -92,6 +92,12 @@ TypNamedType >> > aType [
 	^ self super > aType super
 ]
 
+{ #category : #'as yet unclassified' }
+TypNamedType >> arguments [
+
+	^ #(  )
+]
+
 { #category : #polymorphic }
 TypNamedType >> at: aString [
 
