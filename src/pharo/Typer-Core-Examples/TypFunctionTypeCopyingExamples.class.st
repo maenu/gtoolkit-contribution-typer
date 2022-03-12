@@ -1,7 +1,7 @@
 Class {
 	#name : #TypFunctionTypeCopyingExamples,
 	#superclass : #Object,
-	#category : #'Typer-Core-Examples-Type-Copying'
+	#category : #'Typer-Core-Examples-Copying'
 }
 
 { #category : #accessing }

@@ -34,6 +34,12 @@ TypInfSignal >> initializeNode: aNode from: aType by: anotherType to: yetAnother
 { #category : #printing }
 TypInfSignal >> printOn: aStream [
 
+	self printOneLineContentsOn: aStream
+]
+
+{ #category : #printing }
+TypInfSignal >> printOneLineContentsOn: aStream [
+
 	node printOn: aStream.
 	aStream nextPutAll: ' '.
 	from printOn: aStream.

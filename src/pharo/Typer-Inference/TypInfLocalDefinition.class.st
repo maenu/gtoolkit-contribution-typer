@@ -16,11 +16,15 @@ TypInfLocalDefinition >> outgoingReads [
 { #category : #accessing }
 TypInfLocalDefinition >> transfer [
 
+	(state at: self) isUnknown ifFalse: [ ^ self ].
 	state at: self put: TypNilType instance
 ]
 
 { #category : #accessing }
 TypInfLocalDefinition >> type [
 
+	| type |
+	type := super type.
+	type isUnknown ifFalse: [ ^ type ].
 	^ (self outgoingReads collect: #type) typAsType
 ]

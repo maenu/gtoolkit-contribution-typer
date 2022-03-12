@@ -110,19 +110,9 @@ TypInfState >> join: aState [
 	aState index keysAndValuesDo: [ :n :t | 
 		copy at: n put: (copy index
 				 at: n
-				 ifPresent: [ :tt | self join: t with: tt ]
+				 ifPresent: [ :tt | t covariantWith: tt ]
 				 ifAbsent: [ t ]) ].
 	^ copy
-]
-
-{ #category : #accessing }
-TypInfState >> join: aType with: anotherType [
-
-	aType > anotherType ifTrue: [ ^ anotherType ].
-	anotherType > aType ifTrue: [ ^ aType ].
-	^ { 
-		  aType.
-		  anotherType } typAsType
 ]
 
 { #category : #'as yet unclassified' }

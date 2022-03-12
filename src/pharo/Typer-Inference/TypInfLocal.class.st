@@ -26,9 +26,12 @@ TypInfLocal >> set: aType in: aState [
 { #category : #'as yet unclassified' }
 TypInfLocal >> transfer [
 
-	| type |
-	type := state at: self.
-	type isUnknown ifFalse: [ ^ self ].
-	type := state at: self incomingRead.
-	state at: self put: type
+	(state at: self) isUnknown ifFalse: [ ^ self ].
+	state at: self put: (state at: self incomingRead)
+]
+
+{ #category : #'as yet unclassified' }
+TypInfLocal >> variantNodes [
+
+	^ super variantNodes , { self incomingRead }
 ]

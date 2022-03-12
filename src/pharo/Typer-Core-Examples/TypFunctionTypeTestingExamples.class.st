@@ -1,7 +1,7 @@
 Class {
 	#name : #TypFunctionTypeTestingExamples,
 	#superclass : #Object,
-	#category : #'Typer-Core-Examples-Type-Testing'
+	#category : #'Typer-Core-Examples-Testing'
 }
 
 { #category : #testing }

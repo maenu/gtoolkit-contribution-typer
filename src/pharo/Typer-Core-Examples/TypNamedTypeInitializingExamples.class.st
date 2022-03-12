@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#traits : 'TTypAssertable',
 	#classTraits : 'TTypAssertable classTrait',
-	#category : #'Typer-Core-Examples-Type-Initializing'
+	#category : #'Typer-Core-Examples-Initializing'
 }
 
 { #category : #'as yet unclassified' }

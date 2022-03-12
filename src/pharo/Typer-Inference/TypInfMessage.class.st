@@ -30,15 +30,18 @@ TypInfMessage >> method [
 TypInfMessage >> transfer [
 
 	| receiver method |
+	"(state at: self) isUnknown ifFalse: [ ^ self ]."
 	receiver := self incomingReceiver.
 	(state at: receiver) isUnknown ifTrue: [ 
 		| classes |
 		classes := TypInfMethodIndex instance implementors: node selector.
 		(classes size between: 1 and: 8) ifTrue: [ 
-			receiver set: (classes collect: #typAsType) typAsType in: state ] ].
+			self
+				covariant: receiver
+				to: (classes collect: #typAsType) typAsType ] ].
 	method := self method.
 	self incomingArguments withIndexDo: [ :e :i | 
 		i <= method arguments size ifTrue: [ 
-			e setCovariant: (method arguments at: i) in: state ] ].
-	self set: method result in: state
+			self covariant: e to: (method arguments at: i) ] ].
+	state at: self put: method result
 ]

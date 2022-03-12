@@ -88,6 +88,44 @@ TypType >> asNullable [
 		  self } typAsType
 ]
 
+{ #category : #converting }
+TypType >> contravariantWith: aType [
+
+	"self and aType are assignable to result.
+	 result >= self
+	 result >= aType
+	 should be valid"
+
+	aType isUnknown ifTrue: [ ^ aType ].
+	aType isNil ifTrue: [ ^ self asNullable ].
+	aType isVariable ifTrue: [ 
+		^ aType withSuper: (self contravariantWith: aType super) ].
+	self <= aType ifTrue: [ ^ aType ].
+	self >= aType ifTrue: [ ^ self ].
+	^ { 
+		  self.
+		  aType } typAsType
+]
+
+{ #category : #converting }
+TypType >> covariantWith: aType [
+
+	"result is assignable to self and aType.
+	 self >= result
+	 aType >= result
+	 should be valid"
+
+	aType isUnknown ifTrue: [ ^ self ].
+	aType isNil ifTrue: [ ^ self asNullable ].
+	aType isVariable ifTrue: [ 
+		^ aType withSuper: (self covariantWith: aType super) ].
+	self >= aType ifTrue: [ ^ aType ].
+	self <= aType ifTrue: [ ^ self ].
+	^ { 
+		  self.
+		  aType } typAsType
+]
+
 { #category : #testing }
 TypType >> hasSuper [
 	^ superType isNotNil
@@ -241,19 +279,6 @@ TypType >> superOrNil [
 
 	self hasSuper ifFalse: [ ^ nil ].
 	^ self super
-]
-
-{ #category : #converting }
-TypType >> with: aType [
-
-	<typPraResult: 'TypType'>
-	<typPraArguments: 'TypType'>
-	aType isVariable ifTrue: [ ^ aType ].
-	aType isUnknown ifTrue: [ ^ aType ].
-	aType isNil ifTrue: [ ^ self asNullable ].
-	self >= aType ifTrue: [ ^ self ].
-	self hasSuper ifTrue: [ ^ self super with: aType ].
-	^ TypUnknownType instance
 ]
 
 { #category : #polymorphic }

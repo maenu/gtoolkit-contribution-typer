@@ -21,9 +21,9 @@ TypGtValueStyler >> visitMessageNode: aNode [
 { #category : #visiting }
 TypGtValueStyler >> visitMethodNode: aNode [
 
-	| position type |
-	type := TypInfMethodResolver instance
-		        typeAt: aNode
+	| node position |
+	node := TypInfMethodResolver instance
+		        nodeAt: aNode
 		        self: selfType
 		        super: selfType superOrNil.
 	position := aNode arguments isEmpty
@@ -33,7 +33,7 @@ TypGtValueStyler >> visitMethodNode: aNode [
 	self
 		styleFrom: position
 		to: position
-		with: { (TypGtAttribute type: type result) }
+		with: { (TypGtAttribute node: node type: node type result) }
 ]
 
 { #category : #visiting }

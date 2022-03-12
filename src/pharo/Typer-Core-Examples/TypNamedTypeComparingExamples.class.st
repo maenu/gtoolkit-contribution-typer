@@ -1,7 +1,7 @@
 Class {
 	#name : #TypNamedTypeComparingExamples,
 	#superclass : #Object,
-	#category : #'Typer-Core-Examples-Type-Comparing'
+	#category : #'Typer-Core-Examples-Comparing'
 }
 
 { #category : #accessing }

@@ -21,3 +21,9 @@ TypInfVariable >> initialize: aState [
 	global isClassOrTrait ifFalse: [ ^ self ].
 	state at: self put: global typAsType
 ]
+
+{ #category : #initialization }
+TypInfVariable >> set: aType in: aState [
+
+	aState at: self put: aType
+]

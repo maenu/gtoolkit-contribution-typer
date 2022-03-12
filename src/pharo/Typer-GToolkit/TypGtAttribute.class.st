@@ -2,16 +2,23 @@ Class {
 	#name : #TypGtAttribute,
 	#superclass : #BrTextAdornmentDynamicAttribute,
 	#instVars : [
+		'node',
 		'type'
 	],
 	#category : #'Typer-GToolkit'
 }
 
 { #category : #'as yet unclassified' }
-TypGtAttribute class >> type: aType [
+TypGtAttribute class >> node: aNode [
+
+	^ self node: aNode type: aNode type
+]
+
+{ #category : #'as yet unclassified' }
+TypGtAttribute class >> node: aNode type: aType [
 
 	^ self new
-		  initializeType: aType;
+		  initializeNode: aNode type: aType;
 		  yourself
 ]
 
@@ -41,8 +48,15 @@ TypGtAttribute >> initialize [
 						 left: 0
 						 bottom: -8
 						 right: 0);
-				when: BlClickEvent do: [ :e | e target phlow spawnObject: type ];
+				when: BlClickEvent do: [ :e | e target phlow spawnObject: node ];
 				yourself ]
+]
+
+{ #category : #initialization }
+TypGtAttribute >> initializeNode: aNode type: aType [
+
+	node := aNode.
+	type := aType
 ]
 
 { #category : #initialization }

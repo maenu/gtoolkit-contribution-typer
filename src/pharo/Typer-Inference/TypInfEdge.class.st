@@ -18,7 +18,7 @@ TypInfEdge >> isChanged [
 { #category : #testing }
 TypInfEdge >> isFlow [
 
-	^ #( #next #execute #return #returnBlock #signal ) includes: key
+	^ #( #next #execute #return #returnBlock ) includes: key
 ]
 
 { #category : #accessing }
@@ -37,8 +37,20 @@ TypInfEdge >> state [
 TypInfEdge >> state: anObject [
 
 	state = anObject ifTrue: [ ^ changed := false ].
-	log ifNil: [ log := LinkedList new ].
-	log add: anObject.
+	"log ifNil: [ log := LinkedList new ].
+	log add: anObject."
 	state := anObject.
 	^ changed := true
+]
+
+{ #category : #generated }
+TypInfEdge >> type [
+
+	^ state at: target
+]
+
+{ #category : #generated }
+TypInfEdge >> type: aType [
+
+	state at: target put: aType
 ]

@@ -21,7 +21,8 @@ TypUnionType class >> types: anIdentitySet [
 { #category : #comparing }
 TypUnionType >> = anObject [
 
-	super = anObject ifFalse: [ ^ false ].
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
 	^ types = anObject types
 ]
 
@@ -51,6 +52,7 @@ TypUnionType >> arguments [
 { #category : #converting }
 TypUnionType >> asNonNullable [
 
+	<typEdge>
 	^ self isNullable
 		  ifTrue: [ (types reject: #isNil) typAsType ]
 		  ifFalse: [ self ]
@@ -59,6 +61,7 @@ TypUnionType >> asNonNullable [
 { #category : #converting }
 TypUnionType >> asNullable [
 
+	<typEdge>
 	^ self isNullable
 		  ifTrue: [ self ]
 		  ifFalse: [ (types , { TypNilType instance }) typAsType ]
@@ -67,6 +70,7 @@ TypUnionType >> asNullable [
 { #category : #polymorphic }
 TypUnionType >> at: aString [
 
+	<typEdge>
 	^ (types collect: [ :e | e at: aString ]) typAsType
 ]
 
@@ -88,7 +92,7 @@ TypUnionType >> hasSuper [
 	[ remains isEmpty ] whileFalse: [ 
 		| next common |
 		next := remains remove: remains anyOne.
-		common := current with: next.
+		common := current covariantWith: next.
 		common = current ifFalse: [ 
 			current := common.
 			remains add: current ] ].
@@ -155,6 +159,7 @@ TypUnionType >> isUnion [
 { #category : #lookup }
 TypUnionType >> lookupMethod: aSymbol arguments: aCollection [
 
+	<typEdge>
 	^ (types collect: [ :e | 
 		   e lookupMethod: aSymbol arguments: aCollection ]) typAsType
 ]
@@ -162,6 +167,7 @@ TypUnionType >> lookupMethod: aSymbol arguments: aCollection [
 { #category : #lookup }
 TypUnionType >> lookupVariable: aSymbol [
 
+	<typEdge>
 	^ (types collect: [ :e | e lookupVariable: aSymbol ]) typAsType
 ]
 
@@ -216,6 +222,7 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 { #category : #polymorphic }
 TypUnionType >> result [
 
+	<typEdge>
 	^ (types collect: #result) typAsType
 ]
 
@@ -229,6 +236,7 @@ TypUnionType >> types [
 { #category : #polymorphic }
 TypUnionType >> withParameters: aCollection [
 
+	<typEdge>
 	^ (types collect: [ :e | e withParameters: aCollection ]) typAsType
 ]
 

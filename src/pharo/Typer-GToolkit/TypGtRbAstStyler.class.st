@@ -24,7 +24,7 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 	text := aText.
 	[ 
 	ast typInfTypeSelf.
-	self visitNode: ast ] 
+	self visitNode: ast ]  
 		on: Error
 		do: [ :e | Halt once ].
 	text := nil. 
@@ -41,13 +41,13 @@ TypGtRbAstStyler >> styleFrom: from to: to with: attributes [
 { #category : #visiting }
 TypGtRbAstStyler >> styleNode: aNode [
 
-	| type attribute stop |
-	type := TypInfMethodResolver instance
-		        typeAt: aNode
+	| node attribute stop |
+	node := TypInfMethodResolver instance
+		        nodeAt: aNode
 		        self: selfType
 		        super: selfType superOrNil.
 	"type isUnknown ifTrue: [ ^ self ]."
-	attribute := TypGtAttribute type: type.
+	attribute := TypGtAttribute node: node.
 	stop := aNode stop.
 	"(stop < text size and: [ (text at: stop + 1) = Character space ]) 
 		ifTrue: [ 

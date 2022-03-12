@@ -202,11 +202,11 @@ TypShaPhaDictionary >> mRemoveKeyIfAbsent: aLookup [
 
 { #category : #shadow }
 TypShaPhaDictionary >> mValues: aLookup [
+
 	<typShaMethod: 'values'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult:
-			(Collection typAsType
-				withParameters: {(aLookup receiver at: #A)})
+	^ CompiledMethod typAsFunctionTypeWithResult:
+		  (Collection typAsType withParameters:
+			   { (aLookup root receiver at: #A) })
 ]
 
 { #category : #accessing }

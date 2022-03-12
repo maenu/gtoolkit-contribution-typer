@@ -50,14 +50,10 @@ TypInfMethod >> ougoingExecute: aNode [
 { #category : #accessing }
 TypInfMethod >> transfer [
 
-	| type |
-	type := CompiledMethod
-		        typAsFunctionTypeWithResult:
-		        (self incomingReturns collect: [ :f | state at: f ])
-			        typAsType
-		        arguments:
-		        (self incomingArguments collect: [ :a | state at: a ])
-		        argumentsOptional: false
-		        signalsAlways: nil.
-	state at: self put: type
+	state at: self put: (CompiledMethod
+			 typAsFunctionTypeWithResult:
+			 (self incomingReturns collect: [ :r | state at: r ]) typAsType
+			 arguments: (self incomingArguments collect: [ :a | state at: a ])
+			 argumentsOptional: false
+			 signalsAlways: nil)
 ]

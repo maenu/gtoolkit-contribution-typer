@@ -48,10 +48,9 @@ TypInfNode >> typGtFlowPaintOn: aMondrian [
 	aMondrian edges
 		passive;
 		stencil: [ :e | e typGtAsElementIn: aMondrian with: { e } ];
-		connect:
-			((nodes flatCollect: #outgoing) select: [ :e | e key = #constrain ])
-		from: [ :e | e origin ]
-		to: [ :e | e target ].
+		connect: ((nodes flatCollect: #outgoing) select: [ :e | 
+					 #( covariance contravariance ) includes: e key ])
+		from: [ :e | e origin ] to: [ :e | e target ].
 	aMondrian layout force
 ]
 
@@ -99,5 +98,5 @@ TypInfNode >> typGtTypeFor: aView [
 	^ aView explicit
 		  title: 'Type';
 		  priority: 10;
-		  stencil: [ GtInspectorTool forObject: (state at: self) ]
+		  stencil: [ GtInspectorTool forObject: self type ]
 ]

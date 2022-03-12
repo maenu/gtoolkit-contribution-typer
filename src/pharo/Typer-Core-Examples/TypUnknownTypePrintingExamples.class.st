@@ -1,7 +1,7 @@
 Class {
 	#name : #TypUnknownTypePrintingExamples,
 	#superclass : #Object,
-	#category : #'Typer-Core-Examples-Type-Printing'
+	#category : #'Typer-Core-Examples-Printing'
 }
 
 { #category : #accessing }

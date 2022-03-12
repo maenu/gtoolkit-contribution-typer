@@ -1,6 +1,6 @@
 Trait {
 	#name : #TTypAssertable,
-	#category : #'Typer-Core-Examples-Type-Initializing'
+	#category : #'Typer-Core-Examples-Initializing'
 }
 
 { #category : #accessing }

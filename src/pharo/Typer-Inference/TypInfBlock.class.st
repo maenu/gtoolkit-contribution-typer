@@ -7,6 +7,17 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+TypInfBlock >> convariantTo: aType [
+
+	| arguments |
+	arguments := aType arguments.
+	self incomingArguments withIndexDo: [ :n :i | 
+		i <= arguments size ifTrue: [ 
+			self contravariant: n to: (arguments at: i) ] ].
+	self covariant: self incomingReturnBlock to: aType result
+]
+
+{ #category : #'as yet unclassified' }
 TypInfBlock >> incomingReturnBlock [
 
 	^ self incomingAt: #returnBlock
@@ -36,28 +47,13 @@ TypInfBlock >> ougoingExecute: aNode [
 	^ self outgoingAt: #execute put: aNode
 ]
 
-{ #category : #'as yet unclassified' }
-TypInfBlock >> set: aType in: aState [
-
-	| arguments |
-	super set: aType in: aState.
-	arguments := aType arguments.
-	self incomingArguments withIndexDo: [ :n :i | 
-		i <= arguments size ifTrue: [ 
-			n setCovariant: (arguments at: i) in: aState ] ].
-	self incomingReturnBlock setContravariant: aType result in: aState
-]
-
 { #category : #accessing }
 TypInfBlock >> transfer [
 
-	| type |
-	type := BlockClosure
-		        typAsFunctionTypeWithResult:
-		        (state at: self incomingReturnBlock)
-		        arguments:
-		        (self incomingArguments collect: [ :a | state at: a ])
-		        argumentsOptional: false
-		        signalsAlways: nil.
-	self set: type in: state
+	"(state at: self) isUnknown ifFalse: [ ^ self ]."
+	state at: self put: (BlockClosure
+			 typAsFunctionTypeWithResult: (state at: self incomingReturnBlock)
+			 arguments: (self incomingArguments collect: [ :a | state at: a ])
+			 argumentsOptional: false
+			 signalsAlways: nil)
 ]

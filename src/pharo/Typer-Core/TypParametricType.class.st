@@ -127,6 +127,34 @@ TypParametricType >> at: aString ifAbsent: aBlock [
 	^ parameters at: aString ifAbsent: aBlock
 ]
 
+{ #category : #converting }
+TypParametricType >> contravariantWith: aType [
+
+	| copyParameters otherParameters |
+	(aType isParametric and: [ 
+		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
+		ifFalse: [ ^ super contravariantWith: aType ].
+	otherParameters := aType parameters.
+	copyParameters := OrderedCollection new.
+	parameters keysAndValuesDo: [ :n :t | 
+		copyParameters add: (t covariantWith: (aType at: n)) ].
+	^ self withParameters: copyParameters
+]
+
+{ #category : #converting }
+TypParametricType >> covariantWith: aType [
+
+	| copyParameters otherParameters |
+	(aType isParametric and: [ 
+		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
+		ifFalse: [ ^ super covariantWith: aType ].
+	otherParameters := aType parameters.
+	copyParameters := OrderedCollection new.
+	parameters keysAndValuesDo: [ :n :t | 
+		copyParameters add: (t contravariantWith: (aType at: n)) ].
+	^ self withParameters: copyParameters
+]
+
 { #category : #comparing }
 TypParametricType >> hashSkipping: anIdentitySet [
 
@@ -205,20 +233,6 @@ TypParametricType >> super [
 		self initializeSuper: (superType withParameters:
 				 (superType parameters keys collect: [ :e | self at: e ])) ].
 	^ superType
-]
-
-{ #category : #converting }
-TypParametricType >> with: aType [
-
-	| copyParameters otherParameters |
-	(aType isParametric and: [ 
-		 name = aType name and: [ parameters = aType parameters ] ]) 
-		ifFalse: [ ^ super with: aType ].
-	otherParameters := aType parameters.
-	copyParameters := OrderedCollection new.
-	parameters keysAndValuesDo: [ :n :t | 
-		copyParameters add: (t with: (aType at: n)) ].
-	^ self withParameters: copyParameters
 ]
 
 { #category : #converting }

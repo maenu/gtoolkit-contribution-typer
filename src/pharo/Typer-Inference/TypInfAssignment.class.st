@@ -7,11 +7,9 @@ Class {
 { #category : #'as yet unclassified' }
 TypInfAssignment >> transfer [
 
-	| value valueType variable variableType |
-	value := self incomingNext.
-	valueType := state at: value.
-	variable := self outgoingNext.
-	variableType := state at: variable.
-	state at: self put: valueType.
-	variable set: valueType in: state
+	| type |
+	(state at: self) isUnknown ifFalse: [ ^ self ].
+	type := state at: self incomingNext.
+	state at: self put: type.
+	self outgoingNext set: type in: state
 ]

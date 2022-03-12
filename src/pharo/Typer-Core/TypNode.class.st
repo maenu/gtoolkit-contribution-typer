@@ -137,8 +137,8 @@ TypNode >> incomingRemoveAt: anObject [
 { #category : #accessing }
 TypNode >> initialize [
 
-	<typPraVariable: 'incoming' as: 'IdentityDictionary<?,TypEdge>'>
-	<typPraVariable: 'outgoing' as: 'IdentityDictionary<?,TypEdge>'>
+	<typPraVariable: 'incoming' as: 'IdentityDictionary<?,IdentitySet<TypEdge>>'>
+	<typPraVariable: 'outgoing' as: 'IdentityDictionary<?,IdentitySet<TypEdge>>'>
 	super initialize.
 	incoming := IdentityDictionary new.
 	outgoing := IdentityDictionary new

@@ -1,7 +1,7 @@
 Class {
 	#name : #TypVariableTypeNullnessExamples,
 	#superclass : #Object,
-	#category : #'Typer-Core-Examples-Type-Nullness'
+	#category : #'Typer-Core-Examples-Nullness'
 }
 
 { #category : #accessing }
