@@ -4,6 +4,13 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
+{ #category : #'as yet unclassified' }
+TypInfLocal >> constrainTo: aType [
+
+	super constrainTo: aType.
+	self constrain: self incomingRead to: aType
+]
+
 { #category : #'meta-object-protocol' }
 TypInfLocal >> incomingRead [
 
@@ -20,7 +27,7 @@ TypInfLocal >> incomingRead: aNode [
 TypInfLocal >> set: aType in: aState [
 
 	super set: aType in: aState.
-	self incomingRead set: aType in: aState
+	self incomingRead set: (aState at: self) in: aState
 ]
 
 { #category : #'as yet unclassified' }
@@ -28,10 +35,4 @@ TypInfLocal >> transfer [
 
 	(state at: self) isUnknown ifFalse: [ ^ self ].
 	state at: self put: (state at: self incomingRead)
-]
-
-{ #category : #'as yet unclassified' }
-TypInfLocal >> variantNodes [
-
-	^ super variantNodes , { self incomingRead }
 ]

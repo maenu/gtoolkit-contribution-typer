@@ -178,36 +178,6 @@ TypFunctionType >> argumentsSize [
 	^ argumentsSize
 ]
 
-{ #category : #converting }
-TypFunctionType >> contravariantWith: aType [
-
-	| copyParameters otherArguments |
-	(aType isFunction and: [ 
-		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
-		ifFalse: [ ^ super contravariantWith: aType ].
-	copyParameters := OrderedCollection new.
-	copyParameters add: (self result contravariantWith: aType result).
-	otherArguments := aType arguments.
-	self arguments withIndexDo: [ :t :i | 
-		copyParameters add: (t covariantWith: (otherArguments at: i)) ].
-	^ self withParameters: copyParameters
-]
-
-{ #category : #converting }
-TypFunctionType >> covariantWith: aType [
-
-	| copyParameters otherArguments |
-	(aType isFunction and: [ 
-		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
-		ifFalse: [ ^ super covariantWith: aType ].
-	copyParameters := OrderedCollection new.
-	copyParameters add: (self result covariantWith: aType result).
-	otherArguments := aType arguments.
-	self arguments withIndexDo: [ :t :i | 
-		copyParameters add: (t contravariantWith: (otherArguments at: i)) ].
-	^ self withParameters: copyParameters
-]
-
 { #category : #comparing }
 TypFunctionType >> hashSkipping: anIdentitySet [
 
@@ -285,9 +255,39 @@ TypFunctionType >> signalsAlways [
 ]
 
 { #category : #converting }
+TypFunctionType >> with: aType [
+
+	| copyParameters otherArguments |
+	(aType isFunction and: [ 
+		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
+		ifFalse: [ ^ super with: aType ].
+	copyParameters := OrderedCollection new.
+	copyParameters add: (self result with: aType result).
+	otherArguments := aType arguments.
+	self arguments withIndexDo: [ :t :i | 
+		copyParameters add: (t with: (otherArguments at: i)) ].
+	^ self withParameters: copyParameters
+]
+
+{ #category : #converting }
 TypFunctionType >> withArguments: someTypes [
 
 	^ self withParameters: { self result } , someTypes
+]
+
+{ #category : #converting }
+TypFunctionType >> withCommon: aType [
+
+	| copyParameters otherArguments |
+	(aType isFunction and: [ 
+		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
+		ifFalse: [ ^ super withCommon: aType ].
+	copyParameters := OrderedCollection new.
+	copyParameters add: (self result withCommon: aType result).
+	otherArguments := aType arguments.
+	self arguments withIndexDo: [ :t :i | 
+		copyParameters add: (t withCommon: (otherArguments at: i)) ].
+	^ self withParameters: copyParameters
 ]
 
 { #category : #polymorphic }

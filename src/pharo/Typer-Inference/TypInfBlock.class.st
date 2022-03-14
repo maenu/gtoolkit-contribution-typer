@@ -7,14 +7,21 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypInfBlock >> convariantTo: aType [
+TypInfBlock >> constrainTo: aType [
 
-	| arguments |
-	arguments := aType arguments.
+	| type |
+	super constrainTo: aType.
+	type := aType.
+	type isUnion ifTrue: [ 
+		aType types detect: #isFunction ifFound: [ :t | type := t ] ].
+	type isFunction ifFalse: [ ^ self ].
 	self incomingArguments withIndexDo: [ :n :i | 
-		i <= arguments size ifTrue: [ 
-			self contravariant: n to: (arguments at: i) ] ].
-	self covariant: self incomingReturnBlock to: aType result
+		i <= type arguments size ifTrue: [ 
+			| argumentType |
+			argumentType := type arguments at: i.
+			self constrain: n to: argumentType.
+			n outgoingReads do: [ :m | self constrain: m to: argumentType ] ] ].
+	self constrain: self incomingReturnBlock to: type result
 ]
 
 { #category : #'as yet unclassified' }

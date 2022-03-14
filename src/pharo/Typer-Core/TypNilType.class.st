@@ -79,3 +79,9 @@ TypNilType >> with: aType [
 
 	^ aType asNullable
 ]
+
+{ #category : #converting }
+TypNilType >> withCommon: aType [
+
+	^ aType asNullable
+]

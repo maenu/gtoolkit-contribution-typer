@@ -88,44 +88,6 @@ TypType >> asNullable [
 		  self } typAsType
 ]
 
-{ #category : #converting }
-TypType >> contravariantWith: aType [
-
-	"self and aType are assignable to result.
-	 result >= self
-	 result >= aType
-	 should be valid"
-
-	aType isUnknown ifTrue: [ ^ aType ].
-	aType isNil ifTrue: [ ^ self asNullable ].
-	aType isVariable ifTrue: [ 
-		^ aType withSuper: (self contravariantWith: aType super) ].
-	self <= aType ifTrue: [ ^ aType ].
-	self >= aType ifTrue: [ ^ self ].
-	^ { 
-		  self.
-		  aType } typAsType
-]
-
-{ #category : #converting }
-TypType >> covariantWith: aType [
-
-	"result is assignable to self and aType.
-	 self >= result
-	 aType >= result
-	 should be valid"
-
-	aType isUnknown ifTrue: [ ^ self ].
-	aType isNil ifTrue: [ ^ self asNullable ].
-	aType isVariable ifTrue: [ 
-		^ aType withSuper: (self covariantWith: aType super) ].
-	self >= aType ifTrue: [ ^ aType ].
-	self <= aType ifTrue: [ ^ self ].
-	^ { 
-		  self.
-		  aType } typAsType
-]
-
 { #category : #testing }
 TypType >> hasSuper [
 	^ superType isNotNil
@@ -208,6 +170,12 @@ TypType >> isParametric [
 ]
 
 { #category : #testing }
+TypType >> isSuper [
+
+	^ false
+]
+
+{ #category : #testing }
 TypType >> isUnion [
 	<typPraResult: 'Boolean'>
 	^ false
@@ -279,6 +247,39 @@ TypType >> superOrNil [
 
 	self hasSuper ifFalse: [ ^ nil ].
 	^ self super
+]
+
+{ #category : #converting }
+TypType >> with: aType [
+
+	"result is assignable to self and aType.
+	 self >= result
+	 aType >= result
+	 should be valid"
+
+	aType isUnknown ifTrue: [ ^ self ].
+	aType isNil ifTrue: [ ^ self asNullable ].
+	aType isSuper ifTrue: [ 
+		^ aType withSuper: (self with: aType super) ].
+	self >= aType ifTrue: [ ^ aType ].
+	self < aType ifTrue: [ ^ self ].
+	^ { 
+		  self.
+		  aType } typAsType
+]
+
+{ #category : #converting }
+TypType >> withCommon: aType [
+
+	aType isUnknown ifTrue: [ ^ aType ].
+	aType isNil ifTrue: [ ^ self asNullable ].
+	aType isSuper ifTrue: [ 
+		^ aType withSuper: (self withCommon: aType super) ].
+	self >= aType ifTrue: [ ^ self ].
+	self < aType ifTrue: [ ^ aType ].
+	^ { 
+		  self.
+		  aType } typAsType
 ]
 
 { #category : #polymorphic }

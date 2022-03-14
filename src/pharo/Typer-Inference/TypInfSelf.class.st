@@ -8,5 +8,5 @@ Class {
 TypInfSelf >> initialize: aState [
 
 	super initialize: aState.
-	state at: self put: state self
+	^ state at: self put: state self
 ]

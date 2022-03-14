@@ -37,11 +37,11 @@ TypInfMessage >> transfer [
 		classes := TypInfMethodIndex instance implementors: node selector.
 		(classes size between: 1 and: 8) ifTrue: [ 
 			self
-				covariant: receiver
+				constrain: receiver
 				to: (classes collect: #typAsType) typAsType ] ].
 	method := self method.
 	self incomingArguments withIndexDo: [ :e :i | 
 		i <= method arguments size ifTrue: [ 
-			self covariant: e to: (method arguments at: i) ] ].
+			self constrain: e to: (method arguments at: i) ] ].
 	state at: self put: method result
 ]

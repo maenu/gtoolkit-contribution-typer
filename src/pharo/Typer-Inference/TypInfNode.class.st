@@ -25,6 +25,52 @@ TypInfNode >> burp [
 		   into: [ :r :e | r or: (e state: state copy) ]) or: changed
 ]
 
+{ #category : #'as yet unclassified' }
+TypInfNode >> constrain [
+
+	incoming
+		at: #constrain
+		ifPresent: [ :s | 
+			s ifNotEmpty: [ 
+				state
+					at: self
+					put:
+					(s inject: (state at: self) into: [ :r :e | r with: e type ]) ] ]
+		ifAbsent: [  ].
+	outgoing
+		at: #constrain
+		ifPresent: [ :s | s copy do: [ :e | self outgoingRemove: e ] ]
+		ifAbsent: [ "noop" ]
+]
+
+{ #category : #'as yet unclassified' }
+TypInfNode >> constrain: aNode to: aType [
+
+	| type |
+	aType isUnknown ifTrue: [ ^ self ].
+	changed := true.
+	type := state at: aNode put: ((state at: aNode) with: aType).
+	aNode constrainTo: type.
+	outgoing
+		at: #constrain
+		ifPresent: [ :s | 
+			s
+				detect: [ :e | e target == aNode ]
+				ifFound: [ :e | e type: type ]
+				ifNone: [ 
+					self outgoingAdd:
+						(TypInfConstrainEdge origin: self target: aNode type: type) ] ]
+		ifAbsent: [ 
+			self outgoingAdd:
+				(TypInfConstrainEdge origin: self target: aNode type: type) ]
+]
+
+{ #category : #'as yet unclassified' }
+TypInfNode >> constrainTo: aType [
+
+	
+]
+
 { #category : #accessing }
 TypInfNode >> context [
 
@@ -32,60 +78,10 @@ TypInfNode >> context [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfNode >> contravariance [
-
-	incoming
-		at: #contravariance
-		ifPresent: [ :s | 
-			s ifNotEmpty: [ 
-				state at: self put: (s
-						 inject: (state at: self)
-						 into: [ :r :e | r contravariantWith: e type ]) ] ]
-		ifAbsent: [ "noop" ].
-	outgoing
-		at: #contravariance
-		ifPresent: [ :s | s copy do: [ :e | self outgoingRemove: e ] ]
-		ifAbsent: [ "noop" ]
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> contravariant: aNode to: aType [
-
-	^ self variance: aNode to: aType by: #contravariance
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> covariance [
-
-	incoming
-		at: #covariance
-		ifPresent: [ :s | 
-			s ifNotEmpty: [ 
-				state
-					at: self
-					put:
-					(s
-						 inject: (state at: self)
-						 into: [ :r :e | r covariantWith: e type ]) ] ]
-		ifAbsent: [ "noop" ].
-	outgoing
-		at: #covariance
-		ifPresent: [ :s | s copy do: [ :e | self outgoingRemove: e ] ]
-		ifAbsent: [ "noop" ]
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> covariant: aNode to: aType [
-
-	^ self variance: aNode to: aType by: #covariance
-]
-
-{ #category : #'as yet unclassified' }
 TypInfNode >> incomingFlow [
 
 	^ self incoming select: [ :e | 
-		  (e isKindOf: TypInfEdge) and: [ 
-			  e isFlow or: [ #( #covariance #contravariance ) includes: e key ] ] ]
+		  (e isKindOf: TypInfEdge) and: [ e isFlow ] ]
 ]
 
 { #category : #accessing }
@@ -191,6 +187,7 @@ TypInfNode >> slurp [
 	| states |
 	changed := false.
 	states := self incomingFlow collect: #state as: LinkedList.
+	states ifEmpty: [ ^ self ].
 	state := states removeLast copy.
 	[ states isEmpty ] whileFalse: [ 
 		state := state join: states removeLast ]
@@ -199,11 +196,9 @@ TypInfNode >> slurp [
 { #category : #accessing }
 TypInfNode >> slurpAndBurp [
 
-	self incomingFlow ifEmpty: [ ^ false ].
 	^ self
 		  slurp;
-		  covariance;
-		  contravariance;
+		  constrain;
 		  transfer;
 		  burp
 ]
@@ -232,36 +227,4 @@ TypInfNode >> type [
 TypInfNode >> type: aType [
 
 	^ state at: self put: aType
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> variance: aNode to: aType by: aSymbol [
-
-	| constrain |
-	aType isUnknown ifTrue: [ ^ self ].
-	aNode variantNodes do: [ :n | 
-		changed := true.
-		TypInfSignal
-			emitNode: n
-			from: (state at: self)
-			by: nil
-			to: aType.
-		state at: n put: aType.
-		constrain := [ 
-		             self outgoingAdd:
-			             ((TypInfEdge origin: self target: n key: aSymbol)
-				              state:
-					              (TypInfState self: state self super: state super);
-				              yourself) ].
-		(outgoing
-			 at: aSymbol
-			 ifPresent: [ :s | 
-			 s detect: [ :e | e target == n ] ifNone: constrain ]
-			 ifAbsent: constrain) type: aType ]
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> variantNodes [
-
-	^ { self }
 ]

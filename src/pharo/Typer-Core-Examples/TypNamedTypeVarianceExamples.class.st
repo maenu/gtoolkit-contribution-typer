@@ -5,25 +5,13 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypNamedTypeVarianceExamples >> contravariance [
+TypNamedTypeVarianceExamples >> assignable [
 
 	<gtExample>
 	| type superType |
 	type := TypNamedTypeInitializingExamples new classDescription.
 	superType := type super.
-	self assert: (type contravariantWith: superType) equals: superType.
-	self assert: (superType contravariantWith: type) equals: superType.
-	^ type
-]
-
-{ #category : #'as yet unclassified' }
-TypNamedTypeVarianceExamples >> covariance [
-
-	<gtExample>
-	| type superType |
-	type := TypNamedTypeInitializingExamples new classDescription.
-	superType := type super.
-	self assert: (type covariantWith: superType) equals: type.
-	self assert: (superType covariantWith: type) equals: type.
+	self assert: (type with: superType) equals: type.
+	self assert: (superType with: type) equals: type.
 	^ type
 ]

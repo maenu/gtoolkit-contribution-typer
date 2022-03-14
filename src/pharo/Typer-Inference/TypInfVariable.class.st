@@ -19,7 +19,7 @@ TypInfVariable >> initialize: aState [
 		          at: className asSymbol
 		          ifAbsent: [ ^ self ].
 	global isClassOrTrait ifFalse: [ ^ self ].
-	state at: self put: global typAsType
+	^ state at: self put: global typAsType
 ]
 
 { #category : #initialization }

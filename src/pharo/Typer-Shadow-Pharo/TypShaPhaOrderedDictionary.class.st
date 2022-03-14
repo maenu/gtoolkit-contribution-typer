@@ -161,6 +161,15 @@ TypShaPhaOrderedDictionary >> mKeys: aLookup [
 		typAsFunctionTypeWithResult: (Array typAsType withParameters: {(aLookup receiver at: #B)})
 ]
 
+{ #category : #shadow }
+TypShaPhaOrderedDictionary >> mValues: aLookup [
+
+	<typShaMethod: 'values'>
+	^ CompiledMethod typAsFunctionTypeWithResult:
+		  (Collection typAsType withParameters:
+			   { (aLookup root receiver at: #A) })
+]
+
 { #category : #accessing }
 TypShaPhaOrderedDictionary >> resolveType: aLookup [
 	^ aLookup root classDescription

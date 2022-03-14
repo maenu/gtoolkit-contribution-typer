@@ -110,7 +110,7 @@ TypInfState >> join: aState [
 	aState index keysAndValuesDo: [ :n :t | 
 		copy at: n put: (copy index
 				 at: n
-				 ifPresent: [ :tt | t covariantWith: tt ]
+				 ifPresent: [ :tt | t with: tt ]
 				 ifAbsent: [ t ]) ].
 	^ copy
 ]
