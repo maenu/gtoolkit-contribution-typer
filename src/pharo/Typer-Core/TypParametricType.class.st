@@ -208,20 +208,6 @@ TypParametricType >> super [
 ]
 
 { #category : #converting }
-TypParametricType >> with: aType [
-
-	| copyParameters otherParameters |
-	(aType isParametric and: [ 
-		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
-		ifFalse: [ ^ super with: aType ].
-	otherParameters := aType parameters.
-	copyParameters := OrderedCollection new.
-	parameters keysAndValuesDo: [ :n :t | 
-		copyParameters add: (t with: (aType at: n)) ].
-	^ self withParameters: copyParameters
-]
-
-{ #category : #converting }
 TypParametricType >> withAt: aSymbol put: aType [
 
 	^ self withParameters: (parameters copy
@@ -230,16 +216,16 @@ TypParametricType >> withAt: aSymbol put: aType [
 ]
 
 { #category : #converting }
-TypParametricType >> withCommon: aType [
+TypParametricType >> withNarrow: aType [
 
 	| copyParameters otherParameters |
 	(aType isParametric and: [ 
 		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
-		ifFalse: [ ^ super withCommon: aType ].
+		ifFalse: [ ^ super withNarrow: aType ].
 	otherParameters := aType parameters.
 	copyParameters := OrderedCollection new.
 	parameters keysAndValuesDo: [ :n :t | 
-		copyParameters add: (t withCommon: (aType at: n)) ].
+		copyParameters add: (t withNarrow: (aType at: n)) ].
 	^ self withParameters: copyParameters
 ]
 
@@ -271,4 +257,18 @@ TypParametricType >> withSuper: aType [
 			  parameters: parameters copy
 			  super: aType ].
 	^ self class named: name parameters: parameters copy super: aType
+]
+
+{ #category : #converting }
+TypParametricType >> withWiden: aType [
+
+	| copyParameters otherParameters |
+	(aType isParametric and: [ 
+		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
+		ifFalse: [ ^ super withWiden: aType ].
+	otherParameters := aType parameters.
+	copyParameters := OrderedCollection new.
+	parameters keysAndValuesDo: [ :n :t | 
+		copyParameters add: (t withWiden: (aType at: n)) ].
+	^ self withParameters: copyParameters
 ]

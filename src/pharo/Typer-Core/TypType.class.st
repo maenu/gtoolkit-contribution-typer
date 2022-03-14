@@ -250,7 +250,7 @@ TypType >> superOrNil [
 ]
 
 { #category : #converting }
-TypType >> with: aType [
+TypType >> withNarrow: aType [
 
 	"result is assignable to self and aType.
 	 self >= result
@@ -260,23 +260,9 @@ TypType >> with: aType [
 	aType isUnknown ifTrue: [ ^ self ].
 	aType isNil ifTrue: [ ^ self asNullable ].
 	aType isSuper ifTrue: [ 
-		^ aType withSuper: (self with: aType super) ].
+		^ aType withSuper: (self withNarrow: aType super) ].
 	self >= aType ifTrue: [ ^ aType ].
 	self < aType ifTrue: [ ^ self ].
-	^ { 
-		  self.
-		  aType } typAsType
-]
-
-{ #category : #converting }
-TypType >> withCommon: aType [
-
-	aType isUnknown ifTrue: [ ^ aType ].
-	aType isNil ifTrue: [ ^ self asNullable ].
-	aType isSuper ifTrue: [ 
-		^ aType withSuper: (self withCommon: aType super) ].
-	self >= aType ifTrue: [ ^ self ].
-	self < aType ifTrue: [ ^ aType ].
 	^ { 
 		  self.
 		  aType } typAsType
@@ -292,4 +278,18 @@ TypType >> withParameters: aCollection [
 TypType >> withSuper: aType [
 
 	self subclassResponsibility
+]
+
+{ #category : #converting }
+TypType >> withWiden: aType [
+
+	aType isUnknown ifTrue: [ ^ aType ].
+	aType isNil ifTrue: [ ^ self asNullable ].
+	aType isSuper ifTrue: [ 
+		^ aType withSuper: (self withWiden: aType super) ].
+	self >= aType ifTrue: [ ^ self ].
+	self < aType ifTrue: [ ^ aType ].
+	^ { 
+		  self.
+		  aType } typAsType
 ]

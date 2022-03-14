@@ -75,13 +75,13 @@ TypNilType >> printOn: aStream skipping: anIdentitySet [
 ]
 
 { #category : #converting }
-TypNilType >> with: aType [
+TypNilType >> withNarrow: aType [
 
 	^ aType asNullable
 ]
 
 { #category : #converting }
-TypNilType >> withCommon: aType [
+TypNilType >> withWiden: aType [
 
 	^ aType asNullable
 ]

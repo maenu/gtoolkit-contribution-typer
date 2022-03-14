@@ -35,7 +35,7 @@ TypInfNode >> constrain [
 				state
 					at: self
 					put:
-					(s inject: (state at: self) into: [ :r :e | r with: e type ]) ] ]
+					(s inject: (state at: self) into: [ :r :e | r withNarrow: e type ]) ] ]
 		ifAbsent: [  ].
 	outgoing
 		at: #constrain
@@ -49,7 +49,7 @@ TypInfNode >> constrain: aNode to: aType [
 	| type |
 	aType isUnknown ifTrue: [ ^ self ].
 	changed := true.
-	type := state at: aNode put: ((state at: aNode) with: aType).
+	type := state at: aNode put: ((state at: aNode) withNarrow: aType).
 	aNode constrainTo: type.
 	outgoing
 		at: #constrain

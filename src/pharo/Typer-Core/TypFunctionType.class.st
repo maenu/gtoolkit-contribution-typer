@@ -255,38 +255,23 @@ TypFunctionType >> signalsAlways [
 ]
 
 { #category : #converting }
-TypFunctionType >> with: aType [
-
-	| copyParameters otherArguments |
-	(aType isFunction and: [ 
-		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
-		ifFalse: [ ^ super with: aType ].
-	copyParameters := OrderedCollection new.
-	copyParameters add: (self result with: aType result).
-	otherArguments := aType arguments.
-	self arguments withIndexDo: [ :t :i | 
-		copyParameters add: (t with: (otherArguments at: i)) ].
-	^ self withParameters: copyParameters
-]
-
-{ #category : #converting }
 TypFunctionType >> withArguments: someTypes [
 
 	^ self withParameters: { self result } , someTypes
 ]
 
 { #category : #converting }
-TypFunctionType >> withCommon: aType [
+TypFunctionType >> withNarrow: aType [
 
 	| copyParameters otherArguments |
 	(aType isFunction and: [ 
 		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
-		ifFalse: [ ^ super withCommon: aType ].
+		ifFalse: [ ^ super withNarrow: aType ].
 	copyParameters := OrderedCollection new.
-	copyParameters add: (self result withCommon: aType result).
+	copyParameters add: (self result withNarrow: aType result).
 	otherArguments := aType arguments.
 	self arguments withIndexDo: [ :t :i | 
-		copyParameters add: (t withCommon: (otherArguments at: i)) ].
+		copyParameters add: (t withNarrow: (otherArguments at: i)) ].
 	^ self withParameters: copyParameters
 ]
 
@@ -354,4 +339,19 @@ TypFunctionType >> withSuper: aType [
 		  argumentsOptional: argumentsOptional
 		  signalsAlways: signalsAlways
 		  super: aType
+]
+
+{ #category : #converting }
+TypFunctionType >> withWiden: aType [
+
+	| copyParameters otherArguments |
+	(aType isFunction and: [ 
+		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
+		ifFalse: [ ^ super withWiden: aType ].
+	copyParameters := OrderedCollection new.
+	copyParameters add: (self result withWiden: aType result).
+	otherArguments := aType arguments.
+	self arguments withIndexDo: [ :t :i | 
+		copyParameters add: (t withWiden: (otherArguments at: i)) ].
+	^ self withParameters: copyParameters
 ]
