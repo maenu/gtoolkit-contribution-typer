@@ -20,9 +20,11 @@ TypInfNode class >> node: aNode [
 { #category : #accessing }
 TypInfNode >> burp [
 
-	^ (self outgoingFlow
-		   inject: false
-		   into: [ :r :e | r or: (e state: state copy) ]) or: changed
+	^ outgoing
+		  at: #next
+		  ifPresent: [ :s | 
+			  s inject: changed into: [ :r :e | r or: (e state: state copy) ] ]
+		  ifAbsent: [ changed ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -35,7 +37,7 @@ TypInfNode >> constrain [
 				state
 					at: self
 					put:
-					(s inject: (state at: self) into: [ :r :e | r withNarrow: e type ]) ] ]
+					(s inject: (state at: self) into: [ :r :e | r asNarrower: e type ]) ] ]
 		ifAbsent: [  ].
 	outgoing
 		at: #constrain
@@ -49,7 +51,7 @@ TypInfNode >> constrain: aNode to: aType [
 	| type |
 	aType isUnknown ifTrue: [ ^ self ].
 	changed := true.
-	type := state at: aNode put: ((state at: aNode) withNarrow: aType).
+	type := state at: aNode put: ((state at: aNode) asNarrower: aType).
 	aNode constrainTo: type.
 	outgoing
 		at: #constrain
@@ -75,13 +77,6 @@ TypInfNode >> constrainTo: aType [
 TypInfNode >> context [
 
 	^ self incomingAt: node
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> incomingFlow [
-
-	^ self incoming select: [ :e | 
-		  (e isKindOf: TypInfEdge) and: [ e isFlow ] ]
 ]
 
 { #category : #accessing }
@@ -125,54 +120,9 @@ TypInfNode >> node [
 ]
 
 { #category : #accessing }
-TypInfNode >> outgoingAddTarget: aNode key: anObject [
-
-	self outgoingAdd:
-		(TypInfEdge origin: self target: aNode key: anObject).
-	^ aNode
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> outgoingFlow [
-
-	^ self outgoing select: [ :e | 
-		  (e isKindOf: TypInfEdge) and: [ e isFlow ] ]
-]
-
-{ #category : #accessing }
 TypInfNode >> outgoingNext [
 
 	^ self outgoingAt: #next
-]
-
-{ #category : #accessing }
-TypInfNode >> outgoingNext: aNode [
-
-	^ self outgoingAt: #next put: aNode
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> outgoingReturn [
-
-	^ self outgoingAt: #return
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> outgoingReturn: aNode [
-
-	^ self outgoingAt: #return put: aNode
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> outgoingReturnBlock [
-
-	^ self outgoingAt: #returnBlock
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> outgoingReturnBlock: aNode [
-
-	^ self outgoingAt: #returnBlock put: aNode
 ]
 
 { #category : #printing }
@@ -186,8 +136,10 @@ TypInfNode >> slurp [
 
 	| states |
 	changed := false.
-	states := self incomingFlow collect: #state as: LinkedList.
-	states ifEmpty: [ ^ self ].
+	states := incoming
+		          at: #next
+		          ifPresent: [ :s | s collect: #state as: LinkedList ]
+		          ifAbsent: [ ^ self ].
 	state := states removeLast copy.
 	[ states isEmpty ] whileFalse: [ 
 		state := state join: states removeLast ]

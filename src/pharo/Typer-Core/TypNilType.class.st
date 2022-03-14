@@ -44,6 +44,18 @@ TypNilType class >> named: aString super: aType [
 ]
 
 { #category : #converting }
+TypNilType >> asBroader: aType [
+
+	^ aType asNullable
+]
+
+{ #category : #converting }
+TypNilType >> asNarrower: aType [
+
+	^ aType
+]
+
+{ #category : #converting }
 TypNilType >> asNonNullable [
 
 	^ TypUnknownType instance
@@ -72,16 +84,4 @@ TypNilType >> printOn: aStream skipping: anIdentitySet [
 		ifTrue: [ aStream << '.'.
 			^ self ].
 	aStream << '!'
-]
-
-{ #category : #converting }
-TypNilType >> withNarrow: aType [
-
-	^ aType asNullable
-]
-
-{ #category : #converting }
-TypNilType >> withWiden: aType [
-
-	^ aType asNullable
 ]

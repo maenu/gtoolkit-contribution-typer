@@ -36,7 +36,7 @@ TypNode >> edges [
 { #category : #accessing }
 TypNode >> incoming [
 
-	^ incoming values flatCollect: #yourself
+	^ incoming
 ]
 
 { #category : #accessing }
@@ -107,6 +107,12 @@ TypNode >> incomingAt: anObject put: aNode [
 	^ self incomingAddOrigin: aNode key: anObject
 ]
 
+{ #category : #accessing }
+TypNode >> incomingEdges [
+
+	^ incoming values flatCollect: #yourself
+]
+
 { #category : #testing }
 TypNode >> incomingIncludes: anEdge [
 
@@ -166,14 +172,14 @@ TypNode >> invalidateOnMethodChange: aMethodAnnouncement [
 { #category : #accessing }
 TypNode >> neighbors [
 
-	^ (self outgoing collect: #target as: IdentitySet)
-	  , (self incoming collect: #origin as: IdentitySet)
+	^ (self outgoingEdges collect: #target as: IdentitySet)
+	  , (self incomingEdges collect: #origin as: IdentitySet)
 ]
 
 { #category : #accessing }
 TypNode >> outgoing [
 
-	^ outgoing values flatCollect: #yourself
+	^ outgoing
 ]
 
 { #category : #accessing }
@@ -250,6 +256,12 @@ TypNode >> outgoingAt: anObject put: aNode [
 			e target = aNode ifTrue: [ ^ aNode ].
 			self outgoingRemove: e ] ].
 	^ self outgoingAddTarget: aNode key: anObject
+]
+
+{ #category : #accessing }
+TypNode >> outgoingEdges [
+
+	^ outgoing values flatCollect: #yourself
 ]
 
 { #category : #testing }

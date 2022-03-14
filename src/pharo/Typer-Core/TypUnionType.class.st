@@ -92,7 +92,7 @@ TypUnionType >> hasSuper [
 	[ remains isEmpty ] whileFalse: [ 
 		| next common |
 		next := remains remove: remains anyOne.
-		common := current withWiden: next.
+		common := current asBroader: next.
 		common = current ifFalse: [ 
 			current := common.
 			remains add: current ] ].

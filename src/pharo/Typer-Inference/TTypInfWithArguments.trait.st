@@ -18,7 +18,7 @@ TTypInfWithArguments >> incomingArgumentAt: anInteger put: aNode [
 { #category : #accessing }
 TTypInfWithArguments >> incomingArguments [
 
-	^ (self incoming select: [ :e | e key isInteger ]) sorted collect:
+	^ (self incomingEdges select: [ :e | e key isInteger ]) sorted collect:
 		  #origin
 ]
 

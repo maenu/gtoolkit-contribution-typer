@@ -36,13 +36,18 @@ TypInfContext >> initializeNode: aMethodNode self: aType super: anotherType [
 	nodes valuesDo: [ :e | e initialize: state ].
 	nodes keysAndValuesDo: [ :n :e | 
 		self outgoingAt: n put: e.
-		e outgoingFlow do: [ :f | f state: state copy ] ]
+		e outgoing
+			at: #next
+			ifPresent: [ :s | s do: [ :f | f state: state copy ] ] ]
 ]
 
 { #category : #accessing }
 TypInfContext >> next: aNode [
 
-	^ current := current outgoingNext: (self nodeAt: aNode)
+	| node |
+	node := self nodeAt: aNode.
+	current outgoingAdd: (TypInfNextEdge origin: current target: node).
+	^ current := node
 ]
 
 { #category : #accessing }
@@ -104,7 +109,7 @@ TypInfContext >> visitBlockNode: aBlockNode [
 	current incomingArguments:
 		(aBlockNode arguments collect: [ :n | self nodeAt: n ]).
 	self visitNode: aBlockNode body.
-	^ current outgoingReturnBlock: (self nodeAt: aBlockNode)
+	^ current outgoingAt: #returnBlock put: (self nodeAt: aBlockNode)
 ]
 
 { #category : #visiting }
@@ -167,16 +172,8 @@ TypInfContext >> visitMethodNode: aMethodNode [
 	self visitNode: aMethodNode body.
 	aMethodNode lastIsReturn ifFalse: [ 
 		self next: RBVariableNode selfNode.
-		current outgoingReturn: root ].
+		current outgoingAt: #return put: root ].
 	^ root
-]
-
-{ #category : #visiting }
-TypInfContext >> visitPragmaNode: aPragmaNode [
-
-	"noop"
-
-	
 ]
 
 { #category : #visiting }
@@ -184,13 +181,13 @@ TypInfContext >> visitReturnNode: aReturnNode [
 
 	self visitNode: aReturnNode value.
 	self next: aReturnNode.
-	^ current outgoingReturn: root
+	^ current outgoingAt: #return put: root
 ]
 
 { #category : #visiting }
 TypInfContext >> visitSequenceNode: aSequenceNode [
 
-	current := current ougoingExecute: (self nodeAt: aSequenceNode).
+	self next: aSequenceNode.
 	current incomingArguments:
 		(aSequenceNode temporaries collect: [ :n | self nodeAt: n ]).
 	aSequenceNode statements do: [ :n | self visitNode: n ]

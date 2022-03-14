@@ -42,25 +42,14 @@ TypInfBlock >> initialize: aState [
 			   signalsAlways: nil)
 ]
 
-{ #category : #execution }
-TypInfBlock >> ougoingExecute [
-
-	^ self outgoingAt: #execute
-]
-
-{ #category : #execution }
-TypInfBlock >> ougoingExecute: aNode [
-
-	^ self outgoingAt: #execute put: aNode
-]
-
 { #category : #accessing }
 TypInfBlock >> transfer [
 
 	"(state at: self) isUnknown ifFalse: [ ^ self ]."
+
 	state at: self put: (BlockClosure
-			 typAsFunctionTypeWithResult: (state at: self incomingReturnBlock)
-			 arguments: (self incomingArguments collect: [ :a | state at: a ])
+			 typAsFunctionTypeWithResult: self incomingReturnBlock type
+			 arguments: (self incomingArguments collect: #type)
 			 argumentsOptional: false
 			 signalsAlways: nil)
 ]

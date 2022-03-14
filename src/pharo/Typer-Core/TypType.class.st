@@ -75,6 +75,44 @@ TypType >> >= aType [
 ]
 
 { #category : #converting }
+TypType >> asBroader: aType [
+
+	"self and aType are assignable to result.
+	 result >= self
+	 result >= aType
+	 should be valid"
+
+	aType isUnknown ifTrue: [ ^ aType ].
+	aType isNil ifTrue: [ ^ self asNullable ].
+	aType isSuper ifTrue: [ 
+		^ aType withSuper: (self asBroader: aType super) ].
+	self >= aType ifTrue: [ ^ self ].
+	self < aType ifTrue: [ ^ aType ].
+	^ { 
+		  self.
+		  aType } typAsType
+]
+
+{ #category : #converting }
+TypType >> asNarrower: aType [
+
+	"result is assignable to self and aType.
+	 self >= result
+	 aType >= result
+	 should be valid"
+
+	aType isUnknown ifTrue: [ ^ self ].
+	aType isNil ifTrue: [ ^ self ].
+	aType isSuper ifTrue: [ 
+		^ aType withSuper: (self asNarrower: aType super) ].
+	self >= aType ifTrue: [ ^ aType ].
+	self < aType ifTrue: [ ^ self ].
+	^ { 
+		  self.
+		  aType } typAsType
+]
+
+{ #category : #converting }
 TypType >> asNonNullable [
 
 	^ self
@@ -249,25 +287,6 @@ TypType >> superOrNil [
 	^ self super
 ]
 
-{ #category : #converting }
-TypType >> withNarrow: aType [
-
-	"result is assignable to self and aType.
-	 self >= result
-	 aType >= result
-	 should be valid"
-
-	aType isUnknown ifTrue: [ ^ self ].
-	aType isNil ifTrue: [ ^ self asNullable ].
-	aType isSuper ifTrue: [ 
-		^ aType withSuper: (self withNarrow: aType super) ].
-	self >= aType ifTrue: [ ^ aType ].
-	self < aType ifTrue: [ ^ self ].
-	^ { 
-		  self.
-		  aType } typAsType
-]
-
 { #category : #polymorphic }
 TypType >> withParameters: aCollection [
 
@@ -278,18 +297,4 @@ TypType >> withParameters: aCollection [
 TypType >> withSuper: aType [
 
 	self subclassResponsibility
-]
-
-{ #category : #converting }
-TypType >> withWiden: aType [
-
-	aType isUnknown ifTrue: [ ^ aType ].
-	aType isNil ifTrue: [ ^ self asNullable ].
-	aType isSuper ifTrue: [ 
-		^ aType withSuper: (self withWiden: aType super) ].
-	self >= aType ifTrue: [ ^ self ].
-	self < aType ifTrue: [ ^ aType ].
-	^ { 
-		  self.
-		  aType } typAsType
 ]

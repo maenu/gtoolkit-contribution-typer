@@ -115,6 +115,34 @@ TypParametricType >> > aType [
 	^ parameters keys allSatisfy: [ :e | (self at: e) >= (aType at: e) ]
 ]
 
+{ #category : #converting }
+TypParametricType >> asBroader: aType [
+
+	| copyParameters otherParameters |
+	(aType isParametric and: [ 
+		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
+		ifFalse: [ ^ super asBroader: aType ].
+	otherParameters := aType parameters.
+	copyParameters := OrderedCollection new.
+	parameters keysAndValuesDo: [ :n :t | 
+		copyParameters add: (t asBroader: (aType at: n)) ].
+	^ self withParameters: copyParameters
+]
+
+{ #category : #converting }
+TypParametricType >> asNarrower: aType [
+
+	| copyParameters otherParameters |
+	(aType isParametric and: [ 
+		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
+		ifFalse: [ ^ super asNarrower: aType ].
+	otherParameters := aType parameters.
+	copyParameters := OrderedCollection new.
+	parameters keysAndValuesDo: [ :n :t | 
+		copyParameters add: (t asNarrower: (aType at: n)) ].
+	^ self withParameters: copyParameters
+]
+
 { #category : #accessing }
 TypParametricType >> at: aString [
 
@@ -216,20 +244,6 @@ TypParametricType >> withAt: aSymbol put: aType [
 ]
 
 { #category : #converting }
-TypParametricType >> withNarrow: aType [
-
-	| copyParameters otherParameters |
-	(aType isParametric and: [ 
-		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
-		ifFalse: [ ^ super withNarrow: aType ].
-	otherParameters := aType parameters.
-	copyParameters := OrderedCollection new.
-	parameters keysAndValuesDo: [ :n :t | 
-		copyParameters add: (t withNarrow: (aType at: n)) ].
-	^ self withParameters: copyParameters
-]
-
-{ #category : #converting }
 TypParametricType >> withParameters: aCollection [
 
 	| copyParameters |
@@ -257,18 +271,4 @@ TypParametricType >> withSuper: aType [
 			  parameters: parameters copy
 			  super: aType ].
 	^ self class named: name parameters: parameters copy super: aType
-]
-
-{ #category : #converting }
-TypParametricType >> withWiden: aType [
-
-	| copyParameters otherParameters |
-	(aType isParametric and: [ 
-		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
-		ifFalse: [ ^ super withWiden: aType ].
-	otherParameters := aType parameters.
-	copyParameters := OrderedCollection new.
-	parameters keysAndValuesDo: [ :n :t | 
-		copyParameters add: (t withWiden: (aType at: n)) ].
-	^ self withParameters: copyParameters
 ]

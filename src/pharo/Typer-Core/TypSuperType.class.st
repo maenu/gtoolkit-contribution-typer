@@ -16,6 +16,28 @@ TypSuperType >> arguments [
 	^ superType arguments
 ]
 
+{ #category : #converting }
+TypSuperType >> asBroader: aType [
+
+	aType isSuper ifFalse: [ ^ super asBroader: aType ].
+	self >= aType ifTrue: [ ^ self ].
+	self < aType ifTrue: [ ^ aType ].
+	^ { 
+		  self.
+		  aType } typAsType
+]
+
+{ #category : #'instance creation' }
+TypSuperType >> asNarrower: aType [
+
+	aType isSuper ifFalse: [ ^ super asNarrower: aType ].
+	self >= aType ifTrue: [ ^ aType ].
+	self < aType ifTrue: [ ^ self ].
+	^ { 
+		  self.
+		  aType } typAsType
+]
+
 { #category : #polymorphic }
 TypSuperType >> at: aString [
 
@@ -61,30 +83,8 @@ TypSuperType >> withAt: aString put: aType [
 	^ self withSuper: (superType withAt: aString put: aType)
 ]
 
-{ #category : #'instance creation' }
-TypSuperType >> withNarrow: aType [
-
-	aType isSuper ifFalse: [ ^ super withNarrow: aType ].
-	self >= aType ifTrue: [ ^ aType ].
-	self < aType ifTrue: [ ^ self ].
-	^ { 
-		  self.
-		  aType } typAsType
-]
-
 { #category : #polymorphic }
 TypSuperType >> withParameters: aCollection [
 
 	^ self withSuper: (superType withParameters: aCollection)
-]
-
-{ #category : #converting }
-TypSuperType >> withWiden: aType [
-
-	aType isSuper ifFalse: [ ^ super withWiden: aType ].
-	self >= aType ifTrue: [ ^ self ].
-	self < aType ifTrue: [ ^ aType ].
-	^ { 
-		  self.
-		  aType } typAsType
 ]

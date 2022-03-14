@@ -23,8 +23,5 @@ TypInfLocalDefinition >> transfer [
 { #category : #accessing }
 TypInfLocalDefinition >> type [
 
-	| type |
-	type := super type.
-	type isUnknown ifFalse: [ ^ type ].
 	^ (self outgoingReads collect: #type) typAsType
 ]

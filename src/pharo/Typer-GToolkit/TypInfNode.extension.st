@@ -25,13 +25,13 @@ TypInfNode >> typGtFlowPaintOn: aMondrian [
 
 	| edges nodes currentNodes nextNodes |
 	currentNodes := aMondrian existingNodes.
-	nodes := (self context outgoing collect: #target) difference:
+	nodes := (self context outgoingEdges collect: #target) difference:
 		         currentNodes.
 	nodes ifEmpty: [ ^ self ].
 	nextNodes := currentNodes , nodes , { self }.
-	edges := ((((nodes flatCollect: #incomingFlow) select: [ :e | 
+	edges := ((((nodes flatCollect: #incomingEdges) select: [ :e | 
 		            nextNodes includes: e origin ])
-	           , ((nodes flatCollect: #outgoingFlow) select: [ :e | 
+	           , ((nodes flatCollect: #outgoingEdges) select: [ :e | 
 			            nextNodes includes: e target ])) asIdentitySet asArray 
 		          groupedBy: #nodes) values asArray sort: [ :a :b | 
 		         a size > b size ].
@@ -48,10 +48,9 @@ TypInfNode >> typGtFlowPaintOn: aMondrian [
 	aMondrian edges
 		passive;
 		stencil: [ :e | e typGtAsElementIn: aMondrian with: { e } ];
-		connect:
-			((nodes flatCollect: #outgoing) select: [ :e | e key = #constrain ])
-		from: [ :e | e origin ]
-		to: [ :e | e target ].
+		connect: ((nodes flatCollect: #outgoingEdges) select: [ :e | 
+					 e key = #constrain ])
+		from: [ :e | e origin ] to: [ :e | e target ].
 	aMondrian layout force
 ]
 

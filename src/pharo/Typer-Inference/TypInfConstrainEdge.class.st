@@ -1,6 +1,9 @@
 Class {
 	#name : #TypInfConstrainEdge,
 	#superclass : #TypInfEdge,
+	#instVars : [
+		'type'
+	],
 	#category : #'Typer-Inference-Core'
 }
 
@@ -8,8 +11,18 @@ Class {
 TypInfConstrainEdge class >> origin: aNode target: anotherNode type: aType [
 
 	^ (self origin: aNode target: anotherNode key: #constrain)
-		  state:
-			  (TypInfState self: aNode state self super: aNode state super);
 		  type: aType;
 		  yourself
+]
+
+{ #category : #generated }
+TypInfConstrainEdge >> type [
+
+	^ type
+]
+
+{ #category : #generated }
+TypInfConstrainEdge >> type: aType [
+
+	type := aType
 ]

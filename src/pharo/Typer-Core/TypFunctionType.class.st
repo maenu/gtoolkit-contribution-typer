@@ -260,21 +260,6 @@ TypFunctionType >> withArguments: someTypes [
 	^ self withParameters: { self result } , someTypes
 ]
 
-{ #category : #converting }
-TypFunctionType >> withNarrow: aType [
-
-	| copyParameters otherArguments |
-	(aType isFunction and: [ 
-		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
-		ifFalse: [ ^ super withNarrow: aType ].
-	copyParameters := OrderedCollection new.
-	copyParameters add: (self result withNarrow: aType result).
-	otherArguments := aType arguments.
-	self arguments withIndexDo: [ :t :i | 
-		copyParameters add: (t withNarrow: (otherArguments at: i)) ].
-	^ self withParameters: copyParameters
-]
-
 { #category : #polymorphic }
 TypFunctionType >> withParameters: aCollection [
 
@@ -339,19 +324,4 @@ TypFunctionType >> withSuper: aType [
 		  argumentsOptional: argumentsOptional
 		  signalsAlways: signalsAlways
 		  super: aType
-]
-
-{ #category : #converting }
-TypFunctionType >> withWiden: aType [
-
-	| copyParameters otherArguments |
-	(aType isFunction and: [ 
-		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
-		ifFalse: [ ^ super withWiden: aType ].
-	copyParameters := OrderedCollection new.
-	copyParameters add: (self result withWiden: aType result).
-	otherArguments := aType arguments.
-	self arguments withIndexDo: [ :t :i | 
-		copyParameters add: (t withWiden: (otherArguments at: i)) ].
-	^ self withParameters: copyParameters
 ]
