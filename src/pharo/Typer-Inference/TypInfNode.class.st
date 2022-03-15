@@ -20,11 +20,8 @@ TypInfNode class >> node: aNode [
 { #category : #accessing }
 TypInfNode >> burp [
 
-	^ outgoing
-		  at: #next
-		  ifPresent: [ :s | 
-			  s inject: changed into: [ :r :e | r or: (e state: state copy) ] ]
-		  ifAbsent: [ changed ]
+	outgoing at: #next ifPresent: [ :s | 
+		s do: [ :n | (n state: state copy) ifTrue: [ changed := true ] ] ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -37,34 +34,41 @@ TypInfNode >> constrain [
 				state
 					at: self
 					put:
-					(s inject: (state at: self) into: [ :r :e | r asNarrower: e type ]) ] ]
-		ifAbsent: [  ].
-	outgoing
-		at: #constrain
-		ifPresent: [ :s | s copy do: [ :e | self outgoingRemove: e ] ]
-		ifAbsent: [ "noop" ]
+					(s
+						 inject: (state at: self)
+						 into: [ :r :e | r asNarrower: e type ]) ] ]
+		ifAbsent: [  ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypInfNode >> constrain: aNode to: aType [
 
 	| type |
-	aType isUnknown ifTrue: [ ^ self ].
-	changed := true.
+	aType isUnknown ifTrue: [ 
+		^ changed "generalizing to the top type is not a constraint" ].
 	type := state at: aNode put: ((state at: aNode) asNarrower: aType).
-	aNode constrainTo: type.
+	aType == type ifTrue: [ 
+		^ changed "if unchanged, we need no further constraints" ].
 	outgoing
 		at: #constrain
 		ifPresent: [ :s | 
 			s
 				detect: [ :e | e target == aNode ]
-				ifFound: [ :e | e type: type ]
+				ifFound: [ :e | 
+					(e type: type) ifTrue: [ 
+						aNode constrainTo: type.
+						changed := true ] ]
 				ifNone: [ 
 					self outgoingAdd:
-						(TypInfConstrainEdge origin: self target: aNode type: type) ] ]
+						(TypInfConstrainEdge origin: self target: aNode type: type).
+					aNode constrainTo: type.
+					changed := true ] ]
 		ifAbsent: [ 
 			self outgoingAdd:
-				(TypInfConstrainEdge origin: self target: aNode type: type) ]
+				(TypInfConstrainEdge origin: self target: aNode type: type).
+			aNode constrainTo: type.
+			changed := true ].
+	^ changed
 ]
 
 { #category : #'as yet unclassified' }
@@ -135,7 +139,6 @@ TypInfNode >> printOn: aStream [
 TypInfNode >> slurp [
 
 	| states |
-	changed := false.
 	states := incoming
 		          at: #next
 		          ifPresent: [ :s | s collect: #state as: LinkedList ]
@@ -148,11 +151,13 @@ TypInfNode >> slurp [
 { #category : #accessing }
 TypInfNode >> slurpAndBurp [
 
-	^ self
-		  slurp;
-		  constrain;
-		  transfer;
-		  burp
+	changed := false.
+	self
+		slurp;
+		constrain;
+		transfer;
+		burp.
+	[ ^ changed or: state changed ] ensure: [ changed := false ]
 ]
 
 { #category : #accessing }
@@ -173,10 +178,4 @@ TypInfNode >> transfer [
 TypInfNode >> type [
 
 	^ state at: self
-]
-
-{ #category : #accessing }
-TypInfNode >> type: aType [
-
-	^ state at: self put: aType
 ]

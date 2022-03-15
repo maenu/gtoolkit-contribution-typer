@@ -10,17 +10,13 @@ Class {
 TypInfBlock >> constrainTo: aType [
 
 	| type |
-	super constrainTo: aType.
 	type := aType.
 	type isUnion ifTrue: [ 
 		aType types detect: #isFunction ifFound: [ :t | type := t ] ].
 	type isFunction ifFalse: [ ^ self ].
 	self incomingArguments withIndexDo: [ :n :i | 
 		i <= type arguments size ifTrue: [ 
-			| argumentType |
-			argumentType := type arguments at: i.
-			self constrain: n to: argumentType.
-			n outgoingReads do: [ :m | self constrain: m to: argumentType ] ] ].
+			self constrain: n to: (type arguments at: i) ] ].
 	self constrain: self incomingReturnBlock to: type result
 ]
 

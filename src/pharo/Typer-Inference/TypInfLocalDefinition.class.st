@@ -4,6 +4,19 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
+{ #category : #'as yet unclassified' }
+TypInfLocalDefinition >> constrainTo: aType [
+
+	self outgoingReads do: [ :n | self constrain: n to: aType ]
+]
+
+{ #category : #initialization }
+TypInfLocalDefinition >> initialize: aState [
+
+	super initialize: aState.
+	^ state at: self put: TypNilType instance
+]
+
 { #category : #accessing }
 TypInfLocalDefinition >> outgoingReads [
 

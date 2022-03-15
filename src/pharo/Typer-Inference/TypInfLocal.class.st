@@ -7,7 +7,6 @@ Class {
 { #category : #'as yet unclassified' }
 TypInfLocal >> constrainTo: aType [
 
-	super constrainTo: aType.
 	self constrain: self incomingRead to: aType
 ]
 

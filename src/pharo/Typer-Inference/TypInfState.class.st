@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'index',
 		'selfType',
-		'superType'
+		'superType',
+		'changed'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -48,7 +49,23 @@ TypInfState >> at: aNode [
 { #category : #accessing }
 TypInfState >> at: aNode put: aType [
 
-	^ index at: aNode put: aType
+	^ index
+		  at: aNode
+		  ifPresent: [ :e | 
+			  e == aType
+				  ifTrue: [ aType ]
+				  ifFalse: [ 
+					  changed := true.
+					  index at: aNode put: aType ] ]
+		  ifAbsentPut: [ 
+			  changed := true.
+			  aType ]
+]
+
+{ #category : #accessing }
+TypInfState >> changed [
+
+	^ changed
 ]
 
 { #category : #copying }
@@ -56,7 +73,7 @@ TypInfState >> copy [
 
 	"don't really copy, just wrap it"
 
-	^ TypInfWrappingState state: self
+	^ super copy "TypInfWrappingState state: self"
 ]
 
 { #category : #accessing }
@@ -89,6 +106,7 @@ TypInfState >> index [
 { #category : #initialization }
 TypInfState >> initializeSelf: aType super: anotherType index: aDictionary [
 
+	changed := false.
 	selfType := aType.
 	superType := anotherType.
 	index := aDictionary
@@ -113,6 +131,14 @@ TypInfState >> join: aState [
 				 ifPresent: [ :tt | t asNarrower: tt ]
 				 ifAbsent: [ t ]) ].
 	^ copy
+]
+
+{ #category : #copying }
+TypInfState >> postCopy [
+
+	super postCopy.
+	changed := false.
+	index := index copy
 ]
 
 { #category : #'as yet unclassified' }

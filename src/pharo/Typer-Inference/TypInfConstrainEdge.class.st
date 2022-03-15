@@ -24,5 +24,7 @@ TypInfConstrainEdge >> type [
 { #category : #generated }
 TypInfConstrainEdge >> type: aType [
 
-	type := aType
+	type = aType ifTrue: [ ^ false ].
+	type := aType.
+	^ true
 ]
