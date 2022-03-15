@@ -41,16 +41,9 @@ TypInfBlock >> initialize: aState [
 { #category : #accessing }
 TypInfBlock >> transfer [
 
-	| type |
-	type := state at: self.
-	state at: self put: (BlockClosure
-			 typAsFunctionTypeWithResult: self incomingReturnBlock type
-			 arguments: (self incomingArguments collect: #type)
-			 argumentsOptional: false
-			 signalsAlways: nil).
-	TypInfSignal
-		emitMessage: 'transfer'
-		from: type
-		to: (state at: self)
-		node: self
+	state at: self put: ((state at: self) asNarrower: (BlockClosure
+				  typAsFunctionTypeWithResult: self incomingReturnBlock type
+				  arguments: (self incomingArguments collect: #type)
+				  argumentsOptional: false
+				  signalsAlways: nil))
 ]

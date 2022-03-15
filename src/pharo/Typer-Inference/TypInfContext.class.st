@@ -71,20 +71,13 @@ TypInfContext >> root [
 { #category : #running }
 TypInfContext >> run [
 
-	| n nodes_ states |
-	n := 100.
+	| n nodes_ |
 	nodes_ := nodes values.
-	states := IdentityDictionary new.
-	nodes_ do: [ :e | states at: e put: e state copy ].
+	n := 100.
 	[ 
 	n := n - 1.
-	(nodes_ inject: false into: [ :r :e | 
-		 e slurpAndBurp.
-		 e state = (states at: e)
-			 ifTrue: [ 
-				 states at: e put: e state copy.
-				 true ]
-			 ifFalse: [ r ] ]) and: [ n > 0 ] ] whileTrue.
+	(nodes_ inject: false into: [ :r :e | e slurpAndBurp or: r ]) and: [ 
+		n > 0 ] ] whileTrue.
 	stable := n > 0.
 	^ n
 ]

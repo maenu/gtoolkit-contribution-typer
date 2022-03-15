@@ -7,12 +7,5 @@ Class {
 { #category : #accessing }
 TypInfCascade >> transfer [
 
-	| type |
-	type := state at: self.
-	state at: self put: (state at: self incomingNext).
-	TypInfSignal
-		emitMessage: 'transfer'
-		from: type
-		to: (state at: self)
-		node: self
+	state at: self put: (state at: self incomingNext)
 ]

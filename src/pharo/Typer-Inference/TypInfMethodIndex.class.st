@@ -69,5 +69,5 @@ TypInfMethodIndex >> initialize [
 { #category : #generated }
 TypInfMethodIndex >> writers: aVariable [
 
-	^ cache at: aVariable
+	^ cache at: aVariable ifAbsent: [ #(  ) ]
 ]

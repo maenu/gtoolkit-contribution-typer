@@ -25,13 +25,7 @@ TypInfLocal >> incomingRead: aNode [
 { #category : #'as yet unclassified' }
 TypInfLocal >> transfer [
 
-	| type |
-	type := state at: self.
-	type isUnknown ifFalse: [ ^ self ].
-	state at: self put: (state at: self incomingRead).
-	TypInfSignal
-		emitMessage: 'transfer'
-		from: type
-		to: (state at: self)
-		node: self
+	state
+		at: self
+		put: ((state at: self) asNarrower: (state at: self incomingRead))
 ]

@@ -38,17 +38,10 @@ TypInfMethod >> method [
 { #category : #accessing }
 TypInfMethod >> transfer [
 
-	| type |
-	type := state at: self.
 	state at: self put: (CompiledMethod
 			 typAsFunctionTypeWithResult:
 			 (self incomingReturns collect: #type) typAsType
 			 arguments: (self incomingArguments collect: #type)
 			 argumentsOptional: false
-			 signalsAlways: nil).
-	TypInfSignal
-		emitMessage: 'transfer'
-		from: type
-		to: (state at: self)
-		node: self
+			 signalsAlways: nil)
 ]

@@ -3,8 +3,7 @@ Class {
 	#superclass : #TypNode,
 	#instVars : [
 		'node',
-		'state',
-		'changed'
+		'state'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -20,8 +19,13 @@ TypInfNode class >> node: aNode [
 { #category : #accessing }
 TypInfNode >> burp [
 
-	outgoing at: #next ifPresent: [ :s | 
-		s do: [ :n | (n state: state copy) ifTrue: [ changed := true ] ] ]
+	^ outgoing
+		  at: #next
+		  ifPresent: [ :s | 
+			  s
+				  inject: state changed
+				  into: [ :r :e | r or: (e state: state copy) ] ]
+		  ifAbsent: [ state changed ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -75,18 +79,15 @@ TypInfNode >> constrain: aNode to: aType in: aState [
 				detect: [ :e | e target == aNode ]
 				ifFound: [ :e | 
 					(e type: typeNew) ifTrue: [ 
-						aNode constrainTo: typeNew in: aState.
-						changed := true ] ]
+						aNode constrainTo: typeNew in: aState ] ]
 				ifNone: [ 
 					self outgoingAdd:
 						(TypInfConstrainEdge origin: self target: aNode type: typeNew).
-					aNode constrainTo: typeNew in: aState.
-					changed := true ] ]
+					aNode constrainTo: typeNew in: aState ] ]
 		ifAbsent: [ 
 			self outgoingAdd:
 				(TypInfConstrainEdge origin: self target: aNode type: typeNew).
-			aNode constrainTo: typeNew in: aState.
-			changed := true ]
+			aNode constrainTo: typeNew in: aState ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -179,32 +180,11 @@ TypInfNode >> slurp [
 { #category : #accessing }
 TypInfNode >> slurpAndBurp [
 
-	| type |
-	changed := false.
-	type := state at: self.
-	TypInfSignal
-		emitMessage: 'slurpAndBurp start'
-		from: type
-		to: nil
-		node: self.
-	self
-		slurp;
-		constrain;
-		transfer;
-		burp.
-	changed ifTrue: [ 
-		TypInfSignal
-			emitMessage: 'slurpAndBurp changed'
-			from: type
-			to: (state at: self)
-			node: self ].
-	state changed ifTrue: [ 
-		TypInfSignal
-			emitMessage: 'slurpAndBurp changed state'
-			from: type
-			to: (state at: self)
-			node: self ].
-	[ ^ changed or: state changed ] ensure: [ changed := false ]
+	^ self
+		  slurp;
+		  constrain;
+		  transfer;
+		  burp
 ]
 
 { #category : #accessing }
