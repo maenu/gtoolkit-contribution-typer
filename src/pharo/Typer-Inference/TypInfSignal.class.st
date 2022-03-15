@@ -32,6 +32,12 @@ TypInfSignal >> initializeMessage: aString from: aType to: anotherType node: aNo
 	node := aNode
 ]
 
+{ #category : #accessing }
+TypInfSignal >> message [
+
+	^ message
+]
+
 { #category : #printing }
 TypInfSignal >> printOn: aStream [
 
@@ -42,10 +48,10 @@ TypInfSignal >> printOn: aStream [
 TypInfSignal >> printOneLineContentsOn: aStream [
 
 	aStream nextPutAll: message.
+	aStream nextPutAll: ' '.
+	node printOn: aStream.
 	aStream nextPutAll: ' from '.
 	from printOn: aStream.
 	aStream nextPutAll: ' to '.
-	to printOn: aStream.
-	aStream nextPutAll: ' '.
-	node printOn: aStream
+	to printOn: aStream
 ]

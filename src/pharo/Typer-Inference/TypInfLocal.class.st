@@ -5,9 +5,9 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypInfLocal >> constrainTo: aType [
+TypInfLocal >> constrainTo: aType in: aState [
 
-	self constrain: self incomingRead to: aType
+	self constrain: self incomingRead to: aType in: aState
 ]
 
 { #category : #'meta-object-protocol' }
@@ -25,6 +25,13 @@ TypInfLocal >> incomingRead: aNode [
 { #category : #'as yet unclassified' }
 TypInfLocal >> transfer [
 
-	(state at: self) isUnknown ifFalse: [ ^ self ].
-	state at: self put: (state at: self incomingRead)
+	| type |
+	type := state at: self.
+	type isUnknown ifFalse: [ ^ self ].
+	state at: self put: (state at: self incomingRead).
+	TypInfSignal
+		emitMessage: 'transfer'
+		from: type
+		to: (state at: self)
+		node: self
 ]

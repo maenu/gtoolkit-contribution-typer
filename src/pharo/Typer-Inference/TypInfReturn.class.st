@@ -7,6 +7,12 @@ Class {
 { #category : #accessing }
 TypInfReturn >> transfer [
 
-	(state at: self) isUnknown ifFalse: [ ^ self ].
-	state at: self put: (state at: (self incomingNext))
+	| type |
+	type := state at: self.
+	state at: self put: (state at: self incomingNext).
+	TypInfSignal
+		emitMessage: 'transfer'
+		from: type
+		to: (state at: self)
+		node: self
 ]

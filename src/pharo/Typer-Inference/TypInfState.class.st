@@ -55,6 +55,11 @@ TypInfState >> at: aNode put: aType [
 			  e = aType
 				  ifTrue: [ aType ]
 				  ifFalse: [ 
+					  TypInfSignal
+						  emitMessage: 'state at:put:'
+						  from: e
+						  to: aType
+						  node: aNode.
 					  changed := true.
 					  index at: aNode put: aType ] ]
 		  ifAbsentPut: [ 

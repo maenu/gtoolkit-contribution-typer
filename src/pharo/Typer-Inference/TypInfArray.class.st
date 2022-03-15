@@ -16,7 +16,13 @@ TypInfArray >> initialize: aState [
 { #category : #'as yet unclassified' }
 TypInfArray >> transfer [
 
-	(state at: self) isUnknown ifFalse: [ ^ self ].
+	| type |
+	type := state at: self.
 	state at: self put: (Array typAsType withParameters:
-			 { (self incomingArguments collect: [ :e | state at: e ]) typAsType })
+			 { (self incomingArguments collect: [ :e | state at: e ]) typAsType }).
+	TypInfSignal
+		emitMessage: 'transfer'
+		from: type
+		to: (state at: self)
+		node: self
 ]

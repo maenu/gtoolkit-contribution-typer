@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypInfBlock >> constrainTo: aType [
+TypInfBlock >> constrainTo: aType in: aState [
 
 	| type |
 	type := aType.
@@ -16,8 +16,8 @@ TypInfBlock >> constrainTo: aType [
 	type isFunction ifFalse: [ ^ self ].
 	self incomingArguments withIndexDo: [ :n :i | 
 		i <= type arguments size ifTrue: [ 
-			self constrain: n to: (type arguments at: i) ] ].
-	self constrain: self incomingReturnBlock to: type result
+			self constrain: n to: (type arguments at: i) in: aState ] ].
+	self constrain: self incomingReturnBlock to: type result in: aState
 ]
 
 { #category : #'as yet unclassified' }
@@ -41,11 +41,16 @@ TypInfBlock >> initialize: aState [
 { #category : #accessing }
 TypInfBlock >> transfer [
 
-	"(state at: self) isUnknown ifFalse: [ ^ self ]."
-
+	| type |
+	type := state at: self.
 	state at: self put: (BlockClosure
 			 typAsFunctionTypeWithResult: self incomingReturnBlock type
 			 arguments: (self incomingArguments collect: #type)
 			 argumentsOptional: false
-			 signalsAlways: nil)
+			 signalsAlways: nil).
+	TypInfSignal
+		emitMessage: 'transfer'
+		from: type
+		to: (state at: self)
+		node: self
 ]

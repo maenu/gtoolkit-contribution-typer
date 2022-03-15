@@ -29,8 +29,8 @@ TypInfMessage >> method [
 { #category : #accessing }
 TypInfMessage >> transfer [
 
-	| receiver method |
-	"(state at: self) isUnknown ifFalse: [ ^ self ]."
+	| type receiver method |
+	type := state at: self.
 	receiver := self incomingReceiver.
 	(state at: receiver) isUnknown ifTrue: [ 
 		| classes |
@@ -38,10 +38,16 @@ TypInfMessage >> transfer [
 		(classes size between: 1 and: 8) ifTrue: [ 
 			self
 				constrain: receiver
-				to: (classes collect: #typAsType) typAsType ] ].
+				to: (classes collect: #typAsType) typAsType
+				in: state ] ].
 	method := self method.
 	self incomingArguments withIndexDo: [ :e :i | 
 		i <= method arguments size ifTrue: [ 
-			self constrain: e to: (method arguments at: i) ] ].
-	state at: self put: method result
+			self constrain: e to: (method arguments at: i) in: state ] ].
+	state at: self put: (type asNarrower: method result).
+	TypInfSignal
+		emitMessage: 'transfer'
+		from: type
+		to: (state at: self)
+		node: self
 ]
