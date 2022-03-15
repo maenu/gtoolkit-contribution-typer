@@ -23,13 +23,6 @@ TypInfLocal >> incomingRead: aNode [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfLocal >> set: aType in: aState [
-
-	super set: aType in: aState.
-	self incomingRead set: (aState at: self) in: aState
-]
-
-{ #category : #'as yet unclassified' }
 TypInfLocal >> transfer [
 
 	(state at: self) isUnknown ifFalse: [ ^ self ].

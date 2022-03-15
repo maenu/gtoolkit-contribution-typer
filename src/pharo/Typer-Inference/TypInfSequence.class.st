@@ -12,11 +12,3 @@ TypInfSequence >> initialize: aState [
 	state := aState.
 	^ state at: self put: TypNilType instance
 ]
-
-{ #category : #accessing }
-TypInfSequence >> transfer [
-
-	(state at: self) isUnknown ifFalse: [ ^ self ].
-	self incomingArguments do: [ :e | 
-		state at: e put: TypNilType instance ]
-]

@@ -52,7 +52,7 @@ TypInfState >> at: aNode put: aType [
 	^ index
 		  at: aNode
 		  ifPresent: [ :e | 
-			  e == aType
+			  e = aType
 				  ifTrue: [ aType ]
 				  ifFalse: [ 
 					  changed := true.

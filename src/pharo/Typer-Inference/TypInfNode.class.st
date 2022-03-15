@@ -27,6 +27,8 @@ TypInfNode >> burp [
 { #category : #'as yet unclassified' }
 TypInfNode >> constrain [
 
+	| type |
+	type := state at: self.
 	incoming
 		at: #constrain
 		ifPresent: [ :s | 
@@ -37,38 +39,49 @@ TypInfNode >> constrain [
 					(s
 						 inject: (state at: self)
 						 into: [ :r :e | r asNarrower: e type ]) ] ]
-		ifAbsent: [  ]
+		ifAbsent: [  ].
+	TypInfSignal
+		emitMessage: 'constrain'
+		from: type
+		to: (state at: self)
+		node: self
 ]
 
 { #category : #accessing }
 TypInfNode >> constrain: aNode to: aType [
 
-	| type |
+	| typeOld typeNew |
 	aType isUnknown ifTrue: [ 
-		^ changed "generalizing to the top type is not a constraint" ].
-	type := state at: aNode put: ((state at: aNode) asNarrower: aType).
-	aType == type ifTrue: [ 
-		^ changed "if unchanged, we need no further constraints" ].
+		^ self "generalizing to the top type is not a constraint" ].
+	typeOld := state at: aNode.
+	typeNew := typeOld asNarrower: aType.
+	typeNew = typeOld ifTrue: [ 
+		^ self "if unchanged, we need no further constraints" ].
+	state at: aNode put: typeNew.
+	TypInfSignal
+		emitMessage: 'constrain:to:'
+		from: typeOld
+		to: typeNew
+		node: self -> aNode.
 	outgoing
 		at: #constrain
 		ifPresent: [ :s | 
 			s
 				detect: [ :e | e target == aNode ]
 				ifFound: [ :e | 
-					(e type: type) ifTrue: [ 
-						aNode constrainTo: type.
+					(e type: typeNew) ifTrue: [ 
+						aNode constrainTo: typeNew.
 						changed := true ] ]
 				ifNone: [ 
 					self outgoingAdd:
-						(TypInfConstrainEdge origin: self target: aNode type: type).
-					aNode constrainTo: type.
+						(TypInfConstrainEdge origin: self target: aNode type: typeNew).
+					aNode constrainTo: typeNew.
 					changed := true ] ]
 		ifAbsent: [ 
 			self outgoingAdd:
-				(TypInfConstrainEdge origin: self target: aNode type: type).
-			aNode constrainTo: type.
-			changed := true ].
-	^ changed
+				(TypInfConstrainEdge origin: self target: aNode type: typeNew).
+			aNode constrainTo: typeNew.
+			changed := true ]
 ]
 
 { #category : #'as yet unclassified' }

@@ -11,5 +11,5 @@ TypInfAssignment >> transfer [
 	(state at: self) isUnknown ifFalse: [ ^ self ].
 	type := state at: self incomingNext.
 	state at: self put: type.
-	self outgoingNext set: type in: state
+	self constrain: self outgoingNext to: type
 ]

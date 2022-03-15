@@ -3,32 +3,33 @@ Class {
 	#superclass : #BeaconSignal,
 	#instVars : [
 		'node',
+		'message',
 		'from',
-		'by',
 		'to'
 	],
 	#category : #'Typer-Inference-Core'
 }
 
 { #category : #'as yet unclassified' }
-TypInfSignal class >> emitNode: aNode from: aType by: anotherType to: yetAnotherType [
+TypInfSignal class >> emitMessage: aString from: aType to: anotherType node: aNode [
 
+	aType = anotherType ifTrue: [ ^ self ].
 	^ self new
-		  initializeNode: aNode
+		  initializeMessage: aString
 		  from: aType
-		  by: anotherType
-		  to: yetAnotherType;
+		  to: anotherType
+		  node: aNode;
 		  emit;
 		  yourself
 ]
 
 { #category : #initialization }
-TypInfSignal >> initializeNode: aNode from: aType by: anotherType to: yetAnotherType [
+TypInfSignal >> initializeMessage: aString from: aType to: anotherType node: aNode [
 
-	node := aNode.
+	message := aString.
 	from := aType.
-	by := anotherType.
-	to := yetAnotherType
+	to := anotherType.
+	node := aNode
 ]
 
 { #category : #printing }
@@ -40,12 +41,11 @@ TypInfSignal >> printOn: aStream [
 { #category : #printing }
 TypInfSignal >> printOneLineContentsOn: aStream [
 
-	node printOn: aStream.
-	aStream nextPutAll: ' '.
+	aStream nextPutAll: message.
+	aStream nextPutAll: ' from '.
 	from printOn: aStream.
-	aStream nextPutAll: ' '.
-	by printOn: aStream.
-	aStream nextPutAll: ' '.
+	aStream nextPutAll: ' to '.
 	to printOn: aStream.
-	aStream nextPutAll: ' '
+	aStream nextPutAll: ' '.
+	node printOn: aStream
 ]
