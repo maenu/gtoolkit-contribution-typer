@@ -4,12 +4,6 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #'as yet unclassified' }
-TypInfLocal >> constrainTo: aType in: aState [
-
-	self constrain: self incomingRead to: aType in: aState
-]
-
 { #category : #'meta-object-protocol' }
 TypInfLocal >> incomingRead [
 
@@ -23,9 +17,16 @@ TypInfLocal >> incomingRead: aNode [
 ]
 
 { #category : #'as yet unclassified' }
+TypInfLocal >> tightenTo: aType in: aState [
+
+	self tighten: self incomingRead to: aType in: aState
+]
+
+{ #category : #'as yet unclassified' }
 TypInfLocal >> transfer [
 
 	state
 		at: self
-		put: ((state at: self) asNarrower: (state at: self incomingRead))
+		put: ((state at: self) tighten: (state at: self incomingRead)).
+	super transfer
 ]

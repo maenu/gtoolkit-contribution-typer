@@ -10,8 +10,8 @@ Class {
 TypInfMethod >> incomingReturns [
 
 	^ incoming
-		  at: #return
-		  ifPresent: [ :s | s collect: #origin ]
+		  at: #tighten
+		  ifPresent: [ :s | s select: #isReturn thenCollect: #origin ]
 		  ifAbsent: [ #(  ) ]
 ]
 
@@ -33,15 +33,4 @@ TypInfMethod >> method [
 	^ state self
 		  lookupMethod: node selector asSymbol
 		  arguments: (self incomingArguments collect: [ :e | state at: e ])
-]
-
-{ #category : #accessing }
-TypInfMethod >> transfer [
-
-	state at: self put: (CompiledMethod
-			 typAsFunctionTypeWithResult:
-			 (self incomingReturns collect: #type) typAsType
-			 arguments: (self incomingArguments collect: #type)
-			 argumentsOptional: false
-			 signalsAlways: nil)
 ]

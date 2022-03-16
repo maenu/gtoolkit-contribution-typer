@@ -36,12 +36,13 @@ TypInfMessage >> transfer [
 		classes := TypInfMethodIndex instance implementors: node selector.
 		(classes size between: 1 and: 8) ifTrue: [ 
 			self
-				constrain: self incomingReceiver
+				tighten: self incomingReceiver
 				to: (classes collect: #typAsType) typAsType
 				in: state ] ].
 	method := self method.
 	self incomingArguments withIndexDo: [ :e :i | 
 		i <= method arguments size ifTrue: [ 
-			self constrain: e to: (method arguments at: i) in: state ] ].
-	state at: self put: ((state at: self) asNarrower: method result)
+			self tighten: e to: (method arguments at: i) in: state ] ].
+	state at: self put: ((state at: self) tighten: method result).
+	super transfer
 ]

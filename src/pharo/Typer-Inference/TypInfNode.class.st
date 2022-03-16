@@ -22,78 +22,8 @@ TypInfNode >> burp [
 	^ outgoing
 		  at: #next
 		  ifPresent: [ :s | 
-			  s
-				  inject: state changed
-				  into: [ :r :e | r or: (e state: state copy) ] ]
-		  ifAbsent: [ state changed ]
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> constrain [
-
-	| type |
-	type := state at: self.
-	TypInfSignal
-		emitMessage: 'constrain start'
-		from: nil
-		to: nil
-		node: self.
-	incoming
-		at: #constrain
-		ifPresent: [ :s | 
-			s ifNotEmpty: [ 
-				state
-					at: self
-					put:
-					(s
-						 inject: (state at: self)
-						 into: [ :r :e | r asNarrower: e type ]) ] ]
-		ifAbsent: [  ].
-	TypInfSignal
-		emitMessage: 'constrain end'
-		from: type
-		to: (state at: self)
-		node: self
-]
-
-{ #category : #accessing }
-TypInfNode >> constrain: aNode to: aType in: aState [
-
-	| typeOld typeNew |
-	aType isUnknown ifTrue: [ 
-		^ self "generalizing to the top type is not a constraint" ].
-	typeOld := aState at: aNode.
-	typeNew := typeOld asNarrower: aType.
-	typeNew = typeOld ifTrue: [ 
-		^ self "if unchanged, we need no further constraints" ].
-	aState at: aNode put: typeNew.
-	TypInfSignal
-		emitMessage: 'constrain:to:'
-		from: typeOld
-		to: typeNew
-		node: self -> aNode.
-	outgoing
-		at: #constrain
-		ifPresent: [ :s | 
-			s
-				detect: [ :e | e target == aNode ]
-				ifFound: [ :e | 
-					(e type: typeNew) ifTrue: [ 
-						aNode constrainTo: typeNew in: aState ] ]
-				ifNone: [ 
-					self outgoingAdd:
-						(TypInfConstrainEdge origin: self target: aNode type: typeNew).
-					aNode constrainTo: typeNew in: aState ] ]
-		ifAbsent: [ 
-			self outgoingAdd:
-				(TypInfConstrainEdge origin: self target: aNode type: typeNew).
-			aNode constrainTo: typeNew in: aState ]
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> constrainTo: aType in: aState [
-
-	
+		  s inject: false into: [ :r :e | r or: (e state: state copy) ] ]
+		  ifAbsent: [ false ]
 ]
 
 { #category : #accessing }
@@ -157,34 +87,25 @@ TypInfNode >> printOn: aStream [
 { #category : #'as yet unclassified' }
 TypInfNode >> slurp [
 
-	| states |
-	TypInfSignal
-		emitMessage: 'slurp start'
-		from: nil
-		to: nil
-		node: self.
-	states := incoming
-		          at: #next
-		          ifPresent: [ :s | s collect: #state as: LinkedList ]
-		          ifAbsent: [ ^ self ].
-	state := states removeLast copy.
-	[ states isEmpty ] whileFalse: [ 
-		state := state join: states removeLast ].
-	TypInfSignal
-		emitMessage: 'slurp end'
-		from: nil
-		to: nil
-		node: self
+	incoming at: #next ifPresent: [ :s | 
+		s ifNotEmpty: [ 
+			state := (s collect: #state) reduce: [ :a :b | a join: b ].
+			state := state copy "for good measure" ] ].
+	incoming at: #tighten ifPresent: [ :s | 
+		s ifNotEmpty: [ 
+			| type |
+			type := (s collect: [ :e | e getIn: state ]) reduce: [ :a :b | 
+				        a tighten: b ].
+			state at: self put: type ] ]
 ]
 
 { #category : #accessing }
 TypInfNode >> slurpAndBurp [
 
-	^ self
-		  slurp;
-		  constrain;
-		  transfer;
-		  burp
+	self
+		slurp;
+		transfer;
+		burp
 ]
 
 { #category : #accessing }
@@ -193,12 +114,53 @@ TypInfNode >> state [
 	^ state
 ]
 
+{ #category : #'as yet unclassified' }
+TypInfNode >> tighten: aState [
+
+	incoming at: #tighten ifPresent: [ :s | 
+		s ifNotEmpty: [ 
+			| type |
+			type := (s collect: [ :e | e getIn: aState ]) reduce: [ :a :b | 
+				        a tighten: b ].
+			aState at: self put: type ] ]
+]
+
+{ #category : #accessing }
+TypInfNode >> tighten: aNode to: aType in: aState [
+
+	| type edge |
+	aType isUnknown ifTrue: [ 
+		^ self "generalizing to the top type is not a constraint" ].
+	type := (aState at: aNode) tighten: aType.
+	aState at: aNode put: type.
+	aNode tightenTo: type in: aState.
+	edge := outgoing
+		        at: #tighten
+		        ifPresent: [ :s | 
+			        s detect: [ :e | e target == aNode ] ifNone: [ 
+				        self outgoingAdd:
+					        (TypInfTightenEdge origin: self target: aNode type: type) ] ]
+		        ifAbsent: [ 
+			        self outgoingAdd:
+				        (TypInfTightenEdge origin: self target: aNode type: type) ].
+	edge set: type in: aState
+]
+
+{ #category : #'as yet unclassified' }
+TypInfNode >> tightenTo: aType in: aState [
+
+	
+]
+
 { #category : #accessing }
 TypInfNode >> transfer [
 
 	"transfer the given state from in to out"
 
-	
+	incoming at: #tighten ifPresent: [ :s | 
+		s
+			select: #isReturn
+			thenDo: [ :e | e set: (state at: self) in: state ] ]
 ]
 
 { #category : #accessing }

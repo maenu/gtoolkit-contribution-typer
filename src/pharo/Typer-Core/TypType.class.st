@@ -94,25 +94,6 @@ TypType >> asBroader: aType [
 ]
 
 { #category : #converting }
-TypType >> asNarrower: aType [
-
-	"result is assignable to self and aType.
-	 self >= result
-	 aType >= result
-	 should be valid"
-
-	aType isUnknown ifTrue: [ ^ self ].
-	aType isNil ifTrue: [ ^ self ].
-	aType isSuper ifTrue: [ 
-		^ aType withSuper: (self asNarrower: aType super) ].
-	self >= aType ifTrue: [ ^ aType ].
-	self < aType ifTrue: [ ^ self ].
-	^ { 
-		  self.
-		  aType } typAsType
-]
-
-{ #category : #converting }
 TypType >> asNonNullable [
 
 	^ self
@@ -285,6 +266,25 @@ TypType >> superOrNil [
 
 	self hasSuper ifFalse: [ ^ nil ].
 	^ self super
+]
+
+{ #category : #converting }
+TypType >> tighten: aType [
+
+	"result is assignable to self and aType.
+	 self >= result
+	 aType >= result
+	 should be valid"
+
+	aType isUnknown ifTrue: [ ^ self ].
+	aType isNil ifTrue: [ ^ self ].
+	aType isSuper ifTrue: [ 
+		^ aType withSuper: (self tighten: aType super) ].
+	self >= aType ifTrue: [ ^ aType ].
+	self < aType ifTrue: [ ^ self ].
+	^ { 
+		  self.
+		  aType } typAsType
 ]
 
 { #category : #polymorphic }

@@ -7,23 +7,9 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypInfBlock >> constrainTo: aType in: aState [
+TypInfBlock >> incomingReturn [
 
-	| type |
-	type := aType.
-	type isUnion ifTrue: [ 
-		aType types detect: #isFunction ifFound: [ :t | type := t ] ].
-	type isFunction ifFalse: [ ^ self ].
-	self incomingArguments withIndexDo: [ :n :i | 
-		i <= type arguments size ifTrue: [ 
-			self constrain: n to: (type arguments at: i) in: aState ] ].
-	self constrain: self incomingReturnBlock to: type result in: aState
-]
-
-{ #category : #'as yet unclassified' }
-TypInfBlock >> incomingReturnBlock [
-
-	^ self incomingAt: #returnBlock
+	^ ((incoming at: #tighten) detect: #isReturn) origin
 ]
 
 { #category : #accessing }
@@ -38,12 +24,16 @@ TypInfBlock >> initialize: aState [
 			   signalsAlways: nil)
 ]
 
-{ #category : #accessing }
-TypInfBlock >> transfer [
+{ #category : #'as yet unclassified' }
+TypInfBlock >> tightenTo: aType in: aState [
 
-	state at: self put: ((state at: self) asNarrower: (BlockClosure
-				  typAsFunctionTypeWithResult: self incomingReturnBlock type
-				  arguments: (self incomingArguments collect: #type)
-				  argumentsOptional: false
-				  signalsAlways: nil))
+	| type |
+	type := aType.
+	type isUnion ifTrue: [ 
+		aType types detect: #isFunction ifFound: [ :t | type := t ] ].
+	type isFunction ifFalse: [ ^ self ].
+	self incomingArguments withIndexDo: [ :n :i | 
+		i <= type arguments size ifTrue: [ 
+			self tighten: n to: (type arguments at: i) in: aState ] ].
+	self tighten: self incomingReturn to: type result in: aState
 ]

@@ -50,12 +50,6 @@ TypNilType >> asBroader: aType [
 ]
 
 { #category : #converting }
-TypNilType >> asNarrower: aType [
-
-	^ aType
-]
-
-{ #category : #converting }
 TypNilType >> asNonNullable [
 
 	^ TypUnknownType instance
@@ -84,4 +78,10 @@ TypNilType >> printOn: aStream skipping: anIdentitySet [
 		ifTrue: [ aStream << '.'.
 			^ self ].
 	aStream << '!'
+]
+
+{ #category : #converting }
+TypNilType >> tighten: aType [
+
+	^ aType
 ]

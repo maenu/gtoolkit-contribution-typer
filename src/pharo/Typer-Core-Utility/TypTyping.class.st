@@ -37,7 +37,6 @@ TypTyping >> invalidate [
 	TypEdgeKey invalidateAll.
 	TypResolver invalidateAll.
 	TypShaShadow invalidateAll.
-	TypInfState invalidate.
 	TypInfMethodResolver invalidate.
 	TypInfMethodIndex invalidate.
 	TypInfMethodNodeStack resetSoleInstance.

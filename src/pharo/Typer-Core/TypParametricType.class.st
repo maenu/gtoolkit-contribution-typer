@@ -129,20 +129,6 @@ TypParametricType >> asBroader: aType [
 	^ self withParameters: copyParameters
 ]
 
-{ #category : #converting }
-TypParametricType >> asNarrower: aType [
-
-	| copyParameters otherParameters |
-	(aType isParametric and: [ 
-		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
-		ifFalse: [ ^ super asNarrower: aType ].
-	otherParameters := aType parameters.
-	copyParameters := OrderedCollection new.
-	parameters keysAndValuesDo: [ :n :t | 
-		copyParameters add: (t asNarrower: (aType at: n)) ].
-	^ self withParameters: copyParameters
-]
-
 { #category : #accessing }
 TypParametricType >> at: aString [
 
@@ -233,6 +219,20 @@ TypParametricType >> super [
 		self initializeSuper: (superType withParameters:
 				 (superType parameters keys collect: [ :e | self at: e ])) ].
 	^ superType
+]
+
+{ #category : #converting }
+TypParametricType >> tighten: aType [
+
+	| copyParameters otherParameters |
+	(aType isParametric and: [ 
+		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
+		ifFalse: [ ^ super tighten: aType ].
+	otherParameters := aType parameters.
+	copyParameters := OrderedCollection new.
+	parameters keysAndValuesDo: [ :n :t | 
+		copyParameters add: (t tighten: (aType at: n)) ].
+	^ self withParameters: copyParameters
 ]
 
 { #category : #converting }

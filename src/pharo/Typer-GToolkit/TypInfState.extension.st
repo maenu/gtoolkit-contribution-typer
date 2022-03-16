@@ -7,7 +7,7 @@ TypInfState >> typGtItemsFor: aView [
 	^ aView columnedTree
 		  title: 'Index';
 		  priority: 1;
-		  items: [ self index associations ];
+		  items: [ self associations ];
 		  column: 'Key' text: #key spawn: #key;
 		  column: 'Value' text: #value spawn: #value
 ]

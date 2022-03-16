@@ -17,5 +17,6 @@ TypInfArray >> initialize: aState [
 TypInfArray >> transfer [
 
 	state at: self put: (Array typAsType withParameters:
-			 { (self incomingArguments collect: [ :e | state at: e ]) typAsType })
+			 { (self incomingArguments collect: [ :e | state at: e ]) typAsType }).
+	super transfer
 ]

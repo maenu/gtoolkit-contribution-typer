@@ -7,7 +7,8 @@ Class {
 { #category : #'as yet unclassified' }
 TypInfInstance >> transfer [
 
-	state at: self put: ((state at: self) asNarrower:
+	state at: self put: ((state at: self) tighten:
 			 (node variable owningClass typAsType lookupVariable:
-				  node variable name asSymbol))
+				  node variable name asSymbol)).
+	super transfer
 ]

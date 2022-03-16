@@ -2,8 +2,7 @@ Class {
 	#name : #TypInfNextEdge,
 	#superclass : #TypInfEdge,
 	#instVars : [
-		'state',
-		'log'
+		'state'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -24,8 +23,6 @@ TypInfNextEdge >> state [
 TypInfNextEdge >> state: anObject [
 
 	state = anObject ifTrue: [ ^ false ].
-	"log ifNil: [ log := LinkedList new ].
-	log add: anObject."
 	state := anObject.
 	^ true
 ]

@@ -1,7 +1,7 @@
-Extension { #name : #TypInfConstrainEdge }
+Extension { #name : #TypInfTightenEdge }
 
 { #category : #'*Typer-GToolkit' }
-TypInfConstrainEdge >> typGtTypeFor: aView [
+TypInfTightenEdge >> typGtTypeFor: aView [
 
 	<gtView>
 	^ aView explicit

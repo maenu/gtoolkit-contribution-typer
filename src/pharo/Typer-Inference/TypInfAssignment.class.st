@@ -8,5 +8,6 @@ Class {
 TypInfAssignment >> transfer [
 
 	state at: self put: (state at: self incomingNext).
-	self constrain: self outgoingNext to: (state at: self) in: state
+	self tighten: self outgoingNext to: (state at: self) in: state.
+	super transfer
 ]

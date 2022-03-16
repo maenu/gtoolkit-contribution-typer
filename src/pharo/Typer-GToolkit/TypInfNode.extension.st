@@ -48,9 +48,11 @@ TypInfNode >> typGtFlowPaintOn: aMondrian [
 	aMondrian edges
 		passive;
 		stencil: [ :e | e typGtAsElementIn: aMondrian with: { e } ];
-		connect: ((nodes flatCollect: #outgoingEdges) select: [ :e | 
-					 e key = #constrain ])
-		from: [ :e | e origin ] to: [ :e | e target ].
+		connect:
+			((nodes flatCollect: #outgoingEdges) select: [ :e | 
+					 e key = #tighten ])
+		from: [ :e | e origin ]
+		to: [ :e | e target ].
 	aMondrian layout force
 ]
 
