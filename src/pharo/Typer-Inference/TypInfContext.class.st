@@ -81,10 +81,10 @@ TypInfContext >> run [
 	(nodes_ inject: false into: [ :r :e | 
 		 e slurpAndBurp.
 		 e state = (states at: e)
-			 ifTrue: [ 
+			 ifTrue: [ r ]
+			 ifFalse: [ 
 				 states at: e put: e state copy.
-				 true ]
-			 ifFalse: [ r ] ]) and: [ n > 0 ] ] whileTrue.
+				 true ] ]) and: [ n > 0 ] ] whileTrue.
 	stable := n > 0.
 	^ n
 ]
@@ -112,15 +112,16 @@ TypInfContext >> visitAssignmentNode: anAssignmentNode [
 { #category : #visiting }
 TypInfContext >> visitBlockNode: aBlockNode [
 
-	self next: aBlockNode.
+	| block |
+	block := self next: aBlockNode.
 	current incomingArguments:
 		(aBlockNode arguments collect: [ :n | self nodeAt: n ]).
 	self visitNode: aBlockNode body.
 	current outgoingAdd: (TypInfReturnEdge
 			 origin: current
-			 target: (self nodeAt: aBlockNode)
+			 target: block
 			 type: BlockClosure typAsType).
-	^ current := self nodeAt: aBlockNode
+	^ current := block
 ]
 
 { #category : #visiting }

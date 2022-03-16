@@ -13,8 +13,12 @@ TypInfReturnEdge >> isReturn [
 { #category : #initialization }
 TypInfReturnEdge >> set: aType in: aState [
 
-	^ aState at: self put: (type := type withParameters:
-			           { aType }
-			           ,
-			           (target incomingArguments collect: [ :n | aState at: n ]))
+	^ aState at: self put: (type := type == aType
+			           ifTrue: [ type ]
+			           ifFalse: [ 
+				           type withParameters:
+					           { aType }
+					           ,
+					           (target incomingArguments collect: [ :n | 
+						            aState at: n ]) ])
 ]

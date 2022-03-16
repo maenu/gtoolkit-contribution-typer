@@ -158,9 +158,8 @@ TypInfNode >> transfer [
 	"transfer the given state from in to out"
 
 	incoming at: #tighten ifPresent: [ :s | 
-		s
-			select: #isReturn
-			thenDo: [ :e | e set: (state at: self) in: state ] ]
+		s select: #isReturn thenDo: [ :e | 
+			e set: (state at: self) in: state ] ]
 ]
 
 { #category : #accessing }
