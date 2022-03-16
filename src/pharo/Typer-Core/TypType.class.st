@@ -94,6 +94,13 @@ TypType >> asBroader: aType [
 ]
 
 { #category : #converting }
+TypType >> asNameString [
+
+	^ String streamContents: [ :s | 
+		  self printNameOn: s skipping: IdentitySet new ]
+]
+
+{ #category : #converting }
 TypType >> asNonNullable [
 
 	^ self
@@ -105,6 +112,14 @@ TypType >> asNullable [
 	^ { 
 		  TypNilType instance.
 		  self } typAsType
+]
+
+{ #category : #enumerating }
+TypType >> bind: aType [
+
+	"noop"
+
+	
 ]
 
 { #category : #testing }
@@ -240,6 +255,12 @@ TypType >> lookupMethod: aSymbol arguments: aCollection [
 TypType >> lookupVariable: aSymbol [
 
 	^ TypVariableIndex instance lookupReceiver: self selector: aSymbol
+]
+
+{ #category : #converting }
+TypType >> printNameOn: aStream skipping: anIdentitySet [
+
+	^ self printOn: aStream skipping: anIdentitySet
 ]
 
 { #category : #printing }

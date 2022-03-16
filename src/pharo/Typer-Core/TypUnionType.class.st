@@ -178,6 +178,15 @@ TypUnionType >> postCopy [
 	types := types copy
 ]
 
+{ #category : #converting }
+TypUnionType >> printNameOn: aStream skipping: anIdentitySet [
+
+	(anIdentitySet includes: self) ifTrue: [ ^ self ].
+	aStream nextPut: ${.
+	types anyOne printNameOn: aStream skipping: anIdentitySet.
+	aStream nextPut: $}
+]
+
 { #category : #printing }
 TypUnionType >> printOn: aStream skipping: anIdentitySet [
 
