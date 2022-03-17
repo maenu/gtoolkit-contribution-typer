@@ -7,7 +7,8 @@ Class {
 { #category : #'as yet unclassified' }
 TypInfAssignment >> transfer [
 
-	state at: self put: (state at: self incomingNext).
-	self tighten: self outgoingNext to: (state at: self) in: state.
-	super transfer
+	| value |
+	value := state at: self incomingNext.
+	state at: self put: value.
+	state tightenFrom: self to: self outgoingNext with: value
 ]

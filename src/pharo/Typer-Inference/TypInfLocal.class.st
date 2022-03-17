@@ -17,9 +17,9 @@ TypInfLocal >> incomingRead: aNode [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfLocal >> tightenTo: aType in: aState [
+TypInfLocal >> tighten: aType in: aState [
 
-	self tighten: self incomingRead to: aType in: aState
+	aState tightenFrom: self to: self incomingRead with: aType
 ]
 
 { #category : #'as yet unclassified' }
@@ -27,6 +27,5 @@ TypInfLocal >> transfer [
 
 	state
 		at: self
-		put: ((state at: self) tighten: (state at: self incomingRead)).
-	super transfer
+		put: ((state at: self) tighten: (state at: self incomingRead))
 ]

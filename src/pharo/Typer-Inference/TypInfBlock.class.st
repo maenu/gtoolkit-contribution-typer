@@ -25,15 +25,10 @@ TypInfBlock >> initialize: aState [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfBlock >> tightenTo: aType in: aState [
+TypInfBlock >> tighten: aType in: aState [
 
-	| type |
-	type := aType.
-	type isUnion ifTrue: [ 
-		aType types detect: #isFunction ifFound: [ :t | type := t ] ].
-	type isFunction ifFalse: [ ^ self ].
 	self incomingArguments withIndexDo: [ :n :i | 
-		i <= type arguments size ifTrue: [ 
-			self tighten: n to: (type arguments at: i) in: aState ] ].
-	self tighten: self incomingReturn to: type result in: aState
+		i <= aType arguments size ifTrue: [ 
+			aState tightenFrom: self to: n with: (aType arguments at: i) ] ].
+	aState tightenFrom: self to: self incomingReturn with: aType result
 ]

@@ -9,6 +9,5 @@ TypInfInstance >> transfer [
 
 	state at: self put: ((state at: self) tighten:
 			 (node variable owningClass typAsType lookupVariable:
-				  node variable name asSymbol)).
-	super transfer
+				  node variable name asSymbol))
 ]

@@ -19,11 +19,13 @@ TypInfNode class >> node: aNode [
 { #category : #accessing }
 TypInfNode >> burp [
 
-	^ outgoing
-		  at: #next
-		  ifPresent: [ :s | 
-		  s inject: false into: [ :r :e | r or: (e state: state copy) ] ]
-		  ifAbsent: [ false ]
+	outgoing at: #tighten ifPresent: [ :s | 
+		s
+			select: #isReturn
+			thenDo: [ :e | e set: (state at: self) in: state ] ].
+	outgoing
+		at: #next
+		ifPresent: [ :s | s do: [ :e | e state: state copy ] ]
 ]
 
 { #category : #accessing }
@@ -89,7 +91,7 @@ TypInfNode >> slurp [
 
 	incoming at: #next ifPresent: [ :s | 
 		s ifNotEmpty: [ 
-			state := (s collect: #state) reduce: [ :a :b | a join: b ].
+			state := (s collect: #state) reduce: [ :a :b | a tighten: b ].
 			state := state copy "for good measure" ] ].
 	incoming at: #tighten ifPresent: [ :s | 
 		s ifNotEmpty: [ 
@@ -115,39 +117,7 @@ TypInfNode >> state [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfNode >> tighten: aState [
-
-	incoming at: #tighten ifPresent: [ :s | 
-		s ifNotEmpty: [ 
-			| type |
-			type := (s collect: [ :e | e getIn: aState ]) reduce: [ :a :b | 
-				        a tighten: b ].
-			aState at: self put: type ] ]
-]
-
-{ #category : #accessing }
-TypInfNode >> tighten: aNode to: aType in: aState [
-
-	| type edge |
-	aType isUnknown ifTrue: [ 
-		^ self "generalizing to the top type is not a constraint" ].
-	type := (aState at: aNode) tighten: aType.
-	aState at: aNode put: type.
-	aNode tightenTo: type in: aState.
-	edge := outgoing
-		        at: #tighten
-		        ifPresent: [ :s | 
-			        s detect: [ :e | e target == aNode ] ifNone: [ 
-				        self outgoingAdd:
-					        (TypInfTightenEdge origin: self target: aNode type: type) ] ]
-		        ifAbsent: [ 
-			        self outgoingAdd:
-				        (TypInfTightenEdge origin: self target: aNode type: type) ].
-	edge set: type in: aState
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> tightenTo: aType in: aState [
+TypInfNode >> tighten: aType in: aState [
 
 	
 ]
@@ -157,10 +127,7 @@ TypInfNode >> transfer [
 
 	"transfer the given state from in to out"
 
-	outgoing at: #tighten ifPresent: [ :s | 
-		s
-			select: #isReturn
-			thenDo: [ :e | e set: (state at: self) in: state ] ]
+	
 ]
 
 { #category : #accessing }

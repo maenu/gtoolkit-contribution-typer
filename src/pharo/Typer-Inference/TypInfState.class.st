@@ -53,8 +53,20 @@ TypInfState >> initializeSelf: aType super: anotherType [
 	superType := anotherType
 ]
 
+{ #category : #'as yet unclassified' }
+TypInfState >> self [
+
+	^ selfType
+]
+
+{ #category : #'as yet unclassified' }
+TypInfState >> super [
+
+	^ superType
+]
+
 { #category : #splitjoin }
-TypInfState >> join: aState [
+TypInfState >> tighten: aState [
 
 	| copy |
 	self assert: [ aState self = selfType ].
@@ -69,13 +81,32 @@ TypInfState >> join: aState [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfState >> self [
+TypInfState >> tightenFrom: aNode to: anotherNode with: aType [
 
-	^ selfType
-]
-
-{ #category : #'as yet unclassified' }
-TypInfState >> super [
-
-	^ superType
+	| type edge |
+	aType isUnknown ifTrue: [ 
+		^ self "generalizing to the bottom type is not a constraint" ].
+	"tighten type"
+	type := (self at: anotherNode) tighten: aType.
+	self at: anotherNode put: type.
+	"tighten node with tightened type"
+	anotherNode tighten: type in: self.
+	"ensure tighten edge"
+	edge := aNode outgoing
+		        at: #tighten
+		        ifPresent: [ :s | 
+			        s detect: [ :e | e target == anotherNode ] ifNone: [ 
+				        aNode outgoingAdd:
+					        (TypInfTightenEdge
+						         origin: aNode
+						         target: anotherNode
+						         type: type) ] ]
+		        ifAbsent: [ 
+			        aNode outgoingAdd:
+				        (TypInfTightenEdge
+					         origin: aNode
+					         target: anotherNode
+					         type: type) ].
+	"tighten edge"
+	edge set: type in: self
 ]
