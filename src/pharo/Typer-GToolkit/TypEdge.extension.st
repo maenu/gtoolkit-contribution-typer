@@ -9,16 +9,16 @@ TypEdge >> typGtAsElementIn: aMondrian [
 		  clipChildren: false;
 		  curvatureFraction: 0.33;
 		  border: (BlBorder builder
-				   paint: (Color black alpha: 0.2);
+				   paint: self typGtColor;
 				   width: 2;
 				   build);
 		  toHead: (BlArrowheadTriangle new
 				   scale: 2;
 				   border: (BlBorder builder
-						    paint: (Color black alpha: 0.2);
+						    paint: self typGtColor;
 						    width: 2;
 						    build);
-				   background: (Color black alpha: 0.2);
+				   background: self typGtColor;
 				   yourself);
 		  yourself
 ]
@@ -26,7 +26,7 @@ TypEdge >> typGtAsElementIn: aMondrian [
 { #category : #'*Typer-GToolkit' }
 TypEdge >> typGtAsElementIn: aMondrian with: aCollection [
 
-	| label |
+"	| label |
 	label := BrLabel new
 		         constraintsDo: [ :c | 
 			         c frame horizontal alignCenter.
@@ -48,10 +48,16 @@ TypEdge >> typGtAsElementIn: aMondrian with: aCollection [
 					label phlow spawnObject: aCollection ];
 				text: ('+{1} {2}' format: { 
 								 (aCollection size - 1).
-								 self asString }) asRopedText ].
+								 self asString }) asRopedText ]."
 	^ (self typGtAsElementIn: aMondrian)
-		  addChild: label;
-		  yourself
+		  "addChild: label;
+		  yourself"
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypEdge >> typGtColor [
+
+	^ Color black alpha: 0.2
 ]
 
 { #category : #'*Typer-GToolkit' }

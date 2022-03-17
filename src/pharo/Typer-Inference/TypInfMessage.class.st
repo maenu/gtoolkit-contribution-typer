@@ -43,5 +43,5 @@ TypInfMessage >> transfer [
 	self incomingArguments withIndexDo: [ :e :i | 
 		i <= method arguments size ifTrue: [ 
 			state tightenFrom: self to: e with: (method arguments at: i) ] ].
-	state at: self put: ((state at: self) tighten: method result)
+	state tighten: self with: method result
 ]

@@ -3,11 +3,43 @@ Extension { #name : #TypInfNode }
 { #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtAsElementIn: aMondrian [
 
+	"	^ BrEditor new
+		  aptitude: BrGlamorousCodeEditorAptitude new;
+		  background: BlBackground transparent;
+		  text: node formattedCode;
+		  beReadOnlyWithoutSelection;
+		  hFitContent;
+		  vFitContent;
+		  yourself"
+
 	^ self
-		  typGtDecorate:
-			  (GtPharoSnippetCoder forSource: node formattedCode)
-				  asCoderViewModel collapse asElement hFitContent
+		  typGtDecorate: (BlElement new
+				   size: 25 @ 25;
+				   yourself)
 		  in: aMondrian
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypInfNode >> typGtDecorate: anElement in: aMondrian [
+
+	anElement
+		when: BlMouseDownEvent do: [ anElement zIndex: 1 ];
+		when: BlClickEvent do: [ anElement phlow spawnObject: self ].
+	anElement addAptitude:
+		(TypGtStrongBorderAptitude color: self typGtColor)
+		+ ((BrGlamorousWithTooltipAptitude content: [ 
+					  BrEditor new
+						  aptitude: BrGlamorousCodeEditorAptitude new;
+						  background: BlBackground transparent;
+						  text: node formattedCode;
+						  beReadOnlyWithoutSelection;
+						  hFitContent;
+						  vFitContent;
+						  yourself ])
+				 showDelay: 300 milliSeconds;
+				 hideDelay: 300 milliSeconds;
+				 yourself).
+	^ anElement
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -29,30 +61,33 @@ TypInfNode >> typGtFlowPaintOn: aMondrian [
 		         currentNodes.
 	nodes ifEmpty: [ ^ self ].
 	nextNodes := currentNodes , nodes , { self }.
-	edges := ((((nodes flatCollect: #incomingEdges) select: [ :e | 
-		            nextNodes includes: e origin ])
-	           , ((nodes flatCollect: #outgoingEdges) select: [ :e | 
-			            nextNodes includes: e target ])) asIdentitySet asArray 
-		          groupedBy: #nodes) values asArray sort: [ :a :b | 
-		         a size > b size ].
-	nodes := (edges flatCollect: [ :e | e flatCollect: #nodes ])
-		         asIdentitySet difference: currentNodes.
+	edges := (((nodes flatCollect: #incomingEdges) select: [ :e | 
+		           nextNodes includes: e origin ])
+	          , ((nodes flatCollect: #outgoingEdges) select: [ :e | 
+			           nextNodes includes: e target ])) asIdentitySet 
+		         groupedBy: [ :e | e key -> e nodes ].
+	nodes := (edges keys flatCollect: #value) asIdentitySet difference:
+		         currentNodes.
 	aMondrian nodes
 		stencil: [ :e | e typGtAsElementIn: aMondrian ];
 		with: nodes.
 	aMondrian edges
 		stencil: [ :e | e anyOne typGtAsElementIn: aMondrian with: e ];
-		connect: edges
-		from: [ :e | e anyOne origin ]
-		to: [ :e | e anyOne target ].
+		connect: (edges associations
+				 select: [ :e | 
+					 e key key isInteger or: [ 
+							 #( #next #receiver ) includes: e key key ] ]
+				 thenCollect: #value)
+		from: [ :e | e anyOne origin ] to: [ :e | e anyOne target ].
 	aMondrian edges
 		passive;
-		stencil: [ :e | e typGtAsElementIn: aMondrian with: { e } ];
-		connect:
-			((nodes flatCollect: #outgoingEdges) select: [ :e | 
-					 e key = #tighten ])
-		from: [ :e | e origin ]
-		to: [ :e | e target ].
+		stencil: [ :e | e anyOne typGtAsElementIn: aMondrian with: e ];
+		connect: (edges associations
+				 reject: [ :e | 
+					 e key key isInteger or: [ 
+							 #( #next #receiver ) includes: e key key ] ]
+				 thenCollect: #value)
+		from: [ :e | e anyOne origin ] to: [ :e | e anyOne target ].
 	aMondrian layout force
 ]
 

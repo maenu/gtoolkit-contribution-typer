@@ -299,8 +299,6 @@ TypType >> tighten: aType [
 
 	aType isUnknown ifTrue: [ ^ self ].
 	aType isNil ifTrue: [ ^ self ].
-	aType isSuper ifTrue: [ 
-		^ aType withSuper: (self tighten: aType super) ].
 	self >= aType ifTrue: [ ^ aType ].
 	self < aType ifTrue: [ ^ self ].
 	^ { 

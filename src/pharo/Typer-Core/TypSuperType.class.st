@@ -66,17 +66,6 @@ TypSuperType >> result [
 	^ superType result
 ]
 
-{ #category : #'instance creation' }
-TypSuperType >> tighten: aType [
-
-	aType isSuper ifFalse: [ ^ super tighten: aType ].
-	self >= aType ifTrue: [ ^ aType ].
-	self < aType ifTrue: [ ^ self ].
-	^ { 
-		  self.
-		  aType } typAsType
-]
-
 { #category : #polymorphic }
 TypSuperType >> withAt: aString put: aType [
 

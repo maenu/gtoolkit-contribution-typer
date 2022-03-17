@@ -29,14 +29,15 @@ TypInfState >> = anObject [
 TypInfState >> diff: aState [
 
 	| diff |
-	diff := IdentityDictionary new.
-	self keysAndValuesDo: [ :n :t | 
-		| r |
-		r := aState at: n.
-		r = t ifFalse: [ 
+	diff := TypInfState self: selfType super: superType.
+	self keys , aState keys do: [ :n | 
+		| a b |
+		a := self at: n ifAbsent: [ nil ].
+		b := aState at: n ifAbsent: [ nil ].
+		a = b ifFalse: [ 
 			diff at: n put: { 
-					t.
-					r } ] ].
+					a.
+					b } ] ].
 	^ diff
 ]
 
@@ -81,14 +82,19 @@ TypInfState >> tighten: aState [
 ]
 
 { #category : #'as yet unclassified' }
+TypInfState >> tighten: aNode with: aType [
+
+	^ self at: aNode put: ((self at: aNode) tighten: aType)
+]
+
+{ #category : #'as yet unclassified' }
 TypInfState >> tightenFrom: aNode to: anotherNode with: aType [
 
 	| type edge |
 	aType isUnknown ifTrue: [ 
 		^ self "generalizing to the bottom type is not a constraint" ].
 	"tighten type"
-	type := (self at: anotherNode) tighten: aType.
-	self at: anotherNode put: type.
+	type := self tighten: anotherNode with: aType.
 	"tighten node with tightened type"
 	anotherNode tighten: type in: self.
 	"ensure tighten edge"

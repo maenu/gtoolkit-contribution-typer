@@ -1,6 +1,12 @@
 Extension { #name : #TypInfNextEdge }
 
 { #category : #'*Typer-GToolkit' }
+TypInfNextEdge >> typGtColor [
+
+	^ Color blue alpha: 0.3
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypInfNextEdge >> typGtStateFor: aView [
 
 	<gtView>

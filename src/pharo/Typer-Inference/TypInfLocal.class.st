@@ -25,7 +25,5 @@ TypInfLocal >> tighten: aType in: aState [
 { #category : #'as yet unclassified' }
 TypInfLocal >> transfer [
 
-	state
-		at: self
-		put: ((state at: self) tighten: (state at: self incomingRead))
+	state tighten: self with: (state at: self incomingRead)
 ]

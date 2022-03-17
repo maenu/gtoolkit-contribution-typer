@@ -71,22 +71,28 @@ TypInfContext >> root [
 { #category : #running }
 TypInfContext >> run [
 
-	| n nodes_ states |
+	| n nodes_ states cycles cycle |
 	n := 100.
 	nodes_ := nodes values.
 	states := IdentityDictionary new.
-	nodes_ do: [ :e | states at: e put: e state copy ].
+	cycles := OrderedCollection new.
+	cycle := OrderedIdentityDictionary new.
+	nodes_ do: [ :e | cycle at: e put: (states at: e put: e state copy) ].
 	[ 
 	n := n - 1.
+	cycles add: cycle.
+	cycle := OrderedIdentityDictionary new.
 	(nodes_ inject: false into: [ :r :e | 
 		 e slurpAndBurp.
 		 e state = (states at: e)
 			 ifTrue: [ r ]
 			 ifFalse: [ 
+				 cycle at: e put: ((states at: e) diff: e state).
 				 states at: e put: e state copy.
 				 true ] ]) and: [ n > 0 ] ] whileTrue.
+	cycles add: cycle.
 	stable := n > 0.
-	^ n
+	^ cycles
 ]
 
 { #category : #visiting }
