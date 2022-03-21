@@ -14,7 +14,7 @@ TypInfNode >> typGtAsElementIn: aMondrian [
 
 	^ self
 		  typGtDecorate: (BlElement new
-				   size: 25 @ 25;
+				   size: 8 @ 8;
 				   yourself)
 		  in: aMondrian
 ]
@@ -74,18 +74,14 @@ TypInfNode >> typGtFlowPaintOn: aMondrian [
 	aMondrian edges
 		stencil: [ :e | e anyOne typGtAsElementIn: aMondrian with: e ];
 		connect: (edges associations
-				 select: [ :e | 
-					 e key key isInteger or: [ 
-							 #( #next #receiver ) includes: e key key ] ]
+				 select: [ :e | e key key = #next or: [ e key key isInteger ] ]
 				 thenCollect: #value)
 		from: [ :e | e anyOne origin ] to: [ :e | e anyOne target ].
 	aMondrian edges
 		passive;
 		stencil: [ :e | e anyOne typGtAsElementIn: aMondrian with: e ];
 		connect: (edges associations
-				 reject: [ :e | 
-					 e key key isInteger or: [ 
-							 #( #next #receiver ) includes: e key key ] ]
+				 reject: [ :e | e key key = #next or: [ e key key isInteger ] ]
 				 thenCollect: #value)
 		from: [ :e | e anyOne origin ] to: [ :e | e anyOne target ].
 	aMondrian layout force

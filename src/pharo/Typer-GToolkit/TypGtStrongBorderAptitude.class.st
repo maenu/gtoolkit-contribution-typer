@@ -17,8 +17,8 @@ TypGtStrongBorderAptitude >> initializeColor: aColor [
 
 	| background border geometry |
 	background := Color white.
-	border := BlBorder paint: aColor width: 2.
-	geometry := BlRoundedRectangleGeometry cornerRadius: 8.
+	border := BlBorder paint: aColor width: 1.
+	geometry := BlCircleGeometry new.
 	self collapsed
 		background: background;
 		border: border;

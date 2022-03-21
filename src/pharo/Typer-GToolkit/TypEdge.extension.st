@@ -10,13 +10,13 @@ TypEdge >> typGtAsElementIn: aMondrian [
 		  curvatureFraction: 0.33;
 		  border: (BlBorder builder
 				   paint: self typGtColor;
-				   width: 2;
+				   width: 1;
 				   build);
 		  toHead: (BlArrowheadTriangle new
 				   scale: 2;
 				   border: (BlBorder builder
 						    paint: self typGtColor;
-						    width: 2;
+						    width: 1;
 						    build);
 				   background: self typGtColor;
 				   yourself);

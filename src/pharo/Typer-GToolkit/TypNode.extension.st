@@ -14,7 +14,7 @@ TypNode >> typGtAsElementIn: aMondrian [
 { #category : #'*Typer-GToolkit' }
 TypNode >> typGtColor [
 
-	^ Color fromHexString: '91d5ff'
+	^ Color blue
 ]
 
 { #category : #'*Typer-GToolkit' }

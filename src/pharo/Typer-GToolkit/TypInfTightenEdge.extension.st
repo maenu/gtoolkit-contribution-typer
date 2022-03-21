@@ -4,19 +4,17 @@ Extension { #name : #TypInfTightenEdge }
 TypInfTightenEdge >> typGtAsElementIn: aMondrian [
 
 	^ BlParabollaArcElement new
-		  layout: BlFrameLayout new;
 		  zIndex: -1;
-		  clipChildren: false;
-		  curvatureFraction: 0.2;
+		  curvatureFraction: 0.1;
 		  border: (BlBorder builder
 				   paint: self typGtColor;
-				   width: 2;
+				   width: 1;
 				   build);
 		  toHead: (BlArrowheadTriangle new
 				   scale: 2;
 				   border: (BlBorder builder
 						    paint: self typGtColor;
-						    width: 2;
+						    width: 1;
 						    build);
 				   background: self typGtColor;
 				   yourself);
@@ -26,7 +24,7 @@ TypInfTightenEdge >> typGtAsElementIn: aMondrian [
 { #category : #'*Typer-GToolkit' }
 TypInfTightenEdge >> typGtColor [
 
-	^ Color orange alpha: 0.3
+	^ Color orange alpha: 0.5
 ]
 
 { #category : #'*Typer-GToolkit' }
