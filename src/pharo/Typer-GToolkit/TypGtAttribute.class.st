@@ -35,19 +35,16 @@ TypGtAttribute >> initialize [
 						 foreground: Color gray;
 						 yourself);
 				text: type printString asRopedText glamorousCodeFont;
-				beTinySize;
+				beMiniSize;
 				hFitContent;
 				vFitContent;
-				padding: (BlInsets
-						 top: 0
+				margin: (BlInsets
+						 top: 3.3
 						 left: 2
 						 bottom: 0
-						 right: 2);
-				margin: (BlInsets
-						 top: 1
-						 left: 0
-						 bottom: -8
-						 right: 0);
+						 right: (shouldAppend
+								  ifTrue: [ 0 ]
+								  ifFalse: [ 2 ]));
 				when: BlClickEvent do: [ :e | e target phlow spawnObject: node ];
 				yourself ]
 ]

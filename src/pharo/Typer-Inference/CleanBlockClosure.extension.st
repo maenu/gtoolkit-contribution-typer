@@ -10,3 +10,9 @@ CleanBlockClosure >> readsRef: aVariable [
 CleanBlockClosure >> writesField: varIndex [ 
 	^self compiledBlock writesField: varIndex
 ]
+
+{ #category : #'*Typer-Inference' }
+CleanBlockClosure >> writesRef: aClassVariable [
+
+	^ false
+]

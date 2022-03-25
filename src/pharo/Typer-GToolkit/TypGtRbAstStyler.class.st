@@ -49,10 +49,10 @@ TypGtRbAstStyler >> styleNode: aNode [
 	"type isUnknown ifTrue: [ ^ self ]."
 	attribute := TypGtAttribute node: node.
 	stop := aNode stop.
-	"(stop < text size and: [ (text at: stop + 1) = Character space ]) 
+	(stop < text size and: [ (text at: stop + 1) = Character space ]) 
 		ifTrue: [ 
 			attribute beReplace.
-			stop := stop + 1 ]."
+			stop := stop + 1 ].
 	text attributes: { attribute } from: stop to: stop
 ]
 
