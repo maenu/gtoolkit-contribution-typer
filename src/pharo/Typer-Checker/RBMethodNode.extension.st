@@ -80,7 +80,7 @@ RBMethodNode >> typCheHasNullableArguments [
 			  | e_ i expected actual |
 			  e_ := e parent. "typCastAs RBMessageNode"
 			  i := e_ arguments detectIndex: [ :f | f == e ].
-			  expected := e_ typInfMethodInSelf arguments at: i.
+			  expected := e_ typInfTypeSelf arguments at: i.
 			  actual := e typInfTypeSelf.
 			  (expected >= actual) not and: [ expected >= actual asNonNullable ] ]
 ]
@@ -119,7 +119,7 @@ RBMethodNode >> typCheHasNullables [
 RBMethodNode >> typCheHasUnknownArguments [
 	<typPraResult: 'Boolean'>
 	1 to: self numArgs do: [ :e | 
-		(self typInfMethodInSelf arguments at: e) isUnknown
+		(self typInfTypeSelf arguments at: e) isUnknown
 			ifTrue: [ ^ true ] ].
 	^ false
 ]
@@ -131,7 +131,7 @@ RBMethodNode >> typCheHasUnknownArgumentsPassed [
 		do: [ :e | 
 			e arguments
 				withIndexDo: [ :f :i | 
-					(e typInfMethodInSelf arguments at: i) isUnknown
+					(e typInfTypeSelf arguments at: i) isUnknown
 						ifTrue: [ ^ true ] ] ].	"typParameters RBMessageNode"
 	^ false
 ]
@@ -148,7 +148,7 @@ RBMethodNode >> typCheHasUnknownReceivers [
 { #category : #'*Typer-Checker' }
 RBMethodNode >> typCheHasUnknownResult [
 	<typPraResult: 'Boolean'>
-	^ self typInfMethodInSelf result isUnknown
+	^ self typInfTypeSelf result isUnknown
 ]
 
 { #category : #'*Typer-Checker' }

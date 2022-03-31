@@ -29,7 +29,8 @@ TypShaShadow class >> typGtShadowFor: aClass [
 { #category : #'*Typer-GToolkit' }
 TypShaShadow class >> typGtShadowMethod: aSymbol result: aType arguments: someTypes in: aClass [
 
-	<typPraArguments: 'Symbol,TypType,SequenceableCollection<TypType>,ClassDescription'>
+	<typPraArguments:
+	'Symbol,TypType,SequenceableCollection<TypType>,ClassDescription'>
 	| methods newSelector |
 	methods := aClass methods select: [ :e | 
 		           e typShaResolvesMethod: aSymbol ].
@@ -38,14 +39,14 @@ TypShaShadow class >> typGtShadowMethod: aSymbol result: aType arguments: someTy
 	aClass compile: ('{1} aLookup
 	<typShaMethod: ''{2}''>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: ''{3}''
-		arguments: {{4}}' format: { 
+		typAsFunctionTypeWithResult: ''{3}'' typAsType
+		arguments: \{{4}\}' format: { 
 				 newSelector.
 				 aSymbol.
 				 aType.
 				 (' . ' join:
 					  (someTypes collect: [ :e | '''{1}'' typAsType' format: { e } ])) }).
-	^ { (aClass compiledMethodAt: newSelector) }
+	^ { (self compiledMethodAt: newSelector) }
 ]
 
 { #category : #'*Typer-GToolkit' }

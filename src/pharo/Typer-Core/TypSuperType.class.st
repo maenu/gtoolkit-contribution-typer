@@ -16,17 +16,6 @@ TypSuperType >> arguments [
 	^ superType arguments
 ]
 
-{ #category : #converting }
-TypSuperType >> asBroader: aType [
-
-	aType isSuper ifFalse: [ ^ super asBroader: aType ].
-	self >= aType ifTrue: [ ^ self ].
-	self < aType ifTrue: [ ^ aType ].
-	^ { 
-		  self.
-		  aType } typAsType
-]
-
 { #category : #polymorphic }
 TypSuperType >> at: aString [
 

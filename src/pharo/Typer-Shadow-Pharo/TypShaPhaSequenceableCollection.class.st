@@ -12,6 +12,18 @@ TypShaPhaSequenceableCollection class >> mOfSize: aLookup [
 		arguments: {Integer typAsType}
 ]
 
+{ #category : #accessing }
+TypShaPhaSequenceableCollection class >> mStreamContents: aLookup [
+
+	<typShaMethod: 'streamContents:'>
+	^ CompiledMethod
+		  typAsFunctionTypeWithResult:
+		  aLookup root receiver classDescription instanceSide typAsType
+		  arguments: { (BlockClosure
+				   typAsFunctionTypeWithResult: TypUnknownType instance
+				   arguments: { Stream typAsType }) }
+]
+
 { #category : #'as yet unclassified' }
 TypShaPhaSequenceableCollection class >> shadowedClass [
 	^ SequenceableCollection class

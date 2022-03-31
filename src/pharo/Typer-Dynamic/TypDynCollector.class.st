@@ -2,7 +2,12 @@ Class {
 	#name : #TypDynCollector,
 	#superclass : #Object,
 	#instVars : [
-		'asts'
+		'return',
+		'assign',
+		'before',
+		'result',
+		'contexts',
+		'report'
 	],
 	#classInstVars : [
 		'instance'
@@ -10,96 +15,86 @@ Class {
 	#category : #'Typer-Dynamic'
 }
 
-{ #category : #accessing }
-TypDynCollector >> collectIn: aCollection doing: aBlock [
-	<typPraResult:
-		'Association<Association<Object,TypDynResolver<TypLookup>>,TypDynResolver<TypLookup>>'>
-	<typPraArguments: 'Collection<CompiledMethod()->Object>,BlockClosure()->Object'>
-	| methodResults variableTypes result |
-	result := nil.	"typCastAs {!,Object}"
-	methodResults := Dictionary new.	"typParameters Association<ClassDescription,Symbol>,TypMethodResolver<TypMethodLookup>"
-	variableTypes := Dictionary new.	"typParameters Association<ClassDescription,Symbol>,TypVariableResolver<TypVariableLookup>"
-	asts := aCollection
-		collect: [ :e | 
-			e ast
-				doSemanticAnalysis;
-				typInfInvalidate;
-				typDynInstall ].
-	[ result := aBlock value.
-	methodResults := self collectMethodResultsIn: asts.
-	variableTypes := self collectVariableTypesIn: asts ]
-		ensure: [ "asts do: #typDynUninstall" ].
-	^ result
-		->
-			(TypDynResolver new
-				results: methodResults;
-				yourself)
-		->
-			(TypDynResolver new
-				results: variableTypes;
-				yourself)
-]
+{ #category : #initialization }
+TypDynCollector >> initialize [
 
-{ #category : #accessing }
-TypDynCollector >> collectIn: aCollection running: someTestCases [
-	<typPraResult:
-		'Association<Association<Object,TypDynResolver<TypLookup>>,TypDynResolver<TypLookup>>'>
-	<typPraArguments: 'Collection<CompiledMethod()->Object>,Collection<TestCase class>'>
-	| methodResults variableTypes result |
-	result := TestResult new.
-	methodResults := Dictionary new.	"typParameters Association<ClassDescription,Symbol>,TypMethodResolver<TypMethodLookup>"
-	variableTypes := Dictionary new.	"typParameters Association<ClassDescription,Symbol>,TypVariableResolver<TypVariableLookup>"
-	asts := aCollection
-		collect: [ :e | 
-			e ast
-				doSemanticAnalysis;
-				typInfInvalidate;
-				typDynInstall ].
-	TestCase class announcer when: TestCaseEnded send: #stash to: self.
-	[ someTestCases
-		do: [ :e"typCastAs TestCase class"
-			 | e suite run: result ]
-		displayingProgress: 'Running test case'.
-	methodResults := self collectMethodResultsIn: asts.
-	variableTypes := self collectVariableTypesIn: asts ]
-		ensure: [ TestCase class announcer unsubscribe: self.
-			asts do: #typDynUninstall.
-			asts := nil ].
-	^ result
-		->
-			(TypDynResolver new
-				results: methodResults;
-				yourself)
-		->
-			(TypDynResolver new
-				results: variableTypes;
-				yourself)
-]
-
-{ #category : #accessing }
-TypDynCollector >> collectMethodResultsIn: aCollection [
-	<typPraResult:
-		'Dictionary<Association<ClassDescription,Symbol>,TypMethodLookupResult>'>
-	<typPraArguments: 'Collection<RBMethodNode>'>
-	^ ((aCollection
-		collect: [ :e | e methodClass -> e selector -> e typDynAsMethodLookupResult ])
-		reject: [ :e | e value isNil ]) asDictionary
-]
-
-{ #category : #accessing }
-TypDynCollector >> collectVariableTypesIn: aCollection [
-	<typPraResult: 'Dictionary<Association<ClassDescription,Symbol>,TypType>'>
-	<typPraArguments: 'Collection<RBMethodNode>'>
-	^ ((aCollection
-		flatCollect: [ :e | e typDynTypesForVariables associations ])
-		groupedBy: #key)
-		collect: [ :e | 
-			((e collect: #value)
-				inject: TypDynUnionType new
-				into: [ :a :b | a , b ]) asNonDynType ]
+	super initialize.
+	before := MetaLink new
+		          metaObject: self;
+		          selector: #metaBefore:;
+		          arguments: #( context ).
+	return := MetaLink new
+		          metaObject: self;
+		          selector: #metaReturn:in:;
+		          arguments: #( value context ).
+	assign := MetaLink new
+		          metaObject: self;
+		          selector: #metaAssign:in:;
+		          control: #after;
+		          arguments: #( value node )
 ]
 
 { #category : #'as yet unclassified' }
-TypDynCollector >> stash [
-	asts do: #typDynStash
+TypDynCollector >> install: aMethodNode [
+
+	aMethodNode link: before.
+	aMethodNode allChildren
+		select: #isReturn
+		thenDo: [ :e | e link: return ].
+	aMethodNode assignmentNodes
+		reject: [ :e | e variable isLocalVariable ]
+		thenDo: [ :e | e link: assign ]
+]
+
+{ #category : #accessing }
+TypDynCollector >> instrument: aPackage doing: aBlock [
+
+	report := TypDynReport
+		          package: aPackage
+		          variable: [ LinkedList new ]
+		          method: [ LinkedList new ].
+	contexts := Dictionary new.
+	aPackage methods do: [ :e | 
+		self install: (e ast
+				 doSemanticAnalysis;
+				 yourself) ].
+	aBlock ensure: [ self uninstall ].
+	contexts do: [ :e | 
+		(report methodAt: e key) add: (CompiledMethod
+				 typAsFunctionTypeWithResult: e value first
+				 arguments: e value allButFirst) ].
+	contexts removeAll.
+	report reduce.
+	^ report
+]
+
+{ #category : #'as yet unclassified' }
+TypDynCollector >> metaAssign: anObject in: aNode [
+
+	(report variableAt: aNode variable variable) add: anObject typInfType
+]
+
+{ #category : #'as yet unclassified' }
+TypDynCollector >> metaBefore: aContext [
+
+	contexts
+		at: aContext identityHash
+		put: aContext method -> ({ aContext receiver typInfType }
+			 , (aContext arguments collect: #typInfType))
+]
+
+{ #category : #accessing }
+TypDynCollector >> metaReturn: anObject in: aContext [
+
+	| association |
+	association := contexts at: aContext home identityHash.
+	association value at: 1 put: anObject typInfType
+]
+
+{ #category : #'as yet unclassified' }
+TypDynCollector >> uninstall [
+
+	before uninstall.
+	return uninstall.
+	assign uninstall
 ]

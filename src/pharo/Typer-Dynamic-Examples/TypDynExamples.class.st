@@ -5,6 +5,52 @@ Class {
 }
 
 { #category : #accessing }
+TypDynExamples >> blocLayout [
+
+	<gtExample>
+	^ TypDynCollector new instrument: #'Bloc-Layout' asPackage doing: [ 
+		  (GtExampleGroup withAll:
+			   #'Bloc-Layout-Examples' asPackage gtExamplesAllContained) runAll ]
+]
+
+{ #category : #accessing }
+TypDynExamples >> blocLayoutDynVsInf [
+
+	<gtExample>
+	^ TypDynReportDiff
+		  dynamic: self blocLayout
+		  inference: self blocLayoutInference
+]
+
+{ #category : #accessing }
+TypDynExamples >> blocLayoutInference [
+
+	<gtExample>
+	^ TypDynReport
+		  package: #'Bloc-Layout' asPackage
+		  variable: [ :v | 
+			  (v typInfAssignmentNodes collect: [ :e | 
+				   e value typInfTypeSelf: v owningClass typInfType ]) typAsType ]
+		  method: [ :m | m ast typInfTypeSelf ]
+]
+
+{ #category : #accessing }
+TypDynExamples >> blocLayoutOne [
+
+	<gtExample>
+	^ TypDynCollector new
+		  collectIn: { 
+				  (BlLinearLayoutMeasurer >> #limitedMeasure).
+				  (BlFitChildrenLayout >> #computeAlignmentTranslation:).
+				  (BlFitChildrenLayout >> #layout:) }
+		  doing: [ 
+			  BlFitChildrenLayoutExamples new atMost_one_child_at_50x50_negated.
+			  BlLinearLayoutUsageExamples new
+				  oneChildWithFitContentLimitedExceedsAndThreeChildlren ];
+		  yourself
+]
+
+{ #category : #accessing }
 TypDynExamples >> neoJsonCore [
 
 	<gtExample>

@@ -115,20 +115,6 @@ TypParametricType >> > aType [
 	^ parameters keys allSatisfy: [ :e | (self at: e) >= (aType at: e) ]
 ]
 
-{ #category : #converting }
-TypParametricType >> asBroader: aType [
-
-	| copyParameters otherParameters |
-	(aType isParametric and: [ 
-		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
-		ifFalse: [ ^ super asBroader: aType ].
-	otherParameters := aType parameters.
-	copyParameters := OrderedCollection new.
-	parameters keysAndValuesDo: [ :n :t | 
-		copyParameters add: (t asBroader: (aType at: n)) ].
-	^ self withParameters: copyParameters
-]
-
 { #category : #accessing }
 TypParametricType >> at: aString [
 
@@ -180,6 +166,20 @@ TypParametricType >> invalidateOnClassChange: aClassAnnouncement [
 { #category : #testing }
 TypParametricType >> isParametric [
 	^ true
+]
+
+{ #category : #converting }
+TypParametricType >> loosen: aType [
+
+	| copyParameters otherParameters |
+	(aType isParametric and: [ 
+		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
+		ifFalse: [ ^ super loosen: aType ].
+	otherParameters := aType parameters.
+	copyParameters := OrderedCollection new.
+	parameters keysAndValuesDo: [ :n :t | 
+		copyParameters add: (t loosen: (aType at: n)) ].
+	^ self withParameters: copyParameters
 ]
 
 { #category : #accessing }

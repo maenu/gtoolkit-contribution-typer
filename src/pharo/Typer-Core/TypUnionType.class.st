@@ -79,6 +79,8 @@ TypUnionType >> hasSuper [
 
 	| remains nilTypes unknownTypes current superType_ |
 	superType ifNotNil: [ ^ true ].
+	hasSuperType ifNotNil: [ ^ hasSuperType ].
+	hasSuperType := false.
 	remains := types copy.
 	nilTypes := remains select: #isNil.
 	unknownTypes := remains select: #isUnknown.
@@ -92,7 +94,7 @@ TypUnionType >> hasSuper [
 	[ remains isEmpty ] whileFalse: [ 
 		| next common |
 		next := remains remove: remains anyOne.
-		common := current asBroader: next.
+		common := current loosen: next.
 		common = current ifFalse: [ 
 			current := common.
 			remains add: current ] ].
@@ -120,6 +122,13 @@ TypUnionType >> hashSkipping: anIdentitySet [
 TypUnionType >> initialize [
 	<typPraVariable: 'types' as: 'IdentitySet<TypType>'>
 	super initialize
+]
+
+{ #category : #initialization }
+TypUnionType >> initializeSuper: aType [
+
+	super initializeSuper: aType.
+	hasSuperType := true
 ]
 
 { #category : #initialization }

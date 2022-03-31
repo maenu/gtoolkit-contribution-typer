@@ -44,12 +44,6 @@ TypNilType class >> named: aString super: aType [
 ]
 
 { #category : #converting }
-TypNilType >> asBroader: aType [
-
-	^ aType asNullable
-]
-
-{ #category : #converting }
 TypNilType >> asNonNullable [
 
 	^ TypUnknownType instance
@@ -70,6 +64,12 @@ TypNilType >> initialize [
 { #category : #testing }
 TypNilType >> isNil [
 	^ true
+]
+
+{ #category : #converting }
+TypNilType >> loosen: aType [
+
+	^ aType asNullable
 ]
 
 { #category : #printing }

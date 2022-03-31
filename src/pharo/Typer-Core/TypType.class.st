@@ -75,25 +75,6 @@ TypType >> >= aType [
 ]
 
 { #category : #converting }
-TypType >> asBroader: aType [
-
-	"self and aType are assignable to result.
-	 result >= self
-	 result >= aType
-	 should be valid"
-
-	aType isUnknown ifTrue: [ ^ aType ].
-	aType isNil ifTrue: [ ^ self asNullable ].
-	aType isSuper ifTrue: [ 
-		^ aType withSuper: (self asBroader: aType super) ].
-	self >= aType ifTrue: [ ^ self ].
-	self < aType ifTrue: [ ^ aType ].
-	^ { 
-		  self.
-		  aType } typAsType
-]
-
-{ #category : #converting }
 TypType >> asNameString [
 
 	^ String streamContents: [ :s | 
@@ -255,6 +236,23 @@ TypType >> lookupMethod: aSymbol arguments: aCollection [
 TypType >> lookupVariable: aSymbol [
 
 	^ TypVariableIndex instance lookupReceiver: self selector: aSymbol
+]
+
+{ #category : #converting }
+TypType >> loosen: aType [
+
+	"self and aType are assignable to result.
+	 result >= self
+	 result >= aType
+	 should be valid"
+
+	aType isUnknown ifTrue: [ ^ aType ].
+	aType isNil ifTrue: [ ^ self asNullable ].
+	self >= aType ifTrue: [ ^ self ].
+	self < aType ifTrue: [ ^ aType ].
+	^ { 
+		  self.
+		  aType } typAsType
 ]
 
 { #category : #converting }

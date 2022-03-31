@@ -37,7 +37,7 @@ RBMessageNode >> typGtShadowMethod [
 		          ifEmpty: [ 
 		          TypShaShadow typGtNewShadowFor: clazz instanceSide ]
 		          ifNotEmpty: #first.
-	^ shadow classSide
+	^ shadow
 		  typGtShadowMethod: self selector
 		  result: resultType
 		  arguments: argumentTypes

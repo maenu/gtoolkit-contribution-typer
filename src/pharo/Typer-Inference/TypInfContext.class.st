@@ -78,18 +78,20 @@ TypInfContext >> run [
 	cycles := OrderedCollection new.
 	cycle := OrderedIdentityDictionary new.
 	nodes_ do: [ :e | cycle at: e put: (states at: e put: e state copy) ].
+	root node method isAbstract ifTrue: [ n := 0 "shortcut loop" ].
 	[ 
 	n := n - 1.
 	cycles add: cycle.
 	cycle := OrderedIdentityDictionary new.
-	(nodes_ inject: false into: [ :r :e | 
-		 e slurpAndBurp.
-		 e state = (states at: e)
-			 ifTrue: [ r ]
-			 ifFalse: [ 
-				 cycle at: e put: ((states at: e) diff: e state).
-				 states at: e put: e state copy.
-				 true ] ]) and: [ n > 0 ] ] whileTrue.
+	n > 0 and: [ 
+		nodes_ inject: false into: [ :r :e | 
+			e slurpAndBurp.
+			e state = (states at: e)
+				ifTrue: [ r ]
+				ifFalse: [ 
+					cycle at: e put: ((states at: e) diff: e state).
+					states at: e put: e state copy.
+					true ] ] ] ] whileTrue.
 	cycles add: cycle.
 	stable := n > 0.
 	^ cycles

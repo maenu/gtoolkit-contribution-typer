@@ -10,7 +10,7 @@ RBMethodNode >> typGtShadowMethod [
 
 	| method_ argumentTypes resultType clazz shadow |
 	self assert: [ self typGtCanType ].
-	method_ := self typInfMethodInSelf.
+	method_ := self typInfTypeSelf.
 	argumentTypes := method_ arguments.
 	resultType := method_ result.
 	clazz := self methodClass.
@@ -18,7 +18,7 @@ RBMethodNode >> typGtShadowMethod [
 		          ifEmpty: [ 
 		          TypShaShadow typGtNewShadowFor: clazz instanceSide ]
 		          ifNotEmpty: #first.
-	^ shadow classSide
+	^ shadow
 		  typGtShadowMethod: selector value
 		  result: resultType
 		  arguments: argumentTypes

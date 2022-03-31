@@ -10,9 +10,9 @@ TypTyping >> invalidate [
 	<gtExample>
 	| probes |
 	probes := OrderedCollection new.
-	probes add: 'pre-reset' -> self memoryProbe.
+	"probes add: 'pre-reset' -> self memoryProbe".
 	ASTCache reset.
-	TKTCommonQueueWorkerPool allSubInstancesDo: #removeFailedTasks.
+	"TKTCommonQueueWorkerPool allSubInstancesDo: #removeFailedTasks."
 	GtPlaygroundEvaluatedCodeButtonAttribute allSubInstancesDo: [ :e | 
 		e result: nil ].
 	GtSourceCoderEvaluationResultWithValue allSubInstancesDo: [ :e | 
@@ -27,10 +27,10 @@ TypTyping >> invalidate [
 		e overlayElement removeEventHandler: e ].
 	BlHandlerAnnouncerRegistry allInstancesDo: [ :e | 
 		e removeAllSuchThat: [ :f | f isKindOf: BlOverlayListener ] ].
-	"LeDatabase allInstancesDo: #reload."
+	"LeDatabase allInstancesDo: #reload.
 	LeDatabasesRegistry cleanUp.
 	LeDatabasesRegistry uniqueInstance ensureDatabase.
-	GtHome allInstancesDo: #clearKnowledgeBase.
+	GtHome allInstancesDo: #clearKnowledgeBase."
 	TypNode invalidateAll.
 	TypType invalidateAll.
 	TypIndex invalidateAll.

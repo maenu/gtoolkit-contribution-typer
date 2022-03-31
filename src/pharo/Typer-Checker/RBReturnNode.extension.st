@@ -4,7 +4,7 @@ Extension { #name : #RBReturnNode }
 RBReturnNode >> typCheCheckCompatibility [
 
 	| expected actual |
-	expected := self methodNode typInfMethodInSelf result.
+	expected := self methodNode typInfTypeSelf result.
 	actual := self value typInfTypeSelf.
 	(expected isUnknown or: [ actual isUnknown ]) ifTrue: [ ^ self ].
 	(expected isNullable and: [ actual isNil ]) ifTrue: [ ^ self ].
@@ -37,7 +37,7 @@ RBReturnNode >> typCheCheckCompatibility [
 RBReturnNode >> typCheCheckNullables [
 
 	| expected actual |
-	expected := self methodNode typInfMethodInSelf result.
+	expected := self methodNode typInfTypeSelf result.
 	actual := self value typInfTypeSelf.
 	(expected isUnknown or: [ 
 		 actual isUnknown or: [ 
