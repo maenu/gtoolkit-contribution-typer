@@ -36,6 +36,13 @@ TypDynReport >> initializePackage: aPackage variable: aBlock method: anotherBloc
 ]
 
 { #category : #accessing }
+TypDynReport >> items [
+
+	^ (variables values flatCollect: #values)
+	  , (methods values flatCollect: #values)
+]
+
+{ #category : #accessing }
 TypDynReport >> methodAt: aMethod [
 
 	| clazz |
@@ -66,6 +73,13 @@ TypDynReport >> package [
 TypDynReport >> reduce [
 
 	variables := variables collect: [ :e | e collect: #typAsType ].
+	methods keysAndValuesDo: [ :c :ms | 
+		ms keysAndValuesDo: [ :s :l | 
+			l ifEmpty: [ 
+				l add: (CompiledMethod
+						 typAsFunctionTypeWithResult: TypUnknownType instance
+						 arguments:
+						 ((1 to: (c >> s) numArgs) collect: [ :i | TypUnknownType instance ])) ] ] ].
 	methods := methods collect: [ :e | e collect: #typAsType ]
 ]
 
@@ -134,19 +148,44 @@ TypDynReport >> typGtMethodsFor: aView [
 		  view: #gtItemsFor:
 ]
 
-{ #category : #'as yet unclassified' }
-TypDynReport >> typGtSummaryFor: aView [
+{ #category : #accessing }
+TypDynReport >> typGtSummaryFor: aView context: aContext [
 
 	<gtView>
-	^ aView forward
-		  title: 'Summary';
-		  priority: 10;
-		  object: [ 
-			  ((variables associations flatCollect: [ :a | 
-					    a value associations collect: [ :b | 
-							    b value -> (a key -> b key) ] ]) groupedBy: #key) collect: [ 
-					  :c | c collect: #value ] ];
-		  view: #gtItemsFor:
+	| anIndexStyler aValueStyler |
+	anIndexStyler := aContext at: #gtTreeIndexStyler ifAbsent: [ 
+		                 [ :aNode | 
+		                 aNode key gtDisplayText asRopedText foreground:
+			                 Color gray ] ].
+	aValueStyler := aContext
+		                at: #gtTreeValueStyler
+		                ifAbsent: [ [ :aNode | aNode value gtDisplayText ] ].
+	^ aView columnedTree
+		  title: 'Tree';
+		  priority: 51;
+		  items: [ 
+			  GtTreeNode fromCollection:
+					  ((self items groupedBy: #group) "collect: [ :c | 
+							   c groupedBy: #class ]") ];
+		  children: [ :aNode | 
+			  (aNode value isCollection and: [ aNode value isString not ])
+				  ifTrue: [ GtTreeNode fromNode: aNode ]
+				  ifFalse: [ #(  ) ] ];
+		  actionUpdateButtonTooltip: 'Update tree';
+		  column: 'Index'
+		  text: [ :aNode :anIndex | anIndexStyler cull: aNode cull: anIndex ];
+		  column: 'Item'
+		  text: [ :aNode :anIndex | aValueStyler cull: aNode cull: anIndex ]
+		  weight: 3;
+		  in: [ :theNewView | 
+			  aContext
+				  at: #gtTreeExpansionLevel
+				  ifPresent: [ :anObject | 
+					  anObject isNumber
+						  ifTrue: [ theNewView expandUpTo: anObject ]
+						  ifFalse: [ anObject = true ifTrue: [ theNewView expandAll ] ] ]
+				  ifAbsent: [ "ignore" ] ];
+		  send: [ :aNode | aNode value ]
 ]
 
 { #category : #'as yet unclassified' }

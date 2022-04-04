@@ -83,5 +83,5 @@ TypNilType >> printOn: aStream skipping: anIdentitySet [
 { #category : #converting }
 TypNilType >> tighten: aType [
 
-	^ aType
+	^ aType asNullable
 ]

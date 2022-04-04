@@ -16,15 +16,6 @@ TypDynReportDiff class >> dynamic: aReport inference: anotherReport [
 		  yourself
 ]
 
-{ #category : #api }
-TypDynReportDiff >> group: aType with: anotherType [
-
-	aType = anotherType ifTrue: [ ^ #= ].
-	aType < anotherType ifTrue: [ ^ #< ].
-	aType > anotherType ifTrue: [ ^ #> ].
-	^ #~=
-]
-
 { #category : #initialization }
 TypDynReportDiff >> initializeDynamic: aReport inference: anotherReport [
 
@@ -38,19 +29,34 @@ TypDynReportDiff >> merged [
 	^ TypDynReport
 		  package: dynamic package
 		  variable: [ :v | 
-			  | d i |
-			  d := dynamic variableAt: v.
-			  i := inference variableAt: v.
-			  { 
-				  (#group -> (self group: d with: i)).
-				  (#dynamic -> d).
-				  (#inference -> i) } asDictionary ]
+			  | dyn inf |
+			  dyn := dynamic variableAt: v.
+			  inf := inference variableAt: v.
+			  TypDynReportVariableItem new
+				  clazz: v owningClass;
+				  name: v name asSymbol;
+				  dyn: dyn;
+				  inf: inf;
+				  yourself ]
 		  method: [ :m | 
-			  | d i |
-			  d := dynamic methodAt: m.
-			  i := inference methodAt: m.
-			  { 
-				  (#group -> (self group: d with: i)).
-				  (#dynamic -> d).
-				  (#inference -> i) } asDictionary ]
+			  | dyn inf |
+			  dyn := dynamic methodAt: m.
+			  inf := inference methodAt: m.
+			  TypDynReportMethodItem new
+				  clazz: m methodClass;
+				  name: m selector;
+				  dyn: dyn;
+				  inf: inf;
+				  yourself ]
+]
+
+{ #category : #accessing }
+TypDynReportDiff >> typGtMergedFor: aView [
+
+	<gtView>
+	^ aView forward
+		  title: 'Merged';
+		  priority: 1;
+		  object: [ self merged ];
+		  view: #typGtSummaryFor:context:
 ]

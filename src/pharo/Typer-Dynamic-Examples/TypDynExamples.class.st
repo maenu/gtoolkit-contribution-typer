@@ -39,15 +39,41 @@ TypDynExamples >> blocLayoutOne [
 
 	<gtExample>
 	^ TypDynCollector new
-		  collectIn: { 
-				  (BlLinearLayoutMeasurer >> #limitedMeasure).
-				  (BlFitChildrenLayout >> #computeAlignmentTranslation:).
-				  (BlFitChildrenLayout >> #layout:) }
+		  instrument: (#'Bloc-Layout' asPackage typDynOnly: { 
+					   (BlFlowLayoutChild >> #weight:).
+					   (BlLinearLayoutMeasurer >> #limitedMeasure).
+					   (BlFitChildrenLayout >> #computeAlignmentTranslation:).
+					   (BlFitChildrenLayout >> #layout:) })
 		  doing: [ 
 			  BlFitChildrenLayoutExamples new atMost_one_child_at_50x50_negated.
 			  BlLinearLayoutUsageExamples new
-				  oneChildWithFitContentLimitedExceedsAndThreeChildlren ];
-		  yourself
+				  oneChildWithFitContentLimitedExceedsAndThreeChildlren ]
+]
+
+{ #category : #accessing }
+TypDynExamples >> ifTrueIfFalse [
+
+	<gtExample>
+	| i d |
+	1 isInteger
+		ifTrue: [ 
+			i := 1.
+			d := 1 ]
+		ifFalse: [ d := #d ].
+	^ i -> d
+]
+
+{ #category : #accessing }
+TypDynExamples >> ifTrueIfFalse: aBoolean [
+
+	<gtExample>
+	| i d |
+	aBoolean
+		ifTrue: [ 
+			i := 1.
+			d := 1 ]
+		ifFalse: [ d := #d ].
+	^ i -> d
 ]
 
 { #category : #accessing }

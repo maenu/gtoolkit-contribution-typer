@@ -74,14 +74,14 @@ TypInfNode >> typGtFlowPaintOn: aMondrian [
 	aMondrian edges
 		stencil: [ :e | e anyOne typGtAsElementIn: aMondrian with: e ];
 		connect: (edges associations
-				 select: [ :e | e key key = #next or: [ e key key isInteger ] ]
+				 select: [ :e | e key key = #next ]
 				 thenCollect: #value)
 		from: [ :e | e anyOne origin ] to: [ :e | e anyOne target ].
 	aMondrian edges
 		passive;
 		stencil: [ :e | e anyOne typGtAsElementIn: aMondrian with: e ];
 		connect: (edges associations
-				 reject: [ :e | e key key = #next or: [ e key key isInteger ] ]
+				 reject: [ :e | e key key = #next ]
 				 thenCollect: #value)
 		from: [ :e | e anyOne origin ] to: [ :e | e anyOne target ].
 	aMondrian layout force

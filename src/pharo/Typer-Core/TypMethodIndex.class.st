@@ -10,14 +10,11 @@ TypMethodIndex class >> instance [
 	<typPraResult: 'TypMethodLookupIndex'>
 	^ instance ifNil: [ 
 		  instance := self new
-			              initializeResolver:
-				              (TypBreadthFirstResolver resolvers: { 
-							               (TypDepthFirstResolver resolver:
-									                (TypBreadthFirstResolver resolvers: { 
-												                 TypPraMethodResolver new.
-												                 TypShaMethodResolver new })).
-							               (TypDepthFirstResolver resolver:
-									                TypInfMethodResolver new) });
+			              initializeResolver: (TypDepthFirstResolver resolver:
+						               (TypBreadthFirstResolver resolvers: { 
+									                TypPraMethodResolver new.
+									                TypShaMethodResolver new.
+									                TypInfMethodResolver new }));
 			              yourself ]
 ]
 

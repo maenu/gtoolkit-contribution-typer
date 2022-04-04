@@ -32,5 +32,16 @@ TypInfMethod >> method [
 
 	^ state self
 		  lookupMethod: node selector asSymbol
-		  arguments: (self incomingArguments collect: [ :e | state at: e ])
+		  arguments: (self incomingArguments collect: #type)
+]
+
+{ #category : #accessing }
+TypInfMethod >> transfer [
+
+	state at: self put: (CompiledMethod
+			 typAsFunctionTypeWithResult:
+			 (self incomingReturns collect: #type) typAsType
+			 arguments: (self incomingArguments collect: #type)
+			 argumentsOptional: false
+			 signalsAlways: nil)
 ]

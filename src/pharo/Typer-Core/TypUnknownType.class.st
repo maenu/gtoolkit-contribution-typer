@@ -42,6 +42,12 @@ TypUnknownType >> isUnknown [
 	^ true
 ]
 
+{ #category : #converting }
+TypUnknownType >> loosen: aType [
+
+	^ self
+]
+
 { #category : #printing }
 TypUnknownType >> printOn: aStream skipping: anIdentitySet [
 	(anIdentitySet includes: self)

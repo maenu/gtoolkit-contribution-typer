@@ -16,7 +16,7 @@ TypInfNextEdge class >> origin: aNode target: anotherNode [
 { #category : #accessing }
 TypInfNextEdge >> state [
 
-	^ state
+	^ state ifNil: [ state := origin state copy ]
 ]
 
 { #category : #accessing }

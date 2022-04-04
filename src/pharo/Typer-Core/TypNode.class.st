@@ -128,7 +128,9 @@ TypNode >> incomingRemove: anEdge [
 	self assert: [ (anEdge origin outgoingIncludes: anEdge) not ].
 	incoming
 		at: anEdge key
-		ifPresent: [ :e | e remove: anEdge ]
+		ifPresent: [ :e | 
+			e remove: anEdge.
+			e ifEmpty: [ incoming removeKey: anEdge key ] ]
 		ifAbsent: [ "noop" ]
 ]
 
@@ -278,7 +280,9 @@ TypNode >> outgoingRemove: anEdge [
 
 	outgoing
 		at: anEdge key
-		ifPresent: [ :e | e remove: anEdge ]
+		ifPresent: [ :e | 
+			e remove: anEdge.
+			e ifEmpty: [ outgoing removeKey: anEdge key ] ]
 		ifAbsent: [ "noop" ].
 	^ anEdge target
 		  incomingRemove: anEdge;

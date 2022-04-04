@@ -103,6 +103,29 @@ TypType >> bind: aType [
 	
 ]
 
+{ #category : #'as yet unclassified' }
+TypType >> common: aType [
+
+	| a b i common |
+	a := self withAllSupers reversed.
+	b := aType withAllSupers reversed.
+	a size > b size ifTrue: [ "ensure a to be shorter than b"
+		| tmp |
+		tmp := a.
+		a := b.
+		b := tmp ].
+	a first ~= b first ifTrue: [ 
+		^ { 
+			  self.
+			  aType } typAsType ].
+	common := a first.
+	i := 2.
+	[ i <= a size and: [ (a at: i) = (b at: i) ] ] whileTrue: [ 
+		common := a at: i.
+		i := i + 1 ].
+	^ common
+]
+
 { #category : #testing }
 TypType >> hasSuper [
 	^ superType isNotNil
@@ -250,9 +273,7 @@ TypType >> loosen: aType [
 	aType isNil ifTrue: [ ^ self asNullable ].
 	self >= aType ifTrue: [ ^ self ].
 	self < aType ifTrue: [ ^ aType ].
-	^ { 
-		  self.
-		  aType } typAsType
+	^ self common: aType
 ]
 
 { #category : #converting }
@@ -296,12 +317,19 @@ TypType >> tighten: aType [
 	 should be valid"
 
 	aType isUnknown ifTrue: [ ^ self ].
-	aType isNil ifTrue: [ ^ self ].
+	aType isNil ifTrue: [ ^ self asNullable ].
 	self >= aType ifTrue: [ ^ aType ].
 	self < aType ifTrue: [ ^ self ].
 	^ { 
 		  self.
 		  aType } typAsType
+]
+
+{ #category : #'as yet unclassified' }
+TypType >> withAllSupers [
+
+	self hasSuper ifFalse: [ ^ { self } ].
+	^ { self } , self super withAllSupers
 ]
 
 { #category : #polymorphic }

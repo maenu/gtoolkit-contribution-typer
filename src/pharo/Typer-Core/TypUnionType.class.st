@@ -2,8 +2,7 @@ Class {
 	#name : #TypUnionType,
 	#superclass : #TypType,
 	#instVars : [
-		'types',
-		'hasSuperType'
+		'types'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -77,36 +76,8 @@ TypUnionType >> at: aString [
 { #category : #testing }
 TypUnionType >> hasSuper [
 
-	| remains nilTypes unknownTypes current superType_ |
 	superType ifNotNil: [ ^ true ].
-	hasSuperType ifNotNil: [ ^ hasSuperType ].
-	hasSuperType := false.
-	remains := types copy.
-	nilTypes := remains select: #isNil.
-	unknownTypes := remains select: #isUnknown.
-	remains
-		removeAll: nilTypes;
-		removeAll: unknownTypes.
-	remains ifEmpty: [ ^ false ].
-	current := remains remove: remains anyOne.
-	(remains isEmpty and: [ current hasSuper ]) ifTrue: [ 
-		current := current super ].
-	[ remains isEmpty ] whileFalse: [ 
-		| next common |
-		next := remains remove: remains anyOne.
-		common := current loosen: next.
-		common = current ifFalse: [ 
-			current := common.
-			remains add: current ] ].
-	remains := IdentitySet with: current.
-	remains
-		addAll: nilTypes;
-		addAll: unknownTypes.
-	superType_ := remains typAsType.
-	(superType_ isUnion not or: [ superType_ types ~= types ]) ifTrue: [ 
-		self initializeSuper: superType_.
-		^ true ].
-	^ false
+	^ ((types reject: #isNil) reject: #isUnknown) anySatisfy: #hasSuper
 ]
 
 { #category : #comparing }
@@ -122,13 +93,6 @@ TypUnionType >> hashSkipping: anIdentitySet [
 TypUnionType >> initialize [
 	<typPraVariable: 'types' as: 'IdentitySet<TypType>'>
 	super initialize
-]
-
-{ #category : #initialization }
-TypUnionType >> initializeSuper: aType [
-
-	super initializeSuper: aType.
-	hasSuperType := true
 ]
 
 { #category : #initialization }
@@ -242,6 +206,37 @@ TypUnionType >> result [
 
 	<typEdge>
 	^ (types collect: #result) typAsType
+]
+
+{ #category : #accessing }
+TypUnionType >> super [
+
+	| remains nilTypes unknownTypes current |
+	self assert: [ self hasSuper ].
+	superType ifNotNil: [ ^ superType ].
+	remains := types copy.
+	nilTypes := remains select: #isNil.
+	unknownTypes := remains select: #isUnknown.
+	remains
+		removeAll: nilTypes;
+		removeAll: unknownTypes.
+	remains ifEmpty: [ ^ false ].
+	current := remains remove: remains anyOne.
+	(remains isEmpty and: [ current hasSuper ]) ifTrue: [ 
+		current := current super ].
+	[ remains isEmpty ] whileFalse: [ 
+		| next common |
+		next := remains remove: remains anyOne.
+		common := current loosen: next.
+		common = current ifFalse: [ 
+			current := common.
+			remains add: current ] ].
+	remains := IdentitySet with: current.
+	remains
+		addAll: nilTypes;
+		addAll: unknownTypes.
+	self initializeSuper: remains typAsType.
+	^ superType
 ]
 
 { #category : #accessing }

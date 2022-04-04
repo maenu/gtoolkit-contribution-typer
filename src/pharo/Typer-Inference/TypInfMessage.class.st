@@ -40,6 +40,7 @@ TypInfMessage >> transfer [
 				to: self incomingReceiver
 				with: (classes collect: #typAsType) typAsType ] ].
 	method := self method.
+	method typInfRotate: self.
 	self incomingArguments withIndexDo: [ :e :i | 
 		i <= method arguments size ifTrue: [ 
 			state tightenFrom: self to: e with: (method arguments at: i) ] ].
