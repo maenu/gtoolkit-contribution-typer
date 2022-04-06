@@ -5,7 +5,9 @@ Class {
 		'clazz',
 		'name',
 		'dyn',
-		'inf'
+		'inf',
+		'infReduced',
+		'dynReduced'
 	],
 	#category : #'Typer-Dynamic'
 }
@@ -35,15 +37,9 @@ TypDynReportItem >> dyn: anObject [
 ]
 
 { #category : #accessing }
-TypDynReportItem >> group [
+TypDynReportItem >> dynReduced [
 
-	| d i |
-	d := self isUnknown: dyn.
-	i := self isUnknown: inf.
-	d & i ifTrue: [ ^ 'unknown dyn & inf' ].
-	d ifTrue: [ ^ 'unknown dyn' ].
-	i ifTrue: [ ^ 'unknown inf' ].
-	^ self relation
+	^ dynReduced
 ]
 
 { #category : #accessing }
@@ -56,6 +52,12 @@ TypDynReportItem >> inf [
 TypDynReportItem >> inf: anObject [
 
 	inf := anObject
+]
+
+{ #category : #accessing }
+TypDynReportItem >> infReduced [
+
+	^ infReduced
 ]
 
 { #category : #accessing }
@@ -82,14 +84,31 @@ TypDynReportItem >> printOn: aStream [
 	aStream
 		nextPutAll: dyn asString;
 		nextPutAll: ' ';
-		nextPutAll: inf asString
+		nextPutAll: inf asString;
+		nextPutAll: ' | ';
+		nextPutAll: dynReduced asString;
+		nextPutAll: ' ';
+		nextPutAll: infReduced asString
 ]
 
-{ #category : #api }
-TypDynReportItem >> relation [
+{ #category : #accessing }
+TypDynReportItem >> rank [
 
-	dyn = inf ifTrue: [ ^ #= ].
-	dyn < inf ifTrue: [ ^ #< ].
-	dyn > inf ifTrue: [ ^ #> ].
-	^ #~=
+	| d i |
+	dynReduced := dyn.
+	infReduced := inf.
+	d := self isUnknown: dynReduced.
+	i := self isUnknown: infReduced.
+	d & i ifTrue: [ ^ '7 dyn = ? & inf = ?' ].
+	d ifTrue: [ ^ '6 dyn = ? & inf ~= ?' ].
+	i ifTrue: [ ^ '5 dyn ~= ? & inf = ?' ].
+	dynReduced = infReduced ifTrue: [ ^ '1 dyn = inf' ].
+	infReduced := inf typInfWithoutUnknown.
+	dynReduced = infReduced ifTrue: [ ^ '2 dyn = inf - ?' ].
+	dynReduced := dyn typInfWithoutUnion.
+	infReduced := infReduced typInfWithoutUnion.
+	dynReduced = infReduced ifTrue: [ ^ '3 s(dyn) = s(inf - ?)' ].
+	dynReduced < infReduced ifTrue: [ ^ '4 dyn < inf' ].
+	dynReduced > infReduced ifTrue: [ ^ '4 dyn > inf' ].
+	^ '4 dyn ~= inf'
 ]

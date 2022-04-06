@@ -245,6 +245,17 @@ TypParametricType >> tighten: aType [
 	^ self withParameters: copyParameters
 ]
 
+{ #category : #accessing }
+TypParametricType >> typGtParametersFor: aView [
+
+	<gtView>
+	^ aView forward
+		  title: 'Parameters';
+		  priority: 5;
+		  object: parameters;
+		  view: #gtItemsFor:
+]
+
 { #category : #converting }
 TypParametricType >> withAt: aSymbol put: aType [
 

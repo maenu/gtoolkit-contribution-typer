@@ -152,40 +152,60 @@ TypDynReport >> typGtMethodsFor: aView [
 TypDynReport >> typGtSummaryFor: aView context: aContext [
 
 	<gtView>
-	| anIndexStyler aValueStyler |
-	anIndexStyler := aContext at: #gtTreeIndexStyler ifAbsent: [ 
-		                 [ :aNode | 
-		                 aNode key gtDisplayText asRopedText foreground:
-			                 Color gray ] ].
-	aValueStyler := aContext
-		                at: #gtTreeValueStyler
-		                ifAbsent: [ [ :aNode | aNode value gtDisplayText ] ].
+	| whole |
+	whole := (self items groupedBy: #class) collect: #size.
 	^ aView columnedTree
 		  title: 'Tree';
 		  priority: 51;
 		  items: [ 
 			  GtTreeNode fromCollection:
-					  ((self items groupedBy: #group) "collect: [ :c | 
-							   c groupedBy: #class ]") ];
-		  children: [ :aNode | 
-			  (aNode value isCollection and: [ aNode value isString not ])
-				  ifTrue: [ GtTreeNode fromNode: aNode ]
+					  (((self items groupedBy: #rank) associations sorted: [ :a :b | 
+							    a key < b key ]) as: OrderedDictionary) ];
+		  children: [ :n | 
+			  (n value isCollection and: [ n value isString not ])
+				  ifTrue: [ GtTreeNode fromNode: n ]
 				  ifFalse: [ #(  ) ] ];
 		  actionUpdateButtonTooltip: 'Update tree';
-		  column: 'Index'
-		  text: [ :aNode :anIndex | anIndexStyler cull: aNode cull: anIndex ];
-		  column: 'Item'
-		  text: [ :aNode :anIndex | aValueStyler cull: aNode cull: anIndex ]
-		  weight: 3;
-		  in: [ :theNewView | 
-			  aContext
-				  at: #gtTreeExpansionLevel
-				  ifPresent: [ :anObject | 
-					  anObject isNumber
-						  ifTrue: [ theNewView expandUpTo: anObject ]
-						  ifFalse: [ anObject = true ifTrue: [ theNewView expandAll ] ] ]
-				  ifAbsent: [ "ignore" ] ];
-		  send: [ :aNode | aNode value ]
+		  column: 'Index' text: [ :n | 
+			  (n value isCollection
+				   ifTrue: [ n key gtDisplayText ]
+				   ifFalse: [ 
+					   '{1} {2}/{3}' format: { 
+								   n parent key gtDisplayText.
+								   n key asString.
+								   n parent value size asString } ]) asRopedText foreground:
+					  Color gray ]
+		  weight: 1;
+		  column: 'dyn' text: [ :n | 
+			  n value isCollection
+				  ifTrue: [ 
+					  | partition v m |
+					  partition := (n value groupedBy: #class) collect: #size.
+					  v := partition at: TypDynReportVariableItem ifAbsent: [ 0 ].
+					  m := partition at: TypDynReportMethodItem ifAbsent: [ 0 ].
+					  '{1}|{2}% variables, {3}|{4}% methods' format: { 
+								  v.
+								  (100 * v / (whole at: TypDynReportVariableItem)) asInteger.
+								  m.
+								  (100 * m / (whole at: TypDynReportMethodItem)) asInteger } ]
+				  ifFalse: [ n value dyn asString ] ]
+		  weight: 1;
+		  column: 'inf' text: [ :n | 
+			  n value isCollection
+				  ifTrue: [ '' ]
+				  ifFalse: [ n value inf asString ] ]
+		  weight: 1;
+		  column: 'dynReduced' text: [ :n | 
+			  (n value isCollection or: [ n value dyn = n value dynReduced ])
+				  ifTrue: [ '' ]
+				  ifFalse: [ n value dynReduced asString ] ]
+		  weight: 1;
+		  column: 'infReduced' text: [ :n | 
+			  (n value isCollection or: [ n value inf = n value infReduced ])
+				  ifTrue: [ '' ]
+				  ifFalse: [ n value infReduced asString ] ]
+		  weight: 1;
+		  send: #value
 ]
 
 { #category : #'as yet unclassified' }

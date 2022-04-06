@@ -72,7 +72,7 @@ TypDynExamples >> ifTrueIfFalse: aBoolean [
 		ifTrue: [ 
 			i := 1.
 			d := 1 ]
-		ifFalse: [ d := #d ].
+		ifFalse: [ d := 1.2 ].
 	^ i -> d
 ]
 
