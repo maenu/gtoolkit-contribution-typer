@@ -166,18 +166,6 @@ TypType >> initializeSuper: aType [
 	hash := nil
 ]
 
-{ #category : #invalidation }
-TypType >> invalidateOnClassChange: aClassAnnouncement [
-
-	^ false
-]
-
-{ #category : #invalidation }
-TypType >> invalidateOnMethodChange: aMethodAnnouncement [
-
-	^ false
-]
-
 { #category : #testing }
 TypType >> isFunction [
 	<typPraResult: 'Boolean'>

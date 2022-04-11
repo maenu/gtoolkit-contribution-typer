@@ -44,33 +44,31 @@ TypInfMethodResolver >> contextAt: aMethodNode self: aType super: anotherType [
 { #category : #invalidation }
 TypInfMethodResolver >> invalidateOnClassChange: aClassAnnouncement [
 
-	self flag: 'FIXME'
-	"| class |
-	class := aClassAnnouncement classAffected.
-	contexts keysAndValuesRemove: [ :association :context | 
-		| receiver selector |
-		receiver := association key.
-		selector := association value.
-		self flag: 'FIXME figure out how invalidation should work'.
-		class typAsType >= receiver or: [ 
-			(receiver invalidateOnClassChange: aClassAnnouncement) or: [ 
-				context invalidateOnClassChange: aClassAnnouncement ] ] ]"
+	| changed |
+	changed := false.
+	(outgoing flatCollect: #yourself)
+		select: [ :e | e key isKindOf: TypInfContextKey ]
+		thenDo: [ :e | 
+			changed := changed or:
+				           (e key
+					            invalidateOnClassChange: aClassAnnouncement
+					            in: e) ].
+	^ changed
 ]
 
 { #category : #invalidation }
 TypInfMethodResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	self flag: 'FIXME'
-	"| method |
-	method := aMethodAnnouncement methodAffected.
-	contexts keysAndValuesRemove: [ :association :context | 
-		| receiver selector |
-		receiver := association key.
-		selector := association value.
-		(method selector = selector and: [ 
-			 method methodClass typAsType >= receiver ]) or: [ 
-			(association key invalidateOnMethodChange: aMethodAnnouncement) 
-				or: [ context invalidateOnMethodChange: aMethodAnnouncement ] ] ]"
+	| changed |
+	changed := false.
+	(outgoing flatCollect: #yourself)
+		select: [ :e | e key isKindOf: TypInfContextKey ]
+		thenDo: [ :e | 
+			changed := changed or:
+				           (e key
+					            invalidateOnMethodChange: aMethodAnnouncement
+					            in: e) ].
+	^ changed
 ]
 
 { #category : #accessing }

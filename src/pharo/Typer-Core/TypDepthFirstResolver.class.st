@@ -38,15 +38,13 @@ TypDepthFirstResolver >> invalidate [
 { #category : #invalidation }
 TypDepthFirstResolver >> invalidateOnClassChange: aClassAnnouncement [
 
-	super invalidateOnClassChange: aClassAnnouncement.
-	resolver invalidateOnClassChange: aClassAnnouncement
+	^ resolver invalidateOnClassChange: aClassAnnouncement
 ]
 
 { #category : #invalidation }
 TypDepthFirstResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	super invalidateOnMethodChange: aMethodAnnouncement.
-	resolver invalidateOnMethodChange: aMethodAnnouncement
+	^ resolver invalidateOnMethodChange: aMethodAnnouncement
 ]
 
 { #category : #accessing }

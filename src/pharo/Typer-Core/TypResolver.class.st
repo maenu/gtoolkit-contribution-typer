@@ -19,18 +19,6 @@ TypResolver >> canResolve: aLookup [
 	self subclassResponsibility
 ]
 
-{ #category : #invalidation }
-TypResolver >> invalidateOnClassChange: aClassAnnouncement [
-
-	
-]
-
-{ #category : #invalidation }
-TypResolver >> invalidateOnMethodChange: aMethodAnnouncement [
-
-	
-]
-
 { #category : #resolving }
 TypResolver >> resolve: aLookup [
 	self subclassResponsibility

@@ -162,13 +162,13 @@ TypNode >> invalidate [
 { #category : #invalidation }
 TypNode >> invalidateOnClassChange: aClassAnnouncement [
 
-	
+	^ false
 ]
 
 { #category : #invalidation }
 TypNode >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	
+	^ false
 ]
 
 { #category : #accessing }

@@ -22,37 +22,6 @@ TypInfVariableResolver >> canResolve: aLookup [
 		  anySatisfy: [ :e | e name = aLookup selector ]
 ]
 
-{ #category : #invalidation }
-TypInfVariableResolver >> invalidateOnClassChange: aClassAnnouncement [
-
-	self flag: 'FIXME'
-	"| class |
-	class := aClassAnnouncement classAffected.
-	contexts keysAndValuesRemove: [ :association :context | 
-		| receiver selector |
-		receiver := association key.
-		selector := association value.
-		class typAsType >= receiver or: [ 
-			(association key invalidateOnClassChange: aClassAnnouncement) or: [ 
-				context invalidateOnClassChange: aClassAnnouncement ] ] ]"
-]
-
-{ #category : #invalidation }
-TypInfVariableResolver >> invalidateOnMethodChange: aMethodAnnouncement [
-
-	self flag: 'FIXME'
-	"| method |
-	method := aMethodAnnouncement methodAffected.
-	contexts keysAndValuesRemove: [ :association :context | 
-		| receiver selector |
-		receiver := association key.
-		selector := association value.
-		(method selector = selector and: [ 
-			 method methodClass typAsType >= receiver ]) or: [ 
-			(association key invalidateOnMethodChange: aMethodAnnouncement) 
-				or: [ context invalidateOnMethodChange: aMethodAnnouncement ] ] ]"
-]
-
 { #category : #printing }
 TypInfVariableResolver >> printOn: aStream [
 

@@ -58,15 +58,13 @@ TypInfNode >> initializeNode: aNode [
 { #category : #accessing }
 TypInfNode >> invalidateOnClassChange: aClassAnnouncement [
 
-	self flag: 'FIXME'
-	"^ selfType <= aClassAnnouncement classAffected typAsType"
+	^ self type invalidateOnClassChange: aClassAnnouncement
 ]
 
 { #category : #accessing }
 TypInfNode >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	self flag: 'FIXME'
-	"^ selfType <= aMethodAnnouncement methodAffected methodClass typAsType"
+	^ self type invalidateOnMethodChange: aMethodAnnouncement
 ]
 
 { #category : #accessing }

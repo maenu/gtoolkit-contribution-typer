@@ -170,10 +170,9 @@ TypNamedType >> initializeName: anObject [
 TypNamedType >> invalidateOnClassChange: aClassAnnouncement [
 
 	self hasClassDescription ifFalse: [ ^ false ].
-	(self classDescription = aClassAnnouncement classAffected or: [ 
-		 self classDescription inheritsFrom:
-			 aClassAnnouncement classAffected ]) ifFalse: [ ^ false ].
-	^ true
+	^ self classDescription = aClassAnnouncement classAffected or: [ 
+		  self classDescription inheritsFrom:
+			  aClassAnnouncement classAffected ]
 ]
 
 { #category : #testing }

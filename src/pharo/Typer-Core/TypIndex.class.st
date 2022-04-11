@@ -59,13 +59,13 @@ TypIndex >> invalidate [
 { #category : #invalidation }
 TypIndex >> invalidateOnClassChange: aClassAnnouncement [
 
-	resolver invalidateOnClassChange: aClassAnnouncement
+	^ resolver invalidateOnClassChange: aClassAnnouncement
 ]
 
 { #category : #invalidation }
 TypIndex >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	resolver invalidateOnMethodChange: aMethodAnnouncement
+	^ resolver invalidateOnMethodChange: aMethodAnnouncement
 ]
 
 { #category : #accessing }
