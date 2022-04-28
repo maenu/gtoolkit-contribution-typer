@@ -43,7 +43,8 @@ TypPropertyLookup >> initializeReceiver: aType selector: aSymbol [
 { #category : #invalidation }
 TypPropertyLookup >> invalidateOnClassChange: aClassAnnouncement [
 
-	^ receiver invalidateOnClassChange: aClassAnnouncement
+	^ (super invalidateOnClassChange: aClassAnnouncement) or:
+		  (receiver invalidateOnClassChange: aClassAnnouncement)
 ]
 
 { #category : #accessing }

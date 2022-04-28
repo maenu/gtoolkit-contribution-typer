@@ -19,6 +19,18 @@ TypResolver >> canResolve: aLookup [
 	self subclassResponsibility
 ]
 
+{ #category : #'as yet unclassified' }
+TypResolver >> invalidate: aLookup onClassChange: aClassAnnouncement [
+
+	^ false
+]
+
+{ #category : #'as yet unclassified' }
+TypResolver >> invalidate: aLookup onMethodChange: aMethodAnnouncement [
+
+	^ false
+]
+
 { #category : #resolving }
 TypResolver >> resolve: aLookup [
 	self subclassResponsibility

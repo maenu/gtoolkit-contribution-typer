@@ -33,6 +33,7 @@ TypInfVariableResolver >> resolve: aLookup [
 
 	| classDescription |
 	self assert: [ self canResolve: aLookup ].
+	aLookup initializeResolver: self.
 	classDescription := aLookup receiver classDescription.
 	"instance variable"
 	classDescription

@@ -54,7 +54,7 @@ TypNode >> typGtDecorate: anElement in: aMondrian [
 								   aptitude: BrGlamorousButtonWithLabelAptitude;
 								   label: ('in {1}' format: { self incomingEdges size });
 								   action: [ :button | 
-									   | nodes existingNodes remainingNodes |
+									   | nodes existingNodes remainingNodes |Halt once.
 									   existingNodes := aMondrian existingNodes.
 									   nodes := (self incomingEdges collect: #origin) difference:
 											            existingNodes.

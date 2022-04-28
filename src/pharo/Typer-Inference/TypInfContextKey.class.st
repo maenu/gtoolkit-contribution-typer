@@ -49,29 +49,17 @@ TypInfContextKey >> initializeNode: aNode self: aType super: anotherType [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfContextKey >> invalidateOnClassChange: aClassAnnouncement in: anEdge [
+TypInfContextKey >> invalidateOnClassChange: aClassAnnouncement [
 
-	| changed |
-	changed := false.
-	selfType <= aClassAnnouncement classAffected typAsType ifTrue: [ 
-		anEdge origin outgoingRemove: anEdge.
-		changed := true ].
-	^ changed or:
-		  (anEdge target invalidateOnClassChange: aClassAnnouncement)
+	^ selfType <= aClassAnnouncement classAffected typAsType
 ]
 
 { #category : #'as yet unclassified' }
-TypInfContextKey >> invalidateOnMethodChange: aMethodAnnouncement in: anEdge [
+TypInfContextKey >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	| changed |
-	changed := false.
-	(selfType <= aMethodAnnouncement methodAffected methodClass typAsType 
-		 and: [ node selector = aMethodAnnouncement methodAffected selector ]) 
-		ifTrue: [ 
-			anEdge origin outgoingRemove: anEdge.
-			changed := true ].
-	^ changed or:
-		  (anEdge target invalidateOnMethodChange: aMethodAnnouncement)
+	^ selfType
+	  <= aMethodAnnouncement methodAffected methodClass typAsType and: [ 
+		  node selector = aMethodAnnouncement methodAffected selector ]
 ]
 
 { #category : #'as yet unclassified' }

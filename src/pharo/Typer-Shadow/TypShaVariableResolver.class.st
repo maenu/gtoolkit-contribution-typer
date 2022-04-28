@@ -22,6 +22,7 @@ TypShaVariableResolver >> printOn: aStream [
 TypShaVariableResolver >> resolve: aLookup [
 
 	self assert: [ self canResolve: aLookup ].
+	aLookup initializeResolver: self.
 	^ self
 		  resolve: aLookup
 		  reduce:

@@ -59,13 +59,33 @@ TypIndex >> invalidate [
 { #category : #invalidation }
 TypIndex >> invalidateOnClassChange: aClassAnnouncement [
 
-	^ resolver invalidateOnClassChange: aClassAnnouncement
+	| changed |
+	changed := false.
+	(outgoing flatCollect: #yourself)
+		select: [ :e | e key isKindOf: TypLookup ]
+		thenDo: [ :e | 
+			((e key invalidateOnClassChange: aClassAnnouncement) or:
+				 (e target invalidateOnClassChange: aClassAnnouncement)) ifTrue: [ 
+				self outgoingRemove: e.
+				changed := true ] ].
+	^ changed or: (resolver invalidateOnClassChange: aClassAnnouncement)
 ]
 
 { #category : #invalidation }
 TypIndex >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	^ resolver invalidateOnMethodChange: aMethodAnnouncement
+	| changed |
+	changed := false.
+	(outgoing flatCollect: #yourself)
+		select: [ :e | e key isKindOf: TypLookup ]
+		thenDo: [ :e | 
+			((e key invalidateOnMethodChange: aMethodAnnouncement) or:
+				 (e target invalidateOnMethodChange: aMethodAnnouncement)) 
+				ifTrue: [ 
+					self outgoingRemove: e.
+					changed := true ] ].
+	^ changed or:
+		  (resolver invalidateOnMethodChange: aMethodAnnouncement)
 ]
 
 { #category : #accessing }

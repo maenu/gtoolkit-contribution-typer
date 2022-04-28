@@ -46,7 +46,7 @@ TypShaShadow class >> typGtShadowMethod: aSymbol result: aType arguments: someTy
 				 aType.
 				 (' . ' join:
 					  (someTypes collect: [ :e | '''{1}'' typAsType' format: { e } ])) }).
-	^ { (self compiledMethodAt: newSelector) }
+	^ { (aClass compiledMethodAt: newSelector) }
 ]
 
 { #category : #'*Typer-GToolkit' }

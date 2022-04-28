@@ -24,7 +24,8 @@ Pragma >> typPraIsParameters [
 
 { #category : #'*Typer-Pragma' }
 Pragma >> typPraIsResult [
-	^ selector = #typPraResult:
+
+	^ selector = #typPraResult: or: [ selector = #return: ]
 ]
 
 { #category : #'*Typer-Pragma' }

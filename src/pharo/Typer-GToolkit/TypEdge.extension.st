@@ -26,7 +26,7 @@ TypEdge >> typGtAsElementIn: aMondrian [
 { #category : #'*Typer-GToolkit' }
 TypEdge >> typGtAsElementIn: aMondrian with: aCollection [
 
-"	| label |
+	| label |
 	label := BrLabel new
 		         constraintsDo: [ :c | 
 			         c frame horizontal alignCenter.
@@ -48,10 +48,10 @@ TypEdge >> typGtAsElementIn: aMondrian with: aCollection [
 					label phlow spawnObject: aCollection ];
 				text: ('+{1} {2}' format: { 
 								 (aCollection size - 1).
-								 self asString }) asRopedText ]."
+								 self asString }) asRopedText ].
 	^ (self typGtAsElementIn: aMondrian)
-		  "addChild: label;
-		  yourself"
+		  addChild: label;
+		  yourself
 ]
 
 { #category : #'*Typer-GToolkit' }

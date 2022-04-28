@@ -83,6 +83,14 @@ TypMethodLookup >> initializeArguments: aCollection [
 	arguments := aCollection
 ]
 
+{ #category : #invalidation }
+TypMethodLookup >> invalidateOnMethodChange: aMethodAnnouncement [
+
+	^ (super invalidateOnMethodChange: aMethodAnnouncement) or:
+		  ((receiver invalidateOnMethodChange: aMethodAnnouncement) and: [ 
+			   selector = aMethodAnnouncement methodAffected selector ])
+]
+
 { #category : #accessing }
 TypMethodLookup >> postCopy [
 	super postCopy.

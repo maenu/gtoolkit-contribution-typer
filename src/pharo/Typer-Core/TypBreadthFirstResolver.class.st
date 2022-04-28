@@ -46,14 +46,23 @@ TypBreadthFirstResolver >> invalidate [
 { #category : #invalidation }
 TypBreadthFirstResolver >> invalidateOnClassChange: aClassAnnouncement [
 
-	^ resolvers do: [ :e | e invalidateOnClassChange: aClassAnnouncement ]
+	| changed |
+	changed := false.
+	resolvers do: [ :e | 
+		changed := changed or:
+			           (e invalidateOnClassChange: aClassAnnouncement) ].
+	^ changed
 ]
 
 { #category : #invalidation }
 TypBreadthFirstResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	^ resolvers do: [ :e | 
-		  e invalidateOnMethodChange: aMethodAnnouncement ]
+	| changed |
+	changed := false.
+	resolvers do: [ :e | 
+		changed := changed or:
+			           (e invalidateOnMethodChange: aMethodAnnouncement) ].
+	^ changed
 ]
 
 { #category : #accessing }

@@ -20,6 +20,7 @@ TypShaTypeResolver >> printOn: aStream [
 TypShaTypeResolver >> resolve: aLookup [
 
 	self assert: [ self canResolve: aLookup ].
+	aLookup initializeResolver: self.
 	^ self
 		  resolve: aLookup
 		  reduce: (aLookup classDescription typShaShadows collect: [ :e | 

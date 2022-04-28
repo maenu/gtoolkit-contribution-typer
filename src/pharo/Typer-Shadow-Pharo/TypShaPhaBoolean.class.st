@@ -58,20 +58,25 @@ TypShaPhaBoolean >> mIfTrueIfFalse: aLookup [
 				          origin: (ifTrue incomingAt: #next)
 				          target: ifFalse.
 			  next origin outgoingAdd: next.
-			  next := TypInfNextEdge origin: ifTrue incomingReturn target: node.
+			  next := TypInfNextEdge
+				          origin: ((ifTrue isKindOf: TypInfBlock)
+						           ifTrue: [ ifTrue incomingReturn ]
+						           ifFalse: [ ifTrue ])
+				          target: node.
 			  next origin outgoing at: #next ifPresent: [ :c | 
 					  c
 						  detect: [ :e | e target == node ]
 						  ifFound: [ :e | next origin outgoingRemove: e ] ].
 			  next origin outgoingAdd: next.
-			  ifFalse incomingReturn outgoingRemoveAt: #next.
-			  ifFalse outgoing at: #next ifPresent: [ :c | 
+			  next := TypInfNextEdge
+				          origin: ((ifFalse isKindOf: TypInfBlock)
+						           ifTrue: [ ifFalse incomingReturn ]
+						           ifFalse: [ ifFalse ])
+				          target: node.
+			  next origin outgoing at: #next ifPresent: [ :c | 
 					  c
 						  detect: [ :e | e target == node ]
-						  ifFound: [ :e | ifFalse outgoingRemove: e ] ].
-			  next := TypInfNextEdge
-				          origin: ifFalse incomingReturn
-				          target: node.
+						  ifFound: [ :e | next origin outgoingRemove: e ] ].
 			  next origin outgoingAdd: next ];
 		  yourself
 ]

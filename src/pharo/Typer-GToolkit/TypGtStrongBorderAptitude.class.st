@@ -21,46 +21,46 @@ TypGtStrongBorderAptitude >> initializeColor: aColor [
 	geometry := BlCircleGeometry new.
 	self collapsed
 		background: background;
-		border: border;
-		geometry: geometry.
+		border: border";
+		geometry: geometry".
 	self default
 		background: background;
-		border: border;
-		geometry: geometry.
+		border: border";
+		geometry: geometry".
 	self deselected
 		background: background;
-		border: border;
-		geometry: geometry.
+		border: border";
+		geometry: geometry".
 	self disabled
 		background: background;
-		border: border;
-		geometry: geometry.
+		border: border";
+		geometry: geometry".
 	self enabled
 		background: background;
-		border: border;
-		geometry: geometry.
+		border: border";
+		geometry: geometry".
 	self expanded
 		background: background;
-		border: border;
-		geometry: geometry.
+		border: border";
+		geometry: geometry".
 	self focused
 		background: background;
-		border: border;
-		geometry: geometry.
+		border: border";
+		geometry: geometry".
 	self hovered
 		background: background;
-		border: border;
-		geometry: geometry.
+		border: border";
+		geometry: geometry".
 	self pressed
 		background: background;
-		border: border;
-		geometry: geometry.
+		border: border";
+		geometry: geometry".
 	self selected
 		background: background;
-		border: border;
-		geometry: geometry.
+		border: border";
+		geometry: geometry".
 	self unfocused
 		background: background;
-		border: border;
-		geometry: geometry
+		border: border";
+		geometry: geometry"
 ]

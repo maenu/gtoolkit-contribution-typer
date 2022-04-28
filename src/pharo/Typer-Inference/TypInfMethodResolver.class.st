@@ -41,6 +41,18 @@ TypInfMethodResolver >> contextAt: aMethodNode self: aType super: anotherType [
 				  yourself ]
 ]
 
+{ #category : #'as yet unclassified' }
+TypInfMethodResolver >> invalidate: aMethodLookup onClassChange: aClassAnnouncement [
+
+	^ aClassAnnouncement typInfInvalidatesMethod: aMethodLookup
+]
+
+{ #category : #'as yet unclassified' }
+TypInfMethodResolver >> invalidate: aMethodLookup onMethodChange: aMethodAnnouncement [
+
+	^ aMethodAnnouncement typInfInvalidatesMethod: aMethodLookup
+]
+
 { #category : #invalidation }
 TypInfMethodResolver >> invalidateOnClassChange: aClassAnnouncement [
 
@@ -49,10 +61,10 @@ TypInfMethodResolver >> invalidateOnClassChange: aClassAnnouncement [
 	(outgoing flatCollect: #yourself)
 		select: [ :e | e key isKindOf: TypInfContextKey ]
 		thenDo: [ :e | 
-			changed := changed or:
-				           (e key
-					            invalidateOnClassChange: aClassAnnouncement
-					            in: e) ].
+			((e key invalidateOnClassChange: aClassAnnouncement) or:
+				 (e target invalidateOnClassChange: aClassAnnouncement)) ifTrue: [ 
+				self outgoingRemove: e.
+				changed := true ] ].
 	^ changed
 ]
 
@@ -64,10 +76,11 @@ TypInfMethodResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 	(outgoing flatCollect: #yourself)
 		select: [ :e | e key isKindOf: TypInfContextKey ]
 		thenDo: [ :e | 
-			changed := changed or:
-				           (e key
-					            invalidateOnMethodChange: aMethodAnnouncement
-					            in: e) ].
+			((e key invalidateOnMethodChange: aMethodAnnouncement) or:
+				 (e target invalidateOnMethodChange: aMethodAnnouncement)) 
+				ifTrue: [ 
+					self outgoingRemove: e.
+					changed := true ] ].
 	^ changed
 ]
 
@@ -89,6 +102,7 @@ TypInfMethodResolver >> resolve: aLookup [
 
 	| node |
 	self assert: [ self canResolve: aLookup ].
+	aLookup initializeResolver: self.
 	node := (aLookup receiver classDescription >> aLookup selector) ast.
 	^ self
 		  typeAt: node

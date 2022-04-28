@@ -2,7 +2,8 @@ Class {
 	#name : #TypLookup,
 	#superclass : #TypEdgeKey,
 	#instVars : [
-		'superLookup'
+		'superLookup',
+		'resolver'
 	],
 	#category : #'Typer-Core-Lookup'
 }
@@ -33,6 +34,12 @@ TypLookup >> hash [
 ]
 
 { #category : #accessing }
+TypLookup >> initializeResolver: anObject [
+
+	resolver := anObject
+]
+
+{ #category : #accessing }
 TypLookup >> initializeSuper: aLookup [
 	superLookup := aLookup
 ]
@@ -40,13 +47,29 @@ TypLookup >> initializeSuper: aLookup [
 { #category : #invalidation }
 TypLookup >> invalidateOnClassChange: aClassAnnouncement [
 
-	^ false
+	| changed |
+	changed := false.
+	resolver ifNotNil: [ 
+		changed := resolver
+			           invalidate: self
+			           onClassChange: aClassAnnouncement ].
+	self hasSuper ifFalse: [ ^ changed ].
+	^ changed or:
+		  (self asSuper invalidateOnClassChange: aClassAnnouncement)
 ]
 
 { #category : #invalidation }
 TypLookup >> invalidateOnMethodChange: aMethodAnnouncement [
 
-	^ false
+	| changed |
+	changed := false.
+	resolver ifNotNil: [ 
+		changed := resolver
+			           invalidate: self
+			           onMethodChange: aMethodAnnouncement ].
+	self hasSuper ifFalse: [ ^ changed ].
+	^ changed or:
+		  (self asSuper invalidateOnMethodChange: aMethodAnnouncement)
 ]
 
 { #category : #accessing }
@@ -55,6 +78,12 @@ TypLookup >> printOn: aStream [
 	superLookup ifNil: [ ^ self ].
 	aStream nextPutAll: ' | '.
 	superLookup printOn: aStream
+]
+
+{ #category : #accessing }
+TypLookup >> resolver [
+
+	^ resolver
 ]
 
 { #category : #accessing }

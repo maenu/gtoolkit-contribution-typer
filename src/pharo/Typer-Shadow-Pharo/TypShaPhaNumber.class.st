@@ -29,6 +29,15 @@ TypShaPhaNumber >> mBinary235: aLookup [
 		arguments: {Number typAsType}
 ]
 
+{ #category : #accessing }
+TypShaPhaNumber >> mBinary: aLookup [
+
+	<typShaMethod: '@'>
+	^ CompiledMethod
+		  typAsFunctionTypeWithResult: Point typAsType
+		  arguments: { Number typAsType }
+]
+
 { #category : #shadow }
 TypShaPhaNumber >> mTimesCollect: aLookup [
 
