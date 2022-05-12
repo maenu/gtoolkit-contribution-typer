@@ -10,7 +10,7 @@ TypFunctionTypeCopyingExamples >> copyIsNearlyShallow [
 	<gtExample>
 	| original copy |
 	original := TypFunctionTypeInitializingExamples new
-		            classDescriptionArgumentsSizeArgumentsOptionalBindings.
+		            classDescriptionArgumentsSizeArgumentsOptionalBindings copy.
 	original parameters
 		at: #'0'
 		put: TypNamedTypeInitializingExamples new classDescription.

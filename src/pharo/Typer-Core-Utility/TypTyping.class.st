@@ -8,9 +8,6 @@ Class {
 TypTyping >> invalidate [
 
 	<gtExample>
-	| probes |
-	probes := OrderedCollection new.
-	"probes add: 'pre-reset' -> self memoryProbe".
 	ASTCache reset.
 	"TKTCommonQueueWorkerPool allSubInstancesDo: #removeFailedTasks."
 	GtPlaygroundEvaluatedCodeButtonAttribute allSubInstancesDo: [ :e | 
@@ -40,11 +37,8 @@ TypTyping >> invalidate [
 	TypInfMethodResolver invalidate.
 	TypInfMethodIndex invalidate.
 	TypInfMethodNodeStack resetSoleInstance.
-	"sometimes needs to rounds to clean up"
-	1 second wait.
 	Smalltalk garbageCollect.
-	probes add: 'post-reset' -> self memoryProbe.
-	^ probes
+	^ self memoryProbe
 ]
 
 { #category : #accessing }

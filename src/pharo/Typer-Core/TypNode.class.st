@@ -304,9 +304,3 @@ TypNode >> postCopy [
 	incoming := IdentityDictionary new.
 	outgoing := IdentityDictionary new
 ]
-
-{ #category : #accessing }
-TypNode >> typIsNode [
-
-	^ true
-]
