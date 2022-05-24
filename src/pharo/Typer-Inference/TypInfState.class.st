@@ -81,7 +81,7 @@ TypInfState >> tighten: aState [
 	^ copy
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypInfState >> tighten: aNode with: aType [
 
 	^ self at: aNode put: ((self at: aNode) tighten: aType)

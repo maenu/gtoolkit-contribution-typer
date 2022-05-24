@@ -33,7 +33,7 @@ TypShaPhaSequenceableCollection class >> shadowedClass [
 TypShaPhaSequenceableCollection >> mAt: aLookup [
 	<typShaMethod: 'at:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
+		typAsFunctionTypeWithResult: (aLookup root receiver at: #A)
 		arguments: {Integer typAsType}
 ]
 
@@ -42,8 +42,8 @@ TypShaPhaSequenceableCollection >> mAtIfAbsent: aLookup [
 	<typShaMethod: 'at:ifAbsent:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult:
-			{(aLookup receiver at: #A).
-			(aLookup arguments at: 2) result} typAsType
+			{(aLookup root receiver at: #A).
+			(aLookup root arguments at: 2) result} typAsType
 		arguments:
 			{Integer typAsType.
 			BlockClosure typAsType}

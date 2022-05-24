@@ -84,7 +84,7 @@ TypInfNode >> printOn: aStream [
 	aStream nextPutAll: (node printStringLimitedTo: 32)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypInfNode >> slurp [
 
 	incoming at: #next ifPresent: [ :s | 
@@ -95,7 +95,7 @@ TypInfNode >> slurp [
 		s ifNotEmpty: [ 
 			| type |
 			type := (s collect: [ :e | e getIn: state ]) reduce: [ :a :b | 
-				        a tighten: b ].
+				        b tighten: a ].
 			state at: self put: type ] ]
 ]
 

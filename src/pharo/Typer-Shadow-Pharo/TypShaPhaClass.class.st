@@ -42,10 +42,21 @@ TypShaPhaClass >> mHasClassVarNamed: aLookup [
 ]
 
 { #category : #accessing }
-TypShaPhaClass >> mNew: aLookup [
-	<typShaMethod: 'new'>
+TypShaPhaClass >> mNew2: aLookup [
+
+	<typShaMethod: 'new:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver classDescription instanceSide typAsType
+		  typAsFunctionTypeWithResult:
+		  aLookup root receiver classDescription instanceSide typAsType
+		  arguments: { Integer typAsType }
+]
+
+{ #category : #accessing }
+TypShaPhaClass >> mNew: aLookup [
+
+	<typShaMethod: 'new'>
+	^ CompiledMethod typAsFunctionTypeWithResult:
+		  aLookup root receiver classDescription instanceSide typAsType
 ]
 
 { #category : #shadow }

@@ -31,7 +31,7 @@ TypShaPhaProtoObject >> mBinary288: aLookup [
 TypShaPhaProtoObject >> mClass: aLookup [
 	<typShaMethod: 'class'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup receiver classDescription class typAsType
+		typAsFunctionTypeWithResult: aLookup root receiver classDescription class typAsType
 ]
 
 { #category : #shadow }

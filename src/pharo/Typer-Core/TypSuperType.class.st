@@ -22,6 +22,12 @@ TypSuperType >> at: aString [
 	^ superType at: aString
 ]
 
+{ #category : #accessing }
+TypSuperType >> classDescription [
+
+	^ superType classDescription
+]
+
 { #category : #initialization }
 TypSuperType >> initialize [
 

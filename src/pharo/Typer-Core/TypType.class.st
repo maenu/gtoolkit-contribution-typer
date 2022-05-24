@@ -96,7 +96,7 @@ TypType >> asNullable [
 ]
 
 { #category : #enumerating }
-TypType >> bind: aType [
+TypType >> bindTo: aType [
 
 	"noop"
 
@@ -267,7 +267,7 @@ TypType >> loosen: aType [
 { #category : #converting }
 TypType >> printNameOn: aStream skipping: anIdentitySet [
 
-	^ self printOn: aStream skipping: anIdentitySet
+	self printOn: aStream skipping: anIdentitySet
 ]
 
 { #category : #printing }

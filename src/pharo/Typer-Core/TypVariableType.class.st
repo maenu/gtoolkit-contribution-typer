@@ -33,14 +33,9 @@ TypVariableType >> = anObject [
 ]
 
 { #category : #enumerating }
-TypVariableType >> bind: aType [
+TypVariableType >> bindTo: aType [
 
-	parent ifNil: [ 
-		parent := aType.
-		^ self ].
-	parent := { 
-		          parent.
-		          aType } typAsType
+	parent ifNil: [ parent := aType ]
 ]
 
 { #category : #comparing }
@@ -94,7 +89,7 @@ TypVariableType >> printOn: aStream skipping: anIdentitySet [
 	(anIdentitySet includes: self) ifTrue: [ 
 		aStream << '.'.
 		^ self ].
-	(parent isNil or: [ anIdentitySet includes: parent ]) ifFalse: [ 
+	(parent isNotNil and: [ (anIdentitySet includes: parent) not ]) ifTrue: [ 
 		parent printNameOn: aStream skipping: anIdentitySet.
 		aStream nextPut: $: ].
 	name printOn: aStream.

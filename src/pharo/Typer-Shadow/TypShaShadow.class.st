@@ -48,7 +48,7 @@ TypShaShadow class >> resolveType: aLookup [
 
 { #category : #'as yet unclassified' }
 TypShaShadow class >> shadowedClass [
-	<typPraResult: 'MetaClass'>
+	<typPraResult: 'Metaclass'>
 	self subclassResponsibility
 ]
 

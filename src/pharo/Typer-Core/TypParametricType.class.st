@@ -150,8 +150,9 @@ TypParametricType >> initialize [
 TypParametricType >> initializeParameters: anOrderedDictionary [
 
 	self assert: [ anOrderedDictionary isNotEmpty ].
-	parameters := anOrderedDictionary.
-	parameters valuesDo: [ :e | e bind: self ].
+	parameters removeAll.
+	anOrderedDictionary keysAndValuesDo: [ :k :v | 
+		parameters at: k put: (v bindTo: self) ].
 	self initializeSuper: nil
 ]
 
@@ -200,8 +201,7 @@ TypParametricType >> printNameOn: aStream skipping: anIdentitySet [
 
 	"trickery for parameter-less string"
 
-	^ String streamContents: [ :s | 
-		  super printOn: s skipping: anIdentitySet ]
+	super printOn: aStream skipping: anIdentitySet
 ]
 
 { #category : #printing }

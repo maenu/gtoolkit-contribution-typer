@@ -4,11 +4,12 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #'as yet unclassified' }
-TypInfInstance >> transfer [
+{ #category : #accessing }
+TypInfInstance >> initialize: aState [
 
-	state
-		tighten: self
-		with: (node variable owningClass typAsType lookupVariable:
-				 node variable name asSymbol)
+	state := aState.
+	^ state
+		  at: self
+		  put: (node variable owningClass typAsType lookupVariable:
+				   node variable name asSymbol)
 ]

@@ -9,11 +9,13 @@ TypTypeIndex class >> instance [
 
 	^ instance ifNil: [ 
 		  instance := self new
-			              initializeResolver: (TypDepthFirstResolver resolver:
-						               (TypBreadthFirstResolver resolvers: { 
-									                TypPraTypeResolver new.
-									                TypShaTypeResolver new.
-									                TypInfTypeResolver new }));
+			              initializeResolver:
+				              (TypBreadthFirstResolver resolvers: { 
+							               (TypDepthFirstResolver resolver:
+									                (TypBreadthFirstResolver resolvers: { 
+												                 TypPraTypeResolver new.
+												                 TypShaTypeResolver new })).
+							               TypInfTypeResolver new });
 			              yourself ]
 ]
 
