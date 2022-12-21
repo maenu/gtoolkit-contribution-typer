@@ -6,7 +6,7 @@ Class {
 		'target',
 		'key'
 	],
-	#category : #'Typer-Core-Type'
+	#category : #'Typer-Core-Graph'
 }
 
 { #category : #'instance creation' }

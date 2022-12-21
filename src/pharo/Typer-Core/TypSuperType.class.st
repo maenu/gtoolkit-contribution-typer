@@ -10,18 +10,6 @@ TypSuperType >> > aType [
 	^ superType >= aType
 ]
 
-{ #category : #polymorphic }
-TypSuperType >> arguments [
-
-	^ superType arguments
-]
-
-{ #category : #polymorphic }
-TypSuperType >> at: aString [
-
-	^ superType at: aString
-]
-
 { #category : #accessing }
 TypSuperType >> classDescription [
 
@@ -53,22 +41,4 @@ TypSuperType >> invalidateOnMethodChange: aMethodAnnouncement [
 TypSuperType >> isSuper [
 
 	^ true
-]
-
-{ #category : #polymorphic }
-TypSuperType >> result [
-
-	^ superType result
-]
-
-{ #category : #polymorphic }
-TypSuperType >> withAt: aString put: aType [
-
-	^ self withSuper: (superType withAt: aString put: aType)
-]
-
-{ #category : #polymorphic }
-TypSuperType >> withParameters: aCollection [
-
-	^ self withSuper: (superType withParameters: aCollection)
 ]

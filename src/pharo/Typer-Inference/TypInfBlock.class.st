@@ -29,6 +29,6 @@ TypInfBlock >> tighten: aType in: aState [
 
 	self incomingArguments withIndexDo: [ :n :i | 
 		i <= aType arguments size ifTrue: [ 
-			aState tightenFrom: self to: n with: (aType arguments at: i) ] ].
-	aState tightenFrom: self to: self incomingReturn with: aType result
+			aState covariantFrom: self to: n with: (aType arguments at: i) ] ].
+	aState covariantFrom: self to: self incomingReturn with: aType result
 ]

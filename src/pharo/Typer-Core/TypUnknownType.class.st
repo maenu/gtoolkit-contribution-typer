@@ -26,26 +26,15 @@ TypUnknownType >> > aType [
 	^ aType isUnknown not
 ]
 
-{ #category : #polymorphic }
-TypUnknownType >> arguments [
+{ #category : #converting }
+TypUnknownType >> contravariant: aType [
 
-	^ #(  )
-]
-
-{ #category : #polymorphic }
-TypUnknownType >> at: anObject [
 	^ self
 ]
 
 { #category : #testing }
 TypUnknownType >> isUnknown [
 	^ true
-]
-
-{ #category : #converting }
-TypUnknownType >> loosen: aType [
-
-	^ self
 ]
 
 { #category : #printing }
@@ -56,19 +45,13 @@ TypUnknownType >> printOn: aStream skipping: anIdentitySet [
 	aStream << '?'
 ]
 
-{ #category : #polymorphic }
-TypUnknownType >> result [
-
-	^ self
-]
-
-{ #category : #polymorphic }
+{ #category : #compatibility }
 TypUnknownType >> withParameters: aCollection [
 
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : #compatibility }
 TypUnknownType >> withSuper: aType [
 
 	^ self

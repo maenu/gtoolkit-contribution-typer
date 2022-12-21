@@ -5,7 +5,7 @@ Class {
 		'incoming',
 		'outgoing'
 	],
-	#category : #'Typer-Core-Type'
+	#category : #'Typer-Core-Graph'
 }
 
 { #category : #compiler }

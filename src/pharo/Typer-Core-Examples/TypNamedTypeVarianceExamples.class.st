@@ -11,7 +11,7 @@ TypNamedTypeVarianceExamples >> assignable [
 	| type superType |
 	type := TypNamedTypeInitializingExamples new classDescription.
 	superType := type super.
-	self assert: (type tighten: superType) equals: type.
-	self assert: (superType tighten: type) equals: type.
+	self assert: (type covariant: superType) equals: type.
+	self assert: (superType covariant: type) equals: type.
 	^ type
 ]

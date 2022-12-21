@@ -6,7 +6,7 @@ Class {
 
 { #category : #'generated-accessing' }
 TypTypeParser class >> cacheId [
-	^'2022-02-26T11:43:06.31391+01:00'
+	^'2022-12-20T14:09:16.809882+01:00'
 ]
 
 { #category : #generated }
@@ -62,7 +62,7 @@ VariableType
 	: ""#"" Name 'name'
 		{ TypVariableType named: name asSymbol }
 	| ""#"" Name 'name' ""<="" Type 'superType' 
-		{ TypVariableType named: name asSymbol superType: superType }
+		{ TypVariableType super: superType named: name asSymbol }
 	;
 NamedType
 	: Name 'name' 
@@ -107,7 +107,7 @@ TypTypeParser class >> reduceTable [
 ^#(
 	#(20 1 #reduceActionForNilType1: 625665 false) 
 	#(19 1 #reduceActionForUnknownType1: 577537 false) 
-	#(27 1 #reduceActionForName1: 1685505 false) 
+	#(27 1 #reduceActionForName1: 1681409 false) 
 	#(17 1 #reduceActionForTypes1: 241665 false) 
 	#(18 1 #liftFirstValue: 334849 false) 
 	#(18 1 #liftFirstValue: 334850 false) 
@@ -116,16 +116,16 @@ TypTypeParser class >> reduceTable [
 	#(18 1 #liftFirstValue: 334854 false) 
 	#(18 1 #liftFirstValue: 334853 false) 
 	#(18 1 #liftFirstValue: 334852 false) 
-	#(22 1 #reduceActionForNamedType1: 854017 false) 
+	#(22 1 #reduceActionForNamedType1: 849921 false) 
 	#(21 2 #reduceActionForVariableType1: 665601 false) 
-	#(26 0 #reduceActionForEmptyTypes2: 1631234 false) 
-	#(25 3 #reduceActionForUnionType1: 1545217 false) 
+	#(26 0 #reduceActionForEmptyTypes2: 1627138 false) 
+	#(25 3 #reduceActionForUnionType1: 1541121 false) 
 	#(17 3 #reduceActionForTypes2: 241666 false) 
-	#(26 1 #liftFirstValue: 1631233 false) 
+	#(26 1 #liftFirstValue: 1627137 false) 
 	#(21 4 #reduceActionForVariableType2: 665602 false) 
-	#(23 4 #reduceActionForParametricType1: 964609 false) 
-	#(24 6 #reduceActionForFunctionType2: 1163266 false) 
-	#(24 6 #reduceActionForFunctionType1: 1163265 false)
+	#(23 4 #reduceActionForParametricType1: 960513 false) 
+	#(24 6 #reduceActionForFunctionType2: 1159170 false) 
+	#(24 6 #reduceActionForFunctionType1: 1159169 false)
 	).
 ]
 
@@ -283,7 +283,5 @@ TypTypeParser >> reduceActionForVariableType1: nodes [
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForVariableType2: nodes [
 
-	^ TypVariableType
-		  named: (nodes at: 2) asSymbol
-		  super: (nodes at: 4)
+	^ TypVariableType super: (nodes at: 4) named: (nodes at: 2) asSymbol
 ]

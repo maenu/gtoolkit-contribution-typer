@@ -162,7 +162,7 @@ TypFunctionType >> > aType [
 		allSatisfy: [ :e | (self arguments at: e) >= (aType arguments at: e) ]
 ]
 
-{ #category : #accessing }
+{ #category : #compatibility }
 TypFunctionType >> arguments [
 
 	<typPraResult: 'SequenceableCollection<TypType>'>
@@ -189,9 +189,11 @@ TypFunctionType >> hashSkipping: anIdentitySet [
 
 { #category : #initialization }
 TypFunctionType >> initialize [
+
 	<typPraVariable: 'argumentsSize' as: 'Integer'>
 	<typPraVariable: 'argumentsOptional' as: 'Boolean'>
-	super initialize
+	super initialize.
+	argumentsOptional := false
 ]
 
 { #category : #initialization }
@@ -245,7 +247,7 @@ TypFunctionType >> printOn: aStream skipping: anIdentitySet [
 	self result printOn: aStream skipping: anIdentitySet , {self}
 ]
 
-{ #category : #accessing }
+{ #category : #compatibility }
 TypFunctionType >> result [
 	<typPraResult: 'TypType'>
 	^ self at: #'0'
@@ -262,7 +264,7 @@ TypFunctionType >> withArguments: someTypes [
 	^ self withParameters: { self result } , someTypes
 ]
 
-{ #category : #polymorphic }
+{ #category : #converting }
 TypFunctionType >> withParameters: aCollection [
 
 	self hasClassDescription ifTrue: [ 

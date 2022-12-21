@@ -20,7 +20,7 @@ TypInfTightenEdge >> getIn: aState [
 
 	^ aState
 		  at: self
-		  ifPresent: [ :t | type tighten: t ]
+		  ifPresent: [ :t | type covariant: t ]
 		  ifAbsent: [ type ]
 ]
 
@@ -39,5 +39,5 @@ TypInfTightenEdge >> isTighten [
 { #category : #generated }
 TypInfTightenEdge >> set: aType in: aState [
 
-	^ aState at: self put: (type := type tighten: aType)
+	^ aState at: self put: (type := type covariant: aType)
 ]

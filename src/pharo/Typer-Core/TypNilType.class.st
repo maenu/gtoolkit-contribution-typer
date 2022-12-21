@@ -55,6 +55,18 @@ TypNilType >> asNullable [
 	^ self
 ]
 
+{ #category : #converting }
+TypNilType >> contravariant: aType [
+
+	^ aType asNullable
+]
+
+{ #category : #converting }
+TypNilType >> covariant: aType [
+
+	^ aType asNullable
+]
+
 { #category : #initialization }
 TypNilType >> initialize [
 	super initialize.
@@ -66,22 +78,10 @@ TypNilType >> isNil [
 	^ true
 ]
 
-{ #category : #converting }
-TypNilType >> loosen: aType [
-
-	^ aType asNullable
-]
-
 { #category : #printing }
 TypNilType >> printOn: aStream skipping: anIdentitySet [
 	(anIdentitySet includes: self)
 		ifTrue: [ aStream << '.'.
 			^ self ].
 	aStream << '!'
-]
-
-{ #category : #converting }
-TypNilType >> tighten: aType [
-
-	^ aType asNullable
 ]

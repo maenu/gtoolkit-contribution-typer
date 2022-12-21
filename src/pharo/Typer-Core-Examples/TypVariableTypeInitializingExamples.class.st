@@ -30,7 +30,7 @@ TypVariableTypeInitializingExamples >> namedInvalid [
 TypVariableTypeInitializingExamples >> namedSuperType [
 	<gtExample>
 	| type |
-	type := TypVariableType named: #A super: (TypNamedType classDescription: String).
+	type := TypVariableType super: (TypNamedType classDescription: String) named: #A.
 	self assert: type name equals: #A.
 	self assert: type hasSuper.
 	self assert: type super equals: (TypNamedType classDescription: String).

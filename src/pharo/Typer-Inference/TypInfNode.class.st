@@ -89,13 +89,13 @@ TypInfNode >> slurp [
 
 	incoming at: #next ifPresent: [ :s | 
 		s ifNotEmpty: [ 
-			state := (s collect: #state) reduce: [ :a :b | a tighten: b ].
+			state := (s collect: #state) reduce: [ :a :b | a covariant: b ].
 			state := state copy "for good measure" ] ].
 	incoming at: #tighten ifPresent: [ :s | 
 		s ifNotEmpty: [ 
 			| type |
 			type := (s collect: [ :e | e getIn: state ]) reduce: [ :a :b | 
-				        b tighten: a ].
+				        b covariant: a ].
 			state at: self put: type ] ]
 ]
 

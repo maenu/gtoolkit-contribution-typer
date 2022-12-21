@@ -36,13 +36,13 @@ TypInfMessage >> transfer [
 		classes := TypInfMethodIndex instance implementors: node selector.
 		(classes size between: 1 and: 8) ifTrue: [ 
 			state
-				tightenFrom: self
+				covariantFrom: self
 				to: self incomingReceiver
 				with: (classes collect: #typAsType) typAsType ] ].
 	method := self method.
 	method typInfRotate: self.
 	self incomingArguments withIndexDo: [ :e :i | 
 		i <= method arguments size ifTrue: [ 
-			state tightenFrom: self to: e with: (method arguments at: i) ] ].
-	state tighten: self with: method result
+			state covariantFrom: self to: e with: (method arguments at: i) ] ].
+	state covariant: self with: method result
 ]

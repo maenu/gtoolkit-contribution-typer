@@ -115,16 +115,38 @@ TypParametricType >> > aType [
 	^ parameters keys allSatisfy: [ :e | (self at: e) >= (aType at: e) ]
 ]
 
-{ #category : #accessing }
+{ #category : #compatibility }
 TypParametricType >> at: aString [
 
-	^ self at: aString ifAbsent: [ self super at: aString ]
+	^ parameters at: aString ifAbsent: [ self super at: aString ]
 ]
 
-{ #category : #accessing }
-TypParametricType >> at: aString ifAbsent: aBlock [
+{ #category : #converting }
+TypParametricType >> contravariant: aType [
 
-	^ parameters at: aString ifAbsent: aBlock
+	| copyParameters otherParameters |
+	(aType isParametric and: [ 
+		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
+		ifFalse: [ ^ super contravariant: aType ].
+	otherParameters := aType parameters.
+	copyParameters := OrderedCollection new.
+	parameters keysAndValuesDo: [ :n :t | 
+		copyParameters add: (t contravariant: (aType at: n)) ].
+	^ self withParameters: copyParameters
+]
+
+{ #category : #converting }
+TypParametricType >> covariant: aType [
+
+	| copyParameters otherParameters |
+	(aType isParametric and: [ 
+		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
+		ifFalse: [ ^ super covariant: aType ].
+	otherParameters := aType parameters.
+	copyParameters := OrderedCollection new.
+	parameters keysAndValuesDo: [ :n :t | 
+		copyParameters add: (t covariant: (aType at: n)) ].
+	^ self withParameters: copyParameters
 ]
 
 { #category : #comparing }
@@ -152,7 +174,7 @@ TypParametricType >> initializeParameters: anOrderedDictionary [
 	self assert: [ anOrderedDictionary isNotEmpty ].
 	parameters removeAll.
 	anOrderedDictionary keysAndValuesDo: [ :k :v | 
-		parameters at: k put: (v bindTo: self) ].
+		parameters at: k put: (v boundTo: self) ].
 	self initializeSuper: nil
 ]
 
@@ -169,21 +191,7 @@ TypParametricType >> isParametric [
 	^ true
 ]
 
-{ #category : #converting }
-TypParametricType >> loosen: aType [
-
-	| copyParameters otherParameters |
-	(aType isParametric and: [ 
-		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
-		ifFalse: [ ^ super loosen: aType ].
-	otherParameters := aType parameters.
-	copyParameters := OrderedCollection new.
-	parameters keysAndValuesDo: [ :n :t | 
-		copyParameters add: (t loosen: (aType at: n)) ].
-	^ self withParameters: copyParameters
-]
-
-{ #category : #accessing }
+{ #category : #compatibility }
 TypParametricType >> parameters [
 
 	^ parameters
@@ -198,6 +206,8 @@ TypParametricType >> postCopy [
 
 { #category : #printing }
 TypParametricType >> printNameOn: aStream skipping: anIdentitySet [
+
+	self flag: 'weird'.
 
 	"trickery for parameter-less string"
 
@@ -231,21 +241,7 @@ TypParametricType >> super [
 	^ superType
 ]
 
-{ #category : #converting }
-TypParametricType >> tighten: aType [
-
-	| copyParameters otherParameters |
-	(aType isParametric and: [ 
-		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
-		ifFalse: [ ^ super tighten: aType ].
-	otherParameters := aType parameters.
-	copyParameters := OrderedCollection new.
-	parameters keysAndValuesDo: [ :n :t | 
-		copyParameters add: (t tighten: (aType at: n)) ].
-	^ self withParameters: copyParameters
-]
-
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 TypParametricType >> typGtParametersFor: aView [
 
 	<gtView>
@@ -256,7 +252,7 @@ TypParametricType >> typGtParametersFor: aView [
 		  view: #gtItemsFor:
 ]
 
-{ #category : #converting }
+{ #category : #compatibility }
 TypParametricType >> withAt: aSymbol put: aType [
 
 	^ self withParameters: (parameters copy
@@ -264,7 +260,7 @@ TypParametricType >> withAt: aSymbol put: aType [
 			   values)
 ]
 
-{ #category : #converting }
+{ #category : #compatibility }
 TypParametricType >> withParameters: aCollection [
 
 	| copyParameters |
@@ -283,7 +279,7 @@ TypParametricType >> withParameters: aCollection [
 		  super: self superOrNil
 ]
 
-{ #category : #converting }
+{ #category : #compatibility }
 TypParametricType >> withSuper: aType [
 
 	self hasClassDescription ifTrue: [ 

@@ -19,7 +19,7 @@ TypInfLocal >> incomingRead: aNode [
 { #category : #'as yet unclassified' }
 TypInfLocal >> tighten: aType in: aState [
 
-	aState tightenFrom: self to: self incomingRead with: aType
+	aState covariantFrom: self to: self incomingRead with: aType
 ]
 
 { #category : #accessing }
@@ -27,5 +27,5 @@ TypInfLocal >> transfer [
 
 	(self incomingNext isKindOf: TypInfAssignment) ifTrue: [ 
 		^ self tighten: self type in: state ].
-	state tighten: self with: (state at: self incomingRead)
+	state covariant: self with: (state at: self incomingRead)
 ]

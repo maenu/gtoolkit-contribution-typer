@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-TypValueType class >> value: anObject super: aType [
+TypValueType class >> super: aType value: anObject [
 
 	^ self index
 		  at: { 
@@ -28,6 +28,12 @@ TypValueType >> = anObject [
 	anObject class = self class ifFalse: [ ^ false ].
 	value = anObject value ifFalse: [ ^ false ].
 	^ self super = anObject super
+]
+
+{ #category : #comparing }
+TypValueType >> > aType [
+
+	^ superType >= aType
 ]
 
 { #category : #comparing }
@@ -68,5 +74,5 @@ TypValueType >> value [
 { #category : #converting }
 TypValueType >> withSuper: aType [
 
-	^ self class value: value super: aType
+	^ self class super: aType value: value
 ]

@@ -8,7 +8,7 @@ Class {
 TypInfClass >> transfer [
 
 	state
-		tighten: self
+		covariant: self
 		with: (node variable owningClass typAsType lookupVariable:
 				 node variable name asSymbol)
 ]

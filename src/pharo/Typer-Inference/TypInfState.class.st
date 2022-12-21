@@ -25,6 +25,57 @@ TypInfState >> = anObject [
 	^ true
 ]
 
+{ #category : #splitjoin }
+TypInfState >> covariant: aState [
+
+	| copy |
+	self assert: [ aState self = selfType ].
+	self assert: [ aState super = superType ].
+	copy := self copy.
+	aState keysAndValuesDo: [ :n :t | 
+		copy
+			at: n
+			put:
+			(copy at: n ifPresent: [ :tt | t covariant: tt ] ifAbsent: [ t ]) ].
+	^ copy
+]
+
+{ #category : #accessing }
+TypInfState >> covariant: aNode with: aType [
+
+	^ self at: aNode put: ((self at: aNode) covariant: aType)
+]
+
+{ #category : #'as yet unclassified' }
+TypInfState >> covariantFrom: aNode to: anotherNode with: aType [
+
+	| type edge |
+	aType isUnknown ifTrue: [ 
+		^ self "generalizing to the bottom type is not a constraint" ].
+	"tighten type"
+	type := self covariant: anotherNode with: aType.
+	"tighten node with tightened type"
+	anotherNode tighten: type in: self.
+	"ensure tighten edge"
+	edge := aNode outgoing
+		        at: #tighten
+		        ifPresent: [ :s | 
+			        s detect: [ :e | e target == anotherNode ] ifNone: [ 
+				        aNode outgoingAdd:
+					        (TypInfTightenEdge
+						         origin: aNode
+						         target: anotherNode
+						         type: type) ] ]
+		        ifAbsent: [ 
+			        aNode outgoingAdd:
+				        (TypInfTightenEdge
+					         origin: aNode
+					         target: anotherNode
+					         type: type) ].
+	"tighten edge"
+	edge set: type in: self
+]
+
 { #category : #accessing }
 TypInfState >> diff: aState [
 
@@ -64,55 +115,4 @@ TypInfState >> self [
 TypInfState >> super [
 
 	^ superType
-]
-
-{ #category : #splitjoin }
-TypInfState >> tighten: aState [
-
-	| copy |
-	self assert: [ aState self = selfType ].
-	self assert: [ aState super = superType ].
-	copy := self copy.
-	aState keysAndValuesDo: [ :n :t | 
-		copy
-			at: n
-			put:
-			(copy at: n ifPresent: [ :tt | t tighten: tt ] ifAbsent: [ t ]) ].
-	^ copy
-]
-
-{ #category : #accessing }
-TypInfState >> tighten: aNode with: aType [
-
-	^ self at: aNode put: ((self at: aNode) tighten: aType)
-]
-
-{ #category : #'as yet unclassified' }
-TypInfState >> tightenFrom: aNode to: anotherNode with: aType [
-
-	| type edge |
-	aType isUnknown ifTrue: [ 
-		^ self "generalizing to the bottom type is not a constraint" ].
-	"tighten type"
-	type := self tighten: anotherNode with: aType.
-	"tighten node with tightened type"
-	anotherNode tighten: type in: self.
-	"ensure tighten edge"
-	edge := aNode outgoing
-		        at: #tighten
-		        ifPresent: [ :s | 
-			        s detect: [ :e | e target == anotherNode ] ifNone: [ 
-				        aNode outgoingAdd:
-					        (TypInfTightenEdge
-						         origin: aNode
-						         target: anotherNode
-						         type: type) ] ]
-		        ifAbsent: [ 
-			        aNode outgoingAdd:
-				        (TypInfTightenEdge
-					         origin: aNode
-					         target: anotherNode
-					         type: type) ].
-	"tighten edge"
-	edge set: type in: self
 ]

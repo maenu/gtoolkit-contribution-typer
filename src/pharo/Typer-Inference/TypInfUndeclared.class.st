@@ -1,7 +1,7 @@
 Class {
 	#name : #TypInfUndeclared,
 	#superclass : #TypInfVariable,
-	#category : #'Typer-Inference'
+	#category : #'Typer-Inference-Core'
 }
 
 { #category : #initialization }

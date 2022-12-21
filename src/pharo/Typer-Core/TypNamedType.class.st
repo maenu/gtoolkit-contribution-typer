@@ -92,20 +92,6 @@ TypNamedType >> > aType [
 	^ self super > aType super
 ]
 
-{ #category : #'as yet unclassified' }
-TypNamedType >> arguments [
-
-	^ #(  )
-]
-
-{ #category : #polymorphic }
-TypNamedType >> at: aString [
-
-	^ self hasSuper
-		  ifTrue: [ self super at: aString ]
-		  ifFalse: [ TypUnknownType instance ]
-]
-
 { #category : #accessing }
 TypNamedType >> classDescription [
 	<typPraResult: 'ClassDescription'>
@@ -150,10 +136,8 @@ TypNamedType >> initialize [
 TypNamedType >> initializeClassDescription: aClassDescription [
 
 	<typPraArguments: 'ClassDescription'>
-	classDescription := aClassDescription.
-	name := classDescription name.
-	hasClassDescription := true.
-	hash := nil
+	self initializeName: aClassDescription name.
+	classDescription := aClassDescription
 ]
 
 { #category : #initialization }
@@ -186,11 +170,6 @@ TypNamedType >> name [
 	^ name
 ]
 
-{ #category : #polymorphic }
-TypNamedType >> parameters [
-	^ self super parameters
-]
-
 { #category : #printing }
 TypNamedType >> printOn: aStream skipping: anIdentitySet [
 
@@ -200,31 +179,11 @@ TypNamedType >> printOn: aStream skipping: anIdentitySet [
 	aStream << name asString
 ]
 
-{ #category : #polymorphic }
-TypNamedType >> result [
-
-	self hasSuper ifFalse: [ ^ TypUnknownType instance ].
-	^ self super result
-]
-
 { #category : #accessing }
 TypNamedType >> super [
 	self assert: [ self hasSuper ].
 	^ superType
 		ifNil: [ superType := classDescription superclass typAsType ]
-]
-
-{ #category : #polymorphic }
-TypNamedType >> withAt: aString put: aType [
-
-	^ self withSuper: (self super withAt: aString put: aType)
-]
-
-{ #category : #polymorphic }
-TypNamedType >> withParameters: aCollection [
-
-	self hasSuper ifFalse: [ ^ self ].
-	^ self withSuper: (self super withParameters: aCollection)
 ]
 
 { #category : #converting }

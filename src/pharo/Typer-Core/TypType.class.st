@@ -74,11 +74,11 @@ TypType >> >= aType [
 	^ self > aType or: [ self = aType ]
 ]
 
-{ #category : #converting }
-TypType >> asNameString [
+{ #category : #compatibility }
+TypType >> arguments [
 
-	^ String streamContents: [ :s | 
-		  self printNameOn: s skipping: IdentitySet new ]
+	self hasSuper ifFalse: [ ^ #(  ) ].
+	^ self super arguments
 ]
 
 { #category : #converting }
@@ -95,18 +95,36 @@ TypType >> asNullable [
 		  self } typAsType
 ]
 
-{ #category : #enumerating }
-TypType >> bindTo: aType [
+{ #category : #compatibility }
+TypType >> at: aString [
+
+	self hasSuper ifFalse: [ ^ TypUnknownType instance ].
+	^ self super at: aString
+]
+
+{ #category : #compatibility }
+TypType >> boundTo: aType [
 
 	"noop"
 
-	
+	^ self
 ]
 
-{ #category : #'as yet unclassified' }
-TypType >> common: aType [
+{ #category : #converting }
+TypType >> contravariant: aType [
+
+	"self and aType are assignable to result.
+	 result >= self
+	 result >= aType
+	 should be valid
+	
+	 name is not precise"
 
 	| a b i common |
+	aType isUnknown ifTrue: [ ^ aType ].
+	aType isNil ifTrue: [ ^ self asNullable ].
+	self >= aType ifTrue: [ ^ self ].
+	self < aType ifTrue: [ ^ aType ].
 	a := self withAllSupers reversed.
 	b := aType withAllSupers reversed.
 	a size > b size ifTrue: [ "ensure a to be shorter than b"
@@ -124,6 +142,25 @@ TypType >> common: aType [
 		common := a at: i.
 		i := i + 1 ].
 	^ common
+]
+
+{ #category : #converting }
+TypType >> covariant: aType [
+
+	"result is assignable to self and aType.
+	 self >= result
+	 aType >= result
+	 should be valid
+	
+	name is not precise"
+
+	aType isUnknown ifTrue: [ ^ self ].
+	aType isNil ifTrue: [ ^ self asNullable ].
+	self >= aType ifTrue: [ ^ aType ].
+	self < aType ifTrue: [ ^ self ].
+	^ { 
+		  self.
+		  aType } typAsType
 ]
 
 { #category : #testing }
@@ -152,8 +189,8 @@ TypType >> hashSkipping: anIdentitySet [
 TypType >> initialize [
 
 	<typPraVariable: 'superType' as: '{!,TypType}'>
-	super initialize.
-	hash := nil
+	self flag: 'use class-side methods for typings, empty initialize is intrusive'.
+	super initialize
 ]
 
 { #category : #initialization }
@@ -249,24 +286,17 @@ TypType >> lookupVariable: aSymbol [
 	^ TypVariableIndex instance lookupReceiver: self selector: aSymbol
 ]
 
-{ #category : #converting }
-TypType >> loosen: aType [
+{ #category : #compatibility }
+TypType >> parameters [
 
-	"self and aType are assignable to result.
-	 result >= self
-	 result >= aType
-	 should be valid"
-
-	aType isUnknown ifTrue: [ ^ aType ].
-	aType isNil ifTrue: [ ^ self asNullable ].
-	self >= aType ifTrue: [ ^ self ].
-	self < aType ifTrue: [ ^ aType ].
-	^ self common: aType
+	self hasSuper ifFalse: [ ^ #(  ) ].
+	^ self super parameters
 ]
 
-{ #category : #converting }
+{ #category : #'as yet unclassified' }
 TypType >> printNameOn: aStream skipping: anIdentitySet [
 
+	self flag: 'weird'.
 	self printOn: aStream skipping: anIdentitySet
 ]
 
@@ -281,6 +311,13 @@ TypType >> printOn: aStream skipping: anIdentitySet [
 	self subclassResponsibility
 ]
 
+{ #category : #compatibility }
+TypType >> result [
+
+	self hasSuper ifFalse: [ ^ TypUnknownType instance ].
+	^ self super result
+]
+
 { #category : #accessing }
 TypType >> super [
 
@@ -292,38 +329,29 @@ TypType >> super [
 { #category : #'as yet unclassified' }
 TypType >> superOrNil [
 
+	self flag: 'weird'.
 	self hasSuper ifFalse: [ ^ nil ].
 	^ self super
-]
-
-{ #category : #converting }
-TypType >> tighten: aType [
-
-	"result is assignable to self and aType.
-	 self >= result
-	 aType >= result
-	 should be valid"
-
-	aType isUnknown ifTrue: [ ^ self ].
-	aType isNil ifTrue: [ ^ self asNullable ].
-	self >= aType ifTrue: [ ^ aType ].
-	self < aType ifTrue: [ ^ self ].
-	^ { 
-		  self.
-		  aType } typAsType
 ]
 
 { #category : #'as yet unclassified' }
 TypType >> withAllSupers [
 
+	self flag: 'weird'.
 	self hasSuper ifFalse: [ ^ { self } ].
 	^ { self } , self super withAllSupers
 ]
 
-{ #category : #polymorphic }
+{ #category : #converting }
+TypType >> withAt: aString put: aType [
+
+	^ self withSuper: (self super withAt: aString put: aType)
+]
+
+{ #category : #converting }
 TypType >> withParameters: aCollection [
 
-	self subclassResponsibility
+	^ self withSuper: (self super withParameters: aCollection)
 ]
 
 { #category : #converting }

@@ -1,7 +1,7 @@
 Class {
 	#name : #TypEdgePragmaCompilerPlugin,
 	#superclass : #OCCompilerASTPlugin,
-	#category : #'Typer-Core-Type'
+	#category : #'Typer-Core-Graph'
 }
 
 { #category : #private }

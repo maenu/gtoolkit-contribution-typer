@@ -5,7 +5,7 @@ Class {
 		'selector',
 		'arguments'
 	],
-	#category : #'Typer-Core-Type'
+	#category : #'Typer-Core-Graph'
 }
 
 { #category : #'instance creation' }

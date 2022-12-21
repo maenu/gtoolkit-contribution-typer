@@ -34,7 +34,7 @@ TypUnionType >> > aType [
 	^ aType types allSatisfy: [ :e | self >= e ]
 ]
 
-{ #category : #polymorphic }
+{ #category : #compatibility }
 TypUnionType >> arguments [
 
 	| arguments n |
@@ -66,7 +66,7 @@ TypUnionType >> asNullable [
 		  ifFalse: [ (types , { TypNilType instance }) typAsType ]
 ]
 
-{ #category : #polymorphic }
+{ #category : #compatibility }
 TypUnionType >> at: aString [
 
 	<typEdge>
@@ -151,7 +151,7 @@ TypUnionType >> postCopy [
 	types := types copy
 ]
 
-{ #category : #converting }
+{ #category : #'as yet unclassified' }
 TypUnionType >> printNameOn: aStream skipping: anIdentitySet [
 
 	(anIdentitySet includes: self) ifTrue: [ ^ self ].
@@ -201,7 +201,7 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 	aStream << '}'
 ]
 
-{ #category : #polymorphic }
+{ #category : #compatibility }
 TypUnionType >> result [
 
 	<typEdge>
@@ -227,7 +227,7 @@ TypUnionType >> super [
 	[ remains isEmpty ] whileFalse: [ 
 		| next common |
 		next := remains remove: remains anyOne.
-		common := current loosen: next.
+		common := current contravariant: next.
 		common = current ifFalse: [ 
 			current := common.
 			remains add: current ] ].
@@ -246,14 +246,14 @@ TypUnionType >> types [
 	^ types copy
 ]
 
-{ #category : #polymorphic }
+{ #category : #compatibility }
 TypUnionType >> withParameters: aCollection [
 
 	<typEdge>
 	^ (types collect: [ :e | e withParameters: aCollection ]) typAsType
 ]
 
-{ #category : #converting }
+{ #category : #compatibility }
 TypUnionType >> withSuper: aType [
 
 	^ self
