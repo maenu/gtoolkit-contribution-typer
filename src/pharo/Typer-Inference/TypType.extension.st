@@ -1,6 +1,12 @@
 Extension { #name : #TypType }
 
 { #category : #'*Typer-Inference' }
+TypType >> typInfNode [
+
+	^ self outgoingAt: #method ifAbsent: [ nil ]
+]
+
+{ #category : #'*Typer-Inference' }
 TypType >> typInfRotate: aMessageNode [
 
 	

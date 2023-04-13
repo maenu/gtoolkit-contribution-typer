@@ -7,7 +7,7 @@ Class {
 		'from',
 		'to'
 	],
-	#category : #'Typer-Inference-Core'
+	#category : #'Typer-Inference'
 }
 
 { #category : #'as yet unclassified' }

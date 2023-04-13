@@ -27,14 +27,13 @@ TypInfContext >> initializeNode: aMethodNode self: aType super: anotherType [
 	"ordered to have a cheap, close-to-topological sorting.
 	 makes the run more predictable"
 
-	stable := nil.
-	root := nil.
-	current := nil.
 	nodes := OrderedIdentityDictionary new.
-	aMethodNode acceptVisitor: self.
+	root := nodes at: aMethodNode put: aMethodNode typInfNode.
 	state := TypInfState self: aType super: anotherType.
-	nodes valuesDo: [ :e | e initialize: state ].
+	current := root.
+	aMethodNode acceptVisitor: self.
 	nodes keysAndValuesDo: [ :n :e | 
+		e initialize: state.
 		self outgoingAt: n put: e.
 		e outgoing
 			at: #next
@@ -53,7 +52,10 @@ TypInfContext >> next: aNode [
 { #category : #accessing }
 TypInfContext >> nodeAt: aNode [
 
-	^ nodes at: aNode ifAbsentPut: [ aNode typInfNode ]
+	^ nodes at: aNode ifAbsentPut: [ 
+		  aNode typInfNode
+			  methodNode: root;
+			  yourself ]
 ]
 
 { #category : #accessing }
@@ -183,10 +185,6 @@ TypInfContext >> visitMessageNode: aMessageNode [
 { #category : #visiting }
 TypInfContext >> visitMethodNode: aMethodNode [
 
-	self assert: [ root isNil ].
-	self assert: [ current isNil ].
-	root := self nodeAt: aMethodNode.
-	current := root.
 	current incomingArguments:
 		(aMethodNode arguments collect: [ :n | self nodeAt: n ]).
 	self visitNode: aMethodNode body.

@@ -68,6 +68,18 @@ TypInfNode >> invalidateOnMethodChange: aMethodAnnouncement [
 ]
 
 { #category : #accessing }
+TypInfNode >> methodNode [
+
+	^ self outgoingAt: #methodNode
+]
+
+{ #category : #accessing }
+TypInfNode >> methodNode: aNode [
+
+	^ self outgoingAt: #methodNode put: aNode
+]
+
+{ #category : #accessing }
 TypInfNode >> node [
 	^ node
 ]

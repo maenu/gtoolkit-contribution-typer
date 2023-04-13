@@ -1,8 +1,8 @@
 Class {
 	#name : #TypInfLiteralArray,
 	#superclass : #TypInfNode,
-	#traits : 'TTypInfWithArguments',
-	#classTraits : 'TTypInfWithArguments classTrait',
+	#traits : 'TypInfTWithArguments',
+	#classTraits : 'TypInfTWithArguments classTrait',
 	#category : #'Typer-Inference-Core'
 }
 

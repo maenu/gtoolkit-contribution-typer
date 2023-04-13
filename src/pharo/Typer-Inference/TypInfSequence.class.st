@@ -1,8 +1,8 @@
 Class {
 	#name : #TypInfSequence,
 	#superclass : #TypInfNode,
-	#traits : 'TTypInfWithArguments',
-	#classTraits : 'TTypInfWithArguments classTrait',
+	#traits : 'TypInfTWithArguments',
+	#classTraits : 'TypInfTWithArguments classTrait',
 	#category : #'Typer-Inference-Core'
 }
 

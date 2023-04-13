@@ -1,7 +1,7 @@
 Class {
 	#name : #TypInfMethodNodeStack,
 	#superclass : #ProcessLocalVariable,
-	#category : #'Typer-Inference-Core'
+	#category : #'Typer-Inference-Lookup'
 }
 
 { #category : #'as yet unclassified' }

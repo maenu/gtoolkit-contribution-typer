@@ -1,8 +1,8 @@
 Class {
 	#name : #TypInfMethod,
 	#superclass : #TypInfNode,
-	#traits : 'TTypInfWithArguments',
-	#classTraits : 'TTypInfWithArguments classTrait',
+	#traits : 'TypInfTWithArguments',
+	#classTraits : 'TypInfTWithArguments classTrait',
 	#category : #'Typer-Inference-Core'
 }
 
@@ -36,12 +36,20 @@ TypInfMethod >> method [
 ]
 
 { #category : #accessing }
+TypInfMethod >> methodNode [
+
+	^ self
+]
+
+{ #category : #accessing }
 TypInfMethod >> transfer [
 
-	state at: self put: (CompiledMethod
-			 typAsFunctionTypeWithResult:
-			 (self incomingReturns collect: #type) typAsType
-			 arguments: (self incomingArguments collect: #type)
-			 argumentsOptional: false
-			 signalsAlways: nil)
+	state at: self put: ((CompiledMethod
+			  typAsFunctionTypeWithResult:
+				  (self incomingReturns collect: #type) typAsType
+			  arguments: (self incomingArguments collect: #type)
+			  argumentsOptional: false
+			  signalsAlways: nil)
+			 outgoingAt: #method ifAbsentPut: [ self ];
+			 yourself)
 ]

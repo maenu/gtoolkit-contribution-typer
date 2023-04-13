@@ -19,54 +19,36 @@ TypFunctionType class >> classDescription: aClassDescription parameters: aSequen
 { #category : #accessing }
 TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean [
 
-	| instance parameters |
+	| parameters |
 	parameters := OrderedDictionary new.
 	parameters at: #'0' put: aType.
 	aCollection withIndexDo: [ :e :i | 
 		parameters at: i asString asSymbol put: e ].
-	instance := self new
-		            initializeClassDescription: aClassDescription;
-		            initializeParameters: parameters;
-		            initializeArgumentsSize: parameters size - 1
-		            argumentsOptional: aBoolean
-		            signalsAlways: anotherBoolean;
-		            yourself.
-	^ self index
-		  at: { 
-				  aClassDescription name.
-				  aType.
-				  aCollection asArray.
-				  aBoolean.
-				  anotherBoolean.
-				  instance superOrNil }
-		  ifAbsentPut: [ instance ]
+	^ self new
+		  initializeClassDescription: aClassDescription;
+		  initializeParameters: parameters;
+		  initializeArgumentsSize: parameters size - 1
+		  argumentsOptional: aBoolean
+		  signalsAlways: anotherBoolean;
+		  yourself
 ]
 
 { #category : #accessing }
 TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean super: anotherType [
 
-	^ self index
-		  at: { 
-				  aClassDescription name.
-				  aType.
-				  aCollection asArray.
-				  aBoolean.
-				  anotherBoolean.
-				  anotherType }
-		  ifAbsentPut: [ 
-			  | parameters |
-			  parameters := OrderedDictionary new.
-			  parameters at: #'0' put: aType.
-			  aCollection withIndexDo: [ :e :i | 
-				  parameters at: i asString asSymbol put: e ].
-			  self new
-				  initializeClassDescription: aClassDescription;
-				  initializeParameters: parameters;
-				  initializeArgumentsSize: parameters size - 1
-				  argumentsOptional: aBoolean
-				  signalsAlways: anotherBoolean;
-				  initializeSuper: anotherType;
-				  yourself ]
+	| parameters |
+	parameters := OrderedDictionary new.
+	parameters at: #'0' put: aType.
+	aCollection withIndexDo: [ :e :i | 
+		parameters at: i asString asSymbol put: e ].
+	^ self new
+		  initializeClassDescription: aClassDescription;
+		  initializeParameters: parameters;
+		  initializeArgumentsSize: parameters size - 1
+		  argumentsOptional: aBoolean
+		  signalsAlways: anotherBoolean;
+		  initializeSuper: anotherType;
+		  yourself
 ]
 
 { #category : #accessing }
@@ -78,54 +60,36 @@ TypFunctionType class >> named: aString parameters: aSequenceableCollection [
 { #category : #accessing }
 TypFunctionType class >> named: aString result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean [
 
-	| instance parameters |
+	| parameters |
 	parameters := OrderedDictionary new.
 	parameters at: #'0' put: aType.
 	aCollection withIndexDo: [ :e :i | 
 		parameters at: i asString asSymbol put: e ].
-	instance := self new
-		            initializeName: aString;
-		            initializeParameters: parameters;
-		            initializeArgumentsSize: parameters size - 1
-		            argumentsOptional: aBoolean
-		            signalsAlways: anotherBoolean;
-		            yourself.
-	^ self index
-		  at: { 
-				  aString asString.
-				  aType.
-				  aCollection asArray.
-				  aBoolean.
-				  anotherBoolean.
-				  instance superOrNil }
-		  ifAbsentPut: [ instance ]
+	^ self new
+		  initializeName: aString;
+		  initializeParameters: parameters;
+		  initializeArgumentsSize: parameters size - 1
+		  argumentsOptional: aBoolean
+		  signalsAlways: anotherBoolean;
+		  yourself
 ]
 
 { #category : #accessing }
 TypFunctionType class >> named: aString result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean super: anotherType [
 
-	^ self index
-		  at: { 
-				  aString asString.
-				  aType.
-				  aCollection asArray.
-				  aBoolean.
-				  anotherBoolean.
-				  anotherType }
-		  ifAbsentPut: [ 
-			  | parameters |
-			  parameters := OrderedDictionary new.
-			  parameters at: #'0' put: aType.
-			  aCollection withIndexDo: [ :e :i | 
-				  parameters at: i asString asSymbol put: e ].
-			  self new
-				  initializeName: aString;
-				  initializeParameters: parameters;
-				  initializeArgumentsSize: parameters size - 1
-				  argumentsOptional: aBoolean
-				  signalsAlways: anotherBoolean;
-				  initializeSuper: anotherType;
-				  yourself ]
+	| parameters |
+	parameters := OrderedDictionary new.
+	parameters at: #'0' put: aType.
+	aCollection withIndexDo: [ :e :i | 
+		parameters at: i asString asSymbol put: e ].
+	^ self new
+		  initializeName: aString;
+		  initializeParameters: parameters;
+		  initializeArgumentsSize: parameters size - 1
+		  argumentsOptional: aBoolean
+		  signalsAlways: anotherBoolean;
+		  initializeSuper: anotherType;
+		  yourself
 ]
 
 { #category : #comparing }

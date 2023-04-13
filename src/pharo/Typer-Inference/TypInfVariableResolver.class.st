@@ -1,7 +1,7 @@
 Class {
 	#name : #TypInfVariableResolver,
 	#superclass : #TypResolver,
-	#category : #'Typer-Inference-Core'
+	#category : #'Typer-Inference-Lookup'
 }
 
 { #category : #accessing }

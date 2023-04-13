@@ -1,8 +1,8 @@
 Class {
 	#name : #TypInfMessage,
 	#superclass : #TypInfNode,
-	#traits : 'TTypInfWithArguments',
-	#classTraits : 'TTypInfWithArguments classTrait',
+	#traits : 'TypInfTWithArguments',
+	#classTraits : 'TypInfTWithArguments classTrait',
 	#category : #'Typer-Inference-Core'
 }
 
@@ -29,7 +29,7 @@ TypInfMessage >> method [
 { #category : #accessing }
 TypInfMessage >> transfer [
 
-	| receiver method |
+	| receiver method context |
 	receiver := state at: self incomingReceiver.
 	(receiver isUnknown or: [ receiver isVariable ]) ifTrue: [ 
 		| classes |
@@ -40,7 +40,13 @@ TypInfMessage >> transfer [
 				to: self incomingReceiver
 				with: (classes collect: #typAsType) typAsType ] ].
 	method := self method.
-	method typInfRotate: self.
+	method typInfNode ifNotNil: [ :n | 
+		context := TypInfInlineContext
+			           node: n node
+			           receiver: receiver
+			           arguments: self incomingArguments
+			           state: state
+			           message: self ].
 	self incomingArguments withIndexDo: [ :e :i | 
 		i <= method arguments size ifTrue: [ 
 			state covariantFrom: self to: e with: (method arguments at: i) ] ].
