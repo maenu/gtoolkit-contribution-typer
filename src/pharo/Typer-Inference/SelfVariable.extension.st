@@ -1,7 +1,7 @@
 Extension { #name : #SelfVariable }
 
 { #category : #'*Typer-Inference' }
-SelfVariable >> typInfNode: aNode [
+SelfVariable >> typInfNode: aNode context: aContext [
 
-	^ TypInfSelf node: aNode
+	^ TypInfSelf node: aNode context: aContext
 ]

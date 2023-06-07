@@ -7,6 +7,16 @@ Class {
 }
 
 { #category : #accessing }
+TypInfMessage >> canInline [
+	| receiver |
+	self flag: 'TODO check if already inlined'.
+	receiver := self receiver.
+	receiver isNamed ifFalse: [ ^ false ].
+	receiver hasClassDescription ifFalse: [ ^ false ].
+	^ receiver classDescription canUnderstand: node selector
+]
+
+{ #category : #accessing }
 TypInfMessage >> incomingReceiver [
 
 	^ self incomingAt: #receiver
@@ -19,36 +29,52 @@ TypInfMessage >> incomingReceiver: aNode [
 ]
 
 { #category : #accessing }
-TypInfMessage >> method [
+TypInfMessage >> inline [
+	| receiver method |
+	self assert: [ self canInline ].
+	receiver := self receiver.
+	method := receiver classDescription lookupSelector: node selector.
+	TypInfMethodNodeStack
+		push: method ast
+		max: 8
+		during: [ (TypInfInlinedMethodContext
+				sender: context
+				state: state copy
+				node: method ast
+				self: receiver
+				super: (method methodClass superclass ifNotNil: #typAsType)
+				message: self) visit ]
+		or: [  "Halt once" ]
+]
 
-	^ (state at: self incomingReceiver)
-		  lookupMethod: node selector asSymbol
-		  arguments: (self incomingArguments collect: [ :e | state at: e ])
+{ #category : #accessing }
+TypInfMessage >> receiver [
+	^ state at: self incomingReceiver
 ]
 
 { #category : #accessing }
 TypInfMessage >> transfer [
-
-	| receiver method context |
-	receiver := state at: self incomingReceiver.
-	(receiver isUnknown or: [ receiver isVariable ]) ifTrue: [ 
+	| receiver method |
+	receiver := self receiver.
+	self
+		flag: '(receiver isUnknown or: [ receiver isVariable ]) ifTrue: [ 
 		| classes |
 		classes := TypInfMethodIndex instance implementors: node selector.
 		(classes size between: 1 and: 8) ifTrue: [ 
 			state
 				covariantFrom: self
 				to: self incomingReceiver
-				with: (classes collect: #typAsType) typAsType ] ].
-	method := self method.
-	method typInfNode ifNotNil: [ :n | 
-		context := TypInfInlineContext
-			           node: n node
-			           receiver: receiver
-			           arguments: self incomingArguments
-			           state: state
-			           message: self ].
-	self incomingArguments withIndexDo: [ :e :i | 
-		i <= method arguments size ifTrue: [ 
-			state covariantFrom: self to: e with: (method arguments at: i) ] ].
-	state covariant: self with: method result
+				with: (classes collect: #typAsType) typAsType ] ]'.
+	method := receiver
+			lookupMethod: node selector asSymbol
+			arguments: (self incomingArguments collect: [ :e | state at: e ]).
+	self incomingArguments
+		withIndexDo: [ :e :i | 
+			i <= method arguments size
+				ifTrue: [ state
+						covariantFrom: self
+						to: e
+						with: (method arguments at: i) ] ].
+	state covariant: self with: method result.
+	self canInline ifTrue: [ self inline ]
 ]

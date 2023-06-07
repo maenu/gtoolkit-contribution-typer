@@ -1,7 +1,7 @@
 Extension { #name : #ThisContextVariable }
 
 { #category : #'*Typer-Inference' }
-ThisContextVariable >> typInfNode: aNode [
+ThisContextVariable >> typInfNode: aNode context: aContext [
 
-	^ TypInfThisContext node: aNode
+	^ TypInfThisContext node: aNode context: aContext
 ]

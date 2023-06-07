@@ -15,7 +15,7 @@ TypInfBlock >> incomingReturn [
 { #category : #accessing }
 TypInfBlock >> initialize: aState [
 
-	state := aState.
+	super initialize: aState.
 	^ state at: self put: (BlockClosure
 			   typAsFunctionTypeWithResult: TypUnknownType instance
 			   arguments:

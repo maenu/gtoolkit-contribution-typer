@@ -1,7 +1,7 @@
 Extension { #name : #SuperVariable }
 
 { #category : #'*Typer-Inference' }
-SuperVariable >> typInfNode: aNode [
+SuperVariable >> typInfNode: aNode context: aContext [
 
-	^ TypInfSuper node: aNode
+	^ TypInfSuper node: aNode context: aContext
 ]

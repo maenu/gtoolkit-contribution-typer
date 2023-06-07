@@ -1,7 +1,6 @@
 Extension { #name : #RBReturnNode }
 
 { #category : #'*Typer-Inference' }
-RBReturnNode >> typInfNode [
-
-	^ TypInfReturn node: self
+RBReturnNode >> typInfNodeInContext: aContext [
+	^ TypInfReturn node: self context: aContext
 ]

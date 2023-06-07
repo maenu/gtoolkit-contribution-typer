@@ -6,25 +6,27 @@ Class {
 
 { #category : #accessing }
 TypTyping >> invalidate [
-
 	<gtExample>
-	ASTCache reset.
-	"TKTCommonQueueWorkerPool allSubInstancesDo: #removeFailedTasks."
-	GtPlaygroundEvaluatedCodeButtonAttribute allSubInstancesDo: [ :e | 
-		e result: nil ].
-	GtSourceCoderEvaluationResultWithValue allSubInstancesDo: [ :e | 
-		e value: nil ].
+	| queue |
+	ASTCache reset.	"TKTCommonQueueWorkerPool allSubInstancesDo: #removeFailedTasks."
+	GtPlaygroundEvaluatedCodeButtonAttribute
+		allSubInstancesDo: [ :e | e result: nil ].
+	GtSourceCoderEvaluationResultWithValue allSubInstancesDo: [ :e | e value: nil ].
 	GtCoderObjectSpawnRequest allSubInstancesDo: [ :e | e object: nil ].
-	GtPharoSourceCoderViewModel allSubInstancesDo: [ :e | 
-		e selfObject: nil ].
+	GtPharoSourceCoderViewModel allSubInstancesDo: [ :e | e selfObject: nil ].
 	GtTextualCoderViewModel allSubInstancesDo: #requestUpdateAddOns.
 	GtLocalVariablesBindings allInstancesDo: #initialize.
+	queue := GtWorld someInstance taskQueue.
+	((queue instVarNamed: #tasks) value instVarNamed: #pendingTasks) asArray
+		select: [ :t | 
+			(t isKindOf: BlPromiseTask)
+				and: [ (t instVarNamed: #promise) isKindOf: AsyncPendingFuturePromise ] ]
+		thenDo: [ :t "((t instVarNamed: #promise) future instVarNamed: #executedBlock) at: 2." | queue dequeue: t ].
 	LeSharedSnippetContext allSubInstancesDo: [ :e | e selfObject: nil ].
-	BlOverlayListener allInstancesDo: [ :e | 
-		e overlayElement removeEventHandler: e ].
-	BlHandlerAnnouncerRegistry allInstancesDo: [ :e | 
-		e removeAllSuchThat: [ :f | f isKindOf: BlOverlayListener ] ].
-	"LeDatabase allInstancesDo: #reload.
+	BlOverlayListener
+		allInstancesDo: [ :e | e overlayElement removeEventHandler: e ].
+	BlHandlerAnnouncerRegistry
+		allInstancesDo: [ :e | e removeAllSuchThat: [ :f | f isKindOf: BlOverlayListener ] ].	"LeDatabase allInstancesDo: #reload.
 	LeDatabasesRegistry cleanUp.
 	LeDatabasesRegistry uniqueInstance ensureDatabase.
 	GtHome allInstancesDo: #clearKnowledgeBase."

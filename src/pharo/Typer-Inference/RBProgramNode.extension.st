@@ -10,9 +10,8 @@ RBProgramNode >> typInfAnnotated: aType [
 ]
 
 { #category : #'*Typer-Inference' }
-RBProgramNode >> typInfNode [
-
-	^ TypInfNode node: self
+RBProgramNode >> typInfNodeInContext: aContext [
+	^ TypInfNode node: self context: aContext
 ]
 
 { #category : #'*Typer-Inference' }

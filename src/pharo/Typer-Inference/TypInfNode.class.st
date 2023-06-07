@@ -3,17 +3,17 @@ Class {
 	#superclass : #TypNode,
 	#instVars : [
 		'node',
-		'state'
+		'state',
+		'context'
 	],
 	#category : #'Typer-Inference-Core'
 }
 
 { #category : #accessing }
-TypInfNode class >> node: aNode [
-
+TypInfNode class >> node: aNode context: aContext [
 	^ self new
-		  initializeNode: aNode;
-		  yourself
+		initializeNode: aNode context: aContext;
+		yourself
 ]
 
 { #category : #accessing }
@@ -31,7 +31,7 @@ TypInfNode >> burp [
 { #category : #accessing }
 TypInfNode >> context [
 
-	^ self incomingAt: node
+	^ context
 ]
 
 { #category : #accessing }
@@ -42,7 +42,6 @@ TypInfNode >> incomingNext [
 
 { #category : #accessing }
 TypInfNode >> initialize: aState [
-
 	"compute initial state for node"
 
 	state := aState.
@@ -50,9 +49,9 @@ TypInfNode >> initialize: aState [
 ]
 
 { #category : #initialization }
-TypInfNode >> initializeNode: aNode [
-
-	node := aNode
+TypInfNode >> initializeNode: aNode context: aContext [
+	node := aNode.
+	context := aContext
 ]
 
 { #category : #accessing }
@@ -98,17 +97,20 @@ TypInfNode >> printOn: aStream [
 
 { #category : #accessing }
 TypInfNode >> slurp [
-
-	incoming at: #next ifPresent: [ :s | 
-		s ifNotEmpty: [ 
-			state := (s collect: #state) reduce: [ :a :b | a covariant: b ].
-			state := state copy "for good measure" ] ].
-	incoming at: #tighten ifPresent: [ :s | 
-		s ifNotEmpty: [ 
-			| type |
-			type := (s collect: [ :e | e getIn: state ]) reduce: [ :a :b | 
-				        b covariant: a ].
-			state at: self put: type ] ]
+	incoming
+		at: #next
+		ifPresent: [ :s | 
+			s
+				ifNotEmpty: [ state := (s collect: #state) reduce: [ :a :b | a covariant: b ].
+					state := state copy	"for good measure" ] ].
+	incoming
+		at: #tighten
+		ifPresent: [ :s | 
+			s
+				ifNotEmpty: [ | type |
+					type := (s collect: [ :e | e getIn: state ])
+							reduce: [ :a :b | b covariant: a ].
+					state at: self put: type ] ]
 ]
 
 { #category : #accessing }

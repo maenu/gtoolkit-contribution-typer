@@ -9,7 +9,7 @@ Class {
 { #category : #accessing }
 TypInfSequence >> initialize: aState [
 
-	state := aState.
+	super initialize: aState.
 	^ state at: self put: TypNilType instance
 ]
 

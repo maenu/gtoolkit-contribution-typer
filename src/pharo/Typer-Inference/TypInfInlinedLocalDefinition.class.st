@@ -7,15 +7,13 @@ Class {
 }
 
 { #category : #accessing }
-TypInfInlinedLocalDefinition class >> node: aNode proxy: anObject [
-
-	^ (self node: aNode)
-		  incomingArguments: { anObject };
-		  yourself
+TypInfInlinedLocalDefinition class >> node: aNode context: aContext proxy: anObject [
+	^ (self node: aNode context: aContext)
+		incomingArguments: {anObject};
+		yourself
 ]
 
 { #category : #accessing }
 TypInfInlinedLocalDefinition >> transfer [
-
-	state covariant: self with: (state at: self incomingArguments first)
+	state at: self put: (state at: self incomingArguments first)
 ]

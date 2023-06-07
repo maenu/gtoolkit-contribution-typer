@@ -1,7 +1,7 @@
 Extension { #name : #ClassVariable }
 
 { #category : #'*Typer-Inference' }
-ClassVariable >> typInfNode: aNode [
+ClassVariable >> typInfNode: aNode context: aContext [
 
-	^ TypInfClass node: aNode
+	^ TypInfClass node: aNode context: aContext
 ]

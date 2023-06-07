@@ -24,27 +24,23 @@ TypGtAttribute class >> node: aNode type: aType [
 
 { #category : #initialization }
 TypGtAttribute >> initialize [
-
 	<typPraVariable: 'type' as: 'TypType'>
 	super initialize.
 	self
 		beAppend;
-		stencil: [ 
-			BrLabel new
+		stencil: [ BrLabel new
 				aptitude: (BrGlamorousLabelAptitude new
-						 foreground: Color gray;
-						 yourself);
+						foreground: Color gray;
+						yourself);
 				text: type printString asRopedText glamorousCodeFont;
 				beMiniSize;
 				hFitContent;
 				vFitContent;
 				margin: (BlInsets
-						 top: 3.3
-						 left: 2
-						 bottom: 0
-						 right: (shouldAppend
-								  ifTrue: [ 0 ]
-								  ifFalse: [ 2 ]));
+						top: 3.3
+						left: 2
+						bottom: 0
+						right: (self shouldAppend ifTrue: [ 0 ] ifFalse: [ 2 ]));
 				when: BlClickEvent do: [ :e | e target phlow spawnObject: node ];
 				yourself ]
 ]

@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 TypInfInstance >> initialize: aState [
 
-	state := aState.
+	super initialize: aState.
 	^ state
 		  at: self
 		  put: (node variable owningClass typAsType lookupVariable:

@@ -7,6 +7,6 @@ Class {
 { #category : #accessing }
 TypInfLiteralValue >> initialize: aState [
 
-	state := aState.
+	super initialize: aState.
 	^ state at: self put: node value typInfType
 ]

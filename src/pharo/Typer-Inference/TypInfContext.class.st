@@ -4,99 +4,130 @@ Class {
 	#traits : 'TRBProgramNodeVisitor',
 	#classTraits : 'TRBProgramNodeVisitor classTrait',
 	#instVars : [
+		'sender',
+		'node',
+		'selfType',
+		'superType',
+		'state',
 		'root',
 		'current',
-		'nodes',
-		'state',
-		'stable'
+		'nodes'
 	],
 	#category : #'Typer-Inference-Core'
 }
 
 { #category : #'as yet unclassified' }
-TypInfContext class >> node: aMethodNode self: aType super: anotherType [
-
+TypInfContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType [
 	^ self new
-		  initializeNode: aMethodNode self: aType super: anotherType;
-		  yourself
+		inlitializeSender: aContext
+			state: aState
+			node: aNode
+			self: aType
+			super: anotherType;
+		yourself
 ]
 
-{ #category : #initialization }
-TypInfContext >> initializeNode: aMethodNode self: aType super: anotherType [
+{ #category : #origins }
+TypInfContext >> home [
+	^ sender ifNil: self ifNotNil: #home
+]
 
-	"ordered to have a cheap, close-to-topological sorting.
+{ #category : #'as yet unclassified' }
+TypInfContext >> inlitializeSender: aContext state: aState node: aNode self: aType super: anotherType [
+	sender := aContext.
+	state := aState.
+	node := aNode.
+	selfType := aType.
+	superType := anotherType.
+	nodes := OrderedIdentityDictionary new	"ordered to have a cheap, close-to-topological sorting.
 	 makes the run more predictable"
-
-	nodes := OrderedIdentityDictionary new.
-	root := nodes at: aMethodNode put: aMethodNode typInfNode.
-	state := TypInfState self: aType super: anotherType.
-	current := root.
-	aMethodNode acceptVisitor: self.
-	nodes keysAndValuesDo: [ :n :e | 
-		e initialize: state.
-		self outgoingAt: n put: e.
-		e outgoing
-			at: #next
-			ifPresent: [ :s | s do: [ :f | f state: state copy ] ] ]
 ]
 
 { #category : #accessing }
 TypInfContext >> next: aNode [
+	| next |
+	next := self nodeAt: aNode.
+	current outgoingAdd: (TypInfNextEdge origin: current target: next).
+	^ current := next
+]
 
-	| node |
-	node := self nodeAt: aNode.
-	current outgoingAdd: (TypInfNextEdge origin: current target: node).
-	^ current := node
+{ #category : #accessing }
+TypInfContext >> node [
+	^ node
 ]
 
 { #category : #accessing }
 TypInfContext >> nodeAt: aNode [
-
-	^ nodes at: aNode ifAbsentPut: [ 
-		  aNode typInfNode
-			  methodNode: root;
-			  yourself ]
+	^ nodes
+		at: aNode
+		ifAbsentPut: [ (aNode typInfNodeInContext: self)
+				methodNode: root;
+				yourself ]
 ]
 
 { #category : #accessing }
 TypInfContext >> nodes [
-
 	^ nodes
-]
-
-{ #category : #accessing }
-TypInfContext >> root [
-
-	^ root
 ]
 
 { #category : #running }
 TypInfContext >> run [
-
-	| n nodes_ states cycles cycle |
+	| n nodes_ states cycle cycles stable |
+	self visit.
 	n := 100.
 	nodes_ := nodes values.
 	states := IdentityDictionary new.
 	cycles := OrderedCollection new.
 	cycle := OrderedIdentityDictionary new.
 	nodes_ do: [ :e | cycle at: e put: (states at: e put: e state copy) ].
-	root node method isAbstract ifTrue: [ n := 0 "shortcut loop" ].
-	[ 
-	n := n - 1.
+	root node method isAbstract ifTrue: [ n := 0	"shortcut loop" ].
+	[ n := n - 1.
 	cycles add: cycle.
 	cycle := OrderedIdentityDictionary new.
-	n > 0 and: [ 
-		nodes_ inject: false into: [ :r :e | 
-			e slurpAndBurp.
-			e state = (states at: e)
-				ifTrue: [ r ]
-				ifFalse: [ 
-					cycle at: e put: ((states at: e) diff: e state).
-					states at: e put: e state copy.
-					true ] ] ] ] whileTrue.
+	n > 0
+		and: [  "nodes are changed by inlining methods, hence cannot be cached"nodes values
+				inject: false
+				into: [ :r :e | 
+					e slurpAndBurp.
+					e state = (states at: e ifAbsentPut: [ e state copy ])
+						ifTrue: [ r ]
+						ifFalse: [ cycle at: e put: ((states at: e ifAbsentPut: [ e state copy ]) diff: e state).
+							states at: e put: e state copy.
+							true ] ] ] ] whileTrue.
 	cycles add: cycle.
 	stable := n > 0.
 	^ cycles
+]
+
+{ #category : #accessing }
+TypInfContext >> self [
+	^ selfType
+]
+
+{ #category : #accessing }
+TypInfContext >> sender [
+	^ sender
+]
+
+{ #category : #accessing }
+TypInfContext >> state [
+	^ state
+]
+
+{ #category : #accessing }
+TypInfContext >> super [
+	^ superType
+]
+
+{ #category : #accessing }
+TypInfContext >> visit [
+	root := nodes at: node put: (node typInfNodeInContext: self).
+	current := root.
+	node acceptVisitor: self.
+	nodes
+		keysAndValuesDo: [ :n :e | 
+			e initialize: state.
+			e outgoing at: #next ifPresent: [ :s | s do: [ :f | f state: state copy ] ] ]
 ]
 
 { #category : #visiting }

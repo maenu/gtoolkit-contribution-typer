@@ -1,7 +1,7 @@
 Extension { #name : #GlobalVariable }
 
 { #category : #'*Typer-Inference' }
-GlobalVariable >> typInfNode: aNode [
+GlobalVariable >> typInfNode: aNode context: aContext [
 
-	^ TypInfGlobal node: aNode
+	^ TypInfGlobal node: aNode context: aContext
 ]

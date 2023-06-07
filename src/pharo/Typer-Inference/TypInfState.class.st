@@ -1,42 +1,27 @@
 Class {
 	#name : #TypInfState,
 	#superclass : #IdentityDictionary,
-	#instVars : [
-		'selfType',
-		'superType'
-	],
 	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #'as yet unclassified' }
-TypInfState class >> self: aType super: anotherType [
+{ #category : #accessing }
+TypInfState >> at: anObject [
 
-	^ self new
-		  initializeSelf: aType super: anotherType;
-		  yourself
-]
-
-{ #category : #comparing }
-TypInfState >> = anObject [
-
-	super = anObject ifFalse: [ ^ false ].
-	anObject self = selfType ifFalse: [ ^ false ].
-	anObject super = superType ifFalse: [ ^ false ].
-	^ true
+	^ self at: anObject ifAbsentPut: TypUnknownType instance
 ]
 
 { #category : #splitjoin }
 TypInfState >> covariant: aState [
 
 	| copy |
-	self assert: [ aState self = selfType ].
-	self assert: [ aState super = superType ].
-	copy := self copy.
+	self flag: 'self assert: [ aState self = selfType ].
+	self assert: [ aState super = superType ]'.
+	copy := aState copy.
 	aState keysAndValuesDo: [ :n :t | 
 		copy
 			at: n
 			put:
-			(copy at: n ifPresent: [ :tt | t covariant: tt ] ifAbsent: [ t ]) ].
+			(self at: n ifPresent: [ :tt | t covariant: tt ] ifAbsent: [ t ]) ].
 	^ copy
 ]
 
@@ -80,7 +65,7 @@ TypInfState >> covariantFrom: aNode to: anotherNode with: aType [
 TypInfState >> diff: aState [
 
 	| diff |
-	diff := TypInfState self: selfType super: superType.
+	diff := TypInfState new.
 	self keys , aState keys do: [ :n | 
 		| a b |
 		a := self at: n ifAbsent: [ nil ].
@@ -90,29 +75,4 @@ TypInfState >> diff: aState [
 					a.
 					b } ] ].
 	^ diff
-]
-
-{ #category : #comparing }
-TypInfState >> hash [
-
-	^ (super hash bitXor: selfType hash) bitXor: superType hash
-]
-
-{ #category : #initialization }
-TypInfState >> initializeSelf: aType super: anotherType [
-
-	selfType := aType.
-	superType := anotherType
-]
-
-{ #category : #'as yet unclassified' }
-TypInfState >> self [
-
-	^ selfType
-]
-
-{ #category : #'as yet unclassified' }
-TypInfState >> super [
-
-	^ superType
 ]

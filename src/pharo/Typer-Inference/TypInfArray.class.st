@@ -9,7 +9,7 @@ Class {
 { #category : #accessing }
 TypInfArray >> initialize: aState [
 
-	state := aState.
+	super initialize: aState.
 	^ state at: self put: Array typAsType
 ]
 

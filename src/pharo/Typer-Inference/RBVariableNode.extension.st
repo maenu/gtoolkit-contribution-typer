@@ -1,7 +1,6 @@
 Extension { #name : #RBVariableNode }
 
 { #category : #'*Typer-Inference' }
-RBVariableNode >> typInfNode [
-
-	^ variable typInfNode: self
+RBVariableNode >> typInfNodeInContext: aContext [
+	^ variable typInfNode: self context: aContext
 ]

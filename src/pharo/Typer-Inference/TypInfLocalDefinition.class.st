@@ -8,7 +8,7 @@ Class {
 TypInfLocalDefinition >> initialize: aState [
 
 	| type className global |
-	state := aState.
+	super initialize: aState.
 	node isArgumentVariable ifFalse: [ 
 		^ state at: self put: TypNilType instance ].
 	type := state at: self put: TypUnknownType instance.

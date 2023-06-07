@@ -1,7 +1,6 @@
 Extension { #name : #RBCascadeNode }
 
 { #category : #'*Typer-Inference' }
-RBCascadeNode >> typInfNode [
-
-	^ TypInfCascade node: self
+RBCascadeNode >> typInfNodeInContext: aContext [
+	^ TypInfCascade node: self context: aContext
 ]

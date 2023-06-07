@@ -7,7 +7,7 @@ IndexedSlot >> typInfIsWrittenIn: aCompiledMethod [
 ]
 
 { #category : #'*Typer-Inference' }
-IndexedSlot >> typInfNode: aNode [
+IndexedSlot >> typInfNode: aNode context: aContext [
 
-	^ TypInfInstance node: aNode
+	^ TypInfInstance node: aNode context: aContext
 ]

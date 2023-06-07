@@ -54,36 +54,37 @@ TypInfNode >> typGtFlowFor: aView [
 
 { #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtFlowPaintOn: aMondrian [
-
 	| edges nodes currentNodes nextNodes |
 	currentNodes := aMondrian existingNodes.
-	nodes := (self context outgoingEdges collect: #target) difference:
-		         currentNodes.
+	nodes := (self context outgoingEdges collect: #target)
+			, context home nodes values difference: currentNodes.
 	nodes ifEmpty: [ ^ self ].
-	nextNodes := currentNodes , nodes , { self }.
-	edges := (((nodes flatCollect: #incomingEdges) select: [ :e | 
-		           nextNodes includes: e origin ])
-	          , ((nodes flatCollect: #outgoingEdges) select: [ :e | 
-			           nextNodes includes: e target ])) asIdentitySet 
-		         groupedBy: [ :e | e key -> e nodes ].
-	nodes := (edges keys flatCollect: #value) asIdentitySet difference:
-		         currentNodes.
+	nextNodes := currentNodes , nodes , {self}.
+	edges := (((nodes flatCollect: #incomingEdges)
+			select: [ :e | nextNodes includes: e origin ])
+			, ((nodes flatCollect: #outgoingEdges)
+					select: [ :e | nextNodes includes: e target ])) asIdentitySet
+			groupedBy: [ :e | e key -> e nodes ].
+	nodes := (edges keys flatCollect: #value) asIdentitySet
+			difference: currentNodes.
 	aMondrian nodes
 		stencil: [ :e | e typGtAsElementIn: aMondrian ];
 		with: nodes.
 	aMondrian edges
 		stencil: [ :e | e anyOne typGtAsElementIn: aMondrian with: e ];
 		connect: (edges associations
-				 select: [ :e | e key key = #next ]
-				 thenCollect: #value)
-		from: [ :e | e anyOne origin ] to: [ :e | e anyOne target ].
+					select: [ :e | e key key = #next ]
+					thenCollect: #value)
+			from: [ :e | e anyOne origin ]
+			to: [ :e | e anyOne target ].
 	aMondrian edges
 		passive;
 		stencil: [ :e | e anyOne typGtAsElementIn: aMondrian with: e ];
 		connect: (edges associations
-				 reject: [ :e | e key key = #next ]
-				 thenCollect: #value)
-		from: [ :e | e anyOne origin ] to: [ :e | e anyOne target ].
+					reject: [ :e | e key key = #next ]
+					thenCollect: #value)
+			from: [ :e | e anyOne origin ]
+			to: [ :e | e anyOne target ].
 	aMondrian layout force
 ]
 

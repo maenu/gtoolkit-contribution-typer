@@ -1,7 +1,6 @@
 Extension { #name : #RBBlockNode }
 
 { #category : #'*Typer-Inference' }
-RBBlockNode >> typInfNode [
-
-	^ TypInfBlock node: self
+RBBlockNode >> typInfNodeInContext: aContext [
+	^ TypInfBlock node: self context: aContext
 ]

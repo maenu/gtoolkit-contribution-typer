@@ -1,7 +1,7 @@
 Extension { #name : #UndeclaredVariable }
 
 { #category : #'*Typer-Inference' }
-UndeclaredVariable >> typInfNode: aNode [
+UndeclaredVariable >> typInfNode: aNode context: aContext [
 
-	^ TypInfUndeclared node: aNode
+	^ TypInfUndeclared node: aNode context: aContext
 ]

@@ -36,7 +36,6 @@ TypInfContextKey >> = anObject [
 
 { #category : #comparing }
 TypInfContextKey >> hash [
-
 	^ (node identityHash bitXor: selfType hash) bitXor: superType hash
 ]
 

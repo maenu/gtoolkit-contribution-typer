@@ -1,7 +1,6 @@
 Extension { #name : #RBSequenceNode }
 
 { #category : #'*Typer-Inference' }
-RBSequenceNode >> typInfNode [
-
-	^ TypInfSequence node: self
+RBSequenceNode >> typInfNodeInContext: aContext [
+	^ TypInfSequence node: self context: aContext
 ]

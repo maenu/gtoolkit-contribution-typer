@@ -18,7 +18,7 @@ TypInfMethod >> incomingReturns [
 { #category : #accessing }
 TypInfMethod >> initialize: aState [
 
-	state := aState.
+	super initialize: aState.
 	^ state at: self put: (CompiledMethod
 			 typAsFunctionTypeWithResult: TypUnknownType instance
 			 arguments:
@@ -30,7 +30,7 @@ TypInfMethod >> initialize: aState [
 { #category : #accessing }
 TypInfMethod >> method [
 
-	^ state self
+	^ context self
 		  lookupMethod: node selector asSymbol
 		  arguments: (self incomingArguments collect: #type)
 ]

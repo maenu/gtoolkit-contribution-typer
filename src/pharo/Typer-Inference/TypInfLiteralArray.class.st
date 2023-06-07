@@ -11,7 +11,7 @@ TypInfLiteralArray >> initialize: aState [
 
 	"can pull child literals as it is literal itself"
 
-	state := aState.
+	super initialize: aState.
 	^ state at: self put: (node isForByteArray
 			   ifTrue: [ ByteArray typAsType ]
 			   ifFalse: [ 

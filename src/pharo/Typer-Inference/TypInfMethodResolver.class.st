@@ -31,14 +31,19 @@ TypInfMethodResolver >> canResolve: aLookup [
 
 { #category : #accessing }
 TypInfMethodResolver >> contextAt: aMethodNode self: aType super: anotherType [
-
 	^ self
-		  outgoingAt:
-		  (TypInfContextKey node: aMethodNode self: aType super: anotherType)
-		  ifAbsentPut: [ 
-			  (TypInfContext node: aMethodNode self: aType super: anotherType)
-				  run;
-				  yourself ]
+		outgoingAt: (TypInfContextKey
+				node: aMethodNode
+				self: aType
+				super: anotherType)
+		ifAbsentPut: [ (TypInfMethodContext
+				sender: nil
+				state: TypInfState new
+				node: aMethodNode
+				self: aType
+				super: anotherType)
+				run;
+				yourself ]
 ]
 
 { #category : #'as yet unclassified' }
