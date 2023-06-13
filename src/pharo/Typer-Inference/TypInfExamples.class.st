@@ -5,6 +5,13 @@ Class {
 }
 
 { #category : #requirements }
+TypInfExamples >> block [
+
+	<gtExample>
+	^ self infer: TypInfInferred >> #block:
+]
+
+{ #category : #requirements }
 TypInfExamples >> empty [
 
 	<gtExample>
@@ -14,7 +21,7 @@ TypInfExamples >> empty [
 { #category : #accessing }
 TypInfExamples >> infer: aMethod [
 
-	^ TypTyping new typeMethod: aMethod timeout: 8 minutes
+	^ TypTyping new typeMethod: aMethod timeout: 2 minutes
 ]
 
 { #category : #accessing }
@@ -28,6 +35,13 @@ TypInfExamples >> inlined [
 
 	<gtExample>
 	^ self infer: TypInfInferred >> #inlined
+]
+
+{ #category : #requirements }
+TypInfExamples >> inlinedSync [
+
+	<gtExample>
+	^ self inferSync: TypInfInferred >> #inlined
 ]
 
 { #category : #requirements }

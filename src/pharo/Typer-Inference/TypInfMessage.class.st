@@ -10,6 +10,10 @@ Class {
 TypInfMessage >> canInline [
 	| receiver |
 	self flag: 'TODO check if already inlined'.
+	self
+		outgoingAt: #inline
+		ifPresent: [ :e | ^ false ]
+		ifAbsent: [  ].
 	receiver := self receiver.
 	receiver isNamed ifFalse: [ ^ false ].
 	receiver hasClassDescription ifFalse: [ ^ false ].
@@ -30,20 +34,30 @@ TypInfMessage >> incomingReceiver: aNode [
 
 { #category : #accessing }
 TypInfMessage >> inline [
-	| receiver method |
+	| method |
 	self assert: [ self canInline ].
-	receiver := self receiver.
-	method := receiver classDescription lookupSelector: node selector.
+	method := self receiver classDescription lookupSelector: node selector.
+	method isAbstract
+		ifTrue: [ method typInfOverriddingMethods do: [ :m | self inline: m ] ]
+		ifFalse: [ self inline: method ]
+]
+
+{ #category : #transforming }
+TypInfMessage >> inline: aMethod [
 	TypInfMethodNodeStack
-		push: method ast
+		push: aMethod ast
 		max: 8
-		during: [ (TypInfInlinedMethodContext
-				sender: context
-				state: state copy
-				node: method ast
-				self: receiver
-				super: (method methodClass superclass ifNotNil: #typAsType)
-				message: self) visit ]
+		during: [  "Halt once."| inline |
+			inline := TypInfInlinedMethodContext
+					sender: context
+					state: state copy
+					node: aMethod ast
+					self: aMethod methodClass typAsType
+					super: (aMethod methodClass superclass ifNotNil: #typAsType)
+					message: self.
+			inline visit.
+			self flag: 'TODO use receiver,args as key, invalidate?'.
+			self outgoingAt: #inline put: inline ]
 		or: [  "Halt once" ]
 ]
 

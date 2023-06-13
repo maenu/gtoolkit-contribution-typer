@@ -10,14 +10,3 @@ RBProgramNode >> typGtCanType [
 RBProgramNode >> typGtInvokedMethods [
 	^ self children flatCollect: #typGtInvokedMethods as: IdentitySet
 ]
-
-{ #category : #'*Typer-GToolkit' }
-RBProgramNode >> typGtNodeFor: aView [
-
-	<gtView>
-	^ aView forward
-		  title: 'Typer Graph';
-		  priority: 10;
-		  object: [ TypInfNode node: self ];
-		  view: #typGtGraphFor:
-]

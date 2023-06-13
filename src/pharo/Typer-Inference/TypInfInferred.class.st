@@ -4,6 +4,11 @@ Class {
 	#category : #'Typer-Inference-Examples'
 }
 
+{ #category : #accessing }
+TypInfInferred >> block: aBoolean [
+	^ aBoolean ifTrue: [ 1 ] ifFalse: [ 0 ]
+]
+
 { #category : #requirements }
 TypInfInferred >> empty [
 ]
