@@ -1,6 +1,16 @@
 Extension { #name : #TypType }
 
 { #category : #'*Typer-Inference' }
+TypType >> typInfAbstractInterpret: aMessageNode [
+	
+]
+
+{ #category : #'*Typer-Inference' }
+TypType >> typInfNode [
+	^ self outgoingAt: #typInfNode
+]
+
+{ #category : #'*Typer-Inference' }
 TypType >> typInfRotate: aMessageNode [
 
 	

@@ -6,6 +6,11 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
+{ #category : #'as yet unclassified' }
+TypInfMessage >> abstractInterpret [
+	self receiver typInfAbstractInterpret: self
+]
+
 { #category : #accessing }
 TypInfMessage >> canInline [
 	| receiver |
@@ -48,7 +53,7 @@ TypInfMessage >> inline: aMethod [
 		push: aMethod ast
 		max: 8
 		during: [  "Halt once."| inline |
-			inline := TypInfInlinedMethodContext
+			inline := TypInfInlineContext
 					sender: context
 					state: state copy
 					node: aMethod ast
@@ -90,5 +95,6 @@ TypInfMessage >> transfer [
 						to: e
 						with: (method arguments at: i) ] ].
 	state covariant: self with: method result.
+	self abstractInterpret.
 	self canInline ifTrue: [ self inline ]
 ]

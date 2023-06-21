@@ -1,6 +1,6 @@
 Class {
-	#name : #TypInfInlinedMethodContext,
-	#superclass : #TypInfMethodContext,
+	#name : #TypInfInlineContext,
+	#superclass : #TypInfContext,
 	#instVars : [
 		'message'
 	],
@@ -8,12 +8,12 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypInfInlinedMethodContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType [
+TypInfInlineContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType [
 	self shouldNotImplement
 ]
 
 { #category : #accessing }
-TypInfInlinedMethodContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType message: aMessage [
+TypInfInlineContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType message: aMessage [
 	^ self new
 		inlitializeSender: aContext
 			state: aState
@@ -25,12 +25,12 @@ TypInfInlinedMethodContext class >> sender: aContext state: aState node: aNode s
 ]
 
 { #category : #'as yet unclassified' }
-TypInfInlinedMethodContext >> initializeMessage: aMessage [
+TypInfInlineContext >> initializeMessage: aMessage [
 	message := aMessage
 ]
 
 { #category : #initialization }
-TypInfInlinedMethodContext >> visit [
+TypInfInlineContext >> visit [
 	| home |
 	root := nodes at: node put: (TypInfInlinedMethod node: node context: self).
 	current := root.
@@ -46,7 +46,7 @@ TypInfInlinedMethodContext >> visit [
 ]
 
 { #category : #visiting }
-TypInfInlinedMethodContext >> visitMethodNode: aMethodNode [
+TypInfInlineContext >> visitMethodNode: aMethodNode [
 	| returnOriginal nextOriginal |
 	returnOriginal := message
 			outgoingAt: #returnOriginal

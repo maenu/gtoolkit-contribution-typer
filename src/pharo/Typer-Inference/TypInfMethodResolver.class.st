@@ -36,7 +36,7 @@ TypInfMethodResolver >> contextAt: aMethodNode self: aType super: anotherType [
 				node: aMethodNode
 				self: aType
 				super: anotherType)
-		ifAbsentPut: [ (TypInfMethodContext
+		ifAbsentPut: [ (TypInfContext
 				sender: nil
 				state: TypInfState new
 				node: aMethodNode

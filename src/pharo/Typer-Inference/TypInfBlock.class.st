@@ -14,14 +14,16 @@ TypInfBlock >> incomingReturn [
 
 { #category : #accessing }
 TypInfBlock >> initialize: aState [
-
 	super initialize: aState.
-	^ state at: self put: (BlockClosure
-			   typAsFunctionTypeWithResult: TypUnknownType instance
-			   arguments:
-			   (node arguments collect: [ :e | TypUnknownType instance ])
-			   argumentsOptional: false
-			   signalsAlways: nil)
+	^ state
+		at: self
+		put: ((BlockClosure
+				typAsFunctionTypeWithResult: TypUnknownType instance
+				arguments: (node arguments collect: [ :e | TypUnknownType instance ])
+				argumentsOptional: false
+				signalsAlways: nil)
+				typInfNode: self;
+				yourself)
 ]
 
 { #category : #'as yet unclassified' }
