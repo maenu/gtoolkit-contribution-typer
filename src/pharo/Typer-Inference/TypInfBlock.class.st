@@ -26,11 +26,25 @@ TypInfBlock >> initialize: aState [
 				yourself)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypInfBlock >> tighten: aType in: aState [
-
-	self incomingArguments withIndexDo: [ :n :i | 
-		i <= aType arguments size ifTrue: [ 
-			aState covariantFrom: self to: n with: (aType arguments at: i) ] ].
-	aState covariantFrom: self to: self incomingReturn with: aType result
+	self incomingArguments
+		withIndexDo: [ :n :i | 
+			i <= aType arguments size
+				ifTrue: [ aState
+						covariantFrom: self
+						to: n
+						with: (aType arguments at: i) ] ].
+	incoming
+		at: #tighten
+		ifPresent: [ :s | 
+			s
+				detect: #isReturn
+				ifFound: [ :e | 
+					aState
+						covariantFrom: self
+						to: e origin
+						with: aType result ]
+				ifNone: [ self flag: 'do what?' ] ]
+		ifAbsent: [ self flag: 'do what?' ]
 ]

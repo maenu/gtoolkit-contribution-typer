@@ -6,9 +6,17 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypInfMessage >> abstractInterpret [
-	self receiver typInfAbstractInterpret: self
+	^ self receiver typInfAbstractInterpret: self
+]
+
+{ #category : #accessing }
+TypInfMessage >> canAbstractInterpret [
+	^ self
+		outgoingAt: #abstractInterpret
+		ifPresent: [ :e | false ]
+		ifAbsent: [ true ]
 ]
 
 { #category : #accessing }
@@ -95,6 +103,14 @@ TypInfMessage >> transfer [
 						to: e
 						with: (method arguments at: i) ] ].
 	state covariant: self with: method result.
-	self abstractInterpret.
+	self
+		outgoingAt: #abstractInterpret
+		ifPresent: [ :e | ^ self ]
+		ifAbsent: [  "noop" ].
+	self canAbstractInterpret ifTrue: [ self abstractInterpret ifTrue: [ ^ self ] ].
+	self
+		outgoingAt: #inline
+		ifPresent: [ :e | ^ self ]
+		ifAbsent: [  "noop" ].
 	self canInline ifTrue: [ self inline ]
 ]

@@ -45,12 +45,12 @@ TypTyping >> invalidate [
 
 { #category : #accessing }
 TypTyping >> memoryProbe [
-
 	<gtExample>
-	^ { 
-		  Smalltalk vm memorySize.
-		  Smalltalk vm statisticsReport.
-		  SpaceTally new systemWideSpaceTally }
+	^ {Smalltalk vm memorySize.
+		Smalltalk vm statisticsReport.
+		(SpaceTally new systemWideSpaceTally
+			select: [ :e | e analyzedClassName beginsWith: 'Typ' ])
+			sorted: [ :a :b | a instanceCount > b instanceCount ]}
 ]
 
 { #category : #accessing }

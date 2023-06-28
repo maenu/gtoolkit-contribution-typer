@@ -70,6 +70,11 @@ TypInfContext >> nodes [
 	^ nodes
 ]
 
+{ #category : #accessing }
+TypInfContext >> root [
+	^ root
+]
+
 { #category : #running }
 TypInfContext >> run [
 	| n nodes_ states cycle cycles stable |
@@ -152,17 +157,7 @@ TypInfContext >> visitAssignmentNode: anAssignmentNode [
 
 { #category : #visiting }
 TypInfContext >> visitBlockNode: aBlockNode [
-
-	| block |
-	block := self next: aBlockNode.
-	current incomingArguments:
-		(aBlockNode arguments collect: [ :n | self nodeAt: n ]).
-	self visitNode: aBlockNode body.
-	current outgoingAdd: (TypInfReturnEdge
-			 origin: current
-			 target: block
-			 type: BlockClosure typAsType).
-	^ current := block
+	^ self next: aBlockNode
 ]
 
 { #category : #visiting }
@@ -230,14 +225,13 @@ TypInfContext >> visitMethodNode: aMethodNode [
 
 { #category : #visiting }
 TypInfContext >> visitReturnNode: aReturnNode [
-
 	self visitNode: aReturnNode value.
 	self next: aReturnNode.
-	current outgoingAdd: (TypInfReturnEdge
-			 origin: current
-			 target: root
-			 type: CompiledMethod typAsType).
-	^ current := root
+	current
+		outgoingAdd: (TypInfReturnEdge
+				origin: current
+				target: root
+				type: CompiledMethod typAsType)
 ]
 
 { #category : #visiting }

@@ -1,19 +1,19 @@
 Class {
-	#name : #TypInfInlineContext,
-	#superclass : #TypInfContext,
+	#name : #TypInfBlockContext,
+	#superclass : #TypInfInlineContext,
 	#instVars : [
-		'message'
+		'block'
 	],
 	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #'as yet unclassified' }
-TypInfInlineContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType [
+{ #category : #accessing }
+TypInfBlockContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType message: aMessageNode [
 	self shouldNotImplement
 ]
 
 { #category : #accessing }
-TypInfInlineContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType message: aMessage [
+TypInfBlockContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType message: aMessage block: aBlock [
 	^ self new
 		inlitializeSender: aContext
 			state: aState
@@ -21,33 +21,17 @@ TypInfInlineContext class >> sender: aContext state: aState node: aNode self: aT
 			self: aType
 			super: anotherType;
 		initializeMessage: aMessage;
+		initializeBlock: aBlock;
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TypInfInlineContext >> initializeMessage: aMessage [
-	message := aMessage
+{ #category : #accessing }
+TypInfBlockContext >> initializeBlock: aBlock [
+	block := aBlock
 ]
 
-{ #category : #initialization }
-TypInfInlineContext >> visit [
-	| home node_ |
-	node_ := TypInfInlinedMethod node: node context: self.
-	root := nodes at: node_ put: node_.
-	current := root.
-	self visitNode.
-	home := self home.
-	nodes
-		keysAndValuesDo: [ :n :e | 
-			e initialize: home state.	"parent need to be first, why though?"
-			home nodes at: n put: e.	"needed to be in context run loop"
-			e outgoing
-				at: #next
-				ifPresent: [ :s | s do: [ :f | f state: home state copy ] ] ]
-]
-
-{ #category : #initialization }
-TypInfInlineContext >> visitNode [
+{ #category : #accessing }
+TypInfBlockContext >> visitNode [
 	| returnOriginal nextOriginal |
 	returnOriginal := message
 			outgoingAt: #returnOriginal
@@ -77,12 +61,11 @@ TypInfInlineContext >> visitNode [
 								proxy: (message incomingArguments at: i)) ]).
 	self visitNode: node body.
 	node lastIsReturn
-		ifFalse: [ self next: RBVariableNode selfNode.
-			current
+		ifTrue: [ current
 				outgoingAdd: (TypInfReturnEdge
 						origin: current
-						target: root
-						type: CompiledMethod typAsType) ].
+						target: block context root
+						type: TypUnknownType instance) ].
 	returnOriginal
 		ifNotNil: [ current
 				outgoingAdd: (TypInfReturnEdge
