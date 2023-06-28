@@ -26,9 +26,9 @@ TypInfLocalDefinition >> initialize: aState [
 ]
 
 { #category : #accessing }
-TypInfLocalDefinition >> outgoingReads [
+TypInfLocalDefinition >> outReads [
 
-	^ outgoing
+	^ out
 		  at: #read
 		  ifPresent: [ :e | e collect: #target ]
 		  ifAbsent: [ #(  ) ]
@@ -37,5 +37,5 @@ TypInfLocalDefinition >> outgoingReads [
 { #category : #accessing }
 TypInfLocalDefinition >> type [
 
-	^ (self outgoingReads collect: #type) typAsType
+	^ (self outReads collect: #type) typAsType
 ]

@@ -30,11 +30,11 @@ TypNode >> typGtDecorate: anElement in: aMondrian [
 						  aptitude: BrGlamorousToolbarAptitude;
 						  addItem: (BrButton new
 								   aptitude: BrGlamorousButtonWithLabelAptitude;
-								   label: ('out {1}' format: { self outgoingEdges size });
+								   label: ('out {1}' format: { self outEdges size });
 								   action: [ :button | 
 									   | nodes existingNodes remainingNodes |
 									   existingNodes := aMondrian existingNodes.
-									   nodes := (self outgoingEdges collect: #target) difference:
+									   nodes := (self outEdges collect: #target) difference:
 											            existingNodes.
 									   remainingNodes := nodes size.
 									   (nodes asArray takeFirst: 5) do: [ :e | 
@@ -52,11 +52,11 @@ TypNode >> typGtDecorate: anElement in: aMondrian [
 								   yourself);
 						  addItem: (BrButton new
 								   aptitude: BrGlamorousButtonWithLabelAptitude;
-								   label: ('in {1}' format: { self incomingEdges size });
+								   label: ('in {1}' format: { self inEdges size });
 								   action: [ :button | 
 									   | nodes existingNodes remainingNodes |Halt once.
 									   existingNodes := aMondrian existingNodes.
-									   nodes := (self incomingEdges collect: #origin) difference:
+									   nodes := (self inEdges collect: #origin) difference:
 											            existingNodes.
 									   remainingNodes := nodes size.
 									   (nodes asArray takeFirst: 5) do: [ :e | 
@@ -97,9 +97,9 @@ TypNode >> typGtPaintOn: aMondrian [
 	nodes := self neighbors , { self } difference: currentNodes.
 	nodes ifEmpty: [ ^ self ].
 	nextNodes := currentNodes , nodes , { self }.
-	edges := ((((nodes flatCollect: #incomingEdges) select: [ :e | 
+	edges := ((((nodes flatCollect: #inEdges) select: [ :e | 
 		            nextNodes includes: e origin ])
-	           , ((nodes flatCollect: #outgoingEdges) select: [ :e | 
+	           , ((nodes flatCollect: #outEdges) select: [ :e | 
 			            nextNodes includes: e target ]) groupedBy: #nodes)
 		          values asIdentitySet asArray sort: [ :a :b | a size > b size ]) 
 		         takeFirst: 64.

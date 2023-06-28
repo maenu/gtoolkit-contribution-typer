@@ -7,9 +7,9 @@ Class {
 }
 
 { #category : #accessing }
-TypInfMethod >> incomingReturns [
+TypInfMethod >> inReturns [
 
-	^ incoming
+	^ in
 		  at: #tighten
 		  ifPresent: [ :s | s select: #isReturn thenCollect: #origin ]
 		  ifAbsent: [ #(  ) ]
@@ -32,7 +32,7 @@ TypInfMethod >> method [
 
 	^ context self
 		  lookupMethod: node selector asSymbol
-		  arguments: (self incomingArguments collect: #type)
+		  arguments: (self inArguments collect: #type)
 ]
 
 { #category : #accessing }
@@ -46,10 +46,10 @@ TypInfMethod >> transfer [
 
 	state at: self put: ((CompiledMethod
 			  typAsFunctionTypeWithResult:
-				  (self incomingReturns collect: #type) typAsType
-			  arguments: (self incomingArguments collect: #type)
+				  (self inReturns collect: #type) typAsType
+			  arguments: (self inArguments collect: #type)
 			  argumentsOptional: false
 			  signalsAlways: nil)
-			 outgoingAt: #method ifAbsentPut: [ self ];
+			 outAt: #method ifAbsentPut: [ self ];
 			 yourself)
 ]

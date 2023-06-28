@@ -197,9 +197,9 @@ TypType >> initialize [
 TypType >> initializeSuper: aType [
 
 	aType = superType ifTrue: [ ^ self ].
-	superType ifNotNil: [ self outgoingRemoveAt: #super ].
+	superType ifNotNil: [ self outRemoveAt: #super ].
 	superType := aType.
-	superType ifNotNil: [ self outgoingAt: #super put: superType ].
+	superType ifNotNil: [ self outAt: #super put: superType ].
 	hash := nil
 ]
 

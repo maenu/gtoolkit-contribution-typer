@@ -14,7 +14,7 @@ TypInfMessage >> abstractInterpret [
 { #category : #accessing }
 TypInfMessage >> canAbstractInterpret [
 	^ self
-		outgoingAt: #abstractInterpret
+		outAt: #abstractInterpret
 		ifPresent: [ :e | false ]
 		ifAbsent: [ true ]
 ]
@@ -24,7 +24,7 @@ TypInfMessage >> canInline [
 	| receiver |
 	self flag: 'TODO check if already inlined'.
 	self
-		outgoingAt: #inline
+		outAt: #inline
 		ifPresent: [ :e | ^ false ]
 		ifAbsent: [  ].
 	receiver := self receiver.
@@ -34,15 +34,15 @@ TypInfMessage >> canInline [
 ]
 
 { #category : #accessing }
-TypInfMessage >> incomingReceiver [
+TypInfMessage >> inReceiver [
 
-	^ self incomingAt: #receiver
+	^ self inAt: #receiver
 ]
 
 { #category : #accessing }
-TypInfMessage >> incomingReceiver: aNode [
+TypInfMessage >> inReceiver: aNode [
 
-	^ self incomingAt: #receiver put: aNode
+	^ self inAt: #receiver put: aNode
 ]
 
 { #category : #accessing }
@@ -70,13 +70,13 @@ TypInfMessage >> inline: aMethod [
 					message: self.
 			inline visit.
 			self flag: 'TODO use receiver,args as key, invalidate?'.
-			self outgoingAt: #inline put: inline ]
+			self outAt: #inline put: inline ]
 		or: [  "Halt once" ]
 ]
 
 { #category : #accessing }
 TypInfMessage >> receiver [
-	^ state at: self incomingReceiver
+	^ state at: self inReceiver
 ]
 
 { #category : #accessing }
@@ -90,12 +90,12 @@ TypInfMessage >> transfer [
 		(classes size between: 1 and: 8) ifTrue: [ 
 			state
 				covariantFrom: self
-				to: self incomingReceiver
+				to: self inReceiver
 				with: (classes collect: #typAsType) typAsType ] ]'.
 	method := receiver
 			lookupMethod: node selector asSymbol
-			arguments: (self incomingArguments collect: [ :e | state at: e ]).
-	self incomingArguments
+			arguments: (self inArguments collect: [ :e | state at: e ]).
+	self inArguments
 		withIndexDo: [ :e :i | 
 			i <= method arguments size
 				ifTrue: [ state
@@ -104,12 +104,12 @@ TypInfMessage >> transfer [
 						with: (method arguments at: i) ] ].
 	state covariant: self with: method result.
 	self
-		outgoingAt: #abstractInterpret
+		outAt: #abstractInterpret
 		ifPresent: [ :e | ^ self ]
 		ifAbsent: [  "noop" ].
 	self canAbstractInterpret ifTrue: [ self abstractInterpret ifTrue: [ ^ self ] ].
 	self
-		outgoingAt: #inline
+		outAt: #inline
 		ifPresent: [ :e | ^ self ]
 		ifAbsent: [  "noop" ].
 	self canInline ifTrue: [ self inline ]

@@ -30,10 +30,10 @@ TypBreadthFirstResolver >> initializeResolvers: anObject [
 
 	<typPraArguments: 'SequenceableCollection<TypLookupResolver>'>
 	anObject = resolvers ifTrue: [ ^ self ].
-	resolvers ifNotNil: [ self outgoingRemoveAt: #resolvers ].
+	resolvers ifNotNil: [ self outRemoveAt: #resolvers ].
 	resolvers := anObject.
 	resolvers ifNotNil: [ 
-		resolvers do: [ :e | self outgoingAddTarget: e key: #resolvers ] ]
+		resolvers do: [ :e | self outAddTarget: e key: #resolvers ] ]
 ]
 
 { #category : #invalidation }

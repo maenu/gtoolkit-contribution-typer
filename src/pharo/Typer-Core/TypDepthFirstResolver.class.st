@@ -25,7 +25,7 @@ TypDepthFirstResolver >> canResolve: aLookup [
 TypDepthFirstResolver >> initializeResolver: aResolver [
 
 	resolver := aResolver.
-	self outgoingAt: #resolver put: resolver
+	self outAt: #resolver put: resolver
 ]
 
 { #category : #invalidation }

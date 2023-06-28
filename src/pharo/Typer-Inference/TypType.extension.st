@@ -7,7 +7,7 @@ TypType >> typInfAbstractInterpret: aMessageNode [
 
 { #category : #'*Typer-Inference' }
 TypType >> typInfNode [
-	^ self outgoingAt: #typInfNode
+	^ self outAt: #typInfNode
 ]
 
 { #category : #'*Typer-Inference' }

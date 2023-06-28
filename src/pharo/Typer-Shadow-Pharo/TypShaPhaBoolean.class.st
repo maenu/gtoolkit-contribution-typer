@@ -50,34 +50,34 @@ TypShaPhaBoolean >> mIfTrueIfFalse: aLookup [
 				   BlockClosure typAsType })
 		  typInfRotater: [ :node | "move second from sequential to parallel"
 			  | ifTrue ifFalse next |
-			  ifTrue := node incomingArguments first.
-			  ifFalse := node incomingArguments second.
-			  next := ifFalse incoming: #next.
-			  next origin outgoingRemove: next.
+			  ifTrue := node inArguments first.
+			  ifFalse := node inArguments second.
+			  next := ifFalse in: #next.
+			  next origin outRemove: next.
 			  next := TypInfNextEdge
-				          origin: (ifTrue incomingAt: #next)
+				          origin: (ifTrue inAt: #next)
 				          target: ifFalse.
-			  next origin outgoingAdd: next.
+			  next origin outAdd: next.
 			  next := TypInfNextEdge
 				          origin: ((ifTrue isKindOf: TypInfBlock)
-						           ifTrue: [ ifTrue incomingReturn ]
+						           ifTrue: [ ifTrue inReturn ]
 						           ifFalse: [ ifTrue ])
 				          target: node.
-			  next origin outgoing at: #next ifPresent: [ :c | 
+			  next origin out at: #next ifPresent: [ :c | 
 					  c
 						  detect: [ :e | e target == node ]
-						  ifFound: [ :e | next origin outgoingRemove: e ] ].
-			  next origin outgoingAdd: next.
+						  ifFound: [ :e | next origin outRemove: e ] ].
+			  next origin outAdd: next.
 			  next := TypInfNextEdge
 				          origin: ((ifFalse isKindOf: TypInfBlock)
-						           ifTrue: [ ifFalse incomingReturn ]
+						           ifTrue: [ ifFalse inReturn ]
 						           ifFalse: [ ifFalse ])
 				          target: node.
-			  next origin outgoing at: #next ifPresent: [ :c | 
+			  next origin out at: #next ifPresent: [ :c | 
 					  c
 						  detect: [ :e | e target == node ]
-						  ifFound: [ :e | next origin outgoingRemove: e ] ].
-			  next origin outgoingAdd: next ];
+						  ifFound: [ :e | next origin outRemove: e ] ].
+			  next origin outAdd: next ];
 		  yourself
 ]
 

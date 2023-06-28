@@ -34,44 +34,44 @@ TypInfBlockContext >> initializeBlock: aBlock [
 TypInfBlockContext >> visitNode [
 	| returnOriginal nextOriginal |
 	returnOriginal := message
-			outgoingAt: #returnOriginal
+			outAt: #returnOriginal
 			ifAbsent: [ message
-					outgoingAt: #return
+					outAt: #return
 					ifPresent: [ :target | 
-						message outgoingRemoveAt: #return.
-						message outgoingAt: #returnOriginal put: target ]
+						message outRemoveAt: #return.
+						message outAt: #returnOriginal put: target ]
 					ifAbsent: [ nil ] ].
 	nextOriginal := message
-			outgoingAt: #nextOriginal
+			outAt: #nextOriginal
 			ifAbsent: [ message
-					outgoingAt: #next
+					outAt: #next
 					ifPresent: [ :target | 
-						message outgoingRemoveAt: #next.
-						message outgoingAt: #nextOriginal put: target ]
+						message outRemoveAt: #next.
+						message outAt: #nextOriginal put: target ]
 					ifAbsent: [ nil ] ].
-	message outgoingAdd: (TypInfNextEdge origin: message target: root).
+	message outAdd: (TypInfNextEdge origin: message target: root).
 	current
-		incomingArguments: (node arguments
+		inArguments: (node arguments
 				withIndexCollect: [ :n :i | 
 					nodes
 						at: n
 						put: (TypInfInlinedLocalDefinition
 								node: n
 								context: self
-								proxy: (message incomingArguments at: i)) ]).
+								proxy: (message inArguments at: i)) ]).
 	self visitNode: node body.
 	node lastIsReturn
 		ifTrue: [ current
-				outgoingAdd: (TypInfReturnEdge
+				outAdd: (TypInfReturnEdge
 						origin: current
 						target: block context root
 						type: TypUnknownType instance) ].
 	returnOriginal
 		ifNotNil: [ current
-				outgoingAdd: (TypInfReturnEdge
+				outAdd: (TypInfReturnEdge
 						origin: current
 						target: returnOriginal
 						type: CompiledMethod typAsType) ].
 	nextOriginal
-		ifNotNil: [ current outgoingAdd: (TypInfNextEdge origin: current target: nextOriginal) ]
+		ifNotNil: [ current outAdd: (TypInfNextEdge origin: current target: nextOriginal) ]
 ]

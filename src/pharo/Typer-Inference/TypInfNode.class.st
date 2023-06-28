@@ -19,11 +19,11 @@ TypInfNode class >> node: aNode context: aContext [
 { #category : #accessing }
 TypInfNode >> burp [
 
-	outgoing at: #tighten ifPresent: [ :s | 
+	out at: #tighten ifPresent: [ :s | 
 		s
 			select: #isReturn
 			thenDo: [ :e | e set: (state at: self) in: state ] ].
-	outgoing
+	out
 		at: #next
 		ifPresent: [ :s | s do: [ :e | e state: state copy ] ]
 ]
@@ -35,9 +35,9 @@ TypInfNode >> context [
 ]
 
 { #category : #accessing }
-TypInfNode >> incomingNext [
+TypInfNode >> inNext [
 
-	^ self incomingAt: #next
+	^ self inAt: #next
 ]
 
 { #category : #accessing }
@@ -69,13 +69,13 @@ TypInfNode >> invalidateOnMethodChange: aMethodAnnouncement [
 { #category : #accessing }
 TypInfNode >> methodNode [
 
-	^ self outgoingAt: #methodNode
+	^ self outAt: #methodNode
 ]
 
 { #category : #accessing }
 TypInfNode >> methodNode: aNode [
 
-	^ self outgoingAt: #methodNode put: aNode
+	^ self outAt: #methodNode put: aNode
 ]
 
 { #category : #accessing }
@@ -84,9 +84,9 @@ TypInfNode >> node [
 ]
 
 { #category : #accessing }
-TypInfNode >> outgoingNext [
+TypInfNode >> outNext [
 
-	^ self outgoingAt: #next
+	^ self outAt: #next
 ]
 
 { #category : #printing }
@@ -97,13 +97,13 @@ TypInfNode >> printOn: aStream [
 
 { #category : #accessing }
 TypInfNode >> slurp [
-	incoming
+	in
 		at: #next
 		ifPresent: [ :s | 
 			s
 				ifNotEmpty: [ state := (s collect: #state) reduce: [ :a :b | a covariant: b ].
 					state := state copy	"for good measure" ] ].
-	incoming
+	in
 		at: #tighten
 		ifPresent: [ :s | 
 			s

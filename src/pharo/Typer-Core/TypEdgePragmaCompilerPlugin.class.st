@@ -18,11 +18,11 @@ TypEdgePragmaCompilerPlugin >> transform [
 	ast := ast copy.
 	rewriter := RBParseTreeRewriter new
 		            replace: '| `@temporaries |
-							  		(`.@asserts) `{ :node | node isMessage and: [ node receiver isSelf and: [ node selector = #assert: ] ] }.
+							  		(`.@asserts) `{ :node | node isMessage and: [ node receiver isSelfVariable and: [ node selector = #assert: ] ] }.
 							  		`.@statements.
 							  		^ `@return'
 		            with: '`.@asserts.
-						 	   ^ self outgoingAt: (TypEdgePragmaKey selector: thisContext selector arguments: thisContext arguments) ifAbsentPut: [ | `@temporaries |
+						 	   ^ self outAt: (TypEdgePragmaKey selector: thisContext selector arguments: thisContext arguments) ifAbsentPut: [ | `@temporaries |
 						    	`.@statements.
 							 	`@return ]';
 		            yourself.
@@ -32,7 +32,7 @@ TypEdgePragmaCompilerPlugin >> transform [
 							  		`.@statements.
 							  		^ `@return'
 			            with:
-				            '^ self outgoingAt: (TypEdgePragmaKey selector: thisContext selector arguments: thisContext arguments) ifAbsentPut: [ | `@temporaries |
+				            '^ self outAt: (TypEdgePragmaKey selector: thisContext selector arguments: thisContext arguments) ifAbsentPut: [ | `@temporaries |
 						    	`.@statements.
 								`@return ]';
 			            yourself.

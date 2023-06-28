@@ -9,11 +9,11 @@ Class {
 { #category : #accessing }
 TypInfInlinedLocalDefinition class >> node: aNode context: aContext proxy: anObject [
 	^ (self node: aNode context: aContext)
-		incomingArguments: {anObject};
+		inArguments: {anObject};
 		yourself
 ]
 
 { #category : #accessing }
 TypInfInlinedLocalDefinition >> transfer [
-	state at: self put: (state at: self incomingArguments first)
+	state at: self put: (state at: self inArguments first)
 ]

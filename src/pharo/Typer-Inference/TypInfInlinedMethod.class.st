@@ -7,5 +7,5 @@ Class {
 { #category : #accessing }
 TypInfInlinedMethod >> transfer [
 
-	state at: self put: (self incomingReturns collect: #type) typAsType
+	state at: self put: (self inReturns collect: #type) typAsType
 ]

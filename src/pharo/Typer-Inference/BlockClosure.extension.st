@@ -6,7 +6,7 @@ BlockClosure class >> typInfAbstractInterpretValue: aMessageNode [
 	| receiver block |
 	receiver := aMessageNode receiver.
 	receiver
-		outgoingAt: #typInfNode
+		outAt: #typInfNode
 		ifPresent: [ :n | block := n ]
 		ifAbsent: [ ^ false ].
 	TypInfMethodNodeStack
@@ -24,7 +24,7 @@ BlockClosure class >> typInfAbstractInterpretValue: aMessageNode [
 					block: block.
 			inline visit.
 			self flag: 'TODO use receiver,args as key, invalidate?'.
-			aMessageNode outgoingAt: #abstractInterpret put: inline ]
+			aMessageNode outAt: #abstractInterpret put: inline ]
 		or: [ "Halt now" ].
 	^ true
 ]

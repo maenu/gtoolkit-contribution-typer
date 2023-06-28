@@ -163,6 +163,24 @@ TypRewriter >> rewriteNilNewCopyWithOrigins [
 ]
 
 { #category : #accessing }
+TypRewriter >> rewriteNodeInOutSenders [
+	<gtExample>
+	| sink |
+	sink := AsyncCollectionSink forCollection: OrderedCollection new.
+	((('Typer' gtPackageMatches
+		& ('outgoing' gtSubstringMatch | 'incoming' gtSubstringMatch)
+		select: [ :e | e methodClass ~= self class ]) result
+		collect: [ :e | 
+			| sourceCode |
+			sourceCode := e sourceCode.
+			sourceCode := sourceCode copyReplaceAll: 'outgoing' with: 'out'.
+			sourceCode := sourceCode copyReplaceAll: 'incoming' with: 'in'.
+			e origin compile: sourceCode classified: e protocol.
+			e origin >> e selector ]) forward: sink) wait.
+	^ sink collection
+]
+
+{ #category : #accessing }
 TypRewriter >> rewriteParameterASyntax [
 
 	<gtExample>

@@ -46,7 +46,7 @@ TypIndex >> initializeResolver: anObject [
 
 	<typPraArguments: 'TypLookupResolver'>
 	resolver := anObject.
-	self outgoingAt: #resolver put: resolver
+	self outAt: #resolver put: resolver
 ]
 
 { #category : #invalidation }
@@ -61,12 +61,12 @@ TypIndex >> invalidateOnClassChange: aClassAnnouncement [
 
 	| changed |
 	changed := false.
-	(outgoing flatCollect: #yourself)
+	(out flatCollect: #yourself)
 		select: [ :e | e key isKindOf: TypLookup ]
 		thenDo: [ :e | 
 			((e key invalidateOnClassChange: aClassAnnouncement) or:
 				 (e target invalidateOnClassChange: aClassAnnouncement)) ifTrue: [ 
-				self outgoingRemove: e.
+				self outRemove: e.
 				changed := true ] ].
 	^ changed or: (resolver invalidateOnClassChange: aClassAnnouncement)
 ]
@@ -76,13 +76,13 @@ TypIndex >> invalidateOnMethodChange: aMethodAnnouncement [
 
 	| changed |
 	changed := false.
-	(outgoing flatCollect: #yourself)
+	(out flatCollect: #yourself)
 		select: [ :e | e key isKindOf: TypLookup ]
 		thenDo: [ :e | 
 			((e key invalidateOnMethodChange: aMethodAnnouncement) or:
 				 (e target invalidateOnMethodChange: aMethodAnnouncement)) 
 				ifTrue: [ 
-					self outgoingRemove: e.
+					self outRemove: e.
 					changed := true ] ].
 	^ changed or:
 		  (resolver invalidateOnMethodChange: aMethodAnnouncement)
@@ -91,10 +91,10 @@ TypIndex >> invalidateOnMethodChange: aMethodAnnouncement [
 { #category : #accessing }
 TypIndex >> resolve: aLookup [
 
-	^ self outgoingAt: aLookup ifAbsent: [ 
+	^ self outAt: aLookup ifAbsent: [ 
 		  (resolver canResolve: aLookup)
 			  ifTrue: [ 
-				  self outgoingAt: aLookup put: TypUnknownType instance.
-				  self outgoingAt: aLookup put: (resolver resolve: aLookup) ]
+				  self outAt: aLookup put: TypUnknownType instance.
+				  self outAt: aLookup put: (resolver resolve: aLookup) ]
 			  ifFalse: [ TypUnknownType instance ] ]
 ]

@@ -8,7 +8,7 @@ Class {
 TypInfAssignment >> transfer [
 
 	| value |
-	value := state at: self incomingNext.
+	value := state at: self inNext.
 	state at: self put: value.
-	state covariantFrom: self to: self outgoingNext with: value
+	state covariantFrom: self to: self outNext with: value
 ]

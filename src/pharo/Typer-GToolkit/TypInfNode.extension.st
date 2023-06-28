@@ -56,13 +56,13 @@ TypInfNode >> typGtFlowFor: aView [
 TypInfNode >> typGtFlowPaintOn: aMondrian [
 	| edges nodes currentNodes nextNodes |
 	currentNodes := aMondrian existingNodes.
-	nodes := (self context outgoingEdges collect: #target)
+	nodes := (self context outEdges collect: #target)
 			, context home nodes values difference: currentNodes.
 	nodes ifEmpty: [ ^ self ].
 	nextNodes := currentNodes , nodes , {self}.
-	edges := (((nodes flatCollect: #incomingEdges)
+	edges := (((nodes flatCollect: #inEdges)
 			select: [ :e | nextNodes includes: e origin ])
-			, ((nodes flatCollect: #outgoingEdges)
+			, ((nodes flatCollect: #outEdges)
 					select: [ :e | nextNodes includes: e target ])) asIdentitySet
 			groupedBy: [ :e | e key -> e nodes ].
 	nodes := (edges keys flatCollect: #value) asIdentitySet

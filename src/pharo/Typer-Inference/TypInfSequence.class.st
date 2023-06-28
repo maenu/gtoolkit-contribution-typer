@@ -16,6 +16,6 @@ TypInfSequence >> initialize: aState [
 { #category : #accessing }
 TypInfSequence >> transfer [
 
-	self incomingArguments do: [ :e | 
+	self inArguments do: [ :e | 
 		state at: e put: TypNilType instance ]
 ]

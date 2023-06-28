@@ -5,27 +5,27 @@ Class {
 }
 
 { #category : #'meta-object-protocol' }
-TypInfLocal >> incomingRead [
+TypInfLocal >> inRead [
 
-	^ self incomingAt: #read
+	^ self inAt: #read
 ]
 
 { #category : #'meta-object-protocol' }
-TypInfLocal >> incomingRead: aNode [
+TypInfLocal >> inRead: aNode [
 
-	^ self incomingAt: #read put: aNode
+	^ self inAt: #read put: aNode
 ]
 
 { #category : #'as yet unclassified' }
 TypInfLocal >> tighten: aType in: aState [
 
-	aState covariantFrom: self to: self incomingRead with: aType
+	aState covariantFrom: self to: self inRead with: aType
 ]
 
 { #category : #accessing }
 TypInfLocal >> transfer [
 
-	(self incomingNext isKindOf: TypInfAssignment) ifTrue: [ 
+	(self inNext isKindOf: TypInfAssignment) ifTrue: [ 
 		^ self tighten: self type in: state ].
-	state covariant: self with: (state at: self incomingRead)
+	state covariant: self with: (state at: self inRead)
 ]

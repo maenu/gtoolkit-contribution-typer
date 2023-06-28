@@ -47,7 +47,7 @@ TypInfContext >> inlitializeSender: aContext state: aState node: aNode self: aTy
 TypInfContext >> next: aNode [
 	| next |
 	next := self nodeAt: aNode.
-	current outgoingAdd: (TypInfNextEdge origin: current target: next).
+	current outAdd: (TypInfNextEdge origin: current target: next).
 	^ current := next
 ]
 
@@ -132,7 +132,7 @@ TypInfContext >> visit [
 	nodes
 		keysAndValuesDo: [ :n :e | 
 			e initialize: state.
-			e outgoing at: #next ifPresent: [ :s | s do: [ :f | f state: state copy ] ] ]
+			e out at: #next ifPresent: [ :s | s do: [ :f | f state: state copy ] ] ]
 ]
 
 { #category : #visiting }
@@ -142,7 +142,7 @@ TypInfContext >> visitArrayNode: anArrayNode [
 	arguments := anArrayNode statements collect: [ :n | 
 		             self visitNode: n ].
 	self next: anArrayNode.
-	current incomingArguments: arguments.
+	current inArguments: arguments.
 	^ current
 ]
 
@@ -174,7 +174,7 @@ TypInfContext >> visitLiteralArrayNode: aLiteralArrayNode [
 	arguments := aLiteralArrayNode contents collect: [ :n | 
 		             self visitNode: n ].
 	self next: aLiteralArrayNode.
-	current incomingArguments: arguments.
+	current inArguments: arguments.
 	^ current
 ]
 
@@ -189,7 +189,7 @@ TypInfContext >> visitLocalVariableNode: aLocalNode [
 
 	self visitTemporaryNode: aLocalNode.
 	aLocalNode isDefinition ifFalse: [ 
-		current incomingRead:
+		current inRead:
 			(self nodeAt: aLocalNode variable definingNode) ].
 	^ current
 ]
@@ -203,20 +203,20 @@ TypInfContext >> visitMessageNode: aMessageNode [
 	arguments := aMessageNode arguments collect: [ :n | 
 		             self visitNode: n ].
 	self next: aMessageNode.
-	current incomingArguments: arguments.
-	current incomingReceiver: (self nodeAt: aMessageNode receiver).
+	current inArguments: arguments.
+	current inReceiver: (self nodeAt: aMessageNode receiver).
 	^ current
 ]
 
 { #category : #visiting }
 TypInfContext >> visitMethodNode: aMethodNode [
 
-	current incomingArguments:
+	current inArguments:
 		(aMethodNode arguments collect: [ :n | self nodeAt: n ]).
 	self visitNode: aMethodNode body.
 	aMethodNode lastIsReturn ifFalse: [ 
 		self next: RBVariableNode selfNode.
-		current outgoingAdd: (TypInfReturnEdge
+		current outAdd: (TypInfReturnEdge
 				 origin: current
 				 target: root
 				 type: CompiledMethod typAsType) ].
@@ -228,7 +228,7 @@ TypInfContext >> visitReturnNode: aReturnNode [
 	self visitNode: aReturnNode value.
 	self next: aReturnNode.
 	current
-		outgoingAdd: (TypInfReturnEdge
+		outAdd: (TypInfReturnEdge
 				origin: current
 				target: root
 				type: CompiledMethod typAsType)
@@ -238,7 +238,7 @@ TypInfContext >> visitReturnNode: aReturnNode [
 TypInfContext >> visitSequenceNode: aSequenceNode [
 
 	self next: aSequenceNode.
-	current incomingArguments:
+	current inArguments:
 		(aSequenceNode temporaries collect: [ :n | self nodeAt: n ]).
 	aSequenceNode statements do: [ :n | self visitNode: n ]
 ]

@@ -32,7 +32,7 @@ TypInfMethodResolver >> canResolve: aLookup [
 { #category : #accessing }
 TypInfMethodResolver >> contextAt: aMethodNode self: aType super: anotherType [
 	^ self
-		outgoingAt: (TypInfContextKey
+		outAt: (TypInfContextKey
 				node: aMethodNode
 				self: aType
 				super: anotherType)
@@ -63,12 +63,12 @@ TypInfMethodResolver >> invalidateOnClassChange: aClassAnnouncement [
 
 	| changed |
 	changed := false.
-	(outgoing flatCollect: #yourself)
+	(out flatCollect: #yourself)
 		select: [ :e | e key isKindOf: TypInfContextKey ]
 		thenDo: [ :e | 
 			((e key invalidateOnClassChange: aClassAnnouncement) or:
 				 (e target invalidateOnClassChange: aClassAnnouncement)) ifTrue: [ 
-				self outgoingRemove: e.
+				self outRemove: e.
 				changed := true ] ].
 	^ changed
 ]
@@ -78,13 +78,13 @@ TypInfMethodResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 
 	| changed |
 	changed := false.
-	(outgoing flatCollect: #yourself)
+	(out flatCollect: #yourself)
 		select: [ :e | e key isKindOf: TypInfContextKey ]
 		thenDo: [ :e | 
 			((e key invalidateOnMethodChange: aMethodAnnouncement) or:
 				 (e target invalidateOnMethodChange: aMethodAnnouncement)) 
 				ifTrue: [ 
-					self outgoingRemove: e.
+					self outRemove: e.
 					changed := true ] ].
 	^ changed
 ]

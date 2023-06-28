@@ -16,6 +16,6 @@ TypInfLiteralArray >> initialize: aState [
 			   ifTrue: [ ByteArray typAsType ]
 			   ifFalse: [ 
 				   Array typAsType withParameters:
-					   { (self incomingArguments collect: [ :e | e initialize: state ])
+					   { (self inArguments collect: [ :e | e initialize: state ])
 						   typAsType } ])
 ]

@@ -7,9 +7,9 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TypInfBlock >> incomingReturn [
+TypInfBlock >> inReturn [
 
-	^ ((incoming at: #tighten) detect: #isReturn) origin
+	^ ((in at: #tighten) detect: #isReturn) origin
 ]
 
 { #category : #accessing }
@@ -28,14 +28,14 @@ TypInfBlock >> initialize: aState [
 
 { #category : #accessing }
 TypInfBlock >> tighten: aType in: aState [
-	self incomingArguments
+	self inArguments
 		withIndexDo: [ :n :i | 
 			i <= aType arguments size
 				ifTrue: [ aState
 						covariantFrom: self
 						to: n
 						with: (aType arguments at: i) ] ].
-	incoming
+	in
 		at: #tighten
 		ifPresent: [ :s | 
 			s

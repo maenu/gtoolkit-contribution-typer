@@ -3,9 +3,9 @@ Extension { #name : #TypFunctionType }
 { #category : #'*Typer-Inference' }
 TypFunctionType >> typInfNode: aNode [
 	self
-		outgoingAt: #typInfNode
+		outAt: #typInfNode
 		ifPresent: [ :n | Error signal: 'typInfNode is immutable' ]
-		ifAbsent: [ self outgoingAt: #typInfNode put: aNode ]
+		ifAbsent: [ self outAt: #typInfNode put: aNode ]
 ]
 
 { #category : #'*Typer-Inference' }

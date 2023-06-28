@@ -19,6 +19,6 @@ TypInfReturnEdge >> set: aType in: aState [
 				           type withParameters:
 					           { aType }
 					           ,
-					           (target incomingArguments collect: [ :n | 
+					           (target inArguments collect: [ :n | 
 						            aState at: n ]) ])
 ]

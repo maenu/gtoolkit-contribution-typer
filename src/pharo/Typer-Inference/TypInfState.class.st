@@ -42,17 +42,17 @@ TypInfState >> covariantFrom: aNode to: anotherNode with: aType [
 	"tighten node with tightened type"
 	anotherNode tighten: type in: self.
 	"ensure tighten edge"
-	edge := aNode outgoing
+	edge := aNode out
 		        at: #tighten
 		        ifPresent: [ :s | 
 			        s detect: [ :e | e target == anotherNode ] ifNone: [ 
-				        aNode outgoingAdd:
+				        aNode outAdd:
 					        (TypInfTightenEdge
 						         origin: aNode
 						         target: anotherNode
 						         type: type) ] ]
 		        ifAbsent: [ 
-			        aNode outgoingAdd:
+			        aNode outAdd:
 				        (TypInfTightenEdge
 					         origin: aNode
 					         target: anotherNode
