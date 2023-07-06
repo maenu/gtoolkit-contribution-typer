@@ -9,6 +9,13 @@ TypInfInferred >> block: aBoolean [
 	^ aBoolean ifTrue: [ 1 ] ifFalse: [ 0 ]
 ]
 
+{ #category : #accessing }
+TypInfInferred >> blockUseSameTwice: aBoolean [
+	| block |
+	block := [ 2 ].
+	^ aBoolean ifTrue: block ifFalse: block
+]
+
 { #category : #requirements }
 TypInfInferred >> empty [
 ]

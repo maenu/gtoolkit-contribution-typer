@@ -24,8 +24,7 @@ TypInfLocal >> tighten: aType in: aState [
 
 { #category : #accessing }
 TypInfLocal >> transfer [
-
-	(self inNext isKindOf: TypInfAssignment) ifTrue: [ 
-		^ self tighten: self type in: state ].
+	((in at: #next) allSatisfy: [ :e | e origin isKindOf: TypInfAssignment ])
+		ifTrue: [ ^ self tighten: self type in: state ].
 	state covariant: self with: (state at: self inRead)
 ]

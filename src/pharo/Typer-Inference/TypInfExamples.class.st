@@ -12,6 +12,13 @@ TypInfExamples >> block [
 ]
 
 { #category : #requirements }
+TypInfExamples >> blockUseSameTwice [
+
+	<gtExample>
+	^ self infer: TypInfInferred >> #blockUseSameTwice:
+]
+
+{ #category : #requirements }
 TypInfExamples >> empty [
 
 	<gtExample>

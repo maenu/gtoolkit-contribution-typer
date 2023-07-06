@@ -35,12 +35,6 @@ TypInfNode >> context [
 ]
 
 { #category : #accessing }
-TypInfNode >> inNext [
-
-	^ self inAt: #next
-]
-
-{ #category : #accessing }
 TypInfNode >> initialize: aState [
 	"compute initial state for node"
 
@@ -84,9 +78,8 @@ TypInfNode >> node [
 ]
 
 { #category : #accessing }
-TypInfNode >> outNext [
-
-	^ self outAt: #next
+TypInfNode >> previous [
+	^ ((in at: #next) collect: [ :e | state at: e origin ]) typAsType
 ]
 
 { #category : #printing }

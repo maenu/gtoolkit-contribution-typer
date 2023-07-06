@@ -6,6 +6,5 @@ Class {
 
 { #category : #accessing }
 TypInfReturn >> transfer [
-
-	state at: self put: (state at: self inNext)
+	state at: self put: self previous
 ]

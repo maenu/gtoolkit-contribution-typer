@@ -4,11 +4,15 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypInfAssignment >> transfer [
-
-	| value |
-	value := state at: self inNext.
-	state at: self put: value.
-	state covariantFrom: self to: self outNext with: value
+	| previous |
+	previous := self previous.
+	state at: self put: previous.
+	(out at: #next)
+		do: [ :e | 
+			state
+				covariantFrom: self
+				to: e target
+				with: previous ]
 ]
