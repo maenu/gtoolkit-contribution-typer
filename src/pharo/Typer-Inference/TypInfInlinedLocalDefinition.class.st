@@ -15,5 +15,6 @@ TypInfInlinedLocalDefinition class >> node: aNode context: aContext proxy: anObj
 
 { #category : #accessing }
 TypInfInlinedLocalDefinition >> transfer [
-	state at: self put: (state at: self inArguments first)
+	self flag: 'TODO should use state at: arg, but arg type is more concrete'.
+	state at: self put: (self inArgumentAt: 1) type
 ]

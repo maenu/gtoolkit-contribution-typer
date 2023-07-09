@@ -60,7 +60,7 @@ TypShaPhaBoolean >> mIfTrueIfFalse: aLookup [
 			  next origin outAdd: next.
 			  next := TypInfNextEdge
 				          origin: ((ifTrue isKindOf: TypInfBlock)
-						           ifTrue: [ ifTrue inReturn ]
+						           ifTrue: [ ifTrue inAt: #return ]
 						           ifFalse: [ ifTrue ])
 				          target: node.
 			  next origin out at: #next ifPresent: [ :c | 
@@ -70,7 +70,7 @@ TypShaPhaBoolean >> mIfTrueIfFalse: aLookup [
 			  next origin outAdd: next.
 			  next := TypInfNextEdge
 				          origin: ((ifFalse isKindOf: TypInfBlock)
-						           ifTrue: [ ifFalse inReturn ]
+						           ifTrue: [ ifFalse inAt: #return ]
 						           ifFalse: [ ifFalse ])
 				          target: node.
 			  next origin out at: #next ifPresent: [ :c | 

@@ -9,10 +9,5 @@ TypInfAssignment >> transfer [
 	| previous |
 	previous := self previous.
 	state at: self put: previous.
-	(out at: #next)
-		do: [ :e | 
-			state
-				covariantFrom: self
-				to: e target
-				with: previous ]
+	(out at: #next) do: [ :e | state at: e target put: previous ]
 ]

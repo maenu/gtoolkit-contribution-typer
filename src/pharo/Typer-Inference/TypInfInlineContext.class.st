@@ -31,19 +31,20 @@ TypInfInlineContext >> initializeMessage: aMessage [
 
 { #category : #initialization }
 TypInfInlineContext >> visit [
-	| home node_ |
-	node_ := TypInfInlinedMethod node: node context: self.
-	root := nodes at: node_ put: node_.
+	| home |
+	root := TypInfInlinedMethod node: node context: self.
+	self flag: 'Q is key really root? could be node too...'.
+	self nodesAt: root add: root.
 	current := root.
 	self visitNode.
 	home := self home.
 	nodes
-		keysAndValuesDo: [ :n :e | 
-			e initialize: home state.	"parent need to be first, why though?"
-			home nodes at: n put: e.	"needed to be in context run loop"
-			e out
-				at: #next
-				ifPresent: [ :s | s do: [ :f | f state: home state copy ] ] ]
+		keysAndValuesDo: [ :n :c | 
+			c
+				do: [ :e | 
+					e initialize: home state.	"parent need to be first, why though?"
+					home nodesAt: n add: e.	"needed to be in context run loop"
+					e out at: #next ifPresent: [ :s | s do: [ :f | f state: home state copy ] ] ] ]
 ]
 
 { #category : #initialization }
@@ -69,26 +70,18 @@ TypInfInlineContext >> visitNode [
 	current
 		inArguments: (node arguments
 				withIndexCollect: [ :n :i | 
-					nodes
-						at: n
-						put: (TypInfInlinedLocalDefinition
+					self
+						nodesAt: n
+						add: (TypInfInlinedLocalDefinition
 								node: n
 								context: self
 								proxy: (message inArguments at: i)) ]).
 	self visitNode: node body.
 	node lastIsReturn
 		ifFalse: [ self next: RBVariableNode selfNode.
-			current
-				outAdd: (TypInfReturnEdge
-						origin: current
-						target: root
-						type: CompiledMethod typAsType) ].
+			current outAdd: (TypInfReturnEdge origin: current target: root) ].
 	returnOriginal
-		ifNotNil: [ current
-				outAdd: (TypInfReturnEdge
-						origin: current
-						target: returnOriginal
-						type: CompiledMethod typAsType) ].
+		ifNotNil: [ current outAdd: (TypInfReturnEdge origin: current target: returnOriginal) ].
 	nextOriginal
 		ifNotNil: [ current outAdd: (TypInfNextEdge origin: current target: nextOriginal) ]
 ]

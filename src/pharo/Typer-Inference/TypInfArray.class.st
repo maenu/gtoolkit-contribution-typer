@@ -8,9 +8,8 @@ Class {
 
 { #category : #accessing }
 TypInfArray >> initialize: aState [
-
 	super initialize: aState.
-	^ state at: self put: Array typAsType
+	state at: self put: Array typAsType
 ]
 
 { #category : #'as yet unclassified' }

@@ -1,24 +1,17 @@
 Class {
 	#name : #TypInfReturnEdge,
-	#superclass : #TypInfTightenEdge,
+	#superclass : #TypInfEdge,
 	#category : #'Typer-Inference-Core'
 }
+
+{ #category : #'instance creation' }
+TypInfReturnEdge class >> origin: aNode target: anotherNode [
+
+	^ self origin: aNode target: anotherNode key: #return
+]
 
 { #category : #testing }
 TypInfReturnEdge >> isReturn [
 
 	^ true
-]
-
-{ #category : #initialization }
-TypInfReturnEdge >> set: aType in: aState [
-
-	^ aState at: self put: (type := type == aType
-			           ifTrue: [ type ]
-			           ifFalse: [ 
-				           type withParameters:
-					           { aType }
-					           ,
-					           (target inArguments collect: [ :n | 
-						            aState at: n ]) ])
 ]

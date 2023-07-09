@@ -16,15 +16,10 @@ TypInfLocal >> inRead: aNode [
 	^ self inAt: #read put: aNode
 ]
 
-{ #category : #'as yet unclassified' }
-TypInfLocal >> tighten: aType in: aState [
-
-	aState covariantFrom: self to: self inRead with: aType
-]
-
 { #category : #accessing }
 TypInfLocal >> transfer [
+	self flag: 'TODO does assignment need special treatment?'.
 	((in at: #next) allSatisfy: [ :e | e origin isKindOf: TypInfAssignment ])
-		ifTrue: [ ^ self tighten: self type in: state ].
-	state covariant: self with: (state at: self inRead)
+		ifTrue: [ ^ state at: self inRead put: self type ].
+	state at: self put: (state at: self inRead)
 ]

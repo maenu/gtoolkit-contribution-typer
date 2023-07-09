@@ -4,11 +4,9 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypInfClass >> transfer [
-
 	state
-		covariant: self
-		with: (node variable owningClass typAsType lookupVariable:
-				 node variable name asSymbol)
+		at: self
+		put: (node variable owningClass typAsType lookupVariable: node variable name asSymbol)
 ]

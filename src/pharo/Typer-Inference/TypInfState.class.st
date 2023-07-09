@@ -6,8 +6,7 @@ Class {
 
 { #category : #accessing }
 TypInfState >> at: anObject [
-
-	^ self at: anObject ifAbsentPut: TypUnknownType instance
+	^ self at: anObject ifAbsent: TypUnknownType instance
 ]
 
 { #category : #splitjoin }
@@ -23,42 +22,6 @@ TypInfState >> covariant: aState [
 			put:
 			(self at: n ifPresent: [ :tt | t covariant: tt ] ifAbsent: [ t ]) ].
 	^ copy
-]
-
-{ #category : #accessing }
-TypInfState >> covariant: aNode with: aType [
-
-	^ self at: aNode put: ((self at: aNode) covariant: aType)
-]
-
-{ #category : #'as yet unclassified' }
-TypInfState >> covariantFrom: aNode to: anotherNode with: aType [
-
-	| type edge |
-	aType isUnknown ifTrue: [ 
-		^ self "generalizing to the bottom type is not a constraint" ].
-	"tighten type"
-	type := self covariant: anotherNode with: aType.
-	"tighten node with tightened type"
-	anotherNode tighten: type in: self.
-	"ensure tighten edge"
-	edge := aNode out
-		        at: #tighten
-		        ifPresent: [ :s | 
-			        s detect: [ :e | e target == anotherNode ] ifNone: [ 
-				        aNode outAdd:
-					        (TypInfTightenEdge
-						         origin: aNode
-						         target: anotherNode
-						         type: type) ] ]
-		        ifAbsent: [ 
-			        aNode outAdd:
-				        (TypInfTightenEdge
-					         origin: aNode
-					         target: anotherNode
-					         type: type) ].
-	"tighten edge"
-	edge set: type in: self
 ]
 
 { #category : #accessing }

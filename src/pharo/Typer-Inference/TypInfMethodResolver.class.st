@@ -91,9 +91,18 @@ TypInfMethodResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 
 { #category : #accessing }
 TypInfMethodResolver >> nodeAt: aNode self: aType super: anotherType [
+	^ (self
+		nodesAt: aNode
+		self: aType
+		super: anotherType) first
+]
 
-	^ (self contextAt: aNode methodNode self: aType super: anotherType) 
-		  nodeAt: aNode
+{ #category : #accessing }
+TypInfMethodResolver >> nodesAt: aNode self: aType super: anotherType [
+	^ (self
+		contextAt: aNode methodNode
+		self: aType
+		super: anotherType) nodesAt: aNode
 ]
 
 { #category : #printing }
@@ -117,11 +126,12 @@ TypInfMethodResolver >> resolve: aLookup [
 
 { #category : #accessing }
 TypInfMethodResolver >> typeAt: aNode self: aType super: anotherType [
-
 	^ TypInfMethodNodeStack
-		  push: aNode methodNode
-		  max: 8
-		  during: [ 
-		  (self nodeAt: aNode self: aType super: anotherType) type ]
-		  or: [ TypUnknownType instance ]
+		push: aNode methodNode
+		max: 8
+		during: [ ((self
+				nodesAt: aNode
+				self: aType
+				super: anotherType) collect: #type) typAsType ]
+		or: [ TypUnknownType instance ]
 ]

@@ -53,25 +53,17 @@ TypInfBlockContext >> visitNode [
 	current
 		inArguments: (node arguments
 				withIndexCollect: [ :n :i | 
-					nodes
-						at: n
-						put: (TypInfInlinedLocalDefinition
+					self
+						nodesAt: n
+						add: (TypInfInlinedLocalDefinition
 								node: n
 								context: self
 								proxy: (message inArguments at: i)) ]).
 	self visitNode: node body.
 	node lastIsReturn
-		ifTrue: [ current
-				outAdd: (TypInfReturnEdge
-						origin: current
-						target: block context root
-						type: TypUnknownType instance) ].
+		ifTrue: [ current outAdd: (TypInfReturnEdge origin: current target: block context root) ].
 	returnOriginal
-		ifNotNil: [ current
-				outAdd: (TypInfReturnEdge
-						origin: current
-						target: returnOriginal
-						type: CompiledMethod typAsType) ].
+		ifNotNil: [ current outAdd: (TypInfReturnEdge origin: current target: returnOriginal) ].
 	nextOriginal
 		ifNotNil: [ current outAdd: (TypInfNextEdge origin: current target: nextOriginal) ]
 ]

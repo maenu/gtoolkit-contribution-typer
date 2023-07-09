@@ -6,23 +6,17 @@ Class {
 
 { #category : #initialization }
 TypInfLocalDefinition >> initialize: aState [
-
-	| type className global |
+	| className global |
 	super initialize: aState.
-	node isArgumentVariable ifFalse: [ 
-		^ state at: self put: TypNilType instance ].
-	type := state at: self put: TypUnknownType instance.
+	node isArgumentVariable ifFalse: [ ^ state at: self put: TypNilType instance ].
 	(node name beginsWith: 'an')
 		ifTrue: [ className := node name allButFirst: 2 ]
-		ifFalse: [ 
-			(node name beginsWith: 'a')
+		ifFalse: [ (node name beginsWith: 'a')
 				ifTrue: [ className := node name allButFirst: 1 ]
-				ifFalse: [ ^ type ] ].
-	global := Smalltalk globals
-		          at: className asSymbol
-		          ifAbsent: [ ^ type ].
-	global isClassOrTrait ifFalse: [ ^ type ].
-	^ state at: self put: global typAsType
+				ifFalse: [ ^ self ] ].
+	global := Smalltalk globals at: className asSymbol ifAbsent: [ ^ self ].
+	global isClassOrTrait ifFalse: [ ^ self ].
+	state at: self put: global typAsType
 ]
 
 { #category : #accessing }

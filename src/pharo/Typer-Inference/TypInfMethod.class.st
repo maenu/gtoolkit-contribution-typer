@@ -8,23 +8,22 @@ Class {
 
 { #category : #accessing }
 TypInfMethod >> inReturns [
-
 	^ in
-		  at: #tighten
-		  ifPresent: [ :s | s select: #isReturn thenCollect: #origin ]
-		  ifAbsent: [ #(  ) ]
+		at: #return
+		ifPresent: [ :s | s collect: #origin ]
+		ifAbsent: [ #() ]
 ]
 
 { #category : #accessing }
 TypInfMethod >> initialize: aState [
-
 	super initialize: aState.
-	^ state at: self put: (CompiledMethod
-			 typAsFunctionTypeWithResult: TypUnknownType instance
-			 arguments:
-			 (node arguments collect: [ :e | TypUnknownType instance ])
-			 argumentsOptional: false
-			 signalsAlways: nil)
+	state
+		at: self
+		put: (CompiledMethod
+				typAsFunctionTypeWithResult: TypUnknownType instance
+				arguments: (node arguments collect: [ :e | TypUnknownType instance ])
+				argumentsOptional: false
+				signalsAlways: nil)
 ]
 
 { #category : #accessing }

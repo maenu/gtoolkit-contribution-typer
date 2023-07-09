@@ -8,14 +8,13 @@ Class {
 
 { #category : #accessing }
 TypInfLiteralArray >> initialize: aState [
-
 	"can pull child literals as it is literal itself"
 
 	super initialize: aState.
-	^ state at: self put: (node isForByteArray
-			   ifTrue: [ ByteArray typAsType ]
-			   ifFalse: [ 
-				   Array typAsType withParameters:
-					   { (self inArguments collect: [ :e | e initialize: state ])
-						   typAsType } ])
+	state
+		at: self
+		put: (node isForByteArray
+				ifTrue: [ ByteArray typAsType ]
+				ifFalse: [ Array typAsType
+						withParameters: {(self inArguments collect: [ :e | e initialize: state ]) typAsType} ])
 ]

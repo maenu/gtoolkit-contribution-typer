@@ -96,13 +96,8 @@ TypInfMessage >> transfer [
 			lookupMethod: node selector asSymbol
 			arguments: (self inArguments collect: [ :e | state at: e ]).
 	self inArguments
-		withIndexDo: [ :e :i | 
-			i <= method arguments size
-				ifTrue: [ state
-						covariantFrom: self
-						to: e
-						with: (method arguments at: i) ] ].
-	state covariant: self with: method result.
+		withIndexDo: [ :e :i | i <= method arguments size ifTrue: [ state at: e put: (method arguments at: i) ] ].
+	state at: self put: method result.
 	self
 		outAt: #abstractInterpret
 		ifPresent: [ :e | ^ self ]

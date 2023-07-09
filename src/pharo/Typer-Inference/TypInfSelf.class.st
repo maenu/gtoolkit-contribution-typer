@@ -6,7 +6,6 @@ Class {
 
 { #category : #initialization }
 TypInfSelf >> initialize: aState [
-
 	super initialize: aState.
-	^ state at: self put: context self
+	state at: self put: context self
 ]

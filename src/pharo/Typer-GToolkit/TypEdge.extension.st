@@ -25,33 +25,32 @@ TypEdge >> typGtAsElementIn: aMondrian [
 
 { #category : #'*Typer-GToolkit' }
 TypEdge >> typGtAsElementIn: aMondrian with: aCollection [
-
-	"| label |
+	| label |
 	label := BrLabel new
-		         constraintsDo: [ :c | 
-			         c frame horizontal alignCenter.
-			         c frame vertical alignCenter ];
-		         beSmallSize;
-		         aptitude: BrGlamorousLabelAptitude;
-		         yourself.
+			constraintsDo: [ :c | 
+				c frame horizontal alignCenter.
+				c frame vertical alignCenter ];
+			aptitude: BrGlamorousLabelAptitude;
+			beTinySize;
+			yourself.
 	aCollection size = 1
-		ifTrue: [ 
-			label
-				when: BlClickEvent do: [ :e | 
-					e consumed: true.
-					label phlow spawnObject: self ];
+		ifTrue: [ label
+				when: BlClickEvent
+					do: [ :e | 
+						e consumed: true.
+						label phlow spawnObject: self ];
 				text: self asString asRopedText ]
-		ifFalse: [ 
-			label
-				when: BlClickEvent do: [ :e | 
-					e consumed: true.
-					label phlow spawnObject: aCollection ];
-				text: ('+{1} {2}' format: { 
-								 (aCollection size - 1).
-								 self asString }) asRopedText ]."
+		ifFalse: [ label
+				when: BlClickEvent
+					do: [ :e | 
+						e consumed: true.
+						label phlow spawnObject: aCollection ];
+				text: ('+{1} {2}'
+						format: {aCollection size - 1.
+								self asString}) asRopedText ].
 	^ (self typGtAsElementIn: aMondrian)
-		  "addChild: label;
-		  yourself"
+		addChild: label;
+		yourself
 ]
 
 { #category : #'*Typer-GToolkit' }

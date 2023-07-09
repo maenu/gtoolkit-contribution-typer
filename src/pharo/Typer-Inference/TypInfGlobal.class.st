@@ -6,7 +6,6 @@ Class {
 
 { #category : #initialization }
 TypInfGlobal >> initialize: aState [
-
 	super initialize: aState.
-	^ state at: self put: node variable value typInfType
+	state at: self put: node variable value typInfType
 ]

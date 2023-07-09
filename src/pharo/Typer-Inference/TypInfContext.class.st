@@ -11,7 +11,8 @@ Class {
 		'state',
 		'root',
 		'current',
-		'nodes'
+		'nodes',
+		'cycles'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -46,7 +47,8 @@ TypInfContext >> inlitializeSender: aContext state: aState node: aNode self: aTy
 { #category : #accessing }
 TypInfContext >> next: aNode [
 	| next |
-	next := self nodeAt: aNode.
+	self flag: 'Q is it always add? look at senders'.
+	next := self nodesAddAt: aNode.
 	current outAdd: (TypInfNextEdge origin: current target: next).
 	^ current := next
 ]
@@ -57,17 +59,32 @@ TypInfContext >> node [
 ]
 
 { #category : #accessing }
-TypInfContext >> nodeAt: aNode [
+TypInfContext >> nodes [
 	^ nodes
-		at: aNode
-		ifAbsentPut: [ (aNode typInfNodeInContext: self)
-				methodNode: root;
-				yourself ]
 ]
 
 { #category : #accessing }
-TypInfContext >> nodes [
+TypInfContext >> nodesAddAt: aNode [
+	| newNode |
+	newNode := aNode typInfNodeInContext: self.
 	^ nodes
+		at: aNode
+		ifPresent: [ :c | c add: newNode ]
+		ifAbsent: [ (nodes at: aNode put: (OrderedCollection with: newNode)) last ]
+]
+
+{ #category : #accessing }
+TypInfContext >> nodesAt: aNode [
+	^ nodes at: aNode
+]
+
+{ #category : #accessing }
+TypInfContext >> nodesAt: aNode add: anotherNode [
+	nodes
+		at: aNode
+		ifPresent: [ :c | c add: anotherNode ]
+		ifAbsentPut: [ OrderedCollection with: anotherNode ].
+	^ anotherNode
 ]
 
 { #category : #accessing }
@@ -77,14 +94,14 @@ TypInfContext >> root [
 
 { #category : #running }
 TypInfContext >> run [
-	| n nodes_ states cycle cycles stable |
+	| n states cycle stable |
 	self visit.
 	n := 100.
-	nodes_ := nodes values.
 	states := IdentityDictionary new.
 	cycles := OrderedCollection new.
 	cycle := OrderedIdentityDictionary new.
-	nodes_ do: [ :e | cycle at: e put: (states at: e put: e state copy) ].
+	nodes values
+		do: [ :c | c do: [ :e | cycle at: e put: (states at: e put: e state copy) ] ].
 	root node method isAbstract ifTrue: [ n := 0	"shortcut loop" ].
 	[ n := n - 1.
 	cycles add: cycle.
@@ -92,13 +109,16 @@ TypInfContext >> run [
 	n > 0
 		and: [  "nodes are changed by inlining methods, hence cannot be cached"nodes values
 				inject: false
-				into: [ :r :e | 
-					e slurpAndBurp.
-					e state = (states at: e ifAbsentPut: [ e state copy ])
-						ifTrue: [ r ]
-						ifFalse: [ cycle at: e put: ((states at: e ifAbsentPut: [ e state copy ]) diff: e state).
-							states at: e put: e state copy.
-							true ] ] ] ] whileTrue.
+				into: [ :rr :c | 
+					c
+						inject: rr
+						into: [ :r :e | 
+							e slurpAndBurp.
+							e state = (states at: e ifAbsentPut: [ e state copy ])
+								ifTrue: [ r ]
+								ifFalse: [ cycle at: e put: ((states at: e ifAbsentPut: [ e state copy ]) diff: e state).
+									states at: e put: e state copy.
+									true ] ] ] ] ] whileTrue.
 	cycles add: cycle.
 	stable := n > 0.
 	^ cycles
@@ -126,13 +146,15 @@ TypInfContext >> super [
 
 { #category : #accessing }
 TypInfContext >> visit [
-	root := nodes at: node put: (node typInfNodeInContext: self).
+	root := self nodesAt: node add: (node typInfNodeInContext: self).
 	current := root.
 	node acceptVisitor: self.
 	nodes
-		keysAndValuesDo: [ :n :e | 
-			e initialize: state.
-			e out at: #next ifPresent: [ :s | s do: [ :f | f state: state copy ] ] ]
+		keysAndValuesDo: [ :n :c | 
+			c
+				do: [ :e | 
+					e initialize: state.
+					e out at: #next ifPresent: [ :s | s do: [ :f | f state: state copy ] ] ] ]
 ]
 
 { #category : #visiting }
@@ -186,40 +208,33 @@ TypInfContext >> visitLiteralValueNode: aNode [
 
 { #category : #visiting }
 TypInfContext >> visitLocalVariableNode: aLocalNode [
-
 	self visitTemporaryNode: aLocalNode.
-	aLocalNode isDefinition ifFalse: [ 
-		current inRead:
-			(self nodeAt: aLocalNode variable definingNode) ].
+	aLocalNode isDefinition
+		ifFalse: [ self flag: 'Q is last always correct?'.
+			current inRead: (nodes at: aLocalNode variable definingNode) last ].
 	^ current
 ]
 
 { #category : #visiting }
 TypInfContext >> visitMessageNode: aMessageNode [
-
 	| arguments |
-	(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ]) 
+	(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ])
 		ifTrue: [ self visitNode: aMessageNode receiver ].
-	arguments := aMessageNode arguments collect: [ :n | 
-		             self visitNode: n ].
+	arguments := aMessageNode arguments collect: [ :n | self visitNode: n ].
 	self next: aMessageNode.
 	current inArguments: arguments.
-	current inReceiver: (self nodeAt: aMessageNode receiver).
+	self flag: 'Q is last always correct?'.
+	current inReceiver: (nodes at: aMessageNode receiver) last.
 	^ current
 ]
 
 { #category : #visiting }
 TypInfContext >> visitMethodNode: aMethodNode [
-
-	current inArguments:
-		(aMethodNode arguments collect: [ :n | self nodeAt: n ]).
+	current inArguments: (aMethodNode arguments collect: [ :n | self nodesAddAt: n ]).
 	self visitNode: aMethodNode body.
-	aMethodNode lastIsReturn ifFalse: [ 
-		self next: RBVariableNode selfNode.
-		current outAdd: (TypInfReturnEdge
-				 origin: current
-				 target: root
-				 type: CompiledMethod typAsType) ].
+	aMethodNode lastIsReturn
+		ifFalse: [ self next: RBVariableNode selfNode.
+			current outAdd: (TypInfReturnEdge origin: current target: root) ].
 	^ root
 ]
 
@@ -227,19 +242,14 @@ TypInfContext >> visitMethodNode: aMethodNode [
 TypInfContext >> visitReturnNode: aReturnNode [
 	self visitNode: aReturnNode value.
 	self next: aReturnNode.
-	current
-		outAdd: (TypInfReturnEdge
-				origin: current
-				target: root
-				type: CompiledMethod typAsType)
+	current outAdd: (TypInfReturnEdge origin: current target: root)
 ]
 
 { #category : #visiting }
 TypInfContext >> visitSequenceNode: aSequenceNode [
-
 	self next: aSequenceNode.
-	current inArguments:
-		(aSequenceNode temporaries collect: [ :n | self nodeAt: n ]).
+	current
+		inArguments: (aSequenceNode temporaries collect: [ :n | self nodesAddAt: n ]).
 	aSequenceNode statements do: [ :n | self visitNode: n ]
 ]
 

@@ -9,9 +9,3 @@ TypInfEdge >> isReturn [
 
 	^ false
 ]
-
-{ #category : #testing }
-TypInfEdge >> isTighten [
-
-	^ false
-]

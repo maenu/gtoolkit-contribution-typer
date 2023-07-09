@@ -18,14 +18,7 @@ TypInfNode class >> node: aNode context: aContext [
 
 { #category : #accessing }
 TypInfNode >> burp [
-
-	out at: #tighten ifPresent: [ :s | 
-		s
-			select: #isReturn
-			thenDo: [ :e | e set: (state at: self) in: state ] ].
-	out
-		at: #next
-		ifPresent: [ :s | s do: [ :e | e state: state copy ] ]
+	out at: #next ifPresent: [ :s | s do: [ :e | e state: state copy ] ]
 ]
 
 { #category : #accessing }
@@ -35,11 +28,17 @@ TypInfNode >> context [
 ]
 
 { #category : #accessing }
+TypInfNode >> initialize [
+	super initialize.
+	state := TypInfState new
+]
+
+{ #category : #accessing }
 TypInfNode >> initialize: aState [
 	"compute initial state for node"
 
 	state := aState.
-	^ state at: self put: TypUnknownType instance
+	state at: self put: TypUnknownType instance
 ]
 
 { #category : #initialization }
@@ -63,13 +62,7 @@ TypInfNode >> invalidateOnMethodChange: aMethodAnnouncement [
 { #category : #accessing }
 TypInfNode >> methodNode [
 
-	^ self outAt: #methodNode
-]
-
-{ #category : #accessing }
-TypInfNode >> methodNode: aNode [
-
-	^ self outAt: #methodNode put: aNode
+	^ context root
 ]
 
 { #category : #accessing }
@@ -95,15 +88,7 @@ TypInfNode >> slurp [
 		ifPresent: [ :s | 
 			s
 				ifNotEmpty: [ state := (s collect: #state) reduce: [ :a :b | a covariant: b ].
-					state := state copy	"for good measure" ] ].
-	in
-		at: #tighten
-		ifPresent: [ :s | 
-			s
-				ifNotEmpty: [ | type |
-					type := (s collect: [ :e | e getIn: state ])
-							reduce: [ :a :b | b covariant: a ].
-					state at: self put: type ] ]
+					state := state copy	"for good measure" ] ]
 ]
 
 { #category : #accessing }
@@ -119,12 +104,6 @@ TypInfNode >> slurpAndBurp [
 TypInfNode >> state [
 
 	^ state
-]
-
-{ #category : #'as yet unclassified' }
-TypInfNode >> tighten: aType in: aState [
-
-	
 ]
 
 { #category : #accessing }
