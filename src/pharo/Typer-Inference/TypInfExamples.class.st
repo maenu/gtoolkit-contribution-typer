@@ -32,6 +32,12 @@ TypInfExamples >> infer: aMethod [
 ]
 
 { #category : #accessing }
+TypInfExamples >> inferMonitored: aMethod [
+	TypInfMethodIndex instance.	"rebuild global indexes"
+	^ TypTyping new monitorMemoryMethods: {aMethod} timeout: 1 minute
+]
+
+{ #category : #accessing }
 TypInfExamples >> inferSync: aMethod [
 
 	^ aMethod ast typInfTypeSelf
@@ -91,6 +97,13 @@ TypInfExamples >> message6 [
 
 	<gtExample>
 	^ self infer: TypInfInferred >> #message6
+]
+
+{ #category : #requirements }
+TypInfExamples >> message6Monitored [
+
+	<gtExample>
+	^ self inferMonitored: TypInfInferred >> #message6
 ]
 
 { #category : #requirements }

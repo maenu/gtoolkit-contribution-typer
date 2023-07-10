@@ -21,8 +21,5 @@ TypInfNextEdge >> state [
 
 { #category : #accessing }
 TypInfNextEdge >> state: anObject [
-
-	state = anObject ifTrue: [ ^ false ].
-	state := anObject.
-	^ true
+	state := anObject
 ]

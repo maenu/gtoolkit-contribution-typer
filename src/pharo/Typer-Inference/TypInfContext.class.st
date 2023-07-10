@@ -11,8 +11,7 @@ Class {
 		'state',
 		'root',
 		'current',
-		'nodes',
-		'cycles'
+		'nodes'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -75,7 +74,9 @@ TypInfContext >> nodesAddAt: aNode [
 
 { #category : #accessing }
 TypInfContext >> nodesAt: aNode [
-	^ nodes at: aNode
+	^ nodes
+		at: aNode
+		ifAbsent: [ sender ifNil: [ #() ] ifNotNil: [ sender nodesAt: aNode ] ]
 ]
 
 { #category : #accessing }
@@ -88,15 +89,35 @@ TypInfContext >> nodesAt: aNode add: anotherNode [
 ]
 
 { #category : #accessing }
+TypInfContext >> printOn: aStream [
+	node printOn: aStream
+]
+
+{ #category : #accessing }
 TypInfContext >> root [
 	^ root
 ]
 
 { #category : #running }
 TypInfContext >> run [
-	| n states cycle stable |
+	| n stable |
 	self visit.
-	n := 100.
+	n := 32.
+	root node method isAbstract ifTrue: [ n := 0	"shortcut loop" ].
+	[ n := n - 1.
+	n > 0
+		and: [  "nodes are changed by inlining methods, hence cannot be cached"nodes values
+				inject: false
+				into: [ :rr :c | c inject: rr into: [ :r :e | e slurpAndBurp or: r ] ] ] ]
+		whileTrue.
+	stable := n > 0
+]
+
+{ #category : #running }
+TypInfContext >> runDebug [
+	| n states cycles cycle stable |
+	self visit.
+	n := 32.
 	states := IdentityDictionary new.
 	cycles := OrderedCollection new.
 	cycle := OrderedIdentityDictionary new.
@@ -211,7 +232,7 @@ TypInfContext >> visitLocalVariableNode: aLocalNode [
 	self visitTemporaryNode: aLocalNode.
 	aLocalNode isDefinition
 		ifFalse: [ self flag: 'Q is last always correct?'.
-			current inRead: (nodes at: aLocalNode variable definingNode) last ].
+			current inRead: (self nodesAt: aLocalNode variable definingNode) last ].
 	^ current
 ]
 
@@ -224,7 +245,7 @@ TypInfContext >> visitMessageNode: aMessageNode [
 	self next: aMessageNode.
 	current inArguments: arguments.
 	self flag: 'Q is last always correct?'.
-	current inReceiver: (nodes at: aMessageNode receiver) last.
+	current inReceiver: (self nodesAt: aMessageNode receiver) last.
 	^ current
 ]
 

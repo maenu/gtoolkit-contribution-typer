@@ -18,7 +18,8 @@ TypInfNode class >> node: aNode context: aContext [
 
 { #category : #accessing }
 TypInfNode >> burp [
-	out at: #next ifPresent: [ :s | s do: [ :e | e state: state copy ] ]
+	state changed ifFalse: [ ^ self ].
+	out at: #next ifPresent: [ :s | s do: [ :n | n state: state copy ] ]
 ]
 
 { #category : #accessing }
@@ -87,17 +88,16 @@ TypInfNode >> slurp [
 		at: #next
 		ifPresent: [ :s | 
 			s
-				ifNotEmpty: [ state := (s collect: #state) reduce: [ :a :b | a covariant: b ].
-					state := state copy	"for good measure" ] ]
+				ifNotEmpty: [ state := ((s collect: #state) reduce: [ :a :b | a covariant: b ]) copy ] ]
 ]
 
 { #category : #accessing }
 TypInfNode >> slurpAndBurp [
-
 	self
 		slurp;
 		transfer;
-		burp
+		burp.
+	^ state changed
 ]
 
 { #category : #accessing }
