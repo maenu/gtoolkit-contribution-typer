@@ -18,7 +18,6 @@ TypInfNode class >> node: aNode context: aContext [
 
 { #category : #accessing }
 TypInfNode >> burp [
-	state changed ifFalse: [ ^ self ].
 	out at: #next ifPresent: [ :s | s do: [ :n | n state: state copy ] ]
 ]
 
@@ -93,11 +92,13 @@ TypInfNode >> slurp [
 
 { #category : #accessing }
 TypInfNode >> slurpAndBurp [
+	| old |
+	old := state copy.
 	self
 		slurp;
 		transfer;
 		burp.
-	^ state changed
+	^ state ~= old
 ]
 
 { #category : #accessing }

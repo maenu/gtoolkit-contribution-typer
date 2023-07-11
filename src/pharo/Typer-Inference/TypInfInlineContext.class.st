@@ -42,9 +42,8 @@ TypInfInlineContext >> visit [
 		keysAndValuesDo: [ :n :c | 
 			c
 				do: [ :e | 
-					e initialize: home state.	"parent need to be first, why though?"
-					home nodesAt: n add: e.	"needed to be in context run loop"
-					e out at: #next ifPresent: [ :s | s do: [ :f | f state: home state copy ] ] ] ]
+					e initialize: home state.
+					home nodesAt: n add: e	"needed to be in context run loop" ] ]
 ]
 
 { #category : #initialization }

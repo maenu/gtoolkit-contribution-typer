@@ -14,9 +14,14 @@ TypInfNextEdge class >> origin: aNode target: anotherNode [
 ]
 
 { #category : #accessing }
-TypInfNextEdge >> state [
+TypInfNextEdge >> initialize [
+	super initialize.
+	state := TypInfState new
+]
 
-	^ state ifNil: [ state := origin state copy ]
+{ #category : #accessing }
+TypInfNextEdge >> state [
+	^ state
 ]
 
 { #category : #accessing }

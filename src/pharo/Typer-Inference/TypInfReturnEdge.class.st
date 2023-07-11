@@ -9,9 +9,3 @@ TypInfReturnEdge class >> origin: aNode target: anotherNode [
 
 	^ self origin: aNode target: anotherNode key: #return
 ]
-
-{ #category : #testing }
-TypInfReturnEdge >> isReturn [
-
-	^ true
-]

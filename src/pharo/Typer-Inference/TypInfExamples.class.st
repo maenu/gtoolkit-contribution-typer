@@ -19,6 +19,27 @@ TypInfExamples >> blockUseSameTwice [
 ]
 
 { #category : #requirements }
+TypInfExamples >> blockUseSameTwice2 [
+
+	<gtExample>
+	^ self infer: TypInfInferred >> #blockUseSameTwice2:
+]
+
+{ #category : #requirements }
+TypInfExamples >> blockUseSameTwice3 [
+
+	<gtExample>
+	^ self infer: TypInfInferred >> #blockUseSameTwice3:
+]
+
+{ #category : #requirements }
+TypInfExamples >> blockUseSameTwice4 [
+
+	<gtExample>
+	^ self infer: TypInfInferred >> #blockUseSameTwice4:
+]
+
+{ #category : #requirements }
 TypInfExamples >> empty [
 
 	<gtExample>

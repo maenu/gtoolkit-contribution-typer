@@ -2,11 +2,17 @@ Class {
 	#name : #TypInfState,
 	#superclass : #Object,
 	#instVars : [
-		'changed',
 		'index'
 	],
 	#category : #'Typer-Inference-Core'
 }
+
+{ #category : #accessing }
+TypInfState >> = anObject [
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	^ index = anObject index
+]
 
 { #category : #accessing }
 TypInfState >> at: anObject [
@@ -20,35 +26,21 @@ TypInfState >> at: aNode ifAbsent: aBlock [
 
 { #category : #accessing }
 TypInfState >> at: aNode put: aType [
-	changed ifTrue: [ ^ index at: aNode put: aType ].
-	^ index
-		at: aNode
-		ifPresent: [ :e | 
-			e = aType
-				ifTrue: [ aType ]
-				ifFalse: [ changed := true.
-					index at: aNode put: aType ] ]
-		ifAbsentPut: [ changed := true.
-			aType ]
-]
-
-{ #category : #accessing }
-TypInfState >> changed [
-	^ changed
+	^ index at: aNode put: aType
 ]
 
 { #category : #splitjoin }
 TypInfState >> covariant: aState [
-
 	| copy |
-	self flag: 'self assert: [ aState self = selfType ].
-	self assert: [ aState super = superType ]'.
 	copy := aState copy.
-	aState keysAndValuesDo: [ :n :t | 
-		copy
-			at: n
-			put:
-			(index at: n ifPresent: [ :tt | t covariant: tt ] ifAbsent: [ t ]) ].
+	aState
+		keysAndValuesDo: [ :n :t | 
+			copy
+				at: n
+				put: (index
+						at: n
+						ifPresent: [ :tt | t covariant: tt ]
+						ifAbsent: [ t ]) ].
 	^ copy
 ]
 
@@ -69,9 +61,18 @@ TypInfState >> diff: aState [
 ]
 
 { #category : #accessing }
+TypInfState >> hash [
+	^ index hash
+]
+
+{ #category : #accessing }
+TypInfState >> index [
+	^ index
+]
+
+{ #category : #accessing }
 TypInfState >> initialize [
 	super initialize.
-	changed := false.
 	index := IdentityDictionary new
 ]
 
@@ -88,6 +89,5 @@ TypInfState >> keysAndValuesDo: aBlock [
 { #category : #accessing }
 TypInfState >> postCopy [
 	super postCopy.
-	changed := false.
 	index := index copy
 ]

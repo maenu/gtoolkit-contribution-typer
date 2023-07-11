@@ -10,6 +10,27 @@ TypInfInferred >> block: aBoolean [
 ]
 
 { #category : #accessing }
+TypInfInferred >> blockUseSameTwice2: aBoolean [
+	| block |
+	block := [ 2 ].
+	^ aBoolean ifTrue: block ifFalse: block
+]
+
+{ #category : #accessing }
+TypInfInferred >> blockUseSameTwice3: aBoolean [
+	| block |
+	block := [ 2 ].
+	^ aBoolean ifTrue: block ifFalse: block
+]
+
+{ #category : #accessing }
+TypInfInferred >> blockUseSameTwice4: aBoolean [
+	| block |
+	block := [ 2 ].
+	^ aBoolean ifTrue: block ifFalse: block
+]
+
+{ #category : #accessing }
 TypInfInferred >> blockUseSameTwice: aBoolean [
 	| block |
 	block := [ 2 ].

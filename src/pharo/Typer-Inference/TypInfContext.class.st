@@ -11,7 +11,9 @@ Class {
 		'state',
 		'root',
 		'current',
-		'nodes'
+		'nodes',
+		'iterationsDone',
+		'iterationsMax'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -32,15 +34,17 @@ TypInfContext >> home [
 	^ sender ifNil: self ifNotNil: #home
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypInfContext >> inlitializeSender: aContext state: aState node: aNode self: aType super: anotherType [
 	sender := aContext.
 	state := aState.
 	node := aNode.
 	selfType := aType.
 	superType := anotherType.
-	nodes := OrderedIdentityDictionary new	"ordered to have a cheap, close-to-topological sorting.
+	nodes := OrderedIdentityDictionary new.	"ordered to have a cheap, close-to-topological sorting.
 	 makes the run more predictable"
+	iterationsDone := 0.
+	iterationsMax := 64
 ]
 
 { #category : #accessing }
@@ -100,17 +104,14 @@ TypInfContext >> root [
 
 { #category : #running }
 TypInfContext >> run [
-	| n stable |
 	self visit.
-	n := 32.
-	root node method isAbstract ifTrue: [ n := 0	"shortcut loop" ].
-	[ n := n - 1.
-	n > 0
+	root node method isAbstract ifTrue: [ ^ self	"shortcut loop" ].
+	[ iterationsDone := iterationsDone + 1.
+	iterationsDone <= iterationsMax
 		and: [  "nodes are changed by inlining methods, hence cannot be cached"nodes values
 				inject: false
 				into: [ :rr :c | c inject: rr into: [ :r :e | e slurpAndBurp or: r ] ] ] ]
-		whileTrue.
-	stable := n > 0
+		whileTrue
 ]
 
 { #category : #running }
@@ -170,12 +171,7 @@ TypInfContext >> visit [
 	root := self nodesAt: node add: (node typInfNodeInContext: self).
 	current := root.
 	node acceptVisitor: self.
-	nodes
-		keysAndValuesDo: [ :n :c | 
-			c
-				do: [ :e | 
-					e initialize: state.
-					e out at: #next ifPresent: [ :s | s do: [ :f | f state: state copy ] ] ] ]
+	nodes keysAndValuesDo: [ :n :c | c do: [ :e | e initialize: state ] ]
 ]
 
 { #category : #visiting }
