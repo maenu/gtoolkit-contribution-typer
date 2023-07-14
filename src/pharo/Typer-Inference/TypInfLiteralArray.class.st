@@ -16,5 +16,5 @@ TypInfLiteralArray >> initialize: aState [
 		put: (node isForByteArray
 				ifTrue: [ ByteArray typAsType ]
 				ifFalse: [ Array typAsType
-						withParameters: {(self inArguments collect: [ :e | e initialize: state ]) typAsType} ])
+						withParameters: {(self inArguments collect: [ :e | (e initialize: state) type ]) typAsType} ])
 ]

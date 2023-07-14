@@ -38,7 +38,7 @@ TypTyping >> invalidate [
 	TypShaShadow invalidateAll.
 	TypInfMethodResolver invalidate.
 	TypInfMethodIndex invalidate.
-	TypInfMethodNodeStack resetSoleInstance.
+	TypInfNodeStack resetSoleInstance.
 	Smalltalk garbageCollect.
 	^ self memoryProbe
 ]

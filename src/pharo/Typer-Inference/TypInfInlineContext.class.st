@@ -32,11 +32,16 @@ TypInfInlineContext >> = anObject [
 
 { #category : #accessing }
 TypInfInlineContext >> apply [
-	TypInfMethodNodeStack
+	TypInfNodeStack
 		push: node
-		max: 8
 		during: [ self visit ]
-		or: [ Error signal: 'cannot inline due to method stack limit' ]
+		or: [ Error
+				signal: 'cannot inline due to method stack limit, canApply should have catched that' ]
+]
+
+{ #category : #accessing }
+TypInfInlineContext >> canApply [
+	^ TypInfNodeStack canPush: node
 ]
 
 { #category : #accessing }
@@ -60,7 +65,8 @@ TypInfInlineContext >> revert [
 	home := self home.
 	nodes keysAndValuesDo: [ :n :c | c do: [ :e | home nodesAt: n remove: e ] ].
 	message
-		outAdd: (TypInfNextEdge origin: message target: (current outRemoveAt: #next))
+		outAdd: (TypInfNextEdge origin: message target: (message outAt: #nextOriginal)).
+	message outRemoveAt: #next
 ]
 
 { #category : #initialization }

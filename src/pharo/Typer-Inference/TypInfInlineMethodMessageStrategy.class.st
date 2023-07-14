@@ -20,7 +20,7 @@ TypInfInlineMethodMessageStrategy >> apply [
 					message outAt: #nextOriginal put: target ]
 				ifAbsent: [ Error signal: 'node must have next edge' ] ].
 	oldContexts := contexts.
-	contexts := self newContexts.
+	contexts := self newContexts asOrderedCollection.
 	(oldContexts difference: contexts) do: #revert.
 	(contexts difference: oldContexts) do: #apply
 ]
@@ -33,7 +33,8 @@ TypInfInlineMethodMessageStrategy >> canApply [
 	receiver hasClassDescription ifFalse: [ ^ false ].
 	(receiver classDescription canUnderstand: message selector)
 		ifFalse: [ ^ false ].
-	^ self newContexts size <= 8
+	self newContexts size < 8 ifFalse: [ ^ false ].
+	^ TypInfNodeStack canPush: message
 ]
 
 { #category : #accessing }
@@ -66,5 +67,6 @@ TypInfInlineMethodMessageStrategy >> revert [
 	contexts
 		do: #revert;
 		removeAll.
-	message outRemoveAt: #nextOriginal
+	message
+		outAdd: (TypInfNextEdge origin: message target: (message outAt: #nextOriginal))
 ]
