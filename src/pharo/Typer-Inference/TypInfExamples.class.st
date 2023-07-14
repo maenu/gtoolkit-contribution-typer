@@ -43,7 +43,7 @@ TypInfExamples >> blockUseSameTwice4 [
 TypInfExamples >> empty [
 
 	<gtExample>
-	^ self infer: TypInfInferred >> #empty
+	^ self inferSync: TypInfInferred >> #empty
 ]
 
 { #category : #accessing }

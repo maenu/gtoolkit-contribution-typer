@@ -1,11 +1,6 @@
 Extension { #name : #TypType }
 
 { #category : #'*Typer-Inference' }
-TypType >> typInfAbstractInterpret: aMessageNode [
-	^ false
-]
-
-{ #category : #'*Typer-Inference' }
 TypType >> typInfNode [
 	^ self outAt: #typInfNode
 ]

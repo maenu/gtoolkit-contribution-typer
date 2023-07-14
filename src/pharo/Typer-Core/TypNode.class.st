@@ -291,10 +291,7 @@ TypNode >> outRemove: anEdge [
 
 { #category : #accessing }
 TypNode >> outRemoveAt: anObject [
-
-	out
-		at: anObject
-		ifPresent: [ :e | e copy do: [ :f | self outRemove: f ] ]
+	^ out at: anObject ifPresent: [ :e | e copy do: [ :f | self outRemove: f ] ]
 ]
 
 { #category : #accessing }

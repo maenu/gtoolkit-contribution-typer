@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'node',
 		'state',
-		'context'
+		'context',
+		'oldState'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -30,7 +31,8 @@ TypInfNode >> context [
 { #category : #accessing }
 TypInfNode >> initialize [
 	super initialize.
-	state := TypInfState new
+	state := TypInfState new.
+	oldState := TypInfState new
 ]
 
 { #category : #accessing }
@@ -71,6 +73,12 @@ TypInfNode >> node [
 ]
 
 { #category : #accessing }
+TypInfNode >> oldState [
+
+	^ oldState
+]
+
+{ #category : #accessing }
 TypInfNode >> previous [
 	^ ((in at: #next) collect: [ :e | state at: e origin ]) typAsType
 ]
@@ -92,13 +100,12 @@ TypInfNode >> slurp [
 
 { #category : #accessing }
 TypInfNode >> slurpAndBurp [
-	| old |
-	old := state copy.
+	oldState := state copy.
 	self
 		slurp;
 		transfer;
 		burp.
-	^ state ~= old
+	^ state ~= oldState
 ]
 
 { #category : #accessing }

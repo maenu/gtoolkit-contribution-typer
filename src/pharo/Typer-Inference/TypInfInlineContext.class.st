@@ -24,9 +24,43 @@ TypInfInlineContext class >> sender: aContext state: aState node: aNode self: aT
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+TypInfInlineContext >> = anObject [
+	super = anObject ifFalse: [ ^ false ].
+	^ message = anObject message
+]
+
+{ #category : #accessing }
+TypInfInlineContext >> apply [
+	TypInfMethodNodeStack
+		push: node
+		max: 8
+		during: [ self visit ]
+		or: [ Error signal: 'cannot inline due to method stack limit' ]
+]
+
+{ #category : #accessing }
+TypInfInlineContext >> hash [
+	^ super hash bitXor: message hash
+]
+
+{ #category : #accessing }
 TypInfInlineContext >> initializeMessage: aMessage [
 	message := aMessage
+]
+
+{ #category : #accessing }
+TypInfInlineContext >> message [
+	^ message
+]
+
+{ #category : #accessing }
+TypInfInlineContext >> revert [
+	| home |
+	home := self home.
+	nodes keysAndValuesDo: [ :n :c | c do: [ :e | home nodesAt: n remove: e ] ].
+	message
+		outAdd: (TypInfNextEdge origin: message target: (current outRemoveAt: #next))
 ]
 
 { #category : #initialization }
@@ -48,23 +82,6 @@ TypInfInlineContext >> visit [
 
 { #category : #initialization }
 TypInfInlineContext >> visitNode [
-	| returnOriginal nextOriginal |
-	returnOriginal := message
-			outAt: #returnOriginal
-			ifAbsent: [ message
-					outAt: #return
-					ifPresent: [ :target | 
-						message outRemoveAt: #return.
-						message outAt: #returnOriginal put: target ]
-					ifAbsent: [ nil ] ].
-	nextOriginal := message
-			outAt: #nextOriginal
-			ifAbsent: [ message
-					outAt: #next
-					ifPresent: [ :target | 
-						message outRemoveAt: #next.
-						message outAt: #nextOriginal put: target ]
-					ifAbsent: [ nil ] ].
 	message outAdd: (TypInfNextEdge origin: message target: root).
 	current
 		inArguments: (node arguments
@@ -79,8 +96,6 @@ TypInfInlineContext >> visitNode [
 	node lastIsReturn
 		ifFalse: [ self next: RBVariableNode selfNode.
 			current outAdd: (TypInfReturnEdge origin: current target: root) ].
-	returnOriginal
-		ifNotNil: [ current outAdd: (TypInfReturnEdge origin: current target: returnOriginal) ].
-	nextOriginal
-		ifNotNil: [ current outAdd: (TypInfNextEdge origin: current target: nextOriginal) ]
+	current
+		outAdd: (TypInfNextEdge origin: current target: (message outAt: #nextOriginal))
 ]

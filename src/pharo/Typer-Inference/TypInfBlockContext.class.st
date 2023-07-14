@@ -26,6 +26,22 @@ TypInfBlockContext class >> sender: aContext state: aState node: aNode self: aTy
 ]
 
 { #category : #accessing }
+TypInfBlockContext >> = anObject [
+	super = anObject ifFalse: [ ^ false ].
+	^ block = anObject block
+]
+
+{ #category : #accessing }
+TypInfBlockContext >> block [
+	^ block
+]
+
+{ #category : #accessing }
+TypInfBlockContext >> hash [
+	^ super hash bitXor: block hash
+]
+
+{ #category : #accessing }
 TypInfBlockContext >> initializeBlock: aBlock [
 	block := aBlock
 ]

@@ -29,6 +29,25 @@ TypInfContext class >> sender: aContext state: aState node: aNode self: aType su
 		yourself
 ]
 
+{ #category : #accessing }
+TypInfContext >> = anObject [
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	sender == anObject sender ifFalse: [ ^ false ].
+	node == anObject node ifFalse: [ ^ false ].
+	selfType = anObject self ifFalse: [ ^ false ].
+	superType = anObject super ifFalse: [ ^ false ].
+	^ true
+]
+
+{ #category : #accessing }
+TypInfContext >> hash [
+	^ ({sender.
+		node.
+		selfType.
+		superType} collect: #hash) reduce: [ :r :e | r bitXor: e ]
+]
+
 { #category : #origins }
 TypInfContext >> home [
 	^ sender ifNil: self ifNotNil: #home
@@ -44,7 +63,7 @@ TypInfContext >> inlitializeSender: aContext state: aState node: aNode self: aTy
 	nodes := OrderedIdentityDictionary new.	"ordered to have a cheap, close-to-topological sorting.
 	 makes the run more predictable"
 	iterationsDone := 0.
-	iterationsMax := 64
+	iterationsMax := 16
 ]
 
 { #category : #accessing }
@@ -89,6 +108,17 @@ TypInfContext >> nodesAt: aNode add: anotherNode [
 		at: aNode
 		ifPresent: [ :c | c add: anotherNode ]
 		ifAbsentPut: [ OrderedCollection with: anotherNode ].
+	^ anotherNode
+]
+
+{ #category : #accessing }
+TypInfContext >> nodesAt: aNode remove: anotherNode [
+	nodes
+		at: aNode
+		ifPresent: [ :c | 
+			c remove: anotherNode.
+			c ifEmpty: [ nodes removeKey: aNode ] ]
+		ifAbsent: [  "noop" ].
 	^ anotherNode
 ]
 
