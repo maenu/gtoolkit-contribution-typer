@@ -89,7 +89,7 @@ TypInfInlineContext >> visit [
 { #category : #initialization }
 TypInfInlineContext >> visitNode [
 	message outAdd: (TypInfNextEdge origin: message target: root).
-	current
+	root
 		inArguments: (node arguments
 				withIndexCollect: [ :n :i | 
 					self
@@ -98,6 +98,7 @@ TypInfInlineContext >> visitNode [
 								node: n
 								context: self
 								proxy: (message inArguments at: i)) ]).
+	node pragmas do: [ :p | self visitNode: p ].
 	self visitNode: node body.
 	node lastIsReturn
 		ifFalse: [ self next: RBVariableNode selfNode.

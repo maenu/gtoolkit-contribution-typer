@@ -147,3 +147,66 @@ TypInfExamples >> message7Sync [
 	<gtExample>
 	^ self inferSync: TypInfInferred >> #message7
 ]
+
+{ #category : #requirements }
+TypInfExamples >> translated [
+
+	<gtExample>
+	^ self infer: TypInfInferred >> #translated
+]
+
+{ #category : #requirements }
+TypInfExamples >> translated2 [
+
+	<gtExample>
+	^ self infer: TypInfInferred >> #translated2
+]
+
+{ #category : #requirements }
+TypInfExamples >> translated3 [
+
+	<gtExample>
+	^ self infer: TypInfInferred >> #translated3
+]
+
+{ #category : #requirements }
+TypInfExamples >> translated4 [
+
+	<gtExample>
+	^ self infer: TypInfInferred >> #translated4
+]
+
+{ #category : #requirements }
+TypInfExamples >> translated5 [
+
+	<gtExample>
+	^ self infer: TypInfInferred >> #translated5
+]
+
+{ #category : #requirements }
+TypInfExamples >> translated6 [
+
+	<gtExample>
+	^ self inferSync: TypInfInferred >> #translated6
+]
+
+{ #category : #requirements }
+TypInfExamples >> translated7 [
+
+	<gtExample>
+	^ self infer: TypInfInferred >> #translated7
+]
+
+{ #category : #requirements }
+TypInfExamples >> translated8 [
+
+	<gtExample>
+	^ self infer: TypInfInferred >> #translated8
+]
+
+{ #category : #requirements }
+TypInfExamples >> translated9 [
+
+	<gtExample>
+	^ self infer: TypInfInferred >> #translated9
+]

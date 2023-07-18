@@ -94,7 +94,11 @@ TypInfMethodResolver >> nodeAt: aNode self: aType super: anotherType [
 	^ (self
 		nodesAt: aNode
 		self: aType
-		super: anotherType) first
+		super: anotherType)
+		ifEmpty: [ self
+				flag: 'TODO should never be empty, but is due to unvisited block sequence'.
+			TypInfNode node: aNode context: nil ]
+		ifNotEmpty: #first
 ]
 
 { #category : #accessing }

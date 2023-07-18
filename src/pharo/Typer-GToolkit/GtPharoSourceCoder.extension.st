@@ -17,7 +17,6 @@ GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
-
 	"self completionStrategy:
 		(self completionStrategy typGtAsCompletionStrategy
 			 coder: self;
@@ -28,7 +27,26 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 		addShortcut: TypGtBrowseImplementorsShortcut new;
 		addShortcut: TypGtTypeWithPragmaShortcut new;
 		addShortcut: TypGtTypeWithShadowShortcut new;
-		"addStyler: (TypGtValueStyler new
+		addMainAction: 'declarations' translated
+			icon: BrGlamorousIcons inspect
+			action: [ anAddOns stylers
+					detect: [ :e | e isKindOf: TypGtRbAstStyler ]
+					ifFound: [ :e | anAddOns stylers remove: e ]
+					ifNone: [ anAddOns
+							addStyler: (TypGtDeclarationStyler new
+									coder: self;
+									yourself) ].
+				self requestStyleSourceText ];
+		addMainAction: 'all' translated
+			icon: BrGlamorousIcons inspect
+			action: [ anAddOns stylers
+					detect: [ :e | e isKindOf: TypGtRbAstStyler ]
+					ifFound: [ :e | anAddOns stylers remove: e ]
+					ifNone: [ anAddOns
+							addStyler: (TypGtValueStyler new
+									coder: self;
+									yourself) ].
+				self requestStyleSourceText ]	"addStyler: (TypGtValueStyler new
 				 coder: self;
 				 yourself);""addStyler: (TypGtCheckStyler new
 				 coder: self;
@@ -45,28 +63,6 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 				detect: [ :e | e class == TypGtCheckBodyStyler ].
 			checker markUnknowns: checker markUnknowns not.
 			self styleText ]"
-		addMainAction: 'declarations' translated
-		icon: BrGlamorousIcons inspect
-		action: [ 
-			anAddOns stylers
-				detect: [ :e | e isKindOf: TypGtRbAstStyler ]
-				ifFound: [ :e | anAddOns stylers remove: e ]
-				ifNone: [ 
-					anAddOns addStyler: (TypGtDeclarationStyler new
-								 coder: self;
-								 yourself) ].
-			self requestStyleSourceText ];
-		addMainAction: 'all' translated
-		icon: BrGlamorousIcons inspect
-		action: [ 
-			anAddOns stylers
-				detect: [ :e | e isKindOf: TypGtRbAstStyler ]
-				ifFound: [ :e | anAddOns stylers remove: e ]
-				ifNone: [ 
-					anAddOns addStyler: (TypGtValueStyler new
-							 coder: self;
-							 yourself) ].
-			self requestStyleSourceText ]
 ]
 
 { #category : #'*Typer-GToolkit' }

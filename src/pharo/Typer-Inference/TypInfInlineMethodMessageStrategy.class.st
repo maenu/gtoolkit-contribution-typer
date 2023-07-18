@@ -1,6 +1,6 @@
 Class {
 	#name : #TypInfInlineMethodMessageStrategy,
-	#superclass : #TypInfMessageStrategy,
+	#superclass : #TypInfLookupMessageStrategy,
 	#instVars : [
 		'contexts'
 	],

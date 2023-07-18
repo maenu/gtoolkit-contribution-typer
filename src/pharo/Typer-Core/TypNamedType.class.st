@@ -103,11 +103,12 @@ TypNamedType >> classDescription [
 TypNamedType >> hasClassDescription [
 	<typPraResult: 'Boolean'>
 	^ hasClassDescription
-		ifNil: [ hasClassDescription := [ classDescription := (Character space
-				split: name) first asClass.
-			true ]
-				on: NotFound
-				do: [ false ] ]
+		ifNil: [ hasClassDescription := [ | parts |
+				parts := Character space split: name.
+				classDescription := parts first asClass.
+				(parts size = 2 and: [ parts second = 'class' ])
+					ifTrue: [ classDescription := classDescription class ].
+				true ] on: NotFound do: [ false ] ]
 ]
 
 { #category : #testing }

@@ -278,11 +278,23 @@ TypInfContext >> visitMessageNode: aMessageNode [
 { #category : #visiting }
 TypInfContext >> visitMethodNode: aMethodNode [
 	current inArguments: (aMethodNode arguments collect: [ :n | self nodesAddAt: n ]).
+	aMethodNode pragmas do: [ :each | self visitNode: each ].
 	self visitNode: aMethodNode body.
 	aMethodNode lastIsReturn
 		ifFalse: [ self next: RBVariableNode selfNode.
 			current outAdd: (TypInfReturnEdge origin: current target: root) ].
 	^ root
+]
+
+{ #category : #accessing }
+TypInfContext >> visitPragmaNode: aPragmaNode [
+	| variable |
+	aPragmaNode arguments do: [ :each | self visitNode: each ].
+	aPragmaNode isPrimitiveError ifFalse: [ ^ self ].
+	variable := (node scope lookupVar: aPragmaNode primitiveErrorVariableName)
+			definingNode.
+	self nodesAddAt: variable.
+	self visitNode: variable
 ]
 
 { #category : #visiting }

@@ -1,6 +1,16 @@
 Extension { #name : #TypInfContext }
 
 { #category : #'*Typer-GToolkit' }
+TypInfContext >> typGtCompactFlowFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Compact Flow';
+		priority: 10;
+		object: [ root ];
+		view: #typGtCompactFlowFor:
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypInfContext >> typGtFlowFor: aView [
 	<gtView>
 	^ aView forward

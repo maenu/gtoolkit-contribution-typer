@@ -18,6 +18,9 @@ TypInfNodeStack class >> push: aNode during: aBlock or: anotherBlock [
 	stack := self stack.
 	(self canPush: aNode) ifFalse: [ ^ anotherBlock value ].
 	stack push: aNode.
+	NonInteractiveTranscript stdout
+		nextPutAll: stack size asString;
+		cr.
 	^ aBlock ensure: [ stack pop ]
 ]
 

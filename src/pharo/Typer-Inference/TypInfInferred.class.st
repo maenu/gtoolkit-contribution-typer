@@ -94,3 +94,48 @@ TypInfInferred >> symbol [
 
 	^ #symbol
 ]
+
+{ #category : #accessing }
+TypInfInferred >> translated [
+	^ Array with: 'a' translated with: 'b' translated
+]
+
+{ #category : #accessing }
+TypInfInferred >> translated2 [
+	^ Array with: 'a' translated with: 'b' translated
+]
+
+{ #category : #accessing }
+TypInfInferred >> translated3 [
+	^ Array with: 'a' translated with: 'b' translated
+]
+
+{ #category : #accessing }
+TypInfInferred >> translated4 [
+	^ Array with: 'a' translated with: 'b' translated
+]
+
+{ #category : #accessing }
+TypInfInferred >> translated5 [
+	^ Array with: 'a' translated with: 'b' translated
+]
+
+{ #category : #accessing }
+TypInfInferred >> translated6 [
+	^ Array with: 'a' translated with: 'b' translated
+]
+
+{ #category : #accessing }
+TypInfInferred >> translated7 [
+	^ Array with: 'a' translated with: 'b' translated
+]
+
+{ #category : #accessing }
+TypInfInferred >> translated8 [
+	^ Array with: 'a' translated with: 'b' translated
+]
+
+{ #category : #accessing }
+TypInfInferred >> translated9 [
+	^ Array with: 'a' translated with: 'b' translated
+]
