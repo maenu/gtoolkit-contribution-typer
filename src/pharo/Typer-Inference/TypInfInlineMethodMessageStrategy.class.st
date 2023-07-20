@@ -12,13 +12,8 @@ TypInfInlineMethodMessageStrategy >> apply [
 	| oldContexts |
 	self assert: [ self canApply ].
 	message
-		outAt: #nextOriginal
-		ifAbsent: [ message
-				outAt: #next
-				ifPresent: [ :target | 
-					message outRemoveAt: #next.
-					message outAt: #nextOriginal put: target ]
-				ifAbsent: [ Error signal: 'node must have next edge' ] ].
+		outAt: #nextOriginal put: (message outAt: #next);
+		outRemoveAt: #next.
 	oldContexts := contexts.
 	contexts := self newContexts asOrderedCollection.
 	(oldContexts difference: contexts) do: #revert.
@@ -68,5 +63,6 @@ TypInfInlineMethodMessageStrategy >> revert [
 		do: #revert;
 		removeAll.
 	message
-		outAdd: (TypInfNextEdge origin: message target: (message outAt: #nextOriginal))
+		outAdd: (TypInfNextEdge origin: message target: (message outAt: #nextOriginal));
+		outRemoveAt: #nextOriginal
 ]

@@ -48,23 +48,6 @@ TypInfBlockContext >> initializeBlock: aBlock [
 
 { #category : #accessing }
 TypInfBlockContext >> visitNode [
-	| returnOriginal nextOriginal |
-	returnOriginal := message
-			outAt: #returnOriginal
-			ifAbsent: [ message
-					outAt: #return
-					ifPresent: [ :target | 
-						message outRemoveAt: #return.
-						message outAt: #returnOriginal put: target ]
-					ifAbsent: [ nil ] ].
-	nextOriginal := message
-			outAt: #nextOriginal
-			ifAbsent: [ message
-					outAt: #next
-					ifPresent: [ :target | 
-						message outRemoveAt: #next.
-						message outAt: #nextOriginal put: target ]
-					ifAbsent: [ nil ] ].
 	message outAdd: (TypInfNextEdge origin: message target: root).
 	current
 		inArguments: (node arguments
@@ -77,9 +60,8 @@ TypInfBlockContext >> visitNode [
 								proxy: (message inArguments at: i)) ]).
 	self visitNode: node body.
 	node lastIsReturn
-		ifTrue: [ current outAdd: (TypInfReturnEdge origin: current target: block context root) ].
-	returnOriginal
-		ifNotNil: [ current outAdd: (TypInfReturnEdge origin: current target: returnOriginal) ].
-	nextOriginal
-		ifNotNil: [ current outAdd: (TypInfNextEdge origin: current target: nextOriginal) ]
+		ifTrue: [ current outAdd: (TypInfReturnEdge origin: current target: block context root) ]
+		ifFalse: [ current outAdd: (TypInfReturnEdge origin: current target: root) ].
+	current
+		outAdd: (TypInfNextEdge origin: current target: (message outAt: #nextOriginal))
 ]

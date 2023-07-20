@@ -5,6 +5,16 @@ Class {
 }
 
 { #category : #accessing }
+TypInfInferred >> block2: aBoolean [
+	^ aBoolean ifTrue: [ 1 ] ifFalse: [ 0 ]
+]
+
+{ #category : #accessing }
+TypInfInferred >> block3: aBoolean [
+	^ aBoolean ifTrue: [ 1 ] ifFalse: [ 0 ]
+]
+
+{ #category : #accessing }
 TypInfInferred >> block: aBoolean [
 	^ aBoolean ifTrue: [ 1 ] ifFalse: [ 0 ]
 ]
@@ -25,6 +35,13 @@ TypInfInferred >> blockUseSameTwice3: aBoolean [
 
 { #category : #accessing }
 TypInfInferred >> blockUseSameTwice4: aBoolean [
+	| block |
+	block := [ 2 ].
+	^ aBoolean ifTrue: block ifFalse: block
+]
+
+{ #category : #accessing }
+TypInfInferred >> blockUseSameTwice5: aBoolean [
 	| block |
 	block := [ 2 ].
 	^ aBoolean ifTrue: block ifFalse: block

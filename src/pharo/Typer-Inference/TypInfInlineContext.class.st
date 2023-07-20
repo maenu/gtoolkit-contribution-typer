@@ -73,8 +73,7 @@ TypInfInlineContext >> revert [
 TypInfInlineContext >> visit [
 	| home |
 	root := TypInfInlinedMethod node: node context: self.
-	self flag: 'Q is key really root? could be node too...'.
-	self nodesAt: root add: root.
+	self nodesAt: node add: root.
 	current := root.
 	self visitNode.
 	home := self home.

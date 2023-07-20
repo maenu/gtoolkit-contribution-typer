@@ -12,6 +12,20 @@ TypInfExamples >> block [
 ]
 
 { #category : #requirements }
+TypInfExamples >> block2 [
+
+	<gtExample>
+	^ self infer: TypInfInferred >> #block2:
+]
+
+{ #category : #requirements }
+TypInfExamples >> block3 [
+
+	<gtExample>
+	^ self infer: TypInfInferred >> #block3:
+]
+
+{ #category : #requirements }
 TypInfExamples >> blockUseSameTwice [
 
 	<gtExample>
@@ -37,6 +51,13 @@ TypInfExamples >> blockUseSameTwice4 [
 
 	<gtExample>
 	^ self infer: TypInfInferred >> #blockUseSameTwice4:
+]
+
+{ #category : #requirements }
+TypInfExamples >> blockUseSameTwice5 [
+
+	<gtExample>
+	^ self infer: TypInfInferred >> #blockUseSameTwice5:
 ]
 
 { #category : #requirements }
@@ -146,6 +167,22 @@ TypInfExamples >> message7Sync [
 
 	<gtExample>
 	^ self inferSync: TypInfInferred >> #message7
+]
+
+{ #category : #accessing }
+TypInfExamples >> plus [
+	<gtExample>
+	| node selfType |
+	node := (SmallInteger >> #+) ast.
+	selfType := node methodClass typAsType.
+	^ (TypInfContext
+		sender: nil
+		state: TypInfState new
+		node: node
+		self: selfType
+		super: selfType superOrNil)
+		run;
+		yourself
 ]
 
 { #category : #requirements }

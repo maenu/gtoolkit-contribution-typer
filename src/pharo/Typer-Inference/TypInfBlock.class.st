@@ -7,6 +7,14 @@ Class {
 }
 
 { #category : #accessing }
+TypInfBlock >> inReturns [
+	^ in
+		at: #return
+		ifPresent: [ :s | s collect: #origin ]
+		ifAbsent: [ #() ]
+]
+
+{ #category : #accessing }
 TypInfBlock >> initialize: aState [
 	super initialize: aState.
 	state
@@ -14,6 +22,25 @@ TypInfBlock >> initialize: aState [
 		put: ((BlockClosure
 				typAsFunctionTypeWithResult: TypUnknownType instance
 				arguments: (node arguments collect: [ :e | TypUnknownType instance ])
+				argumentsOptional: false
+				signalsAlways: nil)
+				typInfNode: self;
+				yourself)
+]
+
+{ #category : #accessing }
+TypInfBlock >> transfer [
+	state
+		at: self
+		put: ((BlockClosure
+				typAsFunctionTypeWithResult: (((context nodesAt: node) copyWithout: self)
+						ifEmpty: [ TypUnknownType instance ]
+						ifNotEmpty: [ :s | (s flatCollect: [ :n | n inReturns collect: #type ]) typAsType ])
+				arguments: (node arguments
+						collectWithIndex: [ :n :i | 
+							((context nodesAt: n) copyWithoutAll: self inArguments)
+								ifEmpty: [ TypUnknownType instance ]
+								ifNotEmpty: [ :s | (s collect: #type) typAsType ] ])
 				argumentsOptional: false
 				signalsAlways: nil)
 				typInfNode: self;

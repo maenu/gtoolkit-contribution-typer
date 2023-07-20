@@ -72,24 +72,20 @@ TypInfNode >> typGtCompactFlowOn: aMondrian [
 
 { #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtDecorate: anElement in: aMondrian [
-
 	anElement
 		when: BlMouseDownEvent do: [ anElement zIndex: 1 ];
 		when: BlClickEvent do: [ anElement phlow spawnObject: self ].
-	anElement addAptitude:
-		(TypGtStrongBorderAptitude color: self typGtColor)
-		+ ((BrGlamorousWithTooltipAptitude content: [ 
-					  BrEditor new
-						  aptitude: BrGlamorousCodeEditorAptitude new;
-						  background: BlBackground transparent;
-						  text: node formattedCode;
-						  beReadOnlyWithoutSelection;
-						  hFitContent;
-						  vFitContent;
-						  yourself ])
-				 showDelay: 300 milliSeconds;
-				 hideDelay: 300 milliSeconds;
-				 yourself).
+	anElement
+		addAptitude: (TypGtStrongBorderAptitude color: self typGtColor)
+				+ (BrGlamorousWithTooltipAptitude
+						content: [ BrEditor new
+								aptitude: BrGlamorousCodeEditorAptitude new;
+								background: BlBackground transparent;
+								text: self type asString , String lf , node formattedCode;
+								beReadOnlyWithoutSelection;
+								hFitContent;
+								vFitContent;
+								yourself ]).
 	^ anElement
 ]
 
