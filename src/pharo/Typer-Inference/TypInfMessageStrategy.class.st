@@ -15,12 +15,7 @@ TypInfMessageStrategy class >> message: aMessage [
 ]
 
 { #category : #accessing }
-TypInfMessageStrategy >> apply [
-	self subclassResponsibility
-]
-
-{ #category : #accessing }
-TypInfMessageStrategy >> canApply [
+TypInfMessageStrategy >> canInstall [
 	self subclassResponsibility
 ]
 
@@ -30,6 +25,16 @@ TypInfMessageStrategy >> initializeMessage: aMessage [
 ]
 
 { #category : #accessing }
-TypInfMessageStrategy >> revert [
+TypInfMessageStrategy >> install [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
+TypInfMessageStrategy >> transfer [
+	
+]
+
+{ #category : #accessing }
+TypInfMessageStrategy >> uninstall [
 	self subclassResponsibility
 ]

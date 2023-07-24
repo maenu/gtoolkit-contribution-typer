@@ -8,24 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-TypInfInlineMethodMessageStrategy >> apply [
-	| oldContexts |
-	self assert: [ self canApply ].
-	message
-		outAt: #next
-		ifPresent: [ :n | 
-			message
-				outAt: #nextOriginal put: n;
-				outRemoveAt: #next ]
-		ifAbsent: [  "noop" ].
-	oldContexts := contexts.
-	contexts := self newContexts asOrderedCollection.
-	(oldContexts difference: contexts) do: #revert.
-	(contexts difference: oldContexts) do: #apply
-]
-
-{ #category : #accessing }
-TypInfInlineMethodMessageStrategy >> canApply [
+TypInfInlineMethodMessageStrategy >> canInstall [
 	| receiver newContexts |
 	receiver := message receiver.
 	receiver isNamed ifFalse: [ ^ false ].
@@ -34,13 +17,31 @@ TypInfInlineMethodMessageStrategy >> canApply [
 		ifFalse: [ ^ false ].
 	newContexts := self newContexts.
 	newContexts size < 8 ifFalse: [ ^ false ].
-	^ newContexts allSatisfy: #canApply
+	^ newContexts allSatisfy: #canInstall
 ]
 
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> initialize [
 	super initialize.
 	contexts := Set new
+]
+
+{ #category : #accessing }
+TypInfInlineMethodMessageStrategy >> install [
+	| oldContexts |
+	self assert: [ self canInstall ].
+	message
+		outAt: #nextOriginal
+		ifAbsent: [ message
+				outAt: #next
+				ifPresent: [ :target | 
+					message outRemoveAt: #next.
+					message outAt: #nextOriginal put: target ]
+				ifAbsent: [ Error signal: 'node must have next edge' ] ].
+	oldContexts := contexts.
+	contexts := self newContexts asOrderedCollection.
+	(oldContexts difference: contexts) do: #uninstall.
+	(contexts difference: oldContexts) do: #install
 ]
 
 { #category : #accessing }
@@ -63,9 +64,9 @@ TypInfInlineMethodMessageStrategy >> newContexts [
 ]
 
 { #category : #accessing }
-TypInfInlineMethodMessageStrategy >> revert [
+TypInfInlineMethodMessageStrategy >> uninstall [
 	contexts
-		do: #revert;
+		do: #uninstall;
 		removeAll.
 	message
 		outAt: #nextOriginal

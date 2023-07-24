@@ -5,20 +5,9 @@ Class {
 }
 
 { #category : #accessing }
-TypInfReceiverConstrainingMessageStrategy >> apply [
-	| receiver classes |
-	receiver := message receiver.
-	classes := TypInfMethodIndex instance implementors: message selector.
-	message state
-		at: message inReceiver
-		put: (classes collect: #typAsType) typAsType.
-	super apply
-]
-
-{ #category : #accessing }
-TypInfReceiverConstrainingMessageStrategy >> canApply [
+TypInfReceiverConstrainingMessageStrategy >> canInstall [
 	| receiver |
-	super canApply ifFalse: [ ^ false ].
+	super canInstall ifFalse: [ ^ false ].
 	receiver := message receiver.
 	(receiver isUnknown
 		or: [ receiver isVariable and: [ receiver super isUnknown ] ])
@@ -26,4 +15,15 @@ TypInfReceiverConstrainingMessageStrategy >> canApply [
 	^ (TypInfMethodIndex instance implementors: message selector) size
 		between: 1
 		and: 8
+]
+
+{ #category : #accessing }
+TypInfReceiverConstrainingMessageStrategy >> install [
+	| receiver classes |
+	receiver := message receiver.
+	classes := TypInfMethodIndex instance implementors: message selector.
+	message state
+		at: message inReceiver
+		put: (classes collect: #typAsType) typAsType.
+	super install
 ]

@@ -31,16 +31,7 @@ TypInfInlineContext >> = anObject [
 ]
 
 { #category : #accessing }
-TypInfInlineContext >> apply [
-	TypInfNodeStack
-		push: node
-		during: [ self visit ]
-		or: [ Error
-				signal: 'cannot inline due to method stack limit, canApply should have catched that' ]
-]
-
-{ #category : #accessing }
-TypInfInlineContext >> canApply [
+TypInfInlineContext >> canInstall [
 	^ node compiledMethod isRealPrimitive not
 		and: [ TypInfNodeStack canPush: node ]
 ]
@@ -56,12 +47,21 @@ TypInfInlineContext >> initializeMessage: aMessage [
 ]
 
 { #category : #accessing }
+TypInfInlineContext >> install [
+	TypInfNodeStack
+		push: node
+		during: [ self visit ]
+		or: [ Error
+				signal: 'cannot inline due to method stack limit, canApply should have catched that' ]
+]
+
+{ #category : #accessing }
 TypInfInlineContext >> message [
 	^ message
 ]
 
 { #category : #accessing }
-TypInfInlineContext >> revert [
+TypInfInlineContext >> uninstall [
 	| home |
 	home := self home.
 	nodes keysAndValuesDo: [ :n :c | c do: [ :e | home nodesAt: n remove: e ] ].

@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #accessing }
-TypInfAbstractInterpretationMessageStrategy >> canApply [
+TypInfAbstractInterpretationMessageStrategy >> canInstall [
 	| receiver |
 	receiver := message receiver.
 	receiver isNamed ifFalse: [ ^ false ].

@@ -37,7 +37,7 @@ TypInfBlockContext >> block [
 ]
 
 { #category : #accessing }
-TypInfBlockContext >> canApply [
+TypInfBlockContext >> canInstall [
 	^ TypInfNodeStack canPush: node
 ]
 

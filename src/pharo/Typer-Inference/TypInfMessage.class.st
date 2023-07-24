@@ -50,8 +50,9 @@ TypInfMessage >> selector [
 TypInfMessage >> transfer [
 	| oldStrategy |
 	oldStrategy := currentStrategy.
-	currentStrategy := strategies detect: #canApply.
+	currentStrategy := strategies detect: #canInstall.
 	currentStrategy == oldStrategy
-		ifFalse: [ oldStrategy ifNotNil: #revert.
-			currentStrategy apply ]
+		ifFalse: [ oldStrategy ifNotNil: #uninstall.
+			currentStrategy install ].
+	currentStrategy transfer
 ]

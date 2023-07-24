@@ -5,7 +5,12 @@ Class {
 }
 
 { #category : #accessing }
-TypInfLookupMessageStrategy >> apply [
+TypInfLookupMessageStrategy >> canInstall [
+	^ true
+]
+
+{ #category : #accessing }
+TypInfLookupMessageStrategy >> install [
 	| method |
 	method := message receiver
 			lookupMethod: message selector asSymbol
@@ -17,12 +22,7 @@ TypInfLookupMessageStrategy >> apply [
 ]
 
 { #category : #accessing }
-TypInfLookupMessageStrategy >> canApply [
-	^ true
-]
-
-{ #category : #accessing }
-TypInfLookupMessageStrategy >> revert [
+TypInfLookupMessageStrategy >> uninstall [
 	"noop"
 
 	
