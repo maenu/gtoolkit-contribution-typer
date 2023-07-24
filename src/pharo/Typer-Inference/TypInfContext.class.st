@@ -63,7 +63,7 @@ TypInfContext >> inlitializeSender: aContext state: aState node: aNode self: aTy
 	nodes := OrderedIdentityDictionary new.	"ordered to have a cheap, close-to-topological sorting.
 	 makes the run more predictable"
 	iterationsDone := 0.
-	iterationsMax := 64
+	iterationsMax := 32
 ]
 
 { #category : #accessing }

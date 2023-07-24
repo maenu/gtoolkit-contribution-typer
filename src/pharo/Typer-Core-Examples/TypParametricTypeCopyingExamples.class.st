@@ -8,12 +8,11 @@ Class {
 TypParametricTypeCopyingExamples >> copyIsNearlyShallow [
 	<gtExample>
 	| original copy |
-	original := TypParametricTypeInitializingExamples new classDescriptionParameters.
+	original := TypParametricTypeInitializingExamples new
+			classDescriptionParameters copy.
 	original parameters
 		at: original parameters keys first
-		put:
-			(TypNamedTypeInitializingExamples new classDescription).
-	"ensure superType"
+		put: TypNamedTypeInitializingExamples new classDescription.	"ensure superType"
 	original super.
 	copy := original copy.
 	self assert: original ~~ copy.

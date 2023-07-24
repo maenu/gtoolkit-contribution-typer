@@ -5,29 +5,26 @@ Class {
 }
 
 { #category : #accessing }
-TypInfNodeStack class >> canPush: aNode [
-	| stack |
-	stack := self stack.
-	stack size < 8 ifFalse: [ ^ false ].
-	^ (stack includes: aNode) not
-]
-
-{ #category : #accessing }
-TypInfNodeStack class >> push: aNode during: aBlock or: anotherBlock [
-	| stack |
-	stack := self stack.
-	(self canPush: aNode) ifFalse: [ ^ anotherBlock value ].
-	stack push: aNode.
-	NonInteractiveTranscript stdout
-		nextPutAll: stack size asString;
-		cr.
-	^ aBlock ensure: [ stack pop ]
-]
-
-{ #category : #accessing }
-TypInfNodeStack class >> stack [
+TypInfNodeStack class >> actives [
 
 	^ self value ifNil: [ 
 		  self value: Stack new.
 		  self value ]
+]
+
+{ #category : #accessing }
+TypInfNodeStack class >> canPush: aNode [
+	| actives |
+	actives := self actives.
+	actives size < 8 ifFalse: [ ^ false ].
+	^ (actives includes: aNode) not
+]
+
+{ #category : #accessing }
+TypInfNodeStack class >> push: aNode during: aBlock or: anotherBlock [
+	| actives |
+	actives := self actives.
+	(self canPush: aNode) ifFalse: [ ^ anotherBlock value ].
+	actives push: aNode.
+	^ aBlock ensure: [ self assert: [ actives pop == aNode ] ]
 ]

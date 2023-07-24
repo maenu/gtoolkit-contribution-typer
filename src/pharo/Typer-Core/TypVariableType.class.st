@@ -25,6 +25,14 @@ TypVariableType class >> named: aSymbol variance: anotherSymbol [
 ]
 
 { #category : #'instance creation' }
+TypVariableType class >> super: aType named: aSymbol [
+	^ self
+		super: aType
+		named: aSymbol
+		variance: #co
+]
+
+{ #category : #'instance creation' }
 TypVariableType class >> super: aType named: aSymbol variance: anotherSymbol [
 
 	^ self new

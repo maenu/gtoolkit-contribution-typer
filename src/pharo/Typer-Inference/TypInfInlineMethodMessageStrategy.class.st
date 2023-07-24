@@ -12,8 +12,12 @@ TypInfInlineMethodMessageStrategy >> apply [
 	| oldContexts |
 	self assert: [ self canApply ].
 	message
-		outAt: #nextOriginal put: (message outAt: #next);
-		outRemoveAt: #next.
+		outAt: #next
+		ifPresent: [ :n | 
+			message
+				outAt: #nextOriginal put: n;
+				outRemoveAt: #next ]
+		ifAbsent: [  "noop" ].
 	oldContexts := contexts.
 	contexts := self newContexts asOrderedCollection.
 	(oldContexts difference: contexts) do: #revert.
@@ -22,14 +26,15 @@ TypInfInlineMethodMessageStrategy >> apply [
 
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> canApply [
-	| receiver |
+	| receiver newContexts |
 	receiver := message receiver.
 	receiver isNamed ifFalse: [ ^ false ].
 	receiver hasClassDescription ifFalse: [ ^ false ].
 	(receiver classDescription canUnderstand: message selector)
 		ifFalse: [ ^ false ].
-	self newContexts size < 8 ifFalse: [ ^ false ].
-	^ TypInfNodeStack canPush: message
+	newContexts := self newContexts.
+	newContexts size < 8 ifFalse: [ ^ false ].
+	^ newContexts allSatisfy: #canApply
 ]
 
 { #category : #accessing }
@@ -63,6 +68,10 @@ TypInfInlineMethodMessageStrategy >> revert [
 		do: #revert;
 		removeAll.
 	message
-		outAdd: (TypInfNextEdge origin: message target: (message outAt: #nextOriginal));
-		outRemoveAt: #nextOriginal
+		outAt: #nextOriginal
+		ifPresent: [ :n | 
+			message
+				outAdd: (TypInfNextEdge origin: message target: n);
+				outRemoveAt: #nextOriginal ]
+		ifAbsent: [  "noop" ]
 ]

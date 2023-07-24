@@ -41,7 +41,8 @@ TypInfInlineContext >> apply [
 
 { #category : #accessing }
 TypInfInlineContext >> canApply [
-	^ TypInfNodeStack canPush: node
+	^ node compiledMethod isRealPrimitive not
+		and: [ TypInfNodeStack canPush: node ]
 ]
 
 { #category : #accessing }
@@ -65,7 +66,9 @@ TypInfInlineContext >> revert [
 	home := self home.
 	nodes keysAndValuesDo: [ :n :c | c do: [ :e | home nodesAt: n remove: e ] ].
 	message
-		outAdd: (TypInfNextEdge origin: message target: (message outAt: #nextOriginal)).
+		outAt: #nextOriginal
+		ifPresent: [ :n | message outAdd: (TypInfNextEdge origin: message target: n) ]
+		ifAbsent: [  "noop" ].
 	message outRemoveAt: #next
 ]
 
@@ -102,6 +105,8 @@ TypInfInlineContext >> visitNode [
 	node lastIsReturn
 		ifFalse: [ self next: RBVariableNode selfNode.
 			current outAdd: (TypInfReturnEdge origin: current target: root) ].
-	current
-		outAdd: (TypInfNextEdge origin: current target: (message outAt: #nextOriginal))
+	message
+		outAt: #nextOriginal
+		ifPresent: [ :n | current outAdd: (TypInfNextEdge origin: current target: n) ]
+		ifAbsent: [  "noop" ]
 ]

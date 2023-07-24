@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'argumentsSize',
 		'argumentsOptional',
-		'signalsAlways',
-		'rotater'
+		'signalsAlways'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -168,7 +167,6 @@ TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolea
 	argumentsSize := anInteger.
 	argumentsOptional := aBoolean.
 	signalsAlways := anotherBoolean.
-	rotater := nil.
 	hash := nil
 ]
 

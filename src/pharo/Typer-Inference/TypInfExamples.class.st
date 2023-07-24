@@ -103,7 +103,7 @@ TypInfExamples >> inlinedSync [
 TypInfExamples >> message [
 
 	<gtExample>
-	^ self inferSync: TypInfInferred >> #message
+	^ self infer: TypInfInferred >> #message
 ]
 
 { #category : #requirements }

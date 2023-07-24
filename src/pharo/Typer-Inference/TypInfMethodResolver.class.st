@@ -130,11 +130,10 @@ TypInfMethodResolver >> resolve: aLookup [
 
 { #category : #accessing }
 TypInfMethodResolver >> typeAt: aNode self: aType super: anotherType [
+
 	^ TypInfNodeStack
-		push: aNode methodNode
-		during: [ (self
-				nodeAt: aNode
-				self: aType
-				super: anotherType) type ]
-		or: [ TypUnknownType instance ]
+		  push: aNode methodNode
+		  during: [ 
+		  (self nodeAt: aNode self: aType super: anotherType) type ]
+		  or: [ TypUnknownType instance ]
 ]

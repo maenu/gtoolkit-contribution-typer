@@ -37,6 +37,11 @@ TypInfBlockContext >> block [
 ]
 
 { #category : #accessing }
+TypInfBlockContext >> canApply [
+	^ TypInfNodeStack canPush: node
+]
+
+{ #category : #accessing }
 TypInfBlockContext >> hash [
 	^ super hash bitXor: block hash
 ]
@@ -59,9 +64,18 @@ TypInfBlockContext >> visitNode [
 								context: self
 								proxy: (message inArguments at: i)) ]).
 	self visitNode: node body.
-	node lastIsReturn
+	node body lastIsReturn
 		ifTrue: [ current outAdd: (TypInfReturnEdge origin: current target: block context root) ]
 		ifFalse: [ current outAdd: (TypInfReturnEdge origin: current target: root) ].
-	current
-		outAdd: (TypInfNextEdge origin: current target: (message outAt: #nextOriginal))
+	message
+		outAt: #nextOriginal
+		ifPresent: [ :n | current outAdd: (TypInfNextEdge origin: current target: n) ]
+		ifAbsent: [  "noop" ]
+]
+
+{ #category : #accessing }
+TypInfBlockContext >> visitReturnNode: aReturnNode [
+	self visitNode: aReturnNode value.
+	self next: aReturnNode.
+	current outAdd: (TypInfReturnEdge origin: current target: block context root)
 ]
