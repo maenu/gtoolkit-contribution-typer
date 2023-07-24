@@ -524,6 +524,90 @@ TypRewriter >> rewriteShadowSelectors [
 ]
 
 { #category : #accessing }
+TypRewriter >> rewriteShadowToExtension: aShadow [
+	self rewriteShadowToExtensionType: aShadow.
+	self rewriteShadowToExtensionVariables: aShadow.
+	self rewriteShadowToExtensionMethods: aShadow
+]
+
+{ #category : #accessing }
+TypRewriter >> rewriteShadowToExtensionAll [
+	<gtExample>
+	((RPackageOrganizer default packages
+		select: [ :e | e name beginsWith: 'Typer-Shadow-' ])
+		flatCollect: #definedClasses)
+		do: [ :e | 
+			self rewriteShadowToExtensionBoth: e.
+			e removeFromSystem ].
+	#typShaType: gtPragmas do: #reformat.
+	#typShaVariable: gtPragmas do: #reformat.
+	#typShaMethod: gtPragmas do: #reformat
+]
+
+{ #category : #accessing }
+TypRewriter >> rewriteShadowToExtensionBoth: aClass [
+	self rewriteShadowToExtension: aClass new.
+	self rewriteShadowToExtension: aClass
+]
+
+{ #category : #accessing }
+TypRewriter >> rewriteShadowToExtensionMethods: aShadow [
+	aShadow class methods
+		select: [ :e | e hasPragmaNamed: #typShaMethod: ]
+		thenDo: [ :method | 
+			| selector code |
+			selector := method selector.
+			selector := selector copyFrom: 2 to: selector size.
+			code := 'typShaMethod' , selector
+					, ' aLookup
+	'
+					, (method sourceCode
+							copyFrom: method ast selectorAndArgumentNames size + 1
+							to: method sourceCode size).
+			aShadow shadowedClass
+				compile: code
+				classified: '*' , aShadow class package name.
+			method removeFromSystem ]
+]
+
+{ #category : #accessing }
+TypRewriter >> rewriteShadowToExtensionType: aShadow [
+	| method code |
+	(aShadow class includesSelector: #resolveType:) ifFalse: [ ^ self ].
+	method := aShadow class methodDict at: #resolveType:.
+	code := 'typShaResolve: aLookup 
+	<typShaType>
+	'
+			, (method sourceCode
+					copyFrom: method ast selectorAndArgumentNames size + 1
+					to: method sourceCode size).
+	aShadow shadowedClass
+		compile: code
+		classified: '*' , aShadow class package name.
+	method removeFromSystem
+]
+
+{ #category : #accessing }
+TypRewriter >> rewriteShadowToExtensionVariables: aShadow [
+	aShadow class methods
+		select: [ :e | e hasPragmaNamed: #typShaVariable: ]
+		thenDo: [ :method | 
+			| selector code |
+			selector := method selector.
+			selector := selector copyFrom: 2 to: selector size.
+			code := 'typShaVariable' , selector
+					, ' aLookup
+	'
+					, (method sourceCode
+							copyFrom: method ast selectorAndArgumentNames size + 1
+							to: method sourceCode size).
+			aShadow shadowedClass
+				compile: code
+				classified: '*' , aShadow class package name.
+			method removeFromSystem ]
+]
+
+{ #category : #accessing }
 TypRewriter >> rewriteShadowVariable [
 	<gtExample>
 	^ #typShaForVariable: gtPragmas
