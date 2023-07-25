@@ -29,6 +29,8 @@ TypShaMethodResolver >> resolve: aLookup [
 				thenCollect: [ :m | 
 					| class |
 					class := aLookup receiver classDescription newAnonymousSubclass.
-					class class compile: 'new <primitive: 70>'.
-					class new perform: m selector with: aLookup ])
+					class classSide compile: (Behavior methodDict at: #basicNew) sourceCode.
+					class
+						compile: 'typShaPerform: aSelector with: anObject <primitive: 83> self primitiveFailed'.
+					class basicNew typShaPerform: m selector with: aLookup ])
 ]

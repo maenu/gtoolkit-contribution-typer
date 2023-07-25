@@ -18,6 +18,19 @@ TypShaExamples >> lookupMethod [
 ]
 
 { #category : #accessing }
+TypShaExamples >> lookupMethodClassSide [
+	<gtExample>
+	| lookup |
+	lookup := TypMethodLookup
+			receiver: Color class typAsType
+			selector: #purple
+			arguments: #()
+			super: nil.
+	self assert: (TypShaMethodResolver new canResolve: lookup).
+	^ TypShaMethodResolver new resolve: lookup
+]
+
+{ #category : #accessing }
 TypShaExamples >> lookupMethodNoNew [
 	<gtExample>
 	| lookup |
