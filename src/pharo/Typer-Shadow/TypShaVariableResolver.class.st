@@ -27,6 +27,8 @@ TypShaVariableResolver >> resolve: aLookup [
 		reduce: (aLookup receiver classDescription methods
 				select: [ :m | m typShaResolvesVariable: aLookup selector ]
 				thenCollect: [ :m | 
-					self flag: 'TODO new is dirty, use anonymous subclasses?'.
-					aLookup receiver classDescription new perform: m selector with: aLookup ])
+					| class |
+					class := aLookup receiver classDescription newAnonymousSubclass.
+					class class compile: 'new <primitive: 70>'.
+					class new perform: m selector with: aLookup ])
 ]

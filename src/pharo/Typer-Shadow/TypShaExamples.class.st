@@ -13,14 +13,27 @@ TypShaExamples >> lookupMethod [
 			selector: #anyOne
 			arguments: #()
 			super: nil.
-	self assert: (TypShaMethodResolver instance canResolve: lookup).
-	^ TypShaMethodResolver instance resolve: lookup
+	self assert: (TypShaMethodResolver new canResolve: lookup).
+	^ TypShaMethodResolver new resolve: lookup
+]
+
+{ #category : #accessing }
+TypShaExamples >> lookupMethodNoNew [
+	<gtExample>
+	| lookup |
+	lookup := TypMethodLookup
+			receiver: ExternalType typAsType
+			selector: #isAtomic
+			arguments: #()
+			super: nil.
+	self assert: (TypShaMethodResolver new canResolve: lookup).
+	^ TypShaMethodResolver new resolve: lookup
 ]
 
 { #category : #accessing }
 TypShaExamples >> lookupType [
 	<gtExample>
-	^ TypShaTypeResolver instance
+	^ TypShaTypeResolver new
 		resolve: (TypTypeLookup classDescription: Collection super: nil)
 ]
 
@@ -32,6 +45,6 @@ TypShaExamples >> lookupVariable [
 			receiver: GtPharoMethodCoder typAsType
 			selector: #astCache
 			super: nil.
-	self assert: (TypShaVariableResolver instance canResolve: lookup).
-	^ TypShaVariableResolver instance resolve: lookup
+	self assert: (TypShaVariableResolver new canResolve: lookup).
+	^ TypShaVariableResolver new resolve: lookup
 ]
