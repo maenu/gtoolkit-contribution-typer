@@ -1,8 +1,16 @@
 Class {
 	#name : #TypShaResolver,
 	#superclass : #TypResolver,
+	#classInstVars : [
+		'instance'
+	],
 	#category : #'Typer-Shadow-Lookup'
 }
+
+{ #category : #accessing }
+TypShaResolver class >> instance [
+	^ instance ifNil: [ instance := self new ]
+]
 
 { #category : #accessing }
 TypShaResolver >> resolve: aLookup reduce: aCollection [

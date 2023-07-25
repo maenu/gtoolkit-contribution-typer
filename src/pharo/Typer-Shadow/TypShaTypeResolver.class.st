@@ -6,8 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaTypeResolver >> canResolve: aLookup [
-	^ aLookup classDescription typShaShadows
-		anySatisfy: [ :e | e canResolveType: aLookup ]
+	^ aLookup classDescription class methods anySatisfy: #typShaResolvesType
 ]
 
 { #category : #printing }
@@ -18,11 +17,11 @@ TypShaTypeResolver >> printOn: aStream [
 
 { #category : #accessing }
 TypShaTypeResolver >> resolve: aLookup [
-
 	self assert: [ self canResolve: aLookup ].
 	aLookup initializeResolver: self.
 	^ self
-		  resolve: aLookup
-		  reduce: (aLookup classDescription typShaShadows collect: [ :e | 
-				   e resolveType: aLookup ])
+		resolve: aLookup
+		reduce: (aLookup classDescription class methods
+				select: #typShaResolvesType
+				thenCollect: [ :m | aLookup classDescription perform: m selector with: aLookup ])
 ]

@@ -8,6 +8,11 @@ CompiledMethod >> typShaResolvesMethod: aSymbol [
 ]
 
 { #category : #'*Typer-Shadow' }
+CompiledMethod >> typShaResolvesType [
+	^ self hasPragmaNamed: #typShaType
+]
+
+{ #category : #'*Typer-Shadow' }
 CompiledMethod >> typShaResolvesVariable: aSymbol [
 	^ self pragmas
 		anySatisfy:
