@@ -443,9 +443,8 @@ Collection class >> typShaMethodWithWith: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaResolve: aLookup [ 
+Collection class >> typShaType: aLookup [
 	<typShaType>
-	
 	^ aLookup root classDescription
-		typAsParametricTypeWithParameters: {(#A -> #A typAsVariableType)} asOrderedDictionary
+		typAsParametricTypeWithParameters: {#A -> #A typAsVariableType} asOrderedDictionary
 ]

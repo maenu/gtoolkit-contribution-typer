@@ -163,9 +163,8 @@ SequenceableCollection >> typShaMethodWithIndexSelect: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection >> typShaResolve: aLookup [ 
+SequenceableCollection class >> typShaType: aLookup [
 	<typShaType>
-	
 	^ aLookup root classDescription
-		typAsParametricTypeWithParameters: {(#A -> #A typAsVariableType)} asOrderedDictionary
+		typAsParametricTypeWithParameters: {#A -> #A typAsVariableType} asOrderedDictionary
 ]

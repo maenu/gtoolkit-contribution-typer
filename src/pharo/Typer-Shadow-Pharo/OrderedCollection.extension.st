@@ -24,9 +24,8 @@ OrderedCollection >> typShaMethodRemoveLast: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedCollection >> typShaResolve: aLookup [ 
+OrderedCollection class >> typShaType: aLookup [
 	<typShaType>
-	
 	^ aLookup root classDescription
-		typAsParametricTypeWithParameters: {(#A -> #A typAsVariableType)} asOrderedDictionary
+		typAsParametricTypeWithParameters: {#A -> #A typAsVariableType} asOrderedDictionary
 ]

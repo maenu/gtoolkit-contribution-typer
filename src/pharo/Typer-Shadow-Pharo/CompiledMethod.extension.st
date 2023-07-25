@@ -58,10 +58,8 @@ CompiledMethod >> typShaMethodSourceCode: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-CompiledMethod >> typShaResolve: aLookup [ 
+CompiledMethod class >> typShaType: aLookup [
 	<typShaType>
-	
-
-	^ aLookup root classDescription typAsFunctionTypeWithResult:
-		  TypUnknownType instance
+	^ aLookup root classDescription
+		typAsFunctionTypeWithResult: TypUnknownType instance
 ]

@@ -13,11 +13,9 @@ Association >> typShaMethodValue: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Association >> typShaResolve: aLookup [ 
+Association class >> typShaType: aLookup [
 	<typShaType>
-	
 	^ aLookup root classDescription
-		typAsParametricTypeWithParameters:
-			{(#A -> #A typAsVariableType).
-			(#B -> #B typAsVariableType)} asOrderedDictionary
+		typAsParametricTypeWithParameters: {#A -> #A typAsVariableType.
+				#B -> #B typAsVariableType} asOrderedDictionary
 ]

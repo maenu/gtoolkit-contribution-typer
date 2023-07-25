@@ -24,32 +24,9 @@ TypShaShadow class >> canResolveVariable: aLookup [
 		anySatisfy: [ :e | e typShaResolvesVariable: aLookup selector ]
 ]
 
-{ #category : #'class initialization' }
-TypShaShadow class >> instance [
-	^ instance ifNil: [ instance := self new initialize ]
-]
-
-{ #category : #initialization }
-TypShaShadow class >> invalidate [
-	<script>
-	instance := nil
-]
-
-{ #category : #initialization }
-TypShaShadow class >> invalidateAll [
-	<script>
-	self allSubclassesDo: #invalidate
-]
-
 { #category : #accessing }
 TypShaShadow class >> resolveType: aLookup [
 	^ aLookup root classDescription typAsNamedType
-]
-
-{ #category : #'as yet unclassified' }
-TypShaShadow class >> shadowedClass [
-	<typPraResult: 'Metaclass'>
-	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -72,10 +49,4 @@ TypShaShadow >> canResolveVariable: aLookup [
 { #category : #converting }
 TypShaShadow >> resolveType: aLookup [
 	^ aLookup root classDescription typAsNamedType
-]
-
-{ #category : #accessing }
-TypShaShadow >> shadowedClass [
-	<typPraResult: 'Class'>
-	^ self class shadowedClass instanceSide
 ]

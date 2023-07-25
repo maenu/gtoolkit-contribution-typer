@@ -539,7 +539,7 @@ TypRewriter >> rewriteShadowToExtensionAll [
 		do: [ :e | 
 			self rewriteShadowToExtensionBoth: e.
 			e removeFromSystem ].
-	#typShaType: gtPragmas do: #reformat.
+	#typShaType gtPragmas do: #reformat.
 	#typShaVariable: gtPragmas do: #reformat.
 	#typShaMethod: gtPragmas do: #reformat
 ]
@@ -567,6 +567,21 @@ TypRewriter >> rewriteShadowToExtensionMethods: aShadow [
 			aShadow shadowedClass
 				compile: code
 				classified: '*' , aShadow class package name.
+			method removeFromSystem ]
+]
+
+{ #category : #accessing }
+TypRewriter >> rewriteShadowToExtensionType2 [
+	<gtExample>
+	#typShaType gtPragmas contents
+		do: [ :method | 
+			| code |
+			code := 'typShaType: aLookup'
+					, (method sourceCode
+							copyFrom: method ast selectorAndArgumentNames size + 1
+							to: method sourceCode size).
+			method origin classSide compile: code classified: method category.
+			(method origin classSide methodDict at: #typShaType:) reformat.
 			method removeFromSystem ]
 ]
 

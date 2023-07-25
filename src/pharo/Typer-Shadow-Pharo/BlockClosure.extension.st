@@ -114,10 +114,8 @@ BlockClosure >> typShaMethodWhileTrue: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-BlockClosure >> typShaResolve: aLookup [ 
+BlockClosure class >> typShaType: aLookup [
 	<typShaType>
-	
-
-	^ aLookup root classDescription typAsFunctionTypeWithResult:
-		  TypUnknownType instance
+	^ aLookup root classDescription
+		typAsFunctionTypeWithResult: TypUnknownType instance
 ]

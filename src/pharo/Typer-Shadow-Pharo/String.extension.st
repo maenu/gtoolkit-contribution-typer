@@ -60,14 +60,11 @@ String >> typShaMethodTranslated: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-String >> typShaResolve: aLookup [ 
+String class >> typShaType: aLookup [
 	<typShaType>
-	
-
 	| type |
 	type := aLookup root classDescription typAsNamedType.
-	(type hasSuper and: [ type super isParametric ]) ifTrue: [ 
-		type := type withSuper:
-			        (type super withParameters: { Character typAsType }) ].
+	(type hasSuper and: [ type super isParametric ])
+		ifTrue: [ type := type withSuper: (type super withParameters: {Character typAsType}) ].
 	^ type
 ]
