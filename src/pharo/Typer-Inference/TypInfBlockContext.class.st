@@ -52,6 +52,11 @@ TypInfBlockContext >> initializeBlock: aBlock [
 ]
 
 { #category : #accessing }
+TypInfBlockContext >> nodesAt: aNode [
+	^ (super nodesAt: aNode) ifEmpty: [ block context nodesAt: aNode ]
+]
+
+{ #category : #accessing }
 TypInfBlockContext >> visitNode [
 	message outAdd: (TypInfNextEdge origin: message target: root).
 	current

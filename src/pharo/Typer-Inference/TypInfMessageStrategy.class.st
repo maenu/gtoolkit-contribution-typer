@@ -26,7 +26,7 @@ TypInfMessageStrategy >> initializeMessage: aMessage [
 
 { #category : #accessing }
 TypInfMessageStrategy >> install [
-	self subclassResponsibility
+	
 ]
 
 { #category : #accessing }
@@ -36,5 +36,5 @@ TypInfMessageStrategy >> transfer [
 
 { #category : #accessing }
 TypInfMessageStrategy >> uninstall [
-	self subclassResponsibility
+	
 ]

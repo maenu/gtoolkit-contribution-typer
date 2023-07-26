@@ -32,8 +32,8 @@ TypInfMessage >> initialize [
 	super initialize.
 	strategies := {TypInfAbstractInterpretationMessageStrategy message: self.
 			TypInfInlineMethodMessageStrategy message: self.
-			TypInfReceiverConstrainingMessageStrategy message: self.
-			TypInfLookupMessageStrategy message: self}
+			TypInfLookupMessageStrategy message: self.
+			TypInfReceiverConstrainingMessageStrategy message: self}
 ]
 
 { #category : #accessing }

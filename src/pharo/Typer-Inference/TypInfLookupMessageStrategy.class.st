@@ -1,6 +1,6 @@
 Class {
 	#name : #TypInfLookupMessageStrategy,
-	#superclass : #TypInfMessageStrategy,
+	#superclass : #TypInfReceiverConstrainingMessageStrategy,
 	#category : #'Typer-Inference-Core'
 }
 
@@ -10,8 +10,9 @@ TypInfLookupMessageStrategy >> canInstall [
 ]
 
 { #category : #accessing }
-TypInfLookupMessageStrategy >> install [
+TypInfLookupMessageStrategy >> transfer [
 	| method |
+	super canInstall ifTrue: [ super transfer ].
 	method := message receiver
 			lookupMethod: message selector asSymbol
 			arguments: message arguments.
@@ -19,11 +20,4 @@ TypInfLookupMessageStrategy >> install [
 		withIndexDo: [ :e :i | 
 			i <= method arguments size
 				ifTrue: [ message state at: e put: (method arguments at: i) ] ]
-]
-
-{ #category : #accessing }
-TypInfLookupMessageStrategy >> uninstall [
-	"noop"
-
-	
 ]

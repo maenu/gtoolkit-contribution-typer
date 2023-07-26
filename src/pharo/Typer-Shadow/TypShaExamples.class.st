@@ -31,6 +31,20 @@ TypShaExamples >> lookupMethodClassSide [
 ]
 
 { #category : #accessing }
+TypShaExamples >> lookupMethodNew [
+	<gtExample>
+	| resolver lookup |
+	resolver := TypDepthFirstResolver resolver: TypShaMethodResolver new.
+	lookup := TypMethodLookup
+			receiver: TypNamedType class typAsType
+			selector: #new
+			arguments: #()
+			super: nil.
+	self assert: (resolver canResolve: lookup).
+	^ resolver resolve: lookup
+]
+
+{ #category : #accessing }
 TypShaExamples >> lookupMethodNoNew [
 	<gtExample>
 	| lookup |
