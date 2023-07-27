@@ -21,6 +21,16 @@ TypInfContext >> typGtFlowFor: aView [
 ]
 
 { #category : #'*Typer-GToolkit' }
+TypInfContext >> typGtSourceFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Method';
+		priority: 1;
+		object: [ root ];
+		view: #typGtSourceFor:
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypInfContext >> typGtStateFor: aView [
 	<gtView>
 	state ifNil: [ ^ aView empty ].

@@ -10,15 +10,14 @@ TypInfAbstractInterpretationMessageStrategy >> canInstall [
 	receiver := message receiver.
 	receiver isNamed ifFalse: [ ^ false ].
 	receiver hasClassDescription ifFalse: [ ^ false ].
-	(receiver classDescription class methods
+	^ receiver classDescription class methods
 		detect: [ :m | 
 			m pragmas
 				anySatisfy: [ :p | 
 					p selector = #typInfCanAbstractInterpret:
 						and: [ p arguments first = message selector ] ] ]
 		ifFound: [ :m | receiver classDescription perform: m selector with: message ]
-		ifNone: [ false ]) ifFalse: [ ^ false ].
-	^ super canInstall
+		ifNone: [ false ]
 ]
 
 { #category : #accessing }

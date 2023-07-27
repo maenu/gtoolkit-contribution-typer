@@ -20,6 +20,14 @@ TypInfState >> at: anObject [
 ]
 
 { #category : #accessing }
+TypInfState >> at: aNode covariantPut: aType [
+	self assert: [ aNode isKindOf: TypInfNode ].
+	^ index
+		at: aNode
+		put: ((index at: aNode ifAbsent: [ TypUnknownType instance ]) covariant: aType)
+]
+
+{ #category : #accessing }
 TypInfState >> at: aNode ifAbsent: aBlock [
 	^ index at: aNode ifAbsent: aBlock
 ]

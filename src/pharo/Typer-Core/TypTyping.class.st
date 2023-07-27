@@ -38,8 +38,8 @@ TypTyping >> invalidate [
 	TypInfMethodResolver invalidate.
 	TypInfMethodIndex invalidate.
 	TypInfNodeStack resetSoleInstance.
-	Smalltalk garbageCollect.
-	^ self memoryProbe
+	"Smalltalk garbageCollect.
+	^ self memoryProbe"
 ]
 
 { #category : #accessing }

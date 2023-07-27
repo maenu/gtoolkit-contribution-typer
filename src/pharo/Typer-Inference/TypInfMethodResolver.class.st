@@ -22,11 +22,12 @@ TypInfMethodResolver class >> invalidate [
 
 { #category : #accessing }
 TypInfMethodResolver >> canResolve: aLookup [
-
 	aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
-	^ aLookup receiver classDescription includesSelector:
-		  aLookup selector
+	(aLookup receiver classDescription includesSelector: aLookup selector)
+		ifFalse: [ ^ false ].
+	^ (aLookup receiver classDescription lookupSelector: aLookup selector)
+		isAbstract not
 ]
 
 { #category : #accessing }
@@ -117,15 +118,15 @@ TypInfMethodResolver >> printOn: aStream [
 
 { #category : #accessing }
 TypInfMethodResolver >> resolve: aLookup [
-
 	| node |
 	self assert: [ self canResolve: aLookup ].
 	aLookup initializeResolver: self.
-	node := (aLookup receiver classDescription >> aLookup selector) ast.
+	node := (aLookup receiver classDescription lookupSelector: aLookup selector)
+			ast.
 	^ self
-		  typeAt: node
-		  self: aLookup root receiver
-		  super: aLookup receiver superOrNil
+		typeAt: node
+		self: aLookup root receiver
+		super: aLookup receiver superOrNil
 ]
 
 { #category : #accessing }

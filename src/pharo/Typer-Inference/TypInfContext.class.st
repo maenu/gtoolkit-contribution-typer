@@ -277,7 +277,7 @@ TypInfContext >> visitMessageNode: aMessageNode [
 
 { #category : #visiting }
 TypInfContext >> visitMethodNode: aMethodNode [
-	current inArguments: (aMethodNode arguments collect: [ :n | self nodesAddAt: n ]).
+	current inArguments: (aMethodNode arguments collect: [ :n | self next: n ]).
 	aMethodNode pragmas do: [ :each | self visitNode: each ].
 	self visitNode: aMethodNode body.
 	aMethodNode lastIsReturn
@@ -308,7 +308,7 @@ TypInfContext >> visitReturnNode: aReturnNode [
 TypInfContext >> visitSequenceNode: aSequenceNode [
 	self next: aSequenceNode.
 	current
-		inArguments: (aSequenceNode temporaries collect: [ :n | self nodesAddAt: n ]).
+		inArguments: (aSequenceNode temporaries collect: [ :n | self next: n ]).
 	aSequenceNode statements do: [ :n | self visitNode: n ]
 ]
 

@@ -1,23 +1,25 @@
 Class {
 	#name : #TypInfLookupMessageStrategy,
-	#superclass : #TypInfReceiverConstrainingMessageStrategy,
+	#superclass : #TypInfMessageStrategy,
 	#category : #'Typer-Inference-Core'
 }
 
 { #category : #accessing }
 TypInfLookupMessageStrategy >> canInstall [
-	^ true
+	^ (message receiver
+		lookupMethod: message selector asSymbol
+		arguments: message arguments) isUnknown not
 ]
 
 { #category : #accessing }
 TypInfLookupMessageStrategy >> transfer [
 	| method |
-	super canInstall ifTrue: [ super transfer ].
 	method := message receiver
 			lookupMethod: message selector asSymbol
 			arguments: message arguments.
-	message arguments
+	message inArguments
 		withIndexDo: [ :e :i | 
 			i <= method arguments size
-				ifTrue: [ message state at: e put: (method arguments at: i) ] ]
+				ifTrue: [ message state at: e covariantPut: (method arguments at: i) ] ].
+	message state at: message covariantPut: method result
 ]

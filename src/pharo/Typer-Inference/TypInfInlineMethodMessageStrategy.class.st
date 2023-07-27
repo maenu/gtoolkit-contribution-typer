@@ -1,6 +1,6 @@
 Class {
 	#name : #TypInfInlineMethodMessageStrategy,
-	#superclass : #TypInfLookupMessageStrategy,
+	#superclass : #TypInfMessageStrategy,
 	#instVars : [
 		'contexts'
 	],
@@ -13,7 +13,7 @@ TypInfInlineMethodMessageStrategy >> canInstall [
 	receiver := message receiver.
 	receiver isNamed ifFalse: [ ^ false ].
 	receiver hasClassDescription ifFalse: [ ^ false ].
-	(receiver classDescription canUnderstand: message selector)
+	(receiver classDescription includesSelector: message selector)
 		ifFalse: [ ^ false ].
 	newContexts := self newContexts.
 	newContexts size < 8 ifFalse: [ ^ false ].
@@ -35,6 +35,7 @@ TypInfInlineMethodMessageStrategy >> install [
 		ifAbsent: [ message
 				outAt: #next
 				ifPresent: [ :target | 
+					self assert: [ (message out at: #next) size = 1 ].
 					message outRemoveAt: #next.
 					message outAt: #nextOriginal put: target ]
 				ifAbsent: [ Error signal: 'node must have next edge' ] ].
@@ -64,6 +65,14 @@ TypInfInlineMethodMessageStrategy >> newContexts [
 ]
 
 { #category : #accessing }
+TypInfInlineMethodMessageStrategy >> transfer [
+	message state
+		at: message
+		put: ((message out at: #next) flatCollect: [ :e | e target inReturns collect: #type ])
+				typAsType
+]
+
+{ #category : #accessing }
 TypInfInlineMethodMessageStrategy >> uninstall [
 	contexts
 		do: #uninstall;
@@ -71,6 +80,11 @@ TypInfInlineMethodMessageStrategy >> uninstall [
 	message
 		outAt: #nextOriginal
 		ifPresent: [ :n | 
+			self
+				assert: [ message
+						outAt: #next
+						ifPresent: [ false ]
+						ifAbsent: [ true ] ].
 			message
 				outAdd: (TypInfNextEdge origin: message target: n);
 				outRemoveAt: #nextOriginal ]
