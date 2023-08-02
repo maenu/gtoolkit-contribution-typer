@@ -34,7 +34,8 @@ TypInfMessage >> initialize [
 			TypInfInlineMethodMessageStrategy message: self.
 			TypInfLookupMessageStrategy message: self.
 			TypInfReceiverConstrainingMessageStrategy message: self.
-			TypInfNullMessageStrategy message: self}
+			TypInfNullMessageStrategy message: self}.
+	currentStrategy := strategies last
 ]
 
 { #category : #accessing }
@@ -50,10 +51,16 @@ TypInfMessage >> selector [
 { #category : #accessing }
 TypInfMessage >> transfer [
 	| oldStrategy |
+	state at: self put: TypUnknownType instance.
 	oldStrategy := currentStrategy.
 	currentStrategy := strategies detect: #canInstall.
 	currentStrategy == oldStrategy
 		ifFalse: [ oldStrategy ifNotNil: #uninstall.
 			currentStrategy install ].
 	currentStrategy transfer
+]
+
+{ #category : #accessing }
+TypInfMessage >> uninstall [
+	currentStrategy uninstall
 ]

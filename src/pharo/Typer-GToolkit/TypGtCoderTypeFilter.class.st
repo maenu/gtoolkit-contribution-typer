@@ -9,19 +9,9 @@ Class {
 
 { #category : #testing }
 TypGtCoderTypeFilter >> includesMethod: aCompiledMethod [
-
 	<typPraResult: 'Boolean'>
 	<typPraArguments: 'CompiledMethod()->?'>
-	| methodType |
-	methodType := aCompiledMethod ast typInfTypeSelf.
-	type isUnion
-		ifTrue: [ 
-			type types
-				detect: [ :e | e <= methodType ]
-				ifFound: [  ]
-				ifNone: [ ^ false ] ]
-		ifFalse: [ type <= methodType ifFalse: [ ^ false ] ].
-	^ (type lookupMethod: aCompiledMethod selector) isUnknown not
+	^ type >= aCompiledMethod methodClass typAsType
 ]
 
 { #category : #initialization }

@@ -6,20 +6,19 @@ Class {
 
 { #category : #visiting }
 TypGtDeclarationStyler >> visitMethodNode: aNode [
-
-	| node position |
-	node := TypInfMethodResolver instance
-		        nodeAt: aNode
-		        self: selfType
-		        super: selfType superOrNil.
+	| nodes position |
+	nodes := TypInfMethodResolver instance
+			nodesAt: aNode
+			self: selfType
+			super: selfType superOrNil.
 	position := aNode arguments isEmpty
-		            ifTrue: [ aNode selector size ]
-		            ifFalse: [ aNode arguments last stop ].
+			ifTrue: [ aNode selector size ]
+			ifFalse: [ aNode arguments last stop ].
 	super visitMethodNode: aNode.
 	self
 		styleFrom: position
 		to: position
-		with: { (TypGtAttribute node: node type: node type result) }
+		with: {TypGtAttribute nodes: nodes}
 ]
 
 { #category : #accessing }

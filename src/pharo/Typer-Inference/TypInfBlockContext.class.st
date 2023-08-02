@@ -38,7 +38,7 @@ TypInfBlockContext >> block [
 
 { #category : #accessing }
 TypInfBlockContext >> canInstall [
-	^ TypInfNodeStack canPush: node
+	^ message methodNestingLevel < 5
 ]
 
 { #category : #accessing }
@@ -47,8 +47,18 @@ TypInfBlockContext >> hash [
 ]
 
 { #category : #accessing }
+TypInfBlockContext >> home [
+	^ block context home
+]
+
+{ #category : #accessing }
 TypInfBlockContext >> initializeBlock: aBlock [
 	block := aBlock
+]
+
+{ #category : #accessing }
+TypInfBlockContext >> newRoot [
+	^ TypInfInlinedBlock node: node context: self
 ]
 
 { #category : #accessing }
@@ -62,12 +72,15 @@ TypInfBlockContext >> visitNode [
 	current
 		inArguments: (node arguments
 				withIndexCollect: [ :n :i | 
-					self
-						nodesAt: n
-						add: (TypInfInlinedLocalDefinition
-								node: n
-								context: self
-								proxy: (message inArguments at: i)) ]).
+					| next |
+					"basically #next:, but with special inf node"
+					next := TypInfInlinedLocalDefinition
+							node: n
+							context: self
+							proxy: (message inArguments at: i).
+					self nodesAt: n add: next.
+					current outAdd: (TypInfNextEdge origin: current target: next).
+					current := next ]).
 	self visitNode: node body.
 	node body lastIsReturn
 		ifTrue: [ current outAdd: (TypInfReturnEdge origin: current target: block context root) ]

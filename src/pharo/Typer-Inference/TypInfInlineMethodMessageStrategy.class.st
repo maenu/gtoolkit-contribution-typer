@@ -9,12 +9,22 @@ Class {
 
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> canInstall [
-	| receiver newContexts |
+	| receiver newContexts lookup resolvedLookup resolvedMethod |
 	receiver := message receiver.
 	receiver isNamed ifFalse: [ ^ false ].
 	receiver hasClassDescription ifFalse: [ ^ false ].
-	(receiver classDescription includesSelector: message selector)
+	(receiver classDescription canUnderstand: message selector)
 		ifFalse: [ ^ false ].
+	lookup := TypMethodLookup
+			receiver: message receiver
+			selector: message selector
+			arguments: message arguments
+			super: nil.
+	resolvedMethod := TypMethodIndex instance resolve: lookup.
+	resolvedMethod isUnknown
+		ifFalse: [ resolvedLookup := (TypMethodIndex instance outEdges
+					detect: [ :e | e key = lookup ]) key resolved.
+			(resolvedLookup resolver isKindOf: TypInfMethodResolver) ifFalse: [ ^ false ] ].
 	newContexts := self newContexts.
 	newContexts size < 8 ifFalse: [ ^ false ].
 	^ newContexts allSatisfy: #canInstall
@@ -38,7 +48,7 @@ TypInfInlineMethodMessageStrategy >> install [
 					self assert: [ (message out at: #next) size = 1 ].
 					message outRemoveAt: #next.
 					message outAt: #nextOriginal put: target ]
-				ifAbsent: [ Error signal: 'node must have next edge' ] ].
+				ifAbsent: [  "noop" ] ].
 	oldContexts := contexts.
 	contexts := self newContexts asOrderedCollection.
 	(oldContexts difference: contexts) do: #uninstall.
@@ -80,13 +90,13 @@ TypInfInlineMethodMessageStrategy >> uninstall [
 	message
 		outAt: #nextOriginal
 		ifPresent: [ :n | 
-			self
-				assert: [ message
-						outAt: #next
-						ifPresent: [ false ]
-						ifAbsent: [ true ] ].
 			message
-				outAdd: (TypInfNextEdge origin: message target: n);
-				outRemoveAt: #nextOriginal ]
+				outAt: #next
+				ifPresent: [ :nn | 
+					self assert: [ nn == n ].
+					message outRemoveAt: #nextOriginal ]
+				ifAbsent: [ message
+						outAdd: (TypInfNextEdge origin: message target: n);
+						outRemoveAt: #nextOriginal ] ]
 		ifAbsent: [  "noop" ]
 ]

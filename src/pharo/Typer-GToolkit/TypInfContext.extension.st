@@ -29,14 +29,3 @@ TypInfContext >> typGtSourceFor: aView [
 		object: [ root ];
 		view: #typGtSourceFor:
 ]
-
-{ #category : #'*Typer-GToolkit' }
-TypInfContext >> typGtStateFor: aView [
-	<gtView>
-	state ifNil: [ ^ aView empty ].
-	^ aView forward
-		title: 'State';
-		priority: 10;
-		object: [ state ];
-		view: #typGtItemsFor:
-]

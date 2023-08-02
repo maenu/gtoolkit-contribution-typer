@@ -5,7 +5,6 @@ Class {
 }
 
 { #category : #accessing }
-TypInfLiteralValue >> initialize: aState [
-	super initialize: aState.
+TypInfLiteralValue >> transfer [
 	state at: self put: node value typInfType
 ]

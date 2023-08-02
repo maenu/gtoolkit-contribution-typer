@@ -16,12 +16,11 @@ TypInfState >> = anObject [
 
 { #category : #accessing }
 TypInfState >> at: anObject [
-	^ self at: anObject ifAbsent: TypUnknownType instance
+	^ self at: anObject ifAbsent: [ Halt now ]
 ]
 
 { #category : #accessing }
 TypInfState >> at: aNode covariantPut: aType [
-	self assert: [ aNode isKindOf: TypInfNode ].
 	^ index
 		at: aNode
 		put: ((index at: aNode ifAbsent: [ TypUnknownType instance ]) covariant: aType)
@@ -40,7 +39,7 @@ TypInfState >> at: aNode put: aType [
 { #category : #splitjoin }
 TypInfState >> covariant: aState [
 	| copy |
-	copy := aState copy.
+	copy := self copy.
 	aState
 		keysAndValuesDo: [ :n :t | 
 			copy

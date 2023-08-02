@@ -64,13 +64,13 @@ TypMethodLookup >> arguments [
 
 { #category : #converting }
 TypMethodLookup >> asSuper [
-
+	childLookup ifNotNil: [ ^ childLookup ].
 	self assert: [ self hasSuper ].
-	^ self class
-		  receiver: receiver super
-		  selector: selector
-		  arguments: arguments
-		  super: self
+	^ childLookup := self class
+			receiver: receiver super
+			selector: selector
+			arguments: arguments
+			super: self
 ]
 
 { #category : #accessing }
@@ -105,4 +105,9 @@ TypMethodLookup >> printOn: aStream [
 		nextPut: $};
 		nextPut: $ .
 	super printOn: aStream
+]
+
+{ #category : #accessing }
+TypMethodLookup >> resolved [
+	^ resolver ifNil: [ childLookup resolved ] ifNotNil: [ self ]
 ]

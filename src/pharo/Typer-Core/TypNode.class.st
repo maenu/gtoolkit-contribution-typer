@@ -234,7 +234,7 @@ TypNode >> outAt: anObject ifPresent: aBlock ifAbsent: anotherBlock [
 
 	^ out
 		  at: anObject
-		  ifPresent: [ :e | aBlock value: e anyOne target ]
+		  ifPresent: [ :e | aBlock cull: e anyOne target ]
 		  ifAbsent: anotherBlock
 ]
 

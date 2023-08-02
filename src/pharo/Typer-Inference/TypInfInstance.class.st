@@ -5,8 +5,7 @@ Class {
 }
 
 { #category : #accessing }
-TypInfInstance >> initialize: aState [
-	super initialize: aState.
+TypInfInstance >> transfer [
 	state
 		at: self
 		put: (node variable owningClass typAsType lookupVariable: node variable name asSymbol)

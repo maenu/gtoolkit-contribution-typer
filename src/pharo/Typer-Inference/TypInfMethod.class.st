@@ -15,23 +15,20 @@ TypInfMethod >> inReturns [
 ]
 
 { #category : #accessing }
-TypInfMethod >> initialize: aState [
-	super initialize: aState.
-	state
-		at: self
-		put: (CompiledMethod
-				typAsFunctionTypeWithResult: TypUnknownType instance
-				arguments: (node arguments collect: [ :e | TypUnknownType instance ])
-				argumentsOptional: false
-				signalsAlways: nil)
-]
-
-{ #category : #accessing }
 TypInfMethod >> method [
 
 	^ context self
 		  lookupMethod: node selector asSymbol
 		  arguments: (self inArguments collect: #type)
+]
+
+{ #category : #accessing }
+TypInfMethod >> methodNestingLevel [
+	^ 1
+		+ (self
+				inAt: #next
+				ifPresent: #methodNestingLevel
+				ifAbsent: 0)
 ]
 
 { #category : #accessing }

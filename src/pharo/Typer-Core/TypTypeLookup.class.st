@@ -30,11 +30,11 @@ TypTypeLookup >> = anObject [
 
 { #category : #copying }
 TypTypeLookup >> asSuper [
-
+	childLookup ifNotNil: [ ^ childLookup ].
 	self assert: [ self hasSuper ].
-	^ self class
-		  classDescription: classDescription superclass
-		  super: self
+	^ childLookup := self class
+			classDescription: classDescription superclass
+			super: self
 ]
 
 { #category : #accessing }

@@ -61,6 +61,12 @@ TypInfExamples >> blockUseSameTwice5 [
 ]
 
 { #category : #requirements }
+TypInfExamples >> createWindow [
+	<gtExample>
+	^ self infer: GlutinMainThreadEventLoop >> #createWindow:
+]
+
+{ #category : #requirements }
 TypInfExamples >> empty [
 
 	<gtExample>

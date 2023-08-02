@@ -11,7 +11,7 @@ RBProgramNode >> typInfAnnotated: aType [
 
 { #category : #'*Typer-Inference' }
 RBProgramNode >> typInfNodeInContext: aContext [
-	^ TypInfNode node: self context: aContext
+	self subclassResponsibility
 ]
 
 { #category : #'*Typer-Inference' }

@@ -8,18 +8,17 @@ Class {
 }
 
 { #category : #'instance creation' }
-TypUnionType class >> types: anIdentitySet [
-
-	<typPraArguments: 'IdentitySet<TypType>'>
-	^ self index at: anIdentitySet asIdentitySet ifAbsentPut: [ 
-		  self new
-			  initializeTypes: anIdentitySet asIdentitySet;
-			  yourself ]
+TypUnionType class >> types: aSet [
+	<typPraArguments: 'Set<TypType>'>
+	^ self index
+		at: aSet asSet
+		ifAbsentPut: [ self new
+				initializeTypes: aSet asSet;
+				yourself ]
 ]
 
 { #category : #comparing }
 TypUnionType >> = anObject [
-
 	self == anObject ifTrue: [ ^ true ].
 	self class = anObject class ifFalse: [ ^ false ].
 	^ types = anObject types
@@ -91,15 +90,14 @@ TypUnionType >> hashSkipping: anIdentitySet [
 
 { #category : #initialization }
 TypUnionType >> initialize [
-	<typPraVariable: 'types' as: 'IdentitySet<TypType>'>
+	<typPraVariable: 'types' as: 'Set<TypType>'>
 	super initialize
 ]
 
 { #category : #initialization }
 TypUnionType >> initializeTypes: anObject [
-
-	<typPraArguments: 'IdentitySet<TypType>'>
-	self assert: [ anObject isKindOf: IdentitySet ].
+	<typPraArguments: 'Set<TypType>'>
+	self assert: [ anObject isKindOf: Set ].
 	self assert: [ anObject size > 1 ].
 	anObject = types ifTrue: [ ^ self ].
 	types := anObject.

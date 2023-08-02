@@ -7,14 +7,7 @@ Class {
 }
 
 { #category : #accessing }
-TypInfSequence >> initialize: aState [
-	super initialize: aState.
-	state at: self put: TypNilType instance
-]
-
-{ #category : #accessing }
 TypInfSequence >> transfer [
-
-	self inArguments do: [ :e | 
-		state at: e put: TypNilType instance ]
+	state at: self put: TypNilType instance.
+	self inArguments do: [ :e | state at: e put: TypNilType instance ]
 ]

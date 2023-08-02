@@ -14,9 +14,8 @@ TypInfNextEdge class >> origin: aNode target: anotherNode [
 ]
 
 { #category : #accessing }
-TypInfNextEdge >> initialize [
-	super initialize.
-	state := TypInfState new
+TypInfNextEdge >> canBeSlurped [
+	^ state isNotNil
 ]
 
 { #category : #accessing }

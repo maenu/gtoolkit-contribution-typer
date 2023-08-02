@@ -21,7 +21,10 @@ TypVariableLookup class >> receiver: aType selector: aSymbol super: aLookup [
 
 { #category : #converting }
 TypVariableLookup >> asSuper [
-
+	childLookup ifNotNil: [ ^ childLookup ].
 	self assert: [ self hasSuper ].
-	^ self class receiver: receiver super selector: selector super: self
+	^ childLookup := self class
+			receiver: receiver super
+			selector: selector
+			super: self
 ]

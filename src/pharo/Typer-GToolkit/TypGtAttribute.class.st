@@ -2,23 +2,22 @@ Class {
 	#name : #TypGtAttribute,
 	#superclass : #BrTextAdornmentDynamicAttribute,
 	#instVars : [
-		'node',
-		'type'
+		'type',
+		'nodes'
 	],
 	#category : #'Typer-GToolkit'
 }
 
-{ #category : #'as yet unclassified' }
-TypGtAttribute class >> node: aNode [
-
-	^ self node: aNode type: aNode type
+{ #category : #accessing }
+TypGtAttribute class >> nodes: aCollection [
+	^ self nodes: aCollection type: (aCollection collect: #type) typAsType
 ]
 
 { #category : #'as yet unclassified' }
-TypGtAttribute class >> node: aNode type: aType [
+TypGtAttribute class >> nodes: aNode type: aType [
 
 	^ self new
-		  initializeNode: aNode type: aType;
+		  initializeNodes: aNode type: aType;
 		  yourself
 ]
 
@@ -41,19 +40,13 @@ TypGtAttribute >> initialize [
 						left: 2
 						bottom: 0
 						right: (self shouldAppend ifTrue: [ 0 ] ifFalse: [ 2 ]));
-				when: BlClickEvent do: [ :e | e target phlow spawnObject: node ];
+				when: BlClickEvent do: [ :e | e target phlow spawnObject: nodes ];
 				yourself ]
 ]
 
 { #category : #initialization }
-TypGtAttribute >> initializeNode: aNode type: aType [
+TypGtAttribute >> initializeNodes: aCollection type: aType [
 
-	node := aNode.
-	type := aType
-]
-
-{ #category : #initialization }
-TypGtAttribute >> initializeType: aType [
-
+	nodes := aCollection.
 	type := aType
 ]

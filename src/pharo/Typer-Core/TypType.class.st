@@ -110,6 +110,21 @@ TypType >> boundTo: aType [
 	^ self
 ]
 
+{ #category : #lookup }
+TypType >> canLookupMethod: aSymbol [
+	| arguments |
+	arguments := aSymbol numArgs typTimesCollect: [ :e | TypUnknownType instance ].
+	^ self canLookupMethod: aSymbol arguments: arguments
+]
+
+{ #category : #lookup }
+TypType >> canLookupMethod: aSymbol arguments: aCollection [
+	^ TypMethodIndex instance
+		canLookupMethodReceiver: self
+		selector: aSymbol
+		arguments: aCollection
+]
+
 { #category : #converting }
 TypType >> contravariant: aType [
 
@@ -201,6 +216,11 @@ TypType >> initializeSuper: aType [
 	superType := aType.
 	superType ifNotNil: [ self outAt: #super put: superType ].
 	hash := nil
+]
+
+{ #category : #accessing }
+TypType >> isBound [
+	^ true
 ]
 
 { #category : #testing }

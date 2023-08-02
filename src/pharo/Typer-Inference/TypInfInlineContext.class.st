@@ -32,8 +32,9 @@ TypInfInlineContext >> = anObject [
 
 { #category : #accessing }
 TypInfInlineContext >> canInstall [
-	^ node compiledMethod isRealPrimitive not
-		and: [ TypInfNodeStack canPush: node ]
+	node compiledMethod isRealPrimitive ifTrue: [ ^ false ].
+	node compiledMethod isAbstract ifTrue: [ ^ false ].
+	^ message methodNestingLevel < 4
 ]
 
 { #category : #accessing }
@@ -48,11 +49,7 @@ TypInfInlineContext >> initializeMessage: aMessage [
 
 { #category : #accessing }
 TypInfInlineContext >> install [
-	TypInfNodeStack
-		push: node
-		during: [ self visit ]
-		or: [ Error
-				signal: 'cannot inline due to method stack limit, canApply should have catched that' ]
+	self visit
 ]
 
 { #category : #accessing }
@@ -61,21 +58,33 @@ TypInfInlineContext >> message [
 ]
 
 { #category : #accessing }
+TypInfInlineContext >> newRoot [
+	^ TypInfInlinedMethod node: node context: self
+]
+
+{ #category : #accessing }
 TypInfInlineContext >> uninstall [
 	| home |
 	home := self home.
-	nodes keysAndValuesDo: [ :n :c | c do: [ :e | home nodesAt: n remove: e ] ].
+	nodes
+		keysAndValuesDo: [ :n :c | 
+			c
+				do: [ :e | 
+					(e isKindOf: TypInfMessage) ifTrue: [ e uninstall ].
+					home nodesAt: n remove: e ] ].
 	message
 		outAt: #nextOriginal
-		ifPresent: [ :n | message outAdd: (TypInfNextEdge origin: message target: n) ]
-		ifAbsent: [  "noop" ].
-	message outRemoveAt: #next
+		ifPresent: [ :n | 
+			message
+				outRemoveAt: #next;
+				outAdd: (TypInfNextEdge origin: message target: n) ]
+		ifAbsent: [  "noop" ]
 ]
 
 { #category : #initialization }
 TypInfInlineContext >> visit [
 	| home |
-	root := TypInfInlinedMethod node: node context: self.
+	root := self newRoot.
 	self nodesAt: node add: root.
 	current := root.
 	self visitNode.
@@ -85,7 +94,13 @@ TypInfInlineContext >> visit [
 			c
 				do: [ :e | 
 					e initialize: home state.
-					home nodesAt: n add: e	"needed to be in context run loop" ] ]
+					home nodesAt: n add: e.	"needed to be in context run loop"
+					home nodes values
+						do: [ :cc | 
+							cc
+								do: [ :nn | 
+									nn state at: e put: TypUnknownType instance.
+									nn burp ] ] ] ]
 ]
 
 { #category : #initialization }
@@ -94,12 +109,15 @@ TypInfInlineContext >> visitNode [
 	root
 		inArguments: (node arguments
 				withIndexCollect: [ :n :i | 
-					self
-						nodesAt: n
-						add: (TypInfInlinedLocalDefinition
-								node: n
-								context: self
-								proxy: (message inArguments at: i)) ]).
+					| next |
+					"basically #next:, but with special inf node"
+					next := TypInfInlinedLocalDefinition
+							node: n
+							context: self
+							proxy: (message inArguments at: i).
+					self nodesAt: n add: next.
+					current outAdd: (TypInfNextEdge origin: current target: next).
+					current := next ]).
 	node pragmas do: [ :p | self visitNode: p ].
 	self visitNode: node body.
 	node lastIsReturn

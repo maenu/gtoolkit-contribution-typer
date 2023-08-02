@@ -5,12 +5,6 @@ Class {
 }
 
 { #category : #initialization }
-TypInfGlobal >> initialize: aState [
-	super initialize: aState.
-	state at: self put: node variable value typInfType
-]
-
-{ #category : #initialization }
 TypInfGlobal >> transfer [
 	state at: self put: node variable value typInfType
 ]

@@ -41,8 +41,8 @@ Dictionary >> typShaMethodAssociationsDo: aLookup [
 Dictionary >> typShaMethodAt: aLookup [
 	<typShaMethod: 'at:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
-		arguments: {aLookup receiver at: #B}
+		typAsFunctionTypeWithResult: (aLookup root receiver at: #A)
+		arguments: {aLookup root receiver at: #B}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }

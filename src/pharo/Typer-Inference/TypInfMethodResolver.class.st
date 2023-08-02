@@ -95,11 +95,7 @@ TypInfMethodResolver >> nodeAt: aNode self: aType super: anotherType [
 	^ (self
 		nodesAt: aNode
 		self: aType
-		super: anotherType)
-		ifEmpty: [ self
-				flag: 'TODO should never be empty, but is due to unvisited block sequence'.
-			TypInfNode node: aNode context: nil ]
-		ifNotEmpty: #first
+		super: anotherType) first
 ]
 
 { #category : #accessing }
@@ -131,10 +127,13 @@ TypInfMethodResolver >> resolve: aLookup [
 
 { #category : #accessing }
 TypInfMethodResolver >> typeAt: aNode self: aType super: anotherType [
-
 	^ TypInfNodeStack
-		  push: aNode methodNode
-		  during: [ 
-		  (self nodeAt: aNode self: aType super: anotherType) type ]
-		  or: [ TypUnknownType instance ]
+		push: aNode methodNode
+		during: [ (self
+				nodesAt: aNode
+				self: aType
+				super: anotherType)
+				ifEmpty: [ TypUnknownType instance ]
+				ifNotEmpty: [ :c | c first type ] ]
+		or: [ TypUnknownType instance ]
 ]

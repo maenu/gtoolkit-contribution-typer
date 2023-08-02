@@ -13,7 +13,8 @@ Class {
 		'current',
 		'nodes',
 		'iterationsDone',
-		'iterationsMax'
+		'iterationsMax',
+		'iterations'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -63,7 +64,33 @@ TypInfContext >> inlitializeSender: aContext state: aState node: aNode self: aTy
 	nodes := OrderedIdentityDictionary new.	"ordered to have a cheap, close-to-topological sorting.
 	 makes the run more predictable"
 	iterationsDone := 0.
-	iterationsMax := 32
+	iterationsMax := 64.
+	iterations := OrderedCollection new
+]
+
+{ #category : #accessing }
+TypInfContext >> iterate [
+	self assert: [ iterations size = (iterationsDone - 1) ].
+	iterations addLast: IdentityDictionary new.
+	^ nodes values
+		inject: false
+		into: [ :rr :c | c inject: rr into: [ :r :e | (self iterate: e) or: r ] ]
+]
+
+{ #category : #accessing }
+TypInfContext >> iterate: aNode [
+	"skip removed nodes"
+
+	nodes
+		at: aNode node
+		ifPresent: [ :c | (c includes: aNode) ifFalse: [ ^ false ] ]
+		ifAbsent: [ ^ false ].
+	aNode canSlurpAndBurp ifFalse: [ ^ false ].
+	^ aNode slurpAndBurp index
+		ifEmpty: [ false ]
+		ifNotEmpty: [ :s | 
+			(iterations at: iterationsDone) at: aNode put: s.
+			true ]
 ]
 
 { #category : #accessing }
@@ -78,6 +105,14 @@ TypInfContext >> next: aNode [
 { #category : #accessing }
 TypInfContext >> node [
 	^ node
+]
+
+{ #category : #accessing }
+TypInfContext >> nodeAt: aNode [
+	^ nodes
+		at: aNode
+		ifAbsent: [ Halt now.
+			self nodesAddAt: aNode ]
 ]
 
 { #category : #accessing }
@@ -135,45 +170,8 @@ TypInfContext >> root [
 { #category : #running }
 TypInfContext >> run [
 	self visit.
-	root node method isAbstract ifTrue: [ ^ self	"shortcut loop" ].
 	[ iterationsDone := iterationsDone + 1.
-	iterationsDone <= iterationsMax
-		and: [  "nodes are changed by inlining methods, hence cannot be cached"nodes values
-				inject: false
-				into: [ :rr :c | c inject: rr into: [ :r :e | e slurpAndBurp or: r ] ] ] ]
-		whileTrue
-]
-
-{ #category : #running }
-TypInfContext >> runDebug [
-	| n states cycles cycle stable |
-	self visit.
-	n := 32.
-	states := IdentityDictionary new.
-	cycles := OrderedCollection new.
-	cycle := OrderedIdentityDictionary new.
-	nodes values
-		do: [ :c | c do: [ :e | cycle at: e put: (states at: e put: e state copy) ] ].
-	root node method isAbstract ifTrue: [ n := 0	"shortcut loop" ].
-	[ n := n - 1.
-	cycles add: cycle.
-	cycle := OrderedIdentityDictionary new.
-	n > 0
-		and: [  "nodes are changed by inlining methods, hence cannot be cached"nodes values
-				inject: false
-				into: [ :rr :c | 
-					c
-						inject: rr
-						into: [ :r :e | 
-							e slurpAndBurp.
-							e state = (states at: e ifAbsentPut: [ e state copy ])
-								ifTrue: [ r ]
-								ifFalse: [ cycle at: e put: ((states at: e ifAbsentPut: [ e state copy ]) diff: e state).
-									states at: e put: e state copy.
-									true ] ] ] ] ] whileTrue.
-	cycles add: cycle.
-	stable := n > 0.
-	^ cycles
+	iterationsDone <= iterationsMax and: [ self iterate ] ] whileTrue
 ]
 
 { #category : #accessing }

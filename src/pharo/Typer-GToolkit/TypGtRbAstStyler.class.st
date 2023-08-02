@@ -17,17 +17,13 @@ TypGtRbAstStyler >> coder: aCoder [
 
 { #category : #styling }
 TypGtRbAstStyler >> style: aText ast: anAst [
-
 	| ast |
 	ast := coder rbAST.
-	selfType := ast methodClass typAsType. 
+	selfType := ast methodClass typAsType.
 	text := aText.
-	[ 
-	ast typInfTypeSelf.
-	self visitNode: ast ]    
-		on: Error 
-		do: [ :e |   Halt once   ].
-	text := nil. 
+	[ ast typInfTypeSelf.
+	self visitNode: ast ] on: Error do: [ :e | Halt once ].
+	text := nil.
 	selfType := nil
 ]
 
@@ -40,20 +36,20 @@ TypGtRbAstStyler >> styleFrom: from to: to with: attributes [
 
 { #category : #visiting }
 TypGtRbAstStyler >> styleNode: aNode [
-
-	| node attribute stop |
-	node := TypInfMethodResolver instance
-		        nodeAt: aNode
-		        self: selfType
-		        super: selfType superOrNil.
-	"type isUnknown ifTrue: [ ^ self ]."
-	attribute := TypGtAttribute node: node.
+	| nodes attribute stop |
+	nodes := TypInfMethodResolver instance
+			nodesAt: aNode
+			self: selfType
+			super: selfType superOrNil.	"type isUnknown ifTrue: [ ^ self ]."
+	attribute := TypGtAttribute nodes: nodes.
 	stop := aNode stop.
-	(stop < text size and: [ (text at: stop + 1) = Character space ]) 
-		ifTrue: [ 
-			attribute beReplace.
+	(stop < text size and: [ (text at: stop + 1) = Character space ])
+		ifTrue: [ attribute beReplace.
 			stop := stop + 1 ].
-	text attributes: { attribute } from: stop to: stop
+	text
+		attributes: {attribute}
+		from: stop
+		to: stop
 ]
 
 { #category : #visiting }

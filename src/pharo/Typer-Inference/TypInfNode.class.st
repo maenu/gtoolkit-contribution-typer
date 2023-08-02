@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'node',
 		'state',
-		'context',
-		'oldState'
+		'context'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -19,7 +18,15 @@ TypInfNode class >> node: aNode context: aContext [
 
 { #category : #accessing }
 TypInfNode >> burp [
-	out at: #next ifPresent: [ :s | s do: [ :n | n state: state copy ] ]
+	out at: #next ifPresent: [ :s | s do: [ :n | n state: state ] ]
+]
+
+{ #category : #accessing }
+TypInfNode >> canSlurpAndBurp [
+	^ in
+		at: #next
+		ifPresent: [ :s | s allSatisfy: #canBeSlurped ]
+		ifAbsent: [ true ]
 ]
 
 { #category : #accessing }
@@ -29,18 +36,15 @@ TypInfNode >> context [
 ]
 
 { #category : #accessing }
-TypInfNode >> initialize [
-	super initialize.
-	state := TypInfState new.
-	oldState := TypInfState new
-]
-
-{ #category : #accessing }
 TypInfNode >> initialize: aState [
 	"compute initial state for node"
 
 	state := aState.
-	state at: self put: TypUnknownType instance
+	state at: self put: TypUnknownType instance.
+	out
+		at: #next
+		ifPresent: [ :s | s do: [ :e | e state: state ] ]
+		ifAbsent: [  "noop" ]
 ]
 
 { #category : #initialization }
@@ -62,6 +66,11 @@ TypInfNode >> invalidateOnMethodChange: aMethodAnnouncement [
 ]
 
 { #category : #accessing }
+TypInfNode >> methodNestingLevel [
+	^ self methodNode methodNestingLevel
+]
+
+{ #category : #accessing }
 TypInfNode >> methodNode [
 
 	^ context root
@@ -70,12 +79,6 @@ TypInfNode >> methodNode [
 { #category : #accessing }
 TypInfNode >> node [
 	^ node
-]
-
-{ #category : #accessing }
-TypInfNode >> oldState [
-
-	^ oldState
 ]
 
 { #category : #accessing }
@@ -94,18 +97,22 @@ TypInfNode >> slurp [
 	in
 		at: #next
 		ifPresent: [ :s | 
-			s
-				ifNotEmpty: [ state := ((s collect: #state) reduce: [ :a :b | a covariant: b ]) copy ] ]
+			| first |
+			first := s anyOne.
+			state := first state copy.
+			(s copyWithout: first) do: [ :e | state := state covariant: e state ] ]
 ]
 
 { #category : #accessing }
 TypInfNode >> slurpAndBurp [
+	| oldState |
+	self assert: [ self canSlurpAndBurp ].
 	oldState := state copy.
 	self
 		slurp;
 		transfer;
 		burp.
-	^ state ~= oldState
+	^ state diff: oldState
 ]
 
 { #category : #accessing }

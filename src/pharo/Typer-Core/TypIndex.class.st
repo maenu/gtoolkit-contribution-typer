@@ -31,6 +31,11 @@ TypIndex class >> invalidateAll [
 	self withAllSubclassesDo: #invalidate
 ]
 
+{ #category : #accessing }
+TypIndex >> canResolve: aLookup [
+	^ resolver canResolve: aLookup
+]
+
 { #category : #initialization }
 TypIndex >> initialize [
 

@@ -19,6 +19,16 @@ TypMethodIndex class >> instance [
 ]
 
 { #category : #accessing }
+TypMethodIndex >> canLookupMethodReceiver: aType selector: aSymbol arguments: aCollection [
+	^ self
+		canResolve: (TypMethodLookup
+				receiver: aType
+				selector: aSymbol
+				arguments: aCollection
+				super: nil)
+]
+
+{ #category : #accessing }
 TypMethodIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aCollection [
 
 	^ self resolve: (TypMethodLookup

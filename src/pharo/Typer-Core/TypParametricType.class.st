@@ -170,11 +170,10 @@ TypParametricType >> initialize [
 
 { #category : #initialization }
 TypParametricType >> initializeParameters: anOrderedDictionary [
-
 	self assert: [ anOrderedDictionary isNotEmpty ].
 	parameters removeAll.
-	anOrderedDictionary keysAndValuesDo: [ :k :v | 
-		parameters at: k put: (v boundTo: self) ].
+	anOrderedDictionary
+		keysAndValuesDo: [ :k :v | parameters at: k put: (v isBound ifTrue: [ v ] ifFalse: [ v boundTo: self ]) ].
 	self initializeSuper: nil
 ]
 

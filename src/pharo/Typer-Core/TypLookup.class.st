@@ -3,7 +3,8 @@ Class {
 	#superclass : #TypEdgeKey,
 	#instVars : [
 		'superLookup',
-		'resolver'
+		'resolver',
+		'childLookup'
 	],
 	#category : #'Typer-Core-Lookup'
 }
@@ -35,7 +36,6 @@ TypLookup >> hash [
 
 { #category : #accessing }
 TypLookup >> initializeResolver: anObject [
-
 	resolver := anObject
 ]
 

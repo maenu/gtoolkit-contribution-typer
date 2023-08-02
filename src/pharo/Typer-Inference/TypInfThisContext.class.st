@@ -5,7 +5,6 @@ Class {
 }
 
 { #category : #initialization }
-TypInfThisContext >> initialize: aState [
-	super initialize: aState.
+TypInfThisContext >> transfer [
 	state at: self put: Context typAsType
 ]

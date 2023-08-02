@@ -4,6 +4,11 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
+{ #category : #accessing }
+TypInfLocal >> canSlurpAndBurp [
+	^ state index includesKey: self inRead
+]
+
 { #category : #'meta-object-protocol' }
 TypInfLocal >> inRead [
 

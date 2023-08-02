@@ -6,12 +6,6 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #accessing }
-TypInfArray >> initialize: aState [
-	super initialize: aState.
-	state at: self put: Array typAsType
-]
-
 { #category : #'as yet unclassified' }
 TypInfArray >> transfer [
 

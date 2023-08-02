@@ -4,11 +4,20 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
+{ #category : #accessing }
+TypInfLocalDefinition >> outReads [
+
+	^ out
+		  at: #read
+		  ifPresent: [ :e | e collect: #target ]
+		  ifAbsent: [ #(  ) ]
+]
+
 { #category : #initialization }
-TypInfLocalDefinition >> initialize: aState [
+TypInfLocalDefinition >> transfer [
 	| className global |
-	super initialize: aState.
 	node isArgumentVariable ifFalse: [ ^ state at: self put: TypNilType instance ].
+	(state at: self) isUnknown ifFalse: [ ^ self ].
 	(node name beginsWith: 'an')
 		ifTrue: [ className := node name allButFirst: 2 ]
 		ifFalse: [ (node name beginsWith: 'a')
@@ -17,15 +26,6 @@ TypInfLocalDefinition >> initialize: aState [
 	global := Smalltalk globals at: className asSymbol ifAbsent: [ ^ self ].
 	global isClassOrTrait ifFalse: [ ^ self ].
 	state at: self put: global typAsType
-]
-
-{ #category : #accessing }
-TypInfLocalDefinition >> outReads [
-
-	^ out
-		  at: #read
-		  ifPresent: [ :e | e collect: #target ]
-		  ifAbsent: [ #(  ) ]
 ]
 
 { #category : #accessing }
