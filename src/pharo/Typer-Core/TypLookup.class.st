@@ -11,10 +11,8 @@ Class {
 
 { #category : #accessing }
 TypLookup >> = anObject [
-	anObject == self
-		ifTrue: [ ^ true ].
-	anObject class = self class
-		ifFalse: [ ^ false ].
+	anObject == self ifTrue: [ ^ true ].
+	anObject class = self class ifFalse: [ ^ false ].
 	^ anObject super = superLookup
 ]
 

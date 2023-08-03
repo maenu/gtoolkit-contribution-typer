@@ -36,6 +36,21 @@ TypInfNode >> context [
 ]
 
 { #category : #accessing }
+TypInfNode >> diffSlurpAndBurp [
+	"generates state diff per node instead of just changed or not.
+	useful for debugging"
+
+	| oldState |
+	self assert: [ self canSlurpAndBurp ].
+	oldState := state copy.
+	self
+		slurp;
+		transfer;
+		burp.
+	^ state diff: oldState
+]
+
+{ #category : #accessing }
 TypInfNode >> initialize: aState [
 	"compute initial state for node"
 
@@ -112,7 +127,7 @@ TypInfNode >> slurpAndBurp [
 		slurp;
 		transfer;
 		burp.
-	^ state diff: oldState
+	^ state ~= oldState
 ]
 
 { #category : #accessing }

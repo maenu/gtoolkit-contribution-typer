@@ -96,10 +96,10 @@ TypParametricType class >> named: aString super: aType [
 ]
 
 { #category : #comparing }
-TypParametricType >> = aType [
-	super = aType
-		ifFalse: [ ^ false ].
-	^ parameters = aType parameters
+TypParametricType >> = anObject [
+	self == anObject ifTrue: [ ^ true ].
+	super = anObject ifFalse: [ ^ false ].
+	^ parameters = anObject parameters
 ]
 
 { #category : #comparing }

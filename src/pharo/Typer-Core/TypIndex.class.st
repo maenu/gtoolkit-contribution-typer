@@ -103,3 +103,10 @@ TypIndex >> resolve: aLookup [
 				  self outAt: aLookup put: (resolver resolve: aLookup) ]
 			  ifFalse: [ TypUnknownType instance ] ]
 ]
+
+{ #category : #accessing }
+TypIndex >> resolvedLookup: aLookup [
+	self assert: [ self canResolve: aLookup ].
+	self resolve: aLookup.
+	^ (out keys detect: [ :e | e = aLookup ]) resolved
+]

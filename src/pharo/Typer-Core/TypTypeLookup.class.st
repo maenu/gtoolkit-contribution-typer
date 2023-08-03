@@ -23,8 +23,8 @@ TypTypeLookup class >> classDescription: aClassDescription super: aLookup [
 
 { #category : #comparing }
 TypTypeLookup >> = anObject [
-	super = anObject
-		ifFalse: [ ^ false ].
+	self == anObject ifTrue: [ ^ true ].
+	super = anObject ifFalse: [ ^ false ].
 	^ classDescription = anObject classDescription
 ]
 

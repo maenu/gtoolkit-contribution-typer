@@ -52,8 +52,8 @@ TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollectio
 
 { #category : #accessing }
 TypMethodLookup >> = anObject [
-	super = anObject
-		ifFalse: [ ^ false ].
+	self == anObject ifTrue: [ ^ true ].
+	super = anObject ifFalse: [ ^ false ].
 	^ anObject arguments = arguments
 ]
 

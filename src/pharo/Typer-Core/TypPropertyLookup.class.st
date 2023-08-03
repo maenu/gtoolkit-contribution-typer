@@ -10,10 +10,9 @@ Class {
 
 { #category : #comparing }
 TypPropertyLookup >> = anObject [
-	super = anObject
-		ifFalse: [ ^ false ].
-	anObject selector = selector
-		ifFalse: [ ^ false ].
+	self == anObject ifTrue: [ ^ true ].
+	super = anObject ifFalse: [ ^ false ].
+	anObject selector = selector ifFalse: [ ^ false ].
 	^ anObject receiver = receiver
 ]
 

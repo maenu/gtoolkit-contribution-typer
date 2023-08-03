@@ -27,6 +27,7 @@ TypInfBlockContext class >> sender: aContext state: aState node: aNode self: aTy
 
 { #category : #accessing }
 TypInfBlockContext >> = anObject [
+	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^ false ].
 	^ block = anObject block
 ]

@@ -71,8 +71,8 @@ TypNamedType class >> named: aString super: aType [
 
 { #category : #comparing }
 TypNamedType >> = anObject [
-	super = anObject
-		ifFalse: [ ^ false ].
+	self == anObject ifTrue: [ ^ true ].
+	super = anObject ifFalse: [ ^ false ].
 	^ name = anObject name
 ]
 

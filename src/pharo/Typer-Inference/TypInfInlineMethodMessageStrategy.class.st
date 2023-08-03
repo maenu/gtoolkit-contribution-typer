@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> canInstall [
-	| receiver newContexts lookup resolvedLookup resolvedMethod |
+	| receiver newContexts lookup |
 	receiver := message receiver.
 	receiver isNamed ifFalse: [ ^ false ].
 	receiver hasClassDescription ifFalse: [ ^ false ].
@@ -20,11 +20,9 @@ TypInfInlineMethodMessageStrategy >> canInstall [
 			selector: message selector
 			arguments: message arguments
 			super: nil.
-	resolvedMethod := TypMethodIndex instance resolve: lookup.
-	resolvedMethod isUnknown
-		ifFalse: [ resolvedLookup := (TypMethodIndex instance outEdges
-					detect: [ :e | e key = lookup ]) key resolved.
-			(resolvedLookup resolver isKindOf: TypInfMethodResolver) ifFalse: [ ^ false ] ].
+	((TypMethodIndex instance canResolve: lookup)
+		and: [ ((TypMethodIndex instance resolvedLookup: lookup) resolver
+				isKindOf: TypInfMethodResolver) not ]) ifTrue: [ ^ false ].
 	newContexts := self newContexts.
 	newContexts size < 8 ifFalse: [ ^ false ].
 	^ newContexts allSatisfy: #canInstall
@@ -64,7 +62,7 @@ TypInfInlineMethodMessageStrategy >> newContexts [
 		ifFalse: [ {method} ])
 		collect: [ :m | 
 			| selfType |
-			selfType := m methodClass typAsType.
+			selfType := message receiver.
 			TypInfInlineContext
 				sender: message context
 				state: message state copy

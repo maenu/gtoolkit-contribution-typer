@@ -42,6 +42,38 @@ TypInfContext >> = anObject [
 ]
 
 { #category : #accessing }
+TypInfContext >> diffIterate [
+	self assert: [ iterations size = (iterationsDone - 1) ].
+	iterations addLast: IdentityDictionary new.
+	^ nodes values
+		inject: false
+		into: [ :rr :c | c inject: rr into: [ :r :e | (self diffIterate: e) or: r ] ]
+]
+
+{ #category : #accessing }
+TypInfContext >> diffIterate: aNode [
+	"skip removed nodes"
+
+	nodes
+		at: aNode node
+		ifPresent: [ :c | (c includes: aNode) ifFalse: [ ^ false ] ]
+		ifAbsent: [ ^ false ].
+	aNode canSlurpAndBurp ifFalse: [ ^ false ].
+	^ aNode diffSlurpAndBurp index
+		ifEmpty: [ false ]
+		ifNotEmpty: [ :s | 
+			(iterations at: iterationsDone) at: aNode put: s.
+			true ]
+]
+
+{ #category : #running }
+TypInfContext >> diffRun [
+	self visit.
+	[ iterationsDone := iterationsDone + 1.
+	iterationsDone <= iterationsMax and: [ self diffIterate ] ] whileTrue
+]
+
+{ #category : #accessing }
 TypInfContext >> hash [
 	^ ({sender.
 		node.
@@ -70,8 +102,6 @@ TypInfContext >> inlitializeSender: aContext state: aState node: aNode self: aTy
 
 { #category : #accessing }
 TypInfContext >> iterate [
-	self assert: [ iterations size = (iterationsDone - 1) ].
-	iterations addLast: IdentityDictionary new.
 	^ nodes values
 		inject: false
 		into: [ :rr :c | c inject: rr into: [ :r :e | (self iterate: e) or: r ] ]
@@ -86,11 +116,7 @@ TypInfContext >> iterate: aNode [
 		ifPresent: [ :c | (c includes: aNode) ifFalse: [ ^ false ] ]
 		ifAbsent: [ ^ false ].
 	aNode canSlurpAndBurp ifFalse: [ ^ false ].
-	^ aNode slurpAndBurp index
-		ifEmpty: [ false ]
-		ifNotEmpty: [ :s | 
-			(iterations at: iterationsDone) at: aNode put: s.
-			true ]
+	^ aNode slurpAndBurp
 ]
 
 { #category : #accessing }

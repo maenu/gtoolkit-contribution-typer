@@ -92,12 +92,11 @@ TypFunctionType class >> named: aString result: aType arguments: aCollection arg
 ]
 
 { #category : #comparing }
-TypFunctionType >> = aType [
-	super = aType
-		ifFalse: [ ^ false ].
-	argumentsSize = aType argumentsSize
-		ifFalse: [ ^ false ].
-	^ argumentsOptional = aType argumentsOptional
+TypFunctionType >> = anObject [
+	self == anObject ifTrue: [ ^ true ].
+	super = anObject ifFalse: [ ^ false ].
+	argumentsSize = anObject argumentsSize ifFalse: [ ^ false ].
+	^ argumentsOptional = anObject argumentsOptional
 ]
 
 { #category : #comparing }

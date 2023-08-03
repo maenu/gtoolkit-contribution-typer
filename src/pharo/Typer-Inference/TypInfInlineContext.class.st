@@ -26,6 +26,7 @@ TypInfInlineContext class >> sender: aContext state: aState node: aNode self: aT
 
 { #category : #accessing }
 TypInfInlineContext >> = anObject [
+	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^ false ].
 	^ message = anObject message
 ]

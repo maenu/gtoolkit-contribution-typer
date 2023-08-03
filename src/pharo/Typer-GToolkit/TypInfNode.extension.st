@@ -45,19 +45,20 @@ TypInfNode >> typGtCompactFlowOn: aMondrian [
 			[ queue isEmpty ]
 				whileFalse: [ | edge |
 					edge := queue removeFirst.
-					edges
-						detect: [ :e | 
-							e origin == edge target
-								and: [ (edges select: [ :f | f origin = e origin ]) size = 1
-										and: [ (edges select: [ :f | f origin = edge target ]) size = 1 ] ] ]
-						ifFound: [ :e | 
-							changed := true.
-							queue remove: e ifAbsent: [  "noop" ].
-							edges
-								remove: edge ifAbsent: [  "noop" ];
-								remove: e ifAbsent: [  "noop" ];
-								add: (TypInfNextEdge origin: edge origin target: e target) ]
-						ifNone: [  "noop" ] ] ].
+					(edge target isKindOf: TypInfInlinedMethod)
+						ifFalse: [ edges
+								detect: [ :e | 
+									e origin == edge target
+										and: [ (edges select: [ :f | f origin == e origin ]) size = 1
+												and: [ (edges select: [ :f | f origin == edge target ]) size = 1 ] ] ]
+								ifFound: [ :e | 
+									changed := true.
+									queue remove: e ifAbsent: [  "noop" ].
+									edges
+										remove: edge ifAbsent: [  "noop" ];
+										remove: e ifAbsent: [  "noop" ];
+										add: (TypInfNextEdge origin: edge origin target: e target) ]
+								ifNone: [  "noop" ] ] ] ].
 	nodes := edges flatCollect: #nodes.
 	aMondrian nodes
 		stencil: [ :e | e typGtAsElementIn: aMondrian ];

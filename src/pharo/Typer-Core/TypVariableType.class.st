@@ -43,7 +43,7 @@ TypVariableType class >> super: aType named: aSymbol variance: anotherSymbol [
 
 { #category : #comparing }
 TypVariableType >> = anObject [
-
+	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^ false ].
 	name = anObject name ifFalse: [ ^ false ].
 	^ variance = anObject variance
