@@ -40,7 +40,10 @@ TypGtAttribute >> initialize [
 						left: 2
 						bottom: 0
 						right: (self shouldAppend ifTrue: [ 0 ] ifFalse: [ 2 ]));
-				when: BlClickEvent do: [ :e | e target phlow spawnObject: nodes ];
+				when: BlClickEvent
+					do: [ :e | 
+						e target phlow
+							spawnObject: (nodes size = 1 ifTrue: [ nodes anyOne ] ifFalse: [ nodes ]) ];
 				yourself ]
 ]
 

@@ -30,6 +30,25 @@ TypInfNode >> canSlurpAndBurp [
 ]
 
 { #category : #accessing }
+TypInfNode >> constrain: aNode to: aType [
+	"ensures a constrain edge from self to aNode with a type."
+
+	state at: aNode put: ((state at: aNode) covariant: aType).
+	out
+		at: #constrain
+		ifPresent: [ :s | 
+			s
+				detect: [ :e | e target = aNode ]
+				ifFound: [ :e | 
+					e type: aType.
+					^ e ] ].
+	^ self
+		outAdd: ((TypInfConstrainEdge origin: self target: aNode)
+				type: aType;
+				yourself)
+]
+
+{ #category : #accessing }
 TypInfNode >> context [
 
 	^ context
@@ -115,7 +134,19 @@ TypInfNode >> slurp [
 			| first |
 			first := s anyOne.
 			state := first state copy.
-			(s copyWithout: first) do: [ :e | state := state covariant: e state ] ]
+			(s copyWithout: first) do: [ :e | state := state covariant: e state ] ].
+	in
+		at: #constrain
+		ifPresent: [ :s | 
+			state
+				at: self
+				put: ((s
+						collect: [ :e | 
+							state index
+								at: e
+								ifPresent: [ :t | e type covariant: t ]
+								ifAbsent: [ e type ] ]) , {state at: self}
+						reduce: [ :a :b | b covariant: a ]) ]
 ]
 
 { #category : #accessing }

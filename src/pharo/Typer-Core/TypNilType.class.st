@@ -39,7 +39,6 @@ TypNilType class >> named: aString [
 
 { #category : #'instance creation' }
 TypNilType class >> named: aString super: aType [
-
 	self shouldNotImplement
 ]
 

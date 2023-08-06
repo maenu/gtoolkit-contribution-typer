@@ -20,6 +20,6 @@ TypInfLookupMessageStrategy >> transfer [
 	message inArguments
 		withIndexDo: [ :e :i | 
 			i <= method arguments size
-				ifTrue: [ message state at: e covariantPut: (method arguments at: i) ] ].
+				ifTrue: [ message constrain: e to: (method arguments at: i) ] ].
 	message state at: message covariantPut: method result
 ]

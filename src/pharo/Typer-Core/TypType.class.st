@@ -113,7 +113,7 @@ TypType >> boundTo: aType [
 { #category : #lookup }
 TypType >> canLookupMethod: aSymbol [
 	| arguments |
-	arguments := aSymbol numArgs typTimesCollect: [ :e | TypUnknownType instance ].
+	arguments := aSymbol numArgs timesRepeat: [ TypUnknownType instance ].
 	^ self canLookupMethod: aSymbol arguments: arguments
 ]
 
@@ -329,6 +329,11 @@ TypType >> printOn: aStream [
 TypType >> printOn: aStream skipping: anIdentitySet [
 
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+TypType >> resolvedMethodLookups: aLookup [
+	^ {TypMethodIndex instance resolvedLookup: aLookup}
 ]
 
 { #category : #compatibility }

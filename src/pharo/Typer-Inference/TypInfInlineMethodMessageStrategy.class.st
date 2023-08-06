@@ -9,20 +9,17 @@ Class {
 
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> canInstall [
-	| receiver newContexts lookup |
+	| receiver lookup newContexts |
 	receiver := message receiver.
-	receiver isNamed ifFalse: [ ^ false ].
-	receiver hasClassDescription ifFalse: [ ^ false ].
-	(receiver classDescription canUnderstand: message selector)
-		ifFalse: [ ^ false ].
+	(receiver canLookupMethod: message selector) ifFalse: [ ^ false ].
 	lookup := TypMethodLookup
 			receiver: message receiver
 			selector: message selector
 			arguments: message arguments
 			super: nil.
-	((TypMethodIndex instance canResolve: lookup)
-		and: [ ((TypMethodIndex instance resolvedLookup: lookup) resolver
-				isKindOf: TypInfMethodResolver) not ]) ifTrue: [ ^ false ].
+	((receiver resolvedMethodLookups: lookup)
+		anySatisfy: [ :e | e resolver isKindOf: TypInfMethodResolver ])
+		ifFalse: [ ^ false ].
 	newContexts := self newContexts.
 	newContexts size < 8 ifFalse: [ ^ false ].
 	^ newContexts allSatisfy: #canInstall
@@ -55,21 +52,36 @@ TypInfInlineMethodMessageStrategy >> install [
 
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> newContexts [
-	| method |
-	method := message receiver classDescription lookupSelector: message selector.
-	^ (method isAbstract
-		ifTrue: [ method typInfOverriddingMethods ]
-		ifFalse: [ {method} ])
-		collect: [ :m | 
-			| selfType |
-			selfType := message receiver.
-			TypInfInlineContext
-				sender: message context
-				state: message state copy
-				node: m ast
-				self: selfType
-				super: selfType superOrNil
-				message: message ]
+	^ (message receiver
+		resolvedMethodLookups: (TypMethodLookup
+				receiver: message receiver
+				selector: message selector
+				arguments: message arguments
+				super: nil))
+		flatCollect: [ :l | 
+			| selfType method |
+			selfType := l receiver.
+			(l resolver isKindOf: TypInfMethodResolver)
+				ifTrue: [ method := l receiver classDescription lookupSelector: message selector.
+					(method isAbstract
+						ifTrue: [ method typInfOverriddingMethods ]
+						ifFalse: [ method typInfOverriddingMethods , {method} ])
+						collect: [ :m | 
+							TypInfInlineContext
+								sender: message context
+								state: message state copy
+								node: m ast
+								self: selfType
+								super: selfType superOrNil
+								message: message ] ]
+				ifFalse: [ {TypInfInlineLookupContext
+							sender: message context
+							state: message state copy
+							node: message copy
+							self: selfType
+							super: selfType superOrNil
+							message: message} ] ]
+		as: Set
 ]
 
 { #category : #accessing }

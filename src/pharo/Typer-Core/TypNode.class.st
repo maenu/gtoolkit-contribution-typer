@@ -192,13 +192,10 @@ TypNode >> out: anObject [
 
 { #category : #accessing }
 TypNode >> outAdd: anEdge [
-
 	self assert: [ anEdge origin == self ].
 	out
 		at: anEdge key
-		ifPresent: [ :e | 
-			e add: anEdge.
-			e ]
+		ifPresent: [ :s | s add: anEdge ]
 		ifAbsentPut: [ IdentitySet with: anEdge ].
 	anEdge target inAdd: anEdge.
 	^ anEdge

@@ -72,6 +72,11 @@ TypUnionType >> at: aString [
 	^ (types collect: [ :e | e at: aString ]) typAsType
 ]
 
+{ #category : #lookup }
+TypUnionType >> canLookupMethod: aSymbol arguments: aCollection [
+	^ types anySatisfy: [ :e | e canLookupMethod: aSymbol arguments: aCollection ]
+]
+
 { #category : #testing }
 TypUnionType >> hasSuper [
 
@@ -197,6 +202,19 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 			remove: e;
 			ifNotEmpty: [ aStream << ',' ] ].
 	aStream << '}'
+]
+
+{ #category : #accessing }
+TypUnionType >> resolvedMethodLookups: aLookup [
+	^ types
+		select: [ :e | e canLookupMethod: aLookup selector ]
+		thenFlatCollect: [ :e | 
+			e
+				resolvedMethodLookups: (TypMethodLookup
+						receiver: e
+						selector: aLookup selector
+						arguments: aLookup arguments
+						super: nil) ]
 ]
 
 { #category : #compatibility }

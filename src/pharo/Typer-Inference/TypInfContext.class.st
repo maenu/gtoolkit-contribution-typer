@@ -88,6 +88,7 @@ TypInfContext >> home [
 
 { #category : #accessing }
 TypInfContext >> inlitializeSender: aContext state: aState node: aNode self: aType super: anotherType [
+	self assert: [ aType isNotNil ].
 	sender := aContext.
 	state := aState.
 	node := aNode.

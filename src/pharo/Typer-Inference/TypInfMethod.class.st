@@ -15,14 +15,6 @@ TypInfMethod >> inReturns [
 ]
 
 { #category : #accessing }
-TypInfMethod >> method [
-
-	^ context self
-		  lookupMethod: node selector asSymbol
-		  arguments: (self inArguments collect: #type)
-]
-
-{ #category : #accessing }
 TypInfMethod >> methodNestingLevel [
 	^ 1
 		+ (self

@@ -24,10 +24,7 @@ TypInfMethodResolver class >> invalidate [
 TypInfMethodResolver >> canResolve: aLookup [
 	aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
-	(aLookup receiver classDescription includesSelector: aLookup selector)
-		ifFalse: [ ^ false ].
-	^ (aLookup receiver classDescription lookupSelector: aLookup selector)
-		isAbstract not
+	^ aLookup receiver classDescription includesSelector: aLookup selector
 ]
 
 { #category : #accessing }

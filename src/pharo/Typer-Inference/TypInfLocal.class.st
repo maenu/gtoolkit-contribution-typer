@@ -22,8 +22,15 @@ TypInfLocal >> inRead: aNode [
 ]
 
 { #category : #accessing }
+TypInfLocal >> slurp [
+	super slurp.
+	in
+		at: #constrain
+		ifPresent: [ :s | s do: [ :e | self constrain: self inRead to: e type ] ]
+]
+
+{ #category : #accessing }
 TypInfLocal >> transfer [
-	self flag: 'TODO does assignment need special treatment?'.
 	((in at: #next) allSatisfy: [ :e | e origin isKindOf: TypInfAssignment ])
 		ifTrue: [ ^ state at: self inRead put: self type ].
 	state at: self put: (state at: self inRead)

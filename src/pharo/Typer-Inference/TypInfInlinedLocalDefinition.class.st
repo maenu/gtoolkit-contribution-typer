@@ -14,6 +14,14 @@ TypInfInlinedLocalDefinition class >> node: aNode context: aContext proxy: anObj
 ]
 
 { #category : #accessing }
+TypInfInlinedLocalDefinition >> slurp [
+	super slurp.
+	in
+		at: #constrain
+		ifPresent: [ :s | s do: [ :e | self constrain: (self inArgumentAt: 1) to: e type ] ]
+]
+
+{ #category : #accessing }
 TypInfInlinedLocalDefinition >> transfer [
 	state at: self put: (state at: self inArguments first)
 ]

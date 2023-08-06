@@ -26,7 +26,10 @@ TypTyping >> invalidate [
 	BlOverlayListener
 		allInstancesDo: [ :e | e overlayElement removeEventHandler: e ].
 	BlHandlerAnnouncerRegistry
-		allInstancesDo: [ :e | e removeAllSuchThat: [ :f | f isKindOf: BlOverlayListener ] ].	"LeDatabase allInstancesDo: #reload.
+		allInstancesDo: [ :e | e removeAllSuchThat: [ :f | f isKindOf: BlOverlayListener ] ].
+	GtInspectorTool allInstances
+		select: [ :e | e object class package name beginsWith: 'Typer' ]
+		thenDo: [ :e | e object: nil ].	"LeDatabase allInstancesDo: #reload.
 	LeDatabasesRegistry cleanUp.
 	LeDatabasesRegistry uniqueInstance ensureDatabase.
 	GtHome allInstancesDo: #clearKnowledgeBase."
