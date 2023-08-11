@@ -23,5 +23,6 @@ TypInfReceiverConstrainingMessageStrategy >> transfer [
 	classes := TypInfMethodIndex instance implementors: message selector.
 	message state
 		at: message inReceiver
-		put: (classes collect: #typAsType) typAsType
+		put: (classes collect: #typAsType) typAsType.
+	message state at: message put: TypUnknownType instance
 ]

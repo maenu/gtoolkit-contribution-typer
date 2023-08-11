@@ -131,6 +131,6 @@ TypInfMethodResolver >> typeAt: aNode self: aType super: anotherType [
 				self: aType
 				super: anotherType)
 				ifEmpty: [ TypUnknownType instance ]
-				ifNotEmpty: [ :c | c first type ] ]
+				ifNotEmpty: [ :c | c anyOne type ] ]
 		or: [ TypUnknownType instance ]
 ]

@@ -22,7 +22,7 @@ Class {
 { #category : #'as yet unclassified' }
 TypInfContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType [
 	^ self new
-		inlitializeSender: aContext
+		initializeSender: aContext
 			state: aState
 			node: aNode
 			self: aType
@@ -87,7 +87,7 @@ TypInfContext >> home [
 ]
 
 { #category : #accessing }
-TypInfContext >> inlitializeSender: aContext state: aState node: aNode self: aType super: anotherType [
+TypInfContext >> initializeSender: aContext state: aState node: aNode self: aType super: anotherType [
 	self assert: [ aType isNotNil ].
 	sender := aContext.
 	state := aState.
@@ -102,29 +102,25 @@ TypInfContext >> inlitializeSender: aContext state: aState node: aNode self: aTy
 ]
 
 { #category : #accessing }
-TypInfContext >> iterate [
-	^ nodes values
-		inject: false
-		into: [ :rr :c | c inject: rr into: [ :r :e | (self iterate: e) or: r ] ]
-]
-
-{ #category : #accessing }
-TypInfContext >> iterate: aNode [
-	"skip removed nodes"
-
+TypInfContext >> newRoot [
+	| next |
+	next := node typInfNodeInContext: self.
 	nodes
-		at: aNode node
-		ifPresent: [ :c | (c includes: aNode) ifFalse: [ ^ false ] ]
-		ifAbsent: [ ^ false ].
-	aNode canSlurpAndBurp ifFalse: [ ^ false ].
-	^ aNode slurpAndBurp
+		at: node
+		ifPresent: [ :c | c add: next ]
+		ifAbsentPut: [ OrderedCollection with: next ].
+	^ next
 ]
 
 { #category : #accessing }
 TypInfContext >> next: aNode [
 	| next |
 	self flag: 'Q is it always add? look at senders'.
-	next := self nodesAddAt: aNode.
+	next := aNode typInfNodeInContext: self.
+	next := nodes
+			at: aNode
+			ifPresent: [ :c | c add: next ]
+			ifAbsent: [ (nodes at: aNode put: (OrderedCollection with: next)) last ].
 	current outAdd: (TypInfNextEdge origin: current target: next).
 	^ current := next
 ]
@@ -134,54 +130,14 @@ TypInfContext >> node [
 	^ node
 ]
 
-{ #category : #accessing }
-TypInfContext >> nodeAt: aNode [
-	^ nodes
-		at: aNode
-		ifAbsent: [ Halt now.
-			self nodesAddAt: aNode ]
-]
-
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 TypInfContext >> nodes [
 	^ nodes
 ]
 
 { #category : #accessing }
-TypInfContext >> nodesAddAt: aNode [
-	| newNode |
-	newNode := aNode typInfNodeInContext: self.
-	^ nodes
-		at: aNode
-		ifPresent: [ :c | c add: newNode ]
-		ifAbsent: [ (nodes at: aNode put: (OrderedCollection with: newNode)) last ]
-]
-
-{ #category : #accessing }
 TypInfContext >> nodesAt: aNode [
-	^ nodes
-		at: aNode
-		ifAbsent: [ sender ifNil: [ #() ] ifNotNil: [ sender nodesAt: aNode ] ]
-]
-
-{ #category : #accessing }
-TypInfContext >> nodesAt: aNode add: anotherNode [
-	nodes
-		at: aNode
-		ifPresent: [ :c | c add: anotherNode ]
-		ifAbsentPut: [ OrderedCollection with: anotherNode ].
-	^ anotherNode
-]
-
-{ #category : #accessing }
-TypInfContext >> nodesAt: aNode remove: anotherNode [
-	nodes
-		at: aNode
-		ifPresent: [ :c | 
-			c remove: anotherNode.
-			c ifEmpty: [ nodes removeKey: aNode ] ]
-		ifAbsent: [  "noop" ].
-	^ anotherNode
+	^ self home root allNextNodes select: [ :n | n node == aNode ]
 ]
 
 { #category : #accessing }
@@ -198,7 +154,7 @@ TypInfContext >> root [
 TypInfContext >> run [
 	self visit.
 	[ iterationsDone := iterationsDone + 1.
-	iterationsDone <= iterationsMax and: [ self iterate ] ] whileTrue
+	iterationsDone <= iterationsMax and: [ root iterate ] ] whileTrue
 ]
 
 { #category : #accessing }
@@ -223,10 +179,8 @@ TypInfContext >> super [
 
 { #category : #accessing }
 TypInfContext >> visit [
-	root := self nodesAt: node add: (node typInfNodeInContext: self).
-	current := root.
-	node acceptVisitor: self.
-	nodes keysAndValuesDo: [ :n :c | c do: [ :e | e initialize: state ] ]
+	current := root := self newRoot.
+	self visitNode
 ]
 
 { #category : #visiting }
@@ -281,9 +235,7 @@ TypInfContext >> visitLiteralValueNode: aNode [
 { #category : #visiting }
 TypInfContext >> visitLocalVariableNode: aLocalNode [
 	self visitTemporaryNode: aLocalNode.
-	aLocalNode isDefinition
-		ifFalse: [ self flag: 'Q is last always correct?'.
-			current inRead: (self nodesAt: aLocalNode variable definingNode) last ].
+	aLocalNode isDefinition ifFalse: [ current inRead: current findInRead ].
 	^ current
 ]
 
@@ -295,8 +247,7 @@ TypInfContext >> visitMessageNode: aMessageNode [
 	arguments := aMessageNode arguments collect: [ :n | self visitNode: n ].
 	self next: aMessageNode.
 	current inArguments: arguments.
-	self flag: 'Q is last always correct?'.
-	current inReceiver: (self nodesAt: aMessageNode receiver) last.
+	current inReceiver: current findInReceiver.
 	^ current
 ]
 
@@ -312,13 +263,17 @@ TypInfContext >> visitMethodNode: aMethodNode [
 ]
 
 { #category : #accessing }
+TypInfContext >> visitNode [
+	node acceptVisitor: self
+]
+
+{ #category : #accessing }
 TypInfContext >> visitPragmaNode: aPragmaNode [
 	| variable |
 	aPragmaNode arguments do: [ :each | self visitNode: each ].
 	aPragmaNode isPrimitiveError ifFalse: [ ^ self ].
 	variable := (node scope lookupVar: aPragmaNode primitiveErrorVariableName)
 			definingNode.
-	self nodesAddAt: variable.
 	self visitNode: variable
 ]
 

@@ -29,8 +29,7 @@ TypNode class >> isAbstract [
 
 { #category : #accessing }
 TypNode >> edges [
-
-	^ in values , out values
+	^ (in values flatCollect: #yourself) , (out flatCollect: #yourself)
 ]
 
 { #category : #accessing }
@@ -274,16 +273,15 @@ TypNode >> outIncludes: anEdge [
 
 { #category : #accessing }
 TypNode >> outRemove: anEdge [
-
 	out
 		at: anEdge key
 		ifPresent: [ :e | 
 			e remove: anEdge.
 			e ifEmpty: [ out removeKey: anEdge key ] ]
-		ifAbsent: [ "noop" ].
+		ifAbsent: [ Halt now ].
 	^ anEdge target
-		  inRemove: anEdge;
-		  yourself
+		inRemove: anEdge;
+		yourself
 ]
 
 { #category : #accessing }

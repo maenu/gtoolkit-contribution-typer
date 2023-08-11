@@ -15,7 +15,7 @@ TypInfInlineContext class >> sender: aContext state: aState node: aNode self: aT
 { #category : #accessing }
 TypInfInlineContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType message: aMessage [
 	^ self new
-		inlitializeSender: aContext
+		initializeSender: aContext
 			state: aState
 			node: aNode
 			self: aType
@@ -35,7 +35,7 @@ TypInfInlineContext >> = anObject [
 TypInfInlineContext >> canInstall [
 	node compiledMethod isRealPrimitive ifTrue: [ ^ false ].
 	node compiledMethod isAbstract ifTrue: [ ^ false ].
-	^ message methodNestingLevel < 4
+	^ message methodNestingLevel < 8
 ]
 
 { #category : #accessing }
@@ -50,7 +50,13 @@ TypInfInlineContext >> initializeMessage: aMessage [
 
 { #category : #accessing }
 TypInfInlineContext >> install [
-	self visit
+	"self home root contextNodesEqualsNextNodes."
+	Transcript
+		nextPutAll: 'install ';
+		nextPutAll: node asString lines first;
+		cr.
+	self visit.
+	"self home root contextNodesEqualsNextNodes"
 ]
 
 { #category : #accessing }
@@ -60,48 +66,19 @@ TypInfInlineContext >> message [
 
 { #category : #accessing }
 TypInfInlineContext >> newRoot [
-	^ TypInfInlinedMethod node: node context: self
+	| next |
+	next := TypInfInlinedMethod node: node context: self.
+	nodes
+		at: node
+		ifPresent: [ :c | c add: next ]
+		ifAbsentPut: [ OrderedCollection with: next ].
+	^ next
 ]
 
 { #category : #accessing }
 TypInfInlineContext >> uninstall [
-	| home |
-	home := self home.
-	nodes
-		keysAndValuesDo: [ :n :c | 
-			c
-				do: [ :e | 
-					(e isKindOf: TypInfMessage) ifTrue: [ e uninstall ].
-					home nodesAt: n remove: e ] ].
-	message
-		outAt: #nextOriginal
-		ifPresent: [ :n | 
-			message
-				outRemoveAt: #next;
-				outAdd: (TypInfNextEdge origin: message target: n) ]
-		ifAbsent: [  "noop" ]
-]
-
-{ #category : #initialization }
-TypInfInlineContext >> visit [
-	| home |
-	root := self newRoot.
-	self nodesAt: node add: root.
-	current := root.
-	self visitNode.
-	home := self home.
-	nodes
-		keysAndValuesDo: [ :n :c | 
-			c
-				do: [ :e | 
-					e initialize: home state.
-					home nodesAt: n add: e.	"needed to be in context run loop"
-					home nodes values
-						do: [ :cc | 
-							cc
-								do: [ :nn | 
-									nn state at: e put: TypUnknownType instance.
-									nn burp ] ] ] ]
+	root uninstall.
+	current := root := nil
 ]
 
 { #category : #initialization }
@@ -116,7 +93,10 @@ TypInfInlineContext >> visitNode [
 							node: n
 							context: self
 							proxy: (message inArguments at: i).
-					self nodesAt: n add: next.
+					nodes
+						at: n
+						ifPresent: [ :c | c add: next ]
+						ifAbsent: [ nodes at: n put: (OrderedCollection with: next) ].
 					current outAdd: (TypInfNextEdge origin: current target: next).
 					current := next ]).
 	node pragmas do: [ :p | self visitNode: p ].
@@ -124,8 +104,6 @@ TypInfInlineContext >> visitNode [
 	node lastIsReturn
 		ifFalse: [ self next: RBVariableNode selfNode.
 			current outAdd: (TypInfReturnEdge origin: current target: root) ].
-	message
-		outAt: #nextOriginal
-		ifPresent: [ :n | current outAdd: (TypInfNextEdge origin: current target: n) ]
-		ifAbsent: [  "noop" ]
+	current
+		outAdd: (TypInfNextEdge origin: current target: (message outAt: #nextOriginal))
 ]

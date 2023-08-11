@@ -8,3 +8,8 @@ Class {
 TypInfNullMessageStrategy >> canInstall [
 	^ true
 ]
+
+{ #category : #accessing }
+TypInfNullMessageStrategy >> transfer [
+	message state at: message put: TypUnknownType instance
+]

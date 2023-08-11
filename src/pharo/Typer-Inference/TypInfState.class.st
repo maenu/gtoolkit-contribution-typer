@@ -23,7 +23,7 @@ TypInfState >> at: anObject [
 TypInfState >> at: aNode covariantPut: aType [
 	^ index
 		at: aNode
-		put: ((index at: aNode ifAbsent: [ TypUnknownType instance ]) covariant: aType)
+		put: ((index at: aNode ifAbsent: TypUnknownType instance) covariant: aType)
 ]
 
 { #category : #accessing }

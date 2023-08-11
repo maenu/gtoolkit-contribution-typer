@@ -6,7 +6,14 @@ Class {
 
 { #category : #accessing }
 TypInfLocal >> canSlurpAndBurp [
-	^ state index includesKey: self inRead
+	^ state isNotNil and: [ state index includesKey: self inRead ]
+]
+
+{ #category : #accessing }
+TypInfLocal >> findInRead [
+	self
+		depthFirstNextReverseDo: [ :n | n node == node variable definingNode ifTrue: [ ^ n ] ].
+	Error signal: 'no read found'
 ]
 
 { #category : #'meta-object-protocol' }

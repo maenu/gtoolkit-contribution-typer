@@ -16,6 +16,12 @@ TypInfMessage >> arguments [
 ]
 
 { #category : #accessing }
+TypInfMessage >> findInReceiver [
+	self depthFirstNextReverseDo: [ :n | n node == node receiver ifTrue: [ ^ n ] ].
+	Error signal: 'no receiver found'
+]
+
+{ #category : #accessing }
 TypInfMessage >> inReceiver [
 
 	^ self inAt: #receiver
@@ -51,7 +57,6 @@ TypInfMessage >> selector [
 { #category : #accessing }
 TypInfMessage >> transfer [
 	| oldStrategy |
-	state at: self put: TypUnknownType instance.
 	oldStrategy := currentStrategy.
 	currentStrategy := strategies detect: #canInstall.
 	currentStrategy == oldStrategy
@@ -62,5 +67,6 @@ TypInfMessage >> transfer [
 
 { #category : #accessing }
 TypInfMessage >> uninstall [
-	currentStrategy uninstall
+	currentStrategy uninstall.
+	currentStrategy := nil
 ]

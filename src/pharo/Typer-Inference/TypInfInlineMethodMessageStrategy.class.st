@@ -33,17 +33,13 @@ TypInfInlineMethodMessageStrategy >> initialize [
 
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> install [
-	| oldContexts |
+	| nextOriginal oldContexts |
 	self assert: [ self canInstall ].
-	message
-		outAt: #nextOriginal
-		ifAbsent: [ message
-				outAt: #next
-				ifPresent: [ :target | 
-					self assert: [ (message out at: #next) size = 1 ].
-					message outRemoveAt: #next.
-					message outAt: #nextOriginal put: target ]
-				ifAbsent: [  "noop" ] ].
+	contexts
+		ifEmpty: [ nextOriginal := message outAt: #next.
+			message outRemoveAt: #next.
+			message outAt: #nextOriginal put: nextOriginal ]
+		ifNotEmpty: [ nextOriginal := message outAt: #nextOriginal ].
 	oldContexts := contexts.
 	contexts := self newContexts asOrderedCollection.
 	(oldContexts difference: contexts) do: #uninstall.
@@ -60,12 +56,12 @@ TypInfInlineMethodMessageStrategy >> newContexts [
 				super: nil))
 		flatCollect: [ :l | 
 			| selfType method |
-			selfType := l receiver.
+			selfType := message receiver.
 			(l resolver isKindOf: TypInfMethodResolver)
 				ifTrue: [ method := l receiver classDescription lookupSelector: message selector.
 					(method isAbstract
 						ifTrue: [ method typInfOverriddingMethods ]
-						ifFalse: [ method typInfOverriddingMethods , {method} ])
+						ifFalse: [ {method} ])
 						collect: [ :m | 
 							TypInfInlineContext
 								sender: message context
@@ -94,19 +90,11 @@ TypInfInlineMethodMessageStrategy >> transfer [
 
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> uninstall [
+	| nextOriginal |
 	contexts
 		do: #uninstall;
 		removeAll.
-	message
-		outAt: #nextOriginal
-		ifPresent: [ :n | 
-			message
-				outAt: #next
-				ifPresent: [ :nn | 
-					self assert: [ nn == n ].
-					message outRemoveAt: #nextOriginal ]
-				ifAbsent: [ message
-						outAdd: (TypInfNextEdge origin: message target: n);
-						outRemoveAt: #nextOriginal ] ]
-		ifAbsent: [  "noop" ]
+	nextOriginal := message outAt: #nextOriginal.
+	message outRemoveAt: #nextOriginal.
+	message outAdd: (TypInfNextEdge origin: message target: nextOriginal)
 ]

@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'node',
 		'state',
-		'context'
+		'context',
+		'transferred'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -26,7 +27,7 @@ TypInfNode >> canSlurpAndBurp [
 	^ in
 		at: #next
 		ifPresent: [ :s | s allSatisfy: #canBeSlurped ]
-		ifAbsent: [ true ]
+		ifAbsent: [ state isNotNil ]
 ]
 
 { #category : #accessing }
@@ -55,6 +56,53 @@ TypInfNode >> context [
 ]
 
 { #category : #accessing }
+TypInfNode >> contextNodesEqualsNextNodes [
+	| queue blacks current a b |
+	queue := LinkedList with: context home root.
+	blacks := IdentitySet new.
+	[ queue isEmpty ]
+		whileFalse: [ current := queue removeFirst.
+			current out
+				at: #next
+				ifPresent: [ :s | s do: [ :e | (blacks includes: e target) ifFalse: [ queue add: e target ] ] ].
+			blacks add: current ].
+	a := context home nodes values flatCollect: #yourself as: IdentitySet.
+	b := blacks.
+	self assert: [ (b difference: a) isEmpty ].
+	self assert: [ (a difference: b) isEmpty ]
+]
+
+{ #category : #accessing }
+TypInfNode >> depthFirstNextDo: aBlock [
+	^ self depthFirstNextDo: aBlock skipping: IdentitySet new
+]
+
+{ #category : #accessing }
+TypInfNode >> depthFirstNextDo: aBlock skipping: anIdentitySet [
+	(anIdentitySet includes: self) ifTrue: [ ^ self ].
+	anIdentitySet add: self.
+	aBlock value: self.
+	out
+		at: #next
+		ifPresent: [ :c | c do: [ :e | e target depthFirstNextDo: aBlock skipping: anIdentitySet ] ]
+]
+
+{ #category : #accessing }
+TypInfNode >> depthFirstNextReverseDo: aBlock [
+	^ self depthFirstNextReverseDo: aBlock skipping: IdentitySet new
+]
+
+{ #category : #accessing }
+TypInfNode >> depthFirstNextReverseDo: aBlock skipping: anIdentitySet [
+	(anIdentitySet includes: self) ifTrue: [ ^ self ].
+	anIdentitySet add: self.
+	aBlock value: self.
+	in
+		at: #next
+		ifPresent: [ :c | c do: [ :e | e origin depthFirstNextReverseDo: aBlock skipping: anIdentitySet ] ]
+]
+
+{ #category : #accessing }
 TypInfNode >> diffSlurpAndBurp [
 	"generates state diff per node instead of just changed or not.
 	useful for debugging"
@@ -69,22 +117,14 @@ TypInfNode >> diffSlurpAndBurp [
 	^ state diff: oldState
 ]
 
-{ #category : #accessing }
-TypInfNode >> initialize: aState [
-	"compute initial state for node"
-
-	state := aState.
-	state at: self put: TypUnknownType instance.
-	out
-		at: #next
-		ifPresent: [ :s | s do: [ :e | e state: state ] ]
-		ifAbsent: [  "noop" ]
-]
-
 { #category : #initialization }
 TypInfNode >> initializeNode: aNode context: aContext [
+	self assert: [ aContext state isNotNil ].
+	transferred := false.
 	node := aNode.
-	context := aContext
+	context := aContext.
+	state := aContext state.
+	state at: self put: TypUnknownType instance
 ]
 
 { #category : #accessing }
@@ -97,6 +137,15 @@ TypInfNode >> invalidateOnClassChange: aClassAnnouncement [
 TypInfNode >> invalidateOnMethodChange: aMethodAnnouncement [
 
 	^ self type invalidateOnMethodChange: aMethodAnnouncement
+]
+
+{ #category : #accessing }
+TypInfNode >> iterate [
+	| changed |
+	changed := false.
+	self
+		depthFirstNextDo: [ :n | n canSlurpAndBurp ifTrue: [ changed := n slurpAndBurp or: changed ] ].
+	^ changed
 ]
 
 { #category : #accessing }
@@ -134,6 +183,7 @@ TypInfNode >> slurp [
 			| first |
 			first := s anyOne.
 			state := first state copy.
+			self assert: [ state isNotNil ].
 			(s copyWithout: first) do: [ :e | state := state covariant: e state ] ].
 	in
 		at: #constrain
@@ -145,7 +195,8 @@ TypInfNode >> slurp [
 							state index
 								at: e
 								ifPresent: [ :t | e type covariant: t ]
-								ifAbsent: [ e type ] ]) , {state at: self}
+								ifAbsent: [ e type ] ])
+						, {state at: self ifAbsent: TypUnknownType instance}
 						reduce: [ :a :b | b covariant: a ]) ]
 ]
 
@@ -158,6 +209,8 @@ TypInfNode >> slurpAndBurp [
 		slurp;
 		transfer;
 		burp.
+	transferred := true.	"quick check for most probable change for performance"
+	(oldState at: self) = (state at: self) ifFalse: [ ^ false ].
 	^ state ~= oldState
 ]
 
@@ -177,6 +230,11 @@ TypInfNode >> transfer [
 
 { #category : #accessing }
 TypInfNode >> type [
-
 	^ state at: self
+]
+
+{ #category : #accessing }
+TypInfNode >> uninstall [
+	self edges do: #remove.
+	self flag: 'TODO what else?'
 ]

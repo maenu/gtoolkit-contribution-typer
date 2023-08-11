@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #accessing }
+TypInfInlinedLookupMessage >> inReturns [
+	^ {self}
+]
+
+{ #category : #accessing }
 TypInfInlinedLookupMessage >> initialize [
 	super initialize.
 	strategies := {TypInfLookupMessageStrategy message: self}.

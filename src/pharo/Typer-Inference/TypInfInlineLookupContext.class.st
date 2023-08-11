@@ -18,10 +18,8 @@ TypInfInlineLookupContext >> newRoot [
 TypInfInlineLookupContext >> visitNode [
 	message outAdd: (TypInfNextEdge origin: message target: root).
 	root
-		inReceiver: message receiver;
-		inArguments: message arguments.
-	message
-		outAt: #nextOriginal
-		ifPresent: [ :n | current outAdd: (TypInfNextEdge origin: current target: n) ]
-		ifAbsent: [  "noop" ]
+		inReceiver: message inReceiver;
+		inArguments: message inArguments.
+	root
+		outAdd: (TypInfNextEdge origin: root target: (message outAt: #nextOriginal))
 ]

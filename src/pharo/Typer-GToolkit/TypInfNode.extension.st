@@ -1,6 +1,14 @@
 Extension { #name : #TypInfNode }
 
 { #category : #'*Typer-GToolkit' }
+TypInfNode >> allNextNodes [
+	| result |
+	result := IdentitySet new.
+	self depthFirstNextDo: [ :n | result add: n ].
+	^ result
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtAsElementIn: aMondrian [
 
 	"	^ BrEditor new
@@ -49,17 +57,27 @@ TypInfNode >> typGtCompactFlowOn: aMondrian [
 						ifFalse: [ edges
 								detect: [ :e | 
 									e origin == edge target
-										and: [ (edges select: [ :f | f origin == e origin ]) size = 1
-												and: [ (edges select: [ :f | f origin == edge target ]) size = 1 ] ] ]
+										and: [ (edges select: [ :f | f origin == edge target ]) size = 1
+												and: [ (edges select: [ :f | f target == edge target ]) size = 1 ] ] ]
 								ifFound: [ :e | 
+									| next |
 									changed := true.
-									queue remove: e ifAbsent: [  "noop" ].
+									next := TypInfNextEdge origin: edge origin target: e target.
+									queue
+										remove: e ifAbsent: [  "noop" ];
+										add: next.
 									edges
 										remove: edge ifAbsent: [  "noop" ];
 										remove: e ifAbsent: [  "noop" ];
-										add: (TypInfNextEdge origin: edge origin target: e target) ]
+										add: next ]
 								ifNone: [  "noop" ] ] ] ].
 	nodes := edges flatCollect: #nodes.
+	"edges := edges
+			, (nodes
+					flatCollect: [ :n | 
+						n edges
+							select: [ :e | (nodes includes: e origin) and: [ nodes includes: e target ] ] ]
+					as: IdentitySet)."
 	aMondrian nodes
 		stencil: [ :e | e typGtAsElementIn: aMondrian ];
 		with: nodes.
@@ -101,18 +119,13 @@ TypInfNode >> typGtFlowFor: aView [
 
 { #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtFlowPaintOn: aMondrian [
-	| edges nodes currentNodes nextNodes |
-	currentNodes := aMondrian existingNodes.
-	nodes := "(context outEdges collect: #target)
-			, "(context nodes values flatCollect: #yourself) difference: currentNodes.
+	| edges nodes |
+	nodes := self allNextNodes.
 	nodes ifEmpty: [ ^ self ].
-	nextNodes := currentNodes , nodes , {self}.
 	edges := (((nodes flatCollect: #inEdges)
-			select: [ :e | nextNodes includes: e origin ])
-			, ((nodes flatCollect: #outEdges) select: [ :e | nextNodes includes: e target ]))
+			select: [ :e | nodes includes: e origin ])
+			, ((nodes flatCollect: #outEdges) select: [ :e | nodes includes: e target ]))
 			asIdentitySet groupedBy: [ :e | e key -> e nodes ].
-	nodes := (edges keys flatCollect: #value) asIdentitySet
-			difference: currentNodes.
 	aMondrian nodes
 		stencil: [ :e | e typGtAsElementIn: aMondrian ];
 		with: nodes.
@@ -165,6 +178,67 @@ TypInfNode >> typGtInlineFlowOn: aMondrian [
 								add: (TypInfNextEdge origin: edge origin target: e target) ]
 						ifNone: [  "noop" ] ] ].
 	nodes := edges flatCollect: #nodes.
+	aMondrian nodes
+		stencil: [ :e | e typGtAsElementIn: aMondrian ];
+		with: nodes.
+	aMondrian edges
+		stencil: [ :e | e typGtAsElementIn: aMondrian ];
+		connect: edges
+			from: #origin
+			to: #target.
+	aMondrian layout force
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypInfNode >> typGtMinimalFlowFor: aView [
+	<gtView>
+	^ aView typGtMondrian
+		title: 'Minimal Flow';
+		priority: 10;
+		painting: [ :m | self typGtMinimalFlowOn: m ]
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypInfNode >> typGtMinimalFlowOn: aMondrian [
+	| nodes edges changed |
+	nodes := context nodes values flatCollect: #yourself.
+	edges := nodes
+			flatCollect: [ :n | 
+				(n in at: #next ifAbsent: IdentitySet new)
+					, (n out at: #next ifAbsent: IdentitySet new) ]
+			as: IdentitySet.
+	changed := true.
+	[ changed ]
+		whileTrue: [ | queue |
+			changed := false.
+			queue := edges asOrderedCollection.
+			[ queue isEmpty ]
+				whileFalse: [ | edge |
+					edge := queue removeFirst.
+					edges
+						detect: [ :e | 
+							e origin == edge target
+								and: [ (edges select: [ :f | f origin == edge target ]) size = 1
+										and: [ (edges select: [ :f | f target == edge target ]) size = 1 ] ] ]
+						ifFound: [ :e | 
+							| next |
+							changed := true.
+							next := TypInfNextEdge origin: edge origin target: e target.
+							queue
+								remove: e ifAbsent: [  "noop" ];
+								add: next.
+							edges
+								remove: edge ifAbsent: [  "noop" ];
+								remove: e ifAbsent: [  "noop" ];
+								add: next ]
+						ifNone: [  "noop" ] ] ].
+	nodes := edges flatCollect: #nodes.
+	edges := edges
+			, (nodes
+					flatCollect: [ :n | 
+						n edges
+							select: [ :e | (nodes includes: e origin) and: [ nodes includes: e target ] ] ]
+					as: IdentitySet).
 	aMondrian nodes
 		stencil: [ :e | e typGtAsElementIn: aMondrian ];
 		with: nodes.
