@@ -13,8 +13,7 @@ Class {
 		'current',
 		'nodes',
 		'iterationsDone',
-		'iterationsMax',
-		'iterations'
+		'iterationsMax'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -42,35 +41,12 @@ TypInfContext >> = anObject [
 ]
 
 { #category : #accessing }
-TypInfContext >> diffIterate [
-	self assert: [ iterations size = (iterationsDone - 1) ].
-	iterations addLast: IdentityDictionary new.
-	^ nodes values
-		inject: false
-		into: [ :rr :c | c inject: rr into: [ :r :e | (self diffIterate: e) or: r ] ]
-]
-
-{ #category : #accessing }
-TypInfContext >> diffIterate: aNode [
-	"skip removed nodes"
-
+TypInfContext >> add: aNode [
 	nodes
 		at: aNode node
-		ifPresent: [ :c | (c includes: aNode) ifFalse: [ ^ false ] ]
-		ifAbsent: [ ^ false ].
-	aNode canSlurpAndBurp ifFalse: [ ^ false ].
-	^ aNode diffSlurpAndBurp index
-		ifEmpty: [ false ]
-		ifNotEmpty: [ :s | 
-			(iterations at: iterationsDone) at: aNode put: s.
-			true ]
-]
-
-{ #category : #running }
-TypInfContext >> diffRun [
-	self visit.
-	[ iterationsDone := iterationsDone + 1.
-	iterationsDone <= iterationsMax and: [ self diffIterate ] ] whileTrue
+		ifPresent: [ :c | c add: aNode ]
+		ifAbsent: [ nodes at: aNode node put: (OrderedCollection with: aNode) ].
+	^ aNode
 ]
 
 { #category : #accessing }
@@ -94,35 +70,26 @@ TypInfContext >> initializeSender: aContext state: aState node: aNode self: aTyp
 	node := aNode.
 	selfType := aType.
 	superType := anotherType.
-	nodes := OrderedIdentityDictionary new.	"ordered to have a cheap, close-to-topological sorting.
-	 makes the run more predictable"
+	nodes := IdentityDictionary new.
 	iterationsDone := 0.
-	iterationsMax := 64.
-	iterations := OrderedCollection new
+	iterationsMax := 64
 ]
 
 { #category : #accessing }
 TypInfContext >> newRoot [
-	| next |
-	next := node typInfNodeInContext: self.
-	nodes
-		at: node
-		ifPresent: [ :c | c add: next ]
-		ifAbsentPut: [ OrderedCollection with: next ].
-	^ next
+	^ self add: (node typInfNodeInContext: self)
 ]
 
 { #category : #accessing }
 TypInfContext >> next: aNode [
-	| next |
-	self flag: 'Q is it always add? look at senders'.
-	next := aNode typInfNodeInContext: self.
-	next := nodes
-			at: aNode
-			ifPresent: [ :c | c add: next ]
-			ifAbsent: [ (nodes at: aNode put: (OrderedCollection with: next)) last ].
-	current outAdd: (TypInfNextEdge origin: current target: next).
-	^ current := next
+	^ self nextEdgeTo: (aNode typInfNodeInContext: self)
+]
+
+{ #category : #accessing }
+TypInfContext >> nextEdgeTo: aNode [
+	self add: aNode.
+	current outAdd: (TypInfNextEdge origin: current target: aNode).
+	^ current := aNode
 ]
 
 { #category : #accessing }
@@ -130,14 +97,18 @@ TypInfContext >> node [
 	^ node
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypInfContext >> nodes [
 	^ nodes
 ]
 
 { #category : #accessing }
 TypInfContext >> nodesAt: aNode [
-	^ self home root allNextNodes select: [ :n | n node == aNode ]
+	^ nodes
+		at: aNode
+		ifAbsent: [ sender
+				ifNil: [ root allNextNodes select: [ :n | n node == aNode ] ]
+				ifNotNil: [ sender nodesAt: aNode ] ]
 ]
 
 { #category : #accessing }

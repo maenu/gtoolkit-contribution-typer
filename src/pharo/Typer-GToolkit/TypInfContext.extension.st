@@ -21,6 +21,16 @@ TypInfContext >> typGtFlowFor: aView [
 ]
 
 { #category : #'*Typer-GToolkit' }
+TypInfContext >> typGtMinimalFlowFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Minimal Flow';
+		priority: 10;
+		object: [ root ];
+		view: #typGtMinimalFlowFor:
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypInfContext >> typGtSourceFor: aView [
 	<gtView>
 	^ aView forward

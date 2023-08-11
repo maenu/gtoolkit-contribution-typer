@@ -35,7 +35,7 @@ TypInfInlineContext >> = anObject [
 TypInfInlineContext >> canInstall [
 	node compiledMethod isRealPrimitive ifTrue: [ ^ false ].
 	node compiledMethod isAbstract ifTrue: [ ^ false ].
-	^ message methodNestingLevel < 8
+	^ message methodNestingLevel < 5
 ]
 
 { #category : #accessing }
@@ -66,13 +66,7 @@ TypInfInlineContext >> message [
 
 { #category : #accessing }
 TypInfInlineContext >> newRoot [
-	| next |
-	next := TypInfInlinedMethod node: node context: self.
-	nodes
-		at: node
-		ifPresent: [ :c | c add: next ]
-		ifAbsentPut: [ OrderedCollection with: next ].
-	^ next
+	^ self add: (TypInfInlinedMethod node: node context: self)
 ]
 
 { #category : #accessing }
@@ -87,18 +81,11 @@ TypInfInlineContext >> visitNode [
 	root
 		inArguments: (node arguments
 				withIndexCollect: [ :n :i | 
-					| next |
-					"basically #next:, but with special inf node"
-					next := TypInfInlinedLocalDefinition
-							node: n
-							context: self
-							proxy: (message inArguments at: i).
-					nodes
-						at: n
-						ifPresent: [ :c | c add: next ]
-						ifAbsent: [ nodes at: n put: (OrderedCollection with: next) ].
-					current outAdd: (TypInfNextEdge origin: current target: next).
-					current := next ]).
+					self
+						nextEdgeTo: (TypInfInlinedLocalDefinition
+								node: n
+								context: self
+								proxy: (message inArguments at: i)) ]).
 	node pragmas do: [ :p | self visitNode: p ].
 	self visitNode: node body.
 	node lastIsReturn

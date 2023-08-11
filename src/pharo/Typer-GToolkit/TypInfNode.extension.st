@@ -201,7 +201,7 @@ TypInfNode >> typGtMinimalFlowFor: aView [
 { #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtMinimalFlowOn: aMondrian [
 	| nodes edges changed |
-	nodes := context nodes values flatCollect: #yourself.
+	nodes := context root allNextNodes.
 	edges := nodes
 			flatCollect: [ :n | 
 				(n in at: #next ifAbsent: IdentitySet new)

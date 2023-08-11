@@ -39,7 +39,7 @@ TypInfBlockContext >> block [
 
 { #category : #accessing }
 TypInfBlockContext >> canInstall [
-	^ message methodNestingLevel < 9
+	^ message methodNestingLevel < 6
 ]
 
 { #category : #accessing }
@@ -73,18 +73,11 @@ TypInfBlockContext >> visitNode [
 	current
 		inArguments: (node arguments
 				withIndexCollect: [ :n :i | 
-					| next |
-					"basically #next:, but with special inf node"
-					next := TypInfInlinedLocalDefinition
-							node: n
-							context: self
-							proxy: (message inArguments at: i).
-					nodes
-						at: n
-						ifPresent: [ :c | c add: next ]
-						ifAbsent: [ nodes at: n put: (OrderedCollection with: next) ].
-					current outAdd: (TypInfNextEdge origin: current target: next).
-					current := next ]).
+					self
+						nextEdgeTo: (TypInfInlinedLocalDefinition
+								node: n
+								context: self
+								proxy: (message inArguments at: i)) ]).
 	self visitNode: node body.
 	node body lastIsReturn
 		ifTrue: [ current outAdd: (TypInfReturnEdge origin: current target: block context root) ]

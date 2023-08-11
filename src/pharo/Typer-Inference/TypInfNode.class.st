@@ -102,21 +102,6 @@ TypInfNode >> depthFirstNextReverseDo: aBlock skipping: anIdentitySet [
 		ifPresent: [ :c | c do: [ :e | e origin depthFirstNextReverseDo: aBlock skipping: anIdentitySet ] ]
 ]
 
-{ #category : #accessing }
-TypInfNode >> diffSlurpAndBurp [
-	"generates state diff per node instead of just changed or not.
-	useful for debugging"
-
-	| oldState |
-	self assert: [ self canSlurpAndBurp ].
-	oldState := state copy.
-	self
-		slurp;
-		transfer;
-		burp.
-	^ state diff: oldState
-]
-
 { #category : #initialization }
 TypInfNode >> initializeNode: aNode context: aContext [
 	self assert: [ aContext state isNotNil ].
@@ -226,6 +211,11 @@ TypInfNode >> transfer [
 	"transfer the given state from in to out"
 
 	
+]
+
+{ #category : #accessing }
+TypInfNode >> transferred [
+	^ transferred
 ]
 
 { #category : #accessing }

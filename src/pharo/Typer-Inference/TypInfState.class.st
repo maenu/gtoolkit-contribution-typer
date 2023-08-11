@@ -40,14 +40,7 @@ TypInfState >> at: aNode put: aType [
 TypInfState >> covariant: aState [
 	| copy |
 	copy := self copy.
-	aState
-		keysAndValuesDo: [ :n :t | 
-			copy
-				at: n
-				put: (index
-						at: n
-						ifPresent: [ :tt | t covariant: tt ]
-						ifAbsent: [ t ]) ].
+	aState keysAndValuesDo: [ :n :t | copy at: n covariantPut: t ].
 	^ copy
 ]
 
