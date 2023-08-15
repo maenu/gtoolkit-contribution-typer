@@ -13,7 +13,9 @@ Class {
 		'current',
 		'nodes',
 		'iterationsDone',
-		'iterationsMax'
+		'iterationsMax',
+		'iterations',
+		'children'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -50,6 +52,18 @@ TypInfContext >> add: aNode [
 ]
 
 { #category : #accessing }
+TypInfContext >> children [
+	^ children
+]
+
+{ #category : #accessing }
+TypInfContext >> findInRead: aVariable [
+	aVariable
+		depthFirstNextReverseDo: [ :n | n node == aVariable node variable definingNode ifTrue: [ ^ n ] ].
+	Error signal: 'no read found'
+]
+
+{ #category : #accessing }
 TypInfContext >> hash [
 	^ ({sender.
 		node.
@@ -71,13 +85,15 @@ TypInfContext >> initializeSender: aContext state: aState node: aNode self: aTyp
 	selfType := aType.
 	superType := anotherType.
 	nodes := IdentityDictionary new.
+	children := IdentitySet new.
 	iterationsDone := 0.
-	iterationsMax := 64
+	iterationsMax := 32.
+	iterations := OrderedCollection new
 ]
 
 { #category : #accessing }
 TypInfContext >> newRoot [
-	^ self add: (node typInfNodeInContext: self)
+	^ (node typInfNodeInContext: self)
 ]
 
 { #category : #accessing }
@@ -104,11 +120,8 @@ TypInfContext >> nodes [
 
 { #category : #accessing }
 TypInfContext >> nodesAt: aNode [
-	^ nodes
-		at: aNode
-		ifAbsent: [ sender
-				ifNil: [ root allNextNodes select: [ :n | n node == aNode ] ]
-				ifNotNil: [ sender nodesAt: aNode ] ]
+	^ (nodes at: aNode ifAbsent: [ OrderedCollection new ])
+		, (children flatCollect: [ :c | c nodesAt: aNode ] as: OrderedCollection)
 ]
 
 { #category : #accessing }
@@ -128,6 +141,17 @@ TypInfContext >> run [
 	iterationsDone <= iterationsMax and: [ root iterate ] ] whileTrue
 ]
 
+{ #category : #running }
+TypInfContext >> runDiff [
+	self visit.
+	[ iterationsDone := iterationsDone + 1.
+	iterationsDone <= iterationsMax
+		and: [ | iteration |
+			iteration := root iterateDiff.
+			iterations add: iteration.
+			iteration isNotEmpty ] ] whileTrue
+]
+
 { #category : #accessing }
 TypInfContext >> self [
 	^ selfType
@@ -136,6 +160,11 @@ TypInfContext >> self [
 { #category : #accessing }
 TypInfContext >> sender [
 	^ sender
+]
+
+{ #category : #accessing }
+TypInfContext >> stackSize [
+	^ 1 + (sender ifNil: 0 ifNotNil: #stackSize)
 ]
 
 { #category : #accessing }
@@ -150,7 +179,7 @@ TypInfContext >> super [
 
 { #category : #accessing }
 TypInfContext >> visit [
-	current := root := self newRoot.
+	current := root := self add: self newRoot.
 	self visitNode
 ]
 

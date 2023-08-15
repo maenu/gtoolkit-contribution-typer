@@ -35,7 +35,7 @@ TypInfInlineContext >> = anObject [
 TypInfInlineContext >> canInstall [
 	node compiledMethod isRealPrimitive ifTrue: [ ^ false ].
 	node compiledMethod isAbstract ifTrue: [ ^ false ].
-	^ message methodNestingLevel < 5
+	^ self stackSize < 3
 ]
 
 { #category : #accessing }
@@ -50,13 +50,8 @@ TypInfInlineContext >> initializeMessage: aMessage [
 
 { #category : #accessing }
 TypInfInlineContext >> install [
-	"self home root contextNodesEqualsNextNodes."
-	Transcript
-		nextPutAll: 'install ';
-		nextPutAll: node asString lines first;
-		cr.
-	self visit.
-	"self home root contextNodesEqualsNextNodes"
+	sender children add: self.
+	self visit
 ]
 
 { #category : #accessing }
@@ -66,12 +61,13 @@ TypInfInlineContext >> message [
 
 { #category : #accessing }
 TypInfInlineContext >> newRoot [
-	^ self add: (TypInfInlinedMethod node: node context: self)
+	^ TypInfInlinedMethod node: node context: self
 ]
 
 { #category : #accessing }
 TypInfInlineContext >> uninstall [
-	root uninstall.
+	sender children remove: self.
+	(nodes values flatCollect: #yourself) do: #uninstall.
 	current := root := nil
 ]
 
@@ -91,6 +87,8 @@ TypInfInlineContext >> visitNode [
 	node lastIsReturn
 		ifFalse: [ self next: RBVariableNode selfNode.
 			current outAdd: (TypInfReturnEdge origin: current target: root) ].
-	current
-		outAdd: (TypInfNextEdge origin: current target: (message outAt: #nextOriginal))
+	message
+		outAt: #nextOriginal
+		ifPresent: [ :n | current outAdd: (TypInfNextEdge origin: current target: n) ]
+		ifAbsent: [  "noop" ]
 ]

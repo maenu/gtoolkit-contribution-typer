@@ -97,6 +97,11 @@ TypEdge >> printOn: aStream [
 ]
 
 { #category : #accessing }
+TypEdge >> remove [
+	origin outRemove: self
+]
+
+{ #category : #accessing }
 TypEdge >> target [
 
 	^ target

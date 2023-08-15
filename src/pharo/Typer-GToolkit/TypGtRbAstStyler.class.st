@@ -22,7 +22,7 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 	selfType := ast methodClass typAsType.
 	text := aText.
 	[ ast typInfTypeSelf.
-	self visitNode: ast ] on: Error do: [ :e | Halt once ].
+	self visitNode: ast ] on: Error do: [ :e | Transcript show: e stackString ].
 	text := nil.
 	selfType := nil
 ]

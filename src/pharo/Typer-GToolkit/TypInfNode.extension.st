@@ -213,23 +213,24 @@ TypInfNode >> typGtMinimalFlowOn: aMondrian [
 			changed := false.
 			queue := edges asOrderedCollection.
 			[ queue isEmpty ]
-				whileFalse: [ | edge |
-					edge := queue removeFirst.
+				whileFalse: [ | a |
+					a := queue removeFirst.
 					edges
-						detect: [ :e | 
-							e origin == edge target
-								and: [ (edges select: [ :f | f origin == edge target ]) size = 1
-										and: [ (edges select: [ :f | f target == edge target ]) size = 1 ] ] ]
-						ifFound: [ :e | 
+						detect: [ :b | 
+							b origin == a target
+								and: [ (edges select: [ :c | c origin == a target ]) size = 1
+										and: [ (edges select: [ :c | c target == a target ]) size = 1 ] ] ]
+						ifFound: [ :b | 
 							| next |
 							changed := true.
-							next := TypInfNextEdge origin: edge origin target: e target.
+							next := TypInfNextEdge origin: a origin target: b target.
 							queue
-								remove: e ifAbsent: [  "noop" ];
+								remove: a ifAbsent: [  "noop" ];
+								remove: b ifAbsent: [  "noop" ];
 								add: next.
 							edges
-								remove: edge ifAbsent: [  "noop" ];
-								remove: e ifAbsent: [  "noop" ];
+								remove: a ifAbsent: [  "noop" ];
+								remove: b ifAbsent: [  "noop" ];
 								add: next ]
 						ifNone: [  "noop" ] ] ].
 	nodes := edges flatCollect: #nodes.

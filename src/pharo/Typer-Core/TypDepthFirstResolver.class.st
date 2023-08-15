@@ -48,6 +48,13 @@ TypDepthFirstResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 ]
 
 { #category : #accessing }
+TypDepthFirstResolver >> preResolve: aLookup [
+	(resolver preResolve: aLookup) ifNotNil: [ :e | ^ e ].
+	aLookup hasSuper ifTrue: [ ^ self preResolve: aLookup asSuper ].
+	^ nil
+]
+
+{ #category : #accessing }
 TypDepthFirstResolver >> printOn: aStream [
 
 	aStream nextPutAll: '↓'.

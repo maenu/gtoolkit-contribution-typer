@@ -110,21 +110,6 @@ TypType >> boundTo: aType [
 	^ self
 ]
 
-{ #category : #lookup }
-TypType >> canLookupMethod: aSymbol [
-	| arguments |
-	arguments := aSymbol numArgs timesRepeat: [ TypUnknownType instance ].
-	^ self canLookupMethod: aSymbol arguments: arguments
-]
-
-{ #category : #lookup }
-TypType >> canLookupMethod: aSymbol arguments: aCollection [
-	^ TypMethodIndex instance
-		canLookupMethodReceiver: self
-		selector: aSymbol
-		arguments: aCollection
-]
-
 { #category : #converting }
 TypType >> contravariant: aType [
 
@@ -313,6 +298,13 @@ TypType >> parameters [
 	^ self super parameters
 ]
 
+{ #category : #accessing }
+TypType >> preResolveMethod: aLookup [
+	^ (TypMethodIndex instance preResolve: aLookup)
+		ifNil: [ #() ]
+		ifNotNil: [ :e | {e} ]
+]
+
 { #category : #'as yet unclassified' }
 TypType >> printNameOn: aStream skipping: anIdentitySet [
 
@@ -329,11 +321,6 @@ TypType >> printOn: aStream [
 TypType >> printOn: aStream skipping: anIdentitySet [
 
 	self subclassResponsibility
-]
-
-{ #category : #accessing }
-TypType >> resolvedMethodLookups: aLookup [
-	^ {TypMethodIndex instance resolvedLookup: aLookup}
 ]
 
 { #category : #compatibility }

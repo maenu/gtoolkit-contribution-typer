@@ -14,13 +14,8 @@ TypInfNextEdge class >> origin: aNode target: anotherNode [
 ]
 
 { #category : #accessing }
-TypInfNextEdge >> canBeSlurped [
-	^ self state index includesKey: origin
-]
-
-{ #category : #accessing }
 TypInfNextEdge >> state [
-	^ state ifNil: [ state := origin state ]
+	^ state
 ]
 
 { #category : #accessing }

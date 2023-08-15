@@ -39,7 +39,6 @@ TypInfMessage >> initialize [
 	strategies := {TypInfAbstractInterpretationMessageStrategy message: self.
 			TypInfInlineMethodMessageStrategy message: self.
 			TypInfLookupMessageStrategy message: self.
-			TypInfReceiverConstrainingMessageStrategy message: self.
 			TypInfNullMessageStrategy message: self}.
 	currentStrategy := strategies last
 ]

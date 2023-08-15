@@ -94,6 +94,11 @@ TypIndex >> invalidateOnMethodChange: aMethodAnnouncement [
 ]
 
 { #category : #accessing }
+TypIndex >> preResolve: aLookup [
+	^ resolver preResolve: aLookup
+]
+
+{ #category : #accessing }
 TypIndex >> resolve: aLookup [
 
 	^ self outAt: aLookup ifAbsent: [ 

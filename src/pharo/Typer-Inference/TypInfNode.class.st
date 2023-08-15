@@ -26,7 +26,7 @@ TypInfNode >> burp [
 TypInfNode >> canSlurpAndBurp [
 	^ in
 		at: #next
-		ifPresent: [ :s | s allSatisfy: #canBeSlurped ]
+		ifPresent: [ :s | s allSatisfy: [ :e | e state isNotNil ] ]
 		ifAbsent: [ state isNotNil ]
 ]
 
@@ -134,8 +134,14 @@ TypInfNode >> iterate [
 ]
 
 { #category : #accessing }
-TypInfNode >> methodNestingLevel [
-	^ self methodNode methodNestingLevel
+TypInfNode >> iterateDiff [
+	| changes |
+	changes := OrderedIdentityDictionary new.
+	self
+		depthFirstNextDo: [ :n | 
+			n canSlurpAndBurp
+				ifTrue: [ n slurpAndBurpDiff ifNotEmpty: [ :s | changes at: n put: s ] ] ].
+	^ changes
 ]
 
 { #category : #accessing }
@@ -168,9 +174,9 @@ TypInfNode >> slurp [
 			| first |
 			first := s anyOne.
 			state := first state copy.
-			self assert: [ state isNotNil ].
 			(s copyWithout: first) do: [ :e | state := state covariant: e state ] ].
-	in
+	self flag: #constrain	
+	"in
 		at: #constrain
 		ifPresent: [ :s | 
 			state
@@ -182,7 +188,7 @@ TypInfNode >> slurp [
 								ifPresent: [ :t | e type covariant: t ]
 								ifAbsent: [ e type ] ])
 						, {state at: self ifAbsent: TypUnknownType instance}
-						reduce: [ :a :b | b covariant: a ]) ]
+						reduce: [ :a :b | b covariant: a ]) ]"
 ]
 
 { #category : #accessing }
@@ -194,9 +200,24 @@ TypInfNode >> slurpAndBurp [
 		slurp;
 		transfer;
 		burp.
-	transferred := true.	"quick check for most probable change for performance"
-	(oldState at: self) = (state at: self) ifFalse: [ ^ false ].
+	transferred := true.
 	^ state ~= oldState
+]
+
+{ #category : #accessing }
+TypInfNode >> slurpAndBurpDiff [
+	"generates state diff per node instead of just changed or not.
+	useful for debugging"
+
+	| oldState |
+	self assert: [ self canSlurpAndBurp ].
+	oldState := state copy.
+	self
+		slurp;
+		transfer;
+		burp.
+	transferred := true.
+	^ state diff: oldState
 ]
 
 { #category : #accessing }
@@ -221,6 +242,13 @@ TypInfNode >> transferred [
 { #category : #accessing }
 TypInfNode >> type [
 	^ state at: self
+]
+
+{ #category : #accessing }
+TypInfNode >> unconstrain: aNode [
+	out
+		at: #constrain
+		ifPresent: [ :s | s select: [ :e | e target = aNode ] thenDo: #remove ]
 ]
 
 { #category : #accessing }

@@ -5,15 +5,8 @@ Class {
 }
 
 { #category : #accessing }
-TypInfLocal >> canSlurpAndBurp [
-	^ state isNotNil and: [ state index includesKey: self inRead ]
-]
-
-{ #category : #accessing }
 TypInfLocal >> findInRead [
-	self
-		depthFirstNextReverseDo: [ :n | n node == node variable definingNode ifTrue: [ ^ n ] ].
-	Error signal: 'no read found'
+	^ context findInRead: self
 ]
 
 { #category : #'meta-object-protocol' }
@@ -31,9 +24,11 @@ TypInfLocal >> inRead: aNode [
 { #category : #accessing }
 TypInfLocal >> slurp [
 	super slurp.
-	in
+	self flag: #constrain.
+	"in
 		at: #constrain
 		ifPresent: [ :s | s do: [ :e | self constrain: self inRead to: e type ] ]
+		ifAbsent: [ self unconstrain: self inRead ]"
 ]
 
 { #category : #accessing }

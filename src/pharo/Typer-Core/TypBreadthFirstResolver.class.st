@@ -66,6 +66,12 @@ TypBreadthFirstResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 ]
 
 { #category : #accessing }
+TypBreadthFirstResolver >> preResolve: aLookup [
+	resolvers do: [ :r | (r preResolve: aLookup) ifNotNil: [ :e | ^ e ] ].
+	^ nil
+]
+
+{ #category : #accessing }
 TypBreadthFirstResolver >> printOn: aStream [
 
 	aStream nextPutAll: '→{'.

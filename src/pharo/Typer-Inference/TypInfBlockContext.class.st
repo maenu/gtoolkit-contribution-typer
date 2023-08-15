@@ -39,7 +39,19 @@ TypInfBlockContext >> block [
 
 { #category : #accessing }
 TypInfBlockContext >> canInstall [
-	^ message methodNestingLevel < 6
+	^ self stackSize < 4
+]
+
+{ #category : #accessing }
+TypInfBlockContext >> findInRead: aVariable [
+	aVariable
+		depthFirstNextReverseDo: [ :n | n node == aVariable node variable definingNode ifTrue: [ ^ n ] ].
+	block
+		depthFirstNextReverseDo: [ :n | n node == aVariable node variable definingNode ifTrue: [ ^ n ] ].
+	self flag: 'Q why can we end up here?'.
+	self home root
+		depthFirstNextDo: [ :n | n node == aVariable node variable definingNode ifTrue: [ ^ n ] ].
+	Error signal: 'no read found'
 ]
 
 { #category : #accessing }
@@ -63,13 +75,14 @@ TypInfBlockContext >> newRoot [
 ]
 
 { #category : #accessing }
-TypInfBlockContext >> nodesAt: aNode [
-	^ nodes at: aNode ifAbsent: [ block context nodesAt: aNode ]
+TypInfBlockContext >> stackSize [
+	^ super stackSize max: 1 + block context stackSize
 ]
 
 { #category : #accessing }
 TypInfBlockContext >> visitNode [
 	message outAdd: (TypInfNextEdge origin: message target: root).
+	root outAt: #definition put: block.
 	current
 		inArguments: (node arguments
 				withIndexCollect: [ :n :i | 

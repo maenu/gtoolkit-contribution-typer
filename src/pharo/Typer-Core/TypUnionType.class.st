@@ -72,11 +72,6 @@ TypUnionType >> at: aString [
 	^ (types collect: [ :e | e at: aString ]) typAsType
 ]
 
-{ #category : #lookup }
-TypUnionType >> canLookupMethod: aSymbol arguments: aCollection [
-	^ types anySatisfy: [ :e | e canLookupMethod: aSymbol arguments: aCollection ]
-]
-
 { #category : #testing }
 TypUnionType >> hasSuper [
 
@@ -154,6 +149,18 @@ TypUnionType >> postCopy [
 	types := types copy
 ]
 
+{ #category : #accessing }
+TypUnionType >> preResolveMethod: aLookup [
+	^ (types
+		flatCollect: [ :e | 
+			e
+				preResolveMethod: (TypMethodLookup
+						receiver: e
+						selector: aLookup selector
+						arguments: aLookup arguments
+						super: nil) ]) reject: #isNil
+]
+
 { #category : #'as yet unclassified' }
 TypUnionType >> printNameOn: aStream skipping: anIdentitySet [
 
@@ -202,19 +209,6 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 			remove: e;
 			ifNotEmpty: [ aStream << ',' ] ].
 	aStream << '}'
-]
-
-{ #category : #accessing }
-TypUnionType >> resolvedMethodLookups: aLookup [
-	^ types
-		select: [ :e | e canLookupMethod: aLookup selector ]
-		thenFlatCollect: [ :e | 
-			e
-				resolvedMethodLookups: (TypMethodLookup
-						receiver: e
-						selector: aLookup selector
-						arguments: aLookup arguments
-						super: nil) ]
 ]
 
 { #category : #compatibility }

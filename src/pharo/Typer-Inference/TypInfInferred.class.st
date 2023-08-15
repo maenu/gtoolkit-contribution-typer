@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #accessing }
+TypInfInferred >> block [
+	^ [ 1 ] value
+]
+
+{ #category : #accessing }
 TypInfInferred >> block2: aBoolean [
 	^ aBoolean ifTrue: [ 1 ] ifFalse: [ 0 ]
 ]

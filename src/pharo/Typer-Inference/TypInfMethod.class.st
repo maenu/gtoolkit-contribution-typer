@@ -15,15 +15,6 @@ TypInfMethod >> inReturns [
 ]
 
 { #category : #accessing }
-TypInfMethod >> methodNestingLevel [
-	^ 1
-		+ (self
-				inAt: #next
-				ifPresent: #methodNestingLevel
-				ifAbsent: 0)
-]
-
-{ #category : #accessing }
 TypInfMethod >> methodNode [
 
 	^ self

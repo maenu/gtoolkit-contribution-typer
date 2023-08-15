@@ -16,7 +16,10 @@ TypInfState >> = anObject [
 
 { #category : #accessing }
 TypInfState >> at: anObject [
-	^ self at: anObject ifAbsent: [ Halt now ]
+	^ self
+		at: anObject
+		ifAbsent: [ "Halt now."
+			TypUnknownType instance ]
 ]
 
 { #category : #accessing }
@@ -66,6 +69,11 @@ TypInfState >> hash [
 ]
 
 { #category : #accessing }
+TypInfState >> ifNotEmpty: aBlock [
+	^ self isEmpty ifTrue: [ self ] ifFalse: [ aBlock cull: self ]
+]
+
+{ #category : #accessing }
 TypInfState >> index [
 	^ index
 ]
@@ -74,6 +82,11 @@ TypInfState >> index [
 TypInfState >> initialize [
 	super initialize.
 	index := IdentityDictionary new
+]
+
+{ #category : #accessing }
+TypInfState >> isEmpty [
+	^ index isEmpty
 ]
 
 { #category : #accessing }
@@ -90,4 +103,9 @@ TypInfState >> keysAndValuesDo: aBlock [
 TypInfState >> postCopy [
 	super postCopy.
 	index := index copy
+]
+
+{ #category : #accessing }
+TypInfState >> removeKey: anObject [
+	^ index removeKey: anObject
 ]

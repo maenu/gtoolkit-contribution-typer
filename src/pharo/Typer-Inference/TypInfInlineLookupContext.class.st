@@ -6,7 +6,12 @@ Class {
 
 { #category : #accessing }
 TypInfInlineLookupContext >> canInstall [
-	^ selfType canLookupMethod: message selector
+	^ (selfType
+		preResolveMethod: (TypMethodLookup
+				receiver: selfType
+				selector: message selector
+				arguments: message arguments
+				super: nil)) isNotEmpty
 ]
 
 { #category : #accessing }

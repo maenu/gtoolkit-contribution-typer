@@ -137,15 +137,15 @@ TypParametricType >> contravariant: aType [
 
 { #category : #converting }
 TypParametricType >> covariant: aType [
-
 	| copyParameters otherParameters |
-	(aType isParametric and: [ 
-		 name = aType name and: [ parameters keys = aType parameters keys ] ]) 
+	(aType isParametric
+		and: [ name = aType name and: [ parameters keys = aType parameters keys ] ])
 		ifFalse: [ ^ super covariant: aType ].
 	otherParameters := aType parameters.
+	otherParameters = parameters ifTrue: [ ^ self ].
 	copyParameters := OrderedCollection new.
-	parameters keysAndValuesDo: [ :n :t | 
-		copyParameters add: (t covariant: (aType at: n)) ].
+	parameters
+		keysAndValuesDo: [ :n :t | copyParameters add: (t covariant: (aType at: n)) ].
 	^ self withParameters: copyParameters
 ]
 

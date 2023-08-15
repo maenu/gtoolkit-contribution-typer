@@ -16,9 +16,11 @@ TypInfInlinedLocalDefinition class >> node: aNode context: aContext proxy: anObj
 { #category : #accessing }
 TypInfInlinedLocalDefinition >> slurp [
 	super slurp.
-	in
+	self flag: #constrain.
+	"in
 		at: #constrain
 		ifPresent: [ :s | s do: [ :e | self constrain: (self inArgumentAt: 1) to: e type ] ]
+		ifAbsent: [ self unconstrain: (self inArgumentAt: 1) ]"
 ]
 
 { #category : #accessing }

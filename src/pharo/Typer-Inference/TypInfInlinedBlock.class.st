@@ -1,6 +1,6 @@
 Class {
 	#name : #TypInfInlinedBlock,
-	#superclass : #TypInfInlinedMethod,
+	#superclass : #TypInfBlock,
 	#category : #'Typer-Inference-Core'
 }
 
