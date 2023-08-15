@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #accessing }
+TypInfLocal >> constrainTo: aType from: aNode [
+	super constrainTo: aType from: aNode.
+	self inRead constrainTo: aType from: aNode
+]
+
+{ #category : #accessing }
 TypInfLocal >> findInRead [
 	^ context findInRead: self
 ]
@@ -19,16 +25,6 @@ TypInfLocal >> inRead [
 TypInfLocal >> inRead: aNode [
 
 	^ self inAt: #read put: aNode
-]
-
-{ #category : #accessing }
-TypInfLocal >> slurp [
-	super slurp.
-	self flag: #constrain.
-	"in
-		at: #constrain
-		ifPresent: [ :s | s do: [ :e | self constrain: self inRead to: e type ] ]
-		ifAbsent: [ self unconstrain: self inRead ]"
 ]
 
 { #category : #accessing }

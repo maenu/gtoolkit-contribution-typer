@@ -25,6 +25,11 @@ TypInfInferred >> block: aBoolean [
 ]
 
 { #category : #accessing }
+TypInfInferred >> blockTrue: aBoolean [
+	^ aBoolean ifTrue: [ 1 ]
+]
+
+{ #category : #accessing }
 TypInfInferred >> blockUseSameTwice2: aBoolean [
 	| block |
 	block := [ 2 ].
@@ -57,6 +62,11 @@ TypInfInferred >> blockUseSameTwice: aBoolean [
 	| block |
 	block := [ 2 ].
 	^ aBoolean ifTrue: block ifFalse: block
+]
+
+{ #category : #accessing }
+TypInfInferred >> constrain: x [
+	x blockUseSameTwice: true
 ]
 
 { #category : #requirements }

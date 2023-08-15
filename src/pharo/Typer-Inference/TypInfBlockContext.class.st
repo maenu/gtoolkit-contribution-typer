@@ -39,7 +39,7 @@ TypInfBlockContext >> block [
 
 { #category : #accessing }
 TypInfBlockContext >> canInstall [
-	^ self stackSize < 4
+	^ self stackSize < 6
 ]
 
 { #category : #accessing }

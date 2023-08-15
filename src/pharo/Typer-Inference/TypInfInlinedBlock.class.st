@@ -13,6 +13,6 @@ TypInfInlinedBlock >> transfer [
 				arguments: (self inArguments collect: #type)
 				argumentsOptional: false
 				signalsAlways: nil)
-				outAt: #method ifAbsentPut: [ self ];
+				typInfNode: context block;
 				yourself)
 ]

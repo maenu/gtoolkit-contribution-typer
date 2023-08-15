@@ -32,19 +32,22 @@ TypInfNode >> canSlurpAndBurp [
 
 { #category : #accessing }
 TypInfNode >> constrain: aNode to: aType [
-	"ensures a constrain edge from self to aNode with a type."
-
 	state at: aNode put: ((state at: aNode) covariant: aType).
-	out
+	aNode constrainTo: aType from: self
+]
+
+{ #category : #accessing }
+TypInfNode >> constrainTo: aType from: aNode [
+	aNode out
 		at: #constrain
 		ifPresent: [ :s | 
 			s
-				detect: [ :e | e target = aNode ]
+				detect: [ :e | e target = self ]
 				ifFound: [ :e | 
 					e type: aType.
 					^ e ] ].
-	^ self
-		outAdd: ((TypInfConstrainEdge origin: self target: aNode)
+	aNode
+		outAdd: ((TypInfConstrainEdge origin: aNode target: self)
 				type: aType;
 				yourself)
 ]
@@ -175,8 +178,7 @@ TypInfNode >> slurp [
 			first := s anyOne.
 			state := first state copy.
 			(s copyWithout: first) do: [ :e | state := state covariant: e state ] ].
-	self flag: #constrain	
-	"in
+	in
 		at: #constrain
 		ifPresent: [ :s | 
 			state
@@ -188,7 +190,8 @@ TypInfNode >> slurp [
 								ifPresent: [ :t | e type covariant: t ]
 								ifAbsent: [ e type ] ])
 						, {state at: self ifAbsent: TypUnknownType instance}
-						reduce: [ :a :b | b covariant: a ]) ]"
+						reduce: [ :a :b | b covariant: a ]) ].
+	out at: #constrain ifPresent: [ :s | s copy do: #remove ]
 ]
 
 { #category : #accessing }
@@ -246,9 +249,14 @@ TypInfNode >> type [
 
 { #category : #accessing }
 TypInfNode >> unconstrain: aNode [
-	out
+	aNode unconstrainFrom: self
+]
+
+{ #category : #accessing }
+TypInfNode >> unconstrainFrom: aNode [
+	aNode out
 		at: #constrain
-		ifPresent: [ :s | s select: [ :e | e target = aNode ] thenDo: #remove ]
+		ifPresent: [ :s | s select: [ :e | e target = self ] thenDo: #remove ]
 ]
 
 { #category : #accessing }
