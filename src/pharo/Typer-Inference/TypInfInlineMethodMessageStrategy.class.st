@@ -43,9 +43,6 @@ TypInfInlineMethodMessageStrategy >> initialize [
 TypInfInlineMethodMessageStrategy >> install [
 	| oldContexts |
 	self assert: [ self canInstall ].
-	Transcript
-		show: 'install ' , self asString;
-		cr.
 	contexts
 		ifEmpty: [ self flag: 'TODO returns?'.
 			message
@@ -104,9 +101,6 @@ TypInfInlineMethodMessageStrategy >> transfer [
 
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> uninstall [
-	Transcript
-		show: 'uninstall ' , self asString;
-		cr.
 	contexts
 		do: #uninstall;
 		removeAll.

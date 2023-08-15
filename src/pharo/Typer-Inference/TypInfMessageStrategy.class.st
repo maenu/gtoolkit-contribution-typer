@@ -26,9 +26,7 @@ TypInfMessageStrategy >> initializeMessage: aMessage [
 
 { #category : #accessing }
 TypInfMessageStrategy >> install [
-	Transcript
-		show: 'install ' , self asString;
-		cr
+	
 ]
 
 { #category : #accessing }
@@ -38,7 +36,5 @@ TypInfMessageStrategy >> transfer [
 
 { #category : #accessing }
 TypInfMessageStrategy >> uninstall [
-	Transcript
-		show: 'uninstall ' , self asString;
-		cr
+	
 ]

@@ -12,52 +12,25 @@ TypInfExamples >> block [
 ]
 
 { #category : #requirements }
-TypInfExamples >> block2 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #block2:
-]
-
-{ #category : #requirements }
-TypInfExamples >> block3 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #block3:
-]
-
-{ #category : #requirements }
 TypInfExamples >> blockUseSameTwice [
 
 	<gtExample>
 	^ self infer: TypInfInferred >> #blockUseSameTwice:
 ]
 
-{ #category : #requirements }
-TypInfExamples >> blockUseSameTwice2 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #blockUseSameTwice2:
-]
-
-{ #category : #requirements }
-TypInfExamples >> blockUseSameTwice3 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #blockUseSameTwice3:
-]
-
-{ #category : #requirements }
-TypInfExamples >> blockUseSameTwice4 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #blockUseSameTwice4:
-]
-
-{ #category : #requirements }
-TypInfExamples >> blockUseSameTwice5 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #blockUseSameTwice5:
+{ #category : #accessing }
+TypInfExamples >> cleanContextRun: aMethod [
+	| node selfType |
+	node := aMethod ast.
+	selfType := node methodClass typAsType.
+	^ (TypInfContext
+		sender: nil
+		state: TypInfState new
+		node: node
+		self: selfType
+		super: selfType superOrNil)
+		run;
+		yourself
 ]
 
 { #category : #requirements }
@@ -99,96 +72,16 @@ TypInfExamples >> inlined [
 ]
 
 { #category : #requirements }
-TypInfExamples >> inlinedSync [
-
-	<gtExample>
-	^ self inferSync: TypInfInferred >> #inlined
-]
-
-{ #category : #requirements }
 TypInfExamples >> message [
 
 	<gtExample>
 	^ self infer: TypInfInferred >> #message
 ]
 
-{ #category : #requirements }
-TypInfExamples >> message2 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #message2
-]
-
-{ #category : #requirements }
-TypInfExamples >> message3 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #message3
-]
-
-{ #category : #requirements }
-TypInfExamples >> message4 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #message4
-]
-
-{ #category : #requirements }
-TypInfExamples >> message5 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #message5
-]
-
-{ #category : #requirements }
-TypInfExamples >> message6 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #message6
-]
-
-{ #category : #requirements }
-TypInfExamples >> message6Monitored [
-
-	<gtExample>
-	^ self inferMonitored: TypInfInferred >> #message6
-]
-
-{ #category : #requirements }
-TypInfExamples >> message6Sync [
-
-	<gtExample>
-	^ self inferSync: TypInfInferred >> #message6
-]
-
-{ #category : #requirements }
-TypInfExamples >> message7 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #message7
-]
-
-{ #category : #requirements }
-TypInfExamples >> message7Sync [
-
-	<gtExample>
-	^ self inferSync: TypInfInferred >> #message7
-]
-
 { #category : #accessing }
 TypInfExamples >> plus [
 	<gtExample>
-	| node selfType |
-	node := (SmallInteger >> #+) ast.
-	selfType := node methodClass typAsType.
-	^ (TypInfContext
-		sender: nil
-		state: TypInfState new
-		node: node
-		self: selfType
-		super: selfType superOrNil)
-		run;
-		yourself
+	^ self cleanContextRun: SmallInteger >> #+
 ]
 
 { #category : #requirements }
@@ -196,60 +89,4 @@ TypInfExamples >> translated [
 
 	<gtExample>
 	^ self infer: TypInfInferred >> #translated
-]
-
-{ #category : #requirements }
-TypInfExamples >> translated2 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #translated2
-]
-
-{ #category : #requirements }
-TypInfExamples >> translated3 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #translated3
-]
-
-{ #category : #requirements }
-TypInfExamples >> translated4 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #translated4
-]
-
-{ #category : #requirements }
-TypInfExamples >> translated5 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #translated5
-]
-
-{ #category : #requirements }
-TypInfExamples >> translated6 [
-
-	<gtExample>
-	^ self inferSync: TypInfInferred >> #translated6
-]
-
-{ #category : #requirements }
-TypInfExamples >> translated7 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #translated7
-]
-
-{ #category : #requirements }
-TypInfExamples >> translated8 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #translated8
-]
-
-{ #category : #requirements }
-TypInfExamples >> translated9 [
-
-	<gtExample>
-	^ self infer: TypInfInferred >> #translated9
 ]

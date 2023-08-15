@@ -21,8 +21,8 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 	ast := coder rbAST.
 	selfType := ast methodClass typAsType.
 	text := aText.
-	[ ast typInfTypeSelf.
-	self visitNode: ast ] on: Error do: [ :e | Transcript show: e stackString ].
+	ast typInfTypeSelf.
+	self visitNode: ast.
 	text := nil.
 	selfType := nil
 ]
