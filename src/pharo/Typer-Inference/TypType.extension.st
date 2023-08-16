@@ -6,12 +6,6 @@ TypType >> typInfNode [
 ]
 
 { #category : #'*Typer-Inference' }
-TypType >> typInfRotate: aMessageNode [
-
-	
-]
-
-{ #category : #'*Typer-Inference' }
 TypType >> typInfWithoutUnion [
 
 	^ self

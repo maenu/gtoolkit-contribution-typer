@@ -101,10 +101,13 @@ TypInfInlineMethodMessageStrategy >> transfer [
 
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> uninstall [
+	message
+		inAt: #receiver
+		ifPresent: [ :r | message unconstrain: r ]
+		ifAbsent: [  "noop" ]. "might be in dirty state during node uninstall"
 	contexts
 		do: #uninstall;
 		removeAll.
-	message unconstrain: message inReceiver.
 	message
 		outAt: #nextOriginal
 		ifPresent: [ :n | 

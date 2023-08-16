@@ -66,20 +66,8 @@ TypTyping >> monitorMemoryAllMethods [
 
 { #category : #accessing }
 TypTyping >> monitorMemoryMethods: aCollection timeout: aDuration [
-
-	| probes result tally |
-	probes := Dictionary new.
-	probes at: 'pre-load' put: self memoryProbe.
-	tally := MessageTally on: [ 
-		         result := aCollection collect: [ :e | 
-			                   self typeMethod: e timeout: aDuration ] ].
-	probes at: 'post-load' put: self memoryProbe.
-	Smalltalk garbageCollect.
-	probes at: 'post-gc' put: self memoryProbe.
-	^ { 
-		  result.
-		  tally.
-		  probes }
+	^ aCollection
+		reduce: [ :r :e | r then: [ self typeAndMonitorMethod: e timeout: aDuration ] ]
 ]
 
 { #category : #accessing }
@@ -128,44 +116,78 @@ TypTyping >> typeAllMethods [
 ]
 
 { #category : #accessing }
-TypTyping >> typeMethod: aMethod timeout: aDuration [
+TypTyping >> typeAndMonitorMethod: aMethod [
+	^ self typeAndMonitorMethod: aMethod timeout: 5 seconds
+]
 
-	| start end semaphore process error timeout result |
+{ #category : #accessing }
+TypTyping >> typeAndMonitorMethod: aMethod timeout: aDuration [
+	| start end semaphore process error timeout result tally |
 	start := DateAndTime now.
 	timeout := false.
 	semaphore := Semaphore new.
-	process := [ 
-	           [ 
-	           [ result := aMethod ast typInfTypeSelf ]
-		           on: Exception
-		           do: [ :e | 
-			           (e isKindOf: OCUndeclaredVariableWarning)
-				           ifTrue: [ e resume: e declareUndefined ]
-				           ifFalse: [ 
-					           (e isKindOf: OCShadowVariableWarning)
-						           ifTrue: [ e resume ]
-						           ifFalse: [ 
-							           e freeze.
-							           error := e ] ] ] ] ensure: [ semaphore signal ] ]
-		           fork.
-	semaphore wait: aDuration onCompletion: [  ] onTimeout: [ 
-		process suspend.
-		timeout := true ].
+	process := [ [ [ tally := MessageTally
+				on: [ result := aMethod ast typInfTypeSelf ] ]
+			on: Exception - OCUndeclaredVariableWarning - OCShadowVariableWarning
+			do: [ :e | 
+				e freeze.
+				error := e ] ] ensure: [ semaphore signal ] ] fork.
+	^ [ semaphore
+		wait: aDuration
+		onCompletion: [  ]
+		onTimeout: [ process suspend.
+			timeout := true ].
 	end := DateAndTime now.
-	timeout ifTrue: [ 
-		^ TypMethodMeasurement
-			  method: aMethod
-			  duration: end - start
-			  process: process ].
-	error ifNotNil: [ 
-		^ TypMethodMeasurement
-			  method: aMethod
-			  duration: end - start
-			  error: error ].
-	^ TypMethodMeasurement
-		  method: aMethod
-		  duration: end - start
-		  result: result
+	timeout
+		ifTrue: [ TypMethodMeasurement
+				method: aMethod
+				duration: end - start
+				process: process
+				tally: tally ]
+		ifFalse: [ error
+				ifNil: [ TypMethodMeasurement
+						method: aMethod
+						duration: end - start
+						result: result
+						tally: tally ]
+				ifNotNil: [ TypMethodMeasurement
+						method: aMethod
+						duration: end - start
+						error: error
+						tally: tally ] ] ] asAsyncPromise
+]
+
+{ #category : #accessing }
+TypTyping >> typeMethod: aMethod timeout: aDuration [
+	| promise start end semaphore process error timeout result |
+	start := DateAndTime now.
+	timeout := false.
+	semaphore := Semaphore new.
+	process := [ [ [ result := aMethod ast typInfTypeSelf ]
+			on: Exception - OCUndeclaredVariableWarning - OCShadowVariableWarning
+			do: [ :e | 
+				e freeze.
+				error := e ] ] ensure: [ semaphore signal ] ] fork.
+	^ [ semaphore
+		wait: aDuration
+		onCompletion: [  ]
+		onTimeout: [ process suspend.
+			timeout := true ].
+	end := DateAndTime now.
+	timeout
+		ifTrue: [ TypMethodMeasurement
+				method: aMethod
+				duration: end - start
+				process: process ]
+		ifFalse: [ error
+				ifNil: [ TypMethodMeasurement
+						method: aMethod
+						duration: end - start
+						result: result ]
+				ifNotNil: [ TypMethodMeasurement
+						method: aMethod
+						duration: end - start
+						error: error ] ] ] asAsyncPromise
 ]
 
 { #category : #accessing }
@@ -179,4 +201,16 @@ TypTyping >> typeSomeMethods [
 	all := nil.
 	^ methods asOrderedCollection collect: [ :e | 
 		  self typeMethod: e timeout: 30 seconds ]
+]
+
+{ #category : #accessing }
+TypTyping >> typeSomeMonitoredMethods [
+	<gtExample>
+	| all methods |
+	all := CompiledMethod allInstances.
+	methods := IdentitySet new.
+	[ methods size < 3 ] whileTrue: [ methods add: all atRandom ].
+	all := nil.
+	^ methods asOrderedCollection
+		collect: [ :e | self typeAndMonitorMethod: e timeout: 30 seconds ]
 ]

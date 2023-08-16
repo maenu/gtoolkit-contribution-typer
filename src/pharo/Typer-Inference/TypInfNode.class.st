@@ -185,7 +185,7 @@ TypInfNode >> slurp [
 				at: self
 				put: ((s
 						collect: [ :e | 
-							state index
+							state
 								at: e
 								ifPresent: [ :t | e type covariant: t ]
 								ifAbsent: [ e type ] ])
