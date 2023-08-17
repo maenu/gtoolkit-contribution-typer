@@ -31,5 +31,5 @@ TypInfLocal >> inRead: aNode [
 TypInfLocal >> transfer [
 	((in at: #next) allSatisfy: [ :e | e origin isKindOf: TypInfAssignment ])
 		ifTrue: [ ^ state at: self inRead put: self type ].
-	state at: self put: (state at: self inRead ifAbsent: TypUnknownType instance)
+	state at: self put: (state at: self inRead)
 ]

@@ -10,14 +10,10 @@ Class {
 { #category : #'instance creation' }
 TypUnionType class >> types: aSet [
 	<typPraArguments: 'Set<TypType>'>
-	| types |
-	types := aSet asSet copyWithout: ProtoObject typAsType.
-	types ifEmpty: [ ^ TypUnknownType instance ].
-	types size = 1 ifTrue: [ ^ aSet anyOne ].
 	^ self index
-		at: types
+		at: aSet asSet
 		ifAbsentPut: [ self new
-				initializeTypes: types;
+				initializeTypes: aSet asSet;
 				yourself ]
 ]
 
@@ -156,8 +152,13 @@ TypUnionType >> postCopy [
 { #category : #accessing }
 TypUnionType >> preResolveMethod: aLookup [
 	^ (types
-		flatCollect: [ :e | e preResolveMethod: (aLookup copyWithReceiver: e) ])
-		reject: #isNil
+		flatCollect: [ :e | 
+			e
+				preResolveMethod: (TypMethodLookup
+						receiver: e
+						selector: aLookup selector
+						arguments: aLookup arguments
+						super: nil) ]) reject: #isNil
 ]
 
 { #category : #'as yet unclassified' }
@@ -208,12 +209,6 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 			remove: e;
 			ifNotEmpty: [ aStream << ',' ] ].
 	aStream << '}'
-]
-
-{ #category : #accessing }
-TypUnionType >> resolveMethod: aLookup [
-	^ (types collect: [ :e | e resolveMethod: (aLookup copyWithReceiver: e) ])
-		typAsType
 ]
 
 { #category : #compatibility }
