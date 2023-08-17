@@ -4,7 +4,7 @@ Extension { #name : #RBMethodNode }
 RBMethodNode >> typShaMethodAddPragma: aLookup [
 	<typShaMethod: 'addPragma:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {RBPragmaNode typAsType}
 ]
 
@@ -32,7 +32,7 @@ RBMethodNode >> typShaMethodBody: aLookup [
 RBMethodNode >> typShaMethodCompilationContext: aLookup [
 	<typShaMethod: 'compilationContext:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {CompilationContext typAsType}
 ]
 
@@ -71,7 +71,7 @@ RBMethodNode >> typShaMethodPragmas: aLookup [
 RBMethodNode >> typShaMethodRemovePragma: aLookup [
 	<typShaMethod: 'removePragma:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {RBPragmaNode typAsType}
 ]
 

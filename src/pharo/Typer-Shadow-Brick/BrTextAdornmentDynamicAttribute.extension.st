@@ -4,6 +4,6 @@ Extension { #name : #BrTextAdornmentDynamicAttribute }
 BrTextAdornmentDynamicAttribute >> typShaMethodStencil: aLookup [
 	<typShaMethod: 'stencil:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlockClosure typAsFunctionTypeWithResult: BlElement typAsType}
 ]

@@ -4,7 +4,7 @@ Extension { #name : #Stream }
 Stream >> typShaMethodBinary380: aLookup [
 	<typShaMethod: '<<'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {Collection typAsType withParameters: {aLookup receiver at: #A}}
 ]
 

@@ -16,6 +16,6 @@ BlShortcut >> typShaMethodAction: aLookup [
 BlShortcut >> typShaMethodCombination: aLookup [
 	<typShaMethod: 'combination:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlKeyCombination typAsType}
 ]

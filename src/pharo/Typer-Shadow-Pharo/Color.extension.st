@@ -4,7 +4,7 @@ Extension { #name : #Color }
 Color >> typShaMethodAlpha: aLookup [
 	<typShaMethod: 'alpha:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {Number typAsType}
 ]
 

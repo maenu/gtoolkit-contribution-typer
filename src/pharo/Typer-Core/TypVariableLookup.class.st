@@ -4,8 +4,8 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
-{ #category : #'as yet unclassified' }
-TypVariableLookup class >> receiver: aType selector: aSymbol super: aLookup [
+{ #category : #accessing }
+TypVariableLookup class >> receiver: aType selector: aSymbol parent: aLookup [
 
 	^ self index
 		  at: { 
@@ -15,16 +15,16 @@ TypVariableLookup class >> receiver: aType selector: aSymbol super: aLookup [
 		  ifAbsentPut: [ 
 			  self new
 				  initializeReceiver: aType selector: aSymbol asSymbol;
-				  initializeSuper: aLookup;
+				  initializeParent: aLookup;
 				  yourself ]
 ]
 
 { #category : #converting }
-TypVariableLookup >> asSuper [
-	childLookup ifNotNil: [ ^ childLookup ].
-	self assert: [ self hasSuper ].
-	^ childLookup := self class
+TypVariableLookup >> asParent [
+	child ifNotNil: [ ^ child ].
+	self assert: [ self hasParent ].
+	^ child := self class
 			receiver: receiver super
 			selector: selector
-			super: self
+			parent: self
 ]

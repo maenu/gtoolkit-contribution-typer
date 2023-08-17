@@ -18,7 +18,7 @@ TypDepthFirstResolver class >> resolver: aResolver [
 { #category : #resolving }
 TypDepthFirstResolver >> canResolve: aLookup [
 	^ (resolver canResolve: aLookup)
-		or: [ aLookup hasSuper and: [ self canResolve: aLookup asSuper ] ]
+		or: [ aLookup hasParent and: [ self canResolve: aLookup asParent ] ]
 ]
 
 { #category : #initialization }
@@ -50,7 +50,7 @@ TypDepthFirstResolver >> invalidateOnMethodChange: aMethodAnnouncement [
 { #category : #accessing }
 TypDepthFirstResolver >> preResolve: aLookup [
 	(resolver preResolve: aLookup) ifNotNil: [ :e | ^ e ].
-	aLookup hasSuper ifTrue: [ ^ self preResolve: aLookup asSuper ].
+	aLookup hasParent ifTrue: [ ^ self preResolve: aLookup asParent ].
 	^ nil
 ]
 
@@ -67,5 +67,5 @@ TypDepthFirstResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
 	^ (resolver canResolve: aLookup)
 		  ifTrue: [ resolver resolve: aLookup ]
-		  ifFalse: [ self resolve: aLookup asSuper ]
+		  ifFalse: [ self resolve: aLookup asParent ]
 ]

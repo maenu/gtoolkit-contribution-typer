@@ -11,3 +11,12 @@ Set >> typAsType [
 	flattened size = 1 ifTrue: [ ^ flattened anyOne ].
 	^ TypUnionType types: flattened
 ]
+
+{ #category : #'*Typer-Core' }
+Set >> typCondensed [
+	| condensed |
+	condensed := OrderedCollection new.
+	(self sorted: [ :a :b | a > b ])
+		do: [ :type | condensed detect: [ :e | e > type ] ifNone: [ condensed add: type ] ].
+	^ condensed asSet
+]

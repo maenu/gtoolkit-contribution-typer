@@ -4,7 +4,7 @@ Extension { #name : #BrLabel }
 BrLabel >> typShaMethodText: aLookup [
 	<typShaMethod: 'text:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {{String typAsType.
 					BlText typAsType} typAsType}
 ]

@@ -323,6 +323,11 @@ TypType >> printOn: aStream skipping: anIdentitySet [
 	self subclassResponsibility
 ]
 
+{ #category : #lookup }
+TypType >> resolveMethod: aLookup [
+	^ TypMethodIndex instance resolve: aLookup
+]
+
 { #category : #compatibility }
 TypType >> result [
 
@@ -362,7 +367,7 @@ TypType >> withAt: aString put: aType [
 
 { #category : #converting }
 TypType >> withParameters: aCollection [
-
+	self hasSuper ifFalse: [ ^ self ].
 	^ self withSuper: (self super withParameters: aCollection)
 ]
 

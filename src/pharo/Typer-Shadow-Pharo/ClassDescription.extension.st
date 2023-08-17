@@ -4,7 +4,7 @@ Extension { #name : #ClassDescription }
 ClassDescription >> typShaMethodAddInstVarNamed: aLookup [
 	<typShaMethod: 'addInstVarNamed:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {String typAsType}
 ]
 

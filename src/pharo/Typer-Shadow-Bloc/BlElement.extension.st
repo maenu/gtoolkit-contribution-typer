@@ -4,7 +4,7 @@ Extension { #name : #BlElement }
 BlElement >> typShaMethodBackground: aLookup [
 	<typShaMethod: 'background:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {{Color typAsType.
 					BlBackground typAsType} typAsType}
 ]
@@ -13,7 +13,7 @@ BlElement >> typShaMethodBackground: aLookup [
 BlElement >> typShaMethodConstraintsDo: aLookup [
 	<typShaMethod: 'constraintsDo:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlockClosure
 					typAsFunctionTypeWithResult: TypUnknownType instance
 					arguments: {BlLayoutConstraints typAsType}}
@@ -23,7 +23,7 @@ BlElement >> typShaMethodConstraintsDo: aLookup [
 BlElement >> typShaMethodFireEvent: aLookup [
 	<typShaMethod: 'fireEvent:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlEvent typAsType}
 ]
 
@@ -31,7 +31,7 @@ BlElement >> typShaMethodFireEvent: aLookup [
 BlElement >> typShaMethodGeometry: aLookup [
 	<typShaMethod: 'geometry:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlElementGeometry typAsType}
 ]
 
@@ -39,7 +39,7 @@ BlElement >> typShaMethodGeometry: aLookup [
 BlElement >> typShaMethodLook: aLookup [
 	<typShaMethod: 'look:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {{BrLook class typAsType.
 					BrLook typAsType} typAsType}
 ]
@@ -48,6 +48,6 @@ BlElement >> typShaMethodLook: aLookup [
 BlElement >> typShaMethodMargin: aLookup [
 	<typShaMethod: 'margin:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlInsets typAsType}
 ]

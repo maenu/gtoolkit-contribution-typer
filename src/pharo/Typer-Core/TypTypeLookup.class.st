@@ -7,8 +7,8 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
-{ #category : #'as yet unclassified' }
-TypTypeLookup class >> classDescription: aClassDescription super: aLookup [
+{ #category : #accessing }
+TypTypeLookup class >> classDescription: aClassDescription parent: aLookup [
 
 	^ self index
 		  at: { 
@@ -17,7 +17,7 @@ TypTypeLookup class >> classDescription: aClassDescription super: aLookup [
 		  ifAbsentPut: [ 
 			  self new
 				  initializeClassDescription: aClassDescription;
-				  initializeSuper: aLookup;
+				  initializeParent: aLookup;
 				  yourself ]
 ]
 
@@ -29,12 +29,12 @@ TypTypeLookup >> = anObject [
 ]
 
 { #category : #copying }
-TypTypeLookup >> asSuper [
-	childLookup ifNotNil: [ ^ childLookup ].
-	self assert: [ self hasSuper ].
-	^ childLookup := self class
+TypTypeLookup >> asParent [
+	child ifNotNil: [ ^ child ].
+	self assert: [ self hasParent ].
+	^ child := self class
 			classDescription: classDescription superclass
-			super: self
+			parent: self
 ]
 
 { #category : #accessing }
@@ -44,11 +44,10 @@ TypTypeLookup >> classDescription [
 ]
 
 { #category : #testing }
-TypTypeLookup >> hasSuper [
-
-	^ classDescription superclass isNotNil and: [ 
-		  classDescription superclass ~= classDescription and: [ 
-			  (classDescription superclass inheritsFrom: classDescription) not ] ]
+TypTypeLookup >> hasParent [
+	^ classDescription superclass isNotNil
+		and: [ classDescription superclass ~= classDescription
+				and: [ (classDescription superclass inheritsFrom: classDescription) not ] ]
 ]
 
 { #category : #comparing }

@@ -29,7 +29,7 @@ OrderedDictionary >> typShaMethodAssociations: aLookup [
 OrderedDictionary >> typShaMethodAssociationsDo: aLookup [
 	<typShaMethod: 'associationsDo:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlockClosure
 					typAsFunctionTypeWithResult: TypUnknownType instance
 					arguments: {Association typAsType
@@ -100,7 +100,7 @@ OrderedDictionary >> typShaMethodCollect: aLookup [
 					result ]
 			ifFalse: [ a result ].
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup root receiver
+		typAsFunctionTypeWithResult: (aLookup self
 				withParameters: {aLookup receiver at: #B.
 						r})
 		arguments: {{Symbol typAsType.
@@ -136,7 +136,7 @@ OrderedDictionary >> typShaMethodKeys: aLookup [
 OrderedDictionary >> typShaMethodValues: aLookup [
 	<typShaMethod: 'values'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (Collection typAsType withParameters: {aLookup root receiver at: #A})
+		typAsFunctionTypeWithResult: (Collection typAsType withParameters: {aLookup self at: #A})
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }

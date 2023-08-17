@@ -11,7 +11,9 @@ TypInfInlineLookupContext >> canInstall [
 				receiver: selfType
 				selector: message selector
 				arguments: message arguments
-				super: nil)) isNotEmpty
+				self: selfType
+				super: selfType superOrNil
+				parent: nil)) isNotEmpty
 ]
 
 { #category : #accessing }

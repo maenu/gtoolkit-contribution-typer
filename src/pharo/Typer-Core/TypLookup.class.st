@@ -2,9 +2,9 @@ Class {
 	#name : #TypLookup,
 	#superclass : #TypEdgeKey,
 	#instVars : [
-		'superLookup',
 		'resolver',
-		'childLookup'
+		'parent',
+		'child'
 	],
 	#category : #'Typer-Core-Lookup'
 }
@@ -13,33 +13,33 @@ Class {
 TypLookup >> = anObject [
 	anObject == self ifTrue: [ ^ true ].
 	anObject class = self class ifFalse: [ ^ false ].
-	^ anObject super = superLookup
+	^ anObject parent = parent
 ]
 
 { #category : #copying }
-TypLookup >> asSuper [
+TypLookup >> asParent [
 	self subclassResponsibility
 ]
 
 { #category : #testing }
-TypLookup >> hasSuper [
+TypLookup >> hasParent [
 	<typPraResult: 'Boolean'>
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
 TypLookup >> hash [
-	^ superLookup hash
+	^ parent hash
+]
+
+{ #category : #accessing }
+TypLookup >> initializeParent: aLookup [
+	parent := aLookup
 ]
 
 { #category : #accessing }
 TypLookup >> initializeResolver: anObject [
 	resolver := anObject
-]
-
-{ #category : #accessing }
-TypLookup >> initializeSuper: aLookup [
-	superLookup := aLookup
 ]
 
 { #category : #invalidation }
@@ -51,9 +51,9 @@ TypLookup >> invalidateOnClassChange: aClassAnnouncement [
 		changed := resolver
 			           invalidate: self
 			           onClassChange: aClassAnnouncement ].
-	self hasSuper ifFalse: [ ^ changed ].
+	self hasParent ifFalse: [ ^ changed ].
 	^ changed or:
-		  (self asSuper invalidateOnClassChange: aClassAnnouncement)
+		  (self asParent invalidateOnClassChange: aClassAnnouncement)
 ]
 
 { #category : #invalidation }
@@ -65,17 +65,22 @@ TypLookup >> invalidateOnMethodChange: aMethodAnnouncement [
 		changed := resolver
 			           invalidate: self
 			           onMethodChange: aMethodAnnouncement ].
-	self hasSuper ifFalse: [ ^ changed ].
+	self hasParent ifFalse: [ ^ changed ].
 	^ changed or:
-		  (self asSuper invalidateOnMethodChange: aMethodAnnouncement)
+		  (self asParent invalidateOnMethodChange: aMethodAnnouncement)
+]
+
+{ #category : #accessing }
+TypLookup >> parent [
+	^ parent
 ]
 
 { #category : #accessing }
 TypLookup >> printOn: aStream [
 
-	superLookup ifNil: [ ^ self ].
+	parent ifNil: [ ^ self ].
 	aStream nextPutAll: ' | '.
-	superLookup printOn: aStream
+	parent printOn: aStream
 ]
 
 { #category : #accessing }
@@ -86,10 +91,5 @@ TypLookup >> resolver [
 
 { #category : #accessing }
 TypLookup >> root [
-	^ superLookup ifNil: self ifNotNil: #root
-]
-
-{ #category : #accessing }
-TypLookup >> super [
-	^ superLookup
+	^ parent ifNil: self ifNotNil: #root
 ]

@@ -118,8 +118,8 @@ TypInfMethodResolver >> resolve: aLookup [
 			ast.
 	^ self
 		typeAt: node
-		self: aLookup root receiver
-		super: aLookup receiver superOrNil
+		self: aLookup self
+		super: aLookup super
 ]
 
 { #category : #accessing }

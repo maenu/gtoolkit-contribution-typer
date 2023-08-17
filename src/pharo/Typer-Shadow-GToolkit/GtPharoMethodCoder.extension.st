@@ -10,7 +10,7 @@ GtPharoMethodCoder >> typShaMethodCompiledMethod: aLookup [
 GtPharoMethodCoder >> typShaMethodCursorPositionDo: aLookup [
 	<typShaMethod: 'cursorPositionDo:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlockClosure
 					typAsFunctionTypeWithResult: TypUnknownType instance
 					arguments: {Integer typAsType}}
@@ -52,7 +52,7 @@ GtPharoMethodCoder >> typShaMethodSelector: aLookup [
 GtPharoMethodCoder >> typShaMethodUpdateMethod: aLookup [
 	<typShaMethod: 'updateMethod:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {CompiledMethod typAsType}
 ]
 

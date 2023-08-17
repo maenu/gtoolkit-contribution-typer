@@ -4,7 +4,7 @@ Extension { #name : #BrTextCursorAttribute }
 BrTextCursorAttribute >> typShaMethodEnterAction: aLookup [
 	<typShaMethod: 'enterAction:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlockClosure
 					typAsFunctionTypeWithResult: TypUnknownType instance
 					arguments: {BrTextEditor typAsType.
@@ -17,7 +17,7 @@ BrTextCursorAttribute >> typShaMethodEnterAction: aLookup [
 BrTextCursorAttribute >> typShaMethodLeaveAction: aLookup [
 	<typShaMethod: 'leaveAction:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlockClosure
 					typAsFunctionTypeWithResult: TypUnknownType instance
 					arguments: {BrTextEditor typAsType.

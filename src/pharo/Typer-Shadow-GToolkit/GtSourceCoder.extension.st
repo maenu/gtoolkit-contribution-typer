@@ -16,7 +16,7 @@ GtSourceCoder >> typShaMethodCollapsedEditor: aLookup [
 GtSourceCoder >> typShaMethodExpanded: aLookup [
 	<typShaMethod: 'expanded:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {Boolean typAsType}
 ]
 

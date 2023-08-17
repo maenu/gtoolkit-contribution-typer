@@ -4,7 +4,7 @@ Extension { #name : #BlTextUnderlineAttribute }
 BlTextUnderlineAttribute >> typShaMethodPaint: aLookup [
 	<typShaMethod: 'paint:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {{Color typAsType.
 					BlPaint typAsType} typAsType}
 ]

@@ -16,21 +16,13 @@ TypInfInlineMethodMessageStrategy >> canInstall [
 				receiver: receiver
 				selector: message selector
 				arguments: message arguments
-				super: nil)) anySatisfy: [ :e | e resolver isKindOf: TypInfMethodResolver ])
+				self: receiver
+				super: receiver superOrNil
+				parent: nil)) anySatisfy: [ :e | e resolver isKindOf: TypInfMethodResolver ])
 		ifFalse: [ ^ false ].
 	newContexts := self newContexts.
 	newContexts size < 8 ifFalse: [ ^ false ].
 	^ newContexts allSatisfy: #canInstall
-]
-
-{ #category : #accessing }
-TypInfInlineMethodMessageStrategy >> constrainedReceiver [
-	| receiver implementors |
-	receiver := message receiver.
-	receiver isUnknown ifFalse: [ ^ receiver ].
-	implementors := TypInfMethodIndex instance implementors: message selector.
-	(implementors size between: 1 and: 8) ifFalse: [ ^ receiver ].
-	^ (implementors collect: #typAsType) typAsType
 ]
 
 { #category : #accessing }
@@ -59,28 +51,41 @@ TypInfInlineMethodMessageStrategy >> install [
 
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> newContexts [
+	| receiver selfType superType |
+	receiver := message inReceiver.
+	(receiver isKindOf: TypInfSelf)
+		ifTrue: [ selfType := message context self.
+			superType := message context super ]
+		ifFalse: [ (receiver isKindOf: TypInfSuper)
+				ifTrue: [ selfType := message context self.
+					superType := message context super superOrNil ]
+				ifFalse: [ selfType := self constrainedReceiver.
+					superType := selfType superOrNil ] ].
 	^ (self constrainedReceiver
 		preResolveMethod: (TypMethodLookup
 				receiver: self constrainedReceiver
 				selector: message selector
 				arguments: message arguments
-				super: nil))
+				self: selfType
+				super: superType
+				parent: nil))
 		flatCollect: [ :l | 
-			| selfType method |
-			selfType := self constrainedReceiver.
 			(l resolver isKindOf: TypInfMethodResolver)
-				ifTrue: [ method := l receiver classDescription lookupSelector: message selector.
+				ifTrue: [ | method |
+					method := l receiver classDescription lookupSelector: message selector.
 					(method isAbstract
 						ifTrue: [ method typInfOverriddingMethods ]
 						ifFalse: [ {method} ])
-						collect: [ :m | 
-							TypInfInlineContext
-								sender: message context
-								state: message state copy
-								node: m ast
-								self: selfType
-								super: selfType superOrNil
-								message: message ] ]
+						flatCollect: [ :m | 
+							(method methodClass typInfCanAbstractInterpret: message)
+								ifTrue: [ method methodClass typInfAbstractInterpret: message ]
+								ifFalse: [ {TypInfInlineContext
+											sender: message context
+											state: message state copy
+											node: m ast
+											self: selfType
+											super: superType
+											message: message} ] ] ]
 				ifFalse: [ {TypInfInlineLookupContext
 							sender: message context
 							state: message state copy

@@ -4,7 +4,7 @@ Extension { #name : #Number }
 Number >> typShaMethodBinary233: aLookup [
 	<typShaMethod: '-'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: {aLookup root receiver.
+		typAsFunctionTypeWithResult: {aLookup self.
 				aLookup arguments at: 1} typAsType
 		arguments: {Number typAsType}
 ]
@@ -13,7 +13,7 @@ Number >> typShaMethodBinary233: aLookup [
 Number >> typShaMethodBinary235: aLookup [
 	<typShaMethod: '+'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: {aLookup root receiver.
+		typAsFunctionTypeWithResult: {aLookup self.
 				aLookup arguments at: 1} typAsType
 		arguments: {Number typAsType}
 ]
@@ -46,7 +46,7 @@ Number >> typShaMethodTo: aLookup [
 	<typShaMethod: 'to:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Interval typAsType
-				withParameters: {{aLookup root receiver.
+				withParameters: {{aLookup self.
 							aLookup arguments at: 1} typAsType})
 		arguments: {Number typAsType}
 ]
@@ -55,10 +55,10 @@ Number >> typShaMethodTo: aLookup [
 Number >> typShaMethodToDo: aLookup [
 	<typShaMethod: 'to:do:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {Number typAsType.
 				BlockClosure
 					typAsFunctionTypeWithResult: TypUnknownType instance
-					arguments: {{aLookup root receiver.
+					arguments: {{aLookup self.
 								aLookup arguments at: 1} typAsType}}
 ]

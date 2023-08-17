@@ -4,7 +4,7 @@ Extension { #name : #SequenceableCollection }
 SequenceableCollection >> typShaMethodAt: aLookup [
 	<typShaMethod: 'at:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup root receiver at: #A)
+		typAsFunctionTypeWithResult: (aLookup self at: #A)
 		arguments: {Integer typAsType}
 ]
 
@@ -12,7 +12,7 @@ SequenceableCollection >> typShaMethodAt: aLookup [
 SequenceableCollection >> typShaMethodAtIfAbsent: aLookup [
 	<typShaMethod: 'at:ifAbsent:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: {aLookup root receiver at: #A.
+		typAsFunctionTypeWithResult: {aLookup self at: #A.
 				(aLookup root arguments at: 2) result} typAsType
 		arguments: {Integer typAsType.
 				BlockClosure typAsType}
@@ -30,7 +30,7 @@ SequenceableCollection >> typShaMethodBeginsWith: aLookup [
 SequenceableCollection >> typShaMethodCopyFromTo: aLookup [
 	<typShaMethod: 'copyFrom:to:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {Integer typAsType.
 				Integer typAsType}
 ]
@@ -98,21 +98,21 @@ SequenceableCollection >> typShaMethodLast: aLookup [
 SequenceableCollection class >> typShaMethodOfSize: aLookup [
 	<typShaMethod: 'ofSize:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver classDescription instanceSide typAsType
+		typAsFunctionTypeWithResult: aLookup self classDescription instanceSide typAsType
 		arguments: {Integer typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
 SequenceableCollection >> typShaMethodReversed: aLookup [
 	<typShaMethod: 'reversed'>
-	^ CompiledMethod typAsFunctionTypeWithResult: aLookup root receiver
+	^ CompiledMethod typAsFunctionTypeWithResult: aLookup self
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
 SequenceableCollection >> typShaMethodSort: aLookup [
 	<typShaMethod: 'sort:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlockClosure
 					typAsFunctionTypeWithResult: Boolean typAsType
 					arguments: {aLookup receiver at: #A.
@@ -123,7 +123,7 @@ SequenceableCollection >> typShaMethodSort: aLookup [
 SequenceableCollection class >> typShaMethodStreamContents: aLookup [
 	<typShaMethod: 'streamContents:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver classDescription instanceSide typAsType
+		typAsFunctionTypeWithResult: aLookup self classDescription instanceSide typAsType
 		arguments: {BlockClosure
 					typAsFunctionTypeWithResult: TypUnknownType instance
 					arguments: {Stream typAsType}}
@@ -144,7 +144,7 @@ SequenceableCollection >> typShaMethodWithIndexCollect: aLookup [
 SequenceableCollection >> typShaMethodWithIndexDo: aLookup [
 	<typShaMethod: 'withIndexDo:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlockClosure
 					typAsFunctionTypeWithResult: TypUnknownType instance
 					arguments: {aLookup receiver at: #A.
@@ -155,7 +155,7 @@ SequenceableCollection >> typShaMethodWithIndexDo: aLookup [
 SequenceableCollection >> typShaMethodWithIndexSelect: aLookup [
 	<typShaMethod: 'withIndexSelect:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlockClosure
 					typAsFunctionTypeWithResult: Boolean typAsType
 					arguments: {aLookup receiver at: #A.

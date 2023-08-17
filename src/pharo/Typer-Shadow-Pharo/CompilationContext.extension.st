@@ -4,7 +4,7 @@ Extension { #name : #CompilationContext }
 CompilationContext >> typShaMethodBindings: aLookup [
 	<typShaMethod: 'bindings:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {Dictionary typAsType}
 ]
 
@@ -12,7 +12,7 @@ CompilationContext >> typShaMethodBindings: aLookup [
 CompilationContext >> typShaMethodClass: aLookup [
 	<typShaMethod: 'class:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {ClassDescription typAsType}
 ]
 
@@ -20,7 +20,7 @@ CompilationContext >> typShaMethodClass: aLookup [
 CompilationContext >> typShaMethodForSyntaxHighlighting: aLookup [
 	<typShaMethod: 'forSyntaxHighlighting:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {Boolean typAsType}
 ]
 
@@ -28,6 +28,6 @@ CompilationContext >> typShaMethodForSyntaxHighlighting: aLookup [
 CompilationContext >> typShaMethodRequestor: aLookup [
 	<typShaMethod: 'requestor:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {TypUnknownType instance asNullable}
 ]

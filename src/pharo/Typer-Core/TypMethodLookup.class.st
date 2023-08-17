@@ -28,33 +28,48 @@ Class {
 	#name : #TypMethodLookup,
 	#superclass : #TypPropertyLookup,
 	#instVars : [
-		'arguments'
+		'arguments',
+		'selfType',
+		'superType'
 	],
 	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #accessing }
-TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection super: aLookup [
+TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection parent: aLookup [
+	^ self
+		receiver: aType
+		selector: aSymbol
+		arguments: aCollection
+		self: aType
+		super: aType superOrNil
+		parent: aLookup
+]
 
+{ #category : #accessing }
+TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection self: anotherType super: yetAnotherType parent: aLookup [
 	^ self index
-		  at: { 
-				  aType.
-				  aSymbol asSymbol.
-				  aCollection asArray.
-				  aLookup }
-		  ifAbsentPut: [ 
-			  self new
-				  initializeReceiver: aType selector: aSymbol asSymbol;
-				  initializeArguments: aCollection asArray;
-				  initializeSuper: aLookup;
-				  yourself ]
+		at: {aType.
+				aSymbol asSymbol.
+				aCollection asArray.
+				anotherType.
+				yetAnotherType.
+				aLookup}
+		ifAbsentPut: [ self new
+				initializeReceiver: aType selector: aSymbol asSymbol;
+				initializeArguments: aCollection asArray
+					self: anotherType
+					super: yetAnotherType;
+				initializeParent: aLookup;
+				yourself ]
 ]
 
 { #category : #accessing }
 TypMethodLookup >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^ false ].
-	^ anObject arguments = arguments
+	anObject self = selfType ifFalse: [ ^ false ].
+	^ anObject super = superType
 ]
 
 { #category : #accessing }
@@ -63,24 +78,29 @@ TypMethodLookup >> arguments [
 ]
 
 { #category : #converting }
-TypMethodLookup >> asSuper [
-	childLookup ifNotNil: [ ^ childLookup ].
-	self assert: [ self hasSuper ].
-	^ childLookup := self class
+TypMethodLookup >> asParent [
+	child ifNotNil: [ ^ child ].
+	self assert: [ self hasParent ].
+	^ child := self class
 			receiver: receiver super
 			selector: selector
 			arguments: arguments
-			super: self
+			self: selfType
+			super: superType
+			parent: self
 ]
 
 { #category : #accessing }
 TypMethodLookup >> hash [
-	^ super hash bitXor: arguments hash
+	^ ((super hash bitXor: arguments hash) bitXor: selfType hash)
+		bitXor: superType hash
 ]
 
 { #category : #accessing }
-TypMethodLookup >> initializeArguments: aCollection [
-	arguments := aCollection
+TypMethodLookup >> initializeArguments: aCollection self: aType super: anotherType [
+	arguments := aCollection.
+	selfType := aType.
+	superType := aType
 ]
 
 { #category : #invalidation }
@@ -109,5 +129,15 @@ TypMethodLookup >> printOn: aStream [
 
 { #category : #accessing }
 TypMethodLookup >> resolved [
-	^ resolver ifNil: [ childLookup resolved ] ifNotNil: [ self ]
+	^ resolver ifNil: [ child resolved ] ifNotNil: [ self ]
+]
+
+{ #category : #accessing }
+TypMethodLookup >> self [
+	^ selfType
+]
+
+{ #category : #accessing }
+TypMethodLookup >> super [
+	^ superType
 ]

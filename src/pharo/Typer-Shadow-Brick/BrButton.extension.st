@@ -4,7 +4,7 @@ Extension { #name : #BrButton }
 BrButton >> typShaMethodAction: aLookup [
 	<typShaMethod: 'action:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlockClosure typAsType}
 ]
 
@@ -12,6 +12,6 @@ BrButton >> typShaMethodAction: aLookup [
 BrButton >> typShaMethodIcon: aLookup [
 	<typShaMethod: 'icon:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlElement typAsType}
 ]

@@ -29,7 +29,7 @@ Dictionary >> typShaMethodAssociations: aLookup [
 Dictionary >> typShaMethodAssociationsDo: aLookup [
 	<typShaMethod: 'associationsDo:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlockClosure
 					typAsFunctionTypeWithResult: TypUnknownType instance
 					arguments: {Association typAsType
@@ -41,8 +41,8 @@ Dictionary >> typShaMethodAssociationsDo: aLookup [
 Dictionary >> typShaMethodAt: aLookup [
 	<typShaMethod: 'at:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup root receiver at: #A)
-		arguments: {aLookup root receiver at: #B}
+		typAsFunctionTypeWithResult: (aLookup self at: #A)
+		arguments: {aLookup self at: #B}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
@@ -110,7 +110,7 @@ Dictionary >> typShaMethodCollect: aLookup [
 					result ]
 			ifFalse: [ a result ].
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup root receiver
+		typAsFunctionTypeWithResult: (aLookup self
 				withParameters: {aLookup receiver at: #B.
 						r})
 		arguments: {{Symbol typAsType.
@@ -146,7 +146,7 @@ Dictionary >> typShaMethodKeys: aLookup [
 Dictionary >> typShaMethodKeysAndValuesDo: aLookup [
 	<typShaMethod: 'keysAndValuesDo:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlockClosure
 					typAsFunctionTypeWithResult: TypUnknownType instance
 					arguments: {aLookup receiver at: #B.
@@ -167,7 +167,7 @@ Dictionary >> typShaMethodRemoveKeyIfAbsent: aLookup [
 Dictionary >> typShaMethodValues: aLookup [
 	<typShaMethod: 'values'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (Collection typAsType withParameters: {aLookup root receiver at: #A})
+		typAsFunctionTypeWithResult: (Collection typAsType withParameters: {aLookup self at: #A})
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }

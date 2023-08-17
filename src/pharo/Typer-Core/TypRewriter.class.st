@@ -72,6 +72,23 @@ TypRewriter >> rewriteLookupIndex [
 ]
 
 { #category : #accessing }
+TypRewriter >> rewriteLookupRootReceiverToSelf [
+	<gtExample>
+	^ ((RPackageOrganizer default packages
+		select: [ :e | e name beginsWith: 'Typer' ]) flatCollect: #methods)
+		select: [ :e | 
+			| rewriter ok |
+			rewriter := RBParseTreeRewriter new.
+			rewriter
+				replace: '`@o root receiver'
+				with: '`@o self'.
+			ok := rewriter executeTree: e parseTree.
+			ok
+				ifTrue: [ e origin compile: rewriter tree formattedCode classified: e protocol ].
+			ok ]
+]
+
+{ #category : #accessing }
 TypRewriter >> rewriteMethodLookupIndex [
 	<gtExample>
 	^ ((RPackageOrganizer default packages

@@ -117,44 +117,44 @@ TypTyping >> typeAllMethods [
 
 { #category : #accessing }
 TypTyping >> typeAndMonitorMethod: aMethod [
-	^ self typeAndMonitorMethod: aMethod timeout: 5 seconds
+	^ self typeAndMonitorMethod: aMethod timeout: 5 minutes
 ]
 
 { #category : #accessing }
 TypTyping >> typeAndMonitorMethod: aMethod timeout: aDuration [
-	| start end semaphore process error timeout result tally |
+	| promise start semaphore process error timeout result tally |
+	promise := AsyncPendingPromise new.
 	start := DateAndTime now.
 	timeout := false.
 	semaphore := Semaphore new.
-	process := [ [ [ tally := MessageTally
-				on: [ result := aMethod ast typInfTypeSelf ] ]
+	tally := MessageTally new.
+	process := [ [ [ tally spyEvery: 1 on: [ result := aMethod ast typInfTypeSelf ] ]
 			on: Exception - OCUndeclaredVariableWarning - OCShadowVariableWarning
 			do: [ :e | 
 				e freeze.
-				error := e ] ] ensure: [ semaphore signal ] ] fork.
+				error := e ] ] ensure: [ semaphore signal ] ]
+			forkAt: Processor userBackgroundPriority.
 	^ [ semaphore
 		wait: aDuration
-		onCompletion: [  ]
-		onTimeout: [ process suspend.
-			timeout := true ].
-	end := DateAndTime now.
-	timeout
-		ifTrue: [ TypMethodMeasurement
-				method: aMethod
-				duration: end - start
-				process: process
-				tally: tally ]
-		ifFalse: [ error
+		onCompletion: [ error
 				ifNil: [ TypMethodMeasurement
 						method: aMethod
-						duration: end - start
+						duration: DateAndTime now - start
 						result: result
 						tally: tally ]
 				ifNotNil: [ TypMethodMeasurement
 						method: aMethod
-						duration: end - start
+						duration: DateAndTime now - start
 						error: error
-						tally: tally ] ] ] asAsyncPromise
+						tally: tally ] ]
+		onTimeout: [ process suspend.
+			timeout := true.
+			TypMethodMeasurement
+				method: aMethod
+				duration: DateAndTime now - start
+				process: process
+				tally: tally ] ] asAsyncFuture
+		await: AsyncFutureExecutionConfiguration new lowPriority
 ]
 
 { #category : #accessing }

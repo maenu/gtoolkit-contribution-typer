@@ -4,7 +4,7 @@ Extension { #name : #GtPhlowMondrianView }
 GtPhlowMondrianView >> typShaMethodPainting: aLookup [
 	<typShaMethod: 'painting:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlockClosure
 					typAsFunctionTypeWithResult: TypUnknownType instance
 					arguments: {GtMondrian typAsType}}

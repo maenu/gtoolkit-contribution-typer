@@ -4,7 +4,7 @@ Extension { #name : #GtPhlowObjectEvent }
 GtPhlowObjectEvent >> typShaMethodObject: aLookup [
 	<typShaMethod: 'object:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {Object typAsType asNullable}
 ]
 
@@ -12,6 +12,6 @@ GtPhlowObjectEvent >> typShaMethodObject: aLookup [
 GtPhlowObjectEvent >> typShaMethodSourceElement: aLookup [
 	<typShaMethod: 'sourceElement:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlElement typAsType}
 ]

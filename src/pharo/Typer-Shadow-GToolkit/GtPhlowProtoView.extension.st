@@ -16,7 +16,7 @@ GtPhlowProtoView >> typShaMethodMondrian: aLookup [
 GtPhlowProtoView >> typShaMethodPriority: aLookup [
 	<typShaMethod: 'priority:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {Number typAsType}
 ]
 
@@ -24,6 +24,6 @@ GtPhlowProtoView >> typShaMethodPriority: aLookup [
 GtPhlowProtoView >> typShaMethodTitle: aLookup [
 	<typShaMethod: 'title:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {String typAsType}
 ]

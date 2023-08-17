@@ -13,7 +13,7 @@ GtPharoCompletionStrategy >> typShaMethodActionsForAt: aLookup [
 GtPharoCompletionStrategy >> typShaMethodClassOrMetaClass: aLookup [
 	<typShaMethod: 'classOrMetaClass:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {ClassDescription typAsType}
 ]
 

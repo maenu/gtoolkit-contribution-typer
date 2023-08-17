@@ -27,6 +27,6 @@ ProtoObject >> typShaMethodClass: aLookup [
 ProtoObject >> typShaMethodFlag: aLookup [
 	<typShaMethod: 'flag:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {String typAsType}
 ]

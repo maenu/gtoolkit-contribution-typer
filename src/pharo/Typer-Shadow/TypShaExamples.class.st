@@ -12,7 +12,7 @@ TypShaExamples >> lookupMethod [
 			receiver: Collection typAsType
 			selector: #anyOne
 			arguments: #()
-			super: nil.
+			parent: nil.
 	self assert: (TypShaMethodResolver new canResolve: lookup).
 	^ TypShaMethodResolver new resolve: lookup
 ]
@@ -25,7 +25,7 @@ TypShaExamples >> lookupMethodClassSide [
 			receiver: Color class typAsType
 			selector: #purple
 			arguments: #()
-			super: nil.
+			parent: nil.
 	self assert: (TypShaMethodResolver new canResolve: lookup).
 	^ TypShaMethodResolver new resolve: lookup
 ]
@@ -39,7 +39,7 @@ TypShaExamples >> lookupMethodNew [
 			receiver: TypNamedType class typAsType
 			selector: #new
 			arguments: #()
-			super: nil.
+			parent: nil.
 	self assert: (resolver canResolve: lookup).
 	^ resolver resolve: lookup
 ]
@@ -52,7 +52,7 @@ TypShaExamples >> lookupMethodNoNew [
 			receiver: ExternalType typAsType
 			selector: #isAtomic
 			arguments: #()
-			super: nil.
+			parent: nil.
 	self assert: (TypShaMethodResolver new canResolve: lookup).
 	^ TypShaMethodResolver new resolve: lookup
 ]
@@ -61,7 +61,7 @@ TypShaExamples >> lookupMethodNoNew [
 TypShaExamples >> lookupType [
 	<gtExample>
 	^ TypShaTypeResolver new
-		resolve: (TypTypeLookup classDescription: Collection super: nil)
+		resolve: (TypTypeLookup classDescription: Collection parent: nil)
 ]
 
 { #category : #accessing }
@@ -71,7 +71,7 @@ TypShaExamples >> lookupVariable [
 	lookup := TypVariableLookup
 			receiver: GtPharoMethodCoder typAsType
 			selector: #astCache
-			super: nil.
+			parent: nil.
 	self assert: (TypShaVariableResolver new canResolve: lookup).
 	^ TypShaVariableResolver new resolve: lookup
 ]

@@ -4,7 +4,7 @@ Extension { #name : #GtFilteredMethodsCoder }
 GtFilteredMethodsCoder >> typShaMethodMethodAdded: aLookup [
 	<typShaMethod: 'methodAdded:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {ValueAdded typAsType}
 ]
 

@@ -95,7 +95,7 @@ Collection >> typShaMethodAt: aLookup [
 Collection >> typShaMethodBinary170: aLookup [
 	<typShaMethod: ','>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup root receiver
+		typAsFunctionTypeWithResult: (aLookup self
 				withAt: #A
 					put: {aLookup receiver at: #A.
 							(aLookup arguments at: 1) at: #A} typAsType;
@@ -109,22 +109,21 @@ Collection >> typShaMethodCollect: aLookup [
 	| a r |
 	a := aLookup arguments at: 1.
 	r := (a isValue and: [ a value isString ])
-			ifTrue: [ ((aLookup root receiver at: #A) lookupMethod: a value asSymbol arguments: #())
-					result ]
+			ifTrue: [ ((aLookup self at: #A) lookupMethod: a value asSymbol arguments: #()) result ]
 			ifFalse: [ a result ].
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup root receiver withParameters: {r})
+		typAsFunctionTypeWithResult: (aLookup self withParameters: {r})
 		arguments: {{Symbol typAsType.
 					BlockClosure
 						typAsFunctionTypeWithResult: TypUnknownType instance
-						arguments: {aLookup root receiver at: #A}} typAsType}
+						arguments: {aLookup self at: #A}} typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
 Collection >> typShaMethodCopyWithout: aLookup [
 	<typShaMethod: 'copyWithout:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {aLookup receiver at: #A}
 ]
 
@@ -132,7 +131,7 @@ Collection >> typShaMethodCopyWithout: aLookup [
 Collection >> typShaMethodCopyWithoutAll: aLookup [
 	<typShaMethod: 'copyWithoutAll:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {Collection typAsType}
 ]
 
@@ -151,7 +150,7 @@ Collection >> typShaMethodDetect: aLookup [
 Collection >> typShaMethodDetectIfFound: aLookup [
 	<typShaMethod: 'detect:ifFound:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {{Symbol typAsType.
 					BlockClosure
 						typAsFunctionTypeWithResult: Boolean typAsType
@@ -206,11 +205,11 @@ Collection >> typShaMethodDetectIfNone: aLookup [
 Collection >> typShaMethodDo: aLookup [
 	<typShaMethod: 'do:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {{Symbol typAsType.
 					BlockClosure
 						typAsFunctionTypeWithResult: TypUnknownType instance
-						arguments: {aLookup root receiver at: #A}} typAsType}
+						arguments: {aLookup self at: #A}} typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
@@ -219,15 +218,14 @@ Collection >> typShaMethodFlatCollect: aLookup [
 	| a r |
 	a := aLookup arguments at: 1.
 	r := (a isValue and: [ a value isString ])
-			ifTrue: [ ((aLookup root receiver at: #A) lookupMethod: a value asSymbol arguments: #())
-					result ]
+			ifTrue: [ ((aLookup self at: #A) lookupMethod: a value asSymbol arguments: #()) result ]
 			ifFalse: [ a result ].
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup root receiver withParameters: {r at: #A})
+		typAsFunctionTypeWithResult: (aLookup self withParameters: {r at: #A})
 		arguments: {{Symbol typAsType.
 					BlockClosure
 						typAsFunctionTypeWithResult: TypUnknownType instance
-						arguments: {aLookup root receiver at: #A}} typAsType}
+						arguments: {aLookup self at: #A}} typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
@@ -261,7 +259,7 @@ Collection >> typShaMethodGtItemsFor: aLookup [
 Collection >> typShaMethodIfEmpty: aLookup [
 	<typShaMethod: 'ifEmpty:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: {aLookup root receiver.
+		typAsFunctionTypeWithResult: {aLookup self.
 				(aLookup arguments at: 1) result} typAsType
 		arguments: {BlockClosure typAsType}
 ]
@@ -274,7 +272,7 @@ Collection >> typShaMethodIfEmptyIfNotEmpty: aLookup [
 	| a r |
 	a := aLookup arguments at: 2.
 	r := (a isValue and: [ a value isString ])
-			ifTrue: [ (aLookup root receiver lookupMethod: a value asSymbol arguments: #()) result ]
+			ifTrue: [ (aLookup self lookupMethod: a value asSymbol arguments: #()) result ]
 			ifFalse: [ a result ].
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: {(aLookup arguments at: 1) result.
@@ -283,7 +281,7 @@ Collection >> typShaMethodIfEmptyIfNotEmpty: aLookup [
 				{Symbol typAsType.
 					BlockClosure
 						typAsFunctionTypeWithResult: TypUnknownType instance
-						arguments: {aLookup root receiver}
+						arguments: {aLookup self}
 						argumentsOptional: true
 						signalsAlways: false} typAsType}
 ]
@@ -294,15 +292,15 @@ Collection >> typShaMethodIfNotEmpty: aLookup [
 	| a r |
 	a := aLookup arguments at: 1.
 	r := (a isValue and: [ a value isString ])
-			ifTrue: [ (aLookup root receiver lookupMethod: a value asSymbol arguments: #()) result ]
+			ifTrue: [ (aLookup self lookupMethod: a value asSymbol arguments: #()) result ]
 			ifFalse: [ a result ].
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: {aLookup root receiver.
+		typAsFunctionTypeWithResult: {aLookup self.
 				r} typAsType
 		arguments: {{Symbol typAsType.
 					BlockClosure
 						typAsFunctionTypeWithResult: TypUnknownType instance
-						arguments: {aLookup root receiver}
+						arguments: {aLookup self}
 						argumentsOptional: true
 						signalsAlways: false} typAsType}
 ]
@@ -372,7 +370,7 @@ Collection >> typShaMethodReduce: aLookup [
 Collection >> typShaMethodReject: aLookup [
 	<typShaMethod: 'reject:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {{Symbol typAsType.
 					BlockClosure
 						typAsFunctionTypeWithResult: Boolean typAsType
@@ -401,7 +399,7 @@ Collection >> typShaMethodRemoveIfAbsent: aLookup [
 Collection >> typShaMethodSelect: aLookup [
 	<typShaMethod: 'select:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {{Symbol typAsType.
 					BlockClosure
 						typAsFunctionTypeWithResult: Boolean typAsType

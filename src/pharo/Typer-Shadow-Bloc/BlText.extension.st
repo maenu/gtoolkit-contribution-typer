@@ -4,7 +4,7 @@ Extension { #name : #BlText }
 BlText >> typShaMethodAttribute: aLookup [
 	<typShaMethod: 'attribute:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlTextAttribute typAsType}
 ]
 
@@ -20,7 +20,7 @@ BlText >> typShaMethodAttributesAt: aLookup [
 BlText >> typShaMethodClearAttributes: aLookup [
 	<typShaMethod: 'clearAttributes:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlockClosure
 					typAsFunctionTypeWithResult: TypUnknownType instance
 					arguments: {BlTextAttribute typAsType}}

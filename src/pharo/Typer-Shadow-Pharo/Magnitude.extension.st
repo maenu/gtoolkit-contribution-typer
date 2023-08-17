@@ -28,7 +28,7 @@ Magnitude >> typShaMethodBinary226: aLookup [
 Magnitude >> typShaMethodMax: aLookup [
 	<typShaMethod: 'max:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: {aLookup root receiver.
+		typAsFunctionTypeWithResult: {aLookup self.
 				aLookup arguments at: 1} typAsType
 		arguments: {Magnitude typAsType}
 ]
@@ -37,7 +37,7 @@ Magnitude >> typShaMethodMax: aLookup [
 Magnitude >> typShaMethodMin: aLookup [
 	<typShaMethod: 'min:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: {aLookup root receiver.
+		typAsFunctionTypeWithResult: {aLookup self.
 				aLookup arguments at: 1} typAsType
 		arguments: {Magnitude typAsType}
 ]

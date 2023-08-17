@@ -4,7 +4,7 @@ Extension { #name : #GtMondrianGraphBuilder }
 GtMondrianGraphBuilder >> typShaMethodStencil: aLookup [
 	<typShaMethod: 'stencil:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlockClosure
 					typAsFunctionTypeWithResult: BlElement typAsType
 					arguments: {TypUnknownType instance}}

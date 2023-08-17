@@ -4,6 +4,6 @@ Extension { #name : #TestSuite }
 TestSuite >> typShaMethodRun: aLookup [
 	<typShaMethod: 'run:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {TestResult typAsType}
 ]

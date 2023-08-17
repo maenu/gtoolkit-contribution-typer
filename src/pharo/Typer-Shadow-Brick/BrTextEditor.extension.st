@@ -4,7 +4,7 @@ Extension { #name : #BrTextEditor }
 BrTextEditor >> typShaMethodInvalidateTo: aLookup [
 	<typShaMethod: 'invalidate:to:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {Integer typAsType.
 				Integer typAsType}
 ]
@@ -19,7 +19,7 @@ BrTextEditor >> typShaMethodText: aLookup [
 BrTextEditor >> typShaMethodUpdateTo: aLookup [
 	<typShaMethod: 'update:to:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {Integer typAsType.
 				Integer typAsType}
 ]

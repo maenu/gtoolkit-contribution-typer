@@ -16,7 +16,7 @@ Object >> typShaMethodAsSymbol: aLookup [
 Object >> typShaMethodAssert: aLookup [
 	<typShaMethod: 'assert:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {{Boolean typAsType.
 					BlockClosure typAsFunctionTypeWithResult: Boolean typAsType} typAsType}
 ]
@@ -42,7 +42,7 @@ Object >> typShaMethodBinary256: aLookup [
 	<typShaMethod: '->'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Association typAsType
-				withParameters: {aLookup root receiver.
+				withParameters: {aLookup self.
 						aLookup arguments at: 1})
 		arguments: {aLookup arguments at: 1}
 ]
@@ -50,7 +50,7 @@ Object >> typShaMethodBinary256: aLookup [
 { #category : #'*Typer-Shadow-Pharo' }
 Object >> typShaMethodCopy: aLookup [
 	<typShaMethod: 'copy'>
-	^ CompiledMethod typAsFunctionTypeWithResult: aLookup root receiver
+	^ CompiledMethod typAsFunctionTypeWithResult: aLookup self
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
@@ -93,7 +93,7 @@ Object >> typShaMethodPerform: aLookup [
 	| a r |
 	a := aLookup arguments at: 1.
 	r := (a isValue and: [ a value isSymbol ])
-			ifTrue: [ (aLookup root receiver lookupMethod: a value arguments: #()) result ]
+			ifTrue: [ (aLookup self lookupMethod: a value arguments: #()) result ]
 			ifFalse: [ TypUnknownType instance ].
 	^ CompiledMethod typAsFunctionTypeWithResult: r arguments: {Symbol typAsType}
 ]
@@ -104,8 +104,7 @@ Object >> typShaMethodPerformWithEnoughArguments: aLookup [
 	| a r |
 	a := aLookup arguments at: 1.
 	r := (a isValue and: [ a value isSymbol ])
-			ifTrue: [ (aLookup root receiver lookupMethod: a value arguments: aLookup arguments)
-					result ]
+			ifTrue: [ (aLookup self lookupMethod: a value arguments: aLookup arguments) result ]
 			ifFalse: [ TypUnknownType instance ].
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: r
@@ -117,7 +116,7 @@ Object >> typShaMethodPerformWithEnoughArguments: aLookup [
 Object >> typShaMethodPrintOn: aLookup [
 	<typShaMethod: 'printOn:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {Stream typAsType withParameters: {Character typAsType}}
 ]
 
@@ -130,5 +129,5 @@ Object >> typShaMethodPrintString: aLookup [
 { #category : #'*Typer-Shadow-Pharo' }
 Object >> typShaMethodYourself: aLookup [
 	<typShaMethod: 'yourself'>
-	^ CompiledMethod typAsFunctionTypeWithResult: aLookup root receiver
+	^ CompiledMethod typAsFunctionTypeWithResult: aLookup self
 ]

@@ -109,7 +109,7 @@ RBProgramNode >> typShaMethodLastIsReturn: aLookup [
 RBProgramNode >> typShaMethodLink: aLookup [
 	<typShaMethod: 'link:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {MetaLink typAsType}
 ]
 
@@ -157,9 +157,8 @@ RBProgramNode >> typShaMethodPropertyAtIfPresentIfAbsent: aLookup [
 	| a r |
 	a := aLookup arguments at: 2.
 	r := (a isValue and: [ a value isSymbol ])
-			ifTrue: [ (aLookup root receiver
-					lookupMethod: a value
-					arguments: {TypUnknownType instance}) result ]
+			ifTrue: [ (aLookup self lookupMethod: a value arguments: {TypUnknownType instance})
+					result ]
 			ifFalse: [ a result ].
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: {r.
@@ -187,7 +186,7 @@ RBProgramNode >> typShaMethodPropertyAtPut: aLookup [
 RBProgramNode >> typShaMethodRemoveLink: aLookup [
 	<typShaMethod: 'removeLink:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {MetaLink typAsType}
 ]
 

@@ -4,7 +4,7 @@ Extension { #name : #MetaLink }
 MetaLink >> typShaMethodArguments: aLookup [
 	<typShaMethod: 'arguments:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {SequenceableCollection typAsType withParameters: {Symbol typAsType}}
 ]
 
@@ -12,7 +12,7 @@ MetaLink >> typShaMethodArguments: aLookup [
 MetaLink >> typShaMethodControl: aLookup [
 	<typShaMethod: 'control:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {Symbol typAsType}
 ]
 
@@ -20,7 +20,7 @@ MetaLink >> typShaMethodControl: aLookup [
 MetaLink >> typShaMethodMetaObject: aLookup [
 	<typShaMethod: 'metaObject:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {{Symbol typAsType.
 					Object typAsType} typAsType}
 ]
@@ -29,6 +29,6 @@ MetaLink >> typShaMethodMetaObject: aLookup [
 MetaLink >> typShaMethodSelector: aLookup [
 	<typShaMethod: 'selector:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {Symbol typAsType}
 ]

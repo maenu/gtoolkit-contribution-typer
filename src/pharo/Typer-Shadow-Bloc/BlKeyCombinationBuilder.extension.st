@@ -10,6 +10,6 @@ BlKeyCombinationBuilder >> typShaMethodBuild: aLookup [
 BlKeyCombinationBuilder >> typShaMethodKey: aLookup [
 	<typShaMethod: 'key:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlKeyboardKey typAsType}
 ]

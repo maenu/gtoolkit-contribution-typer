@@ -148,6 +148,11 @@ TypInfNode >> iterateDiff [
 ]
 
 { #category : #accessing }
+TypInfNode >> lookup: aType method: aSymbol arguments: aCollection [
+	^ aType lookupMethod: aSymbol arguments: aCollection
+]
+
+{ #category : #accessing }
 TypInfNode >> methodNode [
 
 	^ context root

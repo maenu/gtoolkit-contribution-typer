@@ -4,6 +4,6 @@ Extension { #name : #BlLayoutCommonConstraintsAxis }
 BlLayoutCommonConstraintsAxis >> typShaMethodExact: aLookup [
 	<typShaMethod: 'exact:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {Number typAsType}
 ]

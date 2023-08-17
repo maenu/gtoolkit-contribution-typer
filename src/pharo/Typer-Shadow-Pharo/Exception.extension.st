@@ -4,7 +4,7 @@ Extension { #name : #Exception }
 Exception >> typShaMethodSignal: aLookup [
 	<typShaMethod: 'signal'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: #()
 		argumentsOptional: false
 		signalsAlways: true

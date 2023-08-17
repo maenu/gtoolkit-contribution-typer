@@ -25,7 +25,7 @@ TypMethodIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aColl
 			   receiver: aType
 			   selector: aSymbol
 			   arguments: aCollection
-			   super: nil)
+			   parent: nil)
 ]
 
 { #category : #printing }

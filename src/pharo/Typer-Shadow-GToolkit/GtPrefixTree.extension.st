@@ -4,7 +4,7 @@ Extension { #name : #GtPrefixTree }
 GtPrefixTree >> typShaMethodAddWeight: aLookup [
 	<typShaMethod: 'add:weight:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {String typAsType.
 				Number typAsType}
 ]

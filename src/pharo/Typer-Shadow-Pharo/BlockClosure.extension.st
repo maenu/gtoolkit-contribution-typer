@@ -101,7 +101,7 @@ BlockClosure >> typShaMethodValueValueValueValue: aLookup [
 BlockClosure >> typShaMethodWhileFalse: aLookup [
 	<typShaMethod: 'whileFalse:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver
+		typAsFunctionTypeWithResult: aLookup self
 		arguments: {BlockClosure typAsType}
 ]
 
