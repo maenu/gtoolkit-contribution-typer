@@ -362,7 +362,7 @@ TypType >> withAt: aString put: aType [
 
 { #category : #converting }
 TypType >> withParameters: aCollection [
-
+	self hasSuper ifFalse: [ ^ self ].
 	^ self withSuper: (self super withParameters: aCollection)
 ]
 

@@ -2,7 +2,9 @@ Class {
 	#name : #TypIndex,
 	#superclass : #TypNode,
 	#instVars : [
-		'resolver'
+		'resolver',
+		'canResolve',
+		'preResolve'
 	],
 	#classInstVars : [
 		'instance'
@@ -33,17 +35,22 @@ TypIndex class >> invalidateAll [
 
 { #category : #accessing }
 TypIndex >> canResolve: aLookup [
-	^ resolver canResolve: aLookup
+	^ canResolve at: aLookup ifAbsentPut: [ resolver canResolve: aLookup ]
 ]
 
 { #category : #initialization }
 TypIndex >> initialize [
-
 	<typPraVariable: 'resolver' as: 'TypLookupResolver'>
 	super initialize.
+	canResolve := Dictionary new.
+	preResolve := Dictionary new.
 	SystemAnnouncer uniqueInstance weak
-		when: ClassAnnouncement send: #invalidateOnClassChange: to: self;
-		when: MethodAnnouncement send: #invalidateOnMethodChange: to: self
+		when: ClassAnnouncement
+			send: #invalidateOnClassChange:
+			to: self;
+		when: MethodAnnouncement
+			send: #invalidateOnMethodChange:
+			to: self
 ]
 
 { #category : #initialization }
@@ -56,8 +63,9 @@ TypIndex >> initializeResolver: anObject [
 
 { #category : #invalidation }
 TypIndex >> invalidate [
-
 	resolver invalidate.
+	canResolve removeAll.
+	preResolve removeAll.
 	super invalidate
 ]
 
@@ -95,7 +103,7 @@ TypIndex >> invalidateOnMethodChange: aMethodAnnouncement [
 
 { #category : #accessing }
 TypIndex >> preResolve: aLookup [
-	^ resolver preResolve: aLookup
+	^ preResolve at: aLookup ifAbsentPut: [ resolver preResolve: aLookup ]
 ]
 
 { #category : #accessing }

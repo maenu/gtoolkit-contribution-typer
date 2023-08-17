@@ -52,6 +52,11 @@ TypInfContext >> add: aNode [
 ]
 
 { #category : #accessing }
+TypInfContext >> allChildren [
+	^ (children flatCollect: #allChildren) , {self}
+]
+
+{ #category : #accessing }
 TypInfContext >> children [
 	^ children
 ]
@@ -164,7 +169,7 @@ TypInfContext >> sender [
 
 { #category : #accessing }
 TypInfContext >> stackSize [
-	^ 1 + (sender ifNil: 0 ifNotNil: #stackSize)
+	^ (sender ifNil: 0 ifNotNil: #stackSize) + 1
 ]
 
 { #category : #accessing }

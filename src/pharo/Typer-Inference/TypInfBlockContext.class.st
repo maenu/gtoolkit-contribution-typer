@@ -39,7 +39,7 @@ TypInfBlockContext >> block [
 
 { #category : #accessing }
 TypInfBlockContext >> canInstall [
-	^ self stackSize < 6
+	^ self stackSize < 4
 ]
 
 { #category : #accessing }
@@ -76,7 +76,7 @@ TypInfBlockContext >> newRoot [
 
 { #category : #accessing }
 TypInfBlockContext >> stackSize [
-	^ super stackSize max: 1 + block context stackSize
+	^ (super stackSize max: block context stackSize) + 1
 ]
 
 { #category : #accessing }
@@ -86,11 +86,13 @@ TypInfBlockContext >> visitNode [
 	current
 		inArguments: (node arguments
 				withIndexCollect: [ :n :i | 
-					self
-						nextEdgeTo: (TypInfInlinedLocalDefinition
-								node: n
-								context: self
-								proxy: (message inArguments at: i)) ]).
+					i <= message inArguments size
+						ifTrue: [ self
+								nextEdgeTo: (TypInfInlinedLocalDefinition
+										node: n
+										context: self
+										proxy: (message inArguments at: i)) ]
+						ifFalse: [ self next: n	"can happen for function receiver types" ] ]).
 	self visitNode: node body.
 	node body lastIsReturn
 		ifTrue: [ current outAdd: (TypInfReturnEdge origin: current target: block context root) ]
