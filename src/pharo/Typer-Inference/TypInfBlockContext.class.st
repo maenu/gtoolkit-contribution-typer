@@ -39,7 +39,7 @@ TypInfBlockContext >> block [
 
 { #category : #accessing }
 TypInfBlockContext >> canInstall [
-	^ self stackSize < 4
+	^ self stackSize < 6
 ]
 
 { #category : #accessing }
@@ -77,6 +77,12 @@ TypInfBlockContext >> newRoot [
 { #category : #accessing }
 TypInfBlockContext >> stackSize [
 	^ (super stackSize max: block context stackSize) + 1
+]
+
+{ #category : #accessing }
+TypInfBlockContext >> uninstall [
+	root outRemoveAt: #definition.
+	super uninstall
 ]
 
 { #category : #accessing }

@@ -1,7 +1,7 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*Typer-Shadow' }
-CompiledMethod >> typShaResolvesMethod: aSymbol [
+CompiledMethod >> typShaCanResolveMethod: aSymbol [
 	^ self pragmas
 		anySatisfy:
 			[ :e | e selector = #typShaMethod: and: [ e arguments first = aSymbol ] ]

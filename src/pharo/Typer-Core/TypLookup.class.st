@@ -16,6 +16,12 @@ TypLookup >> = anObject [
 	^ anObject parent = parent
 ]
 
+{ #category : #accessing }
+TypLookup >> allParents [
+	self hasParent ifFalse: [ ^ {self} ].
+	^ {self} asOrderedCollection , self asParent allParents
+]
+
 { #category : #copying }
 TypLookup >> asParent [
 	self subclassResponsibility

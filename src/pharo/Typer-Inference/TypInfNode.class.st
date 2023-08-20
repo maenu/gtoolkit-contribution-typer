@@ -23,10 +23,20 @@ TypInfNode >> burp [
 ]
 
 { #category : #accessing }
+TypInfNode >> canLookup: aType method: aSymbol arguments: aCollection [
+	^ aType
+		canResolveMethod: (TypMethodLookup
+				receiver: aType
+				selector: aSymbol
+				arguments: aCollection
+				parent: nil)
+]
+
+{ #category : #accessing }
 TypInfNode >> canSlurpAndBurp [
 	^ in
 		at: #next
-		ifPresent: [ :s | s allSatisfy: [ :e | e state isNotNil ] ]
+		ifPresent: [ :s | s allSatisfy: #canBeSlurped ]
 		ifAbsent: [ state isNotNil ]
 ]
 
@@ -129,22 +139,58 @@ TypInfNode >> invalidateOnMethodChange: aMethodAnnouncement [
 
 { #category : #accessing }
 TypInfNode >> iterate [
-	| changed |
-	changed := false.
-	self
-		depthFirstNextDo: [ :n | n canSlurpAndBurp ifTrue: [ changed := n slurpAndBurp or: changed ] ].
-	^ changed
+	^ self iterateWithContinuations: LinkedList new
 ]
 
 { #category : #accessing }
 TypInfNode >> iterateDiff [
 	| changes |
 	changes := OrderedIdentityDictionary new.
-	self
-		depthFirstNextDo: [ :n | 
-			n canSlurpAndBurp
-				ifTrue: [ n slurpAndBurpDiff ifNotEmpty: [ :s | changes at: n put: s ] ] ].
+	self iterateDiffWithContinuations: LinkedList new diff: changes.
 	^ changes
+]
+
+{ #category : #accessing }
+TypInfNode >> iterateDiffWithContinuations: aSequenceableCollection diff: aDictionary [
+	| changed |
+	changed := false.
+	self canSlurpAndBurp
+		ifFalse: [ aSequenceableCollection ifEmpty: [ ^ false ].
+			aSequenceableCollection add: self.
+			^ aSequenceableCollection removeFirst
+				iterateDiffWithContinuations: aSequenceableCollection
+				diff: aDictionary ].
+	self slurpAndBurpDiff ifNotEmpty: [ :s | aDictionary at: self put: s ].
+	out
+		at: #next
+		ifPresent: [ :s | 
+			s
+				inject: changed
+				into: [ :r :e | 
+					r
+						or: (e target
+								iterateDiffWithContinuations: aSequenceableCollection
+								diff: aDictionary) ] ]
+		ifAbsent: [ changed ].
+	^ changed
+]
+
+{ #category : #accessing }
+TypInfNode >> iterateWithContinuations: aSequenceableCollection [
+	| changed |
+	self canSlurpAndBurp
+		ifFalse: [ aSequenceableCollection ifEmpty: [ ^ false ].
+			aSequenceableCollection add: self.
+			^ aSequenceableCollection removeFirst
+				iterateWithContinuations: aSequenceableCollection ].
+	changed := self slurpAndBurp.
+	^ out
+		at: #next
+		ifPresent: [ :s | 
+			s
+				inject: changed
+				into: [ :r :e | r or: (e target iterateWithContinuations: aSequenceableCollection) ] ]
+		ifAbsent: [ changed ]
 ]
 
 { #category : #accessing }
@@ -175,13 +221,18 @@ TypInfNode >> printOn: aStream [
 ]
 
 { #category : #accessing }
+TypInfNode >> selfIn: aType [
+	^ aType
+]
+
+{ #category : #accessing }
 TypInfNode >> slurp [
 	in
 		at: #next
 		ifPresent: [ :s | 
 			| first |
 			first := s anyOne.
-			state := first state copy.
+			state := first slurp copy.
 			(s copyWithout: first) do: [ :e | state := state covariant: e state ] ].
 	in
 		at: #constrain
@@ -232,6 +283,11 @@ TypInfNode >> slurpAndBurpDiff [
 TypInfNode >> state [
 
 	^ state
+]
+
+{ #category : #accessing }
+TypInfNode >> superIn: aType [
+	^ (self selfIn: aType) superOrNil
 ]
 
 { #category : #accessing }

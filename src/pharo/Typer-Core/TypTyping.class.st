@@ -16,12 +16,13 @@ TypTyping >> invalidate [
 	GtPharoSourceCoderViewModel allSubInstancesDo: [ :e | e selfObject: nil ].
 	GtTextualCoderViewModel allSubInstancesDo: #requestUpdateAddOns.
 	GtLocalVariablesBindings allInstancesDo: #initialize.
-	queue := GtWorld someInstance taskQueue.
-	((queue instVarNamed: #tasks) value instVarNamed: #pendingTasks) asArray
-		select: [ :t | 
-			(t isKindOf: BlPromiseTask)
-				and: [ (t instVarNamed: #promise) isKindOf: AsyncPendingFuturePromise ] ]
-		thenDo: [ :t "((t instVarNamed: #promise) future instVarNamed: #executedBlock) at: 2." | queue dequeue: t ].
+	((GtWorld someInstance taskQueue instVarNamed: #tasks) value
+		instVarNamed: #pendingTasks) removeAllTasks.
+	AsyncRejectedPromiseState allInstances
+		select: [ :e | 
+			e error asString
+				beginsWith: 'Instance of a subclass of ProtoObject did not understand ' ]
+		thenDo: [ :e | e error: nil ].
 	LeSharedSnippetContext allSubInstancesDo: [ :e | e selfObject: nil ].
 	BlOverlayListener
 		allInstancesDo: [ :e | e overlayElement removeEventHandler: e ].
@@ -41,7 +42,6 @@ TypTyping >> invalidate [
 	TypInfMethodResolver invalidate.
 	TypInfMethodIndex invalidate.
 	TypInfNodeStack resetSoleInstance.
-	Smalltalk garbageCollect.
 	^ self memoryProbe
 ]
 

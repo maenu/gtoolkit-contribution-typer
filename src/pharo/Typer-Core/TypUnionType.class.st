@@ -9,11 +9,11 @@ Class {
 
 { #category : #'instance creation' }
 TypUnionType class >> types: aSet [
-	<typPraArguments: 'Set<TypType>'>
+	<typPraArguments: 'Set<IdentitySet>'>
 	| types |
-	types := aSet asSet copyWithout: ProtoObject typAsType.
+	types := aSet asIdentitySet copyWithout: ProtoObject typAsType.
 	types ifEmpty: [ ^ TypUnknownType instance ].
-	types size = 1 ifTrue: [ ^ aSet anyOne ].
+	types size = 1 ifTrue: [ ^ types anyOne ].
 	^ self index
 		at: types
 		ifAbsentPut: [ self new
@@ -94,14 +94,15 @@ TypUnionType >> hashSkipping: anIdentitySet [
 
 { #category : #initialization }
 TypUnionType >> initialize [
-	<typPraVariable: 'types' as: 'Set<TypType>'>
+	<typPraVariable: 'types' as: 'IdentitySet<TypType>'>
 	super initialize
 ]
 
 { #category : #initialization }
 TypUnionType >> initializeTypes: anObject [
-	<typPraArguments: 'Set<TypType>'>
-	self assert: [ anObject isKindOf: Set ].
+	<typPraArguments: 'IdentitySet<TypType>'>
+	self assert: [ anObject isKindOf: IdentitySet ].
+	self assert: [ (anObject anySatisfy: #isUnion) not ].
 	self assert: [ anObject size > 1 ].
 	anObject = types ifTrue: [ ^ self ].
 	types := anObject.
@@ -146,6 +147,11 @@ TypUnionType >> lookupVariable: aSymbol [
 	^ (types collect: [ :e | e lookupVariable: aSymbol ]) typAsType
 ]
 
+{ #category : #accessing }
+TypUnionType >> overriddingMethods: aSymbol [
+	^ types flatCollect: [ :e | e overriddingMethods: aSymbol ]
+]
+
 { #category : #copying }
 TypUnionType >> postCopy [
 
@@ -156,7 +162,7 @@ TypUnionType >> postCopy [
 { #category : #accessing }
 TypUnionType >> preResolveMethod: aLookup [
 	^ (types
-		flatCollect: [ :e | e preResolveMethod: (aLookup copyWithReceiver: e) ])
+		flatCollect: [ :e | e preResolveMethod: (aLookup copyWithSelf: e) ])
 		reject: #isNil
 ]
 
@@ -212,7 +218,7 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 
 { #category : #accessing }
 TypUnionType >> resolveMethod: aLookup [
-	^ (types collect: [ :e | e resolveMethod: (aLookup copyWithReceiver: e) ])
+	^ (types collect: [ :e | e resolveMethod: (aLookup copyWithSelf: e) ])
 		typAsType
 ]
 

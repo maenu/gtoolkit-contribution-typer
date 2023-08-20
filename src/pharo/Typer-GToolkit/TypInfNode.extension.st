@@ -100,8 +100,9 @@ TypInfNode >> typGtDecorate: anElement in: aMondrian [
 						content: [ BrEditor new
 								aptitude: BrGlamorousCodeEditorAptitude new;
 								background: BlBackground transparent;
-								text: (state at: self ifAbsent: [ TypUnknownType instance ]) asString , String lf
-										, node formattedCode;
+								text: self class name , String lf , node asString , String lf
+										, (state at: self ifAbsent: [ TypUnknownType instance ]) asString
+										, String lf , node formattedCode;
 								beReadOnlyWithoutSelection;
 								hFitContent;
 								vFitContent;

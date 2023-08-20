@@ -14,12 +14,10 @@ TypShaMethodResolver >> anonymousClass: aClassDescription [
 		ifAbsentPut: [ | class |
 			class := aClassDescription newAnonymousSubclass.
 			class isInstanceSide
-				ifTrue: [ class
-						compile: 'typShaPerform: aSelector with: anObject <primitive: 83> self primitiveFailed'.
-					class classSide
-						compile: 'typShaNew ^ [ self new ] on: Error do: [ self basicNew ]';
+				ifTrue: [ class classSide
 						compile: (Behavior methodDict at: #basicNew) sourceCode;
-						compile: (Behavior methodDict at: #basicNew:) sourceCode ].
+						compile: (Behavior methodDict at: #basicNew:) sourceCode;
+						compile: 'typShaNew ^ [ self new ] on: Error do: [ [ self basicNew ] on: Error do: [ superclass typShaNew ] ]' ].
 			class ]
 ]
 
@@ -27,7 +25,7 @@ TypShaMethodResolver >> anonymousClass: aClassDescription [
 TypShaMethodResolver >> canResolve: aLookup [
 	aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
-	^ aLookup receiver classDescription typShaResolvesMethod: aLookup
+	^ aLookup receiver classDescription typShaCanResolveMethod: aLookup
 ]
 
 { #category : #accessing }
@@ -58,24 +56,4 @@ TypShaMethodResolver >> resolve: aLookup [
 	^ self
 		resolve: aLookup
 		reduce: (aLookup receiver classDescription typShaResolveMethod: aLookup receiver: class)
-]
-
-{ #category : #accessing }
-TypShaMethodResolver >> shadows: aLookup [
-	anonymousClasses
-		at: aLookup receiver classDescription
-		ifAbsentPut: [ aLookup receiver classDescription methods
-				select: [ :m | m typShaResolvesMethod: aLookup selector ]
-				thenCollect: [ :m | 
-					| class |
-					class := aLookup receiver classDescription newAnonymousSubclass.
-					class isClassSide
-						ifTrue: [ [ class perform: m selector with: aLookup ] ]
-						ifFalse: [ class
-								compile: 'typShaPerform: aSelector with: anObject <primitive: 83> self primitiveFailed'.
-							class classSide
-								compile: 'typShaNew ^ [ self new ] on: Error do: [ self basicNew ]';
-								compile: (Behavior methodDict at: #basicNew) sourceCode;
-								compile: (Behavior methodDict at: #basicNew:) sourceCode.
-							class ] ] ]
 ]

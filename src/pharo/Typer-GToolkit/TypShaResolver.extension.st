@@ -33,7 +33,7 @@ TypShaResolver class >> typGtShadowMethod: aSymbol result: aType arguments: some
 	'Symbol,TypType,SequenceableCollection<TypType>,ClassDescription'>
 	| methods newSelector |
 	methods := aClass methods select: [ :e | 
-		           e typShaResolvesMethod: aSymbol ].
+		           e typShaCanResolveMethod: aSymbol ].
 	methods ifNotEmpty: [ ^ methods ].
 	newSelector := self typGtShadowMethodNewSelector: aSymbol in: aClass.
 	aClass compile: ('{1} aLookup

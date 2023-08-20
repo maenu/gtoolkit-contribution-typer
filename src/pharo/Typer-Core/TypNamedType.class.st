@@ -171,6 +171,15 @@ TypNamedType >> name [
 	^ name
 ]
 
+{ #category : #accessing }
+TypNamedType >> overriddingMethods: aSymbol [
+	"all the methods of my superclasses that are overriding me"
+
+	^ (TypInfMethodIndex instance implementors: aSymbol)
+		select: [ :class | class inheritsFrom: self classDescription ]
+		thenCollect: [ :class | class >> aSymbol ]
+]
+
 { #category : #printing }
 TypNamedType >> printOn: aStream skipping: anIdentitySet [
 

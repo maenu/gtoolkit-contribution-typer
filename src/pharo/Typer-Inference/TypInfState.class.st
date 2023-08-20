@@ -8,7 +8,15 @@ Class {
 TypInfState >> at: aNode covariantPut: aType [
 	^ self
 		at: aNode
-		put: ((self at: aNode ifAbsent: TypUnknownType instance) covariant: aType)
+		put: (self
+				at: aNode
+				ifPresent: [ :t | t covariant: aType ]
+				ifAbsent: [ aType ])
+]
+
+{ #category : #accessing }
+TypInfState >> at: aNode put: aType [
+	^ super at: aNode put: aType
 ]
 
 { #category : #splitjoin }

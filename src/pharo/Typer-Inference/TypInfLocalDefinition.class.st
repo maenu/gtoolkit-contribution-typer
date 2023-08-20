@@ -17,6 +17,7 @@ TypInfLocalDefinition >> outReads [
 TypInfLocalDefinition >> transfer [
 	| className global |
 	node isArgumentVariable ifFalse: [ ^ state at: self put: TypNilType instance ].
+	state at: self ifAbsent: [ ^ self ].
 	(state at: self) isUnknown ifFalse: [ ^ self ].
 	(node name beginsWith: 'an')
 		ifTrue: [ className := node name allButFirst: 2 ]

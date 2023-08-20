@@ -110,6 +110,11 @@ TypType >> boundTo: aType [
 	^ self
 ]
 
+{ #category : #lookup }
+TypType >> canResolveMethod: aLookup [
+	^ TypMethodIndex instance canResolve: aLookup
+]
+
 { #category : #converting }
 TypType >> contravariant: aType [
 

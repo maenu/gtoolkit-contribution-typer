@@ -99,7 +99,7 @@ TypMethodMeasurement >> gtControlFlowFor: aView [
 	^ aView forward
 		  title: 'Control Flow';
 		  priority: 10;
-		  object: [ method ast typInfNodeSelf context ];
+		  object: [ result ];
 		  view: #typGtFlowFor:
 ]
 

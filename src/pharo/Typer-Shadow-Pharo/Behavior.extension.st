@@ -8,6 +8,20 @@ Behavior >> typShaMethodAllSubclasses: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
+Behavior >> typShaMethodBasicNew2: aLookup [
+	<typShaMethod: 'basicNew:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup root self classDescription instanceSide typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Behavior >> typShaMethodBasicNew: aLookup [
+	<typShaMethod: 'basicNew'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup root self classDescription instanceSide typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
 Behavior >> typShaMethodBinary83: aLookup [
 	<typShaMethod: '>>'>
 	^ CompiledMethod
@@ -110,6 +124,21 @@ Behavior >> typShaMethodMethods: aLookup [
 Behavior >> typShaMethodName: aLookup [
 	<typShaMethod: 'name'>
 	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Behavior >> typShaMethodNew2: aLookup [
+	<typShaMethod: 'new:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup root self classDescription instanceSide typAsType
+		arguments: {Integer typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Behavior >> typShaMethodNew: aLookup [
+	<typShaMethod: 'new'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup root self classDescription instanceSide typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }

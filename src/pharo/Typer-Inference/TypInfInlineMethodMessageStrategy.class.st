@@ -21,7 +21,7 @@ TypInfInlineMethodMessageStrategy >> canInstall [
 				parent: nil)) anySatisfy: [ :e | e resolver isKindOf: TypInfMethodResolver ])
 		ifFalse: [ ^ false ].
 	newContexts := self newContexts.
-	newContexts size < 8 ifFalse: [ ^ false ].
+	(newContexts size between: 1 and: 8) ifFalse: [ ^ false ].
 	^ newContexts allSatisfy: #canInstall
 ]
 
@@ -52,18 +52,12 @@ TypInfInlineMethodMessageStrategy >> install [
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> newContexts [
 	| receiver selfType superType |
-	receiver := message inReceiver.
-	(receiver isKindOf: TypInfSelf)
-		ifTrue: [ selfType := message context self.
-			superType := message context super ]
-		ifFalse: [ (receiver isKindOf: TypInfSuper)
-				ifTrue: [ selfType := message context self.
-					superType := message context super superOrNil ]
-				ifFalse: [ selfType := self constrainedReceiver.
-					superType := selfType superOrNil ] ].
-	^ (self constrainedReceiver
+	receiver := self constrainedReceiver.
+	selfType := message inReceiver selfIn: receiver.
+	superType := message inReceiver superIn: receiver.
+	^ (receiver
 		preResolveMethod: (TypMethodLookup
-				receiver: self constrainedReceiver
+				receiver: selfType
 				selector: message selector
 				arguments: message arguments
 				self: selfType
@@ -74,15 +68,17 @@ TypInfInlineMethodMessageStrategy >> newContexts [
 				ifTrue: [ | method |
 					method := l receiver classDescription lookupSelector: message selector.
 					(method isAbstract
-						ifTrue: [ method typInfOverriddingMethods ]
-						ifFalse: [ {method} ])
+						ifTrue: [ selfType overriddingMethods: message selector ]
+						ifFalse: [ (selfType overriddingMethods: message selector) , {method} ])
 						flatCollect: [ :m | 
 							(method methodClass typInfCanAbstractInterpret: message)
 								ifTrue: [ method methodClass typInfAbstractInterpret: message ]
 								ifFalse: [ {TypInfInlineContext
 											sender: message context
 											state: message state copy
-											node: m ast
+											node: ([ m ast ]
+													on: OCUndeclaredVariableWarning
+													do: [ :ex | ex resume: ex declareUndefined ])
 											self: selfType
 											super: superType
 											message: message} ] ] ]
@@ -91,7 +87,7 @@ TypInfInlineMethodMessageStrategy >> newContexts [
 							state: message state copy
 							node: message copy
 							self: selfType
-							super: selfType superOrNil
+							super: superType
 							message: message} ] ]
 		as: Set
 ]

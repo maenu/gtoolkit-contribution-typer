@@ -48,20 +48,14 @@ TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollectio
 
 { #category : #accessing }
 TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection self: anotherType super: yetAnotherType parent: aLookup [
-	^ self index
-		at: {aType.
-				aSymbol asSymbol.
-				aCollection asArray.
-				anotherType.
-				yetAnotherType.
-				aLookup}
-		ifAbsentPut: [ self new
-				initializeReceiver: aType selector: aSymbol asSymbol;
-				initializeArguments: aCollection asArray
-					self: anotherType
-					super: yetAnotherType;
-				initializeParent: aLookup;
-				yourself ]
+	self flag: 'TODO index broken as objects change'.
+	^ self new
+		initializeReceiver: aType selector: aSymbol asSymbol;
+		initializeArguments: aCollection asArray
+			self: anotherType
+			super: yetAnotherType;
+		initializeParent: aLookup;
+		yourself
 ]
 
 { #category : #accessing }
@@ -86,8 +80,18 @@ TypMethodLookup >> asParent [
 			selector: selector
 			arguments: arguments
 			self: selfType
-			super: superType
+			super: receiver super superOrNil
 			parent: self
+]
+
+{ #category : #accessing }
+TypMethodLookup >> copyWithSelf: aType [
+	^ self copy
+		initializeReceiver: aType selector: selector;
+		initializeArguments: arguments
+			self: aType
+			super: aType superOrNil;
+		yourself
 ]
 
 { #category : #accessing }
@@ -100,7 +104,7 @@ TypMethodLookup >> hash [
 TypMethodLookup >> initializeArguments: aCollection self: aType super: anotherType [
 	arguments := aCollection.
 	selfType := aType.
-	superType := aType
+	superType := anotherType
 ]
 
 { #category : #invalidation }

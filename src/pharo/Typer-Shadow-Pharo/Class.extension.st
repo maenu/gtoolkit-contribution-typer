@@ -9,20 +9,6 @@ Class >> typShaMethodAddClassVarNamed: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Class >> typShaMethodBasicNew2: aLookup [
-	<typShaMethod: 'basicNew:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver classDescription instanceSide typAsType
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Class >> typShaMethodBasicNew: aLookup [
-	<typShaMethod: 'basicNew'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver classDescription instanceSide typAsType
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
 Class >> typShaMethodClassVarNamed: aLookup [
 	<typShaMethod: 'classVarNamed:'>
 	^ CompiledMethod
@@ -36,21 +22,6 @@ Class >> typShaMethodHasClassVarNamed: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {String typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Class >> typShaMethodNew2: aLookup [
-	<typShaMethod: 'new:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver classDescription instanceSide typAsType
-		arguments: {Integer typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Class >> typShaMethodNew: aLookup [
-	<typShaMethod: 'new'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver classDescription instanceSide typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }

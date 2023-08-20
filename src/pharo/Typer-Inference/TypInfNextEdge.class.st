@@ -14,6 +14,16 @@ TypInfNextEdge class >> origin: aNode target: anotherNode [
 ]
 
 { #category : #accessing }
+TypInfNextEdge >> canBeSlurped [
+	^ state isNotNil
+]
+
+{ #category : #accessing }
+TypInfNextEdge >> slurp [
+	^ [ state ] ensure: [ state := nil ]
+]
+
+{ #category : #accessing }
 TypInfNextEdge >> state [
 	^ state
 ]

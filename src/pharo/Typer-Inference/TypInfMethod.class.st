@@ -22,13 +22,11 @@ TypInfMethod >> methodNode [
 
 { #category : #accessing }
 TypInfMethod >> transfer [
-
-	state at: self put: ((CompiledMethod
-			  typAsFunctionTypeWithResult:
-				  (self inReturns collect: #type) typAsType
-			  arguments: (self inArguments collect: #type)
-			  argumentsOptional: false
-			  signalsAlways: nil)
-			 outAt: #method ifAbsentPut: [ self ];
-			 yourself)
+	state
+		at: self
+		put: (CompiledMethod
+				typAsFunctionTypeWithResult: (self inReturns collect: #type) typAsType
+				arguments: (self inArguments collect: #type)
+				argumentsOptional: false
+				signalsAlways: nil)
 ]

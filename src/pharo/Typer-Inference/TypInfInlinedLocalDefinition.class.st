@@ -21,10 +21,5 @@ TypInfInlinedLocalDefinition >> constrainTo: aType from: aNode [
 
 { #category : #accessing }
 TypInfInlinedLocalDefinition >> transfer [
-	state at: self put: (state at: self inArguments first)
-]
-
-{ #category : #accessing }
-TypInfInlinedLocalDefinition >> type [
-	^ state at: self
+	state at: self put: (state at: (self inArgumentAt: 1))
 ]

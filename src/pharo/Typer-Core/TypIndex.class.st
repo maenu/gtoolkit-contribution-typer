@@ -112,8 +112,17 @@ TypIndex >> resolve: aLookup [
 		outAt: aLookup
 		ifAbsent: [ (resolver canResolve: aLookup)
 				ifTrue: [ self outAt: aLookup put: TypUnknownType instance.
-					self outAt: aLookup put: (resolver resolve: aLookup) ]
+					[ self outAt: aLookup put: (resolver resolve: aLookup) ]
+						ifCurtailed: [ self outRemoveAt: aLookup ] ]
 				ifFalse: [ TypUnknownType instance ] ]
+]
+
+{ #category : #accessing }
+TypIndex >> resolveUncached: aLookup [
+	^ (resolver canResolve: aLookup)
+		ifTrue: [ self outAt: aLookup put: TypUnknownType instance.
+			self outAt: aLookup put: (resolver resolve: aLookup) ]
+		ifFalse: [ TypUnknownType instance ]
 ]
 
 { #category : #accessing }
@@ -121,4 +130,9 @@ TypIndex >> resolvedLookup: aLookup [
 	self assert: [ self canResolve: aLookup ].
 	self resolve: aLookup.
 	^ (out keys detect: [ :e | e = aLookup ]) resolved
+]
+
+{ #category : #accessing }
+TypIndex >> resolver [
+	^ resolver
 ]

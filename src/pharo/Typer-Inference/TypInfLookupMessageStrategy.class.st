@@ -6,10 +6,10 @@ Class {
 
 { #category : #accessing }
 TypInfLookupMessageStrategy >> canInstall [
-	^ (message inReceiver
-		lookup: self constrainedReceiver
+	^ message inReceiver
+		canLookup: self constrainedReceiver
 		method: message selector asSymbol
-		arguments: message arguments) isUnknown not
+		arguments: message arguments
 ]
 
 { #category : #accessing }
@@ -23,5 +23,5 @@ TypInfLookupMessageStrategy >> transfer [
 		withIndexDo: [ :e :i | 
 			i <= method arguments size
 				ifTrue: [ message constrain: e to: (method arguments at: i) ] ].
-	message state at: message covariantPut: method result
+	message state at: message put: method result
 ]

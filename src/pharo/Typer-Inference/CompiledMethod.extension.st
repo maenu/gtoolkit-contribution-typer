@@ -1,51 +1,94 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*Typer-Inference' }
-CompiledMethod >> typInfOverriddingMethods [
-	"all the methods of my superclasses that are overriding me"
-
-	| selector |
-	selector := self selector.
-	^ self methodClass allSubclasses
-		select: [ :class | class includesSelector: selector ]
-		thenCollect: [ :class | class compiledMethodAt: selector ]
-]
-
-{ #category : #'*Typer-Inference' }
-CompiledMethod >> typInfRunAndMonitor [
-	| promise start semaphore process error timeout result tally |
+CompiledMethod >> typInfRun: aDuration [
+	| promise start semaphore process error timeout context |
 	promise := AsyncPendingPromise new.
 	start := DateAndTime now.
 	timeout := false.
 	semaphore := Semaphore new.
-	tally := MessageTally new.
-	process := [ [ [ tally spyEvery: 1 on: [ result := self ast typInfTypeSelf ] ]
+	context := TypInfContext
+			sender: nil
+			state: TypInfState new
+			node: self ast
+			self: self methodClass typAsType
+			super: self methodClass typAsType superOrNil.
+	process := [ [ [ context run ]
 			on: Exception - OCUndeclaredVariableWarning - OCShadowVariableWarning
 			do: [ :e | 
 				e freeze.
 				error := e ] ] ensure: [ semaphore signal ] ]
 			forkAt: Processor userBackgroundPriority.
-	^ [ semaphore
-		wait: 2 minutes
+	[ semaphore
+		wait: aDuration
 		onCompletion: [ error
-				ifNil: [ TypMethodMeasurement
-						method: self
-						duration: DateAndTime now - start
-						result: result
-						tally: tally ]
-				ifNotNil: [ TypMethodMeasurement
-						method: self
-						duration: DateAndTime now - start
-						error: error
-						tally: tally ] ]
+				ifNil: [ promise
+						fulfillWithValue: (TypMethodMeasurement
+								method: self
+								duration: DateAndTime now - start
+								result: context
+								tally: nil) ]
+				ifNotNil: [ promise
+						fulfillWithValue: (TypMethodMeasurement
+								method: self
+								duration: DateAndTime now - start
+								error: error
+								tally: nil) ] ]
 		onTimeout: [ process suspend.
 			timeout := true.
-			TypMethodMeasurement
-				method: self
-				duration: DateAndTime now - start
-				process: process
-				tally: tally ] ] asAsyncFuture
-		await: AsyncFutureExecutionConfiguration new lowPriority
+			promise
+				fulfillWithValue: (TypMethodMeasurement
+						method: self
+						duration: DateAndTime now - start
+						process: process
+						tally: nil) ] ] forkAt: Processor userBackgroundPriority.
+	^ promise
+]
+
+{ #category : #'*Typer-Inference' }
+CompiledMethod >> typInfRunAndMonitor: aDuration [
+	| promise start semaphore process error timeout context tally |
+	promise := AsyncPendingPromise new.
+	start := DateAndTime now.
+	timeout := false.
+	semaphore := Semaphore new.
+	tally := MessageTally new.
+	context := TypInfContext
+			sender: nil
+			state: TypInfState new
+			node: self ast
+			self: self methodClass typAsType
+			super: self methodClass typAsType superOrNil.
+	process := [ [ [ tally spyEvery: 1 on: [ context run ] ]
+			on: Exception - OCUndeclaredVariableWarning - OCShadowVariableWarning
+			do: [ :e | 
+				e freeze.
+				error := e ] ] ensure: [ semaphore signal ] ]
+			forkAt: Processor userBackgroundPriority.
+	[ semaphore
+		wait: aDuration
+		onCompletion: [ error
+				ifNil: [ promise
+						fulfillWithValue: (TypMethodMeasurement
+								method: self
+								duration: DateAndTime now - start
+								result: context
+								tally: tally) ]
+				ifNotNil: [ promise
+						fulfillWithValue: (TypMethodMeasurement
+								method: self
+								duration: DateAndTime now - start
+								error: error
+								tally: tally) ] ]
+		onTimeout: [ process suspend.
+			timeout := true.
+			promise
+				fulfillWithValue: (TypMethodMeasurement
+						method: self
+						duration: DateAndTime now - start
+						process: process
+						tally: tally) ] ] forkAt: Processor userBackgroundPriority.
+	^ promise
 ]
 
 { #category : #'*Typer-Inference' }
