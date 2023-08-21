@@ -2,7 +2,10 @@ Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer-GToolkit' }
 RBMessageNode >> typGtCanType [
-	^ true
+	| receiverType |
+	receiverType := self receiver typInfTypeSelf.
+	receiverType isNamed ifFalse: [ ^ false ].
+	^ receiverType hasClassDescription
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -22,26 +25,14 @@ RBMessageNode >> typGtInvokedMethods [
 
 { #category : #'*Typer-GToolkit' }
 RBMessageNode >> typGtShadowMethod [
-
-	| method_ receiverType argumentTypes resultType clazz shadow |
+	| method_ receiverType argumentTypes resultType |
 	self assert: [ self typGtCanType ].
-	method_ := self typInfNodeSelf method.
+	method_ := self typInfNodeSelf type.
 	receiverType := self receiver typInfTypeSelf.
 	argumentTypes := method_ arguments.
 	resultType := method_ result.
-	clazz := (receiverType isNamed and: [ 
-		          receiverType hasClassDescription ])
-		         ifTrue: [ receiverType classDescription ]
-		         ifFalse: [ Object ].
-	shadow := (TypShaShadow typGtShadowFor: clazz instanceSide)
-		          ifEmpty: [ 
-		          TypShaShadow typGtNewShadowFor: clazz instanceSide ]
-		          ifNotEmpty: #first.
-	^ shadow
-		  typGtShadowMethod: self selector
-		  result: resultType
-		  arguments: argumentTypes
-		  in: (clazz isInstanceSide
-				   ifTrue: [ shadow ]
-				   ifFalse: [ shadow class ])
+	^ receiverType classDescription
+		typGtShadowMethod: self selector
+		result: resultType
+		arguments: argumentTypes
 ]

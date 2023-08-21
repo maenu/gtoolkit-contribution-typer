@@ -71,6 +71,51 @@ ClassDescription >> typGtNodeCoverage [
 ]
 
 { #category : #'*Typer-GToolkit' }
+ClassDescription >> typGtShadowMethod: aSymbol result: aType arguments: someTypes [
+	<typPraArguments: 'Symbol,TypType,SequenceableCollection<TypType>'>
+	| methods newSelector |
+	methods := self methods select: [ :e | e typShaCanResolveMethod: aSymbol ].
+	methods ifNotEmpty: [ ^ methods ].
+	newSelector := self typGtShadowMethodNewSelector: aSymbol.
+	self
+		compile: ('{1} aLookup
+	<typShaMethod: ''{2}''>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: ''{3}'' typAsType
+		arguments: \{{4}\}'
+				format: {newSelector.
+						aSymbol.
+						aType.
+						' . ' join: (someTypes collect: [ :e | '''{1}'' typAsType' format: {e} ])}).
+	^ {self compiledMethodAt: newSelector asSymbol}
+]
+
+{ #category : #'*Typer-GToolkit' }
+ClassDescription >> typGtShadowMethodNewSelector: aSymbol [
+	| newN newSelector |
+	newSelector := self typGtShadowMethodSelector: aSymbol postfix: ''.
+	newN := 1.
+	[ self includesSelector: newSelector ]
+		whileTrue: [ newSelector := self typGtShadowMethodSelector: aSymbol postfix: newN.
+			newN := newN + 1 ].
+	^ newSelector
+]
+
+{ #category : #'*Typer-GToolkit' }
+ClassDescription >> typGtShadowMethodSelector: aSymbol postfix: anObject [
+
+	aSymbol isUnary ifTrue: [ 
+		^ 'm{1}{2}:' format: { 
+				  aSymbol capitalized.
+				  anObject } ].
+	aSymbol isBinary ifTrue: [ ^ 'mBinary{1}:' format: { anObject } ].
+	^ 'm{1}{2}:' format: { 
+			  ('' join: (aSymbol keywords collect: [ :e | 
+					    e capitalized copyFrom: 1 to: e size - 1 ])).
+			  anObject }
+]
+
+{ #category : #'*Typer-GToolkit' }
 ClassDescription >> typGtVariableElementFor: aSymbol [
 
 	| type |

@@ -231,7 +231,6 @@ TypUnionType >> result [
 
 { #category : #accessing }
 TypUnionType >> super [
-
 	| remains nilTypes unknownTypes current |
 	self assert: [ self hasSuper ].
 	superType ifNotNil: [ ^ superType ].
@@ -241,17 +240,16 @@ TypUnionType >> super [
 	remains
 		removeAll: nilTypes;
 		removeAll: unknownTypes.
-	remains ifEmpty: [ ^ false ].
 	current := remains remove: remains anyOne.
-	(remains isEmpty and: [ current hasSuper ]) ifTrue: [ 
-		current := current super ].
-	[ remains isEmpty ] whileFalse: [ 
-		| next common |
-		next := remains remove: remains anyOne.
-		common := current contravariant: next.
-		common = current ifFalse: [ 
-			current := common.
-			remains add: current ] ].
+	(remains isEmpty and: [ current hasSuper ])
+		ifTrue: [ current := current super ].
+	[ remains isEmpty ]
+		whileFalse: [ | next common |
+			next := remains remove: remains anyOne.
+			common := current contravariant: next.
+			common isUnion
+				ifTrue: [ remains add: (current := TypUnknownType instance) ]
+				ifFalse: [ current = common ifFalse: [ remains add: (current := common) ] ] ].
 	remains := IdentitySet with: current.
 	remains
 		addAll: nilTypes;

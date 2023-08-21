@@ -50,32 +50,6 @@ TypShaResolver class >> typGtShadowMethod: aSymbol result: aType arguments: some
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypShaResolver class >> typGtShadowMethodNewSelector: aSymbol in: aClass [
-
-	| newN newSelector |
-	newSelector := self typGtShadowMethodSelector: aSymbol postfix: ''.
-	newN := 1.
-	[ aClass includesSelector: newSelector ] whileTrue: [ 
-		newSelector := self typGtShadowMethodSelector: aSymbol postfix: newN.
-		newN := newN + 1 ].
-	^ newSelector
-]
-
-{ #category : #'*Typer-GToolkit' }
-TypShaResolver class >> typGtShadowMethodSelector: aSymbol postfix: anObject [
-
-	aSymbol isUnary ifTrue: [ 
-		^ 'm{1}{2}:' format: { 
-				  aSymbol capitalized.
-				  anObject } ].
-	aSymbol isBinary ifTrue: [ ^ 'mBinary{1}:' format: { anObject } ].
-	^ 'm{1}{2}:' format: { 
-			  ('' join: (aSymbol keywords collect: [ :e | 
-					    e capitalized copyFrom: 1 to: e size - 1 ])).
-			  anObject }
-]
-
-{ #category : #'*Typer-GToolkit' }
 TypShaResolver class >> typGtShadowVariable: aSymbol type: aType in: aClass [
 
 	<typPraArguments: 'Symbol,TypType,ClassDescription'>

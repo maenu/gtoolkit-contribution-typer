@@ -98,22 +98,6 @@ BlockClosure >> typShaMethodValueValueValueValue: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-BlockClosure >> typShaMethodWhileFalse: aLookup [
-	<typShaMethod: 'whileFalse:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup self
-		arguments: {BlockClosure typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-BlockClosure >> typShaMethodWhileTrue: aLookup [
-	<typShaMethod: 'whileTrue:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: TypNilType instance
-		arguments: {BlockClosure typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
 BlockClosure class >> typShaType: aLookup [
 	<typShaType>
 	^ aLookup root classDescription

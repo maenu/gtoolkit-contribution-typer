@@ -6,9 +6,8 @@ Class {
 
 { #category : #accessing }
 TypInfVariableResolver >> assignedTypeOf: aVariable in: aType [
-
-	^ (aVariable typInfAssignmentNodes collect: [ :e | 
-		   e value typInfTypeSelf: aType ]) typAsType
+	^ ((aVariable typInfAssignmentNodesIn: aType)
+		collect: [ :e | e value typInfTypeSelf: aType ]) typAsType
 ]
 
 { #category : #accessing }
