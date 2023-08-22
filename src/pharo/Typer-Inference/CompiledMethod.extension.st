@@ -59,7 +59,7 @@ CompiledMethod >> typInfRunAndMonitor: aDuration [
 			node: self ast
 			self: self methodClass typAsType
 			super: self methodClass typAsType superOrNil.
-	process := [ [ [ tally spyEvery: 1 on: [ context run ] ]
+	process := [ [ [ tally spyEvery: 1 on: [ context runDiff ] ]
 			on: Exception - OCUndeclaredVariableWarning - OCShadowVariableWarning
 			do: [ :e | 
 				e freeze.

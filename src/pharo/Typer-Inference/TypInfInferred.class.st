@@ -57,3 +57,13 @@ TypInfInferred >> symbol [
 TypInfInferred >> translated [
 	^ Array with: 'a' translated with: 'b' translated
 ]
+
+{ #category : #accessing }
+TypInfInferred >> while2: aBlock [
+	^ aBlock whileFalse: [ 'bop' ]
+]
+
+{ #category : #accessing }
+TypInfInferred >> while: aBoolean [
+	^ [ aBoolean ] whileFalse: [ 'bop' ]
+]

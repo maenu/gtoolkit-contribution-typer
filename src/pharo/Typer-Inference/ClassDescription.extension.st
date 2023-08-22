@@ -36,7 +36,7 @@ ClassDescription >> typInfRun: aSymbol duration: aDuration [
 
 { #category : #'*Typer-Inference' }
 ClassDescription >> typInfRunAndMonitor: aSymbol [
-	^ self typInfRunAndMonitor: aSymbol duration: 2 minutes
+	^ self typInfRunAndMonitor: aSymbol duration: 5 minutes
 ]
 
 { #category : #'*Typer-Inference' }

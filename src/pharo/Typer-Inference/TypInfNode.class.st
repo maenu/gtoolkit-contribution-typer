@@ -42,24 +42,22 @@ TypInfNode >> canSlurpAndBurp [
 
 { #category : #accessing }
 TypInfNode >> constrain: aNode to: aType [
-	state at: aNode put: ((state at: aNode) covariant: aType).
+	state at: aNode covariantPut: aType.
 	aNode constrainTo: aType from: self
 ]
 
 { #category : #accessing }
 TypInfNode >> constrainTo: aType from: aNode [
-	aNode out
-		at: #constrain
-		ifPresent: [ :s | 
-			s
-				detect: [ :e | e target = self ]
-				ifFound: [ :e | 
-					e type: aType.
-					^ e ] ].
-	aNode
-		outAdd: ((TypInfConstrainEdge origin: aNode target: self)
-				type: aType;
-				yourself)
+	| edge |
+	edge := aNode out
+			at: #constrain
+			ifPresent: [ :s | 
+				s
+					detect: [ :e | e target = self ]
+					ifNone: [ aNode outAdd: (TypInfConstrainEdge origin: aNode target: self) ] ]
+			ifAbsent: [ aNode outAdd: (TypInfConstrainEdge origin: aNode target: self) ].
+	edge type: aType.
+	aNode state at: self put: aType
 ]
 
 { #category : #accessing }

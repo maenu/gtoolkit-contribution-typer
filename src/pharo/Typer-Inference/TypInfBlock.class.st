@@ -28,7 +28,7 @@ TypInfBlock >> transfer [
 	definitions := self definitions.
 	state
 		at: self
-		put: ((BlockClosure
+		covariantPut: ((BlockClosure
 				typAsFunctionTypeWithResult: (definitions
 						flatCollect: [ :n | n inReturns collect: #type ]) typAsType
 				arguments: (node arguments

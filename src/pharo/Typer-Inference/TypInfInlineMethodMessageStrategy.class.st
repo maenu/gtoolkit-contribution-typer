@@ -36,13 +36,29 @@ TypInfInlineMethodMessageStrategy >> install [
 	| oldContexts |
 	self assert: [ self canInstall ].
 	contexts
-		ifEmpty: [ self flag: 'TODO returns?'.
-			message
-				outAt: #next
-				ifPresent: [ :n | 
-					message outRemoveAt: #next.
-					message outAt: #nextOriginal put: n ]
-				ifAbsent: [  "noop" ] ].
+		ifEmpty: [ message out
+				at: #next
+					ifPresent: [ :s | 
+						s copy
+							do: [ :e | 
+								message
+									outRemove: e;
+									outAdd: (TypInfEdge
+											origin: e origin
+											target: e target
+											key: #nextOriginal) ] ]
+					ifAbsent: [  "noop" ];
+				at: #return
+					ifPresent: [ :s | 
+						s copy
+							do: [ :e | 
+								message
+									outRemove: e;
+									outAdd: (TypInfEdge
+											origin: e origin
+											target: e target
+											key: #returnOriginal) ] ]
+					ifAbsent: [  "noop" ] ].
 	oldContexts := contexts.
 	contexts := self newContexts asOrderedCollection.
 	(oldContexts difference: contexts) do: #uninstall.
@@ -105,14 +121,25 @@ TypInfInlineMethodMessageStrategy >> uninstall [
 	message
 		inAt: #receiver
 		ifPresent: [ :r | message unconstrain: r ]
-		ifAbsent: [  "noop" ]. "might be in dirty state during node uninstall"
+		ifAbsent: [  "noop" ].	"might be in dirty state during node uninstall"
 	contexts
 		do: #uninstall;
 		removeAll.
-	message
-		outAt: #nextOriginal
-		ifPresent: [ :n | 
-			message outRemoveAt: #nextOriginal.
-			message outAdd: (TypInfNextEdge origin: message target: n) ]
-		ifAbsent: [  "noop" ]
+	message out
+		at: #nextOriginal
+			ifPresent: [ :s | 
+				s copy
+					do: [ :e | 
+						message
+							outRemove: e;
+							outAdd: (TypInfNextEdge origin: e origin target: e target) ] ]
+			ifAbsent: [  "noop" ];
+		at: #returnOriginal
+			ifPresent: [ :s | 
+				s copy
+					do: [ :e | 
+						message
+							outRemove: e;
+							outAdd: (TypInfReturnEdge origin: e origin target: e target) ] ]
+			ifAbsent: [  "noop" ]
 ]

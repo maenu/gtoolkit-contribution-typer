@@ -226,6 +226,14 @@ TypNode >> outAt: anObject ifAbsentPut: aBlock [
 ]
 
 { #category : #accessing }
+TypNode >> outAt: anObject ifPresent: aBlock [
+	^ out
+		at: anObject
+		ifPresent: [ :e | aBlock cull: e anyOne target ]
+		ifAbsent: [  "noop" ]
+]
+
+{ #category : #accessing }
 TypNode >> outAt: anObject ifPresent: aBlock ifAbsent: anotherBlock [
 
 	^ out
