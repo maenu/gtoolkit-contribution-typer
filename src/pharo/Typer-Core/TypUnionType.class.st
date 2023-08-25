@@ -162,7 +162,14 @@ TypUnionType >> postCopy [
 { #category : #accessing }
 TypUnionType >> preResolveMethod: aLookup [
 	^ (types
-		flatCollect: [ :e | e preResolveMethod: (aLookup copyWithSelf: e) ])
+		flatCollect: [ :e | e preResolveMethod: (aLookup copyWithReceiver: e) ])
+		reject: #isNil
+]
+
+{ #category : #accessing }
+TypUnionType >> preResolveVariable: aLookup [
+	^ (types
+		flatCollect: [ :e | e preResolveVariable: (aLookup copyWithReceiver: e) ])
 		reject: #isNil
 ]
 
@@ -218,7 +225,7 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 
 { #category : #accessing }
 TypUnionType >> resolveMethod: aLookup [
-	^ (types collect: [ :e | e resolveMethod: (aLookup copyWithSelf: e) ])
+	^ (types collect: [ :e | e resolveMethod: (aLookup copyWithReceiver: e) ])
 		typAsType
 ]
 

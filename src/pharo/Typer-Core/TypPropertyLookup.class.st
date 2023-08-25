@@ -16,6 +16,13 @@ TypPropertyLookup >> = anObject [
 	^ anObject receiver = receiver
 ]
 
+{ #category : #accessing }
+TypPropertyLookup >> copyWithReceiver: aType [
+	^ self copy
+		initializeReceiver: aType selector: selector;
+		yourself
+]
+
 { #category : #testing }
 TypPropertyLookup >> hasParent [
 	^ receiver hasSuper

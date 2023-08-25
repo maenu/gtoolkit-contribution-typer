@@ -48,14 +48,20 @@ TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollectio
 
 { #category : #accessing }
 TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection self: anotherType super: yetAnotherType parent: aLookup [
-	self flag: 'TODO index broken as objects change'.
-	^ self new
-		initializeReceiver: aType selector: aSymbol asSymbol;
-		initializeArguments: aCollection asArray
-			self: anotherType
-			super: yetAnotherType;
-		initializeParent: aLookup;
-		yourself
+	^ self index
+		at: {aType.
+				aSymbol asSymbol.
+				aCollection asArray.
+				anotherType.
+				yetAnotherType.
+				aLookup}
+		ifAbsentPut: [ self new
+				initializeReceiver: aType selector: aSymbol asSymbol;
+				initializeArguments: aCollection asArray
+					self: anotherType
+					super: yetAnotherType;
+				initializeParent: aLookup;
+				yourself ]
 ]
 
 { #category : #accessing }
@@ -85,9 +91,8 @@ TypMethodLookup >> asParent [
 ]
 
 { #category : #accessing }
-TypMethodLookup >> copyWithSelf: aType [
-	^ self copy
-		initializeReceiver: aType selector: selector;
+TypMethodLookup >> copyWithReceiver: aType [
+	^ (super copyWithReceiver: aType)
 		initializeArguments: arguments
 			self: aType
 			super: aType superOrNil;

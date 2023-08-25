@@ -2,18 +2,25 @@ Extension { #name : #CompiledMethod }
 
 { #category : #'*Typer-Inference' }
 CompiledMethod >> typInfRun: aDuration [
-	| promise start semaphore process error timeout context |
+	| promise start semaphore process error timeout context selfType key |
 	promise := AsyncPendingPromise new.
 	start := DateAndTime now.
 	timeout := false.
 	semaphore := Semaphore new.
+	selfType := self methodClass typAsType.
+	key := TypInfContextKey
+			node: self ast
+			self: selfType
+			super: selfType superOrNil.
+	TypMethodIndex instance outRemoveAt: key.
 	context := TypInfContext
 			sender: nil
 			state: TypInfState new
 			node: self ast
-			self: self methodClass typAsType
-			super: self methodClass typAsType superOrNil.
-	process := [ [ [ context run ]
+			self: selfType
+			super: selfType superOrNil.
+	process := [ [ [ context run.
+		TypMethodIndex instance outAt: key put: context ]
 			on: Exception - OCUndeclaredVariableWarning - OCShadowVariableWarning
 			do: [ :e | 
 				e freeze.
@@ -47,19 +54,26 @@ CompiledMethod >> typInfRun: aDuration [
 
 { #category : #'*Typer-Inference' }
 CompiledMethod >> typInfRunAndMonitor: aDuration [
-	| promise start semaphore process error timeout context tally |
+	| promise start semaphore process error timeout context key tally selfType |
 	promise := AsyncPendingPromise new.
 	start := DateAndTime now.
 	timeout := false.
 	semaphore := Semaphore new.
 	tally := MessageTally new.
+	selfType := self methodClass typAsType.
+	key := TypInfContextKey
+			node: self ast
+			self: selfType
+			super: selfType superOrNil.
+	TypMethodIndex instance outRemoveAt: key.
 	context := TypInfContext
 			sender: nil
 			state: TypInfState new
 			node: self ast
-			self: self methodClass typAsType
-			super: self methodClass typAsType superOrNil.
-	process := [ [ [ tally spyEvery: 1 on: [ context runDiff ] ]
+			self: selfType
+			super: selfType superOrNil.
+	process := [ [ [ tally spyEvery: 1 on: [ context runDiff ].
+		TypMethodIndex instance outAt: key put: context ]
 			on: Exception - OCUndeclaredVariableWarning - OCShadowVariableWarning
 			do: [ :e | 
 				e freeze.

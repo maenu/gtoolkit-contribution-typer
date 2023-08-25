@@ -29,19 +29,26 @@ TypInfMethodResolver >> canResolve: aLookup [
 
 { #category : #accessing }
 TypInfMethodResolver >> contextAt: aMethodNode self: aType super: anotherType [
+	| key |
+	key := TypInfContextKey
+			node: aMethodNode
+			self: aType
+			super: anotherType.
 	^ self
-		outAt: (TypInfContextKey
-				node: aMethodNode
-				self: aType
-				super: anotherType)
-		ifAbsentPut: [ (TypInfContext
-				sender: nil
-				state: TypInfState new
-				node: aMethodNode
-				self: aType
-				super: anotherType)
-				run;
-				yourself ]
+		outAt: key
+		ifAbsent: [ | context |
+			context := TypInfContext
+					sender: nil
+					state: TypInfState new
+					node: aMethodNode
+					self: aType
+					super: anotherType.
+			self outAt: key put: context.
+			TypInfNodeStack
+				push: aMethodNode
+				during: [ [ context run ] ifCurtailed: [ self outRemoveAt: key ] ]
+				or: [ self outRemoveAt: key.
+					context ] ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -124,13 +131,10 @@ TypInfMethodResolver >> resolve: aLookup [
 
 { #category : #accessing }
 TypInfMethodResolver >> typeAt: aNode self: aType super: anotherType [
-	^ TypInfNodeStack
-		push: aNode methodNode
-		during: [ (self
-				nodesAt: aNode
-				self: aType
-				super: anotherType)
-				ifEmpty: [ TypUnknownType instance ]
-				ifNotEmpty: [ :c | c anyOne type ] ]
-		or: [ TypUnknownType instance ]
+	^ (self
+		nodesAt: aNode
+		self: aType
+		super: anotherType)
+		ifEmpty: [ TypUnknownType instance ]
+		ifNotEmpty: [ :c | c anyOne type ]
 ]

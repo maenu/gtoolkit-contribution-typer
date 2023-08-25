@@ -33,7 +33,6 @@ TypInfInlineMethodMessageStrategy >> initialize [
 
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> install [
-	| oldContexts |
 	self assert: [ self canInstall ].
 	contexts
 		ifEmpty: [ message out
@@ -46,8 +45,7 @@ TypInfInlineMethodMessageStrategy >> install [
 									outAdd: (TypInfEdge
 											origin: e origin
 											target: e target
-											key: #nextOriginal) ] ]
-					ifAbsent: [  "noop" ];
+											key: #nextOriginal) ] ];
 				at: #return
 					ifPresent: [ :s | 
 						s copy
@@ -57,12 +55,8 @@ TypInfInlineMethodMessageStrategy >> install [
 									outAdd: (TypInfEdge
 											origin: e origin
 											target: e target
-											key: #returnOriginal) ] ]
-					ifAbsent: [  "noop" ] ].
-	oldContexts := contexts.
-	contexts := self newContexts asOrderedCollection.
-	(oldContexts difference: contexts) do: #uninstall.
-	(contexts difference: oldContexts) do: #install
+											key: #returnOriginal) ] ] ].
+	self updateContexts
 ]
 
 { #category : #accessing }
@@ -95,8 +89,8 @@ TypInfInlineMethodMessageStrategy >> newContexts [
 											node: ([ m ast ]
 													on: OCUndeclaredVariableWarning
 													do: [ :ex | ex resume: ex declareUndefined ])
-											self: selfType
-											super: superType
+											self: l self
+											super: l super
 											message: message} ] ] ]
 				ifFalse: [ {TypInfInlineLookupContext
 							sender: message context
@@ -111,6 +105,7 @@ TypInfInlineMethodMessageStrategy >> newContexts [
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> transfer [
 	message constrain: message inReceiver to: self constrainedReceiver.
+	self updateContexts.
 	message state
 		at: message
 		put: (contexts flatCollect: [ :e | e root inReturns collect: #type ]) typAsType
@@ -142,4 +137,19 @@ TypInfInlineMethodMessageStrategy >> uninstall [
 							outRemove: e;
 							outAdd: (TypInfReturnEdge origin: e origin target: e target) ] ]
 			ifAbsent: [  "noop" ]
+]
+
+{ #category : #accessing }
+TypInfInlineMethodMessageStrategy >> updateContexts [
+	| oldContexts |
+	oldContexts := contexts.
+	contexts := self newContexts asOrderedCollection
+			collect: [ :c | 
+				oldContexts
+					detect: [ :cc | cc = c ]
+					ifFound: #yourself
+					ifNone: c ].
+	(oldContexts difference: contexts) do: #uninstall.
+	(contexts difference: oldContexts) do: #install.
+	(contexts anySatisfy: [ :e | e root isNil ]) ifTrue: [ Halt now ]
 ]

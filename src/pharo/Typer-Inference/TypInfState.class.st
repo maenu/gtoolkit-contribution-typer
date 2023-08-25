@@ -1,6 +1,6 @@
 Class {
 	#name : #TypInfState,
-	#superclass : #IdentityDictionary,
+	#superclass : #OrderedIdentityDictionary,
 	#category : #'Typer-Inference-Core'
 }
 

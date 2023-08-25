@@ -16,9 +16,9 @@ TypInfLocalDefinition >> outReads [
 { #category : #initialization }
 TypInfLocalDefinition >> transfer [
 	| className global |
-	node isArgumentVariable ifFalse: [ ^ state at: self put: TypNilType instance ].
-	state at: self ifAbsent: [ ^ self ].
-	(state at: self) isUnknown ifFalse: [ ^ self ].
+	node isArgumentVariable ifFalse: [ ^ self put: TypNilType instance ].
+	state at: self ifAbsent: [ ^ self put: TypUnknownType instance ].
+	(state at: self) isUnknown ifFalse: [ ^ self put: TypUnknownType instance ].
 	(node name beginsWith: 'an')
 		ifTrue: [ className := node name allButFirst: 2 ]
 		ifFalse: [ (node name beginsWith: 'a')
@@ -26,7 +26,7 @@ TypInfLocalDefinition >> transfer [
 				ifFalse: [ ^ self ] ].
 	global := Smalltalk globals at: className asSymbol ifAbsent: [ ^ self ].
 	global isClassOrTrait ifFalse: [ ^ self ].
-	state at: self put: global typAsType
+	self put: global typAsType
 ]
 
 { #category : #accessing }

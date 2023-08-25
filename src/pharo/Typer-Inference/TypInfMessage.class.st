@@ -61,7 +61,8 @@ TypInfMessage >> transfer [
 	currentStrategy == oldStrategy
 		ifFalse: [ oldStrategy ifNotNil: #uninstall.
 			currentStrategy install ].
-	currentStrategy transfer	"state at: self inReceiver put: self receiver asNonNullable"
+	currentStrategy transfer.
+	state at: self inReceiver put: self receiver asNonNullable
 ]
 
 { #category : #accessing }

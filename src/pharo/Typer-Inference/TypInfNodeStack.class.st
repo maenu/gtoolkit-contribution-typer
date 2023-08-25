@@ -16,7 +16,7 @@ TypInfNodeStack class >> actives [
 TypInfNodeStack class >> canPush: aNode [
 	| actives |
 	actives := self actives.
-	actives size < 4 ifFalse: [ ^ false ].
+	actives size < 5 ifFalse: [ ^ false ].
 	^ (actives includes: aNode) not
 ]
 

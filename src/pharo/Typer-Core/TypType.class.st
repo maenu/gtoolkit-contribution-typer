@@ -117,7 +117,6 @@ TypType >> canResolveMethod: aLookup [
 
 { #category : #converting }
 TypType >> contravariant: aType [
-
 	"self and aType are assignable to result.
 	 result >= self
 	 result >= aType
@@ -132,20 +131,19 @@ TypType >> contravariant: aType [
 	self < aType ifTrue: [ ^ aType ].
 	a := self withAllSupers reversed.
 	b := aType withAllSupers reversed.
-	a size > b size ifTrue: [ "ensure a to be shorter than b"
-		| tmp |
-		tmp := a.
-		a := b.
-		b := tmp ].
-	a first ~= b first ifTrue: [ 
-		^ { 
-			  self.
-			  aType } typAsType ].
+	a size > b size
+		ifTrue: [  "ensure a to be shorter than b"| tmp |
+			tmp := a.
+			a := b.
+			b := tmp ].
+	a first ~= b first
+		ifTrue: [ ^ {self.
+				aType} typAsType ].
 	common := a first.
 	i := 2.
-	[ i <= a size and: [ (a at: i) = (b at: i) ] ] whileTrue: [ 
-		common := a at: i.
-		i := i + 1 ].
+	[ i <= a size and: [ (a at: i) = (b at: i) ] ]
+		whileTrue: [ common := a at: i.
+			i := i + 1 ].
 	^ common
 ]
 
@@ -306,6 +304,13 @@ TypType >> parameters [
 { #category : #accessing }
 TypType >> preResolveMethod: aLookup [
 	^ (TypMethodIndex instance preResolve: aLookup)
+		ifNil: [ #() ]
+		ifNotNil: [ :e | {e} ]
+]
+
+{ #category : #accessing }
+TypType >> preResolveVariable: aLookup [
+	^ (TypVariableIndex instance preResolve: aLookup)
 		ifNil: [ #() ]
 		ifNotNil: [ :e | {e} ]
 ]

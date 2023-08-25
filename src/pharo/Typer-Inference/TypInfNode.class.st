@@ -274,7 +274,7 @@ TypInfNode >> slurpAndBurpDiff [
 		transfer;
 		burp.
 	transferred := true.
-	^ state diff: oldState
+	^ oldState diff: state
 ]
 
 { #category : #accessing }
@@ -303,7 +303,7 @@ TypInfNode >> transferred [
 
 { #category : #accessing }
 TypInfNode >> type [
-	^ state at: self
+	^ state at: self ifAbsent: TypUnknownType instance
 ]
 
 { #category : #accessing }

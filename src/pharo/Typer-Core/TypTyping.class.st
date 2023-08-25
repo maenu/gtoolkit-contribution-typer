@@ -7,8 +7,13 @@ Class {
 { #category : #accessing }
 TypTyping >> invalidate [
 	<gtExample>
-	| queue |
-	ASTCache reset.	"TKTCommonQueueWorkerPool allSubInstancesDo: #removeFailedTasks."
+	self invalidateLight.
+	^ self memoryProbe
+]
+
+{ #category : #accessing }
+TypTyping >> invalidateLight [
+	<gtExample>
 	GtPlaygroundEvaluatedCodeButtonAttribute
 		allSubInstancesDo: [ :e | e result: nil ].
 	GtSourceCoderEvaluationResultWithValue allSubInstancesDo: [ :e | e value: nil ].
@@ -30,10 +35,7 @@ TypTyping >> invalidate [
 		allInstancesDo: [ :e | e removeAllSuchThat: [ :f | f isKindOf: BlOverlayListener ] ].
 	GtInspectorTool allInstances
 		select: [ :e | e object class package name beginsWith: 'Typer' ]
-		thenDo: [ :e | e object: nil ].	"LeDatabase allInstancesDo: #reload.
-	LeDatabasesRegistry cleanUp.
-	LeDatabasesRegistry uniqueInstance ensureDatabase.
-	GtHome allInstancesDo: #clearKnowledgeBase."
+		thenDo: [ :e | e object: nil ].	
 	TypNode invalidateAll.
 	TypType invalidateAll.
 	TypIndex invalidateAll.
@@ -42,7 +44,7 @@ TypTyping >> invalidate [
 	TypInfMethodResolver invalidate.
 	TypInfMethodIndex invalidate.
 	TypInfNodeStack resetSoleInstance.
-	^ self memoryProbe
+	^ self
 ]
 
 { #category : #accessing }

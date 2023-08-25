@@ -42,8 +42,8 @@ TypIndex >> canResolve: aLookup [
 TypIndex >> initialize [
 	<typPraVariable: 'resolver' as: 'TypLookupResolver'>
 	super initialize.
-	canResolve := Dictionary new.
-	preResolve := Dictionary new.
+	canResolve := IdentityDictionary new.
+	preResolve := IdentityDictionary new.
 	SystemAnnouncer uniqueInstance weak
 		when: ClassAnnouncement
 			send: #invalidateOnClassChange:
@@ -115,14 +115,6 @@ TypIndex >> resolve: aLookup [
 					[ self outAt: aLookup put: (resolver resolve: aLookup) ]
 						ifCurtailed: [ self outRemoveAt: aLookup ] ]
 				ifFalse: [ TypUnknownType instance ] ]
-]
-
-{ #category : #accessing }
-TypIndex >> resolveUncached: aLookup [
-	^ (resolver canResolve: aLookup)
-		ifTrue: [ self outAt: aLookup put: TypUnknownType instance.
-			self outAt: aLookup put: (resolver resolve: aLookup) ]
-		ifFalse: [ TypUnknownType instance ]
 ]
 
 { #category : #accessing }
