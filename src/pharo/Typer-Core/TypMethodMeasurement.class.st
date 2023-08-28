@@ -17,64 +17,13 @@ TypMethodMeasurement class >> method: aMethod [
 ]
 
 { #category : #accessing }
-TypMethodMeasurement class >> method: aMethod duration: aDuration error: anError [
-	^ self
-		method: aMethod
-		duration: aDuration
-		error: anError
-		tally: nil
-]
-
-{ #category : #accessing }
-TypMethodMeasurement class >> method: aMethod duration: aDuration error: anError tally: aTally [
-	^ self new
-		initializeMethod: aMethod
-			duration: aDuration
-			result: nil
-			error: anError
-			process: nil
-			tally: aTally;
-		yourself
-]
-
-{ #category : #accessing }
-TypMethodMeasurement class >> method: aMethod duration: aDuration process: aProcess [
-	^ self
-		method: aMethod
-		duration: aDuration
-		process: aProcess
-		tally: nil
-]
-
-{ #category : #accessing }
-TypMethodMeasurement class >> method: aMethod duration: aDuration process: aProcess tally: aTally [
-	^ self new
-		initializeMethod: aMethod
-			duration: aDuration
-			result: nil
-			error: nil
-			process: aProcess
-			tally: aTally;
-		yourself
-]
-
-{ #category : #accessing }
-TypMethodMeasurement class >> method: aMethod duration: aDuration result: aType [
-	^ self
-		method: aMethod
-		duration: aDuration
-		result: aType
-		tally: nil
-]
-
-{ #category : #accessing }
-TypMethodMeasurement class >> method: aMethod duration: aDuration result: aType tally: aTally [
+TypMethodMeasurement class >> method: aMethod duration: aDuration result: aType error: anError process: aProcess tally: aTally [
 	^ self new
 		initializeMethod: aMethod
 			duration: aDuration
 			result: aType
-			error: nil
-			process: nil
+			error: anError
+			process: aProcess
 			tally: aTally;
 		yourself
 ]
@@ -133,16 +82,6 @@ TypMethodMeasurement >> gtResultFor: aView [
 		  title: 'Result';
 		  priority: 10;
 		  stencil: [ GtInspectorTool forObject: result ]
-]
-
-{ #category : #accessing }
-TypMethodMeasurement >> initializeMethod: aMethod duration: aDuration result: aType error: anError process: aProcess [
-
-	method := aMethod.
-	duration := aDuration.
-	result := aType.
-	error := anError.
-	process := aProcess
 ]
 
 { #category : #accessing }

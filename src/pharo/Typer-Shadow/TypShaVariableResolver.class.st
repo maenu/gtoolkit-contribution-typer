@@ -8,8 +8,9 @@ Class {
 TypShaVariableResolver >> canResolve: aLookup [
 	aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
-	^ aLookup receiver classDescription methods
-		anySatisfy: [ :e | e typShaResolvesVariable: aLookup selector ]
+	^ (TypShaMethodIndex instance
+		variableResolvers: aLookup receiver classDescription
+		selector: aLookup selector) isNotEmpty
 ]
 
 { #category : #printing }
@@ -20,17 +21,15 @@ TypShaVariableResolver >> printOn: aStream [
 
 { #category : #accessing }
 TypShaVariableResolver >> resolve: aLookup [
+	| class |
 	self assert: [ self canResolve: aLookup ].
 	aLookup initializeResolver: self.
+	class := TypShaMethodIndex instance
+			anonymousClass: aLookup receiver classDescription.
 	^ self
 		resolve: aLookup
-		reduce: (aLookup receiver classDescription methods
-				select: [ :m | m typShaResolvesVariable: aLookup selector ]
-				thenCollect: [ :m | 
-					| class |
-					class := aLookup receiver classDescription newAnonymousSubclass.
-					class classSide compile: (Behavior methodDict at: #basicNew) sourceCode.
-					class
-						compile: 'typShaPerform: aSelector with: anObject <primitive: 83> self primitiveFailed'.
-					class basicNew typShaPerform: m selector with: aLookup ])
+		reduce: ((TypShaMethodIndex instance
+				variableResolvers: aLookup receiver classDescription
+				selector: aLookup selector)
+				collect: [ :s | class typShaResolve: s lookup: aLookup ])
 ]

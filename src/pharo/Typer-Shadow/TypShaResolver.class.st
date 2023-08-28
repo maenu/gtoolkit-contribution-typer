@@ -6,10 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaResolver >> resolve: aLookup reduce: aCollection [
-
 	aCollection ifEmpty: [ ^ TypUnknownType instance ].
-	aCollection sort.
-	self flag:
-		'TODO make more of alternatives instead of just taking first'.
-	^ aCollection first
+	self flag: 'TODO make more of alternatives instead of just taking first'.
+	^ aCollection asOrderedCollection sort first
 ]

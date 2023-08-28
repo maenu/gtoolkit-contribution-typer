@@ -39,7 +39,7 @@ TypInfBlockContext >> block [
 
 { #category : #accessing }
 TypInfBlockContext >> canInstall [
-	^ self stackSize < 6
+	^ true
 ]
 
 { #category : #accessing }
@@ -76,7 +76,7 @@ TypInfBlockContext >> newRoot [
 
 { #category : #accessing }
 TypInfBlockContext >> stackSize [
-	^ (super stackSize max: block context stackSize) + 1
+	^ sender stackSize
 ]
 
 { #category : #accessing }

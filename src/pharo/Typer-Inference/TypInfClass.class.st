@@ -8,10 +8,10 @@ Class {
 TypInfClass >> transfer [
 	| receiver |
 	((in at: #next) allSatisfy: [ :e | e origin isKindOf: TypInfAssignment ])
-		ifTrue: [ ^ state at: self put: (state at: node variable) ].
+		ifTrue: [ ^ self put: (state at: node variable) ].
 	receiver := node variable owningClass typAsType.
 	self
-		covariantPut: ((receiver
+		put: ((receiver
 				preResolveVariable: (TypVariableLookup
 						receiver: receiver
 						selector: node variable name asSymbol
@@ -19,10 +19,8 @@ TypInfClass >> transfer [
 				detect: [ :l | l resolver isKindOf: TypInfVariableResolver ]
 				ifFound: [ :l | 
 					receiver classDescription instanceSide allClassVariables
-						detect: [ :e | e name = l selector ]
-						ifFound: [ :v | 
-							((v typInfAssignmentNodesIn: l receiver)
-								collect: [ :e | e value typInfTypeSelf: receiver ]) typAsType ]
+						detect: [ :e | e name = node variable name asSymbol ]
+						ifFound: [ :v | v typInfTypeSelf: context self ]
 						ifNone: [ Error signal: 'should not happen' ] ]
 				ifNone: [ receiver lookupVariable: node variable name asSymbol ])
 ]

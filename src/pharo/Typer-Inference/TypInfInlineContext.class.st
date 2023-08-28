@@ -35,7 +35,7 @@ TypInfInlineContext >> = anObject [
 TypInfInlineContext >> canInstall [
 	node compiledMethod isRealPrimitive ifTrue: [ ^ false ].
 	node compiledMethod isAbstract ifTrue: [ ^ false ].
-	^ self stackSize < 5
+	^ self stackSize < 4
 ]
 
 { #category : #accessing }

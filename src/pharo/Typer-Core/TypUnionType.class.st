@@ -76,6 +76,11 @@ TypUnionType >> at: aString [
 	^ (types collect: [ :e | e at: aString ]) typAsType
 ]
 
+{ #category : #accessing }
+TypUnionType >> canResolveMethod: aLookup [
+	^ types allSatisfy: [ :e | e canResolveMethod: (aLookup copyWithReceiver: e) ]
+]
+
 { #category : #testing }
 TypUnionType >> hasSuper [
 
@@ -148,8 +153,8 @@ TypUnionType >> lookupVariable: aSymbol [
 ]
 
 { #category : #accessing }
-TypUnionType >> overriddingMethods: aSymbol [
-	^ types flatCollect: [ :e | e overriddingMethods: aSymbol ]
+TypUnionType >> overriders: aSymbol [
+	^ types flatCollect: [ :e | e overriders: aSymbol ]
 ]
 
 { #category : #copying }

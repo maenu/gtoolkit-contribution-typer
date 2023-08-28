@@ -113,6 +113,14 @@ TypInfNode >> depthFirstNextReverseDo: aBlock skipping: anIdentitySet [
 		ifPresent: [ :c | c do: [ :e | e origin depthFirstNextReverseDo: aBlock skipping: anIdentitySet ] ]
 ]
 
+{ #category : #accessing }
+TypInfNode >> inNexts [
+	^ in
+		at: #next
+		ifPresent: [ :s | s collect: #origin ]
+		ifAbsent: [ #() ]
+]
+
 { #category : #initialization }
 TypInfNode >> initializeNode: aNode context: aContext [
 	self assert: [ aContext state isNotNil ].
@@ -137,40 +145,34 @@ TypInfNode >> invalidateOnMethodChange: aMethodAnnouncement [
 
 { #category : #accessing }
 TypInfNode >> iterate [
-	^ self iterateWithContinuations: LinkedList new
+	| queue changed done |
+	queue := LinkedList with: self.
+	changed := false.
+	done := IdentitySet new.
+	[ queue isEmpty ]
+		whileFalse: [ | current |
+			current := queue removeFirst.
+			current canSlurpAndBurp
+				ifTrue: [ changed := current slurpAndBurp or: changed.
+					done add: current.
+					queue addAll: (current outNexts reject: [ :n | done includes: n ]) ]
+				ifFalse: [ (done includes: current) ifFalse: [ queue add: self ] ] ].
+	^ changed
 ]
 
 { #category : #accessing }
 TypInfNode >> iterateDiff [
-	| changes |
+	| queue changes current |
+	queue := LinkedList with: self.
 	changes := OrderedIdentityDictionary new.
-	self iterateDiffWithContinuations: LinkedList new diff: changes.
-	^ changes
-]
-
-{ #category : #accessing }
-TypInfNode >> iterateDiffWithContinuations: aSequenceableCollection diff: aDictionary [
-	| changed |
-	changed := false.
-	self canSlurpAndBurp
-		ifFalse: [ aSequenceableCollection ifEmpty: [ ^ false ].
-			aSequenceableCollection add: self.
-			^ aSequenceableCollection removeFirst
-				iterateDiffWithContinuations: aSequenceableCollection
-				diff: aDictionary ].
-	self slurpAndBurpDiff ifNotEmpty: [ :s | aDictionary at: self put: s ].
-	out
-		at: #next
-		ifPresent: [ :s | 
-			s
-				inject: changed
-				into: [ :r :e | 
-					r
-						or: (e target
-								iterateDiffWithContinuations: aSequenceableCollection
-								diff: aDictionary) ] ]
-		ifAbsent: [ changed ].
-	^ changed
+	[ queue isEmpty ]
+		whileFalse: [ current := queue removeFirst.
+			current canSlurpAndBurp
+				ifTrue: [ current slurpAndBurpDiff ifNotEmpty: [ :c | changes at: current put: c ].
+					queue addAll: current outNexts ]
+				ifFalse: [ queue ifEmpty: [ ^ changes ].
+					queue add: self ] ].
+	^ changes isEmpty
 ]
 
 { #category : #accessing }
@@ -205,6 +207,14 @@ TypInfNode >> methodNode [
 { #category : #accessing }
 TypInfNode >> node [
 	^ node
+]
+
+{ #category : #accessing }
+TypInfNode >> outNexts [
+	^ out
+		at: #next
+		ifPresent: [ :s | s collect: #target ]
+		ifAbsent: [ #() ]
 ]
 
 { #category : #accessing }

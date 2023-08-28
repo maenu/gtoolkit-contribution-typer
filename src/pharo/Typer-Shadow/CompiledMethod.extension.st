@@ -1,20 +1,29 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*Typer-Shadow' }
-CompiledMethod >> typShaCanResolveMethod: aSymbol [
-	^ self pragmas
-		anySatisfy:
-			[ :e | e selector = #typShaMethod: and: [ e arguments first = aSymbol ] ]
+CompiledMethod >> typShaIsResolveMethod [
+	^ self hasPragmaNamed: #typShaMethod:
 ]
 
 { #category : #'*Typer-Shadow' }
-CompiledMethod >> typShaResolvesType [
+CompiledMethod >> typShaIsResolveType [
 	^ self hasPragmaNamed: #typShaType
 ]
 
 { #category : #'*Typer-Shadow' }
-CompiledMethod >> typShaResolvesVariable: aSymbol [
-	^ self pragmas
-		anySatisfy:
-			[ :e | e selector = #typShaVariable: and: [ e arguments first = aSymbol ] ]
+CompiledMethod >> typShaIsResolveVariable [
+	^ self hasPragmaNamed: #typShaVariable:
+]
+
+{ #category : #'*Typer-Shadow' }
+CompiledMethod >> typShaResolvedMethod [
+	self assert: [ self typShaIsResolveMethod ].
+	^ (self pragmas detect: [ :e | e selector = #typShaMethod: ]) arguments first asSymbol
+]
+
+{ #category : #'*Typer-Shadow' }
+CompiledMethod >> typShaResolvedVariable [
+	self assert: [ self typShaIsResolveVariable ].
+	^ (self pragmas detect: [ :e | e selector = #typShaVariable: ]) arguments first
+		asSymbol
 ]

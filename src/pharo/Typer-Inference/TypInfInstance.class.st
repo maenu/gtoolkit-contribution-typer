@@ -7,9 +7,9 @@ Class {
 { #category : #accessing }
 TypInfInstance >> transfer [
 	((in at: #next) allSatisfy: [ :e | e origin isKindOf: TypInfAssignment ])
-		ifTrue: [ ^ state at: self put: (state at: node variable) ].
+		ifTrue: [ ^ self put: (state at: node variable) ].
 	self
-		covariantPut: ((context self
+		put: ((context self
 				preResolveVariable: (TypVariableLookup
 						receiver: context self
 						selector: node variable name asSymbol
@@ -17,10 +17,8 @@ TypInfInstance >> transfer [
 				detect: [ :l | l resolver isKindOf: TypInfVariableResolver ]
 				ifFound: [ :l | 
 					l receiver classDescription
-						slotNamed: l selector
-						ifFound: [ :v | 
-							((v typInfAssignmentNodesIn: l receiver)
-								collect: [ :e | e value typInfTypeSelf: context self ]) typAsType ]
+						slotNamed: node variable name asSymbol
+						ifFound: [ :v | v typInfTypeSelf: context self ]
 						ifNone: [ Error signal: 'should not happen' ] ]
 				ifNone: [ context self lookupVariable: node variable name asSymbol ])
 ]

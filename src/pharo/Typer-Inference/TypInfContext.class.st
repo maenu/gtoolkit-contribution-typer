@@ -92,7 +92,7 @@ TypInfContext >> initializeSender: aContext state: aState node: aNode self: aTyp
 	nodes := IdentityDictionary new.
 	children := IdentitySet new.
 	iterationsDone := 0.
-	iterationsMax := 24.
+	iterationsMax := 16.
 	iterations := OrderedCollection new
 ]
 

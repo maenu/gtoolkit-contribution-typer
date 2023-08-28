@@ -1,44 +1,16 @@
 Class {
 	#name : #TypShaMethodResolver,
 	#superclass : #TypShaResolver,
-	#instVars : [
-		'anonymousClasses'
-	],
 	#category : #'Typer-Shadow-Lookup'
 }
-
-{ #category : #accessing }
-TypShaMethodResolver >> anonymousClass: aClassDescription [
-	^ anonymousClasses
-		at: aClassDescription
-		ifAbsentPut: [ | class |
-			class := aClassDescription newAnonymousSubclass.
-			class isInstanceSide
-				ifTrue: [ class classSide
-						compile: (Behavior methodDict at: #basicNew) sourceCode;
-						compile: (Behavior methodDict at: #basicNew:) sourceCode;
-						compile: 'typShaNew ^ [ self new ] on: Error do: [ [ self basicNew ] on: Error do: [ superclass typShaNew ] ]' ].
-			class ]
-]
 
 { #category : #accessing }
 TypShaMethodResolver >> canResolve: aLookup [
 	aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
-	^ aLookup receiver classDescription typShaCanResolveMethod: aLookup
-]
-
-{ #category : #accessing }
-TypShaMethodResolver >> initialize [
-	super initialize.
-	anonymousClasses := IdentityDictionary new
-]
-
-{ #category : #accessing }
-TypShaMethodResolver >> invalidate [
-	self flag: 'TODO change listeners'.
-	super invalidate.
-	anonymousClasses removeAll
+	^ (TypShaMethodIndex instance
+		methodResolvers: aLookup receiver classDescription
+		selector: aLookup selector) isNotEmpty
 ]
 
 { #category : #printing }
@@ -52,8 +24,11 @@ TypShaMethodResolver >> resolve: aLookup [
 	| class |
 	self assert: [ self canResolve: aLookup ].
 	aLookup initializeResolver: self.
-	class := self anonymousClass: aLookup receiver classDescription.
+	class := TypShaMethodIndex instance anonymousClass: aLookup receiver classDescription.
 	^ self
 		resolve: aLookup
-		reduce: (aLookup receiver classDescription typShaResolveMethod: aLookup receiver: class)
+		reduce: ((TypShaMethodIndex instance
+				methodResolvers: aLookup receiver classDescription
+				selector: aLookup selector)
+				collect: [ :s | class typShaResolve: s lookup: aLookup ])
 ]

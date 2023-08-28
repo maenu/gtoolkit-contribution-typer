@@ -5,12 +5,6 @@ Class {
 }
 
 { #category : #accessing }
-TypInfVariableResolver >> assignedTypeOf: aVariable in: aType [
-	^ ((aVariable typInfAssignmentNodesIn: aType)
-		collect: [ :e | e value typInfTypeSelf: aType ]) typAsType
-]
-
-{ #category : #accessing }
 TypInfVariableResolver >> canResolve: aLookup [
 
 	aLookup receiver isNamed ifFalse: [ ^ false ].
@@ -29,22 +23,19 @@ TypInfVariableResolver >> printOn: aStream [
 
 { #category : #accessing }
 TypInfVariableResolver >> resolve: aLookup [
-
 	| classDescription |
 	self assert: [ self canResolve: aLookup ].
 	aLookup initializeResolver: self.
-	classDescription := aLookup receiver classDescription.
-	"instance variable"
+	classDescription := aLookup receiver classDescription.	"instance variable"
 	classDescription
 		slotNamed: aLookup selector
-		ifFound: [ :e | ^ self assignedTypeOf: e in: aLookup receiver ].
-	"class variable"
+		ifFound: [ :e | ^ e typInfTypeSelf: aLookup receiver ].	"class variable"
 	classDescription instanceSide allClassVariables
 		detect: [ :e | e name = aLookup selector ]
 		ifFound: [ :e | 
 			^ e value
-				  ifNil: [ self assignedTypeOf: e in: aLookup receiver ]
-				  ifNotNil: [ e value typInfType ] ].
-	self error:
-		'neither class nor instance variable, should not have been accepted in the first place'
+				ifNil: [ e typInfTypeSelf: aLookup receiver ]
+				ifNotNil: #typInfType ].
+	self
+		error: 'neither class nor instance variable, should not have been accepted in the first place'
 ]

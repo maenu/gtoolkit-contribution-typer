@@ -56,11 +56,6 @@ TypValueType >> isValue [
 	^ true
 ]
 
-{ #category : #accessing }
-TypValueType >> overriddingMethods: aSymbol [
-	^ self super overriddingMethods: aSymbol
-]
-
 { #category : #printing }
 TypValueType >> printOn: aStream skipping: anIdentitySet [
 

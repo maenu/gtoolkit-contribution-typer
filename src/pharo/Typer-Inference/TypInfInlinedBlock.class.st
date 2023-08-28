@@ -8,12 +8,10 @@ Class {
 TypInfInlinedBlock >> transfer [
 	state
 		at: self
-		covariantPut: ((BlockClosure
+		put: ((BlockClosure
 				typAsFunctionTypeWithResult: (self inReturns collect: #type) typAsType
 				arguments: (self inArguments collect: #type)
 				argumentsOptional: false
-				signalsAlways: nil)
-				typInfNode: context block;
-				yourself).
+				signalsAlways: nil) typInfWithNode: context block).
 	self constrain: context block to: self type
 ]

@@ -42,3 +42,8 @@ TypSuperType >> isSuper [
 
 	^ true
 ]
+
+{ #category : #accessing }
+TypSuperType >> overriders: aSymbol [
+	^ self super overriders: aSymbol
+]

@@ -67,7 +67,7 @@ TypInfInlineMethodMessageStrategy >> newContexts [
 	superType := message inReceiver superIn: receiver.
 	^ (receiver
 		preResolveMethod: (TypMethodLookup
-				receiver: selfType
+				receiver: receiver
 				selector: message selector
 				arguments: message arguments
 				self: selfType
@@ -78,8 +78,8 @@ TypInfInlineMethodMessageStrategy >> newContexts [
 				ifTrue: [ | method |
 					method := l receiver classDescription lookupSelector: message selector.
 					(method isAbstract
-						ifTrue: [ selfType overriddingMethods: message selector ]
-						ifFalse: [ (selfType overriddingMethods: message selector) , {method} ])
+						ifTrue: [ selfType overriders: message selector ]
+						ifFalse: [ (selfType overriders: message selector) , {method} ])
 						flatCollect: [ :m | 
 							(method methodClass typInfCanAbstractInterpret: message)
 								ifTrue: [ method methodClass typInfAbstractInterpret: message ]

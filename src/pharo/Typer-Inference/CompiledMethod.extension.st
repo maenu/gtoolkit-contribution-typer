@@ -72,7 +72,7 @@ CompiledMethod >> typInfRunAndMonitor: aDuration [
 			node: self ast
 			self: selfType
 			super: selfType superOrNil.
-	process := [ [ [ tally spyEvery: 1 on: [ context runDiff ].
+	process := [ [ [ tally spyEvery: 1 on: [ context run ].
 		TypMethodIndex instance outAt: key put: context ]
 			on: Exception - OCUndeclaredVariableWarning - OCShadowVariableWarning
 			do: [ :e | 
@@ -87,12 +87,16 @@ CompiledMethod >> typInfRunAndMonitor: aDuration [
 								method: self
 								duration: DateAndTime now - start
 								result: context
+								error: nil
+								process: process
 								tally: tally) ]
 				ifNotNil: [ promise
 						fulfillWithValue: (TypMethodMeasurement
 								method: self
 								duration: DateAndTime now - start
+								result: context
 								error: error
+								process: process
 								tally: tally) ] ]
 		onTimeout: [ process suspend.
 			timeout := true.
@@ -100,6 +104,8 @@ CompiledMethod >> typInfRunAndMonitor: aDuration [
 				fulfillWithValue: (TypMethodMeasurement
 						method: self
 						duration: DateAndTime now - start
+						result: context
+						error: nil
 						process: process
 						tally: tally) ] ] forkAt: Processor userBackgroundPriority.
 	^ promise
