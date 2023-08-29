@@ -2,7 +2,8 @@ Class {
 	#name : #TypInfInlineMethodMessageStrategy,
 	#superclass : #TypInfMessageStrategy,
 	#instVars : [
-		'contexts'
+		'contexts',
+		'lookup'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -91,6 +92,14 @@ TypInfInlineMethodMessageStrategy >> newContexts [
 ]
 
 { #category : #accessing }
+TypInfInlineMethodMessageStrategy >> newLookup [
+	^ message inReceiver
+		newLookup: self constrainedReceiver
+		method: message selector
+		arguments: message arguments
+]
+
+{ #category : #accessing }
 TypInfInlineMethodMessageStrategy >> transfer [
 	message constrain: message inReceiver to: self constrainedReceiver.
 	self updateContexts.
@@ -108,6 +117,7 @@ TypInfInlineMethodMessageStrategy >> uninstall [
 	contexts
 		do: #uninstall;
 		removeAll.
+	lookup := nil.
 	message out
 		at: #nextOriginal
 			ifPresent: [ :s | 
@@ -130,6 +140,8 @@ TypInfInlineMethodMessageStrategy >> uninstall [
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> updateContexts [
 	| oldContexts |
+	lookup = self newLookup ifTrue: [ ^ self ].
+	lookup := self newLookup.
 	oldContexts := contexts.
 	contexts := self newContexts asOrderedCollection
 			collect: [ :c | 
@@ -138,6 +150,5 @@ TypInfInlineMethodMessageStrategy >> updateContexts [
 					ifFound: #yourself
 					ifNone: c ].
 	(oldContexts difference: contexts) do: #uninstall.
-	(contexts difference: oldContexts) do: #install.
-	(contexts anySatisfy: [ :e | e root isNil ]) ifTrue: [ Halt now ]
+	(contexts difference: oldContexts) do: #install
 ]

@@ -48,14 +48,7 @@ TypInfExamples >> empty [
 
 { #category : #accessing }
 TypInfExamples >> infer: aMethod [
-
-	^ TypTyping new typeMethod: aMethod timeout: 2 minutes
-]
-
-{ #category : #accessing }
-TypInfExamples >> inferMonitored: aMethod [
-	TypInfMethodIndex instance.	"rebuild global indexes"
-	^ TypTyping new monitorMemoryMethods: {aMethod} timeout: 1 minute
+	^ aMethod typInfRun: 2 minutes
 ]
 
 { #category : #accessing }

@@ -34,12 +34,16 @@ CompiledMethod >> typInfRun: aDuration [
 								method: self
 								duration: DateAndTime now - start
 								result: context
+								error: nil
+								process: process
 								tally: nil) ]
 				ifNotNil: [ promise
 						fulfillWithValue: (TypMethodMeasurement
 								method: self
 								duration: DateAndTime now - start
+								result: context
 								error: error
+								process: process
 								tally: nil) ] ]
 		onTimeout: [ process suspend.
 			timeout := true.
@@ -47,6 +51,8 @@ CompiledMethod >> typInfRun: aDuration [
 				fulfillWithValue: (TypMethodMeasurement
 						method: self
 						duration: DateAndTime now - start
+						result: context
+						error: nil
 						process: process
 						tally: nil) ] ] forkAt: Processor userBackgroundPriority.
 	^ promise
