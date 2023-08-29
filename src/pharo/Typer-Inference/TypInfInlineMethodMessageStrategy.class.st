@@ -9,16 +9,12 @@ Class {
 
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> canInstall [
-	| receiver newContexts |
-	receiver := self constrainedReceiver.
-	((receiver
-		preResolveMethod: (TypMethodLookup
-				receiver: receiver
-				selector: message selector
-				arguments: message arguments
-				self: receiver
-				super: receiver superOrNil
-				parent: nil)) anySatisfy: [ :e | e resolver isKindOf: TypInfMethodResolver ])
+	| newContexts |
+	((message inReceiver
+		preResolve: self constrainedReceiver
+		method: message selector
+		arguments: message arguments)
+		anySatisfy: [ :e | e resolver isKindOf: TypInfMethodResolver ])
 		ifFalse: [ ^ false ].
 	newContexts := self newContexts.
 	(newContexts size between: 1 and: 8) ifFalse: [ ^ false ].
@@ -61,25 +57,17 @@ TypInfInlineMethodMessageStrategy >> install [
 
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> newContexts [
-	| receiver selfType superType |
-	receiver := self constrainedReceiver.
-	selfType := message inReceiver selfIn: receiver.
-	superType := message inReceiver superIn: receiver.
-	^ (receiver
-		preResolveMethod: (TypMethodLookup
-				receiver: receiver
-				selector: message selector
-				arguments: message arguments
-				self: selfType
-				super: superType
-				parent: nil))
+	^ (message inReceiver
+		preResolve: self constrainedReceiver
+		method: message selector
+		arguments: message arguments)
 		flatCollect: [ :l | 
 			(l resolver isKindOf: TypInfMethodResolver)
 				ifTrue: [ | method |
 					method := l receiver classDescription lookupSelector: message selector.
 					(method isAbstract
-						ifTrue: [ selfType overriders: message selector ]
-						ifFalse: [ (selfType overriders: message selector) , {method} ])
+						ifTrue: [ l root self overriders: message selector ]
+						ifFalse: [ (l root self overriders: message selector) , {method} ])
 						flatCollect: [ :m | 
 							(method methodClass typInfCanAbstractInterpret: message)
 								ifTrue: [ method methodClass typInfAbstractInterpret: message ]
@@ -96,8 +84,8 @@ TypInfInlineMethodMessageStrategy >> newContexts [
 							sender: message context
 							state: message state copy
 							node: message copy
-							self: selfType
-							super: superType
+							self: l root self
+							super: l root super
 							message: message} ] ]
 		as: Set
 ]

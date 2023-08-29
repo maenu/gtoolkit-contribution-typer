@@ -5,37 +5,12 @@ Class {
 }
 
 { #category : #accessing }
-TypInfSelf >> canLookup: aType method: aSymbol arguments: aCollection [
+TypInfSelf >> canResolve: aType method: aSymbol arguments: aCollection [
 	^ context self
-		canResolveMethod: (TypMethodLookup
-				receiver: context self
-				selector: aSymbol
-				arguments: aCollection
-				self: (self selfIn: aType)
-				super: (self superIn: aType)
-				parent: nil)
-]
-
-{ #category : #accessing }
-TypInfSelf >> lookup: aType method: aSymbol arguments: aCollection [
-	^ context self
-		resolveMethod: (TypMethodLookup
-				receiver: context self
-				selector: aSymbol
-				arguments: aCollection
-				self: (self selfIn: aType)
-				super: (self superIn: aType)
-				parent: nil)
-]
-
-{ #category : #accessing }
-TypInfSelf >> selfIn: aType [
-	^ context self
-]
-
-{ #category : #accessing }
-TypInfSelf >> superIn: aType [
-	^ context super
+		canResolveMethod:  (self
+				newLookup: aType
+				method: aSymbol
+				arguments: aCollection)
 ]
 
 { #category : #initialization }

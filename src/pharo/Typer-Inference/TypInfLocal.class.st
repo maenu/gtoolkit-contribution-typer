@@ -17,8 +17,7 @@ TypInfLocal >> findInRead [
 
 { #category : #'meta-object-protocol' }
 TypInfLocal >> inRead [
-
-	^ self inAt: #read
+	^ self inAt: #read ifAbsentPut: [ self findInRead ]
 ]
 
 { #category : #'meta-object-protocol' }

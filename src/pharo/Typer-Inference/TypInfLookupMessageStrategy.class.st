@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 TypInfLookupMessageStrategy >> canInstall [
 	^ message inReceiver
-		canLookup: self constrainedReceiver
+		canResolve: self constrainedReceiver
 		method: message selector asSymbol
 		arguments: message arguments
 ]
@@ -16,7 +16,7 @@ TypInfLookupMessageStrategy >> canInstall [
 TypInfLookupMessageStrategy >> transfer [
 	| method |
 	method := message inReceiver
-			lookup: self constrainedReceiver
+			resolve: self constrainedReceiver
 			method: message selector asSymbol
 			arguments: message arguments.
 	message inArguments

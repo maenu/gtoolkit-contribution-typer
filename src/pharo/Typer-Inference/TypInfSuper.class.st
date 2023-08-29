@@ -5,39 +5,38 @@ Class {
 }
 
 { #category : #accessing }
-TypInfSuper >> canLookup: aType method: aSymbol arguments: aCollection [
-	^ (self superIn: aType)
-		ifNil: [ false ]
-		ifNotNil: [ :t | 
-			context self
-				canResolveMethod: (TypMethodLookup
-						receiver: t
-						selector: aSymbol
-						arguments: aCollection
-						self: (self selfIn: aType)
-						super: t
-						parent: nil) ]
-]
-
-{ #category : #accessing }
-TypInfSuper >> lookup: aType method: aSymbol arguments: aCollection [
+TypInfSuper >> canResolve: aType method: aSymbol arguments: aCollection [
+	self super ifNil: [ ^ false ].
 	^ context self
-		resolveMethod: (TypMethodLookup
-				receiver: (self superIn: aType)
-				selector: aSymbol
-				arguments: aCollection
-				self: (self selfIn: aType)
-				super: (self superIn: aType)
-				parent: nil)
+		canResolveMethod: (self
+				newLookup: aType
+				method: aSymbol
+				arguments: aCollection)
 ]
 
 { #category : #accessing }
-TypInfSuper >> selfIn: aType [
-	^ context self
+TypInfSuper >> newLookup: aType method: aSymbol arguments: aCollection [
+	self assert: [ self super isNotNil ].
+	^ TypMethodLookup
+		receiver: self super
+		selector: aSymbol
+		arguments: aCollection
+		self: context self
+		super: self super
+		parent: nil
 ]
 
 { #category : #accessing }
-TypInfSuper >> superIn: aType [
+TypInfSuper >> preResolve: aType method: aSymbol arguments: aCollection [
+	self super ifNil: [ ^ #() ].
+	^ super
+		preResolve: aType
+		method: aSymbol
+		arguments: aCollection
+]
+
+{ #category : #accessing }
+TypInfSuper >> super [
 	^ context super ifNil: nil ifNotNil: #superOrNil
 ]
 
