@@ -6,19 +6,13 @@ Class {
 
 { #category : #accessing }
 TypInfLookupMessageStrategy >> canInstall [
-	^ message inReceiver
-		canResolve: self constrainedReceiver
-		method: message selector asSymbol
-		arguments: message arguments
+	^ message lookup canResolve
 ]
 
 { #category : #accessing }
 TypInfLookupMessageStrategy >> transfer [
 	| method |
-	method := message inReceiver
-			resolve: self constrainedReceiver
-			method: message selector asSymbol
-			arguments: message arguments.
+	method := message lookup resolve.
 	message inArguments
 		withIndexDo: [ :e :i | 
 			i <= method arguments size

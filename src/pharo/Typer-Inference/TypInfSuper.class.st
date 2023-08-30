@@ -5,34 +5,14 @@ Class {
 }
 
 { #category : #accessing }
-TypInfSuper >> canResolve: aType method: aSymbol arguments: aCollection [
-	self super ifNil: [ ^ false ].
-	^ context self
-		canResolveMethod: (self
-				newLookup: aType
-				method: aSymbol
-				arguments: aCollection)
-]
-
-{ #category : #accessing }
-TypInfSuper >> newLookup: aType method: aSymbol arguments: aCollection [
-	self assert: [ self super isNotNil ].
+TypInfSuper >> newMethodLookup: aMessage [
 	^ TypMethodLookup
 		receiver: self super
-		selector: aSymbol
-		arguments: aCollection
+		selector: aMessage selector
+		arguments: aMessage arguments
 		self: context self
 		super: self super
 		parent: nil
-]
-
-{ #category : #accessing }
-TypInfSuper >> preResolve: aType method: aSymbol arguments: aCollection [
-	self super ifNil: [ ^ #() ].
-	^ super
-		preResolve: aType
-		method: aSymbol
-		arguments: aCollection
 ]
 
 { #category : #accessing }

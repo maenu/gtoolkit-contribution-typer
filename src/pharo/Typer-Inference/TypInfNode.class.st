@@ -23,15 +23,6 @@ TypInfNode >> burp [
 ]
 
 { #category : #accessing }
-TypInfNode >> canResolve: aType method: aSymbol arguments: aCollection [
-	^ aType
-		canResolveMethod: (self
-				newLookup: aType
-				method: aSymbol
-				arguments: aCollection)
-]
-
-{ #category : #accessing }
 TypInfNode >> canSlurpAndBurp [
 	^ in
 		at: #next
@@ -199,11 +190,11 @@ TypInfNode >> methodNode [
 ]
 
 { #category : #accessing }
-TypInfNode >> newLookup: aType method: aSymbol arguments: aCollection [
+TypInfNode >> newMethodLookup: aMessage [
 	^ TypMethodLookup
-		receiver: aType
-		selector: aSymbol
-		arguments: aCollection
+		receiver: aMessage constrainedReceiver
+		selector: aMessage selector
+		arguments: aMessage arguments
 		parent: nil
 ]
 
@@ -221,15 +212,6 @@ TypInfNode >> outNexts [
 ]
 
 { #category : #accessing }
-TypInfNode >> preResolve: aType method: aSymbol arguments: aCollection [
-	^ aType
-		preResolveMethod: (self
-				newLookup: aType
-				method: aSymbol
-				arguments: aCollection)
-]
-
-{ #category : #accessing }
 TypInfNode >> previous [
 	^ ((in at: #next) collect: [ :e | state at: e origin ]) typAsType
 ]
@@ -238,15 +220,6 @@ TypInfNode >> previous [
 TypInfNode >> printOn: aStream [
 
 	aStream nextPutAll: (node printStringLimitedTo: 32)
-]
-
-{ #category : #accessing }
-TypInfNode >> resolve: aType method: aSymbol arguments: aCollection [
-	^ aType
-		resolveMethod: (self
-				newLookup: aType
-				method: aSymbol
-				arguments: aCollection)
 ]
 
 { #category : #accessing }

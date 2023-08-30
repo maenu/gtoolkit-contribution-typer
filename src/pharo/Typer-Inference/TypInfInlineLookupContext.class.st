@@ -6,10 +6,7 @@ Class {
 
 { #category : #accessing }
 TypInfInlineLookupContext >> canInstall [
-	^ (message inReceiver
-		preResolve: selfType
-		method: message selector
-		arguments: message arguments) isNotEmpty
+	^ message lookup preResolve isNotEmpty
 ]
 
 { #category : #accessing }

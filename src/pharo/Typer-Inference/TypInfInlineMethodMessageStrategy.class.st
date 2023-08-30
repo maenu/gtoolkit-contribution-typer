@@ -11,10 +11,7 @@ Class {
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> canInstall [
 	| newContexts |
-	((message inReceiver
-		preResolve: self constrainedReceiver
-		method: message selector
-		arguments: message arguments)
+	(message lookup preResolve
 		anySatisfy: [ :e | e resolver isKindOf: TypInfMethodResolver ])
 		ifFalse: [ ^ false ].
 	newContexts := self newContexts.
@@ -58,10 +55,7 @@ TypInfInlineMethodMessageStrategy >> install [
 
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> newContexts [
-	^ (message inReceiver
-		preResolve: self constrainedReceiver
-		method: message selector
-		arguments: message arguments)
+	^ message lookup preResolve
 		flatCollect: [ :l | 
 			(l resolver isKindOf: TypInfMethodResolver)
 				ifTrue: [ | method |
@@ -92,16 +86,8 @@ TypInfInlineMethodMessageStrategy >> newContexts [
 ]
 
 { #category : #accessing }
-TypInfInlineMethodMessageStrategy >> newLookup [
-	^ message inReceiver
-		newLookup: self constrainedReceiver
-		method: message selector
-		arguments: message arguments
-]
-
-{ #category : #accessing }
 TypInfInlineMethodMessageStrategy >> transfer [
-	message constrain: message inReceiver to: self constrainedReceiver.
+	message constrain: message inReceiver to: message constrainedReceiver.
 	self updateContexts.
 	message state
 		at: message
@@ -140,8 +126,8 @@ TypInfInlineMethodMessageStrategy >> uninstall [
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> updateContexts [
 	| oldContexts |
-	lookup = self newLookup ifTrue: [ ^ self ].
-	lookup := self newLookup.
+	lookup = message lookup ifTrue: [ ^ self ].
+	lookup := message lookup.
 	oldContexts := contexts.
 	contexts := self newContexts asOrderedCollection
 			collect: [ :c | 

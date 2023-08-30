@@ -2,10 +2,9 @@ Extension { #name : #CompiledMethod }
 
 { #category : #'*Typer-Inference' }
 CompiledMethod >> typInfRun: aDuration [
-	| promise start semaphore process error timeout context selfType key |
+	| promise start semaphore process error context selfType key |
 	promise := AsyncPendingPromise new.
 	start := DateAndTime now.
-	timeout := false.
 	semaphore := Semaphore new.
 	selfType := self methodClass typAsType.
 	key := TypInfContextKey
@@ -46,13 +45,14 @@ CompiledMethod >> typInfRun: aDuration [
 								process: process
 								tally: nil) ] ]
 		onTimeout: [ process suspend.
-			timeout := true.
 			promise
 				fulfillWithValue: (TypMethodMeasurement
 						method: self
 						duration: DateAndTime now - start
 						result: context
-						error: nil
+						error: (Error new
+								messageText: 'timeout';
+								yourself)
 						process: process
 						tally: nil) ] ] forkAt: Processor userBackgroundPriority.
 	^ promise
@@ -60,10 +60,9 @@ CompiledMethod >> typInfRun: aDuration [
 
 { #category : #'*Typer-Inference' }
 CompiledMethod >> typInfRunAndMonitor: aDuration [
-	| promise start semaphore process error timeout context key tally selfType |
+	| promise start semaphore process error context key tally selfType |
 	promise := AsyncPendingPromise new.
 	start := DateAndTime now.
-	timeout := false.
 	semaphore := Semaphore new.
 	tally := MessageTally new.
 	selfType := self methodClass typAsType.
@@ -105,13 +104,14 @@ CompiledMethod >> typInfRunAndMonitor: aDuration [
 								process: process
 								tally: tally) ] ]
 		onTimeout: [ process suspend.
-			timeout := true.
 			promise
 				fulfillWithValue: (TypMethodMeasurement
 						method: self
 						duration: DateAndTime now - start
 						result: context
-						error: nil
+						error: (Error new
+								messageText: 'timeout';
+								yourself)
 						process: process
 						tally: tally) ] ] forkAt: Processor userBackgroundPriority.
 	^ promise

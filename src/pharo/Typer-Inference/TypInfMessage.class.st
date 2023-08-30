@@ -5,7 +5,8 @@ Class {
 	#classTraits : 'TypInfTWithArguments classTrait',
 	#instVars : [
 		'currentStrategy',
-		'strategies'
+		'strategies',
+		'lookup'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -13,6 +14,16 @@ Class {
 { #category : #accessing }
 TypInfMessage >> arguments [
 	^ self inArguments collect: [ :n | state at: n ]
+]
+
+{ #category : #accessing }
+TypInfMessage >> constrainedReceiver [
+	| receiver implementors |
+	receiver := self receiver.
+	receiver isUnknown ifFalse: [ ^ receiver ].
+	implementors := TypInfMethodIndex instance implementors: self selector.
+	(implementors size between: 1 and: 8) ifFalse: [ ^ receiver ].
+	^ (implementors collect: #typAsType) typAsType
 ]
 
 { #category : #accessing }
@@ -44,6 +55,11 @@ TypInfMessage >> initialize [
 ]
 
 { #category : #accessing }
+TypInfMessage >> lookup [
+	^ lookup ifNil: [ lookup := self inReceiver newMethodLookup: self ]
+]
+
+{ #category : #accessing }
 TypInfMessage >> receiver [
 	^ state at: self inReceiver
 ]
@@ -56,6 +72,7 @@ TypInfMessage >> selector [
 { #category : #accessing }
 TypInfMessage >> transfer [
 	| oldStrategy |
+	lookup := nil.
 	oldStrategy := currentStrategy.
 	currentStrategy := strategies detect: #canInstall.
 	currentStrategy == oldStrategy

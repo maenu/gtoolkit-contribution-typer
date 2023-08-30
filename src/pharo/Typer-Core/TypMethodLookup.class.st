@@ -91,6 +91,12 @@ TypMethodLookup >> asParent [
 ]
 
 { #category : #accessing }
+TypMethodLookup >> canResolve [
+	receiver ifNil: [ ^ false ].
+	^ receiver canResolveMethod: self
+]
+
+{ #category : #accessing }
 TypMethodLookup >> copyWithReceiver: aType [
 	^ (super copyWithReceiver: aType)
 		initializeArguments: arguments
@@ -127,6 +133,11 @@ TypMethodLookup >> postCopy [
 ]
 
 { #category : #accessing }
+TypMethodLookup >> preResolve [
+	^ receiver preResolveMethod: self
+]
+
+{ #category : #accessing }
 TypMethodLookup >> printOn: aStream [
 	aStream
 		nextPut: ${;
@@ -134,6 +145,11 @@ TypMethodLookup >> printOn: aStream [
 		nextPut: $};
 		nextPut: $ .
 	super printOn: aStream
+]
+
+{ #category : #accessing }
+TypMethodLookup >> resolve [
+	^ receiver resolveMethod: self
 ]
 
 { #category : #accessing }

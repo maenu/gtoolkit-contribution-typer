@@ -5,12 +5,12 @@ Class {
 }
 
 { #category : #accessing }
-TypInfSelf >> canResolve: aType method: aSymbol arguments: aCollection [
-	^ context self
-		canResolveMethod:  (self
-				newLookup: aType
-				method: aSymbol
-				arguments: aCollection)
+TypInfSelf >> newMethodLookup: aMessage [
+	^ TypMethodLookup
+		receiver: context self
+		selector: aMessage selector
+		arguments: aMessage arguments
+		parent: nil
 ]
 
 { #category : #initialization }
