@@ -118,12 +118,6 @@ TypMethodLookup >> invalidateOnMethodChange: aMethodAnnouncement [
 ]
 
 { #category : #accessing }
-TypMethodLookup >> postCopy [
-	super postCopy.
-	arguments := arguments copy
-]
-
-{ #category : #accessing }
 TypMethodLookup >> preResolve [
 	^ receiver preResolveMethod: self
 ]
