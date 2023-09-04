@@ -11,6 +11,12 @@ Class {
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> canInstall [
 	| newContexts |
+	({message receiver} , message arguments
+		anySatisfy: [ :t | 
+			t
+				outAt: #typInfNode
+				ifPresent: [ :n | true ]
+				ifAbsent: [ false ] ]) ifFalse: [ ^ false ].
 	(message lookup preResolve
 		anySatisfy: [ :e | e resolver isKindOf: TypInfMethodResolver ])
 		ifFalse: [ ^ false ].

@@ -1,10 +1,11 @@
 Class {
 	#name : #TypIndex,
-	#superclass : #TypNode,
+	#superclass : #Object,
 	#instVars : [
 		'resolver',
 		'canResolve',
-		'preResolve'
+		'preResolve',
+		'resolve'
 	],
 	#classInstVars : [
 		'instance'
@@ -14,7 +15,6 @@ Class {
 
 { #category : #accessing }
 TypIndex class >> instance [
-	<typPraResult: 'TypLookupIndex'>
 	self subclassResponsibility
 ]
 
@@ -40,10 +40,11 @@ TypIndex >> canResolve: aLookup [
 
 { #category : #initialization }
 TypIndex >> initialize [
-	<typPraVariable: 'resolver' as: 'TypLookupResolver'>
+	<typPraVariable: 'resolver' as: 'TypResolver'>
 	super initialize.
 	canResolve := IdentityDictionary new.
 	preResolve := IdentityDictionary new.
+	resolve := IdentityDictionary new.
 	SystemAnnouncer uniqueInstance weak
 		when: ClassAnnouncement
 			send: #invalidateOnClassChange:
@@ -55,10 +56,7 @@ TypIndex >> initialize [
 
 { #category : #initialization }
 TypIndex >> initializeResolver: anObject [
-
-	<typPraArguments: 'TypLookupResolver'>
-	resolver := anObject.
-	self outAt: #resolver put: resolver
+	resolver := anObject
 ]
 
 { #category : #invalidation }
@@ -66,39 +64,93 @@ TypIndex >> invalidate [
 	resolver invalidate.
 	canResolve removeAll.
 	preResolve removeAll.
-	super invalidate
+	resolve removeAll.
+]
+
+{ #category : #accessing }
+TypIndex >> invalidateIndex: aDictionary onClassChange: aClassAnnouncement [
+	| changed |
+	changed := OrderedCollection new.
+	aDictionary
+		keysAndValuesDo: [ :l :t | 
+			((l invalidateOnClassChange: aClassAnnouncement)
+				or: (t invalidateOnClassChange: aClassAnnouncement))
+				ifTrue: [ changed add: l ] ].
+	changed do: [ :l | aDictionary removeKey: l ].
+	^ changed isNotEmpty
+]
+
+{ #category : #accessing }
+TypIndex >> invalidateIndex: aDictionary onMethodChange: aMethodAnnouncement [
+	| changed |
+	changed := OrderedCollection new.
+	aDictionary
+		keysAndValuesDo: [ :l :t | 
+			((l invalidateOnMethodChange: aMethodAnnouncement)
+				or: (t invalidateOnMethodChange: aMethodAnnouncement))
+				ifTrue: [ changed add: l ] ].
+	changed do: [ :l | aDictionary removeKey: l ].
+	^ changed isNotEmpty
 ]
 
 { #category : #invalidation }
 TypIndex >> invalidateOnClassChange: aClassAnnouncement [
-
-	| changed |
+	| changed toRemove |
 	changed := false.
-	(out flatCollect: #yourself)
-		select: [ :e | e key isKindOf: TypLookup ]
-		thenDo: [ :e | 
-			((e key invalidateOnClassChange: aClassAnnouncement) or:
-				 (e target invalidateOnClassChange: aClassAnnouncement)) ifTrue: [ 
-				self outRemove: e.
-				changed := true ] ].
+	toRemove := OrderedCollection new.
+	resolve
+		keysAndValuesDo: [ :l :t | 
+			((l invalidateOnClassChange: aClassAnnouncement)
+				or: (t invalidateOnClassChange: aClassAnnouncement))
+				ifTrue: [ changed := true.
+					toRemove add: l ] ].
+	toRemove do: [ :l | resolve removeKey: l ].
+	toRemove removeAll.
+	canResolve
+		keysDo: [ :l | 
+			(l invalidateOnClassChange: aClassAnnouncement)
+				ifTrue: [ changed := true.
+					toRemove add: l ] ].
+	toRemove do: [ :l | canResolve removeKey: l ].
+	toRemove removeAll.
+	preResolve
+		keysDo: [ :l | 
+			(l invalidateOnClassChange: aClassAnnouncement)
+				ifTrue: [ changed := true.
+					toRemove add: l ] ].
+	toRemove do: [ :l | preResolve removeKey: l ].
+	toRemove removeAll.
 	^ changed or: (resolver invalidateOnClassChange: aClassAnnouncement)
 ]
 
 { #category : #invalidation }
 TypIndex >> invalidateOnMethodChange: aMethodAnnouncement [
-
-	| changed |
+	| changed toRemove |
 	changed := false.
-	(out flatCollect: #yourself)
-		select: [ :e | e key isKindOf: TypLookup ]
-		thenDo: [ :e | 
-			((e key invalidateOnMethodChange: aMethodAnnouncement) or:
-				 (e target invalidateOnMethodChange: aMethodAnnouncement)) 
-				ifTrue: [ 
-					self outRemove: e.
-					changed := true ] ].
-	^ changed or:
-		  (resolver invalidateOnMethodChange: aMethodAnnouncement)
+	toRemove := OrderedCollection new.
+	resolve
+		keysAndValuesDo: [ :l :t | 
+			((l invalidateOnMethodChange: aMethodAnnouncement)
+				or: (t invalidateOnMethodChange: aMethodAnnouncement))
+				ifTrue: [ changed := true.
+					toRemove add: l ] ].
+	toRemove do: [ :l | resolve removeKey: l ].
+	toRemove removeAll.
+	canResolve
+		keysDo: [ :l | 
+			(l invalidateOnMethodChange: aMethodAnnouncement)
+				ifTrue: [ changed := true.
+					toRemove add: l ] ].
+	toRemove do: [ :l | canResolve removeKey: l ].
+	toRemove removeAll.
+	preResolve
+		keysDo: [ :l | 
+			(l invalidateOnMethodChange: aMethodAnnouncement)
+				ifTrue: [ changed := true.
+					toRemove add: l ] ].
+	toRemove do: [ :l | preResolve removeKey: l ].
+	toRemove removeAll.
+	^ changed or: (resolver invalidateOnMethodChange: aMethodAnnouncement)
 ]
 
 { #category : #accessing }
@@ -108,20 +160,11 @@ TypIndex >> preResolve: aLookup [
 
 { #category : #accessing }
 TypIndex >> resolve: aLookup [
-	^ self
-		outAt: aLookup
+	^ resolve
+		at: aLookup
 		ifAbsent: [ (resolver canResolve: aLookup)
-				ifTrue: [ self outAt: aLookup put: TypUnknownType instance.
-					[ self outAt: aLookup put: (resolver resolve: aLookup) ]
-						ifCurtailed: [ self outRemoveAt: aLookup ] ]
+				ifTrue: [ resolve at: aLookup put: (resolver resolve: aLookup) ]
 				ifFalse: [ TypUnknownType instance ] ]
-]
-
-{ #category : #accessing }
-TypIndex >> resolvedLookup: aLookup [
-	self assert: [ self canResolve: aLookup ].
-	self resolve: aLookup.
-	^ (out keys detect: [ :e | e = aLookup ]) resolved
 ]
 
 { #category : #accessing }

@@ -10,7 +10,6 @@ TypInfNode >> allNextNodes [
 
 { #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtAsElementIn: aMondrian [
-
 	"	^ BrEditor new
 		  aptitude: BrGlamorousCodeEditorAptitude new;
 		  background: BlBackground transparent;
@@ -21,93 +20,12 @@ TypInfNode >> typGtAsElementIn: aMondrian [
 		  yourself"
 
 	^ self
-		  typGtDecorate: (BlElement new
-				   size: 8 @ 8;
-				   yourself)
-		  in: aMondrian
-]
-
-{ #category : #'*Typer-GToolkit' }
-TypInfNode >> typGtCompactFlowFor: aView [
-	<gtView>
-	^ aView typGtMondrian
-		title: 'Compact Flow';
-		priority: 10;
-		painting: [ :m | self typGtCompactFlowOn: m ]
-]
-
-{ #category : #'*Typer-GToolkit' }
-TypInfNode >> typGtCompactFlowOn: aMondrian [
-	| nodes edges changed |
-	nodes := context nodes values flatCollect: #yourself.
-	edges := nodes
-			flatCollect: [ :n | 
-				(n in at: #next ifAbsent: IdentitySet new)
-					, (n out at: #next ifAbsent: IdentitySet new) ]
-			as: IdentitySet.
-	changed := true.
-	[ changed ]
-		whileTrue: [ | queue |
-			changed := false.
-			queue := edges asOrderedCollection.
-			[ queue isEmpty ]
-				whileFalse: [ | edge |
-					edge := queue removeFirst.
-					(edge target isKindOf: TypInfInlinedMethod)
-						ifFalse: [ edges
-								detect: [ :e | 
-									e origin == edge target
-										and: [ (edges select: [ :f | f origin == edge target ]) size = 1
-												and: [ (edges select: [ :f | f target == edge target ]) size = 1 ] ] ]
-								ifFound: [ :e | 
-									| next |
-									changed := true.
-									next := TypInfNextEdge origin: edge origin target: e target.
-									queue
-										remove: e ifAbsent: [  "noop" ];
-										add: next.
-									edges
-										remove: edge ifAbsent: [  "noop" ];
-										remove: e ifAbsent: [  "noop" ];
-										add: next ]
-								ifNone: [  "noop" ] ] ] ].
-	nodes := edges flatCollect: #nodes.
-	"edges := edges
-			, (nodes
-					flatCollect: [ :n | 
-						n edges
-							select: [ :e | (nodes includes: e origin) and: [ nodes includes: e target ] ] ]
-					as: IdentitySet)."
-	aMondrian nodes
-		stencil: [ :e | e typGtAsElementIn: aMondrian ];
-		with: nodes.
-	aMondrian edges
-		stencil: [ :e | e typGtAsElementIn: aMondrian ];
-		connect: edges
-			from: #origin
-			to: #target.
-	aMondrian layout force
-]
-
-{ #category : #'*Typer-GToolkit' }
-TypInfNode >> typGtDecorate: anElement in: aMondrian [
-	anElement
-		when: BlMouseDownEvent do: [ anElement zIndex: 1 ];
-		when: BlClickEvent do: [ anElement phlow spawnObject: self ].
-	anElement
-		addAptitude: (TypGtStrongBorderAptitude color: self typGtColor)
-				+ (BrGlamorousWithTooltipAptitude
-						content: [ BrEditor new
-								aptitude: BrGlamorousCodeEditorAptitude new;
-								background: BlBackground transparent;
-								text: self class name , String lf
-										, (state at: self ifAbsent: [ TypUnknownType instance ]) asString
-										, String lf , node formattedCode;
-								beReadOnlyWithoutSelection;
-								hFitContent;
-								vFitContent;
-								yourself ]).
-	^ anElement
+		typGtDecorate: (BlElement new
+				size: 10 @ 10;
+				geometry: BlCircleGeometry new;
+				border: (self typGtBorder: 0.3);
+				yourself)
+		in: aMondrian
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -121,74 +39,40 @@ TypInfNode >> typGtFlowFor: aView [
 
 { #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtFlowPaintOn: aMondrian [
-	| edges nodes |
-	nodes := self allNextNodes.
-	nodes ifEmpty: [ ^ self ].
+	| nodes edges connections |
+	nodes := context root allNextNodes.
 	edges := (((nodes flatCollect: #inEdges)
 			select: [ :e | nodes includes: e origin ])
 			, ((nodes flatCollect: #outEdges) select: [ :e | nodes includes: e target ]))
-			asIdentitySet groupedBy: [ :e | e key -> e nodes ].
+			asIdentitySet.
+	connections := (edges groupedBy: [ :e | e origin -> e target ]) associations
+			collect: [ :a | a key -> a value asOrderedCollection ]
+			as: Dictionary.
 	aMondrian nodes
 		stencil: [ :e | e typGtAsElementIn: aMondrian ];
 		with: nodes.
-	aMondrian edges
-		stencil: [ :e | e anyOne typGtAsElementIn: aMondrian with: e ];
-		connect: (edges associations
-					select: [ :e | e key key = #next ]
-					thenCollect: #value)
-			from: [ :e | e anyOne origin ]
-			to: [ :e | e anyOne target ].
 	aMondrian edges
 		passive;
-		stencil: [ :e | e anyOne typGtAsElementIn: aMondrian with: e ];
-		connect: (edges associations
-					reject: [ :e | e key key = #next ]
-					thenCollect: #value)
-			from: [ :e | e anyOne origin ]
-			to: [ :e | e anyOne target ].
-	aMondrian layout force
-]
-
-{ #category : #'*Typer-GToolkit' }
-TypInfNode >> typGtInlineFlowOn: aMondrian [
-	| nodes edges changed |
-	nodes := context nodes values flatCollect: #yourself.
-	edges := nodes
-			flatCollect: [ :n | 
-				(n in at: #next ifAbsent: IdentitySet new)
-					, (n out at: #next ifAbsent: IdentitySet new) ]
-			as: IdentitySet.
-	changed := true.
-	[ changed ]
-		whileTrue: [ | queue |
-			changed := false.
-			queue := edges asOrderedCollection.
-			[ queue isEmpty ]
-				whileFalse: [ | edge |
-					edge := queue removeFirst.
-					edges
-						detect: [ :e | 
-							e origin == edge target
-								and: [ (edges select: [ :f | f origin = e origin ]) size = 1
-										and: [ (edges select: [ :f | f origin = edge target ]) size = 1 ] ] ]
-						ifFound: [ :e | 
-							changed := true.
-							queue remove: e ifAbsent: [  "noop" ].
-							edges
-								remove: edge ifAbsent: [  "noop" ];
-								remove: e ifAbsent: [  "noop" ];
-								add: (TypInfNextEdge origin: edge origin target: e target) ]
-						ifNone: [  "noop" ] ] ].
-	nodes := edges flatCollect: #nodes.
-	aMondrian nodes
-		stencil: [ :e | e typGtAsElementIn: aMondrian ];
-		with: nodes.
-	aMondrian edges
-		stencil: [ :e | e typGtAsElementIn: aMondrian ];
-		connect: edges
+		stencil: [ :e | 
+			| localEdges |
+			localEdges := connections at: e origin -> e target.
+			(e typGtAsElementIn: aMondrian)
+				curvatureFraction: (localEdges indexOf: e ifAbsent: 0) / (localEdges size * 2 + 1);
+				yourself ];
+		connect: (edges reject: [ :e | e key = #next ] thenCollect: #value)
 			from: #origin
 			to: #target.
-	aMondrian layout force
+	aMondrian edges
+		stencil: [ :e | 
+			| localEdges |
+			localEdges := connections at: e origin -> e target.
+			(e typGtAsElementIn: aMondrian)
+				curvatureFraction: (localEdges indexOf: e ifAbsent: 0) / (localEdges size * 2 + 1);
+				yourself ];
+		connect: (edges select: [ :e | e key = #next ] thenCollect: #value)
+			from: #origin
+			to: #target.
+	aMondrian layout force fix: self at: 0 @ 0
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -197,12 +81,12 @@ TypInfNode >> typGtMinimalFlowFor: aView [
 	^ aView typGtMondrian
 		title: 'Minimal Flow';
 		priority: 10;
-		painting: [ :m | self typGtMinimalFlowOn: m ]
+		painting: [ :m | self typGtMinimalFlowPaintOn: m ]
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypInfNode >> typGtMinimalFlowOn: aMondrian [
-	| nodes edges changed |
+TypInfNode >> typGtMinimalFlowPaintOn: aMondrian [
+	| nodes edges changed connections |
 	nodes := context root allNextNodes.
 	edges := nodes
 			flatCollect: [ :n | 
@@ -236,21 +120,29 @@ TypInfNode >> typGtMinimalFlowOn: aMondrian [
 								add: next ]
 						ifNone: [  "noop" ] ] ].
 	nodes := edges flatCollect: #nodes.
-	edges := edges
-			, (nodes
-					flatCollect: [ :n | 
-						n edges
-							select: [ :e | (nodes includes: e origin) and: [ nodes includes: e target ] ] ]
-					as: IdentitySet).
+	connections := (edges groupedBy: [ :e | e origin -> e target ]) associations
+			collect: [ :a | a key -> a value asOrderedCollection ]
+			as: Dictionary.
 	aMondrian nodes
 		stencil: [ :e | e typGtAsElementIn: aMondrian ];
 		with: nodes.
 	aMondrian edges
+		passive;
 		stencil: [ :e | e typGtAsElementIn: aMondrian ];
-		connect: edges
+		connect: (edges reject: [ :e | e key = #next ] thenCollect: #value)
 			from: #origin
 			to: #target.
-	aMondrian layout force
+	aMondrian edges
+		stencil: [ :e | 
+			| localEdges |
+			localEdges := connections at: e origin -> e target.
+			(e typGtAsElementIn: aMondrian)
+				curvatureFraction: 1 - ((localEdges indexOf: e) / localEdges size);
+				yourself ];
+		connect: (edges select: [ :e | e key = #next ] thenCollect: #value)
+			from: #origin
+			to: #target.
+	aMondrian layout force fix: self at: 0 @ 0
 ]
 
 { #category : #'*Typer-GToolkit' }

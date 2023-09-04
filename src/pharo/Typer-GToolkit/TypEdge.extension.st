@@ -2,25 +2,34 @@ Extension { #name : #TypEdge }
 
 { #category : #'*Typer-GToolkit' }
 TypEdge >> typGtAsElementIn: aMondrian [
-
-	^ BlParabollaArcElement new
-		  layout: BlFrameLayout new;
-		  zIndex: -1;
-		  clipChildren: false;
-		  curvatureFraction: 0.33;
-		  border: (BlBorder builder
-				   paint: self typGtColor;
-				   width: 1;
-				   build);
-		  toHead: (BlArrowheadTriangle new
-				   scale: 2;
-				   border: (BlBorder builder
-						    paint: self typGtColor;
-						    width: 1;
-						    build);
-				   background: self typGtColor;
-				   yourself);
-		  yourself
+	| label element |
+	label := BrLabel new
+			constraintsDo: [ :c | 
+				c frame horizontal alignCenter.
+				c frame vertical alignCenter ];
+			aptitude: BrGlamorousLabelAptitude;
+			when: BlClickEvent
+				do: [ :e | 
+					e consumed: true.
+					label phlow spawnObject: self ];
+			text: (self asString asRopedText fontSize: 6);
+			visibility: BlVisibility hidden;
+			yourself.
+	element := BlParabollaArcElement new.
+	element userData at: #typGtEdge put: self.
+	^ element
+		layout: BlFrameLayout new;
+		zIndex: -1;
+		clipChildren: false;
+		border: (self typGtBorder: 0.3);
+		toHead: (BlArrowheadTriangle new
+				scale: 2;
+				border: (self typGtBorder: 0.3);
+				background: (self typGtBackground: 0.3);
+				yourself);
+		addChild: label as: #label;
+		preventMeAndChildrenMouseEvents;
+		yourself
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -51,6 +60,19 @@ TypEdge >> typGtAsElementIn: aMondrian with: aCollection [
 	^ (self typGtAsElementIn: aMondrian)
 		addChild: label;
 		yourself
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypEdge >> typGtBackground: aNumber [
+	^ (self typGtColor alpha: aNumber) asBlBackground
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypEdge >> typGtBorder: aNumber [
+	^ BlBorder builder
+		paint: (self typGtColor alpha: aNumber);
+		width: 1;
+		build
 ]
 
 { #category : #'*Typer-GToolkit' }

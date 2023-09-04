@@ -17,10 +17,8 @@ TypShaTypeResolver >> printOn: aStream [
 ]
 
 { #category : #accessing }
-TypShaTypeResolver >> resolve: aLookup [
+TypShaTypeResolver >> result: aLookup [
 	| class |
-	self assert: [ self canResolve: aLookup ].
-	aLookup initializeResolver: self.
 	class := TypShaMethodIndex instance anonymousClass: aLookup classDescription.
 	^ self
 		resolve: aLookup

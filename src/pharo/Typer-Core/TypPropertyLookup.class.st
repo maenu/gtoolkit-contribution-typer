@@ -16,13 +16,6 @@ TypPropertyLookup >> = anObject [
 	^ anObject receiver = receiver
 ]
 
-{ #category : #accessing }
-TypPropertyLookup >> copyWithReceiver: aType [
-	^ self copy
-		initializeReceiver: aType selector: selector;
-		yourself
-]
-
 { #category : #testing }
 TypPropertyLookup >> hasParent [
 	^ receiver hasSuper
@@ -71,4 +64,9 @@ TypPropertyLookup >> receiver [
 TypPropertyLookup >> selector [
 	<typPraResult: 'Symbol'>
 	^ selector
+]
+
+{ #category : #accessing }
+TypPropertyLookup >> withReceiver: aType [
+	self subclassResponsibility
 ]

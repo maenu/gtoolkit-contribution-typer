@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'resolver',
 		'parent',
-		'child'
+		'child',
+		'result'
 	],
 	#category : #'Typer-Core-Lookup'
 }
@@ -40,12 +41,8 @@ TypLookup >> hash [
 
 { #category : #accessing }
 TypLookup >> initializeParent: aLookup [
+	self assert: [ parent isNil ].
 	parent := aLookup
-]
-
-{ #category : #accessing }
-TypLookup >> initializeResolver: anObject [
-	resolver := anObject
 ]
 
 { #category : #invalidation }
@@ -91,8 +88,22 @@ TypLookup >> printOn: aStream [
 
 { #category : #accessing }
 TypLookup >> resolver [
-
 	^ resolver
+]
+
+{ #category : #accessing }
+TypLookup >> resolver: aResolver [
+	resolver := aResolver
+]
+
+{ #category : #accessing }
+TypLookup >> result [
+	^ result
+]
+
+{ #category : #accessing }
+TypLookup >> result: anObject [
+	result := anObject
 ]
 
 { #category : #accessing }

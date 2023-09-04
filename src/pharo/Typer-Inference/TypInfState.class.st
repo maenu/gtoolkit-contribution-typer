@@ -16,6 +16,7 @@ TypInfState >> at: aNode covariantPut: aType [
 
 { #category : #accessing }
 TypInfState >> at: aNode put: aType [
+	self assert: [ aType isKindOf: TypType ].
 	^ super at: aNode put: aType
 ]
 

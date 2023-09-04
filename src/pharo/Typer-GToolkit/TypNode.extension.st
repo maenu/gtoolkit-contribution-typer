@@ -2,13 +2,20 @@ Extension { #name : #TypNode }
 
 { #category : #'*Typer-GToolkit' }
 TypNode >> typGtAsElementIn: aMondrian [
-
 	^ self
-		  typGtDecorate: (BrButton new
-				   aptitude: BrGlamorousButtonWithLabelAptitude;
-				   label: self asString;
-				   yourself)
-		  in: aMondrian
+		typGtDecorate: (BrButton new
+				aptitude: BrGlamorousButtonWithLabelAptitude;
+				label: self asString;
+				yourself)
+		in: aMondrian
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypNode >> typGtBorder: aNumber [
+	^ BlBorder builder
+		paint: (self typGtColor alpha: aNumber);
+		width: 1;
+		build
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -19,64 +26,72 @@ TypNode >> typGtColor [
 
 { #category : #'*Typer-GToolkit' }
 TypNode >> typGtDecorate: anElement in: aMondrian [
-
-	anElement
-		when: BlMouseDownEvent do: [ anElement zIndex: 1 ];
-		when: BlClickEvent do: [ anElement phlow spawnObject: self ].
-	anElement addAptitude:
-		(TypGtStrongBorderAptitude color: self typGtColor)
-		+ ((BrGlamorousWithTooltipAptitude content: [ 
-					  BrToolbar new
-						  aptitude: BrGlamorousToolbarAptitude;
-						  addItem: (BrButton new
-								   aptitude: BrGlamorousButtonWithLabelAptitude;
-								   label: ('out {1}' format: { self outEdges size });
-								   action: [ :button | 
-									   | nodes existingNodes remainingNodes |
-									   existingNodes := aMondrian existingNodes.
-									   nodes := (self outEdges collect: #target) difference:
-											            existingNodes.
-									   remainingNodes := nodes size.
-									   (nodes asArray takeFirst: 5) do: [ :e | 
-											   e typGtPaintOn: aMondrian ].
-									   remainingNodes > nodes size
-										   ifTrue: [ 
-											   button
-												   enable;
-												   label:
-													   ('out {1}' format: { (remainingNodes - nodes size) }) ]
-										   ifFalse: [ 
-											   button
-												   disable;
-												   label: 'out' ] ];
-								   yourself);
-						  addItem: (BrButton new
-								   aptitude: BrGlamorousButtonWithLabelAptitude;
-								   label: ('in {1}' format: { self inEdges size });
-								   action: [ :button | 
-									   | nodes existingNodes remainingNodes |Halt once.
-									   existingNodes := aMondrian existingNodes.
-									   nodes := (self inEdges collect: #origin) difference:
-											            existingNodes.
-									   remainingNodes := nodes size.
-									   (nodes asArray takeFirst: 5) do: [ :e | 
-											   e typGtPaintOn: aMondrian ].
-									   remainingNodes > nodes size
-										   ifTrue: [ 
-											   button
-												   enable;
-												   label:
-													   ('in {1}' format: { (remainingNodes - nodes size) }) ]
-										   ifFalse: [ 
-											   button
-												   disable;
-												   label: 'in' ] ];
-								   yourself);
-						  yourself ])
-				 showDelay: 300 milliSeconds;
-				 hideDelay: 300 milliSeconds;
-				 yourself).
+	anElement userData at: #typGtNode put: self.
 	^ anElement
+		when: BlMouseDownEvent do: [ anElement zIndex: 1 ];
+		when: BlMouseOverEvent
+			do: [ | edges |
+				edges := self edges.
+				aMondrian topStep root graph edgeChildren
+					select: [ :e | edges includes: (e userData at: #typGtEdge) ]
+					thenDo: [ :e | 
+						(e childNamed: #label) visibility: BlVisibility visible.
+						e typGtOnMouseOver ].
+				anElement typGtOnMouseOver ];
+		when: BlMouseOutEvent
+			do: [ | edges |
+				edges := self edges.
+				aMondrian topStep root graph edgeChildren
+					select: [ :e | edges includes: (e userData at: #typGtEdge) ]
+					thenDo: [ :e | 
+						(e childNamed: #label) visibility: BlVisibility hidden.
+						e typGtOnMouseOut ].
+				anElement typGtOnMouseOut ];
+		when: BlClickEvent do: [ anElement phlow spawnObject: self ];
+		addAptitude: (TypGtStrongBorderAptitude color: self typGtColor)
+				+ ((BrGlamorousWithTooltipAptitude
+						content: [ BrToolbar new
+								aptitude: BrGlamorousToolbarAptitude;
+								addItem: (BrButton new
+										aptitude: BrGlamorousButtonWithLabelAptitude;
+										label: ('out {1}' format: {self outEdges size});
+										action: [ :button | 
+											| nodes existingNodes remainingNodes |
+											existingNodes := aMondrian existingNodes.
+											nodes := (self outEdges collect: #target) difference: existingNodes.
+											remainingNodes := nodes size.
+											(nodes asArray takeFirst: 5) do: [ :e | e typGtPaintOn: aMondrian ].
+											remainingNodes > nodes size
+												ifTrue: [ button
+														enable;
+														label: ('out {1}' format: {remainingNodes - nodes size}) ]
+												ifFalse: [ button
+														disable;
+														label: 'out' ] ];
+										yourself);
+								addItem: (BrButton new
+										aptitude: BrGlamorousButtonWithLabelAptitude;
+										label: ('in {1}' format: {self inEdges size});
+										action: [ :button | 
+											| nodes existingNodes remainingNodes |
+											Halt once.
+											existingNodes := aMondrian existingNodes.
+											nodes := (self inEdges collect: #origin) difference: existingNodes.
+											remainingNodes := nodes size.
+											(nodes asArray takeFirst: 5) do: [ :e | e typGtPaintOn: aMondrian ].
+											remainingNodes > nodes size
+												ifTrue: [ button
+														enable;
+														label: ('in {1}' format: {remainingNodes - nodes size}) ]
+												ifFalse: [ button
+														disable;
+														label: 'in' ] ];
+										yourself);
+								yourself ])
+						showDelay: 300 milliSeconds;
+						hideDelay: 300 milliSeconds;
+						yourself);
+		yourself
 ]
 
 { #category : #'*Typer-GToolkit' }

@@ -19,9 +19,6 @@ TypPraVariableResolver >> printOn: aStream [
 ]
 
 { #category : #accessing }
-TypPraVariableResolver >> resolve: aLookup [
-
-	self assert: [ self canResolve: aLookup ].
-	aLookup initializeResolver: self.
+TypPraVariableResolver >> result: aLookup [
 	^ aLookup receiver classDescription typPraVariable: aLookup selector
 ]

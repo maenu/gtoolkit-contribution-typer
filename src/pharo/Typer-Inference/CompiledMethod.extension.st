@@ -11,7 +11,7 @@ CompiledMethod >> typInfRun: aDuration [
 			node: self ast
 			self: selfType
 			super: selfType superOrNil.
-	TypMethodIndex instance outRemoveAt: key.
+	TypInfMethodResolver instance outRemoveAt: key.
 	context := TypInfContext
 			sender: nil
 			state: TypInfState new
@@ -19,7 +19,7 @@ CompiledMethod >> typInfRun: aDuration [
 			self: selfType
 			super: selfType superOrNil.
 	process := [ [ [ context run.
-		TypMethodIndex instance outAt: key put: context ]
+		TypInfMethodResolver instance outAt: key put: context ]
 			on: Exception - OCUndeclaredVariableWarning - OCShadowVariableWarning
 			do: [ :e | 
 				e freeze.
@@ -70,7 +70,7 @@ CompiledMethod >> typInfRunAndMonitor: aDuration [
 			node: self ast
 			self: selfType
 			super: selfType superOrNil.
-	TypMethodIndex instance outRemoveAt: key.
+	TypInfMethodResolver instance outRemoveAt: key.
 	context := TypInfContext
 			sender: nil
 			state: TypInfState new
@@ -78,7 +78,7 @@ CompiledMethod >> typInfRunAndMonitor: aDuration [
 			self: selfType
 			super: selfType superOrNil.
 	process := [ [ [ tally spyEvery: 1 on: [ context run ].
-		TypMethodIndex instance outAt: key put: context ]
+		TypInfMethodResolver instance outAt: key put: context ]
 			on: Exception - OCUndeclaredVariableWarning - OCShadowVariableWarning
 			do: [ :e | 
 				e freeze.

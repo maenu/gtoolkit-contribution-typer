@@ -97,15 +97,6 @@ TypMethodLookup >> canResolve [
 ]
 
 { #category : #accessing }
-TypMethodLookup >> copyWithReceiver: aType [
-	^ (super copyWithReceiver: aType)
-		initializeArguments: arguments
-			self: aType
-			super: aType superOrNil;
-		yourself
-]
-
-{ #category : #accessing }
 TypMethodLookup >> hash [
 	^ ((super hash bitXor: arguments hash) bitXor: selfType hash)
 		bitXor: superType hash
@@ -165,4 +156,15 @@ TypMethodLookup >> self [
 { #category : #accessing }
 TypMethodLookup >> super [
 	^ superType
+]
+
+{ #category : #accessing }
+TypMethodLookup >> withReceiver: aType [
+	^ self class
+		receiver: aType
+		selector: selector
+		arguments: arguments
+		self: aType
+		super: aType superOrNil
+		parent: parent
 ]

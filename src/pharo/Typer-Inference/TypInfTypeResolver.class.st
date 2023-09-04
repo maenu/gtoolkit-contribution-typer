@@ -17,9 +17,6 @@ TypInfTypeResolver >> printOn: aStream [
 ]
 
 { #category : #accessing }
-TypInfTypeResolver >> resolve: aLookup [
-
-	self assert: [ self canResolve: aLookup ].
-	aLookup initializeResolver: self.
+TypInfTypeResolver >> result: aLookup [
 	^ aLookup classDescription typAsNamedType
 ]

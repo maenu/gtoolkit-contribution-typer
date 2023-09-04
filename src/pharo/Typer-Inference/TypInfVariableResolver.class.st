@@ -22,20 +22,15 @@ TypInfVariableResolver >> printOn: aStream [
 ]
 
 { #category : #accessing }
-TypInfVariableResolver >> resolve: aLookup [
+TypInfVariableResolver >> result: aLookup [
 	| classDescription |
-	self assert: [ self canResolve: aLookup ].
-	aLookup initializeResolver: self.
 	classDescription := aLookup receiver classDescription.	"instance variable"
 	classDescription
 		slotNamed: aLookup selector
 		ifFound: [ :e | ^ e typInfTypeSelf: aLookup receiver ].	"class variable"
 	classDescription instanceSide allClassVariables
 		detect: [ :e | e name = aLookup selector ]
-		ifFound: [ :e | 
-			^ e value
-				ifNil: [ e typInfTypeSelf: aLookup receiver ]
-				ifNotNil: #typInfType ].
+		ifFound: [ :e | ^ e value ifNil: [ e typInfTypeSelf: aLookup receiver ] ifNotNil: #typInfType ].
 	self
 		error: 'neither class nor instance variable, should not have been accepted in the first place'
 ]

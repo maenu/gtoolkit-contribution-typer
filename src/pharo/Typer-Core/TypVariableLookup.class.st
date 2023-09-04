@@ -28,3 +28,11 @@ TypVariableLookup >> asParent [
 			selector: selector
 			parent: self
 ]
+
+{ #category : #accessing }
+TypVariableLookup >> withReceiver: aType [
+	^ self class
+		receiver: aType
+		selector: selector
+		parent: parent
+]

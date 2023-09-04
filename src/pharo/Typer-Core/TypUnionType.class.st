@@ -78,7 +78,7 @@ TypUnionType >> at: aString [
 
 { #category : #accessing }
 TypUnionType >> canResolveMethod: aLookup [
-	^ types allSatisfy: [ :e | e canResolveMethod: (aLookup copyWithReceiver: e) ]
+	^ types allSatisfy: [ :e | e canResolveMethod: (aLookup withReceiver: e) ]
 ]
 
 { #category : #testing }
@@ -167,14 +167,14 @@ TypUnionType >> postCopy [
 { #category : #accessing }
 TypUnionType >> preResolveMethod: aLookup [
 	^ (types
-		flatCollect: [ :e | e preResolveMethod: (aLookup copyWithReceiver: e) ])
+		flatCollect: [ :e | e preResolveMethod: (aLookup withReceiver: e) ])
 		reject: #isNil
 ]
 
 { #category : #accessing }
 TypUnionType >> preResolveVariable: aLookup [
 	^ (types
-		flatCollect: [ :e | e preResolveVariable: (aLookup copyWithReceiver: e) ])
+		flatCollect: [ :e | e preResolveVariable: (aLookup withReceiver: e) ])
 		reject: #isNil
 ]
 
@@ -230,7 +230,7 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 
 { #category : #accessing }
 TypUnionType >> resolveMethod: aLookup [
-	^ (types collect: [ :e | e resolveMethod: (aLookup copyWithReceiver: e) ])
+	^ (types collect: [ :e | e resolveMethod: (aLookup withReceiver: e) ])
 		typAsType
 ]
 

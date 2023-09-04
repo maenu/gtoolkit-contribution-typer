@@ -34,13 +34,22 @@ TypResolver >> invalidate: aLookup onMethodChange: aMethodAnnouncement [
 { #category : #accessing }
 TypResolver >> preResolve: aLookup [
 	(self canResolve: aLookup)
-		ifTrue: [ ^ aLookup copy
-				initializeResolver: self;
+		ifTrue: [ ^ aLookup
+				resolver: self;
 				yourself ].
 	^ nil
 ]
 
 { #category : #resolving }
 TypResolver >> resolve: aLookup [
+	self assert: [ self canResolve: aLookup ].
+	^ aLookup
+		resolver: self;
+		result: (self result: aLookup);
+		result
+]
+
+{ #category : #accessing }
+TypResolver >> result: aLookup [
 	self subclassResponsibility
 ]

@@ -34,8 +34,7 @@ TypInfMessage >> findInReceiver [
 
 { #category : #accessing }
 TypInfMessage >> inReceiver [
-
-	^ self inAt: #receiver
+	^ self inAt: #receiver ifAbsentPut: [ self findInReceiver ]
 ]
 
 { #category : #accessing }

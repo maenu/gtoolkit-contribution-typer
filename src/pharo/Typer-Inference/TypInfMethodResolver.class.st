@@ -117,14 +117,10 @@ TypInfMethodResolver >> printOn: aStream [
 ]
 
 { #category : #accessing }
-TypInfMethodResolver >> resolve: aLookup [
-	| node |
-	self assert: [ self canResolve: aLookup ].
-	aLookup initializeResolver: self.
-	node := (aLookup receiver classDescription lookupSelector: aLookup selector)
-			ast.
+TypInfMethodResolver >> result: aLookup [
 	^ self
-		typeAt: node
+		typeAt: (aLookup receiver classDescription lookupSelector: aLookup selector)
+				ast
 		self: aLookup self
 		super: aLookup super
 ]
