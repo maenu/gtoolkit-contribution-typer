@@ -3,50 +3,42 @@ Class {
 	#superclass : #GtGenericPharoStyler,
 	#traits : 'TRBProgramNodeVisitor',
 	#classTraits : 'TRBProgramNodeVisitor classTrait',
-	#instVars : [
-		'coder',
-		'selfType'
-	],
 	#category : #'Typer-GToolkit'
 }
 
-{ #category : #accessing }
-TypGtRbAstStyler >> coder: aCoder [
-	coder := aCoder
+{ #category : #styling }
+TypGtRbAstStyler >> context [
+	| model |
+	model := self coderViewModel coderModel.
+	^ model
+		attributeNamed: #typGtContext
+		ifAbsent: [ | selfType |
+			selfType := model behavior typAsType.
+			model
+				attributeNamed: #typGtContext
+				put: (TypInfMethodResolver instance
+						contextAt: model compiledMethod ast
+						self: selfType
+						super: selfType superOrNil) ]
 ]
 
 { #category : #styling }
 TypGtRbAstStyler >> style: aText ast: anAst [
-	| ast |
-	ast := coder rbAST.
-	selfType := ast methodClass typAsType.
 	text := aText.
-	[ ast typInfTypeSelf.
-	self visitNode: ast ] on: Error do: #debug.
-	text := nil.
-	selfType := nil
-]
-
-{ #category : #private }
-TypGtRbAstStyler >> styleFrom: from to: to with: attributes [
-
-	(from <= text size and: [ to <= text size and: [ from <= to ] ]) 
-		ifTrue: [ text attributes: attributes from: from to: to ]
+	[ self visitNode: self context node ] on: Error do: #debug.
+	text := nil
 ]
 
 { #category : #visiting }
 TypGtRbAstStyler >> styleNode: aNode [
 	| nodes attribute stop |
-	nodes := TypInfMethodResolver instance
-			nodesAt: aNode
-			self: selfType
-			super: selfType superOrNil.	"type isUnknown ifTrue: [ ^ self ]."
+	nodes := self context nodesAt: aNode.	"type isUnknown ifTrue: [ ^ self ]."
 	attribute := TypGtAttribute nodes: nodes.
 	stop := aNode stop.
 	(stop < text size and: [ (text at: stop + 1) = Character space ])
 		ifTrue: [ attribute beReplace.
 			stop := stop + 1 ].
-	text
+	self
 		attributes: {attribute}
 		from: stop
 		to: stop

@@ -83,7 +83,7 @@ TypInfNode >> typGtFlowPaintOn: aMondrian [
 			e == self
 				ifTrue: [ element
 						outskirts: BlOutskirts outside;
-						border: (BlBorder paint: BrGlamorousColors defaultHeaderTextColor width: 3) ].
+						border: (BlBorder paint: (BrGlamorousColors textHighlightColor alpha: 0.5) width: 3) ].
 			element ];
 		with: nodes.
 	aMondrian edges

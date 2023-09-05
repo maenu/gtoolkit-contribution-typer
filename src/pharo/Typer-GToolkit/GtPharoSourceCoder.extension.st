@@ -16,7 +16,9 @@ GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 ]
 
 { #category : #'*Typer-GToolkit' }
-GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
+GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns viewModel: aViewModel [
+	"initializeAddOns: addOns viewModel: aViewModel"
+
 	"self completionStrategy:
 		(self completionStrategy typGtAsCompletionStrategy
 			 coder: self;
@@ -34,19 +36,12 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 					ifFound: [ :e | anAddOns stylers remove: e ]
 					ifNone: [ anAddOns
 							addStyler: (TypGtDeclarationStyler new
-									coder: self;
+									coderViewModel: aViewModel;
 									yourself) ].
 				self requestStyleSourceText ];
 		addMainAction: 'all' translated
 			icon: BrGlamorousIcons inspect
-			action: [ anAddOns stylers
-					detect: [ :e | e isKindOf: TypGtRbAstStyler ]
-					ifFound: [ :e | anAddOns stylers remove: e ]
-					ifNone: [ anAddOns
-							addStyler: (TypGtValueStyler new
-									coder: self;
-									yourself) ].
-				self requestStyleSourceText ]	"addStyler: (TypGtValueStyler new
+			action: [  "addStyler: (TypGtValueStyler new
 				 coder: self;
 				 yourself);""addStyler: (TypGtCheckStyler new
 				 coder: self;
@@ -62,7 +57,23 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns [
 			checker := anAddOns stylers
 				detect: [ :e | e class == TypGtCheckBodyStyler ].
 			checker markUnknowns: checker markUnknowns not.
-			self styleText ]"
+			self styleText ]"(anAddOns
+					stylers select: [ :e | e isKindOf: TypGtRbAstStyler ])
+					ifNotEmpty: [ :c | 
+						c do: [ :e | anAddOns removeStylersOfClass: e class ].
+						anAddOns
+							addStyler: (GtPharoMethodExpanderStyler new
+									coderViewModel: aViewModel;
+									yourself) ]
+					ifEmpty: [ anAddOns
+							removeStylersOfClass: GtPharoMethodExpanderStyler;
+							addStyler: (TypGtValueStyler new
+									coderViewModel: aViewModel;
+									yourself);
+							addStyler: (TypGtMethodExpanderStyler new
+									coderViewModel: aViewModel;
+									yourself) ].
+				self requestStyleSourceText ]
 ]
 
 { #category : #'*Typer-GToolkit' }

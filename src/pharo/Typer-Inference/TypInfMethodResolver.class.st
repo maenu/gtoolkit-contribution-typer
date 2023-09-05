@@ -126,6 +126,17 @@ TypInfMethodResolver >> result: aLookup [
 ]
 
 { #category : #accessing }
+TypInfMethodResolver >> typInfContext: aLookup [
+	| methodClass selfType |
+	methodClass := aLookup receiver classDescription.
+	selfType := methodClass typAsType.
+	^ TypInfMethodResolver instance
+		contextAt: (methodClass >> aLookup selector) ast
+		self: selfType
+		super: selfType superOrNil
+]
+
+{ #category : #accessing }
 TypInfMethodResolver >> typeAt: aNode self: aType super: anotherType [
 	^ (self
 		nodesAt: aNode

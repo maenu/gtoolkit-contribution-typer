@@ -6,9 +6,11 @@ Class {
 
 { #category : #visiting }
 TypGtCheckStyler >> styleFrom: anInteger to: anotherInteger attribute: anAttribute [
-
 	<typPraArguments: 'Integer,Integer,BlTextAttribute'>
-	self styleFrom: anInteger to: anotherInteger with: { anAttribute }
+	self
+		attributes: {anAttribute}
+		from: anInteger
+		to: anotherInteger
 ]
 
 { #category : #visiting }

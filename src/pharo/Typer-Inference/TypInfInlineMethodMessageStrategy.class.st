@@ -25,6 +25,11 @@ TypInfInlineMethodMessageStrategy >> canInstall [
 ]
 
 { #category : #accessing }
+TypInfInlineMethodMessageStrategy >> contexts [
+	^ contexts
+]
+
+{ #category : #accessing }
 TypInfInlineMethodMessageStrategy >> initialize [
 	super initialize.
 	contexts := Set new

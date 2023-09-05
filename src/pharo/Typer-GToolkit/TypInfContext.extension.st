@@ -1,6 +1,14 @@
 Extension { #name : #TypInfContext }
 
 { #category : #'*Typer-GToolkit' }
+TypInfContext >> typGtExpander [
+	^ TypGtPharoMethodExpanderAttribute
+		forClass: node compiledMethod methodClass
+		andSelector: node selector
+		inContext: self
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypInfContext >> typGtFlowFor: aView [
 	<gtView>
 	^ aView forward

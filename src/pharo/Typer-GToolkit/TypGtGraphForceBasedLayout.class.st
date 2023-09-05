@@ -52,7 +52,7 @@ TypGtGraphForceBasedLayout >> step [
 				do: [ :ea | 
 					| pos |
 					pos := ea position.
-					ea position: (pos x + k) @ pos y ] ].
+					ea position: (pos x + k) @ (pos y + k) ] ].
 	quad := GtGraphQuadTree withAll: nodes.
 	self accumulate: quad.
 	nodes

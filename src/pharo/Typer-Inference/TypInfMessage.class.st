@@ -72,6 +72,11 @@ TypInfMessage >> selector [
 	^ node selector
 ]
 
+{ #category : #'as yet unclassified' }
+TypInfMessage >> strategy [
+	^ currentStrategy
+]
+
 { #category : #accessing }
 TypInfMessage >> transfer [
 	| oldStrategy |
