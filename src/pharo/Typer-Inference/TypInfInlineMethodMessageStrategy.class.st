@@ -11,14 +11,13 @@ Class {
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> canInstall [
 	| newContexts |
-	({message receiver} , message arguments
+	({message constrainedReceiver} , message arguments
 		anySatisfy: [ :t | 
 			t
 				outAt: #typInfNode
 				ifPresent: [ :n | true ]
 				ifAbsent: [ false ] ]) ifFalse: [ ^ false ].
-	(message lookup preResolve
-		anySatisfy: [ :e | e resolver isKindOf: TypInfMethodResolver ])
+	(message constrainedReceiver typInfCanResolveMethod: message lookup)
 		ifFalse: [ ^ false ].
 	newContexts := self newContexts.
 	(newContexts size between: 1 and: 8) ifFalse: [ ^ false ].
@@ -63,12 +62,11 @@ TypInfInlineMethodMessageStrategy >> install [
 TypInfInlineMethodMessageStrategy >> newContexts [
 	^ message lookup preResolve
 		flatCollect: [ :l | 
-			(l resolver isKindOf: TypInfMethodResolver)
+			(message constrainedReceiver typInfCanResolveMethod: l)
 				ifTrue: [ | method |
 					method := l receiver classDescription lookupSelector: message selector.
-					(method isAbstract
-						ifTrue: [ l root self overriders: message selector ]
-						ifFalse: [ (l root self overriders: message selector) , {method} ])
+					(l root self overriders: message selector)
+						, (method isAbstract ifTrue: [ {} ] ifFalse: [ {method} ])
 						flatCollect: [ :m | 
 							(method methodClass typInfCanAbstractInterpret: message)
 								ifTrue: [ method methodClass typInfAbstractInterpret: message ]
@@ -77,7 +75,7 @@ TypInfInlineMethodMessageStrategy >> newContexts [
 											state: message state copy
 											node: ([ m ast ]
 													on: OCUndeclaredVariableWarning
-													do: [ :ex | ex resume: ex declareUndefined ])
+													do: [ :e | e resume: e declareUndefined ])
 											self: l self
 											super: l super
 											message: message} ] ] ]
@@ -97,7 +95,7 @@ TypInfInlineMethodMessageStrategy >> transfer [
 	self updateContexts.
 	message state
 		at: message
-		put: (contexts flatCollect: [ :e | e root inReturns collect: #type ]) typAsType
+		put: (contexts flatCollect: [ :e | e root inReturns collect: #type ]) typAsMinimizedType
 ]
 
 { #category : #accessing }

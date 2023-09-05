@@ -8,6 +8,5 @@ Variable >> typInfTypeSelf: aType [
 				select: [ :n | 
 					n variable == self
 						and: [ n isWrite and: [ n methodNode compiledMethod methodClass typAsType >= aType ] ] ]
-				thenCollect: [ :e | e value typInfTypeSelf: aType ] ]) typAsType
-		asNullable
+				thenCollect: [ :e | e value typInfTypeSelf: aType ] ]) typAsMinimizedType
 ]

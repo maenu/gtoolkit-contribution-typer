@@ -25,7 +25,7 @@ TypInfMethod >> transfer [
 	state
 		at: self
 		put: (CompiledMethod
-				typAsFunctionTypeWithResult: (self inReturns collect: #type) typAsType
+				typAsFunctionTypeWithResult: (self inReturns collect: #type) typAsMinimizedType
 				arguments: (self inArguments collect: #type)
 				argumentsOptional: false
 				signalsAlways: nil)

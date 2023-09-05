@@ -39,7 +39,7 @@ Class {
 TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection parent: aLookup [
 	^ self
 		receiver: aType
-		selector: aSymbol
+		selector: aSymbol asSymbol
 		arguments: aCollection
 		self: aType
 		super: aType superOrNil

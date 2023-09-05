@@ -12,7 +12,10 @@ TypEdge >> typGtAsElementIn: aMondrian [
 				do: [ :e | 
 					e consumed: true.
 					label phlow spawnObject: self ];
-			text: (self asString asRopedText fontSize: 6);
+			text: ((key displayStringLimitedTo: 16) asRopedText
+					glamorousCodeFont;
+					fontSize: 5;
+					yourself);
 			visibility: BlVisibility hidden;
 			yourself.
 	element := BlParabollaArcElement new.
@@ -21,11 +24,10 @@ TypEdge >> typGtAsElementIn: aMondrian [
 		layout: BlFrameLayout new;
 		zIndex: -1;
 		clipChildren: false;
-		border: (self typGtBorder: 0.3);
+		border: (self typGtBorder: 0.7);
 		toHead: (BlArrowheadTriangle new
 				scale: 2;
-				border: (self typGtBorder: 0.3);
-				background: (self typGtBackground: 0.3);
+				background: (self typGtBackground: 0.7);
 				yourself);
 		addChild: label as: #label;
 		preventMeAndChildrenMouseEvents;
@@ -77,8 +79,7 @@ TypEdge >> typGtBorder: aNumber [
 
 { #category : #'*Typer-GToolkit' }
 TypEdge >> typGtColor [
-
-	^ Color black alpha: 0.2
+	^ BrGlamorousColors lightBorderColor
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -101,17 +102,7 @@ TypEdge >> typGtGraphFor: aView [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypEdge >> typGtKeyFor: aView [
-
-	<gtView>
-	^ aView explicit
-		  title: 'Key';
-		  priority: 10;
-		  stencil: [ GtInspectorTool forObject: key ]
-]
-
-{ #category : #'*Typer-GToolkit' }
-TypEdge >> typGtPaintOn: aMondrian [
+TypEdge >> typGtGraphPaintOn: aMondrian [
 
 	aMondrian nodes
 		stencil: [ :e | e typGtAsElementIn: aMondrian ];
@@ -121,4 +112,14 @@ TypEdge >> typGtPaintOn: aMondrian [
 	aMondrian edges
 		stencil: [ :e | e typGtAsElementIn: aMondrian ];
 		connectFrom: origin to: target
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypEdge >> typGtKeyFor: aView [
+
+	<gtView>
+	^ aView explicit
+		  title: 'Key';
+		  priority: 10;
+		  stencil: [ GtInspectorTool forObject: key ]
 ]

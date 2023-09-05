@@ -18,6 +18,14 @@ TypInfNode class >> node: aNode context: aContext [
 ]
 
 { #category : #accessing }
+TypInfNode >> allNextNodes [
+	| result |
+	result := IdentitySet new.
+	self depthFirstNextDo: [ :n | result add: n ].
+	^ result
+]
+
+{ #category : #accessing }
 TypInfNode >> burp [
 	out at: #next ifPresent: [ :s | s do: [ :n | n state: state ] ]
 ]
@@ -39,6 +47,7 @@ TypInfNode >> constrain: aNode to: aType [
 { #category : #accessing }
 TypInfNode >> constrainTo: aType from: aNode [
 	| edge |
+	aType isUnknown ifTrue: [ ^ self ].
 	edge := aNode out
 			at: #constrain
 			ifPresent: [ :s | 
@@ -213,7 +222,7 @@ TypInfNode >> outNexts [
 
 { #category : #accessing }
 TypInfNode >> previous [
-	^ ((in at: #next) collect: [ :e | state at: e origin ]) typAsType
+	^ ((in at: #next) collect: [ :e | state at: e origin ]) typAsMinimizedType
 ]
 
 { #category : #printing }

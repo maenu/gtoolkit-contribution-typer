@@ -11,9 +11,7 @@ Class {
 TypUnionType class >> types: aSet [
 	<typPraArguments: 'Set<IdentitySet>'>
 	| types |
-	types := aSet asIdentitySet copyWithout: ProtoObject typAsType.
-	types ifEmpty: [ ^ TypUnknownType instance ].
-	types size = 1 ifTrue: [ ^ types anyOne ].
+	types := aSet asIdentitySet.
 	^ self index
 		at: types
 		ifAbsentPut: [ self new
@@ -78,7 +76,7 @@ TypUnionType >> at: aString [
 
 { #category : #accessing }
 TypUnionType >> canResolveMethod: aLookup [
-	^ types allSatisfy: [ :e | e canResolveMethod: (aLookup withReceiver: e) ]
+	^ types anySatisfy: [ :e | e canResolveMethod: (aLookup withReceiver: e) ]
 ]
 
 { #category : #testing }

@@ -11,6 +11,11 @@ TypNode >> typGtAsElementIn: aMondrian [
 ]
 
 { #category : #'*Typer-GToolkit' }
+TypNode >> typGtBackground: aNumber [
+	^ (self typGtColor alpha: aNumber) asBlBackground
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypNode >> typGtBorder: aNumber [
 	^ BlBorder builder
 		paint: (self typGtColor alpha: aNumber);
@@ -20,77 +25,30 @@ TypNode >> typGtBorder: aNumber [
 
 { #category : #'*Typer-GToolkit' }
 TypNode >> typGtColor [
-
-	^ Color blue
+	^ BrGlamorousColors hoveredButtonTextColor
 ]
 
 { #category : #'*Typer-GToolkit' }
 TypNode >> typGtDecorate: anElement in: aMondrian [
 	anElement userData at: #typGtNode put: self.
 	^ anElement
-		when: BlMouseDownEvent do: [ anElement zIndex: 1 ];
 		when: BlMouseOverEvent
-			do: [ | edges |
+			do: [ | edges nodes |
 				edges := self edges.
-				aMondrian topStep root graph edgeChildren
-					select: [ :e | edges includes: (e userData at: #typGtEdge) ]
-					thenDo: [ :e | 
-						(e childNamed: #label) visibility: BlVisibility visible.
-						e typGtOnMouseOver ].
-				anElement typGtOnMouseOver ];
+				nodes := edges flatCollect: #nodes.
+				(aMondrian topStep root graph nodeChildren
+					groupedBy: [ :e | nodes includes: (e userData at: #typGtNode) ])
+					keysAndValuesDo: [ :b :e | b ifTrue: [ e do: #typGtOnMouseOver ] ifFalse: [ e do: #typGtOnMouseOut ] ].
+				(aMondrian topStep root graph edgeChildren
+					groupedBy: [ :e | edges includes: (e userData at: #typGtEdge) ])
+					keysAndValuesDo: [ :b :e | b ifTrue: [ e do: #typGtOnMouseOver ] ifFalse: [ e do: #typGtOnMouseOut ] ] ];
 		when: BlMouseOutEvent
-			do: [ | edges |
+			do: [ | edges nodes |
 				edges := self edges.
-				aMondrian topStep root graph edgeChildren
-					select: [ :e | edges includes: (e userData at: #typGtEdge) ]
-					thenDo: [ :e | 
-						(e childNamed: #label) visibility: BlVisibility hidden.
-						e typGtOnMouseOut ].
-				anElement typGtOnMouseOut ];
+				nodes := edges flatCollect: #nodes.
+				aMondrian topStep root graph nodeChildren do: #typGtOnReset.
+				aMondrian topStep root graph edgeChildren do: #typGtOnReset ];
 		when: BlClickEvent do: [ anElement phlow spawnObject: self ];
-		addAptitude: (TypGtStrongBorderAptitude color: self typGtColor)
-				+ ((BrGlamorousWithTooltipAptitude
-						content: [ BrToolbar new
-								aptitude: BrGlamorousToolbarAptitude;
-								addItem: (BrButton new
-										aptitude: BrGlamorousButtonWithLabelAptitude;
-										label: ('out {1}' format: {self outEdges size});
-										action: [ :button | 
-											| nodes existingNodes remainingNodes |
-											existingNodes := aMondrian existingNodes.
-											nodes := (self outEdges collect: #target) difference: existingNodes.
-											remainingNodes := nodes size.
-											(nodes asArray takeFirst: 5) do: [ :e | e typGtPaintOn: aMondrian ].
-											remainingNodes > nodes size
-												ifTrue: [ button
-														enable;
-														label: ('out {1}' format: {remainingNodes - nodes size}) ]
-												ifFalse: [ button
-														disable;
-														label: 'out' ] ];
-										yourself);
-								addItem: (BrButton new
-										aptitude: BrGlamorousButtonWithLabelAptitude;
-										label: ('in {1}' format: {self inEdges size});
-										action: [ :button | 
-											| nodes existingNodes remainingNodes |
-											Halt once.
-											existingNodes := aMondrian existingNodes.
-											nodes := (self inEdges collect: #origin) difference: existingNodes.
-											remainingNodes := nodes size.
-											(nodes asArray takeFirst: 5) do: [ :e | e typGtPaintOn: aMondrian ].
-											remainingNodes > nodes size
-												ifTrue: [ button
-														enable;
-														label: ('in {1}' format: {remainingNodes - nodes size}) ]
-												ifFalse: [ button
-														disable;
-														label: 'in' ] ];
-										yourself);
-								yourself ])
-						showDelay: 300 milliSeconds;
-						hideDelay: 300 milliSeconds;
-						yourself);
 		yourself
 ]
 
@@ -101,32 +59,54 @@ TypNode >> typGtGraphFor: aView [
 	^ aView typGtMondrian
 		  title: 'Graph';
 		  priority: 10;
-		  painting: [ :m | self typGtPaintOn: m ]
+		  painting: [ :m | self typGtGraphPaintOn: m ]
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypNode >> typGtPaintOn: aMondrian [
-
-	| edges nodes currentNodes nextNodes |
-	currentNodes := aMondrian existingNodes.
-	nodes := self neighbors , { self } difference: currentNodes.
-	nodes ifEmpty: [ ^ self ].
-	nextNodes := currentNodes , nodes , { self }.
-	edges := ((((nodes flatCollect: #inEdges) select: [ :e | 
-		            nextNodes includes: e origin ])
-	           , ((nodes flatCollect: #outEdges) select: [ :e | 
-			            nextNodes includes: e target ]) groupedBy: #nodes)
-		          values asIdentitySet asArray sort: [ :a :b | a size > b size ]) 
-		         takeFirst: 64.
-	nodes := (edges flatCollect: [ :e | e flatCollect: #nodes ]) 
-		         difference: currentNodes.
+TypNode >> typGtGraphPaintOn: aMondrian [
+	| nodes edges connections |
+	nodes := nodes := self neighbors , {self}.
+	edges := (((nodes flatCollect: #inEdges)
+			select: [ :e | nodes includes: e origin ])
+			, ((nodes flatCollect: #outEdges) select: [ :e | nodes includes: e target ]))
+			asIdentitySet.
+	connections := (edges groupedBy: [ :e | e origin -> e target ]) associations
+			collect: [ :a | a key -> (a value sorted: [ :e :f | e key = #next ]) ]
+			as: Dictionary.
 	aMondrian nodes
-		stencil: [ :e | e typGtAsElementIn: aMondrian ];
+		stencil: [ :e | 
+			| element |
+			element := e typGtAsElementIn: aMondrian.
+			e == self
+				ifTrue: [ element
+						outskirts: BlOutskirts outside;
+						border: (BlBorder paint: BrGlamorousColors defaultHeaderTextColor width: 3) ].
+			element ];
 		with: nodes.
 	aMondrian edges
-		stencil: [ :e | e anyOne typGtAsElementIn: aMondrian with: e ];
-		connect: edges
-		from: [ :e | e anyOne origin ]
-		to: [ :e | e anyOne target ].
-	aMondrian layout force
+		passive;
+		fromNearestTightCircle;
+		toNearestTightCircle;
+		stencil: [ :e | 
+			| localEdges |
+			localEdges := connections at: e origin -> e target.
+			(e typGtAsElementIn: aMondrian)
+				curvatureFraction: (localEdges indexOf: e ifAbsent: 0) / (localEdges size * 2 + 1);
+				yourself ];
+		connect: (edges reject: [ :e | e key = #next ] thenCollect: #value)
+			from: #origin
+			to: #target.
+	aMondrian edges
+		fromNearestTightCircle;
+		toNearestTightCircle;
+		stencil: [ :e | 
+			| localEdges |
+			localEdges := connections at: e origin -> e target.
+			(e typGtAsElementIn: aMondrian)
+				curvatureFraction: ((localEdges indexOf: e ifAbsent: 1) - 1) / (localEdges size * 2 + 1);
+				yourself ];
+		connect: (edges select: [ :e | e key = #next ] thenCollect: #value)
+			from: #origin
+			to: #target.
+	aMondrian layout force fix: self at: 0 @ 0
 ]

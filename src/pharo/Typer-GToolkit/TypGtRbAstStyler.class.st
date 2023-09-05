@@ -21,8 +21,8 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 	ast := coder rbAST.
 	selfType := ast methodClass typAsType.
 	text := aText.
-	ast typInfTypeSelf.
-	self visitNode: ast.
+	[ ast typInfTypeSelf.
+	self visitNode: ast ] on: Error do: #debug.
 	text := nil.
 	selfType := nil
 ]

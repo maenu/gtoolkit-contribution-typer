@@ -3,7 +3,7 @@ Extension { #name : #TypInfNextEdge }
 { #category : #'*Typer-GToolkit' }
 TypInfNextEdge >> typGtColor [
 
-	^ Color blue
+	^ BrGlamorousColors hoveredButtonTextColor
 ]
 
 { #category : #'*Typer-GToolkit' }

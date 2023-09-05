@@ -13,6 +13,7 @@ TypInfLookupMessageStrategy >> canInstall [
 TypInfLookupMessageStrategy >> transfer [
 	| method |
 	method := message lookup resolve.
+	message constrain: message inReceiver to: message constrainedReceiver.
 	message inArguments
 		withIndexDo: [ :e :i | 
 			i <= method arguments size

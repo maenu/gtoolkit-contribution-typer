@@ -9,7 +9,7 @@ TypInfInlinedBlock >> transfer [
 	state
 		at: self
 		put: ((BlockClosure
-				typAsFunctionTypeWithResult: (self inReturns collect: #type) typAsType
+				typAsFunctionTypeWithResult: (self inReturns collect: #type) typAsMinimizedType
 				arguments: (self inArguments collect: #type)
 				argumentsOptional: false
 				signalsAlways: nil) typInfWithNode: context block).

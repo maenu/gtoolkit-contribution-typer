@@ -57,6 +57,11 @@ TypInfContext >> allChildren [
 ]
 
 { #category : #accessing }
+TypInfContext >> allNodes [
+	^ self allChildren flatCollect: [ :e | e nodes flatCollect: #yourself ]
+]
+
+{ #category : #accessing }
 TypInfContext >> children [
 	^ children
 ]

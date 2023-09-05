@@ -7,16 +7,6 @@ GtPharoMethodCoder >> typShaMethodCompiledMethod: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoMethodCoder >> typShaMethodCursorPositionDo: aLookup [
-	<typShaMethod: 'cursorPositionDo:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup self
-		arguments: {BlockClosure
-					typAsFunctionTypeWithResult: TypUnknownType instance
-					arguments: {Integer typAsType}}
-]
-
-{ #category : #'*Typer-Shadow-GToolkit' }
 GtPharoMethodCoder class >> typShaMethodForMethod: aLookup [
 	<typShaMethod: 'forMethod:'>
 	^ CompiledMethod

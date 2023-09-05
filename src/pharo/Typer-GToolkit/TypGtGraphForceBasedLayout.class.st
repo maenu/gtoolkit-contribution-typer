@@ -10,7 +10,7 @@ TypGtGraphForceBasedLayout >> initialize [
 	strength := 1.
 	center := 0 @ 0.
 	length := 20.
-	gravity := 5.
+	gravity := 1.
 	charge := -80.
 	friction := 0.95.
 	theta := 1.
@@ -29,24 +29,6 @@ TypGtGraphForceBasedLayout >> step [
 	| from to fp tp x y len k quad old |
 	"If there is no nodes, then there is not much to do"
 	nodes ifEmpty: [ ^ self ].
-	k := alpha * gravity.
-	(k closeTo: 0) not
-		ifTrue: [ x := center x.
-			y := center y.
-			nodes
-				do: [ :ea | 
-					| pos |
-					pos := ea position.
-					ea position: (pos x + k) @ (pos y + k) ] ].
-	quad := GtGraphQuadTree withAll: nodes.
-	self accumulate: quad.
-	nodes
-		do: [ :e | 
-			(self isFixed: e)
-				ifFalse: [ self repulse: e from: quad ]
-				ifTrue: [ translator
-						translateTopLeftOf: e
-						to: (fixedNodes at: e children first element graph model) ] ].
 	edges
 		do: [ :e | 
 			from := e fromNode.
@@ -64,6 +46,22 @@ TypGtGraphForceBasedLayout >> step [
 					to position: (tp x - (x * k)) @ (tp y - (y * k)).
 					k := 1 - k.
 					from position: (fp x + (x * k)) @ (fp y + (y * k)) ] ].
+	k := alpha * gravity.
+	(k closeTo: 0) not
+		ifTrue: [ nodes
+				do: [ :ea | 
+					| pos |
+					pos := ea position.
+					ea position: (pos x + k) @ pos y ] ].
+	quad := GtGraphQuadTree withAll: nodes.
+	self accumulate: quad.
+	nodes
+		do: [ :e | 
+			(self isFixed: e)
+				ifFalse: [ self repulse: e from: quad ]
+				ifTrue: [ translator
+						translateTopLeftOf: e
+						to: (fixedNodes at: e children first element graph model) ] ].
 	nodes
 		do: [ :e | 
 			old := e position.
