@@ -11,7 +11,9 @@ TypInfLookupMessageStrategy >> canInstall [
 
 { #category : #accessing }
 TypInfLookupMessageStrategy >> contexts [
-	^ message lookup resolved typInfContexts
+	| lookup |
+	lookup := message lookup resolved.
+	^ {lookup -> (lookup resolver typInfContext: lookup)}
 ]
 
 { #category : #accessing }

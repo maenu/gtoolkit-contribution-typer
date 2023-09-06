@@ -21,7 +21,7 @@ TypInfInlineMethodMessageStrategy >> canInstall [
 		ifFalse: [ ^ false ].
 	newContexts := self newContexts.
 	(newContexts size between: 1 and: 8) ifFalse: [ ^ false ].
-	^ newContexts allSatisfy: #canInstall
+	^ newContexts allSatisfy: [ :e | e value canInstall ]
 ]
 
 { #category : #accessing }
@@ -75,22 +75,24 @@ TypInfInlineMethodMessageStrategy >> newContexts [
 						flatCollect: [ :m | 
 							(method methodClass typInfCanAbstractInterpret: message)
 								ifTrue: [ method methodClass typInfAbstractInterpret: message ]
-								ifFalse: [ {TypInfInlineContext
-											sender: message context
-											state: message state copy
-											node: ([ m ast ]
-													on: OCUndeclaredVariableWarning
-													do: [ :e | e resume: e declareUndefined ])
-											self: l self
-											super: l super
-											message: message} ] ] ]
-				ifFalse: [ {TypInfInlineLookupContext
-							sender: message context
-							state: message state copy
-							node: message copy
-							self: l root self
-							super: l root super
-							message: message} ] ]
+								ifFalse: [ {l
+											-> (TypInfInlineContext
+													sender: message context
+													state: message state copy
+													node: ([ m ast ]
+															on: OCUndeclaredVariableWarning
+															do: [ :e | e resume: e declareUndefined ])
+													self: l self
+													super: l super
+													message: message)} ] ] ]
+				ifFalse: [ {l
+							-> (TypInfInlineLookupContext
+									sender: message context
+									state: message state copy
+									node: message copy
+									self: l root self
+									super: l root super
+									message: message)} ] ]
 		as: Set
 ]
 
@@ -100,7 +102,7 @@ TypInfInlineMethodMessageStrategy >> transfer [
 	self updateContexts.
 	message state
 		at: message
-		put: (contexts flatCollect: [ :e | e root inReturns collect: #type ]) typAsMinimizedType
+		put: (contexts flatCollect: [ :e | e value root inReturns collect: #type ]) typAsMinimizedType
 ]
 
 { #category : #accessing }
@@ -110,7 +112,7 @@ TypInfInlineMethodMessageStrategy >> uninstall [
 		ifPresent: [ :r | message unconstrain: r ]
 		ifAbsent: [  "noop" ].	"might be in dirty state during node uninstall"
 	contexts
-		do: #uninstall;
+		collect: #value thenDo: #uninstall;
 		removeAll.
 	lookup := nil.
 	message out
@@ -142,8 +144,8 @@ TypInfInlineMethodMessageStrategy >> updateContexts [
 			collect: [ :c | 
 				oldContexts
 					detect: [ :cc | cc = c ]
-					ifFound: #yourself
-					ifNone: c ].
-	(oldContexts difference: contexts) do: #uninstall.
-	(contexts difference: oldContexts) do: #install
+					ifFound: [ :cc | cc ]
+					ifNone: [ c ] ].
+	(oldContexts difference: contexts) collect: #value thenDo: #uninstall.
+	(contexts difference: oldContexts) collect: #value thenDo: #install
 ]

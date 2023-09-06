@@ -15,5 +15,8 @@ TypInfAbstractInterpretationMessageStrategy >> canInstall [
 
 { #category : #accessing }
 TypInfAbstractInterpretationMessageStrategy >> newContexts [
-	^ message receiver classDescription typInfAbstractInterpret: message
+	^ (message receiver classDescription typInfAbstractInterpret: message)
+		collect: [ :e | 
+			lookup resolver: TypInfAbstractInterpretationResolver instance.
+			lookup -> e ]
 ]

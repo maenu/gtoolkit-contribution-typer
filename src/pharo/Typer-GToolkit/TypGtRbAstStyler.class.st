@@ -12,20 +12,20 @@ TypGtRbAstStyler >> context [
 	model := self coderViewModel coderModel.
 	^ model
 		attributeNamed: #typGtContext
-		ifAbsent: [ | selfType |
-			selfType := model behavior typAsType.
-			model
+		ifAbsent: [  "happens for fresh method coder"model
 				attributeNamed: #typGtContext
 				put: (TypInfMethodResolver instance
 						contextAt: model compiledMethod ast
-						self: selfType
-						super: selfType superOrNil) ]
+						self: model behavior typAsType
+						super: model behavior typAsType superOrNil) ]
 ]
 
 { #category : #styling }
 TypGtRbAstStyler >> style: aText ast: anAst [
 	text := aText.
-	[ self visitNode: self context node ] on: Error do: #debug.
+	[ self visitNode: self context node ]
+		on: Error
+		do: [ :e | (GtStylerErrorSignal new signaledError: e) emit ].
 	text := nil
 ]
 

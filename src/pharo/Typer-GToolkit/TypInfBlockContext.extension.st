@@ -1,6 +1,9 @@
 Extension { #name : #TypInfBlockContext }
 
 { #category : #'*Typer-GToolkit' }
-TypInfBlockContext >> typGtExpander [
-	^ TypGtBlockExpanderAttribute inContext: self
+TypInfBlockContext >> typGtAsCoder [
+	^ GtPharoSnippetCoder new
+		attributeNamed: #typGtContext put: self;
+		forSource: node body sourceCode;
+		yourself
 ]

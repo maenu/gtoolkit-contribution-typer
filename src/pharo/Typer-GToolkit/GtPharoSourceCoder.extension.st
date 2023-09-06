@@ -70,7 +70,7 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns viewM
 							addStyler: (TypGtValueStyler new
 									coderViewModel: aViewModel;
 									yourself);
-							addStyler: (TypGtMethodExpanderStyler new
+							addStyler: (TypGtContextExpanderStyler new
 									coderViewModel: aViewModel;
 									yourself) ].
 				self requestStyleSourceText ]

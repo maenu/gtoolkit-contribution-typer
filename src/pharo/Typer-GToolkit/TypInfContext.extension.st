@@ -1,11 +1,11 @@
 Extension { #name : #TypInfContext }
 
 { #category : #'*Typer-GToolkit' }
-TypInfContext >> typGtExpander [
-	^ TypGtPharoMethodExpanderAttribute
-		forClass: node compiledMethod methodClass
-		andSelector: node selector
-		inContext: self
+TypInfContext >> typGtAsCoder [
+	^ GtPharoMethodCoder new
+		attributeNamed: #typGtContext put: self;
+		forMethod: node compiledMethod;
+		yourself
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -16,6 +16,11 @@ TypInfContext >> typGtFlowFor: aView [
 		priority: 10;
 		object: [ root ];
 		view: #typGtFlowFor:
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypInfContext >> typGtIndicator: aLookup [
+	^ 'l:' , aLookup resolver typGtIndicator
 ]
 
 { #category : #'*Typer-GToolkit' }
