@@ -18,7 +18,8 @@ TypGtContextExpanderAttribute class >> lookup: aLookup context: aContext [
 { #category : #accessing }
 TypGtContextExpanderAttribute >> doAffect: aTBrTextEditorTextualPiece in: anEditorElement [
 	^ (super doAffect: aTBrTextEditorTextualPiece in: anEditorElement)
-		addAptitude: (TypGtContextExpanderAptitude indicator: (context typGtIndicator: lookup));
+		addAptitude: (TypGtContextExpanderAptitude
+				indicator: context typGtIndicator , ':' , lookup resolver typGtIndicator);
 		yourself
 ]
 

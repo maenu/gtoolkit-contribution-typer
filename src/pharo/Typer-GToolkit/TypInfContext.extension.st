@@ -19,8 +19,8 @@ TypInfContext >> typGtFlowFor: aView [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypInfContext >> typGtIndicator: aLookup [
-	^ 'l:' , aLookup resolver typGtIndicator
+TypInfContext >> typGtIndicator [
+	^ 'L'
 ]
 
 { #category : #'*Typer-GToolkit' }

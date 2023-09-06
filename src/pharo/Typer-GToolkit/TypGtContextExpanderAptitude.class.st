@@ -25,18 +25,11 @@ TypGtContextExpanderAptitude >> initialize [
 					aptitude: BrGlamorousLabelAptitude;
 					text: (indicator asRopedText
 							glamorousCodeFont;
-							bold;
 							fontSize: 8;
 							foreground: Color black;
 							yourself);
-					margin: (BlInsets
-							top: 0
-							left: 5
-							bottom: 10
-							right: 0);
-					constraintsDo: [ :c | 
-						c ignoreByLayout.
-						c vertical exact: -17 ];
+					constraintsDo: [ :c | c ignoreByLayout ];
+					relocate: -1 @ -5;
 					hFitContent;
 					vFitContent;
 					zIndex: 1;
