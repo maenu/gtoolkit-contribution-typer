@@ -20,11 +20,13 @@ TypInfMessage >> arguments [
 TypInfMessage >> constrainedReceiver [
 	| receiver implementors |
 	receiver := self receiver.
-	({#ifNil:.
-		#ifNotNil:.
-		#ifNil:ifNotNil:.
-		#ifNotNil:ifNil:} includes: self selector) ifTrue: [ ^ receiver asNullable ].
-	receiver isUnknown ifFalse: [ ^ receiver ].
+	receiver isUnknown
+		ifFalse: [ ^ ({#ifNil:.
+				#ifNotNil:.
+				#ifNil:ifNotNil:.
+				#ifNotNil:ifNil:} includes: self selector)
+				ifTrue: [ receiver asNullable ]
+				ifFalse: [ receiver ] ].
 	implementors := TypInfMethodIndex instance implementors: self selector.
 	(implementors size between: 1 and: 8) ifFalse: [ ^ receiver ].
 	^ (implementors collect: #typAsType) typAsMinimizedType

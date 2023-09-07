@@ -20,7 +20,11 @@ TypInfClass >> transfer [
 				ifFound: [ :l | 
 					receiver classDescription instanceSide allClassVariables
 						detect: [ :e | e name = node variable name asSymbol ]
-						ifFound: [ :v | v typInfTypeSelf: context self ]
+						ifFound: [ :v | 
+							v
+								typInfAssignedType: state
+								self: context self
+								super: context super ]
 						ifNone: [ Error signal: 'should not happen' ] ]
 				ifNone: [ receiver lookupVariable: node variable name asSymbol ])
 ]

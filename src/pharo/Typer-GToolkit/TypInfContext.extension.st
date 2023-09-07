@@ -20,7 +20,7 @@ TypInfContext >> typGtFlowFor: aView [
 
 { #category : #'*Typer-GToolkit' }
 TypInfContext >> typGtIndicator [
-	^ 'L'
+	^ 'l'
 ]
 
 { #category : #'*Typer-GToolkit' }

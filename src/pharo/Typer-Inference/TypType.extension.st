@@ -7,6 +7,11 @@ TypType >> typInfCanResolveMethod: aLookup [
 ]
 
 { #category : #'*Typer-Inference' }
+TypType >> typInfHasNode [
+	^ false
+]
+
+{ #category : #'*Typer-Inference' }
 TypType >> typInfWithoutUnion [
 
 	^ self

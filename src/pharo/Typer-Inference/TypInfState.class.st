@@ -32,7 +32,7 @@ TypInfState >> covariant: aState [
 TypInfState >> diff: aState [
 
 	| diff |
-	diff := TypInfState new.
+	diff := OrderedIdentityDictionary new.
 	self keys , aState keys do: [ :n | 
 		| a b |
 		a := self at: n ifAbsent: [ nil ].

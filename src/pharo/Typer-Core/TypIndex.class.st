@@ -3,8 +3,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'resolver',
-		'canResolve',
-		'preResolve',
 		'resolve'
 	],
 	#classInstVars : [
@@ -35,15 +33,15 @@ TypIndex class >> invalidateAll [
 
 { #category : #accessing }
 TypIndex >> canResolve: aLookup [
-	^ canResolve at: aLookup ifAbsentPut: [ resolver canResolve: aLookup ]
+	^ (resolve includesKey: aLookup)
+		ifTrue: [ true ]
+		ifFalse: [ resolver canResolve: aLookup ]
 ]
 
 { #category : #initialization }
 TypIndex >> initialize [
 	<typPraVariable: 'resolver' as: 'TypResolver'>
 	super initialize.
-	canResolve := IdentityDictionary new.
-	preResolve := IdentityDictionary new.
 	resolve := IdentityDictionary new.
 	SystemAnnouncer uniqueInstance weak
 		when: ClassAnnouncement
@@ -62,9 +60,7 @@ TypIndex >> initializeResolver: anObject [
 { #category : #invalidation }
 TypIndex >> invalidate [
 	resolver invalidate.
-	canResolve removeAll.
-	preResolve removeAll.
-	resolve removeAll.
+	resolve removeAll
 ]
 
 { #category : #accessing }
@@ -106,20 +102,6 @@ TypIndex >> invalidateOnClassChange: aClassAnnouncement [
 					toRemove add: l ] ].
 	toRemove do: [ :l | resolve removeKey: l ].
 	toRemove removeAll.
-	canResolve
-		keysDo: [ :l | 
-			(l invalidateOnClassChange: aClassAnnouncement)
-				ifTrue: [ changed := true.
-					toRemove add: l ] ].
-	toRemove do: [ :l | canResolve removeKey: l ].
-	toRemove removeAll.
-	preResolve
-		keysDo: [ :l | 
-			(l invalidateOnClassChange: aClassAnnouncement)
-				ifTrue: [ changed := true.
-					toRemove add: l ] ].
-	toRemove do: [ :l | preResolve removeKey: l ].
-	toRemove removeAll.
 	^ changed or: (resolver invalidateOnClassChange: aClassAnnouncement)
 ]
 
@@ -136,26 +118,12 @@ TypIndex >> invalidateOnMethodChange: aMethodAnnouncement [
 					toRemove add: l ] ].
 	toRemove do: [ :l | resolve removeKey: l ].
 	toRemove removeAll.
-	canResolve
-		keysDo: [ :l | 
-			(l invalidateOnMethodChange: aMethodAnnouncement)
-				ifTrue: [ changed := true.
-					toRemove add: l ] ].
-	toRemove do: [ :l | canResolve removeKey: l ].
-	toRemove removeAll.
-	preResolve
-		keysDo: [ :l | 
-			(l invalidateOnMethodChange: aMethodAnnouncement)
-				ifTrue: [ changed := true.
-					toRemove add: l ] ].
-	toRemove do: [ :l | preResolve removeKey: l ].
-	toRemove removeAll.
 	^ changed or: (resolver invalidateOnMethodChange: aMethodAnnouncement)
 ]
 
 { #category : #accessing }
 TypIndex >> preResolve: aLookup [
-	^ preResolve at: aLookup ifAbsentPut: [ resolver preResolve: aLookup ]
+	^ resolver preResolve: aLookup
 ]
 
 { #category : #accessing }

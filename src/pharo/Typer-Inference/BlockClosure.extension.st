@@ -5,7 +5,7 @@ BlockClosure class >> typInfAbstractInterpretValue: aMessageNode [
 	<typInfAbstractInterpret: #value>
 	| block |
 	self assert: [ self typInfCanAbstractInterpretValue: aMessageNode ].
-	block := aMessageNode receiver outAt: #typInfNode.
+	block := aMessageNode receiver typInfNode.
 	^ TypInfBlockContext
 		sender: aMessageNode context
 		state: aMessageNode state copy
@@ -19,8 +19,5 @@ BlockClosure class >> typInfAbstractInterpretValue: aMessageNode [
 { #category : #'*Typer-Inference' }
 BlockClosure class >> typInfCanAbstractInterpretValue: aMessageNode [
 	<typInfCanAbstractInterpret: #value>
-	^ aMessageNode receiver
-		outAt: #typInfNode
-		ifPresent: [ :n | true ]
-		ifAbsent: [ false ]
+	^ aMessageNode receiver typInfHasNode
 ]

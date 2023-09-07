@@ -2,14 +2,14 @@ Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Inference' }
 ClassDescription >> typInfAbstractInterpret: aMessage [
-	| method |
-	method := self class methods
-			detect: [ :m | 
-				m pragmas
-					anySatisfy: [ :p | 
-						p selector = #typInfAbstractInterpret:
-							and: [ p arguments first = aMessage selector ] ] ].
-	^ {self perform: method selector with: aMessage}
+	^ self class methods
+		detect: [ :m | 
+			m pragmas
+				anySatisfy: [ :p | 
+					p selector = #typInfAbstractInterpret:
+						and: [ p arguments first = aMessage selector ] ] ]
+		ifFound: [ :e | self perform: e selector with: aMessage ]
+		ifNone: [ self error: 'cannot abstract interpret' ]
 ]
 
 { #category : #'*Typer-Inference' }

@@ -170,10 +170,8 @@ TypFunctionType >> covariant: aType [
 	| result |
 	result := super covariant: aType.
 	result isFunction ifFalse: [ ^ result ].
-	^ self
-		outAt: #typInfNode
-		ifPresent: [ :t | result typInfWithNode: t ]
-		ifAbsent: [ result ]
+	self typInfHasNode ifFalse: [ ^ result ].
+	^ result typInfWithNode: self typInfNode
 ]
 
 { #category : #comparing }

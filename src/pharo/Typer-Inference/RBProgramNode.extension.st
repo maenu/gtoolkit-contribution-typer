@@ -49,9 +49,8 @@ RBProgramNode >> typInfTypeSelf: aType [
 
 { #category : #'*Typer-Inference' }
 RBProgramNode >> typInfTypeSelf: aType super: anotherType [
-
 	^ TypInfMethodResolver instance
-		  typeAt: self
-		  self: aType
-		  super: anotherType
+		typeAt: self
+		self: aType
+		super: anotherType
 ]

@@ -11,12 +11,8 @@ Class {
 { #category : #accessing }
 TypInfInlineMethodMessageStrategy >> canInstall [
 	| newContexts |
-	({message constrainedReceiver} , message arguments
-		anySatisfy: [ :t | 
-			t
-				outAt: #typInfNode
-				ifPresent: [ :n | true ]
-				ifAbsent: [ false ] ]) ifFalse: [ ^ false ].
+	({message constrainedReceiver} , message arguments anySatisfy: #typInfHasNode)
+		ifFalse: [ ^ false ].
 	(message constrainedReceiver typInfCanResolveMethod: message lookup)
 		ifFalse: [ ^ false ].
 	newContexts := self newContexts.
@@ -72,11 +68,11 @@ TypInfInlineMethodMessageStrategy >> newContexts [
 					method := l receiver classDescription lookupSelector: message selector.
 					(l root self overriders: message selector)
 						, (method isAbstract ifTrue: [ {} ] ifFalse: [ {method} ])
-						flatCollect: [ :m | 
-							(method methodClass typInfCanAbstractInterpret: message)
-								ifTrue: [ method methodClass typInfAbstractInterpret: message ]
-								ifFalse: [ {l
-											-> (TypInfInlineContext
+						collect: [ :m | 
+							l
+									-> ((method methodClass typInfCanAbstractInterpret: message)
+											ifTrue: [ method methodClass typInfAbstractInterpret: message ]
+											ifFalse: [ TypInfInlineContext
 													sender: message context
 													state: message state copy
 													node: ([ m ast ]
@@ -84,7 +80,7 @@ TypInfInlineMethodMessageStrategy >> newContexts [
 															do: [ :e | e resume: e declareUndefined ])
 													self: l self
 													super: l super
-													message: message)} ] ] ]
+													message: message ]) ] ]
 				ifFalse: [ {l
 							-> (TypInfInlineLookupContext
 									sender: message context

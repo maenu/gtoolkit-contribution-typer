@@ -138,10 +138,8 @@ TypInfMethodResolver >> typInfContext: aLookup [
 
 { #category : #accessing }
 TypInfMethodResolver >> typeAt: aNode self: aType super: anotherType [
-	^ (self
+	^ ((self
 		nodesAt: aNode
 		self: aType
-		super: anotherType)
-		ifEmpty: [ TypUnknownType instance ]
-		ifNotEmpty: [ :c | c anyOne type ]
+		super: anotherType) collect: #type) typAsMinimizedType
 ]

@@ -77,8 +77,9 @@ CompiledMethod >> typInfRunAndMonitor: aDuration [
 			node: self ast
 			self: selfType
 			super: selfType superOrNil.
-	process := [ [ [ tally spyEvery: 1 on: [ context run ].
-		TypInfMethodResolver instance outAt: key put: context ]
+	TypInfMethodResolver instance outAt: key put: context.
+	process := [ [ [ [ tally spyEvery: 1 on: [ context runDiff ] ]
+			ifCurtailed: [ TypInfMethodResolver instance outRemoveAt: key ] ]
 			on: Exception - OCUndeclaredVariableWarning - OCShadowVariableWarning
 			do: [ :e | 
 				e freeze.

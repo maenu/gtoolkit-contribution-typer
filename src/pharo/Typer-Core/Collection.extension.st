@@ -3,7 +3,7 @@ Extension { #name : #Collection }
 { #category : #'*Typer-Core' }
 Collection >> typAsMinimizedType [
 	<typPraResult: 'TypType'>
-	| remains nilTypes unknownTypes removeables |
+	| remains nilTypes unknownTypes |
 	self ifEmpty: [ ^ TypUnknownType instance ].
 	remains := IdentitySet new.
 	self
@@ -13,14 +13,13 @@ Collection >> typAsMinimizedType [
 	remains
 		removeAll: nilTypes;
 		removeAll: unknownTypes.
-	removeables := IdentitySet new.
-	remains
-		sorted: [ :a :b | 
-			a <= b
-				ifTrue: [ removeables add: a.
-					true ]
-				ifFalse: false ].
-	remains removeAll: removeables.
+	remains size > 1
+		ifTrue: [ remains sorted reversed
+				reduce: [ :a :b | 
+					a > b
+						ifTrue: [ remains remove: b.
+							a ]
+						ifFalse: [ b ] ] ].
 	remains
 		addAll: nilTypes;
 		addAll: unknownTypes.

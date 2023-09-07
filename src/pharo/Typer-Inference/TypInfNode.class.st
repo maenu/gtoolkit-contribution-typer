@@ -161,17 +161,19 @@ TypInfNode >> iterate [
 
 { #category : #accessing }
 TypInfNode >> iterateDiff [
-	| queue changes current |
+	| queue changes done |
 	queue := LinkedList with: self.
 	changes := OrderedIdentityDictionary new.
+	done := IdentitySet new.
 	[ queue isEmpty ]
-		whileFalse: [ current := queue removeFirst.
+		whileFalse: [ | current |
+			current := queue removeFirst.
 			current canSlurpAndBurp
 				ifTrue: [ current slurpAndBurpDiff ifNotEmpty: [ :c | changes at: current put: c ].
-					queue addAll: current outNexts ]
-				ifFalse: [ queue ifEmpty: [ ^ changes ].
-					queue add: self ] ].
-	^ changes isEmpty
+					done add: current.
+					queue addAll: (current outNexts reject: [ :n | done includes: n ]) ]
+				ifFalse: [ (done includes: current) ifFalse: [ queue add: self ] ] ].
+	^ changes
 ]
 
 { #category : #accessing }
