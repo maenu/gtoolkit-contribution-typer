@@ -33,13 +33,3 @@ ClassDescription >> typInfRun: aSymbol [
 ClassDescription >> typInfRun: aSymbol duration: aDuration [
 	^ self >> aSymbol typInfRun: aDuration
 ]
-
-{ #category : #'*Typer-Inference' }
-ClassDescription >> typInfRunAndMonitor: aSymbol [
-	^ self typInfRunAndMonitor: aSymbol duration: 1 minutes
-]
-
-{ #category : #'*Typer-Inference' }
-ClassDescription >> typInfRunAndMonitor: aSymbol duration: aDuration [
-	^ self >> aSymbol typInfRunAndMonitor: aDuration
-]

@@ -14,6 +14,11 @@ TypTyping >> invalidate [
 { #category : #accessing }
 TypTyping >> invalidateLight [
 	<gtExample>
+	SmalltalkImage cleanUp.
+	self flag: 'TODO or just above?'.
+	Undeclared associations
+		select: [ :a | a value class package name beginsWith: 'Typer' ]
+		thenDo: [ :a | Undeclared removeKey: a key ].
 	GtPlaygroundEvaluatedCodeButtonAttribute
 		allSubInstancesDo: [ :e | e result: nil ].
 	GtSourceCoderEvaluationResultWithValue allSubInstancesDo: [ :e | e value: nil ].
@@ -35,7 +40,7 @@ TypTyping >> invalidateLight [
 		allInstancesDo: [ :e | e removeAllSuchThat: [ :f | f isKindOf: BlOverlayListener ] ].
 	GtInspectorTool allInstances
 		select: [ :e | e object class package name beginsWith: 'Typer' ]
-		thenDo: [ :e | e object: nil ].	
+		thenDo: [ :e | e object: nil ].
 	TypNode invalidateAll.
 	TypType invalidateAll.
 	TypIndex invalidateAll.

@@ -10,13 +10,13 @@ TypTyping >> typInfRunAllMethods [
 TypTyping >> typInfRunAndMonitorAllMethods [
 	<gtExample>
 	^ CompiledMethod allInstances
-		collect: [ :m | m typInfRunAndMonitor: 5 seconds ]
+		collect: [ :m | m typInfRun: 5 seconds ]
 ]
 
 { #category : #'*Typer-Inference' }
 TypTyping >> typInfRunAndMonitorSomeMethods [
 	<gtExample>
-	^ self typInfSomeMethods collect: [ :m | m typInfRunAndMonitor: 30 seconds ]
+	^ self typInfSomeMethods collect: [ :m | m typInfRun: 30 seconds ]
 ]
 
 { #category : #'*Typer-Inference' }

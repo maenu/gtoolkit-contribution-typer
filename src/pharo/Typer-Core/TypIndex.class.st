@@ -18,7 +18,6 @@ TypIndex class >> instance [
 
 { #category : #invalidation }
 TypIndex class >> invalidate [
-
 	<script>
 	instance ifNotNil: #invalidate.
 	instance := nil
@@ -38,12 +37,17 @@ TypIndex >> canResolve: aLookup [
 		ifFalse: [ resolver canResolve: aLookup ]
 ]
 
+{ #category : #accessing }
+TypIndex >> index [
+	^ resolve
+]
+
 { #category : #initialization }
 TypIndex >> initialize [
 	<typPraVariable: 'resolver' as: 'TypResolver'>
 	super initialize.
 	resolve := IdentityDictionary new.
-	SystemAnnouncer uniqueInstance weak
+	SystemAnnouncer uniqueInstance
 		when: ClassAnnouncement
 			send: #invalidateOnClassChange:
 			to: self;

@@ -9,7 +9,7 @@ TypInfInstance >> transfer [
 	((in at: #next) allSatisfy: [ :e | e origin isKindOf: TypInfAssignment ])
 		ifTrue: [ ^ self put: (state at: node variable) ].
 	self
-		put: ((context self
+		covariantPut: ((context self
 				preResolveVariable: (TypVariableLookup
 						receiver: context self
 						selector: node variable name asSymbol

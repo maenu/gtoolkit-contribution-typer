@@ -39,6 +39,6 @@ TypInfContext >> typGtSourceFor: aView [
 	^ aView forward
 		title: 'Method';
 		priority: 1;
-		object: [ root ];
-		view: #typGtSourceFor:
+		object: [ self typGtAsCoder ];
+		view: #gtLiveFor:
 ]

@@ -131,6 +131,11 @@ TypMethodMeasurement >> printOn: aStream [
 ]
 
 { #category : #accessing }
+TypMethodMeasurement >> tally: aTally [
+	tally := aTally
+]
+
+{ #category : #accessing }
 TypMethodMeasurement >> terminate [
 
 	process ifNotNil: #terminate
