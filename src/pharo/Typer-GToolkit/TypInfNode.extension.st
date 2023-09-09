@@ -40,6 +40,17 @@ TypInfNode >> typGtAsShortString [
 ]
 
 { #category : #'*Typer-GToolkit' }
+TypInfNode >> typGtCoderFor: aView [
+
+	<gtView>
+	^ aView forward
+		  title: 'Method';
+		  priority: 2;
+		  object: [ context typGtAsCoder ];
+		  view: #gtLiveFor:
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtDecorate: anElement in: aMondrian [
 	^ (super typGtDecorate: anElement in: aMondrian)
 		addAptitude: (BrGlamorousWithTooltipAptitude
@@ -197,19 +208,6 @@ TypInfNode >> typGtSourceCodeFor: aView [
 		  priority: 1;
 		  object: [ node ];
 		  view: #gtSourceCodeFor:
-]
-
-{ #category : #'*Typer-GToolkit' }
-TypInfNode >> typGtSourceFor: aView [
-
-	<gtView>
-	node methodNode ifNil: [ ^ aView empty ].
-	node methodNode compiledMethod ifNil: [ ^ aView empty ].
-	^ aView forward
-		  title: 'Method';
-		  priority: 2;
-		  object: [ node methodNode compiledMethod ];
-		  view: #gtSourceFor:
 ]
 
 { #category : #'*Typer-GToolkit' }

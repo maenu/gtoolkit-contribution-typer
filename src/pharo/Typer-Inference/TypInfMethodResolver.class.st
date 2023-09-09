@@ -29,26 +29,26 @@ TypInfMethodResolver >> canResolve: aLookup [
 
 { #category : #accessing }
 TypInfMethodResolver >> contextAt: aMethodNode self: aType super: anotherType [
-	| key |
+	| key context |
 	key := TypInfContextKey
 			node: aMethodNode
 			self: aType
 			super: anotherType.
-	^ self
+	self
 		outAt: key
-		ifAbsent: [ | context |
-			context := TypInfContext
-					sender: nil
-					state: TypInfState new
-					node: aMethodNode
-					self: aType
-					super: anotherType.
-			self outAt: key put: context.
-			TypInfNodeStack
-				push: aMethodNode
-				during: [ [ context run ] ifCurtailed: [ self outRemoveAt: key ] ]
-				or: [ self outRemoveAt: key.
-					context ] ]
+		ifPresent: [ :c | c nodeStackDepth <= TypInfNodeStack actives size ifTrue: [ ^ c ] ].
+	context := TypInfContext
+			sender: nil
+			state: TypInfState new
+			node: aMethodNode
+			self: aType
+			super: anotherType.
+	self outAt: key put: context.
+	^ TypInfNodeStack
+		push: aMethodNode
+		during: [ [ context run ] ifCurtailed: [ self outRemoveAt: key ] ]
+		or: [ self outRemoveAt: key.
+			context ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -126,20 +126,15 @@ TypInfMethodResolver >> result: aLookup [
 ]
 
 { #category : #accessing }
-TypInfMethodResolver >> typInfContext: aLookup [
-	| methodClass selfType |
-	methodClass := aLookup receiver classDescription.
-	selfType := methodClass typAsType.
-	^ TypInfMethodResolver instance
-		contextAt: (methodClass >> aLookup selector) ast
-		self: selfType
-		super: selfType superOrNil
-]
-
-{ #category : #accessing }
 TypInfMethodResolver >> typeAt: aNode self: aType super: anotherType [
 	^ ((self
 		nodesAt: aNode
 		self: aType
 		super: anotherType) collect: #type) typAsMinimizedType
+]
+
+{ #category : #accessing }
+TypInfMethodResolver >> update: aLookup [
+	aLookup result: (self result: aLookup).
+	^ super update: aLookup
 ]

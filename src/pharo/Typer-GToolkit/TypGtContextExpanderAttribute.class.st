@@ -2,24 +2,22 @@ Class {
 	#name : #TypGtContextExpanderAttribute,
 	#superclass : #BrGlamorousTriangleExpanderTextAttribute,
 	#instVars : [
-		'context',
-		'lookup'
+		'coder'
 	],
 	#category : #'Typer-GToolkit'
 }
 
 { #category : #accessing }
-TypGtContextExpanderAttribute class >> lookup: aLookup context: aContext [
+TypGtContextExpanderAttribute class >> coder: aCoder [
 	^ self new
-		initializeLookup: aLookup context: aContext;
+		initializeCoder: aCoder;
 		yourself
 ]
 
 { #category : #accessing }
 TypGtContextExpanderAttribute >> doAffect: aTBrTextEditorTextualPiece in: anEditorElement [
 	^ (super doAffect: aTBrTextEditorTextualPiece in: anEditorElement)
-		addAptitude: (TypGtContextExpanderAptitude
-				indicator: context typGtIndicator , ':' , lookup resolver typGtIndicator);
+		addAptitude: (TypGtContextExpanderAptitude coder: coder);
 		yourself
 ]
 
@@ -29,11 +27,10 @@ TypGtContextExpanderAttribute >> initialize [
 	self
 		attributesCreatingBlock: [ BrTextAdornmentDynamicAttribute new
 				beAppend;
-				stencil: [ context typGtAsCoder ] ]
+				stencil: [ coder ] ]
 ]
 
 { #category : #accessing }
-TypGtContextExpanderAttribute >> initializeLookup: aLookup context: aContext [
-	lookup := aLookup.
-	context := aContext
+TypGtContextExpanderAttribute >> initializeCoder: aCoder [
+	coder := aCoder
 ]

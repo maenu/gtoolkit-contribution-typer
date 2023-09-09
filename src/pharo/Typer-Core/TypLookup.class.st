@@ -87,6 +87,13 @@ TypLookup >> printOn: aStream [
 ]
 
 { #category : #accessing }
+TypLookup >> resolved [
+	^ resolver
+		ifNil: [ self hasParent ifTrue: [ self asParent resolved ] ifFalse: [ self ] ]
+		ifNotNil: [ self ]
+]
+
+{ #category : #accessing }
 TypLookup >> resolver [
 	^ resolver
 ]

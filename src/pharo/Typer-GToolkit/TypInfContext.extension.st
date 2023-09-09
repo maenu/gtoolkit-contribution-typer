@@ -9,6 +9,16 @@ TypInfContext >> typGtAsCoder [
 ]
 
 { #category : #'*Typer-GToolkit' }
+TypInfContext >> typGtCoderFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Method';
+		priority: 1;
+		object: [ self typGtAsCoder ];
+		view: #gtLiveFor:
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypInfContext >> typGtFlowFor: aView [
 	<gtView>
 	^ aView forward
@@ -31,14 +41,4 @@ TypInfContext >> typGtMinimalFlowFor: aView [
 		priority: 10;
 		object: [ root ];
 		view: #typGtMinimalFlowFor:
-]
-
-{ #category : #'*Typer-GToolkit' }
-TypInfContext >> typGtSourceFor: aView [
-	<gtView>
-	^ aView forward
-		title: 'Method';
-		priority: 1;
-		object: [ self typGtAsCoder ];
-		view: #gtLiveFor:
 ]

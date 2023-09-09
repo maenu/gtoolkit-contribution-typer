@@ -11,10 +11,10 @@ TypGtContextExpanderStyler >> visitMessageNode: aMessage [
 	super visitMessageNode: aMessage.
 	(self context nodesAt: aMessage)
 		do: [ :n | 
-			n strategy contexts
+			n strategy typGtExpanderCoders
 				do: [ :c | 
 					text
-						attribute: (TypGtContextExpanderAttribute lookup: c key context: c value)
+						attribute: (TypGtContextExpanderAttribute coder: c)
 						from: position
 						to: position ] ]
 ]

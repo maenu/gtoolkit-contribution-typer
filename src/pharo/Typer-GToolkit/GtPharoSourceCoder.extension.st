@@ -16,6 +16,18 @@ GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 ]
 
 { #category : #'*Typer-GToolkit' }
+GtPharoSourceCoder >> typGtIndicator [
+	^ (self
+		attributeNamed: #typGtContext
+		ifPresent: #typGtIndicator
+		ifAbsent: 'l') , ':'
+		, (self
+				attributeNamed: #typGtLookup
+				ifPresent: #typGtIndicator
+				ifAbsent: '')
+]
+
+{ #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns viewModel: aViewModel [
 	"initializeAddOns: addOns viewModel: aViewModel"
 

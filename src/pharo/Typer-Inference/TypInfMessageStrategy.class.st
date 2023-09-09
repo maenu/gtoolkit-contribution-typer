@@ -20,11 +20,6 @@ TypInfMessageStrategy >> canInstall [
 ]
 
 { #category : #accessing }
-TypInfMessageStrategy >> contexts [
-	self subclassResponsibility
-]
-
-{ #category : #accessing }
 TypInfMessageStrategy >> initializeMessage: aMessage [
 	message := aMessage
 ]

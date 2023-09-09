@@ -134,6 +134,9 @@ TypIndex >> preResolve: aLookup [
 TypIndex >> resolve: aLookup [
 	^ resolve
 		at: aLookup
+		ifPresent: [ | resolved |
+			resolved := aLookup resolved.
+			resolve at: aLookup put: (resolved resolver update: resolved) ]
 		ifAbsent: [ (resolver canResolve: aLookup)
 				ifTrue: [ resolve at: aLookup put: (resolver resolve: aLookup) ]
 				ifFalse: [ TypUnknownType instance ] ]

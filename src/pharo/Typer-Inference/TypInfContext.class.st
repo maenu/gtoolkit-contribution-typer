@@ -15,7 +15,8 @@ Class {
 		'iterationsDone',
 		'iterationsMax',
 		'iterations',
-		'children'
+		'children',
+		'nodeStackDepth'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -96,6 +97,7 @@ TypInfContext >> initializeSender: aContext state: aState node: aNode self: aTyp
 	superType := anotherType.
 	nodes := IdentityDictionary new.
 	children := IdentitySet new.
+	nodeStackDepth := TypInfNodeStack actives size.
 	iterationsDone := 0.
 	iterationsMax := 16.
 	iterations := OrderedCollection new
@@ -121,6 +123,11 @@ TypInfContext >> nextEdgeTo: aNode [
 { #category : #accessing }
 TypInfContext >> node [
 	^ node
+]
+
+{ #category : #accessing }
+TypInfContext >> nodeStackDepth [
+	^ nodeStackDepth
 ]
 
 { #category : #accessing }

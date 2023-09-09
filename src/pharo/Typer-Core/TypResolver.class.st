@@ -53,3 +53,8 @@ TypResolver >> resolve: aLookup [
 TypResolver >> result: aLookup [
 	self subclassResponsibility
 ]
+
+{ #category : #accessing }
+TypResolver >> update: aLookup [
+	^ aLookup result
+]

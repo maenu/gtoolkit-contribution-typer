@@ -10,11 +10,6 @@ TypInfNullMessageStrategy >> canInstall [
 ]
 
 { #category : #accessing }
-TypInfNullMessageStrategy >> contexts [
-	^ {}
-]
-
-{ #category : #accessing }
 TypInfNullMessageStrategy >> transfer [
 	message state at: message put: TypUnknownType instance
 ]

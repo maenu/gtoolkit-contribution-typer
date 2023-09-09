@@ -2,16 +2,15 @@ Class {
 	#name : #TypGtContextExpanderAptitude,
 	#superclass : #BrAptitude,
 	#instVars : [
-		'label',
-		'indicator'
+		'coder'
 	],
 	#category : #'Typer-GToolkit'
 }
 
 { #category : #accessing }
-TypGtContextExpanderAptitude class >> indicator: aString [
+TypGtContextExpanderAptitude class >> coder: aCoder [
 	^ self new
-		initializeIndicator: aString;
+		initializeCoder: aCoder;
 		yourself
 ]
 
@@ -23,7 +22,7 @@ TypGtContextExpanderAptitude >> initialize [
 		addChangeAddChildAs: #(content label)
 			with: [ BrLabel new
 					aptitude: BrGlamorousLabelAptitude;
-					text: (indicator asRopedText
+					text: (coder typGtIndicator asRopedText
 							glamorousCodeFont;
 							fontSize: 8;
 							foreground: Color black;
@@ -37,6 +36,6 @@ TypGtContextExpanderAptitude >> initialize [
 ]
 
 { #category : #accessing }
-TypGtContextExpanderAptitude >> initializeIndicator: aString [
-	indicator := aString
+TypGtContextExpanderAptitude >> initializeCoder: aCoder [
+	coder := aCoder
 ]

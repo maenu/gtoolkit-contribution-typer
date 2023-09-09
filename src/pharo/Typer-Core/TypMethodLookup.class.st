@@ -138,13 +138,6 @@ TypMethodLookup >> resolve [
 ]
 
 { #category : #accessing }
-TypMethodLookup >> resolved [
-	^ resolver
-		ifNil: [ self hasParent ifTrue: [ self asParent resolved ] ifFalse: [ self ] ]
-		ifNotNil: [ self ]
-]
-
-{ #category : #accessing }
 TypMethodLookup >> self [
 	^ selfType
 ]
