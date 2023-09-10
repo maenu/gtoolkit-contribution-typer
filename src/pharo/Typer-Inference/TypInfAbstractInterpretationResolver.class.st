@@ -11,3 +11,8 @@ Class {
 TypInfAbstractInterpretationResolver class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
+
+{ #category : #accessing }
+TypInfAbstractInterpretationResolver class >> invalidate [
+	instance := nil
+]

@@ -15,14 +15,6 @@ TypInfInstance >> transfer [
 						selector: node variable name asSymbol
 						parent: nil))
 				detect: [ :l | l resolver isKindOf: TypInfVariableResolver ]
-				ifFound: [ :l | 
-					l receiver classDescription
-						slotNamed: node variable name asSymbol
-						ifFound: [ :v | 
-							v
-								typInfAssignedType: state
-								self: context self
-								super: context super ]
-						ifNone: [ Error signal: 'should not happen' ] ]
+				ifFound: [ :l | node variable typInfAssignedTypeSelf: context self super: context super ]
 				ifNone: [ context self lookupVariable: node variable name asSymbol ])
 ]

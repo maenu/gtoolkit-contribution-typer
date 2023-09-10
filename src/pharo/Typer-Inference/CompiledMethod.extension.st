@@ -25,22 +25,27 @@ CompiledMethod >> typInfRunAndMonitor: aDuration [
 
 { #category : #'*Typer-Inference' }
 CompiledMethod >> typInfRunVariant: aBlock [
-	| context selfType key |
+	| selfType node key context |
 	selfType := self methodClass typAsType.
+	node := self ast.
 	key := TypInfContextKey
-			node: self ast
+			node: node
 			self: selfType
 			super: selfType superOrNil.
 	TypInfMethodResolver instance outRemoveAt: key.
 	context := TypInfContext
 			sender: nil
 			state: TypInfState new
-			node: self ast
+			node: node
 			self: selfType
 			super: selfType superOrNil.
-	^ [ aBlock value: context.
-	TypInfMethodResolver instance outAt: key put: context ]
-		ifCurtailed: [ TypInfMethodResolver instance outRemoveAt: key ]
+	TypInfMethodResolver instance outAt: key put: context.
+	TypInfNodeStack
+		push: node
+		during: [ [ aBlock value: context ]
+				ifCurtailed: [ TypInfMethodResolver instance outRemoveAt: key ] ]
+		or: [ self error: 'node stack reached max size' ].
+	^ context
 ]
 
 { #category : #'*Typer-Inference' }

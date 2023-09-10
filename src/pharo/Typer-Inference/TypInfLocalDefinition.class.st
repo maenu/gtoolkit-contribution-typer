@@ -23,9 +23,11 @@ TypInfLocalDefinition >> transfer [
 		ifTrue: [ className := node name allButFirst: 2 ]
 		ifFalse: [ (node name beginsWith: 'a')
 				ifTrue: [ className := node name allButFirst: 1 ]
-				ifFalse: [ ^ self ] ].
-	global := Smalltalk globals at: className asSymbol ifAbsent: [ ^ self ].
-	global isClassOrTrait ifFalse: [ ^ self ].
+				ifFalse: [ ^ self put: TypUnknownType instance ] ].
+	global := Smalltalk globals
+			at: className asSymbol
+			ifAbsent: [ ^ self put: TypUnknownType instance ].
+	global isClassOrTrait ifFalse: [ ^ self put: TypUnknownType instance ].
 	self put: global typAsType
 ]
 

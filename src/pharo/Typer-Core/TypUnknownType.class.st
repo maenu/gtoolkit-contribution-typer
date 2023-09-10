@@ -26,9 +26,9 @@ TypUnknownType class >> instance [
 
 { #category : #invalidation }
 TypUnknownType class >> invalidate [
-
 	<script>
 	super invalidate.
+	instance ifNotNil: #invalidate.
 	instance := nil
 ]
 

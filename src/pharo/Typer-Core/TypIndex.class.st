@@ -47,7 +47,7 @@ TypIndex >> initialize [
 	<typPraVariable: 'resolver' as: 'TypResolver'>
 	super initialize.
 	resolve := IdentityDictionary new.
-	SystemAnnouncer uniqueInstance
+	SystemAnnouncer uniqueInstance weak
 		when: ClassAnnouncement
 			send: #invalidateOnClassChange:
 			to: self;

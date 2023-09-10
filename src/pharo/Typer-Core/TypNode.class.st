@@ -153,7 +153,6 @@ TypNode >> initialize [
 
 { #category : #invalidation }
 TypNode >> invalidate [
-
 	in removeAll.
 	out removeAll
 ]

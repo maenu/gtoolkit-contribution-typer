@@ -1,21 +1,8 @@
 Extension { #name : #Variable }
 
 { #category : #'*Typer-Inference' }
-Variable >> typInfAssignedType: aState self: aType super: anotherType [
-	^ ((self typInfWritesSelf: aType super: anotherType)
-		collect: [ :n | aState at: n ifAbsent: [ aState at: n put: n type ] ])
-		typAsMinimizedType
-]
-
-{ #category : #'*Typer-Inference' }
-Variable >> typInfAssignedTypeSelf: aType [
-	^ ((self typInfWritesSelf: aType super: aType superOrNil)
-		collect: #type) typAsMinimizedType
-]
-
-{ #category : #'*Typer-Inference' }
-Variable >> typInfWritesSelf: aType super: anotherType [
-	^ (TypInfMethodIndex instance writers: self)
+Variable >> typInfAssignedTypeSelf: aType super: anotherType [
+	^ (((TypInfMethodIndex instance writers: self)
 		flatCollect: [ :m | 
 			m variableNodes
 				select: [ :n | 
@@ -25,5 +12,5 @@ Variable >> typInfWritesSelf: aType super: anotherType [
 					TypInfMethodResolver instance
 						nodesAt: e value
 						self: aType
-						super: anotherType ] ]
+						super: anotherType ] ]) collect: #type) typAsMinimizedType
 ]

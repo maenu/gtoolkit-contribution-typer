@@ -23,6 +23,7 @@ TypInfMethodIndex class >> instance [
 TypInfMethodIndex class >> invalidate [
 
 	<script>
+	instance ifNotNil: #invalidate.
 	instance := nil
 ]
 

@@ -49,6 +49,7 @@ TypTyping >> invalidateLight [
 	TypShaMethodIndex invalidate.
 	TypInfMethodResolver invalidate.
 	TypInfMethodIndex invalidate.
+	TypInfAbstractInterpretationResolver invalidate.
 	TypInfNodeStack resetSoleInstance.
 	^ self
 ]

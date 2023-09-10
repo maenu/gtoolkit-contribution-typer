@@ -15,8 +15,8 @@ TypInfMethodResolver class >> instance [
 
 { #category : #invalidation }
 TypInfMethodResolver class >> invalidate [
-
 	<script>
+	instance ifNotNil: #invalidate.
 	instance := nil
 ]
 
@@ -44,11 +44,11 @@ TypInfMethodResolver >> contextAt: aMethodNode self: aType super: anotherType [
 			self: aType
 			super: anotherType.
 	self outAt: key put: context.
-	^ TypInfNodeStack
+	TypInfNodeStack
 		push: aMethodNode
 		during: [ [ context run ] ifCurtailed: [ self outRemoveAt: key ] ]
-		or: [ self outRemoveAt: key.
-			context ]
+		or: [ self error: 'node stack reached max size' ].
+	^ context
 ]
 
 { #category : #'as yet unclassified' }

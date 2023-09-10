@@ -95,5 +95,6 @@ TypInfMessage >> transfer [
 { #category : #accessing }
 TypInfMessage >> uninstall [
 	currentStrategy uninstall.
-	currentStrategy := nil
+	currentStrategy := nil.
+	super uninstall
 ]

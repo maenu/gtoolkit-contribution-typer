@@ -5,7 +5,7 @@ Class {
 		'node',
 		'state',
 		'context',
-		'transferred'
+		'transfers'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -123,11 +123,10 @@ TypInfNode >> inNexts [
 { #category : #initialization }
 TypInfNode >> initializeNode: aNode context: aContext [
 	self assert: [ aContext state isNotNil ].
-	transferred := false.
+	transfers := 0.
 	node := aNode.
 	context := aContext.
-	state := aContext state.
-	state at: self put: TypUnknownType instance
+	state := aContext state
 ]
 
 { #category : #accessing }
@@ -148,14 +147,14 @@ TypInfNode >> iterate [
 	queue := LinkedList with: self.
 	changed := false.
 	done := IdentitySet new.
-	[ queue isEmpty ]
+	[ queue isEmpty or: [ queue noneSatisfy: #canSlurpAndBurp ] ]
 		whileFalse: [ | current |
 			current := queue removeFirst.
 			current canSlurpAndBurp
 				ifTrue: [ changed := current slurpAndBurp or: changed.
 					done add: current.
 					queue addAll: (current outNexts reject: [ :n | done includes: n ]) ]
-				ifFalse: [ (done includes: current) ifFalse: [ queue add: self ] ] ].
+				ifFalse: [ queue add: self ] ].
 	^ changed
 ]
 
@@ -165,33 +164,25 @@ TypInfNode >> iterateDiff [
 	queue := LinkedList with: self.
 	changes := OrderedIdentityDictionary new.
 	done := IdentitySet new.
-	[ queue isEmpty ]
+	[ queue isEmpty or: [ queue noneSatisfy: #canSlurpAndBurp ] ]
 		whileFalse: [ | current |
 			current := queue removeFirst.
 			current canSlurpAndBurp
 				ifTrue: [ current slurpAndBurpDiff ifNotEmpty: [ :c | changes at: current put: c ].
 					done add: current.
 					queue addAll: (current outNexts reject: [ :n | done includes: n ]) ]
-				ifFalse: [ (done includes: current) ifFalse: [ queue add: self ] ] ].
+				ifFalse: [ queue add: self ] ].
 	^ changes
 ]
 
 { #category : #accessing }
-TypInfNode >> iterateWithContinuations: aSequenceableCollection [
-	| changed |
-	self canSlurpAndBurp
-		ifFalse: [ aSequenceableCollection ifEmpty: [ ^ false ].
-			aSequenceableCollection add: self.
-			^ aSequenceableCollection removeFirst
-				iterateWithContinuations: aSequenceableCollection ].
-	changed := self slurpAndBurp.
-	^ out
-		at: #next
-		ifPresent: [ :s | 
-			s
-				inject: changed
-				into: [ :r :e | r or: (e target iterateWithContinuations: aSequenceableCollection) ] ]
-		ifAbsent: [ changed ]
+TypInfNode >> iterations [
+	^ context home iterations
+		collect: [ :c | 
+			c
+				at: self
+				"ifPresent: [ :cc | cc at: self ifAbsent: {} ]"
+				ifAbsent: {} ]
 ]
 
 { #category : #accessing }
@@ -267,7 +258,7 @@ TypInfNode >> slurpAndBurp [
 		slurp;
 		transfer;
 		burp.
-	transferred := true.
+	transfers := transfers + 1.
 	^ state ~= oldState
 ]
 
@@ -283,7 +274,7 @@ TypInfNode >> slurpAndBurpDiff [
 		slurp;
 		transfer;
 		burp.
-	transferred := true.
+	transfers := transfers + 1.
 	^ oldState diff: state
 ]
 
@@ -302,8 +293,8 @@ TypInfNode >> transfer [
 ]
 
 { #category : #accessing }
-TypInfNode >> transferred [
-	^ transferred
+TypInfNode >> transfers [
+	^ transfers
 ]
 
 { #category : #accessing }

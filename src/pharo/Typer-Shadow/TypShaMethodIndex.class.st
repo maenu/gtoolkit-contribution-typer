@@ -23,6 +23,7 @@ TypShaMethodIndex class >> instance [
 TypShaMethodIndex class >> invalidate [
 
 	<script>
+	instance ifNotNil: #invalidate.
 	instance := nil
 ]
 

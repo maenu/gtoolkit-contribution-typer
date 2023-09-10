@@ -104,6 +104,11 @@ TypInfContext >> initializeSender: aContext state: aState node: aNode self: aTyp
 ]
 
 { #category : #accessing }
+TypInfContext >> iterations [
+	^ iterations
+]
+
+{ #category : #accessing }
 TypInfContext >> newRoot [
 	^ (node typInfNodeInContext: self)
 ]
