@@ -52,14 +52,21 @@ TypInfNode >> typGtCoderFor: aView [
 
 { #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtDecorate: anElement in: aMondrian [
-	^ (super typGtDecorate: anElement in: aMondrian)
+	super typGtDecorate: anElement in: aMondrian.
+	anElement userData
+		at: #explainer
+		put: ((TypGtExplainerElementContext on: anElement)
+				isExplanation: true;
+				isTarget: true;
+				model: self;
+				yourself).
+	^ anElement
 		addAptitude: (BrGlamorousWithTooltipAptitude
 				content: [ BrEditor new
 						aptitude: BrGlamorousCodeEditorAptitude new;
 						background: BlBackground transparent;
-						text: self class name , String lf
-								, (state at: self ifAbsent: [ TypUnknownType instance ]) asString
-								, String lf , node formattedCode;
+						text: self class name , String lf , self type asString , String lf
+								, node formattedCode;
 						beReadOnlyWithoutSelection;
 						hFitContent;
 						vFitContent;

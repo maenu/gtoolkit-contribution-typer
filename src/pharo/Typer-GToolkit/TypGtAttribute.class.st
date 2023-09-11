@@ -27,10 +27,18 @@ TypGtAttribute >> initialize [
 	super initialize.
 	self
 		beAppend;
-		stencil: [ BrLabel new
+		stencil: [ | element |
+			element := BrLabel new.
+			element userData
+				at: #explainer
+				put: (TypGtExplainerElementContext on: element).
+			element
 				aptitude: (BrGlamorousLabelAptitude new
 						foreground: Color gray;
-						yourself);
+						yourself)
+						+ (GtExplainerExplanationAptitude new
+								explanationModel: nodes;
+								yourself);
 				text: type printString asRopedText glamorousCodeFont;
 				beMiniSize;
 				hFitContent;

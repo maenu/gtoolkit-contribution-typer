@@ -37,6 +37,13 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns viewM
 			 yourself)."
 
 	<gtAstCoderAddOns: 10>
+	self
+		attributeNamed: #typGtContext
+		ifPresent: [ self
+				typGtToggleStylersAllFor: anAst
+				into: anAddOns
+				viewModel: aViewModel ]
+		ifAbsent: [  "noop" ].
 	anAddOns
 		addShortcut: TypGtBrowseImplementorsShortcut new;
 		addShortcut: TypGtTypeWithPragmaShortcut new;
@@ -69,26 +76,10 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns viewM
 			checker := anAddOns stylers
 				detect: [ :e | e class == TypGtCheckBodyStyler ].
 			checker markUnknowns: checker markUnknowns not.
-			self styleText ]"(anAddOns
-					stylers select: [ :e | e isKindOf: TypGtRbAstStyler ])
-					ifNotEmpty: [ :c | 
-						c do: [ :e | anAddOns removeStylersOfClass: e class ].
-						anAddOns
-							addStyler: (GtPharoMethodExpanderStyler new
-									coderViewModel: aViewModel;
-									yourself);
-							addStyler: (GtMethodAdviceStyler new
-									coderViewModel: aViewModel;
-									yourself) ]
-					ifEmpty: [ anAddOns
-							removeStylersOfClass: GtPharoMethodExpanderStyler;
-							removeStylersOfClass: GtMethodAdviceStyler;
-							addStyler: (TypGtValueStyler new
-									coderViewModel: aViewModel;
-									yourself);
-							addStyler: (TypGtContextExpanderStyler new
-									coderViewModel: aViewModel;
-									yourself) ].
+			self styleText ]"self
+					typGtToggleStylersAllFor: anAst
+					into: anAddOns
+					viewModel: aViewModel.
 				self requestStyleSourceText ]
 ]
 
@@ -97,6 +88,29 @@ GtPharoSourceCoder >> typGtRbNodeAt: anInteger [
 
 	<typPraResult: '{!,RBProgramNode}'>
 	^ self rbAST bestNodeFor: (anInteger to: anInteger)
+]
+
+{ #category : #'*Typer-GToolkit' }
+GtPharoSourceCoder >> typGtToggleStylersAllFor: anAst into: anAddOns viewModel: aViewModel [
+	(anAddOns stylers select: [ :e | e isKindOf: TypGtRbAstStyler ])
+		ifNotEmpty: [ :c | 
+			c do: [ :e | anAddOns removeStylersOfClass: e class ].
+			anAddOns
+				addStyler: (GtPharoMethodExpanderStyler new
+						coderViewModel: aViewModel;
+						yourself);
+				addStyler: (GtMethodAdviceStyler new
+						coderViewModel: aViewModel;
+						yourself) ]
+		ifEmpty: [ anAddOns
+				removeStylersOfClass: GtPharoMethodExpanderStyler;
+				removeStylersOfClass: GtMethodAdviceStyler;
+				addStyler: (TypGtValueStyler new
+						coderViewModel: aViewModel;
+						yourself);
+				addStyler: (TypGtContextExpanderStyler new
+						coderViewModel: aViewModel;
+						yourself) ]
 ]
 
 { #category : #'*Typer-GToolkit' }

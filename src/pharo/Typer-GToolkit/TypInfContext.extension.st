@@ -9,6 +9,41 @@ TypInfContext >> typGtAsCoder [
 ]
 
 { #category : #'*Typer-GToolkit' }
+TypInfContext >> typGtCoderAndFlowFor: aView [
+	<gtView>
+	| coder mondrian |
+	coder := self typGtAsCoder.
+	mondrian := TypGtMondrian new.
+	root typGtFlowPaintOn: mondrian.
+	^ aView explicit
+		title: 'Coder & Flow';
+		priority: 10;
+		stencil: [ | element |
+			element := BlElement new.
+			element userData
+				at: #explainer
+				put: ((TypGtExplainerElementContext on: element)
+						isExplanationHolder: true;
+						yourself).
+			element
+				layout: BlLinearLayout horizontal;
+				constraintsDo: [ :c | 
+					c horizontal matchParent.
+					c vertical matchParent ];
+				addChild: (coder asElement
+						constraintsDo: [ :c | 
+							c horizontal matchParent.
+							c vertical matchParent ];
+						yourself);
+				addChild: (mondrian asElement
+						constraintsDo: [ :c | 
+							c horizontal matchParent.
+							c vertical matchParent ];
+						yourself);
+				yourself ]
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypInfContext >> typGtCoderFor: aView [
 	<gtView>
 	^ aView forward
