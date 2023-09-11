@@ -33,6 +33,5 @@ TypInfLocalDefinition >> transfer [
 
 { #category : #accessing }
 TypInfLocalDefinition >> type [
-
-	^ (self outReads collect: #type) typAsMinimizedType
+	^ type ifNil: [ (self outReads collect: #type) typAsMinimizedType ]
 ]

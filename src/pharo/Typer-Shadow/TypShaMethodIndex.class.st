@@ -66,6 +66,11 @@ TypShaMethodIndex >> initialize [
 ]
 
 { #category : #accessing }
+TypShaMethodIndex >> invalidate [
+	cache removeAll
+]
+
+{ #category : #accessing }
 TypShaMethodIndex >> methodResolvers: aClassDescription selector: aSymbol [
 	^ cache at: aClassDescription -> #method -> aSymbol ifAbsent: [ #() ]
 ]

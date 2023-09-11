@@ -77,6 +77,11 @@ TypInfMethodIndex >> initialize [
 ]
 
 { #category : #accessing }
+TypInfMethodIndex >> invalidate [
+	cache removeAll
+]
+
+{ #category : #accessing }
 TypInfMethodIndex >> overriders: aCompiledMethod [
 	^ cache at: aCompiledMethod ifAbsent: [ #() ]
 ]

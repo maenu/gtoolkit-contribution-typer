@@ -68,6 +68,11 @@ TypInfContext >> children [
 ]
 
 { #category : #accessing }
+TypInfContext >> condense [
+	self allNodes do: #condense
+]
+
+{ #category : #accessing }
 TypInfContext >> findInRead: aVariable [
 	aVariable
 		depthFirstNextReverseDo: [ :n | n node == aVariable node variable definingNode ifTrue: [ ^ n ] ].
@@ -160,7 +165,11 @@ TypInfContext >> root [
 TypInfContext >> run [
 	self visit.
 	[ iterationsDone := iterationsDone + 1.
-	iterationsDone <= iterationsMax and: [ root iterate ] ] whileTrue
+	iterationsDone <= iterationsMax
+		and: [ root iterate
+				ifTrue: [ true ]
+				ifFalse: [ self condense.
+					false ] ] ] whileTrue
 ]
 
 { #category : #running }

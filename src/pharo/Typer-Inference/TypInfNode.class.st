@@ -5,7 +5,8 @@ Class {
 		'node',
 		'state',
 		'context',
-		'transfers'
+		'transfers',
+		'type'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -36,6 +37,12 @@ TypInfNode >> canSlurpAndBurp [
 		at: #next
 		ifPresent: [ :s | s allSatisfy: #canBeSlurped ]
 		ifAbsent: [ state isNotNil ]
+]
+
+{ #category : #accessing }
+TypInfNode >> condense [
+	type := self type.
+	state := nil
 ]
 
 { #category : #accessing }
@@ -299,7 +306,7 @@ TypInfNode >> transfers [
 
 { #category : #accessing }
 TypInfNode >> type [
-	^ state at: self ifAbsent: TypUnknownType instance
+	^ type ifNil: [ state at: self ifAbsent: TypUnknownType instance ]
 ]
 
 { #category : #accessing }
