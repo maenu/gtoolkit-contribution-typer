@@ -4,7 +4,8 @@ Extension { #name : #TypInfInlineMethodMessageStrategy }
 TypInfInlineMethodMessageStrategy >> typGtExpanderCoders [
 	^ contexts
 		collect: [ :a | 
-			a value typGtAsCoder
-				attributeNamed: #typGtLookup put: a key;
-				yourself ]
+			| model |
+			model := a value typGtAsCoder.
+			model coderModel attributeNamed: #typGtLookup put: a key.
+			model ]
 ]

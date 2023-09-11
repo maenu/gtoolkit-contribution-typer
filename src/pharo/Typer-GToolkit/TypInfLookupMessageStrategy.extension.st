@@ -7,5 +7,5 @@ TypInfLookupMessageStrategy >> typGtExpanderCoders [
 	^ {GtPharoMethodCoder new
 			attributeNamed: #typGtLookup put: lookup;
 			forMethod: (lookup resolver typGtExpanderMethod: lookup);
-			yourself}
+			asCoderViewModel}
 ]

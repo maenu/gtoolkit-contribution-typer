@@ -4,20 +4,6 @@ Class {
 	#category : #'Typer-GToolkit'
 }
 
-{ #category : #accessing }
-TypGtValueStyler >> attributes: anAttributesCollection from: aStart to: anEnd [
-	^ super
-		attributes: anAttributesCollection
-		from: aStart - self offset
-		to: anEnd - self offset
-]
-
-{ #category : #accessing }
-TypGtValueStyler >> offset [
-	self context node isMethod ifTrue: [ ^ 0 ].
-	^ self context node body start - 1
-]
-
 { #category : #visiting }
 TypGtValueStyler >> visitBlockNode: aNode [
 

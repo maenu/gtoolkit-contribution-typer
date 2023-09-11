@@ -76,9 +76,13 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns viewM
 						anAddOns
 							addStyler: (GtPharoMethodExpanderStyler new
 									coderViewModel: aViewModel;
+									yourself);
+							addStyler: (GtMethodAdviceStyler new
+									coderViewModel: aViewModel;
 									yourself) ]
 					ifEmpty: [ anAddOns
 							removeStylersOfClass: GtPharoMethodExpanderStyler;
+							removeStylersOfClass: GtMethodAdviceStyler;
 							addStyler: (TypGtValueStyler new
 									coderViewModel: aViewModel;
 									yourself);

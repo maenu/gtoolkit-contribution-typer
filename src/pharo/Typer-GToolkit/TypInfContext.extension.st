@@ -5,7 +5,7 @@ TypInfContext >> typGtAsCoder [
 	^ GtPharoMethodCoder new
 		attributeNamed: #typGtContext put: self;
 		forMethod: node compiledMethod;
-		yourself
+		asCoderViewModel
 ]
 
 { #category : #'*Typer-GToolkit' }

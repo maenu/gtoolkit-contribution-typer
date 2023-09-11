@@ -6,6 +6,14 @@ Class {
 	#category : #'Typer-GToolkit'
 }
 
+{ #category : #accessing }
+TypGtRbAstStyler >> attributes: anAttributesCollection from: aStart to: anEnd [
+	^ super
+		attributes: anAttributesCollection
+		from: aStart - self offset
+		to: anEnd - self offset
+]
+
 { #category : #styling }
 TypGtRbAstStyler >> context [
 	| model |
@@ -19,6 +27,14 @@ TypGtRbAstStyler >> context [
 						contextAt: model compiledMethod ast
 						self: model behavior typAsType
 						super: model behavior typAsType superOrNil) ]
+]
+
+{ #category : #accessing }
+TypGtRbAstStyler >> offset [
+	| node |
+	node := self context node.
+	node isBlock ifFalse: [ ^ 0 ].
+	^ node body start - 1
 ]
 
 { #category : #styling }

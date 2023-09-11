@@ -13,7 +13,7 @@ TypGtContextExpanderStyler >> visitMessageNode: aMessage [
 		do: [ :n | 
 			n strategy typGtExpanderCoders
 				do: [ :c | 
-					text
+					self
 						attribute: (TypGtContextExpanderAttribute coder: c)
 						from: position
 						to: position ] ]

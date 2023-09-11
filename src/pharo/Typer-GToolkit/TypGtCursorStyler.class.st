@@ -14,6 +14,6 @@ TypGtCursorStyler >> styleNode: aNode [
 					coder: self coderViewModel;
 					node: aNode;
 					attribute: (TypGtAttribute nodes: nodes)}
-		from: aNode start
+		from: aNode stop
 		to: aNode stop
 ]

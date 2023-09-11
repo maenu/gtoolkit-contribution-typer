@@ -22,7 +22,7 @@ TypGtContextExpanderAptitude >> initialize [
 		addChangeAddChildAs: #(content label)
 			with: [ BrLabel new
 					aptitude: BrGlamorousLabelAptitude;
-					text: (coder typGtIndicator asRopedText
+					text: (coder coderModel typGtIndicator asRopedText
 							glamorousCodeFont;
 							fontSize: 8;
 							foreground: Color black;
