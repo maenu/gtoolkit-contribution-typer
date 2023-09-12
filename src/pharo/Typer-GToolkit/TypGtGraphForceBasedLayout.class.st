@@ -10,7 +10,7 @@ TypGtGraphForceBasedLayout >> initialize [
 	strength := 1.
 	center := 0 @ 0.
 	length := 20.
-	gravity := 1.
+	gravity := 2.5.
 	charge := -80.
 	friction := 0.95.
 	theta := 1.
@@ -52,7 +52,7 @@ TypGtGraphForceBasedLayout >> step [
 				do: [ :ea | 
 					| pos |
 					pos := ea position.
-					ea position: (pos x + k) @ (pos y + k) ] ].
+					ea position: (pos x) @ (pos y + k) ] ].
 	quad := GtGraphQuadTree withAll: nodes.
 	self accumulate: quad.
 	nodes

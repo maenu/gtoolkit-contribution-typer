@@ -31,14 +31,14 @@ TypGtAttribute >> initialize [
 			element := BrLabel new.
 			element userData
 				at: #explainer
-				put: (TypGtExplainerElementContext on: element).
+				put: ((TypGtExplainerElementContext on: element)
+						isExplanation: true;
+						model: nodes;
+						yourself).
 			element
 				aptitude: (BrGlamorousLabelAptitude new
 						foreground: Color gray;
-						yourself)
-						+ (GtExplainerExplanationAptitude new
-								explanationModel: nodes;
-								yourself);
+						yourself) + GtExplainerLinesAptitude new beForExplanation;
 				text: type printString asRopedText glamorousCodeFont;
 				beMiniSize;
 				hFitContent;

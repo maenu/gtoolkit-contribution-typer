@@ -52,11 +52,13 @@ TypInfNode >> typGtCoderFor: aView [
 
 { #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtDecorate: anElement in: aMondrian [
+	anElement
+		when: BlMouseOverEvent
+		do: [ anElement fireEvent: (TypGtExpandNode node: self) ].
 	super typGtDecorate: anElement in: aMondrian.
 	anElement userData
 		at: #explainer
 		put: ((TypGtExplainerElementContext on: anElement)
-				isExplanation: true;
 				isTarget: true;
 				model: self;
 				yourself).
@@ -70,7 +72,7 @@ TypInfNode >> typGtDecorate: anElement in: aMondrian [
 						beReadOnlyWithoutSelection;
 						hFitContent;
 						vFitContent;
-						yourself ]);
+						yourself ]) + GtExplainerLinesAptitude new beForTarget;
 		yourself
 ]
 
