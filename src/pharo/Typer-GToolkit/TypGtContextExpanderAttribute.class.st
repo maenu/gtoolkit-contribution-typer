@@ -2,23 +2,39 @@ Class {
 	#name : #TypGtContextExpanderAttribute,
 	#superclass : #BrGlamorousTriangleExpanderTextAttribute,
 	#instVars : [
-		'coder'
+		'coder',
+		'element'
 	],
 	#category : #'Typer-GToolkit'
 }
 
 { #category : #accessing }
-TypGtContextExpanderAttribute class >> coder: aCoder [
+TypGtContextExpanderAttribute class >> coder: aCoder in: anotherCoder [
 	^ self new
-		initializeCoder: aCoder;
+		initializeCoder: aCoder in: anotherCoder;
 		yourself
 ]
 
 { #category : #accessing }
+TypGtContextExpanderAttribute >> coder [
+	^ coder
+]
+
+{ #category : #accessing }
+TypGtContextExpanderAttribute >> context [
+	^ coder coderModel attributeNamed: #typGtContext
+]
+
+{ #category : #accessing }
 TypGtContextExpanderAttribute >> doAffect: aTBrTextEditorTextualPiece in: anEditorElement [
-	^ (super doAffect: aTBrTextEditorTextualPiece in: anEditorElement)
-		addAptitude: (TypGtContextExpanderAptitude coder: coder);
-		yourself
+	^ element := (super doAffect: aTBrTextEditorTextualPiece in: anEditorElement)
+			addAptitude: (TypGtContextExpanderAptitude coder: coder);
+			yourself
+]
+
+{ #category : #accessing }
+TypGtContextExpanderAttribute >> element [
+	^ element
 ]
 
 { #category : #accessing }
@@ -31,6 +47,24 @@ TypGtContextExpanderAttribute >> initialize [
 ]
 
 { #category : #accessing }
-TypGtContextExpanderAttribute >> initializeCoder: aCoder [
-	coder := aCoder
+TypGtContextExpanderAttribute >> initializeCoder: aCoder in: anotherCoder [
+	coder := aCoder.
+	anotherCoder announcer weak
+		when: TypGtExpandContextRequest
+		send: #onRequestExpandContext:
+		to: self
+]
+
+{ #category : #accessing }
+TypGtContextExpanderAttribute >> onRequestExpandContext: anEvent [
+	(anEvent contextChain
+		includes: (coder coderModel attributeNamed: #typGtContext))
+		ifFalse: [ self isExpanded ifTrue: [ BlSpace simulateClickOn: element ].
+			coder announcer announce: anEvent.
+			^ self ].
+	self isExpanded
+		ifTrue: [ coder announcer announce: anEvent.
+			^ self ].
+	BlSpace simulateClickOn: element.
+	coder announcer announce: anEvent
 ]

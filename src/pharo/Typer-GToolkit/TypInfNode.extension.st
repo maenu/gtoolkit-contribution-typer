@@ -54,7 +54,7 @@ TypInfNode >> typGtCoderFor: aView [
 TypInfNode >> typGtDecorate: anElement in: aMondrian [
 	anElement
 		when: BlMouseOverEvent
-		do: [ anElement fireEvent: (TypGtExpandNode node: self) ].
+		do: [ anElement fireEvent: (TypGtExpandContextRequest context: context) ].
 	super typGtDecorate: anElement in: aMondrian.
 	anElement userData
 		at: #explainer

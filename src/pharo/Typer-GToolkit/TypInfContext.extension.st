@@ -40,6 +40,7 @@ TypInfContext >> typGtCoderAndFlowFor: aView [
 							c horizontal matchParent.
 							c vertical matchParent ];
 						yourself);
+				when: TypGtExpandContextRequest do: [ :e | coder announcer announce: e ];
 				yourself ]
 ]
 
