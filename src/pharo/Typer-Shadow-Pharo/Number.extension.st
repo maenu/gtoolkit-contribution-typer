@@ -37,8 +37,7 @@ Number >> typShaMethodTimesCollect: aLookup [
 		arguments: {BlockClosure
 					typAsFunctionTypeWithResult: TypUnknownType instance
 					arguments: {Integer typAsType}
-					argumentsOptional: true
-					signalsAlways: false}
+					argumentsOptional: true}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }

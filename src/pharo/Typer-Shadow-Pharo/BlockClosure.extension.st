@@ -41,23 +41,6 @@ BlockClosure >> typShaMethodEnsure: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-BlockClosure >> typShaMethodOnDo: aLookup [
-	<typShaMethod: 'on:do:'>
-	| a b |
-	a := aLookup arguments at: 1.
-	b := (a isValue and: [ a value isClass ])
-			ifTrue: [ a value instanceSide typAsType ]
-			ifFalse: [ Exception typAsType ].
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: {aLookup receiver result.
-				(aLookup arguments at: 2) result} typAsType
-		arguments: {Exception class typAsType.
-				BlockClosure
-					typAsFunctionTypeWithResult: TypUnknownType instance
-					arguments: {b}}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
 BlockClosure >> typShaMethodValue2: aLookup [
 	<typShaMethod: 'value:'>
 	^ CompiledMethod

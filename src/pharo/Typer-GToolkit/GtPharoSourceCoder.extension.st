@@ -105,6 +105,9 @@ GtPharoSourceCoder >> typGtToggleStylersAllFor: anAst into: anAddOns viewModel: 
 		ifEmpty: [ anAddOns
 				removeStylersOfClass: GtPharoMethodExpanderStyler;
 				removeStylersOfClass: GtMethodAdviceStyler;
+				addStyler: (TypGtDeadStyler new
+						coderViewModel: aViewModel;
+						yourself);
 				addStyler: (TypGtValueStyler new
 						coderViewModel: aViewModel;
 						yourself);

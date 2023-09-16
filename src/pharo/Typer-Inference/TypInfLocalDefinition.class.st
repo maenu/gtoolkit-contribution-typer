@@ -5,6 +5,21 @@ Class {
 }
 
 { #category : #accessing }
+TypInfLocalDefinition >> classOrNil [
+	| className global |
+	state at: self ifAbsent: [ ^ nil ].
+	(state at: self) isUnknown ifFalse: [ ^ nil ].
+	(node name beginsWith: 'an')
+		ifTrue: [ className := node name allButFirst: 2 ]
+		ifFalse: [ (node name beginsWith: 'a')
+				ifTrue: [ className := node name allButFirst: 1 ]
+				ifFalse: [ ^ false ] ].
+	global := Smalltalk globals at: className asSymbol ifAbsent: [ ^ false ].
+	global isClassOrTrait ifFalse: [ ^ false ].
+	^ global
+]
+
+{ #category : #accessing }
 TypInfLocalDefinition >> outReads [
 
 	^ out
@@ -15,23 +30,19 @@ TypInfLocalDefinition >> outReads [
 
 { #category : #initialization }
 TypInfLocalDefinition >> transfer [
-	| className global |
-	node isArgumentVariable ifFalse: [ ^ self put: TypNilType instance ].
-	state at: self ifAbsent: [ ^ self put: TypUnknownType instance ].
-	(state at: self) isUnknown ifFalse: [ ^ self put: TypUnknownType instance ].
-	(node name beginsWith: 'an')
-		ifTrue: [ className := node name allButFirst: 2 ]
-		ifFalse: [ (node name beginsWith: 'a')
-				ifTrue: [ className := node name allButFirst: 1 ]
-				ifFalse: [ ^ self put: TypUnknownType instance ] ].
-	global := Smalltalk globals
-			at: className asSymbol
-			ifAbsent: [ ^ self put: TypUnknownType instance ].
-	global isClassOrTrait ifFalse: [ ^ self put: TypUnknownType instance ].
-	self put: global typAsType
+	self classOrNil
+		ifNotNil: [ :c | 
+			self put: c typAsType.
+			^ self ].
+	state
+		at: self
+		ifPresent: [ :t | self put: t ]
+		ifAbsent: [ self put: self type ]
 ]
 
 { #category : #accessing }
 TypInfLocalDefinition >> type [
-	^ type ifNil: [ (self outReads collect: #type) typAsMinimizedType ]
+	^ state
+		at: self
+		ifAbsent: [ (self outReads collect: #type) typAsMinimizedType ]
 ]

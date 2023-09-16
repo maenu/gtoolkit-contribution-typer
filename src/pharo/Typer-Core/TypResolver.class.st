@@ -11,6 +11,11 @@ TypResolver class >> invalidateAll [
 	self allSubInstancesDo: #invalidate
 ]
 
+{ #category : #accessing }
+TypResolver >> canCache: aLookup [
+	^ true
+]
+
 { #category : #resolving }
 TypResolver >> canResolve: aLookup [
 

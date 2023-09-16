@@ -35,6 +35,12 @@ TypInfInferred >> constrain: x [
 TypInfInferred >> empty [
 ]
 
+{ #category : #accessing }
+TypInfInferred >> error [
+	[ Error new signal ] on: Error do: [ :e | ^ e ].
+	^ #notcaught
+]
+
 { #category : #requirements }
 TypInfInferred >> inlined [
 
@@ -47,6 +53,34 @@ TypInfInferred >> message [
 	^ 1 + 2
 ]
 
+{ #category : #accessing }
+TypInfInferred >> signal [
+	Error signal
+]
+
+{ #category : #accessing }
+TypInfInferred >> signalAndHandle [
+	[ Error new signal ] on: Error do: [ :e | ^ e ].
+	^ #notcaught
+]
+
+{ #category : #accessing }
+TypInfInferred >> signalInlineAndHandle [
+	[ self signal ] on: Error do: [ :e | ^ e ].
+	^ #notcaught
+]
+
+{ #category : #accessing }
+TypInfInferred >> signalLookup [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
+TypInfInferred >> signalLookupAndHandle [
+	[ self signalLookup ] on: Error do: [ :e | ^ e ].
+	^ #notcaught
+]
+
 { #category : #requirements }
 TypInfInferred >> symbol [
 
@@ -56,6 +90,16 @@ TypInfInferred >> symbol [
 { #category : #accessing }
 TypInfInferred >> translated [
 	^ Array with: 'a' translated with: 'b' translated
+]
+
+{ #category : #accessing }
+TypInfInferred >> typShaMethodSignalLookup: aLookup [
+	<typShaMethod: #signalLookup>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: TypUnknownType instance
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: Error typAsType
 ]
 
 { #category : #accessing }

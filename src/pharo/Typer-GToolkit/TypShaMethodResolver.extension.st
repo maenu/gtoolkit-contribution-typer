@@ -5,7 +5,7 @@ TypShaMethodResolver >> typGtExpanderMethod: aLookup [
 	| methodClass |
 	methodClass := aLookup receiver classDescription.
 	^ aLookup receiver classDescription
-		>> (TypShaMethodIndex instance
+		>> (TypShaIndex instance
 				methodResolvers: methodClass
 				selector: aLookup selector) anyOne
 ]

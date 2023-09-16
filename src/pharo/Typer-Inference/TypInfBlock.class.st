@@ -29,10 +29,9 @@ TypInfBlock >> transfer [
 	state
 		at: self
 		put: ((BlockClosure
-				typAsFunctionTypeWithResult: (definitions
-						flatCollect: [ :n | n inReturns collect: #type ]) typAsMinimizedType
+				typAsFunctionTypeWithResult: (definitions flatCollect: [ :n | n inReturns collect: #type ])
+						typAsMinimizedType
 				arguments: (node arguments
-						collectWithIndex: [ :x :i | (definitions collect: [ :n | (n inArgumentAt: i) type ]) typAsMinimizedType ])
-				argumentsOptional: false
-				signalsAlways: nil) typInfWithNode: self)
+						collectWithIndex: [ :x :i | (definitions collect: [ :n | (n inArgumentAt: i) type ]) typAsMinimizedType ]))
+				typInfWithNode: self)
 ]

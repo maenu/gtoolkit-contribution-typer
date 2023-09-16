@@ -1,6 +1,6 @@
 Class {
 	#name : #TypInfBlockContext,
-	#superclass : #TypInfInlineContext,
+	#superclass : #TypInfInlContext,
 	#instVars : [
 		'block'
 	],
@@ -71,7 +71,7 @@ TypInfBlockContext >> initializeBlock: aBlock [
 
 { #category : #accessing }
 TypInfBlockContext >> newRoot [
-	^ TypInfInlinedBlock node: node context: self
+	^ TypInfInlBlock node: node context: self
 ]
 
 { #category : #accessing }
@@ -88,13 +88,13 @@ TypInfBlockContext >> uninstall [
 { #category : #accessing }
 TypInfBlockContext >> visitNode [
 	message outAdd: (TypInfNextEdge origin: message target: root).
-	root outAt: #definition put: block.
-	current
+	root
+		outAt: #definition put: block;
 		inArguments: (node arguments
 				withIndexCollect: [ :n :i | 
 					i <= message inArguments size
 						ifTrue: [ self
-								nextEdgeTo: (TypInfInlinedLocalDefinition
+								nextEdgeTo: (TypInfInlLocalDefinition
 										node: n
 										context: self
 										proxy: (message inArguments at: i)) ]
@@ -103,8 +103,9 @@ TypInfBlockContext >> visitNode [
 	node body lastIsReturn
 		ifTrue: [ current outAdd: (TypInfReturnEdge origin: current target: block context root) ]
 		ifFalse: [ current outAdd: (TypInfReturnEdge origin: current target: root) ].
-	current
-		outAdd: (TypInfNextEdge origin: current target: (message outAt: #nextOriginal))
+	(current isKindOf: TypInfReturn)
+		ifFalse: [ current
+				outAdd: (TypInfNextEdge origin: current target: (message outAt: #nextOriginal)) ]
 ]
 
 { #category : #accessing }

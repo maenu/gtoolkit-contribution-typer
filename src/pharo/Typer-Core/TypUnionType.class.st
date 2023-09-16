@@ -239,6 +239,14 @@ TypUnionType >> result [
 	^ (types collect: #result) typAsType
 ]
 
+{ #category : #'as yet unclassified' }
+TypUnionType >> signalsAlways [
+	| signals |
+	signals := types collect: #signalsAlways.
+	(signals includes: nil) ifTrue: [ ^ nil ].
+	^ signals typAsMinimizedType
+]
+
 { #category : #accessing }
 TypUnionType >> super [
 	| remains nilTypes unknownTypes current |

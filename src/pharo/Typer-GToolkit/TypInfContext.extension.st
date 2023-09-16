@@ -65,6 +65,11 @@ TypInfContext >> typGtFlowFor: aView [
 ]
 
 { #category : #'*Typer-GToolkit' }
+TypInfContext >> typGtHasCoder [
+	^ true
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypInfContext >> typGtIndicator [
 	^ 'l'
 ]

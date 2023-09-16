@@ -159,8 +159,7 @@ Collection >> typShaMethodDetectIfFound: aLookup [
 					BlockClosure
 						typAsFunctionTypeWithResult: TypUnknownType instance
 						arguments: {aLookup receiver at: #A}
-						argumentsOptional: true
-						signalsAlways: false} typAsType}
+						argumentsOptional: true} typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
@@ -183,8 +182,7 @@ Collection >> typShaMethodDetectIfFoundIfNone: aLookup [
 					BlockClosure
 						typAsFunctionTypeWithResult: TypUnknownType instance
 						arguments: {aLookup receiver at: #A}
-						argumentsOptional: true
-						signalsAlways: false} typAsType.
+						argumentsOptional: true} typAsType.
 				BlockClosure typAsType}
 ]
 
@@ -282,8 +280,7 @@ Collection >> typShaMethodIfEmptyIfNotEmpty: aLookup [
 					BlockClosure
 						typAsFunctionTypeWithResult: TypUnknownType instance
 						arguments: {aLookup self}
-						argumentsOptional: true
-						signalsAlways: false} typAsType}
+						argumentsOptional: true} typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
@@ -301,8 +298,7 @@ Collection >> typShaMethodIfNotEmpty: aLookup [
 					BlockClosure
 						typAsFunctionTypeWithResult: TypUnknownType instance
 						arguments: {aLookup self}
-						argumentsOptional: true
-						signalsAlways: false} typAsType}
+						argumentsOptional: true} typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }

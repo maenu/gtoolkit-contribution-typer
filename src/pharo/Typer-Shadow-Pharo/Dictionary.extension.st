@@ -74,8 +74,7 @@ Dictionary >> typShaMethodAtIfPresentIfAbsent: aLookup [
 				BlockClosure
 					typAsFunctionTypeWithResult: TypUnknownType instance
 					arguments: {aLookup receiver at: #A}
-					argumentsOptional: true
-					signalsAlways: false.
+					argumentsOptional: true.
 				BlockClosure typAsType}
 ]
 

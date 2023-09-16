@@ -1,5 +1,5 @@
 Class {
-	#name : #TypShaMethodIndex,
+	#name : #TypShaIndex,
 	#superclass : #Object,
 	#instVars : [
 		'cache'
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #accessing }
-TypShaMethodIndex class >> instance [
+TypShaIndex class >> instance [
 
 	^ instance ifNil: [ 
 		  instance := self new
@@ -20,7 +20,7 @@ TypShaMethodIndex class >> instance [
 ]
 
 { #category : #accessing }
-TypShaMethodIndex class >> invalidate [
+TypShaIndex class >> invalidate [
 
 	<script>
 	instance ifNotNil: #invalidate.
@@ -28,7 +28,7 @@ TypShaMethodIndex class >> invalidate [
 ]
 
 { #category : #accessing }
-TypShaMethodIndex >> anonymousClass: aClassDescription [
+TypShaIndex >> anonymousClass: aClassDescription [
 	^ cache
 		at: aClassDescription
 		ifAbsentPut: [ | class |
@@ -37,12 +37,12 @@ TypShaMethodIndex >> anonymousClass: aClassDescription [
 				ifTrue: [ class classSide
 						compile: (Behavior methodDict at: #basicNew) sourceCode;
 						compile: (Behavior methodDict at: #basicNew:) sourceCode;
-						compile: 'typShaNew ^ [ self new ] on: Error do: [ [ self basicNew ] on: Error do: [ superclass typShaNew ] ]' ].
+						compile: 'typShaNew ^ [ self basicNew ] on: Error do: [ superclass typShaNew ]' ].
 			class ]
 ]
 
 { #category : #accessing }
-TypShaMethodIndex >> build [
+TypShaIndex >> build [
 	cache removeAll.
 	Smalltalk globals allMethods
 		do: [ :m | 
@@ -60,27 +60,27 @@ TypShaMethodIndex >> build [
 ]
 
 { #category : #accessing }
-TypShaMethodIndex >> initialize [
+TypShaIndex >> initialize [
 	super initialize.
 	cache := Dictionary new
 ]
 
 { #category : #accessing }
-TypShaMethodIndex >> invalidate [
+TypShaIndex >> invalidate [
 	cache removeAll
 ]
 
 { #category : #accessing }
-TypShaMethodIndex >> methodResolvers: aClassDescription selector: aSymbol [
+TypShaIndex >> methodResolvers: aClassDescription selector: aSymbol [
 	^ cache at: aClassDescription -> #method -> aSymbol ifAbsent: [ #() ]
 ]
 
 { #category : #accessing }
-TypShaMethodIndex >> typeResolvers: aClassDescription [
+TypShaIndex >> typeResolvers: aClassDescription [
 	^ cache at: aClassDescription -> #type ifAbsent: [ #() ]
 ]
 
 { #category : #accessing }
-TypShaMethodIndex >> variableResolvers: aClassDescription selector: aSymbol [
+TypShaIndex >> variableResolvers: aClassDescription selector: aSymbol [
 	^ cache at: aClassDescription -> #variable -> aSymbol ifAbsent: [ #() ]
 ]

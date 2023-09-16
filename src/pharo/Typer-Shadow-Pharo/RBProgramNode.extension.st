@@ -168,8 +168,7 @@ RBProgramNode >> typShaMethodPropertyAtIfPresentIfAbsent: aLookup [
 					BlockClosure
 						typAsFunctionTypeWithResult: TypUnknownType instance
 						arguments: {TypUnknownType instance}
-						argumentsOptional: true
-						signalsAlways: false} typAsType.
+						argumentsOptional: true} typAsType.
 				BlockClosure typAsType}
 ]
 

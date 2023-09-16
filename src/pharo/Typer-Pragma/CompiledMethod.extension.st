@@ -22,15 +22,11 @@ CompiledMethod >> typPraHasVariablePragma: aString [
 
 { #category : #'*Typer-Pragma' }
 CompiledMethod >> typPraType [
-
 	^ self pragmas
-		  inject: (CompiledMethod
-				   typAsFunctionTypeWithResult: TypUnknownType instance
-				   arguments:
-				   (self numArgs typTimesCollect: [ :i | TypUnknownType instance ])
-				   argumentsOptional: false
-				   signalsAlways: nil)
-		  into: [ :t :p | p typPraMethodInject: t ]
+		inject: (CompiledMethod
+				typAsFunctionTypeWithResult: TypUnknownType instance
+				arguments: (self numArgs typTimesCollect: [ :i | TypUnknownType instance ]))
+		into: [ :t :p | p typPraMethodInject: t ]
 ]
 
 { #category : #'*Typer-Pragma' }

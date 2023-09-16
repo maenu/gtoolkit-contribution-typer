@@ -1,8 +1,9 @@
 Class {
-	#name : #TypInfMethodIndex,
+	#name : #TypInfIndex,
 	#superclass : #Object,
 	#instVars : [
-		'cache'
+		'cache',
+		'resolver'
 	],
 	#classInstVars : [
 		'instance'
@@ -11,7 +12,7 @@ Class {
 }
 
 { #category : #accessing }
-TypInfMethodIndex class >> instance [
+TypInfIndex class >> instance [
 
 	^ instance ifNil: [ 
 		  instance := self new
@@ -20,7 +21,7 @@ TypInfMethodIndex class >> instance [
 ]
 
 { #category : #accessing }
-TypInfMethodIndex class >> invalidate [
+TypInfIndex class >> invalidate [
 
 	<script>
 	instance ifNotNil: #invalidate.
@@ -28,7 +29,24 @@ TypInfMethodIndex class >> invalidate [
 ]
 
 { #category : #accessing }
-TypInfMethodIndex >> build [
+TypInfIndex >> anonymousClass: aClassDescription [
+	^ cache
+		at: aClassDescription -> #anonymous
+		ifAbsentPut: [ | class |
+			class := aClassDescription newAnonymousSubclass.
+			class isInstanceSide
+				ifTrue: [ class classSide
+						compile: (Behavior methodDict at: #basicNew) sourceCode;
+						compile: (Behavior methodDict at: #basicNew:) sourceCode;
+						compile: 'typInfNew
+										^ [ self basicNew ]
+											on: Error
+											do: [ superclass typInfNew ]' ].
+			class ]
+]
+
+{ #category : #accessing }
+TypInfIndex >> build [
 	| behaviors |
 	cache removeAll.	"toposort superclasses before subclasses so #allSuperclasses are initialized"
 	behaviors := ProtoObject withAllSubclasses asOrderedCollection.	"ProtoObject is last for some reason"
@@ -64,30 +82,39 @@ TypInfMethodIndex >> build [
 ]
 
 { #category : #accessing }
-TypInfMethodIndex >> implementors: aSymbol [
+TypInfIndex >> implementors: aSymbol [
 
 	^ cache at: aSymbol ifAbsent: [ #(  ) ]
 ]
 
 { #category : #accessing }
-TypInfMethodIndex >> initialize [
-
+TypInfIndex >> initialize [
 	super initialize.
-	cache := IdentityDictionary new
+	cache := IdentityDictionary new.
+	resolver := TypDepthFirstResolver
+			resolver: (TypBreadthFirstResolver
+					resolvers: {TypInfAbsMethodResolver new.
+							TypInfInlMethodResolver new.
+							TypInfMethodResolver instance})
 ]
 
 { #category : #accessing }
-TypInfMethodIndex >> invalidate [
+TypInfIndex >> invalidate [
 	cache removeAll
 ]
 
 { #category : #accessing }
-TypInfMethodIndex >> overriders: aCompiledMethod [
+TypInfIndex >> overriders: aCompiledMethod [
 	^ cache at: aCompiledMethod ifAbsent: [ #() ]
 ]
 
+{ #category : #accessing }
+TypInfIndex >> resolver [
+	^ resolver
+]
+
 { #category : #generated }
-TypInfMethodIndex >> writers: aVariable [
+TypInfIndex >> writers: aVariable [
 
 	^ cache at: aVariable ifAbsent: [ #(  ) ]
 ]

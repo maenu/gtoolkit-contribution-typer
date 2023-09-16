@@ -4,9 +4,8 @@ Class {
 	#traits : 'TypInfTWithArguments',
 	#classTraits : 'TypInfTWithArguments classTrait',
 	#instVars : [
-		'currentStrategy',
-		'strategies',
-		'lookup'
+		'lookup',
+		'contexts'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -14,6 +13,14 @@ Class {
 { #category : #accessing }
 TypInfMessage >> arguments [
 	^ self inArguments collect: [ :n | state at: n ]
+]
+
+{ #category : #accessing }
+TypInfMessage >> canInstall [
+	| newContexts |
+	newContexts := self newContexts.
+	(newContexts size between: 1 and: 8) ifFalse: [ ^ false ].
+	^ newContexts allSatisfy: [ :e | e value canInstall ]
 ]
 
 { #category : #accessing }
@@ -27,7 +34,7 @@ TypInfMessage >> constrainedReceiver [
 				#ifNotNil:ifNil:} includes: self selector)
 				ifTrue: [ receiver asNullable ]
 				ifFalse: [ receiver ] ].
-	implementors := TypInfMethodIndex instance implementors: self selector.
+	implementors := TypInfIndex instance implementors: self selector.
 	(implementors size between: 1 and: 8) ifFalse: [ ^ receiver ].
 	^ (implementors collect: #typAsType) typAsMinimizedType
 ]
@@ -52,16 +59,86 @@ TypInfMessage >> inReceiver: aNode [
 { #category : #accessing }
 TypInfMessage >> initialize [
 	super initialize.
-	strategies := {TypInfAbstractInterpretationMessageStrategy message: self.
-			TypInfInlineMethodMessageStrategy message: self.
-			TypInfLookupMessageStrategy message: self.
-			TypInfNullMessageStrategy message: self}.
-	currentStrategy := strategies last
+	contexts := Set new
+]
+
+{ #category : #accessing }
+TypInfMessage >> install [
+	| oldContexts |
+	oldContexts := contexts.
+	oldContexts
+		ifEmpty: [ out
+				at: #next
+					ifPresent: [ :s | 
+						s copy
+							do: [ :e | 
+								self outRemove: e.
+								e origin
+									outAdd: (TypInfEdge
+											origin: e origin
+											target: e target
+											key: #nextOriginal) ] ];
+				at: #return
+					ifPresent: [ :s | 
+						s copy
+							do: [ :e | 
+								self outRemove: e.
+								e origin
+									outAdd: (TypInfEdge
+											origin: e origin
+											target: e target
+											key: #returnOriginal) ] ] ].
+	contexts := self newContexts asOrderedCollection
+			collect: [ :c | 
+				oldContexts
+					detect: [ :cc | cc = c ]
+					ifFound: [ :cc | cc ]
+					ifNone: [ c ] ].
+	self assert: [ contexts isNotEmpty ].
+	(oldContexts difference: contexts) collect: #value thenDo: #uninstall.
+	(contexts difference: oldContexts) collect: #value thenDo: #install
 ]
 
 { #category : #accessing }
 TypInfMessage >> lookup [
-	^ lookup ifNil: [ lookup := self inReceiver newMethodLookup: self ]
+	^ lookup
+]
+
+{ #category : #accessing }
+TypInfMessage >> newContexts [
+	| lookups |
+	lookups := lookup preResolve.
+	lookups
+		detect: [ :l | l resolver isKindOf: TypInfMethodResolver ]
+		ifFound: [ (lookups
+				flatCollect: [ :l | 
+					(l resolver isKindOf: TypInfMethodResolver)
+						ifTrue: [ (TypInfIndex instance resolver
+								resolve: (l copy
+										result: nil;
+										yourself)) typInfContexts collect: [ :c | l -> c ] ]
+						ifFalse: [ {l
+									-> (TypInfInlLookupContext
+											sender: context
+											state: self state copy
+											node: node copy
+											self: l root self
+											super: l root super
+											message: self)} ] ]
+				as: Set) ifNotEmpty: [ :s | ^ s ] ].
+	lookup resolve signalsAlways
+		ifNotNil: [ :t | 
+			^ {lookup
+					-> (TypInfSignalContext
+							sender: context
+							state: state copy
+							node: node
+							self: context self
+							super: context super
+							message: self
+							exception: (TypInfIndex instance anonymousClass: t classDescription)
+									typInfNew)} ].
+	^ {}
 ]
 
 { #category : #accessing }
@@ -74,27 +151,61 @@ TypInfMessage >> selector [
 	^ node selector
 ]
 
-{ #category : #'as yet unclassified' }
-TypInfMessage >> strategy [
-	^ currentStrategy
-]
-
 { #category : #accessing }
 TypInfMessage >> transfer [
-	| oldStrategy |
-	lookup := nil.
-	oldStrategy := currentStrategy.
-	currentStrategy := strategies detect: #canInstall.
-	currentStrategy == oldStrategy
-		ifFalse: [ oldStrategy ifNotNil: #uninstall.
-			currentStrategy install ].
-	currentStrategy transfer.
+	| oldLookup |
+	oldLookup := lookup.
+	lookup := self inReceiver newMethodLookup: self.
+	self constrain: self inReceiver to: self constrainedReceiver.
+	self canInstall
+		ifTrue: [ (lookup ~= oldLookup or: [ contexts isNotEmpty ]) ifTrue: [ self install ].
+			state
+				at: self
+				put: (contexts flatCollect: [ :e | e value root inReturns collect: #type ])
+						typAsMinimizedType ].
+	contexts
+		detect: [ :c | c isKindOf: TypInfSignalContext ]
+		ifFound: [ :c | 
+			lookup resolve signalsAlways
+				ifNotNil: [ :t | 
+					c root
+						exception: (TypInfIndex instance anonymousClass: t classDescription) typInfNew ] ]
+		ifNone: [ | method |
+			method := lookup resolve.
+			self inArguments
+				withIndexDo: [ :e :i | 
+					i <= method arguments size
+						ifTrue: [ self constrain: e to: (method arguments at: i) ] ].
+			state at: self put: method result ].
 	state at: self inReceiver put: self receiver asNonNullable
 ]
 
 { #category : #accessing }
 TypInfMessage >> uninstall [
-	currentStrategy uninstall.
-	currentStrategy := nil.
+	self
+		inAt: #receiver
+		ifPresent: [ :r | self unconstrain: r ]
+		ifAbsent: [  "noop" ].	"might be in dirty state during node uninstall"
+	contexts
+		collect: #value thenDo: #uninstall;
+		removeAll.
+	lookup := nil.
+	out
+		at: #nextOriginal
+			ifPresent: [ :s | 
+				s copy
+					do: [ :e | 
+						self
+							outRemove: e;
+							outAdd: (TypInfNextEdge origin: e origin target: e target) ] ]
+			ifAbsent: [  "noop" ];
+		at: #returnOriginal
+			ifPresent: [ :s | 
+				s copy
+					do: [ :e | 
+						self
+							outRemove: e;
+							outAdd: (TypInfReturnEdge origin: e origin target: e target) ] ]
+			ifAbsent: [  "noop" ].
 	super uninstall
 ]

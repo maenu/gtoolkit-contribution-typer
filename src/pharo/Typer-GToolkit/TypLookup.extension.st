@@ -2,5 +2,5 @@ Extension { #name : #TypLookup }
 
 { #category : #'*Typer-GToolkit' }
 TypLookup >> typGtIndicator [
-	^ resolver typGtIndicator
+	^ resolver ifNil: '' ifNotNil: #typGtIndicator
 ]

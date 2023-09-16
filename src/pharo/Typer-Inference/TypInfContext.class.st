@@ -73,6 +73,11 @@ TypInfContext >> condense [
 ]
 
 { #category : #accessing }
+TypInfContext >> current [
+	^ current
+]
+
+{ #category : #accessing }
 TypInfContext >> findInRead: aVariable [
 	aVariable
 		depthFirstNextReverseDo: [ :n | n node == aVariable node variable definingNode ifTrue: [ ^ n ] ].
@@ -111,6 +116,12 @@ TypInfContext >> initializeSender: aContext state: aState node: aNode self: aTyp
 { #category : #accessing }
 TypInfContext >> iterations [
 	^ iterations
+]
+
+{ #category : #accessing }
+TypInfContext >> newExceptionHandlerContextOrNil: anException [
+	sender ifNil: [ ^ nil ].
+	^ sender newExceptionHandlerContextOrNil: anException
 ]
 
 { #category : #accessing }

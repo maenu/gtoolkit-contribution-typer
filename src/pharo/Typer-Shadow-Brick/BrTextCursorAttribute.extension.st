@@ -9,8 +9,7 @@ BrTextCursorAttribute >> typShaMethodEnterAction: aLookup [
 					typAsFunctionTypeWithResult: TypUnknownType instance
 					arguments: {BrTextEditor typAsType.
 							BrTextEditorCursorAddedEvent typAsType}
-					argumentsOptional: true
-					signalsAlways: false}
+					argumentsOptional: true}
 ]
 
 { #category : #'*Typer-Shadow-Brick' }
@@ -22,6 +21,5 @@ BrTextCursorAttribute >> typShaMethodLeaveAction: aLookup [
 					typAsFunctionTypeWithResult: TypUnknownType instance
 					arguments: {BrTextEditor typAsType.
 							BrTextEditorCursorRemovedEvent typAsType}
-					argumentsOptional: true
-					signalsAlways: false}
+					argumentsOptional: true}
 ]

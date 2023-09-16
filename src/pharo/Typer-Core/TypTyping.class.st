@@ -46,10 +46,10 @@ TypTyping >> invalidateLight [
 	TypIndex invalidateAll.
 	TypEdgeKey invalidateAll.
 	TypResolver invalidateAll.
-	TypShaMethodIndex invalidate.
+	TypShaIndex invalidate.
 	TypInfMethodResolver invalidate.
-	TypInfMethodIndex invalidate.
-	TypInfAbstractInterpretationResolver invalidate.
+	TypInfIndex invalidate.
+	TypInfAbsIndex invalidate.
 	TypInfNodeStack resetSoleInstance.
 	^ self
 ]

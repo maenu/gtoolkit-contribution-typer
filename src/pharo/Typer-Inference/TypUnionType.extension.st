@@ -1,11 +1,6 @@
 Extension { #name : #TypUnionType }
 
 { #category : #'*Typer-Inference' }
-TypUnionType >> typInfCanResolveMethod: aLookup [
-	^ types anySatisfy: [ :e | e typInfCanResolveMethod: (aLookup withReceiver: e) ]
-]
-
-{ #category : #'*Typer-Inference' }
 TypUnionType >> typInfWithoutUnion [
 
 	((types includes: TypNilType instance) and: [ types size = 2 ]) 

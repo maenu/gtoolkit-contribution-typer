@@ -345,6 +345,11 @@ TypType >> result [
 	^ self super result
 ]
 
+{ #category : #compatibility }
+TypType >> signalsAlways [
+	^ nil
+]
+
 { #category : #accessing }
 TypType >> super [
 

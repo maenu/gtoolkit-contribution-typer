@@ -6,12 +6,13 @@ Class {
 
 { #category : #accessing }
 TypInfSuper >> newMethodLookup: aMessage [
-	^ TypMethodLookup
+	^ TypInfMethodLookup
 		receiver: self super
 		selector: aMessage selector
 		arguments: aMessage arguments
 		self: context self
 		super: self super
+		message: self
 		parent: nil
 ]
 

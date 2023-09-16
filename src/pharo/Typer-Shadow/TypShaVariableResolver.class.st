@@ -8,7 +8,7 @@ Class {
 TypShaVariableResolver >> canResolve: aLookup [
 	aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
-	^ (TypShaMethodIndex instance
+	^ (TypShaIndex instance
 		variableResolvers: aLookup receiver classDescription
 		selector: aLookup selector) isNotEmpty
 ]
@@ -22,11 +22,11 @@ TypShaVariableResolver >> printOn: aStream [
 { #category : #accessing }
 TypShaVariableResolver >> result: aLookup [
 	| class |
-	class := TypShaMethodIndex instance
+	class := TypShaIndex instance
 			anonymousClass: aLookup receiver classDescription.
 	^ self
 		resolve: aLookup
-		reduce: ((TypShaMethodIndex instance
+		reduce: ((TypShaIndex instance
 				variableResolvers: aLookup receiver classDescription
 				selector: aLookup selector)
 				collect: [ :s | class typShaResolve: s lookup: aLookup ])
