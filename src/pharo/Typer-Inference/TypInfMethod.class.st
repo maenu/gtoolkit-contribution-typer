@@ -14,13 +14,15 @@ TypInfMethod >> methodNode [
 
 { #category : #accessing }
 TypInfMethod >> signalsAlways [
-	self inReturns ifNotEmpty: [ ^ nil ].
+	in at: #return ifPresent: [ ^ nil ].
 	^ in
 		at: #signal
 		ifPresent: [ :s | 
 			(s reject: [ :e | e origin isDead ])
 				ifEmpty: [ nil ]
-				ifNotEmpty: [ :ss | (ss collect: [ :e | e exception ]) typAsMinimizedType ] ]
+				ifNotEmpty: [ :ss | 
+					(ss collect: [ :e | e exception nonAnonymousClass typAsType ])
+						typAsMinimizedType ] ]
 		ifAbsent: [ nil ]
 ]
 
@@ -29,8 +31,7 @@ TypInfMethod >> transfer [
 	state
 		at: self
 		put: (CompiledMethod
-				typAsFunctionTypeWithResult: (self inReturns collect: #type)
-						typAsMinimizedType
+				typAsFunctionTypeWithResult: self inReturnType
 				arguments: (self inArguments collect: #type)
 				argumentsOptional: false
 				signalsAlways: self signalsAlways)

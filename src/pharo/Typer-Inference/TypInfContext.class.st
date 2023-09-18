@@ -114,6 +114,26 @@ TypInfContext >> iterations [
 ]
 
 { #category : #accessing }
+TypInfContext >> leaves [
+	| cursors cursor done |
+	cursors := IdentitySet with: root.
+	done := IdentitySet new.
+	[ cursors isNotEmpty and: [ (cursors difference: done) isNotEmpty ] ]
+		whileTrue: [ cursor := (cursors difference: done) anyOne.
+			cursor out
+				at: #next
+				ifPresent: [ :s | 
+					s
+						do: [ :e | 
+							(cursors includes: e origin) ifTrue: [ cursors remove: e origin ].
+							(e target context stack includes: self) ifTrue: [ cursors add: e target ] ] ]
+				ifAbsent: [  "noop" ].
+			done add: cursor ].
+	self assert: [ cursors isNotEmpty ].
+	^ cursors
+]
+
+{ #category : #accessing }
 TypInfContext >> newExceptionHandlerContextOrNil: anException [
 	sender ifNil: [ ^ nil ].
 	^ sender newExceptionHandlerContextOrNil: anException
@@ -163,6 +183,16 @@ TypInfContext >> printOn: aStream [
 ]
 
 { #category : #accessing }
+TypInfContext >> returns: aContext [
+	^ self leaves
+		allSatisfy: [ :n | 
+			n out
+				at: #return
+				ifPresent: [ :s | s anySatisfy: [ :e | e target == aContext root ] ]
+				ifAbsent: [ false ] ]
+]
+
+{ #category : #accessing }
 TypInfContext >> root [
 	^ root
 ]
@@ -197,6 +227,11 @@ TypInfContext >> self [
 { #category : #accessing }
 TypInfContext >> sender [
 	^ sender
+]
+
+{ #category : #accessing }
+TypInfContext >> stack [
+	^ (sender ifNil: {} ifNotNil: #stack) , {self}
 ]
 
 { #category : #accessing }

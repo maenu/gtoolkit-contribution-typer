@@ -127,6 +127,14 @@ TypInfNode >> inNexts [
 		ifAbsent: [ #() ]
 ]
 
+{ #category : #accessing }
+TypInfNode >> inReturnType [
+	^ (in
+		at: #return
+		ifPresent: [ :s | s reject: [ :e | e origin isDead ] thenCollect: #type ]
+		ifAbsent: [ #() ]) typAsMinimizedType
+]
+
 { #category : #initialization }
 TypInfNode >> initializeNode: aNode context: aContext [
 	self assert: [ aContext state isNotNil ].

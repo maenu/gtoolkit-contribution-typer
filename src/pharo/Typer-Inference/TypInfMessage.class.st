@@ -12,7 +12,8 @@ Class {
 
 { #category : #accessing }
 TypInfMessage >> arguments [
-	^ self inArguments collect: [ :n | state at: n ]
+	^ self inArguments
+		collect: [ :n | state at: n ifAbsent: TypUnknownType instance ]
 ]
 
 { #category : #accessing }
@@ -52,8 +53,9 @@ TypInfMessage >> inReceiver [
 
 { #category : #accessing }
 TypInfMessage >> inReceiver: aNode [
-
-	^ self inAt: #receiver put: aNode
+	self inAt: #receiver put: aNode.
+	lookup := aNode newMethodLookup: self.
+	^ aNode
 ]
 
 { #category : #accessing }
@@ -143,7 +145,7 @@ TypInfMessage >> newContexts [
 
 { #category : #accessing }
 TypInfMessage >> receiver [
-	^ state at: self inReceiver
+	^ state at: self inReceiver ifAbsent: TypUnknownType instance
 ]
 
 { #category : #accessing }
