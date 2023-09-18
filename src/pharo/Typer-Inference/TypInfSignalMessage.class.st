@@ -31,11 +31,6 @@ TypInfSignalMessage >> exception: anException [
 ]
 
 { #category : #accessing }
-TypInfSignalMessage >> inReturns [
-	^ {self}
-]
-
-{ #category : #accessing }
 TypInfSignalMessage >> newContexts [
 	^ (context newExceptionHandlerContextOrNil: exception)
 		ifNil: [ {} ]

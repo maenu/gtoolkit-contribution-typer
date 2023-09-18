@@ -31,6 +31,12 @@ TypInfInferred >> constrain: x [
 	x blockUseSameTwice: true
 ]
 
+{ #category : #accessing }
+TypInfInferred >> deadCode [
+	true ifTrue: [ ^ self ].
+	^ #dead
+]
+
 { #category : #requirements }
 TypInfInferred >> empty [
 ]

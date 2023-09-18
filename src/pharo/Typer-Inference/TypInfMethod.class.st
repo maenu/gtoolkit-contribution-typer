@@ -7,14 +7,6 @@ Class {
 }
 
 { #category : #accessing }
-TypInfMethod >> inReturns [
-	^ in
-		at: #return
-		ifPresent: [ :s | (s collect: #origin) reject: #isDead ]
-		ifAbsent: [ #() ]
-]
-
-{ #category : #accessing }
 TypInfMethod >> methodNode [
 
 	^ self

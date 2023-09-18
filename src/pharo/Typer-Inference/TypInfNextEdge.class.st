@@ -1,6 +1,6 @@
 Class {
 	#name : #TypInfNextEdge,
-	#superclass : #TypInfEdge,
+	#superclass : #TypInfContextEdge,
 	#instVars : [
 		'state'
 	],

@@ -93,6 +93,13 @@ CompiledMethod >> typInfRunVariant: aBlock duration: aDuration [
 ]
 
 { #category : #'*Typer-Inference' }
+CompiledMethod >> typInfType [
+	^ self class
+		typAsFunctionTypeWithResult: TypUnknownType instance
+		arguments: (self numArgs timesCollect: [ TypUnknownType instance ])
+]
+
+{ #category : #'*Typer-Inference' }
 CompiledMethod >> typInfTypes [
 
 	^ { Integer typAsType }

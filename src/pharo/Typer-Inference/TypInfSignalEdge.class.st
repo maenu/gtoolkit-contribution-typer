@@ -1,6 +1,6 @@
 Class {
 	#name : #TypInfSignalEdge,
-	#superclass : #TypInfEdge,
+	#superclass : #TypInfContextEdge,
 	#instVars : [
 		'exception'
 	],

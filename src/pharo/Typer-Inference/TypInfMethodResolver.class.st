@@ -26,7 +26,9 @@ TypInfMethodResolver >> canResolve: aLookup [
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
 	(aLookup receiver classDescription includesSelector: aLookup selector)
 		ifFalse: [ ^ false ].
-	(TypInfNodeStack canPush: aLookup) ifFalse: [ ^ false ].
+	(TypInfNodeStack
+		canPush: (aLookup receiver classDescription >> aLookup selector) ast)
+		ifFalse: [ ^ false ].
 	^ true
 ]
 

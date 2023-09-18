@@ -111,6 +111,5 @@ TypInfBlockContext >> visitNode [
 { #category : #accessing }
 TypInfBlockContext >> visitReturnNode: aReturnNode [
 	self visitNode: aReturnNode value.
-	self next: aReturnNode.
 	current outAdd: (TypInfReturnEdge origin: current target: block context root)
 ]

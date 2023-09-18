@@ -73,11 +73,6 @@ TypInfContext >> condense [
 ]
 
 { #category : #accessing }
-TypInfContext >> current [
-	^ current
-]
-
-{ #category : #accessing }
 TypInfContext >> findInRead: aVariable [
 	aVariable
 		depthFirstNextReverseDo: [ :n | n node == aVariable node variable definingNode ifTrue: [ ^ n ] ].

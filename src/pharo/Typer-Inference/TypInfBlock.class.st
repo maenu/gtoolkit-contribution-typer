@@ -15,14 +15,6 @@ TypInfBlock >> definitions [
 ]
 
 { #category : #accessing }
-TypInfBlock >> inReturns [
-	^ in
-		at: #return
-		ifPresent: [ :s | s collect: #origin ]
-		ifAbsent: [ #() ]
-]
-
-{ #category : #accessing }
 TypInfBlock >> transfer [
 	| definitions |
 	definitions := self definitions.
