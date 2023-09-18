@@ -71,7 +71,7 @@ TypNode >> typGtGraphPaintOn: aMondrian [
 			, ((nodes flatCollect: #outEdges) select: [ :e | nodes includes: e target ]))
 			asIdentitySet.
 	connections := (edges groupedBy: [ :e | e origin -> e target ]) associations
-			collect: [ :a | a key -> (a value sorted: [ :e :f | e key = #next ]) ]
+			collect: [ :a | a key -> (a value sorted: [ :e :f | #(next return) includes: e key ]) ]
 			as: Dictionary.
 	aMondrian nodes
 		stencil: [ :e | 
@@ -93,7 +93,9 @@ TypNode >> typGtGraphPaintOn: aMondrian [
 			(e typGtAsElementIn: aMondrian)
 				curvatureFraction: (localEdges indexOf: e ifAbsent: 0) / (localEdges size * 2 + 1);
 				yourself ];
-		connect: (edges reject: [ :e | e key = #next ] thenCollect: #value)
+		connect: (edges
+					reject: [ :e | #(next return) includes: e key ]
+					thenCollect: #value)
 			from: #origin
 			to: #target.
 	aMondrian edges
@@ -105,7 +107,7 @@ TypNode >> typGtGraphPaintOn: aMondrian [
 			(e typGtAsElementIn: aMondrian)
 				curvatureFraction: ((localEdges indexOf: e ifAbsent: 1) - 1) / (localEdges size * 2 + 1);
 				yourself ];
-		connect: (edges select: [ :e | e key = #next ] thenCollect: #value)
+		connect: (edges select: [ :e | #(next return) includes: e key ] thenCollect: #value)
 			from: #origin
 			to: #target.
 	aMondrian layout force fix: self at: 0 @ 0

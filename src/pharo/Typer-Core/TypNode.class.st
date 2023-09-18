@@ -29,7 +29,8 @@ TypNode class >> isAbstract [
 
 { #category : #accessing }
 TypNode >> edges [
-	^ (in values flatCollect: #yourself) , (out flatCollect: #yourself)
+	^ ((in values flatCollect: #yourself) , (out flatCollect: #yourself))
+		asIdentitySet
 ]
 
 { #category : #accessing }

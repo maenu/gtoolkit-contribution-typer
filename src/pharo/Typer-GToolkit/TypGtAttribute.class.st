@@ -10,7 +10,7 @@ Class {
 
 { #category : #accessing }
 TypGtAttribute class >> nodes: aCollection [
-	^ self nodes: aCollection type: (aCollection collect: #type) typAsType
+	^ self nodes: aCollection type: (aCollection collect: #type) typAsMinimizedType
 ]
 
 { #category : #'as yet unclassified' }

@@ -15,6 +15,7 @@ TypInfMessage >> typGtExpanderCoders [
 	contexts
 		ifEmpty: [ | lookupResolved |
 			lookupResolved := lookup resolved.
+			lookupResolved resolver ifNil: [ ^ {} ].
 			^ {GtPharoMethodCoder new
 					attributeNamed: #typGtLookup put: lookupResolved;
 					forMethod: (lookupResolved resolver typGtExpanderMethod: lookupResolved);

@@ -5,7 +5,7 @@ Collection >> typAsMinimizedType [
 	<typPraResult: 'TypType'>
 	| remains nilTypes unknownTypes |
 	self ifEmpty: [ ^ TypUnknownType instance ].
-	remains := IdentitySet new.
+	remains := Set new.
 	self
 		do: [ :e | e isUnion ifTrue: [ remains addAll: e types ] ifFalse: [ remains add: e ] ].
 	nilTypes := remains select: #isNil.
