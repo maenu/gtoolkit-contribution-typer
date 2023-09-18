@@ -144,6 +144,48 @@ TypInfMessage >> newContexts [
 ]
 
 { #category : #accessing }
+TypInfMessage >> outDisable [
+	self
+		outDisable: #next;
+		outDisable: #return;
+		outDisable: #signal
+]
+
+{ #category : #accessing }
+TypInfMessage >> outDisable: aSymbol [
+	^ (self outEnableds: aSymbol) collect: #disable
+]
+
+{ #category : #accessing }
+TypInfMessage >> outDisableds: aSymbol [
+	^ out
+		at: (aSymbol , #Disabled) asSymbol
+		ifPresent: #copy
+		ifAbsent: #()
+]
+
+{ #category : #accessing }
+TypInfMessage >> outEnable: aSymbol origin: aNode [
+	(self outDisableds: aSymbol) do: [ :e | e enableOrigin: aNode ]
+]
+
+{ #category : #accessing }
+TypInfMessage >> outEnableOrigin: aNode [
+	self
+		outEnable: #next origin: aNode;
+		outEnable: #return origin: aNode;
+		outEnable: #signal origin: aNode
+]
+
+{ #category : #accessing }
+TypInfMessage >> outEnableds: aSymbol [
+	^ out
+		at: aSymbol
+		ifPresent: #copy
+		ifAbsent: #()
+]
+
+{ #category : #accessing }
 TypInfMessage >> receiver [
 	^ state at: self inReceiver ifAbsent: TypUnknownType instance
 ]

@@ -329,8 +329,7 @@ TypInfContext >> visitMethodNode: aMethodNode [
 	aMethodNode pragmas do: [ :each | self visitNode: each ].
 	self visitNode: aMethodNode body.
 	aMethodNode lastIsReturn
-		ifFalse: [ self next: RBVariableNode selfNode.
-			current outAdd: (TypInfReturnEdge origin: current target: root) ].
+		ifFalse: [ current outAdd: (TypInfSelfReturnEdge origin: current target: root) ].
 	^ root
 ]
 
@@ -352,7 +351,6 @@ TypInfContext >> visitPragmaNode: aPragmaNode [
 { #category : #visiting }
 TypInfContext >> visitReturnNode: aReturnNode [
 	self visitNode: aReturnNode value.
-	self next: aReturnNode.
 	current outAdd: (TypInfReturnEdge origin: current target: root)
 ]
 
