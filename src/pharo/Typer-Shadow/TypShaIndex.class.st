@@ -28,20 +28,6 @@ TypShaIndex class >> invalidate [
 ]
 
 { #category : #accessing }
-TypShaIndex >> anonymousClass: aClassDescription [
-	^ cache
-		at: aClassDescription
-		ifAbsentPut: [ | class |
-			class := aClassDescription newAnonymousSubclass.
-			class isInstanceSide
-				ifTrue: [ class classSide
-						compile: (Behavior methodDict at: #basicNew) sourceCode;
-						compile: (Behavior methodDict at: #basicNew:) sourceCode;
-						compile: 'typShaNew ^ [ self basicNew ] on: Error do: [ superclass typShaNew ]' ].
-			class ]
-]
-
-{ #category : #accessing }
 TypShaIndex >> build [
 	cache removeAll.
 	Smalltalk globals allMethods
@@ -49,14 +35,13 @@ TypShaIndex >> build [
 			m typShaIsResolveMethod
 				ifTrue: [ (cache
 						at: m methodClass -> #method -> m typShaResolvedMethod
-						ifAbsentPut: [ IdentitySet new ]) add: m selector ].
+						ifAbsentPut: [ IdentitySet new ]) add: m ].
 			m typShaIsResolveVariable
 				ifTrue: [ (cache
 						at: m methodClass -> #variable -> m typShaResolvedVariable
-						ifAbsentPut: [ IdentitySet new ]) add: m selector ].
+						ifAbsentPut: [ IdentitySet new ]) add: m ].
 			m typShaIsResolveType
-				ifTrue: [ (cache at: m methodClass -> #type ifAbsentPut: [ IdentitySet new ])
-						add: m selector ] ]
+				ifTrue: [ (cache at: m methodClass -> #type ifAbsentPut: [ IdentitySet new ]) add: m ] ]
 ]
 
 { #category : #accessing }
@@ -77,7 +62,7 @@ TypShaIndex >> methodResolvers: aClassDescription selector: aSymbol [
 
 { #category : #accessing }
 TypShaIndex >> typeResolvers: aClassDescription [
-	^ cache at: aClassDescription -> #type ifAbsent: [ #() ]
+	^ cache at: aClassDescription class -> #type ifAbsent: [ #() ]
 ]
 
 { #category : #accessing }

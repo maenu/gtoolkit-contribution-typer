@@ -21,13 +21,10 @@ TypShaVariableResolver >> printOn: aStream [
 
 { #category : #accessing }
 TypShaVariableResolver >> result: aLookup [
-	| class |
-	class := TypShaIndex instance
-			anonymousClass: aLookup receiver classDescription.
 	^ self
 		resolve: aLookup
 		reduce: ((TypShaIndex instance
 				variableResolvers: aLookup receiver classDescription
 				selector: aLookup selector)
-				collect: [ :s | class typShaResolve: s lookup: aLookup ])
+				collect: [ :m | nil rFwithArgs: {aLookup} executeMethod: m ])
 ]

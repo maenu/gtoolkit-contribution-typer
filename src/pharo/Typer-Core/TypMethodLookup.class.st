@@ -73,6 +73,20 @@ TypMethodLookup >> = anObject [
 ]
 
 { #category : #accessing }
+TypMethodLookup >> > aLookup [
+	| found types |
+	found := false.
+	types := arguments , {receiver}.
+	aLookup arguments , {aLookup receiver}
+		withIndexDo: [ :t :i | 
+			| tt |
+			tt := types at: i.
+			tt >= t ifFalse: [ ^ false ].
+			tt = t ifFalse: [ found := true ] ].
+	^ found
+]
+
+{ #category : #accessing }
 TypMethodLookup >> arguments [
 	^ arguments
 ]

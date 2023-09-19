@@ -28,10 +28,9 @@ TypUnionType >> = anObject [
 
 { #category : #comparing }
 TypUnionType >> > aType [
-	aType isUnion
-		ifFalse: [ ^ types anySatisfy: [ :e | e >= aType ] ].
-	aType = self
-		ifTrue: [ ^ false ].
+	aType isUnknown ifTrue: [ ^ false ].
+	aType isUnion ifFalse: [ ^ types anySatisfy: [ :e | e >= aType ] ].
+	aType = self ifTrue: [ ^ false ].
 	^ aType types allSatisfy: [ :e | self >= e ]
 ]
 

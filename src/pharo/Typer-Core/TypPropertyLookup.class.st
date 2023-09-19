@@ -35,6 +35,7 @@ TypPropertyLookup >> initialize [
 
 { #category : #accessing }
 TypPropertyLookup >> initializeReceiver: aType selector: aSymbol [
+	self assert: [ aType isKindOf: TypType ].
 	receiver := aType.
 	selector := aSymbol
 ]

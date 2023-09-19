@@ -11,10 +11,30 @@ Class {
 }
 
 { #category : #accessing }
+TypLookup >> < aLookup [
+	^ aLookup > self
+]
+
+{ #category : #accessing }
+TypLookup >> <= aLookup [
+	^ aLookup >= self
+]
+
+{ #category : #accessing }
 TypLookup >> = anObject [
 	anObject == self ifTrue: [ ^ true ].
 	anObject class = self class ifFalse: [ ^ false ].
 	^ anObject parent = parent
+]
+
+{ #category : #accessing }
+TypLookup >> > aLookup [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
+TypLookup >> >= aLookup [
+	^ self > aLookup or: [ self = aLookup ]
 ]
 
 { #category : #accessing }

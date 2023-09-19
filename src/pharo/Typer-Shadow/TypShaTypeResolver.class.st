@@ -18,10 +18,8 @@ TypShaTypeResolver >> printOn: aStream [
 
 { #category : #accessing }
 TypShaTypeResolver >> result: aLookup [
-	| class |
-	class := TypShaIndex instance anonymousClass: aLookup classDescription.
 	^ self
 		resolve: aLookup
 		reduce: ((TypShaIndex instance typeResolvers: aLookup classDescription)
-				collect: [ :s | class typShaResolve: s lookup: aLookup ])
+				collect: [ :m | aLookup classDescription rFwithArgs: {aLookup} executeMethod: m ])
 ]
