@@ -65,6 +65,7 @@ TypInfMethodLookup >> asParent [
 
 { #category : #accessing }
 TypInfMethodLookup >> initializeMessage: aMessage [
+	self assert: [ aMessage isKindOf: TypInfMessage ].
 	message := aMessage
 ]
 

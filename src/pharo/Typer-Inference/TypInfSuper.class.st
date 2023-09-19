@@ -12,7 +12,7 @@ TypInfSuper >> newMethodLookup: aMessage [
 		arguments: aMessage arguments
 		self: context self
 		super: self super
-		message: self
+		message: aMessage
 		parent: nil
 ]
 

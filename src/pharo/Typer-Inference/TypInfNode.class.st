@@ -5,8 +5,7 @@ Class {
 		'node',
 		'state',
 		'context',
-		'transfers',
-		'type'
+		'transfers'
 	],
 	#category : #'Typer-Inference-Core'
 }

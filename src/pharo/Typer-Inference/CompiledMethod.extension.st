@@ -15,7 +15,9 @@ CompiledMethod >> typInfRunAndMonitor: aDuration [
 	| tally |
 	tally := MessageTally new.
 	^ (self
-		typInfRunVariant: [ :c | [ tally spyEvery: 1 on: [ c runDiff ] ] ]
+		typInfRunVariant: [ :c | 
+			tally spyEvery: 1 on: [ c run ].
+			c ]
 		duration: aDuration)
 		then: [ :m | 
 			m

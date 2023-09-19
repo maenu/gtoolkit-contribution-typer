@@ -6,8 +6,7 @@ Class {
 
 { #category : #accessing }
 TypInfVariable >> covariantPut: aType [
-	state at: node variable covariantPut: aType.
-	state at: self covariantPut: aType
+	state at: node variable covariantPut: (state at: self covariantPut: aType)
 ]
 
 { #category : #accessing }

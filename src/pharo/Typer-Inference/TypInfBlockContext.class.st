@@ -103,9 +103,11 @@ TypInfBlockContext >> visitNode [
 	node body lastIsReturn
 		ifTrue: [ current outAdd: (TypInfReturnEdge origin: current target: block context root) ]
 		ifFalse: [ current outAdd: (TypInfReturnEdge origin: current target: root) ].
-	(current isKindOf: TypInfReturn)
-		ifFalse: [ current
-				outAdd: (TypInfNextEdge origin: current target: (message outAt: #nextOriginal)) ]
+	(message outDisableds: #next)
+		do: [ :e | (self returns: e target context) ifFalse: [ e enableOrigin: current ] ].
+	message
+		outEnable: #return origin: current;
+		outEnable: #signal origin: current
 ]
 
 { #category : #accessing }

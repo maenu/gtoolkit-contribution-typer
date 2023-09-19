@@ -53,9 +53,7 @@ TypInfMessage >> inReceiver [
 
 { #category : #accessing }
 TypInfMessage >> inReceiver: aNode [
-	self inAt: #receiver put: aNode.
-	lookup := aNode newMethodLookup: self.
-	^ aNode
+	^ self inAt: #receiver put: aNode
 ]
 
 { #category : #accessing }
@@ -68,28 +66,7 @@ TypInfMessage >> initialize [
 TypInfMessage >> install [
 	| oldContexts |
 	oldContexts := contexts.
-	oldContexts
-		ifEmpty: [ out
-				at: #next
-					ifPresent: [ :s | 
-						s copy
-							do: [ :e | 
-								self outRemove: e.
-								e origin
-									outAdd: (TypInfEdge
-											origin: e origin
-											target: e target
-											key: #nextOriginal) ] ];
-				at: #return
-					ifPresent: [ :s | 
-						s copy
-							do: [ :e | 
-								self outRemove: e.
-								e origin
-									outAdd: (TypInfEdge
-											origin: e origin
-											target: e target
-											key: #returnOriginal) ] ] ].
+	oldContexts ifEmpty: [ self outDisable ].
 	contexts := self newContexts asOrderedCollection
 			collect: [ :c | 
 				oldContexts
@@ -138,8 +115,7 @@ TypInfMessage >> newContexts [
 							self: context self
 							super: context super
 							message: self
-							exception: (TypInfIndex instance anonymousClass: t classDescription)
-									typInfNew)} ].
+							exception: t classDescription new)} ].
 	^ {}
 ]
 
@@ -198,29 +174,27 @@ TypInfMessage >> selector [
 { #category : #accessing }
 TypInfMessage >> transfer [
 	| oldLookup |
-	oldLookup := lookup.
-	lookup := self inReceiver newMethodLookup: self.
 	self constrain: self inReceiver to: self constrainedReceiver.
-	self canInstall
-		ifTrue: [ (lookup ~= oldLookup or: [ contexts isNotEmpty ]) ifTrue: [ self install ].
-			state
-				at: self
-				put: (contexts flatCollect: [ :e | e value root inReturns collect: #type ])
-						typAsMinimizedType ].
+	oldLookup := lookup.
+	lookup := self inReceiver newMethodLookup: self.	"(lookup isNotNil and: [ oldLookup isNotNil and: [ lookup > oldLookup ] ])
+		ifTrue: [ Halt now ]."
+	((lookup ~= oldLookup or: [ contexts isNotEmpty ]) and: [ self canInstall ]) ifTrue: [ self install ].
 	contexts
 		detect: [ :c | c isKindOf: TypInfSignalContext ]
 		ifFound: [ :c | 
 			lookup resolve signalsAlways
-				ifNotNil: [ :t | 
-					c root
-						exception: (TypInfIndex instance anonymousClass: t classDescription) typInfNew ] ]
-		ifNone: [ | method |
+				ifNotNil: [ :t | c root exception: t classDescription new ] ].
+	contexts
+		ifEmpty: [ | method |
 			method := lookup resolve.
 			self inArguments
 				withIndexDo: [ :e :i | 
 					i <= method arguments size
 						ifTrue: [ self constrain: e to: (method arguments at: i) ] ].
-			state at: self put: method result ].
+			state at: self put: method result ]
+		ifNotEmpty: [ state
+				at: self
+				put: (contexts collect: [ :a | a value root inReturnType ]) typAsMinimizedType ].
 	state at: self inReceiver put: self receiver asNonNullable
 ]
 
@@ -234,22 +208,6 @@ TypInfMessage >> uninstall [
 		collect: #value thenDo: #uninstall;
 		removeAll.
 	lookup := nil.
-	out
-		at: #nextOriginal
-			ifPresent: [ :s | 
-				s copy
-					do: [ :e | 
-						self
-							outRemove: e;
-							outAdd: (TypInfNextEdge origin: e origin target: e target) ] ]
-			ifAbsent: [  "noop" ];
-		at: #returnOriginal
-			ifPresent: [ :s | 
-				s copy
-					do: [ :e | 
-						self
-							outRemove: e;
-							outAdd: (TypInfReturnEdge origin: e origin target: e target) ] ]
-			ifAbsent: [  "noop" ].
+	self outEnable: #next origin: self.
 	super uninstall
 ]

@@ -55,16 +55,11 @@ TypInfSignalContext >> visitNode [
 	root
 		inReceiver: message inReceiver;
 		inArguments: message inArguments.
-	exception := (TypInfIndex instance
-			anonymousClass: message receiver classDescription) typInfNew.
+	exception := message receiver classDescription new.
 	(self newExceptionHandlerContextOrNil: exception)
 		ifNil: [ root
 				outAdd: ((TypInfSignalEdge origin: root target: self home root)
 						exception: exception;
 						yourself) ]
-		ifNotNil: [ root
-				outAdd: (TypInfEdge
-						origin: root
-						target: (message outAt: #nextOriginal)
-						key: #nextOriginal) ]
+		ifNotNil: [ message outEnable: #signal origin: root ]
 ]
