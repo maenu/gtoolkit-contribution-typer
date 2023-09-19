@@ -39,12 +39,6 @@ TypInfNode >> canSlurpAndBurp [
 ]
 
 { #category : #accessing }
-TypInfNode >> condense [
-	"type := self type."
-	"state := nil"
-]
-
-{ #category : #accessing }
 TypInfNode >> constrain: aNode to: aType [
 	state at: aNode covariantPut: aType.
 	aNode constrainTo: aType from: self

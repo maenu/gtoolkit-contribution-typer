@@ -1,6 +1,30 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*Typer-Inference' }
+CompiledMethod >> typInfAbsCanResolve [
+	self assert: [ self typInfAbsIsCanResolve ].
+	^ (self pragmas detect: [ :e | e selector = #typInfAbsCanResolveMethod: ])
+		arguments first asSymbol
+]
+
+{ #category : #'*Typer-Inference' }
+CompiledMethod >> typInfAbsIsCanResolve [
+	^ self hasPragmaNamed: #typInfAbsCanResolveMethod:
+]
+
+{ #category : #'*Typer-Inference' }
+CompiledMethod >> typInfAbsIsResolveMethod [
+	^ self hasPragmaNamed: #typInfAbsResolveMethod:
+]
+
+{ #category : #'*Typer-Inference' }
+CompiledMethod >> typInfAbsResolveMethod [
+	self assert: [ self typInfAbsIsResolveMethod ].
+	^ (self pragmas detect: [ :e | e selector = #typInfAbsResolveMethod: ])
+		arguments first asSymbol
+]
+
+{ #category : #'*Typer-Inference' }
 CompiledMethod >> typInfRun [
 	^ self typInfRunVariant: #run
 ]

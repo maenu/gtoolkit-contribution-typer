@@ -249,6 +249,14 @@ TypInfContext >> super [
 	^ superType
 ]
 
+{ #category : #'as yet unclassified' }
+TypInfContext >> typInfAbsType [
+	root ifNotNil: [ ^ root type ].
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: TypUnknownType instance
+		arguments: (node arguments collect: [ :n | TypUnknownType instance ])
+]
+
 { #category : #accessing }
 TypInfContext >> visit [
 	current := root := self add: self newRoot.
