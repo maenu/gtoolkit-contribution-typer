@@ -26,5 +26,5 @@ TypShaMethodResolver >> result: aLookup [
 		reduce: ((TypShaIndex instance
 				methodResolvers: aLookup receiver classDescription
 				selector: aLookup selector)
-				collect: [ :m | nil rFwithArgs: {aLookup} executeMethod: m ])
+				collect: [ :m | nil withArgs: {aLookup} executeMethod: m ])
 ]

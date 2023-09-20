@@ -21,5 +21,5 @@ TypShaTypeResolver >> result: aLookup [
 	^ self
 		resolve: aLookup
 		reduce: ((TypShaIndex instance typeResolvers: aLookup classDescription)
-				collect: [ :m | aLookup classDescription rFwithArgs: {aLookup} executeMethod: m ])
+				collect: [ :m | aLookup classDescription withArgs: {aLookup} executeMethod: m ])
 ]

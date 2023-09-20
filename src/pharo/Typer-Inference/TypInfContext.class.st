@@ -201,11 +201,7 @@ TypInfContext >> root [
 TypInfContext >> run [
 	self visit.
 	[ iterationsDone := iterationsDone + 1.
-	iterationsDone <= iterationsMax
-		and: [ root iterate
-				ifTrue: [ true ]
-				ifFalse: [ self condense.
-					false ] ] ] whileTrue
+	iterationsDone <= iterationsMax and: [ root iterate ] ] whileTrue
 ]
 
 { #category : #running }
@@ -251,6 +247,14 @@ TypInfContext >> super [
 
 { #category : #'as yet unclassified' }
 TypInfContext >> typInfAbsType [
+	root ifNotNil: [ ^ root type ].
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: TypUnknownType instance
+		arguments: (node arguments collect: [ :n | TypUnknownType instance ])
+]
+
+{ #category : #'as yet unclassified' }
+TypInfContext >> type [
 	root ifNotNil: [ ^ root type ].
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType instance

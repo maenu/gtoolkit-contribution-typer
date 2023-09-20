@@ -19,6 +19,6 @@ TypGtDeadStyler >> styleNode: aNode [
 
 { #category : #accessing }
 TypGtDeadStyler >> visitNode: aNode [
-	aNode isReturn ifFalse: [ self styleNode: aNode ].
+	(aNode isReturn or: aNode isPragma) ifFalse: [ self styleNode: aNode ].
 	super visitNode: aNode
 ]

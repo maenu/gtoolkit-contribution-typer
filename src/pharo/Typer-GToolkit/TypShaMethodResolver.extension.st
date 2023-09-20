@@ -7,7 +7,7 @@ TypShaMethodResolver >> typGtExpanderMethod: aLookup [
 	^ aLookup receiver classDescription
 		>> (TypShaIndex instance
 				methodResolvers: methodClass
-				selector: aLookup selector) anyOne
+				selector: aLookup selector) anyOne selector
 ]
 
 { #category : #'*Typer-GToolkit' }

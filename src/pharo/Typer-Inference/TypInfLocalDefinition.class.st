@@ -29,5 +29,10 @@ TypInfLocalDefinition >> outReads [
 TypInfLocalDefinition >> transfer [
 	node isArgumentVariable ifFalse: [ ^ self put: TypNilType instance ].
 	self ifFromName: [ :t | ^ self covariantPut: t ].
-	self covariantPut: (self outReads collect: #type) typAsMinimizedType
+	self covariantPut: self type
+]
+
+{ #category : #initialization }
+TypInfLocalDefinition >> type [
+	^ (self outReads collect: #type) typAsMinimizedType
 ]

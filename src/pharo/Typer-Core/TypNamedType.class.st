@@ -176,7 +176,7 @@ TypNamedType >> overriders: aSymbol [
 	^ (self classDescription lookupSelector: aSymbol)
 		ifNil: [ #() ]
 		ifNotNil: [ :m | 
-			(TypInfMethodIndex instance overriders: m)
+			(TypInfIndex instance overriders: m)
 				select: [ :mm | mm methodClass inheritsFrom: self classDescription ] ]
 ]
 

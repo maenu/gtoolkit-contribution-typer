@@ -23,7 +23,5 @@ TypInfAbsMethodResolver >> resolve: aLookup reduce: aCollection [
 
 { #category : #accessing }
 TypInfAbsMethodResolver >> result: aLookup [
-	| contexts |
-	contexts := TypInfAbsIndex instance resolveMethod: aLookup.
-	^ contexts anyOne typInfAbsType typInfWithContexts: contexts
+	^ TypInfAbsIndex instance resolveMethod: aLookup
 ]
