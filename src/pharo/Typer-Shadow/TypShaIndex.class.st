@@ -32,22 +32,26 @@ TypShaIndex >> build [
 	cache removeAll.
 	Smalltalk globals allMethods
 		do: [ :m | 
+			| class |
+			class := cache at: m methodClass ifAbsentPut: [ IdentityDictionary new ].
 			m typShaIsResolveMethod
-				ifTrue: [ (cache
-						at: m methodClass -> #method -> m typShaResolvedMethod
-						ifAbsentPut: [ IdentitySet new ]) add: m ].
+				ifTrue: [ | methods |
+					methods := class at: #method ifAbsentPut: [ IdentityDictionary new ].
+					(methods at: m typShaResolvedMethod ifAbsentPut: [ IdentitySet new ])
+						add: m ].
 			m typShaIsResolveVariable
-				ifTrue: [ (cache
-						at: m methodClass -> #variable -> m typShaResolvedVariable
-						ifAbsentPut: [ IdentitySet new ]) add: m ].
+				ifTrue: [ | variables |
+					variables := class at: #variable ifAbsentPut: [ IdentityDictionary new ].
+					(variables at: m typShaResolvedVariable ifAbsentPut: [ IdentitySet new ])
+						add: m ].
 			m typShaIsResolveType
-				ifTrue: [ (cache at: m methodClass -> #type ifAbsentPut: [ IdentitySet new ]) add: m ] ]
+				ifTrue: [ (class at: #type ifAbsentPut: [ IdentitySet new ]) add: m ] ]
 ]
 
 { #category : #accessing }
 TypShaIndex >> initialize [
 	super initialize.
-	cache := Dictionary new
+	cache := IdentityDictionary new
 ]
 
 { #category : #accessing }
@@ -57,15 +61,26 @@ TypShaIndex >> invalidate [
 
 { #category : #accessing }
 TypShaIndex >> methodResolvers: aClassDescription selector: aSymbol [
-	^ cache at: aClassDescription -> #method -> aSymbol ifAbsent: [ #() ]
+	^ cache
+		typShaAt: aClassDescription
+		at: #method
+		at: aSymbol
+		ifAbsent: [ #() ]
 ]
 
 { #category : #accessing }
 TypShaIndex >> typeResolvers: aClassDescription [
-	^ cache at: aClassDescription class -> #type ifAbsent: [ #() ]
+	^ cache
+		at: aClassDescription class
+		at: #type
+		ifAbsent: [ #() ]
 ]
 
 { #category : #accessing }
 TypShaIndex >> variableResolvers: aClassDescription selector: aSymbol [
-	^ cache at: aClassDescription -> #variable -> aSymbol ifAbsent: [ #() ]
+	^ cache
+		typShaAt: aClassDescription
+		at: #variable
+		at: aSymbol
+		ifAbsent: [ #() ]
 ]

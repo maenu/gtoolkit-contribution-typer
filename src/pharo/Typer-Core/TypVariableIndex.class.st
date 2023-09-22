@@ -17,12 +17,6 @@ TypVariableIndex class >> instance [
 			              yourself ]
 ]
 
-{ #category : #accessing }
-TypVariableIndex >> lookupReceiver: aType selector: aSymbol [
-
-	^ self resolve: (TypVariableLookup receiver: aType selector: aSymbol parent: nil)
-]
-
 { #category : #printing }
 TypVariableIndex >> printOn: aStream [
 

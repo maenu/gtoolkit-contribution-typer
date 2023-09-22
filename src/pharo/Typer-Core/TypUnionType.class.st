@@ -50,25 +50,22 @@ TypUnionType >> arguments [
 
 { #category : #converting }
 TypUnionType >> asNonNullable [
-
 	<typEdge>
 	^ self isNullable
-		  ifTrue: [ (types reject: #isNil) typAsType ]
-		  ifFalse: [ self ]
+		ifTrue: [ (types reject: #isNil) typAsType ]
+		ifFalse: [ self ]
 ]
 
 { #category : #converting }
 TypUnionType >> asNullable [
-
 	<typEdge>
 	^ self isNullable
-		  ifTrue: [ self ]
-		  ifFalse: [ (types , { TypNilType instance }) typAsType ]
+		ifTrue: [ self ]
+		ifFalse: [ (types , {TypNilType instance}) typAsType ]
 ]
 
 { #category : #compatibility }
 TypUnionType >> at: aString [
-
 	<typEdge>
 	^ (types collect: [ :e | e at: aString ]) typAsType
 ]
@@ -76,6 +73,11 @@ TypUnionType >> at: aString [
 { #category : #accessing }
 TypUnionType >> canResolveMethod: aLookup [
 	^ types anySatisfy: [ :e | e canResolveMethod: (aLookup withReceiver: e) ]
+]
+
+{ #category : #accessing }
+TypUnionType >> canResolveVariable: aLookup [
+	^ types anySatisfy: [ :e | e canResolveVariable: (aLookup withReceiver: e) ]
 ]
 
 { #category : #testing }
@@ -132,21 +134,6 @@ TypUnionType >> isNullable [
 { #category : #testing }
 TypUnionType >> isUnion [
 	^ true
-]
-
-{ #category : #lookup }
-TypUnionType >> lookupMethod: aSymbol arguments: aCollection [
-
-	<typEdge>
-	^ (types collect: [ :e | 
-		   e lookupMethod: aSymbol arguments: aCollection ]) typAsType
-]
-
-{ #category : #lookup }
-TypUnionType >> lookupVariable: aSymbol [
-
-	<typEdge>
-	^ (types collect: [ :e | e lookupVariable: aSymbol ]) typAsType
 ]
 
 { #category : #accessing }
@@ -231,9 +218,14 @@ TypUnionType >> resolveMethod: aLookup [
 		typAsType
 ]
 
+{ #category : #accessing }
+TypUnionType >> resolveVariable: aLookup [
+	^ (types collect: [ :e | e resolveVariable: (aLookup withReceiver: e) ])
+		typAsType
+]
+
 { #category : #compatibility }
 TypUnionType >> result [
-
 	<typEdge>
 	^ (types collect: #result) typAsType
 ]
@@ -284,7 +276,6 @@ TypUnionType >> types [
 
 { #category : #compatibility }
 TypUnionType >> withParameters: aCollection [
-
 	<typEdge>
 	^ (types collect: [ :e | e withParameters: aCollection ]) typAsType
 ]

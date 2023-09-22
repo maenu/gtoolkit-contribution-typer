@@ -16,16 +16,6 @@ TypMethodIndex class >> instance [
 					yourself ]
 ]
 
-{ #category : #accessing }
-TypMethodIndex >> lookupMethodReceiver: aType selector: aSymbol arguments: aCollection [
-
-	^ self resolve: (TypMethodLookup
-			   receiver: aType
-			   selector: aSymbol
-			   arguments: aCollection
-			   parent: nil)
-]
-
 { #category : #printing }
 TypMethodIndex >> printOn: aStream [
 

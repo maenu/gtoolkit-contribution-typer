@@ -115,6 +115,11 @@ TypType >> canResolveMethod: aLookup [
 	^ TypMethodIndex instance canResolve: aLookup
 ]
 
+{ #category : #lookup }
+TypType >> canResolveVariable: aLookup [
+	^ TypVariableIndex instance canResolve: aLookup
+]
+
 { #category : #converting }
 TypType >> contravariant: aType [
 	"self and aType are assignable to result.
@@ -272,26 +277,28 @@ TypType >> isVariable [
 
 { #category : #lookup }
 TypType >> lookupMethod: aSymbol [
-
 	| arguments |
-	arguments := aSymbol numArgs typTimesCollect: [ :e | 
-		             TypUnknownType instance ].
+	arguments := aSymbol numArgs typTimesCollect: [ :e | TypUnknownType instance ].
 	^ self lookupMethod: aSymbol arguments: arguments
 ]
 
 { #category : #lookup }
 TypType >> lookupMethod: aSymbol arguments: aCollection [
-
-	^ TypMethodIndex instance
-		  lookupMethodReceiver: self
-		  selector: aSymbol
-		  arguments: aCollection
+	^ self
+		resolveMethod: (TypMethodLookup
+				receiver: self
+				selector: aSymbol
+				arguments: aCollection
+				parent: nil)
 ]
 
 { #category : #lookup }
 TypType >> lookupVariable: aSymbol [
-
-	^ TypVariableIndex instance lookupReceiver: self selector: aSymbol
+	^ self
+		resolveVariable: (TypVariableLookup
+				receiver: self
+				selector: aSymbol
+				parent: nil)
 ]
 
 { #category : #compatibility }
@@ -338,6 +345,11 @@ TypType >> resolveMethod: aLookup [
 	^ TypMethodIndex instance resolve: aLookup
 ]
 
+{ #category : #lookup }
+TypType >> resolveVariable: aLookup [
+	^ TypVariableIndex instance resolve: aLookup
+]
+
 { #category : #compatibility }
 TypType >> result [
 
@@ -364,6 +376,11 @@ TypType >> superOrNil [
 	self flag: 'weird'.
 	self hasSuper ifFalse: [ ^ nil ].
 	^ self super
+]
+
+{ #category : #compatibility }
+TypType >> types [
+	^ {self}
 ]
 
 { #category : #'as yet unclassified' }
