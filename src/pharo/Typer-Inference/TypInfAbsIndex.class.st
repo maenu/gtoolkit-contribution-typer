@@ -45,8 +45,7 @@ TypInfAbsIndex >> build [
 { #category : #accessing }
 TypInfAbsIndex >> canResolveMethod: aLookup [
 	| classDescription |
-	self assert: [ aLookup root typInfMessage isNotNil ].
-	aLookup root typInfMessage ifNil: [ ^ false ].
+	aLookup root message ifNil: [ ^ false ].
 	aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
 	classDescription := aLookup receiver classDescription.
@@ -54,7 +53,7 @@ TypInfAbsIndex >> canResolveMethod: aLookup [
 		at: classDescription -> #canResolveMethod -> aLookup selector
 		ifPresent: [ :s | 
 			s
-				allSatisfy: [ :m | nil withArgs: {aLookup root typInfMessage} executeMethod: m ] ]
+				allSatisfy: [ :m | nil withArgs: {aLookup root message} executeMethod: m ] ]
 		ifAbsent: [ self flag: 'TODO should listen to change events'.
 			false ]
 ]
@@ -75,5 +74,5 @@ TypInfAbsIndex >> resolveMethod: aLookup [
 	| classDescription |
 	classDescription := aLookup receiver classDescription.
 	^ (cache at: classDescription -> #resolveMethod -> aLookup selector)
-		collect: [ :m | aLookup -> (nil withArgs: {aLookup root typInfMessage} executeMethod: m) ]
+		collect: [ :m | aLookup -> (nil withArgs: {aLookup root message} executeMethod: m) ]
 ]

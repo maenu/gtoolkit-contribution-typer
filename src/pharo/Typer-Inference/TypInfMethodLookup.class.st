@@ -70,7 +70,7 @@ TypInfMethodLookup >> initializeMessage: aMessage [
 ]
 
 { #category : #accessing }
-TypInfMethodLookup >> typInfMessage [
+TypInfMethodLookup >> message [
 	^ message
 ]
 

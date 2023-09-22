@@ -68,11 +68,6 @@ TypInfContext >> children [
 ]
 
 { #category : #accessing }
-TypInfContext >> condense [
-	self allNodes do: #condense
-]
-
-{ #category : #accessing }
 TypInfContext >> findInRead: aVariable [
 	aVariable
 		depthFirstNextReverseDo: [ :n | n node == aVariable node variable definingNode ifTrue: [ ^ n ] ].
@@ -246,14 +241,6 @@ TypInfContext >> super [
 ]
 
 { #category : #'as yet unclassified' }
-TypInfContext >> typInfAbsType [
-	root ifNotNil: [ ^ root type ].
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: TypUnknownType instance
-		arguments: (node arguments collect: [ :n | TypUnknownType instance ])
-]
-
-{ #category : #'as yet unclassified' }
 TypInfContext >> type [
 	root ifNotNil: [ ^ root type ].
 	^ CompiledMethod
@@ -263,6 +250,8 @@ TypInfContext >> type [
 
 { #category : #accessing }
 TypInfContext >> visit [
+	self assert: [ root isNil ].
+	self assert: [ current isNil ].
 	current := root := self add: self newRoot.
 	self visitNode
 ]

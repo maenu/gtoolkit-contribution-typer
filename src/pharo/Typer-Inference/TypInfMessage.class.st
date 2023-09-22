@@ -168,7 +168,7 @@ TypInfMessage >> receiver [
 
 { #category : #accessing }
 TypInfMessage >> selector [
-	^ node selector
+	^ node selector asSymbol
 ]
 
 { #category : #accessing }

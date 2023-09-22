@@ -6,13 +6,12 @@ Class {
 
 { #category : #accessing }
 TypInfVariableResolver >> canResolve: aLookup [
-
 	aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
-	(aLookup receiver classDescription hasSlotNamed: aLookup selector) 
+	(aLookup receiver classDescription hasSlotNamed: aLookup selector)
 		ifTrue: [ ^ true ].
-	^ aLookup receiver classDescription instanceSide allClassVariables 
-		  anySatisfy: [ :e | e name = aLookup selector ]
+	^ aLookup receiver classDescription instanceSide allClassVariables
+		anySatisfy: [ :e | e name = aLookup selector ]
 ]
 
 { #category : #printing }

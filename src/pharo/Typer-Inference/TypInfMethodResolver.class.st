@@ -22,13 +22,13 @@ TypInfMethodResolver class >> invalidate [
 
 { #category : #accessing }
 TypInfMethodResolver >> canResolve: aLookup [
+	| method |
 	aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
 	(aLookup receiver classDescription includesSelector: aLookup selector)
 		ifFalse: [ ^ false ].
-	(TypInfNodeStack
-		canPush: (aLookup receiver classDescription >> aLookup selector) ast)
-		ifFalse: [ ^ false ].
+	method := aLookup receiver classDescription >> aLookup selector.
+	(TypInfNodeStack canPush: method ast) ifFalse: [ ^ false ].
 	^ true
 ]
 

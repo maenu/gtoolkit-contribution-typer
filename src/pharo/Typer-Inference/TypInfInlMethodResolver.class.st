@@ -18,13 +18,6 @@ TypInfInlMethodResolver >> canResolve: aLookup [
 ]
 
 { #category : #accessing }
-TypInfInlMethodResolver >> resolve: aLookup reduce: aCollection [
-	aCollection ifEmpty: [ ^ TypUnknownType instance ].
-	self flag: 'TODO make more of alternatives instead of just taking first'.
-	^ aCollection asOrderedCollection sort first
-]
-
-{ #category : #accessing }
 TypInfInlMethodResolver >> result: aLookup [
 	| message method methods contexts |
 	message := aLookup root typInfMessage.

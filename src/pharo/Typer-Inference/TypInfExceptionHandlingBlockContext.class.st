@@ -28,6 +28,23 @@ TypInfExceptionHandlingBlockContext class >> sender: aContext state: aState node
 ]
 
 { #category : #accessing }
+TypInfExceptionHandlingBlockContext >> = anObject [
+	self == anObject ifTrue: [ ^ true ].
+	super = anObject ifFalse: [ ^ false ].
+	^ exceptionHandler = anObject exceptionHandler
+]
+
+{ #category : #accessing }
+TypInfExceptionHandlingBlockContext >> exceptionHandler [
+	^ exceptionHandler
+]
+
+{ #category : #accessing }
+TypInfExceptionHandlingBlockContext >> hash [
+	^ super hash bitXor: exceptionHandler hash
+]
+
+{ #category : #accessing }
 TypInfExceptionHandlingBlockContext >> initializeException: anExceptionSet exceptionHandler: anotherNode [
 	exception := anExceptionSet.
 	exceptionHandler := anotherNode
