@@ -171,20 +171,18 @@ TypInfMessage >> transfer [
 	oldLookup := lookup.
 	lookup := self inReceiver newMethodLookup: self.	"(lookup isNotNil and: [ oldLookup isNotNil and: [ lookup > oldLookup ] ])
 		ifTrue: [ Halt now ]."
-	((lookup ~= oldLookup or: [ contexts isNotEmpty ]) and: [ self canInstall ]) ifTrue: [ self install ].
+	(lookup ~= oldLookup and: [ self canInstall ]) ifTrue: [ self install ].
 	contexts
-		detect: [ :c | c isKindOf: TypInfSignalContext ]
-		ifFound: [ :c | 
-			lookup resolve signalsAlways
-				ifNotNil: [ :t | c root exception: t classDescription new ] ].
-	contexts
-		ifEmpty: [ | method |
-			method := lookup resolve.
-			self inArguments
-				withIndexDo: [ :e :i | 
-					i <= method arguments size
-						ifTrue: [ self constrain: e to: (method arguments at: i) ] ].
-			state at: self put: method result ]
+		ifEmpty: [ lookup
+				ifNil: [ state at: self put: TypUnknownType instance ]
+				ifNotNil: [ | method |
+					self flag: 'TODO respect signalsAlways'.
+					method := lookup resolve.
+					self inArguments
+						withIndexDo: [ :e :i | 
+							i <= method arguments size
+								ifTrue: [ self constrain: e to: (method arguments at: i) ] ].
+					state at: self put: method result ] ]
 		ifNotEmpty: [ state
 				at: self
 				put: (contexts collect: [ :a | a value root inReturnType ]) typAsMinimizedType ].

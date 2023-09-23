@@ -129,9 +129,9 @@ TypInfContext >> leaves [
 ]
 
 { #category : #accessing }
-TypInfContext >> newExceptionHandlerContextOrNil: anException [
+TypInfContext >> newExceptionHandlerContextOrNil: aSignalMessage [
 	sender ifNil: [ ^ nil ].
-	^ sender newExceptionHandlerContextOrNil: anException
+	^ sender newExceptionHandlerContextOrNil: aSignalMessage
 ]
 
 { #category : #accessing }

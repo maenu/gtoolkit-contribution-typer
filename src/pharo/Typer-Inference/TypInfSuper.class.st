@@ -6,20 +6,14 @@ Class {
 
 { #category : #accessing }
 TypInfSuper >> newMethodLookup: aMessage [
-	self super ifNil: [ ^ nil ].
-	^ TypInfMethodLookup
-		receiver: self super
+	context super ifNil: [ ^ nil ].
+	^ TypMethodLookup
+		receiver: context super
 		selector: aMessage selector
 		arguments: aMessage arguments
 		self: context self
-		super: self super
-		message: aMessage
+		super: (context super ifNil: nil ifNotNil: #superOrNil)
 		parent: nil
-]
-
-{ #category : #accessing }
-TypInfSuper >> super [
-	^ context super ifNil: nil ifNotNil: #superOrNil
 ]
 
 { #category : #initialization }

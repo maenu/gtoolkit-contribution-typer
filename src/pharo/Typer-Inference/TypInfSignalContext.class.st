@@ -21,7 +21,7 @@ TypInfSignalContext class >> sender: aContext state: aState node: aNode self: aT
 		self: aType
 		super: anotherType
 		message: aMessage)
-		exception: anException;
+		initializeException: anException;
 		yourself
 ]
 
@@ -31,17 +31,19 @@ TypInfSignalContext >> canInstall [
 ]
 
 { #category : #accessing }
-TypInfSignalContext >> exception: anException [
-	self assert: [ (anException isKindOf: TypType) not ].
+TypInfSignalContext >> exception [
+	^ exception
+]
+
+{ #category : #accessing }
+TypInfSignalContext >> initializeException: anException [
+	self assert: [ anException isKindOf: TypType ].
 	exception := anException
 ]
 
 { #category : #accessing }
 TypInfSignalContext >> newRoot [
-	^ TypInfSignalMessage
-		node: node
-		context: self
-		exception: exception
+	^ TypInfSignalMessage node: node context: self
 ]
 
 { #category : #accessing }
@@ -55,8 +57,7 @@ TypInfSignalContext >> visitNode [
 	root
 		inReceiver: message inReceiver;
 		inArguments: message inArguments.
-	exception := message receiver classDescription new.
-	(self newExceptionHandlerContextOrNil: exception)
+	(self newExceptionHandlerContextOrNil: root)
 		ifNil: [ root
 				outAdd: ((TypInfSignalEdge origin: root target: self home root)
 						exception: exception;
