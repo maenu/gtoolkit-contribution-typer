@@ -140,14 +140,10 @@ TypIndex >> resolve: aLookup [
 			self assert: [ type isNotNil ].
 			resolve at: aLookup put: type ]
 		ifAbsent: [ (resolver canResolve: aLookup)
-				ifTrue: [ | resolved |
-					resolver resolve: aLookup.
-					resolved := aLookup resolved.
-					(resolved resolver canCache: aLookup)
-						ifTrue: [ | type |
-							type := resolver resolve: aLookup.
-							self assert: [ type isNotNil ].
-							resolve at: aLookup put: type ] ]
+				ifTrue: [ | type |
+					type := resolver resolve: aLookup.
+					self assert: [ type isNotNil ].
+					resolve at: aLookup put: type ]
 				ifFalse: [ TypUnknownType instance ] ]
 ]
 

@@ -38,11 +38,6 @@ TypInfBlockContext >> block [
 ]
 
 { #category : #accessing }
-TypInfBlockContext >> canInstall [
-	^ true
-]
-
-{ #category : #accessing }
 TypInfBlockContext >> findInRead: aVariable [
 	aVariable
 		depthFirstNextReverseDo: [ :n | n node == aVariable node variable definingNode ifTrue: [ ^ n ] ].

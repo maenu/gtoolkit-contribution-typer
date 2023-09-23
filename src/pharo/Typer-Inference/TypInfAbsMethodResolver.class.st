@@ -5,11 +5,6 @@ Class {
 }
 
 { #category : #accessing }
-TypInfAbsMethodResolver >> canCache: aLookup [
-	^ false
-]
-
-{ #category : #accessing }
 TypInfAbsMethodResolver >> canResolve: aLookup [
 	| classDescription |
 	aLookup root message ifNil: [ ^ false ].

@@ -5,11 +5,6 @@ Class {
 }
 
 { #category : #accessing }
-TypInfInlMethodResolver >> canCache: aLookup [
-	^ false
-]
-
-{ #category : #accessing }
 TypInfInlMethodResolver >> canResolve: aLookup [
 	aLookup root typInfMessage ifNil: [ ^ false ].
 	aLookup receiver isNamed ifFalse: [ ^ false ].
