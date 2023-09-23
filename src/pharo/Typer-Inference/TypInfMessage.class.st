@@ -91,19 +91,12 @@ TypInfMessage >> newContexts [
 		detect: [ :l | l resolver isKindOf: TypInfMethodResolver ]
 		ifFound: [ (lookups
 				flatCollect: [ :l | 
-					(l resolver isKindOf: TypInfMethodResolver)
-						ifTrue: [ (TypInfIndex instance resolver
-								resolve: (l copy
-										result: nil;
-										yourself)) typInfContexts collect: [ :c | l -> c ] ]
-						ifFalse: [ {l
-									-> (TypInfInlLookupContext
-											sender: context
-											state: self state copy
-											node: node copy
-											self: l root self
-											super: l root super
-											message: self)} ] ]
+					| ll |
+					ll := l typInfAsLookup: self.
+					((l resolver isKindOf: TypInfMethodResolver)
+						and: [ TypInfIndex instance contextResolver canResolve: ll ])
+						ifTrue: [ TypInfIndex instance contextResolver resolve: ll ]
+						ifFalse: [ {} ] ]
 				as: Set) ifNotEmpty: [ :s | ^ s ] ].
 	lookup resolve signalsAlways
 		ifNotNil: [ :t | 
@@ -115,8 +108,8 @@ TypInfMessage >> newContexts [
 							self: context self
 							super: context super
 							message: self
-							exception: t classDescription new)} ].
-	^ {}
+							exception: t)} ].
+	^ #()
 ]
 
 { #category : #accessing }
