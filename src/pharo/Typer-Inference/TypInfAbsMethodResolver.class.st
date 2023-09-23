@@ -11,17 +11,18 @@ TypInfAbsMethodResolver >> canCache: aLookup [
 
 { #category : #accessing }
 TypInfAbsMethodResolver >> canResolve: aLookup [
-	^ TypInfAbsIndex instance canResolveMethod: aLookup
-]
-
-{ #category : #accessing }
-TypInfAbsMethodResolver >> resolve: aLookup reduce: aCollection [
-	aCollection ifEmpty: [ ^ TypUnknownType instance ].
-	self flag: 'TODO make more of alternatives instead of just taking first'.
-	^ aCollection asOrderedCollection sort first
+	| classDescription |
+	aLookup root message ifNil: [ ^ false ].
+	aLookup receiver isNamed ifFalse: [ ^ false ].
+	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
+	classDescription := aLookup receiver classDescription.
+	^ (TypInfAbsIndex instance canResolveMethods: aLookup)
+		ifEmpty: [ false ]
+		ifNotEmpty: [ :s | s allSatisfy: [ :m | nil withArgs: {aLookup root message} executeMethod: m ] ]
 ]
 
 { #category : #accessing }
 TypInfAbsMethodResolver >> result: aLookup [
-	^ TypInfAbsIndex instance resolveMethod: aLookup
+	^ (TypInfAbsIndex instance resolveMethods: aLookup)
+		collect: [ :m | aLookup -> (nil withArgs: {aLookup root message} executeMethod: m) ]
 ]

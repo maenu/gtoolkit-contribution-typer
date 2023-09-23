@@ -32,20 +32,24 @@ TypShaIndex >> build [
 	cache removeAll.
 	Smalltalk globals allMethods
 		do: [ :m | 
-			| class |
-			class := cache at: m methodClass ifAbsentPut: [ IdentityDictionary new ].
 			m typShaIsResolveMethod
-				ifTrue: [ | methods |
-					methods := class at: #method ifAbsentPut: [ IdentityDictionary new ].
-					(methods at: m typShaResolvedMethod ifAbsentPut: [ IdentitySet new ])
-						add: m ].
+				ifTrue: [ (cache
+						typAt: m methodClass
+						at: #method
+						at: m typShaResolvedMethod
+						ifAbsentPut: [ IdentitySet new ]) add: m ].
 			m typShaIsResolveVariable
-				ifTrue: [ | variables |
-					variables := class at: #variable ifAbsentPut: [ IdentityDictionary new ].
-					(variables at: m typShaResolvedVariable ifAbsentPut: [ IdentitySet new ])
-						add: m ].
+				ifTrue: [ (cache
+						typAt: m methodClass
+						at: #variable
+						at: m typShaResolvedVariable
+						ifAbsentPut: [ IdentitySet new ]) add: m ].
 			m typShaIsResolveType
-				ifTrue: [ (class at: #type ifAbsentPut: [ IdentitySet new ]) add: m ] ]
+				ifTrue: [ (cache
+						typAt: m methodClass
+						at: #type
+						at: #type
+						ifAbsentPut: [ IdentitySet new ]) add: m ] ]
 ]
 
 { #category : #accessing }
@@ -62,7 +66,7 @@ TypShaIndex >> invalidate [
 { #category : #accessing }
 TypShaIndex >> methodResolvers: aClassDescription selector: aSymbol [
 	^ cache
-		typShaAt: aClassDescription
+		typAt: aClassDescription
 		at: #method
 		at: aSymbol
 		ifAbsent: [ #() ]
@@ -71,7 +75,8 @@ TypShaIndex >> methodResolvers: aClassDescription selector: aSymbol [
 { #category : #accessing }
 TypShaIndex >> typeResolvers: aClassDescription [
 	^ cache
-		at: aClassDescription class
+		typAt: aClassDescription class
+		at: #type
 		at: #type
 		ifAbsent: [ #() ]
 ]
@@ -79,7 +84,7 @@ TypShaIndex >> typeResolvers: aClassDescription [
 { #category : #accessing }
 TypShaIndex >> variableResolvers: aClassDescription selector: aSymbol [
 	^ cache
-		typShaAt: aClassDescription
+		typAt: aClassDescription
 		at: #variable
 		at: aSymbol
 		ifAbsent: [ #() ]

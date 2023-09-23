@@ -34,34 +34,31 @@ TypInfAbsIndex >> build [
 		do: [ :m | 
 			m typInfAbsIsCanResolve
 				ifTrue: [ (cache
-						at: m methodClass -> #canResolveMethod -> m typInfAbsCanResolve
+						typAt: m methodClass
+						at: #canResolveMethod
+						at: m typInfAbsCanResolveMethod
 						ifAbsentPut: [ IdentitySet new ]) add: m ].
 			m typInfAbsIsResolveMethod
 				ifTrue: [ (cache
-						at: m methodClass -> #resolveMethod -> m typInfAbsResolveMethod
+						typAt: m methodClass
+						at: #resolveMethod
+						at: m typInfAbsResolveMethod
 						ifAbsentPut: [ IdentitySet new ]) add: m ] ]
 ]
 
 { #category : #accessing }
-TypInfAbsIndex >> canResolveMethod: aLookup [
-	| classDescription |
-	aLookup root message ifNil: [ ^ false ].
-	aLookup receiver isNamed ifFalse: [ ^ false ].
-	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
-	classDescription := aLookup receiver classDescription.
+TypInfAbsIndex >> canResolveMethods: aLookup [
 	^ cache
-		at: classDescription -> #canResolveMethod -> aLookup selector
-		ifPresent: [ :s | 
-			s
-				allSatisfy: [ :m | nil withArgs: {aLookup root message} executeMethod: m ] ]
-		ifAbsent: [ self flag: 'TODO should listen to change events'.
-			false ]
+		typAt: aLookup receiver classDescription
+		at: #canResolveMethod
+		at: aLookup selector
+		ifAbsent: [ #() ]
 ]
 
 { #category : #accessing }
 TypInfAbsIndex >> initialize [
 	super initialize.
-	cache := Dictionary new
+	cache := IdentityDictionary new
 ]
 
 { #category : #accessing }
@@ -70,9 +67,10 @@ TypInfAbsIndex >> invalidate [
 ]
 
 { #category : #accessing }
-TypInfAbsIndex >> resolveMethod: aLookup [
-	| classDescription |
-	classDescription := aLookup receiver classDescription.
-	^ (cache at: classDescription -> #resolveMethod -> aLookup selector)
-		collect: [ :m | aLookup -> (nil withArgs: {aLookup root message} executeMethod: m) ]
+TypInfAbsIndex >> resolveMethods: aLookup [
+	^ cache
+		typAt: aLookup receiver classDescription
+		at: #resolveMethod
+		at: aLookup selector
+		ifAbsent: [ #() ]
 ]

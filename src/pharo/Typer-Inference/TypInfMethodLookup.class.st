@@ -26,27 +26,32 @@ TypInfMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollec
 
 { #category : #accessing }
 TypInfMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection self: anotherType super: yetAnotherType message: aMessage parent: aLookup [
-	^ self index
-		at: {aType.
-				aSymbol asSymbol.
-				aCollection asArray.
-				anotherType.
-				yetAnotherType.
-				aMessage.
-				aLookup}
-		ifAbsentPut: [ self new
-				initializeReceiver: aType selector: aSymbol asSymbol;
-				initializeArguments: aCollection asArray
-					self: anotherType
-					super: yetAnotherType;
-				initializeMessage: aMessage;
-				initializeParent: aLookup;
-				yourself ]
+	"no indexed as not referenced my anyone other than the context, which is also not indexed"
+
+	^ self new
+		initializeReceiver: aType selector: aSymbol asSymbol;
+		initializeArguments: aCollection asArray
+			self: anotherType
+			super: yetAnotherType;
+		initializeMessage: aMessage;
+		initializeParent: aLookup;
+		yourself
 ]
 
 { #category : #accessing }
 TypInfMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection self: anotherType super: yetAnotherType parent: aLookup [
 	self shouldNotImplement
+]
+
+{ #category : #accessing }
+TypInfMethodLookup >> asDefault [
+	^ TypMethodLookup
+		receiver: receiver
+		selector: selector
+		arguments: arguments
+		self: selfType
+		super: superType
+		parent: nil
 ]
 
 { #category : #accessing }
@@ -61,6 +66,11 @@ TypInfMethodLookup >> asParent [
 			super: receiver super superOrNil
 			message: message
 			parent: self
+]
+
+{ #category : #accessing }
+TypInfMethodLookup >> hasParent [
+	^ receiver hasSuper
 ]
 
 { #category : #accessing }

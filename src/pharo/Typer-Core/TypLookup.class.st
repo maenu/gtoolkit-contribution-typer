@@ -130,6 +130,7 @@ TypLookup >> result [
 
 { #category : #accessing }
 TypLookup >> result: anObject [
+	self assert: [ anObject isNotNil ].
 	result := anObject
 ]
 

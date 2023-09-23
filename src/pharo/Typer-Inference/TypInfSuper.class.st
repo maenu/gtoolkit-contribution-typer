@@ -6,6 +6,7 @@ Class {
 
 { #category : #accessing }
 TypInfSuper >> newMethodLookup: aMessage [
+	self super ifNil: [ ^ nil ].
 	^ TypInfMethodLookup
 		receiver: self super
 		selector: aMessage selector

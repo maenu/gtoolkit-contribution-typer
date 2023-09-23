@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'cache',
-		'resolver'
+		'contextResolver'
 	],
 	#classInstVars : [
 		'instance'
@@ -82,6 +82,11 @@ TypInfIndex >> build [
 ]
 
 { #category : #accessing }
+TypInfIndex >> contextResolver [
+	^ contextResolver
+]
+
+{ #category : #accessing }
 TypInfIndex >> implementors: aSymbol [
 
 	^ cache at: aSymbol ifAbsent: [ #(  ) ]
@@ -91,11 +96,10 @@ TypInfIndex >> implementors: aSymbol [
 TypInfIndex >> initialize [
 	super initialize.
 	cache := IdentityDictionary new.
-	resolver := TypDepthFirstResolver
+	contextResolver := TypDepthFirstResolver
 			resolver: (TypBreadthFirstResolver
 					resolvers: {TypInfAbsMethodResolver new.
-							TypInfInlMethodResolver new.
-							TypInfMethodResolver instance})
+							TypInfInlMethodResolver new})
 ]
 
 { #category : #accessing }
@@ -106,11 +110,6 @@ TypInfIndex >> invalidate [
 { #category : #accessing }
 TypInfIndex >> overriders: aCompiledMethod [
 	^ cache at: aCompiledMethod ifAbsent: [ #() ]
-]
-
-{ #category : #accessing }
-TypInfIndex >> resolver [
-	^ resolver
 ]
 
 { #category : #generated }

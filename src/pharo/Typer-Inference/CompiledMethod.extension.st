@@ -1,7 +1,7 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*Typer-Inference' }
-CompiledMethod >> typInfAbsCanResolve [
+CompiledMethod >> typInfAbsCanResolveMethod [
 	self assert: [ self typInfAbsIsCanResolve ].
 	^ (self pragmas detect: [ :e | e selector = #typInfAbsCanResolveMethod: ])
 		arguments first asSymbol
