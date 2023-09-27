@@ -140,6 +140,8 @@ TypInfMethodResolver >> typeAt: aNode self: aType super: anotherType [
 
 { #category : #accessing }
 TypInfMethodResolver >> update: aLookup [
-	aLookup result: (self result: aLookup).
+	(TypInfNodeStack
+		canPush: (aLookup receiver classDescription lookupSelector: aLookup selector) ast)
+		ifTrue: [ aLookup result: (self result: aLookup) ].
 	^ super update: aLookup
 ]

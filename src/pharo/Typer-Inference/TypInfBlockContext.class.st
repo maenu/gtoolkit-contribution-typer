@@ -65,23 +65,11 @@ TypInfBlockContext >> initializeBlock: aBlock [
 ]
 
 { #category : #accessing }
-TypInfBlockContext >> newRoot [
-	^ TypInfInlBlock node: node context: self
-]
-
-{ #category : #accessing }
-TypInfBlockContext >> stackSize [
-	^ sender stackSize
-]
-
-{ #category : #accessing }
-TypInfBlockContext >> uninstall [
-	root outRemoveAt: #definition.
-	super uninstall
-]
-
-{ #category : #accessing }
-TypInfBlockContext >> visitNode [
+TypInfBlockContext >> install [
+	self assert: [ root isNil ].
+	self assert: [ current isNil ].
+	sender children add: self.
+	current := root := self add: (TypInfInlBlock node: node context: self).
 	message outAdd: (TypInfNextEdge origin: message target: root).
 	root
 		outAt: #definition put: block;
@@ -96,13 +84,21 @@ TypInfBlockContext >> visitNode [
 						ifFalse: [ self next: n	"can happen for function receiver types" ] ]).
 	self visitNode: node body.
 	node body lastIsReturn
-		ifTrue: [ current outAdd: (TypInfReturnEdge origin: current target: block context root) ]
 		ifFalse: [ current outAdd: (TypInfReturnEdge origin: current target: root) ].
 	(message outDisableds: #next)
 		do: [ :e | (self returns: e target context) ifFalse: [ e enableOrigin: current ] ].
-	message
-		outEnable: #return origin: current;
-		outEnable: #signal origin: current
+	message outEnable: #return origin: current
+]
+
+{ #category : #accessing }
+TypInfBlockContext >> stackSize [
+	^ sender stackSize
+]
+
+{ #category : #accessing }
+TypInfBlockContext >> uninstall [
+	root outRemoveAt: #definition.
+	super uninstall
 ]
 
 { #category : #accessing }

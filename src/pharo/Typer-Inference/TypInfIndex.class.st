@@ -29,23 +29,6 @@ TypInfIndex class >> invalidate [
 ]
 
 { #category : #accessing }
-TypInfIndex >> anonymousClass: aClassDescription [
-	^ cache
-		at: aClassDescription -> #anonymous
-		ifAbsentPut: [ | class |
-			class := aClassDescription newAnonymousSubclass.
-			class isInstanceSide
-				ifTrue: [ class classSide
-						compile: (Behavior methodDict at: #basicNew) sourceCode;
-						compile: (Behavior methodDict at: #basicNew:) sourceCode;
-						compile: 'typInfNew
-										^ [ self basicNew ]
-											on: Error
-											do: [ superclass typInfNew ]' ].
-			class ]
-]
-
-{ #category : #accessing }
 TypInfIndex >> build [
 	| behaviors |
 	cache removeAll.	"toposort superclasses before subclasses so #allSuperclasses are initialized"

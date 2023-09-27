@@ -26,19 +26,6 @@ TypInfNode >> allNextNodes [
 ]
 
 { #category : #accessing }
-TypInfNode >> burp [
-	out at: #next ifPresent: [ :s | s do: [ :n | n state: state ] ]
-]
-
-{ #category : #accessing }
-TypInfNode >> canSlurpAndBurp [
-	^ in
-		at: #next
-		ifPresent: [ :s | s allSatisfy: #canBeSlurped ]
-		ifAbsent: [ state isNotNil ]
-]
-
-{ #category : #accessing }
 TypInfNode >> constrain: aNode to: aType [
 	state at: aNode covariantPut: aType.
 	aNode constrainTo: aType from: self
@@ -124,7 +111,7 @@ TypInfNode >> inNexts [
 TypInfNode >> inReturnType [
 	^ (in
 		at: #return
-		ifPresent: [ :s | s reject: [ :e | e origin isDead ] thenCollect: #type ]
+		ifPresent: [ :s | s reject: [ :e | e origin isDead ] thenCollect: [ :e | e origin type ] ]
 		ifAbsent: [ #() ]) typAsMinimizedType
 ]
 
@@ -158,34 +145,30 @@ TypInfNode >> isDead [
 { #category : #accessing }
 TypInfNode >> iterate [
 	| queue changed done |
+	TypInfNodeIterateSignal emit: self.
 	queue := LinkedList with: self.
 	changed := false.
 	done := IdentitySet new.
-	[ queue isEmpty or: [ queue noneSatisfy: #canSlurpAndBurp ] ]
+	[ queue isEmpty ]
 		whileFalse: [ | current |
-			current := queue removeFirst.
-			current canSlurpAndBurp
-				ifTrue: [ changed := current slurpAndBurp or: changed.
-					done add: current.
-					queue addAll: (current outNexts reject: [ :n | done includes: n ]) ]
-				ifFalse: [ queue add: self ] ].
+			current := done add: queue removeFirst.
+			changed := current slurpAndTransfer or: changed.
+			queue addAll: (current outNexts reject: [ :n | done includes: n ]) ].
 	^ changed
 ]
 
 { #category : #accessing }
 TypInfNode >> iterateDiff [
 	| queue changes done |
+	TypInfNodeIterateSignal emit: self.
 	queue := LinkedList with: self.
 	changes := OrderedIdentityDictionary new.
 	done := IdentitySet new.
-	[ queue isEmpty or: [ queue noneSatisfy: #canSlurpAndBurp ] ]
+	[ queue isEmpty ]
 		whileFalse: [ | current |
-			current := queue removeFirst.
-			current canSlurpAndBurp
-				ifTrue: [ current slurpAndBurpDiff ifNotEmpty: [ :c | changes at: current put: c ].
-					done add: current.
-					queue addAll: (current outNexts reject: [ :n | done includes: n ]) ]
-				ifFalse: [ queue add: self ] ].
+			current := done add: queue removeFirst.
+			current slurpAndTransferDiff ifNotEmpty: [ :c | changes at: current put: c ].
+			queue addAll: (current outNexts reject: [ :n | done includes: n ]) ].
 	^ changes
 ]
 
@@ -207,10 +190,11 @@ TypInfNode >> methodNode [
 
 { #category : #accessing }
 TypInfNode >> newMethodLookup: aMessage [
-	^ TypMethodLookup
+	^ TypInfMethodLookup
 		receiver: aMessage constrainedReceiver
 		selector: aMessage selector
 		arguments: aMessage arguments
+		message: aMessage
 		parent: nil
 ]
 
@@ -229,7 +213,9 @@ TypInfNode >> outNexts [
 
 { #category : #accessing }
 TypInfNode >> previous [
-	^ ((in at: #next) collect: [ :e | state at: e origin ]) typAsMinimizedType
+	^ ((in at: #next)
+		collect: [ :e | state at: e origin ifAbsent: [  "happens for recursion"e origin type ] ])
+		typAsMinimizedType
 ]
 
 { #category : #printing }
@@ -245,8 +231,8 @@ TypInfNode >> slurp [
 		ifPresent: [ :s | 
 			| first |
 			first := s anyOne.
-			state := first slurp copy.
-			(s copyWithout: first) do: [ :e | state := state covariant: e state ] ].
+			state := first origin state copy.
+			(s copyWithout: first) do: [ :e | state := state covariant: e origin state ] ].
 	in
 		at: #constrain
 		ifPresent: [ :s | 
@@ -264,30 +250,28 @@ TypInfNode >> slurp [
 ]
 
 { #category : #accessing }
-TypInfNode >> slurpAndBurp [
+TypInfNode >> slurpAndTransfer [
 	| oldState |
-	self assert: [ self canSlurpAndBurp ].
+	TypInfNodeSlurpAndBurpSignal emit: self.
 	oldState := state copy.
 	self
 		slurp;
-		transfer;
-		burp.
+		transfer.
 	transfers := transfers + 1.
 	^ state ~= oldState
 ]
 
 { #category : #accessing }
-TypInfNode >> slurpAndBurpDiff [
+TypInfNode >> slurpAndTransferDiff [
 	"generates state diff per node instead of just changed or not.
 	useful for debugging"
 
 	| oldState |
-	self assert: [ self canSlurpAndBurp ].
+	TypInfNodeSlurpAndBurpSignal emit: self.
 	oldState := state copy.
 	self
 		slurp;
-		transfer;
-		burp.
+		transfer.
 	transfers := transfers + 1.
 	^ oldState diff: state
 ]

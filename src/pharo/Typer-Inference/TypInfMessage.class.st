@@ -41,9 +41,20 @@ TypInfMessage >> constrainedReceiver [
 ]
 
 { #category : #accessing }
+TypInfMessage >> couldBeSelfOrSuperSend [
+	^ {context self.
+		context super} includes: self receiver
+]
+
+{ #category : #accessing }
 TypInfMessage >> findInReceiver [
 	self depthFirstNextReverseDo: [ :n | n node == node receiver ifTrue: [ ^ n ] ].
 	Error signal: 'no receiver found'
+]
+
+{ #category : #accessing }
+TypInfMessage >> hasNodes [
+	^ {self receiver} , self arguments anySatisfy: #hasNode
 ]
 
 { #category : #accessing }
@@ -64,18 +75,21 @@ TypInfMessage >> initialize [
 
 { #category : #accessing }
 TypInfMessage >> install [
-	| oldContexts |
+	| oldContexts oldContextValues contextValues |
 	oldContexts := contexts.
 	oldContexts ifEmpty: [ self outDisable ].
-	contexts := self newContexts asOrderedCollection
-			collect: [ :c | 
+	contexts := self newContexts.
+	contexts := contexts asSet
+			collect: [ :a | 
 				oldContexts
-					detect: [ :cc | cc = c ]
-					ifFound: [ :cc | cc ]
-					ifNone: [ c ] ].
+					detect: [ :aa | aa value = a value ]
+					ifFound: [ :aa | a key -> aa value ]
+					ifNone: [ a ] ].
 	self assert: [ contexts isNotEmpty ].
-	(oldContexts difference: contexts) collect: #value thenDo: #uninstall.
-	(contexts difference: oldContexts) collect: #value thenDo: #install
+	oldContextValues := oldContexts collect: #value.
+	contextValues := contexts collect: #value.
+	(oldContextValues difference: contextValues) do: #uninstall.
+	(contextValues difference: oldContextValues) do: #install
 ]
 
 { #category : #accessing }
@@ -86,19 +100,26 @@ TypInfMessage >> lookup [
 { #category : #accessing }
 TypInfMessage >> newContexts [
 	| lookups |
+	self recursiveContextOrNil
+		ifNotNil: [ :c | 
+			^ {lookup
+					-> (TypInfRecursionContext
+							sender: context
+							state: state copy
+							node: node
+							self: context self
+							super: context super
+							message: self)} ].
 	lookups := lookup preResolve.
 	lookups
 		detect: [ :l | l resolver isKindOf: TypInfMethodResolver ]
 		ifFound: [ (lookups
 				flatCollect: [ :l | 
-					| ll |
-					ll := l typInfAsLookup: self.
-					((l resolver isKindOf: TypInfMethodResolver)
-						and: [ TypInfIndex instance contextResolver canResolve: ll ])
-						ifTrue: [ TypInfIndex instance contextResolver resolve: ll ]
+					(TypInfIndex instance contextResolver canResolve: l)
+						ifTrue: [ TypInfIndex instance contextResolver resolve: l ]
 						ifFalse: [ {} ] ]
 				as: Set) ifNotEmpty: [ :s | ^ s ] ].
-	lookup resolve signalsAlways
+	lookup asDefault resolve signalsAlways
 		ifNotNil: [ :t | 
 			^ {lookup
 					-> (TypInfSignalContext
@@ -160,6 +181,16 @@ TypInfMessage >> receiver [
 ]
 
 { #category : #accessing }
+TypInfMessage >> recursiveContextOrNil [
+	^ (context stack copyWithout: context) reversed
+		detect: [ :c | 
+			c node isMethod
+				and: [ (c isKindOf: TypInfInlContext) and: [ c root lookup = lookup asDefault ] ] ]
+		ifFound: #yourself
+		ifNone: nil
+]
+
+{ #category : #accessing }
 TypInfMessage >> selector [
 	^ node selector asSymbol
 ]
@@ -169,15 +200,13 @@ TypInfMessage >> transfer [
 	| oldLookup |
 	self constrain: self inReceiver to: self constrainedReceiver.
 	oldLookup := lookup.
-	lookup := self inReceiver newMethodLookup: self.	"(lookup isNotNil and: [ oldLookup isNotNil and: [ lookup > oldLookup ] ])
-		ifTrue: [ Halt now ]."
+	lookup := self inReceiver newMethodLookup: self.
 	(lookup ~= oldLookup and: [ self canInstall ]) ifTrue: [ self install ].
 	contexts
 		ifEmpty: [ lookup
 				ifNil: [ state at: self put: TypUnknownType instance ]
 				ifNotNil: [ | method |
-					self flag: 'TODO respect signalsAlways'.
-					method := lookup resolve.
+					method := lookup asDefault resolve.
 					self inArguments
 						withIndexDo: [ :e :i | 
 							i <= method arguments size
@@ -199,6 +228,6 @@ TypInfMessage >> uninstall [
 		collect: #value thenDo: #uninstall;
 		removeAll.
 	lookup := nil.
-	self outEnable: #next origin: self.
+	self outEnableOrigin: self.
 	super uninstall
 ]

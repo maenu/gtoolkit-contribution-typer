@@ -33,9 +33,7 @@ TypInfInlContext >> = anObject [
 
 { #category : #accessing }
 TypInfInlContext >> canInstall [
-	node compiledMethod isRealPrimitive ifTrue: [ ^ false ].
-	node compiledMethod isAbstract ifTrue: [ ^ false ].
-	^ self stackSize < 4
+	^ true
 ]
 
 { #category : #accessing }
@@ -49,31 +47,12 @@ TypInfInlContext >> initializeMessage: aMessage [
 	message := aMessage
 ]
 
-{ #category : #accessing }
-TypInfInlContext >> install [
-	sender children add: self.
-	self visit
-]
-
-{ #category : #accessing }
-TypInfInlContext >> message [
-	^ message
-]
-
-{ #category : #accessing }
-TypInfInlContext >> newRoot [
-	^ TypInfInlMethod node: node context: self
-]
-
-{ #category : #accessing }
-TypInfInlContext >> uninstall [
-	sender children remove: self.
-	(nodes values flatCollect: #yourself) do: #uninstall.
-	current := root := nil
-]
-
 { #category : #initialization }
-TypInfInlContext >> visitNode [
+TypInfInlContext >> install [
+	self assert: [ root isNil ].
+	self assert: [ current isNil ].
+	sender children add: self.
+	current := root := self add: (TypInfInlMethod node: node context: self).
 	message outAdd: (TypInfNextEdge origin: message target: root).
 	root
 		inArguments: (node arguments
@@ -86,10 +65,21 @@ TypInfInlContext >> visitNode [
 	node pragmas do: [ :p | self visitNode: p ].
 	self visitNode: node body.
 	node lastIsReturn
-		ifFalse: [ current outAdd: (TypInfSelfReturnEdge origin: current target: root) ].
+		ifFalse: [ self next: RBVariableNode selfNode.
+			current outAdd: (TypInfReturnEdge origin: current target: root) ].
 	(message outDisableds: #next)
 		do: [ :e | (self returns: e target context) ifFalse: [ e enableOrigin: current ] ].
-	message
-		outEnable: #return origin: current;
-		outEnable: #signal origin: current
+	message outEnable: #return origin: current
+]
+
+{ #category : #accessing }
+TypInfInlContext >> message [
+	^ message
+]
+
+{ #category : #accessing }
+TypInfInlContext >> uninstall [
+	sender children remove: self.
+	(nodes values flatCollect: #yourself) do: #uninstall.
+	current := root := nil
 ]

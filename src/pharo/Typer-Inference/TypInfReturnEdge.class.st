@@ -1,6 +1,6 @@
 Class {
 	#name : #TypInfReturnEdge,
-	#superclass : #TypInfContextEdge,
+	#superclass : #TypInfEdge,
 	#category : #'Typer-Inference-Core'
 }
 
@@ -10,9 +10,4 @@ TypInfReturnEdge class >> origin: aNode target: anotherNode [
 		origin: aNode
 		target: anotherNode
 		key: #return
-]
-
-{ #category : #accessing }
-TypInfReturnEdge >> type [
-	^ origin type
 ]

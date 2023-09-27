@@ -108,28 +108,16 @@ TypInfContext >> initializeSender: aContext state: aState node: aNode self: aTyp
 ]
 
 { #category : #accessing }
-TypInfContext >> iterations [
-	^ iterations
+TypInfContext >> install [
+	self assert: [ root isNil ].
+	self assert: [ current isNil ].
+	current := root := self add: (node typInfNodeInContext: self).
+	node acceptVisitor: self
 ]
 
 { #category : #accessing }
-TypInfContext >> leaves [
-	| cursors cursor done |
-	cursors := IdentitySet with: root.
-	done := IdentitySet new.
-	[ cursors isNotEmpty and: [ (cursors difference: done) isNotEmpty ] ]
-		whileTrue: [ cursor := (cursors difference: done) anyOne.
-			cursor out
-				at: #next
-				ifPresent: [ :s | 
-					s
-						do: [ :e | 
-							(cursors includes: e origin) ifTrue: [ cursors remove: e origin ].
-							(e target context stack includes: self) ifTrue: [ cursors add: e target ] ] ]
-				ifAbsent: [  "noop" ].
-			done add: cursor ].
-	self assert: [ cursors isNotEmpty ].
-	^ cursors
+TypInfContext >> iterations [
+	^ iterations
 ]
 
 { #category : #accessing }
@@ -139,17 +127,13 @@ TypInfContext >> newExceptionHandlerContextOrNil: aSignalMessage [
 ]
 
 { #category : #accessing }
-TypInfContext >> newRoot [
-	^ (node typInfNodeInContext: self)
-]
-
-{ #category : #accessing }
 TypInfContext >> next: aNode [
 	^ self nextEdgeTo: (aNode typInfNodeInContext: self)
 ]
 
 { #category : #accessing }
 TypInfContext >> nextEdgeTo: aNode [
+	self assert: [ aNode isKindOf: TypInfNode ].
 	self add: aNode.
 	current outAdd: (TypInfNextEdge origin: current target: aNode).
 	^ current := aNode
@@ -183,7 +167,21 @@ TypInfContext >> printOn: aStream [
 
 { #category : #accessing }
 TypInfContext >> returns: aContext [
-	^ self leaves
+	| cursors cursor done |
+	cursors := IdentitySet with: root.
+	done := IdentitySet new.
+	[ cursors isNotEmpty and: [ (cursors difference: done) isNotEmpty ] ]
+		whileTrue: [ cursor := (cursors difference: done) anyOne.
+			cursor out
+				at: #next
+				ifPresent: [ :s | 
+					s
+						do: [ :e | 
+							(cursors includes: e origin) ifTrue: [ cursors remove: e origin ].
+							(e target context stack includes: self) ifTrue: [ cursors add: e target ] ] ]
+				ifAbsent: [  "noop" ].
+			done add: cursor ].
+	^ cursors
 		allSatisfy: [ :n | 
 			n out
 				at: #return
@@ -198,14 +196,16 @@ TypInfContext >> root [
 
 { #category : #running }
 TypInfContext >> run [
-	self visit.
+	self install.
+	TypInfContextStartSignal emit: self.
 	[ iterationsDone := iterationsDone + 1.
-	iterationsDone <= iterationsMax and: [ root iterate ] ] whileTrue
+	iterationsDone <= iterationsMax and: [ root iterate ] ] whileTrue.
+	TypInfContextStopSignal emit: self
 ]
 
 { #category : #running }
 TypInfContext >> runDiff [
-	self visit.
+	self install.
 	[ iterationsDone := iterationsDone + 1.
 	iterationsDone <= iterationsMax
 		and: [ | iteration |
@@ -250,14 +250,6 @@ TypInfContext >> type [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType instance
 		arguments: (node arguments collect: [ :n | TypUnknownType instance ])
-]
-
-{ #category : #accessing }
-TypInfContext >> visit [
-	self assert: [ root isNil ].
-	self assert: [ current isNil ].
-	current := root := self add: self newRoot.
-	self visitNode
 ]
 
 { #category : #visiting }
@@ -334,13 +326,9 @@ TypInfContext >> visitMethodNode: aMethodNode [
 	aMethodNode pragmas do: [ :each | self visitNode: each ].
 	self visitNode: aMethodNode body.
 	aMethodNode lastIsReturn
-		ifFalse: [ current outAdd: (TypInfSelfReturnEdge origin: current target: root) ].
+		ifFalse: [ self next: RBVariableNode selfNode.
+			current outAdd: (TypInfReturnEdge origin: current target: root) ].
 	^ root
-]
-
-{ #category : #accessing }
-TypInfContext >> visitNode [
-	node acceptVisitor: self
 ]
 
 { #category : #accessing }

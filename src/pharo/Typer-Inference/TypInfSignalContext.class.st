@@ -42,17 +42,11 @@ TypInfSignalContext >> initializeException: anException [
 ]
 
 { #category : #accessing }
-TypInfSignalContext >> newRoot [
-	^ TypInfSignalMessage node: node context: self
-]
-
-{ #category : #accessing }
-TypInfSignalContext >> stackSize [
-	^ sender stackSize
-]
-
-{ #category : #accessing }
-TypInfSignalContext >> visitNode [
+TypInfSignalContext >> install [
+	self assert: [ root isNil ].
+	self assert: [ current isNil ].
+	sender children add: self.
+	current := root := self add: (TypInfSignalMessage node: node context: self).
 	message outAdd: (TypInfNextEdge origin: message target: root).
 	root
 		inReceiver: message inReceiver;
@@ -63,4 +57,9 @@ TypInfSignalContext >> visitNode [
 						exception: exception;
 						yourself) ]
 		ifNotNil: [ message outEnable: #signal origin: root ]
+]
+
+{ #category : #accessing }
+TypInfSignalContext >> stackSize [
+	^ sender stackSize
 ]

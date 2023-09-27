@@ -7,7 +7,6 @@ Class {
 { #category : #accessing }
 TypInfAbsMethodResolver >> canResolve: aLookup [
 	| classDescription |
-	aLookup root message ifNil: [ ^ false ].
 	aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
 	classDescription := aLookup receiver classDescription.
