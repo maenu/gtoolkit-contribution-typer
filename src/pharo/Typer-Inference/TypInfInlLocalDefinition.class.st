@@ -3,7 +3,7 @@ Class {
 	#superclass : #TypInfLocalDefinition,
 	#traits : 'TypInfTWithArguments',
 	#classTraits : 'TypInfTWithArguments classTrait',
-	#category : #'Typer-Inference-Inline'
+	#category : #'Typer-Inference-Core'
 }
 
 { #category : #accessing }

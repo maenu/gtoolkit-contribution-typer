@@ -18,7 +18,7 @@ TypUnknownTypeTestingExamples >> isNamed [
 	<gtExample>
 	| type |
 	type := TypUnknownTypeInitializingExamples new new.
-	self assert: type isNamed not.
+	self assert: type isNamed.
 	^ type
 ]
 

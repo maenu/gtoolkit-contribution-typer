@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'message'
 	],
-	#category : #'Typer-Inference-Inline'
+	#category : #'Typer-Inference-Core'
 }
 
 { #category : #'as yet unclassified' }

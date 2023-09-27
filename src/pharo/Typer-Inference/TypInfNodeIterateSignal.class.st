@@ -1,5 +1,5 @@
 Class {
 	#name : #TypInfNodeIterateSignal,
 	#superclass : #TypInfNodeSignal,
-	#category : #'Typer-Inference-Core'
+	#category : #'Typer-Inference-Signals'
 }

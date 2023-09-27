@@ -31,6 +31,20 @@ TypType class >> invalidateAll [
 	self withAllSubclassesDo: #invalidate
 ]
 
+{ #category : #accessing }
+TypType class >> invalidateEverything [
+	TypNode invalidateAll.
+	TypType invalidateAll.
+	TypIndex invalidateAll.
+	TypEdgeKey invalidateAll.
+	TypResolver invalidateAll.
+	TypShaIndex invalidate.
+	TypInfMethodResolver invalidate.
+	TypInfIndex invalidate.
+	TypInfAbsIndex invalidate.
+	TypInfNodeStack resetSoleInstance
+]
+
 { #category : #comparing }
 TypType >> < aType [
 	<typPraResult: 'Boolean'>

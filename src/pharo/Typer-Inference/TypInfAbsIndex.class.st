@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'Typer-Inference-AbstractInterpretation'
+	#category : #'Typer-Inference-Lookup'
 }
 
 { #category : #accessing }

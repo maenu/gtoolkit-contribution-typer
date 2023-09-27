@@ -1,7 +1,7 @@
 Class {
 	#name : #TypInfInlMethod,
 	#superclass : #TypInfMethod,
-	#category : #'Typer-Inference-Inline'
+	#category : #'Typer-Inference-Core'
 }
 
 { #category : #accessing }

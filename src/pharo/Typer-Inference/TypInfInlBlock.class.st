@@ -1,7 +1,7 @@
 Class {
 	#name : #TypInfInlBlock,
 	#superclass : #TypInfBlock,
-	#category : #'Typer-Inference-Inline'
+	#category : #'Typer-Inference-Core'
 }
 
 { #category : #accessing }

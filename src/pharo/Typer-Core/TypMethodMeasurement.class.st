@@ -9,7 +9,7 @@ Class {
 		'duration',
 		'tally'
 	],
-	#category : #'Typer-Core-Utility-Typer-Core-Utility'
+	#category : #'Typer-Core-Utility'
 }
 
 { #category : #accessing }

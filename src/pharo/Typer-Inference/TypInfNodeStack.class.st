@@ -1,7 +1,7 @@
 Class {
 	#name : #TypInfNodeStack,
 	#superclass : #ProcessLocalVariable,
-	#category : #'Typer-Inference-Core'
+	#category : #'Typer-Inference-Lookup'
 }
 
 { #category : #accessing }

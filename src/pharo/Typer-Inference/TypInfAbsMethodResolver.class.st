@@ -1,7 +1,7 @@
 Class {
 	#name : #TypInfAbsMethodResolver,
 	#superclass : #TypResolver,
-	#category : #'Typer-Inference-AbstractInterpretation'
+	#category : #'Typer-Inference-Lookup'
 }
 
 { #category : #accessing }
