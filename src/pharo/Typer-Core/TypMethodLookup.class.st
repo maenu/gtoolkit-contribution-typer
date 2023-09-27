@@ -49,17 +49,17 @@ TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollectio
 { #category : #accessing }
 TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection self: anotherType super: yetAnotherType parent: aLookup [
 	^ self index
-		at: {aType.
+		at: {aType withoutNode.
 				aSymbol asSymbol.
-				aCollection asArray.
-				anotherType.
-				yetAnotherType.
+				aCollection collect: #withoutNode as: Array.
+				anotherType withoutNode.
+				yetAnotherType ifNotNil: #withoutNode.
 				aLookup}
 		ifAbsentPut: [ self new
-				initializeReceiver: aType selector: aSymbol asSymbol;
-				initializeArguments: aCollection asArray
-					self: anotherType
-					super: yetAnotherType;
+				initializeReceiver: aType withoutNode selector: aSymbol asSymbol;
+				initializeArguments: (aCollection collect: #withoutNode as: Array)
+					self: anotherType withoutNode
+					super: (yetAnotherType ifNotNil: #withoutNode);
 				initializeParent: aLookup;
 				yourself ]
 ]
@@ -118,6 +118,9 @@ TypMethodLookup >> hash [
 
 { #category : #accessing }
 TypMethodLookup >> initializeArguments: aCollection self: aType super: anotherType [
+	self assert: [ aCollection noneSatisfy: #hasNode ].
+	self assert: [ aType hasNode not ].
+	anotherType ifNotNil: [ self assert: [ anotherType hasNode not ] ].
 	arguments := aCollection.
 	selfType := aType.
 	superType := anotherType

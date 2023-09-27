@@ -171,6 +171,11 @@ TypType >> covariant: aType [
 		  aType } typAsType
 ]
 
+{ #category : #accessing }
+TypType >> hasNode [
+	^ false
+]
+
 { #category : #testing }
 TypType >> hasSuper [
 	^ superType isNotNil
@@ -407,4 +412,9 @@ TypType >> withParameters: aCollection [
 TypType >> withSuper: aType [
 
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+TypType >> withoutNode [
+	^ self
 ]

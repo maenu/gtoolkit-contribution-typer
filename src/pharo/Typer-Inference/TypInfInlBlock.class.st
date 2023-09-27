@@ -10,6 +10,6 @@ TypInfInlBlock >> transfer [
 		at: self
 		put: ((BlockClosure
 				typAsFunctionTypeWithResult: self inReturnType
-				arguments: (self inArguments collect: #type)) typInfWithNode: context block).
+				arguments: (self inArguments collect: #type)) withNode: context block).
 	self constrain: context block to: self type
 ]

@@ -6,17 +6,14 @@ Class {
 
 { #category : #accessing }
 TypVariableLookup class >> receiver: aType selector: aSymbol parent: aLookup [
-
 	^ self index
-		  at: { 
-				  aType.
-				  aSymbol asSymbol.
-				  aLookup }
-		  ifAbsentPut: [ 
-			  self new
-				  initializeReceiver: aType selector: aSymbol asSymbol;
-				  initializeParent: aLookup;
-				  yourself ]
+		at: {aType withoutNode.
+				aSymbol asSymbol.
+				aLookup}
+		ifAbsentPut: [ self new
+				initializeReceiver: aType withoutNode selector: aSymbol asSymbol;
+				initializeParent: aLookup;
+				yourself ]
 ]
 
 { #category : #converting }

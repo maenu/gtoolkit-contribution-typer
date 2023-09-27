@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'argumentsSize',
 		'argumentsOptional',
-		'signalsAlways'
+		'signalsAlways',
+		'node'
 	],
 	#category : #'Typer-Core-Type'
 }
@@ -120,32 +121,33 @@ TypFunctionType >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^ false ].
 	argumentsSize = anObject argumentsSize ifFalse: [ ^ false ].
-	^ argumentsOptional = anObject argumentsOptional
+	argumentsOptional = anObject argumentsOptional ifFalse: [ ^ false ].
+	node = anObject node ifFalse: [ ^ false ].
+	^ true
 ]
 
 { #category : #comparing }
 TypFunctionType >> > aType [
-	aType = self
-		ifTrue: [ ^ false ].
+	aType = self ifTrue: [ ^ false ].
 	(aType class inheritsFrom: self class)
 		ifTrue: [ ^ self >= (aType as: self class) ].
-	(aType isFunction and: [ aType name = name ])
-		ifFalse: [ ^ super > aType ].
-	aType result > self result
-		ifTrue: [ ^ false ].
+	(aType isFunction and: [ aType name = name ]) ifFalse: [ ^ super > aType ].
+	aType result > self result ifTrue: [ ^ false ].
 	argumentsOptional
 		ifTrue: [ | size |
 			size := argumentsSize min: aType argumentsSize.
-			size = 0
-				ifTrue: [ ^ true ].
+			size = 0 ifTrue: [ ^ true ].
 			^ (1 to: size)
 				allSatisfy: [ :e | (self arguments at: e) >= (aType arguments at: e) ] ].
-	aType argumentsOptional
-		ifTrue: [ ^ false ].
-	argumentsSize = aType argumentsSize
+	aType argumentsOptional ifTrue: [ ^ false ].
+	argumentsSize = aType argumentsSize ifFalse: [ ^ false ].
+	((1 to: argumentsSize)
+		allSatisfy: [ :e | (self arguments at: e) >= (aType arguments at: e) ])
 		ifFalse: [ ^ false ].
-	^ (1 to: argumentsSize)
-		allSatisfy: [ :e | (self arguments at: e) >= (aType arguments at: e) ]
+	(aType hasNode and: [ self hasNode not ]) ifTrue: [ ^ false ].
+	(aType hasNode not and: [ self hasNode ]) ifTrue: [ ^ true ].
+	node = aType node ifFalse: [ ^ false ].
+	^ true
 ]
 
 { #category : #compatibility }
@@ -170,16 +172,20 @@ TypFunctionType >> covariant: aType [
 	| result |
 	result := super covariant: aType.
 	result isFunction ifFalse: [ ^ result ].
-	self typInfHasNode ifFalse: [ ^ result ].
-	^ result typInfWithNode: self typInfNode
+	self hasNode ifFalse: [ ^ result ].
+	^ result withNode: self node
+]
+
+{ #category : #accessing }
+TypFunctionType >> hasNode [
+	^ node isNotNil
 ]
 
 { #category : #comparing }
 TypFunctionType >> hashSkipping: anIdentitySet [
-
 	(anIdentitySet includes: self) ifTrue: [ ^ 41 ].
-	^ ((41 bitXor: argumentsSize hash) bitXor: argumentsOptional hash) 
-		  bitXor: (super hashSkipping: anIdentitySet)
+	^ (((41 bitXor: argumentsSize hash) bitXor: argumentsOptional hash)
+		bitXor: node hash) bitXor: (super hashSkipping: anIdentitySet)
 ]
 
 { #category : #initialization }
@@ -215,6 +221,17 @@ TypFunctionType >> initializeParameters: anOrderedDictionary [
 { #category : #testing }
 TypFunctionType >> isFunction [
 	^ true
+]
+
+{ #category : #accessing }
+TypFunctionType >> node [
+	^ node
+]
+
+{ #category : #accessing }
+TypFunctionType >> node: aNode [
+	self assert: [ node isNil ] description: 'initialization only'.
+	node := aNode
 ]
 
 { #category : #printing }
@@ -256,6 +273,14 @@ TypFunctionType >> signalsAlways [
 TypFunctionType >> withArguments: someTypes [
 
 	^ self withParameters: { self result } , someTypes
+]
+
+{ #category : #accessing }
+TypFunctionType >> withNode: aNode [
+	node ifNotNil: [ :n | n == aNode ifTrue: [ ^ self ] ].
+	^ self copy
+		node: aNode;
+		yourself
 ]
 
 { #category : #converting }
@@ -322,4 +347,23 @@ TypFunctionType >> withSuper: aType [
 		  argumentsOptional: argumentsOptional
 		  signalsAlways: signalsAlways
 		  super: aType
+]
+
+{ #category : #converting }
+TypFunctionType >> withoutNode [
+	self hasClassDescription
+		ifTrue: [ ^ self class
+				classDescription: self classDescription
+				result: self result
+				arguments: self arguments
+				argumentsOptional: argumentsOptional
+				signalsAlways: signalsAlways
+				super: self superOrNil ].
+	^ self class
+		named: name
+		result: self result
+		arguments: self arguments
+		argumentsOptional: argumentsOptional
+		signalsAlways: signalsAlways
+		super: self superOrNil
 ]

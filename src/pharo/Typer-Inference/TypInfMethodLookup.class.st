@@ -74,9 +74,27 @@ TypInfMethodLookup >> hasParent [
 ]
 
 { #category : #accessing }
+TypInfMethodLookup >> initializeArguments: aCollection self: aType super: anotherType [
+	"self assert: [ aCollection noneSatisfy: #hasNode ].
+	self assert: [ aType hasNode not ].
+	anotherType ifNotNil: [ self assert: [ anotherType hasNode not ] ]. we want nodes in this case, as we are not caching"
+	arguments := aCollection.
+	selfType := aType.
+	superType := anotherType
+]
+
+{ #category : #accessing }
 TypInfMethodLookup >> initializeMessage: aMessage [
 	self assert: [ aMessage isKindOf: TypInfMessage ].
 	message := aMessage
+]
+
+{ #category : #accessing }
+TypInfMethodLookup >> initializeReceiver: aType selector: aSymbol [
+	self assert: [ aType isKindOf: TypType ].
+	"self assert: [ aType hasNode not ]. we want nodes in this case, as we are not caching"
+	receiver := aType.
+	selector := aSymbol
 ]
 
 { #category : #accessing }

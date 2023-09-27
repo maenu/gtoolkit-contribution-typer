@@ -24,7 +24,8 @@ TypInfTWithArguments >> inArguments [
 
 { #category : #accessing }
 TypInfTWithArguments >> inArguments: aCollection [
-
-	^ aCollection withIndexDo: [ :n :i | 
-		  self inArgumentAt: i put: n ]
+	^ aCollection
+		withIndexDo: [ :n :i | 
+			self assert: [ n isKindOf: TypInfNode ].
+			self inArgumentAt: i put: n ]
 ]
