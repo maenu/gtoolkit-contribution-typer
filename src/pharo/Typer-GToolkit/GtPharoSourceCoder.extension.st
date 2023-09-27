@@ -108,10 +108,10 @@ GtPharoSourceCoder >> typGtToggleStylersAllFor: anAst into: anAddOns viewModel: 
 				addStyler: (TypGtDeadStyler new
 						coderViewModel: aViewModel;
 						yourself);
-				addStyler: (TypGtValueStyler new
+				addStyler: (TypGtContextExpanderStyler new
 						coderViewModel: aViewModel;
 						yourself);
-				addStyler: (TypGtContextExpanderStyler new
+				addStyler: (TypGtValueStyler new
 						coderViewModel: aViewModel;
 						yourself) ]
 ]

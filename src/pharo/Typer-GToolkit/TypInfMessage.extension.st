@@ -14,7 +14,7 @@ TypInfMessage >> typGtColor [
 TypInfMessage >> typGtExpanderCoders [
 	contexts
 		ifEmpty: [ | lookupResolved |
-			lookupResolved := lookup resolved.
+			lookupResolved := lookup asDefault resolved.
 			lookupResolved resolver ifNil: [ ^ {} ].
 			^ {GtPharoMethodCoder new
 					attributeNamed: #typGtLookup put: lookupResolved;

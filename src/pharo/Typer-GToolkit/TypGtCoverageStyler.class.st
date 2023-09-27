@@ -13,8 +13,8 @@ TypGtCoverageStyler >> styleNode: aNode [
 			self
 				attributes: {BlTextHighlightAttribute
 							paint: ((c ifTrue: [ Color green ] ifFalse: [ Color red ]) alpha: 0.3) asBlPaint}
-				from: aNode start
-				to: aNode stop ]
+				from: aNode startWithoutParentheses
+				to: aNode stopWithoutParentheses ]
 		ifAbsent: [  ]
 ]
 

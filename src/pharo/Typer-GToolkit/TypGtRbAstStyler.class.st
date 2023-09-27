@@ -48,17 +48,10 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 
 { #category : #visiting }
 TypGtRbAstStyler >> styleNode: aNode [
-	| nodes attribute stop |
-	nodes := self context nodesAt: aNode.	"type isUnknown ifTrue: [ ^ self ]."
-	attribute := TypGtAttribute nodes: nodes.
-	stop := aNode stop.
-	(stop < text size and: [ (text at: stop + 1) = Character space ])
-		ifTrue: [ attribute beReplace.
-			stop := stop + 1 ].
 	self
-		attributes: {attribute}
-		from: stop
-		to: stop
+		attributes: {TypGtAttribute nodes: (self context nodesAt: aNode)}
+		from: aNode stopWithoutParentheses
+		to: aNode stopWithoutParentheses
 ]
 
 { #category : #visiting }

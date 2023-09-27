@@ -134,8 +134,12 @@ TypIndex >> preResolve: aLookup [
 TypIndex >> resolve: aLookup [
 	^ resolve
 		at: aLookup
-		ifPresent: [ | resolved type |
+		ifPresent: [ :t | 
+			| resolved type |
 			resolved := aLookup resolved.
+			resolved result
+				ifNil: [ self flag: 'TODO how can this happen'.
+					resolved result: t ].
 			type := resolved resolver update: resolved.
 			self assert: [ type isNotNil ].
 			resolve at: aLookup put: type ]

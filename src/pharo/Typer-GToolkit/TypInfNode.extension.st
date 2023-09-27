@@ -86,6 +86,64 @@ TypInfNode >> typGtFlowFor: aView [
 ]
 
 { #category : #'*Typer-GToolkit' }
+TypInfNode >> typGtFlowHomeFor: aView [
+	<gtView>
+	^ aView typGtMondrian
+		title: 'Home Flow';
+		priority: 10;
+		painting: [ :m | self typGtFlowHomePaintOn: m ]
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypInfNode >> typGtFlowHomePaintOn: aMondrian [
+	| nodes edges connections |
+	nodes := context home allNodes.
+	edges := (((nodes flatCollect: #inEdges)
+			select: [ :e | nodes includes: e origin ])
+			, ((nodes flatCollect: #outEdges) select: [ :e | nodes includes: e target ]))
+			asIdentitySet.
+	connections := (edges groupedBy: [ :e | e origin -> e target ]) associations
+			collect: [ :a | a key -> (a value sorted: [ :e :f | e key = #next ]) ]
+			as: Dictionary.
+	aMondrian nodes
+		stencil: [ :e | 
+			| element |
+			element := e typGtAsElementIn: aMondrian.
+			e == self
+				ifTrue: [ element
+						outskirts: BlOutskirts outside;
+						border: (BlBorder paint: (BrGlamorousColors textHighlightColor alpha: 0.5) width: 3) ].
+			element ];
+		with: nodes.
+	aMondrian edges
+		passive;
+		fromNearestTightCircle;
+		toNearestTightCircle;
+		stencil: [ :e | 
+			| localEdges |
+			localEdges := connections at: e origin -> e target.
+			(e typGtAsElementIn: aMondrian)
+				curvatureFraction: (localEdges indexOf: e ifAbsent: 0) / (localEdges size * 2 + 1);
+				yourself ];
+		connect: (edges reject: [ :e | e key = #next ] thenCollect: #value)
+			from: #origin
+			to: #target.
+	aMondrian edges
+		fromNearestTightCircle;
+		toNearestTightCircle;
+		stencil: [ :e | 
+			| localEdges |
+			localEdges := connections at: e origin -> e target.
+			(e typGtAsElementIn: aMondrian)
+				curvatureFraction: ((localEdges indexOf: e ifAbsent: 1) - 1) / (localEdges size * 2 + 1);
+				yourself ];
+		connect: (edges select: [ :e | e key = #next ] thenCollect: #value)
+			from: #origin
+			to: #target.
+	aMondrian layout force fix: self at: 0 @ 0
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtFlowPaintOn: aMondrian [
 	| nodes edges connections |
 	nodes := context allNodes.

@@ -50,7 +50,7 @@ TypInfContext >> typGtCoderFor: aView [
 	^ aView forward
 		title: 'Method';
 		priority: 1;
-		object: [ self typGtAsCoder ];
+		object: [ self typGtAsCoder asElement asScrollableElement ];
 		view: #gtLiveFor:
 ]
 

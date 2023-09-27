@@ -13,8 +13,8 @@ TypGtDeadStyler >> styleNode: aNode [
 	self
 		attributes: {BlTextHighlightAttribute
 					paint: BrGlamorousColors errorBackgroundColor}
-		from: aNode start
-		to: aNode stop
+		from: aNode startWithoutParentheses
+		to: aNode stopWithoutParentheses
 ]
 
 { #category : #accessing }

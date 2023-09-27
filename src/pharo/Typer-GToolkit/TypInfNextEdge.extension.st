@@ -5,15 +5,3 @@ TypInfNextEdge >> typGtColor [
 	self isDisabled ifTrue: [ ^ BrGlamorousColors neutralBackgroundColor ].
 	^ BrGlamorousColors hoveredButtonTextColor
 ]
-
-{ #category : #'*Typer-GToolkit' }
-TypInfNextEdge >> typGtStateFor: aView [
-
-	<gtView>
-	state ifNil: [ ^ aView empty ].
-	^ aView forward
-		  title: 'State';
-		  priority: 10;
-		  object: [ state ];
-		  view: #typGtItemsFor:
-]

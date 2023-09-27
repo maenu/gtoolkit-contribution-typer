@@ -7,8 +7,10 @@ Class {
 { #category : #accessing }
 TypTyping >> invalidate [
 	<gtExample>
+	| before |
+	before := self memoryProbe.
 	self invalidateLight.
-	^ self memoryProbe
+	^ before -> self memoryProbe
 ]
 
 { #category : #accessing }
