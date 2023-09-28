@@ -2,17 +2,17 @@ Extension { #name : #GtPharoSourceCoder }
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
-
 	<typPraArguments: 'Integer'>
-	| node |
+	| node context |
 	node := self typGtRbNodeAt: anInteger.
 	node isNil ifTrue: [ ^ self ].
 	node isMessage ifFalse: [ ^ self ].
-	self notifyObjectSpawn:
-		(GtSearchImplementorsFilter selector: node selector)
-		& (TypGtCoderTypeFilter new
-				 type: node receiver typInfTypeSelf;
-				 yourself)
+	context := self attributeNamed: #typGtContext.
+	self
+		notifyObjectSpawn: (GtSearchImplementorsFilter selector: node selector)
+				& (TypGtCoderTypeFilter new
+						type: (context type: node);
+						yourself)
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -118,11 +118,11 @@ GtPharoSourceCoder >> typGtToggleStylersAllFor: anAst into: anAddOns viewModel: 
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtTypeWithShadowAt: anInteger [
-
 	<typPraArguments: 'Integer'>
-	| node |
+	| node context |
 	node := self typGtRbNodeAt: anInteger.
-	node isNil ifTrue: [ ^ self ].
-	node typGtCanType ifFalse: [ ^ self ].
-	self notifyObjectSpawn: node typGtShadowMethod
+	node ifNil: [ ^ self ].
+	context := self attributeNamed: #typGtContext.
+	(node typGtCanTypeIn: context) ifFalse: [ ^ self ].
+	self notifyObjectSpawn: (node typGtShadowMethodIn: context)
 ]

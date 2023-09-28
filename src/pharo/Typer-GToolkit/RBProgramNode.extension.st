@@ -6,6 +6,8 @@ RBProgramNode >> typGtCanTypeIn: aContext [
 ]
 
 { #category : #'*Typer-GToolkit' }
-RBProgramNode >> typGtInvokedMethods [
-	^ self children flatCollect: #typGtInvokedMethods as: IdentitySet
+RBProgramNode >> typGtInvokedMethodsIn: aContext [
+	^ self children
+		flatCollect: [ :n | n typGtInvokedMethodsIn: aContext ]
+		as: IdentitySet
 ]

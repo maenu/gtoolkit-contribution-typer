@@ -3,23 +3,21 @@ Extension { #name : #RBMessageNode }
 { #category : #'*Typer-GToolkit' }
 RBMessageNode >> typGtCanTypeIn: aContext [
 	| receiverType |
-	receiverType := self receiver typInfTypeIn: aContext.
+	receiverType := aContext type: self receiver.
 	receiverType isNamed ifFalse: [ ^ false ].
 	^ receiverType hasClassDescription
 ]
 
 { #category : #'*Typer-GToolkit' }
-RBMessageNode >> typGtInvokedMethods [
-
+RBMessageNode >> typGtInvokedMethodsIn: aContext [
 	| methods receiverType |
-	methods := super typGtInvokedMethods.
-	receiverType := receiver typInfTypeSelf.
-	(receiverType isNamed and: [ receiverType hasClassDescription ]) 
-		ifTrue: [ 
-			receiverType classDescription
+	methods := super typGtInvokedMethodsIn: aContext.
+	receiverType := aContext type: receiver.
+	(receiverType isNamed and: [ receiverType hasClassDescription ])
+		ifTrue: [ receiverType classDescription
 				classAndMethodFor: selector value
-				do: [ :c :m | ^ methods , { m } ]
-				ifAbsent: [  ] ].
+				do: [ :c :m | ^ methods , {m} ]
+				ifAbsent: [  "noop" ] ].
 	^ methods
 ]
 

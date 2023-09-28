@@ -7,6 +7,5 @@ RBVariableNode >> typGtCanTypeIn: aContext [
 
 { #category : #'*Typer-GToolkit' }
 RBVariableNode >> typGtShadowMethodIn: aContext [
-	self flag: 'FIXME'.
 	^ variable typGtShadowMethodIn: aContext
 ]
