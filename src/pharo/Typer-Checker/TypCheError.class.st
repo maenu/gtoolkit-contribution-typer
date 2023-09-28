@@ -6,5 +6,5 @@ Class {
 
 { #category : #accessing }
 TypCheError >> color [
-	^ Color black
+	self subclassResponsibility
 ]
