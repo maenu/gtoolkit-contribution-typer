@@ -1,7 +1,7 @@
 Class {
 	#name : #TypGtCheckStyler,
 	#superclass : #TypGtRbAstStyler,
-	#category : #'Typer-GToolkit'
+	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #visiting }

@@ -9,7 +9,7 @@ Class {
 		'infReduced',
 		'dynReduced'
 	],
-	#category : #'Typer-Dynamic'
+	#category : #'Typer-Dynamic-Core'
 }
 
 { #category : #accessing }

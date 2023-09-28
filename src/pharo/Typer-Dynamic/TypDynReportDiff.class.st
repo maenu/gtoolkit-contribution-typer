@@ -5,7 +5,7 @@ Class {
 		'dynamic',
 		'inference'
 	],
-	#category : #'Typer-Dynamic'
+	#category : #'Typer-Dynamic-Core'
 }
 
 { #category : #'as yet unclassified' }

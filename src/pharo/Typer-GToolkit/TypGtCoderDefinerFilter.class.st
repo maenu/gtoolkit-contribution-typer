@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : 'Typer-GToolkit'
+	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #testing }

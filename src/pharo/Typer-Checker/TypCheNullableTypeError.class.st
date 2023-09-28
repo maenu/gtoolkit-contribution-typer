@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'type'
 	],
-	#category : #'Typer-Checker'
+	#category : #'Typer-Checker-Core'
 }
 
 { #category : #accessing }

@@ -4,5 +4,5 @@ Class {
 	#instVars : [
 		'variable'
 	],
-	#category : #'Typer-Dynamic'
+	#category : #'Typer-Dynamic-Core'
 }

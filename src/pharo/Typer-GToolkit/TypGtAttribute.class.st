@@ -5,7 +5,7 @@ Class {
 		'type',
 		'nodes'
 	],
-	#category : #'Typer-GToolkit'
+	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #accessing }

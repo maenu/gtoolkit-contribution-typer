@@ -5,7 +5,7 @@ Class {
 		'type',
 		'selector'
 	],
-	#category : #'Typer-Checker'
+	#category : #'Typer-Checker-Core'
 }
 
 { #category : #accessing }

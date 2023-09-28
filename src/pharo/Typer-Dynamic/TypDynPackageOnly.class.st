@@ -5,7 +5,7 @@ Class {
 		'package',
 		'methods'
 	],
-	#category : #'Typer-Dynamic'
+	#category : #'Typer-Dynamic-Core'
 }
 
 { #category : #'reflective operations' }

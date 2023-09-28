@@ -7,7 +7,7 @@ Class {
 		'message',
 		'node'
 	],
-	#category : 'Typer-GToolkit-Typer-GToolkit'
+	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #accessing }

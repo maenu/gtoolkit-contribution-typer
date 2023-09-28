@@ -1,7 +1,7 @@
 Class {
 	#name : #TypCheError,
 	#superclass : #Error,
-	#category : #'Typer-Checker'
+	#category : #'Typer-Checker-Core'
 }
 
 { #category : #accessing }

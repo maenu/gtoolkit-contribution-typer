@@ -1,7 +1,7 @@
 Class {
 	#name : #TypGtContextExpanderStyler,
 	#superclass : #TypGtRbAstStyler,
-	#category : #'Typer-GToolkit'
+	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #accessing }
