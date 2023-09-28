@@ -1,7 +1,7 @@
 Class {
 	#name : #TypGtDeadStyler,
 	#superclass : #TypGtRbAstStyler,
-	#category : #'Typer-GToolkit'
+	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #accessing }

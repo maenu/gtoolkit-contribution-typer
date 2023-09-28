@@ -1,7 +1,7 @@
 Class {
 	#name : #TypGtStrongBorderAptitude,
 	#superclass : #BrStyleCommonAptitude,
-	#category : #'Typer-GToolkit'
+	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #accessing }

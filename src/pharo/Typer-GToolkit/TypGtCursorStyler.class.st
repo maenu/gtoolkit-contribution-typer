@@ -1,7 +1,7 @@
 Class {
 	#name : #TypGtCursorStyler,
 	#superclass : #TypGtValueStyler,
-	#category : #'Typer-GToolkit'
+	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #visiting }
