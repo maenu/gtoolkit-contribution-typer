@@ -9,20 +9,14 @@ Variable >> typInfAssignedTypeSelf: aType super: anotherType [
 	^ (writers
 		flatCollect: [ :m | 
 			m variableNodes
-				select: [ :n | 
-					n variable == self
-						and: [ n isWrite and: [ n methodNode compiledMethod methodClass typAsType >= aType ] ] ]
+				select: [ :n | n variable == self and: [ n isWrite and: [ m methodClass typAsType >= aType ] ] ]
 				thenFlatCollect: [ :n | 
-					TypInfMethodResolver instance
-						outAt: (TypInfContextKey
-								node: n methodNode
-								self: aType
-								super: anotherType)
+					| lookup |
+					lookup := m typInfAsLookupSelf: aType super: anotherType.
+					TypInfIndex instance
+						context: lookup
 						ifPresent: [ :c | (c nodesAt: n) collect: #type ]
 						ifAbsent: [ (TypInfNodeStack canPush: n methodNode)
-								ifTrue: [ (TypInfMethodResolver instance
-										nodesAt: n
-										self: aType
-										super: anotherType) collect: #type ]
+								ifTrue: [ ((TypInfIndex instance context: lookup) nodesAt: n) collect: #type ]
 								ifFalse: [ {TypUnknownType instance} ] ] ] ]) typAsMinimizedType
 ]

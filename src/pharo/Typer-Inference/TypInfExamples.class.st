@@ -8,14 +8,14 @@ Class {
 TypInfExamples >> block [
 
 	<gtExample>
-	^ self infer: TypInfInferred >> #block:
+	^ self updateContextAsync: TypInfInferred >> #block:
 ]
 
 { #category : #requirements }
 TypInfExamples >> blockUseSameTwice [
 
 	<gtExample>
-	^ self infer: TypInfInferred >> #blockUseSameTwice:
+	^ self updateContextAsync: TypInfInferred >> #blockUseSameTwice:
 ]
 
 { #category : #accessing }
@@ -36,7 +36,7 @@ TypInfExamples >> cleanContextRun: aMethod [
 { #category : #requirements }
 TypInfExamples >> createWindow [
 	<gtExample>
-	^ self infer: GlutinMainThreadEventLoop >> #createWindow:
+	^ self updateContextAsync: GlutinMainThreadEventLoop >> #createWindow:
 ]
 
 { #category : #requirements }
@@ -44,11 +44,6 @@ TypInfExamples >> empty [
 
 	<gtExample>
 	^ self inferSync: TypInfInferred >> #empty
-]
-
-{ #category : #accessing }
-TypInfExamples >> infer: aMethod [
-	^ aMethod typInfRun: 2 minutes
 ]
 
 { #category : #accessing }
@@ -61,7 +56,7 @@ TypInfExamples >> inferSync: aMethod [
 TypInfExamples >> inlined [
 
 	<gtExample>
-	^ self infer: TypInfInferred >> #inlined
+	^ self updateContextAsync: TypInfInferred >> #inlined
 ]
 
 { #category : #accessing }
@@ -87,7 +82,7 @@ TypInfExamples >> invalidateEverything [
 TypInfExamples >> message [
 
 	<gtExample>
-	^ self infer: TypInfInferred >> #message
+	^ self updateContextAsync: TypInfInferred >> #message
 ]
 
 { #category : #accessing }
@@ -108,42 +103,6 @@ TypInfExamples >> parseAllAsts [
 TypInfExamples >> plus [
 	<gtExample>
 	^ self cleanContextRun: SmallInteger >> #+
-]
-
-{ #category : #accessing }
-TypInfExamples >> runAllMethods [
-	<gtExample>
-	^ CompiledMethod allInstances collect: [ :m | m typInfRun: 5 seconds ]
-]
-
-{ #category : #accessing }
-TypInfExamples >> runAndMonitorAllMethods [
-	<gtExample>
-	^ CompiledMethod allInstances collect: [ :m | m typInfRun: 5 seconds ]
-]
-
-{ #category : #accessing }
-TypInfExamples >> runAndMonitorRandomMethod [
-	<gtExample>
-	^ self someRandomMethods anyOne typInfRunAndMonitor: 3 seconds
-]
-
-{ #category : #accessing }
-TypInfExamples >> runAndMonitorSomeRandomMethods [
-	<gtExample>
-	^ self someRandomMethods collect: [ :m | m typInfRunAndMonitor: 30 seconds ]
-]
-
-{ #category : #accessing }
-TypInfExamples >> runRandomMethod [
-	<gtExample>
-	^ self someRandomMethods anyOne typInfRun: 30 seconds
-]
-
-{ #category : #accessing }
-TypInfExamples >> runSomeRandomMethods [
-	<gtExample>
-	^ self someRandomMethods collect: [ :m | m typInfRun: 30 seconds ]
 ]
 
 { #category : #accessing }
@@ -168,5 +127,75 @@ TypInfExamples >> spaceTallyResultsItems [
 TypInfExamples >> translated [
 
 	<gtExample>
-	^ self infer: TypInfInferred >> #translated
+	^ self updateContextAsync: TypInfInferred >> #translated
+]
+
+{ #category : #accessing }
+TypInfExamples >> updateAllContextsAsync [
+	<gtExample>
+	^ CompiledMethod allInstances
+		collect: [ :m | 
+			^ TypInfIndex instance
+				updateContextAsync: m typInfAsLookup
+				by: #run
+				for: 5 seconds ]
+]
+
+{ #category : #accessing }
+TypInfExamples >> updateAllContextsAsyncWithTally [
+	<gtExample>
+	^ CompiledMethod allInstances
+		collect: [ :m | 
+			^ TypInfIndex instance
+				updateContextAsync: m typInfAsLookup
+				by: #run
+				for: 5 seconds ]
+]
+
+{ #category : #accessing }
+TypInfExamples >> updateContextAsync: aMethod [
+	^ TypInfIndex instance
+		updateContextAsync: aMethod typInfAsLookup
+		by: #run
+		for: 2 minutes
+]
+
+{ #category : #accessing }
+TypInfExamples >> updateRandomContextAsync [
+	<gtExample>
+	^ TypInfIndex instance
+		updateContextAsync: self someRandomMethods anyOne typInfAsLookup
+		by: #run
+		for: 30 seconds
+]
+
+{ #category : #accessing }
+TypInfExamples >> updateRandomContextAsyncWithTally [
+	<gtExample>
+	^ TypInfIndex instance
+		updateContextAsyncWithTally: self someRandomMethods anyOne typInfAsLookup
+		by: #run
+		for: 3 seconds
+]
+
+{ #category : #accessing }
+TypInfExamples >> updateSomeRandomContextsAsync [
+	<gtExample>
+	^ self someRandomMethods
+		collect: [ :m | 
+			^ TypInfIndex instance
+				updateContextAsync: m typInfAsLookup
+				by: #run
+				for: 30 seconds ]
+]
+
+{ #category : #accessing }
+TypInfExamples >> updateSomeRandomContextsAsyncWithTally [
+	<gtExample>
+	^ self someRandomMethods
+		collect: [ :m | 
+			^ TypInfIndex instance
+				updateContextAsyncWithTally: m typInfAsLookup
+				by: #run
+				for: 30 seconds ]
 ]

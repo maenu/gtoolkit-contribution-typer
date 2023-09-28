@@ -1,24 +1,8 @@
 Class {
 	#name : #TypInfMethodResolver,
 	#superclass : #TypResolver,
-	#classInstVars : [
-		'instance'
-	],
 	#category : #'Typer-Inference-Lookup'
 }
-
-{ #category : #accessing }
-TypInfMethodResolver class >> instance [
-
-	^ instance ifNil: [ instance := self new ]
-]
-
-{ #category : #invalidation }
-TypInfMethodResolver class >> invalidate [
-	<script>
-	instance ifNotNil: #invalidate.
-	instance := nil
-]
 
 { #category : #accessing }
 TypInfMethodResolver >> canResolve: aLookup [
@@ -30,30 +14,6 @@ TypInfMethodResolver >> canResolve: aLookup [
 	method := aLookup receiver classDescription >> aLookup selector.
 	(TypInfNodeStack canPush: method ast) ifFalse: [ ^ false ].
 	^ true
-]
-
-{ #category : #accessing }
-TypInfMethodResolver >> contextAt: aMethodNode self: aType super: anotherType [
-	| key context |
-	key := TypInfContextKey
-			node: aMethodNode
-			self: aType
-			super: anotherType.
-	self
-		outAt: key
-		ifPresent: [ :c | c nodeStackDepth <= TypInfNodeStack actives size ifTrue: [ ^ c ] ].
-	context := TypInfContext
-			sender: nil
-			state: TypInfState new
-			node: aMethodNode
-			self: aType
-			super: anotherType.
-	self outAt: key put: context.
-	TypInfNodeStack
-		push: aMethodNode
-		during: [ [ context run ] ifCurtailed: [ self outRemoveAt: key ] ]
-		or: [ self error: 'node stack reached max size' ].
-	^ context
 ]
 
 { #category : #'as yet unclassified' }
@@ -68,53 +28,6 @@ TypInfMethodResolver >> invalidate: aMethodLookup onMethodChange: aMethodAnnounc
 	^ aMethodAnnouncement typInfInvalidatesMethod: aMethodLookup
 ]
 
-{ #category : #invalidation }
-TypInfMethodResolver >> invalidateOnClassChange: aClassAnnouncement [
-
-	| changed |
-	changed := false.
-	(out flatCollect: #yourself)
-		select: [ :e | e key isKindOf: TypInfContextKey ]
-		thenDo: [ :e | 
-			((e key invalidateOnClassChange: aClassAnnouncement) or:
-				 (e target invalidateOnClassChange: aClassAnnouncement)) ifTrue: [ 
-				self outRemove: e.
-				changed := true ] ].
-	^ changed
-]
-
-{ #category : #invalidation }
-TypInfMethodResolver >> invalidateOnMethodChange: aMethodAnnouncement [
-
-	| changed |
-	changed := false.
-	(out flatCollect: #yourself)
-		select: [ :e | e key isKindOf: TypInfContextKey ]
-		thenDo: [ :e | 
-			((e key invalidateOnMethodChange: aMethodAnnouncement) or:
-				 (e target invalidateOnMethodChange: aMethodAnnouncement)) 
-				ifTrue: [ 
-					self outRemove: e.
-					changed := true ] ].
-	^ changed
-]
-
-{ #category : #accessing }
-TypInfMethodResolver >> nodeAt: aNode self: aType super: anotherType [
-	^ (self
-		nodesAt: aNode
-		self: aType
-		super: anotherType) first
-]
-
-{ #category : #accessing }
-TypInfMethodResolver >> nodesAt: aNode self: aType super: anotherType [
-	^ (self
-		contextAt: aNode methodNode
-		self: aType
-		super: anotherType) nodesAt: aNode
-]
-
 { #category : #printing }
 TypInfMethodResolver >> printOn: aStream [
 
@@ -123,19 +36,9 @@ TypInfMethodResolver >> printOn: aStream [
 
 { #category : #accessing }
 TypInfMethodResolver >> result: aLookup [
-	^ self
-		typeAt: (aLookup receiver classDescription lookupSelector: aLookup selector)
-				ast
-		self: aLookup self
-		super: aLookup super
-]
-
-{ #category : #accessing }
-TypInfMethodResolver >> typeAt: aNode self: aType super: anotherType [
-	^ ((self
-		nodesAt: aNode
-		self: aType
-		super: anotherType) collect: #type) typAsMinimizedType
+	^ (TypInfIndex instance
+		context: (aLookup receiver classDescription lookupSelector: aLookup selector) typInfAsLookup)
+		root type result
 ]
 
 { #category : #accessing }

@@ -115,8 +115,8 @@ TypInfMessage >> newContexts [
 		detect: [ :l | l resolver isKindOf: TypInfMethodResolver ]
 		ifFound: [ (lookups
 				flatCollect: [ :l | 
-					(TypInfIndex instance contextResolver canResolve: l)
-						ifTrue: [ TypInfIndex instance contextResolver resolve: l ]
+					(TypInfIndex instance canResolve: l)
+						ifTrue: [ TypInfIndex instance resolve: l ]
 						ifFalse: [ {} ] ]
 				as: Set) ifNotEmpty: [ :s | ^ s ] ].
 	lookup asDefault resolve signalsAlways

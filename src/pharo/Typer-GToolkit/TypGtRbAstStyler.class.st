@@ -20,13 +20,9 @@ TypGtRbAstStyler >> context [
 	model := self coderViewModel coderModel.
 	^ model
 		attributeNamed: #typGtContext
-		ifAbsent: [  "happens for fresh method coder"
-			model
+		ifAbsent: [  "happens for fresh method coder"model
 				attributeNamed: #typGtContext
-				put: (TypInfMethodResolver instance
-						contextAt: model compiledMethod ast
-						self: model behavior typAsType
-						super: model behavior typAsType superOrNil) ]
+				put: (TypInfIndex instance context: model compiledMethod typInfAsLookup) ]
 ]
 
 { #category : #accessing }

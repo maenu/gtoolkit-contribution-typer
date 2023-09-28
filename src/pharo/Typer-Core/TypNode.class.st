@@ -14,10 +14,16 @@ TypNode class >> compiler [
 	^ super compiler addPlugin: TypEdgePragmaCompilerPlugin
 ]
 
+{ #category : #accessing }
+TypNode class >> invalidate [
+	
+]
+
 { #category : #invalidation }
 TypNode class >> invalidateAll [
-
 	<script>
+	self withAllSubclassesDo: #invalidate.
+	self flag: 'TODO this is slow'.
 	^ self allSubInstancesDo: #invalidate
 ]
 
@@ -150,12 +156,6 @@ TypNode >> initialize [
 	super initialize.
 	in := IdentityDictionary new.
 	out := IdentityDictionary new
-]
-
-{ #category : #invalidation }
-TypNode >> invalidate [
-	in removeAll.
-	out removeAll
 ]
 
 { #category : #invalidation }

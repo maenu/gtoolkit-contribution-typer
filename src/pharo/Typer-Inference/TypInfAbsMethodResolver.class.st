@@ -10,13 +10,13 @@ TypInfAbsMethodResolver >> canResolve: aLookup [
 	aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
 	classDescription := aLookup receiver classDescription.
-	^ (TypInfAbsIndex instance canResolveMethods: aLookup)
+	^ (TypInfIndex instance absCanResolve: aLookup)
 		ifEmpty: [ false ]
 		ifNotEmpty: [ :s | s allSatisfy: [ :m | nil withArgs: {aLookup root message} executeMethod: m ] ]
 ]
 
 { #category : #accessing }
 TypInfAbsMethodResolver >> result: aLookup [
-	^ (TypInfAbsIndex instance resolveMethods: aLookup)
+	^ (TypInfIndex instance absResolve: aLookup)
 		collect: [ :m | aLookup -> (nil withArgs: {aLookup root message} executeMethod: m) ]
 ]

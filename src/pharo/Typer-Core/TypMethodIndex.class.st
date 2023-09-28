@@ -12,7 +12,7 @@ TypMethodIndex class >> instance [
 							resolver: (TypBreadthFirstResolver
 									resolvers: {TypPraMethodResolver new.
 											TypShaMethodResolver new.
-											TypInfMethodResolver instance}));
+											TypInfMethodResolver new}));
 					yourself ]
 ]
 

@@ -1,11 +1,15 @@
 Extension { #name : #MethodAnnouncement }
 
 { #category : #'*Typer-Inference' }
-MethodAnnouncement >> typInfInvalidatesMethod: aMethodLookup [
+MethodAnnouncement >> typInfInvalidateIndex [
+	
+]
 
-	^ (aMethodLookup receiver classDescription = method methodClass and: [ 
-		   aMethodLookup selector = method selector ]) or: [ 
-		  method sendsSelector: aMethodLookup selector ]
+{ #category : #'*Typer-Inference' }
+MethodAnnouncement >> typInfInvalidatesMethod: aLookup [
+	^ (aLookup receiver classDescription = method methodClass
+		and: [ aLookup selector = method selector ])
+		or: [ method sendsSelector: aLookup selector ]
 ]
 
 { #category : #'*Typer-Inference' }

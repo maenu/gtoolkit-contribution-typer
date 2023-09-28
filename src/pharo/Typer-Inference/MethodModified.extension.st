@@ -1,8 +1,14 @@
 Extension { #name : #MethodModified }
 
 { #category : #'*Typer-Inference' }
-MethodModified >> typInfInvalidatesMethod: aMethodLookup [
+MethodModified >> typInfInvalidateIndex [
+	TypInfIndex instance
+		removeMethod: oldMethod;
+		addMethod: method
+]
 
-	^ (super typInfInvalidatesMethod: aMethodLookup) or: [ 
-		  oldMethod sendsSelector: aMethodLookup selector ]
+{ #category : #'*Typer-Inference' }
+MethodModified >> typInfInvalidatesMethod: aLookup [
+	^ (super typInfInvalidatesMethod: aLookup)
+		or: [ oldMethod sendsSelector: aLookup selector ]
 ]

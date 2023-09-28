@@ -4,13 +4,6 @@ Class {
 	#category : #'Typer-Core-Lookup'
 }
 
-{ #category : #accessing }
-TypResolver class >> invalidateAll [
-
-	<script>
-	self allSubInstancesDo: #invalidate
-]
-
 { #category : #resolving }
 TypResolver >> canResolve: aLookup [
 

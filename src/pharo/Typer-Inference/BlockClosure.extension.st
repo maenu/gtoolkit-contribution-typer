@@ -1,8 +1,8 @@
 Extension { #name : #BlockClosure }
 
 { #category : #'*Typer-Inference' }
-BlockClosure >> typInfAbsCanResolveMethodOnDo: aMessageNode [
-	<typInfAbsCanResolveMethod: #on:do:>
+BlockClosure >> typInfAbsCanResolveOnDo: aMessageNode [
+	<typInfAbsCanResolve: #on:do:>
 	^ aMessageNode receiver hasNode
 		and: [ ([ | exception |
 			exception := (aMessageNode inArgumentAt: 1) node evaluate.
@@ -12,14 +12,14 @@ BlockClosure >> typInfAbsCanResolveMethodOnDo: aMessageNode [
 ]
 
 { #category : #'*Typer-Inference' }
-BlockClosure >> typInfAbsCanResolveMethodValue: aMessageNode [
-	<typInfAbsCanResolveMethod: #value>
+BlockClosure >> typInfAbsCanResolveValue: aMessageNode [
+	<typInfAbsCanResolve: #value>
 	^ aMessageNode receiver hasNode
 ]
 
 { #category : #'*Typer-Inference' }
-BlockClosure >> typInfAbsResolveMethodOnDo: aMessageNode [
-	<typInfAbsResolveMethod: #on:do:>
+BlockClosure >> typInfAbsResolveOnDo: aMessageNode [
+	<typInfAbsResolve: #on:do:>
 	| receiver exception exceptionHandler |
 	receiver := aMessageNode receiver node.
 	exception := (aMessageNode inArgumentAt: 1) node evaluate.
@@ -37,8 +37,8 @@ BlockClosure >> typInfAbsResolveMethodOnDo: aMessageNode [
 ]
 
 { #category : #'*Typer-Inference' }
-BlockClosure >> typInfAbsResolveMethodValue: aMessageNode [
-	<typInfAbsResolveMethod: #value>
+BlockClosure >> typInfAbsResolveValue: aMessageNode [
+	<typInfAbsResolve: #value>
 	| block |
 	block := aMessageNode receiver node.
 	^ TypInfBlockContext
@@ -49,4 +49,26 @@ BlockClosure >> typInfAbsResolveMethodValue: aMessageNode [
 		super: block context super
 		message: aMessageNode
 		block: block
+]
+
+{ #category : #'*Typer-Inference' }
+BlockClosure >> typInfValueAsyncFor: aDuration [
+	| promise semaphore process |
+	promise := AsyncPendingPromise new.
+	semaphore := Semaphore new.
+	process := [ [ [ promise fulfillWithValue: self value ]
+			on: Error
+			do: [ :e | promise rejectWithError: e ] ] ]
+			forkAt: Processor userBackgroundPriority - 1.
+	[ semaphore
+		wait: aDuration
+		onCompletion: [ self assert: [ promise isSettled ] ]
+		onTimeout: [ process suspend.
+			process
+				suspendedContext: ([ Error signal: 'timeout' ] asContext
+						privSender: process suspendedContext;
+						yourself).
+			process priority: (Processor lowIOPriority min: process priority + 5).
+			process resume ] ] forkAt: Processor userBackgroundPriority - 1.
+	^ promise
 ]

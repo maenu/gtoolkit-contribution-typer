@@ -1,91 +1,96 @@
 Class {
 	#name : #TypShaIndex,
-	#superclass : #Object,
-	#instVars : [
-		'cache'
-	],
-	#classInstVars : [
-		'instance'
-	],
+	#superclass : #TypIndex,
 	#category : #'Typer-Shadow-Lookup'
 }
 
 { #category : #accessing }
-TypShaIndex class >> instance [
-
-	^ instance ifNil: [ 
-		  instance := self new
-			              build;
-			              yourself ]
-]
-
-{ #category : #accessing }
-TypShaIndex class >> invalidate [
-
-	<script>
-	instance ifNotNil: #invalidate.
-	instance := nil
-]
-
-{ #category : #accessing }
-TypShaIndex >> build [
-	cache removeAll.
-	Smalltalk globals allMethods
-		do: [ :m | 
-			m typShaIsResolveMethod
-				ifTrue: [ (cache
-						typAt: m methodClass
-						at: #method
-						at: m typShaResolvedMethod
-						ifAbsentPut: [ IdentitySet new ]) add: m ].
-			m typShaIsResolveVariable
-				ifTrue: [ (cache
-						typAt: m methodClass
-						at: #variable
-						at: m typShaResolvedVariable
-						ifAbsentPut: [ IdentitySet new ]) add: m ].
-			m typShaIsResolveType
-				ifTrue: [ (cache
-						typAt: m methodClass
-						at: #type
-						at: #type
-						ifAbsentPut: [ IdentitySet new ]) add: m ] ]
+TypShaIndex >> addMethod: aMethod [
+	aMethod typShaIsResolveMethod
+		ifTrue: [ (cache
+				typAt: {#method.
+						aMethod methodClass.
+						aMethod typShaResolvedMethod}
+				ifAbsentPut: [ IdentitySet new ]) add: aMethod ].
+	aMethod typShaIsResolveVariable
+		ifTrue: [ (cache
+				typAt: {#variable.
+						aMethod methodClass.
+						aMethod typShaResolvedVariable}
+				ifAbsentPut: [ IdentitySet new ]) add: aMethod ].
+	aMethod typShaIsResolveType
+		ifTrue: [ (cache
+				typAt: {#type.
+						aMethod methodClass}
+				ifAbsentPut: [ IdentitySet new ]) add: aMethod ]
 ]
 
 { #category : #accessing }
 TypShaIndex >> initialize [
 	super initialize.
-	cache := IdentityDictionary new
+	Smalltalk globals allMethods do: [ :m | self addMethod: m ]
 ]
 
 { #category : #accessing }
-TypShaIndex >> invalidate [
-	cache removeAll
+TypShaIndex >> invalidateOnClassChange: aClassAnnouncement [
+	aClassAnnouncement typShaInvalidateIndex
 ]
 
 { #category : #accessing }
-TypShaIndex >> methodResolvers: aClassDescription selector: aSymbol [
+TypShaIndex >> invalidateOnMethodChange: aMethodAnnouncement [
+	aMethodAnnouncement typShaInvalidateIndex
+]
+
+{ #category : #accessing }
+TypShaIndex >> removeBehavior: aBehavior [
+	(cache at: #method) removeKey: aBehavior ifAbsent: [  "noop" ].
+	(cache at: #variable) removeKey: aBehavior ifAbsent: [  "noop" ].
+	(cache at: #type) removeKey: aBehavior ifAbsent: [  "noop" ]
+]
+
+{ #category : #accessing }
+TypShaIndex >> removeMethod: aMethod [
+	aMethod typShaIsResolveMethod
+		ifTrue: [ (cache
+				typAt: {#method.
+						aMethod methodClass})
+				removeKey: aMethod typShaResolvedMethod
+				ifAbsent: [  "noop" ] ].
+	aMethod typShaIsResolveVariable
+		ifTrue: [ (cache
+				typAt: {#variable.
+						aMethod methodClass})
+				removeKey: aMethod typShaResolvedVariable
+				ifAbsent: [  "noop" ] ].
+	aMethod typShaIsResolveType
+		ifTrue: [ (cache
+				typAt: {#type.
+						aMethod methodClass}) remove: aMethod ifAbsent: [  "noop" ] ]
+]
+
+{ #category : #accessing }
+TypShaIndex >> resolveMethod: aLookup [
 	^ cache
-		typAt: aClassDescription
-		at: #method
-		at: aSymbol
+		typAt: {#method.
+				aLookup receiver classDescription.
+				aLookup selector}
+		ifPresent: [ :s | s collect: [ :m | nil withArgs: {aLookup} executeMethod: m ] ]
 		ifAbsent: [ #() ]
 ]
 
 { #category : #accessing }
-TypShaIndex >> typeResolvers: aClassDescription [
+TypShaIndex >> resolveType: aLookup [
 	^ cache
-		typAt: aClassDescription class
-		at: #type
-		at: #type
+		typAt: {#type.
+				aLookup classDescription class}
 		ifAbsent: [ #() ]
 ]
 
 { #category : #accessing }
-TypShaIndex >> variableResolvers: aClassDescription selector: aSymbol [
+TypShaIndex >> resolveVariable: aLookup [
 	^ cache
-		typAt: aClassDescription
-		at: #variable
-		at: aSymbol
+		typAt: {#variable.
+				aLookup receiver classDescription.
+				aLookup selector}
 		ifAbsent: [ #() ]
 ]

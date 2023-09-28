@@ -2,12 +2,8 @@ Extension { #name : #TypShaMethodResolver }
 
 { #category : #'*Typer-GToolkit' }
 TypShaMethodResolver >> typGtExpanderMethod: aLookup [
-	| methodClass |
-	methodClass := aLookup receiver classDescription.
 	^ aLookup receiver classDescription
-		>> (TypShaIndex instance
-				methodResolvers: methodClass
-				selector: aLookup selector) anyOne selector
+		>> (TypShaIndex instance resolveMethod: aLookup) anyOne selector
 ]
 
 { #category : #'*Typer-GToolkit' }

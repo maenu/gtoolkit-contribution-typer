@@ -6,8 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaTypeResolver >> canResolve: aLookup [
-	^ (TypShaIndex instance typeResolvers: aLookup classDescription)
-		isNotEmpty
+	^ (TypShaIndex instance resolveType: aLookup) isNotEmpty
 ]
 
 { #category : #printing }
@@ -20,6 +19,6 @@ TypShaTypeResolver >> printOn: aStream [
 TypShaTypeResolver >> result: aLookup [
 	^ self
 		resolve: aLookup
-		reduce: ((TypShaIndex instance typeResolvers: aLookup classDescription)
+		reduce: ((TypShaIndex instance resolveType: aLookup)
 				collect: [ :m | aLookup classDescription withArgs: {aLookup} executeMethod: m ])
 ]

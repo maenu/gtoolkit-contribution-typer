@@ -8,9 +8,7 @@ Class {
 TypShaMethodResolver >> canResolve: aLookup [
 	aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
-	^ (TypShaIndex instance
-		methodResolvers: aLookup receiver classDescription
-		selector: aLookup selector) isNotEmpty
+	^ (TypShaIndex instance resolveMethod: aLookup) isNotEmpty
 ]
 
 { #category : #printing }
@@ -23,8 +21,6 @@ TypShaMethodResolver >> printOn: aStream [
 TypShaMethodResolver >> result: aLookup [
 	^ self
 		resolve: aLookup
-		reduce: ((TypShaIndex instance
-				methodResolvers: aLookup receiver classDescription
-				selector: aLookup selector)
+		reduce: ((TypShaIndex instance resolveMethod: aLookup)
 				collect: [ :m | nil withArgs: {aLookup} executeMethod: m ])
 ]
