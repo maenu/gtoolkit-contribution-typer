@@ -54,7 +54,7 @@ TypInfExamples >> invalidateEverything [
 	before typInfIsInvalidatedEverything
 		ifTrue: [ ^ {before.
 				'success, one garbage collection did it'} ].
-	TypType invalidateEverything.
+	TypManifest invalidateEverything.
 	after := self spaceTallyResultsItems.
 	after typInfIsInvalidatedEverything
 		ifTrue: [ ^ {before.

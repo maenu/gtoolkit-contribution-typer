@@ -236,7 +236,7 @@ TypInfIndex >> removeMethod: aMethod [
 						aMethod typInfAbsCanResolve}
 				ifPresent: [ :s | s remove: aMethod ] ].
 	cache typRemoveAt: aMethod typInfAsLookup typInfAsContextPath.
-	self flag: 'TODO invalidate senders too'.
+	self flag: 'TODO invalidate senders etc. too'.
 	cache
 		typAt: {#implementors.
 				aMethod selector}

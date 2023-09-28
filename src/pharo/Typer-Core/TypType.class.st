@@ -29,13 +29,7 @@ TypType class >> invalidateEverything [
 	TypNode invalidateAll.
 	TypType invalidateAll.
 	TypIndex invalidateAll.
-	TypEdgeKey invalidateAll.
-	TypResolver invalidateAll.
-	TypShaIndex invalidate.
-	TypInfMethodResolver invalidate.
-	TypInfIndex invalidate.
-	TypInfAbsIndex invalidate.
-	TypInfNodeStack resetSoleInstance
+	TypEdgeKey invalidateAll
 ]
 
 { #category : #comparing }
