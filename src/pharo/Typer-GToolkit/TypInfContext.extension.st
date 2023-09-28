@@ -75,6 +75,11 @@ TypInfContext >> typGtIndicator [
 ]
 
 { #category : #'*Typer-GToolkit' }
+TypInfContext >> typGtInvokedMethods [
+	^ self allNodes flatCollect: #typGtInvokedMethods as: IdentitySet
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypInfContext >> typGtMinimalFlowFor: aView [
 	<gtView>
 	^ aView forward

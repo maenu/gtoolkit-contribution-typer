@@ -93,6 +93,12 @@ TypNamedType >> > aType [
 ]
 
 { #category : #accessing }
+TypNamedType >> allSelectors [
+	self hasClassDescription ifFalse: [ ^ #() ].
+	^ classDescription allSelectors
+]
+
+{ #category : #accessing }
 TypNamedType >> classDescription [
 	<typPraResult: 'ClassDescription'>
 	self assert: [ self hasClassDescription ].

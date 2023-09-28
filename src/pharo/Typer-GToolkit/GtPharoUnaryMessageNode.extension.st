@@ -1,24 +1,57 @@
 Extension { #name : #GtPharoUnaryMessageNode }
 
 { #category : #'*Typer-GToolkit' }
-GtPharoUnaryMessageNode >> typGtCompletionActionStreamFor: aStrategy in: anRbNode [
+GtPharoUnaryMessageNode >> typGtCompletionActionStreamFor: aStrategy type: aType [
+	"replaces GtPharoUnaryMessageNode>>#completionActionStreamFor:
+	TypGtPharoCompletionStrategy"
 
 	<typPraArguments: 'TypGtPharoCompletionStrategy,RBMessageNode'>
-	| startingText index type clazz |
-	index := aStrategy index.
-	selectorPart stopPosition = index ifFalse: [ ^ #(  ) asAsyncStream ].
-	startingText := selectorPart value.
-	type := anRbNode typInfTypeSelf.
-	self flag: 'TODO can be less restrictive here'.
-	clazz := (type isNamed and: [ type hasClassDescription ])
-		         ifTrue: [ type classDescription ]
-		         ifFalse: [ Object ].
-	^ ((aStrategy selectorsForReceiver: clazz matching: startingText) 
-		   collect: [ :each | 
-			   parent
-				   actionForSelector: each
-				   startingWith: startingText
-				   at: index
-				   needsParensKeywords: parent parent needsParenthesisForKeyword ])
-		  asAsyncStream
+	selectorPart stopPosition = aStrategy index ifFalse: [ ^ #() asAsyncStream ].
+	^ self
+		typGtMessageCompletionsSendTo: self receiver
+		matching: selectorPart
+		parentMessage: self completionKeywordMessage
+		for: aStrategy
+		type: aType
+]
+
+{ #category : #'*Typer-GToolkit' }
+GtPharoUnaryMessageNode >> typGtMessageCompletionsSendTo: receiver matching: aToken parentMessage: aMessage for: strategy type: aType [
+	"replaces GtPharoProgramNode>>#messageCompletionsSendTo:matching:parentMessage:for:"
+
+	| index name completionsStream replacementsStream wordSelectorStream |
+	index := strategy index.
+	name := aToken source.
+	strategy wasRequested
+		ifFalse: [ (aType canLookupMethod: name) ifTrue: [ ^ #() asAsyncStream ] ].
+	completionsStream := (strategy selectorStreamForReceiver: aType matching: name)
+			collect: [ :each | 
+				receiver
+					actionForSelector: each
+					startingWith: name
+					at: index
+					strategy: strategy ].
+	wordSelectorStream := (strategy
+			selectorStreamForReceiver: aType
+			matchingWords: name) cached.
+	aMessage
+		ifNotNil: [ completionsStream := self
+					mergeKeywordCompletionsWith: completionsStream
+					from: aMessage
+					matching: aToken
+					preferKeywords: aType <= BlockClosure typAsType
+					for: strategy ].
+	replacementsStream := wordSelectorStream
+			collect: [ :each | 
+				(GtCompositeCompletionAction labeled: (strategy labelFor: each withWords: name))
+					addAction: (GtDeleteTextCompletionAction
+							labeled: ''
+							from: aToken startPosition
+							to: aToken stopPosition);
+					addAction: (receiver
+							actionForSelector: each
+							startingWith: ''
+							at: aToken startPosition - 1
+							strategy: strategy) ].
+	^ completionsStream merge: replacementsStream
 ]

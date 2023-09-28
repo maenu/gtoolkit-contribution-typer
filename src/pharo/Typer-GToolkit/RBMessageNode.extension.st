@@ -9,19 +9,6 @@ RBMessageNode >> typGtCanTypeIn: aContext [
 ]
 
 { #category : #'*Typer-GToolkit' }
-RBMessageNode >> typGtInvokedMethodsIn: aContext [
-	| methods receiverType |
-	methods := super typGtInvokedMethodsIn: aContext.
-	receiverType := aContext type: receiver.
-	(receiverType isNamed and: [ receiverType hasClassDescription ])
-		ifTrue: [ receiverType classDescription
-				classAndMethodFor: selector value
-				do: [ :c :m | ^ methods , {m} ]
-				ifAbsent: [  "noop" ] ].
-	^ methods
-]
-
-{ #category : #'*Typer-GToolkit' }
 RBMessageNode >> typGtShadowMethodIn: aContext [
 	| method_ receiverType argumentTypes resultType |
 	self flag: 'FIXME'.

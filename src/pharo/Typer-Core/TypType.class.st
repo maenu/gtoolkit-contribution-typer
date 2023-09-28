@@ -81,6 +81,13 @@ TypType >> >= aType [
 	^ self > aType or: [ self = aType ]
 ]
 
+{ #category : #accessing }
+TypType >> allSelectors [
+	"needed by gt completion, compromise compatibility"
+
+	self subclassResponsibility
+]
+
 { #category : #compatibility }
 TypType >> arguments [
 
@@ -115,6 +122,23 @@ TypType >> boundTo: aType [
 	"noop"
 
 	^ self
+]
+
+{ #category : #lookup }
+TypType >> canLookupMethod: aSymbol [
+	^ self
+		canLookupMethod: aSymbol
+		arguments: (aSymbol numArgs typTimesCollect: [ :e | TypUnknownType instance ])
+]
+
+{ #category : #lookup }
+TypType >> canLookupMethod: aSymbol arguments: aCollection [
+	^ self
+		canResolveMethod: (TypMethodLookup
+				receiver: self
+				selector: aSymbol
+				arguments: aCollection
+				parent: nil)
 ]
 
 { #category : #lookup }
@@ -289,9 +313,9 @@ TypType >> isVariable [
 
 { #category : #lookup }
 TypType >> lookupMethod: aSymbol [
-	| arguments |
-	arguments := aSymbol numArgs typTimesCollect: [ :e | TypUnknownType instance ].
-	^ self lookupMethod: aSymbol arguments: arguments
+	^ self
+		lookupMethod: aSymbol
+		arguments: (aSymbol numArgs typTimesCollect: [ :e | TypUnknownType instance ])
 ]
 
 { #category : #lookup }

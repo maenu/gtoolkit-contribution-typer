@@ -34,6 +34,11 @@ TypUnionType >> > aType [
 	^ aType types allSatisfy: [ :e | self >= e ]
 ]
 
+{ #category : #accessing }
+TypUnionType >> allSelectors [
+	^ types sorted flatCollect: #allSelectors
+]
+
 { #category : #compatibility }
 TypUnionType >> arguments [
 

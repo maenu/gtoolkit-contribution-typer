@@ -193,6 +193,11 @@ TypInfNode >> typGtFlowPaintOn: aMondrian [
 ]
 
 { #category : #'*Typer-GToolkit' }
+TypInfNode >> typGtInvokedMethods [
+	^ #()
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtMinimalFlowFor: aView [
 	<gtView>
 	^ aView typGtMondrian

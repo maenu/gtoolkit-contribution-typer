@@ -28,3 +28,15 @@ TypInfMessage >> typGtExpanderCoders [
 			model coderModel attributeNamed: #typGtLookup put: a key.
 			model ]
 ]
+
+{ #category : #'*Typer-GToolkit' }
+TypInfMessage >> typGtInvokedMethods [
+	| receiverType |
+	receiverType := self receiver.
+	(receiverType isNamed and: [ receiverType hasClassDescription ])
+		ifFalse: [ ^ #() ].
+	^ receiverType classDescription
+		classAndMethodFor: self selector value
+		do: [ :c :m | {m} ]
+		ifAbsent: [ #() ]
+]

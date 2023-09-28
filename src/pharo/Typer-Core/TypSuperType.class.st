@@ -11,6 +11,11 @@ TypSuperType >> > aType [
 ]
 
 { #category : #accessing }
+TypSuperType >> allSelectors [
+	^ self super allSelectors
+]
+
+{ #category : #accessing }
 TypSuperType >> classDescription [
 
 	^ superType classDescription

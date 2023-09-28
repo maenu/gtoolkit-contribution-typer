@@ -21,28 +21,23 @@ TypGtPharoCompletionStrategy >> coder: anObject [
 
 { #category : #accessing }
 TypGtPharoCompletionStrategy >> completionActionStreamFor: aText at: positionInteger requested: aBoolean [
-
-	| node |
 	index := positionInteger.
 	wasRequested := aBoolean.
-	node := coder rbAST bestNodeFor: (index to: index).
 	^ (self parseSource: aText asString)
-		  ifNil: [ #(  ) asAsyncStream ]
-		  ifNotNil: [ :tree | 
-		  tree typGtCompletionActionStreamFor: self in: node ]
+		ifNil: [ #() asAsyncStream ]
+		ifNotNil: [ :tree | 
+			tree
+				typGtCompletionActionStreamFor: self
+				type: ((coder attributeNamed: #typGtContext)
+						type: (coder rbAST bestNodeFor: (index to: index))) ]
 ]
 
-{ #category : #'private-selector' }
-TypGtPharoCompletionStrategy >> selectorStreamForReceiver: aBehavior matching: aString [
-
-	| tree |
-	tree := aBehavior ifNil: [ SelectorCache ] ifNotNil: [ 
-		        tree := GtPrefixTree new.
-		        aBehavior withAllSuperclasses withIndexDo: [ :e :i | 
-			        e selectors do: [ :f | 
-				        tree add: f weight: 999 - i "this is an incredible stupid trick to get an inverse order while being above zero, which is apparently required. never do 999 superclasses" ] ].
-		        tree ].
-	^ tree asyncWeightedStreamStartingWith: aString
+{ #category : #accessing }
+TypGtPharoCompletionStrategy >> selectorStreamForReceiver: aType matchingWords: aString [
+	aType isUnknown
+		ifTrue: [ ^ super selectorStreamForReceiver: aType matchingWords: aString ].
+	^ (GtPharoIndex current asyncSelectorsForWord: aString)
+		select: [ :each | (each beginsWith: aString) not and: [ aType canLookupMethod: each asSymbol ] ]
 ]
 
 { #category : #accessing }
