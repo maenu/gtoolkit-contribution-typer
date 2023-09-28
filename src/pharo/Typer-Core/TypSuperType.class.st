@@ -1,7 +1,7 @@
 Class {
 	#name : #TypSuperType,
 	#superclass : #TypType,
-	#category : #'Typer-Core-Type'
+	#category : #'Typer-Core-Core'
 }
 
 { #category : #comparing }

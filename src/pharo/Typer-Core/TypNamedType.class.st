@@ -6,7 +6,7 @@ Class {
 		'classDescription',
 		'hasClassDescription'
 	],
-	#category : #'Typer-Core-Type'
+	#category : #'Typer-Core-Core'
 }
 
 { #category : #'instance creation' }

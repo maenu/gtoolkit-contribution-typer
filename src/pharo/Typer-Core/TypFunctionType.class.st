@@ -7,7 +7,7 @@ Class {
 		'signalsAlways',
 		'node'
 	],
-	#category : #'Typer-Core-Type'
+	#category : #'Typer-Core-Core'
 }
 
 { #category : #accessing }

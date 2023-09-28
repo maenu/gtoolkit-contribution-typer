@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'types'
 	],
-	#category : #'Typer-Core-Type'
+	#category : #'Typer-Core-Core'
 }
 
 { #category : #'instance creation' }

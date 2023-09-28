@@ -8,7 +8,7 @@ Class {
 	#classInstVars : [
 		'index'
 	],
-	#category : #'Typer-Core-Type'
+	#category : #'Typer-Core-Core'
 }
 
 { #category : #accessing }
@@ -22,13 +22,6 @@ TypType class >> invalidate [
 
 	<script>
 	index := nil
-]
-
-{ #category : #invalidation }
-TypType class >> invalidateAll [
-
-	<script>
-	self withAllSubclassesDo: #invalidate
 ]
 
 { #category : #accessing }
