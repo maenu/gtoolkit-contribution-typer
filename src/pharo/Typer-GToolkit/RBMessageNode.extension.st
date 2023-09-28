@@ -1,9 +1,9 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer-GToolkit' }
-RBMessageNode >> typGtCanType [
+RBMessageNode >> typGtCanTypeIn: aContext [
 	| receiverType |
-	receiverType := self receiver typInfTypeSelf.
+	receiverType := self receiver typInfTypeIn: aContext.
 	receiverType isNamed ifFalse: [ ^ false ].
 	^ receiverType hasClassDescription
 ]
@@ -24,9 +24,10 @@ RBMessageNode >> typGtInvokedMethods [
 ]
 
 { #category : #'*Typer-GToolkit' }
-RBMessageNode >> typGtShadowMethod [
+RBMessageNode >> typGtShadowMethodIn: aContext [
 	| method_ receiverType argumentTypes resultType |
-	self assert: [ self typGtCanType ].
+	self flag: 'FIXME'.
+	self assert: [ self typGtCanTypeIn: nil ].
 	method_ := self typInfNodeSelf type.
 	receiverType := self receiver typInfTypeSelf.
 	argumentTypes := method_ arguments.

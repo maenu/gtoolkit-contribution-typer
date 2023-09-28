@@ -252,6 +252,11 @@ TypInfContext >> type [
 		arguments: (node arguments collect: [ :n | TypUnknownType instance ])
 ]
 
+{ #category : #accessing }
+TypInfContext >> type: aNode [
+	^ (self nodesAt: self) typAsMinimizedType
+]
+
 { #category : #visiting }
 TypInfContext >> visitArrayNode: anArrayNode [
 

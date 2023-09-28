@@ -1,13 +1,12 @@
 Extension { #name : #RBVariableNode }
 
 { #category : #'*Typer-GToolkit' }
-RBVariableNode >> typGtCanType [
-
-	^ variable typGtCanType
+RBVariableNode >> typGtCanTypeIn: aContext [
+	^ variable typGtCanTypeIn: aContext
 ]
 
 { #category : #'*Typer-GToolkit' }
-RBVariableNode >> typGtShadowMethod [
-
-	^ variable typGtShadowMethod
+RBVariableNode >> typGtShadowMethodIn: aContext [
+	self flag: 'FIXME'.
+	^ variable typGtShadowMethodIn: aContext
 ]

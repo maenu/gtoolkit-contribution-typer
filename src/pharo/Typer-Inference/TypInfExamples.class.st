@@ -40,19 +40,6 @@ TypInfExamples >> createWindow [
 ]
 
 { #category : #requirements }
-TypInfExamples >> empty [
-
-	<gtExample>
-	^ self inferSync: TypInfInferred >> #empty
-]
-
-{ #category : #accessing }
-TypInfExamples >> inferSync: aMethod [
-
-	^ aMethod ast typInfTypeSelf
-]
-
-{ #category : #requirements }
 TypInfExamples >> inlined [
 
 	<gtExample>

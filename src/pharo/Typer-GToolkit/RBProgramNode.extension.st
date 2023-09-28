@@ -1,8 +1,7 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*Typer-GToolkit' }
-RBProgramNode >> typGtCanType [
-	<typPraResult: 'Boolean'>
+RBProgramNode >> typGtCanTypeIn: aContext [
 	^ false
 ]
 

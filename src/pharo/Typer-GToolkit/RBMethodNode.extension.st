@@ -1,30 +1,27 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-GToolkit' }
-RBMethodNode >> typGtCanType [
+RBMethodNode >> typGtCanTypeIn: aContext [
 	^ true
 ]
 
 { #category : #'*Typer-GToolkit' }
-RBMethodNode >> typGtShadowMethod [
-
+RBMethodNode >> typGtShadowMethodIn: aContext [
 	| method_ argumentTypes resultType clazz shadow |
-	self assert: [ self typGtCanType ].
+	self flag: 'FIXME'.
+	self assert: [ self typGtCanTypeIn: nil ].
 	method_ := self typInfTypeSelf.
 	argumentTypes := method_ arguments.
 	resultType := method_ result.
 	clazz := self methodClass.
 	shadow := (TypShaShadow typGtShadowFor: clazz instanceSide)
-		          ifEmpty: [ 
-		          TypShaShadow typGtNewShadowFor: clazz instanceSide ]
-		          ifNotEmpty: #first.
+			ifEmpty: [ TypShaShadow typGtNewShadowFor: clazz instanceSide ]
+			ifNotEmpty: #first.
 	^ shadow
-		  typGtShadowMethod: selector value
-		  result: resultType
-		  arguments: argumentTypes
-		  in: (clazz isInstanceSide
-				   ifTrue: [ shadow ]
-				   ifFalse: [ shadow class ])
+		typGtShadowMethod: selector value
+		result: resultType
+		arguments: argumentTypes
+		in: (clazz isInstanceSide ifTrue: [ shadow ] ifFalse: [ shadow class ])
 ]
 
 { #category : #'*Typer-GToolkit' }
