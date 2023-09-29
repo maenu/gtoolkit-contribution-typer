@@ -1,6 +1,6 @@
 Extension { #name : #RPackageTag }
 
-{ #category : #'*Typer-Coverage' }
+{ #category : #'*Typer-GToolkit' }
 RPackageTag >> typGtCovFor: aView context: aDictionary [
 	<gtPackageTagView>
 	^ aView explicit
@@ -26,7 +26,7 @@ RPackageTag >> typGtCovFor: aView context: aDictionary [
 		yourself
 ]
 
-{ #category : #'*Typer-Coverage' }
+{ #category : #'*Typer-GToolkit' }
 RPackageTag >> typGtCovMethod [
 	| result |
 	result := Dictionary new
@@ -41,7 +41,7 @@ RPackageTag >> typGtCovMethod [
 	^ result
 ]
 
-{ #category : #'*Typer-Coverage' }
+{ #category : #'*Typer-GToolkit' }
 RPackageTag >> typGtCovNode [
 	| result |
 	result := Dictionary new
