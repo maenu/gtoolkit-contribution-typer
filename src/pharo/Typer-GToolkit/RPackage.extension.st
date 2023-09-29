@@ -2,41 +2,39 @@ Extension { #name : #RPackage }
 
 { #category : #'*Typer-GToolkit' }
 RPackage >> typGtView2For: aView [
-
 	<gtView>
 	<typPraResult: 'GtPhlowProtoView'>
 	<typPraArguments: 'GtPhlowProtoView'>
 	^ aView mondrian
-		  title: 'Typer2' translated;
-		  priority: 51;
-		  painting: [ :e | 
-			  | methods |
-			  methods := self methods asSet.
-			  e nodes
-				  stencil: [ :f | 
-					  BlElement new
-						  size: 25 @ 25;
-						  background: Color blue;
-						  yourself ];
-				  with: methods.
-			  e edges
-				  fromNearestBounds;
-				  toNearestBounds;
-				  shape: [ 
-					  BlParabollaArcElement new
-						  curvatureFraction: 0.2;
-						  border: (BlBorder paint: (Color gray alpha: 0.5) width: 5);
-						  toHead: (BlArrowheadSimpleArrow new
-								   arrowLengthFraction: 3;
-								   arrowNoseAngle: 60;
-								   border: (BlBorder paint: (Color gray alpha: 0.5) width: 5);
-								   yourself);
-						  yourself ];
-				  connect: methods
-				  toAll: [ :f | 
-				  f ast typGtInvokedMethods select: [ :g | methods includes: g ] ].
-			  e layout force charge: -5000 ];
-		  yourself
+		title: 'Typer2' translated;
+		priority: 51;
+		painting: [ :m | 
+			| methods |
+			methods := self methods asSet.
+			m nodes
+				stencil: [ :f | 
+					BlElement new
+						size: 25 @ 25;
+						background: Color blue;
+						yourself ];
+				with: methods.
+			m edges
+				fromNearestBounds;
+				toNearestBounds;
+				shape: [ BlParabollaArcElement new
+						curvatureFraction: 0.2;
+						border: (BlBorder paint: (Color gray alpha: 0.5) width: 5);
+						toHead: (BlArrowheadSimpleArrow new
+								arrowLengthFraction: 3;
+								arrowNoseAngle: 60;
+								border: (BlBorder paint: (Color gray alpha: 0.5) width: 5);
+								yourself);
+						yourself ];
+				connect: methods
+					toAll: [ :f | 
+						(TypInfIndex instance context: f typInfAsLookup)
+							select: [ :g | methods includes: g ] ] ];
+		yourself
 ]
 
 { #category : #'*Typer-GToolkit' }
