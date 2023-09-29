@@ -32,14 +32,9 @@ GtPharoSourceCoder >> typGtIndicator [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns viewModel: aViewModel [
-	"initializeAddOns: addOns viewModel: aViewModel"
-
-	"self completionStrategy:
-		(self completionStrategy typGtAsCompletionStrategy
-			 coder: self;
-			 yourself)."
-
 	<gtAstCoderAddOns: 10>
+	aViewModel
+		completionStrategy: (aViewModel completionStrategy typGtAsCompletionStrategyIn: self).
 	self
 		attributeNamed: #typGtContext
 		ifPresent: [ self
@@ -51,35 +46,9 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns viewM
 		addShortcut: TypGtBrowseImplementorsShortcut new;
 		addShortcut: TypGtPraTypeShortcut new;
 		addShortcut: TypGtShaTypeShortcut new;
-		addMainAction: 'declarations' translated
-			icon: BrGlamorousIcons inspect
-			action: [ anAddOns stylers
-					detect: [ :e | e isKindOf: TypGtRbAstStyler ]
-					ifFound: [ :e | anAddOns stylers remove: e ]
-					ifNone: [ anAddOns
-							addStyler: (TypGtDeclarationStyler new
-									coderViewModel: aViewModel;
-									yourself) ].
-				self requestStyleSourceText ];
-		addMainAction: 'all' translated
-			icon: BrGlamorousIcons inspect
-			action: [  "addStyler: (TypGtValueStyler new
-				 coder: self;
-				 yourself);""addStyler: (TypGtCheckStyler new
-				 coder: self;
-				 yourself);
-		addStyler: (TypGtCoverageStyler new
-				 coder: self;
-				 yourself);""addStyler: (TypGtCursorStyler new
-				 coder: self;
-				 yourself);
-		addMainAction: 'Unknowns' translated
-			icon: BrGlamorousIcons minimize
-			action: [ | checker |
-			checker := anAddOns stylers
-				detect: [ :e | e class == TypGtCheckBodyStyler ].
-			checker markUnknowns: checker markUnknowns not.
-			self styleText ]"self
+		addMainAction: 'types' translated
+			icon: BrGlamorousIcons traitIcon
+			action: [ self
 					typGtToggleStylersAllFor: anAst
 					into: anAddOns
 					viewModel: aViewModel.
@@ -126,6 +95,12 @@ GtPharoSourceCoder >> typGtToggleStylersAllFor: anAst into: anAddOns viewModel: 
 						coderViewModel: aViewModel;
 						yourself);
 				addStyler: (TypGtValueStyler new
+						coderViewModel: aViewModel;
+						yourself);
+				addStyler: (TypGtCheStyler new
+						coderViewModel: aViewModel;
+						yourself);
+				addStyler: (TypGtCovStyler new
 						coderViewModel: aViewModel;
 						yourself) ]
 ]

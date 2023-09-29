@@ -88,7 +88,8 @@ TypDynReport >> typGtIndexFor: aView [
 
 	"<gtView>"
 
-	self flag: 'too expensive'.
+	| report |
+	self flag: 'FIXME report, too expensive'.
 	^ aView mondrian
 		  title: 'Index' translated;
 		  priority: 51;

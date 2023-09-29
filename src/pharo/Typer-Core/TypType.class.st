@@ -227,7 +227,7 @@ TypType >> hashSkipping: anIdentitySet [
 TypType >> initialize [
 
 	<typPraVariable: 'superType' as: '{!,TypType}'>
-	self flag: 'use class-side methods for typings, empty initialize is intrusive'.
+	self flag: 'TODO use class-side methods for typings, empty initialize is intrusive'.
 	super initialize
 ]
 
@@ -354,8 +354,8 @@ TypType >> preResolveVariable: aLookup [
 
 { #category : #'as yet unclassified' }
 TypType >> printNameOn: aStream skipping: anIdentitySet [
+	"trickery for parameter-less string"
 
-	self flag: 'weird'.
 	self printOn: aStream skipping: anIdentitySet
 ]
 
@@ -402,8 +402,6 @@ TypType >> super [
 
 { #category : #'as yet unclassified' }
 TypType >> superOrNil [
-
-	self flag: 'weird'.
 	self hasSuper ifFalse: [ ^ nil ].
 	^ self super
 ]
@@ -415,10 +413,8 @@ TypType >> types [
 
 { #category : #'as yet unclassified' }
 TypType >> withAllSupers [
-
-	self flag: 'weird'.
-	self hasSuper ifFalse: [ ^ { self } ].
-	^ { self } , self super withAllSupers
+	self hasSuper ifFalse: [ ^ {self} ].
+	^ {self} , self super withAllSupers
 ]
 
 { #category : #converting }

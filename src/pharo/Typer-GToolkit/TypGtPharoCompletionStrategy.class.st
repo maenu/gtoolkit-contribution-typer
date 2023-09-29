@@ -9,13 +9,11 @@ Class {
 
 { #category : #accessing }
 TypGtPharoCompletionStrategy >> coder [
-	<typPraResult: 'TypGtMethodCoder'>
 	^ coder
 ]
 
 { #category : #accessing }
 TypGtPharoCompletionStrategy >> coder: anObject [
-
 	coder := anObject
 ]
 
@@ -40,7 +38,6 @@ TypGtPharoCompletionStrategy >> selectorStreamForReceiver: aType matchingWords: 
 ]
 
 { #category : #accessing }
-TypGtPharoCompletionStrategy >> typGtAsCompletionStrategy [
-
+TypGtPharoCompletionStrategy >> typGtAsCompletionStrategyIn: aCoder [
 	^ self
 ]

@@ -205,9 +205,6 @@ TypParametricType >> postCopy [
 
 { #category : #printing }
 TypParametricType >> printNameOn: aStream skipping: anIdentitySet [
-
-	self flag: 'weird'.
-
 	"trickery for parameter-less string"
 
 	super printOn: aStream skipping: anIdentitySet

@@ -11,6 +11,11 @@ TypManifest class >> allPackages [
 ]
 
 { #category : #accessing }
+TypManifest class >> flags [
+	^ 'Typer' gtPackageMatches & #flag: gtSenders
+]
+
+{ #category : #accessing }
 TypManifest class >> invalidate [
 	TypEdgeKey invalidateAll.
 	TypIndex invalidateAll.

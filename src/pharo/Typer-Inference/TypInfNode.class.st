@@ -314,6 +314,6 @@ TypInfNode >> unconstrainFrom: aNode [
 
 { #category : #accessing }
 TypInfNode >> uninstall [
-	self edges do: #remove.
-	self flag: 'TODO what else?'
+	self flag: 'TODO sounds expensive'.
+	self edges do: #remove
 ]
