@@ -8,7 +8,6 @@ Class {
 TypManifest class >> allPackages [
 	^ RPackageOrganizer default packages
 		select: [ :e | e name beginsWith: 'Typer' ]
-		thenCollect: #packageManifestOrNil
 ]
 
 { #category : #accessing }
@@ -20,7 +19,12 @@ TypManifest class >> invalidate [
 
 { #category : #accessing }
 TypManifest class >> invalidateEverything [
-	self allPackages
+	(self allPackages collect: #packageManifestOrNil)
 		reject: #isNil
 		thenDo: [ :c | (c class includesSelector: #invalidate) ifTrue: [ c invalidate ] ]
+]
+
+{ #category : #accessing }
+TypManifest class >> recompileAll [
+	(self allPackages flatCollect: #definedClasses) do: #recompile
 ]

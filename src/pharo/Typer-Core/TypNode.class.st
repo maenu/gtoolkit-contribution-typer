@@ -10,8 +10,7 @@ Class {
 
 { #category : #compiler }
 TypNode class >> compiler [
-	self flag: 'FIXME plugin'.
-	^ super compiler	"addPlugin: TypEdgePragmaCompilerPlugin"
+	^ super compiler addPlugin: TypEdgePragmaCompilerPlugin
 ]
 
 { #category : #accessing }
