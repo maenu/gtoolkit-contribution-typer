@@ -13,7 +13,7 @@ Class {
 
 { #category : #accessing }
 TypIndex class >> instance [
-	self subclassResponsibility
+	^ instance ifNil: [ instance := self new ]
 ]
 
 { #category : #invalidation }
@@ -54,11 +54,6 @@ TypIndex >> initialize [
 		when: MethodAnnouncement
 			send: #invalidateOnMethodChange:
 			to: self
-]
-
-{ #category : #initialization }
-TypIndex >> initializeResolver: anObject [
-	resolver := anObject
 ]
 
 { #category : #invalidation }
@@ -112,7 +107,7 @@ TypIndex >> resolve: aLookup [
 			| resolved type |
 			resolved := aLookup resolved.
 			resolved result
-				ifNil: [ self flag: 'Q how can this happen'.
+				ifNil: [ self flag: 'Q how can this happen?'.
 					resolved result: t ].
 			type := resolved resolver update: resolved.
 			self assert: [ type isNotNil ].

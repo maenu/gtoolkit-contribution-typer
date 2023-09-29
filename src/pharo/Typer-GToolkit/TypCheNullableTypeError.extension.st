@@ -1,6 +1,6 @@
 Extension { #name : #TypCheNullableTypeError }
 
 { #category : #'*Typer-GToolkit' }
-TypCheNullableTypeError >> typGtAsAttributeAt: aNode [
-	self subclassResponsibility
+TypCheNullableTypeError >> typGtColor [
+	^ Color purple
 ]

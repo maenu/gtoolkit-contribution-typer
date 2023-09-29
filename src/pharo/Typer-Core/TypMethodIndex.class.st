@@ -5,15 +5,13 @@ Class {
 }
 
 { #category : #accessing }
-TypMethodIndex class >> instance [
-	^ instance
-		ifNil: [ instance := self new
-					initializeResolver: (TypDepthFirstResolver
-							resolver: (TypBreadthFirstResolver
-									resolvers: {TypPraMethodResolver new.
-											TypShaMethodResolver new.
-											TypInfMethodResolver new}));
-					yourself ]
+TypMethodIndex >> initialize [
+	super initialize.
+	resolver := TypDepthFirstResolver
+			resolver: (TypBreadthFirstResolver
+					resolvers: {TypPraMethodResolver new.
+							TypShaMethodResolver new.
+							TypInfMethodResolver new})
 ]
 
 { #category : #printing }

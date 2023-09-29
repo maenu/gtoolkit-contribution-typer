@@ -10,7 +10,7 @@ TypGtCheckStyler >> styleNode: aNode for: aBlock [
 		on: TypCheError
 		do: [ :e | 
 			self
-				attributes: {e typGtAsAttributeAt: aNode}
+				attributes: {e typGtAsAttribute}
 				from: aNode stopWithoutParentheses
 				to: aNode stopWithoutParentheses ]
 ]
@@ -59,7 +59,7 @@ TypGtCheckStyler >> visitMessageNode: aNode [
 		withIndexDo: [ :nn :i | 
 			(self context nodesAt: nn)
 				do: [ :n | 
-					(n type isUnknown or: [ (n method arguments at: i) isUnknown ])
+					(n type isUnknown or: [ (n typCheMethod arguments at: i) isUnknown ])
 						ifTrue: [ self styleNodeUnknown: nn message: 'Argument is unknown' ]
 						ifFalse: [ self styleNode: nn for: [ n typCheCheckArgumentCompatibilityAt: i ] ] ] ]
 ]

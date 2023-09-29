@@ -9,11 +9,6 @@ Class {
 }
 
 { #category : #accessing }
-TypCheNoMethodError >> color [
-	^ Color orange darker
-]
-
-{ #category : #accessing }
 TypCheNoMethodError >> selector [
 	<typPraResult: 'Symbol'>
 	^ selector

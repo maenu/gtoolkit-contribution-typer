@@ -21,11 +21,6 @@ TypCheIncompatibleTypeError >> actual: anObject [
 ]
 
 { #category : #accessing }
-TypCheIncompatibleTypeError >> color [
-	^ Color red
-]
-
-{ #category : #accessing }
 TypCheIncompatibleTypeError >> expected [
 	<typPraResult: 'TypType'>
 	^ expected
@@ -45,14 +40,4 @@ TypCheIncompatibleTypeError >> messageText [
 				               expected asString.
 				               actual asString } ].
 	^ super messageText
-]
-
-{ #category : #printing }
-TypCheIncompatibleTypeError >> printOn: aStream [
-	super printOn: aStream.
-	aStream nextPutAll: ' expected '.
-	expected printOn: aStream.
-	aStream nextPutAll: ', actual '.
-	actual printOn: aStream.
-	
 ]

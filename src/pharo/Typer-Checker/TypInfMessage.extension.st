@@ -4,7 +4,7 @@ Extension { #name : #TypInfMessage }
 TypInfMessage >> typCheCheckArgumentCompatibilityAt: anInteger [
 	| argument expected actual |
 	argument := self arguments at: anInteger.
-	expected := self method arguments at: anInteger.
+	expected := self typCheMethod arguments at: anInteger.
 	actual := argument type.
 	expected isUnknown ifTrue: [ ^ self ].
 	actual isUnknown ifTrue: [ ^ self ].
@@ -37,4 +37,9 @@ TypInfMessage >> typCheCheckReceiver [
 	TypCheNullableTypeError new
 		type: receiver;
 		signal
+]
+
+{ #category : #'*Typer-Checker' }
+TypInfMessage >> typCheMethod [
+	^ TypCheIndex instance resolveMethod: self lookup
 ]

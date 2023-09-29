@@ -8,11 +8,6 @@ Class {
 }
 
 { #category : #accessing }
-TypCheNullableTypeError >> color [
-	^ Color purple
-]
-
-{ #category : #accessing }
 TypCheNullableTypeError >> type [
 	<typPraResult: 'TypType'>
 	^ type
