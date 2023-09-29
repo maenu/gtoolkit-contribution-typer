@@ -5,6 +5,13 @@ Class {
 }
 
 { #category : #accessing }
+TypManifest class >> allPackages [
+	^ RPackageOrganizer default packages
+		select: [ :e | e name beginsWith: 'Typer' ]
+		thenCollect: #packageManifestOrNil
+]
+
+{ #category : #accessing }
 TypManifest class >> invalidate [
 	TypEdgeKey invalidateAll.
 	TypIndex invalidateAll.
@@ -13,10 +20,7 @@ TypManifest class >> invalidate [
 
 { #category : #accessing }
 TypManifest class >> invalidateEverything [
-	<gtExample>
-	(RPackageOrganizer default packages
-		select: [ :e | e name beginsWith: 'Typer' ]
-		thenCollect: #packageManifestOrNil)
+	self allPackages
 		reject: #isNil
 		thenDo: [ :c | (c class includesSelector: #invalidate) ifTrue: [ c invalidate ] ]
 ]

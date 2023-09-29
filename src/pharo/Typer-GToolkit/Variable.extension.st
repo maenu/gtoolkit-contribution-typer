@@ -1,6 +1,6 @@
 Extension { #name : #Variable }
 
 { #category : #'*Typer-GToolkit' }
-Variable >> typGtCanTypeIn: aContext [
+Variable >> typGtShaCanTypeIn: aContext [
 	^ false
 ]

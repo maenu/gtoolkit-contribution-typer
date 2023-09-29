@@ -1,7 +1,7 @@
 Extension { #name : #RPackageTag }
 
-{ #category : #'*Typer-GToolkit' }
-RPackageTag >> typGtCoverageFor: aView context: aDictionary [
+{ #category : #'*Typer-Coverage' }
+RPackageTag >> typGtCovFor: aView context: aDictionary [
 	<gtPackageTagView>
 	^ aView explicit
 		title: 'Coverage';
@@ -16,18 +16,18 @@ RPackageTag >> typGtCoverageFor: aView context: aDictionary [
 						aptitude: BrGlamorousLabelLook;
 						text: 'methods';
 						yourself).
-					self typGtMethodCoverage typGtAsCoverageElement.
+					self typGtCovMethod typGtCovAsElement.
 					(BrLabel new
 						look: BrGlamorousLabelLook;
 						text: 'nodes';
 						yourself).
-					self typGtNodeCoverage typGtAsCoverageElement};
+					self typGtCovNode typGtCovAsElement};
 				yourself ];
 		yourself
 ]
 
-{ #category : #'*Typer-GToolkit' }
-RPackageTag >> typGtMethodCoverage [
+{ #category : #'*Typer-Coverage' }
+RPackageTag >> typGtCovMethod [
 	| result |
 	result := Dictionary new
 		at: true put: IdentitySet new;
@@ -36,13 +36,13 @@ RPackageTag >> typGtMethodCoverage [
 		yourself.
 	self classes
 		do: [ :c | 
-			c typGtMethodCoverage
+			c typGtCovMethod
 				keysAndValuesDo: [ :k :v | (result at: k) addAll: v ] ].
 	^ result
 ]
 
-{ #category : #'*Typer-GToolkit' }
-RPackageTag >> typGtNodeCoverage [
+{ #category : #'*Typer-Coverage' }
+RPackageTag >> typGtCovNode [
 	| result |
 	result := Dictionary new
 		at: true put: IdentitySet new;
@@ -51,7 +51,7 @@ RPackageTag >> typGtNodeCoverage [
 		yourself.
 	self classes
 		do: [ :c | 
-			c typGtNodeCoverage
+			c typGtCovNode
 				keysAndValuesDo: [ :k :v | (result at: k) addAll: v ] ].
 	^ result
 ]

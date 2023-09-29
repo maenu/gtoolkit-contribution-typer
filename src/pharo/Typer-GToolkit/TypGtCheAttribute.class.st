@@ -1,5 +1,5 @@
 Class {
-	#name : #TypGtCheckAttribute,
+	#name : #TypGtCheAttribute,
 	#superclass : #BrTextAdornmentDynamicAttribute,
 	#instVars : [
 		'color',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #accessing }
-TypGtCheckAttribute class >> object: anObject color: aColor message: aString [
+TypGtCheAttribute class >> object: anObject color: aColor message: aString [
 	^ self new
 		initializeObject: anObject
 			color: aColor
@@ -19,7 +19,7 @@ TypGtCheckAttribute class >> object: anObject color: aColor message: aString [
 ]
 
 { #category : #accessing }
-TypGtCheckAttribute >> initialize [
+TypGtCheAttribute >> initialize [
 	super initialize.
 	self
 		beAppend;
@@ -42,7 +42,7 @@ TypGtCheckAttribute >> initialize [
 ]
 
 { #category : #accessing }
-TypGtCheckAttribute >> initializeObject: anObject color: aColor message: aString [
+TypGtCheAttribute >> initializeObject: anObject color: aColor message: aString [
 	object := anObject.
 	color := aColor.
 	message := aString

@@ -1,24 +1,7 @@
 Extension { #name : #TypShaResolver }
 
 { #category : #'*Typer-GToolkit' }
-TypShaResolver class >> typGtNewShadowFor: aClass [
-	<typPraResult: 'TypShaShadow class'>
-	<typPraArguments: 'ClassDescription'>
-	| shadow |
-	shadow := TypShaShadow
-		subclass: 'Sha_' , aClass instanceSide name
-		instanceVariableNames: ''
-		classVariableNames: ''
-		package: 'Sha_'.
-	shadow class
-		compile:
-			'shadowedClass
-	^ ' , aClass instanceSide name , ' class'.
-	^ shadow
-]
-
-{ #category : #'*Typer-GToolkit' }
-TypShaResolver class >> typGtShadowFor: aClass [
+TypShaResolver class >> typGtShaFor: aClass [
 
 	<typPraResult: 'SequenceableCollection<TypShaShadow class>'>
 	<typPraArguments: 'ClassDescription'>
@@ -27,7 +10,7 @@ TypShaResolver class >> typGtShadowFor: aClass [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypShaResolver class >> typGtShadowMethod: aSymbol result: aType arguments: someTypes in: aClass [
+TypShaResolver class >> typGtShaMethod: aSymbol result: aType arguments: someTypes in: aClass [
 
 	<typPraArguments:
 	'Symbol,TypType,SequenceableCollection<TypType>,ClassDescription'>
@@ -50,7 +33,24 @@ TypShaResolver class >> typGtShadowMethod: aSymbol result: aType arguments: some
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypShaResolver class >> typGtShadowVariable: aSymbol type: aType in: aClass [
+TypShaResolver class >> typGtShaNewFor: aClass [
+	<typPraResult: 'TypShaShadow class'>
+	<typPraArguments: 'ClassDescription'>
+	| shadow |
+	shadow := TypShaShadow
+		subclass: 'Sha_' , aClass instanceSide name
+		instanceVariableNames: ''
+		classVariableNames: ''
+		package: 'Sha_'.
+	shadow class
+		compile:
+			'shadowedClass
+	^ ' , aClass instanceSide name , ' class'.
+	^ shadow
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypShaResolver class >> typGtShaVariable: aSymbol type: aType in: aClass [
 
 	<typPraArguments: 'Symbol,TypType,ClassDescription'>
 	| methods newSelector |
@@ -58,7 +58,7 @@ TypShaResolver class >> typGtShadowVariable: aSymbol type: aType in: aClass [
 		           e typShaResolvesVariable: aSymbol ].
 	methods ifNotEmpty: [ ^ methods ].
 	newSelector := self
-		               typGtShadowVariableNewSelector: aSymbol
+		               typGtShaVariableNewSelector: aSymbol
 		               in: self class.
 	self class compile: ('{1} aLookup
 	<typShaVariable: ''{2}''>
@@ -70,21 +70,21 @@ TypShaResolver class >> typGtShadowVariable: aSymbol type: aType in: aClass [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypShaResolver class >> typGtShadowVariableNewSelector: aSymbol in: aClass [
+TypShaResolver class >> typGtShaVariableNewSelector: aSymbol in: aClass [
 
 	| newN newSelector |
-	newSelector := self typGtShadowVariableSelector: aSymbol postfix: ''.
+	newSelector := self typGtShaVariableSelector: aSymbol postfix: ''.
 	newN := 1.
 	[ aClass includesSelector: newSelector ] whileTrue: [ 
 		newSelector := self
-			               typGtShadowVariableSelector: aSymbol
+			               typGtShaVariableSelector: aSymbol
 			               postfix: newN.
 		newN := newN + 1 ].
 	^ newSelector
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypShaResolver class >> typGtShadowVariableSelector: aSymbol postfix: anObject [
+TypShaResolver class >> typGtShaVariableSelector: aSymbol postfix: anObject [
 
 	^ 'v{1}{2}:' format: { 
 			  aSymbol capitalized.

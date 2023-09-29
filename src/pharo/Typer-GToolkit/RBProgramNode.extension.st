@@ -1,6 +1,6 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*Typer-GToolkit' }
-RBProgramNode >> typGtCanTypeIn: aContext [
+RBProgramNode >> typGtShaCanTypeIn: aContext [
 	^ false
 ]

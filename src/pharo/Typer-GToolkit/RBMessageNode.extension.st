@@ -1,7 +1,7 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer-GToolkit' }
-RBMessageNode >> typGtCanTypeIn: aContext [
+RBMessageNode >> typGtShaCanTypeIn: aContext [
 	| receiverType |
 	receiverType := aContext type: self receiver.
 	receiverType isNamed ifFalse: [ ^ false ].
@@ -9,16 +9,16 @@ RBMessageNode >> typGtCanTypeIn: aContext [
 ]
 
 { #category : #'*Typer-GToolkit' }
-RBMessageNode >> typGtShadowMethodIn: aContext [
+RBMessageNode >> typGtShaMethodIn: aContext [
 	| method_ receiverType argumentTypes resultType |
 	self flag: 'FIXME'.
-	self assert: [ self typGtCanTypeIn: nil ].
+	self assert: [ self typGtShaCanTypeIn: nil ].
 	method_ := self typInfNodeSelf type.
 	receiverType := self receiver typInfTypeSelf.
 	argumentTypes := method_ arguments.
 	resultType := method_ result.
 	^ receiverType classDescription
-		typGtShadowMethod: self selector
+		typGtShaMethod: self selector
 		result: resultType
 		arguments: argumentTypes
 ]

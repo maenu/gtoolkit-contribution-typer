@@ -1,28 +1,28 @@
 Class {
-	#name : #TypGtTypeWithShadowShortcut,
+	#name : #TypGtShaTypeShortcut,
 	#superclass : #GtSourceCoderShortcut,
-	#category : 'Typer-GToolkit-Shortcut'
+	#category : #'Typer-GToolkit-Shortcut'
 }
 
 { #category : #accessing }
-TypGtTypeWithShadowShortcut >> description [
+TypGtShaTypeShortcut >> description [
 	^ 'Browses implementors of message/variable near cursor, filter by receiver type, to type using a shadow class.'
 ]
 
 { #category : #accessing }
-TypGtTypeWithShadowShortcut >> initialize [
+TypGtShaTypeShortcut >> initialize [
 	super initialize.
 	combination := BlKeyCombination builder primary shift s build
 ]
 
 { #category : #accessing }
-TypGtTypeWithShadowShortcut >> name [
+TypGtShaTypeShortcut >> name [
 	^ 'Browse to type by using a shadow class'
 ]
 
 { #category : #accessing }
-TypGtTypeWithShadowShortcut >> performOnEditor: aBrTextEditor element: aBrEditorElement coder: aGtSourceCoder dueTo: aShortcutEvent [
+TypGtShaTypeShortcut >> performOnEditor: aBrTextEditor element: aBrEditorElement coder: aGtSourceCoder dueTo: aShortcutEvent [
 	aBrTextEditor hasCursors
 		ifTrue: [ aGtSourceCoder
-				typGtTypeWithShadowAt: aBrTextEditor cursors first position ]
+				typGtShaTypeWithAt: aBrTextEditor cursors first position ]
 ]

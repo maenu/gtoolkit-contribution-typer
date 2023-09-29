@@ -2,7 +2,7 @@ Extension { #name : #TypCheError }
 
 { #category : #'*Typer-GToolkit' }
 TypCheError >> typGtAsAttribute [
-	^ TypGtCheckAttribute
+	^ TypGtCheAttribute
 		object: self
 		color: self typGtColor
 		message: self messageText

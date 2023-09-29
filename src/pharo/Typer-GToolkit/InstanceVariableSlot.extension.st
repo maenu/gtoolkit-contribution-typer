@@ -1,20 +1,20 @@
 Extension { #name : #InstanceVariableSlot }
 
 { #category : #'*Typer-GToolkit' }
-InstanceVariableSlot >> typGtCanTypeIn: aContext [
+InstanceVariableSlot >> typGtShaCanTypeIn: aContext [
 	^ true
 ]
 
 { #category : #'*Typer-GToolkit' }
-InstanceVariableSlot >> typGtShadowMethodIn: aContext [
+InstanceVariableSlot >> typGtShaMethodIn: aContext [
 	| shadow |
 	self flag: 'FIXME'.
-	self assert: [ self typGtCanTypeIn: nil ].
-	shadow := (TypShaShadow typGtShadowFor: owningClass instanceSide)
-			ifEmpty: [ TypShaShadow typGtNewShadowFor: owningClass ]
+	self assert: [ self typGtShaCanTypeIn: nil ].
+	shadow := (TypShaShadow typGtShaFor: owningClass instanceSide)
+			ifEmpty: [ TypShaShadow typGtShaNewFor: owningClass ]
 			ifNotEmpty: #first.
 	^ shadow
-		typGtShadowVariable: name asSymbol
+		typGtShaVariable: name asSymbol
 		type: (owningClass typAsType lookupVariable: name asSymbol)
 		in: (owningClass isInstanceSide ifTrue: [ shadow ] ifFalse: [ shadow class ])
 ]

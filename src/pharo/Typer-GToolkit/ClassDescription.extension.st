@@ -1,39 +1,6 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-GToolkit' }
-ClassDescription >> typGtCoverageFor: aView context: aDictionary [
-	<gtClassView>
-	^ aView explicit
-		title: 'Coverage';
-		priority: 50;
-		stencil: [ BlElement new
-				layout: BlLinearLayout vertical;
-				constraintsDo: [ :c | 
-					c horizontal fitContent.
-					c vertical fitContent ];
-				addChildren:
-					{(BrLabel new
-						aptitude: BrGlamorousLabelLook;
-						text: 'methods';
-						yourself).
-					self typGtMethodCoverage typGtAsCoverageElement.
-					(BrLabel new
-						aptitude: BrGlamorousLabelLook;
-						text: 'nodes';
-						yourself).
-					self typGtNodeCoverage typGtAsCoverageElement};
-				yourself ];
-		yourself
-]
-
-{ #category : #'*Typer-GToolkit' }
-ClassDescription >> typGtMethodCoverage [
-	^ ((self methods , self classSide methods collect: #ast)
-		groupedBy: [ :e | e propertyAt: #tagExecuted ifAbsent: [ nil ] ])
-		asDictionary
-]
-
-{ #category : #'*Typer-GToolkit' }
 ClassDescription >> typGtMethodsElementInPackage: aPackage [
 
 	| methods width |
@@ -63,20 +30,12 @@ ClassDescription >> typGtMethodsElementInPackage: aPackage [
 ]
 
 { #category : #'*Typer-GToolkit' }
-ClassDescription >> typGtNodeCoverage [
-	^ ((self methods , self classSide methods
-		flatCollect: [ :e | e ast allChildren , {e ast} ])
-		groupedBy: [ :e | e propertyAt: #tagExecuted ifAbsent: [ nil ] ])
-		asDictionary
-]
-
-{ #category : #'*Typer-GToolkit' }
-ClassDescription >> typGtShadowMethod: aSymbol result: aType arguments: someTypes [
+ClassDescription >> typGtShaMethod: aSymbol result: aType arguments: someTypes [
 	<typPraArguments: 'Symbol,TypType,SequenceableCollection<TypType>'>
 	| methods newSelector |
 	methods := self methods select: [ :e | e typShaCanResolveMethod: aSymbol ].
 	methods ifNotEmpty: [ ^ methods ].
-	newSelector := self typGtShadowMethodNewSelector: aSymbol.
+	newSelector := self typGtShaMethodNewSelector: aSymbol.
 	self
 		compile: ('{1} aLookup
 	<typShaMethod: ''{2}''>
@@ -91,18 +50,18 @@ ClassDescription >> typGtShadowMethod: aSymbol result: aType arguments: someType
 ]
 
 { #category : #'*Typer-GToolkit' }
-ClassDescription >> typGtShadowMethodNewSelector: aSymbol [
+ClassDescription >> typGtShaMethodNewSelector: aSymbol [
 	| newN newSelector |
-	newSelector := self typGtShadowMethodSelector: aSymbol postfix: ''.
+	newSelector := self typGtShaMethodSelector: aSymbol postfix: ''.
 	newN := 1.
 	[ self includesSelector: newSelector ]
-		whileTrue: [ newSelector := self typGtShadowMethodSelector: aSymbol postfix: newN.
+		whileTrue: [ newSelector := self typGtShaMethodSelector: aSymbol postfix: newN.
 			newN := newN + 1 ].
 	^ newSelector
 ]
 
 { #category : #'*Typer-GToolkit' }
-ClassDescription >> typGtShadowMethodSelector: aSymbol postfix: anObject [
+ClassDescription >> typGtShaMethodSelector: aSymbol postfix: anObject [
 
 	aSymbol isUnary ifTrue: [ 
 		^ 'm{1}{2}:' format: { 

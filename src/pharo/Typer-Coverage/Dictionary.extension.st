@@ -1,7 +1,7 @@
 Extension { #name : #Dictionary }
 
-{ #category : #'*Typer-GToolkit' }
-Dictionary >> typGtAsCoverageElement [
+{ #category : #'*Typer-Coverage' }
+Dictionary >> typGtCovAsElement [
 	| executed notExecuted notInstrumented executedButton notExecutedButton notInstrumentedButton instrumentedLabel allLabel |
 	executed := self at: true ifAbsent: [ #() ].
 	notExecuted := self at: false ifAbsent: [ #() ].

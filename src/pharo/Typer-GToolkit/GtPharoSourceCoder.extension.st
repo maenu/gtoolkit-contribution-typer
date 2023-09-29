@@ -2,16 +2,14 @@ Extension { #name : #GtPharoSourceCoder }
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
-	<typPraArguments: 'Integer'>
-	| node context |
+	| node |
 	node := self typGtRbNodeAt: anInteger.
 	node isNil ifTrue: [ ^ self ].
 	node isMessage ifFalse: [ ^ self ].
-	context := self attributeNamed: #typGtContext.
 	self
 		notifyObjectSpawn: (GtSearchImplementorsFilter selector: node selector)
 				& (TypGtCoderTypeFilter new
-						type: (context type: node);
+						type: ((self attributeNamed: #typGtContext) type: node);
 						yourself)
 ]
 
@@ -46,8 +44,8 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns viewM
 		ifAbsent: [  "noop" ].
 	anAddOns
 		addShortcut: TypGtBrowseImplementorsShortcut new;
-		addShortcut: TypGtTypeWithPragmaShortcut new;
-		addShortcut: TypGtTypeWithShadowShortcut new;
+		addShortcut: TypGtPraTypeShortcut new;
+		addShortcut: TypGtShaTypeShortcut new;
 		addMainAction: 'declarations' translated
 			icon: BrGlamorousIcons inspect
 			action: [ anAddOns stylers
@@ -85,9 +83,18 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns viewM
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtRbNodeAt: anInteger [
-
 	<typPraResult: '{!,RBProgramNode}'>
 	^ self rbAST bestNodeFor: (anInteger to: anInteger)
+]
+
+{ #category : #'*Typer-GToolkit' }
+GtPharoSourceCoder >> typGtShaTypeWithAt: anInteger [
+	| node context |
+	node := self typGtRbNodeAt: anInteger.
+	node ifNil: [ ^ self ].
+	context := self attributeNamed: #typGtContext.
+	(node typGtShaCanTypeIn: context) ifFalse: [ ^ self ].
+	self notifyObjectSpawn: (node typGtShaMethodIn: context)
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -114,15 +121,4 @@ GtPharoSourceCoder >> typGtToggleStylersAllFor: anAst into: anAddOns viewModel: 
 				addStyler: (TypGtValueStyler new
 						coderViewModel: aViewModel;
 						yourself) ]
-]
-
-{ #category : #'*Typer-GToolkit' }
-GtPharoSourceCoder >> typGtTypeWithShadowAt: anInteger [
-	<typPraArguments: 'Integer'>
-	| node context |
-	node := self typGtRbNodeAt: anInteger.
-	node ifNil: [ ^ self ].
-	context := self attributeNamed: #typGtContext.
-	(node typGtCanTypeIn: context) ifFalse: [ ^ self ].
-	self notifyObjectSpawn: (node typGtShadowMethodIn: context)
 ]
