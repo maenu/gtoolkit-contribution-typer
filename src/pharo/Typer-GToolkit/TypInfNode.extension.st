@@ -41,13 +41,12 @@ TypInfNode >> typGtAsShortString [
 
 { #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtCoderFor: aView [
-
 	<gtView>
 	^ aView forward
-		  title: 'Method';
-		  priority: 2;
-		  object: [ context typGtAsCoder ];
-		  view: #gtLiveFor:
+		title: 'Method';
+		priority: 2;
+		object: [ context typGtAsCoder ];
+		view: #gtLiveFor:
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -272,35 +271,37 @@ TypInfNode >> typGtMinimalFlowPaintOn: aMondrian [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypInfNode >> typGtSourceCodeFor: aView [
+TypInfNode >> typGtShaCanType [
+	^ false
+]
 
+{ #category : #'*Typer-GToolkit' }
+TypInfNode >> typGtSourceCodeFor: aView [
 	<gtView>
 	^ aView forward
-		  title: 'Node';
-		  priority: 1;
-		  object: [ node ];
-		  view: #gtSourceCodeFor:
+		title: 'Node';
+		priority: 1;
+		object: [ node ];
+		view: #gtSourceCodeFor:
 ]
 
 { #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtStateFor: aView [
-
 	<gtView>
 	state ifNil: [ ^ aView empty ].
 	^ aView forward
-		  title: 'State';
-		  priority: 10;
-		  object: [ state ];
-		  view: #typGtItemsFor:
+		title: 'State';
+		priority: 10;
+		object: [ state ];
+		view: #typGtItemsFor:
 ]
 
 { #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtTypeFor: aView [
-
 	<gtView>
 	state ifNil: [ ^ aView empty ].
 	^ aView explicit
-		  title: 'Type';
-		  priority: 10;
-		  stencil: [ GtInspectorTool forObject: self type ]
+		title: 'Type';
+		priority: 10;
+		stencil: [ GtInspectorTool forObject: self type ]
 ]

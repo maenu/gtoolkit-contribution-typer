@@ -11,17 +11,16 @@ RPackageTag >> typGtCovFor: aView context: aDictionary [
 				constraintsDo: [ :c | 
 					c horizontal fitContent.
 					c vertical fitContent ];
-				addChildren:
-					{(BrLabel new
-						aptitude: BrGlamorousLabelLook;
-						text: 'methods';
-						yourself).
-					self typGtCovMethod typGtCovAsElement.
-					(BrLabel new
-						look: BrGlamorousLabelLook;
-						text: 'nodes';
-						yourself).
-					self typGtCovNode typGtCovAsElement};
+				addChildren: {BrLabel new
+							aptitude: BrGlamorousLabelAptitude;
+							text: 'methods';
+							yourself.
+						self typGtCovMethod typGtCovAsElement.
+						BrLabel new
+							look: BrGlamorousLabelAptitude;
+							text: 'nodes';
+							yourself.
+						self typGtCovNode typGtCovAsElement};
 				yourself ];
 		yourself
 ]

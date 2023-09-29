@@ -9,8 +9,13 @@ GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 	self
 		notifyObjectSpawn: (GtSearchImplementorsFilter selector: node selector)
 				& (TypGtCoderTypeFilter new
-						type: ((self attributeNamed: #typGtContext) type: node);
+						type: (self typGtContext type: node);
 						yourself)
+]
+
+{ #category : #'*Typer-GToolkit' }
+GtPharoSourceCoder >> typGtContext [
+	^ self attributeNamed: #typGtContext
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -89,12 +94,14 @@ GtPharoSourceCoder >> typGtRbNodeAt: anInteger [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtShaTypeWithAt: anInteger [
-	| node context |
+	| node |
 	node := self typGtRbNodeAt: anInteger.
 	node ifNil: [ ^ self ].
-	context := self attributeNamed: #typGtContext.
-	(node typGtShaCanTypeIn: context) ifFalse: [ ^ self ].
-	self notifyObjectSpawn: (node typGtShaMethodIn: context)
+	self
+		notifyObjectSpawn: ((self typGtContext nodesAt: node)
+				detect: #typGtShaCanType
+				ifFound: #typGtShaMethod
+				ifNone: [ ^ self ])
 ]
 
 { #category : #'*Typer-GToolkit' }

@@ -9,3 +9,13 @@ TypInfVariable >> typGtAsShortString [
 TypInfVariable >> typGtColor [
 	^ BrGlamorousColors pressedButtonTextColor
 ]
+
+{ #category : #'*Typer-GToolkit' }
+TypInfVariable >> typGtShaCanType [
+	^ node variable typGtShaCanTypeIn: self
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypInfVariable >> typGtShaMethod [
+	^ node variable typGtShaMethodIn: self
+]

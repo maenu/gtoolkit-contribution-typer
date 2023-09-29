@@ -22,7 +22,7 @@ TypGtContextExpanderAttribute >> coder [
 
 { #category : #accessing }
 TypGtContextExpanderAttribute >> context [
-	^ coder coderModel attributeNamed: #typGtContext
+	^ coder coderModel typGtContext
 ]
 
 { #category : #accessing }
@@ -57,8 +57,7 @@ TypGtContextExpanderAttribute >> initializeCoder: aCoder in: anotherCoder [
 
 { #category : #accessing }
 TypGtContextExpanderAttribute >> onRequestExpandContext: anEvent [
-	(anEvent contextChain
-		includes: (coder coderModel attributeNamed: #typGtContext))
+	(anEvent contextChain includes: coder coderModel typGtContext)
 		ifFalse: [ self isExpanded ifTrue: [ BlSpace simulateClickOn: element ].
 			coder announcer announce: anEvent.
 			^ self ].

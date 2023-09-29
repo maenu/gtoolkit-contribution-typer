@@ -9,3 +9,16 @@ TypInfMethod >> typGtAsShortString [
 TypInfMethod >> typGtColor [
 	^ BrGlamorousColors failureBorderColor
 ]
+
+{ #category : #'*Typer-GToolkit' }
+TypInfMethod >> typGtShaCanType [
+	^ self type hasClassDescription
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypInfMethod >> typGtShaMethod [
+	| type |
+	self assert: [ self typGtShaCanType ].
+	type := self type.
+	^ type classDescription typGtShaMethod: node selector value type: type
+]

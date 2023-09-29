@@ -84,31 +84,29 @@ TypEdge >> typGtColor [
 
 { #category : #'*Typer-GToolkit' }
 TypEdge >> typGtGraphFor: aView [
-
 	<gtView>
 	^ aView typGtMondrian
-		  title: 'Graph';
-		  priority: 10;
-		  painting: [ :m | 
-			  m nodes
-				  stencil: [ :e | e typGtAsElementIn: m ];
-				  with: { 
-						  origin.
-						  target }.
-			  m edges
-				  stencil: [ :e | e typGtAsElementIn: m ];
-				  connect: { self } from: #origin to: #target.
-			  m layout force ]
+		title: 'Graph';
+		priority: 10;
+		painting: [ :m | 
+			m nodes
+				stencil: [ :e | e typGtAsElementIn: m ];
+				with: {origin.
+						target}.
+			m edges
+				stencil: [ :e | e typGtAsElementIn: m ];
+				connect: {self}
+					from: #origin
+					to: #target.
+			m layout force ]
 ]
 
 { #category : #'*Typer-GToolkit' }
 TypEdge >> typGtGraphPaintOn: aMondrian [
-
 	aMondrian nodes
 		stencil: [ :e | e typGtAsElementIn: aMondrian ];
-		with: { 
-				origin.
-				target }.
+		with: {origin.
+				target}.
 	aMondrian edges
 		stencil: [ :e | e typGtAsElementIn: aMondrian ];
 		connectFrom: origin to: target
@@ -116,10 +114,9 @@ TypEdge >> typGtGraphPaintOn: aMondrian [
 
 { #category : #'*Typer-GToolkit' }
 TypEdge >> typGtKeyFor: aView [
-
 	<gtView>
 	^ aView explicit
-		  title: 'Key';
-		  priority: 10;
-		  stencil: [ GtInspectorTool forObject: key ]
+		title: 'Key';
+		priority: 10;
+		stencil: [ GtInspectorTool forObject: key ]
 ]

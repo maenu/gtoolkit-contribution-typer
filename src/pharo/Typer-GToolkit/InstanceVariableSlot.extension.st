@@ -6,15 +6,7 @@ InstanceVariableSlot >> typGtShaCanTypeIn: aContext [
 ]
 
 { #category : #'*Typer-GToolkit' }
-InstanceVariableSlot >> typGtShaMethodIn: aContext [
-	| shadow |
-	self flag: 'FIXME'.
-	self assert: [ self typGtShaCanTypeIn: nil ].
-	shadow := (TypShaShadow typGtShaFor: owningClass instanceSide)
-			ifEmpty: [ TypShaShadow typGtShaNewFor: owningClass ]
-			ifNotEmpty: #first.
-	^ shadow
-		typGtShaVariable: name asSymbol
-		type: (owningClass typAsType lookupVariable: name asSymbol)
-		in: (owningClass isInstanceSide ifTrue: [ shadow ] ifFalse: [ shadow class ])
+InstanceVariableSlot >> typGtShaMethodIn: aNode [
+	self assert: [ self typGtShaCanTypeIn: aNode ].
+	^ owningClass typGtShaVariable: name asSymbol type: aNode type
 ]

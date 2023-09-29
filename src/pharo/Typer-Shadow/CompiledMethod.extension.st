@@ -1,6 +1,18 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*Typer-Shadow' }
+CompiledMethod >> typShaCanResolveMethod: aSymbol [
+	self typShaIsResolveMethod ifFalse: [ ^ false ].
+	^ self typShaResolvedMethod = aSymbol
+]
+
+{ #category : #'*Typer-Shadow' }
+CompiledMethod >> typShaCanResolveVariable: aSymbol [
+	self typShaIsResolveVariable ifFalse: [ ^ false ].
+	^ self typShaResolvedVariable = aSymbol
+]
+
+{ #category : #'*Typer-Shadow' }
 CompiledMethod >> typShaIsResolveMethod [
 	^ self hasPragmaNamed: #typShaMethod:
 ]

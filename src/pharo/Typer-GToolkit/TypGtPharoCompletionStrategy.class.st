@@ -28,8 +28,7 @@ TypGtPharoCompletionStrategy >> completionActionStreamFor: aText at: positionInt
 		ifNotNil: [ :tree | 
 			tree
 				typGtCompletionActionStreamFor: self
-				type: ((coder attributeNamed: #typGtContext)
-						type: (coder rbAST bestNodeFor: (index to: index))) ]
+				type: (coder typGtContext type: (coder rbAST bestNodeFor: (index to: index))) ]
 ]
 
 { #category : #accessing }

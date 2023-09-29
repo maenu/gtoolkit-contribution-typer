@@ -2,30 +2,27 @@ Extension { #name : #RPackage }
 
 { #category : #'*Typer-GToolkit' }
 RPackage >> typGtCovFor: aView context: aDictionary [
-
 	<gtPackageView>
 	^ aView explicit
-		  title: 'Coverage';
-		  priority: 50;
-		  stencil: [ 
-			  BlElement new
-				  layout: BlLinearLayout vertical;
-				  constraintsDo: [ :c | 
-					  c horizontal fitContent.
-					  c vertical fitContent ];
-				  addChildren: { 
-						  (BrLabel new
-							   aptitude: BrGlamorousLabelLook;
-							   text: 'methods';
-							   yourself).
-						  self typGtCovMethod typGtCovAsElement.
-						  (BrLabel new
-							   aptitude: BrGlamorousLabelLook;
-							   text: 'nodes';
-							   yourself).
-						  self typGtCovNode typGtCovAsElement };
-				  yourself ];
-		  yourself
+		title: 'Coverage';
+		priority: 50;
+		stencil: [ BlElement new
+				layout: BlLinearLayout vertical;
+				constraintsDo: [ :c | 
+					c horizontal fitContent.
+					c vertical fitContent ];
+				addChildren: {BrLabel new
+							aptitude: BrGlamorousLabelAptitude;
+							text: 'methods';
+							yourself.
+						self typGtCovMethod typGtCovAsElement.
+						BrLabel new
+							aptitude: BrGlamorousLabelAptitude;
+							text: 'nodes';
+							yourself.
+						self typGtCovNode typGtCovAsElement};
+				yourself ];
+		yourself
 ]
 
 { #category : #'*Typer-GToolkit' }

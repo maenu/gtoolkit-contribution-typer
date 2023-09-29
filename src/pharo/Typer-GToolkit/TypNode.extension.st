@@ -54,12 +54,11 @@ TypNode >> typGtDecorate: anElement in: aMondrian [
 
 { #category : #'*Typer-GToolkit' }
 TypNode >> typGtGraphFor: aView [
-
 	<gtView>
 	^ aView typGtMondrian
-		  title: 'Graph';
-		  priority: 10;
-		  painting: [ :m | self typGtGraphPaintOn: m ]
+		title: 'Graph';
+		priority: 10;
+		painting: [ :m | self typGtGraphPaintOn: m ]
 ]
 
 { #category : #'*Typer-GToolkit' }

@@ -11,17 +11,16 @@ ClassDescription >> typGtCovFor: aView context: aDictionary [
 				constraintsDo: [ :c | 
 					c horizontal fitContent.
 					c vertical fitContent ];
-				addChildren:
-					{(BrLabel new
-						aptitude: BrGlamorousLabelLook;
-						text: 'methods';
-						yourself).
-					self typGtCovMethod typGtCovAsElement.
-					(BrLabel new
-						aptitude: BrGlamorousLabelLook;
-						text: 'nodes';
-						yourself).
-					self typGtCovNode typGtCovAsElement};
+				addChildren: {BrLabel new
+							aptitude: BrGlamorousLabelAptitude;
+							text: 'methods';
+							yourself.
+						self typGtCovMethod typGtCovAsElement.
+						BrLabel new
+							aptitude: BrGlamorousLabelAptitude;
+							text: 'nodes';
+							yourself.
+						self typGtCovNode typGtCovAsElement};
 				yourself ];
 		yourself
 ]
@@ -43,40 +42,36 @@ ClassDescription >> typGtCovNode [
 
 { #category : #'*Typer-GToolkit' }
 ClassDescription >> typGtMethodsElementInPackage: aPackage [
-
 	| methods width |
 	methods := aPackage methodsForClass: self.
 	width := methods size sqrt ceiling.
 	^ BlElement new
-		  layout: (BlGridLayout new
-				   rowCount: width;
-				   columnCount: width;
-				   cellSpacing: 5;
-				   yourself);
-		  constraintsDo: [ :c | 
-			  c horizontal fitContent.
-			  c vertical fitContent ];
-		  border:
-		  (BlBorder
-			   paint: BrGlamorousColors defaultButtonBorderColor
-			   width: 1);
-		  aptitude: (BrGlamorousWithTooltipAptitude content: [ 
-				   BrLabel new
-					   aptitude: BrGlamorousLabelAptitude;
-					   padding: (BlInsets all: 5);
-					   text: self name;
-					   yourself ]);
-		  addChildren: (methods collect: #typGtElement);
-		  yourself
+		layout: (BlGridLayout new
+				rowCount: width;
+				columnCount: width;
+				cellSpacing: 5;
+				yourself);
+		constraintsDo: [ :c | 
+			c horizontal fitContent.
+			c vertical fitContent ];
+		border: (BlBorder paint: BrGlamorousColors defaultButtonBorderColor width: 1);
+		aptitude: (BrGlamorousWithTooltipAptitude
+				content: [ BrLabel new
+						aptitude: BrGlamorousLabelAptitude;
+						padding: (BlInsets all: 5);
+						text: self name;
+						yourself ]);
+		addChildren: (methods collect: #typGtElement);
+		yourself
 ]
 
 { #category : #'*Typer-GToolkit' }
-ClassDescription >> typGtShaMethod: aSymbol result: aType arguments: someTypes [
+ClassDescription >> typGtShaMethod: aSymbol type: aType [
 	<typPraArguments: 'Symbol,TypType,SequenceableCollection<TypType>'>
 	| methods newSelector |
 	methods := self methods select: [ :e | e typShaCanResolveMethod: aSymbol ].
 	methods ifNotEmpty: [ ^ methods ].
-	newSelector := self typGtShaMethodNewSelector: aSymbol.
+	newSelector := self typGtShaMethodSelector: aSymbol.
 	self
 		compile: ('{1} aLookup
 	<typShaMethod: ''{2}''>
@@ -85,56 +80,78 @@ ClassDescription >> typGtShaMethod: aSymbol result: aType arguments: someTypes [
 		arguments: \{{4}\}'
 				format: {newSelector.
 						aSymbol.
-						aType.
-						' . ' join: (someTypes collect: [ :e | '''{1}'' typAsType' format: {e} ])}).
+						aType result.
+						' . '
+							join: (aType arguments collect: [ :e | '''{1}'' typAsType' format: {e} ])}).
 	^ {self compiledMethodAt: newSelector asSymbol}
 ]
 
 { #category : #'*Typer-GToolkit' }
-ClassDescription >> typGtShaMethodNewSelector: aSymbol [
-	| newN newSelector |
-	newSelector := self typGtShaMethodSelector: aSymbol postfix: ''.
-	newN := 1.
-	[ self includesSelector: newSelector ]
-		whileTrue: [ newSelector := self typGtShaMethodSelector: aSymbol postfix: newN.
-			newN := newN + 1 ].
-	^ newSelector
+ClassDescription >> typGtShaMethodSelector: aSymbol [
+	| i selector |
+	i := 1.
+	[ aSymbol isUnary
+		ifTrue: [ selector := 'typShaMet{1}{2}:'
+					format: {aSymbol capitalized.
+							i} ].
+	aSymbol isBinary ifTrue: [ selector := 'typShaMet{1}:' format: {i} ].
+	aSymbol isKeyword
+		ifTrue: [ selector := 'typShaMet{1}{2}:'
+					format: {''
+								join: (aSymbol keywords collect: [ :e | e capitalized copyFrom: 1 to: e size - 1 ]).
+							i} ].
+	i := i + 1.
+	self includesSelector: selector ] whileTrue.
+	^ selector
 ]
 
 { #category : #'*Typer-GToolkit' }
-ClassDescription >> typGtShaMethodSelector: aSymbol postfix: anObject [
+ClassDescription >> typGtShaVariable: aSymbol type: aType [
+	<typPraArguments: 'Symbol,TypType,ClassDescription'>
+	| methods newSelector |
+	methods := self class methods
+			select: [ :e | e typShaCanResolveVariable: aSymbol ].
+	methods ifNotEmpty: [ ^ methods ].
+	newSelector := self typGtShaVariableSelector: aSymbol.
+	self class
+		compile: ('{1} aLookup
+	<typShaVariable: ''{2}''>
+	^ ''{3}'' typAsType'
+				format: {newSelector.
+						aSymbol.
+						aType}).
+	^ {self class compiledMethodAt: newSelector}
+]
 
-	aSymbol isUnary ifTrue: [ 
-		^ 'm{1}{2}:' format: { 
-				  aSymbol capitalized.
-				  anObject } ].
-	aSymbol isBinary ifTrue: [ ^ 'mBinary{1}:' format: { anObject } ].
-	^ 'm{1}{2}:' format: { 
-			  ('' join: (aSymbol keywords collect: [ :e | 
-					    e capitalized copyFrom: 1 to: e size - 1 ])).
-			  anObject }
+{ #category : #'*Typer-GToolkit' }
+ClassDescription >> typGtShaVariableSelector: aSymbol [
+	| i selector |
+	i := 1.
+	[ selector := 'typShaVar{1}{2}:'
+			format: {aSymbol capitalized.
+					i}.
+	i := i + 1.
+	self includesSelector: selector ] whileTrue.
+	^ selector
 ]
 
 { #category : #'*Typer-GToolkit' }
 ClassDescription >> typGtVariableElementFor: aSymbol [
-
 	| type |
 	type := self typAsType lookupVariable: aSymbol.
 	^ BlElement new
-		  background: (type isUnknown
-				   ifTrue: [ Color blue ]
-				   ifFalse: [ Color green ]);
-		  constraintsDo: [ :c | 
-			  c horizontal exact: 16. "typCastAs BlLayoutCommonConstraintsAxis"
-			  c vertical exact: 16 "typCastAs BlLayoutCommonConstraintsAxis" ];
-		  aptitude: (BrGlamorousWithTooltipAptitude content: [ 
-					   BrLabel new
-						   aptitude: BrGlamorousLabelAptitude;
-						   padding: (BlInsets all: 5);
-						   text: aSymbol;
-						   yourself ]);
-		  when: BlClickEvent do: [ :f | f target phlow spawnObject: type ];
-		  yourself
+		background: (type isUnknown ifTrue: [ Color blue ] ifFalse: [ Color green ]);
+		constraintsDo: [ :c | 
+			c horizontal exact: 16.	"typCastAs BlLayoutCommonConstraintsAxis"
+			c vertical exact: 16	"typCastAs BlLayoutCommonConstraintsAxis" ];
+		aptitude: (BrGlamorousWithTooltipAptitude
+				content: [ BrLabel new
+						aptitude: BrGlamorousLabelAptitude;
+						padding: (BlInsets all: 5);
+						text: aSymbol;
+						yourself ]);
+		when: BlClickEvent do: [ :f | f target phlow spawnObject: type ];
+		yourself
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -144,32 +161,27 @@ ClassDescription >> typGtVariableNames [
 
 { #category : #'*Typer-GToolkit' }
 ClassDescription >> typGtVariablesElementInPackage: aPackage [
-
 	| variables width |
 	variables := (aPackage includesClass: self instanceSide)
-		             ifTrue: [ self typGtVariableNames ]
-		             ifFalse: [ #(  ) ].
+			ifTrue: [ self typGtVariableNames ]
+			ifFalse: [ #() ].
 	width := variables size sqrt ceiling.
 	^ BlElement new
-		  layout: (BlGridLayout new
-				   rowCount: width;
-				   columnCount: width;
-				   cellSpacing: 5;
-				   yourself);
-		  constraintsDo: [ :c | 
-			  c horizontal fitContent.
-			  c vertical fitContent ];
-		  border:
-		  (BlBorder
-			   paint: BrGlamorousColors defaultButtonBorderColor
-			   width: 1);
-		  aptitude: (BrGlamorousWithTooltipAptitude content: [ 
-				   BrLabel new
-					   aptitude: BrGlamorousLabelAptitude;
-					   padding: (BlInsets all: 5);
-					   text: self name;
-					   yourself ]);
-		  addChildren:
-		  (variables collect: [ :e | self typGtVariableElementFor: e ]);
-		  yourself
+		layout: (BlGridLayout new
+				rowCount: width;
+				columnCount: width;
+				cellSpacing: 5;
+				yourself);
+		constraintsDo: [ :c | 
+			c horizontal fitContent.
+			c vertical fitContent ];
+		border: (BlBorder paint: BrGlamorousColors defaultButtonBorderColor width: 1);
+		aptitude: (BrGlamorousWithTooltipAptitude
+				content: [ BrLabel new
+						aptitude: BrGlamorousLabelAptitude;
+						padding: (BlInsets all: 5);
+						text: self name;
+						yourself ]);
+		addChildren: (variables collect: [ :e | self typGtVariableElementFor: e ]);
+		yourself
 ]
