@@ -1,105 +1,105 @@
 Class {
-	#name : #TypInfInferred,
+	#name : #TypInfExaMethods,
 	#superclass : #Object,
 	#category : #'Typer-Inference-Examples'
 }
 
 { #category : #accessing }
-TypInfInferred >> block [
+TypInfExaMethods >> block [
 	^ [ 1 ] value
 ]
 
 { #category : #accessing }
-TypInfInferred >> block: aBoolean [
+TypInfExaMethods >> block: aBoolean [
 	^ aBoolean ifTrue: [ 1 ] ifFalse: [ 0 ]
 ]
 
 { #category : #accessing }
-TypInfInferred >> blockTrue: aBoolean [
+TypInfExaMethods >> blockTrue: aBoolean [
 	^ aBoolean ifTrue: [ 1 ]
 ]
 
 { #category : #accessing }
-TypInfInferred >> blockUseSameTwice: aBoolean [
+TypInfExaMethods >> blockUseSameTwice: aBoolean [
 	| block |
 	block := [ 2 ].
 	^ aBoolean ifTrue: block ifFalse: block
 ]
 
 { #category : #accessing }
-TypInfInferred >> constrain: x [
+TypInfExaMethods >> constrain: x [
 	x blockUseSameTwice: true
 ]
 
 { #category : #accessing }
-TypInfInferred >> deadCode [
+TypInfExaMethods >> deadCode [
 	true ifTrue: [ ^ self ].
 	^ #dead
 ]
 
 { #category : #requirements }
-TypInfInferred >> empty [
+TypInfExaMethods >> empty [
 ]
 
 { #category : #accessing }
-TypInfInferred >> error [
+TypInfExaMethods >> error [
 	[ Error new signal ] on: Error do: [ :e | ^ e ].
 	^ #notcaught
 ]
 
 { #category : #requirements }
-TypInfInferred >> inlined [
+TypInfExaMethods >> inlined [
 
 	^ self symbol
 ]
 
 { #category : #requirements }
-TypInfInferred >> message [
+TypInfExaMethods >> message [
 
 	^ 1 + 2
 ]
 
 { #category : #accessing }
-TypInfInferred >> signal [
+TypInfExaMethods >> signal [
 	Error signal
 ]
 
 { #category : #accessing }
-TypInfInferred >> signalAndHandle [
+TypInfExaMethods >> signalAndHandle [
 	[ Error new signal ] on: Error do: [ :e | ^ e ].
 	^ #notcaught
 ]
 
 { #category : #accessing }
-TypInfInferred >> signalInlineAndHandle [
+TypInfExaMethods >> signalInlineAndHandle [
 	[ self signal ] on: Error do: [ :e | ^ e ].
 	^ #notcaught
 ]
 
 { #category : #accessing }
-TypInfInferred >> signalLookup [
+TypInfExaMethods >> signalLookup [
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
-TypInfInferred >> signalLookupAndHandle [
+TypInfExaMethods >> signalLookupAndHandle [
 	[ self signalLookup ] on: Error do: [ :e | ^ e ].
 	^ #notcaught
 ]
 
 { #category : #requirements }
-TypInfInferred >> symbol [
+TypInfExaMethods >> symbol [
 
 	^ #symbol
 ]
 
 { #category : #accessing }
-TypInfInferred >> translated [
+TypInfExaMethods >> translated [
 	^ Array with: 'a' translated with: 'b' translated
 ]
 
 { #category : #accessing }
-TypInfInferred >> typShaMethodSignalLookup: aLookup [
+TypInfExaMethods >> typShaMethodSignalLookup: aLookup [
 	<typShaMethod: #signalLookup>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType instance
@@ -109,11 +109,11 @@ TypInfInferred >> typShaMethodSignalLookup: aLookup [
 ]
 
 { #category : #accessing }
-TypInfInferred >> while2: aBlock [
+TypInfExaMethods >> while2: aBlock [
 	^ aBlock whileFalse: [ 'bop' ]
 ]
 
 { #category : #accessing }
-TypInfInferred >> while: aBoolean [
+TypInfExaMethods >> while: aBoolean [
 	^ [ aBoolean ] whileFalse: [ 'bop' ]
 ]

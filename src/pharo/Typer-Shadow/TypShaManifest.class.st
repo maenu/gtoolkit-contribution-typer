@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #accessing }
+TypShaManifest class >> build [
+	TypShaIndex instance
+]
+
+{ #category : #accessing }
 TypShaManifest class >> invalidate [
 	TypShaIndex invalidate
 ]

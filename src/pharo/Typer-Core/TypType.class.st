@@ -24,14 +24,6 @@ TypType class >> invalidate [
 	index := nil
 ]
 
-{ #category : #accessing }
-TypType class >> invalidateEverything [
-	TypNode invalidateAll.
-	TypType invalidateAll.
-	TypIndex invalidateAll.
-	TypEdgeKey invalidateAll
-]
-
 { #category : #comparing }
 TypType >> < aType [
 	<typPraResult: 'Boolean'>

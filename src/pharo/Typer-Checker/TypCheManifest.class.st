@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #accessing }
+TypCheManifest class >> build [
+	TypCheIndex instance
+]
+
+{ #category : #accessing }
 TypCheManifest class >> invalidate [
 	TypCheIndex invalidate
 ]
