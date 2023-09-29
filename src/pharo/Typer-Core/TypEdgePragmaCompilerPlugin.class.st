@@ -1,6 +1,6 @@
 Class {
 	#name : #TypEdgePragmaCompilerPlugin,
-	#superclass : #OCCompilerASTPlugin,
+	#superclass : #OCASTCompilerPlugin,
 	#category : #'Typer-Core-Graph'
 }
 
