@@ -18,8 +18,50 @@ TypManifest class >> buildAll [
 ]
 
 { #category : #accessing }
+TypManifest class >> canFindReferences [
+	^ self canTallySpace
+]
+
+{ #category : #accessing }
+TypManifest class >> canTallySpace [
+	^ Smalltalk vm memorySize < (10 ** 9)
+]
+
+{ #category : #accessing }
+TypManifest class >> checkVitals: aCollection start: aDateAndTime ifDead: aBlock [
+	^ aCollection
+		, (self
+				ifDead: [ :t | 
+					aBlock
+						value: {t.
+								Smalltalk vm statisticsReport.
+								DateAndTime now - aDateAndTime} ]
+				ifAlive: [ :t | {t} ]
+				ifUnknown: [ #() ])
+]
+
+{ #category : #accessing }
+TypManifest class >> declareAlive: aCollection start: aDateAndTime message: aString [
+	^ aCollection
+		, {Smalltalk vm statisticsReport.
+				DateAndTime now - aDateAndTime.
+				aString}
+]
+
+{ #category : #accessing }
 TypManifest class >> flags [
 	^ 'Typer' gtPackageMatches & #flag: gtSenders
+]
+
+{ #category : #accessing }
+TypManifest class >> ifDead: aBlock ifAlive: anotherBlock ifUnknown: yetAnotherBlock [
+	| tally |
+	TypUnknownType instanceCount = 0 ifTrue: [ ^ aBlock cull: nil ].
+	self canTallySpace ifFalse: [ ^ yetAnotherBlock value ].
+	tally := self tallySpace.
+	^ tally size <= 8
+		ifTrue: [ aBlock cull: tally ]
+		ifFalse: [ anotherBlock cull: tally ]
 ]
 
 { #category : #accessing }
@@ -37,6 +79,14 @@ TypManifest class >> invalidateAll [
 ]
 
 { #category : #accessing }
+TypManifest class >> isDead [
+	^ self
+		ifDead: true
+		ifAlive: false
+		ifUnknown: nil
+]
+
+{ #category : #accessing }
 TypManifest class >> nilAll [
 	(self allPackages collect: #packageManifestOrNil)
 		reject: #isNil
@@ -50,48 +100,40 @@ TypManifest class >> nuke [
 	this takes minutes, but due to memory size checks should not take hours"
 
 	<gtExample>
-	| before after result beforeFinder afterFinder paths |
+	<noTest>
+	| start result |
+	start := DateAndTime now.
+	result := {}.
 	self nilAll.
-	before := self spaceTallyResultsItems.
-	before typInfIsInvalidatedEverything
-		ifTrue: [ ^ {before.
-				'success, one garbage collection did it'} ].
 	self invalidateAll.
-	after := self spaceTallyResultsItems.
-	after typInfIsInvalidatedEverything
-		ifTrue: [ ^ {before.
-				after.
-				'success, two garbage collections did it'} ].
-	result := {before.
-		after.
-		'failure, there are still too many instantiated typer classes'}.
-	Smalltalk vm memorySize < (2 * 10 ** 9)
-		ifFalse: [ ^ result
-				, {'failure, more than 2GB and instantiated typer classes, #pointersTo and ReferenceFinder can help to find out who references it, but it is really slow for this memory size. try closing all tabs and run this again. save, close, start may also help, but saving GB images can be slow'} ].
+	result := self
+			checkVitals: result
+			start: start
+			ifDead: [ :c | ^ c , {'success, one garbage collection did it'} ].
+	self canFindReferences
+		ifFalse: [ ^ self
+				declareAlive: result
+				start: start
+				message: 'failure, more than 1GB and instantiated typer classes, #pointersTo and ReferenceFinder can help to find out who references it, but it is really slow for this gigabyte images. try closing all tabs and run this again. save, close, start may also help, but saving GB images can be slow' ].
 	
-	"somehow, calling ReferenceFinder and subsequent GC gets rid of more objects, sometimes"
-	beforeFinder results
+	"somehow, calling ReferenceFinder and subsequent GC gets rid of more objects. sometimes"
+	result last
 		detect: [ :e | (e analyzedClassName beginsWith: 'TypGt') not ]
-		ifFound: [ :e | paths := ReferenceFinder findAllPathsToInstanceOf: e analyzedClassName asClass ]
-		ifNone: [ ^ result
-				, {beforeFinder.
-						'failure, tried finding a paths to an instantiated typer class, but none found. try closing all tabs and run this again. save, close, start may also help, but saving GB images can be slow'} ].
-	afterFinder := self spaceTallyResultsItems.
-	afterFinder typInfIsInvalidatedEverything
-		ifFalse: [ ^ result
-				, {beforeFinder.
-						afterFinder.
-						'success, all gone after nudging garbage collection'} ].
-	paths
-		ifNotNil: [ ^ result
-				, {beforeFinder.
-						afterFinder.
-						'failure, nudged garbage collection, break the found paths by nilling a reference in the right place, see next element for paths'.
-						paths} ].
-	^ result
-		, {beforeFinder.
-				afterFinder.
-				'failure, multiple garbage collections and tricks did not reduce instantiated classes to four gt classes, but could not find a reference to an instance of one of the non-gt ones. is the reference finder not finding all references?'}
+		ifFound: [ :e | 
+			(ReferenceFinder findPathToInstanceOf: e analyzedClassName asClass)
+				ifNotNil: [ :c | 
+					^ self
+						declareAlive: result , {c}
+						start: start
+						message: 'failure, strong paths found, break the found paths by nilling a reference in the right place' ] ].
+	result := self
+			checkVitals: result
+			start: start
+			ifDead: [ :c | ^ c , {'success, all gone after nudging garbage collection'} ].
+	^ self
+		declareAlive: result
+		start: start
+		message: 'failure, multiple garbage collections and tricks did not reduce instantiated classes to four gt classes, but could not find a reference to an instance of one of the non-gt ones. is the reference finder not finding all references due to some corner case?'
 ]
 
 { #category : #accessing }
@@ -100,10 +142,12 @@ TypManifest class >> recompileAll [
 ]
 
 { #category : #accessing }
-TypManifest class >> spaceTallyResultsItems [
-	<gtExample>
+TypManifest class >> tallySpace [
 	"system-wide seems to be faster than querying ~100 classes"
-	^ (SpaceTally new systemWideSpaceTally 
+
+	<gtExample>
+	<notTest>
+	^ (SpaceTally new systemWideSpaceTally
 		select: [ :e | e analyzedClassName beginsWith: 'Typ' ])
 		sorted: [ :a :b | a instanceCount > b instanceCount ]
 ]

@@ -1,11 +1,6 @@
 Extension { #name : #Collection }
 
 { #category : #'*Typer-Inference' }
-Collection >> typInfIsInvalidatedEverything [
-	^ self size <= 8
-]
-
-{ #category : #'*Typer-Inference' }
 Collection >> typInfType [
 
 	^ self class typAsType withParameters:

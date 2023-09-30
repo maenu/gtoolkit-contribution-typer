@@ -12,6 +12,13 @@ TypResolver >> canResolve: aLookup [
 	self subclassResponsibility
 ]
 
+{ #category : #accessing }
+TypResolver >> invalidate [
+	"noop"
+
+	
+]
+
 { #category : #'as yet unclassified' }
 TypResolver >> invalidate: aLookup onClassChange: aClassAnnouncement [
 

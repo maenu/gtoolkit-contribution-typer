@@ -58,7 +58,8 @@ TypIndex >> initialize [
 
 { #category : #invalidation }
 TypIndex >> invalidate [
-	resolver invalidate.
+	self flag: 'FIXME remove nil check?'.
+	resolver ifNotNil: #invalidate.
 	cache removeAll
 ]
 

@@ -2,9 +2,7 @@ Extension { #name : #Dictionary }
 
 { #category : #'*Typer-Core' }
 Dictionary >> typAt: aPath [
-	^ aPath
-		inject: self
-		into: [ :r :e | r at: e ifAbsentPut: [ self species new ] ]
+	^ aPath inject: self into: [ :r :e | r at: e ifAbsent: [ ^ #() ] ]
 ]
 
 { #category : #'*Typer-Core' }
@@ -20,7 +18,7 @@ Dictionary >> typAt: aPath ifAbsentPut: aBlock [
 	^ self
 		typAt: aPath
 		ifPresent: #yourself
-		ifAbsentPut: [  "noop" ]
+		ifAbsentPut: aBlock
 ]
 
 { #category : #'*Typer-Core' }
@@ -39,13 +37,25 @@ Dictionary >> typAt: aPath ifPresent: aBlock ifAbsent: anotherBlock [
 
 { #category : #'*Typer-Core' }
 Dictionary >> typAt: aPath ifPresent: aBlock ifAbsentPut: anotherBlock [
-	^ aBlock
-		value: ((aPath inject: self into: [ :r :e | r at: e ]) ifAbsentPut: anotherBlock)
+	self assert: [ aPath isNotEmpty ].
+	^ (aPath size > 1
+		ifTrue: [ self
+				typAt: (aPath copyFrom: 1 to: aPath size - 1)
+				ifAbsentPut: [ self species new ] ]
+		ifFalse: [ self ])
+		at: aPath last
+		ifPresent: aBlock
+		ifAbsentPut: anotherBlock
 ]
 
 { #category : #'*Typer-Core' }
 Dictionary >> typAt: aPath put: anObject [
-	^ (aPath inject: self into: [ :r :e | r at: e ]) put: anObject
+	self assert: [ aPath isNotEmpty ].
+	^ (aPath size > 1
+		ifTrue: [ self
+				typAt: (aPath copyFrom: 1 to: aPath size - 1)
+				ifAbsentPut: [ self species new ] ]
+		ifFalse: [ self ]) at: aPath last put: anObject
 ]
 
 { #category : #'*Typer-Core' }

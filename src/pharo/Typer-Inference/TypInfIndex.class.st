@@ -27,6 +27,11 @@ TypInfIndex >> addBehavior: aBehavior [
 	| variables |
 	variables := aBehavior instanceVariables asIdentitySet.
 	aBehavior isClass ifTrue: [ variables addAll: aBehavior classVariables ].
+	variables
+		ifNotEmpty: [ cache
+				typAt: {#variables.
+						aBehavior}
+				put: variables ].
 	aBehavior
 		allSuperclassesDo: [ :b | 
 			variables
@@ -44,24 +49,21 @@ TypInfIndex >> addBehavior: aBehavior [
 				typAt: {#writers.
 						v}
 				ifAbsentPut: [ IdentitySet new ] ].
-	cache
-		typAt: {#variables.
-				aBehavior}
-		put: variables.
-	aBehavior methods do: [ :m | self addMethod: aBehavior ]
+	aBehavior methods do: [ :m | self addMethod: m ]
 ]
 
 { #category : #accessing }
 TypInfIndex >> addMethod: aMethod [
-	| c |
-	(cache
+	cache
 		typAt: {#variables.
-				aMethod methodClass})
-		select: [ :v | v typInfIsWrittenIn: aMethod ]
-		thenDo: [ :v | 
-			(cache
-				typAt: {#writers.
-						v}) add: aMethod ].
+				aMethod methodClass}
+		ifPresent: [ :vs | 
+			vs
+				select: [ :v | v typInfIsWrittenIn: aMethod ]
+				thenDo: [ :v | 
+					(cache
+						typAt: {#writers.
+								v}) add: aMethod ] ].
 	aMethod typInfAbsIsCanResolve
 		ifTrue: [ (cache
 				typAt: {#absCanResolve.
@@ -78,15 +80,12 @@ TypInfIndex >> addMethod: aMethod [
 		typAt: {#implementors.
 				aMethod selector}
 		ifAbsentPut: [ IdentitySet new ]) add: aMethod methodClass.
-	c := aMethod methodClass superclass.
-	[ c isNil ]
-		whileFalse: [ (c lookupSelector: aMethod selector)
-				ifNotNil: [ :m | 
-					(cache
-						typAt: {#overriders.
-								m}
-						ifAbsentPut: [ IdentitySet new ]) add: aMethod.
-					c := m methodClass superclass ] ]
+	aMethod overriddenMethods
+		do: [ :m | 
+			(cache
+				typAt: {#overriders.
+						m}
+				ifAbsentPut: [ IdentitySet new ]) add: aMethod ]
 ]
 
 { #category : #accessing }
