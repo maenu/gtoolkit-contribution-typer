@@ -4,33 +4,6 @@ Class {
 	#category : #'Typer-GToolkit-Core'
 }
 
-{ #category : #accessing }
-TypGtCheStyler >> styleNode: aNode for: aBlock [
-	[ aBlock cull: aNode ]
-		on: TypCheError
-		do: [ :e | 
-			self
-				attributes: {e typGtAsAttribute}
-				from: aNode stopWithoutParentheses
-				to: aNode stopWithoutParentheses ]
-]
-
-{ #category : #visiting }
-TypGtCheStyler >> styleNodeUnknown: aNode message: aString [
-	self
-		attributes: {TypGtCheAttribute
-					object: aNode
-					color: Color blue
-					message: aString}
-		from: aNode stopWithoutParentheses
-		to: aNode stopWithoutParentheses
-]
-
-{ #category : #accessing }
-TypGtCheStyler >> styleNodesAt: aNode for: aBlock [
-	(self context nodesAt: aNode) do: [ :n | self styleNode: aNode for: aBlock ]
-]
-
 { #category : #visiting }
 TypGtCheStyler >> visitArgumentNode: aNode [
 	super visitArgumentNode: aNode.
@@ -69,6 +42,22 @@ TypGtCheStyler >> visitMethodNode: aNode [
 	super visitMethodNode: aNode.
 	aNode typCheHasUnknownResult
 		ifTrue: [ self styleNodeUnknown: aNode message: 'Result is unknown' ]
+]
+
+{ #category : #visiting }
+TypGtCheStyler >> visitNode: aNode [
+	super visitNode: aNode.
+	(self context nodesAt: aNode)
+		do: [ :n | 
+			n typCheErrors
+				ifNotEmpty: [ :c | 
+					self
+						attributes: {TypGtCheAttribute
+									object: c
+									color: c first typGtColor
+									message: c first messageText}
+						from: aNode stopWithoutParentheses
+						to: aNode stopWithoutParentheses ] ]
 ]
 
 { #category : #visiting }

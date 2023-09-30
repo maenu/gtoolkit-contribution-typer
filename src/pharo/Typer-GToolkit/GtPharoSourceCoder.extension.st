@@ -32,9 +32,9 @@ GtPharoSourceCoder >> typGtIndicator [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns viewModel: aViewModel [
-	"<gtAstCoderAddOns: 10>"
-	aViewModel
-		completionStrategy: (aViewModel completionStrategy typGtAsCompletionStrategyIn: self).
+	<gtAstCoderAddOns: 10>
+	"aViewModel
+		completionStrategy: (aViewModel completionStrategy typGtAsCompletionStrategyIn: self)."
 	self
 		attributeNamed: #typGtContext
 		ifPresent: [ self

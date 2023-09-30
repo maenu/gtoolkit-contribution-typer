@@ -257,7 +257,11 @@ TypInfIndex >> removeMethod: aMethod [
 						aMethod methodClass.
 						aMethod typInfAbsCanResolve}
 				ifPresent: [ :s | s remove: aMethod ] ].
-	cache typRemoveAt: aMethod typInfAsLookup typInfAsContextPath.
+	cache
+		typRemoveAt: {#context.
+				aMethod methodClass.
+				aMethod selector.
+				self}.
 	self flag: 'TODO invalidate senders etc. too'.
 	cache
 		typAt: {#implementors.
@@ -268,7 +272,7 @@ TypInfIndex >> removeMethod: aMethod [
 			cache
 				typAt: {#overriders.
 						m}
-				ifPresent: [ :s | s remove: aMethod ] ]
+				ifPresent: [ :s | s remove: aMethod ifAbsent: [  "noop" ] ] ]
 ]
 
 { #category : #accessing }

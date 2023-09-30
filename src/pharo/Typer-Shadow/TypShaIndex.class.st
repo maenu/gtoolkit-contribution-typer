@@ -102,6 +102,7 @@ TypShaIndex >> resolveType: aLookup [
 	^ cache
 		typAt: {#type.
 				aLookup classDescription class}
+		ifPresent: [ :s | s collect: [ :m | nil withArgs: {aLookup} executeMethod: m ] ]
 		ifAbsent: [ #() ]
 ]
 
@@ -111,5 +112,6 @@ TypShaIndex >> resolveVariable: aLookup [
 		typAt: {#variable.
 				aLookup receiver classDescription.
 				aLookup selector}
+		ifPresent: [ :s | s collect: [ :m | nil withArgs: {aLookup} executeMethod: m ] ]
 		ifAbsent: [ #() ]
 ]

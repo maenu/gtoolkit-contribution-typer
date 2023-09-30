@@ -31,6 +31,11 @@ TypIndex class >> invalidateAll [
 ]
 
 { #category : #accessing }
+TypIndex >> cache [
+	^ cache
+]
+
+{ #category : #accessing }
 TypIndex >> canResolve: aLookup [
 	^ (cache includesKey: aLookup)
 		ifTrue: [ true ]

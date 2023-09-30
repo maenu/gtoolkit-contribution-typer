@@ -19,8 +19,5 @@ TypShaMethodResolver >> printOn: aStream [
 
 { #category : #accessing }
 TypShaMethodResolver >> result: aLookup [
-	^ self
-		resolve: aLookup
-		reduce: ((TypShaIndex instance resolveMethod: aLookup)
-				collect: [ :m | nil withArgs: {aLookup} executeMethod: m ])
+	^ self resolve: aLookup reduce: (TypShaIndex instance resolveMethod: aLookup)
 ]

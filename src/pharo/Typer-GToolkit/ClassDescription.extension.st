@@ -1,6 +1,31 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-GToolkit' }
+ClassDescription >> typGtCheMethodsElementInPackage: aPackage [
+	| methods width |
+	methods := aPackage methodsForClass: self.
+	width := methods size sqrt ceiling.
+	^ BlElement new
+		layout: (BlGridLayout new
+				rowCount: width;
+				columnCount: width;
+				cellSpacing: 5;
+				yourself);
+		constraintsDo: [ :c | 
+			c horizontal fitContent.
+			c vertical fitContent ];
+		border: (BlBorder paint: BrGlamorousColors defaultButtonBorderColor width: 1);
+		aptitude: (BrGlamorousWithTooltipAptitude
+				content: [ BrLabel new
+						aptitude: BrGlamorousLabelAptitude;
+						padding: (BlInsets all: 5);
+						text: self name;
+						yourself ]);
+		addChildren: (methods collect: #typGtCheElement);
+		yourself
+]
+
+{ #category : #'*Typer-GToolkit' }
 ClassDescription >> typGtCovFor: aView context: aDictionary [
 	<gtClassView>
 	^ aView explicit
@@ -38,31 +63,6 @@ ClassDescription >> typGtCovNode [
 		flatCollect: [ :e | e ast allChildren , {e ast} ])
 		groupedBy: [ :e | e propertyAt: #tagExecuted ifAbsent: [ nil ] ])
 		asDictionary
-]
-
-{ #category : #'*Typer-GToolkit' }
-ClassDescription >> typGtMethodsElementInPackage: aPackage [
-	| methods width |
-	methods := aPackage methodsForClass: self.
-	width := methods size sqrt ceiling.
-	^ BlElement new
-		layout: (BlGridLayout new
-				rowCount: width;
-				columnCount: width;
-				cellSpacing: 5;
-				yourself);
-		constraintsDo: [ :c | 
-			c horizontal fitContent.
-			c vertical fitContent ];
-		border: (BlBorder paint: BrGlamorousColors defaultButtonBorderColor width: 1);
-		aptitude: (BrGlamorousWithTooltipAptitude
-				content: [ BrLabel new
-						aptitude: BrGlamorousLabelAptitude;
-						padding: (BlInsets all: 5);
-						text: self name;
-						yourself ]);
-		addChildren: (methods collect: #typGtElement);
-		yourself
 ]
 
 { #category : #'*Typer-GToolkit' }

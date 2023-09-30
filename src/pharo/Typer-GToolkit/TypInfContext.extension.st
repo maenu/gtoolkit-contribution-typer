@@ -9,6 +9,11 @@ TypInfContext >> typGtAsCoder [
 ]
 
 { #category : #'*Typer-GToolkit' }
+TypInfContext >> typGtCheColor [
+	^ root typCheErrors ifEmpty: [ Color green ] ifNotEmpty: [ :c | c first color ]
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypInfContext >> typGtCoderAndFlowFor: aView [
 	<gtView>
 	| coder mondrian |

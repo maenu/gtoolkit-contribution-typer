@@ -1,45 +1,29 @@
 Extension { #name : #TypInfMessage }
 
 { #category : #'*Typer-Checker' }
-TypInfMessage >> typCheCheckArgumentCompatibilityAt: anInteger [
-	| argument expected actual |
-	argument := self arguments at: anInteger.
-	expected := self typCheMethod arguments at: anInteger.
-	actual := argument type.
-	expected isUnknown ifTrue: [ ^ self ].
-	actual isUnknown ifTrue: [ ^ self ].
-	expected asNonNullable >= actual asNonNullable ifTrue: [ ^ self ].
-	TypCheIncompatibleTypeError new
-		expected: expected;
-		actual: actual;
-		signal
-]
-
-{ #category : #'*Typer-Checker' }
-TypInfMessage >> typCheCheckMethod [
+TypInfMessage >> typChe [
 	| receiver |
+	super typChe.
 	receiver := self receiver.
-	receiver isUnknown ifTrue: [ ^ self ].
-	(receiver asNonNullable canLookupMethod: self selector) ifFalse: [ ^ self ].
-	TypCheNoMethodError new
-		type: receiver;
-		selector: self selector;
-		signal
+	(receiver canLookupMethod: self selector)
+		ifTrue: [ self typCheArgumentsWithReceiver: receiver ]
+		ifFalse: [ (receiver asNonNullable canLookupMethod: self selector)
+				ifTrue: [ self typCheArgumentsWithReceiver: receiver asNonNullable ]
+				ifFalse: [ TypCheNoMethod signal: self ] ]
 ]
 
 { #category : #'*Typer-Checker' }
-TypInfMessage >> typCheCheckReceiver [
-	| receiver |
-	receiver := self receiver.
-	receiver isUnknown ifTrue: [ ^ self ].
-	(receiver canLookupMethod: self selector) ifTrue: [ ^ self ].
-	receiver isNullable ifFalse: [ ^ self ].
-	TypCheNullableTypeError new
-		type: receiver;
-		signal
-]
-
-{ #category : #'*Typer-Checker' }
-TypInfMessage >> typCheMethod [
-	^ TypCheIndex instance resolveMethod: self lookup
+TypInfMessage >> typCheArgumentsWithReceiver: aType [
+	| expecteds actuals |
+	expecteds := (TypMethodIndex instance
+			resolveMethod: (self lookup withReceiver: aType)) arguments.
+	actuals := aType arguments.
+	1
+		to: (expecteds size min: actuals size)
+		do: [ :i | 
+			| expected actual |
+			expected := expecteds at: i.
+			actual := actuals at: i.
+			expected >= actual
+				ifFalse: [ TypCheIncompatible signal: (self inArgumentAt: i) expected: expected ] ]
 ]

@@ -1,18 +1,12 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*Typer-GToolkit' }
-CompiledMethod >> typGtElement [
+CompiledMethod >> typGtCheElement [
 	^ BlElement new
-		in: [ :e | 
-			| color |
-			color := self ast typCheColor.
-			(self ast typCheHasUnknownArguments not
-				and: [ self ast typCheHasUnknownResult not ])
-				ifTrue: [ e background: color ]
-				ifFalse: [ e background: color muchLighter ] ];
+		in: [ :e | e background: self ast typGtCheColor ];
 		constraintsDo: [ :c | 
-			c horizontal exact: 16.	"typCastAs BlLayoutCommonConstraintsAxis"
-			c vertical exact: 16	"typCastAs BlLayoutCommonConstraintsAxis" ];
+			c horizontal exact: 16.
+			c vertical exact: 16 ];
 		aptitude: (BrGlamorousWithTooltipAptitude
 				content: [ BrLabel new
 						aptitude: BrGlamorousLabelAptitude;

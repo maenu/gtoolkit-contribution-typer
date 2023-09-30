@@ -17,8 +17,5 @@ TypShaTypeResolver >> printOn: aStream [
 
 { #category : #accessing }
 TypShaTypeResolver >> result: aLookup [
-	^ self
-		resolve: aLookup
-		reduce: ((TypShaIndex instance resolveType: aLookup)
-				collect: [ :m | aLookup classDescription withArgs: {aLookup} executeMethod: m ])
+	^ self resolve: aLookup reduce: (TypShaIndex instance resolveType: aLookup)
 ]

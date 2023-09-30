@@ -14,7 +14,7 @@ Class >> typGtElementInPackage: aPackage [
 		border: (BlBorder paint: BrGlamorousColors defaultButtonBorderColor width: 1);
 		addChildren: {self instanceSide typGtVariablesElementInPackage: aPackage.
 				self classSide typGtVariablesElementInPackage: aPackage.
-				self instanceSide typGtMethodsElementInPackage: aPackage.
-				self classSide typGtMethodsElementInPackage: aPackage};
+				self instanceSide typGtCheMethodsElementInPackage: aPackage.
+				self classSide typGtCheMethodsElementInPackage: aPackage};
 		yourself
 ]

@@ -1,16 +1,11 @@
 Extension { #name : #TypInfAssignment }
 
 { #category : #'*Typer-Checker' }
-TypInfAssignment >> typCheCheckCompatibility [
+TypInfAssignment >> typChe [
 	| expected actual |
+	super typChe.
 	expected := (self outAt: #next) type.
 	actual := self type.
-	expected isUnknown ifTrue: [ ^ self ].
-	actual isUnknown ifTrue: [ ^ self ].
-	expected >= actual ifTrue: [ ^ self ].
-	(actual typCheHasArgumentsCompatibleWithThoseOf: actual) ifTrue: [ ^ self ].
-	TypCheIncompatibleTypeError new
-		expected: expected;
-		actual: actual;
-		signal
+	expected >= actual
+		ifFalse: [ TypCheIncompatible signal: self expected: expected ]
 ]
