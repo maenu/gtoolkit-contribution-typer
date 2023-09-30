@@ -25,6 +25,11 @@ TypInfIndex >> absResolve: aLookup [
 { #category : #accessing }
 TypInfIndex >> addBehavior: aBehavior [
 	| variables |
+	cache
+		typAt: {#indexed.
+				aBehavior}
+		ifPresent: [ ^ self ]
+		ifAbsentPut: [ true ].
 	variables := aBehavior instanceVariables asIdentitySet.
 	aBehavior isClass ifTrue: [ variables addAll: aBehavior classVariables ].
 	variables
@@ -54,6 +59,11 @@ TypInfIndex >> addBehavior: aBehavior [
 
 { #category : #accessing }
 TypInfIndex >> addMethod: aMethod [
+	cache
+		typAt: {#indexed.
+				aMethod}
+		ifPresent: [ ^ self ]
+		ifAbsentPut: [ true ].
 	cache
 		typAt: {#variables.
 				aMethod methodClass}
@@ -210,18 +220,31 @@ TypInfIndex >> overriders: aCompiledMethod [
 
 { #category : #accessing }
 TypInfIndex >> removeBehavior: aBehavior [
+	cache
+		typAt: {#indexed.
+				aBehavior}
+		ifPresent: [ cache
+				typRemoveAt: {#indexed.
+						aBehavior} ]
+		ifAbsent: [ ^ self ].
 	(cache
 		typAt: {#variables.
 				aBehavior})
 		do: [ :v | 
 			(cache at: #variables) removeKey: v ifAbsent: [  "noop" ].
 			(cache at: #writers) removeKey: v ifAbsent: [  "noop" ] ].
-	aBehavior methods do: [ :m | self removeMethod: aBehavior ]
+	aBehavior methods do: [ :m | self removeMethod: m ]
 ]
 
 { #category : #accessing }
 TypInfIndex >> removeMethod: aMethod [
-	| c |
+	cache
+		typAt: {#indexed.
+				aMethod}
+		ifPresent: [ cache
+				typRemoveAt: {#indexed.
+						aMethod} ]
+		ifAbsent: [ ^ self ].
 	aMethod typInfAbsIsCanResolve
 		ifTrue: [ cache
 				typAt: {#absCanResolve.
@@ -240,15 +263,12 @@ TypInfIndex >> removeMethod: aMethod [
 		typAt: {#implementors.
 				aMethod selector}
 		ifPresent: [ :s | s remove: aMethod methodClass ].
-	c := aMethod methodClass superclass.
-	[ c isNil ]
-		whileFalse: [ (c lookupSelector: aMethod selector)
-				ifNotNil: [ :m | 
-					cache
-						typAt: {#overriders.
-								m}
-						ifPresent: [ :s | s remove: aMethod ].
-					c := m methodClass superclass ] ]
+	aMethod overriddenMethods
+		do: [ :m | 
+			cache
+				typAt: {#overriders.
+						m}
+				ifPresent: [ :s | s remove: aMethod ] ]
 ]
 
 { #category : #accessing }

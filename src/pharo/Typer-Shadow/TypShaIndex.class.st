@@ -6,6 +6,11 @@ Class {
 
 { #category : #accessing }
 TypShaIndex >> addMethod: aMethod [
+	cache
+		typAt: {#indexed.
+				aMethod}
+		ifPresent: [ ^ self ]
+		ifAbsentPut: [ true ].
 	aMethod typShaIsResolveMethod
 		ifTrue: [ (cache
 				typAt: {#method.
@@ -43,6 +48,13 @@ TypShaIndex >> invalidateOnMethodChange: aMethodAnnouncement [
 
 { #category : #accessing }
 TypShaIndex >> removeBehavior: aBehavior [
+	cache
+		typAt: {#indexed.
+				aBehavior}
+		ifPresent: [ cache
+				typRemoveAt: {#indexed.
+						aBehavior} ]
+		ifAbsent: [ ^ self ].
 	(cache at: #method) removeKey: aBehavior ifAbsent: [  "noop" ].
 	(cache at: #variable) removeKey: aBehavior ifAbsent: [  "noop" ].
 	(cache at: #type) removeKey: aBehavior ifAbsent: [  "noop" ]
@@ -50,6 +62,13 @@ TypShaIndex >> removeBehavior: aBehavior [
 
 { #category : #accessing }
 TypShaIndex >> removeMethod: aMethod [
+	cache
+		typAt: {#indexed.
+				aMethod}
+		ifPresent: [ cache
+				typRemoveAt: {#indexed.
+						aMethod} ]
+		ifAbsent: [ ^ self ].
 	aMethod typShaIsResolveMethod
 		ifTrue: [ (cache
 				typAt: {#method.
