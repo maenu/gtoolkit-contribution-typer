@@ -1,6 +1,6 @@
-Extension { #name : #TypCheError }
+Extension { #name : #TypCheWarning }
 
 { #category : #'*Typer-GToolkit' }
-TypCheError >> typGtColor [
+TypCheWarning >> typGtColor [
 	self subclassResponsibility
 ]

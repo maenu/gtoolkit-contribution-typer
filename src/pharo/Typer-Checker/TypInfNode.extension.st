@@ -11,7 +11,7 @@ TypInfNode >> typCheErrors [
 	| errors |
 	errors := OrderedCollection new.
 	[ self typChe ]
-		on: TypCheError
+		on: TypCheWarning
 		do: [ :e | 
 			errors add: e.
 			e resume ].

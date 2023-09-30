@@ -89,7 +89,6 @@ TypInfExaMethods >> signalLookupAndHandle [
 
 { #category : #requirements }
 TypInfExaMethods >> symbol [
-
 	^ #symbol
 ]
 

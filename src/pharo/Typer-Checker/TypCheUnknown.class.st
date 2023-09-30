@@ -1,6 +1,6 @@
 Class {
 	#name : #TypCheUnknown,
-	#superclass : #TypCheError,
+	#superclass : #TypCheWarning,
 	#category : #'Typer-Checker-Core'
 }
 

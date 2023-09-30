@@ -10,6 +10,12 @@ TypInfManifest class >> build [
 ]
 
 { #category : #accessing }
+TypInfManifest class >> exampleMethods [
+	<gtExample>
+	^ GtPharoMethodsCoder forItems: TypInfExaMethods methods
+]
+
+{ #category : #accessing }
 TypInfManifest class >> invalidate [
 	TypInfIndex invalidate.
 	TypInfNodeStack resetSoleInstance

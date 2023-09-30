@@ -1,6 +1,6 @@
 Class {
 	#name : #TypCheNoMethod,
-	#superclass : #TypCheError,
+	#superclass : #TypCheWarning,
 	#instVars : [
 		'selector'
 	],

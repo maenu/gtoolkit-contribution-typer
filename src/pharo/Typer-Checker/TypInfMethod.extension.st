@@ -4,7 +4,7 @@ Extension { #name : #TypInfMethod }
 TypInfMethod >> typChe [
 	| expected actual |
 	super typChe.
-	expected := (TypMethodIndex instance resolveMethod: self lookup) result.
+	expected := (TypMethodIndex instance resolve: self lookup) result.
 	in
 		at: #return
 		ifPresent: [ :s | 

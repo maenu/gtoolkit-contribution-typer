@@ -16,7 +16,7 @@ TypInfMessage >> typChe [
 TypInfMessage >> typCheArgumentsWithReceiver: aType [
 	| expecteds actuals |
 	expecteds := (TypMethodIndex instance
-			resolveMethod: (self lookup withReceiver: aType)) arguments.
+			resolve: (self lookup withReceiver: aType)) arguments.
 	actuals := aType arguments.
 	1
 		to: (expecteds size min: actuals size)

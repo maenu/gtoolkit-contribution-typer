@@ -1,6 +1,6 @@
 Class {
 	#name : #TypCheIncompatible,
-	#superclass : #TypCheError,
+	#superclass : #TypCheWarning,
 	#instVars : [
 		'expected'
 	],

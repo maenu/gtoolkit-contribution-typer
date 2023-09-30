@@ -1,6 +1,6 @@
 Class {
-	#name : #TypCheError,
-	#superclass : #Error,
+	#name : #TypCheWarning,
+	#superclass : #Warning,
 	#instVars : [
 		'node'
 	],
@@ -8,18 +8,18 @@ Class {
 }
 
 { #category : #accessing }
-TypCheError class >> signal: aNode [
+TypCheWarning class >> signal: aNode [
 	^ self new
 		node: aNode;
 		signal
 ]
 
 { #category : #accessing }
-TypCheError >> node [
+TypCheWarning >> node [
 	^ node
 ]
 
 { #category : #accessing }
-TypCheError >> node: anObject [
+TypCheWarning >> node: anObject [
 	node := anObject
 ]

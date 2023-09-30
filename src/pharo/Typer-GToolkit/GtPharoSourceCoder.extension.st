@@ -99,8 +99,8 @@ GtPharoSourceCoder >> typGtToggleStylersAllFor: anAst into: anAddOns viewModel: 
 						yourself);
 				addStyler: (TypGtCheStyler new
 						coderViewModel: aViewModel;
-						yourself);
+						yourself)";
 				addStyler: (TypGtCovStyler new
 						coderViewModel: aViewModel;
-						yourself) ]
+						yourself)" ]
 ]
