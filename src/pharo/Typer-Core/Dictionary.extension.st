@@ -32,7 +32,7 @@ Dictionary >> typAt: aPath ifPresent: aBlock [
 { #category : #'*Typer-Core' }
 Dictionary >> typAt: aPath ifPresent: aBlock ifAbsent: anotherBlock [
 	^ aBlock
-		value: (aPath inject: self into: [ :r :e | r at: e ifAbsent: [ ^ anotherBlock value ] ])
+		cull: (aPath inject: self into: [ :r :e | r at: e ifAbsent: [ ^ anotherBlock value ] ])
 ]
 
 { #category : #'*Typer-Core' }

@@ -29,7 +29,8 @@ CompiledMethod >> typInfAsLookup [
 	^ TypMethodLookup
 		receiver: self methodClass typAsType
 		selector: self selector
-		arguments: (self selector numArgs typTimesCollect: [ TypUnknownType instance ])
+		arguments: (self selector numArgs
+				typTimesCollect: [ :i | TypUnknownType instance ])
 		parent: nil
 ]
 
