@@ -24,7 +24,7 @@ TypCheNoMethod class >> signal: aNode selector: aSymbol [
 TypCheNoMethod >> messageText [
 	messageText ifNotNil: [ ^ super messageText ].
 	^ messageText := '{1} cannot lookup {2}'
-			format: {node type.
+			format: {node receiver.
 					selector}
 ]
 

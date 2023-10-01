@@ -37,7 +37,10 @@ TypGtCheAttribute >> initialize [
 				size: 8 @ 8;
 				background: color;
 				geometry: BlEllipseGeometry new;
-				when: BlClickEvent do: [ :e | e target phlow spawnObject: object ];
+				when: BlClickEvent
+					do: [ :e | 
+						e target phlow
+							spawnObject: (object size = 1 ifTrue: [ object first ] ifFalse: [ object ]) ];
 				yourself ]
 ]
 

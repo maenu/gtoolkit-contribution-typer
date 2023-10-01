@@ -99,44 +99,41 @@ TypManifest class >> nilAll [
 TypManifest class >> nuke [
 	"nukes typer from memory.
 	before calling you should close all tabs to get rid of references in coders etc.
-	this takes minutes, but due to memory size checks should not take hours"
+	this takes minutes, but due to memory size checks should not take hours
+	
+	failure, more than 1GB and instantiated typer classes, #pointersTo and ReferenceFinder can help to find out who references it, but it is really slow for this gigabyte images. try closing all tabs and run this again. save, close, start may also help, but saving GB images can be slow
+	
+	somehow, calling ReferenceFinder seems to nudge GC
+	
+	is the reference finder not finding all references due to some corner case?"
 
 	<gtExample>
 	<noTest>
-	| start report |
+	| start report paths found find |
 	start := DateAndTime now.
 	report := OrderedCollection new.
 	self nilAll.
 	self invalidateAll.
+	Smalltalk garbageCollectMost.
 	self
 		checkVitals: report
 		start: start
-		message: 'success, one garbage collection did it'
+		message: 'success, garbage collection did it'
 		ifDead: [ ^ report ].
-	
-	"sometimes a second GC helps"
-	self
-		checkVitals: report
-		start: start
-		message: 'success, second garbage collection did it'
-		ifDead: [ ^ report ].
-	
-	"somehow, calling ReferenceFinder and subsequent GC gets rid of more objects. sometimes"
-	self canFindReferences
-		ifFalse: [ ^ self
+	found := Semaphore new.
+	find := [ (ReferenceFinder
+			findPathToInstanceOf: report last anyOne analyzedClassName asClass)
+			ifNotNil: [ :c | 
+				paths := c.
+				found signal ] ] fork.
+	found
+		wait: 1 minute
+		onCompletion: [ report add: paths.
+			^ self
 				declareAlive: report
 				start: start
-				message: 'failure, more than 1GB and instantiated typer classes, #pointersTo and ReferenceFinder can help to find out who references it, but it is really slow for this gigabyte images. try closing all tabs and run this again. save, close, start may also help, but saving GB images can be slow' ].
-	report last
-		detect: [ :e | (e analyzedClassName beginsWith: 'TypGt') not ]
-		ifFound: [ :e | 
-			(ReferenceFinder findPathToInstanceOf: e analyzedClassName asClass)
-				ifNotNil: [ :c | 
-					report add: c.
-					^ self
-						declareAlive: report
-						start: start
-						message: 'failure, strong paths found, break the found paths by nilling a reference in the right place' ] ].
+				message: 'failure, strong paths found, break the found paths by nilling a reference in the right place' ]
+		onTimeout: [ find terminate ].
 	self
 		checkVitals: report
 		start: start
@@ -145,7 +142,7 @@ TypManifest class >> nuke [
 	^ self
 		declareAlive: report
 		start: start
-		message: 'failure, multiple garbage collections and tricks did not reduce instantiated classes to four gt classes, but could not find a reference to an instance of one of the non-gt ones. is the reference finder not finding all references due to some corner case?'
+		message: 'failure, multiple garbage collections and tricks did not reduce instantiated typer classes, but could not find a reference to an instance quickly'
 ]
 
 { #category : #accessing }

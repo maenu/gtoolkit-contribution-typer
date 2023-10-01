@@ -10,8 +10,8 @@ TypGtGraphForceBasedLayout >> initialize [
 	strength := 1.
 	center := 0 @ 0.
 	length := 20.
-	gravity := 2.5.
-	charge := -25.
+	gravity := 1.
+	charge := -20.
 	friction := 0.95.
 	theta := 1.
 	alpha := 0.9

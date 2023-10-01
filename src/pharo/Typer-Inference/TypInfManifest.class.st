@@ -16,6 +16,11 @@ TypInfManifest class >> exampleMethods [
 ]
 
 { #category : #accessing }
+TypInfManifest class >> findPathToIndex [
+	^ ReferenceFinder findPathToInstanceOf: TypInfIndex
+]
+
+{ #category : #accessing }
 TypInfManifest class >> invalidate [
 	TypInfIndex invalidate.
 	TypInfNodeStack resetSoleInstance
