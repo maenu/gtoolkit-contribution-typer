@@ -1,6 +1,8 @@
 Class {
 	#name : #TypInfManifest,
 	#superclass : #PackageManifest,
+	#traits : 'TypTManifest',
+	#classTraits : 'TypTManifest classTrait',
 	#category : #'Typer-Inference-Core'
 }
 

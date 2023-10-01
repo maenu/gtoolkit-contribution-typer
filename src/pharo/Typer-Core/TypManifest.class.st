@@ -1,20 +1,14 @@
 Class {
 	#name : #TypManifest,
 	#superclass : #PackageManifest,
+	#traits : 'TypTManifest',
+	#classTraits : 'TypTManifest classTrait',
 	#category : #'Typer-Core-Core'
 }
 
 { #category : #accessing }
-TypManifest class >> allPackages [
-	^ RPackageOrganizer default packages
-		select: [ :e | e name beginsWith: 'Typer' ]
-]
-
-{ #category : #accessing }
 TypManifest class >> buildAll [
-	(self allPackages collect: #packageManifestOrNil)
-		reject: #isNil
-		thenDo: [ :c | (c class includesSelector: #build) ifTrue: [ c build ] ]
+	self manifests do: #build
 ]
 
 { #category : #accessing }
@@ -75,9 +69,7 @@ TypManifest class >> invalidate [
 
 { #category : #accessing }
 TypManifest class >> invalidateAll [
-	(self allPackages collect: #packageManifestOrNil)
-		reject: #isNil
-		thenDo: [ :c | (c class includesSelector: #invalidate) ifTrue: [ c invalidate ] ]
+	self manifests do: #invalidate
 ]
 
 { #category : #accessing }
@@ -89,10 +81,25 @@ TypManifest class >> isDead [
 ]
 
 { #category : #accessing }
+TypManifest class >> manifests [
+	^ (self packages collect: #packageManifestOrNil) reject: #isNil
+]
+
+{ #category : #accessing }
+TypManifest class >> nil [
+	"clean up undeclareds
+	not sure how to reproduce
+	the undeclared class instance variable was pointing to a value"
+	
+	SmalltalkImage cleanUp.
+	Undeclared associations
+		select: [ :a | a value class package name beginsWith: 'Typer' ]
+		thenDo: [ :a | Undeclared removeKey: a key ]
+]
+
+{ #category : #accessing }
 TypManifest class >> nilAll [
-	(self allPackages collect: #packageManifestOrNil)
-		reject: #isNil
-		thenDo: [ :c | (c class includesSelector: #nil) ifTrue: [ c nil ] ]
+	self manifests do: #nil
 ]
 
 { #category : #accessing }
@@ -109,7 +116,7 @@ TypManifest class >> nuke [
 
 	<gtExample>
 	<noTest>
-	| start report paths found find |
+	| start report |
 	start := DateAndTime now.
 	report := OrderedCollection new.
 	self nilAll.
@@ -120,20 +127,17 @@ TypManifest class >> nuke [
 		start: start
 		message: 'success, garbage collection did it'
 		ifDead: [ ^ report ].
-	found := Semaphore new.
-	find := [ (ReferenceFinder
-			findPathToInstanceOf: report last anyOne analyzedClassName asClass)
-			ifNotNil: [ :c | 
-				paths := c.
-				found signal ] ] fork.
-	found
-		wait: 1 minute
-		onCompletion: [ report add: paths.
-			^ self
-				declareAlive: report
-				start: start
-				message: 'failure, strong paths found, break the found paths by nilling a reference in the right place' ]
-		onTimeout: [ find terminate ].
+	[ ReferenceFinder
+		findPathToInstanceOf: report last first analyzedClassName asClass ]
+		typRunAtMost: 1 minute
+		onCompletion: [ :r :e | 
+			r
+				ifNotNil: [ report add: r.
+					^ self
+						declareAlive: report
+						start: start
+						message: 'failure, strong paths found, break the found paths by nilling a reference in the right place' ] ]
+		onTimeout: [ report add: 'terminated ReferenceFinder after 1 minute' ].
 	self
 		checkVitals: report
 		start: start
@@ -146,8 +150,14 @@ TypManifest class >> nuke [
 ]
 
 { #category : #accessing }
+TypManifest class >> packages [
+	^ RPackageOrganizer default packages
+		select: [ :e | e name beginsWith: 'Typer' ]
+]
+
+{ #category : #accessing }
 TypManifest class >> recompileAll [
-	(self allPackages flatCollect: #definedClasses) do: #recompile
+	(self packages flatCollect: #definedClasses) do: #recompile
 ]
 
 { #category : #accessing }
@@ -159,16 +169,4 @@ TypManifest class >> tallySpace [
 	^ (SpaceTally new systemWideSpaceTally
 		select: [ :e | e analyzedClassName beginsWith: 'Typ' ])
 		sorted: [ :a :b | a instanceCount > b instanceCount ]
-]
-
-{ #category : #accessing }
-TypManifest >> nil [
-	"clean up undeclareds
-	not sure how to reproduce
-	the undeclared class instance variable was pointing to a value"
-	
-	SmalltalkImage cleanUp.
-	Undeclared associations
-		select: [ :a | a value class package name beginsWith: 'Typer' ]
-		thenDo: [ :a | Undeclared removeKey: a key ]
 ]

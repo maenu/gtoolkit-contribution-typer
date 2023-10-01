@@ -197,6 +197,40 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-01T16:10:42.399853+02:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-01T16:10:55.400912+02:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "p5PA9QnDDQC7EIz+CQkFOg=="
+				},
+				"code" : "TypManifest manifests"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
 						"dateAndTimeString" : "2023-10-01T10:54:49.545894+02:00"
 					}
 				},
@@ -318,6 +352,40 @@
 					"uidString" : "xFNcxfjCDQCGU/78Dgf1ZQ=="
 				},
 				"code" : "TypGtManifest logger"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-01T16:47:16.973481+02:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-01T16:48:41.425051+02:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "/RyPeArDDQC74pkCCQkFOg=="
+				},
+				"code" : "[ 2 seconds wait ]\r\ttypRunAtMost: 5 second\r\tonCompletion: [ :r :e | \r\t\t{r.\r\t\t\te} ]\r\tonTimeout: [ #timeout ]"
 			}
 		]
 	},

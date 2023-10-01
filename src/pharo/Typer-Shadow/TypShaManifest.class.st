@@ -1,6 +1,8 @@
 Class {
 	#name : #TypShaManifest,
 	#superclass : #PackageManifest,
+	#traits : 'TypTManifest',
+	#classTraits : 'TypTManifest classTrait',
 	#category : #'Typer-Shadow-Core'
 }
 

@@ -1,6 +1,8 @@
 Class {
 	#name : #TypGtManifest,
 	#superclass : #PackageManifest,
+	#traits : 'TypTManifest',
+	#classTraits : 'TypTManifest classTrait',
 	#classInstVars : [
 		'logger'
 	],

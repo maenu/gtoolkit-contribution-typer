@@ -66,7 +66,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-01T11:55:45.047187+02:00"
+						"dateAndTimeString" : "2023-10-01T11:56:45.693459+02:00"
 					}
 				},
 				"uid" : {
@@ -76,7 +76,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "This beast is not tamed yet. Therefore, it makes sense to have a shotgun ready when things go south. If you notice non-terminating processes or obscene memory growth, terminate those processes and nuke the Typer memory. This invalidates indexes and nils references. This can take a while though, as it may include smultiple GCs . I measured 30s for a 1GB image. But it can take much, much longer for a multi-gigabyte image. So give it time to finish, but kill the hogging process at will."
+				"string" : "This beast is not tamed yet. Therefore, it makes sense to have a shotgun ready when things go south. If you notice non-terminating processes or obscene memory growth, terminate those processes and nuke the Typer memory. This invalidates indexes and nils references. This can take a while though, as it may include smultiple GCs . I measured less than a minute for a 1GB image. But it can take much, much longer for a multi-gigabyte image. So give it time to finish, but kill the hogging process at will."
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -182,6 +182,40 @@
 					"uidString" : "mJUg5+bCDQCh8o+fCEN/qA=="
 				},
 				"code" : "TypManifest buildAll"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-01T16:10:42.399853+02:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-01T16:10:55.400912+02:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "p5PA9QnDDQC7EIz+CQkFOg=="
+				},
+				"code" : "TypManifest manifests"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -318,6 +352,40 @@
 					"uidString" : "xFNcxfjCDQCGU/78Dgf1ZQ=="
 				},
 				"code" : "TypGtManifest logger"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-01T16:47:16.973481+02:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-01T16:47:58.88257+02:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "/RyPeArDDQC74pkCCQkFOg=="
+				},
+				"code" : "[ 2 seconds wait ]\r\ttypRunAtMost: 1 second\r\tonCompletion: [ :r :e | \r\t\t{r.\r\t\t\te} ]\r\tonTimeout: [ #timeout ]"
 			}
 		]
 	},
