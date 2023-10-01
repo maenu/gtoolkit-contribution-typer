@@ -14,5 +14,5 @@ TypInfMethod >> typChe [
 					expected >= actual
 						ifFalse: [ TypCheIncompatible signal: e origin expected: expected ].
 					(expected isNullable not and: actual isNullable)
-						ifTrue: [ TypCheNullable signal: e origin ] ] ]
+						ifTrue: [ TypCheNullable signal: e origin message: 'return is unknown' ] ] ]
 ]

@@ -8,9 +8,10 @@ Class {
 }
 
 { #category : #accessing }
-TypCheWarning class >> signal: aNode [
+TypCheWarning class >> signal: aNode message: aString [
 	^ self new
 		node: aNode;
+		messageText: aString;
 		signal
 ]
 

@@ -21,9 +21,7 @@ TypNode class >> invalidate [
 { #category : #invalidation }
 TypNode class >> invalidateAll [
 	<script>
-	self withAllSubclassesDo: #invalidate.
-	self flag: 'TODO this is slow'.
-	^ self allSubInstancesDo: #invalidate
+	self withAllSubclassesDo: #invalidate
 ]
 
 { #category : #testing }

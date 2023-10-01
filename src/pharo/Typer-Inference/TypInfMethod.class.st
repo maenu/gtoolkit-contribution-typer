@@ -25,15 +25,15 @@ TypInfMethod >> methodNode [
 
 { #category : #accessing }
 TypInfMethod >> signalsAlways [
-	in at: #return ifPresent: [ ^ nil ].
+	in
+		at: #return
+		ifPresent: [ :s | (s reject: [ :e | e origin isDead ]) ifNotEmpty: [ ^ nil ] ].
 	^ in
 		at: #signal
 		ifPresent: [ :s | 
 			(s reject: [ :e | e origin isDead ])
 				ifEmpty: [ nil ]
-				ifNotEmpty: [ :ss | 
-					(ss collect: [ :e | e exception nonAnonymousClass typAsType ])
-						typAsMinimizedType ] ]
+				ifNotEmpty: [ :ss | (ss collect: #exception) typAsMinimizedType ] ]
 		ifAbsent: [ nil ]
 ]
 

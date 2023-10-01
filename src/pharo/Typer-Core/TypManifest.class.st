@@ -19,33 +19,36 @@ TypManifest class >> buildAll [
 
 { #category : #accessing }
 TypManifest class >> canFindReferences [
-	^ self canTallySpace
-]
-
-{ #category : #accessing }
-TypManifest class >> canTallySpace [
 	^ Smalltalk vm memorySize < (10 ** 9)
 ]
 
 { #category : #accessing }
-TypManifest class >> checkVitals: aCollection start: aDateAndTime ifDead: aBlock [
+TypManifest class >> canTallySpace [
+	^ Smalltalk vm memorySize < (4 * 10 ** 9)
+]
+
+{ #category : #accessing }
+TypManifest class >> checkVitals: aCollection start: aDateAndTime message: aString ifDead: aBlock [
+	self
+		ifDead: [ :t | 
+			aCollection
+				add: t;
+				add: Smalltalk vm statisticsReport;
+				add: DateAndTime now - aDateAndTime;
+				add: aString.
+			aBlock value ]
+		ifAlive: [ :t | aCollection add: t ]
+		ifUnknown: [  "noop" ].
 	^ aCollection
-		, (self
-				ifDead: [ :t | 
-					aBlock
-						value: {t.
-								Smalltalk vm statisticsReport.
-								DateAndTime now - aDateAndTime} ]
-				ifAlive: [ :t | {t} ]
-				ifUnknown: [ #() ])
 ]
 
 { #category : #accessing }
 TypManifest class >> declareAlive: aCollection start: aDateAndTime message: aString [
 	^ aCollection
-		, {Smalltalk vm statisticsReport.
-				DateAndTime now - aDateAndTime.
-				aString}
+		add: Smalltalk vm statisticsReport;
+		add: DateAndTime now - aDateAndTime;
+		add: aString;
+		yourself
 ]
 
 { #category : #accessing }
@@ -56,7 +59,6 @@ TypManifest class >> flags [
 { #category : #accessing }
 TypManifest class >> ifDead: aBlock ifAlive: anotherBlock ifUnknown: yetAnotherBlock [
 	| tally |
-	TypUnknownType instanceCount = 0 ifTrue: [ ^ aBlock cull: nil ].
 	self canTallySpace ifFalse: [ ^ yetAnotherBlock value ].
 	tally := self tallySpace.
 	^ tally size <= 8
@@ -101,37 +103,47 @@ TypManifest class >> nuke [
 
 	<gtExample>
 	<noTest>
-	| start result |
+	| start report |
 	start := DateAndTime now.
-	result := {}.
+	report := OrderedCollection new.
 	self nilAll.
 	self invalidateAll.
-	result := self
-			checkVitals: result
-			start: start
-			ifDead: [ :c | ^ c , {'success, one garbage collection did it'} ].
-	self canFindReferences
-		ifFalse: [ ^ self
-				declareAlive: result
-				start: start
-				message: 'failure, more than 1GB and instantiated typer classes, #pointersTo and ReferenceFinder can help to find out who references it, but it is really slow for this gigabyte images. try closing all tabs and run this again. save, close, start may also help, but saving GB images can be slow' ].
+	self
+		checkVitals: report
+		start: start
+		message: 'success, one garbage collection did it'
+		ifDead: [ ^ report ].
+	
+	"sometimes a second GC helps"
+	self
+		checkVitals: report
+		start: start
+		message: 'success, second garbage collection did it'
+		ifDead: [ ^ report ].
 	
 	"somehow, calling ReferenceFinder and subsequent GC gets rid of more objects. sometimes"
-	result last
+	self canFindReferences
+		ifFalse: [ ^ self
+				declareAlive: report
+				start: start
+				message: 'failure, more than 1GB and instantiated typer classes, #pointersTo and ReferenceFinder can help to find out who references it, but it is really slow for this gigabyte images. try closing all tabs and run this again. save, close, start may also help, but saving GB images can be slow' ].
+	report last
 		detect: [ :e | (e analyzedClassName beginsWith: 'TypGt') not ]
 		ifFound: [ :e | 
 			(ReferenceFinder findPathToInstanceOf: e analyzedClassName asClass)
 				ifNotNil: [ :c | 
+					report add: c.
 					^ self
-						declareAlive: result , {c}
+						declareAlive: report
 						start: start
 						message: 'failure, strong paths found, break the found paths by nilling a reference in the right place' ] ].
-	result := self
-			checkVitals: result
-			start: start
-			ifDead: [ :c | ^ c , {'success, all gone after nudging garbage collection'} ].
+	self
+		checkVitals: report
+		start: start
+		message: 'success, all gone after nudging garbage collection'
+		ifDead: [ ^ report ].
 	^ self
-		declareAlive: result
+		declareAlive: report
 		start: start
 		message: 'failure, multiple garbage collections and tricks did not reduce instantiated classes to four gt classes, but could not find a reference to an instance of one of the non-gt ones. is the reference finder not finding all references due to some corner case?'
 ]

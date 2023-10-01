@@ -8,16 +8,16 @@ Class {
 }
 
 { #category : #accessing }
-TypCheIncompatible class >> signal: aNode [
-	self shouldNotImplement
-]
-
-{ #category : #accessing }
 TypCheIncompatible class >> signal: aNode expected: aType [
 	^ self new
 		node: aNode;
 		expected: aType;
 		signal
+]
+
+{ #category : #accessing }
+TypCheIncompatible class >> signal: aNode message: aString [
+	self shouldNotImplement
 ]
 
 { #category : #accessing }
@@ -34,11 +34,10 @@ TypCheIncompatible >> expected: anObject [
 
 { #category : #accessing }
 TypCheIncompatible >> messageText [
-	messageText
-		ifNil: [ messageText := 'Expected {1}, but was {2}'
-					format: {expected asString.
-							actual asString} ].
-	^ super messageText
+	messageText ifNotNil: [ ^ super messageText ].
+	^ messageText := 'expected {1}, but was {2}'
+			format: {expected.
+					node type}
 ]
 
 { #category : #accessing }

@@ -28,7 +28,6 @@ TypNilType class >> instance [
 TypNilType class >> invalidate [
 	<script>
 	super invalidate.
-	instance ifNotNil: #invalidate.
 	instance := nil
 ]
 

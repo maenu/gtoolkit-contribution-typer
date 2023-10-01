@@ -37,7 +37,7 @@ TypInfMethodResolver >> printOn: aStream [
 { #category : #accessing }
 TypInfMethodResolver >> result: aLookup [
 	^ (TypInfIndex instance
-		context: (aLookup receiver classDescription lookupSelector: aLookup selector) typInfAsLookup)
+		context: (aLookup receiver classDescription lookupSelector: aLookup selector))
 		root type result
 ]
 

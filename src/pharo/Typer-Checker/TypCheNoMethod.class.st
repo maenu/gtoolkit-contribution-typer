@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-TypCheNoMethod class >> signal: aNode [
+TypCheNoMethod class >> signal: aNode message: aString [
 	self shouldNotImplement
 ]
 
@@ -18,6 +18,14 @@ TypCheNoMethod class >> signal: aNode selector: aSymbol [
 		node: aNode;
 		selector: aSymbol;
 		signal
+]
+
+{ #category : #accessing }
+TypCheNoMethod >> messageText [
+	messageText ifNotNil: [ ^ super messageText ].
+	^ messageText := '{1} cannot lookup {2}'
+			format: {node type.
+					selector}
 ]
 
 { #category : #accessing }

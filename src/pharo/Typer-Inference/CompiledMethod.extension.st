@@ -46,6 +46,40 @@ CompiledMethod >> typInfAsLookupSelf: aType super: anotherType [
 ]
 
 { #category : #'*Typer-Inference' }
+CompiledMethod >> typInfContext [
+	^ TypInfIndex instance context: self
+]
+
+{ #category : #'*Typer-Inference' }
+CompiledMethod >> typInfContextAsyncBy: aBlock for: aDuration [
+	^ TypInfIndex instance
+		contextAsync: self
+		by: aBlock
+		for: aDuration
+]
+
+{ #category : #'*Typer-Inference' }
+CompiledMethod >> typInfContextAsyncWithTallyBy: aBlock for: aDuration [
+	^ TypInfIndex instance
+		contextAsyncWithTally: self
+		by: aBlock
+		for: aDuration
+]
+
+{ #category : #'*Typer-Inference' }
+CompiledMethod >> typInfContextBy: aBlock [
+	^ TypInfIndex instance context: self by: aBlock
+]
+
+{ #category : #'*Typer-Inference' }
+CompiledMethod >> typInfContextIfPresent: aBlock ifAbsent: anotherBlock [
+	^ TypInfIndex instance
+		context: self
+		ifPresent: aBlock
+		ifAbsent: anotherBlock
+]
+
+{ #category : #'*Typer-Inference' }
 CompiledMethod >> typInfType [
 	^ self class
 		typAsFunctionTypeWithResult: TypUnknownType instance

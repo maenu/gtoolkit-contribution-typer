@@ -73,7 +73,8 @@ TypInfIndex >> addMethod: aMethod [
 				thenDo: [ :v | 
 					(cache
 						typAt: {#writers.
-								v}) add: aMethod ] ].
+								v}
+						ifAbsentPut: [ IdentitySet new ]) add: aMethod ] ].
 	aMethod typInfAbsIsCanResolve
 		ifTrue: [ (cache
 				typAt: {#absCanResolve.
@@ -99,83 +100,72 @@ TypInfIndex >> addMethod: aMethod [
 ]
 
 { #category : #accessing }
-TypInfIndex >> context: aLookup [
-	^ self context: aLookup by: #run
+TypInfIndex >> context: aMethod [
+	^ self context: aMethod by: #run
 ]
 
 { #category : #accessing }
-TypInfIndex >> context: aLookup by: aBlock [
-	| node |
-	node := (aLookup receiver classDescription lookupSelector: aLookup selector)
-			ast.
+TypInfIndex >> context: aMethod by: aBlock [
+	| node lookup path |
+	node := aMethod ast.
+	lookup := aMethod typInfAsLookup.
+	path := lookup typInfAsContextPath.
 	cache
-		typAt: aLookup typInfAsContextPath
+		typAt: path
 		ifPresent: [ :c | 
 			c nodeStackDepth <= TypInfNodeStack actives size
 				ifTrue: [ ^ c ]
-				ifFalse: [ cache typRemoveAt: aLookup typInfAsContextPath ] ].
+				ifFalse: [ cache typRemoveAt: path ] ].
 	^ TypInfNodeStack
 		push: node
 		during: [ [ aBlock
 				value: (cache
-						typAt: aLookup typInfAsContextPath
+						typAt: path
 						put: (TypInfContext
 								sender: nil
 								state: TypInfState new
 								node: node
-								self: aLookup self
-								super: aLookup super)) ]
-				ifCurtailed: [ cache typRemoveAt: aLookup typInfAsContextPath ] ]
+								self: lookup self
+								super: lookup super)) ] ifCurtailed: [ cache typRemoveAt: path ] ]
 		or: [ self error: 'node stack reached max size' ]
 ]
 
 { #category : #accessing }
-TypInfIndex >> context: aLookup ifPresent: aBlock ifAbsent: anotherBlock [
+TypInfIndex >> context: aMethod ifPresent: aBlock ifAbsent: anotherBlock [
 	^ cache
-		typAt: aLookup typInfAsContextPath
+		typAt: aMethod typInfAsLookup typInfAsContextPath
 		ifPresent: aBlock
 		ifAbsent: anotherBlock
 ]
 
 { #category : #accessing }
-TypInfIndex >> contextAsync: aLookup by: aBlock for: aDuration [
+TypInfIndex >> contextAsync: aMethod by: aBlock for: aDuration [
 	| start |
 	start := DateAndTime now.
-	^ ([ self context: aLookup by: aBlock ] typInfValueAsyncFor: aDuration)
+	^ ([ self context: aMethod by: aBlock ] typInfValueAsyncFor: aDuration)
 		then: [ :c | 
-			TypInfMethodMeasurement
-				duration: DateAndTime now - start
-				context: c
-				error: nil
-				tally: nil ]
+			{DateAndTime now - start.
+				c} ]
 		otherwise: [ :e | 
-			TypInfMethodMeasurement
-				duration: DateAndTime now - start
-				context: nil
-				error: e
-				tally: nil ]
+			{DateAndTime now - start.
+				e} ]
 ]
 
 { #category : #accessing }
-TypInfIndex >> contextAsyncWithTally: aLookup by: aBlock for: aDuration [
+TypInfIndex >> contextAsyncWithTally: aMethod by: aBlock for: aDuration [
 	| start tally |
 	start := DateAndTime now.
 	tally := MessageTally new.
 	^ ([ | context |
-	tally spyEvery: 1 on: [ context := self context: aLookup by: aBlock ].
+	tally spyEvery: 1 on: [ context := self context: aMethod by: aBlock ].
 	context ] typInfValueAsyncFor: aDuration)
 		then: [ :c | 
-			TypInfMethodMeasurement
-				duration: DateAndTime now - start
-				context: c
-				error: nil
-				tally: tally ]
+			{DateAndTime now - start c.
+				tally} ]
 		otherwise: [ :e | 
-			TypInfMethodMeasurement
-				duration: DateAndTime now - start
-				context: nil
-				error: e
-				tally: tally ]
+			{DateAndTime now - start.
+				e.
+				tally} ]
 ]
 
 { #category : #accessing }

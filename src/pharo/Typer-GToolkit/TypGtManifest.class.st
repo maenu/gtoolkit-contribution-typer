@@ -25,7 +25,10 @@ TypGtManifest class >> groupedExtensionMethods [
 
 { #category : #accessing }
 TypGtManifest class >> invalidate [
-	logger ifNotNil: #stop.
+	logger
+		ifNotNil: [ logger
+				stop;
+				reset ].
 	logger := nil
 ]
 

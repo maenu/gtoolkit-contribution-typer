@@ -9,7 +9,7 @@ TypInfMessage >> typChe [
 		ifTrue: [ self typCheArgumentsWithReceiver: receiver ]
 		ifFalse: [ (receiver asNonNullable canLookupMethod: self selector)
 				ifTrue: [ self typCheArgumentsWithReceiver: receiver asNonNullable ]
-				ifFalse: [ TypCheNoMethod signal: self ] ]
+				ifFalse: [ TypCheNoMethod signal: self selector: self selector ] ]
 ]
 
 { #category : #'*Typer-Checker' }
