@@ -252,7 +252,7 @@ TypInfNode >> slurp [
 { #category : #accessing }
 TypInfNode >> slurpAndTransfer [
 	| oldState |
-	TypInfNodeSlurpAndBurpSignal emit: self.
+	TypInfNodeSlurpAndTransferSignal emit: self.
 	oldState := state copy.
 	self
 		slurp;
@@ -267,7 +267,7 @@ TypInfNode >> slurpAndTransferDiff [
 	useful for debugging"
 
 	| oldState |
-	TypInfNodeSlurpAndBurpSignal emit: self.
+	TypInfNodeSlurpAndTransferSignal emit: self.
 	oldState := state copy.
 	self
 		slurp;

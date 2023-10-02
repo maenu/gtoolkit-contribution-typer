@@ -54,16 +54,15 @@ TypIndex >> initialize [
 	cache := IdentityDictionary new.
 	SystemAnnouncer uniqueInstance weak
 		when: ClassAnnouncement
-			send: #invalidateOnClassChange:
+			send: #invalidateOnClassChangeAsync:
 			to: self;
 		when: MethodAnnouncement
-			send: #invalidateOnMethodChange:
+			send: #invalidateOnMethodChangeAsync:
 			to: self
 ]
 
 { #category : #invalidation }
 TypIndex >> invalidate [
-	self flag: 'FIXME remove nil check?'.
 	resolver ifNotNil: #invalidate.
 	cache removeAll
 ]
@@ -84,6 +83,11 @@ TypIndex >> invalidateOnClassChange: aClassAnnouncement [
 	^ changed or: (resolver invalidateOnClassChange: aClassAnnouncement)
 ]
 
+{ #category : #accessing }
+TypIndex >> invalidateOnClassChangeAsync: aClassAnnouncement [
+	[ self invalidateOnClassChange: aClassAnnouncement ] asAsyncFuture typAwait
+]
+
 { #category : #invalidation }
 TypIndex >> invalidateOnMethodChange: aMethodAnnouncement [
 	| changed toRemove |
@@ -98,6 +102,11 @@ TypIndex >> invalidateOnMethodChange: aMethodAnnouncement [
 	toRemove do: [ :l | cache removeKey: l ].
 	toRemove removeAll.
 	^ changed or: (resolver invalidateOnMethodChange: aMethodAnnouncement)
+]
+
+{ #category : #accessing }
+TypIndex >> invalidateOnMethodChangeAsync: aMethodAnnouncement [
+	[ self invalidateOnMethodChange: aMethodAnnouncement ] asAsyncFuture typAwait
 ]
 
 { #category : #accessing }

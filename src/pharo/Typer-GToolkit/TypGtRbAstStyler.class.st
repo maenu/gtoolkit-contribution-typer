@@ -16,13 +16,7 @@ TypGtRbAstStyler >> attributes: anAttributesCollection from: aStart to: anEnd [
 
 { #category : #styling }
 TypGtRbAstStyler >> context [
-	| model |
-	model := self coderViewModel coderModel.
-	^ model
-		attributeNamed: #typGtContext
-		ifAbsent: [  "happens for fresh method coder"model
-				attributeNamed: #typGtContext
-				put: (TypInfIndex instance context: model compiledMethod) ]
+	^ self coderViewModel coderModel typGtContext
 ]
 
 { #category : #accessing }
@@ -35,6 +29,7 @@ TypGtRbAstStyler >> offset [
 
 { #category : #styling }
 TypGtRbAstStyler >> style: aText ast: anAst [
+	self context ifNil: [ ^ self ].
 	text := aText.
 	[ self visitNode: self context node ]
 		on: Error

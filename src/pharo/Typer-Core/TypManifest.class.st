@@ -62,6 +62,8 @@ TypManifest class >> ifDead: aBlock ifAlive: anotherBlock ifUnknown: yetAnotherB
 
 { #category : #accessing }
 TypManifest class >> invalidate [
+	threadPool ifNotNil: #shutdown.
+	threadPool := nil.
 	TypEdgeKey invalidateAll.
 	TypIndex invalidateAll.
 	TypNode invalidateAll
@@ -169,4 +171,12 @@ TypManifest class >> tallySpace [
 	^ (SpaceTally new systemWideSpaceTally
 		select: [ :e | e analyzedClassName beginsWith: 'Typ' ])
 		sorted: [ :a :b | a instanceCount > b instanceCount ]
+]
+
+{ #category : #accessing }
+TypManifest class >> threadPool [
+	^ threadPool
+		ifNil: [ threadPool := AsyncFutureThreadPool new
+					typMaxWorkers: 1;
+					yourself ]
 ]

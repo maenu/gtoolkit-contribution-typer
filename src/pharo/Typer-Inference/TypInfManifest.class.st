@@ -7,6 +7,13 @@ Class {
 }
 
 { #category : #accessing }
+TypInfManifest class >> asyncMethods [
+	<gtExample>
+	^ 'Typer' gtPackageMatches
+		select: [ :m | m selector includesSubstring: 'async' caseSensitive: false ]
+]
+
+{ #category : #accessing }
 TypInfManifest class >> build [
 	TypInfIndex instance
 ]

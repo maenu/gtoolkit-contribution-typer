@@ -15,7 +15,25 @@ GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtContext [
-	^ self attributeNamed: #typGtContext
+	attributes at: #typGtContext ifPresent: [ :c | ^ c ].
+	attributes at: #typGtContextPromise ifPresent: [ :p | ^ nil ].
+	self typGtContextAsync.
+	^ nil
+]
+
+{ #category : #'*Typer-GToolkit' }
+GtPharoSourceCoder >> typGtContextAsync [
+	attributes at: #typGtContext ifPresent: [ :c | ^ c asAsyncPromise ].
+	attributes at: #typGtContextPromise ifPresent: [ :p | ^ p ].
+	^ attributes
+		at: #typGtContextPromise
+		put: ([ TypInfIndex instance context: self compiledMethod ] asAsyncFuture typAwait
+				then: [ :c | 
+					attributes
+						removeKey: #typGtContextPromise;
+						at: #typGtContext put: c.
+					self requestStyleSourceText.
+					c ])
 ]
 
 { #category : #'*Typer-GToolkit' }
