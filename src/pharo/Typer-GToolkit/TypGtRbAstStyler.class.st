@@ -40,7 +40,7 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 { #category : #visiting }
 TypGtRbAstStyler >> styleNode: aNode [
 	self
-		attributes: {TypGtAttribute nodes: (self context nodesAt: aNode)}
+		attributes: {TypGtTypeAttribute nodes: (self context nodesAt: aNode)}
 		from: aNode stopWithoutParentheses
 		to: aNode stopWithoutParentheses
 ]

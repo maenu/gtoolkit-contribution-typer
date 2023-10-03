@@ -297,6 +297,12 @@ TypType >> isVariable [
 	^ false
 ]
 
+{ #category : #testing }
+TypType >> isVoid [
+	<typPraResult: 'Boolean'>
+	^ false
+]
+
 { #category : #lookup }
 TypType >> lookupMethod: aSymbol [
 	^ self
@@ -358,7 +364,6 @@ TypType >> printOn: aStream [
 
 { #category : #printing }
 TypType >> printOn: aStream skipping: anIdentitySet [
-
 	self subclassResponsibility
 ]
 

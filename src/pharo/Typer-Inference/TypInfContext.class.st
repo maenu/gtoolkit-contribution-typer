@@ -75,6 +75,11 @@ TypInfContext >> findInRead: aVariable [
 ]
 
 { #category : #accessing }
+TypInfContext >> handles: anExceptionType [
+	^ false
+]
+
+{ #category : #accessing }
 TypInfContext >> hash [
 	^ ({sender.
 		node.
@@ -89,11 +94,7 @@ TypInfContext >> home [
 
 { #category : #accessing }
 TypInfContext >> initializeSender: aContext state: aState node: aNode self: aType super: anotherType [
-	self assert: [ aType isNotNil ].
-	self
-		assert: [ aType isFunction not
-				or: [ aType hasNode not
-						or: [ aContext stack includes: aType node context ] ] ].
+	self assert: [ aType isNotNil ].				
 	sender := aContext.
 	state := aState.
 	node := aNode.
@@ -118,12 +119,6 @@ TypInfContext >> install [
 { #category : #accessing }
 TypInfContext >> iterations [
 	^ iterations
-]
-
-{ #category : #accessing }
-TypInfContext >> newExceptionHandlerContextOrNil: aSignalMessage [
-	sender ifNil: [ ^ nil ].
-	^ sender newExceptionHandlerContextOrNil: aSignalMessage
 ]
 
 { #category : #accessing }

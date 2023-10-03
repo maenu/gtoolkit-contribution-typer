@@ -87,9 +87,8 @@ Pragma >> typPraSignalsAlwaysInject: aType [
 
 { #category : #'*Typer-Pragma' }
 Pragma >> typPraSuperTypeBindToInject: aType [
-
-	^ aType withSuper:
-		  (aType super withAt: arguments first put: arguments second)
+	^ aType
+		withSuper: (aType super withAt: arguments first put: arguments second typAsType)
 ]
 
 { #category : #'*Typer-Pragma' }

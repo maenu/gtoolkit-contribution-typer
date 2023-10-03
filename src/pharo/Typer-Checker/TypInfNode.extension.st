@@ -2,10 +2,7 @@ Extension { #name : #TypInfNode }
 
 { #category : #'*Typer-Checker' }
 TypInfNode >> typChe [
-	self type isNullable
-		ifTrue: [ TypCheNullable signal: self message: 'type is nullable' ].
-	self type asNonNullable isUnknown
-		ifTrue: [ TypCheUnknown signal: self message: 'type is unknown' ]
+	
 ]
 
 { #category : #'*Typer-Checker' }

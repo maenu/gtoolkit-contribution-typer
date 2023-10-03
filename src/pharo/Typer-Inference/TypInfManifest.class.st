@@ -44,7 +44,8 @@ TypInfManifest class >> invalidate [
 { #category : #accessing }
 TypInfManifest class >> randomContext [
 	<gtExample>
-	^ CompiledMethod allInstances atRandom typInfContext
+	^ (Smalltalk globals allMethods
+		select: [ :m | m isInstalled and: [ m size < 100 ] ]) atRandom typInfContext
 ]
 
 { #category : #accessing }
@@ -56,7 +57,7 @@ TypInfManifest class >> signalContext [
 { #category : #accessing }
 TypInfManifest class >> someRandomMethods [
 	| all methods |
-	all := CompiledMethod allInstances.
+	all := Smalltalk globals allMethods.
 	methods := IdentitySet new.
 	[ methods size < 3 ] whileTrue: [ methods add: all atRandom ].
 	^ methods

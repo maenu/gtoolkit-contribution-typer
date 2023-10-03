@@ -7,6 +7,11 @@ Class {
 }
 
 { #category : #accessing }
+TypInfMethod >> asFunction [
+	^ self type
+]
+
+{ #category : #accessing }
 TypInfMethod >> lookup [
 	^ TypMethodLookup
 		receiver: context self

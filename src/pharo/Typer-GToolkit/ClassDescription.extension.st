@@ -83,7 +83,7 @@ ClassDescription >> typGtShaMethod: aSymbol type: aType [
 						aType result.
 						' . '
 							join: (aType arguments collect: [ :e | '''{1}'' typAsType' format: {e} ])}).
-	^ {self compiledMethodAt: newSelector asSymbol}
+	^ self compiledMethodAt: newSelector asSymbol
 ]
 
 { #category : #'*Typer-GToolkit' }

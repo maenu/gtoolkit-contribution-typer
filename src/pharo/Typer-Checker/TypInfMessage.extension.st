@@ -3,12 +3,12 @@ Extension { #name : #TypInfMessage }
 { #category : #'*Typer-Checker' }
 TypInfMessage >> typChe [
 	| receiver |
-	super typChe.
 	receiver := self receiver.
 	(receiver canLookupMethod: self selector)
 		ifTrue: [ self typCheArgumentsWithReceiver: receiver ]
 		ifFalse: [ (receiver asNonNullable canLookupMethod: self selector)
-				ifTrue: [ self typCheArgumentsWithReceiver: receiver asNonNullable ]
+				ifTrue: [ TypCheNullable signal: self inReceiver message: 'receiver is nullable'.
+					self typCheArgumentsWithReceiver: receiver asNonNullable ]
 				ifFalse: [ TypCheNoMethod signal: self selector: self selector ] ]
 ]
 

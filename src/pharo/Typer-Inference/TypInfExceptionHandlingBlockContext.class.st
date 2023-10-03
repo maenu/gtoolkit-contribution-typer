@@ -40,6 +40,11 @@ TypInfExceptionHandlingBlockContext >> exceptionHandler [
 ]
 
 { #category : #accessing }
+TypInfExceptionHandlingBlockContext >> handles: anExceptionType [
+	^ exception handles: anExceptionType classDescription new
+]
+
+{ #category : #accessing }
 TypInfExceptionHandlingBlockContext >> hash [
 	^ super hash bitXor: exceptionHandler hash
 ]
@@ -51,15 +56,14 @@ TypInfExceptionHandlingBlockContext >> initializeException: anExceptionSet excep
 ]
 
 { #category : #accessing }
-TypInfExceptionHandlingBlockContext >> newExceptionHandlerContextOrNil: aSignalMessage [
-	(exception handles: aSignalMessage context exception classDescription new)
-		ifTrue: [ ^ TypInfBlockContext
-				sender: self
-				state: root state copy
-				node: exceptionHandler node
-				self: exceptionHandler context self
-				super: exceptionHandler context super
-				message: aSignalMessage
-				block: exceptionHandler ].
-	^ super newExceptionHandlerContextOrNil: aSignalMessage
+TypInfExceptionHandlingBlockContext >> newExceptionHandlerContext: aSignalMessage [
+	self assert: [ self handles: aSignalMessage context exception ].
+	^ TypInfBlockContext
+		sender: self
+		state: root state copy
+		node: exceptionHandler node
+		self: exceptionHandler context self
+		super: exceptionHandler context super
+		message: aSignalMessage
+		block: exceptionHandler
 ]

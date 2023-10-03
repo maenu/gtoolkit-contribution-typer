@@ -30,7 +30,8 @@ Class {
 	#instVars : [
 		'arguments',
 		'selfType',
-		'superType'
+		'superType',
+		'signalsAlways'
 	],
 	#category : #'Typer-Core-Lookup'
 }
@@ -157,6 +158,16 @@ TypMethodLookup >> resolve [
 { #category : #accessing }
 TypMethodLookup >> self [
 	^ selfType
+]
+
+{ #category : #accessing }
+TypMethodLookup >> signalsAlways [
+	^ signalsAlways
+]
+
+{ #category : #accessing }
+TypMethodLookup >> signalsAlways: anObject [
+	signalsAlways := anObject
 ]
 
 { #category : #accessing }

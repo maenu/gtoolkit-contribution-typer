@@ -3,7 +3,6 @@ Extension { #name : #TypInfMethod }
 { #category : #'*Typer-Checker' }
 TypInfMethod >> typChe [
 	| expected actual |
-	super typChe.
 	expected := (TypMethodIndex instance resolve: self lookup) result.
 	in
 		at: #return

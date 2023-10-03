@@ -23,14 +23,13 @@ ClassDescription >> typAsFunctionTypeWithResult: aType arguments: aCollection ar
 ]
 
 { #category : #'*Typer-Core' }
-ClassDescription >> typAsFunctionTypeWithResult: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean [
-	<typPraArguments: 'TypType,SequenceableCollection<TypType>,Boolean,Boolean'>
+ClassDescription >> typAsFunctionTypeWithResult: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil [
 	^ TypFunctionType
 		classDescription: self
 		result: aType
 		arguments: aCollection
 		argumentsOptional: aBoolean
-		signalsAlways: anotherBoolean
+		signalsAlways: aTypeOrNil
 ]
 
 { #category : #'*Typer-Core' }

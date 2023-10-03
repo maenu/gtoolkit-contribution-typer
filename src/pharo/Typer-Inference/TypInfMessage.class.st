@@ -17,6 +17,15 @@ TypInfMessage >> arguments [
 ]
 
 { #category : #accessing }
+TypInfMessage >> asFunction [
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: self type
+		arguments: self arguments
+		argumentsOptional: false
+		signalsAlways: self signalsAlways
+]
+
+{ #category : #accessing }
 TypInfMessage >> canInstall [
 	| newContexts |
 	newContexts := self newContexts.
@@ -193,6 +202,17 @@ TypInfMessage >> recursiveContextOrNil [
 { #category : #accessing }
 TypInfMessage >> selector [
 	^ node selector asSymbol
+]
+
+{ #category : #accessing }
+TypInfMessage >> signalsAlways [
+	| signalsAlways |
+	contexts
+		ifEmpty: [ lookup ifNil: [ ^ nil ].
+			^ lookup asDefault resolve signalsAlways ].
+	signalsAlways := contexts collect: [ :a | a value root signalsAlways ].
+	(signalsAlways includes: nil) ifTrue: [ ^ nil ].
+	^ signalsAlways typAsMinimizedType
 ]
 
 { #category : #accessing }

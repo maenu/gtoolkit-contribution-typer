@@ -41,12 +41,6 @@ TypInfExaMethods >> deadCode [
 TypInfExaMethods >> empty [
 ]
 
-{ #category : #accessing }
-TypInfExaMethods >> error [
-	[ Error new signal ] on: Error do: [ :e | ^ e ].
-	^ #notcaught
-]
-
 { #category : #requirements }
 TypInfExaMethods >> inlined [
 
@@ -101,7 +95,7 @@ TypInfExaMethods >> translated [
 TypInfExaMethods >> typShaMethodSignalLookup: aLookup [
 	<typShaMethod: #signalLookup>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: TypUnknownType instance
+		typAsFunctionTypeWithResult: TypVoidType instance
 		arguments: {}
 		argumentsOptional: false
 		signalsAlways: Error typAsType

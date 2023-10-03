@@ -6,9 +6,11 @@ Class {
 
 { #category : #accessing }
 TypInfSignalMessage >> newContexts [
-	^ (context newExceptionHandlerContextOrNil: self)
-		ifNil: [ {} ]
-		ifNotNil: [ :c | ^ {lookup -> c} ]
+	context stack
+		reverseDo: [ :c | 
+			(c handles: context exception)
+				ifTrue: [ ^ {lookup -> (c newExceptionHandlerContext: self)} ] ].
+	^ {}
 ]
 
 { #category : #accessing }

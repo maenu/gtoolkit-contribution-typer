@@ -9,3 +9,8 @@ TypType class >> gtIndexFor: aView [
 		object: [ index ];
 		view: #gtItemsFor:
 ]
+
+{ #category : #'*Typer-GToolkit' }
+TypType >> typGtAsRopedText [
+	^ self printString asRopedText foreground: BrGlamorousColors fadedTextColor
+]

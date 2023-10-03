@@ -30,18 +30,6 @@ TypInfMessage >> typGtExpanderCoders [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypInfMessage >> typGtInvokedMethods [
-	| receiverType |
-	receiverType := self receiver.
-	(receiverType isNamed and: [ receiverType hasClassDescription ])
-		ifFalse: [ ^ #() ].
-	^ receiverType classDescription
-		classAndMethodFor: self selector value
-		do: [ :c :m | {m} ]
-		ifAbsent: [ #() ]
-]
-
-{ #category : #'*Typer-GToolkit' }
 TypInfMessage >> typGtShaCanType [
 	self receiver isNamed ifFalse: [ ^ false ].
 	^ self receiver hasClassDescription

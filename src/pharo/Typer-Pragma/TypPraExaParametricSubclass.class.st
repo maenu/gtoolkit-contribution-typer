@@ -6,8 +6,8 @@ Class {
 
 { #category : #initialization }
 TypPraExaParametricSubclass >> initialize [
-	<typPraParameters: #B>
 	<typPraSuperTypeBind: #A to: 'Integer'>
+	<typPraParameters: #B>
 	super initialize
 ]
 

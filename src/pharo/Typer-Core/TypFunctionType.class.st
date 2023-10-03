@@ -17,8 +17,9 @@ TypFunctionType class >> classDescription: aClassDescription parameters: aSequen
 ]
 
 { #category : #accessing }
-TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean [
+TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil [
 	| instance parameters |
+	self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
 	parameters := OrderedDictionary new.
 	parameters at: #'0' put: aType.
 	aCollection withIndexDo: [ :e :i | parameters at: i asString asSymbol put: e ].
@@ -27,28 +28,29 @@ TypFunctionType class >> classDescription: aClassDescription result: aType argum
 			initializeParameters: parameters;
 			initializeArgumentsSize: parameters size - 1
 				argumentsOptional: aBoolean
-				signalsAlways: anotherBoolean;
+				signalsAlways: aTypeOrNil;
 			yourself.
 	^ self index
 		at: {aClassDescription name.
 				aType.
 				aCollection asArray.
 				aBoolean.
-				anotherBoolean.
+				aTypeOrNil.
 				instance superOrNil}
 		ifAbsentPut: [ instance ]
 ]
 
 { #category : #accessing }
-TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean super: anotherType [
+TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil super: anotherType [
 	^ self index
 		at: {aClassDescription name.
 				aType.
 				aCollection asArray.
 				aBoolean.
-				anotherBoolean.
+				aTypeOrNil.
 				anotherType}
 		ifAbsentPut: [ | parameters |
+			self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
 			parameters := OrderedDictionary new.
 			parameters at: #'0' put: aType.
 			aCollection
@@ -58,7 +60,7 @@ TypFunctionType class >> classDescription: aClassDescription result: aType argum
 				initializeParameters: parameters;
 				initializeArgumentsSize: parameters size - 1
 					argumentsOptional: aBoolean
-					signalsAlways: anotherBoolean;
+					signalsAlways: aTypeOrNil;
 				initializeSuper: anotherType;
 				yourself ]
 ]
@@ -70,8 +72,9 @@ TypFunctionType class >> named: aString parameters: aSequenceableCollection [
 ]
 
 { #category : #accessing }
-TypFunctionType class >> named: aString result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean [
+TypFunctionType class >> named: aString result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil [
 	| instance parameters |
+	self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
 	parameters := OrderedDictionary new.
 	parameters at: #'0' put: aType.
 	aCollection withIndexDo: [ :e :i | parameters at: i asString asSymbol put: e ].
@@ -80,28 +83,29 @@ TypFunctionType class >> named: aString result: aType arguments: aCollection arg
 			initializeParameters: parameters;
 			initializeArgumentsSize: parameters size - 1
 				argumentsOptional: aBoolean
-				signalsAlways: anotherBoolean;
+				signalsAlways: aTypeOrNil;
 			yourself.
 	^ self index
 		at: {aString asString.
 				aType.
 				aCollection asArray.
 				aBoolean.
-				anotherBoolean.
+				aTypeOrNil.
 				instance superOrNil}
 		ifAbsentPut: [ instance ]
 ]
 
 { #category : #accessing }
-TypFunctionType class >> named: aString result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: anotherBoolean super: anotherType [
+TypFunctionType class >> named: aString result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil super: anotherType [
 	^ self index
 		at: {aString asString.
 				aType.
 				aCollection asArray.
 				aBoolean.
-				anotherBoolean.
+				aTypeOrNil.
 				anotherType}
 		ifAbsentPut: [ | parameters |
+			self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
 			parameters := OrderedDictionary new.
 			parameters at: #'0' put: aType.
 			aCollection
@@ -111,7 +115,7 @@ TypFunctionType class >> named: aString result: aType arguments: aCollection arg
 				initializeParameters: parameters;
 				initializeArgumentsSize: parameters size - 1
 					argumentsOptional: aBoolean
-					signalsAlways: anotherBoolean;
+					signalsAlways: aTypeOrNil;
 				initializeSuper: anotherType;
 				yourself ]
 ]
@@ -239,21 +243,13 @@ TypFunctionType >> printOn: aStream skipping: anIdentitySet [
 	(anIdentitySet includes: self)
 		ifTrue: [ aStream << '.'.
 			^ self ].
-	aStream
-		<<
-			(argumentsOptional
-				ifTrue: [ '[' ]
-				ifFalse: [ '(' ]).
-	(1 to: argumentsSize)
+	aStream << (argumentsOptional ifTrue: [ '[' ] ifFalse: [ '(' ]).
+	1
+		to: argumentsSize
 		do: [ :i | 
 			(self arguments at: i) printOn: aStream skipping: anIdentitySet , {self}.
-			i < argumentsSize
-				ifTrue: [ aStream << ',' ] ].
-	aStream
-		<<
-			(argumentsOptional
-				ifTrue: [ ']' ]
-				ifFalse: [ ')' ]).
+			i < argumentsSize ifTrue: [ aStream << ',' ] ].
+	aStream << (argumentsOptional ifTrue: [ ']' ] ifFalse: [ ')' ]).
 	aStream << '->'.
 	self result printOn: aStream skipping: anIdentitySet , {self}
 ]

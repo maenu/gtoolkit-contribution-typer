@@ -51,12 +51,13 @@ TypInfSignalContext >> install [
 	root
 		inReceiver: message inReceiver;
 		inArguments: message inArguments.
-	(self newExceptionHandlerContextOrNil: root)
-		ifNil: [ root
-				outAdd: ((TypInfSignalEdge origin: root target: self home root)
+	self stack
+		reverseDo: [ :c | 
+			root
+				outAdd: ((TypInfSignalEdge origin: root target: c root)
 						exception: exception;
-						yourself) ]
-		ifNotNil: [ message outEnable: #signal origin: root ]
+						yourself).
+			(c handles: exception) ifTrue: [ ^ self ] ]
 ]
 
 { #category : #accessing }

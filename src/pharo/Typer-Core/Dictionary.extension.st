@@ -62,6 +62,6 @@ Dictionary >> typAt: aPath put: anObject [
 Dictionary >> typRemoveAt: aPath [
 	^ self
 		typAt: (aPath copyFrom: 1 to: aPath size - 1)
-		ifPresent: [ :e | e removeKey: aPath last ]
+		ifPresent: [ :e | e removeKey: aPath last ifAbsent: [  "noop" ] ]
 		ifAbsent: [ nil ]
 ]

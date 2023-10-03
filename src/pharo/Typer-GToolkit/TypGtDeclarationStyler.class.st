@@ -8,12 +8,14 @@ Class {
 TypGtDeclarationStyler >> visitMethodNode: aNode [
 	| nodes position |
 	nodes := self context nodesAt: aNode.
-	position := aNode arguments isEmpty
-			ifTrue: [ aNode selector size ]
-			ifFalse: [ aNode keywordsIntervals last stop ].
+	position := aNode arguments
+			ifEmpty: [ aNode keywordsIntervals last stop ]
+			ifNotEmpty: [ :c | c last stop ].
 	super visitMethodNode: aNode.
 	self
-		attributes: {TypGtAttribute nodes: nodes}
+		attributes: {TypGtTypeAttribute
+					nodes: nodes
+					type: (nodes collect: [ :e | e type result ]) typAsType}
 		from: position
 		to: position
 ]

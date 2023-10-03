@@ -6,34 +6,41 @@ Class {
 
 { #category : #visiting }
 TypGtValueStyler >> visitBlockNode: aNode [
-
 	super visitBlockNode: aNode.
 	self styleNode: aNode
 ]
 
 { #category : #visiting }
 TypGtValueStyler >> visitMessageNode: aNode [
-
+	| nodes |
 	super visitMessageNode: aNode.
-	self styleNode: aNode
+	nodes := self context nodesAt: aNode.
+	self
+		attributes: {TypGtFunctionResultAttribute
+					nodes: (self context nodesAt: aNode)
+					type: (nodes collect: #asFunction) typAsMinimizedType}
+		from: aNode stopWithoutParentheses
+		to: aNode stopWithoutParentheses
 ]
 
 { #category : #visiting }
 TypGtValueStyler >> visitMethodNode: aNode [
-	| nodes |
-	nodes := self context nodesAt: aNode.
+	| position nodes |
 	super visitMethodNode: aNode.
+	position := aNode arguments
+			ifEmpty: [ aNode keywordsIntervals last stop ]
+			ifNotEmpty: [ :c | c last stop ].
+	nodes := self context nodesAt: aNode.
 	self
-		attributes: {TypGtAttribute
+		attributes: {TypGtFunctionResultAttribute
 					nodes: nodes
-					type: (nodes collect: [ :e | e type result ]) typAsType}
-		from: aNode stop
-		to: aNode stop
+					type: (nodes collect: #asFunction) typAsMinimizedType}
+		from: position
+		to: position
 ]
 
 { #category : #visiting }
 TypGtValueStyler >> visitVariableNode: aNode [
-
-	self styleNode: aNode.
+	aNode variable isReservedVariable ifFalse: [ self styleNode: aNode ].
 	super visitVariableNode: aNode
 ]

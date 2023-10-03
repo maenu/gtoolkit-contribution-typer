@@ -1,5 +1,5 @@
 Class {
-	#name : #TypGtAttribute,
+	#name : #TypGtTypeAttribute,
 	#superclass : #BrTextAdornmentDynamicAttribute,
 	#instVars : [
 		'type',
@@ -9,20 +9,19 @@ Class {
 }
 
 { #category : #accessing }
-TypGtAttribute class >> nodes: aCollection [
+TypGtTypeAttribute class >> nodes: aCollection [
 	^ self nodes: aCollection type: (aCollection collect: #type) typAsMinimizedType
 ]
 
-{ #category : #'as yet unclassified' }
-TypGtAttribute class >> nodes: aNode type: aType [
-
+{ #category : #accessing }
+TypGtTypeAttribute class >> nodes: aCollection type: aType [
 	^ self new
-		  initializeNodes: aNode type: aType;
-		  yourself
+		initializeNodes: aCollection type: aType;
+		yourself
 ]
 
 { #category : #initialization }
-TypGtAttribute >> initialize [
+TypGtTypeAttribute >> initialize [
 	<typPraVariable: 'type' as: 'TypType'>
 	super initialize.
 	self
@@ -36,10 +35,8 @@ TypGtAttribute >> initialize [
 						model: nodes;
 						yourself).
 			element
-				aptitude: (BrGlamorousLabelAptitude new
-						foreground: Color gray;
-						yourself) + GtExplainerLinesAptitude new beForExplanation;
-				text: type printString asRopedText glamorousCodeFont;
+				aptitude: BrGlamorousLabelAptitude new + GtExplainerLinesAptitude new beForExplanation;
+				text: self text;
 				beMiniSize;
 				hFitContent;
 				vFitContent;
@@ -47,7 +44,7 @@ TypGtAttribute >> initialize [
 						top: 3.3
 						left: 2
 						bottom: 0
-						right: (self shouldAppend ifTrue: [ 0 ] ifFalse: [ 2 ]));
+						right: 0);
 				when: BlClickEvent
 					do: [ :e | 
 						e target phlow
@@ -56,8 +53,12 @@ TypGtAttribute >> initialize [
 ]
 
 { #category : #initialization }
-TypGtAttribute >> initializeNodes: aCollection type: aType [
-
+TypGtTypeAttribute >> initializeNodes: aCollection type: aType [
 	nodes := aCollection.
 	type := aType
+]
+
+{ #category : #accessing }
+TypGtTypeAttribute >> text [
+	^ type typGtAsRopedText glamorousCodeFont
 ]

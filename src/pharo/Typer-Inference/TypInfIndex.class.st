@@ -271,14 +271,14 @@ TypInfIndex >> resolve: aLookup [
 ]
 
 { #category : #accessing }
-TypInfIndex >> updateContext: aLookup [
-	^ self updateContext: aLookup by: #run
+TypInfIndex >> updateContext: aMethod [
+	^ self updateContext: aMethod by: #run
 ]
 
 { #category : #accessing }
-TypInfIndex >> updateContext: aLookup by: aBlock [
-	cache typRemoveAt: aLookup typInfAsContextPath.
-	^ self context: aLookup by: aBlock
+TypInfIndex >> updateContext: aMethod by: aBlock [
+	cache typRemoveAt: aMethod typInfAsLookup typInfAsContextPath.
+	^ self context: aMethod by: aBlock
 ]
 
 { #category : #accessing }
