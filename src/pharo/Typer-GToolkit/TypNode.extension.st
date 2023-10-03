@@ -57,7 +57,7 @@ TypNode >> typGtGraphFor: aView [
 	<gtView>
 	^ aView typGtMondrian
 		title: 'Graph';
-		priority: 10;
+		priority: 20;
 		painting: [ :m | self typGtGraphPaintOn: m ]
 ]
 

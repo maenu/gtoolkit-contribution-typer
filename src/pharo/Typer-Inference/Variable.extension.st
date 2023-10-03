@@ -17,6 +17,6 @@ Variable >> typInfAssignedTypeSelf: aType super: anotherType [
 						context: lookup
 						ifPresent: [ :c | (c nodesAt: n) collect: #type ]
 						ifAbsent: [ (TypInfNodeStack canPush: n methodNode)
-								ifTrue: [ ((TypInfIndex instance context: lookup) nodesAt: n) collect: #type ]
+								ifTrue: [ ((TypInfIndex instance context: m) nodesAt: n) collect: #type ]
 								ifFalse: [ {TypUnknownType instance} ] ] ] ]) typAsMinimizedType
 ]

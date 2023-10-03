@@ -12,5 +12,5 @@ Collection >> typInfTypes [
 
 	self size < 128 ifTrue: [ 
 		^ self collect: #typInfType as: Array ].
-	^ 128 typTimesCollect: [ :e | self atRandom typInfType ]
+	^ 128 typTimesCollect: [ :i | self atRandom typInfType ]
 ]

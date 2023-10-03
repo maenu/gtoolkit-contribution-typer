@@ -53,8 +53,8 @@ TypInfContext >> typGtCoderAndFlowFor: aView [
 TypInfContext >> typGtCoderFor: aView [
 	<gtView>
 	^ aView forward
-		title: 'Method';
-		priority: 1;
+		title: 'Coder';
+		priority: 0;
 		object: [ self typGtAsCoder asElement asScrollableElement ];
 		view: #gtLiveFor:
 ]
@@ -64,7 +64,7 @@ TypInfContext >> typGtFlowFor: aView [
 	<gtView>
 	^ aView forward
 		title: 'Control Flow';
-		priority: 10;
+		priority: 2;
 		object: [ root ];
 		view: #typGtFlowFor:
 ]
@@ -89,7 +89,7 @@ TypInfContext >> typGtMinimalFlowFor: aView [
 	<gtView>
 	^ aView forward
 		title: 'Minimal Flow';
-		priority: 10;
+		priority: 3;
 		object: [ root ];
 		view: #typGtMinimalFlowFor:
 ]

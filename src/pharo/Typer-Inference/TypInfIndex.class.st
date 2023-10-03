@@ -131,9 +131,9 @@ TypInfIndex >> context: aMethod by: aBlock [
 ]
 
 { #category : #accessing }
-TypInfIndex >> context: aMethod ifPresent: aBlock ifAbsent: anotherBlock [
+TypInfIndex >> context: aLookup ifPresent: aBlock ifAbsent: anotherBlock [
 	^ cache
-		typAt: aMethod typInfAsLookup typInfAsContextPath
+		typAt: aLookup typInfAsContextPath
 		ifPresent: aBlock
 		ifAbsent: anotherBlock
 ]

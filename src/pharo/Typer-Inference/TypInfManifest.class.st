@@ -19,6 +19,12 @@ TypInfManifest class >> build [
 ]
 
 { #category : #accessing }
+TypInfManifest class >> exampleContext [
+	<gtExample>
+	^ TypInfExaMethods typInfContext: #block:
+]
+
+{ #category : #accessing }
 TypInfManifest class >> exampleMethods [
 	<gtExample>
 	^ GtPharoMethodsCoder forItems: TypInfExaMethods methods
@@ -33,6 +39,18 @@ TypInfManifest class >> findPathToIndex [
 TypInfManifest class >> invalidate [
 	TypInfIndex invalidate.
 	TypInfNodeStack resetSoleInstance
+]
+
+{ #category : #accessing }
+TypInfManifest class >> randomContext [
+	<gtExample>
+	^ CompiledMethod allInstances atRandom typInfContext
+]
+
+{ #category : #accessing }
+TypInfManifest class >> signalContext [
+	<gtExample>
+	^ TypInfExaMethods typInfContext: #signalAndHandle
 ]
 
 { #category : #accessing }

@@ -39,7 +39,7 @@ CompiledMethod >> typInfAsLookupSelf: aType super: anotherType [
 	^ TypMethodLookup
 		receiver: self methodClass typAsType
 		selector: self selector
-		arguments: (self selector numArgs typTimesCollect: [ TypUnknownType instance ])
+		arguments: (self selector numArgs typTimesCollect: [ :i | TypUnknownType instance ])
 		self: aType
 		super: anotherType
 		parent: nil
@@ -74,7 +74,7 @@ CompiledMethod >> typInfContextBy: aBlock [
 { #category : #'*Typer-Inference' }
 CompiledMethod >> typInfContextIfPresent: aBlock ifAbsent: anotherBlock [
 	^ TypInfIndex instance
-		context: self
+		context: self typInfAsLookup
 		ifPresent: aBlock
 		ifAbsent: anotherBlock
 ]

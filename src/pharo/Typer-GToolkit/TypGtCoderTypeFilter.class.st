@@ -12,6 +12,7 @@ TypGtCoderTypeFilter >> includesMethod: aCompiledMethod [
 	<typPraResult: 'Boolean'>
 	<typPraArguments: 'CompiledMethod()->?'>
 	^ type <= aCompiledMethod methodClass typAsType
+		or: [ type > aCompiledMethod methodClass typAsType ]
 ]
 
 { #category : #initialization }
