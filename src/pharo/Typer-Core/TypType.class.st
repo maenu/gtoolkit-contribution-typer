@@ -389,6 +389,11 @@ TypType >> signalsAlways [
 	^ nil
 ]
 
+{ #category : #compatibility }
+TypType >> signalsMaybe [
+	^ nil
+]
+
 { #category : #accessing }
 TypType >> super [
 

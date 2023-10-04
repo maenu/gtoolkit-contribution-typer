@@ -11,27 +11,25 @@ TypFunctionTypeInitializingExamples >> classDescriptionArgumentsSizeArgumentsOpt
 	<gtExample>
 	| type |
 	type := TypFunctionType
-		classDescription: Integer
-		result: (TypNamedType classDescription: Boolean)
-		arguments: {(TypNamedType classDescription: Float)}
-		argumentsOptional: true
-		signalsAlways: true.
+			classDescription: Integer
+			result: (TypNamedType classDescription: Boolean)
+			arguments: {TypNamedType classDescription: Float}
+			argumentsOptional: true
+			signalsAlways: true
+			signalsMaybe: nil.
 	self assert: type name equals: 'Integer'.
 	self assert: type hasClassDescription.
 	self assert: type classDescription equals: Integer.
 	self assert: type hasSuper.
+	self assert: type super equals: (TypNamedType classDescription: Number).
 	self
-		assert: type super
-		equals: (TypNamedType classDescription: Number).
-	self assert: type parameters keys equals: {#'0' . #'1'}.
+		assert: type parameters keys
+		equals: {#'0'.
+				#'1'}.
 	self assert: type argumentsOptional equals: true.
 	self assert: type argumentsSize equals: 1.
-	self
-		assert: type arguments
-		equals: {(TypNamedType classDescription: Float)}.
-	self
-		assert: type result
-		equals: (TypNamedType classDescription: Boolean).
+	self assert: type arguments equals: {TypNamedType classDescription: Float}.
+	self assert: type result equals: (TypNamedType classDescription: Boolean).
 	self assert: type signalsAlways equals: true.
 	^ type
 ]
@@ -50,27 +48,25 @@ TypFunctionTypeInitializingExamples >> namedArgumentsSizeArgumentsOptionalBindin
 	<gtExample>
 	| type |
 	type := TypFunctionType
-		named: 'Integer'
-		result: (TypNamedType classDescription: Boolean)
-		arguments: {(TypNamedType classDescription: Float)}
-		argumentsOptional: true
-		signalsAlways: true.
+			named: 'Integer'
+			result: (TypNamedType classDescription: Boolean)
+			arguments: {TypNamedType classDescription: Float}
+			argumentsOptional: true
+			signalsAlways: true
+			signalsMaybe: nil.
 	self assert: type name equals: 'Integer'.
 	self assert: type hasClassDescription.
 	self assert: type classDescription equals: Integer.
 	self assert: type hasSuper.
+	self assert: type super equals: (TypNamedType classDescription: Number).
 	self
-		assert: type super
-		equals: (TypNamedType classDescription: Number).
-	self assert: type parameters keys equals: {#'0' . #'1'}.
+		assert: type parameters keys
+		equals: {#'0'.
+				#'1'}.
 	self assert: type argumentsOptional equals: true.
 	self assert: type argumentsSize equals: 1.
-	self
-		assert: type arguments
-		equals: {(TypNamedType classDescription: Float)}.
-	self
-		assert: type result
-		equals: (TypNamedType classDescription: Boolean).
+	self assert: type arguments equals: {TypNamedType classDescription: Float}.
+	self assert: type result equals: (TypNamedType classDescription: Boolean).
 	self assert: type signalsAlways equals: true.
 	^ type
 ]

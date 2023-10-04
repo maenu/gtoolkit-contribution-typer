@@ -8,6 +8,7 @@ Exception >> typShaMethodSignal2: aLookup [
 		arguments: #()
 		argumentsOptional: false
 		signalsAlways: aLookup root receiver
+		signalsMaybe: nil
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
@@ -18,4 +19,5 @@ Exception >> typShaMethodSignal: aLookup [
 		arguments: #()
 		argumentsOptional: false
 		signalsAlways: aLookup root receiver
+		signalsMaybe: nil
 ]

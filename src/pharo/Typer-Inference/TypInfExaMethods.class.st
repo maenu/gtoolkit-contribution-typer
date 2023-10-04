@@ -99,6 +99,7 @@ TypInfExaMethods >> typShaMethodSignalLookup: aLookup [
 		arguments: {}
 		argumentsOptional: false
 		signalsAlways: Error typAsType
+		signalsMaybe: nil
 ]
 
 { #category : #accessing }

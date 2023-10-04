@@ -5,7 +5,8 @@ Class {
 		'argumentsSize',
 		'argumentsOptional',
 		'signalsAlways',
-		'node'
+		'node',
+		'signalsMaybe'
 	],
 	#category : #'Typer-Core-Core'
 }
@@ -17,7 +18,7 @@ TypFunctionType class >> classDescription: aClassDescription parameters: aSequen
 ]
 
 { #category : #accessing }
-TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil [
+TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil [
 	| instance parameters |
 	self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
 	parameters := OrderedDictionary new.
@@ -28,7 +29,8 @@ TypFunctionType class >> classDescription: aClassDescription result: aType argum
 			initializeParameters: parameters;
 			initializeArgumentsSize: parameters size - 1
 				argumentsOptional: aBoolean
-				signalsAlways: aTypeOrNil;
+				signalsAlways: aTypeOrNil
+				signalsMaybe: anotherTypeOrNil;
 			yourself.
 	^ self index
 		at: {aClassDescription name.
@@ -36,21 +38,21 @@ TypFunctionType class >> classDescription: aClassDescription result: aType argum
 				aCollection asArray.
 				aBoolean.
 				aTypeOrNil.
+				anotherTypeOrNil.
 				instance superOrNil}
 		ifAbsentPut: [ instance ]
 ]
 
 { #category : #accessing }
-TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil super: anotherType [
+TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil super: anotherType [
 	^ self index
 		at: {aClassDescription name.
 				aType.
 				aCollection asArray.
 				aBoolean.
 				aTypeOrNil.
-				anotherType}
+				anotherTypeOrNil}
 		ifAbsentPut: [ | parameters |
-			self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
 			parameters := OrderedDictionary new.
 			parameters at: #'0' put: aType.
 			aCollection
@@ -60,7 +62,8 @@ TypFunctionType class >> classDescription: aClassDescription result: aType argum
 				initializeParameters: parameters;
 				initializeArgumentsSize: parameters size - 1
 					argumentsOptional: aBoolean
-					signalsAlways: aTypeOrNil;
+					signalsAlways: aTypeOrNil
+					signalsMaybe: anotherTypeOrNil;
 				initializeSuper: anotherType;
 				yourself ]
 ]
@@ -72,7 +75,7 @@ TypFunctionType class >> named: aString parameters: aSequenceableCollection [
 ]
 
 { #category : #accessing }
-TypFunctionType class >> named: aString result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil [
+TypFunctionType class >> named: aString result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil [
 	| instance parameters |
 	self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
 	parameters := OrderedDictionary new.
@@ -83,7 +86,8 @@ TypFunctionType class >> named: aString result: aType arguments: aCollection arg
 			initializeParameters: parameters;
 			initializeArgumentsSize: parameters size - 1
 				argumentsOptional: aBoolean
-				signalsAlways: aTypeOrNil;
+				signalsAlways: aTypeOrNil
+				signalsMaybe: anotherTypeOrNil;
 			yourself.
 	^ self index
 		at: {aString asString.
@@ -91,21 +95,22 @@ TypFunctionType class >> named: aString result: aType arguments: aCollection arg
 				aCollection asArray.
 				aBoolean.
 				aTypeOrNil.
+				anotherTypeOrNil.
 				instance superOrNil}
 		ifAbsentPut: [ instance ]
 ]
 
 { #category : #accessing }
-TypFunctionType class >> named: aString result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil super: anotherType [
+TypFunctionType class >> named: aString result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil super: anotherType [
 	^ self index
 		at: {aString asString.
 				aType.
 				aCollection asArray.
 				aBoolean.
 				aTypeOrNil.
+				anotherTypeOrNil.
 				anotherType}
 		ifAbsentPut: [ | parameters |
-			self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
 			parameters := OrderedDictionary new.
 			parameters at: #'0' put: aType.
 			aCollection
@@ -115,7 +120,8 @@ TypFunctionType class >> named: aString result: aType arguments: aCollection arg
 				initializeParameters: parameters;
 				initializeArgumentsSize: parameters size - 1
 					argumentsOptional: aBoolean
-					signalsAlways: aTypeOrNil;
+					signalsAlways: aTypeOrNil
+					signalsMaybe: anotherTypeOrNil;
 				initializeSuper: anotherType;
 				yourself ]
 ]
@@ -176,8 +182,28 @@ TypFunctionType >> covariant: aType [
 	| result |
 	result := super covariant: aType.
 	result isFunction ifFalse: [ ^ result ].
-	self hasNode ifFalse: [ ^ result ].
-	^ result withNode: self node
+	aType isFunction ifFalse: [ ^ result ].
+	result := {signalsAlways.
+			result signalsAlways}
+			detect: #isNil
+			ifFound: [ result
+					withSignalsAlways: ({signalsAlways.
+							aType signalsAlways}
+							detect: #isNil
+							ifFound: [ nil ]
+							ifNone: [ {signalsAlways.
+									aType signalsAlways} typAsType ])
+					signalsMaybe: (({signalsMaybe.
+							aType signalsMaybe} reject: #isNil) ifEmpty: nil ifNotEmpty: #typAsType) ]
+			ifNone: [ result
+					withSignalsAlways: nil
+					signalsMaybe: (({signalsAlways.
+							aType signalsAlways.
+							signalsMaybe.
+							aType signalsMaybe} reject: #isNil) ifEmpty: nil ifNotEmpty: #typAsType) ].
+	^ result
+		withNode: (({node.
+				result node} reject: #isNil) ifEmpty: nil ifNotEmpty: #first)
 ]
 
 { #category : #accessing }
@@ -202,13 +228,14 @@ TypFunctionType >> initialize [
 ]
 
 { #category : #initialization }
-TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean signalsAlways: anotherBoolean [
-
+TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil [
 	self assert: [ anInteger isInteger ].
 	self assert: [ anInteger >= 0 ].
+	self assert: [ aTypeOrNil isNil or: anotherTypeOrNil isNil ].
 	argumentsSize := anInteger.
 	argumentsOptional := aBoolean.
-	signalsAlways := anotherBoolean.
+	signalsAlways := aTypeOrNil.
+	signalsMaybe := anotherTypeOrNil.
 	hash := nil
 ]
 
@@ -265,6 +292,11 @@ TypFunctionType >> signalsAlways [
 	^ signalsAlways
 ]
 
+{ #category : #accessing }
+TypFunctionType >> signalsMaybe [
+	^ signalsMaybe
+]
+
 { #category : #converting }
 TypFunctionType >> withArguments: someTypes [
 
@@ -281,22 +313,23 @@ TypFunctionType >> withNode: aNode [
 
 { #category : #converting }
 TypFunctionType >> withParameters: aCollection [
-
-	self hasClassDescription ifTrue: [ 
-		^ self class
-			  classDescription: self classDescription
-			  result: aCollection first
-			  arguments: aCollection allButFirst
-			  argumentsOptional: argumentsOptional
-			  signalsAlways: signalsAlways
-			  super: self superOrNil ].
+	self hasClassDescription
+		ifTrue: [ ^ self class
+				classDescription: self classDescription
+				result: aCollection first
+				arguments: aCollection allButFirst
+				argumentsOptional: argumentsOptional
+				signalsAlways: signalsAlways
+				signalsMaybe: signalsMaybe
+				super: self superOrNil ].
 	^ self class
-		  named: name
-		  result: aCollection first
-		  arguments: aCollection allButFirst
-		  argumentsOptional: argumentsOptional
-		  signalsAlways: signalsAlways
-		  super: self superOrNil
+		named: name
+		result: aCollection first
+		arguments: aCollection allButFirst
+		argumentsOptional: argumentsOptional
+		signalsAlways: signalsAlways
+		signalsMaybe: signalsMaybe
+		super: self superOrNil
 ]
 
 { #category : #converting }
@@ -306,43 +339,50 @@ TypFunctionType >> withResult: aType [
 ]
 
 { #category : #converting }
-TypFunctionType >> withSignalsAlways: aBooleanOrNil [
+TypFunctionType >> withSignalsAlways: aTypeOrNil [
+	^ self withSignalsAlways: aTypeOrNil signalsMaybe: signalsMaybe
+]
 
-	self hasClassDescription ifTrue: [ 
-		^ self class
-			  classDescription: self classDescription
-			  result: self result
-			  arguments: self arguments
-			  argumentsOptional: argumentsOptional
-			  signalsAlways: aBooleanOrNil
-			  super: self superOrNil ].
+{ #category : #converting }
+TypFunctionType >> withSignalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil [
+	self hasClassDescription
+		ifTrue: [ ^ self class
+				classDescription: self classDescription
+				result: self result
+				arguments: self arguments
+				argumentsOptional: argumentsOptional
+				signalsAlways: aTypeOrNil
+				signalsMaybe: anotherTypeOrNil
+				super: self superOrNil ].
 	^ self class
-		  named: name
-		  result: self result
-		  arguments: self arguments
-		  argumentsOptional: argumentsOptional
-		  signalsAlways: aBooleanOrNil
-		  super: self superOrNil
+		named: name
+		result: self result
+		arguments: self arguments
+		argumentsOptional: argumentsOptional
+		signalsAlways: aTypeOrNil
+		signalsMaybe: anotherTypeOrNil
+		super: self superOrNil
 ]
 
 { #category : #converting }
 TypFunctionType >> withSuper: aType [
-
-	self hasClassDescription ifTrue: [ 
-		^ self class
-			  classDescription: self classDescription
-			  result: self result
-			  arguments: self arguments
-			  argumentsOptional: argumentsOptional
-			  signalsAlways: signalsAlways
-			  super: aType ].
+	self hasClassDescription
+		ifTrue: [ ^ self class
+				classDescription: self classDescription
+				result: self result
+				arguments: self arguments
+				argumentsOptional: argumentsOptional
+				signalsAlways: signalsAlways
+				signalsMaybe: signalsMaybe
+				super: aType ].
 	^ self class
-		  named: name
-		  result: self result
-		  arguments: self arguments
-		  argumentsOptional: argumentsOptional
-		  signalsAlways: signalsAlways
-		  super: aType
+		named: name
+		result: self result
+		arguments: self arguments
+		argumentsOptional: argumentsOptional
+		signalsAlways: signalsAlways
+		signalsMaybe: signalsMaybe
+		super: aType
 ]
 
 { #category : #converting }
@@ -354,6 +394,7 @@ TypFunctionType >> withoutNode [
 				arguments: self arguments
 				argumentsOptional: argumentsOptional
 				signalsAlways: signalsAlways
+				signalsMaybe: signalsMaybe
 				super: self superOrNil ].
 	^ self class
 		named: name
@@ -361,5 +402,6 @@ TypFunctionType >> withoutNode [
 		arguments: self arguments
 		argumentsOptional: argumentsOptional
 		signalsAlways: signalsAlways
+		signalsMaybe: signalsMaybe
 		super: self superOrNil
 ]

@@ -61,6 +61,12 @@ TypGtManifest class >> nil [
 	GtPharoSourceCoderViewModel allSubInstancesDo: [ :e | e selfObject: nil ].
 	LeSharedSnippetContext allSubInstancesDo: [ :e | e selfObject: nil ].
 	GtLocalVariablesBindings allInstancesDo: #initialize.
+	GtExampleWithResult allInstancesDo: [ :e | e result: nil ].
+	GtPharoSourceCoder
+		allSubInstancesDo: [ :e | e attributes
+				removeKey: #typGtContext ifAbsent: [  "noop" ];
+				removeKey: #typGtContextPromise ifAbsent: [  "noop" ];
+				removeKey: #typGtLookup ifAbsent: [  "noop" ] ].
 
 	"forces removal of typer coder extensions, given the addon is disabled"
 	GtTextualCoderViewModel allSubInstancesDo: #requestUpdateAddOns.

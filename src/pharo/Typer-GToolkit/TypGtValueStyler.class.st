@@ -41,6 +41,6 @@ TypGtValueStyler >> visitMethodNode: aNode [
 
 { #category : #visiting }
 TypGtValueStyler >> visitVariableNode: aNode [
-	aNode variable isReservedVariable ifFalse: [ self styleNode: aNode ].
+	self styleNode: aNode.
 	super visitVariableNode: aNode
 ]

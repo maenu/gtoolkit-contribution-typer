@@ -29,26 +29,16 @@ TypInfMethod >> methodNode [
 ]
 
 { #category : #accessing }
-TypInfMethod >> signalsAlways [
-	in
-		at: #return
-		ifPresent: [ :s | (s reject: [ :e | e origin isDead ]) ifNotEmpty: [ ^ nil ] ].
-	^ in
-		at: #signal
-		ifPresent: [ :s | 
-			(s reject: [ :e | e origin isDead ])
-				ifEmpty: [ nil ]
-				ifNotEmpty: [ :ss | (ss collect: #exception) typAsMinimizedType ] ]
-		ifAbsent: [ nil ]
-]
-
-{ #category : #accessing }
 TypInfMethod >> transfer [
+	| return signal |
+	return := self inReturnType.
+	signal := self inSignalType.
 	state
 		at: self
 		put: (CompiledMethod
-				typAsFunctionTypeWithResult: self inReturnType
+				typAsFunctionTypeWithResult: return
 				arguments: (self inArguments collect: #type)
 				argumentsOptional: false
-				signalsAlways: self signalsAlways)
+				signalsAlways: (return isVoid ifTrue: [ signal ] ifFalse: [ nil ])
+				signalsMaybe: (return isVoid ifTrue: [ nil ] ifFalse: [ signal ]))
 ]

@@ -20,16 +20,18 @@ ClassDescription >> typAsFunctionTypeWithResult: aType arguments: aCollection ar
 		arguments: aCollection
 		argumentsOptional: aBoolean
 		signalsAlways: nil
+		signalsMaybe: nil
 ]
 
 { #category : #'*Typer-Core' }
-ClassDescription >> typAsFunctionTypeWithResult: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil [
+ClassDescription >> typAsFunctionTypeWithResult: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil [
 	^ TypFunctionType
 		classDescription: self
 		result: aType
 		arguments: aCollection
 		argumentsOptional: aBoolean
 		signalsAlways: aTypeOrNil
+		signalsMaybe: anotherTypeOrNil
 ]
 
 { #category : #'*Typer-Core' }

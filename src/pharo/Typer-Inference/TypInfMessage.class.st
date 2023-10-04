@@ -23,6 +23,7 @@ TypInfMessage >> asFunction [
 		arguments: self arguments
 		argumentsOptional: false
 		signalsAlways: self signalsAlways
+		signalsMaybe: self signalsMaybe
 ]
 
 { #category : #accessing }
@@ -210,9 +211,19 @@ TypInfMessage >> signalsAlways [
 	contexts
 		ifEmpty: [ lookup ifNil: [ ^ nil ].
 			^ lookup asDefault resolve signalsAlways ].
-	signalsAlways := contexts collect: [ :a | a value root signalsAlways ].
+	signalsAlways := contexts collect: [ :a | a value root type signalsAlways ].
 	(signalsAlways includes: nil) ifTrue: [ ^ nil ].
 	^ signalsAlways typAsMinimizedType
+]
+
+{ #category : #accessing }
+TypInfMessage >> signalsMaybe [
+	contexts
+		ifEmpty: [ lookup ifNil: [ ^ nil ].
+			^ lookup asDefault resolve signalsMaybe ].
+	^ (contexts collect: [ :a | a value root type signalsMaybe ] thenReject: #isNil)
+		ifEmpty: nil
+		ifNotEmpty: #typAsType
 ]
 
 { #category : #accessing }

@@ -115,6 +115,17 @@ TypInfNode >> inReturnType [
 		ifAbsent: [ #() ]) typAsMinimizedType
 ]
 
+{ #category : #accessing }
+TypInfNode >> inSignalType [
+	^ in
+		at: #signal
+		ifPresent: [ :s | 
+			(s reject: [ :e | e origin isDead ])
+				ifEmpty: [ nil ]
+				ifNotEmpty: [ :ss | (ss collect: #exception) typAsType ] ]
+		ifAbsent: [ nil ]
+]
+
 { #category : #initialization }
 TypInfNode >> initializeNode: aNode context: aContext [
 	self assert: [ aContext state isNotNil ].

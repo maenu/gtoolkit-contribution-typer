@@ -200,24 +200,24 @@ TypTypeParser >> reduceActionForEmptyTypes2: nodes [
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForFunctionType1: nodes [
-
 	^ TypFunctionType
-		  named: (nodes at: 1)
-		  result: (nodes at: 6)
-		  arguments: (nodes at: 3)
-		  argumentsOptional: true
-		  signalsAlways: nil
+		named: (nodes at: 1)
+		result: (nodes at: 6)
+		arguments: (nodes at: 3)
+		argumentsOptional: true
+		signalsAlways: nil
+		signalsMaybe: nil
 ]
 
 { #category : #'generated-reduction actions' }
 TypTypeParser >> reduceActionForFunctionType2: nodes [
-
 	^ TypFunctionType
-		  named: (nodes at: 1)
-		  result: (nodes at: 6)
-		  arguments: (nodes at: 3)
-		  argumentsOptional: false
-		  signalsAlways: nil
+		named: (nodes at: 1)
+		result: (nodes at: 6)
+		arguments: (nodes at: 3)
+		argumentsOptional: false
+		signalsAlways: nil
+		signalsMaybe: nil
 ]
 
 { #category : #'generated-reduction actions' }

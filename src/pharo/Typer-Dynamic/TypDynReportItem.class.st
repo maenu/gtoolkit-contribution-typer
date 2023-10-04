@@ -103,10 +103,10 @@ TypDynReportItem >> rank [
 	d ifTrue: [ ^ '6 dyn = ? & inf ~= ?' ].
 	i ifTrue: [ ^ '5 dyn ~= ? & inf = ?' ].
 	dynReduced = infReduced ifTrue: [ ^ '1 dyn = inf' ].
-	infReduced := inf typInfWithoutUnknown.
+	infReduced := inf typDynWithoutUnknown.
 	dynReduced = infReduced ifTrue: [ ^ '2 dyn = inf - ?' ].
-	dynReduced := dyn typInfWithoutUnion.
-	infReduced := infReduced typInfWithoutUnion.
+	dynReduced := dyn typDynWithoutUnion.
+	infReduced := infReduced typDynWithoutUnion.
 	dynReduced = infReduced ifTrue: [ ^ '3 s(dyn) = s(inf - ?)' ].
 	dynReduced < infReduced ifTrue: [ ^ '4 dyn < inf' ].
 	dynReduced > infReduced ifTrue: [ ^ '4 dyn > inf' ].

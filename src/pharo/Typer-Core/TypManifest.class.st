@@ -130,7 +130,7 @@ TypManifest class >> nuke [
 		message: 'success, garbage collection did it'
 		ifDead: [ ^ report ].
 	[ ReferenceFinder
-		findPathToInstanceOf: report last first analyzedClassName asClass ]
+		findPathToInstanceOf: report last atRandom analyzedClassName asClass ]
 		typRunAtMost: 1 minute
 		onCompletion: [ :r :e | 
 			r

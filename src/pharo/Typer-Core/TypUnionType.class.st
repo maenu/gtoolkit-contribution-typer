@@ -244,6 +244,13 @@ TypUnionType >> signalsAlways [
 ]
 
 { #category : #accessing }
+TypUnionType >> signalsMaybe [
+	^ (types collect: #signalsMaybe thenReject: #isNil)
+		ifEmpty: nil
+		ifNotEmpty: #typAsType
+]
+
+{ #category : #accessing }
 TypUnionType >> super [
 	| remains nilTypes unknownTypes current |
 	self assert: [ self hasSuper ].

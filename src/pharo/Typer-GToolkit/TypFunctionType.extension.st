@@ -2,10 +2,15 @@ Extension { #name : #TypFunctionType }
 
 { #category : #'*Typer-GToolkit' }
 TypFunctionType >> typGtAsResultRopedText [
-	^ signalsAlways
-		ifNil: [ self result typGtAsRopedText ]
-		ifNotNil: [ signalsAlways typGtAsRopedText
-				foreground: BrGlamorousColors errorBackgroundColor ]
+	signalsAlways
+		ifNotNil: [ ^ signalsAlways typGtAsRopedText
+				foreground: BrGlamorousColors errorBackgroundColor ].
+	signalsMaybe ifNotNil: [  ].
+	^ self result typGtAsRopedText
+		, (signalsMaybe
+				ifNil: [ '' asRopedText ]
+				ifNotNil: [ '/' asRopedText , signalsMaybe typGtAsRopedText
+						foreground: BrGlamorousColors errorBackgroundColor ])
 ]
 
 { #category : #'*Typer-GToolkit' }
