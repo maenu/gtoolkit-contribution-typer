@@ -94,7 +94,7 @@ TypInfContext >> home [
 
 { #category : #accessing }
 TypInfContext >> initializeSender: aContext state: aState node: aNode self: aType super: anotherType [
-	self assert: [ aType isNotNil ].				
+	self assert: [ aType isNotNil ].
 	sender := aContext.
 	state := aState.
 	node := aNode.
@@ -104,7 +104,7 @@ TypInfContext >> initializeSender: aContext state: aState node: aNode self: aTyp
 	children := IdentitySet new.
 	nodeStackDepth := TypInfNodeStack actives size.
 	iterationsDone := 0.
-	iterationsMax := 16.
+	iterationsMax := TypInfManifest maxIterations.
 	iterations := OrderedCollection new
 ]
 

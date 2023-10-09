@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 TypInfInlMethodResolver >> canResolve: aLookup [
 	| method |
-	aLookup message context stackSize <= TypInfNodeStack maxSize
+	aLookup message context stackSize <= TypInfManifest maxNodeStackSize
 		ifFalse: [ ^ false ].
 	aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
@@ -18,7 +18,7 @@ TypInfInlMethodResolver >> canResolve: aLookup [
 	((self methods: aLookup) size between: 1 and: 4) ifFalse: [ ^ false ].	"exclude the largest 5%"
 	(aLookup message couldBeSelfOrSuperSend not
 		and: [ aLookup message hasNodes not
-				and: [ (aLookup message context stackSize <= (TypInfNodeStack maxSize / 2)) not ] ])
+				and: [ (aLookup message context stackSize <= (TypInfManifest maxNodeStackSize / 2)) not ] ])
 		ifTrue: [ ^ false ].
 	^ true
 ]

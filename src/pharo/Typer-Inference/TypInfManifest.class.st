@@ -42,6 +42,21 @@ TypInfManifest class >> invalidate [
 ]
 
 { #category : #accessing }
+TypInfManifest class >> maxIterations [
+	^ 16
+]
+
+{ #category : #accessing }
+TypInfManifest class >> maxNodeStackSize [
+	^ 4
+]
+
+{ #category : #accessing }
+TypInfManifest class >> maxWriters [
+	^ 4
+]
+
+{ #category : #accessing }
 TypInfManifest class >> randomContext [
 	<gtExample>
 	^ (Smalltalk globals allMethods

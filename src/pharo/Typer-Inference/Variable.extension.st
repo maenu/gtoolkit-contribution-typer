@@ -4,7 +4,7 @@ Extension { #name : #Variable }
 Variable >> typInfAssignedTypeSelf: aType super: anotherType [
 	| writers |
 	writers := TypInfIndex instance writers: self.
-	writers size > 8
+	writers size > TypInfManifest maxWriters
 		ifTrue: [ ^ TypUnknownType instance	"too many potentially new method inferences, accounts for 95% of instance vars" ].
 	^ (writers
 		flatCollect: [ :m | 
