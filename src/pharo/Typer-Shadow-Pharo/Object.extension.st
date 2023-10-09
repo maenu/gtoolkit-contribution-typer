@@ -1,6 +1,78 @@
 Extension { #name : #Object }
 
 { #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMetAt: aLookup [
+	<typShaMethod: 'at:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType
+		arguments: {TypUnknownType instance}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMetAtPut: aLookup [
+	<typShaMethod: 'at:put:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup root arguments first
+		arguments: {TypUnknownType instance}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMetBasicAt: aLookup [
+	<typShaMethod: 'basicAt:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType
+		arguments: {TypUnknownType instance}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMetBasicAtPut: aLookup [
+	<typShaMethod: 'basicAt:put:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup root arguments first
+		arguments: {TypUnknownType instance}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMetBasicSize: aLookup [
+	<typShaMethod: 'basicSize'>
+	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMetInstVarAt: aLookup [
+	<typShaMethod: 'instVarAt:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType
+		arguments: {TypUnknownType instance}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMetInstVarAtPut: aLookup [
+	<typShaMethod: 'instVarAt:put:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType
+		arguments: {Integer typAsType.
+				TypUnknownType instance}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMetSize: aLookup [
+	<typShaMethod: 'size'>
+	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMetSubclassResponsibility1: aLookup [
+	<typShaMethod: 'subclassResponsibility'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: TypVoidType instance
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: SubclassResponsibility typAsType
+		signalsMaybe: nil
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
 Object >> typShaMethodAsString: aLookup [
 	<typShaMethod: 'asString'>
 	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
@@ -99,12 +171,30 @@ Object >> typShaMethodPerform: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMethodPerformWithArgumentsInSuperclass: aLookup [
+	<typShaMethod: 'perform:withArguments:inSuperclass:'>
+	| a r |
+	a := aLookup arguments at: 1.
+	r := (a isValue and: [ a value isSymbol ])
+			ifTrue: [ ((aLookup arguments at: 3)
+					lookupMethod: a value
+					arguments: (aLookup arguments at: 2)) result ]
+			ifFalse: [ TypUnknownType instance ].
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: r
+		arguments: {Symbol typAsType.
+				SequenceableCollection typAsType.
+				ClassDescription typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
 Object >> typShaMethodPerformWithEnoughArguments: aLookup [
 	<typShaMethod: 'perform:withEnoughArguments:'>
 	| a r |
 	a := aLookup arguments at: 1.
 	r := (a isValue and: [ a value isSymbol ])
-			ifTrue: [ (aLookup self lookupMethod: a value arguments: aLookup arguments) result ]
+			ifTrue: [ (aLookup self lookupMethod: a value arguments: (aLookup arguments at: 2))
+					result ]
 			ifFalse: [ TypUnknownType instance ].
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: r

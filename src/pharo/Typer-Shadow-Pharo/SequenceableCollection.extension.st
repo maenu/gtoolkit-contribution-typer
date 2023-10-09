@@ -46,21 +46,6 @@ SequenceableCollection >> typShaMethodDetectIndex: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection >> typShaMethodDetectIndexIfNone: aLookup [
-	<typShaMethod: 'detectIndex:ifNone:'>
-	| a |
-	a := aLookup arguments at: 2.
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: {Integer typAsType.
-				a isFunction ifTrue: [ a result ] ifFalse: [ a ]} typAsType
-		arguments: {BlockClosure
-					typAsFunctionTypeWithResult: Boolean typAsType
-					arguments: {aLookup receiver at: #A}.
-				{TypUnknownType instance.
-					BlockClosure typAsFunctionTypeWithResult: Boolean typAsType} typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
 SequenceableCollection >> typShaMethodEndsWith: aLookup [
 	<typShaMethod: 'endsWith:'>
 	^ CompiledMethod
@@ -127,17 +112,6 @@ SequenceableCollection class >> typShaMethodStreamContents: aLookup [
 		arguments: {BlockClosure
 					typAsFunctionTypeWithResult: TypUnknownType instance
 					arguments: {Stream typAsType}}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection >> typShaMethodWithIndexCollect: aLookup [
-	<typShaMethod: 'withIndexCollect:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiver withParameters: {(aLookup arguments at: 1) result})
-		arguments: {BlockClosure
-					typAsFunctionTypeWithResult: TypUnknownType instance
-					arguments: {aLookup receiver at: #A.
-							Integer typAsType}}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }

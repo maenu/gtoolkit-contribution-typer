@@ -1,20 +1,56 @@
 Extension { #name : #Number }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Number >> typShaMethodBinary233: aLookup [
-	<typShaMethod: '-'>
+Number >> typShaMethodAbs: aLookup [
+	<typShaMethod: 'abs'>
+	^ CompiledMethod typAsFunctionTypeWithResult: Number typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Number >> typShaMethodBinary1: aLookup [
+	<typShaMethod: '*'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: {aLookup self.
-				aLookup arguments at: 1} typAsType
+		typAsFunctionTypeWithResult: Number typAsType
 		arguments: {Number typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Number >> typShaMethodBinary235: aLookup [
+Number >> typShaMethodBinary2: aLookup [
 	<typShaMethod: '+'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: {aLookup self.
-				aLookup arguments at: 1} typAsType
+		typAsFunctionTypeWithResult: Number typAsType
+		arguments: {Number typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Number >> typShaMethodBinary3: aLookup [
+	<typShaMethod: '-'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Number typAsType
+		arguments: {Number typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Number >> typShaMethodBinary4: aLookup [
+	<typShaMethod: '/'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Number typAsType
+		arguments: {Number typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Number >> typShaMethodBinary5: aLookup [
+	<typShaMethod: '//'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Number typAsType
+		arguments: {Number typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Number >> typShaMethodBinary6: aLookup [
+	<typShaMethod: '\\'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Number typAsType
 		arguments: {Number typAsType}
 ]
 
@@ -23,6 +59,34 @@ Number >> typShaMethodBinary: aLookup [
 	<typShaMethod: '@'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Point typAsType
+		arguments: {Number typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Number >> typShaMethodNegated: aLookup [
+	<typShaMethod: 'negated'>
+	^ CompiledMethod typAsFunctionTypeWithResult: Number typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Number >> typShaMethodQuo: aLookup [
+	<typShaMethod: 'quo:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType
+		arguments: {Number typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Number >> typShaMethodReciprocal: aLookup [
+	<typShaMethod: 'reciprocal'>
+	^ CompiledMethod typAsFunctionTypeWithResult: Number typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Number >> typShaMethodRem: aLookup [
+	<typShaMethod: 'rem:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Number typAsType
 		arguments: {Number typAsType}
 ]
 
@@ -48,16 +112,4 @@ Number >> typShaMethodTo: aLookup [
 				withParameters: {{aLookup self.
 							aLookup arguments at: 1} typAsType})
 		arguments: {Number typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Number >> typShaMethodToDo: aLookup [
-	<typShaMethod: 'to:do:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup self
-		arguments: {Number typAsType.
-				BlockClosure
-					typAsFunctionTypeWithResult: TypUnknownType instance
-					arguments: {{aLookup self.
-								aLookup arguments at: 1} typAsType}}
 ]

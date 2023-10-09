@@ -104,22 +104,6 @@ Collection >> typShaMethodBinary170: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodCollect: aLookup [
-	<typShaMethod: 'collect:'>
-	| a r |
-	a := aLookup arguments at: 1.
-	r := (a isValue and: [ a value isString ])
-			ifTrue: [ ((aLookup self at: #A) lookupMethod: a value asSymbol arguments: #()) result ]
-			ifFalse: [ a result ].
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup self withParameters: {r})
-		arguments: {{Symbol typAsType.
-					BlockClosure
-						typAsFunctionTypeWithResult: TypUnknownType instance
-						arguments: {aLookup self at: #A}} typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
 Collection >> typShaMethodCopyWithout: aLookup [
 	<typShaMethod: 'copyWithout:'>
 	^ CompiledMethod
@@ -163,43 +147,6 @@ Collection >> typShaMethodDetectIfFound: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodDetectIfFoundIfNone: aLookup [
-	<typShaMethod: 'detect:ifFound:ifNone:'>
-	| a r |
-	a := aLookup arguments at: 2.
-	r := (a isValue and: [ a value isString ])
-			ifTrue: [ ((aLookup receiver at: #A) lookupMethod: a value asSymbol arguments: #())
-					result ]
-			ifFalse: [ a result ].
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: {r.
-				(aLookup arguments at: 3) result} typAsType
-		arguments: {{Symbol typAsType.
-					BlockClosure
-						typAsFunctionTypeWithResult: Boolean typAsType
-						arguments: {aLookup receiver at: #A}} typAsType.
-				{Symbol typAsType.
-					BlockClosure
-						typAsFunctionTypeWithResult: TypUnknownType instance
-						arguments: {aLookup receiver at: #A}
-						argumentsOptional: true} typAsType.
-				BlockClosure typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodDetectIfNone: aLookup [
-	<typShaMethod: 'detect:ifNone:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: {aLookup receiver at: #A.
-				(aLookup arguments at: 2) result} typAsType
-		arguments: {{Symbol typAsType.
-					BlockClosure
-						typAsFunctionTypeWithResult: Boolean typAsType
-						arguments: {aLookup receiver at: #A}} typAsType.
-				BlockClosure typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
 Collection >> typShaMethodDo: aLookup [
 	<typShaMethod: 'do:'>
 	^ CompiledMethod
@@ -211,94 +158,11 @@ Collection >> typShaMethodDo: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodFlatCollect: aLookup [
-	<typShaMethod: 'flatCollect:'>
-	| a r |
-	a := aLookup arguments at: 1.
-	r := (a isValue and: [ a value isString ])
-			ifTrue: [ ((aLookup self at: #A) lookupMethod: a value asSymbol arguments: #()) result ]
-			ifFalse: [ a result ].
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup self withParameters: {r at: #A})
-		arguments: {{Symbol typAsType.
-					BlockClosure
-						typAsFunctionTypeWithResult: TypUnknownType instance
-						arguments: {aLookup self at: #A}} typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodGroupedBy: aLookup [
-	<typShaMethod: 'groupedBy:'>
-	| a r |
-	a := aLookup arguments at: 1.
-	r := (a isValue and: [ a value isString ])
-			ifTrue: [ ((aLookup receiver at: #A) lookupMethod: a value asSymbol arguments: #())
-					result ]
-			ifFalse: [ a result ].
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: (OrderedDictionary typAsType
-				withParameters: {r.
-						Collection typAsType withParameters: {aLookup receiver at: #A}})
-		arguments: {{Symbol typAsType.
-					BlockClosure
-						typAsFunctionTypeWithResult: TypUnknownType instance
-						arguments: {aLookup receiver at: #A}} typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
 Collection >> typShaMethodGtItemsFor: aLookup [
 	<typShaMethod: 'gtItemsFor:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtPhlowView typAsType
 		arguments: {GtPhlowView typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodIfEmpty: aLookup [
-	<typShaMethod: 'ifEmpty:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: {aLookup self.
-				(aLookup arguments at: 1) result} typAsType
-		arguments: {BlockClosure typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodIfEmptyIfNotEmpty: aLookup [
-	<typShaMethod: 'ifEmpty:ifNotEmpty:'>
-	<typPraArguments: 'TypMethodLookup'>
-	<typPraResult: 'TypFunctionType'>
-	| a r |
-	a := aLookup arguments at: 2.
-	r := (a isValue and: [ a value isString ])
-			ifTrue: [ (aLookup self lookupMethod: a value asSymbol arguments: #()) result ]
-			ifFalse: [ a result ].
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: {(aLookup arguments at: 1) result.
-				r} typAsType
-		arguments: {BlockClosure typAsType.
-				{Symbol typAsType.
-					BlockClosure
-						typAsFunctionTypeWithResult: TypUnknownType instance
-						arguments: {aLookup self}
-						argumentsOptional: true} typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodIfNotEmpty: aLookup [
-	<typShaMethod: 'ifNotEmpty:'>
-	| a r |
-	a := aLookup arguments at: 1.
-	r := (a isValue and: [ a value isString ])
-			ifTrue: [ (aLookup self lookupMethod: a value asSymbol arguments: #()) result ]
-			ifFalse: [ a result ].
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: {aLookup self.
-				r} typAsType
-		arguments: {{Symbol typAsType.
-					BlockClosure
-						typAsFunctionTypeWithResult: TypUnknownType instance
-						arguments: {aLookup self}
-						argumentsOptional: true} typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
@@ -315,21 +179,6 @@ Collection >> typShaMethodIncludesAll: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {Collection typAsType withParameters: {aLookup receiver at: #A}}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodInjectInto: aLookup [
-	<typShaMethod: 'inject:into:'>
-	| result |
-	result := {aLookup arguments at: 1.
-			(aLookup arguments at: 2) result} typAsType.
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: result
-		arguments: {result.
-				BlockClosure
-					typAsFunctionTypeWithResult: result
-					arguments: {result.
-							aLookup receiver at: #A}}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
@@ -351,18 +200,6 @@ Collection >> typShaMethodMax: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodReduce: aLookup [
-	<typShaMethod: 'reduce:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup arguments at: 1) result
-		arguments: {BlockClosure
-					typAsFunctionTypeWithResult: TypUnknownType instance
-					arguments: {{aLookup receiver at: #A.
-								(aLookup arguments at: 1) result} typAsType.
-							aLookup receiver at: #A}}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
 Collection >> typShaMethodReject: aLookup [
 	<typShaMethod: 'reject:'>
 	^ CompiledMethod
@@ -379,16 +216,6 @@ Collection >> typShaMethodRemove: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
 		arguments: {aLookup receiver at: #A}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodRemoveIfAbsent: aLookup [
-	<typShaMethod: 'remove:ifAbsent:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: {aLookup arguments at: 1.
-				(aLookup arguments at: 2) result} typAsType
-		arguments: {aLookup receiver at: #A.
-				BlockClosure typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }

@@ -142,37 +142,6 @@ RBProgramNode >> typShaMethodPropertyAt: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBProgramNode >> typShaMethodPropertyAtIfAbsentPut: aLookup [
-	<typShaMethod: 'propertyAt:ifAbsentPut:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: {TypUnknownType instance.
-				((aLookup arguments at: 2) lookupMethod: #value) result} typAsType
-		arguments: {TypUnknownType instance.
-				BlockClosure typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-RBProgramNode >> typShaMethodPropertyAtIfPresentIfAbsent: aLookup [
-	<typShaMethod: 'propertyAt:ifPresent:ifAbsent:'>
-	| a r |
-	a := aLookup arguments at: 2.
-	r := (a isValue and: [ a value isSymbol ])
-			ifTrue: [ (aLookup self lookupMethod: a value arguments: {TypUnknownType instance})
-					result ]
-			ifFalse: [ a result ].
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: {r.
-				(aLookup arguments at: 3) result} typAsType
-		arguments: {String typAsType.
-				{Symbol typAsType.
-					BlockClosure
-						typAsFunctionTypeWithResult: TypUnknownType instance
-						arguments: {TypUnknownType instance}
-						argumentsOptional: true} typAsType.
-				BlockClosure typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
 RBProgramNode >> typShaMethodPropertyAtPut: aLookup [
 	<typShaMethod: 'propertyAt:put:'>
 	^ CompiledMethod
@@ -187,16 +156,6 @@ RBProgramNode >> typShaMethodRemoveLink: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
 		arguments: {MetaLink typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-RBProgramNode >> typShaMethodRemovePropertyIfAbsent: aLookup [
-	<typShaMethod: 'removeProperty:ifAbsent:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: {TypUnknownType instance.
-				(aLookup arguments at: 2) result} typAsType
-		arguments: {String typAsType.
-				BlockClosure typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }

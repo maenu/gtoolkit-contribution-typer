@@ -7,16 +7,6 @@ String >> typShaMethodAsClass: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-String >> typShaMethodAsClassInEnvironmentIfAbsent: aLookup [
-	<typShaMethod: 'asClassInEnvironment:ifAbsent:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: {Class typAsType.
-				(aLookup arguments at: 1) result} typAsType
-		arguments: {SystemDictionary typAsType.
-				BlockClosure typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
 String >> typShaMethodAsPackage: aLookup [
 	<typShaMethod: 'asPackage'>
 	^ CompiledMethod typAsFunctionTypeWithResult: RPackage typAsType

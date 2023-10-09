@@ -5,7 +5,7 @@ Exception >> typShaMethodSignal2: aLookup [
 	<typShaMethod: 'signal:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypVoidType instance
-		arguments: #()
+		arguments: {String typAsType}
 		argumentsOptional: false
 		signalsAlways: aLookup root receiver
 		signalsMaybe: nil
