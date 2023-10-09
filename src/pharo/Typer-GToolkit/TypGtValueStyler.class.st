@@ -17,7 +17,7 @@ TypGtValueStyler >> visitMessageNode: aNode [
 	nodes := self context nodesAt: aNode.
 	self
 		attributes: {TypGtFunctionResultAttribute
-					nodes: (self context nodesAt: aNode)
+					nodes: nodes
 					type: (nodes collect: #asFunction) typAsMinimizedType}
 		from: aNode stopWithoutParentheses
 		to: aNode stopWithoutParentheses

@@ -37,6 +37,11 @@ TypInfExaMethods >> deadCode [
 	^ #dead
 ]
 
+{ #category : #accessing }
+TypInfExaMethods >> divide: aNumber [
+	^ aNumber / aNumber
+]
+
 { #category : #requirements }
 TypInfExaMethods >> empty [
 ]

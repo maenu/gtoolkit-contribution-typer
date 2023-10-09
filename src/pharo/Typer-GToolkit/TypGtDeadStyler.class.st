@@ -7,12 +7,11 @@ Class {
 { #category : #accessing }
 TypGtDeadStyler >> styleNode: aNode [
 	<typPraArguments: 'RBProgramNode'>
-	| nodes |
-	nodes := self context nodesAt: aNode.
-	(nodes allSatisfy: #isDead) ifFalse: [ ^ self ].
 	self
 		attributes: {BlTextHighlightAttribute
-					paint: BrGlamorousColors errorBackgroundColor}
+					paint: (((self context nodesAt: aNode) allSatisfy: #isDead)
+							ifTrue: BrGlamorousColors errorBackgroundColor
+							ifFalse: Color white)}
 		from: aNode startWithoutParentheses
 		to: aNode stopWithoutParentheses
 ]

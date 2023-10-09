@@ -13,13 +13,15 @@ TypInfMessage >> typGtColor [
 { #category : #'*Typer-GToolkit' }
 TypInfMessage >> typGtExpanderCoders [
 	contexts
-		ifEmpty: [ | lookupResolved |
-			lookupResolved := lookup asDefault resolved.
-			lookupResolved resolver ifNil: [ ^ {} ].
-			^ {GtPharoMethodCoder new
-					attributeNamed: #typGtLookup put: lookupResolved;
-					forMethod: (lookupResolved resolver typGtExpanderMethod: lookupResolved);
-					asCoderViewModel} ].
+		ifEmpty: [ lookup
+				ifNil: [ ^ {} ]
+				ifNotNil: [ ^ lookup asDefault preResolved
+						ifNil: [ {} ]
+						ifNotNil: [ :l | 
+							{GtPharoMethodCoder new
+									attributeNamed: #typGtLookup put: l;
+									forMethod: (l resolver typGtExpanderMethod: l);
+									asCoderViewModel} ] ] ].
 	^ contexts
 		select: [ :a | a value typGtHasCoder ]
 		thenCollect: [ :a | 

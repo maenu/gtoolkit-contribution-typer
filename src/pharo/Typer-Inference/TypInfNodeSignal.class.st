@@ -23,3 +23,8 @@ TypInfNodeSignal class >> node: aNode [
 TypInfNodeSignal >> initializeNode: aNode [
 	node := aNode
 ]
+
+{ #category : #accessing }
+TypInfNodeSignal >> node [
+	^ node
+]
