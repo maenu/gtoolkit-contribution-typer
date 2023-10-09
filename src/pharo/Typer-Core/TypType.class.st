@@ -171,21 +171,17 @@ TypType >> contravariant: aType [
 
 { #category : #converting }
 TypType >> covariant: aType [
-
 	"result is assignable to self and aType.
 	 self >= result
 	 aType >= result
-	 should be valid
-	
-	name is not precise"
+	 should be valid"
 
 	aType isUnknown ifTrue: [ ^ self ].
 	aType isNil ifTrue: [ ^ self asNullable ].
 	self >= aType ifTrue: [ ^ aType ].
 	self < aType ifTrue: [ ^ self ].
-	^ { 
-		  self.
-		  aType } typAsType
+	^ {self.
+		aType} typAsType
 ]
 
 { #category : #accessing }

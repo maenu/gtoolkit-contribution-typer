@@ -283,7 +283,7 @@ TypNode >> outRemove: anEdge [
 		ifPresent: [ :e | 
 			e remove: anEdge.
 			e ifEmpty: [ out removeKey: anEdge key ] ]
-		ifAbsent: [ Halt now ].
+		ifAbsent: [ ^ anEdge target ].
 	^ anEdge target
 		inRemove: anEdge;
 		yourself

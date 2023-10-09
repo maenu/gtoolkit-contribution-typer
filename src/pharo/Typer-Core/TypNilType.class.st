@@ -61,7 +61,6 @@ TypNilType >> contravariant: aType [
 
 { #category : #converting }
 TypNilType >> covariant: aType [
-
 	^ aType asNullable
 ]
 
