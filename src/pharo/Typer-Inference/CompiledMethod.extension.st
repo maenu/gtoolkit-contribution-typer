@@ -3,8 +3,9 @@ Extension { #name : #CompiledMethod }
 { #category : #'*Typer-Inference' }
 CompiledMethod >> typInfAbsCanResolve [
 	self assert: [ self typInfAbsIsCanResolve ].
-	^ (self pragmas detect: [ :e | e selector = #typInfAbsCanResolve: ]) arguments
-		first asSymbol
+	^ self pragmas
+		select: [ :e | e selector = #typInfAbsCanResolve: ]
+		thenCollect: [ :e | e arguments first asSymbol ]
 ]
 
 { #category : #'*Typer-Inference' }
@@ -20,8 +21,9 @@ CompiledMethod >> typInfAbsIsResolve [
 { #category : #'*Typer-Inference' }
 CompiledMethod >> typInfAbsResolve [
 	self assert: [ self typInfAbsIsResolve ].
-	^ (self pragmas detect: [ :e | e selector = #typInfAbsResolve: ])
-		arguments first asSymbol
+	^ self pragmas
+		select: [ :e | e selector = #typInfAbsResolve: ]
+		thenCollect: [ :e | e arguments first asSymbol ]
 ]
 
 { #category : #'*Typer-Inference' }

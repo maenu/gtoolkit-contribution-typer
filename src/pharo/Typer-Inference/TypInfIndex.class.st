@@ -76,17 +76,21 @@ TypInfIndex >> addMethod: aMethod [
 								v}
 						ifAbsentPut: [ IdentitySet new ]) add: aMethod ] ].
 	aMethod typInfAbsIsCanResolve
-		ifTrue: [ (cache
-				typAt: {#absCanResolve.
-						aMethod methodClass.
-						aMethod typInfAbsCanResolve}
-				ifAbsentPut: [ IdentitySet new ]) add: aMethod ].
+		ifTrue: [ aMethod typInfAbsCanResolve
+				do: [ :selector | 
+					(cache
+						typAt: {#absCanResolve.
+								aMethod methodClass.
+								selector}
+						ifAbsentPut: [ IdentitySet new ]) add: aMethod ] ].
 	aMethod typInfAbsIsResolve
-		ifTrue: [ (cache
-				typAt: {#absResolve.
-						aMethod methodClass.
-						aMethod typInfAbsResolve}
-				ifAbsentPut: [ IdentitySet new ]) add: aMethod ].
+		ifTrue: [ aMethod typInfAbsResolve
+				do: [ :selector | 
+					(cache
+						typAt: {#absResolve.
+								aMethod methodClass.
+								selector}
+						ifAbsentPut: [ IdentitySet new ]) add: aMethod ] ].
 	(cache
 		typAt: {#implementors.
 				aMethod selector}
@@ -236,17 +240,21 @@ TypInfIndex >> removeMethod: aMethod [
 						aMethod} ]
 		ifAbsent: [ ^ self ].
 	aMethod typInfAbsIsCanResolve
-		ifTrue: [ cache
-				typAt: {#absCanResolve.
-						aMethod methodClass.
-						aMethod typInfAbsCanResolve}
-				ifPresent: [ :s | s remove: aMethod ] ].
+		ifTrue: [ aMethod typInfAbsCanResolve
+				do: [ :selector | 
+					cache
+						typAt: {#absCanResolve.
+								aMethod methodClass.
+								selector}
+						ifPresent: [ :s | s remove: aMethod ] ] ].
 	aMethod typInfAbsIsResolve
-		ifTrue: [ cache
-				typAt: {#absResolve.
-						aMethod methodClass.
-						aMethod typInfAbsCanResolve}
-				ifPresent: [ :s | s remove: aMethod ] ].
+		ifTrue: [ aMethod typInfAbsResolve
+				do: [ :selector | 
+					cache
+						typAt: {#absResolve.
+								aMethod methodClass.
+								selector}
+						ifPresent: [ :s | s remove: aMethod ] ] ].
 	cache
 		typRemoveAt: {#context.
 				aMethod methodClass.

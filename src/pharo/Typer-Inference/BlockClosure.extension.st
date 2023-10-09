@@ -14,6 +14,10 @@ BlockClosure >> typInfAbsCanResolveOnDo: aMessageNode [
 { #category : #'*Typer-Inference' }
 BlockClosure >> typInfAbsCanResolveValue: aMessageNode [
 	<typInfAbsCanResolve: #value>
+	<typInfAbsCanResolve: #value:>
+	<typInfAbsCanResolve: #value:value:>
+	<typInfAbsCanResolve: #value:value:value:>
+	<typInfAbsCanResolve: #value:value:value:value:>
 	^ aMessageNode receiver hasNode
 ]
 
@@ -39,6 +43,10 @@ BlockClosure >> typInfAbsResolveOnDo: aMessageNode [
 { #category : #'*Typer-Inference' }
 BlockClosure >> typInfAbsResolveValue: aMessageNode [
 	<typInfAbsResolve: #value>
+	<typInfAbsResolve: #value:>
+	<typInfAbsResolve: #value:value:>
+	<typInfAbsResolve: #value:value:value:>
+	<typInfAbsResolve: #value:value:value:value:>
 	| block |
 	block := aMessageNode receiver node.
 	^ TypInfBlockContext
