@@ -19,7 +19,9 @@ TypInfMessage >> arguments [
 { #category : #accessing }
 TypInfMessage >> asFunction [
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: self type
+		typAsFunctionTypeWithResult: (self signalsAlways
+				ifNil: [ self type ]
+				ifNotNil: [ TypVoidType instance ])
 		arguments: self arguments
 		argumentsOptional: false
 		signalsAlways: self signalsAlways
@@ -109,7 +111,6 @@ TypInfMessage >> lookup [
 
 { #category : #accessing }
 TypInfMessage >> newContexts [
-	| lookups |
 	self recursiveContextOrNil
 		ifNotNil: [ :c | 
 			^ {lookup
@@ -120,27 +121,19 @@ TypInfMessage >> newContexts [
 							self: context self
 							super: context super
 							message: self)} ].
-	lookups := lookup preResolve.
-	lookups
-		detect: [ :l | l resolver isKindOf: TypInfMethodResolver ]
-		ifFound: [ (lookups
-				flatCollect: [ :l | 
-					(TypInfIndex instance canResolve: l)
-						ifTrue: [ TypInfIndex instance resolve: l ]
-						ifFalse: [ {} ] ]
-				as: Set) ifNotEmpty: [ :s | ^ s ] ].
-	lookup asDefault resolve signalsAlways
-		ifNotNil: [ :t | 
-			^ {lookup
-					-> (TypInfSignalContext
-							sender: context
-							state: state copy
-							node: node
-							self: context self
-							super: context super
-							message: self
-							exception: t)} ].
-	^ #()
+	^ lookup preResolve
+		flatCollect: [ :l | 
+			(TypInfIndex instance canResolve: l)
+				ifTrue: [ TypInfIndex instance resolve: l ]
+				ifFalse: [ {l
+							-> (TypInfInlLookupContext
+									sender: context
+									state: state copy
+									node: node copy
+									self: context self
+									super: context super
+									message: self
+									lookup: l)} ] ]
 ]
 
 { #category : #accessing }
@@ -233,20 +226,11 @@ TypInfMessage >> transfer [
 	oldLookup := lookup.
 	lookup := self inReceiver newMethodLookup: self.
 	(lookup ~= oldLookup and: [ self canInstall ]) ifTrue: [ self install ].
-	contexts
-		ifEmpty: [ lookup
-				ifNil: [ state at: self put: TypUnknownType instance ]
-				ifNotNil: [ | method |
-					method := lookup asDefault resolve.
-					self inArguments
-						withIndexDo: [ :e :i | 
-							i <= method arguments size
-								ifTrue: [ self constrain: e to: (method arguments at: i) ] ].
-					state at: self put: method result ] ]
-		ifNotEmpty: [ state
-				at: self
-				put: (contexts collect: [ :a | a value root inReturnType ]) typAsMinimizedType ].
-	state at: self inReceiver put: self receiver asNonNullable
+	state
+		at: self
+		put: (contexts
+				ifEmpty: [ TypUnknownType instance ]
+				ifNotEmpty: [ (contexts collect: [ :a | a value root inReturnType ]) typAsMinimizedType ])
 ]
 
 { #category : #accessing }

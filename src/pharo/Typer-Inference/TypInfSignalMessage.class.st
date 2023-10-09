@@ -10,12 +10,13 @@ TypInfSignalMessage >> newContexts [
 		reverseDo: [ :c | 
 			(c handles: context exception)
 				ifTrue: [ ^ {lookup -> (c newExceptionHandlerContext: self)} ] ].
-	^ {}
+	^ #()
 ]
 
 { #category : #accessing }
 TypInfSignalMessage >> transfer [
 	super transfer.
+	state at: self put: TypVoidType instance.
 	contexts
 		ifNotEmpty: [ :c | 
 			| arguments |

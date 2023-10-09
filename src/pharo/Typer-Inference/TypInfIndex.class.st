@@ -104,6 +104,12 @@ TypInfIndex >> addMethod: aMethod [
 ]
 
 { #category : #accessing }
+TypInfIndex >> canResolve: aLookup [
+	(aLookup resolver isKindOf: TypInfMethodResolver) ifFalse: [ ^ false ].
+	^ resolver canResolve: aLookup
+]
+
+{ #category : #accessing }
 TypInfIndex >> context: aMethod [
 	^ self context: aMethod by: #run
 ]
@@ -183,16 +189,13 @@ TypInfIndex >> implementors: aSymbol [
 
 { #category : #accessing }
 TypInfIndex >> initialize [
-	| behaviors |
 	super initialize.
 	resolver := TypDepthFirstResolver
 			resolver: (TypBreadthFirstResolver
 					resolvers: {TypInfAbsMethodResolver new.
 							TypInfInlMethodResolver new}).
-	behaviors := ProtoObject withAllSubclasses asOrderedCollection.	"toposort superclasses before subclasses so #allSuperclasses are initialized"
-	behaviors addFirst: behaviors removeLast.	"ProtoObject is last for some reason"
-	behaviors addAll: ProtoObject class withAllSubclasses.
-	behaviors do: [ :b | self addBehavior: b ]
+	{ProtoObject} , ProtoObject allSubclasses , {ProtoObject class}
+		, ProtoObject class allSubclasses do: [ :b | self addBehavior: b ]
 ]
 
 { #category : #accessing }

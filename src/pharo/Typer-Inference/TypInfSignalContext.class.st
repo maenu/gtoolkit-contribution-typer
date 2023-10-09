@@ -2,7 +2,8 @@ Class {
 	#name : #TypInfSignalContext,
 	#superclass : #TypInfInlContext,
 	#instVars : [
-		'exception'
+		'exception',
+		'edge'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -26,13 +27,20 @@ TypInfSignalContext class >> sender: aContext state: aState node: aNode self: aT
 ]
 
 { #category : #accessing }
-TypInfSignalContext >> canInstall [
-	^ message receiver hasClassDescription
+TypInfSignalContext >> = anObject [
+	self == anObject ifTrue: [ ^ true ].
+	super = anObject ifFalse: [ ^ false ].
+	^ exception = anObject exception
 ]
 
 { #category : #accessing }
 TypInfSignalContext >> exception [
 	^ exception
+]
+
+{ #category : #accessing }
+TypInfSignalContext >> hash [
+	^ super hash bitXor: exception hash
 ]
 
 { #category : #accessing }
@@ -47,7 +55,7 @@ TypInfSignalContext >> install [
 	self assert: [ current isNil ].
 	sender children add: self.
 	current := root := self add: (TypInfSignalMessage node: node context: self).
-	message outAdd: (TypInfNextEdge origin: message target: root).
+	edge := message outAdd: (TypInfNextEdge origin: message target: root).
 	root
 		inReceiver: message inReceiver;
 		inArguments: message inArguments.
@@ -63,4 +71,10 @@ TypInfSignalContext >> install [
 { #category : #accessing }
 TypInfSignalContext >> stackSize [
 	^ sender stackSize
+]
+
+{ #category : #accessing }
+TypInfSignalContext >> uninstall [
+	edge remove.
+	super uninstall
 ]

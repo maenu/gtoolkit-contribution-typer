@@ -99,11 +99,31 @@ TypLookup >> parent [
 ]
 
 { #category : #accessing }
+TypLookup >> preResolve [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
+TypLookup >> preResolved [
+	self flag: 'TODO this is ugly'.
+	^ self preResolve
+		ifEmpty: [ nil ]
+		ifNotEmpty: [ :c | 
+			self assert: [ c size = 1 ].
+			c anyOne ]
+]
+
+{ #category : #accessing }
 TypLookup >> printOn: aStream [
 
 	parent ifNil: [ ^ self ].
 	aStream nextPutAll: ' | '.
 	parent printOn: aStream
+]
+
+{ #category : #accessing }
+TypLookup >> resolve [
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

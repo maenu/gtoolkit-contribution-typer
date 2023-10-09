@@ -76,7 +76,17 @@ TypTypeLookup >> invalidateOnClassChange: aClassAnnouncement [
 ]
 
 { #category : #accessing }
+TypTypeLookup >> preResolve [
+	^ {TypTypeIndex instance preResolve: self}
+]
+
+{ #category : #accessing }
 TypTypeLookup >> printOn: aStream [
 	aStream nextPutAll: classDescription name.
 	super printOn: aStream
+]
+
+{ #category : #accessing }
+TypTypeLookup >> resolve [
+	^ TypTypeIndex instance resolve: self
 ]

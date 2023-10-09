@@ -135,6 +135,12 @@ TypMethodLookup >> invalidateOnMethodChange: aMethodAnnouncement [
 ]
 
 { #category : #accessing }
+TypMethodLookup >> method [
+	receiver hasClassDescription ifFalse: [ ^ nil ].
+	^ receiver classDescription lookupSelector: selector
+]
+
+{ #category : #accessing }
 TypMethodLookup >> preResolve [
 	^ receiver preResolveMethod: self
 ]

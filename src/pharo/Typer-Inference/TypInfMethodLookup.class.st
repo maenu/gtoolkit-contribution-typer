@@ -51,7 +51,7 @@ TypInfMethodLookup >> asDefault [
 		arguments: arguments
 		self: selfType
 		super: superType
-		parent: nil
+		parent: (parent ifNotNil: #asDefault)
 ]
 
 { #category : #accessing }
@@ -100,6 +100,15 @@ TypInfMethodLookup >> initializeReceiver: aType selector: aSymbol [
 { #category : #accessing }
 TypInfMethodLookup >> message [
 	^ message
+]
+
+{ #category : #accessing }
+TypInfMethodLookup >> methods [
+	| method |
+	method := receiver classDescription lookupSelector: selector.
+	^ method isAbstract
+		ifTrue: [ (self root self overriders: method) ifEmpty: [ {method} ] ]
+		ifFalse: [ {method} ]
 ]
 
 { #category : #accessing }

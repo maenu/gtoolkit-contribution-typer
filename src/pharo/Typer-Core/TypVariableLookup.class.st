@@ -27,6 +27,16 @@ TypVariableLookup >> asParent [
 ]
 
 { #category : #accessing }
+TypVariableLookup >> preResolve [
+	^ receiver preResolveVariable: self
+]
+
+{ #category : #accessing }
+TypVariableLookup >> resolve [
+	^ receiver resolveVariable: self
+]
+
+{ #category : #accessing }
 TypVariableLookup >> withReceiver: aType [
 	^ self class
 		receiver: aType
