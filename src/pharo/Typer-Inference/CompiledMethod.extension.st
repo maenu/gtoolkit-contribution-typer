@@ -27,6 +27,11 @@ CompiledMethod >> typInfAbsResolve [
 ]
 
 { #category : #'*Typer-Inference' }
+CompiledMethod >> typInfAsContextPath [
+	^ self typInfAsLookup typInfAsContextPath: self
+]
+
+{ #category : #'*Typer-Inference' }
 CompiledMethod >> typInfAsLookup [
 	^ TypMethodLookup
 		receiver: self methodClass typAsType
@@ -63,7 +68,7 @@ CompiledMethod >> typInfContextAsyncBy: aBlock for: aDuration [
 { #category : #'*Typer-Inference' }
 CompiledMethod >> typInfContextAsyncWithTallyBy: aBlock for: aDuration [
 	^ TypInfIndex instance
-		contextAsyncWithTally: self
+		contextWithTallyAsync: self
 		by: aBlock
 		for: aDuration
 ]

@@ -113,7 +113,7 @@ TypInfIndex >> context: aMethod by: aBlock [
 	| node lookup path |
 	node := aMethod ast.
 	lookup := aMethod typInfAsLookup.
-	path := lookup typInfAsContextPath.
+	path := aMethod typInfAsContextPath.
 	cache
 		typAt: path
 		ifPresent: [ :c | 
@@ -146,7 +146,7 @@ TypInfIndex >> context: aLookup ifPresent: aBlock ifAbsent: anotherBlock [
 TypInfIndex >> contextAsync: aMethod by: aBlock for: aDuration [
 	| start |
 	start := DateAndTime now.
-	^ ([ self context: aMethod by: aBlock ] typInfValueAsyncFor: aDuration)
+	^ ([ self context: aMethod by: aBlock ] asAsyncFuture typAwaitFor: aDuration)
 		then: [ :c | 
 			{DateAndTime now - start.
 				c} ]
@@ -156,19 +156,20 @@ TypInfIndex >> contextAsync: aMethod by: aBlock for: aDuration [
 ]
 
 { #category : #accessing }
-TypInfIndex >> contextAsyncWithTally: aMethod by: aBlock for: aDuration [
-	| start tally |
+TypInfIndex >> contextWithTallyAsync: aMethod by: aBlock for: aDuration [
+	| start tally context |
 	start := DateAndTime now.
 	tally := MessageTally new.
-	^ ([ | context |
-	tally spyEvery: 1 on: [ context := self context: aMethod by: aBlock ].
-	context ] typInfValueAsyncFor: aDuration)
+	^ ([ tally spyEvery: 1 on: [ context := self context: aMethod by: aBlock ].
+	context ] asAsyncFuture typAwaitFor: aDuration)
 		then: [ :c | 
-			{DateAndTime now - start c.
+			{DateAndTime now - start.
+				c.
 				tally} ]
 		otherwise: [ :e | 
 			{DateAndTime now - start.
-				e.
+				context.
+				e freeze.
 				tally} ]
 ]
 
@@ -285,24 +286,24 @@ TypInfIndex >> updateContext: aMethod [
 
 { #category : #accessing }
 TypInfIndex >> updateContext: aMethod by: aBlock [
-	cache typRemoveAt: aMethod typInfAsLookup typInfAsContextPath.
+	cache typRemoveAt: aMethod typInfAsContextPath.
 	^ self context: aMethod by: aBlock
 ]
 
 { #category : #accessing }
-TypInfIndex >> updateContextAsync: aLookup by: aBlock for: aDuration [
-	cache typRemoveAt: aLookup typInfAsContextPath.
+TypInfIndex >> updateContextAsync: aMethod by: aBlock for: aDuration [
+	cache typRemoveAt: aMethod typInfAsContextPath.
 	^ self
-		contextAsync: aLookup typInfAsContextPath
+		contextAsync: aMethod
 		by: aBlock
 		for: aDuration
 ]
 
 { #category : #accessing }
-TypInfIndex >> updateContextAsyncWithTally: aLookup by: aBlock for: aDuration [
-	cache typRemoveAt: aLookup typInfAsContextPath.
+TypInfIndex >> updateContextWithTallyAsync: aMethod by: aBlock for: aDuration [
+	cache typRemoveAt: aMethod typInfAsContextPath.
 	^ self
-		contextAsyncWithTally: aLookup typInfAsContextPath
+		contextWithTallyAsync: aMethod
 		by: aBlock
 		for: aDuration
 ]

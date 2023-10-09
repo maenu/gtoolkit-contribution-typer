@@ -58,25 +58,3 @@ BlockClosure >> typInfAbsResolveValue: aMessageNode [
 		message: aMessageNode
 		block: block
 ]
-
-{ #category : #'*Typer-Inference' }
-BlockClosure >> typInfValueAsyncFor: aDuration [
-	| promise semaphore process |
-	promise := AsyncPendingPromise new.
-	semaphore := Semaphore new.
-	process := [ [ [ promise fulfillWithValue: self value ]
-			on: Error
-			do: [ :e | promise rejectWithError: e ] ] ]
-			forkAt: Processor userBackgroundPriority - 1.
-	[ semaphore
-		wait: aDuration
-		onCompletion: [ self assert: [ promise isSettled ] ]
-		onTimeout: [ process suspend.
-			process
-				suspendedContext: ([ Error signal: 'timeout' ] asContext
-						privSender: process suspendedContext;
-						yourself).
-			process priority: (Processor lowIOPriority min: process priority + 5).
-			process resume ] ] forkAt: Processor userBackgroundPriority - 1.
-	^ promise
-]

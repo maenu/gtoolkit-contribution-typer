@@ -1,6 +1,16 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*Typer-Inference' }
+RBProgramNode >> startWithoutParentheses [
+	^ self start
+]
+
+{ #category : #'*Typer-Inference' }
+RBProgramNode >> stopWithoutParentheses [
+	^ self stop
+]
+
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typInfAnnotated: aType [
 	"Annotates aType according to my comments used for casting and setting parameters."
 

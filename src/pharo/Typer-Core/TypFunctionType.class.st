@@ -18,32 +18,6 @@ TypFunctionType class >> classDescription: aClassDescription parameters: aSequen
 ]
 
 { #category : #accessing }
-TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil [
-	| instance parameters |
-	self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
-	parameters := OrderedDictionary new.
-	parameters at: #'0' put: aType.
-	aCollection withIndexDo: [ :e :i | parameters at: i asString asSymbol put: e ].
-	instance := self new
-			initializeClassDescription: aClassDescription;
-			initializeParameters: parameters;
-			initializeArgumentsSize: parameters size - 1
-				argumentsOptional: aBoolean
-				signalsAlways: aTypeOrNil
-				signalsMaybe: anotherTypeOrNil;
-			yourself.
-	^ self index
-		at: {aClassDescription name.
-				aType.
-				aCollection asArray.
-				aBoolean.
-				aTypeOrNil.
-				anotherTypeOrNil.
-				instance superOrNil}
-		ifAbsentPut: [ instance ]
-]
-
-{ #category : #accessing }
 TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil node: aNodeOrNil [
 	| instance parameters |
 	self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
@@ -99,60 +73,9 @@ TypFunctionType class >> classDescription: aClassDescription result: aType argum
 ]
 
 { #category : #accessing }
-TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil super: anotherType [
-	^ self index
-		at: {aClassDescription name.
-				aType.
-				aCollection asArray.
-				aBoolean.
-				aTypeOrNil.
-				anotherTypeOrNil}
-		ifAbsentPut: [ | parameters |
-			parameters := OrderedDictionary new.
-			parameters at: #'0' put: aType.
-			aCollection
-				withIndexDo: [ :e :i | parameters at: i asString asSymbol put: e ].
-			self new
-				initializeClassDescription: aClassDescription;
-				initializeParameters: parameters;
-				initializeArgumentsSize: parameters size - 1
-					argumentsOptional: aBoolean
-					signalsAlways: aTypeOrNil
-					signalsMaybe: anotherTypeOrNil;
-				initializeSuper: anotherType;
-				yourself ]
-]
-
-{ #category : #accessing }
 TypFunctionType class >> named: aString parameters: aSequenceableCollection [
 
 	self shouldNotImplement
-]
-
-{ #category : #accessing }
-TypFunctionType class >> named: aString result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil [
-	| instance parameters |
-	self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
-	parameters := OrderedDictionary new.
-	parameters at: #'0' put: aType.
-	aCollection withIndexDo: [ :e :i | parameters at: i asString asSymbol put: e ].
-	instance := self new
-			initializeName: aString;
-			initializeParameters: parameters;
-			initializeArgumentsSize: parameters size - 1
-				argumentsOptional: aBoolean
-				signalsAlways: aTypeOrNil
-				signalsMaybe: anotherTypeOrNil;
-			yourself.
-	^ self index
-		at: {aString asString.
-				aType.
-				aCollection asArray.
-				aBoolean.
-				aTypeOrNil.
-				anotherTypeOrNil.
-				instance superOrNil}
-		ifAbsentPut: [ instance ]
 ]
 
 { #category : #accessing }
@@ -211,41 +134,16 @@ TypFunctionType class >> named: aString result: aType arguments: aCollection arg
 				yourself ]
 ]
 
-{ #category : #accessing }
-TypFunctionType class >> named: aString result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil super: anotherType [
-	^ self index
-		at: {aString asString.
-				aType.
-				aCollection asArray.
-				aBoolean.
-				aTypeOrNil.
-				anotherTypeOrNil.
-				anotherType}
-		ifAbsentPut: [ | parameters |
-			parameters := OrderedDictionary new.
-			parameters at: #'0' put: aType.
-			aCollection
-				withIndexDo: [ :e :i | parameters at: i asString asSymbol put: e ].
-			self new
-				initializeName: aString;
-				initializeParameters: parameters;
-				initializeArgumentsSize: parameters size - 1
-					argumentsOptional: aBoolean
-					signalsAlways: aTypeOrNil
-					signalsMaybe: anotherTypeOrNil;
-				initializeSuper: anotherType;
-				yourself ]
-]
-
 { #category : #comparing }
 TypFunctionType >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
-	super = anObject ifFalse: [ ^ false ].
+	self class = anObject class ifFalse: [ ^ false ].
 	argumentsSize = anObject argumentsSize ifFalse: [ ^ false ].
 	argumentsOptional = anObject argumentsOptional ifFalse: [ ^ false ].
+	node = anObject node ifFalse: [ ^ false ].
 	signalsAlways = anObject signalsAlways ifFalse: [ ^ false ].
 	signalsMaybe = anObject signalsMaybe ifFalse: [ ^ false ].
-	node = anObject node ifFalse: [ ^ false ].
+	super = anObject ifFalse: [ ^ false ].
 	^ true
 ]
 
@@ -360,17 +258,6 @@ TypFunctionType >> initialize [
 	<typPraVariable: 'argumentsOptional' as: 'Boolean'>
 	super initialize.
 	argumentsOptional := false
-]
-
-{ #category : #initialization }
-TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil [
-	self assert: [ anInteger isInteger ].
-	self assert: [ anInteger >= 0 ].
-	argumentsSize := anInteger.
-	argumentsOptional := aBoolean.
-	signalsAlways := aTypeOrNil.
-	signalsMaybe := anotherTypeOrNil.
-	hash := nil
 ]
 
 { #category : #initialization }

@@ -207,6 +207,7 @@ TypTypeParser >> reduceActionForFunctionType1: nodes [
 		argumentsOptional: true
 		signalsAlways: nil
 		signalsMaybe: nil
+		node: nil
 ]
 
 { #category : #'generated-reduction actions' }
@@ -218,6 +219,7 @@ TypTypeParser >> reduceActionForFunctionType2: nodes [
 		argumentsOptional: false
 		signalsAlways: nil
 		signalsMaybe: nil
+		node: nil
 ]
 
 { #category : #'generated-reduction actions' }

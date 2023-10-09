@@ -32,6 +32,7 @@ ClassDescription >> typAsFunctionTypeWithResult: aType arguments: aCollection ar
 		argumentsOptional: aBoolean
 		signalsAlways: aTypeOrNil
 		signalsMaybe: anotherTypeOrNil
+		node: nil
 ]
 
 { #category : #'*Typer-Core' }

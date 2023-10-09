@@ -106,11 +106,11 @@ TypInfManifest class >> updateRandomContextAsync [
 ]
 
 { #category : #accessing }
-TypInfManifest class >> updateRandomContextAsyncWithTally [
+TypInfManifest class >> updateRandomContextWithTallyAsync [
 	<gtExample>
 	<noTest>
 	^ TypInfIndex instance
-		updateContextAsyncWithTally: self someRandomMethods anyOne typInfAsLookup
+		updateContextWithTallyAsync: self someRandomMethods anyOne typInfAsLookup
 		by: #run
 		for: 3 seconds
 ]
@@ -128,13 +128,13 @@ TypInfManifest class >> updateSomeRandomContextsAsync [
 ]
 
 { #category : #accessing }
-TypInfManifest class >> updateSomeRandomContextsAsyncWithTally [
+TypInfManifest class >> updateSomeRandomContextsWithTallyAsync [
 	<gtExample>
 	<noTest>
 	^ self someRandomMethods
 		collect: [ :m | 
 			^ TypInfIndex instance
-				updateContextAsyncWithTally: m typInfAsLookup
+				updateContextWithTallyAsync: m typInfAsLookup
 				by: #run
 				for: 30 seconds ]
 ]

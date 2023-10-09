@@ -16,7 +16,8 @@ TypFunctionTypeInitializingExamples >> classDescriptionArgumentsSizeArgumentsOpt
 			arguments: {TypNamedType classDescription: Float}
 			argumentsOptional: true
 			signalsAlways: true
-			signalsMaybe: nil.
+			signalsMaybe: nil
+			node: nil.
 	self assert: type name equals: 'Integer'.
 	self assert: type hasClassDescription.
 	self assert: type classDescription equals: Integer.
@@ -53,7 +54,8 @@ TypFunctionTypeInitializingExamples >> namedArgumentsSizeArgumentsOptionalBindin
 			arguments: {TypNamedType classDescription: Float}
 			argumentsOptional: true
 			signalsAlways: true
-			signalsMaybe: nil.
+			signalsMaybe: nil
+			node: nil.
 	self assert: type name equals: 'Integer'.
 	self assert: type hasClassDescription.
 	self assert: type classDescription equals: Integer.
