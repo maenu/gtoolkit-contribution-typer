@@ -34,5 +34,7 @@ TypInfLocalDefinition >> transfer [
 
 { #category : #initialization }
 TypInfLocalDefinition >> type [
-	^ (self outReads collect: #type) typAsMinimizedType
+	^ (self outReads collect: #type)
+		ifEmpty: [ TypUnknownType instance ]
+		ifNotEmpty: #typAsMinimizedType
 ]

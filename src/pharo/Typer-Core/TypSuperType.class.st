@@ -52,3 +52,8 @@ TypSuperType >> isSuper [
 TypSuperType >> overriders: aSymbol [
 	^ self super overriders: aSymbol
 ]
+
+{ #category : #accessing }
+TypSuperType >> writers: aVariable [
+	^ self super writers: aVariable
+]

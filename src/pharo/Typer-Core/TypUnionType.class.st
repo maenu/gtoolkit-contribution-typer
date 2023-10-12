@@ -302,3 +302,8 @@ TypUnionType >> withSuper: aType [
 
 	^ self
 ]
+
+{ #category : #accessing }
+TypUnionType >> writers: aVariable [
+	^ types flatCollect: [ :e | e writers: aVariable ]
+]

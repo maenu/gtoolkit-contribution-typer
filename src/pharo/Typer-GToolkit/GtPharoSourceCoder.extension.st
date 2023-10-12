@@ -27,7 +27,8 @@ GtPharoSourceCoder >> typGtContextAsync [
 	attributes at: #typGtContextPromise ifPresent: [ :p | ^ p ].
 	^ attributes
 		at: #typGtContextPromise
-		put: ([ TypInfIndex instance context: self compiledMethod ] asAsyncFuture typAwait
+		put: ([ TypInfIndex instance contextAt: self compiledMethod typInfAsLookup ]
+				asAsyncFuture typAwait
 				then: [ :c | 
 					attributes
 						removeKey: #typGtContextPromise;
@@ -113,6 +114,9 @@ GtPharoSourceCoder >> typGtToggleStylersAllFor: anAst into: anAddOns viewModel: 
 						coderViewModel: aViewModel;
 						yourself);
 				addStyler: (TypGtValueStyler new
+						coderViewModel: aViewModel;
+						yourself);
+				addStyler: (TypGtStabilityStyler new
 						coderViewModel: aViewModel;
 						yourself)";
 				addStyler: (TypGtCheStyler new

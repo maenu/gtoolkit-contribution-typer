@@ -2,14 +2,10 @@ Extension { #name : #TypMethodLookup }
 
 { #category : #'*Typer-Inference' }
 TypMethodLookup >> typInfAsContextPath [
-	^ self
-		typInfAsContextPath: (receiver classDescription lookupSelector: selector)
-]
-
-{ #category : #'*Typer-Inference' }
-TypMethodLookup >> typInfAsContextPath: aMethod [
+	| method |
+	method := self compiledMethod.
 	^ {#context.
-		aMethod methodClass.
-		aMethod selector.
+		method methodClass.
+		method selector.
 		self}
 ]

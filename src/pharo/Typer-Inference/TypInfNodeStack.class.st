@@ -16,7 +16,7 @@ TypInfNodeStack class >> actives [
 TypInfNodeStack class >> canPush: aNode [
 	| actives |
 	actives := self actives.
-	actives size < TypInfManifest maxNodeStackSize ifFalse: [ ^ false ].
+	actives size < TypInfIndex instance maxNodeStackSize ifFalse: [ ^ false ].
 	^ (actives includes: aNode) not
 ]
 

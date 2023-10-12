@@ -64,6 +64,14 @@ TypInfNode >> typGtDecorate: anElement in: aMondrian [
 				model: self;
 				yourself).
 	^ anElement
+		clipChildren: false;
+		addChild: (BrBadge new
+				label: transfers;
+				exact: 8 @ 8;
+				aptitude: BrGlamorousBadgeWithLabelAptitude + BrGlamorousBadgeCircularAptitude;
+				constraintsDo: [ :c | c ignoreByLayout ];
+				relocate: 6 @ -4;
+				yourself);
 		addAptitude: (BrGlamorousWithTooltipAptitude
 				content: [ BrEditor new
 						aptitude: BrGlamorousCodeEditorAptitude new;

@@ -32,6 +32,12 @@ TypInfInlContext >> = anObject [
 ]
 
 { #category : #accessing }
+TypInfInlContext >> adoptSelf: aType super: anotherTypeOrNil [
+	selfType := aType.
+	superType := anotherTypeOrNil
+]
+
+{ #category : #accessing }
 TypInfInlContext >> canInstall [
 	^ true
 ]

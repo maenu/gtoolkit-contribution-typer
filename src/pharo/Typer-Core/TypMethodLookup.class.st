@@ -111,6 +111,12 @@ TypMethodLookup >> canResolve [
 ]
 
 { #category : #accessing }
+TypMethodLookup >> compiledMethod [
+	receiver hasClassDescription ifFalse: [ ^ nil ].
+	^ receiver classDescription lookupSelector: selector
+]
+
+{ #category : #accessing }
 TypMethodLookup >> hash [
 	^ ((super hash bitXor: arguments hash) bitXor: selfType hash)
 		bitXor: superType hash
@@ -132,12 +138,6 @@ TypMethodLookup >> invalidateOnMethodChange: aMethodAnnouncement [
 	^ (super invalidateOnMethodChange: aMethodAnnouncement) or:
 		  ((receiver invalidateOnMethodChange: aMethodAnnouncement) and: [ 
 			   selector = aMethodAnnouncement methodAffected selector ])
-]
-
-{ #category : #accessing }
-TypMethodLookup >> method [
-	receiver hasClassDescription ifFalse: [ ^ nil ].
-	^ receiver classDescription lookupSelector: selector
 ]
 
 { #category : #accessing }

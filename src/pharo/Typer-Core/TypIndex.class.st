@@ -126,9 +126,11 @@ TypIndex >> resolve: aLookup [
 					resolved result: t ].
 			type := resolved resolver update: resolved.
 			self assert: [ type isNotNil ].
+			aLookup result: type.
 			cache at: aLookup put: type ]
 		ifAbsent: [ (resolver canResolve: aLookup)
 				ifTrue: [ | type |
+					cache at: aLookup put: TypUnknownType instance.
 					type := resolver resolve: aLookup.
 					self assert: [ type isNotNil ].
 					cache at: aLookup put: type ]

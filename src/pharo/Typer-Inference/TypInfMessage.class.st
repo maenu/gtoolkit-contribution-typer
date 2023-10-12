@@ -52,6 +52,11 @@ TypInfMessage >> constrainedReceiver [
 	^ (implementors collect: #typAsType) typAsMinimizedType
 ]
 
+{ #category : #'as yet unclassified' }
+TypInfMessage >> contexts [
+	^ contexts
+]
+
 { #category : #accessing }
 TypInfMessage >> couldBeSelfOrSuperSend [
 	^ {context self.

@@ -21,6 +21,7 @@ TypFunctionType class >> classDescription: aClassDescription parameters: aSequen
 TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil node: aNodeOrNil [
 	| instance parameters |
 	self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
+	self assert: [ aCollection noneSatisfy: #isVoid ].
 	parameters := OrderedDictionary new.
 	parameters at: #'0' put: aType.
 	aCollection withIndexDo: [ :e :i | parameters at: i asString asSymbol put: e ].
@@ -197,7 +198,7 @@ TypFunctionType >> covariant: aType [
 	resultResult := self result covariant: aType result.
 	resultArguments := aType arguments.
 	resultArguments := self arguments
-			collectWithIndex: [ :t :i | t covariant: (resultArguments at: i) ].
+			withIndexCollect: [ :t :i | t covariant: (resultArguments at: i) ].
 	resultArgumentsOptional := argumentsOptional and: aType argumentsOptional.
 	{signalsAlways.
 		aType signalsAlways}

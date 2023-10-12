@@ -209,3 +209,9 @@ TypNamedType >> withSuper: aType [
 		^ self class classDescription: self classDescription super: aType ].
 	^ self class named: name super: aType
 ]
+
+{ #category : #accessing }
+TypNamedType >> writers: aVariable [
+	^ (TypInfIndex instance writers: aVariable)
+		select: [ :m | m methodClass typAsType >= self ]
+]

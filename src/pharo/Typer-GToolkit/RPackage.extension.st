@@ -74,7 +74,7 @@ RPackage >> typGtView2For: aView [
 						yourself ];
 				connect: methods
 					toAll: [ :f | 
-						(TypInfIndex instance context: f typInfAsLookup)
+						(TypInfIndex instance contextAt: f typInfAsLookup)
 							select: [ :g | methods includes: g ] ] ];
 		yourself
 ]

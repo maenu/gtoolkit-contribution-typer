@@ -27,22 +27,14 @@ CompiledMethod >> typInfAbsResolve [
 ]
 
 { #category : #'*Typer-Inference' }
-CompiledMethod >> typInfAsContextPath [
-	^ self typInfAsLookup typInfAsContextPath: self
-]
-
-{ #category : #'*Typer-Inference' }
 CompiledMethod >> typInfAsLookup [
-	^ TypMethodLookup
-		receiver: self methodClass typAsType
-		selector: self selector
-		arguments: (self selector numArgs
-				typTimesCollect: [ :i | TypUnknownType instance ])
-		parent: nil
+	| selfType |
+	selfType := self methodClass typAsType.
+	^ self typInfAsLookupWithSelf: selfType super: selfType superOrNil
 ]
 
 { #category : #'*Typer-Inference' }
-CompiledMethod >> typInfAsLookupSelf: aType super: anotherType [
+CompiledMethod >> typInfAsLookupWithSelf: aType super: anotherType [
 	^ TypMethodLookup
 		receiver: self methodClass typAsType
 		selector: self selector
@@ -54,47 +46,22 @@ CompiledMethod >> typInfAsLookupSelf: aType super: anotherType [
 
 { #category : #'*Typer-Inference' }
 CompiledMethod >> typInfContext [
-	^ TypInfIndex instance context: self
-]
-
-{ #category : #'*Typer-Inference' }
-CompiledMethod >> typInfContextAsyncBy: aBlock for: aDuration [
-	^ TypInfIndex instance
-		contextAsync: self
-		by: aBlock
-		for: aDuration
-]
-
-{ #category : #'*Typer-Inference' }
-CompiledMethod >> typInfContextAsyncWithTallyBy: aBlock for: aDuration [
-	^ TypInfIndex instance
-		contextWithTallyAsync: self
-		by: aBlock
-		for: aDuration
-]
-
-{ #category : #'*Typer-Inference' }
-CompiledMethod >> typInfContextBy: aBlock [
-	^ TypInfIndex instance context: self by: aBlock
-]
-
-{ #category : #'*Typer-Inference' }
-CompiledMethod >> typInfContextIfPresent: aBlock ifAbsent: anotherBlock [
-	^ TypInfIndex instance
-		context: self typInfAsLookup
-		ifPresent: aBlock
-		ifAbsent: anotherBlock
+	^ TypInfIndex instance contextAt: self typInfAsLookup
 ]
 
 { #category : #'*Typer-Inference' }
 CompiledMethod >> typInfType [
 	^ self class
 		typAsFunctionTypeWithResult: TypUnknownType instance
-		arguments: (self numArgs timesCollect: [ TypUnknownType instance ])
+		arguments: (self numArgs typTimesCollect: [ :i | TypUnknownType instance ])
 ]
 
 { #category : #'*Typer-Inference' }
 CompiledMethod >> typInfTypes [
+	^ {Integer typAsType}
+]
 
-	^ { Integer typAsType }
+{ #category : #'*Typer-Inference' }
+CompiledMethod >> typInfUpdateContext [
+	^ TypInfIndex instance updateContextAt: self typInfAsLookup
 ]

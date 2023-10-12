@@ -104,7 +104,7 @@ TypInfContext >> initializeSender: aContext state: aState node: aNode self: aTyp
 	children := IdentitySet new.
 	nodeStackDepth := TypInfNodeStack actives size.
 	iterationsDone := 0.
-	iterationsMax := TypInfManifest maxIterations.
+	iterationsMax := TypInfIndex instance maxIterations.
 	iterations := OrderedCollection new
 ]
 
@@ -114,6 +114,11 @@ TypInfContext >> install [
 	self assert: [ current isNil ].
 	current := root := self add: (node typInfNodeInContext: self).
 	node acceptVisitor: self
+]
+
+{ #category : #accessing }
+TypInfContext >> isStable [
+	^ iterationsDone < iterationsMax 
 ]
 
 { #category : #accessing }
@@ -250,6 +255,13 @@ TypInfContext >> type [
 { #category : #accessing }
 TypInfContext >> type: aNode [
 	^ (self nodesAt: self) typAsMinimizedType
+]
+
+{ #category : #accessing }
+TypInfContext >> typeAt: aNode [
+	^ ((self nodesAt: aNode) collect: #type)
+		ifEmpty: TypUnknownType instance
+		ifNotEmpty: #typAsType
 ]
 
 { #category : #visiting }

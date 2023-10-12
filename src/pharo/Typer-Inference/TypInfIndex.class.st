@@ -1,6 +1,13 @@
 Class {
 	#name : #TypInfIndex,
 	#superclass : #TypIndex,
+	#instVars : [
+		'maxIterations',
+		'maxNodeStackSize',
+		'maxImplementors',
+		'maxWriters',
+		'maxMethodSize'
+	],
 	#category : #'Typer-Inference-Lookup'
 }
 
@@ -104,69 +111,44 @@ TypInfIndex >> addMethod: aMethod [
 ]
 
 { #category : #accessing }
-TypInfIndex >> canResolve: aLookup [
-	(aLookup resolver isKindOf: TypInfMethodResolver) ifFalse: [ ^ false ].
-	^ resolver canResolve: aLookup
-]
-
-{ #category : #accessing }
-TypInfIndex >> context: aMethod [
-	^ self context: aMethod by: #run
-]
-
-{ #category : #accessing }
-TypInfIndex >> context: aMethod by: aBlock [
-	| node lookup path |
-	node := aMethod ast.
-	lookup := aMethod typInfAsLookup.
-	path := aMethod typInfAsContextPath.
-	cache
-		typAt: path
-		ifPresent: [ :c | 
-			c nodeStackDepth <= TypInfNodeStack actives size
-				ifTrue: [ ^ c ]
-				ifFalse: [ cache typRemoveAt: path ] ].
-	^ TypInfNodeStack
-		push: node
-		during: [ [ aBlock
-				value: (cache
-						typAt: path
-						put: (TypInfContext
-								sender: nil
-								state: TypInfState new
-								node: node
-								self: lookup self
-								super: lookup super)) ] ifCurtailed: [ cache typRemoveAt: path ] ]
-		or: [ self error: 'node stack reached max size' ]
-]
-
-{ #category : #accessing }
-TypInfIndex >> context: aLookup ifPresent: aBlock ifAbsent: anotherBlock [
-	^ cache
-		typAt: aLookup typInfAsContextPath
-		ifPresent: aBlock
-		ifAbsent: anotherBlock
-]
-
-{ #category : #accessing }
-TypInfIndex >> contextAsync: aMethod by: aBlock for: aDuration [
-	| start |
+TypInfIndex >> asyncContextAt: aLookup ifNew: aBlock for: aDuration [
+	| start context |
 	start := DateAndTime now.
-	^ ([ self context: aMethod by: aBlock ] asAsyncFuture typAwaitFor: aDuration)
+	^ ([ self
+		contextAt: aLookup
+		ifNew: [ :c | 
+			context := c.
+			aBlock value: c ] ] asAsyncFuture typAwaitFor: aDuration)
 		then: [ :c | 
 			{DateAndTime now - start.
 				c} ]
 		otherwise: [ :e | 
 			{DateAndTime now - start.
-				e} ]
+				context.
+				e freeze} ]
 ]
 
 { #category : #accessing }
-TypInfIndex >> contextWithTallyAsync: aMethod by: aBlock for: aDuration [
-	| start tally context |
+TypInfIndex >> asyncUpdateContextAt: aLookup ifNew: aBlock for: aDuration [
+	cache typRemoveAt: aLookup typInfAsContextPath.
+	^ self
+		asyncContextAt: aLookup
+		ifNew: aBlock
+		for: aDuration
+]
+
+{ #category : #accessing }
+TypInfIndex >> asyncWithTallyContextAt: aLookup ifNew: aBlock for: aDuration [
+	| start context tally |
 	start := DateAndTime now.
 	tally := MessageTally new.
-	^ ([ tally spyEvery: 1 on: [ context := self context: aMethod by: aBlock ].
+	^ ([ tally
+		spyEvery: 1
+		on: [ self
+				contextAt: aLookup
+				ifNew: [ :c | 
+					context := c.
+					aBlock value: c ] ].
 	context ] asAsyncFuture typAwaitFor: aDuration)
 		then: [ :c | 
 			{DateAndTime now - start.
@@ -177,6 +159,68 @@ TypInfIndex >> contextWithTallyAsync: aMethod by: aBlock for: aDuration [
 				context.
 				e freeze.
 				tally} ]
+]
+
+{ #category : #accessing }
+TypInfIndex >> asyncWithTallyUpdateContextAt: aLookup ifNew: aBlock for: aDuration [
+	cache typRemoveAt: aLookup typInfAsContextPath.
+	^ self
+		asyncWithTallyContextAt: aLookup
+		ifNew: aBlock
+		for: aDuration
+]
+
+{ #category : #accessing }
+TypInfIndex >> canResolve: aLookup [
+	(aLookup resolver isKindOf: TypInfMethodResolver) ifFalse: [ ^ false ].
+	^ resolver canResolve: aLookup
+]
+
+{ #category : #accessing }
+TypInfIndex >> contextAt: aLookup [
+	^ self contextAt: aLookup ifNew: #run
+]
+
+{ #category : #accessing }
+TypInfIndex >> contextAt: aLookup ifNew: aBlock [
+	^ self
+		contextAt: aLookup
+		ifNew: aBlock
+		ifPresent: #yourself
+		ifAbsent: [ self error: 'node stack reached max size' ]
+]
+
+{ #category : #accessing }
+TypInfIndex >> contextAt: aLookup ifNew: aBlock ifPresent: anotherBlock ifAbsent: yetAnotherBlock [
+	| node path |
+	node := aLookup compiledMethod ast.
+	path := aLookup typInfAsContextPath.
+	cache
+		typAt: path
+		ifPresent: [ :c | 
+			TypInfNodeStack actives size < c nodeStackDepth
+				ifTrue: [ cache typRemoveAt: path ]
+				ifFalse: [ ^ anotherBlock value: c ] ].
+	^ TypInfNodeStack
+		push: node
+		during: [ [ | context |
+			context := TypInfContext
+					sender: nil
+					state: TypInfState new
+					node: node
+					self: aLookup root self
+					super: aLookup root super.
+			cache typAt: path put: context.
+			aBlock value: context.
+			anotherBlock value: context ] ifCurtailed: [ cache typRemoveAt: path ] ]
+		or: [ yetAnotherBlock value ]
+]
+
+{ #category : #accessing }
+TypInfIndex >> implementors95Quantile [
+	| values |
+	values := ((cache at: #implementors) values collect: #size) sorted.
+	^ values at: (values size * 0.95) floor
 ]
 
 { #category : #accessing }
@@ -195,7 +239,12 @@ TypInfIndex >> initialize [
 					resolvers: {TypInfAbsMethodResolver new.
 							TypInfInlMethodResolver new}).
 	{ProtoObject} , ProtoObject allSubclasses , {ProtoObject class}
-		, ProtoObject class allSubclasses do: [ :b | self addBehavior: b ]
+		, ProtoObject class allSubclasses do: [ :b | self addBehavior: b ].
+	maxIterations := 16.
+	maxNodeStackSize := 5.
+	maxImplementors := self implementors95Quantile.
+	maxWriters := self writers95Quantile.
+	maxMethodSize := self methodSize95Quantile
 ]
 
 { #category : #accessing }
@@ -206,6 +255,38 @@ TypInfIndex >> invalidateOnClassChange: aClassAnnouncement [
 { #category : #accessing }
 TypInfIndex >> invalidateOnMethodChange: aMethodAnnouncement [
 	aMethodAnnouncement typInfInvalidateIndex
+]
+
+{ #category : #accessing }
+TypInfIndex >> maxImplementors [
+	^ maxImplementors
+]
+
+{ #category : #accessing }
+TypInfIndex >> maxIterations [
+	^ maxIterations
+]
+
+{ #category : #accessing }
+TypInfIndex >> maxMethodSize [
+	^ maxMethodSize
+]
+
+{ #category : #accessing }
+TypInfIndex >> maxNodeStackSize [
+	^ maxNodeStackSize
+]
+
+{ #category : #accessing }
+TypInfIndex >> maxWriters [
+	^ maxWriters
+]
+
+{ #category : #accessing }
+TypInfIndex >> methodSize95Quantile [
+	| values |
+	values := (Smalltalk globals allMethods collect: #size) sorted.
+	^ values at: (values size * 0.95) floor
 ]
 
 { #category : #accessing }
@@ -262,8 +343,7 @@ TypInfIndex >> removeMethod: aMethod [
 	cache
 		typRemoveAt: {#context.
 				aMethod methodClass.
-				aMethod selector.
-				self}.
+				aMethod selector}.
 	self flag: 'TODO invalidate senders etc. too'.
 	cache
 		typAt: {#implementors.
@@ -283,32 +363,21 @@ TypInfIndex >> resolve: aLookup [
 ]
 
 { #category : #accessing }
-TypInfIndex >> updateContext: aMethod [
-	^ self updateContext: aMethod by: #run
+TypInfIndex >> updateContextAt: aLookup [
+	^ self updateContextAt: aLookup ifNew: #run
 ]
 
 { #category : #accessing }
-TypInfIndex >> updateContext: aMethod by: aBlock [
-	cache typRemoveAt: aMethod typInfAsContextPath.
-	^ self context: aMethod by: aBlock
+TypInfIndex >> updateContextAt: aLookup ifNew: aBlock [
+	cache typRemoveAt: aLookup typInfAsContextPath.
+	^ self contextAt: aLookup ifNew: aBlock
 ]
 
 { #category : #accessing }
-TypInfIndex >> updateContextAsync: aMethod by: aBlock for: aDuration [
-	cache typRemoveAt: aMethod typInfAsContextPath.
-	^ self
-		contextAsync: aMethod
-		by: aBlock
-		for: aDuration
-]
-
-{ #category : #accessing }
-TypInfIndex >> updateContextWithTallyAsync: aMethod by: aBlock for: aDuration [
-	cache typRemoveAt: aMethod typInfAsContextPath.
-	^ self
-		contextWithTallyAsync: aMethod
-		by: aBlock
-		for: aDuration
+TypInfIndex >> writers95Quantile [
+	| values |
+	values := ((cache at: #writers) values collect: #size) sorted.
+	^ values at: (values size * 0.95) floor
 ]
 
 { #category : #generated }

@@ -36,15 +36,16 @@ TypInfMethodResolver >> printOn: aStream [
 
 { #category : #accessing }
 TypInfMethodResolver >> result: aLookup [
-	^ (TypInfIndex instance
-		context: (aLookup receiver classDescription lookupSelector: aLookup selector))
-		root type
+	^ (TypInfIndex instance contextAt: aLookup) root type
 ]
 
 { #category : #accessing }
 TypInfMethodResolver >> update: aLookup [
-	(TypInfNodeStack
-		canPush: (aLookup receiver classDescription lookupSelector: aLookup selector) ast)
-		ifTrue: [ aLookup result: (self result: aLookup) ].
+	TypInfIndex instance cache
+		typAt: aLookup typInfAsContextPath
+		ifPresent: [ :c | 
+			(TypInfNodeStack actives size < c nodeStackDepth
+				and: [ TypInfNodeStack canPush: aLookup compiledMethod ast ])
+				ifTrue: [ aLookup result: (self result: aLookup) ] ].
 	^ super update: aLookup
 ]

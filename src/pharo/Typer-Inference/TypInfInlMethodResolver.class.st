@@ -6,20 +6,22 @@ Class {
 
 { #category : #accessing }
 TypInfInlMethodResolver >> canResolve: aLookup [
-	| method |
-	aLookup message context stackSize <= TypInfManifest maxNodeStackSize
+	| methods |
+	aLookup message context stackSize < TypInfIndex instance maxNodeStackSize
+		ifFalse: [ ^ false ].
+	(aLookup message couldBeSelfOrSuperSend or: [ aLookup message hasNodes ])
 		ifFalse: [ ^ false ].
 	aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
 	(aLookup receiver classDescription canUnderstand: aLookup selector)
 		ifFalse: [ ^ false ].
-	method := aLookup receiver classDescription lookupSelector: aLookup selector.
-	method size > 100 ifTrue: [ ^ false ].	"exclude the largest 10%"
-	((self methods: aLookup) size between: 1 and: 4) ifFalse: [ ^ false ].	"exclude the largest 5%"
-	(aLookup message couldBeSelfOrSuperSend not
-		and: [ aLookup message hasNodes not
-				and: [ (aLookup message context stackSize <= (TypInfManifest maxNodeStackSize / 2)) not ] ])
-		ifTrue: [ ^ false ].
+	methods := self methods: aLookup.
+	self flag: 'Q inline some of it, lookup the rest, like for variables?'.
+	(methods size between: 1 and: TypInfIndex instance maxImplementors)
+		ifFalse: [ ^ false ].
+	methods
+		detect: [ :a | a value size > TypInfIndex instance maxMethodSize ]
+		ifFound: [ ^ false ].
 	^ true
 ]
 
@@ -42,15 +44,20 @@ TypInfInlMethodResolver >> result: aLookup [
 		collect: [ :a | 
 			a key
 				-> ((a key asDefault preResolved resolver isKindOf: TypInfMethodResolver)
-						ifTrue: [ TypInfInlContext
-								sender: message context
-								state: message state copy
-								node: ([ a value ast ]
-										on: OCUndeclaredVariableWarning
-										do: [ :e | e resume: e declareUndefined ])
-								self: aLookup root self
-								super: aLookup root super
-								message: message ]
+						ifTrue: [ | node |
+							node := [ a value ast ]
+									on: OCUndeclaredVariableWarning
+									do: [ :e | e resume: e declareUndefined ].
+							message contexts
+								detect: [ :aa | (aa value isKindOf: TypInfInlContext) and: aa value node == node ]
+								ifFound: [ :aa | aa value adoptSelf: aLookup root self super: aLookup root super ]
+								ifNone: [ TypInfInlContext
+										sender: message context
+										state: message state copy
+										node: node
+										self: aLookup root self
+										super: aLookup root super
+										message: message ] ]
 						ifFalse: [ TypInfInlLookupContext
 								sender: message context
 								state: message state copy
