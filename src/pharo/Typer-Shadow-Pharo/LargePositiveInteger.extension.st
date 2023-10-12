@@ -1,13 +1,13 @@
 Extension { #name : #LargePositiveInteger }
 
 { #category : #'*Typer-Shadow-Pharo' }
-LargePositiveInteger >> typShaMetAbs: aLookup [
+LargePositiveInteger >> typShaMethodUnaryAbs: aLookup [
 	<typShaMethod: 'abs'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Number typAsType
+	^ super typShaMethodUnaryAbs: aLookup
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-LargePositiveInteger >> typShaMetNegated: aLookup [
+LargePositiveInteger >> typShaMethodUnaryNegated: aLookup [
 	<typShaMethod: 'negated'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Number typAsType
+	^ super typShaMethodUnaryNegated: aLookup
 ]

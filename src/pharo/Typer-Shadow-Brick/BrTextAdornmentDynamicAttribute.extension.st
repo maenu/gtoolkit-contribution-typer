@@ -1,7 +1,7 @@
 Extension { #name : #BrTextAdornmentDynamicAttribute }
 
 { #category : #'*Typer-Shadow-Brick' }
-BrTextAdornmentDynamicAttribute >> typShaMethodStencil: aLookup [
+BrTextAdornmentDynamicAttribute >> typShaMethodKeywordStencil: aLookup [
 	<typShaMethod: 'stencil:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self

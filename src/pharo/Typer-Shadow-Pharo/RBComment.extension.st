@@ -1,19 +1,19 @@
 Extension { #name : #RBComment }
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBComment >> typShaMethodContents: aLookup [
+RBComment >> typShaMethodUnaryContents: aLookup [
 	<typShaMethod: 'contents'>
 	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBComment >> typShaMethodStart: aLookup [
+RBComment >> typShaMethodUnaryStart: aLookup [
 	<typShaMethod: 'start'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
+	^ super typShaMethodUnaryStart: aLookup
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBComment >> typShaMethodStop: aLookup [
+RBComment >> typShaMethodUnaryStop: aLookup [
 	<typShaMethod: 'stop'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
+	^ super typShaMethodUnaryStop: aLookup
 ]

@@ -1,7 +1,7 @@
 Extension { #name : #RBLiteralValueNode }
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBLiteralValueNode class >> typShaMethodValue: aLookup [
+RBLiteralValueNode class >> typShaMethodKeywordValue: aLookup [
 	<typShaMethod: 'value:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType

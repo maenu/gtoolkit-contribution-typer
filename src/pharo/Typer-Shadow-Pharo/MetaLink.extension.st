@@ -1,7 +1,7 @@
 Extension { #name : #MetaLink }
 
 { #category : #'*Typer-Shadow-Pharo' }
-MetaLink >> typShaMethodArguments: aLookup [
+MetaLink >> typShaMethodKeywordArguments: aLookup [
 	<typShaMethod: 'arguments:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -9,7 +9,7 @@ MetaLink >> typShaMethodArguments: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-MetaLink >> typShaMethodControl: aLookup [
+MetaLink >> typShaMethodKeywordControl: aLookup [
 	<typShaMethod: 'control:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -17,7 +17,7 @@ MetaLink >> typShaMethodControl: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-MetaLink >> typShaMethodMetaObject: aLookup [
+MetaLink >> typShaMethodKeywordMetaObject: aLookup [
 	<typShaMethod: 'metaObject:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -26,7 +26,7 @@ MetaLink >> typShaMethodMetaObject: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-MetaLink >> typShaMethodSelector: aLookup [
+MetaLink >> typShaMethodKeywordSelector: aLookup [
 	<typShaMethod: 'selector:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self

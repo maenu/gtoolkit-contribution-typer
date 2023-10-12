@@ -1,13 +1,13 @@
 Extension { #name : #SmaCCToken }
 
 { #category : #'*Typer-Shadow-SmaCC' }
-SmaCCToken >> typShaMethodStopPosition: aLookup [
+SmaCCToken >> typShaMethodUnaryStopPosition: aLookup [
 	<typShaMethod: 'stopPosition'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType asNullable
 ]
 
 { #category : #'*Typer-Shadow-SmaCC' }
-SmaCCToken >> typShaMethodValue: aLookup [
+SmaCCToken >> typShaMethodUnaryValue: aLookup [
 	<typShaMethod: 'value'>
 	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]

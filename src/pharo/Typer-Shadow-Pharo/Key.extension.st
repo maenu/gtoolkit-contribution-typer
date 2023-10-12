@@ -1,13 +1,13 @@
 Extension { #name : #Key }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Key class >> typShaMethodH: aLookup [
+Key class >> typShaMethodUnaryH: aLookup [
 	<typShaMethod: 'h'>
 	^ CompiledMethod typAsFunctionTypeWithResult: BlKeyboardKey typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Key class >> typShaMethodT: aLookup [
+Key class >> typShaMethodUnaryT: aLookup [
 	<typShaMethod: 't'>
 	^ CompiledMethod typAsFunctionTypeWithResult: BlKeyboardKey typAsType
 ]

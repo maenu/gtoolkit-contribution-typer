@@ -1,7 +1,7 @@
 Extension { #name : #ReflectiveMethod }
 
 { #category : #'*Typer-Shadow-Pharo' }
-ReflectiveMethod >> typShaMethodCompiledMethod: aLookup [
+ReflectiveMethod >> typShaMethodUnaryCompiledMethod: aLookup [
 	<typShaMethod: 'compiledMethod'>
 	^ CompiledMethod typAsFunctionTypeWithResult: CompiledMethod typAsType
 ]

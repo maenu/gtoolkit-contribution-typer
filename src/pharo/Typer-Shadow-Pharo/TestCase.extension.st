@@ -1,7 +1,7 @@
 Extension { #name : #TestCase }
 
 { #category : #'*Typer-Shadow-Pharo' }
-TestCase class >> typShaMethodSuite: aLookup [
+TestCase class >> typShaMethodUnarySuite: aLookup [
 	<typShaMethod: 'suite'>
 	^ CompiledMethod typAsFunctionTypeWithResult: TestSuite typAsType
 ]

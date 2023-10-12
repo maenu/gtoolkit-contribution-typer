@@ -1,7 +1,7 @@
 Extension { #name : #GtFilteredMethodsCoder }
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtFilteredMethodsCoder >> typShaMethodMethodAdded: aLookup [
+GtFilteredMethodsCoder >> typShaMethodKeywordMethodAdded: aLookup [
 	<typShaMethod: 'methodAdded:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -9,7 +9,7 @@ GtFilteredMethodsCoder >> typShaMethodMethodAdded: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtFilteredMethodsCoder >> typShaMethodNewMethodCoderFor: aLookup [
+GtFilteredMethodsCoder >> typShaMethodKeywordNewMethodCoderFor: aLookup [
 	<typShaMethod: 'newMethodCoderFor:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtPharoMethodCoder typAsType

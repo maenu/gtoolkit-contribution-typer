@@ -1,45 +1,37 @@
 Extension { #name : #ScaledDecimal }
 
 { #category : #'*Typer-Shadow-Pharo' }
-ScaledDecimal >> typShaMethodBinary1: aLookup [
-	<typShaMethod: '-'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-ScaledDecimal >> typShaMethodBinary2: aLookup [
-	<typShaMethod: '*'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-ScaledDecimal >> typShaMethodBinary3: aLookup [
-	<typShaMethod: '+'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-ScaledDecimal >> typShaMethodBinary4: aLookup [
+ScaledDecimal >> typShaMethodBinaryDivide: aLookup [
 	<typShaMethod: '/'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
+	^ super typShaMethodBinaryDivide: aLookup
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-ScaledDecimal >> typShaMethodNegated: aLookup [
+ScaledDecimal >> typShaMethodBinaryMinus: aLookup [
+	<typShaMethod: '-'>
+	^ super typShaMethodBinaryMinus: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+ScaledDecimal >> typShaMethodBinaryMultiply: aLookup [
+	<typShaMethod: '*'>
+	^ super typShaMethodBinaryMultiply: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+ScaledDecimal >> typShaMethodBinaryPlus: aLookup [
+	<typShaMethod: '+'>
+	^ super typShaMethodBinaryPlus: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+ScaledDecimal >> typShaMethodUnaryNegated: aLookup [
 	<typShaMethod: 'negated'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Number typAsType
+	^ super typShaMethodUnaryNegated: aLookup
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-ScaledDecimal >> typShaMethodReciprocal: aLookup [
+ScaledDecimal >> typShaMethodUnaryReciprocal: aLookup [
 	<typShaMethod: 'reciprocal'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Number typAsType
+	^ super typShaMethodUnaryReciprocal: aLookup
 ]

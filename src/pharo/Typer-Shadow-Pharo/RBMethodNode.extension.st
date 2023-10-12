@@ -1,7 +1,7 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBMethodNode >> typShaMethodAddPragma: aLookup [
+RBMethodNode >> typShaMethodKeywordAddPragma: aLookup [
 	<typShaMethod: 'addPragma:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -9,27 +9,7 @@ RBMethodNode >> typShaMethodAddPragma: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBMethodNode >> typShaMethodAllChildren: aLookup [
-	<typShaMethod: 'allChildren'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: (SequenceableCollection typAsType withParameters: {RBProgramNode typAsType})
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-RBMethodNode >> typShaMethodArguments: aLookup [
-	<typShaMethod: 'arguments'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: (SequenceableCollection typAsType withParameters: {RBArgumentNode typAsType})
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-RBMethodNode >> typShaMethodBody: aLookup [
-	<typShaMethod: 'body'>
-	^ CompiledMethod typAsFunctionTypeWithResult: RBSequenceNode typAsType
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-RBMethodNode >> typShaMethodCompilationContext: aLookup [
+RBMethodNode >> typShaMethodKeywordCompilationContext: aLookup [
 	<typShaMethod: 'compilationContext:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -37,38 +17,7 @@ RBMethodNode >> typShaMethodCompilationContext: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBMethodNode >> typShaMethodIsPrimitive: aLookup [
-	<typShaMethod: 'isPrimitive'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-RBMethodNode >> typShaMethodMethod: aLookup [
-	<typShaMethod: 'method'>
-	^ CompiledMethod typAsFunctionTypeWithResult: CompiledMethod typAsType
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-RBMethodNode >> typShaMethodMethodClass: aLookup [
-	<typShaMethod: 'methodClass'>
-	^ CompiledMethod typAsFunctionTypeWithResult: ClassDescription typAsType
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-RBMethodNode >> typShaMethodNumArgs: aLookup [
-	<typShaMethod: 'numArgs'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-RBMethodNode >> typShaMethodPragmas: aLookup [
-	<typShaMethod: 'pragmas'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: (SequenceableCollection typAsType withParameters: {RBPragmaNode typAsType})
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-RBMethodNode >> typShaMethodRemovePragma: aLookup [
+RBMethodNode >> typShaMethodKeywordRemovePragma: aLookup [
 	<typShaMethod: 'removePragma:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -76,7 +25,57 @@ RBMethodNode >> typShaMethodRemovePragma: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBMethodNode >> typShaMethodSelector: aLookup [
+RBMethodNode >> typShaMethodUnaryAllChildren: aLookup [
+	<typShaMethod: 'allChildren'>
+	^ super typShaMethodUnaryAllChildren: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+RBMethodNode >> typShaMethodUnaryArguments: aLookup [
+	<typShaMethod: 'arguments'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (SequenceableCollection typAsType withParameters: {RBArgumentNode typAsType})
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+RBMethodNode >> typShaMethodUnaryBody: aLookup [
+	<typShaMethod: 'body'>
+	^ CompiledMethod typAsFunctionTypeWithResult: RBSequenceNode typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+RBMethodNode >> typShaMethodUnaryIsPrimitive: aLookup [
+	<typShaMethod: 'isPrimitive'>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+RBMethodNode >> typShaMethodUnaryMethod: aLookup [
+	<typShaMethod: 'method'>
+	^ CompiledMethod typAsFunctionTypeWithResult: CompiledMethod typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+RBMethodNode >> typShaMethodUnaryMethodClass: aLookup [
+	<typShaMethod: 'methodClass'>
+	^ CompiledMethod typAsFunctionTypeWithResult: ClassDescription typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+RBMethodNode >> typShaMethodUnaryNumArgs: aLookup [
+	<typShaMethod: 'numArgs'>
+	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+RBMethodNode >> typShaMethodUnaryPragmas: aLookup [
+	<typShaMethod: 'pragmas'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (SequenceableCollection typAsType withParameters: {RBPragmaNode typAsType})
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+RBMethodNode >> typShaMethodUnarySelector: aLookup [
 	<typShaMethod: 'selector'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Symbol typAsType
 ]

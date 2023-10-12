@@ -1,15 +1,7 @@
 Extension { #name : #SequenceableCollection }
 
 { #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection >> typShaMethodAt: aLookup [
-	<typShaMethod: 'at:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup self at: #A)
-		arguments: {Integer typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection >> typShaMethodAtIfAbsent: aLookup [
+SequenceableCollection >> typShaMethodKeywordAtIfAbsent: aLookup [
 	<typShaMethod: 'at:ifAbsent:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: {aLookup self at: #A.
@@ -19,7 +11,7 @@ SequenceableCollection >> typShaMethodAtIfAbsent: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection >> typShaMethodBeginsWith: aLookup [
+SequenceableCollection >> typShaMethodKeywordBeginsWith: aLookup [
 	<typShaMethod: 'beginsWith:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -27,7 +19,7 @@ SequenceableCollection >> typShaMethodBeginsWith: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection >> typShaMethodCopyFromTo: aLookup [
+SequenceableCollection >> typShaMethodKeywordCopyFromTo: aLookup [
 	<typShaMethod: 'copyFrom:to:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -36,7 +28,7 @@ SequenceableCollection >> typShaMethodCopyFromTo: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection >> typShaMethodDetectIndex: aLookup [
+SequenceableCollection >> typShaMethodKeywordDetectIndex: aLookup [
 	<typShaMethod: 'detectIndex:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Integer typAsType
@@ -46,7 +38,7 @@ SequenceableCollection >> typShaMethodDetectIndex: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection >> typShaMethodEndsWith: aLookup [
+SequenceableCollection >> typShaMethodKeywordEndsWith: aLookup [
 	<typShaMethod: 'endsWith:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -54,13 +46,7 @@ SequenceableCollection >> typShaMethodEndsWith: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection >> typShaMethodFirst: aLookup [
-	<typShaMethod: 'first'>
-	^ CompiledMethod typAsFunctionTypeWithResult: (aLookup receiver at: #A)
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection >> typShaMethodIndexOf: aLookup [
+SequenceableCollection >> typShaMethodKeywordIndexOf: aLookup [
 	<typShaMethod: 'indexOf:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Integer typAsType
@@ -68,19 +54,7 @@ SequenceableCollection >> typShaMethodIndexOf: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection >> typShaMethodIsEmpty: aLookup [
-	<typShaMethod: 'isEmpty'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection >> typShaMethodLast: aLookup [
-	<typShaMethod: 'last'>
-	^ CompiledMethod typAsFunctionTypeWithResult: (aLookup receiver at: #A)
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection class >> typShaMethodOfSize: aLookup [
+SequenceableCollection class >> typShaMethodKeywordOfSize: aLookup [
 	<typShaMethod: 'ofSize:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self classDescription instanceSide typAsType
@@ -88,13 +62,7 @@ SequenceableCollection class >> typShaMethodOfSize: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection >> typShaMethodReversed: aLookup [
-	<typShaMethod: 'reversed'>
-	^ CompiledMethod typAsFunctionTypeWithResult: aLookup self
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection >> typShaMethodSort: aLookup [
+SequenceableCollection >> typShaMethodKeywordSort: aLookup [
 	<typShaMethod: 'sort:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -105,7 +73,7 @@ SequenceableCollection >> typShaMethodSort: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection class >> typShaMethodStreamContents: aLookup [
+SequenceableCollection class >> typShaMethodKeywordStreamContents: aLookup [
 	<typShaMethod: 'streamContents:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self classDescription instanceSide typAsType
@@ -115,7 +83,7 @@ SequenceableCollection class >> typShaMethodStreamContents: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection >> typShaMethodWithIndexDo: aLookup [
+SequenceableCollection >> typShaMethodKeywordWithIndexDo: aLookup [
 	<typShaMethod: 'withIndexDo:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -126,7 +94,7 @@ SequenceableCollection >> typShaMethodWithIndexDo: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SequenceableCollection >> typShaMethodWithIndexSelect: aLookup [
+SequenceableCollection >> typShaMethodKeywordWithIndexSelect: aLookup [
 	<typShaMethod: 'withIndexSelect:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -134,6 +102,24 @@ SequenceableCollection >> typShaMethodWithIndexSelect: aLookup [
 					typAsFunctionTypeWithResult: Boolean typAsType
 					arguments: {aLookup receiver at: #A.
 							Integer typAsType}}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+SequenceableCollection >> typShaMethodUnaryFirst: aLookup [
+	<typShaMethod: 'first'>
+	^ CompiledMethod typAsFunctionTypeWithResult: (aLookup receiver at: #A)
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+SequenceableCollection >> typShaMethodUnaryLast: aLookup [
+	<typShaMethod: 'last'>
+	^ CompiledMethod typAsFunctionTypeWithResult: (aLookup receiver at: #A)
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+SequenceableCollection >> typShaMethodUnaryReversed: aLookup [
+	<typShaMethod: 'reversed'>
+	^ CompiledMethod typAsFunctionTypeWithResult: aLookup self
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }

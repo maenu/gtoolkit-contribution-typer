@@ -1,21 +1,13 @@
 Extension { #name : #Float }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Float >> typShaMetAbs: aLookup [
-	<typShaMethod: 'abs'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Float typAsType
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Float >> typShaMetBasicAt: aLookup [
+Float >> typShaMethodKeywordBasicAt: aLookup [
 	<typShaMethod: 'basicAt:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Integer typAsType
-		arguments: {Integer typAsType}
+	^ super typShaMethodKeywordBasicAt: aLookup
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Float >> typShaMetBasicAtPut: aLookup [
+Float >> typShaMethodKeywordBasicAtPut: aLookup [
 	<typShaMethod: 'basicAt:put:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Integer typAsType
@@ -23,13 +15,19 @@ Float >> typShaMetBasicAtPut: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Float >> typShaMetNegated: aLookup [
-	<typShaMethod: 'negated'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Float typAsType
+Float >> typShaMethodUnaryAbs: aLookup [
+	<typShaMethod: 'abs'>
+	^ super typShaMethodUnaryAbs: aLookup
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Float >> typShaMetReciprocal: aLookup [
+Float >> typShaMethodUnaryNegated: aLookup [
+	<typShaMethod: 'negated'>
+	^ super typShaMethodUnaryNegated: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Float >> typShaMethodUnaryReciprocal: aLookup [
 	<typShaMethod: 'reciprocal'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Number typAsType
+	^ super typShaMethodUnaryReciprocal: aLookup
 ]

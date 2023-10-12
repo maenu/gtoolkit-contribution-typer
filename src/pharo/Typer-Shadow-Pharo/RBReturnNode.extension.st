@@ -1,7 +1,7 @@
 Extension { #name : #RBReturnNode }
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBReturnNode >> typShaMethodValue: aLookup [
+RBReturnNode >> typShaMethodUnaryValue: aLookup [
 	<typShaMethod: 'value'>
 	^ CompiledMethod typAsFunctionTypeWithResult: RBValueNode typAsType
 ]

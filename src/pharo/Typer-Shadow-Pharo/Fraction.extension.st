@@ -1,45 +1,75 @@
 Extension { #name : #Fraction }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Fraction >> typShaMetBinary1: aLookup [
-	<typShaMethod: '-'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Fraction >> typShaMetBinary2: aLookup [
-	<typShaMethod: '*'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Fraction >> typShaMetBinary3: aLookup [
-	<typShaMethod: '+'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Fraction >> typShaMetBinary4: aLookup [
+Fraction >> typShaMethodBinaryDivide: aLookup [
 	<typShaMethod: '/'>
+	^ super typShaMethodBinaryDivide: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Fraction >> typShaMethodBinaryEqual: aLookup [
+	<typShaMethod: '='>
+	^ super typShaMethodBinaryEqual: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Fraction >> typShaMethodBinaryGreater: aLookup [
+	<typShaMethod: '>'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
+		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {Number typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Fraction >> typShaMetNegated: aLookup [
-	<typShaMethod: 'negated'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Fraction typAsType
+Fraction >> typShaMethodBinaryGreaterOrEqual: aLookup [
+	<typShaMethod: '>='>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {Number typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Fraction >> typShaMetReciprocal: aLookup [
+Fraction >> typShaMethodBinaryLess: aLookup [
+	<typShaMethod: '<'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {Number typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Fraction >> typShaMethodBinaryLessOrEqual: aLookup [
+	<typShaMethod: '<='>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {Number typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Fraction >> typShaMethodBinaryMinus: aLookup [
+	<typShaMethod: '-'>
+	^ super typShaMethodBinaryMinus: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Fraction >> typShaMethodBinaryMultiply: aLookup [
+	<typShaMethod: '*'>
+	^ super typShaMethodBinaryMultiply: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Fraction >> typShaMethodBinaryPlus: aLookup [
+	<typShaMethod: '+'>
+	^ super typShaMethodBinaryPlus: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Fraction >> typShaMethodUnaryNegated: aLookup [
+	<typShaMethod: 'negated'>
+	^ super typShaMethodUnaryNegated: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Fraction >> typShaMethodUnaryReciprocal: aLookup [
 	<typShaMethod: 'reciprocal'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Number typAsType
+	^ super typShaMethodUnaryReciprocal: aLookup
 ]

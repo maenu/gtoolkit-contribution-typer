@@ -1,7 +1,7 @@
 Extension { #name : #BlShortcut }
 
 { #category : #'*Typer-Shadow-Bloc' }
-BlShortcut >> typShaMethodCombination: aLookup [
+BlShortcut >> typShaMethodKeywordCombination: aLookup [
 	<typShaMethod: 'combination:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self

@@ -1,7 +1,7 @@
 Extension { #name : #BlLayoutCommonConstraintsAxis }
 
 { #category : #'*Typer-Shadow-Bloc' }
-BlLayoutCommonConstraintsAxis >> typShaMethodExact: aLookup [
+BlLayoutCommonConstraintsAxis >> typShaMethodKeywordExact: aLookup [
 	<typShaMethod: 'exact:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self

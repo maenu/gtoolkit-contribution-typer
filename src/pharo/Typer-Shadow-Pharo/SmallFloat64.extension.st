@@ -1,31 +1,19 @@
 Extension { #name : #SmallFloat64 }
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallFloat64 >> typShaMetBinary1: aLookup [
-	<typShaMethod: '+'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
+SmallFloat64 >> typShaMethodBinaryDivide: aLookup [
+	<typShaMethod: '/'>
+	^ super typShaMethodBinaryDivide: aLookup
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallFloat64 >> typShaMetBinary2: aLookup [
-	<typShaMethod: '-'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
+SmallFloat64 >> typShaMethodBinaryEqual: aLookup [
+	<typShaMethod: '='>
+	^ super typShaMethodBinaryEqual: aLookup
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallFloat64 >> typShaMetBinary3: aLookup [
-	<typShaMethod: '<'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {Float typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-SmallFloat64 >> typShaMetBinary4: aLookup [
+SmallFloat64 >> typShaMethodBinaryGreater: aLookup [
 	<typShaMethod: '>'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -33,31 +21,49 @@ SmallFloat64 >> typShaMetBinary4: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallFloat64 >> typShaMetBinary5: aLookup [
-	<typShaMethod: '='>
+SmallFloat64 >> typShaMethodBinaryGreaterOrEqual: aLookup [
+	<typShaMethod: '>='>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {Number typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+SmallFloat64 >> typShaMethodBinaryLess: aLookup [
+	<typShaMethod: '<'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {Float typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallFloat64 >> typShaMetBinary6: aLookup [
+SmallFloat64 >> typShaMethodBinaryLessOrEqual: aLookup [
+	<typShaMethod: '<='>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {Number typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+SmallFloat64 >> typShaMethodBinaryMinus: aLookup [
+	<typShaMethod: '-'>
+	^ super typShaMethodBinaryMinus: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+SmallFloat64 >> typShaMethodBinaryMultiply: aLookup [
 	<typShaMethod: '*'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
+	^ super typShaMethodBinaryMultiply: aLookup
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallFloat64 >> typShaMetBinary7: aLookup [
-	<typShaMethod: '/'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
+SmallFloat64 >> typShaMethodBinaryPlus: aLookup [
+	<typShaMethod: '+'>
+	^ super typShaMethodBinaryPlus: aLookup
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallFloat64 >> typShaMetTruncated: aLookup [
+SmallFloat64 >> typShaMethodUnaryTruncated: aLookup [
 	<typShaMethod: 'truncated'>
 	^ CompiledMethod typAsFunctionTypeWithResult: SmallInteger typAsType
 ]

@@ -1,7 +1,7 @@
 Extension { #name : #Exception }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Exception >> typShaMethodSignal2: aLookup [
+Exception >> typShaMethodKeywordSignal: aLookup [
 	<typShaMethod: 'signal:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypVoidType instance
@@ -12,7 +12,7 @@ Exception >> typShaMethodSignal2: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Exception >> typShaMethodSignal: aLookup [
+Exception >> typShaMethodUnarySignal: aLookup [
 	<typShaMethod: 'signal'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypVoidType instance

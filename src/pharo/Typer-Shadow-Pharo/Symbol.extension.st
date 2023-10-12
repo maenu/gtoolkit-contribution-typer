@@ -1,19 +1,19 @@
 Extension { #name : #Symbol }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Symbol >> typShaMethodIsBinary: aLookup [
+Symbol >> typShaMethodUnaryIsBinary: aLookup [
 	<typShaMethod: 'isBinary'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Symbol >> typShaMethodIsKeyword: aLookup [
+Symbol >> typShaMethodUnaryIsKeyword: aLookup [
 	<typShaMethod: 'isKeyword'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Symbol >> typShaMethodIsUnary: aLookup [
+Symbol >> typShaMethodUnaryIsUnary: aLookup [
 	<typShaMethod: 'isUnary'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]

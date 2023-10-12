@@ -1,14 +1,14 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBMessageNode >> typShaMethodArguments: aLookup [
+RBMessageNode >> typShaMethodUnaryArguments: aLookup [
 	<typShaMethod: 'arguments'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (SequenceableCollection typAsType withParameters: {RBValueNode typAsType})
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBMessageNode >> typShaMethodKeywordsIntervals: aLookup [
+RBMessageNode >> typShaMethodUnaryKeywordsIntervals: aLookup [
 	<typShaMethod: 'keywordsIntervals'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (SequenceableCollection typAsType
@@ -16,19 +16,19 @@ RBMessageNode >> typShaMethodKeywordsIntervals: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBMessageNode >> typShaMethodNumArgs: aLookup [
+RBMessageNode >> typShaMethodUnaryNumArgs: aLookup [
 	<typShaMethod: 'numArgs'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBMessageNode >> typShaMethodReceiver: aLookup [
+RBMessageNode >> typShaMethodUnaryReceiver: aLookup [
 	<typShaMethod: 'receiver'>
 	^ CompiledMethod typAsFunctionTypeWithResult: RBValueNode typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBMessageNode >> typShaMethodSelector: aLookup [
+RBMessageNode >> typShaMethodUnarySelector: aLookup [
 	<typShaMethod: 'selector'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Symbol typAsType
 ]

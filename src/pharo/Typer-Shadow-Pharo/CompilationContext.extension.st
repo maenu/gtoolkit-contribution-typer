@@ -1,7 +1,7 @@
 Extension { #name : #CompilationContext }
 
 { #category : #'*Typer-Shadow-Pharo' }
-CompilationContext >> typShaMethodBindings: aLookup [
+CompilationContext >> typShaMethodKeywordBindings: aLookup [
 	<typShaMethod: 'bindings:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -9,7 +9,7 @@ CompilationContext >> typShaMethodBindings: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-CompilationContext >> typShaMethodClass: aLookup [
+CompilationContext >> typShaMethodKeywordClass: aLookup [
 	<typShaMethod: 'class:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -17,7 +17,7 @@ CompilationContext >> typShaMethodClass: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-CompilationContext >> typShaMethodForSyntaxHighlighting: aLookup [
+CompilationContext >> typShaMethodKeywordForSyntaxHighlighting: aLookup [
 	<typShaMethod: 'forSyntaxHighlighting:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -25,7 +25,7 @@ CompilationContext >> typShaMethodForSyntaxHighlighting: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-CompilationContext >> typShaMethodRequestor: aLookup [
+CompilationContext >> typShaMethodKeywordRequestor: aLookup [
 	<typShaMethod: 'requestor:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self

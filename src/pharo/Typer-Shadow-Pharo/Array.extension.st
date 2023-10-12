@@ -1,9 +1,7 @@
 Extension { #name : #Array }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Array class >> typShaMethodNew2: aLookup [
+Array class >> typShaMethodKeywordNew: aLookup [
 	<typShaMethod: 'new:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root self classDescription instanceSide typAsType
-		arguments: {Integer typAsType}
+	^ super typShaMethodKeywordNew: aLookup
 ]

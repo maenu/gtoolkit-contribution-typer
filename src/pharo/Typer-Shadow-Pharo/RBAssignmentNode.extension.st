@@ -1,13 +1,13 @@
 Extension { #name : #RBAssignmentNode }
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBAssignmentNode >> typShaMethodValue: aLookup [
+RBAssignmentNode >> typShaMethodUnaryValue: aLookup [
 	<typShaMethod: 'value'>
 	^ CompiledMethod typAsFunctionTypeWithResult: RBValueNode typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBAssignmentNode >> typShaMethodVariable: aLookup [
+RBAssignmentNode >> typShaMethodUnaryVariable: aLookup [
 	<typShaMethod: 'variable'>
 	^ CompiledMethod typAsFunctionTypeWithResult: RBVariableNode typAsType
 ]

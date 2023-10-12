@@ -1,61 +1,7 @@
 Extension { #name : #Number }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Number >> typShaMethodAbs: aLookup [
-	<typShaMethod: 'abs'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Number typAsType
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Number >> typShaMethodBinary1: aLookup [
-	<typShaMethod: '*'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Number >> typShaMethodBinary2: aLookup [
-	<typShaMethod: '+'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Number >> typShaMethodBinary3: aLookup [
-	<typShaMethod: '-'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Number >> typShaMethodBinary4: aLookup [
-	<typShaMethod: '/'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Number >> typShaMethodBinary5: aLookup [
-	<typShaMethod: '//'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Number >> typShaMethodBinary6: aLookup [
-	<typShaMethod: '\\'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Number >> typShaMethodBinary: aLookup [
+Number >> typShaMethodBinaryAt: aLookup [
 	<typShaMethod: '@'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Point typAsType
@@ -63,13 +9,55 @@ Number >> typShaMethodBinary: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Number >> typShaMethodNegated: aLookup [
-	<typShaMethod: 'negated'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Number typAsType
+Number >> typShaMethodBinaryDivide: aLookup [
+	<typShaMethod: '/'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Number typAsType
+		arguments: {Number typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Number >> typShaMethodQuo: aLookup [
+Number >> typShaMethodBinaryIntegerDivide: aLookup [
+	<typShaMethod: '//'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType
+		arguments: {Number typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Number >> typShaMethodBinaryMinus: aLookup [
+	<typShaMethod: '-'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Number typAsType
+		arguments: {Number typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Number >> typShaMethodBinaryModulo: aLookup [
+	<typShaMethod: '\\'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Number typAsType
+		arguments: {Number typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Number >> typShaMethodBinaryMultiply: aLookup [
+	<typShaMethod: '*'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Number typAsType
+		arguments: {Number typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Number >> typShaMethodBinaryPlus: aLookup [
+	<typShaMethod: '+'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Number typAsType
+		arguments: {Number typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Number >> typShaMethodKeywordQuo: aLookup [
 	<typShaMethod: 'quo:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Integer typAsType
@@ -77,13 +65,7 @@ Number >> typShaMethodQuo: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Number >> typShaMethodReciprocal: aLookup [
-	<typShaMethod: 'reciprocal'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Number typAsType
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Number >> typShaMethodRem: aLookup [
+Number >> typShaMethodKeywordRem: aLookup [
 	<typShaMethod: 'rem:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Number typAsType
@@ -91,7 +73,7 @@ Number >> typShaMethodRem: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Number >> typShaMethodTimesCollect: aLookup [
+Number >> typShaMethodKeywordTimesCollect: aLookup [
 	<typShaMethod: 'timesCollect:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (OrderedCollection typAsType
@@ -105,11 +87,29 @@ Number >> typShaMethodTimesCollect: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Number >> typShaMethodTo: aLookup [
+Number >> typShaMethodKeywordTo: aLookup [
 	<typShaMethod: 'to:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Interval typAsType
 				withParameters: {{aLookup self.
 							aLookup arguments at: 1} typAsType})
 		arguments: {Number typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Number >> typShaMethodUnaryAbs: aLookup [
+	<typShaMethod: 'abs'>
+	^ CompiledMethod typAsFunctionTypeWithResult: Number typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Number >> typShaMethodUnaryNegated: aLookup [
+	<typShaMethod: 'negated'>
+	^ CompiledMethod typAsFunctionTypeWithResult: aLookup root self
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Number >> typShaMethodUnaryReciprocal: aLookup [
+	<typShaMethod: 'reciprocal'>
+	^ CompiledMethod typAsFunctionTypeWithResult: Number typAsType
 ]

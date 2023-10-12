@@ -1,7 +1,7 @@
 Extension { #name : #Color }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Color >> typShaMethodAlpha: aLookup [
+Color >> typShaMethodKeywordAlpha: aLookup [
 	<typShaMethod: 'alpha:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -9,37 +9,37 @@ Color >> typShaMethodAlpha: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Color class >> typShaMethodBlue: aLookup [
+Color class >> typShaMethodUnaryBlue: aLookup [
 	<typShaMethod: 'blue'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Color typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Color class >> typShaMethodGreen: aLookup [
+Color class >> typShaMethodUnaryGreen: aLookup [
 	<typShaMethod: 'green'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Color typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Color class >> typShaMethodOrange: aLookup [
+Color class >> typShaMethodUnaryOrange: aLookup [
 	<typShaMethod: 'orange'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Color typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Color class >> typShaMethodPurple: aLookup [
+Color class >> typShaMethodUnaryPurple: aLookup [
 	<typShaMethod: 'purple'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Color typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Color class >> typShaMethodRed: aLookup [
+Color class >> typShaMethodUnaryRed: aLookup [
 	<typShaMethod: 'red'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Color typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Color class >> typShaMethodVeryLightGray: aLookup [
+Color class >> typShaMethodUnaryVeryLightGray: aLookup [
 	<typShaMethod: 'veryLightGray'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Color typAsType
 ]

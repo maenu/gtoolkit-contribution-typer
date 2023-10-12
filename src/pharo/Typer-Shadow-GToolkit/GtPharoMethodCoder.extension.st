@@ -1,13 +1,7 @@
 Extension { #name : #GtPharoMethodCoder }
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoMethodCoder >> typShaMethodCompiledMethod: aLookup [
-	<typShaMethod: 'compiledMethod'>
-	^ CompiledMethod typAsFunctionTypeWithResult: CompiledMethod typAsType
-]
-
-{ #category : #'*Typer-Shadow-GToolkit' }
-GtPharoMethodCoder class >> typShaMethodForMethod: aLookup [
+GtPharoMethodCoder class >> typShaMethodKeywordForMethod: aLookup [
 	<typShaMethod: 'forMethod:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
@@ -15,35 +9,41 @@ GtPharoMethodCoder class >> typShaMethodForMethod: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoMethodCoder >> typShaMethodNewCompletionStrategy: aLookup [
+GtPharoMethodCoder >> typShaMethodKeywordUpdateMethod: aLookup [
+	<typShaMethod: 'updateMethod:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup self
+		arguments: {CompiledMethod typAsType}
+]
+
+{ #category : #'*Typer-Shadow-GToolkit' }
+GtPharoMethodCoder >> typShaMethodUnaryCompiledMethod: aLookup [
+	<typShaMethod: 'compiledMethod'>
+	^ CompiledMethod typAsFunctionTypeWithResult: CompiledMethod typAsType
+]
+
+{ #category : #'*Typer-Shadow-GToolkit' }
+GtPharoMethodCoder >> typShaMethodUnaryNewCompletionStrategy: aLookup [
 	<typShaMethod: 'newCompletionStrategy'>
 	^ CompiledMethod typAsFunctionTypeWithResult: GtCompletionStrategy typAsType
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoMethodCoder >> typShaMethodRbAST: aLookup [
+GtPharoMethodCoder >> typShaMethodUnaryRbAST: aLookup [
 	<typShaMethod: 'rbAST'>
 	^ CompiledMethod typAsFunctionTypeWithResult: RBMethodNode typAsType
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoMethodCoder >> typShaMethodSave: aLookup [
+GtPharoMethodCoder >> typShaMethodUnarySave: aLookup [
 	<typShaMethod: 'save'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoMethodCoder >> typShaMethodSelector: aLookup [
+GtPharoMethodCoder >> typShaMethodUnarySelector: aLookup [
 	<typShaMethod: 'selector'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Symbol typAsType
-]
-
-{ #category : #'*Typer-Shadow-GToolkit' }
-GtPharoMethodCoder >> typShaMethodUpdateMethod: aLookup [
-	<typShaMethod: 'updateMethod:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup self
-		arguments: {CompiledMethod typAsType}
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }

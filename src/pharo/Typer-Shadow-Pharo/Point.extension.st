@@ -1,7 +1,7 @@
 Extension { #name : #Point }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Point >> typShaMethodAbs: aLookup [
+Point >> typShaMethodUnaryAbs: aLookup [
 	<typShaMethod: 'abs'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Number typAsType
 ]

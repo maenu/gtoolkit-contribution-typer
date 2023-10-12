@@ -1,80 +1,7 @@
 Extension { #name : #Dictionary }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodAnyOne: aLookup [
-	<typShaMethod: 'anyOne'>
-	^ CompiledMethod typAsFunctionTypeWithResult: (aLookup receiver at: #A)
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodAsOrderedDictionary: aLookup [
-	<typShaMethod: 'asOrderedDictionary'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: (OrderedDictionary typAsType
-				withParameters: {aLookup receiver at: #B.
-						aLookup receiver at: #A})
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodAssociations: aLookup [
-	<typShaMethod: 'associations'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: (Array typAsType
-				withParameters: {Association typAsType
-							withParameters: {aLookup receiver at: #B.
-									aLookup receiver at: #A}})
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodAssociationsDo: aLookup [
-	<typShaMethod: 'associationsDo:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup self
-		arguments: {BlockClosure
-					typAsFunctionTypeWithResult: TypUnknownType instance
-					arguments: {Association typAsType
-								withParameters: {aLookup receiver at: #B.
-										aLookup receiver at: #A}}}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodAt: aLookup [
-	<typShaMethod: 'at:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup self at: #A)
-		arguments: {aLookup self at: #B}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodAtIfAbsent: aLookup [
-	<typShaMethod: 'at:ifAbsent:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: {aLookup receiver at: #A.
-				aLookup arguments second result} typAsType
-		arguments: {aLookup receiver at: #B.
-				BlockClosure typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodAtIfAbsentPut: aLookup [
-	<typShaMethod: 'at:ifAbsentPut:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
-		arguments: {aLookup receiver at: #B.
-				BlockClosure typAsFunctionTypeWithResult: (aLookup receiver at: #A)}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodAtPut: aLookup [
-	<typShaMethod: 'at:put:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
-		arguments: {aLookup receiver at: #B.
-				aLookup receiver at: #A}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodBinary214: aLookup [
+Dictionary >> typShaMethodBinaryConcatenate: aLookup [
 	<typShaMethod: ','>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver
@@ -86,15 +13,61 @@ Dictionary >> typShaMethodBinary214: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodIncludes: aLookup [
-	<typShaMethod: 'includes:'>
+Dictionary >> typShaMethodKeywordAssociationsDo: aLookup [
+	<typShaMethod: 'associationsDo:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {aLookup receiver at: #A}
+		typAsFunctionTypeWithResult: aLookup self
+		arguments: {BlockClosure
+					typAsFunctionTypeWithResult: TypUnknownType instance
+					arguments: {Association typAsType
+								withParameters: {aLookup receiver at: #B.
+										aLookup receiver at: #A}}}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodIncludesKey: aLookup [
+Dictionary >> typShaMethodKeywordAt: aLookup [
+	<typShaMethod: 'at:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup self at: #A)
+		arguments: {aLookup self at: #B}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Dictionary >> typShaMethodKeywordAtIfAbsent: aLookup [
+	<typShaMethod: 'at:ifAbsent:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: {aLookup receiver at: #A.
+				aLookup arguments second result} typAsType
+		arguments: {aLookup receiver at: #B.
+				BlockClosure typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Dictionary >> typShaMethodKeywordAtIfAbsentPut: aLookup [
+	<typShaMethod: 'at:ifAbsentPut:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
+		arguments: {aLookup receiver at: #B.
+				BlockClosure typAsFunctionTypeWithResult: (aLookup receiver at: #A)}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Dictionary >> typShaMethodKeywordAtPut: aLookup [
+	<typShaMethod: 'at:put:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
+		arguments: {aLookup receiver at: #B.
+				aLookup receiver at: #A}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Dictionary >> typShaMethodKeywordIncludes: aLookup [
+	<typShaMethod: 'includes:'>
+	^ super typShaMethodKeywordIncludes: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Dictionary >> typShaMethodKeywordIncludesKey: aLookup [
 	<typShaMethod: 'includesKey:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -102,14 +75,7 @@ Dictionary >> typShaMethodIncludesKey: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodKeys: aLookup [
-	<typShaMethod: 'keys'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: (Collection typAsType withParameters: {aLookup receiver at: #B})
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodKeysAndValuesDo: aLookup [
+Dictionary >> typShaMethodKeywordKeysAndValuesDo: aLookup [
 	<typShaMethod: 'keysAndValuesDo:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -120,7 +86,7 @@ Dictionary >> typShaMethodKeysAndValuesDo: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodRemoveKeyIfAbsent: aLookup [
+Dictionary >> typShaMethodKeywordRemoveKeyIfAbsent: aLookup [
 	<typShaMethod: 'removeKey:ifAbsent:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: {aLookup receiver at: #A.
@@ -130,7 +96,39 @@ Dictionary >> typShaMethodRemoveKeyIfAbsent: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodValues: aLookup [
+Dictionary >> typShaMethodUnaryAnyOne: aLookup [
+	<typShaMethod: 'anyOne'>
+	^ super typShaMethodUnaryAnyOne: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Dictionary >> typShaMethodUnaryAsOrderedDictionary: aLookup [
+	<typShaMethod: 'asOrderedDictionary'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (OrderedDictionary typAsType
+				withParameters: {aLookup receiver at: #B.
+						aLookup receiver at: #A})
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Dictionary >> typShaMethodUnaryAssociations: aLookup [
+	<typShaMethod: 'associations'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (Array typAsType
+				withParameters: {Association typAsType
+							withParameters: {aLookup receiver at: #B.
+									aLookup receiver at: #A}})
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Dictionary >> typShaMethodUnaryKeys: aLookup [
+	<typShaMethod: 'keys'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (Collection typAsType withParameters: {aLookup receiver at: #B})
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Dictionary >> typShaMethodUnaryValues: aLookup [
 	<typShaMethod: 'values'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Collection typAsType withParameters: {aLookup self at: #A})

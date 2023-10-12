@@ -1,13 +1,13 @@
 Extension { #name : #GtPharoUnaryMessageNode }
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoUnaryMessageNode >> typShaMethodParent: aLookup [
+GtPharoUnaryMessageNode >> typShaMethodUnaryParent: aLookup [
 	<typShaMethod: 'parent'>
 	^ CompiledMethod typAsFunctionTypeWithResult: GtPharoMessageSendNode typAsType
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoUnaryMessageNode >> typShaMethodSelectorPart: aLookup [
+GtPharoUnaryMessageNode >> typShaMethodUnarySelectorPart: aLookup [
 	<typShaMethod: 'selectorPart'>
 	^ CompiledMethod typAsFunctionTypeWithResult: SmaCCToken typAsType
 ]

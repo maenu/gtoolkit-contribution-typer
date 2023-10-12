@@ -1,7 +1,7 @@
 Extension { #name : #TestSuite }
 
 { #category : #'*Typer-Shadow-Pharo' }
-TestSuite >> typShaMethodRun: aLookup [
+TestSuite >> typShaMethodKeywordRun: aLookup [
 	<typShaMethod: 'run:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self

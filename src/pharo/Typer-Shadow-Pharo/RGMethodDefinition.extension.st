@@ -1,7 +1,7 @@
 Extension { #name : #RGMethodDefinition }
 
 { #category : #'*Typer-Shadow-Pharo' }
-RGMethodDefinition >> typShaMethodCompiledMethod: aLookup [
+RGMethodDefinition >> typShaMethodUnaryCompiledMethod: aLookup [
 	<typShaMethod: 'compiledMethod'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: CompiledMethod typAsType asNullable

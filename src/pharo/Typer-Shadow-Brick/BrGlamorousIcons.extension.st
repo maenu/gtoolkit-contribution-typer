@@ -1,13 +1,13 @@
 Extension { #name : #BrGlamorousIcons }
 
 { #category : #'*Typer-Shadow-Brick' }
-BrGlamorousIcons class >> typShaMethodBrowse: aLookup [
+BrGlamorousIcons class >> typShaMethodUnaryBrowse: aLookup [
 	<typShaMethod: 'browse'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Form typAsType
 ]
 
 { #category : #'*Typer-Shadow-Brick' }
-BrGlamorousIcons class >> typShaMethodInspect: aLookup [
+BrGlamorousIcons class >> typShaMethodUnaryInspect: aLookup [
 	<typShaMethod: 'inspect'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Form typAsType
 ]

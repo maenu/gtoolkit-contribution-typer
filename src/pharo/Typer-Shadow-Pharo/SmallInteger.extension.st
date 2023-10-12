@@ -1,93 +1,67 @@
 Extension { #name : #SmallInteger }
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMetAsFloat: aLookup [
-	<typShaMethod: 'asFloat'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Float typAsType
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMetBinary10: aLookup [
-	<typShaMethod: '\\'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMetBinary1: aLookup [
-	<typShaMethod: '+'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMetBinary2: aLookup [
-	<typShaMethod: '-'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMetBinary3: aLookup [
-	<typShaMethod: '<'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: TypUnknownType instance
-		arguments: {Boolean typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMetBinary4: aLookup [
-	<typShaMethod: '>'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: TypUnknownType instance
-		arguments: {Boolean typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMetBinary5: aLookup [
-	<typShaMethod: '='>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: TypUnknownType instance
-		arguments: {Boolean typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMetBinary6: aLookup [
-	<typShaMethod: '~='>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: TypUnknownType instance
-		arguments: {Boolean typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMetBinary7: aLookup [
-	<typShaMethod: '*'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMetBinary8: aLookup [
-	<typShaMethod: '//'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Integer typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMetBinary9: aLookup [
+SmallInteger >> typShaMethodBinaryDivide: aLookup [
 	<typShaMethod: '/'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Number typAsType}
+	^ super typShaMethodBinaryDivide: aLookup
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMetBitAnd: aLookup [
+SmallInteger >> typShaMethodBinaryEqual: aLookup [
+	<typShaMethod: '='>
+	^ super typShaMethodBinaryEqual: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+SmallInteger >> typShaMethodBinaryGreater: aLookup [
+	<typShaMethod: '>'>
+	^ super typShaMethodBinaryGreater: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+SmallInteger >> typShaMethodBinaryIntegerDivide: aLookup [
+	<typShaMethod: '//'>
+	^ super typShaMethodBinaryIntegerDivide: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+SmallInteger >> typShaMethodBinaryLess: aLookup [
+	<typShaMethod: '<'>
+	^ super typShaMethodBinaryLess: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+SmallInteger >> typShaMethodBinaryMinus: aLookup [
+	<typShaMethod: '-'>
+	^ super typShaMethodBinaryMinus: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+SmallInteger >> typShaMethodBinaryModulo: aLookup [
+	<typShaMethod: '\\'>
+	^ super typShaMethodBinaryModulo: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+SmallInteger >> typShaMethodBinaryMultiply: aLookup [
+	<typShaMethod: '*'>
+	^ super typShaMethodBinaryMultiply: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+SmallInteger >> typShaMethodBinaryNotEqual: aLookup [
+	<typShaMethod: '~='>
+	^ super typShaMethodBinaryNotEqual: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+SmallInteger >> typShaMethodBinaryPlus: aLookup [
+	<typShaMethod: '+'>
+	^ super typShaMethodBinaryPlus: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+SmallInteger >> typShaMethodKeywordBitAnd: aLookup [
 	<typShaMethod: 'bitAnd:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType instance
@@ -95,7 +69,7 @@ SmallInteger >> typShaMetBitAnd: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMetBitOr: aLookup [
+SmallInteger >> typShaMethodKeywordBitOr: aLookup [
 	<typShaMethod: 'bitOr:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType instance
@@ -103,7 +77,7 @@ SmallInteger >> typShaMetBitOr: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMetBitShift: aLookup [
+SmallInteger >> typShaMethodKeywordBitShift: aLookup [
 	<typShaMethod: 'bitShift:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Integer typAsType
@@ -111,23 +85,19 @@ SmallInteger >> typShaMetBitShift: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMetBitXor: aLookup [
+SmallInteger >> typShaMethodKeywordBitXor: aLookup [
 	<typShaMethod: 'bitXor:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: TypUnknownType instance
-		arguments: {Integer typAsType}
+	^ super typShaMethodKeywordBitXor: aLookup
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMetQuo: aLookup [
+SmallInteger >> typShaMethodKeywordQuo: aLookup [
 	<typShaMethod: 'quo:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Number typAsType
-		arguments: {Integer typAsType}
+	^ super typShaMethodKeywordQuo: aLookup
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMetRfMinus: aLookup [
+SmallInteger >> typShaMethodKeywordRfMinus: aLookup [
 	<typShaMethod: 'rfMinus:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Number typAsType
@@ -135,9 +105,15 @@ SmallInteger >> typShaMetRfMinus: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMetRfPlus: aLookup [
+SmallInteger >> typShaMethodKeywordRfPlus: aLookup [
 	<typShaMethod: 'rfPlus:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Number typAsType
 		arguments: {Number typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+SmallInteger >> typShaMethodUnaryAsFloat: aLookup [
+	<typShaMethod: 'asFloat'>
+	^ CompiledMethod typAsFunctionTypeWithResult: Float typAsType
 ]

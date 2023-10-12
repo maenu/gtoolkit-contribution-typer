@@ -1,7 +1,7 @@
 Extension { #name : #BrTextEditor }
 
 { #category : #'*Typer-Shadow-Brick' }
-BrTextEditor >> typShaMethodInvalidateTo: aLookup [
+BrTextEditor >> typShaMethodKeywordInvalidateTo: aLookup [
 	<typShaMethod: 'invalidate:to:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -10,16 +10,16 @@ BrTextEditor >> typShaMethodInvalidateTo: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Brick' }
-BrTextEditor >> typShaMethodText: aLookup [
-	<typShaMethod: 'text'>
-	^ CompiledMethod typAsFunctionTypeWithResult: BlText typAsType
-]
-
-{ #category : #'*Typer-Shadow-Brick' }
-BrTextEditor >> typShaMethodUpdateTo: aLookup [
+BrTextEditor >> typShaMethodKeywordUpdateTo: aLookup [
 	<typShaMethod: 'update:to:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
 		arguments: {Integer typAsType.
 				Integer typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Brick' }
+BrTextEditor >> typShaMethodUnaryText: aLookup [
+	<typShaMethod: 'text'>
+	^ CompiledMethod typAsFunctionTypeWithResult: BlText typAsType
 ]

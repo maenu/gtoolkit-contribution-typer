@@ -203,6 +203,312 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-03T17:07:42.523992+02:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-03T17:07:48.205176+02:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "PEhK/TLDDQCBuj7lBasvQw=="
+				},
+				"code" : "TypManifest nuke"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-10T20:56:09.121405+02:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-10T20:56:17.324433+02:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "N/wn/8LDDQCezin0Bz2JmQ=="
+				},
+				"code" : "TypInfIndex instance "
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-03T17:10:03.682602+02:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-11T18:55:02.615421+02:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "ijG0BTPDDQCB9fURBasvQw=="
+				},
+				"code" : "(FFILibrary class >> #uniqueInstance) typInfUpdateContext"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-03T18:21:04.15316+02:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-11T18:56:06.621807+02:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "INClAzTDDQCISB74BasvQw=="
+				},
+				"code" : "TypInfIndex instance updateContextAt: (TypInfExaMethods>>#while:) typInfAsLookup ifNew: #runDiff"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-11T18:57:23.847015+02:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-11T18:57:31.627252+02:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "QU1MdNXDDQCOiWZIA03m2A=="
+				},
+				"code" : "TypInfIndex instance updateContextAt: (Dictionary>>#scanFor:) typInfAsLookup ifNew: #runDiff"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-08T12:10:19.222078+02:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-11T18:56:55.455068+02:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "9PnzapPDDQC45bsGCCi+cQ=="
+				},
+				"code" : "TypInfIndex instance\r\tasyncUpdateContextAt: (Dictionary >> #scanFor:) typInfAsLookup\r\tifNew: #runDiff\r\tfor: 2 minutes"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-04T21:05:39.680753+02:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-04T22:15:41.177228+02:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "oMcdbkrDDQCy9LN3C/6HFQ=="
+				},
+				"code" : "TypInfIndex instance updateContext: Number>>#/"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-04T21:14:19.549759+02:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-04T21:14:26.819977+02:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "5VkajUrDDQC+G6jjC/6HFQ=="
+				},
+				"code" : "TypInfIndex instance updateContext: Object>>#subclassResponsibility"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-04T16:53:43.807393+02:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-04T16:53:49.469295+02:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "s9sj6UbDDQCaGBkEC/6HFQ=="
+				},
+				"code" : "TypInfIndex instance updateContext: GtRemotePhlowItemValue>>#initializeFromJSONDictionary:"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
 						"dateAndTimeString" : "2023-09-08T11:03:08.746527+02:00"
 					}
 				},
@@ -305,40 +611,6 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-09-06T10:35:04.521582+02:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-09-11T11:56:34.339454+02:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "d5FoWw7BDQCEAOmUC3W66g=="
-				},
-				"code" : "MemoryLogger new\r\tstartFor: StringSignal , GtStylerErrorSignal;\r\tyourself"
-			},
-			{
-				"__type" : "pharoSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
 						"dateAndTimeString" : "2023-08-15T16:42:55.118085+02:00"
 					}
 				},
@@ -418,14 +690,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-09-30T13:19:52.358633+02:00"
+						"dateAndTimeString" : "2023-09-16T15:57:33.763695+02:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "nKjHBtzBDQCv6lJJDPCZAg=="
 				},
-				"code" : "TypInfExaMethods >> #deadCode typInfRunVariant: #run"
+				"code" : "TypInfInferred >> #deadCode typInfRunVariant: #run"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -1132,14 +1404,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-09-18T20:19:37.095925+02:00"
+						"dateAndTimeString" : "2023-10-03T14:59:26.750188+02:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "GdxbPWy/DQCtem49BXd8Xw=="
 				},
-				"code" : "FFILibrary class >> #uniqueInstance"
+				"code" : "TypInfIndex instance updateContext: FFILibrary class >> #uniqueInstance"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -1948,14 +2220,48 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-07-24T12:31:41.374376+02:00"
+						"dateAndTimeString" : "2023-10-05T16:07:42.915795+02:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "Vh9hFGS9DQCXv1IZBVBnRw=="
 				},
-				"code" : "primitives := ((((Smalltalk allClasses flatCollect: #methods)\r\t\tselect: #isRealPrimitive)\r\t\tsort: [ :a :b | a ast primitiveFromPragma num < b ast primitiveFromPragma num ])\r\t\tselect: [ :m | m ast primitiveFromPragma spec isNil ])\r\t\treject: [ :m | m sourceCode includesSubstring: 'Optional' ]"
+				"code" : "primitives := ((((Smalltalk globals allMethods select: #isRealPrimitive)\r\t\tsort: [ :a :b | a ast primitiveFromPragma num < b ast primitiveFromPragma num ])\r\t\tselect: [ :m | m ast primitiveFromPragma spec isNil ])\r\t\treject: [ :m | m sourceCode includesSubstring: 'Optional' ])\r\t\tselect: [ :m | m sourceCode includesSubstring: 'Essential' ]"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-05T17:25:04.831334+02:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-05T17:28:13.507002+02:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "DGEZd1vDDQCYT+W5BcdSMg=="
+				},
+				"code" : "primitives groupedBy: [ :e | (TypShaIndex instance resolveMethod: e typInfAsLookup) isEmpty ]"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -2073,7 +2379,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-07-25T18:20:57.863208+02:00"
+						"dateAndTimeString" : "2023-10-05T16:03:36.443727+02:00"
 					}
 				},
 				"editEmail" : {
@@ -2084,14 +2390,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-08-15T10:11:49.336396+02:00"
+						"dateAndTimeString" : "2023-10-05T16:05:39.823051+02:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
-					"uidString" : "FJZh2rO9DQCUwBZiBPn7aw=="
+					"uidString" : "CoG6U1rDDQCicY+nBcdSMg=="
 				},
-				"code" : "'BlockClosure()->?' typAsType covariant: 'BlockClosure()->Boolean' typAsType"
+				"code" : "primitives groupedBy: [ :m | m methodClass package ]"
 			}
 		]
 	},
@@ -2114,12 +2420,12 @@
 		"__type" : "time",
 		"time" : {
 			"__type" : "dateAndTime",
-			"dateAndTimeString" : "2022-05-12T16:05:44.92357+02:00"
+			"dateAndTimeString" : "2023-10-12T22:09:51.196967+02:00"
 		}
 	},
 	"pageType" : {
 		"__type" : "namedPage",
-		"title" : "Typer TODO"
+		"title" : "workbench 1"
 	},
 	"uid" : {
 		"__type" : "uuid",

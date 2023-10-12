@@ -97,7 +97,7 @@ TypInfExaMethods >> translated [
 ]
 
 { #category : #accessing }
-TypInfExaMethods >> typShaMethodSignalLookup: aLookup [
+TypInfExaMethods >> typShaMethodUnarySignalLookup: aLookup [
 	<typShaMethod: #signalLookup>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypVoidType instance

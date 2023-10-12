@@ -1,7 +1,7 @@
 Extension { #name : #Form }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Form >> typShaMethodAsElement: aLookup [
+Form >> typShaMethodUnaryAsElement: aLookup [
 	<typShaMethod: 'asElement'>
 	^ CompiledMethod typAsFunctionTypeWithResult: BlElement typAsType
 ]

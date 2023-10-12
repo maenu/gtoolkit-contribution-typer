@@ -1,19 +1,19 @@
 Extension { #name : #RBVariableNode }
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBVariableNode >> typShaMethodBinding: aLookup [
+RBVariableNode >> typShaMethodUnaryBinding: aLookup [
 	<typShaMethod: 'binding'>
 	^ CompiledMethod typAsFunctionTypeWithResult: OCLiteralVariable typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBVariableNode >> typShaMethodIsInstance: aLookup [
+RBVariableNode >> typShaMethodUnaryIsInstance: aLookup [
 	<typShaMethod: 'isInstance'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBVariableNode >> typShaMethodName: aLookup [
+RBVariableNode >> typShaMethodUnaryName: aLookup [
 	<typShaMethod: 'name'>
 	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]

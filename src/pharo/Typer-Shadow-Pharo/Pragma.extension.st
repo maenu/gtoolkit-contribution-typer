@@ -1,7 +1,7 @@
 Extension { #name : #Pragma }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Pragma >> typShaMethodArguments: aLookup [
+Pragma >> typShaMethodUnaryArguments: aLookup [
 	<typShaMethod: 'arguments'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (SequenceableCollection typAsType
@@ -12,7 +12,7 @@ Pragma >> typShaMethodArguments: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Pragma >> typShaMethodSelector: aLookup [
+Pragma >> typShaMethodUnarySelector: aLookup [
 	<typShaMethod: 'selector'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Symbol typAsType
 ]

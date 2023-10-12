@@ -1,7 +1,7 @@
 Extension { #name : #BrTextEditorCursorRemovedEvent }
 
 { #category : #'*Typer-Shadow-Brick' }
-BrTextEditorCursorRemovedEvent >> typShaMethodCursor: aLookup [
+BrTextEditorCursorRemovedEvent >> typShaMethodUnaryCursor: aLookup [
 	<typShaMethod: 'cursor'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: BrTextEditorSingleCursor typAsType

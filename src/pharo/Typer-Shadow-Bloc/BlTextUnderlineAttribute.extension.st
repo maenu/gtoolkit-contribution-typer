@@ -1,7 +1,7 @@
 Extension { #name : #BlTextUnderlineAttribute }
 
 { #category : #'*Typer-Shadow-Bloc' }
-BlTextUnderlineAttribute >> typShaMethodPaint: aLookup [
+BlTextUnderlineAttribute >> typShaMethodKeywordPaint: aLookup [
 	<typShaMethod: 'paint:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self

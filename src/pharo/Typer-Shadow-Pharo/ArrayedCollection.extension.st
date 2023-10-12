@@ -1,7 +1,7 @@
 Extension { #name : #ArrayedCollection }
 
 { #category : #'*Typer-Shadow-Pharo' }
-ArrayedCollection >> typShaMethodSize: aLookup [
+ArrayedCollection >> typShaMethodUnarySize: aLookup [
 	<typShaMethod: 'size'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
+	^ super typShaMethodUnarySize: aLookup
 ]

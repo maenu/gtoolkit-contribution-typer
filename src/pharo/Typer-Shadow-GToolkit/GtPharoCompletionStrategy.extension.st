@@ -1,7 +1,7 @@
 Extension { #name : #GtPharoCompletionStrategy }
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoCompletionStrategy >> typShaMethodActionsForAt: aLookup [
+GtPharoCompletionStrategy >> typShaMethodKeywordActionsForAt: aLookup [
 	<typShaMethod: 'actionsFor:at:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (SequenceableCollection typAsType withParameters: {GtCompletionAction typAsType})
@@ -10,7 +10,7 @@ GtPharoCompletionStrategy >> typShaMethodActionsForAt: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoCompletionStrategy >> typShaMethodClassOrMetaClass: aLookup [
+GtPharoCompletionStrategy >> typShaMethodKeywordClassOrMetaClass: aLookup [
 	<typShaMethod: 'classOrMetaClass:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -18,13 +18,7 @@ GtPharoCompletionStrategy >> typShaMethodClassOrMetaClass: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoCompletionStrategy >> typShaMethodIndex: aLookup [
-	<typShaMethod: 'index'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
-]
-
-{ #category : #'*Typer-Shadow-GToolkit' }
-GtPharoCompletionStrategy >> typShaMethodNodeForIn: aLookup [
+GtPharoCompletionStrategy >> typShaMethodKeywordNodeForIn: aLookup [
 	<typShaMethod: 'nodeFor:in:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtPharoProgramNode typAsType asNullable
@@ -33,12 +27,18 @@ GtPharoCompletionStrategy >> typShaMethodNodeForIn: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoCompletionStrategy >> typShaMethodSelectorsForReceiverMatching: aLookup [
+GtPharoCompletionStrategy >> typShaMethodKeywordSelectorsForReceiverMatching: aLookup [
 	<typShaMethod: 'selectorsForReceiver:matching:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (SequenceableCollection typAsType withParameters: {String typAsType})
 		arguments: {Behavior typAsType.
 				String typAsType}
+]
+
+{ #category : #'*Typer-Shadow-GToolkit' }
+GtPharoCompletionStrategy >> typShaMethodUnaryIndex: aLookup [
+	<typShaMethod: 'index'>
+	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }

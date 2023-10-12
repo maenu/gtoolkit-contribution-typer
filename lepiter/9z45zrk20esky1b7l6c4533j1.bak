@@ -55,7 +55,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T15:15:09.649789+02:00"
+						"dateAndTimeString" : "2023-10-12T17:07:34.681914+02:00"
 					}
 				},
 				"editEmail" : {
@@ -66,17 +66,17 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T15:58:59.989706+02:00"
+						"dateAndTimeString" : "2023-10-12T17:09:02.075172+02:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
-					"uidString" : "xjfyTB3DDQCiwm8iAJXBTg=="
+					"uidString" : "j/xkCejDDQCcLpWYBRoxow=="
 				},
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "The thing I dislike about many statically typed languages is that I have to write type names all over the place. Tools in the IDE can help by auto-generating those where possible, but the source code itself is now plastered with meta-information that obstruct understanding the intention of the code. Some newer statically types languages, or versions thereof, reduce the need for explicit types by infering the types wherever possible, which is pretty nice. TypeScript is not nice though, it is ugly as hell. Dynamically typed languages are more pleasant to read and write for me, as they get rid of the meta clutter. Unfortunately, this meta clutter - the type system - is a strength of statically typed systems, as it simplifies navigation and enables  type-checking and auto-completion. In Smalltalk, those static analyses exist only in rudimentary forms. Browsing implementors and senders of common selectors requires you to manually search in a large list. This is a thing I do not like about dynamically typed system. What I am trying to say: I want Smalltalk, but with types sprinkled on top. My goal is improve the precision of the tools we use all the time, by using type information to tune the tool's parameters and scope."
+				"string" : "The thing I dislike about many statically typed languages is that I have to write type names all over the place. Tools in the IDE can help by auto-generating those where possible, but the source code itself is now plastered with meta-information, convoluting the intention of the code more than revealing it. Some newer statically types languages, or versions thereof, reduce the need for explicit type declarations by infering the types wherever possible, which is pretty nice. On a side note, this argument does not apply to the horrendously ugly atrocity called TypeScript. JavaScript is fine and it always was. Nobody asked for a pre-compiler that forces you to upcast, then downcast expressions, or complicating the project setup by two orders of magnitude while not giving any clues in the case of a bad configuration. It's basically Spring for JavaScript *shudder*. Anyway, dynamically typed languages are more pleasant to read and write for me, as they get rid of the meta clutter. Unfortunately, this meta clutter - the type system - is a strength of statically typed systems, as it simplifies navigation and enables  type-checking and auto-completion. In Smalltalk, those static analyses exist only in rudimentary forms. Browsing implementors and senders of common selectors requires you to manually search in a large list. This is a thing I do not like about dynamically typed system. What I am trying to say: I want Smalltalk, but with types sprinkled on top. My goal is improve the precision of the tools we use all the time, by using type information to tune the tool's parameters and scope."
 			},
 			{
 				"__type" : "textSnippet",
@@ -129,6 +129,43 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-02T21:03:36.334321+02:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-04T14:51:09.022804+02:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "KkXYKiLDDQCwBRsCAJXBTg=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "{{gtExample:TypInfManifest class>>#exampleContext|noCode|previewShow=typGtCoderAndFlowFor:}}"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
 						"dateAndTimeString" : "2023-10-02T20:27:17.23587+02:00"
 					}
 				},
@@ -140,7 +177,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T20:30:53.208593+02:00"
+						"dateAndTimeString" : "2023-10-04T16:37:34.40513+02:00"
 					}
 				},
 				"uid" : {
@@ -150,192 +187,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "We can type methods and show type annotations by clicking the T button. The first time takes a few seconds, as indexes are initialized. "
-			},
-			{
-				"__type" : "textSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T20:25:07.247521+02:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T20:27:17.238807+02:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "UAlzoSHDDQCNc/3dAJXBTg=="
-				},
-				"paragraphStyle" : {
-					"__type" : "textStyle"
-				},
-				"string" : "{{gtMethod:TypInfExaMethods>>#block:|expanded}} "
-			},
-			{
-				"__type" : "textSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T20:28:27.879536+02:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T20:52:00.208703+02:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "ZDp6qiHDDQCOWJoKAJXBTg=="
-				},
-				"paragraphStyle" : {
-					"__type" : "textStyle"
-				},
-				"string" : "Note how the type inference figured out a type for each AST node. The argument type is inferred by name. The two expanders show inlined methods, in the context of the message send. Inside the inlined methods #value is abstractly interpretated, i.e., the blocks are inlined."
-			},
-			{
-				"__type" : "textSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T20:49:10.390532+02:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T20:52:38.023075+02:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "UaZ39yHDDQCe6JQmAJXBTg=="
-				},
-				"paragraphStyle" : {
-					"__type" : "textStyle"
-				},
-				"string" : "You can also inspect the control flow graph. You can click a type in a coder to inspect the CFG nodes used in the inference. Check out the CFG for the method above."
-			},
-			{
-				"__type" : "textSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T20:27:45.347099+02:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T21:07:25.959219+02:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "1G7fqiHDDQCOXOijAJXBTg=="
-				},
-				"paragraphStyle" : {
-					"__type" : "textStyle"
-				},
-				"string" : "{{gtExample:TypInfManifest class>>#exampleContext|noCode|previewHeight=300|previewShow=typGtFlowFor:}}"
-			},
-			{
-				"__type" : "textSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T20:55:49.161693+02:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T21:01:05.392479+02:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "KPb+DiLDDQChiGHhAJXBTg=="
-				},
-				"paragraphStyle" : {
-					"__type" : "textStyle"
-				},
-				"string" : "The exception path is implemented too. As a byproduct of the inference, we also get a dead code analysis. The blue dots are from the type checker, indicating unknown types. In this case they are added as a signaling method does not return normally and hence has no return type."
+				"string" : "We can type methods and show type annotations by clicking the T button. The first time takes a few seconds, as indexes are initialized. Note how the type inference figured out a type for each AST node. The argument type is inferred by name. The two expanders show inlined methods in the context of the message send. Inside the inlined methods #value is abstractly interpretated, i.e., the blocks are inlined. The inference is performed as a data-flow analysis over a CFG. This CFG is created by an initial visit over the RB AST, then the graph is refined when nodes change. You can inspect the control flow graph. Hover over types or nodes to show their correspondents."
 			},
 			{
 				"__type" : "textSnippet",
@@ -388,7 +240,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T21:01:33.094492+02:00"
+						"dateAndTimeString" : "2023-10-02T20:55:49.161693+02:00"
 					}
 				},
 				"editEmail" : {
@@ -399,17 +251,17 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T21:05:51.87293+02:00"
+						"dateAndTimeString" : "2023-10-04T16:39:01.874956+02:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
-					"uidString" : "T2u8IyLDDQCqu73uAJXBTg=="
+					"uidString" : "KPb+DiLDDQChiGHhAJXBTg=="
 				},
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "Now that we have two main views, i.e. coder and a CFG, we can also compose them to build a little contraption to show the relations between AST and CFG. Hover over types or nodes to show their correspondents."
+				"string" : "The exception path is implemented too. As a byproduct of the inference, we also get a dead code analysis. You can also expand the #new expander to see a form of extension to the inference. Expanders represent sent messages that are then looked up. The resolvers of these lookups come in different shapes: {{gtMethod:TypPraExaParametricSubclass>>#initialize}} shows how pragmas are used to annotate methods and classes for code that you control. For code you do not control, e.g., the Pharo core, extension methods are used for type rules, as in {{gtMethod:Behavior>>#typShaMethodNew:}}"
 			},
 			{
 				"__type" : "textSnippet",
@@ -425,7 +277,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T21:03:36.334321+02:00"
+						"dateAndTimeString" : "2023-10-03T13:49:47.270576+02:00"
 					}
 				},
 				"editEmail" : {
@@ -436,17 +288,17 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T21:04:51.550395+02:00"
+						"dateAndTimeString" : "2023-10-04T16:39:39.103451+02:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
-					"uidString" : "KkXYKiLDDQCwBRsCAJXBTg=="
+					"uidString" : "seneLzDDDQCVCkOUAES0Lw=="
 				},
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "{{gtExample:TypInfManifest class>>#exampleContext|noCode|previewShow=typGtCoderAndFlowFor:|previewHeight=600}}"
+				"string" : "{{gtMethod:FFILibrary class >> #uniqueInstance|expanded}}"
 			},
 			{
 				"__type" : "textSnippet",
@@ -462,7 +314,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T21:08:51.79657+02:00"
+						"dateAndTimeString" : "2023-10-04T16:39:48.708332+02:00"
 					}
 				},
 				"editEmail" : {
@@ -473,17 +325,17 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T21:11:12.435831+02:00"
+						"dateAndTimeString" : "2023-10-04T16:39:48.708332+02:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
-					"uidString" : "adY5PSLDDQCySZnrAJXBTg=="
+					"uidString" : "Nztdt0bDDQCZ+71CC/6HFQ=="
 				},
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "All example so far are admittedly geared towards showing the good parts. You can use the example below to type a random method. Results may vary."
+				"string" : "Those singleton instantiation methods demonstrate the power of the inference pretty well."
 			},
 			{
 				"__type" : "textSnippet",
@@ -510,7 +362,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T21:11:36.981744+02:00"
+						"dateAndTimeString" : "2023-10-02T21:13:40.588033+02:00"
 					}
 				},
 				"uid" : {
@@ -520,7 +372,81 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "{{gtExample:TypInfManifest class>>}}"
+				"string" : "{{gtExample:TypInfManifest class>>#randomContext}}"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-02T21:08:51.79657+02:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-04T16:39:48.710299+02:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "adY5PSLDDQCySZnrAJXBTg=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "All example so far are admittedly geared towards showing the good parts. You can use the example below to type a random method. Results may vary."
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-03T13:26:30.427974+02:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-10-03T13:26:30.981424+02:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "Eyk25i/DDQCJU52fAES0Lw=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "The blue dots are from the type checker, indicating unknown types. In this case they are added as a signaling method does not return normally and hence has no return type."
 			},
 			{
 				"__type" : "textSnippet",
@@ -647,7 +573,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T15:41:57.108655+02:00"
+						"dateAndTimeString" : "2023-10-02T21:49:26.706041+02:00"
 					}
 				},
 				"editEmail" : {
@@ -658,7 +584,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T15:41:59.076297+02:00"
+						"dateAndTimeString" : "2023-10-02T21:49:26.706041+02:00"
 					}
 				},
 				"uid" : {

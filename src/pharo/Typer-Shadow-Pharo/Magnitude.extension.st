@@ -1,15 +1,7 @@
 Extension { #name : #Magnitude }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Magnitude >> typShaMethodBinary223: aLookup [
-	<typShaMethod: '<='>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {Magnitude typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Magnitude >> typShaMethodBinary225: aLookup [
+Magnitude >> typShaMethodBinaryGreater: aLookup [
 	<typShaMethod: '>'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -17,7 +9,7 @@ Magnitude >> typShaMethodBinary225: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Magnitude >> typShaMethodBinary226: aLookup [
+Magnitude >> typShaMethodBinaryLess: aLookup [
 	<typShaMethod: '<'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -25,7 +17,15 @@ Magnitude >> typShaMethodBinary226: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Magnitude >> typShaMethodMax: aLookup [
+Magnitude >> typShaMethodBinaryLessOrEqual: aLookup [
+	<typShaMethod: '<='>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {Magnitude typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Magnitude >> typShaMethodKeywordMax: aLookup [
 	<typShaMethod: 'max:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: {aLookup self.
@@ -34,7 +34,7 @@ Magnitude >> typShaMethodMax: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Magnitude >> typShaMethodMin: aLookup [
+Magnitude >> typShaMethodKeywordMin: aLookup [
 	<typShaMethod: 'min:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: {aLookup self.

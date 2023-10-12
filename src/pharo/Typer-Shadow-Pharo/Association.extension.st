@@ -1,13 +1,13 @@
 Extension { #name : #Association }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Association >> typShaMethodKey: aLookup [
+Association >> typShaMethodUnaryKey: aLookup [
 	<typShaMethod: 'key'>
 	^ CompiledMethod typAsFunctionTypeWithResult: (aLookup receiver at: #A)
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Association >> typShaMethodValue: aLookup [
+Association >> typShaMethodUnaryValue: aLookup [
 	<typShaMethod: 'value'>
 	^ CompiledMethod typAsFunctionTypeWithResult: (aLookup receiver at: #B)
 ]

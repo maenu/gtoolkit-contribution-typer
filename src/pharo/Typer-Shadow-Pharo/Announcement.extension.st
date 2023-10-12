@@ -1,9 +1,9 @@
 Extension { #name : #Announcement }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Announcement class >> typShaMethodBinary77: aLookup [
+Announcement class >> typShaMethodBinaryConcatenate: aLookup [
 	<typShaMethod: ','>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: TypUnknownType instance
+		typAsFunctionTypeWithResult: AnnouncementSet typAsType
 		arguments: {Announcement class typAsType}
 ]

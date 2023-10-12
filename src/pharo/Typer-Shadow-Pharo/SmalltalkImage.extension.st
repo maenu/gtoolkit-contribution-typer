@@ -1,7 +1,7 @@
 Extension { #name : #SmalltalkImage }
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmalltalkImage >> typShaMethodGlobals: aLookup [
+SmalltalkImage >> typShaMethodUnaryGlobals: aLookup [
 	<typShaMethod: 'globals'>
 	^ CompiledMethod typAsFunctionTypeWithResult: SystemDictionary typAsType
 ]

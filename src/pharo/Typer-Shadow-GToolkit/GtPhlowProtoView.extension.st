@@ -1,19 +1,7 @@
 Extension { #name : #GtPhlowProtoView }
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPhlowProtoView >> typShaMethodExplicit: aLookup [
-	<typShaMethod: 'explicit'>
-	^ CompiledMethod typAsFunctionTypeWithResult: GtPhlowExplicitView typAsType
-]
-
-{ #category : #'*Typer-Shadow-GToolkit' }
-GtPhlowProtoView >> typShaMethodMondrian: aLookup [
-	<typShaMethod: 'mondrian'>
-	^ CompiledMethod typAsFunctionTypeWithResult: GtPhlowMondrianView typAsType
-]
-
-{ #category : #'*Typer-Shadow-GToolkit' }
-GtPhlowProtoView >> typShaMethodPriority: aLookup [
+GtPhlowProtoView >> typShaMethodKeywordPriority: aLookup [
 	<typShaMethod: 'priority:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -21,9 +9,21 @@ GtPhlowProtoView >> typShaMethodPriority: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPhlowProtoView >> typShaMethodTitle: aLookup [
+GtPhlowProtoView >> typShaMethodKeywordTitle: aLookup [
 	<typShaMethod: 'title:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
 		arguments: {String typAsType}
+]
+
+{ #category : #'*Typer-Shadow-GToolkit' }
+GtPhlowProtoView >> typShaMethodUnaryExplicit: aLookup [
+	<typShaMethod: 'explicit'>
+	^ CompiledMethod typAsFunctionTypeWithResult: GtPhlowExplicitView typAsType
+]
+
+{ #category : #'*Typer-Shadow-GToolkit' }
+GtPhlowProtoView >> typShaMethodUnaryMondrian: aLookup [
+	<typShaMethod: 'mondrian'>
+	^ CompiledMethod typAsFunctionTypeWithResult: GtPhlowMondrianView typAsType
 ]

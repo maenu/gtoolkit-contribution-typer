@@ -1,116 +1,7 @@
 Extension { #name : #Object }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMetAt: aLookup [
-	<typShaMethod: 'at:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Integer typAsType
-		arguments: {TypUnknownType instance}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMetAtPut: aLookup [
-	<typShaMethod: 'at:put:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root arguments first
-		arguments: {TypUnknownType instance}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMetBasicAt: aLookup [
-	<typShaMethod: 'basicAt:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Integer typAsType
-		arguments: {TypUnknownType instance}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMetBasicAtPut: aLookup [
-	<typShaMethod: 'basicAt:put:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root arguments first
-		arguments: {TypUnknownType instance}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMetBasicSize: aLookup [
-	<typShaMethod: 'basicSize'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMetInstVarAt: aLookup [
-	<typShaMethod: 'instVarAt:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Integer typAsType
-		arguments: {TypUnknownType instance}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMetInstVarAtPut: aLookup [
-	<typShaMethod: 'instVarAt:put:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Integer typAsType
-		arguments: {Integer typAsType.
-				TypUnknownType instance}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMetSize: aLookup [
-	<typShaMethod: 'size'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMetSubclassResponsibility1: aLookup [
-	<typShaMethod: 'subclassResponsibility'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: TypVoidType instance
-		arguments: {}
-		argumentsOptional: false
-		signalsAlways: SubclassResponsibility typAsType
-		signalsMaybe: nil
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMethodAsString: aLookup [
-	<typShaMethod: 'asString'>
-	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMethodAsSymbol: aLookup [
-	<typShaMethod: 'asSymbol'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Symbol typAsType
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMethodAssert: aLookup [
-	<typShaMethod: 'assert:'>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup self
-		arguments: {{Boolean typAsType.
-					BlockClosure typAsFunctionTypeWithResult: Boolean typAsType} typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMethodBinary248: aLookup [
-	<typShaMethod: '='>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {TypUnknownType instance asNullable}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMethodBinary255: aLookup [
-	<typShaMethod: '~='>
-	^ CompiledMethod
-		typAsFunctionTypeWithResult: Boolean typAsType
-		arguments: {TypUnknownType instance asNullable}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMethodBinary256: aLookup [
+Object >> typShaMethodBinaryAssociate: aLookup [
 	<typShaMethod: '->'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Association typAsType
@@ -120,19 +11,81 @@ Object >> typShaMethodBinary256: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMethodCopy: aLookup [
-	<typShaMethod: 'copy'>
-	^ CompiledMethod typAsFunctionTypeWithResult: aLookup self
+Object >> typShaMethodBinaryEqual: aLookup [
+	<typShaMethod: '='>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {TypUnknownType instance}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMethodHash: aLookup [
-	<typShaMethod: 'hash'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
+Object >> typShaMethodBinaryNotEqual: aLookup [
+	<typShaMethod: '~='>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Boolean typAsType
+		arguments: {TypUnknownType instance}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMethodInstVarNamed: aLookup [
+Object >> typShaMethodKeywordAssert: aLookup [
+	<typShaMethod: 'assert:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup self
+		arguments: {{Boolean typAsType.
+					BlockClosure typAsFunctionTypeWithResult: Boolean typAsType} typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMethodKeywordAt: aLookup [
+	<typShaMethod: 'at:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: TypUnknownType instance
+		arguments: {Integer typAsType}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMethodKeywordAtPut: aLookup [
+	<typShaMethod: 'at:put:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup root arguments first
+		arguments: {TypUnknownType instance}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMethodKeywordBasicAt: aLookup [
+	<typShaMethod: 'basicAt:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType
+		arguments: {TypUnknownType instance}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMethodKeywordBasicAtPut: aLookup [
+	<typShaMethod: 'basicAt:put:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: aLookup root arguments first
+		arguments: {TypUnknownType instance}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMethodKeywordInstVarAt: aLookup [
+	<typShaMethod: 'instVarAt:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType
+		arguments: {TypUnknownType instance}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMethodKeywordInstVarAtPut: aLookup [
+	<typShaMethod: 'instVarAt:put:'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: Integer typAsType
+		arguments: {Integer typAsType.
+				TypUnknownType instance}
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMethodKeywordInstVarNamed: aLookup [
 	<typShaMethod: 'instVarNamed:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType instance asNullable
@@ -140,13 +93,7 @@ Object >> typShaMethodInstVarNamed: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMethodIsBlock: aLookup [
-	<typShaMethod: 'isBlock'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMethodIsKindOf: aLookup [
+Object >> typShaMethodKeywordIsKindOf: aLookup [
 	<typShaMethod: 'isKindOf:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -154,13 +101,7 @@ Object >> typShaMethodIsKindOf: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMethodIsNotNil: aLookup [
-	<typShaMethod: 'isNotNil'>
-	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMethodPerform: aLookup [
+Object >> typShaMethodKeywordPerform: aLookup [
 	<typShaMethod: 'perform:'>
 	| a r |
 	a := aLookup arguments at: 1.
@@ -171,7 +112,7 @@ Object >> typShaMethodPerform: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMethodPerformWithArgumentsInSuperclass: aLookup [
+Object >> typShaMethodKeywordPerformWithArgumentsInSuperclass: aLookup [
 	<typShaMethod: 'perform:withArguments:inSuperclass:'>
 	| a r |
 	a := aLookup arguments at: 1.
@@ -188,7 +129,7 @@ Object >> typShaMethodPerformWithArgumentsInSuperclass: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMethodPerformWithEnoughArguments: aLookup [
+Object >> typShaMethodKeywordPerformWithEnoughArguments: aLookup [
 	<typShaMethod: 'perform:withEnoughArguments:'>
 	| a r |
 	a := aLookup arguments at: 1.
@@ -203,7 +144,7 @@ Object >> typShaMethodPerformWithEnoughArguments: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMethodPrintOn: aLookup [
+Object >> typShaMethodKeywordPrintOn: aLookup [
 	<typShaMethod: 'printOn:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -211,13 +152,72 @@ Object >> typShaMethodPrintOn: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMethodPrintString: aLookup [
+Object >> typShaMethodUnaryAsString: aLookup [
+	<typShaMethod: 'asString'>
+	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMethodUnaryAsSymbol: aLookup [
+	<typShaMethod: 'asSymbol'>
+	^ CompiledMethod typAsFunctionTypeWithResult: Symbol typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMethodUnaryBasicSize: aLookup [
+	<typShaMethod: 'basicSize'>
+	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMethodUnaryCopy: aLookup [
+	<typShaMethod: 'copy'>
+	^ CompiledMethod typAsFunctionTypeWithResult: aLookup self
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMethodUnaryHash: aLookup [
+	<typShaMethod: 'hash'>
+	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMethodUnaryIsBlock: aLookup [
+	<typShaMethod: 'isBlock'>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMethodUnaryIsNotNil: aLookup [
+	<typShaMethod: 'isNotNil'>
+	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMethodUnaryPrintString: aLookup [
 	<typShaMethod: 'printString'>
 	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Object >> typShaMethodYourself: aLookup [
+Object >> typShaMethodUnarySize: aLookup [
+	<typShaMethod: 'size'>
+	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMethodUnarySubclassResponsibility: aLookup [
+	<typShaMethod: 'subclassResponsibility'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: TypVoidType instance
+		arguments: {}
+		argumentsOptional: false
+		signalsAlways: SubclassResponsibility typAsType
+		signalsMaybe: nil
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Object >> typShaMethodUnaryYourself: aLookup [
 	<typShaMethod: 'yourself'>
 	^ CompiledMethod typAsFunctionTypeWithResult: aLookup self
 ]

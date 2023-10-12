@@ -1,7 +1,7 @@
 Extension { #name : #OrderedCollection }
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedCollection >> typShaMethodAddFirst: aLookup [
+OrderedCollection >> typShaMethodKeywordAddFirst: aLookup [
 	<typShaMethod: 'addFirst:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup arguments at: 1)
@@ -9,7 +9,7 @@ OrderedCollection >> typShaMethodAddFirst: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedCollection >> typShaMethodAtPut: aLookup [
+OrderedCollection >> typShaMethodKeywordAtPut: aLookup [
 	<typShaMethod: 'at:put:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
@@ -18,7 +18,7 @@ OrderedCollection >> typShaMethodAtPut: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedCollection >> typShaMethodRemoveLast: aLookup [
+OrderedCollection >> typShaMethodUnaryRemoveLast: aLookup [
 	<typShaMethod: 'removeLast'>
 	^ CompiledMethod typAsFunctionTypeWithResult: (aLookup receiver at: #A)
 ]

@@ -1,7 +1,7 @@
 Extension { #name : #GtSearchImplementorsFilter }
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtSearchImplementorsFilter class >> typShaMethodSelector: aLookup [
+GtSearchImplementorsFilter class >> typShaMethodKeywordSelector: aLookup [
 	<typShaMethod: 'selector:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
