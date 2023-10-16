@@ -43,7 +43,7 @@ TypInfInlLookupMessage >> newContexts [
 { #category : #accessing }
 TypInfInlLookupMessage >> transfer [
 	| oldLookup method |
-	self constrain: self inReceiver to: self constrainedReceiver.
+	self constrainReceiver.
 	oldLookup := lookup.
 	lookup := context lookup.
 	(lookup ~= oldLookup and: [ self canInstall ]) ifTrue: [ self install ].

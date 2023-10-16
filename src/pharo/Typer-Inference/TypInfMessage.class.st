@@ -37,19 +37,21 @@ TypInfMessage >> canInstall [
 ]
 
 { #category : #accessing }
-TypInfMessage >> constrainedReceiver [
+TypInfMessage >> constrainReceiver [
 	| receiver implementors |
 	receiver := self receiver.
 	receiver isUnknown
-		ifFalse: [ ^ ({#ifNil:.
+		ifFalse: [ ({#ifNil:.
 				#ifNotNil:.
 				#ifNil:ifNotNil:.
 				#ifNotNil:ifNil:} includes: self selector)
-				ifTrue: [ receiver asNullable ]
-				ifFalse: [ receiver ] ].
+				ifTrue: [ self constrain: self inReceiver to: receiver asNullable ].
+			^ self ].
 	implementors := TypInfIndex instance implementors: self selector.
-	(implementors size between: 1 and: 8) ifFalse: [ ^ receiver ].
-	^ (implementors collect: #typAsType) typAsMinimizedType
+	(implementors size between: 1 and: 8)
+		ifTrue: [ self
+				constrain: self inReceiver
+				to: (implementors collect: #typAsType) typAsMinimizedType ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -203,7 +205,7 @@ TypInfMessage >> signalsMaybe [
 { #category : #accessing }
 TypInfMessage >> transfer [
 	| oldLookup |
-	self constrain: self inReceiver to: self constrainedReceiver.
+	self constrainReceiver.
 	oldLookup := lookup.
 	lookup := self inReceiver newMethodLookup: self.
 	(lookup ~= oldLookup and: [ self canInstall ]) ifTrue: [ self install ].

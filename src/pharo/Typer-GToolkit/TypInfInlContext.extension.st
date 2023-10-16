@@ -4,7 +4,6 @@ Extension { #name : #TypInfInlContext }
 TypInfInlContext >> typGtAsCoder [
 	^ GtPharoMethodCoder new
 		attributeNamed: #typGtContext put: self;
-		attributeNamed: #typGtLookup put: root lookup;
 		forMethod: node compiledMethod;
 		asCoderViewModel
 ]

@@ -15,10 +15,8 @@ GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtContext [
-	attributes at: #typGtContext ifPresent: [ :c | ^ c ].
-	attributes at: #typGtContextPromise ifPresent: [ :p | ^ nil ].
-	self typGtContextAsync.
-	^ nil
+	self assert: [ self typGtHasContext ].
+	^ attributes at: #typGtContext
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -38,15 +36,20 @@ GtPharoSourceCoder >> typGtContextAsync [
 ]
 
 { #category : #'*Typer-GToolkit' }
+GtPharoSourceCoder >> typGtHasContext [
+	^ attributes includesKey: #typGtContext
+]
+
+{ #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtIndicator [
 	^ (self
 		attributeNamed: #typGtContext
 		ifPresent: #typGtIndicator
-		ifAbsent: 'l') , ':'
+		ifAbsent: [ Halt now ]) , ':'
 		, (self
 				attributeNamed: #typGtLookup
 				ifPresent: #typGtIndicator
-				ifAbsent: '')
+				ifAbsent: [ Halt now ])
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -118,10 +121,10 @@ GtPharoSourceCoder >> typGtToggleStylersAllFor: anAst into: anAddOns viewModel: 
 						yourself);
 				addStyler: (TypGtStabilityStyler new
 						coderViewModel: aViewModel;
-						yourself);
+						yourself)";
 				addStyler: (TypGtCheStyler new
 						coderViewModel: aViewModel;
-						yourself)";
+						yourself);
 				addStyler: (TypGtCovStyler new
 						coderViewModel: aViewModel;
 						yourself)" ]

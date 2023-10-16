@@ -9,7 +9,7 @@ TypGtDeadStyler >> styleNode: aNode [
 	<typPraArguments: 'RBProgramNode'>
 	self
 		attributes: {BlTextHighlightAttribute
-					paint: (((self context nodesAt: aNode) allSatisfy: #isDead)
+					paint: (((context nodesAt: aNode) allSatisfy: #isDead)
 							ifTrue: BrGlamorousColors errorBackgroundColor
 							ifFalse: Color white)}
 		from: aNode startWithoutParentheses

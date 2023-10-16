@@ -1,7 +1,7 @@
 Extension { #name : #TypInfMethod }
 
 { #category : #'*Typer-Checker' }
-TypInfMethod >> typChe [
+TypInfMethod >> typCheOn: aStream [
 	| expected actual |
 	expected := (TypMethodIndex instance resolve: self lookup) result.
 	in
@@ -11,7 +11,7 @@ TypInfMethod >> typChe [
 				do: [ :e | 
 					actual := e origin type.
 					expected >= actual
-						ifFalse: [ TypCheIncompatible signal: e origin expected: expected ].
+						ifFalse: [ aStream nextPut: (TypCheIncompatible node: e origin expected: expected) ].
 					(expected isNullable not and: actual isNullable)
-						ifTrue: [ TypCheNullable signal: e origin message: 'return is unknown' ] ] ]
+						ifTrue: [ aStream nextPut: (TypCheNullable node: e origin message: 'return is unknown') ] ] ]
 ]

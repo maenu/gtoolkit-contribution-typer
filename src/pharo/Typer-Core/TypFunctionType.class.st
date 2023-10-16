@@ -195,6 +195,9 @@ TypFunctionType >> covariant: aType [
 	(aType isFunction
 		and: [ name = aType name and: [ argumentsSize = aType argumentsSize ] ])
 		ifFalse: [ ^ super covariant: aType ].
+	aType == self ifTrue: [ ^ self ].
+	self isUnknownFunction ifTrue: [ ^ aType ].
+	aType isUnknownFunction ifTrue: [ ^ self ].
 	resultResult := self result covariant: aType result.
 	resultArguments := aType arguments.
 	resultArguments := self arguments
@@ -286,6 +289,15 @@ TypFunctionType >> initializeParameters: anOrderedDictionary [
 
 { #category : #testing }
 TypFunctionType >> isFunction [
+	^ true
+]
+
+{ #category : #accessing }
+TypFunctionType >> isUnknownFunction [
+	signalsAlways ifNotNil: [ ^ false ].
+	signalsMaybe ifNotNil: [ ^ false ].
+	self result isUnknown ifFalse: [ ^ false ].
+	(self arguments allSatisfy: #isUnknown) ifFalse: [ ^ false ].
 	^ true
 ]
 

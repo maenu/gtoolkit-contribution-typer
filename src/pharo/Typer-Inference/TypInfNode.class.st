@@ -212,7 +212,7 @@ TypInfNode >> methodNode [
 { #category : #accessing }
 TypInfNode >> newMethodLookup: aMessage [
 	^ TypInfMethodLookup
-		receiver: aMessage constrainedReceiver
+		receiver: aMessage receiver
 		selector: aMessage selector
 		arguments: aMessage arguments
 		message: aMessage

@@ -1,10 +1,10 @@
 Extension { #name : #TypInfAssignment }
 
 { #category : #'*Typer-Checker' }
-TypInfAssignment >> typChe [
+TypInfAssignment >> typCheOn: aStream [
 	| expected actual |
 	expected := (self outAt: #next) type.
 	actual := self type.
 	expected >= actual
-		ifFalse: [ TypCheIncompatible signal: self expected: expected ]
+		ifFalse: [ aStream nextPut: (TypCheIncompatible node: self expected: expected) ]
 ]

@@ -8,16 +8,16 @@ Class {
 }
 
 { #category : #accessing }
-TypCheNoMethod class >> signal: aNode message: aString [
+TypCheNoMethod class >> node: aNode message: aString [
 	self shouldNotImplement
 ]
 
 { #category : #accessing }
-TypCheNoMethod class >> signal: aNode selector: aSymbol [
+TypCheNoMethod class >> node: aNode selector: aSymbol [
 	^ self new
 		node: aNode;
 		selector: aSymbol;
-		signal
+		yourself
 ]
 
 { #category : #accessing }

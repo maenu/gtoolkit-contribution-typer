@@ -8,11 +8,11 @@ Class {
 }
 
 { #category : #accessing }
-TypCheWarning class >> signal: aNode message: aString [
+TypCheWarning class >> node: aNode message: aString [
 	^ self new
 		node: aNode;
 		messageText: aString;
-		signal
+		yourself
 ]
 
 { #category : #accessing }

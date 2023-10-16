@@ -8,15 +8,15 @@ Class {
 }
 
 { #category : #accessing }
-TypCheIncompatible class >> signal: aNode expected: aType [
+TypCheIncompatible class >> node: aNode expected: aType [
 	^ self new
 		node: aNode;
 		expected: aType;
-		signal
+		yourself
 ]
 
 { #category : #accessing }
-TypCheIncompatible class >> signal: aNode message: aString [
+TypCheIncompatible class >> node: aNode message: aString [
 	self shouldNotImplement
 ]
 

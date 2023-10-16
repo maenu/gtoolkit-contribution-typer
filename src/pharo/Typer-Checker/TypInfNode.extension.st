@@ -1,18 +1,12 @@
 Extension { #name : #TypInfNode }
 
 { #category : #'*Typer-Checker' }
-TypInfNode >> typChe [
-	
+TypInfNode >> typCheErrors [
+	^ (OrderedCollection streamContents: [ :s | self typCheOn: s ])
+		sorted: [ :a :b | a priority < b priority ]
 ]
 
 { #category : #'*Typer-Checker' }
-TypInfNode >> typCheErrors [
-	| errors |
-	errors := OrderedCollection new.
-	[ self typChe ]
-		on: TypCheWarning
-		do: [ :e | 
-			errors add: e.
-			e resume ].
-	^ errors sorted: [ :a :b | a priority < b priority ]
+TypInfNode >> typCheOn: aStream [
+	
 ]

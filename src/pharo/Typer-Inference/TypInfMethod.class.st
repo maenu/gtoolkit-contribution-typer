@@ -7,6 +7,11 @@ Class {
 }
 
 { #category : #accessing }
+TypInfMethod >> arguments [
+	^ self inArguments collect: #type
+]
+
+{ #category : #accessing }
 TypInfMethod >> asFunction [
 	^ self type
 ]

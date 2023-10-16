@@ -9,7 +9,7 @@ TypGtContextExpanderStyler >> visitMessageNode: aMessage [
 	| position |
 	position := aMessage keywordsIntervals last stop.
 	super visitMessageNode: aMessage.
-	(self context nodesAt: aMessage)
+	(context nodesAt: aMessage)
 		do: [ :n | 
 			n typGtExpanderCoders
 				do: [ :c | 

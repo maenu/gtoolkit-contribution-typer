@@ -5,12 +5,6 @@ Class {
 }
 
 { #category : #accessing }
-TypInfInlMethod >> arguments [
-	^ self inArguments
-		collect: [ :e | state at: e ifAbsent: TypUnknownType instance ]
-]
-
-{ #category : #accessing }
 TypInfInlMethod >> transfer [
 	self lookup preResolve
 		reject: [ :l | l resolver isKindOf: TypInfMethodResolver ]

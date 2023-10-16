@@ -48,7 +48,6 @@ TypUnknownType >> > aType [
 
 { #category : #converting }
 TypUnknownType >> contravariant: aType [
-
 	^ self
 ]
 

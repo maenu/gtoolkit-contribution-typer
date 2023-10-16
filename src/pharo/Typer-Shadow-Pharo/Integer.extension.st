@@ -55,14 +55,18 @@ Integer >> typShaMethodBinaryLessOrEqual: aLookup [
 { #category : #'*Typer-Shadow-Pharo' }
 Integer >> typShaMethodBinaryMinus: aLookup [
 	<typShaMethod: '-'>
-	^ super typShaMethodBinaryMinus: aLookup
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup arguments first <= Integer typAsType
+				ifTrue: [ Integer typAsType ]
+				ifFalse: [ Number typAsType ])
+		arguments: {Number typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
 Integer >> typShaMethodBinaryModulo: aLookup [
 	<typShaMethod: '\\'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup arguments first = Integer typAsType
+		typAsFunctionTypeWithResult: (aLookup arguments first <= Integer typAsType
 				ifTrue: [ Integer typAsType ]
 				ifFalse: [ Number typAsType ])
 		arguments: {Number typAsType}
@@ -71,13 +75,21 @@ Integer >> typShaMethodBinaryModulo: aLookup [
 { #category : #'*Typer-Shadow-Pharo' }
 Integer >> typShaMethodBinaryMultiply: aLookup [
 	<typShaMethod: '*'>
-	^ super typShaMethodBinaryMultiply: aLookup
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup arguments first <= Integer typAsType
+				ifTrue: [ Integer typAsType ]
+				ifFalse: [ Number typAsType ])
+		arguments: {Number typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
 Integer >> typShaMethodBinaryPlus: aLookup [
 	<typShaMethod: '+'>
-	^ super typShaMethodBinaryPlus: aLookup
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup arguments first <= Integer typAsType
+				ifTrue: [ Integer typAsType ]
+				ifFalse: [ Number typAsType ])
+		arguments: {Number typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }

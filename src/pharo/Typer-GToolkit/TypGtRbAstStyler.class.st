@@ -3,6 +3,9 @@ Class {
 	#superclass : #GtGenericPharoStyler,
 	#traits : 'TRBProgramNodeVisitor',
 	#classTraits : 'TRBProgramNodeVisitor classTrait',
+	#instVars : [
+		'context'
+	],
 	#category : #'Typer-GToolkit-Core'
 }
 
@@ -14,33 +17,32 @@ TypGtRbAstStyler >> attributes: anAttributesCollection from: aStart to: anEnd [
 		to: anEnd - self offset
 ]
 
-{ #category : #styling }
-TypGtRbAstStyler >> context [
-	^ self coderViewModel coderModel typGtContext
-]
-
 { #category : #accessing }
 TypGtRbAstStyler >> offset [
 	| node |
-	node := self context node.
+	node := context node.
 	node isBlock ifFalse: [ ^ 0 ].
 	^ node body start - 1
 ]
 
 { #category : #styling }
 TypGtRbAstStyler >> style: aText ast: anAst [
-	self context ifNil: [ ^ self ].
+	| coder |
+	coder := self coderViewModel coderModel.
+	coder typGtHasContext ifFalse: [ ^ self ].
 	text := aText.
-	[ self visitNode: self context node ]
+	[ context := coder typGtContext.
+	self visitNode: context node ]
 		on: Error
 		do: [ :e | (GtStylerErrorSignal new signaledError: e) emit ].
-	text := nil
+	text := nil.
+	context := nil
 ]
 
 { #category : #visiting }
 TypGtRbAstStyler >> styleNode: aNode [
 	self
-		attributes: {TypGtTypeAttribute nodes: (self context nodesAt: aNode)}
+		attributes: {TypGtTypeAttribute nodes: (context nodesAt: aNode)}
 		from: aNode stopWithoutParentheses
 		to: aNode stopWithoutParentheses
 ]
