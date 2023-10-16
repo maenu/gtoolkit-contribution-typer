@@ -70,12 +70,11 @@ TypInfInlContext >> install [
 								proxy: (message inArguments at: i)) ]).
 	node pragmas do: [ :p | self visitNode: p ].
 	self visitNode: node body.
-	node lastIsReturn
+	node body lastIsReturn
 		ifFalse: [ self next: RBVariableNode selfNode.
 			current outAdd: (TypInfReturnEdge origin: current target: root) ].
-	(message outDisableds: #next)
-		do: [ :e | (self returns: e target context) ifFalse: [ e enableOrigin: current ] ].
-	message outEnable: #return origin: current
+	message outNextDisableds
+		do: [ :e | (self returns: e target context) ifFalse: [ e enableOrigin: current ] ]
 ]
 
 { #category : #accessing }

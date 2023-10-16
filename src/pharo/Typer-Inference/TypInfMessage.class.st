@@ -94,7 +94,7 @@ TypInfMessage >> initialize [
 TypInfMessage >> install [
 	| oldContexts oldContextValues contextValues |
 	oldContexts := contexts.
-	oldContexts ifEmpty: [ self outDisable ].
+	oldContexts ifEmpty: [ self outNextDisable ].
 	contexts := self newContexts.
 	contexts := contexts asSet
 			collect: [ :a | 
@@ -142,45 +142,21 @@ TypInfMessage >> newContexts [
 ]
 
 { #category : #accessing }
-TypInfMessage >> outDisable [
-	self
-		outDisable: #next;
-		outDisable: #return;
-		outDisable: #signal
-]
-
-{ #category : #accessing }
-TypInfMessage >> outDisable: aSymbol [
-	^ (self outEnableds: aSymbol) collect: #disable
-]
-
-{ #category : #accessing }
-TypInfMessage >> outDisableds: aSymbol [
+TypInfMessage >> outNextDisable [
 	^ out
-		at: (aSymbol , #Disabled) asSymbol
-		ifPresent: #copy
-		ifAbsent: #()
+		at: #next
+		ifPresent: [ :s | s collect: #disable ]
+		ifAbsent: [ #() ]
 ]
 
 { #category : #accessing }
-TypInfMessage >> outEnable: aSymbol origin: aNode [
-	(self outDisableds: aSymbol) do: [ :e | e enableOrigin: aNode ]
+TypInfMessage >> outNextDisableds [
+	^ out at: #nextDisabled ifAbsent: #()
 ]
 
 { #category : #accessing }
-TypInfMessage >> outEnableOrigin: aNode [
-	self
-		outEnable: #next origin: aNode;
-		outEnable: #return origin: aNode;
-		outEnable: #signal origin: aNode
-]
-
-{ #category : #accessing }
-TypInfMessage >> outEnableds: aSymbol [
-	^ out
-		at: aSymbol
-		ifPresent: #copy
-		ifAbsent: #()
+TypInfMessage >> outNextDisabledsEnableOn: aNode [
+	self outNextDisableds do: [ :e | e enableOrigin: aNode ]
 ]
 
 { #category : #accessing }
@@ -248,6 +224,6 @@ TypInfMessage >> uninstall [
 		collect: #value thenDo: #uninstall;
 		removeAll.
 	lookup := nil.
-	self outEnableOrigin: self.
+	self outNextDisabledsEnableOn: self.
 	super uninstall
 ]

@@ -52,7 +52,7 @@ TypInfInlLookupContext >> install [
 	root
 		inReceiver: message inReceiver;
 		inArguments: message inArguments.
-	message outEnableOrigin: root
+	message outNextDisabledsEnableOn: root
 ]
 
 { #category : #'as yet unclassified' }

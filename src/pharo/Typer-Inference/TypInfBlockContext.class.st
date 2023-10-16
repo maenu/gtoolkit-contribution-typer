@@ -84,10 +84,9 @@ TypInfBlockContext >> install [
 						ifFalse: [ self next: n	"can happen for function receiver types" ] ]).
 	self visitNode: node body.
 	node body lastIsReturn
-		ifFalse: [ current outAdd: (TypInfReturnEdge origin: current target: root) ].
-	(message outDisableds: #next)
-		do: [ :e | (self returns: e target context) ifFalse: [ e enableOrigin: current ] ].
-	message outEnable: #return origin: current
+		ifFalse: [ current outAdd: (TypInfReturnEdge origin: current target: root).
+			message outNextDisableds
+				do: [ :e | (self returns: e target context) ifFalse: [ e enableOrigin: current ] ] ]
 ]
 
 { #category : #accessing }
@@ -104,5 +103,5 @@ TypInfBlockContext >> uninstall [
 { #category : #accessing }
 TypInfBlockContext >> visitReturnNode: aReturnNode [
 	self visitNode: aReturnNode value.
-	current outAdd: (TypInfReturnEdge origin: current target: block context root)
+	current outAdd: (TypInfReturnEdge origin: current target: block context home root)
 ]

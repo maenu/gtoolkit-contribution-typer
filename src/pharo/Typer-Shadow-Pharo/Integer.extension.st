@@ -29,7 +29,7 @@ Integer >> typShaMethodBinaryGreaterOrEqual: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Integer >> typShaMethodBinaryIntegerDivision: aLookup [
+Integer >> typShaMethodBinaryIntegerDivide: aLookup [
 	<typShaMethod: '//'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Integer typAsType
@@ -56,6 +56,16 @@ Integer >> typShaMethodBinaryLessOrEqual: aLookup [
 Integer >> typShaMethodBinaryMinus: aLookup [
 	<typShaMethod: '-'>
 	^ super typShaMethodBinaryMinus: aLookup
+]
+
+{ #category : #'*Typer-Shadow-Pharo' }
+Integer >> typShaMethodBinaryModulo: aLookup [
+	<typShaMethod: '\\'>
+	^ CompiledMethod
+		typAsFunctionTypeWithResult: (aLookup arguments first = Integer typAsType
+				ifTrue: [ Integer typAsType ]
+				ifFalse: [ Number typAsType ])
+		arguments: {Number typAsType}
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }

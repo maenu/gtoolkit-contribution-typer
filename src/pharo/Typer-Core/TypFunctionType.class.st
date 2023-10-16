@@ -141,7 +141,7 @@ TypFunctionType >> = anObject [
 	self class = anObject class ifFalse: [ ^ false ].
 	argumentsSize = anObject argumentsSize ifFalse: [ ^ false ].
 	argumentsOptional = anObject argumentsOptional ifFalse: [ ^ false ].
-	node = anObject node ifFalse: [ ^ false ].
+	node == anObject node ifFalse: [ ^ false ].
 	signalsAlways = anObject signalsAlways ifFalse: [ ^ false ].
 	signalsMaybe = anObject signalsMaybe ifFalse: [ ^ false ].
 	super = anObject ifFalse: [ ^ false ].
@@ -248,7 +248,7 @@ TypFunctionType >> hasNode [
 TypFunctionType >> hashSkipping: anIdentitySet [
 	(anIdentitySet includes: self) ifTrue: [ ^ 41 ].
 	^ (((((41 bitXor: argumentsSize hash) bitXor: argumentsOptional hash)
-		bitXor: signalsAlways hash) bitXor: signalsMaybe hash) bitXor: node hash)
+		bitXor: signalsAlways hash) bitXor: signalsMaybe hash) bitXor: node identityHash)
 		bitXor: (super hashSkipping: anIdentitySet)
 ]
 
@@ -265,6 +265,7 @@ TypFunctionType >> initialize [
 TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil node: aNodeOrNil [
 	self assert: [ anInteger isInteger ].
 	self assert: [ anInteger >= 0 ].
+	self assert: [ aNodeOrNil isNil or: [ aNodeOrNil methodNode isNotNil ] ].
 	argumentsSize := anInteger.
 	argumentsOptional := aBoolean.
 	signalsAlways := aTypeOrNil.

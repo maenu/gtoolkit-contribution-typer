@@ -53,9 +53,20 @@ TypInfNode >> typGtCoderFor: aView [
 
 { #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtDecorate: anElement in: aMondrian [
+	| badge |
+	badge := BrBadge new
+			label: transfers;
+			exact: 8 @ 8;
+			aptitude: BrGlamorousBadgeWithLabelAptitude + BrGlamorousBadgeCircularAptitude;
+			constraintsDo: [ :c | c ignoreByLayout ];
+			relocate: 6 @ -4;
+			visibility: BlVisibility hidden;
+			yourself.
 	anElement
 		when: BlMouseOverEvent
-		do: [ anElement fireEvent: (TypGtExpandContextRequest context: context) ].
+			do: [ badge visibility: BlVisibility visible.
+				anElement fireEvent: (TypGtExpandContextRequest context: context) ];
+		when: BlMouseOutEvent do: [ badge visibility: BlVisibility hidden ].
 	super typGtDecorate: anElement in: aMondrian.
 	anElement userData
 		at: #explainer
@@ -65,13 +76,7 @@ TypInfNode >> typGtDecorate: anElement in: aMondrian [
 				yourself).
 	^ anElement
 		clipChildren: false;
-		addChild: (BrBadge new
-				label: transfers;
-				exact: 8 @ 8;
-				aptitude: BrGlamorousBadgeWithLabelAptitude + BrGlamorousBadgeCircularAptitude;
-				constraintsDo: [ :c | c ignoreByLayout ];
-				relocate: 6 @ -4;
-				yourself);
+		addChild: badge;
 		addAptitude: (BrGlamorousWithTooltipAptitude
 				content: [ BrEditor new
 						aptitude: BrGlamorousCodeEditorAptitude new;

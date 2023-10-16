@@ -167,21 +167,7 @@ TypInfContext >> printOn: aStream [
 
 { #category : #accessing }
 TypInfContext >> returns: aContext [
-	| cursors cursor done |
-	cursors := IdentitySet with: root.
-	done := IdentitySet new.
-	[ cursors isNotEmpty and: [ (cursors difference: done) isNotEmpty ] ]
-		whileTrue: [ cursor := (cursors difference: done) anyOne.
-			cursor out
-				at: #next
-				ifPresent: [ :s | 
-					s
-						do: [ :e | 
-							(cursors includes: e origin) ifTrue: [ cursors remove: e origin ].
-							(e target context stack includes: self) ifTrue: [ cursors add: e target ] ] ]
-				ifAbsent: [  "noop" ].
-			done add: cursor ].
-	^ cursors
+	^ (root leaves: aContext)
 		allSatisfy: [ :n | 
 			n out
 				at: #return

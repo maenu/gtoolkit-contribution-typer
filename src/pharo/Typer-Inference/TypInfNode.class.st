@@ -53,23 +53,6 @@ TypInfNode >> context [
 ]
 
 { #category : #accessing }
-TypInfNode >> contextNodesEqualsNextNodes [
-	| queue blacks current a b |
-	queue := LinkedList with: context home root.
-	blacks := IdentitySet new.
-	[ queue isEmpty ]
-		whileFalse: [ current := queue removeFirst.
-			current out
-				at: #next
-				ifPresent: [ :s | s do: [ :e | (blacks includes: e target) ifFalse: [ queue add: e target ] ] ].
-			blacks add: current ].
-	a := context home nodes values flatCollect: #yourself as: IdentitySet.
-	b := blacks.
-	self assert: [ (b difference: a) isEmpty ].
-	self assert: [ (a difference: b) isEmpty ]
-]
-
-{ #category : #accessing }
 TypInfNode >> depthFirstNextDo: aBlock [
 	^ self depthFirstNextDo: aBlock skipping: IdentitySet new
 ]
@@ -154,6 +137,17 @@ TypInfNode >> isDead [
 ]
 
 { #category : #accessing }
+TypInfNode >> isLeaf [
+	^ self outNexts isEmpty
+]
+
+{ #category : #accessing }
+TypInfNode >> isLeaf: aContext [
+	(context stack includes: aContext) ifFalse: [ ^ false ].
+	^ self outNexts noneSatisfy: [ :n | n context stack includes: aContext ]
+]
+
+{ #category : #accessing }
 TypInfNode >> iterate [
 	| queue changed done |
 	TypInfNodeIterateSignal emit: self.
@@ -191,6 +185,22 @@ TypInfNode >> iterations [
 				at: self
 				"ifPresent: [ :cc | cc at: self ifAbsent: {} ]"
 				ifAbsent: {} ]
+]
+
+{ #category : #accessing }
+TypInfNode >> leaves [
+	| result |
+	result := IdentitySet new.
+	self depthFirstNextDo: [ :n | n isLeaf ifTrue: [ result add: n ] ].
+	^ result
+]
+
+{ #category : #accessing }
+TypInfNode >> leaves: aContext [
+	| result |
+	result := IdentitySet new.
+	self depthFirstNextDo: [ :n | (n isLeaf: aContext) ifTrue: [ result add: n ] ].
+	^ result
 ]
 
 { #category : #accessing }
@@ -295,7 +305,6 @@ TypInfNode >> state [
 
 { #category : #accessing }
 TypInfNode >> transfer [
-
 	"transfer the given state from in to out"
 
 	
