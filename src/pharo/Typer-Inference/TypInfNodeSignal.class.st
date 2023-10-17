@@ -1,6 +1,6 @@
 Class {
 	#name : #TypInfNodeSignal,
-	#superclass : #BeaconSignal,
+	#superclass : #ContextStackSignal,
 	#instVars : [
 		'node'
 	],
@@ -27,4 +27,10 @@ TypInfNodeSignal >> initializeNode: aNode [
 { #category : #accessing }
 TypInfNodeSignal >> node [
 	^ node
+]
+
+{ #category : #accessing }
+TypInfNodeSignal >> printOneLineContentsOn: aStream [
+	node printOn: aStream.
+	super printOneLineContentsOn: aStream
 ]

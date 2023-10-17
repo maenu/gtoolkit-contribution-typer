@@ -3,9 +3,6 @@ Class {
 	#superclass : #PackageManifest,
 	#traits : 'TypTManifest',
 	#classTraits : 'TypTManifest classTrait',
-	#classInstVars : [
-		'logger'
-	],
 	#category : #'Typer-GToolkit-Core'
 }
 
@@ -23,25 +20,6 @@ TypGtManifest class >> groupedExtensionMethods [
 					a methodClass name = b methodClass name
 						ifTrue: [ a selector < b selector ]
 						ifFalse: [ a methodClass name < b methodClass name ] ] ]
-]
-
-{ #category : #accessing }
-TypGtManifest class >> invalidate [
-	logger
-		ifNotNil: [ logger
-				stop;
-				reset ].
-	logger := nil
-]
-
-{ #category : #accessing }
-TypGtManifest class >> logger [
-	<gtExample>
-	<noTest>
-	^ logger
-		ifNil: [ logger := MemoryLogger new
-					startFor: TypInfNodeSignal , GtStylerErrorSignal;
-					yourself ]
 ]
 
 { #category : #accessing }
