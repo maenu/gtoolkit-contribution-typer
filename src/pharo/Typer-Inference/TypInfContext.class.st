@@ -68,10 +68,14 @@ TypInfContext >> children [
 ]
 
 { #category : #accessing }
-TypInfContext >> findInRead: aVariable [
-	aVariable
-		depthFirstNextReverseDo: [ :n | n node == aVariable node variable definingNode ifTrue: [ ^ n ] ].
-	Error signal: 'no read found'
+TypInfContext >> definition: aLocalNode [
+	nodes
+		at: aLocalNode variable definingNode
+		ifPresent: [ :c | 
+			self assert: [ c size = 1 ].
+			^ c anyOne ].
+	sender ifNotNil: [ ^ sender definition: aLocalNode ].
+	Error signal: 'no definition found'
 ]
 
 { #category : #accessing }
@@ -182,22 +186,30 @@ TypInfContext >> root [
 
 { #category : #running }
 TypInfContext >> run [
+	| start stop |
 	self install.
-	TypInfContextStartSignal emit: self.
+	start := TypInfContextStartSignal node: self.
+	start emit.
 	[ iterationsDone := iterationsDone + 1.
 	iterationsDone <= iterationsMax and: [ root iterate ] ] whileTrue.
-	TypInfContextStopSignal emit: self
+	stop := TypInfContextStopSignal node: self start: start.
+	stop emit
 ]
 
 { #category : #running }
 TypInfContext >> runDiff [
+	| start stop |
 	self install.
+	start := TypInfContextStartSignal node: self.
+	start emit.
 	[ iterationsDone := iterationsDone + 1.
 	iterationsDone <= iterationsMax
 		and: [ | iteration |
 			iteration := root iterateDiff.
 			iterations add: iteration.
-			iteration isNotEmpty ] ] whileTrue
+			iteration isNotEmpty ] ] whileTrue.
+	stop := TypInfContextStopSignal node: self start: start.
+	stop emit
 ]
 
 { #category : #accessing }
@@ -302,7 +314,8 @@ TypInfContext >> visitLiteralValueNode: aNode [
 { #category : #visiting }
 TypInfContext >> visitLocalVariableNode: aLocalNode [
 	self visitTemporaryNode: aLocalNode.
-	aLocalNode isDefinition ifFalse: [ current inRead: current findInRead ].
+	aLocalNode isDefinition
+		ifFalse: [ current inRead: (self definition: aLocalNode) ].
 	^ current
 ]
 

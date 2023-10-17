@@ -10,14 +10,9 @@ TypInfLocal >> constrainTo: aType from: aNode [
 	self inRead constrainTo: aType from: aNode
 ]
 
-{ #category : #accessing }
-TypInfLocal >> findInRead [
-	^ context findInRead: self
-]
-
 { #category : #'meta-object-protocol' }
 TypInfLocal >> inRead [
-	^ self inAt: #read ifAbsentPut: [ self findInRead ]
+	^ self inAt: #read
 ]
 
 { #category : #'meta-object-protocol' }

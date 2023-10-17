@@ -38,15 +38,13 @@ TypInfBlockContext >> block [
 ]
 
 { #category : #accessing }
-TypInfBlockContext >> findInRead: aVariable [
-	aVariable
-		depthFirstNextReverseDo: [ :n | n node == aVariable node variable definingNode ifTrue: [ ^ n ] ].
-	block
-		depthFirstNextReverseDo: [ :n | n node == aVariable node variable definingNode ifTrue: [ ^ n ] ].
-	self flag: 'Q why can we end up here?'.
-	self home root
-		depthFirstNextDo: [ :n | n node == aVariable node variable definingNode ifTrue: [ ^ n ] ].
-	Error signal: 'no read found'
+TypInfBlockContext >> definition: aLocalNode [
+	nodes
+		at: aLocalNode variable definingNode
+		ifPresent: [ :c | 
+			self assert: [ c size = 1 ].
+			^ c anyOne ].
+	^ block context definition: aLocalNode
 ]
 
 { #category : #accessing }
