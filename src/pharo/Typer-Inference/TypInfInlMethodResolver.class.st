@@ -61,7 +61,7 @@ TypInfInlMethodResolver >> result: aLookup [
 						ifFalse: [ TypInfInlLookupContext
 								sender: message context
 								state: message state copy
-								node: message node copy
+								node: message node
 								self: aLookup root self
 								super: aLookup root super
 								message: message

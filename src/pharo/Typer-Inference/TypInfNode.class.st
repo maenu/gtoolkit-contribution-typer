@@ -275,7 +275,7 @@ TypInfNode >> slurp [
 TypInfNode >> slurpAndTransfer [
 	| oldState |
 	TypInfNodeSlurpAndTransferSignal emit: self.
-	oldState := state copy.
+	oldState := state.
 	self
 		slurp;
 		transfer.
@@ -290,7 +290,7 @@ TypInfNode >> slurpAndTransferDiff [
 
 	| oldState |
 	TypInfNodeSlurpAndTransferSignal emit: self.
-	oldState := state copy.
+	oldState := state.
 	self
 		slurp;
 		transfer.

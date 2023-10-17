@@ -136,7 +136,7 @@ TypInfMessage >> newContexts [
 							-> (TypInfInlLookupContext
 									sender: context
 									state: state copy
-									node: node copy
+									node: node
 									self: context self
 									super: context super
 									message: self

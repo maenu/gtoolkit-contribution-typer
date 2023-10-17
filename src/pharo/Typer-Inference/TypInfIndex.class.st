@@ -206,7 +206,7 @@ TypInfIndex >> contextAt: aLookup ifNew: aBlock ifPresent: anotherBlock ifAbsent
 		during: [ [ | context |
 			context := TypInfContext
 					sender: nil
-					state: TypInfState new
+					state: nil
 					node: node
 					self: aLookup root self
 					super: aLookup root super.

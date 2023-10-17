@@ -220,7 +220,9 @@ TypFunctionType >> covariant: aType [
 					signalsMaybe.
 					aType signalsMaybe} reject: #isNil) ifEmpty: nil ifNotEmpty: #typAsType ].
 	resultNode := ({node.
-			aType node} reject: #isNil) ifEmpty: nil ifNotEmpty: #first.
+			aType node} reject: #isNil)
+			ifEmpty: nil
+			ifNotEmpty: [ :c | c detect: [ :n | n methodNode isNotNil ] ifNone: [ Halt now ] ].
 	self hasClassDescription
 		ifTrue: [ ^ self class
 				classDescription: self classDescription

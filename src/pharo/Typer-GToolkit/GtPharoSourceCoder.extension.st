@@ -45,7 +45,7 @@ GtPharoSourceCoder >> typGtIndicator [
 	^ (self
 		attributeNamed: #typGtContext
 		ifPresent: #typGtIndicator
-		ifAbsent: [ Halt now ]) , ':'
+		ifAbsent: [ 'l' ]) , ':'
 		, (self
 				attributeNamed: #typGtLookup
 				ifPresent: #typGtIndicator

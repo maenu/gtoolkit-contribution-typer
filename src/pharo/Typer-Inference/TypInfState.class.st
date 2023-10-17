@@ -2,23 +2,15 @@ Class {
 	#name : #TypInfState,
 	#superclass : #Object,
 	#instVars : [
-		'state',
 		'cache'
 	],
 	#category : #'Typer-Inference-Core'
 }
 
 { #category : #accessing }
-TypInfState class >> cache: anOrderedIdentityDictionary [
+TypInfState class >> cache: anIdentityDictionary [
 	^ self new
-		initializeCache: anOrderedIdentityDictionary;
-		yourself
-]
-
-{ #category : #accessing }
-TypInfState class >> state: aState [
-	^ self new
-		initializeState: aState;
+		initializeCache: anIdentityDictionary;
 		yourself
 ]
 
@@ -26,33 +18,25 @@ TypInfState class >> state: aState [
 TypInfState >> = anObject [
 	anObject == self ifTrue: [ ^ true ].
 	anObject class = self class ifFalse: [ ^ false ].
-	(anObject state = state and: [ anObject cache = cache ]) ifTrue: [ ^ true ].
-	^ self associations = anObject associations
+	anObject cache = cache ifFalse: [ ^ false ].
+	^ true
 ]
 
 { #category : #accessing }
 TypInfState >> associations [
-	| keys |
-	keys := cache keys.
-	^ (state
-		ifNil: #()
-		ifNotNil: [ state associations reject: [ :a | keys includes: a key ] ])
-		, cache associations
+	^ cache associations
 ]
 
 { #category : #accessing }
 TypInfState >> at: aNode [
-	^ self
-		at: aNode
-		ifPresent: #yourself
-		ifAbsent: nil
+	^ cache at: aNode
 ]
 
 { #category : #accessing }
 TypInfState >> at: aNode covariantPut: aType [
-	^ self
+	^ cache
 		at: aNode
-		put: (self
+		put: (cache
 				at: aNode
 				ifPresent: [ :t | t covariant: aType ]
 				ifAbsent: [ aType ])
@@ -60,27 +44,20 @@ TypInfState >> at: aNode covariantPut: aType [
 
 { #category : #accessing }
 TypInfState >> at: aNode ifAbsent: anotherBlock [
-	^ self
-		at: aNode
-		ifPresent: #yourself
-		ifAbsent: anotherBlock
+	^ cache at: aNode ifAbsent: anotherBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypInfState >> at: aNode ifPresent: aBlock [
-	^ self
-		at: aNode
-		ifPresent: aBlock
-		ifAbsent: nil
+	^ cache at: aNode ifPresent: aBlock
 ]
 
 { #category : #accessing }
 TypInfState >> at: aNode ifPresent: aBlock ifAbsent: anotherBlock [
-	self
-		flag: 'TODO drag up read into cache, to later throw away original state to save memory'.
-	cache at: aNode ifPresent: [ :t | ^ aBlock value: t ].
-	state ifNotNil: [ state at: aNode ifPresent: [ :t | ^ aBlock value: t ] ].
-	^ anotherBlock value
+	^ cache
+		at: aNode
+		ifPresent: aBlock
+		ifAbsent: anotherBlock
 ]
 
 { #category : #accessing }
@@ -95,20 +72,13 @@ TypInfState >> cache [
 ]
 
 { #category : #accessing }
-TypInfState >> copy [
-	^ state
-		ifNil: [ TypInfState state: self ]
-		ifNotNil: [ TypInfState cache: (self associations as: OrderedIdentityDictionary) ]
-]
-
-{ #category : #accessing }
 TypInfState >> diff: aState [
 	| diff |
 	diff := cache species new.
-	self keys , aState keys
+	cache keys , aState keys
 		do: [ :n | 
 			| a b |
-			a := self at: n ifAbsent: [ nil ].
+			a := cache at: n ifAbsent: [ nil ].
 			b := aState at: n ifAbsent: [ nil ].
 			a = b
 				ifFalse: [ diff
@@ -120,38 +90,20 @@ TypInfState >> diff: aState [
 
 { #category : #accessing }
 TypInfState >> hash [
-	^ self associations hash
+	^ cache hash
 ]
 
 { #category : #accessing }
-TypInfState >> initialize [
-	super initialize.
-	self initializeCache: OrderedIdentityDictionary new
-]
-
-{ #category : #accessing }
-TypInfState >> initializeCache: anOrderedIdentityDictionary [
-	cache := anOrderedIdentityDictionary
-]
-
-{ #category : #accessing }
-TypInfState >> initializeState: aState [
-	state := aState
+TypInfState >> initializeCache: anIdentityDictionary [
+	cache := anIdentityDictionary
 ]
 
 { #category : #accessing }
 TypInfState >> keys [
-	^ (state ifNil: #() ifNotNil: [ state keys ]) , cache keys as: IdentitySet
+	^ cache keys
 ]
 
 { #category : #accessing }
-TypInfState >> lazyCopy [
-	^ state
-		ifNotNil: [ TypInfState cache: (self associations as: OrderedIdentityDictionary) ]
-		ifNil: [ TypInfState state: self ]
-]
-
-{ #category : #accessing }
-TypInfState >> state [
-	^ state
+TypInfState >> postCopy [
+	cache := cache copy
 ]
