@@ -230,6 +230,7 @@ TypInfNode >> typGtShaCanType [
 { #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtStateFor: aView [
 	<gtView>
+	self flag: 'FIXME'.
 	state ifNil: [ ^ aView empty ].
 	^ aView forward
 		title: 'State';

@@ -253,7 +253,8 @@ TypInfNode >> slurp [
 			| first |
 			first := s anyOne.
 			state := first origin state copy.
-			(s copyWithout: first) do: [ :e | state := state covariant: e origin state ] ].
+			(s copyWithout: first)
+				do: [ :e | e origin state associations do: [ :a | state at: a key covariantPut: a value ] ] ].
 	in
 		at: #constrain
 		ifPresent: [ :s | 
@@ -299,7 +300,6 @@ TypInfNode >> slurpAndTransferDiff [
 
 { #category : #accessing }
 TypInfNode >> state [
-
 	^ state
 ]
 

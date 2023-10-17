@@ -6,9 +6,10 @@ Class {
 	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TypInfArray >> transfer [
-
-	state at: self put: (Array typAsType withParameters:
-			 { (self inArguments collect: [ :e | state at: e ]) typAsType })
+	state
+		at: self
+		put: (Array typAsType
+				withParameters: {(self inArguments collect: [ :e | state at: e ]) typAsType})
 ]
