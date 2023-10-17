@@ -44,7 +44,7 @@ TypInfMethodResolver >> update: aLookup [
 	TypInfIndex instance cache
 		typAt: aLookup typInfAsContextPath
 		ifPresent: [ :c | 
-			(TypInfNodeStack actives size < c nodeStackDepth
+			(TypInfNodeStack actives size + 1 < c nodeStackDepth
 				and: [ TypInfNodeStack canPush: aLookup compiledMethod ast ])
 				ifTrue: [ aLookup result: (self result: aLookup) ] ].
 	^ super update: aLookup

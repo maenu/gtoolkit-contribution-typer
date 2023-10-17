@@ -198,7 +198,7 @@ TypInfIndex >> contextAt: aLookup ifNew: aBlock ifPresent: anotherBlock ifAbsent
 	cache
 		typAt: path
 		ifPresent: [ :c | 
-			TypInfNodeStack actives size < c nodeStackDepth
+			TypInfNodeStack actives size + 1 < c nodeStackDepth
 				ifTrue: [ cache typRemoveAt: path ]
 				ifFalse: [ ^ anotherBlock value: c ] ].
 	^ TypInfNodeStack
