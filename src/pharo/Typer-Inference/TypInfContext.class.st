@@ -109,8 +109,7 @@ TypInfContext >> initializeSender: aContext state: aState node: aNode self: aTyp
 	children := IdentitySet new.
 	nodeStackDepth := TypInfNodeStack actives size.
 	iterationsDone := 0.
-	iterationsMax := TypInfIndex instance maxIterations.
-	iterations := OrderedCollection new
+	iterationsMax := TypInfIndex instance maxIterations
 ]
 
 { #category : #accessing }
@@ -194,6 +193,7 @@ TypInfContext >> run [
 	start emit.
 	[ iterationsDone := iterationsDone + 1.
 	iterationsDone <= iterationsMax and: [ root iterate ] ] whileTrue.
+	self allNodes do: #reduceStateToRead.
 	stop := TypInfContextStopSignal node: self start: start.
 	stop emit
 ]
@@ -202,6 +202,7 @@ TypInfContext >> run [
 TypInfContext >> runDiff [
 	| start stop |
 	state := TypInfState cache: OrderedIdentityDictionary new.
+	iterations := OrderedCollection new.
 	self install.
 	start := TypInfContextStartSignal node: self.
 	start emit.

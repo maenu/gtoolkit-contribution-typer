@@ -246,6 +246,11 @@ TypInfNode >> printOn: aStream [
 ]
 
 { #category : #accessing }
+TypInfNode >> reduceStateToRead [
+	state reduceToReadIn: self
+]
+
+{ #category : #accessing }
 TypInfNode >> slurp [
 	in
 		at: #next
@@ -253,8 +258,7 @@ TypInfNode >> slurp [
 			| first |
 			first := s anyOne.
 			state := first origin state copy.
-			(s copyWithout: first)
-				do: [ :e | e origin state associations do: [ :a | state at: a key covariantPut: a value ] ] ].
+			(s copyWithout: first) do: [ :e | state slurp: e origin state ] ].
 	in
 		at: #constrain
 		ifPresent: [ :s | 
@@ -268,6 +272,7 @@ TypInfNode >> slurp [
 								ifAbsent: [ e type ] ])
 						, {state at: self ifAbsent: TypUnknownType instance}
 						reduce: [ :a :b | b covariant: a ]) ].
+	state resetRead.
 	out at: #constrain ifPresent: [ :s | s copy do: #remove ]
 ]
 

@@ -2,7 +2,8 @@ Class {
 	#name : #TypInfState,
 	#superclass : #Object,
 	#instVars : [
-		'cache'
+		'cache',
+		'read'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -29,14 +30,17 @@ TypInfState >> associations [
 
 { #category : #accessing }
 TypInfState >> at: aNode [
-	^ cache at: aNode
+	^ self
+		at: aNode
+		ifPresent: #yourself
+		ifAbsent: [ cache errorKeyNotFound: aNode ]
 ]
 
 { #category : #accessing }
 TypInfState >> at: aNode covariantPut: aType [
-	^ cache
+	^ self
 		at: aNode
-		put: (cache
+		put: (self
 				at: aNode
 				ifPresent: [ :t | t covariant: aType ]
 				ifAbsent: [ aType ])
@@ -44,16 +48,23 @@ TypInfState >> at: aNode covariantPut: aType [
 
 { #category : #accessing }
 TypInfState >> at: aNode ifAbsent: anotherBlock [
-	^ cache at: aNode ifAbsent: anotherBlock
+	^ self
+		at: aNode
+		ifPresent: #yourself
+		ifAbsent: anotherBlock
 ]
 
 { #category : #accessing }
 TypInfState >> at: aNode ifPresent: aBlock [
-	^ cache at: aNode ifPresent: aBlock
+	^ self
+		at: aNode
+		ifPresent: aBlock
+		ifAbsent: [ cache errorKeyNotFound: aNode ]
 ]
 
 { #category : #accessing }
 TypInfState >> at: aNode ifPresent: aBlock ifAbsent: anotherBlock [
+	read add: aNode.
 	^ cache
 		at: aNode
 		ifPresent: aBlock
@@ -63,6 +74,7 @@ TypInfState >> at: aNode ifPresent: aBlock ifAbsent: anotherBlock [
 { #category : #accessing }
 TypInfState >> at: aNode put: aType [
 	self assert: [ aType isKindOf: TypType ].
+	read add: aNode.
 	^ cache at: aNode put: aType
 ]
 
@@ -75,11 +87,11 @@ TypInfState >> cache [
 TypInfState >> diff: aState [
 	| diff |
 	diff := cache species new.
-	cache keys , aState keys
+	cache keys , aState cache keys "indirect access to not record reads"
 		do: [ :n | 
 			| a b |
 			a := cache at: n ifAbsent: [ nil ].
-			b := aState at: n ifAbsent: [ nil ].
+			b := aState cache at: n ifAbsent: [ nil ].
 			a = b
 				ifFalse: [ diff
 						at: n
@@ -95,7 +107,8 @@ TypInfState >> hash [
 
 { #category : #accessing }
 TypInfState >> initializeCache: anIdentityDictionary [
-	cache := anIdentityDictionary
+	cache := anIdentityDictionary.
+	read := IdentitySet new
 ]
 
 { #category : #accessing }
@@ -105,5 +118,27 @@ TypInfState >> keys [
 
 { #category : #accessing }
 TypInfState >> postCopy [
-	cache := cache copy
+	self initializeCache: cache copy
+]
+
+{ #category : #accessing }
+TypInfState >> read [
+	^ read
+]
+
+{ #category : #accessing }
+TypInfState >> reduceToReadIn: aNode [
+	cache := (read , {aNode} select: [ :n | cache includesKey: n ])
+			collect: [ :n | n -> (cache at: n) ]
+			as: IdentityDictionary
+]
+
+{ #category : #accessing }
+TypInfState >> resetRead [
+	read removeAll
+]
+
+{ #category : #accessing }
+TypInfState >> slurp: aState [
+	aState associations do: [ :a | self at: a key covariantPut: a value ]
 ]
