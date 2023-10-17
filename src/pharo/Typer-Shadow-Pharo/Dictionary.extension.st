@@ -61,12 +61,6 @@ Dictionary >> typShaMethodKeywordAtPut: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodKeywordIncludes: aLookup [
-	<typShaMethod: 'includes:'>
-	^ super typShaMethodKeywordIncludes: aLookup
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
 Dictionary >> typShaMethodKeywordIncludesKey: aLookup [
 	<typShaMethod: 'includesKey:'>
 	^ CompiledMethod
@@ -93,12 +87,6 @@ Dictionary >> typShaMethodKeywordRemoveKeyIfAbsent: aLookup [
 				aLookup arguments first result} typAsType
 		arguments: {aLookup receiver at: #B.
 				BlockClosure typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodUnaryAnyOne: aLookup [
-	<typShaMethod: 'anyOne'>
-	^ super typShaMethodUnaryAnyOne: aLookup
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }

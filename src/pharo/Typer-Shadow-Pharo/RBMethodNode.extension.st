@@ -25,12 +25,6 @@ RBMethodNode >> typShaMethodKeywordRemovePragma: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBMethodNode >> typShaMethodUnaryAllChildren: aLookup [
-	<typShaMethod: 'allChildren'>
-	^ super typShaMethodUnaryAllChildren: aLookup
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
 RBMethodNode >> typShaMethodUnaryArguments: aLookup [
 	<typShaMethod: 'arguments'>
 	^ CompiledMethod

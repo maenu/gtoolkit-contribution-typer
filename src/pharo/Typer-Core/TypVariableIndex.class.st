@@ -7,11 +7,10 @@ Class {
 { #category : #accessing }
 TypVariableIndex >> initialize [
 	super initialize.
-	resolver := TypDepthFirstResolver
-			resolver: (TypBreadthFirstResolver
-					resolvers: {TypPraVariableResolver new.
-							TypShaVariableResolver new.
-							TypInfVariableResolver new})
+	resolver := TypBreadthFirstResolver
+			resolvers: {TypDepthFirstResolver resolver: TypPraVariableResolver new.
+					TypDepthFirstResolver resolver: TypShaVariableResolver new.
+					TypDepthFirstResolver resolver: TypInfVariableResolver new}
 ]
 
 { #category : #printing }

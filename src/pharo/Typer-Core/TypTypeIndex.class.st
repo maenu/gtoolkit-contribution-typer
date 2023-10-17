@@ -8,11 +8,9 @@ Class {
 TypTypeIndex >> initialize [
 	super initialize.
 	resolver := TypBreadthFirstResolver
-			resolvers: {TypDepthFirstResolver
-						resolver: (TypBreadthFirstResolver
-								resolvers: {TypPraTypeResolver new.
-										TypShaTypeResolver new}).
-					TypInfTypeResolver new}
+			resolvers: {TypDepthFirstResolver resolver: TypPraTypeResolver new.
+					TypDepthFirstResolver resolver: TypShaTypeResolver new.
+					TypDepthFirstResolver resolver: TypInfTypeResolver new}
 ]
 
 { #category : #accessing }

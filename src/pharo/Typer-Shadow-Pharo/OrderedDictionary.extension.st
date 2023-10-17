@@ -51,23 +51,11 @@ OrderedDictionary >> typShaMethodKeywordAtPut: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedDictionary >> typShaMethodKeywordIncludes: aLookup [
-	<typShaMethod: 'includes:'>
-	^ super typShaMethodKeywordIncludes: aLookup
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
 OrderedDictionary >> typShaMethodKeywordIncludesKey: aLookup [
 	<typShaMethod: 'includesKey:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
 		arguments: {aLookup receiver at: #B}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-OrderedDictionary >> typShaMethodUnaryAnyOne: aLookup [
-	<typShaMethod: 'anyOne'>
-	^ super typShaMethodUnaryAnyOne: aLookup
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }

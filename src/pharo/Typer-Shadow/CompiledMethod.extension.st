@@ -1,15 +1,15 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*Typer-Shadow' }
-CompiledMethod >> typShaCanResolveMethod: aSymbol [
+CompiledMethod >> typShaCanResolveMethodSelector: aSymbol [
 	self typShaIsResolveMethod ifFalse: [ ^ false ].
-	^ self typShaResolvedMethod = aSymbol
+	^ self typShaResolvedMethodSelector = aSymbol
 ]
 
 { #category : #'*Typer-Shadow' }
-CompiledMethod >> typShaCanResolveVariable: aSymbol [
+CompiledMethod >> typShaCanResolveVariableSelector: aSymbol [
 	self typShaIsResolveVariable ifFalse: [ ^ false ].
-	^ self typShaResolvedVariable = aSymbol
+	^ self typShaResolvedVariableSelector = aSymbol
 ]
 
 { #category : #'*Typer-Shadow' }
@@ -30,11 +30,17 @@ CompiledMethod >> typShaIsResolveVariable [
 { #category : #'*Typer-Shadow' }
 CompiledMethod >> typShaResolvedMethod [
 	self assert: [ self typShaIsResolveMethod ].
+	^ self methodClass lookupSelector: self typShaResolvedMethodSelector
+]
+
+{ #category : #'*Typer-Shadow' }
+CompiledMethod >> typShaResolvedMethodSelector [
+	self assert: [ self typShaIsResolveMethod ].
 	^ (self pragmas detect: [ :e | e selector = #typShaMethod: ]) arguments first asSymbol
 ]
 
 { #category : #'*Typer-Shadow' }
-CompiledMethod >> typShaResolvedVariable [
+CompiledMethod >> typShaResolvedVariableSelector [
 	self assert: [ self typShaIsResolveVariable ].
 	^ (self pragmas detect: [ :e | e selector = #typShaVariable: ]) arguments first
 		asSymbol

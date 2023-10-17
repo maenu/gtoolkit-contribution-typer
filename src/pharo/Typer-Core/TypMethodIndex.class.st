@@ -7,11 +7,10 @@ Class {
 { #category : #accessing }
 TypMethodIndex >> initialize [
 	super initialize.
-	resolver := TypDepthFirstResolver
-			resolver: (TypBreadthFirstResolver
-					resolvers: {TypPraMethodResolver new.
-							TypShaMethodResolver new.
-							TypInfMethodResolver new})
+	resolver := TypBreadthFirstResolver
+			resolvers: {TypDepthFirstResolver resolver: TypPraMethodResolver new.
+					TypDepthFirstResolver resolver: TypShaMethodResolver new.
+					TypDepthFirstResolver resolver: TypInfMethodResolver new}
 ]
 
 { #category : #printing }

@@ -1,18 +1,6 @@
 Extension { #name : #Integer }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Integer >> typShaMethodBinaryDivide: aLookup [
-	<typShaMethod: '/'>
-	^ super typShaMethodBinaryDivide: aLookup
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Integer >> typShaMethodBinaryEqual: aLookup [
-	<typShaMethod: '='>
-	^ super typShaMethodBinaryEqual: aLookup
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
 Integer >> typShaMethodBinaryGreater: aLookup [
 	<typShaMethod: '>'>
 	^ CompiledMethod
@@ -98,12 +86,6 @@ Integer >> typShaMethodKeywordBitXor: aLookup [
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Integer typAsType
 		arguments: {Integer typAsType}
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
-Integer >> typShaMethodKeywordQuo: aLookup [
-	<typShaMethod: 'quo:'>
-	^ super typShaMethodKeywordQuo: aLookup
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }

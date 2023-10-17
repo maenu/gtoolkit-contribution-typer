@@ -15,13 +15,13 @@ TypShaIndex >> addMethod: aMethod [
 		ifTrue: [ (cache
 				typAt: {#method.
 						aMethod methodClass.
-						aMethod typShaResolvedMethod}
+						aMethod typShaResolvedMethodSelector}
 				ifAbsentPut: [ IdentitySet new ]) add: aMethod ].
 	aMethod typShaIsResolveVariable
 		ifTrue: [ (cache
 				typAt: {#variable.
 						aMethod methodClass.
-						aMethod typShaResolvedVariable}
+						aMethod typShaResolvedVariableSelector}
 				ifAbsentPut: [ IdentitySet new ]) add: aMethod ].
 	aMethod typShaIsResolveType
 		ifTrue: [ (cache
@@ -73,13 +73,13 @@ TypShaIndex >> removeMethod: aMethod [
 		ifTrue: [ (cache
 				typAt: {#method.
 						aMethod methodClass})
-				removeKey: aMethod typShaResolvedMethod
+				removeKey: aMethod typShaResolvedMethodSelector
 				ifAbsent: [  "noop" ] ].
 	aMethod typShaIsResolveVariable
 		ifTrue: [ (cache
 				typAt: {#variable.
 						aMethod methodClass})
-				removeKey: aMethod typShaResolvedVariable
+				removeKey: aMethod typShaResolvedVariableSelector
 				ifAbsent: [  "noop" ] ].
 	aMethod typShaIsResolveType
 		ifTrue: [ (cache

@@ -258,12 +258,6 @@ Collection >> typShaMethodUnaryMax: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodUnarySize: aLookup [
-	<typShaMethod: 'size'>
-	^ super typShaMethodUnarySize: aLookup
-]
-
-{ #category : #'*Typer-Shadow-Pharo' }
 Collection class >> typShaType: aLookup [
 	<typShaType>
 	^ aLookup root classDescription
