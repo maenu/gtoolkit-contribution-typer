@@ -13,5 +13,5 @@ TypInfMethod >> typCheOn: aStream [
 					expected >= actual
 						ifFalse: [ aStream nextPut: (TypCheIncompatible node: e origin expected: expected) ].
 					(expected isNullable not and: actual isNullable)
-						ifTrue: [ aStream nextPut: (TypCheNullable node: e origin message: 'return is unknown') ] ] ]
+						ifTrue: [ aStream nextPut: (TypCheNullable node: e origin message: 'return is nullable') ] ] ]
 ]
