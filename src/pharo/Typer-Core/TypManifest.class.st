@@ -88,18 +88,6 @@ TypManifest class >> manifests [
 ]
 
 { #category : #accessing }
-TypManifest class >> nil [
-	"clean up undeclareds
-	not sure how to reproduce
-	the undeclared class instance variable was pointing to a value"
-	
-	SmalltalkImage cleanUp.
-	Undeclared associations
-		select: [ :a | a value class package name beginsWith: 'Typer' ]
-		thenDo: [ :a | Undeclared removeKey: a key ]
-]
-
-{ #category : #accessing }
 TypManifest class >> nilAll [
 	self manifests do: #nil
 ]
@@ -121,8 +109,8 @@ TypManifest class >> nuke [
 	| start report |
 	start := DateAndTime now.
 	report := OrderedCollection new.
-	self nilAll.
 	self invalidateAll.
+	self nilAll.
 	Smalltalk garbageCollectMost.
 	self
 		checkVitals: report
@@ -167,7 +155,10 @@ TypManifest class >> tallySpace [
 	"system-wide seems to be faster than querying ~100 classes"
 
 	<gtExample>
-	<notTest>
+	<noTest>
+	"^ ((SpaceTally new spaceTally: (self packages flatCollect: #definedClasses)) items
+		select: [ :e | e analyzedClassName beginsWith: 'Typ' ])
+		sorted: [ :a :b | a instanceCount > b instanceCount ]"
 	^ (SpaceTally new systemWideSpaceTally
 		select: [ :e | e analyzedClassName beginsWith: 'Typ' ])
 		sorted: [ :a :b | a instanceCount > b instanceCount ]

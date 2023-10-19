@@ -63,8 +63,19 @@ TypInfContext >> allNodes [
 ]
 
 { #category : #accessing }
+TypInfContext >> canRun [
+	^ TypInfNodeStack canPush: node
+]
+
+{ #category : #accessing }
 TypInfContext >> children [
 	^ children
+]
+
+{ #category : #accessing }
+TypInfContext >> cleanup [
+	iterations removeAll.
+	self allNodes do: [ :e | e state reduceToRead ]
 ]
 
 { #category : #accessing }
@@ -105,10 +116,7 @@ TypInfContext >> initializeSender: aContext state: aState node: aNode self: aTyp
 	selfType := aType.
 	superType := anotherType.
 	nodes := IdentityDictionary new.
-	children := IdentitySet new.
-	nodeStackDepth := TypInfNodeStack actives size.
-	iterationsDone := 0.
-	iterationsMax := TypInfIndex instance maxIterations
+	children := IdentitySet new
 ]
 
 { #category : #accessing }
@@ -117,6 +125,11 @@ TypInfContext >> install [
 	self assert: [ current isNil ].
 	current := root := self add: (node typInfNodeInContext: self).
 	node acceptVisitor: self
+]
+
+{ #category : #accessing }
+TypInfContext >> isRun [
+	^ iterationsDone > 0
 ]
 
 { #category : #accessing }
@@ -185,34 +198,27 @@ TypInfContext >> root [
 
 { #category : #running }
 TypInfContext >> run [
-	| start stop |
-	state := TypInfState node: self.
-	self install.
-	start := TypInfContextStartSignal node: self.
-	start emit.
-	[ iterationsDone := iterationsDone + 1.
-	iterationsDone <= iterationsMax and: [ root iterate ] ] whileTrue.
-	self allNodes do: [ :n | n state reduceToRead ].
-	stop := TypInfContextStopSignal node: self start: start.
-	stop emit
-]
-
-{ #category : #running }
-TypInfContext >> runDiff [
-	| start stop |
-	state := TypInfState node: self.
-	iterations := OrderedCollection new.
-	self install.
-	start := TypInfContextStartSignal node: self.
-	start emit.
-	[ iterationsDone := iterationsDone + 1.
-	iterationsDone <= iterationsMax
-		and: [ | iteration |
-			iteration := root iterateDiff.
-			iterations add: iteration.
-			iteration isNotEmpty ] ] whileTrue.
-	stop := TypInfContextStopSignal node: self start: start.
-	stop emit
+	self assert: [ self canRun ].
+	TypInfNodeStack
+		push: node
+		during: [ | start stop |
+			iterationsDone := 0.
+			iterationsMax := TypInfCurrentConfiguration value maxIterations.
+			nodeStackDepth := TypInfNodeStack actives size.
+			iterations := OrderedCollection new.
+			self install.
+			start := TypInfContextStartSignal node: self.
+			start emit.
+			[ iterationsDone := iterationsDone + 1.
+			iterationsDone <= iterationsMax
+				and: [ | iteration |
+					iteration := root iterate.
+					iterations add: iteration.
+					iteration isNotEmpty ] ] whileTrue.
+			self perform: TypInfCurrentConfiguration value contextCleanup.
+			stop := TypInfContextStopSignal node: self start: start.
+			stop emit ]
+		or: [ self error: 'cannot push node' ]
 ]
 
 { #category : #accessing }

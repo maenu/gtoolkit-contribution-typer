@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 TypInfInlMethodResolver >> canResolve: aLookup [
 	| methods |
-	aLookup message context stackSize < TypInfIndex instance maxNodeStackSize
+	aLookup message context stackSize < TypInfCurrentConfiguration value maxNodeStackSize
 		ifFalse: [ ^ false ].
 	(aLookup message couldBeSelfOrSuperSend or: [ aLookup message hasNodes ])
 		ifFalse: [ ^ false ].
@@ -17,10 +17,10 @@ TypInfInlMethodResolver >> canResolve: aLookup [
 		ifFalse: [ ^ false ].
 	methods := self methods: aLookup.
 	self flag: 'Q inline some of it, lookup the rest, like for variables?'.
-	(methods size between: 1 and: TypInfIndex instance maxImplementors)
+	(methods size between: 1 and: TypInfCurrentConfiguration value maxImplementors)
 		ifFalse: [ ^ false ].
 	methods
-		detect: [ :a | a value size > TypInfIndex instance maxMethodSize ]
+		detect: [ :a | a value size > TypInfCurrentConfiguration value maxMethodSize ]
 		ifFound: [ ^ false ].
 	^ true
 ]

@@ -26,6 +26,19 @@ TypInfNode >> allNextNodes [
 ]
 
 { #category : #accessing }
+TypInfNode >> changesDiffFrom: aState [
+	"generates state diff per node instead of just changed or not.
+	useful for debugging"
+
+	^ aState diff: state
+]
+
+{ #category : #accessing }
+TypInfNode >> changesFrom: aState [
+	^ aState = state ifTrue: [ #() ] ifFalse: [ {nil} ]
+]
+
+{ #category : #accessing }
 TypInfNode >> constrain: aNode to: aType [
 	state at: aNode covariantPut: aType.
 	aNode constrainTo: aType from: self
@@ -150,21 +163,6 @@ TypInfNode >> isLeaf: aContext [
 
 { #category : #accessing }
 TypInfNode >> iterate [
-	| queue changed done |
-	TypInfNodeIterateSignal emit: self.
-	queue := LinkedList with: self.
-	changed := false.
-	done := IdentitySet new.
-	[ queue isEmpty ]
-		whileFalse: [ | current |
-			current := done add: queue removeFirst.
-			changed := current slurpAndTransfer or: changed.
-			queue addAll: (current outNexts reject: [ :n | done includes: n ]) ].
-	^ changed
-]
-
-{ #category : #accessing }
-TypInfNode >> iterateDiff [
 	| queue changes done |
 	TypInfNodeIterateSignal emit: self.
 	queue := LinkedList with: self.
@@ -173,7 +171,8 @@ TypInfNode >> iterateDiff [
 	[ queue isEmpty ]
 		whileFalse: [ | current |
 			current := done add: queue removeFirst.
-			current slurpAndTransferDiff ifNotEmpty: [ :c | changes at: current put: c ].
+			(current slurpAndTransfer)
+				ifNotEmpty: [ :c | changes at: current put: c ].
 			queue addAll: (current outNexts reject: [ :n | done includes: n ]) ].
 	^ changes
 ]
@@ -277,27 +276,12 @@ TypInfNode >> slurp [
 TypInfNode >> slurpAndTransfer [
 	| oldState |
 	TypInfNodeSlurpAndTransferSignal emit: self.
-	oldState := state copy.
-	self
-		slurp;
-		transfer.
-	transfers := transfers + 1.
-	^ state ~= oldState
-]
-
-{ #category : #accessing }
-TypInfNode >> slurpAndTransferDiff [
-	"generates state diff per node instead of just changed or not.
-	useful for debugging"
-
-	| oldState |
-	TypInfNodeSlurpAndTransferSignal emit: self.
 	oldState := state.
 	self
 		slurp;
 		transfer.
 	transfers := transfers + 1.
-	^ oldState diff: state
+	^ self perform: TypInfCurrentConfiguration value nodeChanges with: oldState
 ]
 
 { #category : #accessing }

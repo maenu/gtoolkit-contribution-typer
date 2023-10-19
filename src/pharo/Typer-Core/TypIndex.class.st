@@ -52,7 +52,7 @@ TypIndex >> initialize [
 	<typPraVariable: 'resolver' as: 'TypResolver'>
 	super initialize.
 	cache := IdentityDictionary new.
-	SystemAnnouncer uniqueInstance weak
+	SystemAnnouncer uniqueInstance
 		when: ClassAnnouncement
 			send: #invalidateOnClassChangeAsync:
 			to: self;
@@ -63,6 +63,7 @@ TypIndex >> initialize [
 
 { #category : #invalidation }
 TypIndex >> invalidate [
+	SystemAnnouncer uniqueInstance unsubscribe: self.
 	resolver ifNotNil: #invalidate.
 	cache removeAll
 ]

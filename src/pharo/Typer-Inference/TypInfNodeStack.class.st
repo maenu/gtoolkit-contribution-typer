@@ -1,22 +1,21 @@
 Class {
 	#name : #TypInfNodeStack,
 	#superclass : #ProcessLocalVariable,
-	#category : #'Typer-Inference-Lookup'
+	#category : #'Typer-Inference-Core'
 }
 
 { #category : #accessing }
 TypInfNodeStack class >> actives [
-
-	^ self value ifNil: [ 
-		  self value: Stack new.
-		  self value ]
+	^ self value
+		ifNil: [ self value: Stack new.
+			self value ]
 ]
 
 { #category : #accessing }
 TypInfNodeStack class >> canPush: aNode [
 	| actives |
 	actives := self actives.
-	actives size < TypInfIndex instance maxNodeStackSize ifFalse: [ ^ false ].
+	actives size < TypInfCurrentConfiguration value maxNodeStackSize ifFalse: [ ^ false ].
 	^ (actives includes: aNode) not
 ]
 

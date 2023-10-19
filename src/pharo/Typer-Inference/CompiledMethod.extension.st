@@ -63,5 +63,5 @@ CompiledMethod >> typInfTypes [
 
 { #category : #'*Typer-Inference' }
 CompiledMethod >> typInfUpdateContext [
-	^ TypInfIndex instance updateContextAt: self typInfAsLookup
+	^ TypInfIndex instance contextUpdateAt: self typInfAsLookup
 ]
