@@ -99,7 +99,6 @@ TypInfContext >> home [
 { #category : #accessing }
 TypInfContext >> initializeSender: aContext state: aState node: aNode self: aType super: anotherType [
 	self assert: [ aType isNotNil ].
-	self assert: [ aNode methodNode isNotNil ].
 	sender := aContext.
 	state := aState.
 	node := aNode.
@@ -187,13 +186,13 @@ TypInfContext >> root [
 { #category : #running }
 TypInfContext >> run [
 	| start stop |
-	state := TypInfState cache: IdentityDictionary new.
+	state := TypInfState node: self.
 	self install.
 	start := TypInfContextStartSignal node: self.
 	start emit.
 	[ iterationsDone := iterationsDone + 1.
 	iterationsDone <= iterationsMax and: [ root iterate ] ] whileTrue.
-	self allNodes do: #reduceStateToRead.
+	self allNodes do: [ :n | n state reduceToRead ].
 	stop := TypInfContextStopSignal node: self start: start.
 	stop emit
 ]
@@ -201,7 +200,7 @@ TypInfContext >> run [
 { #category : #running }
 TypInfContext >> runDiff [
 	| start stop |
-	state := TypInfState cache: OrderedIdentityDictionary new.
+	state := TypInfState node: self.
 	iterations := OrderedCollection new.
 	self install.
 	start := TypInfContextStartSignal node: self.

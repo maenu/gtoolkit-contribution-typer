@@ -30,7 +30,7 @@ BlockClosure >> typInfAbsResolveOnDo: aMessageNode [
 	exceptionHandler := aMessageNode arguments second.
 	^ TypInfExceptionHandlingBlockContext
 		sender: aMessageNode context
-		state: aMessageNode state copy
+		state: aMessageNode state
 		node: receiver node
 		self: receiver context self
 		super: receiver context super
@@ -51,7 +51,7 @@ BlockClosure >> typInfAbsResolveValue: aMessageNode [
 	block := aMessageNode receiver node.
 	^ TypInfBlockContext
 		sender: aMessageNode context
-		state: aMessageNode state copy
+		state: aMessageNode state
 		node: block node
 		self: block context self
 		super: block context super

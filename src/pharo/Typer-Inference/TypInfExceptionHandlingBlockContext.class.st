@@ -60,7 +60,7 @@ TypInfExceptionHandlingBlockContext >> newExceptionHandlerContext: aSignalMessag
 	self assert: [ self handles: aSignalMessage context exception ].
 	^ TypInfBlockContext
 		sender: self
-		state: root state copy
+		state: root state
 		node: exceptionHandler node
 		self: exceptionHandler context self
 		super: exceptionHandler context super

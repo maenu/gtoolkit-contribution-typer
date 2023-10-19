@@ -6,14 +6,11 @@ Class {
 
 { #category : #accessing }
 TypGtStabilityStyler >> visitMethodNode: aNode [
-	| position color |
+	| position |
 	context == context home ifFalse: [ ^ self ].
 	position := aNode arguments
 			ifEmpty: [ aNode keywordsIntervals last stop ]
 			ifNotEmpty: [ :c | c last stop ].
-	color := context isStable
-			ifTrue: BrGlamorousColors successBackgroundColor
-			ifFalse: BrGlamorousColors errorBackgroundColor.
 	self
 		attributes: {BrTextAdornmentDynamicAttribute new
 					beAppend;
@@ -29,7 +26,9 @@ TypGtStabilityStyler >> visitMethodNode: aNode [
 									bottom: 0
 									left: 3);
 							size: 8 @ 8;
-							background: color;
+							background: (context isStable
+									ifTrue: BrGlamorousColors successBackgroundColor
+									ifFalse: BrGlamorousColors errorBackgroundColor);
 							geometry: BlEllipseGeometry new;
 							when: BlClickEvent do: [ :e | e target phlow spawnObject: context ];
 							yourself ];

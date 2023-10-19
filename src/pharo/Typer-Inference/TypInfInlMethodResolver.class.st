@@ -53,14 +53,14 @@ TypInfInlMethodResolver >> result: aLookup [
 								ifFound: [ :aa | aa value adoptSelf: aLookup root self super: aLookup root super ]
 								ifNone: [ TypInfInlContext
 										sender: message context
-										state: message state copy
+										state: message state
 										node: node
 										self: aLookup root self
 										super: aLookup root super
 										message: message ] ]
 						ifFalse: [ TypInfInlLookupContext
 								sender: message context
-								state: message state copy
+								state: message state
 								node: message node
 								self: aLookup root self
 								super: aLookup root super

@@ -141,7 +141,7 @@ TypFunctionType >> = anObject [
 	self class = anObject class ifFalse: [ ^ false ].
 	argumentsSize = anObject argumentsSize ifFalse: [ ^ false ].
 	argumentsOptional = anObject argumentsOptional ifFalse: [ ^ false ].
-	node == anObject node ifFalse: [ ^ false ].
+	node = anObject node ifFalse: [ ^ false ].
 	signalsAlways = anObject signalsAlways ifFalse: [ ^ false ].
 	signalsMaybe = anObject signalsMaybe ifFalse: [ ^ false ].
 	super = anObject ifFalse: [ ^ false ].
@@ -198,6 +198,14 @@ TypFunctionType >> covariant: aType [
 	aType == self ifTrue: [ ^ self ].
 	self isUnknownFunction ifTrue: [ ^ aType ].
 	aType isUnknownFunction ifTrue: [ ^ self ].
+	resultNode := ({node.
+			aType node} asIdentitySet reject: #isNil)
+			ifEmpty: nil
+			ifNotEmpty: [ :c | 
+				c size > 1
+					ifTrue: [ ^ {self.
+							aType} typAsType ]
+					ifFalse: [ c anyOne ] ].
 	resultResult := self result covariant: aType result.
 	resultArguments := aType arguments.
 	resultArguments := self arguments
@@ -219,10 +227,6 @@ TypFunctionType >> covariant: aType [
 					aType signalsAlways.
 					signalsMaybe.
 					aType signalsMaybe} reject: #isNil) ifEmpty: nil ifNotEmpty: #typAsType ].
-	resultNode := ({node.
-			aType node} reject: #isNil)
-			ifEmpty: nil
-			ifNotEmpty: [ :c | c detect: [ :n | n methodNode isNotNil ] ifNone: [ Halt now ] ].
 	self hasClassDescription
 		ifTrue: [ ^ self class
 				classDescription: self classDescription
@@ -253,7 +257,7 @@ TypFunctionType >> hasNode [
 TypFunctionType >> hashSkipping: anIdentitySet [
 	(anIdentitySet includes: self) ifTrue: [ ^ 41 ].
 	^ (((((41 bitXor: argumentsSize hash) bitXor: argumentsOptional hash)
-		bitXor: signalsAlways hash) bitXor: signalsMaybe hash) bitXor: node identityHash)
+		bitXor: signalsAlways hash) bitXor: signalsMaybe hash) bitXor: node hash)
 		bitXor: (super hashSkipping: anIdentitySet)
 ]
 
@@ -270,7 +274,7 @@ TypFunctionType >> initialize [
 TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil node: aNodeOrNil [
 	self assert: [ anInteger isInteger ].
 	self assert: [ anInteger >= 0 ].
-	self assert: [ aNodeOrNil isNil or: [ aNodeOrNil methodNode isNotNil ] ].
+	self assert: [ aNodeOrNil isNil or: [ aNodeOrNil class = TypInfBlock ] ].
 	argumentsSize := anInteger.
 	argumentsOptional := aBoolean.
 	signalsAlways := aTypeOrNil.
@@ -296,6 +300,7 @@ TypFunctionType >> isFunction [
 
 { #category : #accessing }
 TypFunctionType >> isUnknownFunction [
+	node ifNotNil: [ ^ false ].
 	signalsAlways ifNotNil: [ ^ false ].
 	signalsMaybe ifNotNil: [ ^ false ].
 	self result isUnknown ifFalse: [ ^ false ].

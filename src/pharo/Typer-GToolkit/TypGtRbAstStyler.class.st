@@ -36,7 +36,7 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 		on: Error
 		do: [ :e | (GtStylerErrorSignal new signaledError: e) emit ].
 	text := nil.
-	context := nil
+	"context := nil"
 ]
 
 { #category : #visiting }

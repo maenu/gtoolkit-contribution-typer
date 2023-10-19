@@ -43,6 +43,7 @@ TypInfNode >> constrainTo: aType from: aNode [
 					ifNone: [ aNode outAdd: (TypInfConstrainEdge origin: aNode target: self) ] ]
 			ifAbsent: [ aNode outAdd: (TypInfConstrainEdge origin: aNode target: self) ].
 	edge type: aType.
+	self flag: 'TODO looks dirty, but is needed to ensure subsequent type reads of said node are consistent'.
 	aNode state at: self put: aType
 ]
 
@@ -115,7 +116,7 @@ TypInfNode >> initializeNode: aNode context: aContext [
 	transfers := 0.
 	node := aNode.
 	context := aContext.
-	state := aContext state
+	state := aContext state withNode: self
 ]
 
 { #category : #accessing }
@@ -246,19 +247,15 @@ TypInfNode >> printOn: aStream [
 ]
 
 { #category : #accessing }
-TypInfNode >> reduceStateToRead [
-	state reduceToReadIn: self
-]
-
-{ #category : #accessing }
 TypInfNode >> slurp [
 	in
 		at: #next
 		ifPresent: [ :s | 
-			| first |
-			first := s anyOne.
-			state := first origin state copy.
-			(s copyWithout: first) do: [ :e | state slurp: e origin state ] ].
+			| states |
+			states := (s collect: [ :e | e origin state ] as: OrderedCollection)
+					sorted: [ :a :b | a size > b size ].
+			state := states removeFirst withNode: self.
+			state slurpAll: states ].
 	in
 		at: #constrain
 		ifPresent: [ :s | 
@@ -272,15 +269,15 @@ TypInfNode >> slurp [
 								ifAbsent: [ e type ] ])
 						, {state at: self ifAbsent: TypUnknownType instance}
 						reduce: [ :a :b | b covariant: a ]) ].
-	state resetRead.
-	out at: #constrain ifPresent: [ :s | s copy do: #remove ]
+	out at: #constrain ifPresent: [ :s | s copy do: #remove ].
+	state read removeAll
 ]
 
 { #category : #accessing }
 TypInfNode >> slurpAndTransfer [
 	| oldState |
 	TypInfNodeSlurpAndTransferSignal emit: self.
-	oldState := state.
+	oldState := state copy.
 	self
 		slurp;
 		transfer.

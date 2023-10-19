@@ -116,9 +116,9 @@ TypParametricType >> > aType [
 ]
 
 { #category : #compatibility }
-TypParametricType >> at: aString [
-
-	^ parameters at: aString ifAbsent: [ self super at: aString ]
+TypParametricType >> at: aSymbol [
+	self assert: [ aSymbol isSymbol ].
+	^ parameters at: aSymbol ifAbsent: [ self super at: aSymbol ]
 ]
 
 { #category : #converting }
@@ -163,9 +163,9 @@ TypParametricType >> hashSkipping: anIdentitySet [
 TypParametricType >> initialize [
 
 	<typPraResult: 'TypParametricType'>
-	<typPraVariable: 'parameters' as: 'OrderedDictionary<String,TypType>'>
+	<typPraVariable: 'parameters' as: 'OrderedDictionary<Symbol,TypType>'>
 	super initialize.
-	parameters := OrderedDictionary new
+	parameters := OrderedIdentityDictionary new
 ]
 
 { #category : #initialization }
@@ -250,10 +250,11 @@ TypParametricType >> typGtParametersFor: aView [
 
 { #category : #compatibility }
 TypParametricType >> withAt: aSymbol put: aType [
-
-	^ self withParameters: (parameters copy
-			   at: aSymbol put: aType;
-			   values)
+	self assert: [ aSymbol isSymbol ].
+	^ self
+		withParameters: (parameters copy
+				at: aSymbol put: aType;
+				values)
 ]
 
 { #category : #compatibility }

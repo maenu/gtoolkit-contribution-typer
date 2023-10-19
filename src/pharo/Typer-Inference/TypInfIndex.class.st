@@ -241,7 +241,7 @@ TypInfIndex >> initialize [
 	{ProtoObject} , ProtoObject allSubclasses , {ProtoObject class}
 		, ProtoObject class allSubclasses do: [ :b | self addBehavior: b ].
 	maxIterations := 16.
-	maxNodeStackSize := 5.
+	maxNodeStackSize := 6.
 	maxImplementors := self implementors95Quantile.
 	maxWriters := self writers95Quantile.
 	maxMethodSize := self methodSize95Quantile

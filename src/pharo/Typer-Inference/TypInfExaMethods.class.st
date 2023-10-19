@@ -54,7 +54,6 @@ TypInfExaMethods >> inlined [
 
 { #category : #requirements }
 TypInfExaMethods >> message [
-
 	^ 1 + 2
 ]
 

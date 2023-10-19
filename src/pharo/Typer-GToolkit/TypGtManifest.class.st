@@ -28,6 +28,7 @@ TypGtManifest class >> nil [
 
 	<gtExample>
 	<noTest>
+	| extensions |
 	"nil various references"
 	GtPlaygroundEvaluatedCodeButtonAttribute
 		allSubInstancesDo: [ :e | e result: nil ].
@@ -41,20 +42,35 @@ TypGtManifest class >> nil [
 	GtLocalVariablesBindings allInstancesDo: #initialize.
 	GtExampleWithResult allInstancesDo: [ :e | e result: nil ].
 	GtPharoSourceCoder
-		allSubInstancesDo: [ :e | e attributes
+		allSubInstancesDo: [ :e | 
+			e attributes
 				removeKey: #typGtContext ifAbsent: [  "noop" ];
 				removeKey: #typGtContextPromise ifAbsent: [  "noop" ];
 				removeKey: #typGtLookup ifAbsent: [  "noop" ] ].
-
-	"forces removal of typer coder extensions, given the addon is disabled"
+	GtPharoMethodContextCoder allInstances
+		select: [ :e | 
+			e context isNotNil
+				and: [ e compiledMethod methodClass package name beginsWith: 'Typer' ] ]
+		thenDo: [ :e | e instVarNamed: #context put: nil ].
+	
+	"forces removal of typer coder extensions"
+	extensions := (#gtAstCoderAddOns: gtPragmas & 'Typer' gtPackageMatches)
+			contents
+			collect: [ :m | 
+				{m.
+					m methodClass.
+					m sourceCode.
+					m category} ].
+	extensions do: [ :a | a first removeFromSystem ].
 	GtTextualCoderViewModel allSubInstancesDo: #requestUpdateAddOns.
+	1 second wait.
+	extensions do: [ :a | a second compile: a third classified: a fourth ].
 	
 	"some tasks seem to end up in ever-pending state"
 	((GtWorld someInstance taskQueue instVarNamed: #tasks) value
 		instVarNamed: #pendingTasks) removeAllTasks.
-		
-	"probably not needed anymore
-	was necessary when screwing up with anonymous classes"
+	
+	"probably not needed anymore, was necessary when screwing up with anonymous classes"
 	AsyncRejectedPromiseState allInstances
 		select: [ :e | 
 			e error asString
@@ -66,6 +82,5 @@ TypGtManifest class >> nil [
 		allInstancesDo: [ :e | e overlayElement removeEventHandler: e ].
 	BlHandlerAnnouncerRegistry
 		allInstancesDo: [ :e | e removeAllSuchThat: [ :f | f isKindOf: BlOverlayListener ] ].
-		
 	^ self
 ]
