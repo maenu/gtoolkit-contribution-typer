@@ -9,18 +9,19 @@ Class {
 }
 
 { #category : #accessing }
-TypInfExceptionHandlingBlockContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType message: aMessage block: aBlock [
+TypInfExceptionHandlingBlockContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType lookup: aLookup message: aMessage block: aBlock [
 	self shouldNotImplement
 ]
 
 { #category : #accessing }
-TypInfExceptionHandlingBlockContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType message: aMessage block: aBlock exception: anException exceptionHandler: anotherNode [
+TypInfExceptionHandlingBlockContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType lookup: aLookup message: aMessage block: aBlock exception: anException exceptionHandler: anotherNode [
 	^ (super
 		sender: aContext
 		state: aState
 		node: aNode
 		self: aType
 		super: anotherType
+		lookup: aLookup
 		message: aMessage
 		block: aBlock)
 		initializeException: anException exceptionHandler: anotherNode;

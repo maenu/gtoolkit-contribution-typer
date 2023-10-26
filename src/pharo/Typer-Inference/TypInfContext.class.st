@@ -109,7 +109,11 @@ TypInfContext >> home [
 
 { #category : #accessing }
 TypInfContext >> initializeSender: aContext state: aState node: aNode self: aType super: anotherType [
-	self assert: [ aType isNotNil ].
+	self assert: [ aType isKindOf: TypType ].
+	self assert: [ aType isUnion not ].
+	anotherType
+		ifNotNil: [ self assert: [ anotherType isKindOf: TypType ].
+			self assert: [ anotherType isUnion not ] ].
 	sender := aContext.
 	state := aState.
 	node := aNode.

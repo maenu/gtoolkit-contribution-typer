@@ -9,18 +9,19 @@ Class {
 }
 
 { #category : #accessing }
-TypInfSignalContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType message: aMessage [
+TypInfSignalContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType lookup: aLookup message: aMessage [
 	self shouldNotImplement
 ]
 
 { #category : #accessing }
-TypInfSignalContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType message: aMessage exception: anException [
+TypInfSignalContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType lookup: aLookup message: aMessage exception: anException [
 	^ (super
 		sender: aContext
 		state: aState
 		node: aNode
 		self: aType
 		super: anotherType
+		lookup: aLookup
 		message: aMessage)
 		initializeException: anException;
 		yourself

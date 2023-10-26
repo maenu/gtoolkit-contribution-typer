@@ -2,7 +2,8 @@ Class {
 	#name : #TypInfInlContext,
 	#superclass : #TypInfContext,
 	#instVars : [
-		'message'
+		'message',
+		'lookup'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -13,14 +14,14 @@ TypInfInlContext class >> sender: aContext state: aState node: aNode self: aType
 ]
 
 { #category : #accessing }
-TypInfInlContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType message: aMessage [
-	^ self new
-		initializeSender: aContext
-			state: aState
-			node: aNode
-			self: aType
-			super: anotherType;
-		initializeMessage: aMessage;
+TypInfInlContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType lookup: aLookup message: aMessage [
+	^ (super
+		sender: aContext
+		state: aState
+		node: aNode
+		self: aType
+		super: anotherType)
+		initializeLookup: aLookup message: aMessage;
 		yourself
 ]
 
@@ -44,12 +45,14 @@ TypInfInlContext >> canInstall [
 
 { #category : #accessing }
 TypInfInlContext >> hash [
-	^ super hash bitXor: message hash
+	^ (super hash bitXor: message hash) bitXor: lookup hash
 ]
 
 { #category : #accessing }
-TypInfInlContext >> initializeMessage: aMessage [
+TypInfInlContext >> initializeLookup: aLookup message: aMessage [
+	self assert: [ aLookup isKindOf: TypLookup ].
 	self assert: [ aMessage isKindOf: TypInfMessage ].
+	lookup := aLookup.
 	message := aMessage
 ]
 
@@ -75,6 +78,11 @@ TypInfInlContext >> install [
 			current outAdd: (TypInfReturnEdge origin: current target: root) ].
 	message outNextDisableds
 		do: [ :e | (self returns: e target context) ifFalse: [ e enableOrigin: current ] ]
+]
+
+{ #category : #accessing }
+TypInfInlContext >> lookup [
+	^ lookup
 ]
 
 { #category : #accessing }

@@ -8,19 +8,20 @@ Class {
 }
 
 { #category : #accessing }
-TypInfBlockContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType message: aMessageNode [
+TypInfBlockContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType lookup: aLookup message: aMessageNode [
 	self shouldNotImplement
 ]
 
 { #category : #accessing }
-TypInfBlockContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType message: aMessage block: aBlock [
-	^ self new
-		initializeSender: aContext
-			state: aState
-			node: aNode
-			self: aType
-			super: anotherType;
-		initializeMessage: aMessage;
+TypInfBlockContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType lookup: aLookup message: aMessage block: aBlock [
+	^ (super
+		sender: aContext
+		state: aState
+		node: aNode
+		self: aType
+		super: anotherType
+		lookup: aLookup
+		message: aMessage)
 		initializeBlock: aBlock;
 		yourself
 ]
