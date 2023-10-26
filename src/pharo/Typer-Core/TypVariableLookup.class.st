@@ -7,13 +7,23 @@ Class {
 { #category : #accessing }
 TypVariableLookup class >> receiver: aType selector: aSymbol parent: aLookup [
 	^ self index
-		at: {aType withoutNode.
+		at: {aType.
 				aSymbol asSymbol.
 				aLookup}
 		ifAbsentPut: [ self new
-				initializeReceiver: aType withoutNode selector: aSymbol asSymbol;
+				initializeReceiver: aType selector: aSymbol asSymbol;
 				initializeParent: aLookup;
 				yourself ]
+]
+
+{ #category : #accessing }
+TypVariableLookup class >> resolver [
+	^ resolver
+		ifNil: [ resolver := TypTerminalResolver
+					resolver: (TypBreadthFirstResolver
+							resolvers: {TypDepthFirstResolver resolver: TypPraVariableResolver new.
+									TypDepthFirstResolver resolver: TypShaVariableResolver new.
+									TypDepthFirstResolver resolver: TypInfVariableResolver new}) ]
 ]
 
 { #category : #converting }
@@ -27,19 +37,21 @@ TypVariableLookup >> asParent [
 ]
 
 { #category : #accessing }
-TypVariableLookup >> preResolve [
-	^ receiver preResolveVariable: self
+TypVariableLookup >> canResolve [
+	^ receiver canResolveVariable: self
 ]
 
 { #category : #accessing }
 TypVariableLookup >> resolve [
-	^ receiver resolveVariable: self
+	self flag: 'FIXME weird'.
+	^ [ receiver resolveVariable: self ]
+		ensure: [ self assert: [ result isNotNil ] ]
 ]
 
 { #category : #accessing }
 TypVariableLookup >> withReceiver: aType [
 	^ self class
-		receiver: aType
+		receiver: (receiver covariant: aType)
 		selector: selector
 		parent: parent
 ]

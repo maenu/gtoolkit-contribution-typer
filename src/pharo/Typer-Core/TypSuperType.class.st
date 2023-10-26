@@ -17,8 +17,12 @@ TypSuperType >> allSelectors [
 
 { #category : #accessing }
 TypSuperType >> classDescription [
-
 	^ superType classDescription
+]
+
+{ #category : #accessing }
+TypSuperType >> hasClassDescription [
+	^ superType hasClassDescription
 ]
 
 { #category : #initialization }

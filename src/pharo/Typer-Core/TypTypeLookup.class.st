@@ -21,6 +21,16 @@ TypTypeLookup class >> classDescription: aClassDescription parent: aLookup [
 				  yourself ]
 ]
 
+{ #category : #accessing }
+TypTypeLookup class >> resolver [
+	^ resolver
+		ifNil: [ resolver := TypTerminalResolver
+					resolver: (TypBreadthFirstResolver
+							resolvers: {TypDepthFirstResolver resolver: TypPraTypeResolver new.
+									TypDepthFirstResolver resolver: TypShaTypeResolver new.
+									TypDepthFirstResolver resolver: TypInfTypeResolver new}) ]
+]
+
 { #category : #comparing }
 TypTypeLookup >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
@@ -35,6 +45,11 @@ TypTypeLookup >> asParent [
 	^ child := self class
 			classDescription: classDescription superclass
 			parent: self
+]
+
+{ #category : #accessing }
+TypTypeLookup >> canResolve [
+	^ TypTypeLookup resolver canResolve: self
 ]
 
 { #category : #accessing }
@@ -76,11 +91,6 @@ TypTypeLookup >> invalidateOnClassChange: aClassAnnouncement [
 ]
 
 { #category : #accessing }
-TypTypeLookup >> preResolve [
-	^ {TypTypeIndex instance preResolve: self}
-]
-
-{ #category : #accessing }
 TypTypeLookup >> printOn: aStream [
 	aStream nextPutAll: classDescription name.
 	super printOn: aStream
@@ -88,5 +98,7 @@ TypTypeLookup >> printOn: aStream [
 
 { #category : #accessing }
 TypTypeLookup >> resolve [
-	^ TypTypeIndex instance resolve: self
+	self flag: 'FIXME weird'.
+	^ [ TypTypeLookup resolver resolve: self ]
+		ensure: [ self assert: [ result isNotNil ] ]
 ]

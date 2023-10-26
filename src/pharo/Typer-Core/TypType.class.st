@@ -129,12 +129,12 @@ TypType >> canLookupMethod: aSymbol arguments: aCollection [
 
 { #category : #lookup }
 TypType >> canResolveMethod: aLookup [
-	^ TypMethodIndex instance canResolve: aLookup
+	^ TypMethodLookup resolver canResolve: aLookup
 ]
 
 { #category : #lookup }
 TypType >> canResolveVariable: aLookup [
-	^ TypVariableIndex instance canResolve: aLookup
+	^ TypVariableLookup resolver canResolve: aLookup
 ]
 
 { #category : #converting }
@@ -221,11 +221,8 @@ TypType >> initialize [
 
 { #category : #initialization }
 TypType >> initializeSuper: aType [
-
 	aType = superType ifTrue: [ ^ self ].
-	superType ifNotNil: [ self outRemoveAt: #super ].
 	superType := aType.
-	superType ifNotNil: [ self outAt: #super put: superType ].
 	hash := nil
 ]
 
@@ -308,21 +305,21 @@ TypType >> lookupMethod: aSymbol [
 
 { #category : #lookup }
 TypType >> lookupMethod: aSymbol arguments: aCollection [
-	^ self
+	^ (self
 		resolveMethod: (TypMethodLookup
 				receiver: self
 				selector: aSymbol
 				arguments: aCollection
-				parent: nil)
+				parent: nil)) resultOrUnknown
 ]
 
 { #category : #lookup }
 TypType >> lookupVariable: aSymbol [
-	^ self
+	^ (self
 		resolveVariable: (TypVariableLookup
 				receiver: self
 				selector: aSymbol
-				parent: nil)
+				parent: nil)) resultOrUnknown
 ]
 
 { #category : #compatibility }
@@ -330,20 +327,6 @@ TypType >> parameters [
 
 	self hasSuper ifFalse: [ ^ #(  ) ].
 	^ self super parameters
-]
-
-{ #category : #accessing }
-TypType >> preResolveMethod: aLookup [
-	^ (TypMethodIndex instance preResolve: aLookup)
-		ifNil: [ #() ]
-		ifNotNil: [ :e | {e} ]
-]
-
-{ #category : #accessing }
-TypType >> preResolveVariable: aLookup [
-	^ (TypVariableIndex instance preResolve: aLookup)
-		ifNil: [ #() ]
-		ifNotNil: [ :e | {e} ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -365,12 +348,12 @@ TypType >> printOn: aStream skipping: anIdentitySet [
 
 { #category : #lookup }
 TypType >> resolveMethod: aLookup [
-	^ TypMethodIndex instance resolve: aLookup
+	^ TypMethodLookup resolver resolve: aLookup
 ]
 
 { #category : #lookup }
 TypType >> resolveVariable: aLookup [
-	^ TypVariableIndex instance resolve: aLookup
+	^ TypVariableLookup resolver resolve: aLookup
 ]
 
 { #category : #compatibility }
@@ -431,9 +414,4 @@ TypType >> withParameters: aCollection [
 TypType >> withSuper: aType [
 
 	self subclassResponsibility
-]
-
-{ #category : #accessing }
-TypType >> withoutNode [
-	^ self
 ]

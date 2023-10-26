@@ -49,6 +49,6 @@ ClassDescription >> typAsParametricTypeWithParameters: anOrderedDictionary [
 
 { #category : #'*Typer-Core' }
 ClassDescription >> typAsType [
-
-	^ TypTypeIndex instance lookupClassDescription: self
+	^ (TypTypeLookup resolver
+		resolve: (TypTypeLookup classDescription: self parent: nil)) resultOrUnknown
 ]

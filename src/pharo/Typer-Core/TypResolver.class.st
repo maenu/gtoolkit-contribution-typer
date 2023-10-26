@@ -1,52 +1,19 @@
 Class {
 	#name : #TypResolver,
-	#superclass : #TypNode,
+	#superclass : #Object,
 	#category : #'Typer-Core-Lookup'
 }
 
 { #category : #resolving }
 TypResolver >> canResolve: aLookup [
-
-	<typPraArguments: 'TypLookup'>
-	<typPraResult: 'Boolean'>
 	self subclassResponsibility
-]
-
-{ #category : #accessing }
-TypResolver >> invalidate [
-	"noop"
-
-	
-]
-
-{ #category : #'as yet unclassified' }
-TypResolver >> invalidate: aLookup onClassChange: aClassAnnouncement [
-
-	^ false
-]
-
-{ #category : #'as yet unclassified' }
-TypResolver >> invalidate: aLookup onMethodChange: aMethodAnnouncement [
-
-	^ false
-]
-
-{ #category : #accessing }
-TypResolver >> preResolve: aLookup [
-	(self canResolve: aLookup)
-		ifTrue: [ ^ aLookup
-				resolver: self;
-				yourself ].
-	^ nil
 ]
 
 { #category : #resolving }
 TypResolver >> resolve: aLookup [
 	self assert: [ self canResolve: aLookup ].
+	aLookup resolveTo: (self result: aLookup) by: self.
 	^ aLookup
-		resolver: self;
-		result: (self result: aLookup);
-		result
 ]
 
 { #category : #accessing }
@@ -56,5 +23,7 @@ TypResolver >> result: aLookup [
 
 { #category : #accessing }
 TypResolver >> update: aLookup [
-	^ aLookup result
+	"noop by default"
+
+	
 ]

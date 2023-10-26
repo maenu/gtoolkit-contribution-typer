@@ -17,41 +17,13 @@ TypDepthFirstResolver class >> resolver: aResolver [
 
 { #category : #resolving }
 TypDepthFirstResolver >> canResolve: aLookup [
-	^ (resolver canResolve: aLookup)
-		or: [ aLookup hasParent and: [ self canResolve: aLookup asParent ] ]
+	(resolver canResolve: aLookup) ifTrue: [ ^ true ].
+	^ aLookup hasParent and: [ self canResolve: aLookup asParent ]
 ]
 
 { #category : #initialization }
 TypDepthFirstResolver >> initializeResolver: aResolver [
-
-	resolver := aResolver.
-	self outAt: #resolver put: resolver
-]
-
-{ #category : #invalidation }
-TypDepthFirstResolver >> invalidate [
-
-	resolver invalidate.
-	super invalidate
-]
-
-{ #category : #invalidation }
-TypDepthFirstResolver >> invalidateOnClassChange: aClassAnnouncement [
-
-	^ resolver invalidateOnClassChange: aClassAnnouncement
-]
-
-{ #category : #invalidation }
-TypDepthFirstResolver >> invalidateOnMethodChange: aMethodAnnouncement [
-
-	^ resolver invalidateOnMethodChange: aMethodAnnouncement
-]
-
-{ #category : #accessing }
-TypDepthFirstResolver >> preResolve: aLookup [
-	(resolver preResolve: aLookup) ifNotNil: [ :e | ^ e ].
-	aLookup hasParent ifTrue: [ ^ self preResolve: aLookup asParent ].
-	^ nil
+	resolver := aResolver
 ]
 
 { #category : #accessing }
@@ -63,8 +35,10 @@ TypDepthFirstResolver >> printOn: aStream [
 
 { #category : #resolving }
 TypDepthFirstResolver >> resolve: aLookup [
+	| parent |
 	self assert: [ self canResolve: aLookup ].
-	^ (resolver canResolve: aLookup)
-		ifTrue: [ resolver resolve: aLookup ]
-		ifFalse: [ self resolve: aLookup asParent ]
+	(resolver canResolve: aLookup) ifTrue: [ ^ resolver resolve: aLookup ].
+	parent := self resolve: aLookup asParent.
+	aLookup resolveTo: parent result by: parent resolver.
+	^ parent
 ]

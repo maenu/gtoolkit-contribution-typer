@@ -1,14 +1,36 @@
 Class {
 	#name : #TypLookup,
-	#superclass : #TypEdgeKey,
+	#superclass : #Object,
 	#instVars : [
 		'resolver',
 		'parent',
 		'child',
 		'result'
 	],
+	#classInstVars : [
+		'index',
+		'resolver'
+	],
 	#category : #'Typer-Core-Lookup'
 }
+
+{ #category : #accessing }
+TypLookup class >> index [
+	^ index ifNil: [ index := Dictionary new ]
+]
+
+{ #category : #accessing }
+TypLookup class >> invalidate [
+	<script>
+	index := nil.
+	resolver := nil
+]
+
+{ #category : #accessing }
+TypLookup class >> invalidateAll [
+	<script>
+	self withAllSubclassesDo: #invalidate
+]
 
 { #category : #accessing }
 TypLookup >> < aLookup [
@@ -37,14 +59,13 @@ TypLookup >> >= aLookup [
 	^ self > aLookup or: [ self = aLookup ]
 ]
 
-{ #category : #accessing }
-TypLookup >> allParents [
-	self hasParent ifFalse: [ ^ {self} ].
-	^ {self} asOrderedCollection , self asParent allParents
-]
-
 { #category : #copying }
 TypLookup >> asParent [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
+TypLookup >> canResolve [
 	self subclassResponsibility
 ]
 
@@ -94,23 +115,13 @@ TypLookup >> invalidateOnMethodChange: aMethodAnnouncement [
 ]
 
 { #category : #accessing }
+TypLookup >> isResolved [
+	^ resolver isNotNil
+]
+
+{ #category : #accessing }
 TypLookup >> parent [
 	^ parent
-]
-
-{ #category : #accessing }
-TypLookup >> preResolve [
-	self subclassResponsibility
-]
-
-{ #category : #accessing }
-TypLookup >> preResolved [
-	self flag: 'TODO this is ugly'.
-	^ self preResolve
-		ifEmpty: [ nil ]
-		ifNotEmpty: [ :c | 
-			self assert: [ c size = 1 ].
-			c anyOne ]
 ]
 
 { #category : #accessing }
@@ -127,10 +138,11 @@ TypLookup >> resolve [
 ]
 
 { #category : #accessing }
-TypLookup >> resolved [
-	^ resolver
-		ifNil: [ self hasParent ifTrue: [ self asParent resolved ] ifFalse: [ self ] ]
-		ifNotNil: [ self ]
+TypLookup >> resolveTo: aType by: aResolver [
+	self assert: [ aType isNotNil ].
+	self assert: [ aType isKindOf: TypType ].
+	result := aType.
+	resolver := aResolver
 ]
 
 { #category : #accessing }
@@ -139,22 +151,27 @@ TypLookup >> resolver [
 ]
 
 { #category : #accessing }
-TypLookup >> resolver: aResolver [
-	resolver := aResolver
-]
-
-{ #category : #accessing }
 TypLookup >> result [
+	result ifNotNil: [ ^ result ].
+	self resolve.
 	^ result
 ]
 
 { #category : #accessing }
-TypLookup >> result: anObject [
-	self assert: [ anObject isNotNil ].
-	result := anObject
+TypLookup >> resultOrUnknown [
+	^ self result ifNil: [ TypUnknownType instance ]
 ]
 
 { #category : #accessing }
 TypLookup >> root [
 	^ parent ifNil: self ifNotNil: #root
+]
+
+{ #category : #accessing }
+TypLookup >> updateTo: aType by: aResolver [
+	self assert: [ aType isKindOf: TypType ].
+	self assert: [ result isNotNil ].
+	self assert: [ resolver isNotNil ].
+	self assert: [ resolver == aResolver ].
+	result := aType
 ]

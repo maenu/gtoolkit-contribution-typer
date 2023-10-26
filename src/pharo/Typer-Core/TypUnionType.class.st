@@ -160,13 +160,6 @@ TypUnionType >> preResolveMethod: aLookup [
 		reject: #isNil
 ]
 
-{ #category : #accessing }
-TypUnionType >> preResolveVariable: aLookup [
-	^ (types
-		flatCollect: [ :e | e preResolveVariable: (aLookup withReceiver: e) ])
-		reject: #isNil
-]
-
 { #category : #'as yet unclassified' }
 TypUnionType >> printNameOn: aStream skipping: anIdentitySet [
 

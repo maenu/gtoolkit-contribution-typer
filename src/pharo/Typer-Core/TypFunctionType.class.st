@@ -480,27 +480,3 @@ TypFunctionType >> withSuper: aType [
 		node: node
 		super: aType
 ]
-
-{ #category : #converting }
-TypFunctionType >> withoutNode [
-	node ifNil: [ ^ self ].
-	self hasClassDescription
-		ifTrue: [ ^ self class
-				classDescription: self classDescription
-				result: self result
-				arguments: self arguments
-				argumentsOptional: argumentsOptional
-				signalsAlways: signalsAlways
-				signalsMaybe: signalsMaybe
-				node: nil
-				super: self superOrNil ].
-	^ self class
-		named: name
-		result: self result
-		arguments: self arguments
-		argumentsOptional: argumentsOptional
-		signalsAlways: signalsAlways
-		signalsMaybe: signalsMaybe
-		node: nil
-		super: self superOrNil
-]

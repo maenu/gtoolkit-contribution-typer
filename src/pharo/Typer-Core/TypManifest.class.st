@@ -3,8 +3,21 @@ Class {
 	#superclass : #PackageManifest,
 	#traits : 'TypTManifest',
 	#classTraits : 'TypTManifest classTrait',
+	#classInstVars : [
+		'threadPool',
+		'logger',
+		'subscription'
+	],
 	#category : #'Typer-Core-Core'
 }
+
+{ #category : #accessing }
+TypManifest class >> build [
+	self flag: 'FIXME ensure build is called'.
+	subscription := SystemAnnouncer uniqueInstance
+			when: ClassAnnouncement , MethodAnnouncement
+			do: [ [ :e | [ e typInvalidateAll ] asAsyncFuture typAwait ] ]
+]
 
 { #category : #accessing }
 TypManifest class >> buildAll [
@@ -62,9 +75,14 @@ TypManifest class >> ifDead: aBlock ifAlive: anotherBlock ifUnknown: yetAnotherB
 
 { #category : #accessing }
 TypManifest class >> invalidate [
+	subscription ifNotNil: [ subscription announcer unsubscribe: subscription ].
+	subscription := nil.
 	threadPool ifNotNil: #shutdown.
 	threadPool := nil.
-	TypEdgeKey invalidateAll.
+	logger ifNotNil: #stop.
+	logger ifNotNil: #reset.
+	logger := nil.
+	TypLookup invalidateAll.
 	TypIndex invalidateAll.
 	TypNode invalidateAll
 ]
@@ -80,6 +98,17 @@ TypManifest class >> isDead [
 		ifDead: true
 		ifAlive: false
 		ifUnknown: nil
+]
+
+{ #category : #accessing }
+TypManifest class >> logger [
+	<gtExample>
+	<noTest>
+	self flag: 'TODO remove gt dep by class-side gt conf'.
+	^ logger
+		ifNil: [ logger := TypInfMemoryLogger new
+					startFor: TypInfNodeSignal , GtStylerErrorSignal;
+					yourself ]
 ]
 
 { #category : #accessing }

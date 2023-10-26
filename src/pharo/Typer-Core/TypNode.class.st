@@ -62,7 +62,6 @@ TypNode >> inAdd: anEdge [
 
 { #category : #accessing }
 TypNode >> inAddOrigin: aNode key: anObject [
-
 	aNode outAddTarget: self key: anObject.
 	^ aNode
 ]
@@ -90,12 +89,10 @@ TypNode >> inAt: anObject ifPresent: aBlock ifAbsent: anotherBlock [
 
 { #category : #accessing }
 TypNode >> inAt: anObject ifPresent: aBlock ifAbsentPut: anotherBlock [
-
 	^ in
-		  at: anObject
-		  ifPresent: [ :e | aBlock value: e anyOne origin ]
-		  ifAbsent: [ 
-		  anotherBlock value outAddTarget: self key: anObject ]
+		at: anObject
+		ifPresent: [ :e | aBlock value: e anyOne origin ]
+		ifAbsent: [ anotherBlock value outAddTarget: self key: anObject ]
 ]
 
 { #category : #converting }
@@ -153,18 +150,6 @@ TypNode >> initialize [
 	super initialize.
 	in := IdentityDictionary new.
 	out := IdentityDictionary new
-]
-
-{ #category : #invalidation }
-TypNode >> invalidateOnClassChange: aClassAnnouncement [
-
-	^ false
-]
-
-{ #category : #invalidation }
-TypNode >> invalidateOnMethodChange: aMethodAnnouncement [
-
-	^ false
 ]
 
 { #category : #accessing }
@@ -241,23 +226,22 @@ TypNode >> outAt: anObject ifPresent: aBlock ifAbsent: anotherBlock [
 
 { #category : #accessing }
 TypNode >> outAt: anObject ifPresent: aBlock ifAbsentPut: anotherBlock [
-
 	^ out
-		  at: anObject
-		  ifPresent: [ :e | aBlock value: e anyOne target ]
-		  ifAbsent: [ 
-		  self outAddTarget: anotherBlock value key: anObject ]
+		at: anObject
+		ifPresent: [ :e | aBlock value: e anyOne target ]
+		ifAbsent: [ self outAddTarget: anotherBlock value key: anObject ]
 ]
 
 { #category : #converting }
 TypNode >> outAt: anObject put: aNode [
-
-	out at: anObject ifPresent: [ :c | 
-		c ifNotEmpty: [ 
-			| e |
-			e := c anyOne.
-			e target = aNode ifTrue: [ ^ aNode ].
-			self outRemove: e ] ].
+	out
+		at: anObject
+		ifPresent: [ :c | 
+			c
+				ifNotEmpty: [ | e |
+					e := c anyOne.
+					e target = aNode ifTrue: [ ^ aNode ].
+					self outRemove: e ] ].
 	^ self outAddTarget: aNode key: anObject
 ]
 

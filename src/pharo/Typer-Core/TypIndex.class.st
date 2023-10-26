@@ -2,7 +2,6 @@ Class {
 	#name : #TypIndex,
 	#superclass : #Object,
 	#instVars : [
-		'resolver',
 		'cache'
 	],
 	#classInstVars : [
@@ -16,16 +15,15 @@ TypIndex class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
-{ #category : #invalidation }
+{ #category : #accessing }
 TypIndex class >> invalidate [
 	<script>
 	instance ifNotNil: #invalidate.
 	instance := nil
 ]
 
-{ #category : #invalidation }
+{ #category : #accessing }
 TypIndex class >> invalidateAll [
-
 	<script>
 	self withAllSubclassesDo: #invalidate
 ]
@@ -36,35 +34,13 @@ TypIndex >> cache [
 ]
 
 { #category : #accessing }
-TypIndex >> canResolve: aLookup [
-	^ (cache includesKey: aLookup)
-		ifTrue: [ true ]
-		ifFalse: [ resolver canResolve: aLookup ]
+TypIndex >> initialize [
+	super initialize.
+	cache := IdentityDictionary new
 ]
 
 { #category : #accessing }
-TypIndex >> index [
-	^ cache
-]
-
-{ #category : #initialization }
-TypIndex >> initialize [
-	<typPraVariable: 'resolver' as: 'TypResolver'>
-	super initialize.
-	cache := IdentityDictionary new.
-	SystemAnnouncer uniqueInstance
-		when: ClassAnnouncement
-			send: #invalidateOnClassChangeAsync:
-			to: self;
-		when: MethodAnnouncement
-			send: #invalidateOnMethodChangeAsync:
-			to: self
-]
-
-{ #category : #invalidation }
 TypIndex >> invalidate [
-	SystemAnnouncer uniqueInstance unsubscribe: self.
-	resolver ifNotNil: #invalidate.
 	cache removeAll
 ]
 
@@ -108,37 +84,4 @@ TypIndex >> invalidateOnMethodChange: aMethodAnnouncement [
 { #category : #accessing }
 TypIndex >> invalidateOnMethodChangeAsync: aMethodAnnouncement [
 	[ self invalidateOnMethodChange: aMethodAnnouncement ] asAsyncFuture typAwait
-]
-
-{ #category : #accessing }
-TypIndex >> preResolve: aLookup [
-	^ resolver preResolve: aLookup
-]
-
-{ #category : #accessing }
-TypIndex >> resolve: aLookup [
-	^ cache
-		at: aLookup
-		ifPresent: [ :t | 
-			| resolved type |
-			resolved := aLookup resolved.
-			resolved result
-				ifNil: [ self flag: 'Q how can this happen?'.
-					resolved result: t ].
-			type := resolved resolver update: resolved.
-			self assert: [ type isNotNil ].
-			aLookup result: type.
-			cache at: aLookup put: type ]
-		ifAbsent: [ (resolver canResolve: aLookup)
-				ifTrue: [ | type |
-					cache at: aLookup put: TypUnknownType instance.
-					type := resolver resolve: aLookup.
-					self assert: [ type isNotNil ].
-					cache at: aLookup put: type ]
-				ifFalse: [ TypUnknownType instance ] ]
-]
-
-{ #category : #accessing }
-TypIndex >> resolver [
-	^ resolver
 ]

@@ -36,7 +36,7 @@ TypPropertyLookup >> initialize [
 { #category : #accessing }
 TypPropertyLookup >> initializeReceiver: aType selector: aSymbol [
 	self assert: [ aType isKindOf: TypType ].
-	self assert: [ aType hasNode not ].
+	self assert: [ aType isUnion not ].
 	receiver := aType.
 	selector := aSymbol
 ]

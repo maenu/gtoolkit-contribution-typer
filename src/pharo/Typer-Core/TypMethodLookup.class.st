@@ -49,19 +49,29 @@ TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollectio
 { #category : #accessing }
 TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection self: anotherType super: yetAnotherType parent: aLookup [
 	^ self index
-		at: {aType withoutNode.
+		at: {aType.
 				aSymbol asSymbol.
-				aCollection collect: #withoutNode as: Array.
-				anotherType withoutNode.
-				yetAnotherType ifNotNil: #withoutNode.
+				aCollection asArray.
+				anotherType.
+				yetAnotherType.
 				aLookup}
 		ifAbsentPut: [ self new
-				initializeReceiver: aType withoutNode selector: aSymbol asSymbol;
-				initializeArguments: (aCollection collect: #withoutNode as: Array)
-					self: anotherType withoutNode
-					super: (yetAnotherType ifNotNil: #withoutNode);
+				initializeReceiver: aType selector: aSymbol asSymbol;
+				initializeArguments: aCollection asArray
+					self: anotherType
+					super: yetAnotherType;
 				initializeParent: aLookup;
 				yourself ]
+]
+
+{ #category : #accessing }
+TypMethodLookup class >> resolver [
+	^ resolver
+		ifNil: [ resolver := TypTerminalResolver
+					resolver: (TypBreadthFirstResolver
+							resolvers: {TypDepthFirstResolver resolver: TypPraMethodResolver new.
+									TypDepthFirstResolver resolver: TypShaMethodResolver new.
+									TypDepthFirstResolver resolver: TypInfMethodResolver new}) ]
 ]
 
 { #category : #accessing }
@@ -106,7 +116,6 @@ TypMethodLookup >> asParent [
 
 { #category : #accessing }
 TypMethodLookup >> canResolve [
-	receiver ifNil: [ ^ false ].
 	^ receiver canResolveMethod: self
 ]
 
@@ -124,9 +133,11 @@ TypMethodLookup >> hash [
 
 { #category : #accessing }
 TypMethodLookup >> initializeArguments: aCollection self: aType super: anotherType [
-	self assert: [ aCollection noneSatisfy: #hasNode ].
-	self assert: [ aType hasNode not ].
-	anotherType ifNotNil: [ self assert: [ anotherType hasNode not ] ].
+	self assert: [ aType isKindOf: TypType ].
+	self assert: [ aType isUnion not ].
+	anotherType
+		ifNotNil: [ self assert: [ anotherType isKindOf: TypType ].
+			self assert: [ anotherType isUnion not ] ].
 	arguments := aCollection.
 	selfType := aType.
 	superType := anotherType
@@ -141,11 +152,6 @@ TypMethodLookup >> invalidateOnMethodChange: aMethodAnnouncement [
 ]
 
 { #category : #accessing }
-TypMethodLookup >> preResolve [
-	^ receiver preResolveMethod: self
-]
-
-{ #category : #accessing }
 TypMethodLookup >> printOn: aStream [
 	aStream
 		nextPut: ${;
@@ -157,7 +163,8 @@ TypMethodLookup >> printOn: aStream [
 
 { #category : #accessing }
 TypMethodLookup >> resolve [
-	^ receiver resolveMethod: self
+	self flag: 'FIXME weird'.
+	^ [ receiver resolveMethod: self ] ensure: [ self assert: [ result isNotNil ] ]
 ]
 
 { #category : #accessing }
@@ -173,10 +180,10 @@ TypMethodLookup >> super [
 { #category : #accessing }
 TypMethodLookup >> withReceiver: aType [
 	^ self class
-		receiver: aType
+		receiver: (receiver covariant: aType)
 		selector: selector
 		arguments: arguments
-		self: aType
-		super: aType superOrNil
+		self: selfType
+		super: (aType superOrNil ifNotNil: [ :t | superType covariant: t ])
 		parent: parent
 ]
