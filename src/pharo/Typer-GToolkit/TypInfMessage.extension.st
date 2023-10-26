@@ -13,11 +13,11 @@ TypInfMessage >> typGtColor [
 { #category : #'*Typer-GToolkit' }
 TypInfMessage >> typGtExpanderCoders [
 	^ contexts
-		select: [ :a | a value typGtHasCoder ]
-		thenCollect: [ :a | 
+		select: #typGtHasCoder
+		thenCollect: [ :c | 
 			| model |
-			model := a value typGtAsCoder.
-			model coderModel attributeNamed: #typGtLookup put: a key.
+			model := c typGtAsCoder.
+			model coderModel attributeNamed: #typGtLookup put: c lookup.
 			model ]
 ]
 

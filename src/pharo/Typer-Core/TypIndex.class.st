@@ -60,11 +60,6 @@ TypIndex >> invalidateOnClassChange: aClassAnnouncement [
 	^ changed or: (resolver invalidateOnClassChange: aClassAnnouncement)
 ]
 
-{ #category : #accessing }
-TypIndex >> invalidateOnClassChangeAsync: aClassAnnouncement [
-	[ self invalidateOnClassChange: aClassAnnouncement ] asAsyncFuture typAwait
-]
-
 { #category : #invalidation }
 TypIndex >> invalidateOnMethodChange: aMethodAnnouncement [
 	| changed toRemove |
@@ -79,9 +74,4 @@ TypIndex >> invalidateOnMethodChange: aMethodAnnouncement [
 	toRemove do: [ :l | cache removeKey: l ].
 	toRemove removeAll.
 	^ changed or: (resolver invalidateOnMethodChange: aMethodAnnouncement)
-]
-
-{ #category : #accessing }
-TypIndex >> invalidateOnMethodChangeAsync: aMethodAnnouncement [
-	[ self invalidateOnMethodChange: aMethodAnnouncement ] asAsyncFuture typAwait
 ]

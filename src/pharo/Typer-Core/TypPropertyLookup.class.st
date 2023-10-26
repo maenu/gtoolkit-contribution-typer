@@ -16,6 +16,12 @@ TypPropertyLookup >> = anObject [
 	^ anObject receiver = receiver
 ]
 
+{ #category : #invalidation }
+TypPropertyLookup >> dependsOnClassDescription: aClassDescription [
+	(super dependsOnClassDescription: aClassDescription) ifTrue: [ ^ true ].
+	^ receiver dependsOnClassDescription: aClassDescription
+]
+
 { #category : #testing }
 TypPropertyLookup >> hasParent [
 	^ receiver hasSuper
@@ -39,13 +45,6 @@ TypPropertyLookup >> initializeReceiver: aType selector: aSymbol [
 	self assert: [ aType isUnion not ].
 	receiver := aType.
 	selector := aSymbol
-]
-
-{ #category : #invalidation }
-TypPropertyLookup >> invalidateOnClassChange: aClassAnnouncement [
-
-	^ (super invalidateOnClassChange: aClassAnnouncement) or:
-		  (receiver invalidateOnClassChange: aClassAnnouncement)
 ]
 
 { #category : #accessing }

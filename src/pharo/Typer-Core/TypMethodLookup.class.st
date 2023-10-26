@@ -125,6 +125,13 @@ TypMethodLookup >> compiledMethod [
 	^ receiver classDescription lookupSelector: selector
 ]
 
+{ #category : #invalidation }
+TypMethodLookup >> dependsOnCompiledMethod: aCompiledMethod [
+	(super dependsOnCompiledMethod: aCompiledMethod) ifTrue: [ ^ true ].
+	^ selector = aCompiledMethod selector
+		and: [ receiver dependsOnClassDescription: aCompiledMethod methodClass ]
+]
+
 { #category : #accessing }
 TypMethodLookup >> hash [
 	^ ((super hash bitXor: arguments hash) bitXor: selfType hash)
@@ -141,14 +148,6 @@ TypMethodLookup >> initializeArguments: aCollection self: aType super: anotherTy
 	arguments := aCollection.
 	selfType := aType.
 	superType := anotherType
-]
-
-{ #category : #invalidation }
-TypMethodLookup >> invalidateOnMethodChange: aMethodAnnouncement [
-
-	^ (super invalidateOnMethodChange: aMethodAnnouncement) or:
-		  ((receiver invalidateOnMethodChange: aMethodAnnouncement) and: [ 
-			   selector = aMethodAnnouncement methodAffected selector ])
 ]
 
 { #category : #accessing }

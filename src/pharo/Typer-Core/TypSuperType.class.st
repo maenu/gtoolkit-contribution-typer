@@ -20,6 +20,18 @@ TypSuperType >> classDescription [
 	^ superType classDescription
 ]
 
+{ #category : #invalidation }
+TypSuperType >> dependsOnClassDescription: aClassDescription [
+	(super dependsOnClassDescription: aClassDescription) ifTrue: [ ^ true ].
+	^ superType dependsOnClassDescription: aClassDescription
+]
+
+{ #category : #invalidation }
+TypSuperType >> dependsOnCompiledMethod: aCompiledMethod [
+	(super dependsOnCompiledMethod: aCompiledMethod) ifTrue: [ ^ true ].
+	^ superType dependsOnCompiledMethod: aCompiledMethod
+]
+
 { #category : #accessing }
 TypSuperType >> hasClassDescription [
 	^ superType hasClassDescription
@@ -32,18 +44,6 @@ TypSuperType >> initialize [
 	<typPraVariable: 'superType' as: 'TypType'>
 	super initialize.
 	self initializeSuper: ProtoObject typAsType
-]
-
-{ #category : #invalidation }
-TypSuperType >> invalidateOnClassChange: aClassAnnouncement [
-
-	^ superType invalidateOnClassChange: aClassAnnouncement
-]
-
-{ #category : #invalidation }
-TypSuperType >> invalidateOnMethodChange: aMethodAnnouncement [
-
-	^ superType invalidateOnMethodChange: aMethodAnnouncement
 ]
 
 { #category : #testing }

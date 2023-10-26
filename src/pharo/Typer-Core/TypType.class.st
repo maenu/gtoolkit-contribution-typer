@@ -185,6 +185,16 @@ TypType >> covariant: aType [
 ]
 
 { #category : #accessing }
+TypType >> dependsOnClassDescription: aClassDescription [
+	^ false
+]
+
+{ #category : #accessing }
+TypType >> dependsOnCompiledMethod: aCompiledMethod [
+	^ false
+]
+
+{ #category : #accessing }
 TypType >> hasNode [
 	^ false
 ]

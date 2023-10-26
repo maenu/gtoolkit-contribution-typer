@@ -149,6 +149,19 @@ TypParametricType >> covariant: aType [
 	^ self withParameters: copyParameters
 ]
 
+{ #category : #invalidation }
+TypParametricType >> dependsOnClassDescription: aClassDescription [
+	(super dependsOnClassDescription: aClassDescription) ifTrue: [ ^ true ].
+	^ parameters
+		anySatisfy: [ :t | t dependsOnClassDescription: aClassDescription ]
+]
+
+{ #category : #invalidation }
+TypParametricType >> dependsOnCompiledMethod: aCompiledMethod [
+	(super dependsOnCompiledMethod: aCompiledMethod) ifTrue: [ ^ true ].
+	^ parameters anySatisfy: [ :t | t dependsOnCompiledMethod: aCompiledMethod ]
+]
+
 { #category : #comparing }
 TypParametricType >> hashSkipping: anIdentitySet [
 
@@ -175,14 +188,6 @@ TypParametricType >> initializeParameters: anOrderedDictionary [
 	anOrderedDictionary
 		keysAndValuesDo: [ :k :v | parameters at: k put: (v isBound ifTrue: [ v ] ifFalse: [ v boundTo: self ]) ].
 	self initializeSuper: nil
-]
-
-{ #category : #invalidation }
-TypParametricType >> invalidateOnClassChange: aClassAnnouncement [
-
-	^ (super invalidateOnClassChange: aClassAnnouncement) or: [ 
-		  parameters anySatisfy: [ :e | 
-			  e invalidateOnClassChange: aClassAnnouncement ] ]
 ]
 
 { #category : #testing }

@@ -3,7 +3,7 @@ Extension { #name : #TypInfMethod }
 { #category : #'*Typer-Checker' }
 TypInfMethod >> typCheOn: aStream [
 	| expected actual |
-	expected := (TypMethodIndex instance resolve: self lookup) result.
+	expected := (TypMethodLookup resolver resolve: self lookup) result.
 	in
 		at: #return
 		ifPresent: [ :s | 

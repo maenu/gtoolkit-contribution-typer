@@ -8,7 +8,8 @@ Class {
 		'maxImplementors',
 		'maxMethodSize',
 		'maxWriters',
-		'maxNodeStackSize'
+		'maxNodeStackSize',
+		'maxInlinesPerSend'
 	],
 	#classInstVars : [
 		'default'
@@ -32,6 +33,7 @@ TypInfConfiguration class >> default [
 					nodeChanges: #changesFrom:;
 					maxIterations: 16;
 					maxNodeStackSize: 5;
+					maxInlinesPerSend: 8;
 					maxImplementors: TypInfIndex instance implementors95Quantile;
 					maxWriters: TypInfIndex instance writers95Quantile;
 					maxMethodSize: TypInfIndex instance methodSize95Quantile;
@@ -54,18 +56,6 @@ TypInfConfiguration >> contextCleanup: anObject [
 ]
 
 { #category : #accessing }
-TypInfConfiguration >> initialize [
-	super initialize.
-	contextCleanup := #cleanup.
-	nodeChanges := #changesFrom:.
-	maxIterations := 16.
-	maxNodeStackSize := 5.
-	maxImplementors := TypInfIndex instance implementors95Quantile.
-	maxWriters := TypInfIndex instance writers95Quantile.
-	maxMethodSize := TypInfIndex instance methodSize95Quantile
-]
-
-{ #category : #accessing }
 TypInfConfiguration >> maxImplementors [
 	^ maxImplementors
 ]
@@ -73,6 +63,16 @@ TypInfConfiguration >> maxImplementors [
 { #category : #accessing }
 TypInfConfiguration >> maxImplementors: anObject [
 	maxImplementors := anObject
+]
+
+{ #category : #accessing }
+TypInfConfiguration >> maxInlinesPerSend [
+	^ maxInlinesPerSend
+]
+
+{ #category : #accessing }
+TypInfConfiguration >> maxInlinesPerSend: anObject [
+	maxInlinesPerSend := anObject
 ]
 
 { #category : #accessing }

@@ -69,6 +69,16 @@ TypLookup >> canResolve [
 	self subclassResponsibility
 ]
 
+{ #category : #invalidation }
+TypLookup >> dependsOnClassDescription: aClassDescription [
+	^ false
+]
+
+{ #category : #invalidation }
+TypLookup >> dependsOnCompiledMethod: aCompiledMethod [
+	^ false
+]
+
 { #category : #testing }
 TypLookup >> hasParent [
 	<typPraResult: 'Boolean'>
@@ -84,34 +94,6 @@ TypLookup >> hash [
 TypLookup >> initializeParent: aLookup [
 	self assert: [ parent isNil ].
 	parent := aLookup
-]
-
-{ #category : #invalidation }
-TypLookup >> invalidateOnClassChange: aClassAnnouncement [
-
-	| changed |
-	changed := false.
-	resolver ifNotNil: [ 
-		changed := resolver
-			           invalidate: self
-			           onClassChange: aClassAnnouncement ].
-	self hasParent ifFalse: [ ^ changed ].
-	^ changed or:
-		  (self asParent invalidateOnClassChange: aClassAnnouncement)
-]
-
-{ #category : #invalidation }
-TypLookup >> invalidateOnMethodChange: aMethodAnnouncement [
-
-	| changed |
-	changed := false.
-	resolver ifNotNil: [ 
-		changed := resolver
-			           invalidate: self
-			           onMethodChange: aMethodAnnouncement ].
-	self hasParent ifFalse: [ ^ changed ].
-	^ changed or:
-		  (self asParent invalidateOnMethodChange: aMethodAnnouncement)
 ]
 
 { #category : #accessing }

@@ -85,6 +85,18 @@ TypUnionType >> canResolveVariable: aLookup [
 	^ types anySatisfy: [ :e | e canResolveVariable: (aLookup withReceiver: e) ]
 ]
 
+{ #category : #invalidation }
+TypUnionType >> dependsOnClassDescription: aClassDescription [
+	(super dependsOnClassDescription: aClassDescription) ifTrue: [ ^ true ].
+	^ types anySatisfy: [ :t | t dependsOnClassDescription: aClassDescription ]
+]
+
+{ #category : #invalidation }
+TypUnionType >> dependsOnCompiledMethod: aCompiledMethod [
+	(super dependsOnCompiledMethod: aCompiledMethod) ifTrue: [ ^ true ].
+	^ types anySatisfy: [ :t | t dependsOnCompiledMethod: aCompiledMethod ]
+]
+
 { #category : #testing }
 TypUnionType >> hasSuper [
 
@@ -116,18 +128,6 @@ TypUnionType >> initializeTypes: anObject [
 	anObject = types ifTrue: [ ^ self ].
 	types := anObject.
 	hash := nil
-]
-
-{ #category : #invalidation }
-TypUnionType >> invalidateOnClassChange: aClassAnnouncement [
-
-	^ types anySatisfy: [ :e | e invalidateOnClassChange: aClassAnnouncement ]
-]
-
-{ #category : #invalidation }
-TypUnionType >> invalidateOnMethodChange: aMethodAnnouncement [
-
-	^ types anySatisfy: [ :e | e invalidateOnMethodChange: aMethodAnnouncement ]
 ]
 
 { #category : #testing }

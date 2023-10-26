@@ -52,3 +52,8 @@ ClassDescription >> typAsType [
 	^ (TypTypeLookup resolver
 		resolve: (TypTypeLookup classDescription: self parent: nil)) resultOrUnknown
 ]
+
+{ #category : #'*Typer-Core' }
+ClassDescription >> typDependsOnClassDescription: aClassDescription [
+	^ aClassDescription = self or: [ aClassDescription inheritsFrom: self ]
+]

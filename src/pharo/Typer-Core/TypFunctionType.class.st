@@ -249,6 +249,20 @@ TypFunctionType >> covariant: aType [
 ]
 
 { #category : #accessing }
+TypFunctionType >> dependsOnCompiledMethod: aCompiledMethod [
+	(super dependsOnCompiledMethod: aCompiledMethod) ifTrue: [ ^ true ].
+	self hasClassDescription ifFalse: [ ^ false ].
+	node ifNil: [ ^ false ].
+	^ node context home allChildren
+		anySatisfy: [ :c | 
+			c root node methodNode
+				ifNil: [ false ]
+				ifNotNil: [ :n | 
+					self flag: 'FIXME compare may be broken for removed method'.
+					n compiledMethod == aCompiledMethod ] ]
+]
+
+{ #category : #accessing }
 TypFunctionType >> hasNode [
 	^ node isNotNil
 ]

@@ -105,6 +105,13 @@ TypNamedType >> classDescription [
 	^ classDescription
 ]
 
+{ #category : #invalidation }
+TypNamedType >> dependsOnClassDescription: aClassDescription [
+	(super dependsOnClassDescription: aClassDescription) ifTrue: [ ^ true ].
+	self hasClassDescription ifFalse: [ ^ false ].
+	^ aClassDescription typDependsOnClassDescription: self classDescription
+]
+
 { #category : #testing }
 TypNamedType >> hasClassDescription [
 	<typPraResult: 'Boolean'>
@@ -155,15 +162,6 @@ TypNamedType >> initializeName: anObject [
 	name := anObject.
 	hasClassDescription := nil.
 	hash := nil
-]
-
-{ #category : #invalidation }
-TypNamedType >> invalidateOnClassChange: aClassAnnouncement [
-
-	self hasClassDescription ifFalse: [ ^ false ].
-	^ self classDescription = aClassAnnouncement classAffected or: [ 
-		  self classDescription inheritsFrom:
-			  aClassAnnouncement classAffected ]
 ]
 
 { #category : #testing }

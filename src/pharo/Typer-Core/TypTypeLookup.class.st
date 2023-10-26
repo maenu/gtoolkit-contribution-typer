@@ -58,6 +58,13 @@ TypTypeLookup >> classDescription [
 	^ classDescription
 ]
 
+{ #category : #invalidation }
+TypTypeLookup >> dependsOnClassDescription: aClassDescription [
+	(super dependsOnClassDescription: aClassDescription) ifTrue: [ ^ true ].
+	^ classDescription = aClassDescription
+		or: [ classDescription inheritsFrom: aClassDescription ]
+]
+
 { #category : #testing }
 TypTypeLookup >> hasParent [
 	^ classDescription superclass isNotNil
@@ -80,14 +87,6 @@ TypTypeLookup >> initialize [
 TypTypeLookup >> initializeClassDescription: anObject [
 	<typPraArguments: 'ClassDescription'>
 	classDescription := anObject
-]
-
-{ #category : #invalidation }
-TypTypeLookup >> invalidateOnClassChange: aClassAnnouncement [
-
-	^ (super invalidateOnClassChange: aClassAnnouncement) or:
-		  (classDescription = aClassAnnouncement classAffected or: [ 
-			   classDescription inheritsFrom: aClassAnnouncement classAffected ])
 ]
 
 { #category : #accessing }
