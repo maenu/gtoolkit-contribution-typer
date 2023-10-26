@@ -37,16 +37,6 @@ TypShaIndex >> initialize [
 ]
 
 { #category : #accessing }
-TypShaIndex >> invalidateOnClassChange: aClassAnnouncement [
-	aClassAnnouncement typShaInvalidateIndex
-]
-
-{ #category : #accessing }
-TypShaIndex >> invalidateOnMethodChange: aMethodAnnouncement [
-	aMethodAnnouncement typShaInvalidateIndex
-]
-
-{ #category : #accessing }
 TypShaIndex >> removeBehavior: aBehavior [
 	cache
 		typAt: {#indexed.

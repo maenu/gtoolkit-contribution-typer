@@ -1,7 +1,8 @@
 Extension { #name : #ClassAdded }
 
 { #category : #'*Typer-Inference' }
-ClassAdded >> typInfInvalidateIndex [
+ClassAdded >> typInfInvalidate [
+	<typInvalidate: 20>
 	TypInfIndex instance
 		addBehavior: classAdded;
 		addBehavior: classAdded class

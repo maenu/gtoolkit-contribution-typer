@@ -27,12 +27,12 @@ TypInfVariableResolver >> result: aLookup [
 	classDescription
 		slotNamed: aLookup selector
 		ifFound: [ :e | ^ e typInfAssignedTypeSelf: aLookup receiver super: aLookup receiver superOrNil ].	"class variable"
-	classDescription instanceSide allClassVariables
+	^ classDescription instanceSide allClassVariables
 		detect: [ :e | e name = aLookup selector ]
 		ifFound: [ :e | 
 			^ e value
 				ifNil: [ e typInfAssignedTypeSelf: aLookup receiver super: aLookup receiver superOrNil ]
-				ifNotNil: #typInfType ].
-	self
-		error: 'neither class nor instance variable, should not have been accepted in the first place'
+				ifNotNil: #typInfType ]
+		ifNone: [ self
+				error: 'neither class nor instance variable, should not have been accepted in the first place' ]
 ]

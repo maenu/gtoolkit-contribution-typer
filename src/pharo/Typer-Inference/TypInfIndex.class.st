@@ -1,6 +1,9 @@
 Class {
 	#name : #TypInfIndex,
 	#superclass : #TypIndex,
+	#instVars : [
+		'resolver'
+	],
 	#category : #'Typer-Inference-Lookup'
 }
 
@@ -104,12 +107,6 @@ TypInfIndex >> addMethod: aMethod [
 ]
 
 { #category : #accessing }
-TypInfIndex >> canResolve: aLookup [
-	(aLookup resolver isKindOf: TypInfMethodResolver) ifFalse: [ ^ false ].
-	^ resolver canResolve: aLookup
-]
-
-{ #category : #accessing }
 TypInfIndex >> contextAsyncAt: aLookup for: aDuration [
 	| configuration |
 	configuration := TypInfCurrentConfiguration value.
@@ -171,22 +168,11 @@ TypInfIndex >> implementors: aSymbol [
 { #category : #accessing }
 TypInfIndex >> initialize [
 	super initialize.
-	resolver := TypDepthFirstResolver
-			resolver: (TypBreadthFirstResolver
-					resolvers: {TypInfAbsMethodResolver new.
-							TypInfInlMethodResolver new}).
+	resolver := TypBreadthFirstResolver
+			resolvers: {TypInfAbsMethodResolver new.
+					TypInfInlMethodResolver new}.
 	{ProtoObject} , ProtoObject allSubclasses , {ProtoObject class}
 		, ProtoObject class allSubclasses do: [ :b | self addBehavior: b ]
-]
-
-{ #category : #accessing }
-TypInfIndex >> invalidateOnClassChange: aClassAnnouncement [
-	aClassAnnouncement typInfInvalidateIndex
-]
-
-{ #category : #accessing }
-TypInfIndex >> invalidateOnMethodChange: aMethodAnnouncement [
-	aMethodAnnouncement typInfInvalidateIndex
 ]
 
 { #category : #accessing }
@@ -252,6 +238,7 @@ TypInfIndex >> removeMethod: aMethod [
 				aMethod methodClass.
 				aMethod selector}.
 	self flag: 'TODO invalidate senders etc. too'.
+	"oldMethod sendsSelector: aLookup selector"
 	cache
 		typAt: {#implementors.
 				aMethod selector}
@@ -265,8 +252,8 @@ TypInfIndex >> removeMethod: aMethod [
 ]
 
 { #category : #accessing }
-TypInfIndex >> resolve: aLookup [
-	^ resolver resolve: aLookup
+TypInfIndex >> resolver [
+	^ resolver
 ]
 
 { #category : #accessing }

@@ -1,7 +1,8 @@
 Extension { #name : #ClassModifiedClassDefinition }
 
 { #category : #'*Typer-Inference' }
-ClassModifiedClassDefinition >> typInfInvalidateIndex [
+ClassModifiedClassDefinition >> typInfInvalidate [
+	<typInvalidate: 20>
 	TypInfIndex instance
 		removeBehavior: oldClassDefinition;
 		removeBehavior: oldClassDefinition class;

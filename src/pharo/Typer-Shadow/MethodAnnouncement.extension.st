@@ -1,6 +1,7 @@
 Extension { #name : #MethodAnnouncement }
 
 { #category : #'*Typer-Shadow' }
-MethodAnnouncement >> typShaInvalidateIndex [
+MethodAnnouncement >> typShaInvalidate [
+	<typInvalidate: 30>
 	
 ]

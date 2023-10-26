@@ -61,7 +61,7 @@ TypShaExamples >> lookupMethodNoNew [
 TypShaExamples >> lookupType [
 	<gtExample>
 	| lookup resolver |
-	resolver := TypTypeIndex instance resolver.
+	resolver := TypTypeLookup resolver.
 	lookup := TypTypeLookup classDescription: TypNamedType parent: nil.
 	self assert: (resolver canResolve: lookup).
 	^ resolver resolve: lookup
@@ -71,14 +71,14 @@ TypShaExamples >> lookupType [
 TypShaExamples >> lookupTypeAsType [
 	<gtExample>
 	TypTypeLookup invalidate.
-	TypTypeIndex invalidate.
 	^ TypNamedType class typAsType
 ]
 
 { #category : #accessing }
 TypShaExamples >> lookupTypeIndex [
 	<gtExample>
-	^ TypTypeIndex instance lookupClassDescription: TypNamedType
+	^ TypTypeLookup resolver
+		resolve: (TypTypeLookup classDescription: TypNamedType parent: nil)
 ]
 
 { #category : #accessing }

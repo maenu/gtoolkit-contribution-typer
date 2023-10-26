@@ -1,6 +1,6 @@
 Class {
 	#name : #TypShaMethodResolver,
-	#superclass : #TypShaResolver,
+	#superclass : #TypResolver,
 	#category : #'Typer-Shadow-Lookup'
 }
 
@@ -19,5 +19,6 @@ TypShaMethodResolver >> printOn: aStream [
 
 { #category : #accessing }
 TypShaMethodResolver >> result: aLookup [
-	^ self resolve: aLookup reduce: (TypShaIndex instance resolveMethod: aLookup)
+	self flag: 'TODO make more of alternatives instead of just taking first'.
+	^ (TypShaIndex instance resolveMethod: aLookup) asOrderedCollection sort first
 ]

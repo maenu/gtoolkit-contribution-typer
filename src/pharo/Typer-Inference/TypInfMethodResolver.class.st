@@ -12,20 +12,7 @@ TypInfMethodResolver >> canResolve: aLookup [
 	(aLookup receiver classDescription includesSelector: aLookup selector)
 		ifFalse: [ ^ false ].
 	method := aLookup receiver classDescription >> aLookup selector.
-	(TypInfNodeStack canPush: method ast) ifFalse: [ ^ false ].
-	^ true
-]
-
-{ #category : #'as yet unclassified' }
-TypInfMethodResolver >> invalidate: aMethodLookup onClassChange: aClassAnnouncement [
-
-	^ aClassAnnouncement typInfInvalidatesMethod: aMethodLookup
-]
-
-{ #category : #'as yet unclassified' }
-TypInfMethodResolver >> invalidate: aMethodLookup onMethodChange: aMethodAnnouncement [
-
-	^ aMethodAnnouncement typInfInvalidatesMethod: aMethodLookup
+	^ TypInfNodeStack canPush: method ast
 ]
 
 { #category : #printing }
@@ -41,11 +28,11 @@ TypInfMethodResolver >> result: aLookup [
 
 { #category : #accessing }
 TypInfMethodResolver >> update: aLookup [
+	super update: aLookup.
 	TypInfIndex instance cache
 		typAt: aLookup typInfAsContextPath
 		ifPresent: [ :c | 
 			(TypInfNodeStack actives size + 1 < c nodeStackDepth
 				and: [ TypInfNodeStack canPush: aLookup compiledMethod ast ])
-				ifTrue: [ aLookup result: (self result: aLookup) ] ].
-	^ super update: aLookup
+				ifTrue: [ aLookup updateTo: (self result: aLookup) by: self ] ]
 ]

@@ -1,11 +1,7 @@
 Extension { #name : #ClassAnnouncement }
 
 { #category : #'*Typer-Inference' }
-ClassAnnouncement >> typInfInvalidateIndex [
+ClassAnnouncement >> typInfInvalidate [
+	<typInvalidate: 20>
 	
-]
-
-{ #category : #'*Typer-Inference' }
-ClassAnnouncement >> typInfInvalidatesMethod: aLookup [
-	^ aLookup receiver classDescription = self classAffected
 ]

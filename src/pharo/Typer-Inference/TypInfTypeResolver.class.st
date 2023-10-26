@@ -6,7 +6,6 @@ Class {
 
 { #category : #accessing }
 TypInfTypeResolver >> canResolve: aLookup [
-
 	^ true
 ]
 

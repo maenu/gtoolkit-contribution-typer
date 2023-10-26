@@ -133,18 +133,6 @@ TypInfNode >> initializeNode: aNode context: aContext [
 ]
 
 { #category : #accessing }
-TypInfNode >> invalidateOnClassChange: aClassAnnouncement [
-
-	^ self type invalidateOnClassChange: aClassAnnouncement
-]
-
-{ #category : #accessing }
-TypInfNode >> invalidateOnMethodChange: aMethodAnnouncement [
-
-	^ self type invalidateOnMethodChange: aMethodAnnouncement
-]
-
-{ #category : #accessing }
 TypInfNode >> isDead [
 	self depthFirstNextReverseDo: [ :n | n == context root ifTrue: [ ^ false ] ].
 	^ true

@@ -1,6 +1,7 @@
 Extension { #name : #MethodRemoved }
 
 { #category : #'*Typer-Inference' }
-MethodRemoved >> typInfInvalidateIndex [
+MethodRemoved >> typInfInvalidate [
+	<typInvalidate: 20>
 	TypInfIndex instance removeMethod: method
 ]

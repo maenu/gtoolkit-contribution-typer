@@ -1,7 +1,8 @@
 Extension { #name : #ClassParentRenamed }
 
 { #category : #'*Typer-Inference' }
-ClassParentRenamed >> typInfInvalidateIndex [
+ClassParentRenamed >> typInfInvalidate [
+	<typInvalidate: 20>
 	TypInfIndex instance
 		removeBehavior: classAffected;
 		removeBehavior: classAffected class;

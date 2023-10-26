@@ -6,10 +6,9 @@ Class {
 
 { #category : #accessing }
 TypPraMethodResolver >> canResolve: aLookup [
-	^ aLookup receiver isNamed
-		and: [ aLookup receiver hasClassDescription
-				and:
-					[ aLookup receiver classDescription typPraHasMethod: aLookup selector ] ]
+	aLookup receiver isNamed ifFalse: [ ^ false ].
+	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
+	^ aLookup receiver classDescription typPraHasMethod: aLookup selector
 ]
 
 { #category : #printing }

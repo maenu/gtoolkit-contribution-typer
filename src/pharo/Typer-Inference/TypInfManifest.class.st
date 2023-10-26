@@ -3,9 +3,6 @@ Class {
 	#superclass : #PackageManifest,
 	#traits : 'TypTManifest',
 	#classTraits : 'TypTManifest classTrait',
-	#classInstVars : [
-		'logger'
-	],
 	#category : #'Typer-Inference-Core'
 }
 
@@ -41,24 +38,10 @@ TypInfManifest class >> findPathToIndex [
 
 { #category : #accessing }
 TypInfManifest class >> invalidate [
-	logger ifNotNil: #stop.
-	logger ifNotNil: #reset.
-	logger := nil.
 	TypInfIndex invalidate.
 	TypInfNodeStack resetSoleInstance.
 	TypInfConfiguration invalidate.
 	TypInfCurrentConfiguration resetSoleInstance
-]
-
-{ #category : #accessing }
-TypInfManifest class >> logger [
-	<gtExample>
-	<noTest>
-	self flag: 'TODO remove gt dep by class-side gt conf'.
-	^ logger
-		ifNil: [ logger := TypInfMemoryLogger new
-					startFor: TypInfNodeSignal , GtStylerErrorSignal;
-					yourself ]
 ]
 
 { #category : #accessing }
