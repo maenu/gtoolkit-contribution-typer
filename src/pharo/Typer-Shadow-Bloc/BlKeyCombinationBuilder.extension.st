@@ -1,7 +1,7 @@
 Extension { #name : #BlKeyCombinationBuilder }
 
 { #category : #'*Typer-Shadow-Bloc' }
-BlKeyCombinationBuilder >> typShaMethodKeywordKey: aLookup [
+BlKeyCombinationBuilder >> typShaMethodKeywordKey: aLookup root: anotherLookup [
 	<typShaMethod: 'key:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -9,7 +9,7 @@ BlKeyCombinationBuilder >> typShaMethodKeywordKey: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Bloc' }
-BlKeyCombinationBuilder >> typShaMethodUnaryBuild: aLookup [
+BlKeyCombinationBuilder >> typShaMethodUnaryBuild: aLookup root: anotherLookup [
 	<typShaMethod: 'build'>
 	^ CompiledMethod typAsFunctionTypeWithResult: BlKeyCombination typAsType
 ]

@@ -14,35 +14,30 @@ TypParametricType class >> classDescription: aClassDescription [
 ]
 
 { #category : #accessing }
-TypParametricType class >> classDescription: aClassDescription parameters: anOrderedDictionary [
-
+TypParametricType class >> classDescription: aClassDescription parameters: aCollection [
 	| instance |
 	instance := self new
-		            initializeClassDescription: aClassDescription;
-		            initializeParameters: anOrderedDictionary;
-		            yourself.
+			initializeClassDescription: aClassDescription;
+			initializeParameters: (aCollection as: OrderedIdentityDictionary);
+			yourself.
 	^ self index
-		  at: { 
-				  aClassDescription name.
-				  anOrderedDictionary asOrderedDictionary.
-				  instance superOrNil }
-		  ifAbsentPut: [ instance ]
+		at: {aClassDescription name.
+				aCollection as: OrderedIdentityDictionary.
+				instance superOrNil}
+		ifAbsentPut: [ instance ]
 ]
 
 { #category : #accessing }
-TypParametricType class >> classDescription: aClassDescription parameters: anOrderedDictionary super: aType [
-
+TypParametricType class >> classDescription: aClassDescription parameters: aDictionary super: aType [
 	^ self index
-		  at: { 
-				  aClassDescription name.
-				  anOrderedDictionary asOrderedDictionary.
-				  aType }
-		  ifAbsentPut: [ 
-			  self new
-				  initializeClassDescription: aClassDescription;
-				  initializeParameters: anOrderedDictionary;
-				  initializeSuper: aType;
-				  yourself ]
+		at: {aClassDescription name.
+				aDictionary as: OrderedIdentityDictionary.
+				aType}
+		ifAbsentPut: [ self new
+				initializeClassDescription: aClassDescription;
+				initializeParameters: (aDictionary as: OrderedIdentityDictionary);
+				initializeSuper: aType;
+				yourself ]
 ]
 
 { #category : #'instance creation' }
@@ -58,35 +53,30 @@ TypParametricType class >> named: aString [
 ]
 
 { #category : #accessing }
-TypParametricType class >> named: aString parameters: anOrderedDictionary [
-
+TypParametricType class >> named: aSymbol parameters: aDictionary [
 	| instance |
 	instance := self new
-		            initializeName: aString asString;
-		            initializeParameters: anOrderedDictionary;
-		            yourself.
+			initializeName: aSymbol asSymbol;
+			initializeParameters: (aDictionary as: OrderedIdentityDictionary);
+			yourself.
 	^ self index
-		  at: { 
-				  aString asString.
-				  anOrderedDictionary asOrderedDictionary.
-				  instance superOrNil }
-		  ifAbsentPut: [ instance ]
+		at: {aSymbol asSymbol.
+				aDictionary as: OrderedIdentityDictionary.
+				instance superOrNil}
+		ifAbsentPut: [ instance ]
 ]
 
 { #category : #accessing }
-TypParametricType class >> named: aString parameters: anOrderedDictionary super: aType [
-
+TypParametricType class >> named: aSymbol parameters: aDictionary super: aType [
 	^ self index
-		  at: { 
-				  aString asString.
-				  anOrderedDictionary asOrderedDictionary.
-				  aType }
-		  ifAbsentPut: [ 
-			  self new
-				  initializeName: aString asString;
-				  initializeParameters: anOrderedDictionary;
-				  initializeSuper: aType;
-				  yourself ]
+		at: {aSymbol asSymbol.
+				aDictionary as: OrderedIdentityDictionary.
+				aType}
+		ifAbsentPut: [ self new
+				initializeName: aSymbol asSymbol;
+				initializeParameters: (aDictionary as: OrderedIdentityDictionary);
+				initializeSuper: aType;
+				yourself ]
 ]
 
 { #category : #'instance creation' }
@@ -182,10 +172,11 @@ TypParametricType >> initialize [
 ]
 
 { #category : #initialization }
-TypParametricType >> initializeParameters: anOrderedDictionary [
-	self assert: [ anOrderedDictionary isNotEmpty ].
+TypParametricType >> initializeParameters: aDictionary [
+	self assert: [ aDictionary isKindOf: OrderedIdentityDictionary ].
+	self assert: [ aDictionary isNotEmpty ].
 	parameters removeAll.
-	anOrderedDictionary
+	aDictionary
 		keysAndValuesDo: [ :k :v | parameters at: k put: (v isBound ifTrue: [ v ] ifFalse: [ v boundTo: self ]) ].
 	self initializeSuper: nil
 ]
@@ -264,21 +255,18 @@ TypParametricType >> withAt: aSymbol put: aType [
 
 { #category : #compatibility }
 TypParametricType >> withParameters: aCollection [
-
 	| copyParameters |
-	copyParameters := ((1 to: (aCollection size min: parameters size)) 
-		                   collect: [ :i | 
-		                   (parameters keys at: i) -> (aCollection at: i) ])
-		                  asOrderedDictionary.
-	self hasClassDescription ifTrue: [ 
-		^ self class
-			  classDescription: self classDescription
-			  parameters: copyParameters
-			  super: self superOrNil ].
+	copyParameters := (1 to: (aCollection size min: parameters size))
+			collect: [ :i | (parameters keys at: i) -> (aCollection at: i) ].
+	self hasClassDescription
+		ifTrue: [ ^ self class
+				classDescription: self classDescription
+				parameters: copyParameters
+				super: self superOrNil ].
 	^ self class
-		  named: name
-		  parameters: copyParameters
-		  super: self superOrNil
+		named: name
+		parameters: copyParameters
+		super: self superOrNil
 ]
 
 { #category : #compatibility }

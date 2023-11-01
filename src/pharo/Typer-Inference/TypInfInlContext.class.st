@@ -29,13 +29,15 @@ TypInfInlContext class >> sender: aContext state: aState node: aNode self: aType
 TypInfInlContext >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^ false ].
-	^ message = anObject message
+	message = anObject message ifFalse: [ ^ false ].
+	^ lookup = anObject lookup
 ]
 
 { #category : #accessing }
 TypInfInlContext >> adoptSelf: aType super: anotherTypeOrNil [
 	selfType := aType.
-	superType := anotherTypeOrNil
+	superType := anotherTypeOrNil.
+	message contexts rehash
 ]
 
 { #category : #accessing }

@@ -1,7 +1,7 @@
 Extension { #name : #LargeInteger }
 
 { #category : #'*Typer-Shadow-Pharo' }
-LargeInteger >> typShaMethodKeywordBitAnd: aLookup [
+LargeInteger >> typShaMethodKeywordBitAnd: aLookup root: anotherLookup [
 	<typShaMethod: 'bitAnd:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType instance
@@ -9,7 +9,7 @@ LargeInteger >> typShaMethodKeywordBitAnd: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-LargeInteger >> typShaMethodKeywordBitOr: aLookup [
+LargeInteger >> typShaMethodKeywordBitOr: aLookup root: anotherLookup [
 	<typShaMethod: 'bitOr:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType instance
@@ -17,7 +17,7 @@ LargeInteger >> typShaMethodKeywordBitOr: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-LargeInteger >> typShaMethodKeywordBitShift: aLookup [
+LargeInteger >> typShaMethodKeywordBitShift: aLookup root: anotherLookup [
 	<typShaMethod: 'bitShift:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Integer typAsType
@@ -25,7 +25,7 @@ LargeInteger >> typShaMethodKeywordBitShift: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-LargeInteger >> typShaMethodKeywordByteAt: aLookup [
+LargeInteger >> typShaMethodKeywordByteAt: aLookup root: anotherLookup [
 	<typShaMethod: 'byteAt:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Integer typAsType
@@ -33,7 +33,7 @@ LargeInteger >> typShaMethodKeywordByteAt: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-LargeInteger >> typShaMethodKeywordByteAtPut: aLookup [
+LargeInteger >> typShaMethodKeywordByteAtPut: aLookup root: anotherLookup [
 	<typShaMethod: 'byteAt:put:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Integer typAsType
@@ -42,7 +42,7 @@ LargeInteger >> typShaMethodKeywordByteAtPut: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-LargeInteger >> typShaMethodKeywordRfMinus: aLookup [
+LargeInteger >> typShaMethodKeywordRfMinus: aLookup root: anotherLookup [
 	<typShaMethod: 'rfMinus:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Number typAsType
@@ -50,7 +50,7 @@ LargeInteger >> typShaMethodKeywordRfMinus: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-LargeInteger >> typShaMethodKeywordRfPlus: aLookup [
+LargeInteger >> typShaMethodKeywordRfPlus: aLookup root: anotherLookup [
 	<typShaMethod: 'rfPlus:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Number typAsType
@@ -58,7 +58,7 @@ LargeInteger >> typShaMethodKeywordRfPlus: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-LargeInteger >> typShaMethodUnaryBytesCount: aLookup [
+LargeInteger >> typShaMethodUnaryBytesCount: aLookup root: anotherLookup [
 	<typShaMethod: 'bytesCount'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
 ]

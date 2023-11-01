@@ -1,7 +1,7 @@
 Extension { #name : #Integer }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Integer >> typShaMethodBinaryGreater: aLookup [
+Integer >> typShaMethodBinaryGreater: aLookup root: anotherLookup [
 	<typShaMethod: '>'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -9,7 +9,7 @@ Integer >> typShaMethodBinaryGreater: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Integer >> typShaMethodBinaryGreaterOrEqual: aLookup [
+Integer >> typShaMethodBinaryGreaterOrEqual: aLookup root: anotherLookup [
 	<typShaMethod: '>='>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -17,7 +17,7 @@ Integer >> typShaMethodBinaryGreaterOrEqual: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Integer >> typShaMethodBinaryIntegerDivide: aLookup [
+Integer >> typShaMethodBinaryIntegerDivide: aLookup root: anotherLookup [
 	<typShaMethod: '//'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Integer typAsType
@@ -25,7 +25,7 @@ Integer >> typShaMethodBinaryIntegerDivide: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Integer >> typShaMethodBinaryLess: aLookup [
+Integer >> typShaMethodBinaryLess: aLookup root: anotherLookup [
 	<typShaMethod: '<'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -33,7 +33,7 @@ Integer >> typShaMethodBinaryLess: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Integer >> typShaMethodBinaryLessOrEqual: aLookup [
+Integer >> typShaMethodBinaryLessOrEqual: aLookup root: anotherLookup [
 	<typShaMethod: '<='>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -41,7 +41,7 @@ Integer >> typShaMethodBinaryLessOrEqual: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Integer >> typShaMethodBinaryMinus: aLookup [
+Integer >> typShaMethodBinaryMinus: aLookup root: anotherLookup [
 	<typShaMethod: '-'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup arguments first <= Integer typAsType
@@ -51,7 +51,7 @@ Integer >> typShaMethodBinaryMinus: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Integer >> typShaMethodBinaryModulo: aLookup [
+Integer >> typShaMethodBinaryModulo: aLookup root: anotherLookup [
 	<typShaMethod: '\\'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup arguments first <= Integer typAsType
@@ -61,7 +61,7 @@ Integer >> typShaMethodBinaryModulo: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Integer >> typShaMethodBinaryMultiply: aLookup [
+Integer >> typShaMethodBinaryMultiply: aLookup root: anotherLookup [
 	<typShaMethod: '*'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup arguments first <= Integer typAsType
@@ -71,7 +71,7 @@ Integer >> typShaMethodBinaryMultiply: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Integer >> typShaMethodBinaryPlus: aLookup [
+Integer >> typShaMethodBinaryPlus: aLookup root: anotherLookup [
 	<typShaMethod: '+'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup arguments first <= Integer typAsType
@@ -81,7 +81,7 @@ Integer >> typShaMethodBinaryPlus: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Integer >> typShaMethodKeywordBitXor: aLookup [
+Integer >> typShaMethodKeywordBitXor: aLookup root: anotherLookup [
 	<typShaMethod: 'bitXor:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Integer typAsType
@@ -89,13 +89,13 @@ Integer >> typShaMethodKeywordBitXor: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Integer >> typShaMethodUnaryAsCharacter: aLookup [
+Integer >> typShaMethodUnaryAsCharacter: aLookup root: anotherLookup [
 	<typShaMethod: 'asCharacter'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Character typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Integer >> typShaMethodUnaryAtRandom: aLookup [
+Integer >> typShaMethodUnaryAtRandom: aLookup root: anotherLookup [
 	<typShaMethod: 'atRandom'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
 ]

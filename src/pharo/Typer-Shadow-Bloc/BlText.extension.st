@@ -1,7 +1,7 @@
 Extension { #name : #BlText }
 
 { #category : #'*Typer-Shadow-Bloc' }
-BlText >> typShaMethodKeywordAttribute: aLookup [
+BlText >> typShaMethodKeywordAttribute: aLookup root: anotherLookup [
 	<typShaMethod: 'attribute:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -9,7 +9,7 @@ BlText >> typShaMethodKeywordAttribute: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Bloc' }
-BlText >> typShaMethodKeywordAttributesAt: aLookup [
+BlText >> typShaMethodKeywordAttributesAt: aLookup root: anotherLookup [
 	<typShaMethod: 'attributesAt:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (SequenceableCollection typAsType withParameters: {BlTextAttribute typAsType})
@@ -17,7 +17,7 @@ BlText >> typShaMethodKeywordAttributesAt: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Bloc' }
-BlText >> typShaMethodKeywordClearAttributes: aLookup [
+BlText >> typShaMethodKeywordClearAttributes: aLookup root: anotherLookup [
 	<typShaMethod: 'clearAttributes:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -27,7 +27,7 @@ BlText >> typShaMethodKeywordClearAttributes: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Bloc' }
-BlText >> typShaMethodKeywordFromTo: aLookup [
+BlText >> typShaMethodKeywordFromTo: aLookup root: anotherLookup [
 	<typShaMethod: 'from:to:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: BlText typAsType

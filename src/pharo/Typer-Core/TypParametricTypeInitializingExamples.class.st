@@ -20,18 +20,16 @@ TypParametricTypeInitializingExamples >> classDescriptionParameters [
 	<gtExample>
 	| type |
 	type := TypParametricType
-		classDescription: Integer
-		parameters: {(#A -> #A typAsVariableType)} asOrderedDictionary.
+			classDescription: Integer
+			parameters: {#A -> #A typAsVariableType}.
 	self assert: type name equals: 'Integer'.
 	self assert: type hasClassDescription.
 	self assert: type classDescription equals: Integer.
 	self assert: type hasSuper.
-	self
-		assert: type super
-		equals: (TypNamedType classDescription: Number).
+	self assert: type super equals: (TypNamedType classDescription: Number).
 	self
 		assert: type parameters
-		equals: {(#A -> #A typAsVariableType)} asOrderedDictionary.
+		equals: ({#A -> #A typAsVariableType} as: OrderedIdentityDictionary).
 	^ type
 ]
 
@@ -49,15 +47,13 @@ TypParametricTypeInitializingExamples >> namedWithClassDescriptionParameters [
 	<gtExample>
 	| type |
 	type := TypParametricType
-		named: 'Integer'
-		parameters: {(#A -> #A typAsVariableType)} asOrderedDictionary.
+			named: 'Integer'
+			parameters: {#A -> #A typAsVariableType}.
 	self assert: type name equals: 'Integer'.
 	self assert: type hasClassDescription.
 	self assert: type classDescription equals: Integer.
 	self assert: type hasSuper.
-	self
-		assert: type super
-		equals: (TypNamedType classDescription: Number).
+	self assert: type super equals: (TypNamedType classDescription: Number).
 	^ type
 ]
 
@@ -75,8 +71,8 @@ TypParametricTypeInitializingExamples >> namedWithoutClassDescriptionParameters 
 	<gtExample>
 	| type |
 	type := TypParametricType
-		named: 'Nothing'
-		parameters: {(#A -> #A typAsVariableType)} asOrderedDictionary.
+			named: 'Nothing'
+			parameters: {#A -> #A typAsVariableType}.
 	self assert: type name equals: 'Nothing'.
 	self assert: type hasClassDescription not.
 	self assert: [ type classDescription ] signals: AssertionFailure.

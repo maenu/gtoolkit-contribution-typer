@@ -1,7 +1,7 @@
 Extension { #name : #GtMondrianGraphBuilder }
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtMondrianGraphBuilder >> typShaMethodKeywordStencil: aLookup [
+GtMondrianGraphBuilder >> typShaMethodKeywordStencil: aLookup root: anotherLookup [
 	<typShaMethod: 'stencil:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self

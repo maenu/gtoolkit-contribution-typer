@@ -1,7 +1,7 @@
 Extension { #name : #Fraction }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Fraction >> typShaMethodBinaryGreater: aLookup [
+Fraction >> typShaMethodBinaryGreater: aLookup root: anotherLookup [
 	<typShaMethod: '>'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -9,7 +9,7 @@ Fraction >> typShaMethodBinaryGreater: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Fraction >> typShaMethodBinaryGreaterOrEqual: aLookup [
+Fraction >> typShaMethodBinaryGreaterOrEqual: aLookup root: anotherLookup [
 	<typShaMethod: '>='>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -17,7 +17,7 @@ Fraction >> typShaMethodBinaryGreaterOrEqual: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Fraction >> typShaMethodBinaryLess: aLookup [
+Fraction >> typShaMethodBinaryLess: aLookup root: anotherLookup [
 	<typShaMethod: '<'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -25,7 +25,7 @@ Fraction >> typShaMethodBinaryLess: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Fraction >> typShaMethodBinaryLessOrEqual: aLookup [
+Fraction >> typShaMethodBinaryLessOrEqual: aLookup root: anotherLookup [
 	<typShaMethod: '<='>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType

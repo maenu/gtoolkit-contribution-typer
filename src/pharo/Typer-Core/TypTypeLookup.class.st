@@ -8,27 +8,21 @@ Class {
 }
 
 { #category : #accessing }
-TypTypeLookup class >> classDescription: aClassDescription parent: aLookup [
-
+TypTypeLookup class >> classDescription: aClassDescription [
 	^ self index
-		  at: { 
-				  aClassDescription.
-				  aLookup }
-		  ifAbsentPut: [ 
-			  self new
-				  initializeClassDescription: aClassDescription;
-				  initializeParent: aLookup;
-				  yourself ]
+		at: {aClassDescription}
+		ifAbsentPut: [ self new
+				initializeClassDescription: aClassDescription;
+				yourself ]
 ]
 
 { #category : #accessing }
 TypTypeLookup class >> resolver [
 	^ resolver
-		ifNil: [ resolver := TypTerminalResolver
-					resolver: (TypBreadthFirstResolver
-							resolvers: {TypDepthFirstResolver resolver: TypPraTypeResolver new.
-									TypDepthFirstResolver resolver: TypShaTypeResolver new.
-									TypDepthFirstResolver resolver: TypInfTypeResolver new}) ]
+		ifNil: [ resolver := TypBreadthFirstResolver
+					resolvers: {TypDepthFirstResolver resolver: TypPraTypeResolver new.
+							TypDepthFirstResolver resolver: TypShaTypeResolver new.
+							TypDepthFirstResolver resolver: TypInfTypeResolver new} ]
 ]
 
 { #category : #comparing }
@@ -40,16 +34,8 @@ TypTypeLookup >> = anObject [
 
 { #category : #copying }
 TypTypeLookup >> asParent [
-	child ifNotNil: [ ^ child ].
 	self assert: [ self hasParent ].
-	^ child := self class
-			classDescription: classDescription superclass
-			parent: self
-]
-
-{ #category : #accessing }
-TypTypeLookup >> canResolve [
-	^ TypTypeLookup resolver canResolve: self
+	^ self class classDescription: classDescription superclass
 ]
 
 { #category : #accessing }
@@ -93,11 +79,4 @@ TypTypeLookup >> initializeClassDescription: anObject [
 TypTypeLookup >> printOn: aStream [
 	aStream nextPutAll: classDescription name.
 	super printOn: aStream
-]
-
-{ #category : #accessing }
-TypTypeLookup >> resolve [
-	self flag: 'FIXME weird'.
-	^ [ TypTypeLookup resolver resolve: self ]
-		ensure: [ self assert: [ result isNotNil ] ]
 ]

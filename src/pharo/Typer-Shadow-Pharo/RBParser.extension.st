@@ -1,7 +1,7 @@
 Extension { #name : #RBParser }
 
 { #category : #'*Typer-Shadow-Pharo' }
-RBParser class >> typShaMethodKeywordParseFaultyMethod: aLookup [
+RBParser class >> typShaMethodKeywordParseFaultyMethod: aLookup root: anotherLookup [
 	<typShaMethod: 'parseFaultyMethod:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: RBMethodNode typAsType

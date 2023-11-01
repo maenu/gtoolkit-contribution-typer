@@ -1,7 +1,7 @@
 Extension { #name : #GtSourceCoder }
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtSourceCoder >> typShaMethodKeywordExpanded: aLookup [
+GtSourceCoder >> typShaMethodKeywordExpanded: aLookup root: anotherLookup [
 	<typShaMethod: 'expanded:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -9,7 +9,7 @@ GtSourceCoder >> typShaMethodKeywordExpanded: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtSourceCoder >> typShaMethodKeywordMethodsCoder: aLookup [
+GtSourceCoder >> typShaMethodKeywordMethodsCoder: aLookup root: anotherLookup [
 	<typShaMethod: 'methodsCoder:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup arguments at: 1)
@@ -17,19 +17,19 @@ GtSourceCoder >> typShaMethodKeywordMethodsCoder: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtSourceCoder >> typShaMethodUnaryClassOrMetaClass: aLookup [
+GtSourceCoder >> typShaMethodUnaryClassOrMetaClass: aLookup root: anotherLookup [
 	<typShaMethod: 'classOrMetaClass'>
 	^ CompiledMethod typAsFunctionTypeWithResult: ClassDescription typAsType
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtSourceCoder >> typShaMethodUnaryCollapsedEditor: aLookup [
+GtSourceCoder >> typShaMethodUnaryCollapsedEditor: aLookup root: anotherLookup [
 	<typShaMethod: 'collapsedEditor'>
 	^ CompiledMethod typAsFunctionTypeWithResult: BrTextEditor typAsType
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtSourceCoder >> typShaMethodUnarySource: aLookup [
+GtSourceCoder >> typShaMethodUnarySource: aLookup root: anotherLookup [
 	<typShaMethod: 'source'>
 	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]

@@ -1,7 +1,7 @@
 Extension { #name : #Collection }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodBinaryConcatenate: aLookup [
+Collection >> typShaMethodBinaryConcatenate: aLookup root: anotherLookup [
 	<typShaMethod: ','>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup self
@@ -13,7 +13,7 @@ Collection >> typShaMethodBinaryConcatenate: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodKeywordAdd: aLookup [
+Collection >> typShaMethodKeywordAdd: aLookup root: anotherLookup [
 	<typShaMethod: 'add:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup arguments at: 1)
@@ -21,7 +21,7 @@ Collection >> typShaMethodKeywordAdd: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodKeywordAddAll: aLookup [
+Collection >> typShaMethodKeywordAddAll: aLookup root: anotherLookup [
 	<typShaMethod: 'addAll:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup arguments at: 1)
@@ -29,7 +29,7 @@ Collection >> typShaMethodKeywordAddAll: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodKeywordAllSatisfy: aLookup [
+Collection >> typShaMethodKeywordAllSatisfy: aLookup root: anotherLookup [
 	<typShaMethod: 'allSatisfy:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -40,7 +40,7 @@ Collection >> typShaMethodKeywordAllSatisfy: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodKeywordAnySatisfy: aLookup [
+Collection >> typShaMethodKeywordAnySatisfy: aLookup root: anotherLookup [
 	<typShaMethod: 'anySatisfy:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -51,7 +51,7 @@ Collection >> typShaMethodKeywordAnySatisfy: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodKeywordAt: aLookup [
+Collection >> typShaMethodKeywordAt: aLookup root: anotherLookup [
 	<typShaMethod: 'at:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
@@ -59,7 +59,7 @@ Collection >> typShaMethodKeywordAt: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodKeywordCopyWithout: aLookup [
+Collection >> typShaMethodKeywordCopyWithout: aLookup root: anotherLookup [
 	<typShaMethod: 'copyWithout:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -67,7 +67,7 @@ Collection >> typShaMethodKeywordCopyWithout: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodKeywordCopyWithoutAll: aLookup [
+Collection >> typShaMethodKeywordCopyWithoutAll: aLookup root: anotherLookup [
 	<typShaMethod: 'copyWithoutAll:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -75,7 +75,7 @@ Collection >> typShaMethodKeywordCopyWithoutAll: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodKeywordDetect: aLookup [
+Collection >> typShaMethodKeywordDetect: aLookup root: anotherLookup [
 	<typShaMethod: 'detect:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
@@ -86,7 +86,7 @@ Collection >> typShaMethodKeywordDetect: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodKeywordDetectIfFound: aLookup [
+Collection >> typShaMethodKeywordDetectIfFound: aLookup root: anotherLookup [
 	<typShaMethod: 'detect:ifFound:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -102,7 +102,7 @@ Collection >> typShaMethodKeywordDetectIfFound: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodKeywordDo: aLookup [
+Collection >> typShaMethodKeywordDo: aLookup root: anotherLookup [
 	<typShaMethod: 'do:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -113,7 +113,7 @@ Collection >> typShaMethodKeywordDo: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodKeywordGtItemsFor: aLookup [
+Collection >> typShaMethodKeywordGtItemsFor: aLookup root: anotherLookup [
 	<typShaMethod: 'gtItemsFor:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtPhlowView typAsType
@@ -121,7 +121,7 @@ Collection >> typShaMethodKeywordGtItemsFor: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodKeywordIncludes: aLookup [
+Collection >> typShaMethodKeywordIncludes: aLookup root: anotherLookup [
 	<typShaMethod: 'includes:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -129,7 +129,7 @@ Collection >> typShaMethodKeywordIncludes: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodKeywordIncludesAll: aLookup [
+Collection >> typShaMethodKeywordIncludesAll: aLookup root: anotherLookup [
 	<typShaMethod: 'includesAll:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -137,7 +137,7 @@ Collection >> typShaMethodKeywordIncludesAll: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodKeywordReject: aLookup [
+Collection >> typShaMethodKeywordReject: aLookup root: anotherLookup [
 	<typShaMethod: 'reject:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -148,7 +148,7 @@ Collection >> typShaMethodKeywordReject: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodKeywordRemove: aLookup [
+Collection >> typShaMethodKeywordRemove: aLookup root: anotherLookup [
 	<typShaMethod: 'remove:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
@@ -156,7 +156,7 @@ Collection >> typShaMethodKeywordRemove: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodKeywordSelect: aLookup [
+Collection >> typShaMethodKeywordSelect: aLookup root: anotherLookup [
 	<typShaMethod: 'select:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -167,7 +167,7 @@ Collection >> typShaMethodKeywordSelect: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection class >> typShaMethodKeywordWith: aLookup [
+Collection class >> typShaMethodKeywordWith: aLookup root: anotherLookup [
 	<typShaMethod: 'with:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver classDescription instanceSide typAsType
@@ -176,7 +176,7 @@ Collection class >> typShaMethodKeywordWith: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection class >> typShaMethodKeywordWithAll: aLookup [
+Collection class >> typShaMethodKeywordWithAll: aLookup root: anotherLookup [
 	<typShaMethod: 'withAll:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver classDescription instanceSide typAsType
@@ -185,7 +185,7 @@ Collection class >> typShaMethodKeywordWithAll: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection class >> typShaMethodKeywordWithWith: aLookup [
+Collection class >> typShaMethodKeywordWithWith: aLookup root: anotherLookup [
 	<typShaMethod: 'with:with:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver classDescription instanceSide typAsType
@@ -195,13 +195,13 @@ Collection class >> typShaMethodKeywordWithWith: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodUnaryAnyOne: aLookup [
+Collection >> typShaMethodUnaryAnyOne: aLookup root: anotherLookup [
 	<typShaMethod: 'anyOne'>
 	^ CompiledMethod typAsFunctionTypeWithResult: (aLookup receiver at: #A)
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodUnaryAsDictionary: aLookup [
+Collection >> typShaMethodUnaryAsDictionary: aLookup root: anotherLookup [
 	<typShaMethod: 'asDictionary'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Dictionary typAsType
@@ -210,21 +210,21 @@ Collection >> typShaMethodUnaryAsDictionary: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodUnaryAsIdentitySet: aLookup [
+Collection >> typShaMethodUnaryAsIdentitySet: aLookup root: anotherLookup [
 	<typShaMethod: 'asIdentitySet'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (IdentitySet typAsType withParameters: {aLookup receiver at: #A})
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodUnaryAsOrderedCollection: aLookup [
+Collection >> typShaMethodUnaryAsOrderedCollection: aLookup root: anotherLookup [
 	<typShaMethod: 'asOrderedCollection'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (OrderedCollection typAsType withParameters: {aLookup receiver at: #A})
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodUnaryAsOrderedDictionary: aLookup [
+Collection >> typShaMethodUnaryAsOrderedDictionary: aLookup root: anotherLookup [
 	<typShaMethod: 'asOrderedDictionary'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (OrderedDictionary typAsType
@@ -233,33 +233,33 @@ Collection >> typShaMethodUnaryAsOrderedDictionary: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodUnaryAsSet: aLookup [
+Collection >> typShaMethodUnaryAsSet: aLookup root: anotherLookup [
 	<typShaMethod: 'asSet'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Set typAsType withParameters: {aLookup receiver at: #A})
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodUnaryIsEmpty: aLookup [
+Collection >> typShaMethodUnaryIsEmpty: aLookup root: anotherLookup [
 	<typShaMethod: 'isEmpty'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodUnaryIsNotEmpty: aLookup [
+Collection >> typShaMethodUnaryIsNotEmpty: aLookup root: anotherLookup [
 	<typShaMethod: 'isNotEmpty'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection >> typShaMethodUnaryMax: aLookup [
+Collection >> typShaMethodUnaryMax: aLookup root: anotherLookup [
 	<typShaMethod: 'max'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Number typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Collection class >> typShaType: aLookup [
+Collection class >> typShaType: aLookup root: anotherLookup [
 	<typShaType>
-	^ aLookup root classDescription
-		typAsParametricTypeWithParameters: {#A -> #A typAsVariableType} asOrderedDictionary
+	^ anotherLookup classDescription
+		typAsParametricTypeWithParameters: {#A -> #A typAsVariableType}
 ]

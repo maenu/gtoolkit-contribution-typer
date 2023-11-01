@@ -1,7 +1,7 @@
 Extension { #name : #GtPharoMessageSendNode }
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoMessageSendNode >> typShaMethodUnaryReceiver: aLookup [
+GtPharoMessageSendNode >> typShaMethodUnaryReceiver: aLookup root: anotherLookup [
 	<typShaMethod: 'receiver'>
 	^ CompiledMethod typAsFunctionTypeWithResult: GtPharoValueNode typAsType
 ]

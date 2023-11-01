@@ -11,8 +11,7 @@ TypShaExamples >> lookupMethod [
 	lookup := TypMethodLookup
 			receiver: Collection typAsType
 			selector: #anyOne
-			arguments: #()
-			parent: nil.
+			arguments: #().
 	self assert: (TypShaMethodResolver new canResolve: lookup).
 	^ TypShaMethodResolver new resolve: lookup
 ]
@@ -24,8 +23,7 @@ TypShaExamples >> lookupMethodClassSide [
 	lookup := TypMethodLookup
 			receiver: Color class typAsType
 			selector: #purple
-			arguments: #()
-			parent: nil.
+			arguments: #().
 	self assert: (TypShaMethodResolver new canResolve: lookup).
 	^ TypShaMethodResolver new resolve: lookup
 ]
@@ -38,8 +36,7 @@ TypShaExamples >> lookupMethodNew [
 	lookup := TypMethodLookup
 			receiver: TypNamedType class typAsType
 			selector: #new
-			arguments: #()
-			parent: nil.
+			arguments: #().
 	self assert: (resolver canResolve: lookup).
 	^ resolver resolve: lookup
 ]
@@ -51,8 +48,7 @@ TypShaExamples >> lookupMethodNoNew [
 	lookup := TypMethodLookup
 			receiver: ExternalType typAsType
 			selector: #isAtomic
-			arguments: #()
-			parent: nil.
+			arguments: #().
 	self assert: (TypShaMethodResolver new canResolve: lookup).
 	^ TypShaMethodResolver new resolve: lookup
 ]
@@ -62,7 +58,7 @@ TypShaExamples >> lookupType [
 	<gtExample>
 	| lookup resolver |
 	resolver := TypTypeLookup resolver.
-	lookup := TypTypeLookup classDescription: TypNamedType parent: nil.
+	lookup := TypTypeLookup classDescription: TypNamedType.
 	self assert: (resolver canResolve: lookup).
 	^ resolver resolve: lookup
 ]
@@ -78,7 +74,7 @@ TypShaExamples >> lookupTypeAsType [
 TypShaExamples >> lookupTypeIndex [
 	<gtExample>
 	^ TypTypeLookup resolver
-		resolve: (TypTypeLookup classDescription: TypNamedType parent: nil)
+		resolve: (TypTypeLookup classDescription: TypNamedType)
 ]
 
 { #category : #accessing }
@@ -87,8 +83,7 @@ TypShaExamples >> lookupVariable [
 	| lookup |
 	lookup := TypVariableLookup
 			receiver: GtPharoMethodCoder typAsType
-			selector: #astCache
-			parent: nil.
+			selector: #astCache.
 	self assert: (TypShaVariableResolver new canResolve: lookup).
 	^ TypShaVariableResolver new resolve: lookup
 ]

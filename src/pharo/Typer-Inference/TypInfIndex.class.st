@@ -1,28 +1,40 @@
 Class {
 	#name : #TypInfIndex,
 	#superclass : #TypIndex,
-	#instVars : [
-		'resolver'
-	],
 	#category : #'Typer-Inference-Lookup'
 }
 
 { #category : #accessing }
-TypInfIndex >> absCanResolve: aLookup [
+TypInfIndex >> absCanResolve: aLookup message: aMessage [
+	| classDescription |
+	aLookup receiver isNamed ifFalse: [ ^ false ].
+	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
+	classDescription := aLookup receiver classDescription.
 	^ cache
 		typAt: {#absCanResolve.
 				aLookup receiver classDescription.
 				aLookup selector}
-		ifAbsent: [ #() ]
+		ifPresent: [ :s | 
+			s
+				allSatisfy: [ :m | 
+					nil
+						withArgs: {aLookup.
+								aMessage}
+						executeMethod: m ] ]
+		ifAbsent: [ false ]
 ]
 
 { #category : #accessing }
-TypInfIndex >> absResolve: aLookup [
-	^ cache
+TypInfIndex >> absResolve: aLookup message: aMessage [
+	^ (cache
 		typAt: {#absResolve.
 				aLookup receiver classDescription.
-				aLookup selector}
-		ifAbsent: [ #() ]
+				aLookup selector})
+		collect: [ :m | 
+			nil
+				withArgs: {aLookup.
+						aMessage}
+				executeMethod: m ]
 ]
 
 { #category : #accessing }
@@ -168,11 +180,69 @@ TypInfIndex >> implementors: aSymbol [
 { #category : #accessing }
 TypInfIndex >> initialize [
 	super initialize.
-	resolver := TypBreadthFirstResolver
-			resolvers: {TypInfAbsMethodResolver new.
-					TypInfInlMethodResolver new}.
 	{ProtoObject} , ProtoObject allSubclasses , {ProtoObject class}
 		, ProtoObject class allSubclasses do: [ :b | self addBehavior: b ]
+]
+
+{ #category : #accessing }
+TypInfIndex >> inlCanResolve: aLookup message: aMessage [
+	| methods |
+	aMessage context stackSize < TypInfCurrentConfiguration value maxNodeStackSize
+		ifFalse: [ ^ false ].
+	(aMessage couldBeSelfOrSuperSend or: [ aMessage hasNodes ])
+		ifFalse: [ ^ false ].
+	aLookup receiver isNamed ifFalse: [ ^ false ].
+	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
+	(aLookup receiver classDescription canUnderstand: aLookup selector)
+		ifFalse: [ ^ false ].
+	methods := self inlMethods: aLookup.
+	self flag: 'Q inline some of it, lookup the rest, like for variables?'.
+	(methods size between: 1 and: TypInfCurrentConfiguration value maxImplementors)
+		ifFalse: [ ^ false ].
+	^ methods
+		anySatisfy: [ :a | a value size <= TypInfCurrentConfiguration value maxMethodSize ]
+]
+
+{ #category : #accessing }
+TypInfIndex >> inlMethods: aLookup [
+	| method |
+	method := aLookup receiver classDescription lookupSelector: aLookup selector.
+	method isAbstract ifFalse: [ ^ {aLookup -> method} ].
+	^ (aLookup self overriders: aLookup selector)
+		flatCollect: [ :m | self inlMethods: (aLookup withReceiver: m methodClass typAsType) ]
+		as: Set
+]
+
+{ #category : #accessing }
+TypInfIndex >> inlResolve: aLookup message: aMessage [
+	| method |
+	method := aLookup receiver classDescription lookupSelector: aLookup selector.
+	^ (self inlMethods: aLookup)
+		collect: [ :a | 
+			(a key resolver isKindOf: TypInfMethodResolver)
+				ifTrue: [ | node |
+					node := [ a value ast ]
+							on: OCUndeclaredVariableWarning
+							do: [ :e | e resume: e declareUndefined ].
+					aMessage contexts
+						detect: [ :cc | (cc isKindOf: TypInfInlContext) and: cc node = node ]
+						ifFound: [ :cc | cc adoptSelf: aLookup self super: aLookup super ]
+						ifNone: [ TypInfInlContext
+								sender: aMessage context
+								state: aMessage state
+								node: node
+								self: aLookup self
+								super: aLookup super
+								lookup: a key
+								message: aMessage ] ]
+				ifFalse: [ TypInfInlLookupContext
+						sender: aMessage context
+						state: aMessage state
+						node: aMessage node
+						self: aLookup self
+						super: aLookup super
+						lookup: a key
+						message: aMessage ] ]
 ]
 
 { #category : #accessing }
@@ -249,11 +319,6 @@ TypInfIndex >> removeMethod: aMethod [
 				typAt: {#overriders.
 						m}
 				ifPresent: [ :s | s remove: aMethod ifAbsent: [  "noop" ] ] ]
-]
-
-{ #category : #accessing }
-TypInfIndex >> resolver [
-	^ resolver
 ]
 
 { #category : #accessing }

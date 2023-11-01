@@ -36,8 +36,8 @@ TypInfContext class >> sender: aContext state: aState node: aNode self: aType su
 TypInfContext >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	self class = anObject class ifFalse: [ ^ false ].
-	sender == anObject sender ifFalse: [ ^ false ].
-	node == anObject node ifFalse: [ ^ false ].
+	sender = anObject sender ifFalse: [ ^ false ].
+	node = anObject node ifFalse: [ ^ false ].
 	selfType = anObject self ifFalse: [ ^ false ].
 	superType = anObject super ifFalse: [ ^ false ].
 	^ true

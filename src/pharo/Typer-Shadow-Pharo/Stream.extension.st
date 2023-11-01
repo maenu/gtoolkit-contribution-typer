@@ -1,7 +1,7 @@
 Extension { #name : #Stream }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Stream >> typShaMethodBinaryPutOn: aLookup [
+Stream >> typShaMethodBinaryPutOn: aLookup root: anotherLookup [
 	<typShaMethod: '<<'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -9,7 +9,7 @@ Stream >> typShaMethodBinaryPutOn: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Stream >> typShaMethodKeywordNextPutAll: aLookup [
+Stream >> typShaMethodKeywordNextPutAll: aLookup root: anotherLookup [
 	<typShaMethod: 'nextPutAll:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup arguments first
@@ -17,8 +17,8 @@ Stream >> typShaMethodKeywordNextPutAll: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Stream class >> typShaType: aLookup [
+Stream class >> typShaType: aLookup root: anotherLookup [
 	<typShaType>
-	^ aLookup root classDescription
-		typAsParametricTypeWithParameters: {#A -> #A typAsVariableType} asOrderedDictionary
+	^ anotherLookup classDescription
+		typAsParametricTypeWithParameters: {#A -> #A typAsVariableType}
 ]

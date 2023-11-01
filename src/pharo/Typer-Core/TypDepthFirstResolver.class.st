@@ -34,11 +34,8 @@ TypDepthFirstResolver >> printOn: aStream [
 ]
 
 { #category : #resolving }
-TypDepthFirstResolver >> resolve: aLookup [
-	| parent |
-	self assert: [ self canResolve: aLookup ].
-	(resolver canResolve: aLookup) ifTrue: [ ^ resolver resolve: aLookup ].
-	parent := self resolve: aLookup asParent.
-	aLookup resolveTo: parent result by: parent resolver.
-	^ parent
+TypDepthFirstResolver >> resolve: aLookup root: anotherLookup [
+	(resolver canResolve: aLookup)
+		ifTrue: [ ^ resolver resolve: aLookup root: anotherLookup ].
+	^ self resolve: aLookup asParent root: anotherLookup
 ]

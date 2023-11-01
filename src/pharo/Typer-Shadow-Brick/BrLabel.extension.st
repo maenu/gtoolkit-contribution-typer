@@ -1,7 +1,7 @@
 Extension { #name : #BrLabel }
 
 { #category : #'*Typer-Shadow-Brick' }
-BrLabel >> typShaMethodKeywordText: aLookup [
+BrLabel >> typShaMethodKeywordText: aLookup root: anotherLookup [
 	<typShaMethod: 'text:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self

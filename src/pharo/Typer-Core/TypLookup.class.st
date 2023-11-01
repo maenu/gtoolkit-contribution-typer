@@ -3,9 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'resolver',
-		'parent',
-		'child',
-		'result'
+		'result',
+		'resolved'
 	],
 	#classInstVars : [
 		'index',
@@ -30,6 +29,11 @@ TypLookup class >> invalidate [
 TypLookup class >> invalidateAll [
 	<script>
 	self withAllSubclassesDo: #invalidate
+]
+
+{ #category : #accessing }
+TypLookup class >> resolver [
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -66,7 +70,7 @@ TypLookup >> asParent [
 
 { #category : #accessing }
 TypLookup >> canResolve [
-	self subclassResponsibility
+	^ self class resolver canResolve: self
 ]
 
 { #category : #invalidation }
@@ -102,29 +106,29 @@ TypLookup >> isResolved [
 ]
 
 { #category : #accessing }
-TypLookup >> parent [
-	^ parent
-]
-
-{ #category : #accessing }
 TypLookup >> printOn: aStream [
-
-	parent ifNil: [ ^ self ].
+	resolved ifNil: [ ^ self ].
+	resolved == self ifTrue: [ ^ self ].
 	aStream nextPutAll: ' | '.
-	parent printOn: aStream
+	resolved printOn: aStream
 ]
 
 { #category : #accessing }
 TypLookup >> resolve [
-	self subclassResponsibility
+	resolved ifNotNil: [ ^ resolved ].
+	self canResolve ifTrue: [ ^ self class resolver resolve: self ].
+	result := TypUnknownType instance.
+	^ self
 ]
 
 { #category : #accessing }
-TypLookup >> resolveTo: aType by: aResolver [
-	self assert: [ aType isNotNil ].
+TypLookup >> resolved: aLookup resolver: aResolver result: aType [
+	self assert: [ aLookup isKindOf: self class ].
+	self assert: [ aResolver isKindOf: TypResolver ].
 	self assert: [ aType isKindOf: TypType ].
-	result := aType.
-	resolver := aResolver
+	resolved := aLookup.
+	resolver := aResolver.
+	result := aType
 ]
 
 { #category : #accessing }
@@ -142,18 +146,4 @@ TypLookup >> result [
 { #category : #accessing }
 TypLookup >> resultOrUnknown [
 	^ self result ifNil: [ TypUnknownType instance ]
-]
-
-{ #category : #accessing }
-TypLookup >> root [
-	^ parent ifNil: self ifNotNil: #root
-]
-
-{ #category : #accessing }
-TypLookup >> updateTo: aType by: aResolver [
-	self assert: [ aType isKindOf: TypType ].
-	self assert: [ result isNotNil ].
-	self assert: [ resolver isNotNil ].
-	self assert: [ resolver == aResolver ].
-	result := aType
 ]

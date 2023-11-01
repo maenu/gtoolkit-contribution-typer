@@ -1,7 +1,7 @@
 Extension { #name : #BrButton }
 
 { #category : #'*Typer-Shadow-Brick' }
-BrButton >> typShaMethodKeywordAction: aLookup [
+BrButton >> typShaMethodKeywordAction: aLookup root: anotherLookup [
 	<typShaMethod: 'action:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -9,7 +9,7 @@ BrButton >> typShaMethodKeywordAction: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Brick' }
-BrButton >> typShaMethodKeywordIcon: aLookup [
+BrButton >> typShaMethodKeywordIcon: aLookup root: anotherLookup [
 	<typShaMethod: 'icon:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self

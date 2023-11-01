@@ -1,7 +1,7 @@
 Extension { #name : #CompiledCode }
 
 { #category : #'*Typer-Shadow-Pharo' }
-CompiledCode >> typShaMethodKeywordObjectAt: aLookup [
+CompiledCode >> typShaMethodKeywordObjectAt: aLookup root: anotherLookup [
 	<typShaMethod: 'objectAt:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType instance
@@ -9,7 +9,7 @@ CompiledCode >> typShaMethodKeywordObjectAt: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-CompiledCode >> typShaMethodKeywordObjectAtPut: aLookup [
+CompiledCode >> typShaMethodKeywordObjectAtPut: aLookup root: anotherLookup [
 	<typShaMethod: 'objectAt:put:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType instance
@@ -18,7 +18,7 @@ CompiledCode >> typShaMethodKeywordObjectAtPut: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-CompiledCode >> typShaMethodUnaryIsPrimitive: aLookup [
+CompiledCode >> typShaMethodUnaryIsPrimitive: aLookup root: anotherLookup [
 	<typShaMethod: 'isPrimitive'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]

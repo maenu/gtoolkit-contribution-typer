@@ -1,7 +1,7 @@
 Extension { #name : #OrderedCollection }
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedCollection >> typShaMethodKeywordAddFirst: aLookup [
+OrderedCollection >> typShaMethodKeywordAddFirst: aLookup root: anotherLookup [
 	<typShaMethod: 'addFirst:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup arguments at: 1)
@@ -9,7 +9,7 @@ OrderedCollection >> typShaMethodKeywordAddFirst: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedCollection >> typShaMethodKeywordAtPut: aLookup [
+OrderedCollection >> typShaMethodKeywordAtPut: aLookup root: anotherLookup [
 	<typShaMethod: 'at:put:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
@@ -18,14 +18,14 @@ OrderedCollection >> typShaMethodKeywordAtPut: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedCollection >> typShaMethodUnaryRemoveLast: aLookup [
+OrderedCollection >> typShaMethodUnaryRemoveLast: aLookup root: anotherLookup [
 	<typShaMethod: 'removeLast'>
 	^ CompiledMethod typAsFunctionTypeWithResult: (aLookup receiver at: #A)
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedCollection class >> typShaType: aLookup [
+OrderedCollection class >> typShaType: aLookup root: anotherLookup [
 	<typShaType>
-	^ aLookup root classDescription
-		typAsParametricTypeWithParameters: {#A -> #A typAsVariableType} asOrderedDictionary
+	^ anotherLookup classDescription
+		typAsParametricTypeWithParameters: {#A -> #A typAsVariableType}
 ]

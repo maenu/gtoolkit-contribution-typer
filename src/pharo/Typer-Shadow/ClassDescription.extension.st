@@ -1,7 +1,7 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Shadow' }
-ClassDescription >> typShaType: aLookup [
+ClassDescription >> typShaType: aLookup root: anotherLookup [
 	<typShaType>
-	^ aLookup root classDescription typAsNamedType
+	^ anotherLookup classDescription typAsNamedType
 ]

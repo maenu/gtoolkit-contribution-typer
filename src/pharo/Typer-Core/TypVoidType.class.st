@@ -53,7 +53,7 @@ TypVoidType >> contravariant: aType [
 { #category : #accessing }
 TypVoidType >> initialize [
 	super initialize.
-	self initializeName: 'void'.
+	self initializeName: #void.
 	hasClassDescription := false
 ]
 

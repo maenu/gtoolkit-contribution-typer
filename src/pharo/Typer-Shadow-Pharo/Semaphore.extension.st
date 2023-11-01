@@ -1,13 +1,13 @@
 Extension { #name : #Semaphore }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Semaphore >> typShaMethodUnarySignal: aLookup [
+Semaphore >> typShaMethodUnarySignal: aLookup root: anotherLookup [
 	<typShaMethod: 'signal'>
-	^ CompiledMethod typAsFunctionTypeWithResult: aLookup root self
+	^ CompiledMethod typAsFunctionTypeWithResult: anotherLookup self
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Semaphore >> typShaMethodUnaryWait: aLookup [
+Semaphore >> typShaMethodUnaryWait: aLookup root: anotherLookup [
 	<typShaMethod: 'wait'>
-	^ CompiledMethod typAsFunctionTypeWithResult: aLookup root self
+	^ CompiledMethod typAsFunctionTypeWithResult: anotherLookup self
 ]

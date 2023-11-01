@@ -24,7 +24,6 @@ TypInfMethod >> lookup [
 		arguments: self arguments
 		self: context self
 		super: context super
-		parent: nil
 ]
 
 { #category : #accessing }

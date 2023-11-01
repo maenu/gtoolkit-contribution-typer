@@ -61,15 +61,11 @@ Pragma >> typPraMethodInject: aType [
 
 { #category : #'*Typer-Pragma' }
 Pragma >> typPraParametersInject: aType [
-
 	| type |
 	type := TypParametricType
-		        classDescription: aType classDescription
-		        parameters: (arguments first typAsTypes
-				         collect: [ :f | f name -> f ]
-				         as: OrderedDictionary).
-	aType hasSuper ifTrue: [ 
-		type := type withSuper: aType super ].
+			classDescription: aType classDescription
+			parameters: (arguments first typAsTypes collect: [ :f | f name -> f ]).
+	aType hasSuper ifTrue: [ type := type withSuper: aType super ].
 	^ type
 ]
 

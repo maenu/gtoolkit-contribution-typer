@@ -1,7 +1,7 @@
 Extension { #name : #GtPhlowProtoView }
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPhlowProtoView >> typShaMethodKeywordPriority: aLookup [
+GtPhlowProtoView >> typShaMethodKeywordPriority: aLookup root: anotherLookup [
 	<typShaMethod: 'priority:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -9,7 +9,7 @@ GtPhlowProtoView >> typShaMethodKeywordPriority: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPhlowProtoView >> typShaMethodKeywordTitle: aLookup [
+GtPhlowProtoView >> typShaMethodKeywordTitle: aLookup root: anotherLookup [
 	<typShaMethod: 'title:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -17,13 +17,13 @@ GtPhlowProtoView >> typShaMethodKeywordTitle: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPhlowProtoView >> typShaMethodUnaryExplicit: aLookup [
+GtPhlowProtoView >> typShaMethodUnaryExplicit: aLookup root: anotherLookup [
 	<typShaMethod: 'explicit'>
 	^ CompiledMethod typAsFunctionTypeWithResult: GtPhlowExplicitView typAsType
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPhlowProtoView >> typShaMethodUnaryMondrian: aLookup [
+GtPhlowProtoView >> typShaMethodUnaryMondrian: aLookup root: anotherLookup [
 	<typShaMethod: 'mondrian'>
 	^ CompiledMethod typAsFunctionTypeWithResult: GtPhlowMondrianView typAsType
 ]

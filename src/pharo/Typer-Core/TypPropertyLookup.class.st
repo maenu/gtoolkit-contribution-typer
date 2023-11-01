@@ -16,6 +16,12 @@ TypPropertyLookup >> = anObject [
 	^ anObject receiver = receiver
 ]
 
+{ #category : #converting }
+TypPropertyLookup >> asParent [
+	self assert: [ self hasParent ].
+	^ self withReceiver: receiver super
+]
+
 { #category : #invalidation }
 TypPropertyLookup >> dependsOnClassDescription: aClassDescription [
 	(super dependsOnClassDescription: aClassDescription) ifTrue: [ ^ true ].

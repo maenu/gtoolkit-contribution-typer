@@ -1,7 +1,7 @@
 Extension { #name : #String }
 
 { #category : #'*Typer-Shadow-Pharo' }
-String >> typShaMethodKeywordIncludesSubstring: aLookup [
+String >> typShaMethodKeywordIncludesSubstring: aLookup root: anotherLookup [
 	<typShaMethod: 'includesSubstring:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -9,7 +9,7 @@ String >> typShaMethodKeywordIncludesSubstring: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-String >> typShaMethodKeywordJoin: aLookup [
+String >> typShaMethodKeywordJoin: aLookup root: anotherLookup [
 	<typShaMethod: 'join:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: String typAsType
@@ -17,7 +17,7 @@ String >> typShaMethodKeywordJoin: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-String >> typShaMethodKeywordSplit: aLookup [
+String >> typShaMethodKeywordSplit: aLookup root: anotherLookup [
 	<typShaMethod: 'split:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (SequenceableCollection typAsType withParameters: {aLookup arguments at: 1})
@@ -25,33 +25,33 @@ String >> typShaMethodKeywordSplit: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-String >> typShaMethodUnaryAsClass: aLookup [
+String >> typShaMethodUnaryAsClass: aLookup root: anotherLookup [
 	<typShaMethod: 'asClass'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Class typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-String >> typShaMethodUnaryAsPackage: aLookup [
+String >> typShaMethodUnaryAsPackage: aLookup root: anotherLookup [
 	<typShaMethod: 'asPackage'>
 	^ CompiledMethod typAsFunctionTypeWithResult: RPackage typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-String >> typShaMethodUnaryKeywords: aLookup [
+String >> typShaMethodUnaryKeywords: aLookup root: anotherLookup [
 	<typShaMethod: 'keywords'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (SequenceableCollection typAsType withParameters: {String typAsType})
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-String >> typShaMethodUnaryTranslated: aLookup [
+String >> typShaMethodUnaryTranslated: aLookup root: anotherLookup [
 	<typShaMethod: 'translated'>
 	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-String class >> typShaType: aLookup [
+String class >> typShaType: aLookup root: anotherLookup [
 	<typShaType>
-	^ aLookup root classDescription typAsNamedType
+	^ anotherLookup classDescription typAsNamedType
 		withParameters: {Character typAsType}
 ]

@@ -1,7 +1,7 @@
 Extension { #name : #GtPharoCompletionStrategy }
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoCompletionStrategy >> typShaMethodKeywordActionsForAt: aLookup [
+GtPharoCompletionStrategy >> typShaMethodKeywordActionsForAt: aLookup root: anotherLookup [
 	<typShaMethod: 'actionsFor:at:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (SequenceableCollection typAsType withParameters: {GtCompletionAction typAsType})
@@ -10,7 +10,7 @@ GtPharoCompletionStrategy >> typShaMethodKeywordActionsForAt: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoCompletionStrategy >> typShaMethodKeywordClassOrMetaClass: aLookup [
+GtPharoCompletionStrategy >> typShaMethodKeywordClassOrMetaClass: aLookup root: anotherLookup [
 	<typShaMethod: 'classOrMetaClass:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -18,7 +18,7 @@ GtPharoCompletionStrategy >> typShaMethodKeywordClassOrMetaClass: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoCompletionStrategy >> typShaMethodKeywordNodeForIn: aLookup [
+GtPharoCompletionStrategy >> typShaMethodKeywordNodeForIn: aLookup root: anotherLookup [
 	<typShaMethod: 'nodeFor:in:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtPharoProgramNode typAsType asNullable
@@ -27,7 +27,7 @@ GtPharoCompletionStrategy >> typShaMethodKeywordNodeForIn: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoCompletionStrategy >> typShaMethodKeywordSelectorsForReceiverMatching: aLookup [
+GtPharoCompletionStrategy >> typShaMethodKeywordSelectorsForReceiverMatching: aLookup root: anotherLookup [
 	<typShaMethod: 'selectorsForReceiver:matching:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (SequenceableCollection typAsType withParameters: {String typAsType})
@@ -36,13 +36,13 @@ GtPharoCompletionStrategy >> typShaMethodKeywordSelectorsForReceiverMatching: aL
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoCompletionStrategy >> typShaMethodUnaryIndex: aLookup [
+GtPharoCompletionStrategy >> typShaMethodUnaryIndex: aLookup root: anotherLookup [
 	<typShaMethod: 'index'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Integer typAsType
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoCompletionStrategy >> typShaVariableMaxItems: aLookup [
+GtPharoCompletionStrategy >> typShaVariableMaxItems: aLookup root: anotherLookup [
 	<typShaVariable: #maxItems>
 	^ Integer typAsType
 ]

@@ -12,10 +12,10 @@ TypFunctionTypeInitializingExamples >> classDescriptionArgumentsSizeArgumentsOpt
 	| type |
 	type := TypFunctionType
 			classDescription: Integer
-			result: (TypNamedType classDescription: Boolean)
+			result: TypVoidType instance
 			arguments: {TypNamedType classDescription: Float}
 			argumentsOptional: true
-			signalsAlways: true
+			signalsAlways: Error typAsType
 			signalsMaybe: nil
 			node: nil.
 	self assert: type name equals: 'Integer'.
@@ -30,8 +30,8 @@ TypFunctionTypeInitializingExamples >> classDescriptionArgumentsSizeArgumentsOpt
 	self assert: type argumentsOptional equals: true.
 	self assert: type argumentsSize equals: 1.
 	self assert: type arguments equals: {TypNamedType classDescription: Float}.
-	self assert: type result equals: (TypNamedType classDescription: Boolean).
-	self assert: type signalsAlways equals: true.
+	self assert: type result equals: TypVoidType instance.
+	self assert: type signalsAlways equals: Error typAsType.
 	^ type
 ]
 
@@ -50,10 +50,10 @@ TypFunctionTypeInitializingExamples >> namedArgumentsSizeArgumentsOptionalBindin
 	| type |
 	type := TypFunctionType
 			named: 'Integer'
-			result: (TypNamedType classDescription: Boolean)
+			result: TypVoidType instance
 			arguments: {TypNamedType classDescription: Float}
 			argumentsOptional: true
-			signalsAlways: true
+			signalsAlways: Error typAsType
 			signalsMaybe: nil
 			node: nil.
 	self assert: type name equals: 'Integer'.
@@ -68,8 +68,8 @@ TypFunctionTypeInitializingExamples >> namedArgumentsSizeArgumentsOptionalBindin
 	self assert: type argumentsOptional equals: true.
 	self assert: type argumentsSize equals: 1.
 	self assert: type arguments equals: {TypNamedType classDescription: Float}.
-	self assert: type result equals: (TypNamedType classDescription: Boolean).
-	self assert: type signalsAlways equals: true.
+	self assert: type result equals: TypVoidType instance.
+	self assert: type signalsAlways equals: Error typAsType.
 	^ type
 ]
 

@@ -65,6 +65,7 @@ TypInfExceptionHandlingBlockContext >> newExceptionHandlerContext: aSignalMessag
 		node: exceptionHandler node
 		self: exceptionHandler context self
 		super: exceptionHandler context super
+		lookup: exceptionHandler context lookup
 		message: aSignalMessage
 		block: exceptionHandler
 ]

@@ -1,7 +1,7 @@
 Extension { #name : #SmallInteger }
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMethodKeywordBitAnd: aLookup [
+SmallInteger >> typShaMethodKeywordBitAnd: aLookup root: anotherLookup [
 	<typShaMethod: 'bitAnd:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType instance
@@ -9,7 +9,7 @@ SmallInteger >> typShaMethodKeywordBitAnd: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMethodKeywordBitOr: aLookup [
+SmallInteger >> typShaMethodKeywordBitOr: aLookup root: anotherLookup [
 	<typShaMethod: 'bitOr:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType instance
@@ -17,7 +17,7 @@ SmallInteger >> typShaMethodKeywordBitOr: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMethodKeywordBitShift: aLookup [
+SmallInteger >> typShaMethodKeywordBitShift: aLookup root: anotherLookup [
 	<typShaMethod: 'bitShift:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Integer typAsType
@@ -25,7 +25,7 @@ SmallInteger >> typShaMethodKeywordBitShift: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMethodKeywordRfMinus: aLookup [
+SmallInteger >> typShaMethodKeywordRfMinus: aLookup root: anotherLookup [
 	<typShaMethod: 'rfMinus:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Number typAsType
@@ -33,7 +33,7 @@ SmallInteger >> typShaMethodKeywordRfMinus: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMethodKeywordRfPlus: aLookup [
+SmallInteger >> typShaMethodKeywordRfPlus: aLookup root: anotherLookup [
 	<typShaMethod: 'rfPlus:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Number typAsType
@@ -41,7 +41,7 @@ SmallInteger >> typShaMethodKeywordRfPlus: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallInteger >> typShaMethodUnaryAsFloat: aLookup [
+SmallInteger >> typShaMethodUnaryAsFloat: aLookup root: anotherLookup [
 	<typShaMethod: 'asFloat'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Float typAsType
 ]

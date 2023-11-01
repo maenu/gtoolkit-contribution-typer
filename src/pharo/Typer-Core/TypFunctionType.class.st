@@ -22,7 +22,7 @@ TypFunctionType class >> classDescription: aClassDescription result: aType argum
 	| instance parameters |
 	self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
 	self assert: [ aCollection noneSatisfy: #isVoid ].
-	parameters := OrderedDictionary new.
+	parameters := OrderedIdentityDictionary new.
 	parameters at: #'0' put: aType.
 	aCollection withIndexDo: [ :e :i | parameters at: i asString asSymbol put: e ].
 	instance := self new
@@ -57,7 +57,7 @@ TypFunctionType class >> classDescription: aClassDescription result: aType argum
 				anotherTypeOrNil.
 				aNodeOrNil}
 		ifAbsentPut: [ | parameters |
-			parameters := OrderedDictionary new.
+			parameters := OrderedIdentityDictionary new.
 			parameters at: #'0' put: aType.
 			aCollection
 				withIndexDo: [ :e :i | parameters at: i asString asSymbol put: e ].
@@ -80,14 +80,14 @@ TypFunctionType class >> named: aString parameters: aSequenceableCollection [
 ]
 
 { #category : #accessing }
-TypFunctionType class >> named: aString result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil node: aNodeOrNil [
+TypFunctionType class >> named: aSymbol result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil node: aNodeOrNil [
 	| instance parameters |
 	self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
-	parameters := OrderedDictionary new.
+	parameters := OrderedIdentityDictionary new.
 	parameters at: #'0' put: aType.
 	aCollection withIndexDo: [ :e :i | parameters at: i asString asSymbol put: e ].
 	instance := self new
-			initializeName: aString;
+			initializeName: aSymbol asSymbol;
 			initializeParameters: parameters;
 			initializeArgumentsSize: parameters size - 1
 				argumentsOptional: aBoolean
@@ -96,7 +96,7 @@ TypFunctionType class >> named: aString result: aType arguments: aCollection arg
 				node: aNodeOrNil;
 			yourself.
 	^ self index
-		at: {aString asString.
+		at: {aSymbol asSymbol.
 				aType.
 				aCollection asArray.
 				aBoolean.
@@ -108,9 +108,9 @@ TypFunctionType class >> named: aString result: aType arguments: aCollection arg
 ]
 
 { #category : #accessing }
-TypFunctionType class >> named: aString result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil node: aNodeOrNil super: anotherType [
+TypFunctionType class >> named: aSymbol result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil node: aNodeOrNil super: anotherType [
 	^ self index
-		at: {aString asString.
+		at: {aSymbol asSymbol.
 				aType.
 				aCollection asArray.
 				aBoolean.
@@ -119,12 +119,12 @@ TypFunctionType class >> named: aString result: aType arguments: aCollection arg
 				aNodeOrNil.
 				anotherType}
 		ifAbsentPut: [ | parameters |
-			parameters := OrderedDictionary new.
+			parameters := OrderedIdentityDictionary new.
 			parameters at: #'0' put: aType.
 			aCollection
 				withIndexDo: [ :e :i | parameters at: i asString asSymbol put: e ].
 			self new
-				initializeName: aString;
+				initializeName: aSymbol asSymbol;
 				initializeParameters: parameters;
 				initializeArgumentsSize: parameters size - 1
 					argumentsOptional: aBoolean
@@ -298,13 +298,11 @@ TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolea
 ]
 
 { #category : #initialization }
-TypFunctionType >> initializeParameters: anOrderedDictionary [
+TypFunctionType >> initializeParameters: aDictionary [
 	self
-		assert: [ anOrderedDictionary associations
-				allSatisfy: [ :e | 
-					e key = #'0'
-						or: [ e value isVariable not or: [ e value name ~= #'0' ] ] ] ].
-	super initializeParameters: anOrderedDictionary
+		assert: [ aDictionary associations
+				allSatisfy: [ :e | e key = #'0' or: [ e value isVariable not or: [ e value name ~= #'0' ] ] ] ].
+	super initializeParameters: aDictionary
 ]
 
 { #category : #testing }

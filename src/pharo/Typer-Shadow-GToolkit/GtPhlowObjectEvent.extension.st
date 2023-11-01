@@ -1,7 +1,7 @@
 Extension { #name : #GtPhlowObjectEvent }
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPhlowObjectEvent >> typShaMethodKeywordObject: aLookup [
+GtPhlowObjectEvent >> typShaMethodKeywordObject: aLookup root: anotherLookup [
 	<typShaMethod: 'object:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -9,7 +9,7 @@ GtPhlowObjectEvent >> typShaMethodKeywordObject: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPhlowObjectEvent >> typShaMethodKeywordSourceElement: aLookup [
+GtPhlowObjectEvent >> typShaMethodKeywordSourceElement: aLookup root: anotherLookup [
 	<typShaMethod: 'sourceElement:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self

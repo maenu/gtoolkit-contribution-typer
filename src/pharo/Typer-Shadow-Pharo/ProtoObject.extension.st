@@ -1,7 +1,7 @@
 Extension { #name : #ProtoObject }
 
 { #category : #'*Typer-Shadow-Pharo' }
-ProtoObject >> typShaMethodBinaryIdentical: aLookup [
+ProtoObject >> typShaMethodBinaryIdentical: aLookup root: anotherLookup [
 	<typShaMethod: '=='>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -9,7 +9,7 @@ ProtoObject >> typShaMethodBinaryIdentical: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-ProtoObject >> typShaMethodBinaryNotIdentical: aLookup [
+ProtoObject >> typShaMethodBinaryNotIdentical: aLookup root: anotherLookup [
 	<typShaMethod: '~~'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -17,7 +17,7 @@ ProtoObject >> typShaMethodBinaryNotIdentical: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-ProtoObject >> typShaMethodKeywordFlag: aLookup [
+ProtoObject >> typShaMethodKeywordFlag: aLookup root: anotherLookup [
 	<typShaMethod: 'flag:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -25,8 +25,8 @@ ProtoObject >> typShaMethodKeywordFlag: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-ProtoObject >> typShaMethodUnaryClass: aLookup [
+ProtoObject >> typShaMethodUnaryClass: aLookup root: anotherLookup [
 	<typShaMethod: 'class'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: aLookup root receiver classDescription class typAsType
+		typAsFunctionTypeWithResult: anotherLookup receiver classDescription class typAsType
 ]

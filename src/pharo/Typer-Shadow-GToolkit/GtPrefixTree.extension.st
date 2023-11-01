@@ -1,7 +1,7 @@
 Extension { #name : #GtPrefixTree }
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPrefixTree >> typShaMethodKeywordAddWeight: aLookup [
+GtPrefixTree >> typShaMethodKeywordAddWeight: aLookup root: anotherLookup [
 	<typShaMethod: 'add:weight:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -10,7 +10,7 @@ GtPrefixTree >> typShaMethodKeywordAddWeight: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPrefixTree >> typShaMethodKeywordWeightedFirstStartingWith: aLookup [
+GtPrefixTree >> typShaMethodKeywordWeightedFirstStartingWith: aLookup root: anotherLookup [
 	<typShaMethod: 'weightedFirst:startingWith:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (SequenceableCollection typAsType withParameters: {String typAsType})

@@ -1,7 +1,7 @@
 Extension { #name : #BlockClosure }
 
 { #category : #'*Typer-Inference' }
-BlockClosure >> typInfAbsCanResolveOnDo: aMessageNode [
+BlockClosure >> typInfAbsCanResolveOnDo: aLookup message: aMessageNode [
 	<typInfAbsCanResolve: #on:do:>
 	^ aMessageNode receiver hasNode
 		and: [ ([ | exception |
@@ -12,7 +12,7 @@ BlockClosure >> typInfAbsCanResolveOnDo: aMessageNode [
 ]
 
 { #category : #'*Typer-Inference' }
-BlockClosure >> typInfAbsCanResolveValue: aMessageNode [
+BlockClosure >> typInfAbsCanResolveValue: aLookup message: aMessageNode [
 	<typInfAbsCanResolve: #value>
 	<typInfAbsCanResolve: #value:>
 	<typInfAbsCanResolve: #value:value:>
@@ -22,7 +22,7 @@ BlockClosure >> typInfAbsCanResolveValue: aMessageNode [
 ]
 
 { #category : #'*Typer-Inference' }
-BlockClosure >> typInfAbsResolveOnDo: aMessageNode [
+BlockClosure >> typInfAbsResolveOnDo: aLookup message: aMessageNode [
 	<typInfAbsResolve: #on:do:>
 	| receiver exception exceptionHandler |
 	receiver := aMessageNode receiver node.
@@ -34,6 +34,7 @@ BlockClosure >> typInfAbsResolveOnDo: aMessageNode [
 		node: receiver node
 		self: receiver context self
 		super: receiver context super
+		lookup: aLookup
 		message: aMessageNode
 		block: receiver
 		exception: exception
@@ -41,7 +42,7 @@ BlockClosure >> typInfAbsResolveOnDo: aMessageNode [
 ]
 
 { #category : #'*Typer-Inference' }
-BlockClosure >> typInfAbsResolveValue: aMessageNode [
+BlockClosure >> typInfAbsResolveValue: aLookup message: aMessageNode [
 	<typInfAbsResolve: #value>
 	<typInfAbsResolve: #value:>
 	<typInfAbsResolve: #value:value:>
@@ -55,6 +56,7 @@ BlockClosure >> typInfAbsResolveValue: aMessageNode [
 		node: block node
 		self: block context self
 		super: block context super
+		lookup: aLookup
 		message: aMessageNode
 		block: block
 ]

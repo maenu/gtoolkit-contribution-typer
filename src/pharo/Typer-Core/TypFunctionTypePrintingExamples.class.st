@@ -9,7 +9,7 @@ TypFunctionTypePrintingExamples >> asString [
 	<gtExample>
 	| type |
 	type := TypFunctionTypeInitializingExamples new classDescriptionArgumentsSizeArgumentsOptionalBindings.
-	self assert: type asString equals: '[Float]->Boolean'.
+	self assert: type asString equals: '[Float]->void'.
 	^ type
 ]
 
@@ -19,6 +19,6 @@ TypFunctionTypePrintingExamples >> asStringRecursive [
 	| type |
 	type := TypFunctionTypeInitializingExamples new classDescriptionArgumentsSizeArgumentsOptionalBindings copy.
 	(type instVarNamed: #parameters) at: #'1' put: type.
-	self assert: type asString equals: '[.]->Boolean'.
+	self assert: type asString equals: '[.]->void'.
 	^ type
 ]

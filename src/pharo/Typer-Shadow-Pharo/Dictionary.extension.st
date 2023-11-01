@@ -1,7 +1,7 @@
 Extension { #name : #Dictionary }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodBinaryConcatenate: aLookup [
+Dictionary >> typShaMethodBinaryConcatenate: aLookup root: anotherLookup [
 	<typShaMethod: ','>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver
@@ -13,7 +13,7 @@ Dictionary >> typShaMethodBinaryConcatenate: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodKeywordAssociationsDo: aLookup [
+Dictionary >> typShaMethodKeywordAssociationsDo: aLookup root: anotherLookup [
 	<typShaMethod: 'associationsDo:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -25,7 +25,7 @@ Dictionary >> typShaMethodKeywordAssociationsDo: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodKeywordAt: aLookup [
+Dictionary >> typShaMethodKeywordAt: aLookup root: anotherLookup [
 	<typShaMethod: 'at:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup self at: #A)
@@ -33,7 +33,7 @@ Dictionary >> typShaMethodKeywordAt: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodKeywordAtIfAbsent: aLookup [
+Dictionary >> typShaMethodKeywordAtIfAbsent: aLookup root: anotherLookup [
 	<typShaMethod: 'at:ifAbsent:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: {aLookup receiver at: #A.
@@ -43,7 +43,7 @@ Dictionary >> typShaMethodKeywordAtIfAbsent: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodKeywordAtIfAbsentPut: aLookup [
+Dictionary >> typShaMethodKeywordAtIfAbsentPut: aLookup root: anotherLookup [
 	<typShaMethod: 'at:ifAbsentPut:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
@@ -52,7 +52,7 @@ Dictionary >> typShaMethodKeywordAtIfAbsentPut: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodKeywordAtPut: aLookup [
+Dictionary >> typShaMethodKeywordAtPut: aLookup root: anotherLookup [
 	<typShaMethod: 'at:put:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
@@ -61,7 +61,7 @@ Dictionary >> typShaMethodKeywordAtPut: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodKeywordIncludesKey: aLookup [
+Dictionary >> typShaMethodKeywordIncludesKey: aLookup root: anotherLookup [
 	<typShaMethod: 'includesKey:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -69,7 +69,7 @@ Dictionary >> typShaMethodKeywordIncludesKey: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodKeywordKeysAndValuesDo: aLookup [
+Dictionary >> typShaMethodKeywordKeysAndValuesDo: aLookup root: anotherLookup [
 	<typShaMethod: 'keysAndValuesDo:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -80,7 +80,7 @@ Dictionary >> typShaMethodKeywordKeysAndValuesDo: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodKeywordRemoveKeyIfAbsent: aLookup [
+Dictionary >> typShaMethodKeywordRemoveKeyIfAbsent: aLookup root: anotherLookup [
 	<typShaMethod: 'removeKey:ifAbsent:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: {aLookup receiver at: #A.
@@ -90,7 +90,7 @@ Dictionary >> typShaMethodKeywordRemoveKeyIfAbsent: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodUnaryAsOrderedDictionary: aLookup [
+Dictionary >> typShaMethodUnaryAsOrderedDictionary: aLookup root: anotherLookup [
 	<typShaMethod: 'asOrderedDictionary'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (OrderedDictionary typAsType
@@ -99,7 +99,7 @@ Dictionary >> typShaMethodUnaryAsOrderedDictionary: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodUnaryAssociations: aLookup [
+Dictionary >> typShaMethodUnaryAssociations: aLookup root: anotherLookup [
 	<typShaMethod: 'associations'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Array typAsType
@@ -109,23 +109,23 @@ Dictionary >> typShaMethodUnaryAssociations: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodUnaryKeys: aLookup [
+Dictionary >> typShaMethodUnaryKeys: aLookup root: anotherLookup [
 	<typShaMethod: 'keys'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Collection typAsType withParameters: {aLookup receiver at: #B})
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary >> typShaMethodUnaryValues: aLookup [
+Dictionary >> typShaMethodUnaryValues: aLookup root: anotherLookup [
 	<typShaMethod: 'values'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Collection typAsType withParameters: {aLookup self at: #A})
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Dictionary class >> typShaType: aLookup [
+Dictionary class >> typShaType: aLookup root: anotherLookup [
 	<typShaType>
-	^ aLookup root classDescription
+	^ anotherLookup classDescription
 		typAsParametricTypeWithParameters: {#B -> #B typAsVariableType.
-				#A -> #A typAsVariableType} asOrderedDictionary
+				#A -> #A typAsVariableType}
 ]

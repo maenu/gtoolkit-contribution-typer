@@ -1,7 +1,7 @@
 Extension { #name : #GtPhlowMondrianView }
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPhlowMondrianView >> typShaMethodKeywordPainting: aLookup [
+GtPhlowMondrianView >> typShaMethodKeywordPainting: aLookup root: anotherLookup [
 	<typShaMethod: 'painting:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self

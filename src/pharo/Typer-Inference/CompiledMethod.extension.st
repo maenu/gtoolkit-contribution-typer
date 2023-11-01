@@ -38,10 +38,10 @@ CompiledMethod >> typInfAsLookupWithSelf: aType super: anotherType [
 	^ TypMethodLookup
 		receiver: self methodClass typAsType
 		selector: self selector
-		arguments: (self selector numArgs typTimesCollect: [ :i | TypUnknownType instance ])
+		arguments: (self selector numArgs
+				typTimesCollect: [ :i | TypUnknownType instance ])
 		self: aType
 		super: anotherType
-		parent: nil
 ]
 
 { #category : #'*Typer-Inference' }

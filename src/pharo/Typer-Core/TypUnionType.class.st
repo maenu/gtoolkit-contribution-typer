@@ -75,16 +75,6 @@ TypUnionType >> at: aString [
 	^ (types collect: [ :e | e at: aString ]) typAsType
 ]
 
-{ #category : #accessing }
-TypUnionType >> canResolveMethod: aLookup [
-	^ types anySatisfy: [ :e | e canResolveMethod: (aLookup withReceiver: e) ]
-]
-
-{ #category : #accessing }
-TypUnionType >> canResolveVariable: aLookup [
-	^ types anySatisfy: [ :e | e canResolveVariable: (aLookup withReceiver: e) ]
-]
-
 { #category : #invalidation }
 TypUnionType >> dependsOnClassDescription: aClassDescription [
 	(super dependsOnClassDescription: aClassDescription) ifTrue: [ ^ true ].
@@ -153,13 +143,6 @@ TypUnionType >> postCopy [
 	types := types copy
 ]
 
-{ #category : #accessing }
-TypUnionType >> preResolveMethod: aLookup [
-	^ (types
-		flatCollect: [ :e | e preResolveMethod: (aLookup withReceiver: e) ])
-		reject: #isNil
-]
-
 { #category : #'as yet unclassified' }
 TypUnionType >> printNameOn: aStream skipping: anIdentitySet [
 
@@ -208,18 +191,6 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 			remove: e;
 			ifNotEmpty: [ aStream << ',' ] ].
 	aStream << '}'
-]
-
-{ #category : #accessing }
-TypUnionType >> resolveMethod: aLookup [
-	^ (types collect: [ :e | e resolveMethod: (aLookup withReceiver: e) ])
-		typAsType
-]
-
-{ #category : #accessing }
-TypUnionType >> resolveVariable: aLookup [
-	^ (types collect: [ :e | e resolveVariable: (aLookup withReceiver: e) ])
-		typAsType
 ]
 
 { #category : #compatibility }

@@ -12,22 +12,51 @@ TypShaIndex >> addMethod: aMethod [
 		ifPresent: [ ^ self ]
 		ifAbsentPut: [ true ].
 	aMethod typShaIsResolveMethod
-		ifTrue: [ (cache
+		ifTrue: [ cache
 				typAt: {#method.
 						aMethod methodClass.
 						aMethod typShaResolvedMethodSelector}
-				ifAbsentPut: [ IdentitySet new ]) add: aMethod ].
+				put: aMethod ].
 	aMethod typShaIsResolveVariable
-		ifTrue: [ (cache
+		ifTrue: [ cache
 				typAt: {#variable.
 						aMethod methodClass.
 						aMethod typShaResolvedVariableSelector}
-				ifAbsentPut: [ IdentitySet new ]) add: aMethod ].
+				put: aMethod ].
 	aMethod typShaIsResolveType
-		ifTrue: [ (cache
+		ifTrue: [ cache
 				typAt: {#type.
 						aMethod methodClass}
-				ifAbsentPut: [ IdentitySet new ]) add: aMethod ]
+				put: aMethod ]
+]
+
+{ #category : #accessing }
+TypShaIndex >> canResolveMethod: aLookup [
+	^ cache
+		typAt: {#method.
+				aLookup receiver classDescription.
+				aLookup selector}
+		ifPresent: [ :m | true ]
+		ifAbsent: [ false ]
+]
+
+{ #category : #accessing }
+TypShaIndex >> canResolveType: aLookup [
+	^ cache
+		typAt: {#type.
+				aLookup classDescription class}
+		ifPresent: [ :m | true ]
+		ifAbsent: [ false ]
+]
+
+{ #category : #accessing }
+TypShaIndex >> canResolveVariable: aLookup [
+	^ cache
+		typAt: {#variable.
+				aLookup receiver classDescription.
+				aLookup selector}
+		ifPresent: [ :m | true ]
+		ifAbsent: [ false ]
 ]
 
 { #category : #accessing }
@@ -72,36 +101,43 @@ TypShaIndex >> removeMethod: aMethod [
 				removeKey: aMethod typShaResolvedVariableSelector
 				ifAbsent: [  "noop" ] ].
 	aMethod typShaIsResolveType
-		ifTrue: [ (cache
-				typAt: {#type.
-						aMethod methodClass}) remove: aMethod ifAbsent: [  "noop" ] ]
+		ifTrue: [ (cache typAt: {#type}) removeKey: aMethod methodClass ifAbsent: [  "noop" ] ]
 ]
 
 { #category : #accessing }
-TypShaIndex >> resolveMethod: aLookup [
-	^ cache
-		typAt: {#method.
-				aLookup receiver classDescription.
-				aLookup selector}
-		ifPresent: [ :s | s collect: [ :m | nil withArgs: {aLookup} executeMethod: m ] ]
-		ifAbsent: [ #() ]
+TypShaIndex >> resultMethod: aLookup root: anotherLookup [
+	| method |
+	method := cache
+			typAt: {#method.
+					aLookup receiver classDescription.
+					aLookup selector}.
+	^ nil
+		withArgs: {aLookup.
+				anotherLookup}
+		executeMethod: method
 ]
 
 { #category : #accessing }
-TypShaIndex >> resolveType: aLookup [
-	^ cache
-		typAt: {#type.
-				aLookup classDescription class}
-		ifPresent: [ :s | s collect: [ :m | nil withArgs: {aLookup} executeMethod: m ] ]
-		ifAbsent: [ #() ]
+TypShaIndex >> resultType: aLookup root: anotherLookup [
+	| method |
+	method := cache
+			typAt: {#type.
+					aLookup classDescription class}.
+	^ nil
+		withArgs: {aLookup.
+				anotherLookup}
+		executeMethod: method
 ]
 
 { #category : #accessing }
-TypShaIndex >> resolveVariable: aLookup [
-	^ cache
-		typAt: {#variable.
-				aLookup receiver classDescription.
-				aLookup selector}
-		ifPresent: [ :s | s collect: [ :m | nil withArgs: {aLookup} executeMethod: m ] ]
-		ifAbsent: [ #() ]
+TypShaIndex >> resultVariable: aLookup root: anotherLookup [
+	| method |
+	method := cache
+			typAt: {#variable.
+					aLookup receiver classDescription.
+					aLookup selector}.
+	^ nil
+		withArgs: {aLookup.
+				anotherLookup}
+		executeMethod: method
 ]

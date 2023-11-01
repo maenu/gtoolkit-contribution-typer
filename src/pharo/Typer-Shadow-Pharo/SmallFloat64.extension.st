@@ -1,7 +1,7 @@
 Extension { #name : #SmallFloat64 }
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallFloat64 >> typShaMethodBinaryGreater: aLookup [
+SmallFloat64 >> typShaMethodBinaryGreater: aLookup root: anotherLookup [
 	<typShaMethod: '>'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -9,7 +9,7 @@ SmallFloat64 >> typShaMethodBinaryGreater: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallFloat64 >> typShaMethodBinaryGreaterOrEqual: aLookup [
+SmallFloat64 >> typShaMethodBinaryGreaterOrEqual: aLookup root: anotherLookup [
 	<typShaMethod: '>='>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -17,7 +17,7 @@ SmallFloat64 >> typShaMethodBinaryGreaterOrEqual: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallFloat64 >> typShaMethodBinaryLess: aLookup [
+SmallFloat64 >> typShaMethodBinaryLess: aLookup root: anotherLookup [
 	<typShaMethod: '<'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -25,7 +25,7 @@ SmallFloat64 >> typShaMethodBinaryLess: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallFloat64 >> typShaMethodBinaryLessOrEqual: aLookup [
+SmallFloat64 >> typShaMethodBinaryLessOrEqual: aLookup root: anotherLookup [
 	<typShaMethod: '<='>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -33,7 +33,7 @@ SmallFloat64 >> typShaMethodBinaryLessOrEqual: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-SmallFloat64 >> typShaMethodUnaryTruncated: aLookup [
+SmallFloat64 >> typShaMethodUnaryTruncated: aLookup root: anotherLookup [
 	<typShaMethod: 'truncated'>
 	^ CompiledMethod typAsFunctionTypeWithResult: SmallInteger typAsType
 ]

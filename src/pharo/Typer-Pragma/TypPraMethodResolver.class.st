@@ -18,6 +18,6 @@ TypPraMethodResolver >> printOn: aStream [
 ]
 
 { #category : #accessing }
-TypPraMethodResolver >> result: aLookup [
+TypPraMethodResolver >> result: aLookup root: anotherLookup [
 	^ aLookup receiver classDescription typPraMethod: aLookup selector
 ]

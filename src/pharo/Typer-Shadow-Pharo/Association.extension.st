@@ -1,21 +1,21 @@
 Extension { #name : #Association }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Association >> typShaMethodUnaryKey: aLookup [
+Association >> typShaMethodUnaryKey: aLookup root: anotherLookup [
 	<typShaMethod: 'key'>
 	^ CompiledMethod typAsFunctionTypeWithResult: (aLookup receiver at: #A)
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Association >> typShaMethodUnaryValue: aLookup [
+Association >> typShaMethodUnaryValue: aLookup root: anotherLookup [
 	<typShaMethod: 'value'>
 	^ CompiledMethod typAsFunctionTypeWithResult: (aLookup receiver at: #B)
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Association class >> typShaType: aLookup [
+Association class >> typShaType: aLookup root: anotherLookup [
 	<typShaType>
-	^ aLookup root classDescription
+	^ anotherLookup classDescription
 		typAsParametricTypeWithParameters: {#A -> #A typAsVariableType.
-				#B -> #B typAsVariableType} asOrderedDictionary
+				#B -> #B typAsVariableType}
 ]

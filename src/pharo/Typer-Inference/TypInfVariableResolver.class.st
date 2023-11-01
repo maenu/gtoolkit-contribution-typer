@@ -21,7 +21,7 @@ TypInfVariableResolver >> printOn: aStream [
 ]
 
 { #category : #accessing }
-TypInfVariableResolver >> result: aLookup [
+TypInfVariableResolver >> result: aLookup root: anotherLookup [
 	| classDescription |
 	classDescription := aLookup receiver classDescription.	"instance variable"
 	classDescription

@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TypShaTypeResolver >> canResolve: aLookup [
-	^ (TypShaIndex instance resolveType: aLookup) isNotEmpty
+	^ TypShaIndex instance canResolveType: aLookup
 ]
 
 { #category : #printing }
@@ -16,7 +16,6 @@ TypShaTypeResolver >> printOn: aStream [
 ]
 
 { #category : #accessing }
-TypShaTypeResolver >> result: aLookup [
-	self flag: 'TODO make more of alternatives instead of just taking first'.
-	^ (TypShaIndex instance resolveType: aLookup) asOrderedCollection sort first
+TypShaTypeResolver >> result: aLookup root: anotherLookup [
+	^ TypShaIndex instance resultType: aLookup root: anotherLookup
 ]

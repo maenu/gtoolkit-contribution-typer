@@ -1,7 +1,7 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*Typer-Shadow-Pharo' }
-ClassDescription >> typShaMethodKeywordAddInstVarNamed: aLookup [
+ClassDescription >> typShaMethodKeywordAddInstVarNamed: aLookup root: anotherLookup [
 	<typShaMethod: 'addInstVarNamed:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -9,7 +9,7 @@ ClassDescription >> typShaMethodKeywordAddInstVarNamed: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-ClassDescription >> typShaMethodKeywordHasInstVarNamed: aLookup [
+ClassDescription >> typShaMethodKeywordHasInstVarNamed: aLookup root: anotherLookup [
 	<typShaMethod: 'hasInstVarNamed:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -17,27 +17,27 @@ ClassDescription >> typShaMethodKeywordHasInstVarNamed: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-ClassDescription >> typShaMethodUnaryClassSide: aLookup [
+ClassDescription >> typShaMethodUnaryClassSide: aLookup root: anotherLookup [
 	<typShaMethod: 'classSide'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver classDescription classSide typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-ClassDescription >> typShaMethodUnaryInstanceSide: aLookup [
+ClassDescription >> typShaMethodUnaryInstanceSide: aLookup root: anotherLookup [
 	<typShaMethod: 'instanceSide'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver classDescription instanceSide typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-ClassDescription >> typShaMethodUnaryIsClassSide: aLookup [
+ClassDescription >> typShaMethodUnaryIsClassSide: aLookup root: anotherLookup [
 	<typShaMethod: 'isClassSide'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-ClassDescription >> typShaMethodUnaryIsTestCase: aLookup [
+ClassDescription >> typShaMethodUnaryIsTestCase: aLookup root: anotherLookup [
 	<typShaMethod: 'isTestCase'>
 	^ CompiledMethod typAsFunctionTypeWithResult: Boolean typAsType
 ]

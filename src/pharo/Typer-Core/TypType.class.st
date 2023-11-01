@@ -119,22 +119,10 @@ TypType >> canLookupMethod: aSymbol [
 
 { #category : #lookup }
 TypType >> canLookupMethod: aSymbol arguments: aCollection [
-	^ self
-		canResolveMethod: (TypMethodLookup
-				receiver: self
-				selector: aSymbol
-				arguments: aCollection
-				parent: nil)
-]
-
-{ #category : #lookup }
-TypType >> canResolveMethod: aLookup [
-	^ TypMethodLookup resolver canResolve: aLookup
-]
-
-{ #category : #lookup }
-TypType >> canResolveVariable: aLookup [
-	^ TypVariableLookup resolver canResolve: aLookup
+	^ (TypMethodLookup
+		receiver: self
+		selector: aSymbol
+		arguments: aCollection) canResolve
 ]
 
 { #category : #converting }
@@ -315,21 +303,15 @@ TypType >> lookupMethod: aSymbol [
 
 { #category : #lookup }
 TypType >> lookupMethod: aSymbol arguments: aCollection [
-	^ (self
-		resolveMethod: (TypMethodLookup
-				receiver: self
-				selector: aSymbol
-				arguments: aCollection
-				parent: nil)) resultOrUnknown
+	^ (TypMethodLookup
+		receiver: self
+		selector: aSymbol
+		arguments: aCollection) resultOrUnknown
 ]
 
 { #category : #lookup }
 TypType >> lookupVariable: aSymbol [
-	^ (self
-		resolveVariable: (TypVariableLookup
-				receiver: self
-				selector: aSymbol
-				parent: nil)) resultOrUnknown
+	^ (TypVariableLookup receiver: self selector: aSymbol) resultOrUnknown
 ]
 
 { #category : #compatibility }
@@ -354,16 +336,6 @@ TypType >> printOn: aStream [
 { #category : #printing }
 TypType >> printOn: aStream skipping: anIdentitySet [
 	self subclassResponsibility
-]
-
-{ #category : #lookup }
-TypType >> resolveMethod: aLookup [
-	^ TypMethodLookup resolver resolve: aLookup
-]
-
-{ #category : #lookup }
-TypType >> resolveVariable: aLookup [
-	^ TypVariableLookup resolver resolve: aLookup
 ]
 
 { #category : #compatibility }

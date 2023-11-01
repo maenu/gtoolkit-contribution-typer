@@ -8,7 +8,7 @@ Class {
 TypShaVariableResolver >> canResolve: aLookup [
 	aLookup receiver isNamed ifFalse: [ ^ false ].
 	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
-	^ (TypShaIndex instance resolveVariable: aLookup) isNotEmpty
+	^ TypShaIndex instance canResolveVariable: aLookup
 ]
 
 { #category : #printing }
@@ -18,8 +18,6 @@ TypShaVariableResolver >> printOn: aStream [
 ]
 
 { #category : #accessing }
-TypShaVariableResolver >> result: aLookup [
-	self flag: 'TODO make more of alternatives instead of just taking first'.
-	^ (TypShaIndex instance resolveVariable: aLookup) asOrderedCollection sort
-		first
+TypShaVariableResolver >> result: aLookup root: anotherLookup [
+	^ TypShaIndex instance resultVariable: aLookup root: anotherLookup
 ]

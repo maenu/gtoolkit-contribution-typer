@@ -41,16 +41,13 @@ ClassDescription >> typAsNamedType [
 ]
 
 { #category : #'*Typer-Core' }
-ClassDescription >> typAsParametricTypeWithParameters: anOrderedDictionary [
-	^ TypParametricType
-		classDescription: self
-		parameters: anOrderedDictionary
+ClassDescription >> typAsParametricTypeWithParameters: aDictionary [
+	^ TypParametricType classDescription: self parameters: aDictionary
 ]
 
 { #category : #'*Typer-Core' }
 ClassDescription >> typAsType [
-	^ (TypTypeLookup resolver
-		resolve: (TypTypeLookup classDescription: self parent: nil)) resultOrUnknown
+	^ (TypTypeLookup classDescription: self) resultOrUnknown
 ]
 
 { #category : #'*Typer-Core' }

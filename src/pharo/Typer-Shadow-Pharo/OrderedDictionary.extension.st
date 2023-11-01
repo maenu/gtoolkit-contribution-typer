@@ -1,7 +1,7 @@
 Extension { #name : #OrderedDictionary }
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedDictionary >> typShaMethodBinaryConcatenate: aLookup [
+OrderedDictionary >> typShaMethodBinaryConcatenate: aLookup root: anotherLookup [
 	<typShaMethod: ','>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver
@@ -13,7 +13,7 @@ OrderedDictionary >> typShaMethodBinaryConcatenate: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedDictionary >> typShaMethodKeywordAssociationsDo: aLookup [
+OrderedDictionary >> typShaMethodKeywordAssociationsDo: aLookup root: anotherLookup [
 	<typShaMethod: 'associationsDo:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -25,7 +25,7 @@ OrderedDictionary >> typShaMethodKeywordAssociationsDo: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedDictionary >> typShaMethodKeywordAt: aLookup [
+OrderedDictionary >> typShaMethodKeywordAt: aLookup root: anotherLookup [
 	<typShaMethod: 'at:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
@@ -33,7 +33,7 @@ OrderedDictionary >> typShaMethodKeywordAt: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedDictionary >> typShaMethodKeywordAtIfAbsentPut: aLookup [
+OrderedDictionary >> typShaMethodKeywordAtIfAbsentPut: aLookup root: anotherLookup [
 	<typShaMethod: 'at:ifAbsentPut:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
@@ -42,7 +42,7 @@ OrderedDictionary >> typShaMethodKeywordAtIfAbsentPut: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedDictionary >> typShaMethodKeywordAtPut: aLookup [
+OrderedDictionary >> typShaMethodKeywordAtPut: aLookup root: anotherLookup [
 	<typShaMethod: 'at:put:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (aLookup receiver at: #A)
@@ -51,7 +51,7 @@ OrderedDictionary >> typShaMethodKeywordAtPut: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedDictionary >> typShaMethodKeywordIncludesKey: aLookup [
+OrderedDictionary >> typShaMethodKeywordIncludesKey: aLookup root: anotherLookup [
 	<typShaMethod: 'includesKey:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -59,7 +59,7 @@ OrderedDictionary >> typShaMethodKeywordIncludesKey: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedDictionary >> typShaMethodUnaryAsOrderedDictionary: aLookup [
+OrderedDictionary >> typShaMethodUnaryAsOrderedDictionary: aLookup root: anotherLookup [
 	<typShaMethod: 'asOrderedDictionary'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (OrderedDictionary typAsType
@@ -68,7 +68,7 @@ OrderedDictionary >> typShaMethodUnaryAsOrderedDictionary: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedDictionary >> typShaMethodUnaryAssociations: aLookup [
+OrderedDictionary >> typShaMethodUnaryAssociations: aLookup root: anotherLookup [
 	<typShaMethod: 'associations'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Array typAsType
@@ -78,23 +78,23 @@ OrderedDictionary >> typShaMethodUnaryAssociations: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedDictionary >> typShaMethodUnaryKeys: aLookup [
+OrderedDictionary >> typShaMethodUnaryKeys: aLookup root: anotherLookup [
 	<typShaMethod: 'keys'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Array typAsType withParameters: {aLookup receiver at: #B})
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedDictionary >> typShaMethodUnaryValues: aLookup [
+OrderedDictionary >> typShaMethodUnaryValues: aLookup root: anotherLookup [
 	<typShaMethod: 'values'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Collection typAsType withParameters: {aLookup self at: #A})
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-OrderedDictionary class >> typShaType: aLookup [
+OrderedDictionary class >> typShaType: aLookup root: anotherLookup [
 	<typShaType>
-	^ aLookup root classDescription
+	^ anotherLookup classDescription
 		typAsParametricTypeWithParameters: {#B -> #B typAsVariableType.
-				#A -> #A typAsVariableType} asOrderedDictionary
+				#A -> #A typAsVariableType}
 ]

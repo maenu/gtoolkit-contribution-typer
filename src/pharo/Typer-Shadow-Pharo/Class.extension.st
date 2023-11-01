@@ -1,7 +1,7 @@
 Extension { #name : #Class }
 
 { #category : #'*Typer-Shadow-Pharo' }
-Class >> typShaMethodKeywordAddClassVarNamed: aLookup [
+Class >> typShaMethodKeywordAddClassVarNamed: aLookup root: anotherLookup [
 	<typShaMethod: 'addClassVarNamed:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -9,7 +9,7 @@ Class >> typShaMethodKeywordAddClassVarNamed: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Class >> typShaMethodKeywordClassVarNamed: aLookup [
+Class >> typShaMethodKeywordClassVarNamed: aLookup root: anotherLookup [
 	<typShaMethod: 'classVarNamed:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: TypUnknownType instance
@@ -17,7 +17,7 @@ Class >> typShaMethodKeywordClassVarNamed: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Class >> typShaMethodKeywordHasClassVarNamed: aLookup [
+Class >> typShaMethodKeywordHasClassVarNamed: aLookup root: anotherLookup [
 	<typShaMethod: 'hasClassVarNamed:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: Boolean typAsType
@@ -25,7 +25,7 @@ Class >> typShaMethodKeywordHasClassVarNamed: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Class >> typShaMethodKeywordSubclassInstanceVariableNamesClassVariableNamesPackage: aLookup [
+Class >> typShaMethodKeywordSubclassInstanceVariableNamesClassVariableNamesPackage: aLookup root: anotherLookup [
 	<typShaMethod: 'subclass:instanceVariableNames:classVariableNames:package:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup receiver classDescription typAsType
@@ -36,7 +36,7 @@ Class >> typShaMethodKeywordSubclassInstanceVariableNamesClassVariableNamesPacka
 ]
 
 { #category : #'*Typer-Shadow-Pharo' }
-Class >> typShaMethodUnarySharedPools: aLookup [
+Class >> typShaMethodUnarySharedPools: aLookup root: anotherLookup [
 	<typShaMethod: 'sharedPools'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (Collection typAsType withParameters: {Class typAsType})

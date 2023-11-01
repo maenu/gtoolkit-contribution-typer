@@ -1,8 +1,8 @@
 Extension { #name : #BlockClosure }
 
 { #category : #'*Typer-Shadow-Pharo' }
-BlockClosure class >> typShaType: aLookup [
+BlockClosure class >> typShaType: aLookup root: anotherLookup [
 	<typShaType>
-	^ aLookup root classDescription
+	^ anotherLookup classDescription
 		typAsFunctionTypeWithResult: TypUnknownType instance
 ]

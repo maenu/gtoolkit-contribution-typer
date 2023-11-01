@@ -1,7 +1,7 @@
 Extension { #name : #BlElement }
 
 { #category : #'*Typer-Shadow-Bloc' }
-BlElement >> typShaMethodKeywordBackground: aLookup [
+BlElement >> typShaMethodKeywordBackground: aLookup root: anotherLookup [
 	<typShaMethod: 'background:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -10,7 +10,7 @@ BlElement >> typShaMethodKeywordBackground: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Bloc' }
-BlElement >> typShaMethodKeywordConstraintsDo: aLookup [
+BlElement >> typShaMethodKeywordConstraintsDo: aLookup root: anotherLookup [
 	<typShaMethod: 'constraintsDo:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -20,7 +20,7 @@ BlElement >> typShaMethodKeywordConstraintsDo: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Bloc' }
-BlElement >> typShaMethodKeywordFireEvent: aLookup [
+BlElement >> typShaMethodKeywordFireEvent: aLookup root: anotherLookup [
 	<typShaMethod: 'fireEvent:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -28,7 +28,7 @@ BlElement >> typShaMethodKeywordFireEvent: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Bloc' }
-BlElement >> typShaMethodKeywordGeometry: aLookup [
+BlElement >> typShaMethodKeywordGeometry: aLookup root: anotherLookup [
 	<typShaMethod: 'geometry:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -36,7 +36,7 @@ BlElement >> typShaMethodKeywordGeometry: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Bloc' }
-BlElement >> typShaMethodKeywordLook: aLookup [
+BlElement >> typShaMethodKeywordLook: aLookup root: anotherLookup [
 	<typShaMethod: 'look:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -45,7 +45,7 @@ BlElement >> typShaMethodKeywordLook: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Bloc' }
-BlElement >> typShaMethodKeywordMargin: aLookup [
+BlElement >> typShaMethodKeywordMargin: aLookup root: anotherLookup [
 	<typShaMethod: 'margin:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self

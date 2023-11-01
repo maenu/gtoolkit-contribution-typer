@@ -1,7 +1,7 @@
 Extension { #name : #GtPhlowView }
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPhlowView >> typShaMethodKeywordActionStencil: aLookup [
+GtPhlowView >> typShaMethodKeywordActionStencil: aLookup root: anotherLookup [
 	<typShaMethod: 'actionStencil:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self

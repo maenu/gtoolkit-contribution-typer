@@ -1,7 +1,7 @@
 Extension { #name : #GtPharoProgramNode }
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoProgramNode >> typShaMethodKeywordActionForSelectorStartingWithAt: aLookup [
+GtPharoProgramNode >> typShaMethodKeywordActionForSelectorStartingWithAt: aLookup root: anotherLookup [
 	<typShaMethod: 'actionForSelector:startingWith:at:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: GtCompletionAction typAsType
@@ -11,7 +11,7 @@ GtPharoProgramNode >> typShaMethodKeywordActionForSelectorStartingWithAt: aLooku
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoProgramNode >> typShaMethodKeywordCompletionActionsFor: aLookup [
+GtPharoProgramNode >> typShaMethodKeywordCompletionActionsFor: aLookup root: anotherLookup [
 	<typShaMethod: 'completionActionsFor:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: (SequenceableCollection typAsType withParameters: {GtCompletionAction typAsType})
@@ -19,7 +19,7 @@ GtPharoProgramNode >> typShaMethodKeywordCompletionActionsFor: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-GToolkit' }
-GtPharoProgramNode >> typShaMethodUnarySource: aLookup [
+GtPharoProgramNode >> typShaMethodUnarySource: aLookup root: anotherLookup [
 	<typShaMethod: 'source'>
 	^ CompiledMethod typAsFunctionTypeWithResult: String typAsType
 ]

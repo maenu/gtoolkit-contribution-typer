@@ -36,42 +36,38 @@ Class {
 }
 
 { #category : #accessing }
-TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection parent: aLookup [
+TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection [
 	^ self
 		receiver: aType
 		selector: aSymbol asSymbol
 		arguments: aCollection
 		self: aType
 		super: aType superOrNil
-		parent: aLookup
 ]
 
 { #category : #accessing }
-TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection self: anotherType super: yetAnotherType parent: aLookup [
+TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection self: anotherType super: yetAnotherType [
 	^ self index
 		at: {aType.
 				aSymbol asSymbol.
 				aCollection asArray.
 				anotherType.
-				yetAnotherType.
-				aLookup}
+				yetAnotherType}
 		ifAbsentPut: [ self new
 				initializeReceiver: aType selector: aSymbol asSymbol;
 				initializeArguments: aCollection asArray
 					self: anotherType
 					super: yetAnotherType;
-				initializeParent: aLookup;
 				yourself ]
 ]
 
 { #category : #accessing }
 TypMethodLookup class >> resolver [
 	^ resolver
-		ifNil: [ resolver := TypTerminalResolver
-					resolver: (TypBreadthFirstResolver
-							resolvers: {TypDepthFirstResolver resolver: TypPraMethodResolver new.
-									TypDepthFirstResolver resolver: TypShaMethodResolver new.
-									TypDepthFirstResolver resolver: TypInfMethodResolver new}) ]
+		ifNil: [ resolver := TypBreadthFirstResolver
+					resolvers: {TypDepthFirstResolver resolver: TypPraMethodResolver new.
+							TypDepthFirstResolver resolver: TypShaMethodResolver new.
+							TypDepthFirstResolver resolver: TypInfMethodResolver new} ]
 ]
 
 { #category : #accessing }
@@ -99,24 +95,6 @@ TypMethodLookup >> > aLookup [
 { #category : #accessing }
 TypMethodLookup >> arguments [
 	^ arguments
-]
-
-{ #category : #converting }
-TypMethodLookup >> asParent [
-	child ifNotNil: [ ^ child ].
-	self assert: [ self hasParent ].
-	^ child := self class
-			receiver: receiver super
-			selector: selector
-			arguments: arguments
-			self: selfType
-			super: receiver super superOrNil
-			parent: self
-]
-
-{ #category : #accessing }
-TypMethodLookup >> canResolve [
-	^ receiver canResolveMethod: self
 ]
 
 { #category : #accessing }
@@ -158,12 +136,6 @@ TypMethodLookup >> printOn: aStream [
 		nextPut: $};
 		nextPut: $ .
 	super printOn: aStream
-]
-
-{ #category : #accessing }
-TypMethodLookup >> resolve [
-	self flag: 'FIXME weird'.
-	^ [ receiver resolveMethod: self ] ensure: [ self assert: [ result isNotNil ] ]
 ]
 
 { #category : #accessing }

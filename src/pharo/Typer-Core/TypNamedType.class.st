@@ -40,33 +40,26 @@ TypNamedType class >> classDescription: aClassDescription super: aType [
 ]
 
 { #category : #'instance creation' }
-TypNamedType class >> named: aString [
-
-	<typPraArguments: 'String'>
+TypNamedType class >> named: aSymbol [
 	| instance |
 	instance := self new
-		            initializeName: aString asString;
-		            yourself.
+			initializeName: aSymbol asSymbol;
+			yourself.
 	^ self index
-		  at: { 
-				  aString asString.
-				  instance superOrNil }
-		  ifAbsentPut: [ instance ]
+		at: {aSymbol asSymbol.
+				instance superOrNil}
+		ifAbsentPut: [ instance ]
 ]
 
-{ #category : #'as yet unclassified' }
-TypNamedType class >> named: aString super: aType [
-
-	<typPraArguments: 'String'>
+{ #category : #accessing }
+TypNamedType class >> named: aSymbol super: aType [
 	^ self index
-		  at: { 
-				  aString asString.
-				  aType }
-		  ifAbsentPut: [ 
-			  self new
-				  initializeName: aString asString;
-				  initializeSuper: aType;
-				  yourself ]
+		at: {aSymbol asSymbol.
+				aType}
+		ifAbsentPut: [ self new
+				initializeName: aSymbol asSymbol;
+				initializeSuper: aType;
+				yourself ]
 ]
 
 { #category : #comparing }
@@ -148,18 +141,15 @@ TypNamedType >> initialize [
 
 { #category : #initialization }
 TypNamedType >> initializeClassDescription: aClassDescription [
-
-	<typPraArguments: 'ClassDescription'>
-	self initializeName: aClassDescription name.
+	self initializeName: aClassDescription name asSymbol.
 	classDescription := aClassDescription
 ]
 
 { #category : #initialization }
-TypNamedType >> initializeName: anObject [
-
-	<typPraArguments: 'String'>
+TypNamedType >> initializeName: aSymbol [
+	self assert: [ aSymbol isKindOf: Symbol ].
 	classDescription := nil.
-	name := anObject.
+	name := aSymbol.
 	hasClassDescription := nil.
 	hash := nil
 ]

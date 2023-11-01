@@ -17,7 +17,7 @@ TypResolver >> resolve: aLookup [
 ]
 
 { #category : #accessing }
-TypResolver >> result: aLookup [
+TypResolver >> result: aLookup root: anotherLookup [
 	self subclassResponsibility
 ]
 

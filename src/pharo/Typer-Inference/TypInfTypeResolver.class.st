@@ -16,6 +16,6 @@ TypInfTypeResolver >> printOn: aStream [
 ]
 
 { #category : #accessing }
-TypInfTypeResolver >> result: aLookup [
+TypInfTypeResolver >> result: aLookup root: anotherLookup [
 	^ aLookup classDescription typAsNamedType
 ]

@@ -1,7 +1,7 @@
 Extension { #name : #BrTextCursorAttribute }
 
 { #category : #'*Typer-Shadow-Brick' }
-BrTextCursorAttribute >> typShaMethodKeywordEnterAction: aLookup [
+BrTextCursorAttribute >> typShaMethodKeywordEnterAction: aLookup root: anotherLookup [
 	<typShaMethod: 'enterAction:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
@@ -13,7 +13,7 @@ BrTextCursorAttribute >> typShaMethodKeywordEnterAction: aLookup [
 ]
 
 { #category : #'*Typer-Shadow-Brick' }
-BrTextCursorAttribute >> typShaMethodKeywordLeaveAction: aLookup [
+BrTextCursorAttribute >> typShaMethodKeywordLeaveAction: aLookup root: anotherLookup [
 	<typShaMethod: 'leaveAction:'>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: aLookup self
