@@ -3,7 +3,7 @@ Extension { #name : #CompiledMethod }
 { #category : #'*Typer-GToolkit' }
 CompiledMethod >> typGtCheElement [
 	^ BlElement new
-		in: [ :e | e background: self ast typGtCheColor ];
+		background: self ast typGtCheColor;
 		constraintsDo: [ :c | 
 			c horizontal exact: 16.
 			c vertical exact: 16 ];

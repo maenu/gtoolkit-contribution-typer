@@ -11,8 +11,19 @@ TypResolver >> canResolve: aLookup [
 
 { #category : #resolving }
 TypResolver >> resolve: aLookup [
-	self assert: [ self canResolve: aLookup ].
-	aLookup resolveTo: (self result: aLookup) by: self.
+	^ self resolve: aLookup root: aLookup
+]
+
+{ #category : #resolving }
+TypResolver >> resolve: aLookup root: anotherLookup [
+	aLookup
+		resolved: aLookup
+		resolver: self
+		result: (self result: aLookup root: aLookup).
+	anotherLookup
+		resolved: aLookup
+		resolver: self
+		result: (self result: aLookup root: anotherLookup).
 	^ aLookup
 ]
 

@@ -1,13 +1,12 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*Typer-Inference' }
-RBMethodNode >> typInfContextSelf: aType super: anotherTypeOrNil [
+RBMethodNode >> typInfContextFor: aLookup [
 	^ TypInfContext
 		sender: nil
 		state: TypInfState new
 		node: self
-		self: aType
-		super: anotherTypeOrNil
+		lookup: aLookup
 ]
 
 { #category : #'*Typer-Inference' }

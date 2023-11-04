@@ -47,13 +47,6 @@ TypLookup >> <= aLookup [
 ]
 
 { #category : #accessing }
-TypLookup >> = anObject [
-	anObject == self ifTrue: [ ^ true ].
-	anObject class = self class ifFalse: [ ^ false ].
-	^ anObject parent = parent
-]
-
-{ #category : #accessing }
 TypLookup >> > aLookup [
 	self subclassResponsibility
 ]
@@ -90,19 +83,15 @@ TypLookup >> hasParent [
 ]
 
 { #category : #accessing }
-TypLookup >> hash [
-	^ parent hash
+TypLookup >> preResolve [
+	resolved ifNotNil: [ ^ resolved ].
+	self canResolve ifTrue: [ ^ self class resolver preResolve: self ].
+	^ self
 ]
 
 { #category : #accessing }
-TypLookup >> initializeParent: aLookup [
-	self assert: [ parent isNil ].
-	parent := aLookup
-]
-
-{ #category : #accessing }
-TypLookup >> isResolved [
-	^ resolver isNotNil
+TypLookup >> preResolve: aResolver [
+	resolver := aResolver
 ]
 
 { #category : #accessing }
@@ -145,5 +134,5 @@ TypLookup >> result [
 
 { #category : #accessing }
 TypLookup >> resultOrUnknown [
-	^ self result ifNil: [ TypUnknownType instance ]
+	^ self result ifNil: TypUnknownType instance
 ]

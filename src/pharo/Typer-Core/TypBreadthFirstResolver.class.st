@@ -32,6 +32,13 @@ TypBreadthFirstResolver >> initializeResolvers: anObject [
 	resolvers := anObject
 ]
 
+{ #category : #resolving }
+TypBreadthFirstResolver >> preResolve: aLookup root: anotherLookup [
+	^ (resolvers detect: [ :e | e canResolve: aLookup ])
+		preResolve: aLookup
+		root: anotherLookup
+]
+
 { #category : #accessing }
 TypBreadthFirstResolver >> printOn: aStream [
 

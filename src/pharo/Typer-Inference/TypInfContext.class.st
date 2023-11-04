@@ -6,29 +6,25 @@ Class {
 	#instVars : [
 		'sender',
 		'node',
-		'selfType',
-		'superType',
 		'state',
 		'root',
 		'current',
 		'nodes',
-		'iterationsDone',
-		'iterationsMax',
 		'iterations',
 		'children',
-		'nodeStackDepth'
+		'nodeStackDepth',
+		'lookup'
 	],
 	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #'as yet unclassified' }
-TypInfContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType [
+{ #category : #accessing }
+TypInfContext class >> sender: aContext state: aState node: aNode lookup: aLookup [
 	^ self new
 		initializeSender: aContext
 			state: aState
 			node: aNode
-			self: aType
-			super: anotherType;
+			lookup: aLookup;
 		yourself
 ]
 
@@ -38,9 +34,13 @@ TypInfContext >> = anObject [
 	self class = anObject class ifFalse: [ ^ false ].
 	sender = anObject sender ifFalse: [ ^ false ].
 	node = anObject node ifFalse: [ ^ false ].
-	selfType = anObject self ifFalse: [ ^ false ].
-	superType = anObject super ifFalse: [ ^ false ].
+	lookup = anObject lookup ifFalse: [ ^ false ].
 	^ true
+]
+
+{ #category : #accessing }
+TypInfContext >> absorb: aContext [
+	lookup := lookup absorbed: aContext lookup
 ]
 
 { #category : #accessing }
@@ -63,6 +63,12 @@ TypInfContext >> allNodes [
 ]
 
 { #category : #accessing }
+TypInfContext >> canAbsorb: aContext [
+	aContext class = self class ifFalse: [ ^ false ].
+	^ lookup canAbsorb: aContext lookup
+]
+
+{ #category : #accessing }
 TypInfContext >> canRun [
 	^ TypInfNodeStack canPush: node
 ]
@@ -74,7 +80,7 @@ TypInfContext >> children [
 
 { #category : #accessing }
 TypInfContext >> cleanup [
-	iterations removeAll.
+	iterations := iterations collect: [ :s | nil ].
 	self allNodes do: [ :e | e state reduceToRead ]
 ]
 
@@ -96,10 +102,7 @@ TypInfContext >> handles: anExceptionType [
 
 { #category : #accessing }
 TypInfContext >> hash [
-	^ ({sender.
-		node.
-		selfType.
-		superType} collect: #hash) reduce: [ :r :e | r bitXor: e ]
+	^ (sender hash bitXor: node hash) bitXor: lookup hash
 ]
 
 { #category : #origins }
@@ -108,17 +111,12 @@ TypInfContext >> home [
 ]
 
 { #category : #accessing }
-TypInfContext >> initializeSender: aContext state: aState node: aNode self: aType super: anotherType [
-	self assert: [ aType isKindOf: TypType ].
-	self assert: [ aType isUnion not ].
-	anotherType
-		ifNotNil: [ self assert: [ anotherType isKindOf: TypType ].
-			self assert: [ anotherType isUnion not ] ].
+TypInfContext >> initializeSender: aContext state: aState node: aNode lookup: aLookup [
 	sender := aContext.
 	state := aState.
 	node := aNode.
-	selfType := aType.
-	superType := anotherType.
+	lookup := aLookup.
+	iterations := OrderedCollection new.
 	nodes := IdentityDictionary new.
 	children := IdentitySet new
 ]
@@ -133,17 +131,22 @@ TypInfContext >> install [
 
 { #category : #accessing }
 TypInfContext >> isRun [
-	^ iterationsDone > 0
+	^ iterations size > 0
 ]
 
 { #category : #accessing }
 TypInfContext >> isStable [
-	^ iterationsDone < iterationsMax 
+	^ iterations size < TypInfCurrentConfiguration value maxIterations
 ]
 
 { #category : #accessing }
 TypInfContext >> iterations [
 	^ iterations
+]
+
+{ #category : #accessing }
+TypInfContext >> lookup [
+	^ lookup
 ]
 
 { #category : #accessing }
@@ -206,15 +209,11 @@ TypInfContext >> run [
 	TypInfNodeStack
 		push: node
 		during: [ | start stop |
-			iterationsDone := 0.
-			iterationsMax := TypInfCurrentConfiguration value maxIterations.
 			nodeStackDepth := TypInfNodeStack actives size.
-			iterations := OrderedCollection new.
 			self install.
 			start := TypInfContextStartSignal node: self.
 			start emit.
-			[ iterationsDone := iterationsDone + 1.
-			iterationsDone <= iterationsMax
+			[ iterations size <= TypInfCurrentConfiguration value maxIterations
 				and: [ | iteration |
 					iteration := root iterate.
 					iterations add: iteration.
@@ -227,7 +226,7 @@ TypInfContext >> run [
 
 { #category : #accessing }
 TypInfContext >> self [
-	^ selfType
+	^ lookup self
 ]
 
 { #category : #accessing }
@@ -252,7 +251,7 @@ TypInfContext >> state [
 
 { #category : #accessing }
 TypInfContext >> super [
-	^ superType
+	^ lookup super
 ]
 
 { #category : #'as yet unclassified' }

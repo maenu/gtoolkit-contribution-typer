@@ -149,6 +149,17 @@ TypInfNode >> typGtFlowPaintOn: aMondrian [
 ]
 
 { #category : #'*Typer-GToolkit' }
+TypInfNode >> typGtIterationsFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Iterations';
+		priority: 2;
+		object: [ context home iterations
+				collect: [ :d | d ifNil: [ nil ] ifNotNil: [ d at: self ifAbsent: [ nil ] ] ] ];
+		view: #gtLiveFor:
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtMinimalFlowFor: aView [
 	<gtView>
 	^ aView typGtMondrian

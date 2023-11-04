@@ -28,7 +28,7 @@ TypTypeLookup class >> resolver [
 { #category : #comparing }
 TypTypeLookup >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
-	super = anObject ifFalse: [ ^ false ].
+	anObject class = self class ifFalse: [ ^ false ].
 	^ classDescription = anObject classDescription
 ]
 
@@ -60,7 +60,7 @@ TypTypeLookup >> hasParent [
 
 { #category : #comparing }
 TypTypeLookup >> hash [
-	^ super hash bitXor: classDescription hash
+	^ classDescription hash
 ]
 
 { #category : #initialization }

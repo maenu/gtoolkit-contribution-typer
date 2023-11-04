@@ -2,26 +2,24 @@ Class {
 	#name : #TypInfInlContext,
 	#superclass : #TypInfContext,
 	#instVars : [
-		'message',
-		'lookup'
+		'message'
 	],
 	#category : #'Typer-Inference-Core'
 }
 
-{ #category : #'as yet unclassified' }
-TypInfInlContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType [
+{ #category : #accessing }
+TypInfInlContext class >> sender: aContext state: aState node: aNode lookup: aLookup [
 	self shouldNotImplement
 ]
 
 { #category : #accessing }
-TypInfInlContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType lookup: aLookup message: aMessage [
+TypInfInlContext class >> sender: aContext state: aState node: aNode lookup: aLookup message: aMessage [
 	^ (super
 		sender: aContext
 		state: aState
 		node: aNode
-		self: aType
-		super: anotherType)
-		initializeLookup: aLookup message: aMessage;
+		lookup: aLookup)
+		initializeMessage: aMessage;
 		yourself
 ]
 
@@ -30,14 +28,7 @@ TypInfInlContext >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^ false ].
 	message = anObject message ifFalse: [ ^ false ].
-	^ lookup = anObject lookup
-]
-
-{ #category : #accessing }
-TypInfInlContext >> adoptSelf: aType super: anotherTypeOrNil [
-	selfType := aType.
-	superType := anotherTypeOrNil.
-	message contexts rehash
+	^ true
 ]
 
 { #category : #accessing }
@@ -51,10 +42,7 @@ TypInfInlContext >> hash [
 ]
 
 { #category : #accessing }
-TypInfInlContext >> initializeLookup: aLookup message: aMessage [
-	self assert: [ aLookup isKindOf: TypLookup ].
-	self assert: [ aMessage isKindOf: TypInfMessage ].
-	lookup := aLookup.
+TypInfInlContext >> initializeMessage: aMessage [
 	message := aMessage
 ]
 
@@ -83,8 +71,8 @@ TypInfInlContext >> install [
 ]
 
 { #category : #accessing }
-TypInfInlContext >> lookup [
-	^ lookup
+TypInfInlContext >> isInstalled [
+	^ root isNotNil
 ]
 
 { #category : #accessing }

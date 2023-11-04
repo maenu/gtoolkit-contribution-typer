@@ -4,7 +4,6 @@ Class {
 	#traits : 'TypInfTWithArguments',
 	#classTraits : 'TypInfTWithArguments classTrait',
 	#instVars : [
-		'lookup',
 		'contexts'
 	],
 	#category : #'Typer-Inference-Core'
@@ -32,8 +31,8 @@ TypInfMessage >> asFunction [
 TypInfMessage >> canInstall [
 	| newContexts |
 	newContexts := self newContexts.
-	(newContexts size between: 1 and: 8) ifFalse: [ ^ false ].
-	^ newContexts allSatisfy: [ :e | e value canInstall ]
+	(newContexts size between: 1 and: TypInfCurrentConfiguration value maxInlinesPerSend) ifFalse: [ ^ false ].
+	^ newContexts allSatisfy: #canInstall
 ]
 
 { #category : #accessing }
@@ -52,11 +51,6 @@ TypInfMessage >> constrainReceiver [
 		ifTrue: [ self
 				constrain: self inReceiver
 				to: (implementors collect: #typAsType) typAsMinimizedType ]
-]
-
-{ #category : #'as yet unclassified' }
-TypInfMessage >> contexts [
-	^ contexts
 ]
 
 { #category : #accessing }
@@ -94,53 +88,49 @@ TypInfMessage >> initialize [
 
 { #category : #accessing }
 TypInfMessage >> install [
-	| oldContexts oldContextValues contextValues |
+	| oldContexts |
 	oldContexts := contexts.
 	oldContexts ifEmpty: [ self outNextDisable ].
-	contexts := self newContexts.
-	contexts := contexts asSet
-			collect: [ :a | 
+	contexts := self newContexts asSet
+			collect: [ :c | 
 				oldContexts
-					detect: [ :aa | aa value = a value ]
-					ifFound: [ :aa | a key -> aa value ]
-					ifNone: [ a ] ].
+					detect: [ :cc | cc canAbsorb: c ]
+					ifFound: [ :cc | cc absorb: c ]
+					ifNone: [ c ] ].
 	self assert: [ contexts isNotEmpty ].
-	oldContextValues := oldContexts collect: #value.
-	contextValues := contexts collect: #value.
-	(oldContextValues difference: contextValues) do: #uninstall.
-	(contextValues difference: oldContextValues) do: #install
+	oldContexts rehash.	"due to #absorb:"
+	(oldContexts difference: contexts) do: #uninstall.
+	(contexts difference: oldContexts) do: #install.
+	self assert: [ contexts allSatisfy: #isInstalled ]
 ]
 
 { #category : #accessing }
-TypInfMessage >> lookup [
-	^ lookup
+TypInfMessage >> lookups [
+	^ self inReceiver newMethodLookups: self
 ]
 
 { #category : #accessing }
 TypInfMessage >> newContexts [
 	self recursiveContextOrNil
 		ifNotNil: [ :c | 
-			^ {lookup
-					-> (TypInfRecursionContext
-							sender: context
-							state: state copy
-							node: node
-							self: context self
-							super: context super
-							message: self)} ].
-	^ lookup preResolve
+			^ {TypInfRecursionContext
+					sender: context
+					state: state copy
+					node: node
+					lookup: c lookup
+					message: self} ].
+	^ self lookups
 		flatCollect: [ :l | 
-			(TypInfIndex instance canResolve: l)
-				ifTrue: [ TypInfIndex instance resolve: l ]
-				ifFalse: [ {l
-							-> (TypInfInlLookupContext
+			(TypInfIndex instance absCanResolve: l message: self)
+				ifTrue: [ TypInfIndex instance absResolve: l message: self ]
+				ifFalse: [ (TypInfIndex instance inlCanResolve: l message: self)
+						ifTrue: [ TypInfIndex instance inlResolve: l message: self ]
+						ifFalse: [ {TypInfInlLookupContext
 									sender: context
 									state: state copy
 									node: node
-									self: context self
-									super: context super
-									message: self
-									lookup: l)} ] ]
+									lookup: l
+									message: self} ] ] ]
 ]
 
 { #category : #accessing }
@@ -171,8 +161,7 @@ TypInfMessage >> recursiveContextOrNil [
 	^ (context stack copyWithout: context) reversed
 		detect: [ :c | 
 			c node isMethod
-				and: [ (c isKindOf: TypInfInlContext) and: [ c root lookup = lookup asDefault ] ] ]
-		ifFound: #yourself
+				and: [ (c isKindOf: TypInfInlContext) and: [ self lookups includes: c root lookup ] ] ]
 		ifNone: nil
 ]
 
@@ -184,36 +173,30 @@ TypInfMessage >> selector [
 { #category : #accessing }
 TypInfMessage >> signalsAlways [
 	| signalsAlways |
-	contexts
-		ifEmpty: [ lookup ifNil: [ ^ nil ].
-			^ lookup asDefault resolve signalsAlways ].
-	signalsAlways := contexts collect: [ :a | a value root type signalsAlways ].
+	signalsAlways := contexts collect: [ :c | c root type signalsAlways ].
+	signalsAlways ifEmpty: [ ^ nil ].
 	(signalsAlways includes: nil) ifTrue: [ ^ nil ].
 	^ signalsAlways typAsMinimizedType
 ]
 
 { #category : #accessing }
 TypInfMessage >> signalsMaybe [
-	contexts
-		ifEmpty: [ lookup ifNil: [ ^ nil ].
-			^ lookup asDefault resolve signalsMaybe ].
-	^ (contexts collect: [ :a | a value root type signalsMaybe ] thenReject: #isNil)
-		ifEmpty: nil
-		ifNotEmpty: #typAsType
+	| signalsMaybe |
+	signalsMaybe := (contexts collect: [ :c | c root type signalsMaybe ])
+			reject: #isNil.
+	signalsMaybe ifEmpty: [ ^ nil ].
+	^ signalsMaybe typAsType
 ]
 
 { #category : #accessing }
 TypInfMessage >> transfer [
-	| oldLookup |
 	self constrainReceiver.
-	oldLookup := lookup.
-	lookup := self inReceiver newMethodLookup: self.
-	(lookup ~= oldLookup and: [ self canInstall ]) ifTrue: [ self install ].
+	self canInstall ifTrue: [ self install ].
 	state
 		at: self
 		put: (contexts
 				ifEmpty: [ TypUnknownType instance ]
-				ifNotEmpty: [ (contexts collect: [ :a | a value root inReturnType ]) typAsMinimizedType ])
+				ifNotEmpty: [ (contexts collect: [ :c | c root inReturnType ]) typAsMinimizedType ])
 ]
 
 { #category : #accessing }
@@ -222,10 +205,8 @@ TypInfMessage >> uninstall [
 		inAt: #receiver
 		ifPresent: [ :r | self unconstrain: r ]
 		ifAbsent: [  "noop" ].	"might be in dirty state during node uninstall"
-	contexts
-		collect: #value thenDo: #uninstall;
-		removeAll.
-	lookup := nil.
+	contexts do: #uninstall.
+	contexts removeAll.
 	self outNextDisabledsEnableOn: self.
 	super uninstall
 ]

@@ -40,7 +40,7 @@ TypInfNode >> changesFrom: aState [
 
 { #category : #accessing }
 TypInfNode >> constrain: aNode to: aType [
-	state at: aNode covariantPut: aType.
+	state at: aNode put: aType.
 	aNode constrainTo: aType from: self
 ]
 
@@ -55,9 +55,7 @@ TypInfNode >> constrainTo: aType from: aNode [
 					detect: [ :e | e target = self ]
 					ifNone: [ aNode outAdd: (TypInfConstrainEdge origin: aNode target: self) ] ]
 			ifAbsent: [ aNode outAdd: (TypInfConstrainEdge origin: aNode target: self) ].
-	edge type: aType.
-	self flag: 'TODO looks dirty, but is needed to ensure subsequent type reads of said node are consistent'.
-	aNode state at: self put: aType
+	edge type: aType
 ]
 
 { #category : #accessing }
@@ -198,13 +196,13 @@ TypInfNode >> methodNode [
 ]
 
 { #category : #accessing }
-TypInfNode >> newMethodLookup: aMessage [
-	^ TypInfMethodLookup
-		receiver: aMessage receiver
-		selector: aMessage selector
-		arguments: aMessage arguments
-		message: aMessage
-		parent: nil
+TypInfNode >> newMethodLookups: aMessage [
+	^ aMessage receiver types
+		collect: [ :t | 
+			TypMethodLookup
+				receiver: t
+				selector: aMessage selector
+				arguments: aMessage arguments ]
 ]
 
 { #category : #accessing }
@@ -291,7 +289,7 @@ TypInfNode >> transfers [
 
 { #category : #accessing }
 TypInfNode >> type [
-	^ state at: self ifAbsent: TypUnknownType instance
+	^ state at: self ifAbsent: [ TypUnknownType instance ]
 ]
 
 { #category : #accessing }

@@ -6,6 +6,6 @@ TypInfBlockContext >> typGtAsCoder [
 		attributeNamed: #typGtContext put: self;
 		forSource: node body sourceCode;
 		asCoderViewModel)
-		selfObject: selfType classDescription;
+		selfObject: self self classDescription;
 		yourself
 ]

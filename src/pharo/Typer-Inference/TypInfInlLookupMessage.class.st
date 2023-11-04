@@ -11,7 +11,7 @@ TypInfInlLookupMessage >> inReturnType [
 
 { #category : #accessing }
 TypInfInlLookupMessage >> method [
-	^ lookup asDefault resolve
+	^ context lookup resultOrUnknown
 ]
 
 { #category : #accessing }
@@ -42,11 +42,9 @@ TypInfInlLookupMessage >> newContexts [
 
 { #category : #accessing }
 TypInfInlLookupMessage >> transfer [
-	| oldLookup method |
+	| method |
 	self constrainReceiver.
-	oldLookup := lookup.
-	lookup := context lookup.
-	(lookup ~= oldLookup and: [ self canInstall ]) ifTrue: [ self install ].
+	self canInstall ifTrue: [ self install ].
 	method := self method.
 	self inArguments
 		withIndexDo: [ :e :i | 

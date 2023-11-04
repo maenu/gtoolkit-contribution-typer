@@ -6,35 +6,33 @@ Class {
 
 { #category : #accessing }
 TypInfIndex >> absCanResolve: aLookup message: aMessage [
-	| classDescription |
-	aLookup receiver isNamed ifFalse: [ ^ false ].
-	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
-	classDescription := aLookup receiver classDescription.
+	| preResolved |
+	preResolved := aLookup preResolve.
+	preResolved receiver isNamed ifFalse: [ ^ false ].
+	preResolved receiver hasClassDescription ifFalse: [ ^ false ].
 	^ cache
 		typAt: {#absCanResolve.
-				aLookup receiver classDescription.
-				aLookup selector}
-		ifPresent: [ :s | 
-			s
-				allSatisfy: [ :m | 
-					nil
-						withArgs: {aLookup.
-								aMessage}
-						executeMethod: m ] ]
+				preResolved receiver classDescription.
+				preResolved selector}
+		ifPresent: [ :m | 
+			nil
+				withArgs: {aLookup.
+						aMessage}
+				executeMethod: m ]
 		ifAbsent: [ false ]
 ]
 
 { #category : #accessing }
 TypInfIndex >> absResolve: aLookup message: aMessage [
-	^ (cache
-		typAt: {#absResolve.
-				aLookup receiver classDescription.
-				aLookup selector})
-		collect: [ :m | 
-			nil
-				withArgs: {aLookup.
-						aMessage}
-				executeMethod: m ]
+	| preResolved |
+	preResolved := aLookup preResolve.
+	^ {nil
+		withArgs: {aLookup.
+				aMessage}
+		executeMethod: (cache
+				typAt: {#absResolve.
+						preResolved receiver classDescription.
+						preResolved selector})}
 ]
 
 { #category : #accessing }
@@ -93,19 +91,19 @@ TypInfIndex >> addMethod: aMethod [
 	aMethod typInfAbsIsCanResolve
 		ifTrue: [ aMethod typInfAbsCanResolve
 				do: [ :selector | 
-					(cache
+					cache
 						typAt: {#absCanResolve.
 								aMethod methodClass.
 								selector}
-						ifAbsentPut: [ IdentitySet new ]) add: aMethod ] ].
+						put: aMethod ] ].
 	aMethod typInfAbsIsResolve
 		ifTrue: [ aMethod typInfAbsResolve
 				do: [ :selector | 
-					(cache
+					cache
 						typAt: {#absResolve.
 								aMethod methodClass.
 								selector}
-						ifAbsentPut: [ IdentitySet new ]) add: aMethod ] ].
+						put: aMethod ] ].
 	(cache
 		typAt: {#implementors.
 				aMethod selector}
@@ -142,9 +140,7 @@ TypInfIndex >> contextAt: aLookup [
 			TypInfNodeStack actives size + 1 < c nodeStackDepth
 				ifTrue: [ self contextRemoveAt: aLookup ]
 				ifFalse: [ ^ c ] ].
-	context := aLookup compiledMethod ast
-			typInfContextSelf: aLookup root self
-			super: aLookup root super.
+	context := aLookup compiledMethod ast typInfContextFor: aLookup.
 	context canRun ifFalse: [ ^ context ].
 	cache typAt: aLookup typInfAsContextPath put: context.
 	[ context run ] ifCurtailed: [ self contextRemoveAt: aLookup ].

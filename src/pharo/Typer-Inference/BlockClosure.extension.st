@@ -32,8 +32,6 @@ BlockClosure >> typInfAbsResolveOnDo: aLookup message: aMessageNode [
 		sender: aMessageNode context
 		state: aMessageNode state
 		node: receiver node
-		self: receiver context self
-		super: receiver context super
 		lookup: aLookup
 		message: aMessageNode
 		block: receiver
@@ -54,8 +52,6 @@ BlockClosure >> typInfAbsResolveValue: aLookup message: aMessageNode [
 		sender: aMessageNode context
 		state: aMessageNode state
 		node: block node
-		self: block context self
-		super: block context super
 		lookup: aLookup
 		message: aMessageNode
 		block: block

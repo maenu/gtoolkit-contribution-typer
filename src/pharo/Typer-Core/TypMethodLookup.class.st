@@ -73,9 +73,10 @@ TypMethodLookup class >> resolver [
 { #category : #accessing }
 TypMethodLookup >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
-	super = anObject ifFalse: [ ^ false ].
+	anObject class = self class ifFalse: [ ^ false ].
 	anObject self = selfType ifFalse: [ ^ false ].
-	^ anObject super = superType
+	anObject super = superType ifFalse: [ ^ false ].
+	^ anObject arguments = arguments
 ]
 
 { #category : #accessing }
@@ -93,8 +94,34 @@ TypMethodLookup >> > aLookup [
 ]
 
 { #category : #accessing }
+TypMethodLookup >> absorbed: aLookup [
+	^ self class
+		receiver: (receiver covariant: aLookup receiver)
+		selector: selector
+		arguments: (arguments
+				with: aLookup arguments
+				collect: [ :a :b | a covariant: b ])
+		self: (selfType covariant: aLookup self)
+		super: (superType
+				ifNil: [ aLookup super ]
+				ifNotNil: [ aLookup super ifNil: [ superType ] ifNotNil: [ :t | superType covariant: t ] ])
+]
+
+{ #category : #accessing }
 TypMethodLookup >> arguments [
 	^ arguments
+]
+
+{ #category : #accessing }
+TypMethodLookup >> canAbsorb: aLookup [
+	aLookup selector = selector ifFalse: [ ^ false ].
+	(receiver covariant: aLookup receiver) isUnion ifTrue: [ ^ false ].
+	(selfType covariant: aLookup self) isUnion ifTrue: [ ^ false ].
+	(superType
+		ifNil: [ aLookup super ]
+		ifNotNil: [ aLookup super ifNil: [ superType ] ifNotNil: [ :t | superType covariant: t ] ])
+		ifNotNil: [ :t | t isUnion ifTrue: [ ^ false ] ].
+	^ true
 ]
 
 { #category : #accessing }
@@ -112,8 +139,7 @@ TypMethodLookup >> dependsOnCompiledMethod: aCompiledMethod [
 
 { #category : #accessing }
 TypMethodLookup >> hash [
-	^ ((super hash bitXor: arguments hash) bitXor: selfType hash)
-		bitXor: superType hash
+	^ (arguments hash bitXor: selfType hash) bitXor: superType hash
 ]
 
 { #category : #accessing }
@@ -150,11 +176,34 @@ TypMethodLookup >> super [
 
 { #category : #accessing }
 TypMethodLookup >> withReceiver: aType [
+	aType <= receiver
+		ifTrue: [ ^ self class
+				receiver: aType
+				selector: selector
+				arguments: arguments
+				self: (selfType covariant: aType)
+				super: (aType superOrNil ifNotNil: [ :t | superType covariant: t ]) ].
+	aType > receiver
+		ifTrue: [ ^ self class
+				receiver: aType
+				selector: selector
+				arguments: arguments
+				self: selfType
+				super: superType ].
 	^ self class
-		receiver: (receiver covariant: aType)
+		receiver: aType
 		selector: selector
 		arguments: arguments
-		self: selfType
-		super: (aType superOrNil ifNotNil: [ :t | superType covariant: t ])
-		parent: parent
+		self: aType
+		super: aType superOrNil
+]
+
+{ #category : #accessing }
+TypMethodLookup >> withSelf: aType super: anotherTypeOrNil [
+	^ self class
+		receiver: receiver
+		selector: selector
+		arguments: arguments
+		self: aType
+		super: anotherTypeOrNil
 ]

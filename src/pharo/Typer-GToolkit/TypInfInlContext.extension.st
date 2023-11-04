@@ -4,11 +4,11 @@ Extension { #name : #TypInfInlContext }
 TypInfInlContext >> typGtAsCoder [
 	^ GtPharoMethodCoder new
 		attributeNamed: #typGtContext put: self;
-		forMethod: node compiledMethod;
+		forMethod: lookup typGtExpanderMethod;
 		asCoderViewModel
 ]
 
 { #category : #'*Typer-GToolkit' }
 TypInfInlContext >> typGtIndicator [
-	^ 'i'
+	^ 'i:', lookup typGtIndicator
 ]

@@ -9,11 +9,6 @@ TypInfInlLookupContext >> typGtAsCoder [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypInfInlLookupContext >> typGtHasCoder [
-	^ root lookup isNotNil
-]
-
-{ #category : #'*Typer-GToolkit' }
 TypInfInlLookupContext >> typGtIndicator [
 	^ 'l'
 ]

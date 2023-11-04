@@ -33,6 +33,22 @@ TypIndex >> cache [
 	^ cache
 ]
 
+{ #category : #invalidation }
+TypIndex >> dependsOnClassDescription: aClassDescription [
+	| resolver |
+	cache
+		keysAndValuesRemove: [ :c :l | l dependsOnClassDescription: aClassDescription ].
+	^ resolver dependsOnClassDescription: aClassDescription
+]
+
+{ #category : #invalidation }
+TypIndex >> dependsOnCompiledMethod: aCompiledMethod [
+	| resolver |
+	cache
+		keysAndValuesRemove: [ :c :l | l dependsOnCompiledMethod: aCompiledMethod ].
+	^ resolver dependsOnCompiledMethod: aCompiledMethod
+]
+
 { #category : #accessing }
 TypIndex >> initialize [
 	super initialize.
@@ -42,36 +58,4 @@ TypIndex >> initialize [
 { #category : #accessing }
 TypIndex >> invalidate [
 	cache removeAll
-]
-
-{ #category : #invalidation }
-TypIndex >> invalidateOnClassChange: aClassAnnouncement [
-	| changed toRemove |
-	changed := false.
-	toRemove := OrderedCollection new.
-	cache
-		keysAndValuesDo: [ :l :t | 
-			((l invalidateOnClassChange: aClassAnnouncement)
-				or: (t invalidateOnClassChange: aClassAnnouncement))
-				ifTrue: [ changed := true.
-					toRemove add: l ] ].
-	toRemove do: [ :l | cache removeKey: l ].
-	toRemove removeAll.
-	^ changed or: (resolver invalidateOnClassChange: aClassAnnouncement)
-]
-
-{ #category : #invalidation }
-TypIndex >> invalidateOnMethodChange: aMethodAnnouncement [
-	| changed toRemove |
-	changed := false.
-	toRemove := OrderedCollection new.
-	cache
-		keysAndValuesDo: [ :l :t | 
-			((l invalidateOnMethodChange: aMethodAnnouncement)
-				or: (t invalidateOnMethodChange: aMethodAnnouncement))
-				ifTrue: [ changed := true.
-					toRemove add: l ] ].
-	toRemove do: [ :l | cache removeKey: l ].
-	toRemove removeAll.
-	^ changed or: (resolver invalidateOnMethodChange: aMethodAnnouncement)
 ]

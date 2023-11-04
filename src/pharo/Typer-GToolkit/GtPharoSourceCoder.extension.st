@@ -15,8 +15,10 @@ GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtContext [
-	self assert: [ self typGtHasContext ].
-	^ attributes at: #typGtContext
+	attributes at: #typGtContext ifPresent: [ :c | ^ c ].
+	attributes at: #typGtContextPromise ifPresent: [ :p | ^ nil ].
+	self typGtContextAsync.
+	^ nil
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -42,14 +44,10 @@ GtPharoSourceCoder >> typGtHasContext [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtIndicator [
-	^ (self
+	^ self
 		attributeNamed: #typGtContext
 		ifPresent: #typGtIndicator
-		ifAbsent: [ 'l' ]) , ':'
-		, (self
-				attributeNamed: #typGtLookup
-				ifPresent: #typGtIndicator
-				ifAbsent: [ Halt now ])
+		ifAbsent: [ self attributeNamed: #typGtIndicator ]
 ]
 
 { #category : #'*Typer-GToolkit' }

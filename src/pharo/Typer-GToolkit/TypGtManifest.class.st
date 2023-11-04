@@ -45,8 +45,7 @@ TypGtManifest class >> nil [
 		allSubInstancesDo: [ :e | 
 			e attributes
 				removeKey: #typGtContext ifAbsent: [  "noop" ];
-				removeKey: #typGtContextPromise ifAbsent: [  "noop" ];
-				removeKey: #typGtLookup ifAbsent: [  "noop" ] ].
+				removeKey: #typGtContextPromise ifAbsent: [  "noop" ] ].
 	GtPharoMethodContextCoder allInstances
 		select: [ :e | 
 			e context isNotNil

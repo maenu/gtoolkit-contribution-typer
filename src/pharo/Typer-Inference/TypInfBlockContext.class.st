@@ -8,18 +8,16 @@ Class {
 }
 
 { #category : #accessing }
-TypInfBlockContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType lookup: aLookup message: aMessageNode [
+TypInfBlockContext class >> sender: aContext state: aState node: aNode lookup: aLookup message: aMessageNode [
 	self shouldNotImplement
 ]
 
 { #category : #accessing }
-TypInfBlockContext class >> sender: aContext state: aState node: aNode self: aType super: anotherType lookup: aLookup message: aMessage block: aBlock [
+TypInfBlockContext class >> sender: aContext state: aState node: aNode lookup: aLookup message: aMessage block: aBlock [
 	^ (super
 		sender: aContext
 		state: aState
 		node: aNode
-		self: aType
-		super: anotherType
 		lookup: aLookup
 		message: aMessage)
 		initializeBlock: aBlock;
@@ -89,8 +87,18 @@ TypInfBlockContext >> install [
 ]
 
 { #category : #accessing }
+TypInfBlockContext >> self [
+	^ block context self
+]
+
+{ #category : #accessing }
 TypInfBlockContext >> stackSize [
 	^ sender stackSize
+]
+
+{ #category : #accessing }
+TypInfBlockContext >> super [
+	^ block context super
 ]
 
 { #category : #accessing }

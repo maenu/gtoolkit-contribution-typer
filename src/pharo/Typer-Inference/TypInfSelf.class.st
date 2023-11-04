@@ -5,13 +5,13 @@ Class {
 }
 
 { #category : #accessing }
-TypInfSelf >> newMethodLookup: aMessage [
-	^ TypInfMethodLookup
-		receiver: context self
-		selector: aMessage selector
-		arguments: aMessage arguments
-		message: aMessage
-		parent: nil
+TypInfSelf >> newMethodLookups: aMessage [
+	^ {TypMethodLookup
+			receiver: context self
+			selector: aMessage selector
+			arguments: aMessage arguments
+			self: context self
+			super: context super}
 ]
 
 { #category : #initialization }

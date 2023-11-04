@@ -76,7 +76,7 @@ TypInfContext >> typGtHasCoder [
 
 { #category : #'*Typer-GToolkit' }
 TypInfContext >> typGtIndicator [
-	^ 'l'
+	^ 'l:', lookup typGtIndicator
 ]
 
 { #category : #'*Typer-GToolkit' }

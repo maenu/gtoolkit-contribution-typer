@@ -75,6 +75,16 @@ TypUnionType >> at: aString [
 	^ (types collect: [ :e | e at: aString ]) typAsType
 ]
 
+{ #category : #accessing }
+TypUnionType >> canLookupMethod: aSymbol arguments: aCollection [
+	^ types
+		allSatisfy: [ :t | 
+			(TypMethodLookup
+				receiver: t
+				selector: aSymbol
+				arguments: aCollection) canResolve ]
+]
+
 { #category : #invalidation }
 TypUnionType >> dependsOnClassDescription: aClassDescription [
 	(super dependsOnClassDescription: aClassDescription) ifTrue: [ ^ true ].

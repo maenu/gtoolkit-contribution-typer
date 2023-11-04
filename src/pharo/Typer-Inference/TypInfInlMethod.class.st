@@ -6,11 +6,11 @@ Class {
 
 { #category : #accessing }
 TypInfInlMethod >> transfer [
-	self lookup preResolve
-		reject: [ :l | l resolver isKindOf: TypInfMethodResolver ]
-		thenDo: [ :l | 
-			| resolved |
-			resolved := l resolve.
+	| lookup |
+	lookup := self lookup preResolve.
+	(lookup resolver isKindOf: TypInfMethodResolver)
+		ifFalse: [ | resolved |
+			resolved := self lookup resolve.
 			resolved arguments
 				withIndexDo: [ :t :i | self constrain: (self inArgumentAt: i) to: t ].
 			in

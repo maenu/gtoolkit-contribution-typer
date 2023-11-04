@@ -9,7 +9,7 @@ TypInfSignalMessage >> newContexts [
 	context stack
 		reverseDo: [ :c | 
 			(c handles: context exception)
-				ifTrue: [ ^ {lookup -> (c newExceptionHandlerContext: self)} ] ].
+				ifTrue: [ ^ {c newExceptionHandlerContext: self} ] ].
 	^ #()
 ]
 

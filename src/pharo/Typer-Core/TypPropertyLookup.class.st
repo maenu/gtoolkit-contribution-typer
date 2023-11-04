@@ -11,7 +11,7 @@ Class {
 { #category : #comparing }
 TypPropertyLookup >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
-	super = anObject ifFalse: [ ^ false ].
+	anObject class = self class ifFalse: [ ^ false ].
 	anObject selector = selector ifFalse: [ ^ false ].
 	^ anObject receiver = receiver
 ]
@@ -35,7 +35,7 @@ TypPropertyLookup >> hasParent [
 
 { #category : #comparing }
 TypPropertyLookup >> hash [
-	^ (super hash bitXor: selector hash) bitXor: receiver hash
+	^ selector hash bitXor: receiver hash
 ]
 
 { #category : #initialization }
