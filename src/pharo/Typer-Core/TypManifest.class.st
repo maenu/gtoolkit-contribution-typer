@@ -84,7 +84,8 @@ TypManifest class >> invalidate [
 	logger := nil.
 	TypLookup invalidateAll.
 	TypIndex invalidateAll.
-	TypNode invalidateAll
+	TypNode invalidateAll.
+	TypCoverage invalidate
 ]
 
 { #category : #accessing }

@@ -125,6 +125,11 @@ TypType >> canLookupMethod: aSymbol arguments: aCollection [
 		arguments: aCollection) canResolve
 ]
 
+{ #category : #lookup }
+TypType >> canLookupVariable: aSymbol [
+	^ (TypVariableLookup receiver: self selector: aSymbol) canResolve
+]
+
 { #category : #converting }
 TypType >> contravariant: aType [
 	"self and aType are assignable to result.
@@ -371,7 +376,7 @@ TypType >> superOrNil [
 
 { #category : #compatibility }
 TypType >> types [
-	^ {self}
+	^ {self} asIdentitySet
 ]
 
 { #category : #'as yet unclassified' }

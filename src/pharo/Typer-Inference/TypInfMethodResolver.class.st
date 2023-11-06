@@ -27,12 +27,6 @@ TypInfMethodResolver >> result: aLookup root: anotherLookup [
 ]
 
 { #category : #accessing }
-TypInfMethodResolver >> update: aLookup [
-	super update: aLookup.
-	TypInfIndex instance cache
-		typAt: aLookup typInfAsContextPath
-		ifPresent: [ :c | 
-			(TypInfNodeStack actives size + 1 < c nodeStackDepth
-				and: [ TypInfNodeStack canPush: aLookup compiledMethod ast ])
-				ifTrue: [ aLookup updateTo: (self result: aLookup) by: self ] ]
+TypInfMethodResolver >> result: aLookup root: anotherLookup update: aType [
+	^ self result: aLookup root: anotherLookup
 ]

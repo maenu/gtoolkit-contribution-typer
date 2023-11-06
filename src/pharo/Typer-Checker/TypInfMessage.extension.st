@@ -5,8 +5,7 @@ TypInfMessage >> typCheArgumentsWithReceiver: aType on: aStream [
 	aType types
 		do: [ :t | 
 			| expecteds actuals |
-			expecteds := (TypMethodLookup resolver
-					resolve: (self lookups anyOne withReceiver: t)) arguments.
+			expecteds := (self lookups anyOne withReceiver: t) resolve arguments.
 			actuals := aType arguments.
 			1
 				to: (expecteds size min: actuals size)

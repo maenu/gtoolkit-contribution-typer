@@ -110,5 +110,5 @@ TypInfBlockContext >> uninstall [
 { #category : #accessing }
 TypInfBlockContext >> visitReturnNode: aReturnNode [
 	self visitNode: aReturnNode value.
-	current outAdd: (TypInfReturnEdge origin: current target: block context home root)
+	current outAdd: (TypInfReturnEdge origin: current target: block context root)
 ]

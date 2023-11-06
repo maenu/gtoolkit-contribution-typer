@@ -6,14 +6,14 @@ Class {
 
 { #category : #accessing }
 TypInfIndex >> absCanResolve: aLookup message: aMessage [
-	| preResolved |
-	preResolved := aLookup preResolve.
-	preResolved receiver isNamed ifFalse: [ ^ false ].
-	preResolved receiver hasClassDescription ifFalse: [ ^ false ].
+	| resolved |
+	resolved := aLookup resolve.
+	resolved receiver isNamed ifFalse: [ ^ false ].
+	resolved receiver hasClassDescription ifFalse: [ ^ false ].
 	^ cache
 		typAt: {#absCanResolve.
-				preResolved receiver classDescription.
-				preResolved selector}
+				resolved receiver classDescription.
+				resolved selector}
 		ifPresent: [ :m | 
 			nil
 				withArgs: {aLookup.
@@ -24,15 +24,15 @@ TypInfIndex >> absCanResolve: aLookup message: aMessage [
 
 { #category : #accessing }
 TypInfIndex >> absResolve: aLookup message: aMessage [
-	| preResolved |
-	preResolved := aLookup preResolve.
-	^ {nil
+	| resolved |
+	resolved := aLookup resolve.
+	^ nil
 		withArgs: {aLookup.
 				aMessage}
 		executeMethod: (cache
 				typAt: {#absResolve.
-						preResolved receiver classDescription.
-						preResolved selector})}
+						resolved receiver classDescription.
+						resolved selector})
 ]
 
 { #category : #accessing }
@@ -182,14 +182,15 @@ TypInfIndex >> initialize [
 
 { #category : #accessing }
 TypInfIndex >> inlCanResolve: aLookup message: aMessage [
-	| methods |
+	| resolved methods |
+	resolved := aLookup resolve.
 	aMessage context stackSize < TypInfCurrentConfiguration value maxNodeStackSize
 		ifFalse: [ ^ false ].
 	(aMessage couldBeSelfOrSuperSend or: [ aMessage hasNodes ])
 		ifFalse: [ ^ false ].
-	aLookup receiver isNamed ifFalse: [ ^ false ].
-	aLookup receiver hasClassDescription ifFalse: [ ^ false ].
-	(aLookup receiver classDescription canUnderstand: aLookup selector)
+	resolved receiver isNamed ifFalse: [ ^ false ].
+	resolved receiver hasClassDescription ifFalse: [ ^ false ].
+	(resolved receiver classDescription canUnderstand: resolved selector)
 		ifFalse: [ ^ false ].
 	methods := self inlMethods: aLookup.
 	self flag: 'Q inline some of it, lookup the rest, like for variables?'.
@@ -211,8 +212,6 @@ TypInfIndex >> inlMethods: aLookup [
 
 { #category : #accessing }
 TypInfIndex >> inlResolve: aLookup message: aMessage [
-	| method |
-	method := aLookup receiver classDescription lookupSelector: aLookup selector.
 	^ (self inlMethods: aLookup)
 		collect: [ :a | 
 			(a key resolver isKindOf: TypInfMethodResolver)
@@ -220,23 +219,16 @@ TypInfIndex >> inlResolve: aLookup message: aMessage [
 					node := [ a value ast ]
 							on: OCUndeclaredVariableWarning
 							do: [ :e | e resume: e declareUndefined ].
-					aMessage contexts
-						detect: [ :cc | (cc isKindOf: TypInfInlContext) and: cc node = node ]
-						ifFound: [ :cc | cc adoptSelf: aLookup self super: aLookup super ]
-						ifNone: [ TypInfInlContext
-								sender: aMessage context
-								state: aMessage state
-								node: node
-								self: aLookup self
-								super: aLookup super
-								lookup: a key
-								message: aMessage ] ]
+					TypInfInlContext
+						sender: aMessage context
+						state: aMessage state
+						node: node
+						lookup: a key
+						message: aMessage ]
 				ifFalse: [ TypInfInlLookupContext
 						sender: aMessage context
 						state: aMessage state
 						node: aMessage node
-						self: aLookup self
-						super: aLookup super
 						lookup: a key
 						message: aMessage ] ]
 ]

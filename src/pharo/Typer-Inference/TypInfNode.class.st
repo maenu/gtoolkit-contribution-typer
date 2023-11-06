@@ -156,9 +156,8 @@ TypInfNode >> iterate [
 	done := IdentitySet new.
 	[ queue isEmpty ]
 		whileFalse: [ | current |
-			current := done add: queue removeFirst.
-			(current slurpAndTransfer)
-				ifNotEmpty: [ :c | changes at: current put: c ].
+			current := done add: queue removeLast.
+			current slurpAndTransfer ifNotEmpty: [ :c | changes at: current put: c ].
 			queue addAll: (current outNexts reject: [ :n | done includes: n ]) ].
 	^ changes
 ]

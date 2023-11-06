@@ -12,14 +12,14 @@ TypGtCovStyler >> styleNode: aNode [
 		ifPresent: [ :c | 
 			self
 				attributes: {BlTextHighlightAttribute
-							paint: ((c ifTrue: [ Color green ] ifFalse: [ Color red ]) alpha: 0.3) asBlPaint}
+							paint: ((c ifTrue: [ Color green ] ifFalse: [ Color red ]) alpha: 0.3)}
 				from: aNode startWithoutParentheses
 				to: aNode stopWithoutParentheses ]
-		ifAbsent: [  ]
+		ifAbsent: [  "noop" ]
 ]
 
 { #category : #accessing }
 TypGtCovStyler >> visitNode: aNode [
-	self styleNode: aNode.
+	aNode isVariable ifFalse: [ self styleNode: aNode ].
 	super visitNode: aNode
 ]

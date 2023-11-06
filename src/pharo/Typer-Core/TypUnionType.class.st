@@ -77,12 +77,12 @@ TypUnionType >> at: aString [
 
 { #category : #accessing }
 TypUnionType >> canLookupMethod: aSymbol arguments: aCollection [
-	^ types
-		allSatisfy: [ :t | 
-			(TypMethodLookup
-				receiver: t
-				selector: aSymbol
-				arguments: aCollection) canResolve ]
+	^ types allSatisfy: [ :t | t canLookupMethod: aSymbol arguments: aCollection ]
+]
+
+{ #category : #accessing }
+TypUnionType >> canLookupVariable: aSymbol [
+	^ types allSatisfy: [ :t | t canLookupVariable: aSymbol ]
 ]
 
 { #category : #invalidation }
@@ -99,9 +99,9 @@ TypUnionType >> dependsOnCompiledMethod: aCompiledMethod [
 
 { #category : #testing }
 TypUnionType >> hasSuper [
-
 	superType ifNotNil: [ ^ true ].
-	^ ((types reject: #isNil) reject: #isUnknown) anySatisfy: #hasSuper
+	^ (types reject: [ :t | t isNil or: [ t isUnknown or: [ t isVoid ] ] ])
+		anySatisfy: #hasSuper
 ]
 
 { #category : #comparing }
@@ -226,15 +226,17 @@ TypUnionType >> signalsMaybe [
 
 { #category : #accessing }
 TypUnionType >> super [
-	| remains nilTypes unknownTypes current |
+	| current remains nilTypes unknownTypes voidTypes |
 	self assert: [ self hasSuper ].
 	superType ifNotNil: [ ^ superType ].
 	remains := types copy.
 	nilTypes := remains select: #isNil.
 	unknownTypes := remains select: #isUnknown.
+	voidTypes := remains select: #isVoid.
 	remains
 		removeAll: nilTypes;
-		removeAll: unknownTypes.
+		removeAll: unknownTypes;
+		removeAll: voidTypes.
 	current := remains remove: remains anyOne.
 	(remains isEmpty and: [ current hasSuper ])
 		ifTrue: [ current := current super ].
@@ -246,9 +248,12 @@ TypUnionType >> super [
 				ifTrue: [ remains add: (current := TypUnknownType instance) ]
 				ifFalse: [ current = common ifFalse: [ remains add: (current := common) ] ] ].
 	remains := IdentitySet with: current.
-	remains
-		addAll: nilTypes;
-		addAll: unknownTypes.
+	current >= ProtoObject typAsType
+		ifTrue: [ unknownTypes
+				ifNotEmpty: [ remains := IdentitySet with: TypUnknownType instance ] ]
+		ifFalse: [ remains addAll: unknownTypes ].
+	current >= Object typAsType ifFalse: [ remains addAll: nilTypes ].
+	remains addAll: voidTypes.
 	self initializeSuper: remains typAsType.
 	^ superType
 ]

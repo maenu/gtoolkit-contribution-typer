@@ -3,12 +3,12 @@ Extension { #name : #TypInfInlLookupContext }
 { #category : #'*Typer-GToolkit' }
 TypInfInlLookupContext >> typGtAsCoder [
 	^ GtPharoMethodCoder new
-		attributeNamed: #typGtLookup put: root lookup;
-		forMethod: (root lookup resolver typGtExpanderMethod: root lookup);
+		attributeNamed: #typGtIndicator put: self typGtIndicator;
+		forMethod: lookup typGtExpanderMethod;
 		asCoderViewModel
 ]
 
 { #category : #'*Typer-GToolkit' }
 TypInfInlLookupContext >> typGtIndicator [
-	^ 'l'
+	^ 'l:', lookup typGtIndicator
 ]

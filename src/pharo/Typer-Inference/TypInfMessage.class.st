@@ -60,19 +60,13 @@ TypInfMessage >> couldBeSelfOrSuperSend [
 ]
 
 { #category : #accessing }
-TypInfMessage >> findInReceiver [
-	self depthFirstNextReverseDo: [ :n | n node == node receiver ifTrue: [ ^ n ] ].
-	Error signal: 'no receiver found'
-]
-
-{ #category : #accessing }
 TypInfMessage >> hasNodes [
 	^ {self receiver} , self arguments anySatisfy: #hasNode
 ]
 
 { #category : #accessing }
 TypInfMessage >> inReceiver [
-	^ self inAt: #receiver ifAbsentPut: [ self findInReceiver ]
+	^ self inAt: #receiver
 ]
 
 { #category : #accessing }
@@ -122,7 +116,7 @@ TypInfMessage >> newContexts [
 	^ self lookups
 		flatCollect: [ :l | 
 			(TypInfIndex instance absCanResolve: l message: self)
-				ifTrue: [ TypInfIndex instance absResolve: l message: self ]
+				ifTrue: [ {TypInfIndex instance absResolve: l message: self} ]
 				ifFalse: [ (TypInfIndex instance inlCanResolve: l message: self)
 						ifTrue: [ TypInfIndex instance inlResolve: l message: self ]
 						ifFalse: [ {TypInfInlLookupContext

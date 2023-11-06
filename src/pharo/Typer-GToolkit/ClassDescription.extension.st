@@ -67,72 +67,38 @@ ClassDescription >> typGtCovNode [
 
 { #category : #'*Typer-GToolkit' }
 ClassDescription >> typGtShaMethod: aSymbol type: aType [
-	<typPraArguments: 'Symbol,TypType,SequenceableCollection<TypType>'>
-	| methods newSelector |
-	methods := self methods select: [ :e | e typShaCanResolveMethod: aSymbol ].
-	methods ifNotEmpty: [ ^ methods ].
-	newSelector := self typGtShaMethodSelector: aSymbol.
-	self
-		compile: ('{1} aLookup
+	self methods
+		detect: [ :m | m typShaCanResolveMethodSelector: aSymbol ]
+		ifFound: [ :m | ^ m ].
+	^ self
+		compiledMethodAt: (self
+				compile: ('typShaMethod{1}: aLookup root: anotherLookup
 	<typShaMethod: ''{2}''>
 	^ CompiledMethod
 		typAsFunctionTypeWithResult: ''{3}'' typAsType
 		arguments: \{{4}\}'
-				format: {newSelector.
-						aSymbol.
-						aType result.
-						' . '
-							join: (aType arguments collect: [ :e | '''{1}'' typAsType' format: {e} ])}).
-	^ self compiledMethodAt: newSelector asSymbol
-]
-
-{ #category : #'*Typer-GToolkit' }
-ClassDescription >> typGtShaMethodSelector: aSymbol [
-	| i selector |
-	i := 1.
-	[ aSymbol isUnary
-		ifTrue: [ selector := 'typShaMet{1}{2}:'
-					format: {aSymbol capitalized.
-							i} ].
-	aSymbol isBinary ifTrue: [ selector := 'typShaMet{1}:' format: {i} ].
-	aSymbol isKeyword
-		ifTrue: [ selector := 'typShaMet{1}{2}:'
-					format: {''
-								join: (aSymbol keywords collect: [ :e | e capitalized copyFrom: 1 to: e size - 1 ]).
-							i} ].
-	i := i + 1.
-	self includesSelector: selector ] whileTrue.
-	^ selector
+						format: {aSymbol typGtShaMethodSelector.
+								aSymbol.
+								aType result.
+								' . '
+									join: (aType arguments collect: [ :t | '''{1}'' typAsType' format: {t} ])})
+				classified: '*Typer-Shadow-Uncategorized')
 ]
 
 { #category : #'*Typer-GToolkit' }
 ClassDescription >> typGtShaVariable: aSymbol type: aType [
-	<typPraArguments: 'Symbol,TypType,ClassDescription'>
-	| methods newSelector |
-	methods := self class methods
-			select: [ :e | e typShaCanResolveVariable: aSymbol ].
-	methods ifNotEmpty: [ ^ methods ].
-	newSelector := self typGtShaVariableSelector: aSymbol.
-	self class
-		compile: ('{1} aLookup
+	self methods
+		detect: [ :m | m typShaCanResolveVariableSelector: aSymbol ]
+		ifFound: [ :m | ^ m ].
+	^ self
+		compiledMethodAt: (self
+				compile: ('typShaVariable{1}: aLookup root: anotherLookup
 	<typShaVariable: ''{2}''>
 	^ ''{3}'' typAsType'
-				format: {newSelector.
-						aSymbol.
-						aType}).
-	^ {self class compiledMethodAt: newSelector}
-]
-
-{ #category : #'*Typer-GToolkit' }
-ClassDescription >> typGtShaVariableSelector: aSymbol [
-	| i selector |
-	i := 1.
-	[ selector := 'typShaVar{1}{2}:'
-			format: {aSymbol capitalized.
-					i}.
-	i := i + 1.
-	self includesSelector: selector ] whileTrue.
-	^ selector
+						format: {aSymbol capitalized.
+								aSymbol.
+								aType})
+				classified: '*Typer-Shadow-Uncategorized')
 ]
 
 { #category : #'*Typer-GToolkit' }

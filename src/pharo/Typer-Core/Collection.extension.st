@@ -3,11 +3,9 @@ Extension { #name : #Collection }
 { #category : #'*Typer-Core' }
 Collection >> typAsMinimizedType [
 	<typPraResult: 'TypType'>
-	| remains nilTypes unknownTypes voidTypes |
-	self ifEmpty: [ ^ TypVoidType instance ].
-	remains := Set new.
-	self
-		do: [ :e | e isUnion ifTrue: [ remains addAll: e types ] ifFalse: [ remains add: e ] ].
+	| remains nilTypes unknownTypes voidTypes current |
+	remains := self typAsType types.
+	remains size = 1 ifTrue: [ ^ remains anyOne ].
 	nilTypes := remains select: #isNil.
 	unknownTypes := remains select: #isUnknown.
 	voidTypes := remains select: #isVoid.
@@ -22,10 +20,15 @@ Collection >> typAsMinimizedType [
 						ifTrue: [ remains remove: b.
 							a ]
 						ifFalse: [ b ] ] ].
-	remains
-		addAll: nilTypes;
-		addAll: unknownTypes;
-		addAll: voidTypes.
+	current := remains typAsType.
+	unknownTypes
+		ifNotEmpty: [ current >= ProtoObject typAsType
+				ifTrue: [ remains := IdentitySet with: TypUnknownType instance ]
+				ifFalse: [ remains addAll: unknownTypes ] ].
+	nilTypes
+		ifNotEmpty: [ (current isVoid or: [ (current >= Object typAsType) not ])
+				ifTrue: [ remains addAll: nilTypes ] ].
+	remains addAll: voidTypes.
 	remains size = 1 ifTrue: [ ^ remains anyOne ].
 	remains removeAll: voidTypes.
 	remains size = 1 ifTrue: [ ^ remains anyOne ].

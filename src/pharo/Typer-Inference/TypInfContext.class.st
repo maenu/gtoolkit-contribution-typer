@@ -189,6 +189,14 @@ TypInfContext >> printOn: aStream [
 ]
 
 { #category : #accessing }
+TypInfContext >> receiver: aNode [
+	^ nodes
+		at: aNode
+		ifPresent: #last
+		ifAbsent: [ Error signal: 'no receiver found' ]
+]
+
+{ #category : #accessing }
 TypInfContext >> returns: aContext [
 	^ (root leaves: aContext)
 		allSatisfy: [ :n | 
@@ -339,7 +347,7 @@ TypInfContext >> visitMessageNode: aMessageNode [
 	arguments := aMessageNode arguments collect: [ :n | self visitNode: n ].
 	self next: aMessageNode.
 	current inArguments: arguments.
-	current inReceiver: current findInReceiver.
+	current inReceiver: (self receiver: aMessageNode receiver).
 	^ current
 ]
 

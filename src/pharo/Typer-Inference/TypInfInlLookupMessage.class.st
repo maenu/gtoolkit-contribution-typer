@@ -18,26 +18,22 @@ TypInfInlLookupMessage >> method [
 TypInfInlLookupMessage >> newContexts [
 	self recursiveContextOrNil
 		ifNotNil: [ :c | 
-			^ {lookup
-					-> (TypInfRecursionContext
-							sender: context
-							state: state copy
-							node: node
-							self: context self
-							super: context super
-							message: self)} ].
+			^ {TypInfRecursionContext
+					sender: context
+					state: state copy
+					node: node
+					lookup: c lookup
+					message: self} ].
 	^ self method signalsAlways
 		ifNil: [ #() ]
 		ifNotNil: [ :t | 
-			{lookup
-					-> (TypInfSignalContext
-							sender: context
-							state: state copy
-							node: node
-							self: context self
-							super: context super
-							message: self
-							exception: t)} ]
+			{TypInfSignalContext
+					sender: context
+					state: state copy
+					node: node
+					lookup: context lookup
+					message: self
+					exception: t} ]
 ]
 
 { #category : #accessing }

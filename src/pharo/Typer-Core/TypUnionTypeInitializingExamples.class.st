@@ -7,6 +7,72 @@ Class {
 }
 
 { #category : #accessing }
+TypUnionTypeInitializingExamples >> typAsMinimizedTypeDoesNotReduceNilAndVoidAndUnknown [
+	<gtExample>
+	self
+		assert: {TypVoidType instance.
+				TypNilType instance.
+				TypUnknownType instance} typAsMinimizedType types
+		equals: {TypVoidType instance.
+				TypNilType instance.
+				TypUnknownType instance} asIdentitySet.
+	^ nil
+]
+
+{ #category : #accessing }
+TypUnionTypeInitializingExamples >> typAsMinimizedTypeDoesNotReduceNonCovariantTypes [
+	<gtExample>
+	self
+		assert: {TypNamedType classDescription: Integer.
+				TypNamedType classDescription: Number.
+				TypNamedType classDescription: Boolean} typAsMinimizedType types
+		equals: {TypNamedType classDescription: Number.
+				TypNamedType classDescription: Boolean} asIdentitySet.
+	^ nil
+]
+
+{ #category : #accessing }
+TypUnionTypeInitializingExamples >> typAsMinimizedTypeDoesNotReduceUnknownAndNonProtoObject [
+	<gtExample>
+	self
+		assert: {TypNamedType classDescription: Object.
+				TypUnknownType instance} typAsMinimizedType types
+		equals: {TypNamedType classDescription: Object.
+				TypUnknownType instance} asIdentitySet.
+	^ nil
+]
+
+{ #category : #accessing }
+TypUnionTypeInitializingExamples >> typAsMinimizedTypeReducesCovariantTypes [
+	<gtExample>
+	self
+		assert: {TypNamedType classDescription: Integer.
+				TypNamedType classDescription: Number} typAsMinimizedType types
+		equals: {TypNamedType classDescription: Number} asIdentitySet.
+	^ nil
+]
+
+{ #category : #accessing }
+TypUnionTypeInitializingExamples >> typAsMinimizedTypeReducesNilAndObject [
+	<gtExample>
+	self
+		assert: {TypNamedType classDescription: Object.
+				TypNilType instance} typAsMinimizedType types
+		equals: {TypNamedType classDescription: Object} asIdentitySet.
+	^ nil
+]
+
+{ #category : #accessing }
+TypUnionTypeInitializingExamples >> typAsMinimizedTypeReducesUnknownAndProtoObject [
+	<gtExample>
+	self
+		assert: {TypNamedType classDescription: ProtoObject.
+				TypUnknownType instance} typAsMinimizedType types
+		equals: {TypUnknownType instance} asIdentitySet.
+	^ nil
+]
+
+{ #category : #accessing }
 TypUnionTypeInitializingExamples >> typAsTypeFlattensUnionTypes [
 
 	<gtExample>

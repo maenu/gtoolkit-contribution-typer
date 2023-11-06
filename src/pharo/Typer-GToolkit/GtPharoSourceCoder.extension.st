@@ -53,8 +53,8 @@ GtPharoSourceCoder >> typGtIndicator [
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns viewModel: aViewModel [
 	<gtAstCoderAddOns: 10>
-	"aViewModel
-		completionStrategy: (aViewModel completionStrategy typGtAsCompletionStrategyIn: self)."
+	aViewModel
+		completionStrategy: (aViewModel completionStrategy typGtAsCompletionStrategyIn: self).
 	self
 		attributeNamed: #typGtContext
 		ifPresent: [ self
@@ -65,6 +65,9 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns viewM
 	anAddOns
 		addShortcut: TypGtBrowseImplementorsShortcut new;
 		addShortcut: TypGtPraTypeShortcut new;
+		addStyler: (TypGtCovStyler new
+				coderViewModel: aViewModel;
+				yourself);
 		addShortcut: TypGtShaTypeShortcut new;
 		addMainAction: 'types' translated
 			icon: BrGlamorousIcons traitIcon
@@ -72,7 +75,10 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns viewM
 					typGtToggleStylersAllFor: anAst
 					into: anAddOns
 					viewModel: aViewModel.
-				self requestStyleSourceText ]
+				self requestStyleSourceText ];
+		addMainAction: 'instrument' translated
+			icon: BrGlamorousIcons classicon
+			action: [ self compiledMethod typCovInstrument ]
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -95,7 +101,7 @@ GtPharoSourceCoder >> typGtShaTypeWithAt: anInteger [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtToggleStylersAllFor: anAst into: anAddOns viewModel: aViewModel [
-	(anAddOns stylers select: [ :e | e isKindOf: TypGtRbAstStyler ])
+	(anAddOns stylers select: [ :e | e isKindOf: TypGtRbAstWithContextStyler ])
 		ifNotEmpty: [ :c | 
 			c do: [ :e | anAddOns removeStylersOfClass: e class ].
 			anAddOns
@@ -122,8 +128,5 @@ GtPharoSourceCoder >> typGtToggleStylersAllFor: anAst into: anAddOns viewModel: 
 						yourself);
 				addStyler: (TypGtCheStyler new
 						coderViewModel: aViewModel;
-						yourself)";
-				addStyler: (TypGtCovStyler new
-						coderViewModel: aViewModel;
-						yourself)" ]
+						yourself) ]
 ]

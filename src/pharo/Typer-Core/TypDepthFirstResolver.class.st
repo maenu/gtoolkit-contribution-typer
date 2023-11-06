@@ -26,13 +26,6 @@ TypDepthFirstResolver >> initializeResolver: aResolver [
 	resolver := aResolver
 ]
 
-{ #category : #resolving }
-TypDepthFirstResolver >> preResolve: aLookup root: anotherLookup [
-	(resolver canResolve: aLookup)
-		ifTrue: [ ^ resolver preResolve: aLookup root: anotherLookup ].
-	^ self preResolve: aLookup asParent root: anotherLookup
-]
-
 { #category : #accessing }
 TypDepthFirstResolver >> printOn: aStream [
 
@@ -41,8 +34,7 @@ TypDepthFirstResolver >> printOn: aStream [
 ]
 
 { #category : #resolving }
-TypDepthFirstResolver >> resolve: aLookup root: anotherLookup [
-	(resolver canResolve: aLookup)
-		ifTrue: [ ^ resolver resolve: aLookup root: anotherLookup ].
-	^ self resolve: aLookup asParent root: anotherLookup
+TypDepthFirstResolver >> resolve: aLookup [
+	(resolver canResolve: aLookup) ifTrue: [ ^ resolver resolve: aLookup ].
+	^ self resolve: aLookup asParent
 ]

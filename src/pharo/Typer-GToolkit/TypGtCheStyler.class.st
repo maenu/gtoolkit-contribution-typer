@@ -1,6 +1,6 @@
 Class {
 	#name : #TypGtCheStyler,
-	#superclass : #TypGtRbAstStyler,
+	#superclass : #TypGtRbAstWithContextStyler,
 	#category : #'Typer-GToolkit-Core'
 }
 

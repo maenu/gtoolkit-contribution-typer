@@ -36,3 +36,8 @@ TypInfVariableResolver >> result: aLookup root: anotherLookup [
 		ifNone: [ self
 				error: 'neither class nor instance variable, should not have been accepted in the first place' ]
 ]
+
+{ #category : #accessing }
+TypInfVariableResolver >> result: aLookup root: anotherLookup update: aType [
+	^ self result: aLookup root: anotherLookup
+]

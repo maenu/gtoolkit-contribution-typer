@@ -1,6 +1,6 @@
 Class {
 	#name : #TypGtDeadStyler,
-	#superclass : #TypGtRbAstStyler,
+	#superclass : #TypGtRbAstWithContextStyler,
 	#category : #'Typer-GToolkit-Core'
 }
 

@@ -83,18 +83,6 @@ TypLookup >> hasParent [
 ]
 
 { #category : #accessing }
-TypLookup >> preResolve [
-	resolved ifNotNil: [ ^ resolved ].
-	self canResolve ifTrue: [ ^ self class resolver preResolve: self ].
-	^ self
-]
-
-{ #category : #accessing }
-TypLookup >> preResolve: aResolver [
-	resolver := aResolver
-]
-
-{ #category : #accessing }
 TypLookup >> printOn: aStream [
 	resolved ifNil: [ ^ self ].
 	resolved == self ifTrue: [ ^ self ].
@@ -105,34 +93,38 @@ TypLookup >> printOn: aStream [
 { #category : #accessing }
 TypLookup >> resolve [
 	resolved ifNotNil: [ ^ resolved ].
-	self canResolve ifTrue: [ ^ self class resolver resolve: self ].
-	result := TypUnknownType instance.
-	^ self
-]
-
-{ #category : #accessing }
-TypLookup >> resolved: aLookup resolver: aResolver result: aType [
-	self assert: [ aLookup isKindOf: self class ].
-	self assert: [ aResolver isKindOf: TypResolver ].
-	self assert: [ aType isKindOf: TypType ].
-	resolved := aLookup.
-	resolver := aResolver.
-	result := aType
+	self canResolve ifFalse: [ ^ self ].
+	resolved := self class resolver resolve: self.
+	resolver := resolved resolver.
+	^ resolved
 ]
 
 { #category : #accessing }
 TypLookup >> resolver [
+	resolver ifNotNil: [ ^ resolver ].
+	self resolve.
 	^ resolver
 ]
 
 { #category : #accessing }
+TypLookup >> resolver: aResolver [
+	self assert: [ aResolver isKindOf: TypResolver ].
+	resolver := aResolver
+]
+
+{ #category : #accessing }
 TypLookup >> result [
-	result ifNotNil: [ ^ result ].
+	result
+		ifNotNil: [ ^ result := resolver
+					result: resolved
+					root: self
+					update: result ].
 	self resolve.
-	^ result
+	resolver ifNil: [ ^ result ].
+	^ result := resolver result: resolved root: self
 ]
 
 { #category : #accessing }
 TypLookup >> resultOrUnknown [
-	^ self result ifNil: TypUnknownType instance
+	^ self result ifNil: [ TypUnknownType instance ]
 ]

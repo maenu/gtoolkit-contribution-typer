@@ -11,19 +11,7 @@ TypResolver >> canResolve: aLookup [
 
 { #category : #resolving }
 TypResolver >> resolve: aLookup [
-	^ self resolve: aLookup root: aLookup
-]
-
-{ #category : #resolving }
-TypResolver >> resolve: aLookup root: anotherLookup [
-	aLookup
-		resolved: aLookup
-		resolver: self
-		result: (self result: aLookup root: aLookup).
-	anotherLookup
-		resolved: aLookup
-		resolver: self
-		result: (self result: aLookup root: anotherLookup).
+	aLookup resolver: self.
 	^ aLookup
 ]
 
@@ -33,8 +21,6 @@ TypResolver >> result: aLookup root: anotherLookup [
 ]
 
 { #category : #accessing }
-TypResolver >> update: aLookup [
-	"noop by default"
-
-	
+TypResolver >> result: aLookup root: anotherLookup update: aType [
+	^ aType
 ]

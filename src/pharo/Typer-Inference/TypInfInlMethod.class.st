@@ -7,14 +7,12 @@ Class {
 { #category : #accessing }
 TypInfInlMethod >> transfer [
 	| lookup |
-	lookup := self lookup preResolve.
+	lookup := self lookup .
 	(lookup resolver isKindOf: TypInfMethodResolver)
-		ifFalse: [ | resolved |
-			resolved := self lookup resolve.
-			resolved arguments
+		ifFalse: [ lookup arguments
 				withIndexDo: [ :t :i | self constrain: (self inArgumentAt: i) to: t ].
 			in
 				at: #return
-				ifPresent: [ :s | s do: [ :e | self constrain: e origin to: resolved result ] ] ].
+				ifPresent: [ :s | s do: [ :e | self constrain: e origin to: lookup result ] ] ].
 	super transfer
 ]

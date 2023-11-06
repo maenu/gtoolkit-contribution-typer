@@ -73,8 +73,9 @@ TypShaExamples >> lookupTypeAsType [
 { #category : #accessing }
 TypShaExamples >> lookupTypeIndex [
 	<gtExample>
-	^ TypTypeLookup resolver
-		resolve: (TypTypeLookup classDescription: TypNamedType)
+	| lookup |
+	lookup := TypTypeLookup classDescription: TypNamedType.
+	^ TypTypeLookup resolver resolve: lookup
 ]
 
 { #category : #accessing }

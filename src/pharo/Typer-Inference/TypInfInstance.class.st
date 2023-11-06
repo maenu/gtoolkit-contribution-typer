@@ -6,15 +6,12 @@ Class {
 
 { #category : #accessing }
 TypInfInstance >> transfer [
+	| lookup |
 	((in at: #next) allSatisfy: [ :e | e origin isKindOf: TypInfAssignment ])
 		ifTrue: [ ^ self put: (state at: node variable) ].
+	lookup := TypVariableLookup receiver: context self selector: node variable name.
 	self
-		covariantPut: ((context self
-				preResolveVariable: (TypVariableLookup
-						receiver: context self
-						selector: node variable name asSymbol
-						parent: nil))
-				detect: [ :l | l resolver isKindOf: TypInfVariableResolver ]
-				ifFound: [ :l | node variable typInfAssignedTypeSelf: context self super: context super ]
-				ifNone: [ context self lookupVariable: node variable name asSymbol ])
+		covariantPut: ((lookup resolver isKindOf: TypInfVariableResolver)
+				ifTrue: [ node variable typInfAssignedTypeSelf: context self super: context super ]
+				ifFalse: [ lookup resultOrUnknown ])
 ]
