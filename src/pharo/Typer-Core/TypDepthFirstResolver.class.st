@@ -35,6 +35,9 @@ TypDepthFirstResolver >> printOn: aStream [
 
 { #category : #resolving }
 TypDepthFirstResolver >> resolve: aLookup [
+	| resolved |
 	(resolver canResolve: aLookup) ifTrue: [ ^ resolver resolve: aLookup ].
-	^ self resolve: aLookup asParent
+	resolved := self resolve: aLookup asParent.
+	aLookup resolved: resolved resolver: resolved resolver.
+	^ resolved
 ]

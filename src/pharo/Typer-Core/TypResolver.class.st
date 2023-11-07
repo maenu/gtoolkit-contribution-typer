@@ -11,8 +11,7 @@ TypResolver >> canResolve: aLookup [
 
 { #category : #resolving }
 TypResolver >> resolve: aLookup [
-	aLookup resolver: self.
-	^ aLookup
+	^ aLookup resolved: aLookup resolver: self
 ]
 
 { #category : #accessing }

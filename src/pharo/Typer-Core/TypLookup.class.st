@@ -94,9 +94,14 @@ TypLookup >> printOn: aStream [
 TypLookup >> resolve [
 	resolved ifNotNil: [ ^ resolved ].
 	self canResolve ifFalse: [ ^ self ].
-	resolved := self class resolver resolve: self.
-	resolver := resolved resolver.
+	self class resolver resolve: self.
 	^ resolved
+]
+
+{ #category : #accessing }
+TypLookup >> resolved: aLookup resolver: aResolver [
+	resolved := aLookup.
+	resolver := aResolver
 ]
 
 { #category : #accessing }
@@ -104,12 +109,6 @@ TypLookup >> resolver [
 	resolver ifNotNil: [ ^ resolver ].
 	self resolve.
 	^ resolver
-]
-
-{ #category : #accessing }
-TypLookup >> resolver: aResolver [
-	self assert: [ aResolver isKindOf: TypResolver ].
-	resolver := aResolver
 ]
 
 { #category : #accessing }

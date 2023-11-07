@@ -44,5 +44,8 @@ TypBreadthFirstResolver >> printOn: aStream [
 
 { #category : #resolving }
 TypBreadthFirstResolver >> resolve: aLookup [
-	^ (resolvers detect: [ :e | e canResolve: aLookup ]) resolve: aLookup
+	| resolved |
+	resolved := (resolvers detect: [ :e | e canResolve: aLookup ]) resolve: aLookup.
+	aLookup resolved: resolved resolver: resolved resolver.
+	^ resolved
 ]
