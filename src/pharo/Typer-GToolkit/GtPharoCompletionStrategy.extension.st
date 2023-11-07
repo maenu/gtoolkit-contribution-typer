@@ -12,3 +12,8 @@ GtPharoCompletionStrategy >> typGtAsCompletionStrategyIn: aCoder [
 		do: [ :e | strategy instVarNamed: e put: (self instVarNamed: e) ].
 	^ strategy
 ]
+
+{ #category : #'*Typer-GToolkit' }
+GtPharoCompletionStrategy >> typGtAsPharoCompletionStrategyIn: aCoder [
+	^ self
+]

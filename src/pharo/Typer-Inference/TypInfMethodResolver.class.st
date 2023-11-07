@@ -23,7 +23,13 @@ TypInfMethodResolver >> printOn: aStream [
 
 { #category : #accessing }
 TypInfMethodResolver >> result: aLookup root: anotherLookup [
-	^ (TypInfIndex instance contextAt: aLookup) root type
+	| method |
+	method := aLookup receiver classDescription >> aLookup selector.
+	^ (TypInfContextLookup
+		node: method ast
+		arguments: anotherLookup arguments
+		self: anotherLookup self
+		super: anotherLookup super) result root type
 ]
 
 { #category : #accessing }

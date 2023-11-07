@@ -74,7 +74,11 @@ RPackage >> typGtView2For: aView [
 						yourself ];
 				connect: methods
 					toAll: [ :f | 
-						(TypInfIndex instance contextAt: f typInfAsLookup)
+						((TypInfContextLookup
+							node: f ast
+							arguments: f selector typInfUnknownArguments
+							self: f methodClass typAsType
+							super: f methodClass typAsType superOrNil) resultAsyncFor: 1 second) wait
 							select: [ :g | methods includes: g ] ] ];
 		yourself
 ]

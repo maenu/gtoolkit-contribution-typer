@@ -1,6 +1,15 @@
 Extension { #name : #BlockClosure }
 
 { #category : #'*Typer-Core' }
+BlockClosure >> typAsAsyncFuture [
+	| configuration |
+	configuration := TypInfCurrentConfiguration value.
+	^ [ TypInfIsAsync
+		do: [ TypInfCurrentConfiguration value: configuration during: self ] ]
+		asAsyncFuture
+]
+
+{ #category : #'*Typer-Core' }
 BlockClosure >> typRunAtMost: aDuration onCompletion: aBlock onTimeout: anotherBlock [
 	| semaphore process result exception |
 	semaphore := Semaphore new.

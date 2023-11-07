@@ -20,6 +20,15 @@ RBProgramNode >> typInfAnnotated: aType [
 ]
 
 { #category : #'*Typer-Inference' }
+RBProgramNode >> typInfContextLookup [
+	^ TypInfContextLookup
+		node: self
+		arguments: #()
+		self: nil
+		super: nil
+]
+
+{ #category : #'*Typer-Inference' }
 RBProgramNode >> typInfNodeInContext: aContext [
 	self subclassResponsibility
 ]

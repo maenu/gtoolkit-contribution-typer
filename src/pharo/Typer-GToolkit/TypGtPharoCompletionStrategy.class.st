@@ -41,3 +41,14 @@ TypGtPharoCompletionStrategy >> selectorStreamForReceiver: aType matchingWords: 
 TypGtPharoCompletionStrategy >> typGtAsCompletionStrategyIn: aCoder [
 	^ self
 ]
+
+{ #category : #accessing }
+TypGtPharoCompletionStrategy >> typGtAsPharoCompletionStrategyIn: aCoder [
+	"kind of a copy as subinstance"
+
+	| strategy |
+	strategy := GtPharoCompletionStrategy new.
+	(strategy class withAllSuperclasses flatCollect: #instVarNames)
+		do: [ :e | strategy instVarNamed: e put: (self instVarNamed: e) ].
+	^ strategy
+]

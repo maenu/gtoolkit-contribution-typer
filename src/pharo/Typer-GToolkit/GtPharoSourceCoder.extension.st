@@ -27,8 +27,7 @@ GtPharoSourceCoder >> typGtContextAsync [
 	attributes at: #typGtContextPromise ifPresent: [ :p | ^ p ].
 	^ attributes
 		at: #typGtContextPromise
-		put: ([ TypInfIndex instance contextAt: self compiledMethod typInfAsLookup ]
-				asAsyncFuture typAwait
+		put: (self rbAST typInfContextLookup resultAsync
 				then: [ :c | 
 					attributes
 						removeKey: #typGtContextPromise;
@@ -53,32 +52,12 @@ GtPharoSourceCoder >> typGtIndicator [
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns viewModel: aViewModel [
 	<gtAstCoderAddOns: 10>
-	aViewModel
-		completionStrategy: (aViewModel completionStrategy typGtAsCompletionStrategyIn: self).
-	self
-		attributeNamed: #typGtContext
-		ifPresent: [ self
-				typGtToggleStylersAllFor: anAst
-				into: anAddOns
-				viewModel: aViewModel ]
-		ifAbsent: [  "noop" ].
 	anAddOns
-		addShortcut: TypGtBrowseImplementorsShortcut new;
-		addShortcut: TypGtPraTypeShortcut new;
-		addStyler: (TypGtCovStyler new
-				coderViewModel: aViewModel;
-				yourself);
-		addShortcut: TypGtShaTypeShortcut new;
 		addMainAction: 'types' translated
-			icon: BrGlamorousIcons traitIcon
-			action: [ self
-					typGtToggleStylersAllFor: anAst
-					into: anAddOns
-					viewModel: aViewModel.
-				self requestStyleSourceText ];
-		addMainAction: 'instrument' translated
-			icon: BrGlamorousIcons classicon
-			action: [ self compiledMethod typCovInstrument ]
+		icon: BrGlamorousIcons traitIcon
+		action: [ self typGtToggleTypesInto: anAddOns viewModel: aViewModel ].
+	self typGtHasContext
+		ifTrue: [ self typGtToggleTypesInto: anAddOns viewModel: aViewModel ]
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -100,18 +79,25 @@ GtPharoSourceCoder >> typGtShaTypeWithAt: anInteger [
 ]
 
 { #category : #'*Typer-GToolkit' }
-GtPharoSourceCoder >> typGtToggleStylersAllFor: anAst into: anAddOns viewModel: aViewModel [
+GtPharoSourceCoder >> typGtToggleTypesInto: anAddOns viewModel: aViewModel [
 	(anAddOns stylers select: [ :e | e isKindOf: TypGtRbAstWithContextStyler ])
 		ifNotEmpty: [ :c | 
 			c do: [ :e | anAddOns removeStylersOfClass: e class ].
+			anAddOns shortcuts shortcuts
+				removeAllSuchThat: [ :s | s class = TypGtBrowseImplementorsShortcut ];
+				removeAllSuchThat: [ :s | s class = TypGtShaTypeShortcut ].
 			anAddOns
 				addStyler: (GtPharoMethodExpanderStyler new
 						coderViewModel: aViewModel;
 						yourself);
 				addStyler: (GtMethodAdviceStyler new
 						coderViewModel: aViewModel;
-						yourself) ]
+						yourself).
+			aViewModel
+				completionStrategy: (aViewModel completionStrategy typGtAsPharoCompletionStrategyIn: self) ]
 		ifEmpty: [ anAddOns
+				addShortcut: TypGtBrowseImplementorsShortcut new;
+				addShortcut: TypGtShaTypeShortcut new;
 				removeStylersOfClass: GtPharoMethodExpanderStyler;
 				removeStylersOfClass: GtMethodAdviceStyler;
 				addStyler: (TypGtDeadStyler new
@@ -128,5 +114,8 @@ GtPharoSourceCoder >> typGtToggleStylersAllFor: anAst into: anAddOns viewModel: 
 						yourself);
 				addStyler: (TypGtCheStyler new
 						coderViewModel: aViewModel;
-						yourself) ]
+						yourself).
+			aViewModel
+				completionStrategy: (aViewModel completionStrategy typGtAsCompletionStrategyIn: self) ].
+	self requestStyleSourceText
 ]

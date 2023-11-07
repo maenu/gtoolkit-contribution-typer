@@ -27,41 +27,13 @@ CompiledMethod >> typInfAbsResolve [
 ]
 
 { #category : #'*Typer-Inference' }
-CompiledMethod >> typInfAsLookup [
-	| selfType |
-	selfType := self methodClass typAsType.
-	^ self typInfAsLookupWithSelf: selfType super: selfType superOrNil
-]
-
-{ #category : #'*Typer-Inference' }
-CompiledMethod >> typInfAsLookupWithSelf: aType super: anotherType [
-	^ TypMethodLookup
-		receiver: self methodClass typAsType
-		selector: self selector
-		arguments: (self selector numArgs
-				typTimesCollect: [ :i | TypUnknownType instance ])
-		self: aType
-		super: anotherType
-]
-
-{ #category : #'*Typer-Inference' }
-CompiledMethod >> typInfContext [
-	^ TypInfIndex instance contextAt: self typInfAsLookup
-]
-
-{ #category : #'*Typer-Inference' }
 CompiledMethod >> typInfType [
 	^ self class
 		typAsFunctionTypeWithResult: TypUnknownType instance
-		arguments: (self numArgs typTimesCollect: [ :i | TypUnknownType instance ])
+		arguments: self selector typInfUnknownArguments
 ]
 
 { #category : #'*Typer-Inference' }
 CompiledMethod >> typInfTypes [
 	^ {Integer typAsType}
-]
-
-{ #category : #'*Typer-Inference' }
-CompiledMethod >> typInfUpdateContext [
-	^ TypInfIndex instance contextUpdateAt: self typInfAsLookup
 ]

@@ -117,48 +117,6 @@ TypInfIndex >> addMethod: aMethod [
 ]
 
 { #category : #accessing }
-TypInfIndex >> contextAsyncAt: aLookup for: aDuration [
-	| configuration |
-	configuration := TypInfCurrentConfiguration value.
-	^ [ TypInfCurrentConfiguration
-		value: configuration
-		during: [ self contextAt: aLookup ] ] asAsyncFuture typAwaitFor: aDuration
-]
-
-{ #category : #accessing }
-TypInfIndex >> contextAsyncUpdateAt: aLookup for: aDuration [
-	self contextRemoveAt: aLookup.
-	^ self contextAsyncAt: aLookup for: aDuration
-]
-
-{ #category : #accessing }
-TypInfIndex >> contextAt: aLookup [
-	| context |
-	cache
-		typAt: aLookup typInfAsContextPath
-		ifPresent: [ :c | 
-			TypInfNodeStack actives size + 1 < c nodeStackDepth
-				ifTrue: [ self contextRemoveAt: aLookup ]
-				ifFalse: [ ^ c ] ].
-	context := aLookup compiledMethod ast typInfContextFor: aLookup.
-	context canRun ifFalse: [ ^ context ].
-	cache typAt: aLookup typInfAsContextPath put: context.
-	[ context run ] ifCurtailed: [ self contextRemoveAt: aLookup ].
-	^ context
-]
-
-{ #category : #accessing }
-TypInfIndex >> contextRemoveAt: aLookup [
-	^ cache typRemoveAt: aLookup typInfAsContextPath
-]
-
-{ #category : #accessing }
-TypInfIndex >> contextUpdateAt: aLookup [
-	self contextRemoveAt: aLookup.
-	^ self contextAt: aLookup
-]
-
-{ #category : #accessing }
 TypInfIndex >> implementors95Quantile [
 	| values |
 	values := ((cache at: #implementors) values collect: #size) sorted.
@@ -291,12 +249,6 @@ TypInfIndex >> removeMethod: aMethod [
 								aMethod methodClass.
 								selector}
 						ifPresent: [ :s | s remove: aMethod ] ] ].
-	cache
-		typRemoveAt: {#context.
-				aMethod methodClass.
-				aMethod selector}.
-	self flag: 'TODO invalidate senders etc. too'.
-	"oldMethod sendsSelector: aLookup selector"
 	cache
 		typAt: {#implementors.
 				aMethod selector}

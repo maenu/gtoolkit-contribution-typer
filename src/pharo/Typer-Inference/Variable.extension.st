@@ -2,7 +2,8 @@ Extension { #name : #Variable }
 
 { #category : #'*Typer-Inference' }
 Variable >> typInfAssignedTypeSelf: aType super: anotherType [
-	TypInfNodeStack actives size <= (TypInfCurrentConfiguration value maxNodeStackSize / 2)
+	TypInfNodeStack actives size
+		<= (TypInfCurrentConfiguration value maxNodeStackSize / 2)
 		ifFalse: [ ^ TypUnknownType instance ].
 	^ ((aType writers: self) sorted: [ :a :b | a size < b size ])
 		ifEmpty: [ TypUnknownType instance ]
@@ -14,8 +15,10 @@ Variable >> typInfAssignedTypeSelf: aType super: anotherType [
 						ifTrue: [ m variableNodes
 								select: [ :n | n variable == self and: [ n isWrite ] ]
 								thenCollect: [ :n | 
-									(TypInfIndex instance
-										contextAt: (m typInfAsLookupWithSelf: aType super: anotherType))
-										typeAt: n ] ]
+									(TypInfContextLookup
+										node: m ast
+										arguments: m selector typInfUnknownArguments
+										self: aType
+										super: anotherType) result typeAt: n ] ]
 						ifFalse: [ {TypUnknownType instance} ] ]) typAsMinimizedType ]
 ]

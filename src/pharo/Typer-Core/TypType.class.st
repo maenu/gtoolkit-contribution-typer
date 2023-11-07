@@ -112,9 +112,7 @@ TypType >> boundTo: aType [
 
 { #category : #lookup }
 TypType >> canLookupMethod: aSymbol [
-	^ self
-		canLookupMethod: aSymbol
-		arguments: (aSymbol numArgs typTimesCollect: [ :i | TypUnknownType instance ])
+	^ self canLookupMethod: aSymbol arguments: aSymbol typInfUnknownArguments
 ]
 
 { #category : #lookup }
@@ -301,9 +299,7 @@ TypType >> isVoid [
 
 { #category : #lookup }
 TypType >> lookupMethod: aSymbol [
-	^ self
-		lookupMethod: aSymbol
-		arguments: (aSymbol numArgs typTimesCollect: [ :i | TypUnknownType instance ])
+	^ self lookupMethod: aSymbol arguments: aSymbol typInfUnknownArguments
 ]
 
 { #category : #lookup }

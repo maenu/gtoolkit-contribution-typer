@@ -65,35 +65,3 @@ TypInfManifest class >> someRandomMethods [
 	[ methods size < 3 ] whileTrue: [ methods add: all atRandom ].
 	^ methods
 ]
-
-{ #category : #accessing }
-TypInfManifest class >> updateAllContextsAsync [
-	<gtExample>
-	<noTest>
-	^ CompiledMethod allInstances
-		collect: [ :m | ^ TypInfIndex instance contextAsyncUpdateAt: m typInfAsLookup for: 5 seconds ]
-]
-
-{ #category : #accessing }
-TypInfManifest class >> updateContextAsync: aMethod [
-	^ TypInfIndex instance
-		contextAsyncUpdateAt: aMethod typInfAsLookup
-		for: 2 minutes
-]
-
-{ #category : #accessing }
-TypInfManifest class >> updateRandomContextAsync [
-	<gtExample>
-	<noTest>
-	^ TypInfIndex instance
-		contextAsyncUpdateAt: self someRandomMethods anyOne typInfAsLookup
-		for: 30 seconds
-]
-
-{ #category : #accessing }
-TypInfManifest class >> updateSomeRandomContextsAsync [
-	<gtExample>
-	<noTest>
-	^ self someRandomMethods
-		collect: [ :m | ^ TypInfIndex instance contextAsyncUpdateAt: m typInfAsLookup for: 30 seconds ]
-]

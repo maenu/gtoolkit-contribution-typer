@@ -24,10 +24,8 @@ TAsyncFuture >> typAwaitFor: aDuration [
 		onTimeout: [ promise cancelHard ] ]
 		forkAt: Processor userBackgroundPriority - 1.
 	^ promise
-		then: [ :r | 
-			semaphore signal.
-			r ]
-		otherwise: [ :e | 
-			semaphore signal.
-			e ]
+		then: [ semaphore signal.
+			promise ]
+		otherwise: [ semaphore signal.
+			promise ]
 ]

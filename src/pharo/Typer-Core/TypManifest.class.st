@@ -16,7 +16,7 @@ TypManifest class >> build [
 	self flag: 'FIXME ensure build is called'.
 	subscription := SystemAnnouncer uniqueInstance
 			when: ClassAnnouncement , MethodAnnouncement
-			do: [ [ :e | [ e typInvalidateAll ] asAsyncFuture typAwait ] ]
+			do: [ [ :e | [ e typInvalidateAll ] typAsAsyncFuture typAwait ] ]
 ]
 
 { #category : #accessing }

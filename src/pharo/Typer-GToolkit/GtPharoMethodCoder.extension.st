@@ -1,9 +1,15 @@
 Extension { #name : #GtPharoMethodCoder }
 
 { #category : #'*Typer-GToolkit' }
-GtPharoMethodCoder >> typGtInitializeMethodAddOnsFor: anAst into: anAddOns [
+GtPharoMethodCoder >> typGtInitializeMethodAddOnsFor: anAst into: anAddOns viewModel: aViewModel [
 	<gtAstCoderAddOns: 11>
-	anAddOns addShortcut: TypGtPraTypeShortcut new
+	anAddOns
+		addStyler: (TypGtCovStyler new
+				coderViewModel: aViewModel;
+				yourself);
+		addMainAction: 'instrument' translated
+			icon: BrGlamorousIcons classicon
+			action: [ self compiledMethod typCovInstrument ]
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -46,4 +52,14 @@ GtPharoMethodCoder >> typGtPraType [
 							ast addPragma: variablePragma ]
 						ifNone: [ ast addPragma: variablePragma ] ] ].
 	self sourceCode: (GtCoderExplicitStringSource new source: ast formattedCode)
+]
+
+{ #category : #'*Typer-GToolkit' }
+GtPharoMethodCoder >> typGtToggleTypesInto: anAddOns viewModel: aViewModel [
+	(anAddOns stylers select: [ :e | e isKindOf: TypGtRbAstWithContextStyler ])
+		ifNotEmpty: [ :c | 
+			anAddOns shortcuts shortcuts
+				removeAllSuchThat: [ :s | s class = TypGtPraTypeShortcut ] ]
+		ifEmpty: [ anAddOns addShortcut: TypGtPraTypeShortcut new ].
+	super typGtToggleTypesInto: anAddOns viewModel: aViewModel
 ]
