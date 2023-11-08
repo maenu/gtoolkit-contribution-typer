@@ -2,14 +2,15 @@ Extension { #name : #GtPharoSourceCoder }
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
-	| node |
-	node := self typGtRbNodeAt: anInteger.
-	node isNil ifTrue: [ ^ self ].
+	| context node |
+	context := self typGtContext.
+	node := context node bestNodeFor: (anInteger to: anInteger).
+	node ifNil: [ ^ self ].
 	node isMessage ifFalse: [ ^ self ].
 	self
 		notifyObjectSpawn: (GtSearchImplementorsFilter selector: node selector)
 				& (TypGtCoderTypeFilter new
-						type: (self typGtContext type: node);
+						type: (context type: node);
 						yourself)
 ]
 
@@ -38,18 +39,13 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns viewM
 ]
 
 { #category : #'*Typer-GToolkit' }
-GtPharoSourceCoder >> typGtRbNodeAt: anInteger [
-	<typPraResult: '{!,RBProgramNode}'>
-	^ self rbAST bestNodeFor: (anInteger to: anInteger)
-]
-
-{ #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtShaTypeWithAt: anInteger [
-	| node |
-	node := self typGtRbNodeAt: anInteger.
+	| context node |
+	context := self typGtContext.
+	node := context node bestNodeFor: (anInteger to: anInteger).
 	node ifNil: [ ^ self ].
 	self
-		notifyObjectSpawn: ((self typGtContext nodesAt: node)
+		notifyObjectSpawn: ((context nodesAt: node)
 				detect: #typGtShaCanType
 				ifFound: #typGtShaMethod
 				ifNone: [ ^ self ])
@@ -93,6 +89,6 @@ GtPharoSourceCoder >> typGtToggleTypesInto: anAddOns viewModel: aViewModel [
 						coderViewModel: aViewModel;
 						yourself).
 			aViewModel
-				completionStrategy: (aViewModel completionStrategy typGtAsCompletionStrategyIn: self) ].
+				completionStrategy: (aViewModel completionStrategy typGtAsCompletionStrategyIn: aViewModel) ].
 	self requestStyleSourceText
 ]

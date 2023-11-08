@@ -2,19 +2,14 @@ Class {
 	#name : #TypGtPharoCompletionStrategy,
 	#superclass : #GtPharoCompletionStrategy,
 	#instVars : [
-		'coder'
+		'coderViewModel'
 	],
 	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #accessing }
-TypGtPharoCompletionStrategy >> coder [
-	^ coder
-]
-
-{ #category : #accessing }
-TypGtPharoCompletionStrategy >> coder: anObject [
-	coder := anObject
+TypGtPharoCompletionStrategy >> coderViewModel: aCoderViewModel [
+	coderViewModel := aCoderViewModel
 ]
 
 { #category : #accessing }
@@ -23,10 +18,12 @@ TypGtPharoCompletionStrategy >> completionActionStreamFor: aText at: positionInt
 	wasRequested := aBoolean.
 	^ (self parseSource: aText asString)
 		ifNil: [ #() asAsyncStream ]
-		ifNotNil: [ :tree | 
-			tree
+		ifNotNil: [ :n | 
+			| context |
+			context := coderViewModel typGtContext.
+			n
 				typGtCompletionActionStreamFor: self
-				type: (coder typGtContext type: (coder rbAST bestNodeFor: (index to: index))) ]
+				type: (context type: (context node bestNodeFor: (index to: index))) ]
 ]
 
 { #category : #accessing }
@@ -38,12 +35,12 @@ TypGtPharoCompletionStrategy >> selectorStreamForReceiver: aType matchingWords: 
 ]
 
 { #category : #accessing }
-TypGtPharoCompletionStrategy >> typGtAsCompletionStrategyIn: aCoder [
+TypGtPharoCompletionStrategy >> typGtAsCompletionStrategyIn: aCoderViewModel [
 	^ self
 ]
 
 { #category : #accessing }
-TypGtPharoCompletionStrategy >> typGtAsPharoCompletionStrategyIn: aCoder [
+TypGtPharoCompletionStrategy >> typGtAsPharoCompletionStrategyIn: aCoderViewModel [
 	"kind of a copy as subinstance"
 
 	| strategy |

@@ -1,12 +1,12 @@
 Extension { #name : #GtPharoCompletionStrategy }
 
 { #category : #'*Typer-GToolkit' }
-GtPharoCompletionStrategy >> typGtAsCompletionStrategyIn: aCoder [
+GtPharoCompletionStrategy >> typGtAsCompletionStrategyIn: aCoderViewModel [
 	"kind of a copy as subinstance"
 
 	| strategy |
 	strategy := TypGtPharoCompletionStrategy new
-			coder: aCoder;
+			coderViewModel: aCoderViewModel;
 			yourself.
 	(self class withAllSuperclasses flatCollect: #instVarNames)
 		do: [ :e | strategy instVarNamed: e put: (self instVarNamed: e) ].
@@ -14,6 +14,6 @@ GtPharoCompletionStrategy >> typGtAsCompletionStrategyIn: aCoder [
 ]
 
 { #category : #'*Typer-GToolkit' }
-GtPharoCompletionStrategy >> typGtAsPharoCompletionStrategyIn: aCoder [
+GtPharoCompletionStrategy >> typGtAsPharoCompletionStrategyIn: aCoderViewModel [
 	^ self
 ]
