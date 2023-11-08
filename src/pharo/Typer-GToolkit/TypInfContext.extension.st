@@ -1,11 +1,8 @@
 Extension { #name : #TypInfContext }
 
 { #category : #'*Typer-GToolkit' }
-TypInfContext >> typGtAsCoder [
-	^ GtPharoMethodCoder new
-		attributeNamed: #typGtContext put: self;
-		forMethod: node compiledMethod;
-		asCoderViewModel
+TypInfContext >> typGtAsCoderViewModel [
+	^ node typGtAsCoderViewModelFor: self
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -17,7 +14,7 @@ TypInfContext >> typGtCheColor [
 TypInfContext >> typGtCoderAndFlowFor: aView [
 	<gtView>
 	| coder mondrian |
-	coder := self typGtAsCoder.
+	coder := self typGtAsCoderViewModel.
 	mondrian := TypGtMondrian new.
 	root typGtFlowPaintOn: mondrian.
 	^ aView explicit
@@ -55,7 +52,7 @@ TypInfContext >> typGtCoderFor: aView [
 	^ aView forward
 		title: 'Coder';
 		priority: 0;
-		object: [ self typGtAsCoder asElement asScrollableElement ];
+		object: [ self typGtAsCoderViewModel asElement asScrollableElement ];
 		view: #gtLiveFor:
 ]
 
@@ -70,7 +67,7 @@ TypInfContext >> typGtFlowFor: aView [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypInfContext >> typGtHasCoder [
+TypInfContext >> typGtHasCoderViewModel [
 	^ true
 ]
 

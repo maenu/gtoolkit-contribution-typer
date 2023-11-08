@@ -79,6 +79,11 @@ TypInfContextLookup >> printOn: aStream [
 ]
 
 { #category : #accessing }
+TypInfContextLookup >> reset [
+	result := nil
+]
+
+{ #category : #accessing }
 TypInfContextLookup >> result [
 	self assert: [ TypInfIsAsync value ].
 	result

@@ -14,7 +14,7 @@ TypGtValueStyler >> visitBlockNode: aNode [
 TypGtValueStyler >> visitMessageNode: aNode [
 	| nodes |
 	super visitMessageNode: aNode.
-	nodes := context nodesAt: aNode.
+	nodes := coderViewModel typGtContext nodesAt: aNode.
 	self
 		attributes: {TypGtFunctionResultAttribute
 					nodes: nodes
@@ -30,7 +30,7 @@ TypGtValueStyler >> visitMethodNode: aNode [
 	position := aNode arguments
 			ifEmpty: [ aNode keywordsIntervals last stop ]
 			ifNotEmpty: [ :c | c last stop ].
-	nodes := context nodesAt: aNode.
+	nodes := coderViewModel typGtContext nodesAt: aNode.
 	self
 		attributes: {TypGtFunctionResultAttribute
 					nodes: nodes

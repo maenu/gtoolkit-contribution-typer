@@ -6,8 +6,9 @@ Class {
 
 { #category : #accessing }
 TypGtStabilityStyler >> visitMethodNode: aNode [
-	| position |
-	context == context home ifFalse: [ ^ self ].
+	| position context |
+	context := coderViewModel typGtContext.
+	context sender ifNotNil: [ ^ self ].
 	position := aNode arguments
 			ifEmpty: [ aNode keywordsIntervals last stop ]
 			ifNotEmpty: [ :c | c last stop ].

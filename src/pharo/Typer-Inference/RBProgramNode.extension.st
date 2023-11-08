@@ -32,3 +32,8 @@ RBProgramNode >> typInfContextLookup [
 RBProgramNode >> typInfNodeInContext: aContext [
 	self subclassResponsibility
 ]
+
+{ #category : #'*Typer-Inference' }
+RBProgramNode >> typInfRootNodeInContext: aContext [
+	^ TypInfExpression node: self context: aContext
+]

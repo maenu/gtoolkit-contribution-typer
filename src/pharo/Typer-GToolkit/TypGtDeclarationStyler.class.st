@@ -7,7 +7,7 @@ Class {
 { #category : #visiting }
 TypGtDeclarationStyler >> visitMethodNode: aNode [
 	| nodes position |
-	nodes := context nodesAt: aNode.
+	nodes := coderViewModel typGtContext nodesAt: aNode.
 	position := aNode arguments
 			ifEmpty: [ aNode keywordsIntervals last stop ]
 			ifNotEmpty: [ :c | c last stop ].

@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 TypGtCheStyler >> styleNode: aNode [
 	<typPraArguments: 'RBProgramNode'>
-	(context nodesAt: aNode)
+	(coderViewModel typGtContext nodesAt: aNode)
 		do: [ :n | 
 			n typCheErrors
 				ifNotEmpty: [ :c | 

@@ -15,30 +15,7 @@ GtPharoSourceCoder >> typGtBrowseImplementorsAt: anInteger [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoder >> typGtContext [
-	attributes at: #typGtContext ifPresent: [ :c | ^ c ].
-	attributes at: #typGtContextPromise ifPresent: [ :p | ^ nil ].
-	self typGtContextAsync.
-	^ nil
-]
-
-{ #category : #'*Typer-GToolkit' }
-GtPharoSourceCoder >> typGtContextAsync [
-	attributes at: #typGtContext ifPresent: [ :c | ^ c asAsyncPromise ].
-	attributes at: #typGtContextPromise ifPresent: [ :p | ^ p ].
-	^ attributes
-		at: #typGtContextPromise
-		put: (self rbAST typInfContextLookup resultAsync
-				then: [ :c | 
-					attributes
-						removeKey: #typGtContextPromise;
-						at: #typGtContext put: c.
-					self requestStyleSourceText.
-					c ])
-]
-
-{ #category : #'*Typer-GToolkit' }
-GtPharoSourceCoder >> typGtHasContext [
-	^ attributes includesKey: #typGtContext
+	^ self attributes at: #typGtContext ifAbsent: [ nil ]
 ]
 
 { #category : #'*Typer-GToolkit' }
@@ -56,7 +33,7 @@ GtPharoSourceCoder >> typGtInitializeSourceAddOnsFor: anAst into: anAddOns viewM
 		addMainAction: 'types' translated
 		icon: BrGlamorousIcons traitIcon
 		action: [ self typGtToggleTypesInto: anAddOns viewModel: aViewModel ].
-	self typGtHasContext
+	(self attributes includesKey: #typGtContext)
 		ifTrue: [ self typGtToggleTypesInto: anAddOns viewModel: aViewModel ]
 ]
 
@@ -83,7 +60,7 @@ GtPharoSourceCoder >> typGtToggleTypesInto: anAddOns viewModel: aViewModel [
 	(anAddOns stylers select: [ :e | e isKindOf: TypGtRbAstWithContextStyler ])
 		ifNotEmpty: [ :c | 
 			c do: [ :e | anAddOns removeStylersOfClass: e class ].
-			anAddOns shortcuts shortcuts
+			anAddOns shortcuts
 				removeAllSuchThat: [ :s | s class = TypGtBrowseImplementorsShortcut ];
 				removeAllSuchThat: [ :s | s class = TypGtShaTypeShortcut ].
 			anAddOns

@@ -2,33 +2,28 @@ Class {
 	#name : #TypGtContextExpanderAttribute,
 	#superclass : #BrGlamorousTriangleExpanderTextAttribute,
 	#instVars : [
-		'coder',
-		'element'
+		'element',
+		'coderViewModel'
 	],
 	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #accessing }
-TypGtContextExpanderAttribute class >> coder: aCoder in: anotherCoder [
-	^ self new
-		initializeCoder: aCoder in: anotherCoder;
-		yourself
+TypGtContextExpanderAttribute >> coderViewModel [
+	^ coderViewModel
 ]
 
 { #category : #accessing }
-TypGtContextExpanderAttribute >> coder [
-	^ coder
-]
-
-{ #category : #accessing }
-TypGtContextExpanderAttribute >> context [
-	^ coder coderModel typGtContext
+TypGtContextExpanderAttribute >> coderViewModel: anObject [
+	coderViewModel := anObject
 ]
 
 { #category : #accessing }
 TypGtContextExpanderAttribute >> doAffect: aTBrTextEditorTextualPiece in: anEditorElement [
 	^ element := (super doAffect: aTBrTextEditorTextualPiece in: anEditorElement)
-			addAptitude: (TypGtContextExpanderAptitude coder: coder);
+			addAptitude: (TypGtContextExpanderAptitude new
+					coderViewModel: coderViewModel;
+					yourself);
 			yourself
 ]
 
@@ -43,27 +38,18 @@ TypGtContextExpanderAttribute >> initialize [
 	self
 		attributesCreatingBlock: [ BrTextAdornmentDynamicAttribute new
 				beAppend;
-				stencil: [ coder ] ]
-]
-
-{ #category : #accessing }
-TypGtContextExpanderAttribute >> initializeCoder: aCoder in: anotherCoder [
-	coder := aCoder.
-	anotherCoder announcer weak
-		when: TypGtExpandContextRequest
-		send: #onRequestExpandContext:
-		to: self
+				stencil: [ coderViewModel ] ]
 ]
 
 { #category : #accessing }
 TypGtContextExpanderAttribute >> onRequestExpandContext: anEvent [
-	(anEvent contextChain includes: coder coderModel typGtContext)
+	(anEvent contextChain includes: coderViewModel typGtContext)
 		ifFalse: [ self isExpanded ifTrue: [ BlSpace simulateClickOn: element ].
-			coder announcer announce: anEvent.
+			coderViewModel announcer announce: anEvent.
 			^ self ].
 	self isExpanded
-		ifTrue: [ coder announcer announce: anEvent.
+		ifTrue: [ coderViewModel announcer announce: anEvent.
 			^ self ].
 	BlSpace simulateClickOn: element.
-	coder announcer announce: anEvent
+	coderViewModel announcer announce: anEvent
 ]

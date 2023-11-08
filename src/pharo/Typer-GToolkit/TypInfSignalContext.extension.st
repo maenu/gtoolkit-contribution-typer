@@ -1,6 +1,6 @@
 Extension { #name : #TypInfSignalContext }
 
 { #category : #'*Typer-GToolkit' }
-TypInfSignalContext >> typGtHasCoder [
+TypInfSignalContext >> typGtHasCoderViewModel [
 	^ false
 ]

@@ -13,3 +13,8 @@ RBMethodNode >> typInfContextLookup [
 RBMethodNode >> typInfNodeInContext: aContext [
 	^ TypInfMethod node: self context: aContext
 ]
+
+{ #category : #'*Typer-Inference' }
+RBMethodNode >> typInfRootNodeInContext: aContext [
+	^ self typInfNodeInContext: aContext
+]

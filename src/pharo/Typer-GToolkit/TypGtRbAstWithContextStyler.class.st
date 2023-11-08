@@ -1,9 +1,6 @@
 Class {
 	#name : #TypGtRbAstWithContextStyler,
 	#superclass : #TypGtRbAstStyler,
-	#instVars : [
-		'context'
-	],
 	#category : #'Typer-GToolkit-Core'
 }
 
@@ -18,28 +15,25 @@ TypGtRbAstWithContextStyler >> attributes: anAttributesCollection from: aStart t
 { #category : #accessing }
 TypGtRbAstWithContextStyler >> offset [
 	| node |
-	node := context node.
+	node := coderViewModel typGtContext node.
 	node isBlock ifFalse: [ ^ 0 ].
 	^ node body start - 1
 ]
 
 { #category : #styling }
 TypGtRbAstWithContextStyler >> style: aText ast: anAst [
-	| coder |
-	coder := self coderViewModel coderModel.
-	coder typGtHasContext ifFalse: [ ^ self	"style requested later" ].
+	coderViewModel typGtContext ifNil: [ ^ self	"style requested later" ].
 	text := aText.
-	[ context := coder typGtContext.
-	self visitNode: context node ]
+	[ self visitNode: coderViewModel typGtContext node ]
 		on: Error
 		do: [ :e | (GtStylerErrorSignal new signaledError: e) emit ].
-	text := nil	"context := nil"
+	text := nil
 ]
 
 { #category : #visiting }
 TypGtRbAstWithContextStyler >> styleNode: aNode [
 	self
-		attributes: {TypGtTypeAttribute nodes: (context nodesAt: aNode)}
+		attributes: {TypGtTypeAttribute nodes: (coderViewModel typGtContext nodesAt: aNode)}
 		from: aNode stopWithoutParentheses
 		to: aNode stopWithoutParentheses
 ]

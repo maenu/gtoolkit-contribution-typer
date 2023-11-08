@@ -125,7 +125,7 @@ TypInfContext >> initializeSender: aContext state: aState node: aNode lookup: aL
 TypInfContext >> install [
 	self assert: [ root isNil ].
 	self assert: [ current isNil ].
-	current := root := self add: (node typInfNodeInContext: self).
+	current := root := self add: (node typInfRootNodeInContext: self).
 	node acceptVisitor: self
 ]
 
@@ -360,6 +360,21 @@ TypInfContext >> visitMethodNode: aMethodNode [
 		ifFalse: [ self next: RBVariableNode selfNode.
 			current outAdd: (TypInfReturnEdge origin: current target: root) ].
 	^ root
+]
+
+{ #category : #visiting }
+TypInfContext >> visitNode: aNode [
+	| result |
+	result := aNode acceptVisitor: self.
+	self
+		assert: [ result isKindOf: TypInfNode ]
+		description: [ 'check aNode, should answer TypInfNode' ].
+	^ result
+]
+
+{ #category : #visiting }
+TypInfContext >> visitParseErrorNode: anErrorNode [
+	^ self next: anErrorNode
 ]
 
 { #category : #accessing }

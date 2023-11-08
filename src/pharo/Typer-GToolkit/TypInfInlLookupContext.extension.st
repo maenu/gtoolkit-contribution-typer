@@ -1,7 +1,7 @@
 Extension { #name : #TypInfInlLookupContext }
 
 { #category : #'*Typer-GToolkit' }
-TypInfInlLookupContext >> typGtAsCoder [
+TypInfInlLookupContext >> typGtAsCoderViewModel [
 	^ GtPharoMethodCoder new
 		attributeNamed: #typGtIndicator put: self typGtIndicator;
 		forMethod: lookup typGtExpanderMethod;

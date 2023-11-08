@@ -2,16 +2,19 @@ Class {
 	#name : #TypGtContextExpanderAptitude,
 	#superclass : #BrAptitude,
 	#instVars : [
-		'coder'
+		'coderViewModel'
 	],
 	#category : #'Typer-GToolkit-Core'
 }
 
 { #category : #accessing }
-TypGtContextExpanderAptitude class >> coder: aCoder [
-	^ self new
-		initializeCoder: aCoder;
-		yourself
+TypGtContextExpanderAptitude >> coderViewModel [
+	^ coderViewModel
+]
+
+{ #category : #accessing }
+TypGtContextExpanderAptitude >> coderViewModel: anObject [
+	coderViewModel := anObject
 ]
 
 { #category : #accessing }
@@ -22,7 +25,7 @@ TypGtContextExpanderAptitude >> initialize [
 		addChangeAddChildAs: #(content label)
 			with: [ BrLabel new
 					aptitude: BrGlamorousLabelAptitude;
-					text: (coder coderModel typGtIndicator asRopedText
+					text: (coderViewModel coderModel typGtIndicator asRopedText
 							glamorousCodeFont;
 							fontSize: 8;
 							foreground: Color black;
@@ -33,9 +36,4 @@ TypGtContextExpanderAptitude >> initialize [
 					vFitContent;
 					zIndex: 1;
 					yourself ]
-]
-
-{ #category : #accessing }
-TypGtContextExpanderAptitude >> initializeCoder: aCoder [
-	coder := aCoder
 ]

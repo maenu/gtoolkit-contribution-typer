@@ -45,8 +45,10 @@ TypInfNode >> typGtCoderFor: aView [
 	^ aView forward
 		title: 'Method';
 		priority: 1;
-		object: [ context typGtAsCoder
-				highlighter: (TypGtRbHighlighter new node: node);
+		object: [ context typGtAsCoderViewModel
+				highlighter: (TypGtRbHighlighter new
+						node: node;
+						yourself);
 				yourself ];
 		view: #gtLiveFor:
 ]

@@ -8,11 +8,6 @@ Class {
 }
 
 { #category : #accessing }
-TypGtRbHighlighter >> context [
-	^ self coderViewModel coderModel typGtContext
-]
-
-{ #category : #accessing }
 TypGtRbHighlighter >> node [
 	^ node
 ]
@@ -24,10 +19,9 @@ TypGtRbHighlighter >> node: anObject [
 
 { #category : #accessing }
 TypGtRbHighlighter >> style: aText ast: theAst [
-	| tree intervals |
-	tree := self context node.
+	| intervals |
 	intervals := OrderedCollection new.
-	tree
+	coderViewModel typGtContext node
 		nodesDo: [ :n | n == node ifTrue: [ intervals add: (n start to: n stop) ] ].
 	self style: aText intervals: intervals.
 	^ aText

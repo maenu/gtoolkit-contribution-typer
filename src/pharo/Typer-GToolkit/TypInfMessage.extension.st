@@ -11,10 +11,10 @@ TypInfMessage >> typGtColor [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypInfMessage >> typGtExpanderCoders [
+TypInfMessage >> typGtExpanderCoderViewModels [
 	^ contexts
-		select: #typGtHasCoder
-		thenCollect: #typGtAsCoder
+		select: #typGtHasCoderViewModel
+		thenCollect: #typGtAsCoderViewModel
 ]
 
 { #category : #'*Typer-GToolkit' }
