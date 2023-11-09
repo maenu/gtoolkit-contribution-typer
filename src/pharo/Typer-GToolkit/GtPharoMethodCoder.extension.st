@@ -1,6 +1,18 @@
 Extension { #name : #GtPharoMethodCoder }
 
 { #category : #'*Typer-GToolkit' }
+GtPharoMethodCoder >> typGtContextDisable: anAddOns viewModel: aViewModel [
+	anAddOns shortcuts removeAllSuchThat: [ :s | s class = TypGtPraTypeShortcut ].
+	super typGtContextDisable: anAddOns viewModel: aViewModel
+]
+
+{ #category : #'*Typer-GToolkit' }
+GtPharoMethodCoder >> typGtContextEnable: anAddOns viewModel: aViewModel [
+	super typGtContextEnable: anAddOns viewModel: aViewModel.
+	anAddOns addShortcut: TypGtPraTypeShortcut new
+]
+
+{ #category : #'*Typer-GToolkit' }
 GtPharoMethodCoder >> typGtInitializeMethodAddOnsFor: anAst into: anAddOns viewModel: aViewModel [
 	<gtAstCoderAddOns: 11>
 	anAddOns
@@ -52,12 +64,4 @@ GtPharoMethodCoder >> typGtPraType [
 							node addPragma: variablePragma ]
 						ifNone: [ node addPragma: variablePragma ] ] ].
 	self sourceCode: (GtCoderExplicitStringSource new source: node formattedCode)
-]
-
-{ #category : #'*Typer-GToolkit' }
-GtPharoMethodCoder >> typGtToggleTypesInto: anAddOns viewModel: aViewModel [
-	(anAddOns stylers select: [ :e | e isKindOf: TypGtRbAstWithContextStyler ])
-		ifNotEmpty: [ :c | anAddOns shortcuts removeAllSuchThat: [ :s | s class = TypGtPraTypeShortcut ] ]
-		ifEmpty: [ anAddOns addShortcut: TypGtPraTypeShortcut new ].
-	super typGtToggleTypesInto: anAddOns viewModel: aViewModel
 ]

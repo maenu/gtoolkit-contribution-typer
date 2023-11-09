@@ -95,8 +95,8 @@ TypInfContextLookup >> result [
 			state: TypInfState new
 			node: node
 			lookup: self.
-	result canRun ifFalse: [ ^ result ].
-	result run.
+	result canRun ifFalse: [ ^ result := nil ].
+	[ result run ] ifCurtailed: [ ^ result := nil ].
 	^ result
 ]
 

@@ -172,7 +172,7 @@ TypType >> covariant: aType [
 	self >= aType ifTrue: [ ^ aType ].
 	self < aType ifTrue: [ ^ self ].
 	^ {self.
-		aType} typAsType
+		aType} typAsMinimizedType
 ]
 
 { #category : #accessing }

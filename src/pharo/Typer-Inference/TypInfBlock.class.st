@@ -17,7 +17,7 @@ TypInfBlock >> transfer [
 		at: self
 		put: ((in
 				at: #definition
-				ifPresent: [ :s | (s collect: [ :e | e origin type ]) typAsMinimizedType ]
+				ifPresent: [ :s | (s collect: [ :e | e origin type withoutNode ]) typAsMinimizedType ]
 				ifAbsent: [ BlockClosure
 						typAsFunctionTypeWithResult: TypUnknownType instance
 						arguments: (node arguments collect: [ :n | TypUnknownType instance ]) ])

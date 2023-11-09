@@ -11,9 +11,5 @@ TypInfExpression >> asFunction [
 
 { #category : #accessing }
 TypInfExpression >> transfer [
-	state
-		at: self
-		put: (((context nodesAt: node) copyWithout: self)
-				ifEmpty: [ TypUnknownType instance ]
-				ifNotEmpty: #typAsType)
+	state at: self put: (context nodesAt: node) second type
 ]

@@ -2,7 +2,8 @@ Class {
 	#name : #TypInfContextStopSignal,
 	#superclass : #TypInfNodeSignal,
 	#instVars : [
-		'start'
+		'start',
+		'tally'
 	],
 	#category : #'Typer-Inference-Signals'
 }
@@ -18,9 +19,9 @@ TypInfContextStopSignal class >> node: aNode [
 ]
 
 { #category : #accessing }
-TypInfContextStopSignal class >> node: aNode start: aSignal [
+TypInfContextStopSignal class >> node: aNode start: aSignal tally: aTally [
 	^ (super node: aNode)
-		initializeStart: aSignal;
+		initializeStart: aSignal tally: aTally;
 		yourself
 ]
 
@@ -30,8 +31,9 @@ TypInfContextStopSignal >> duration [
 ]
 
 { #category : #accessing }
-TypInfContextStopSignal >> initializeStart: aSignal [
-	start := aSignal
+TypInfContextStopSignal >> initializeStart: aSignal tally: aTally [
+	start := aSignal.
+	tally := aTally
 ]
 
 { #category : #accessing }

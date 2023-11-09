@@ -4,7 +4,8 @@ Class {
 	#traits : 'TypInfTWithArguments',
 	#classTraits : 'TypInfTWithArguments classTrait',
 	#instVars : [
-		'contexts'
+		'contexts',
+		'newContexts'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -29,9 +30,10 @@ TypInfMessage >> asFunction [
 
 { #category : #accessing }
 TypInfMessage >> canInstall [
-	| newContexts |
 	newContexts := self newContexts.
-	(newContexts size between: 1 and: TypInfCurrentConfiguration value maxInlinesPerSend) ifFalse: [ ^ false ].
+	(newContexts size
+		between: 1
+		and: TypInfCurrentConfiguration value maxInlinesPerSend) ifFalse: [ ^ false ].
 	^ newContexts allSatisfy: #canInstall
 ]
 
@@ -85,7 +87,7 @@ TypInfMessage >> install [
 	| oldContexts |
 	oldContexts := contexts.
 	oldContexts ifEmpty: [ self outNextDisable ].
-	contexts := self newContexts asSet
+	contexts := newContexts asSet
 			collect: [ :c | 
 				oldContexts
 					detect: [ :cc | cc canAbsorb: c ]

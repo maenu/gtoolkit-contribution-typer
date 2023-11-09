@@ -17,6 +17,13 @@ TypInfInlLookupContext >> install [
 	message outNextDisabledsEnableOn: root
 ]
 
+{ #category : #accessing }
+TypInfInlLookupContext >> noMethod [
+	"nothing found"
+
+	
+]
+
 { #category : #testing }
 TypInfInlLookupContext >> stackSize [
 	^ sender stackSize

@@ -9,7 +9,7 @@ Class {
 { #category : #styling }
 TypGtRbAstStyler >> style: aText ast: anAst [
 	text := aText.
-	[ self visitNode: coderViewModel coderModel rbAST ]
+	[ self visitNode: coderViewModel typGtRbAst ]
 		on: Error
 		do: [ :e | (GtStylerErrorSignal new signaledError: e) emit ].
 	text := nil

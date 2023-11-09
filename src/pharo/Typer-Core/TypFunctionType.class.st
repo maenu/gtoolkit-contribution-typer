@@ -153,7 +153,9 @@ TypFunctionType >> > aType [
 	aType = self ifTrue: [ ^ false ].
 	(aType class inheritsFrom: self class)
 		ifTrue: [ ^ self >= (aType as: self class) ].
-	(aType isFunction and: [ aType name = name ]) ifFalse: [ ^ super > aType ].
+	(aType isFunction
+		and: [ aType name = name and: [ node isNil or: [ node = aType node ] ] ])
+		ifFalse: [ ^ super > aType ].
 	aType result > self result ifTrue: [ ^ false ].
 	argumentsOptional
 		ifTrue: [ | size |
@@ -166,9 +168,6 @@ TypFunctionType >> > aType [
 	((1 to: argumentsSize)
 		allSatisfy: [ :e | (self arguments at: e) >= (aType arguments at: e) ])
 		ifFalse: [ ^ false ].
-	(aType hasNode and: [ self hasNode not ]) ifTrue: [ ^ false ].
-	(aType hasNode not and: [ self hasNode ]) ifTrue: [ ^ true ].
-	node = aType node ifFalse: [ ^ false ].
 	^ true
 ]
 
@@ -198,14 +197,6 @@ TypFunctionType >> covariant: aType [
 	aType == self ifTrue: [ ^ self ].
 	self isUnknownFunction ifTrue: [ ^ aType ].
 	aType isUnknownFunction ifTrue: [ ^ self ].
-	resultNode := ({node.
-			aType node} asIdentitySet reject: #isNil)
-			ifEmpty: nil
-			ifNotEmpty: [ :c | 
-				c size > 1
-					ifTrue: [ ^ {self.
-							aType} typAsType ]
-					ifFalse: [ c anyOne ] ].
 	resultResult := self result covariant: aType result.
 	resultArguments := aType arguments.
 	resultArguments := self arguments
@@ -227,6 +218,8 @@ TypFunctionType >> covariant: aType [
 					aType signalsAlways.
 					signalsMaybe.
 					aType signalsMaybe} reject: #isNil) ifEmpty: nil ifNotEmpty: #typAsType ].
+	resultNode := ({node.
+			aType node} reject: #isNil) ifEmpty: nil ifNotEmpty: #first.
 	self hasClassDescription
 		ifTrue: [ ^ self class
 				classDescription: self classDescription
@@ -491,4 +484,28 @@ TypFunctionType >> withSuper: aType [
 		signalsMaybe: signalsMaybe
 		node: node
 		super: aType
+]
+
+{ #category : #accessing }
+TypFunctionType >> withoutNode [
+	node ifNil: [ ^ self ].
+	self hasClassDescription
+		ifTrue: [ ^ self class
+				classDescription: self classDescription
+				result: self result
+				arguments: self arguments
+				argumentsOptional: argumentsOptional
+				signalsAlways: signalsAlways
+				signalsMaybe: signalsMaybe
+				node: nil
+				super: self superOrNil ].
+	^ self class
+		named: name
+		result: self result
+		arguments: self arguments
+		argumentsOptional: argumentsOptional
+		signalsAlways: signalsAlways
+		signalsMaybe: signalsMaybe
+		node: nil
+		super: self superOrNil
 ]

@@ -22,7 +22,8 @@ TypGtRbAstWithContextStyler >> offset [
 
 { #category : #styling }
 TypGtRbAstWithContextStyler >> style: aText ast: anAst [
-	coderViewModel typGtContext ifNil: [ ^ self	"style requested later" ].
+	coderViewModel coderModel typGtContextEnabled
+		ifFalse: [ ^ self	"style may be requested later" ].
 	text := aText.
 	[ self visitNode: coderViewModel typGtContext node ]
 		on: Error

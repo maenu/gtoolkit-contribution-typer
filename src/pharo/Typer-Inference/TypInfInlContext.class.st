@@ -83,6 +83,5 @@ TypInfInlContext >> message [
 { #category : #accessing }
 TypInfInlContext >> uninstall [
 	sender children remove: self.
-	(nodes values flatCollect: #yourself) do: #uninstall.
-	current := root := nil
+	super uninstall
 ]

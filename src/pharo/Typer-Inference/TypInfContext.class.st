@@ -139,6 +139,18 @@ TypInfContext >> isStable [
 	^ iterations size < TypInfCurrentConfiguration value maxIterations
 ]
 
+{ #category : #running }
+TypInfContext >> iterate [
+	self install.
+	[ iterations size <= TypInfCurrentConfiguration value maxIterations
+		and: [ | iteration |
+			iteration := root iterate.
+			iterations add: iteration.
+			iteration isNotEmpty ] ] whileTrue.
+	[ self perform: TypInfCurrentConfiguration value contextCleanup ]
+		typAsAsyncFuture typAwait
+]
+
 { #category : #accessing }
 TypInfContext >> iterations [
 	^ iterations
@@ -216,18 +228,20 @@ TypInfContext >> run [
 	self assert: [ self canRun ].
 	TypInfNodeStack
 		push: node
-		during: [ | start stop |
+		during: [ | start stop tally |
 			nodeStackDepth := TypInfNodeStack actives size.
-			self install.
 			start := TypInfContextStartSignal node: self.
 			start emit.
-			[ iterations size <= TypInfCurrentConfiguration value maxIterations
-				and: [ | iteration |
-					iteration := root iterate.
-					iterations add: iteration.
-					iteration isNotEmpty ] ] whileTrue.
-			self perform: TypInfCurrentConfiguration value contextCleanup.
-			stop := TypInfContextStopSignal node: self start: start.
+			(TypInfCurrentConfiguration value wantsTally
+				and: [ MessageTally typInfIsRunning not ])
+				ifTrue: [ tally := MessageTally new
+							spyEvery: 1 on: [ self iterate ];
+							yourself ]
+				ifFalse: [ self iterate ].
+			stop := TypInfContextStopSignal
+					node: self
+					start: start
+					tally: tally.
 			stop emit ]
 		or: [ self error: 'cannot push node' ]
 ]
@@ -279,7 +293,14 @@ TypInfContext >> type: aNode [
 TypInfContext >> typeAt: aNode [
 	^ ((self nodesAt: aNode) collect: #type)
 		ifEmpty: TypUnknownType instance
-		ifNotEmpty: #typAsType
+		ifNotEmpty: #typAsMinimizedType
+]
+
+{ #category : #accessing }
+TypInfContext >> uninstall [
+	(nodes values flatCollect: #yourself) do: #uninstall.
+	iterations removeAll.
+	current := root := nil
 ]
 
 { #category : #visiting }
@@ -363,13 +384,8 @@ TypInfContext >> visitMethodNode: aMethodNode [
 ]
 
 { #category : #visiting }
-TypInfContext >> visitNode: aNode [
-	| result |
-	result := aNode acceptVisitor: self.
-	self
-		assert: [ result isKindOf: TypInfNode ]
-		description: [ 'check aNode, should answer TypInfNode' ].
-	^ result
+TypInfContext >> visitNode: aNode [ 
+	^aNode acceptVisitor: self
 ]
 
 { #category : #visiting }

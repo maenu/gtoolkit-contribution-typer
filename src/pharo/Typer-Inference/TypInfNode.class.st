@@ -40,7 +40,7 @@ TypInfNode >> changesFrom: aState [
 
 { #category : #accessing }
 TypInfNode >> constrain: aNode to: aType [
-	state at: aNode put: aType.
+	state at: aNode covariantPut: aType.
 	aNode constrainTo: aType from: self
 ]
 

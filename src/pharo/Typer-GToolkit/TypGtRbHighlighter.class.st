@@ -21,7 +21,7 @@ TypGtRbHighlighter >> node: anObject [
 TypGtRbHighlighter >> style: aText ast: theAst [
 	| intervals |
 	intervals := OrderedCollection new.
-	coderViewModel typGtContext node
+	coderViewModel typGtRbAst
 		nodesDo: [ :n | n == node ifTrue: [ intervals add: (n start to: n stop) ] ].
 	self style: aText intervals: intervals.
 	^ aText

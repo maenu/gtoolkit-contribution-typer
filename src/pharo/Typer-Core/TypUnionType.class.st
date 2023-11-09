@@ -265,11 +265,6 @@ TypUnionType >> types [
 	^ types copy
 ]
 
-{ #category : #'as yet unclassified' }
-TypUnionType >> withNode: aNode [
-	^ (types collect: [ :t | t withNode: aNode ]) typAsType
-]
-
 { #category : #compatibility }
 TypUnionType >> withParameters: aCollection [
 	<typEdge>

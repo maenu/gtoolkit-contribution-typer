@@ -9,29 +9,33 @@ Class {
 		'maxMethodSize',
 		'maxWriters',
 		'maxNodeStackSize',
-		'maxInlinesPerSend'
+		'maxInlinesPerSend',
+		'wantsTally'
 	],
 	#classInstVars : [
-		'default'
+		'default',
+		'debug'
 	],
 	#category : #'Typer-Inference-Core'
 }
 
 { #category : #accessing }
 TypInfConfiguration class >> debug [
-	^ self default copy
-		contextCleanup: #yourself;
-		nodeChanges: #changesDiffFrom:;
-		yourself
+	^ debug
+		ifNil: [ debug := self default copy
+					contextCleanup: #yourself;
+					nodeChanges: #changesDiffFrom:;
+					yourself ]
 ]
 
 { #category : #accessing }
 TypInfConfiguration class >> default [
 	^ default
 		ifNil: [ default := self new
+					wantsTally: false;
 					contextCleanup: #cleanup;
 					nodeChanges: #changesFrom:;
-					maxIterations: 24;
+					maxIterations: 12;
 					maxNodeStackSize: 5;
 					maxInlinesPerSend: 8;
 					maxImplementors: TypInfIndex instance implementors95Quantile;
@@ -42,7 +46,8 @@ TypInfConfiguration class >> default [
 
 { #category : #accessing }
 TypInfConfiguration class >> invalidate [
-	default := nil
+	default := nil.
+	debug := nil
 ]
 
 { #category : #accessing }
@@ -123,4 +128,22 @@ TypInfConfiguration >> nodeChanges [
 { #category : #accessing }
 TypInfConfiguration >> nodeChanges: anObject [
 	nodeChanges := anObject
+]
+
+{ #category : #accessing }
+TypInfConfiguration >> wantsTally [
+	^ wantsTally
+]
+
+{ #category : #accessing }
+TypInfConfiguration >> wantsTally: anObject [
+	wantsTally := anObject
+]
+
+{ #category : #accessing }
+TypInfConfiguration >> withTally [
+	wantsTally ifTrue: [ ^ wantsTally ].
+	^ self copy
+		wantsTally: true;
+		yourself
 ]

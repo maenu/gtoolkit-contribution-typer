@@ -4,6 +4,7 @@ Extension { #name : #TAsyncFuture }
 TAsyncFuture >> typAwait [
 	| promise |
 	promise := AsyncPendingFuturePromise new
+			priority: AsyncFutureExecutionLowPriority uniqueInstance;
 			group: (AsyncFutureExecutionValueGroup new
 					value: #Typer;
 					yourself);
