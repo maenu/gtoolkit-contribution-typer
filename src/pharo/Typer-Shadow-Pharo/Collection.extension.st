@@ -170,8 +170,8 @@ Collection >> typShaMethodKeywordSelect: aLookup root: anotherLookup [
 Collection class >> typShaMethodKeywordWith: aLookup root: anotherLookup [
 	<typShaMethod: 'with:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiver classDescription instanceSide typAsType
-				withParameters: {aLookup arguments at: 1})
+		typAsFunctionTypeWithResult: (anotherLookup receiver classDescription instanceSide typAsType
+				withParameters: {anotherLookup arguments at: 1})
 		arguments: {TypUnknownType instance asNullable}
 ]
 
@@ -179,8 +179,8 @@ Collection class >> typShaMethodKeywordWith: aLookup root: anotherLookup [
 Collection class >> typShaMethodKeywordWithAll: aLookup root: anotherLookup [
 	<typShaMethod: 'withAll:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiver classDescription instanceSide typAsType
-				withParameters: {(aLookup arguments at: 1) at: #A})
+		typAsFunctionTypeWithResult: (anotherLookup receiver classDescription instanceSide typAsType
+				withParameters: {(anotherLookup arguments at: 1) at: #A})
 		arguments: {Collection typAsType}
 ]
 
@@ -188,8 +188,8 @@ Collection class >> typShaMethodKeywordWithAll: aLookup root: anotherLookup [
 Collection class >> typShaMethodKeywordWithWith: aLookup root: anotherLookup [
 	<typShaMethod: 'with:with:'>
 	^ CompiledMethod
-		typAsFunctionTypeWithResult: (aLookup receiver classDescription instanceSide typAsType
-				withParameters: {aLookup arguments typAsType})
+		typAsFunctionTypeWithResult: (anotherLookup receiver classDescription instanceSide typAsType
+				withParameters: {anotherLookup arguments typAsType})
 		arguments: {TypUnknownType instance.
 				TypUnknownType instance}
 ]

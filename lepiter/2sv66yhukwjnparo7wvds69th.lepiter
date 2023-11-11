@@ -5,43 +5,6 @@
 		"__type" : "snippets",
 		"items" : [
 			{
-				"__type" : "textSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2022-05-18T15:22:21.589831+02:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2022-05-18T15:23:14.347879+02:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "flMn4qqbDQCn59OxBYnIbg=="
-				},
-				"paragraphStyle" : {
-					"__type" : "textStyle"
-				},
-				"string" : "shadows should provide impl. for overwritten methods, otherwise lookup stops early at inference of existing method"
-			},
-			{
 				"__type" : "pharoSnippet",
 				"children" : {
 					"__type" : "snippets",
@@ -89,7 +52,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-10T20:56:09.121405+02:00"
+						"dateAndTimeString" : "2023-11-07T21:31:11.254389+01:00"
 					}
 				},
 				"editEmail" : {
@@ -100,14 +63,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-10T20:56:17.324433+02:00"
+						"dateAndTimeString" : "2023-11-11T17:47:46.977002+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
-					"uidString" : "N/wn/8LDDQCezin0Bz2JmQ=="
+					"uidString" : "OSGWlvfFDQCTHguXBxNewQ=="
 				},
-				"code" : "TypInfIndex instance "
+				"code" : "TypManifest logger"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -123,7 +86,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-03T17:10:03.682602+02:00"
+						"dateAndTimeString" : "2023-11-11T17:47:47.530957+01:00"
 					}
 				},
 				"editEmail" : {
@@ -134,14 +97,218 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-11T18:55:02.615421+02:00"
+						"dateAndTimeString" : "2023-11-11T17:47:56.29002+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
-					"uidString" : "ijG0BTPDDQCB9fURBasvQw=="
+					"uidString" : "rAsH70TGDQCdd/FPD47KHA=="
 				},
-				"code" : "(FFILibrary class >> #uniqueInstance) typInfUpdateContext"
+				"code" : "TypManifest repository"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-11-06T16:32:23.957914+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-11-09T19:36:43.40086+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "a+sxTN/FDQCRcyuwDoKPQA=="
+				},
+				"code" : "TypManifest\r\tinvalidateAll;\r\tbuildAll;\r\tlogger"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-11-11T17:09:12.487663+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-11-11T17:09:24.799166+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "6UgKZUTGDQCcxInmD47KHA=="
+				},
+				"code" : "TypInfCurrentConfiguration\r\tvalue: TypInfConfiguration debug withTally\r\tduring: [ (TypInfExaMethods>>#signalAndHandle) ast typInfContextLookup reset result ]"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-11-07T13:16:40.056533+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-11-09T18:29:23.687142+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "KJQLrvDFDQCUMrSoDEXTaQ=="
+				},
+				"code" : "(FFILibrary class >> #uniqueInstance) ast typInfContextLookup reset resultAsync "
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-11-11T13:48:00.585206+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-11-11T13:54:31.516364+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "7aZ/lUHGDQCahD7DBsMEDw=="
+				},
+				"code" : "TypInfCurrentConfiguration\r\tvalue: TypInfConfiguration debug withTally\r\tduring: [ (FFILibrary class >> #uniqueInstance) ast typInfContextLookup reset result ]"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-11-09T21:08:40.579037+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-11-11T13:54:38.355949+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "WDbDgR/GDQCzuvFkBfyQ2g=="
+				},
+				"code" : "(Dictionary >> #scanFor:) ast typInfContextLookup reset result"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-11-09T23:31:33.566893+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-11-11T13:54:47.354808+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "W5/AgCHGDQCQHR5wB2c0cw=="
+				},
+				"code" : "TypInfCurrentConfiguration\r\tvalue: TypInfConfiguration debug withTally\r\tduring: [ (Dictionary >> #scanFor:) ast typInfContextLookup reset result ]"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -168,7 +335,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-11T18:56:06.621807+02:00"
+						"dateAndTimeString" : "2023-11-05T12:54:23.091592+01:00"
 					}
 				},
 				"uid" : {
@@ -202,7 +369,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-11T18:57:31.627252+02:00"
+						"dateAndTimeString" : "2023-11-05T12:54:23.115688+01:00"
 					}
 				},
 				"uid" : {

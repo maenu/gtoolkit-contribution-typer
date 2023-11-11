@@ -4,7 +4,7 @@ Extension { #name : #TypInfInlLookupContext }
 TypInfInlLookupContext >> typGtAsCoderViewModel [
 	^ GtPharoMethodCoder new
 		attributeNamed: #typGtIndicator put: self typGtIndicator;
-		forMethod: lookup typGtExpanderMethod;
+		forMethod: (lookup typGtExpanderMethod ifNil: [ self class >> #noMethod ]);
 		asCoderViewModel
 ]
 

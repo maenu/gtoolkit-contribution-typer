@@ -44,9 +44,33 @@ TypInfContextLookup >> = anObject [
 	^ anObject arguments = arguments
 ]
 
+{ #category : #'as yet unclassified' }
+TypInfContextLookup >> absorbed: aLookup [
+	^ self class
+		node: node
+		arguments: (arguments
+				with: aLookup arguments
+				collect: [ :a :b | a covariant: b ])
+		self: (selfType covariant: aLookup self)
+		super: (superType
+				ifNil: [ aLookup super ]
+				ifNotNil: [ aLookup super ifNil: [ superType ] ifNotNil: [ :t | superType covariant: t ] ])
+]
+
 { #category : #accessing }
 TypInfContextLookup >> arguments [
 	^ arguments
+]
+
+{ #category : #accessing }
+TypInfContextLookup >> canAbsorb: aLookup [
+	node == aLookup node ifFalse: [ ^ false ].
+	(selfType covariant: aLookup self) isUnion ifTrue: [ ^ false ].
+	(superType
+		ifNil: [ aLookup super ]
+		ifNotNil: [ aLookup super ifNil: [ superType ] ifNotNil: [ :t | superType covariant: t ] ])
+		ifNotNil: [ :t | t isUnion ifTrue: [ ^ false ] ].
+	^ true
 ]
 
 { #category : #accessing }

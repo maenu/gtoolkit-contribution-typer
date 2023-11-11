@@ -32,9 +32,9 @@ TypInfLocalDefinition >> transfer [
 			^ self ].
 	self
 		ifFromName: [ :t | 
-			state at: self put: t.
+			state at: self covariantPut: t.
 			^ self ].
-	state at: self put: self type
+	state at: self covariantPut: self type
 ]
 
 { #category : #initialization }

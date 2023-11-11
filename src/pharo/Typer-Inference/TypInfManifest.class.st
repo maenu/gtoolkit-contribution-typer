@@ -22,7 +22,7 @@ TypInfManifest class >> build [
 { #category : #accessing }
 TypInfManifest class >> exampleContext [
 	<gtExample>
-	^ (TypInfExaMethods >> #block:) typInfContext
+	^ (TypInfExaMethods >> #block:) ast typInfContextLookup result
 ]
 
 { #category : #accessing }
@@ -48,13 +48,13 @@ TypInfManifest class >> invalidate [
 TypInfManifest class >> randomContext [
 	<gtExample>
 	^ (Smalltalk globals allMethods
-		select: [ :m | m isInstalled and: [ m size < 100 ] ]) atRandom typInfContext
+		select: [ :m | m isInstalled and: [ m size < 100 ] ]) atRandom ast typInfContextLookup result
 ]
 
 { #category : #accessing }
 TypInfManifest class >> signalContext [
 	<gtExample>
-	^ (TypInfExaMethods >> #signalAndHandle) typInfContext
+	^ (TypInfExaMethods >> #signalAndHandle) ast typInfContextLookup result
 ]
 
 { #category : #accessing }

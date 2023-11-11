@@ -251,7 +251,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-04T16:39:01.874956+02:00"
+						"dateAndTimeString" : "2023-11-11T17:36:17.285145+01:00"
 					}
 				},
 				"uid" : {
@@ -261,7 +261,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "The exception path is implemented too. As a byproduct of the inference, we also get a dead code analysis. You can also expand the #new expander to see a form of extension to the inference. Expanders represent sent messages that are then looked up. The resolvers of these lookups come in different shapes: {{gtMethod:TypPraExaParametricSubclass>>#initialize}} shows how pragmas are used to annotate methods and classes for code that you control. For code you do not control, e.g., the Pharo core, extension methods are used for type rules, as in {{gtMethod:Behavior>>#typShaMethodNew:}}"
+				"string" : "The exception path is implemented too. As a byproduct of the inference, we also get a dead code analysis. You can also expand the #new expander to see a form of extension to the inference. Expanders represent sent messages that are then looked up. The resolvers of these lookups come in different shapes: {{gtMethod:TypPraExaParametricSubclass>>#initialize}} shows how pragmas are used to annotate methods and classes for code that you control. For code you do not control, e.g., the Pharo core, extension methods are used for type rules, as in {{gtMethod:Behavior>>#typShaMethodKeywordNew:root:}}"
 			},
 			{
 				"__type" : "textSnippet",
@@ -1340,7 +1340,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-09-30T18:50:51.363209+02:00"
+						"dateAndTimeString" : "2023-11-11T17:37:55.388225+01:00"
 					}
 				},
 				"uid" : {
@@ -1363,7 +1363,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-01T16:10:42.399853+02:00"
+						"dateAndTimeString" : "2023-11-11T17:37:55.715315+01:00"
 					}
 				},
 				"editEmail" : {
@@ -1374,14 +1374,48 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-01T16:10:55.400912+02:00"
+						"dateAndTimeString" : "2023-11-11T17:37:56.377685+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
-					"uidString" : "p5PA9QnDDQC7EIz+CQkFOg=="
+					"uidString" : "LabAy0TGDQCdJ1phD47KHA=="
 				},
-				"code" : "TypManifest manifests"
+				"code" : "TypManifest\r\tinvalidateAll;\r\tbuildAll;\r\tlogger"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-11-11T17:38:09.955705+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2023-11-11T17:38:14.700856+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "0+yZzETGDQCdMAKUD47KHA=="
+				},
+				"code" : "TypManifest logger"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -1431,40 +1465,6 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-09-30T20:00:23.332978+02:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-01T20:38:22.618613+02:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "EYlRDfnCDQCJDniUDgf1ZQ=="
-				},
-				"code" : "[TypInfExaMethods typInfContext: #signalAndHandle] asAsyncFuture typAwait"
-			},
-			{
-				"__type" : "pharoSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
 						"dateAndTimeString" : "2023-10-01T11:53:14.463971+02:00"
 					}
 				},
@@ -1484,40 +1484,6 @@
 					"uidString" : "3cf7XAbDDQCX6n9nB8jFlQ=="
 				},
 				"code" : "TypInfManifest  exampleMethods"
-			},
-			{
-				"__type" : "pharoSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-09-30T19:40:16.083551+02:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-09-30T19:44:49.633314+02:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "xFNcxfjCDQCGU/78Dgf1ZQ=="
-				},
-				"code" : "TypGtManifest logger"
 			},
 			{
 				"__type" : "pharoSnippet",

@@ -107,11 +107,6 @@ TypInfExaMethods >> typShaMethodUnarySignalLookup: aLookup root: anotherLookup [
 ]
 
 { #category : #accessing }
-TypInfExaMethods >> while2: aBlock [
-	^ aBlock whileFalse: [ 'bop' ]
-]
-
-{ #category : #accessing }
 TypInfExaMethods >> while: aBoolean [
 	^ [ aBoolean ] whileFalse: [ 'bop' ]
 ]

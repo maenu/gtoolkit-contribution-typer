@@ -16,25 +16,18 @@ GtPharoSourceCoderViewModel >> typGtContext [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoSourceCoderViewModel >> typGtContextPromise [
-	| promise |
-	promise := coderModel attributes
-			at: #typGtContextPromise
-				ifPresent: [ :p | 
-					(coderModel attributes at: #typGtContextPromiseSourceCode)
-						= coderModel sourceCode ifTrue: [ ^ p ].
-					p cancelHard ];
-			at: #typGtContextPromiseSourceCode put: coderModel sourceCode;
-			at: #typGtContextPromise
-				put: self typGtRbAst typInfContextLookup reset resultAsync.
-	promise
-		then: [ :c | 
-			coderModel attributes at: #typGtContext put: c.
-			coderModel requestStyleSourceText ]
-		otherwise: [ :e | 
-			promise isCancelled
-				ifFalse: [ coderModel attributes removeKey: #typGtContext ifAbsent: [  "noop" ].
-					coderModel requestStyleSourceText ] ].
-	^ promise
+	^ coderModel attributes
+		at: #typGtContextPromise
+			ifPresent: [ :p | 
+				(coderModel attributes at: #typGtContextPromiseSourceCode)
+					= coderModel sourceCode ifTrue: [ ^ p ].
+				p cancelHard ];
+		at: #typGtContextPromiseSourceCode put: coderModel sourceCode;
+		at: #typGtContextPromise
+			put: [ [ coderModel attributes
+					at: #typGtContext
+					put: self typGtRbAst typInfContextLookup reset result ]
+					ensure: [ coderModel requestStyleSourceText ] ] typAsAsyncFuture typAwait
 ]
 
 { #category : #'*Typer-GToolkit' }

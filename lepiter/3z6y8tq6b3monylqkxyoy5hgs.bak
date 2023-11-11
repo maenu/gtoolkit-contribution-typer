@@ -233,14 +233,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-11-08T20:08:38.401896+01:00"
+						"dateAndTimeString" : "2023-11-08T20:08:16.779763+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "HLtriwrGDQC1pYH8D6CpyQ=="
 				},
-				"code" : "1 + 1"
+				"code" : "1"
 			},
 			{
 				"__type" : "pharoSnippet",

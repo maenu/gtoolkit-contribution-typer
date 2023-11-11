@@ -29,7 +29,6 @@ TypGtManifest class >> nil [
 	<gtExample>
 	<noTest>
 	| extensions |
-	"nil various references"
 	GtPlaygroundEvaluatedCodeButtonAttribute
 		allSubInstancesDo: [ :e | e result: nil ].
 	GtInspectorTool allInstances
@@ -44,7 +43,13 @@ TypGtManifest class >> nil [
 	GtPharoSourceCoder
 		allSubInstancesDo: [ :e | 
 			e attributes
+				at: #typGtSubscription ifPresent: [ :s | s announcer unsubscribe: self ];
+				at: #typGtContextPromise ifPresent: #cancelHard;
+				removeKey: #typGtContextEnabled ifAbsent: [  "noop" ];
+				removeKey: #typGtSubscription ifAbsent: [  "noop" ];
+				removeKey: #typGtContextEnabled ifAbsent: [  "noop" ];
 				removeKey: #typGtContext ifAbsent: [  "noop" ];
+				removeKey: #typGtContextPromiseSourceCode ifAbsent: [  "noop" ];
 				removeKey: #typGtContextPromise ifAbsent: [  "noop" ] ].
 	GtPharoMethodContextCoder allInstances
 		select: [ :e | 
@@ -75,7 +80,7 @@ TypGtManifest class >> nil [
 			e error asString
 				beginsWith: 'Instance of a subclass of ProtoObject did not understand ' ]
 		thenDo: [ :e | e error: nil ].
-		
+	
 	"seems like they are never removed, or not always at least"
 	BlOverlayListener
 		allInstancesDo: [ :e | e overlayElement removeEventHandler: e ].
