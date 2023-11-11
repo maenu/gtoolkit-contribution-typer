@@ -4,8 +4,7 @@ Extension { #name : #BlockClosure }
 BlockClosure >> typAsAsyncFuture [
 	| configuration |
 	configuration := TypInfCurrentConfiguration value.
-	^ [ TypInfIsAsync
-		do: [ TypInfCurrentConfiguration value: configuration during: self ] ]
+	^ [ TypInfCurrentConfiguration value: configuration during: self ]
 		asAsyncFuture
 ]
 

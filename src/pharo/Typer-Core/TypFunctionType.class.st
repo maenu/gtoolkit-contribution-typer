@@ -191,10 +191,18 @@ TypFunctionType >> argumentsSize [
 { #category : #accessing }
 TypFunctionType >> covariant: aType [
 	| resultResult resultArguments resultArgumentsOptional resultSignalsAlways resultSignalsMaybe resultNode |
-	(aType isFunction
+	aType == self ifTrue: [ ^ self ].
+	(aType class = self class
 		and: [ name = aType name and: [ argumentsSize = aType argumentsSize ] ])
 		ifFalse: [ ^ super covariant: aType ].
-	aType == self ifTrue: [ ^ self ].
+	resultNode := ({node.
+			aType node} reject: #isNil) asIdentitySet
+			ifEmpty: [ nil ]
+			ifNotEmpty: [ :s | 
+				s size > 1
+					ifTrue: [ ^ {self.
+							aType} typAsType ]
+					ifFalse: [ s anyOne ] ].
 	self isUnknownFunction ifTrue: [ ^ aType ].
 	aType isUnknownFunction ifTrue: [ ^ self ].
 	resultResult := self result covariant: aType result.
@@ -218,8 +226,6 @@ TypFunctionType >> covariant: aType [
 					aType signalsAlways.
 					signalsMaybe.
 					aType signalsMaybe} reject: #isNil) ifEmpty: nil ifNotEmpty: #typAsType ].
-	resultNode := ({node.
-			aType node} reject: #isNil) ifEmpty: nil ifNotEmpty: #first.
 	self hasClassDescription
 		ifTrue: [ ^ self class
 				classDescription: self classDescription

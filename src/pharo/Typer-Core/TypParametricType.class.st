@@ -128,7 +128,8 @@ TypParametricType >> contravariant: aType [
 { #category : #converting }
 TypParametricType >> covariant: aType [
 	| copyParameters otherParameters |
-	(aType isParametric
+	aType == self ifTrue: [ ^ self ].
+	(aType class = self class
 		and: [ name = aType name and: [ parameters keys = aType parameters keys ] ])
 		ifFalse: [ ^ super covariant: aType ].
 	otherParameters := aType parameters.

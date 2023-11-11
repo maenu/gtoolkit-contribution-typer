@@ -167,6 +167,7 @@ TypType >> covariant: aType [
 	 aType >= result
 	 should be valid"
 
+	aType == self ifTrue: [ ^ self ].
 	aType isUnknown ifTrue: [ ^ self ].
 	aType isNil ifTrue: [ ^ self asNullable ].
 	self >= aType ifTrue: [ ^ aType ].

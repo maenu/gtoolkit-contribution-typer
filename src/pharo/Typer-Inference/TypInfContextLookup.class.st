@@ -85,7 +85,6 @@ TypInfContextLookup >> reset [
 
 { #category : #accessing }
 TypInfContextLookup >> result [
-	self assert: [ TypInfIsAsync value ].
 	result
 		ifNotNil: [ TypInfNodeStack actives size + 1 < result nodeStackDepth
 				ifTrue: [ result := nil ]

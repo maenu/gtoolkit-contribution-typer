@@ -6,12 +6,5 @@ Class {
 
 { #category : #accessing }
 TypInfAssignment >> transfer [
-	| previous |
-	previous := self previous.
-	state at: self put: previous.
-	(out at: #next)
-		do: [ :e | 
-			state
-				at: e target put: previous;
-				at: e target node variable put: previous ]
+	state at: self put: self previous
 ]

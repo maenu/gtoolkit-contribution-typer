@@ -142,11 +142,15 @@ TypInfContext >> isStable [
 { #category : #running }
 TypInfContext >> iterate [
 	self install.
-	[ iterations size <= TypInfCurrentConfiguration value maxIterations
-		and: [ | iteration |
-			iteration := root iterate.
-			iterations add: iteration.
-			iteration isNotEmpty ] ] whileTrue.
+	iterations size <= TypInfCurrentConfiguration value maxIterations
+		and: [ TypInfNodeStack
+				push: node
+				during: [ | iteration |
+					nodeStackDepth := TypInfNodeStack actives size.
+					iteration := root iterate.
+					iterations add: iteration.
+					iteration isNotEmpty ]
+				or: [ self error: 'cannot push node' ] ] whileTrue.
 	[ self perform: TypInfCurrentConfiguration value contextCleanup ]
 		typAsAsyncFuture typAwait
 ]
@@ -225,25 +229,21 @@ TypInfContext >> root [
 
 { #category : #running }
 TypInfContext >> run [
+	| start stop tally |
 	self assert: [ self canRun ].
-	TypInfNodeStack
-		push: node
-		during: [ | start stop tally |
-			nodeStackDepth := TypInfNodeStack actives size.
-			start := TypInfContextStartSignal node: self.
-			start emit.
-			(TypInfCurrentConfiguration value wantsTally
-				and: [ MessageTally typInfIsRunning not ])
-				ifTrue: [ tally := MessageTally new
-							spyEvery: 1 on: [ self iterate ];
-							yourself ]
-				ifFalse: [ self iterate ].
-			stop := TypInfContextStopSignal
-					node: self
-					start: start
-					tally: tally.
-			stop emit ]
-		or: [ self error: 'cannot push node' ]
+	start := TypInfContextStartSignal node: self.
+	start emit.
+	(TypInfCurrentConfiguration value wantsTally
+		and: [ MessageTally typInfIsRunning not ])
+		ifTrue: [ tally := MessageTally new
+					spyEvery: 1 on: [ self iterate ];
+					yourself ]
+		ifFalse: [ self iterate ].
+	stop := TypInfContextStopSignal
+			node: self
+			start: start
+			tally: tally.
+	stop emit
 ]
 
 { #category : #accessing }
@@ -299,6 +299,7 @@ TypInfContext >> typeAt: aNode [
 { #category : #accessing }
 TypInfContext >> uninstall [
 	(nodes values flatCollect: #yourself) do: #uninstall.
+	nodes removeAll.
 	iterations removeAll.
 	current := root := nil
 ]

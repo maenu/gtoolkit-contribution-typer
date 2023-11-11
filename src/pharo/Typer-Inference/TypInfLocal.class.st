@@ -24,6 +24,6 @@ TypInfLocal >> inRead: aNode [
 { #category : #accessing }
 TypInfLocal >> transfer [
 	((in at: #next) allSatisfy: [ :e | e origin isKindOf: TypInfAssignment ])
-		ifTrue: [ ^ self put: (state at: node variable) ].
-	self covariantPut: (state at: node variable ifAbsent: TypUnknownType instance)
+		ifTrue: [ state at: self inRead put: self previous ].
+	state at: self put: (state at: self inRead)
 ]

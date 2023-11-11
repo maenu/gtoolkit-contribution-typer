@@ -41,12 +41,11 @@ TypInfMessage >> canInstall [
 TypInfMessage >> constrainReceiver [
 	| receiver implementors |
 	receiver := self receiver.
-	receiver isUnknown
-		ifFalse: [ ({#ifNil:.
-				#ifNotNil:.
-				#ifNil:ifNotNil:.
-				#ifNotNil:ifNil:} includes: self selector)
-				ifTrue: [ self constrain: self inReceiver to: receiver asNullable ].
+	({#ifNil:.
+		#ifNotNil:.
+		#ifNil:ifNotNil:.
+		#ifNotNil:ifNil:} includes: self selector)
+		ifTrue: [ state at: self inReceiver put: receiver asNullable.
 			^ self ].
 	implementors := TypInfIndex instance implementors: self selector.
 	(implementors size between: 1 and: 8)
