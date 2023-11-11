@@ -10,6 +10,4 @@ Metacello new
     load.
 ```
 
-For an example usage, run the example in `TypDynExamples`, then inspect the resulted test methods.
-
-Currently based on instrumented invocations under test.
+Check the 'Typer' page in the Lepiter database.
