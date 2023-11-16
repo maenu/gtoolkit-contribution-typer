@@ -20,7 +20,7 @@ TypInfInlLookupMessage >> newContexts [
 		ifNotNil: [ :c | 
 			^ {TypInfRecursionContext
 					sender: context
-					state: state copy
+					state: state
 					node: node
 					lookup: c lookup
 					message: self} ].
@@ -29,7 +29,7 @@ TypInfInlLookupMessage >> newContexts [
 		ifNotNil: [ :t | 
 			{TypInfSignalContext
 					sender: context
-					state: state copy
+					state: state
 					node: node
 					lookup: context lookup
 					message: self
@@ -46,6 +46,6 @@ TypInfInlLookupMessage >> transfer [
 		withIndexDo: [ :e :i | 
 			i <= method arguments size
 				ifTrue: [ self constrain: e to: (method arguments at: i) ] ].
-	state at: self put: method result.
-	state at: self inReceiver put: self receiver asNonNullable
+	state at: self inReceiver put: self receiver asNonNullable.
+	self put: method result
 ]

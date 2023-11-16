@@ -6,5 +6,5 @@ Class {
 
 { #category : #accessing }
 TypInfLiteralValue >> transfer [
-	state at: self put: node value typInfType
+	self put: node value typInfType
 ]

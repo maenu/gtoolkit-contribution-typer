@@ -11,5 +11,5 @@ TypInfExpression >> asFunction [
 
 { #category : #accessing }
 TypInfExpression >> transfer [
-	state at: self put: (context nodesAt: node) second type
+	self put: (context nodesAt: node) second type
 ]

@@ -79,12 +79,6 @@ TypInfContext >> children [
 ]
 
 { #category : #accessing }
-TypInfContext >> cleanup [
-	iterations := iterations collect: [ :s | nil ].
-	self allNodes do: [ :e | e state reduceToRead ]
-]
-
-{ #category : #accessing }
 TypInfContext >> definition: aLocalNode [
 	nodes
 		at: aLocalNode variable definingNode
@@ -113,7 +107,7 @@ TypInfContext >> home [
 { #category : #accessing }
 TypInfContext >> initializeSender: aContext state: aState node: aNode lookup: aLookup [
 	sender := aContext.
-	state := aState.
+	state := aState copy.
 	node := aNode.
 	lookup := aLookup.
 	iterations := OrderedCollection new.
@@ -142,16 +136,16 @@ TypInfContext >> isStable [
 { #category : #running }
 TypInfContext >> iterate [
 	self install.
-	iterations size <= TypInfCurrentConfiguration value maxIterations
-		and: [ TypInfNodeStack
-				push: node
-				during: [ | iteration |
-					nodeStackDepth := TypInfNodeStack actives size.
-					iteration := root iterate.
-					iterations add: iteration.
-					iteration isNotEmpty ]
-				or: [ self error: 'cannot push node' ] ] whileTrue.
-	[ self perform: TypInfCurrentConfiguration value contextCleanup ]
+	TypInfNodeStack
+		push: node
+		during: [ | iteration |
+			nodeStackDepth := TypInfNodeStack actives size.
+			[ iteration := root iterate.
+			iterations add: iteration.
+			iterations size <= TypInfCurrentConfiguration value maxIterations
+				and: [ iteration isNotEmpty ] ] whileTrue ]
+		or: [ self error: 'cannot push node' ].
+	[ self perform: TypInfCurrentConfiguration value afterContextIterate ]
 		typAsAsyncFuture typAwait
 ]
 
@@ -210,6 +204,14 @@ TypInfContext >> receiver: aNode [
 		at: aNode
 		ifPresent: #last
 		ifAbsent: [ Error signal: 'no receiver found' ]
+]
+
+{ #category : #accessing }
+TypInfContext >> reduce [
+	| allNodes |
+	iterations := iterations collect: [ :s | nil ].
+	allNodes := self allNodes.
+	allNodes do: [ :e | e state reduceTo: allNodes ]
 ]
 
 { #category : #accessing }

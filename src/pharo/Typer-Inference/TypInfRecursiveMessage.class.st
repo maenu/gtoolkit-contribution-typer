@@ -24,5 +24,5 @@ TypInfRecursiveMessage >> newContexts [
 
 { #category : #accessing }
 TypInfRecursiveMessage >> transfer [
-	state at: self put: (state at: message)
+	self put: (state at: message)
 ]

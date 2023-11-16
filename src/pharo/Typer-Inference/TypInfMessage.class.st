@@ -13,7 +13,7 @@ Class {
 { #category : #accessing }
 TypInfMessage >> arguments [
 	^ self inArguments
-		collect: [ :n | state at: n ifAbsent: TypUnknownType instance ]
+		collect: [ :n | state at: n ifAbsent: [ TypUnknownType instance ] ]
 ]
 
 { #category : #accessing }
@@ -47,6 +47,7 @@ TypInfMessage >> constrainReceiver [
 		#ifNotNil:ifNil:} includes: self selector)
 		ifTrue: [ state at: self inReceiver put: receiver asNullable.
 			^ self ].
+	receiver isUnknown ifFalse: [ ^ self ].
 	implementors := TypInfIndex instance implementors: self selector.
 	(implementors size between: 1 and: 8)
 		ifTrue: [ self
@@ -110,7 +111,7 @@ TypInfMessage >> newContexts [
 		ifNotNil: [ :c | 
 			^ {TypInfRecursionContext
 					sender: context
-					state: state copy
+					state: state
 					node: node
 					lookup: c lookup
 					message: self} ].
@@ -122,7 +123,7 @@ TypInfMessage >> newContexts [
 						ifTrue: [ TypInfIndex instance inlResolve: l message: self ]
 						ifFalse: [ {TypInfInlLookupContext
 									sender: context
-									state: state copy
+									state: state
 									node: node
 									lookup: l
 									message: self} ] ] ]
@@ -148,7 +149,7 @@ TypInfMessage >> outNextDisabledsEnableOn: aNode [
 
 { #category : #accessing }
 TypInfMessage >> receiver [
-	^ state at: self inReceiver ifAbsent: TypUnknownType instance
+	^ state at: self inReceiver ifAbsent: [ TypUnknownType instance ]
 ]
 
 { #category : #accessing }
@@ -187,8 +188,7 @@ TypInfMessage >> signalsMaybe [
 TypInfMessage >> transfer [
 	self constrainReceiver.
 	self canInstall ifTrue: [ self install ].
-	state
-		at: self
+	self
 		put: (contexts
 				ifEmpty: [ TypUnknownType instance ]
 				ifNotEmpty: [ (contexts collect: [ :c | c root inReturnType ]) typAsMinimizedType ])

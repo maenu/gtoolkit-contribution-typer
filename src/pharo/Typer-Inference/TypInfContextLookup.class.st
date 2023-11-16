@@ -22,10 +22,10 @@ TypInfContextLookup class >> node: aNode arguments: aCollection [
 { #category : #accessing }
 TypInfContextLookup class >> node: aNode arguments: aCollection self: aTypeOrNil super: anotherTypeOrNil [
 	^ self index
-		at: {aNode identityHash.
-				aCollection asArray.
+		typAt: {aNode identityHash.
 				aTypeOrNil.
-				anotherTypeOrNil}
+				anotherTypeOrNil.
+				aCollection size} , aCollection
 		ifAbsentPut: [ self new
 				initializeNode: aNode
 					arguments: aCollection asArray
@@ -121,11 +121,6 @@ TypInfContextLookup >> result [
 	result canRun ifFalse: [ ^ result := nil ].
 	[ result run ] ifCurtailed: [ ^ result := nil ].
 	^ result
-]
-
-{ #category : #accessing }
-TypInfContextLookup >> resultAsync [
-	^ [ self result ] typAsAsyncFuture typAwait
 ]
 
 { #category : #accessing }

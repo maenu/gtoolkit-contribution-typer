@@ -6,5 +6,5 @@ Class {
 
 { #category : #accessing }
 TypInfError >> transfer [
-	state at: self put: TypUnknownType instance
+	self put: TypUnknownType instance
 ]

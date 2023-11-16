@@ -6,5 +6,5 @@ Class {
 
 { #category : #initialization }
 TypInfThisContext >> transfer [
-	state at: self put: Context typAsType
+	self put: Context typAsType
 ]

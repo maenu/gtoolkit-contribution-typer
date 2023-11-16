@@ -8,8 +8,7 @@ Class {
 
 { #category : #accessing }
 TypInfArray >> transfer [
-	state
-		at: self
+	self
 		put: (Array typAsType
 				withParameters: {(self inArguments collect: [ :e | state at: e ]) typAsType})
 ]

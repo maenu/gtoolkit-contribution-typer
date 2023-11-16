@@ -13,8 +13,7 @@ TypInfBlock >> asFunction [
 
 { #category : #accessing }
 TypInfBlock >> transfer [
-	state
-		at: self
+	self
 		put: ((in
 				at: #definition
 				ifPresent: [ :s | (s collect: [ :e | e origin type withoutNode ]) typAsMinimizedType ]

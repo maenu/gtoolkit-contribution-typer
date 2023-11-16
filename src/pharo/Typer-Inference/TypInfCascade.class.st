@@ -6,6 +6,5 @@ Class {
 
 { #category : #accessing }
 TypInfCascade >> transfer [
-
-	state at: self put: self previous
+	self put: self previous
 ]

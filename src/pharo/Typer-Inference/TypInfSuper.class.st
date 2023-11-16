@@ -17,5 +17,5 @@ TypInfSuper >> newMethodLookups: aMessage [
 
 { #category : #initialization }
 TypInfSuper >> transfer [
-	state at: self put: (context super ifNil: TypNilType instance)
+	self put: (context super ifNil: TypNilType instance)
 ]

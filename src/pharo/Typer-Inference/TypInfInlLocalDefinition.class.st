@@ -21,8 +21,7 @@ TypInfInlLocalDefinition >> constrainTo: aType from: aNode [
 
 { #category : #accessing }
 TypInfInlLocalDefinition >> transfer [
-	state
-		at: self
+	self
 		put: (state
 				at: (self inArgumentAt: 1)
 				ifAbsent: [ TypUnknownType instance	"undefined" ])

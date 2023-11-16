@@ -9,8 +9,7 @@ TypInfInlBlock >> transfer [
 	| return signal |
 	return := self inReturnType.
 	signal := self inSignalType.
-	state
-		at: self
+	self
 		put: ((BlockClosure
 				typAsFunctionTypeWithResult: return
 				arguments: (self inArguments collect: #type)

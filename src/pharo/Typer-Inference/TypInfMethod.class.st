@@ -37,8 +37,7 @@ TypInfMethod >> transfer [
 	| return signal |
 	return := self inReturnType.
 	signal := self inSignalType.
-	state
-		at: self
+	self
 		put: (CompiledMethod
 				typAsFunctionTypeWithResult: return
 				arguments: (self inArguments collect: #type)

@@ -18,9 +18,7 @@ TypInfInlLookupContext >> install [
 ]
 
 { #category : #accessing }
-TypInfInlLookupContext >> noMethod [
-	"nothing found"
-
+TypInfInlLookupContext >> notFound [
 	
 ]
 

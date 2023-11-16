@@ -28,13 +28,13 @@ TypInfLocalDefinition >> outReads [
 { #category : #initialization }
 TypInfLocalDefinition >> transfer [
 	node isArgumentVariable
-		ifFalse: [ state at: self put: TypNilType instance.
+		ifFalse: [ self put: TypNilType instance.
 			^ self ].
 	self
 		ifFromName: [ :t | 
-			state at: self covariantPut: t.
+			self covariantPut: t.
 			^ self ].
-	state at: self covariantPut: self type
+	self covariantPut: self type
 ]
 
 { #category : #initialization }

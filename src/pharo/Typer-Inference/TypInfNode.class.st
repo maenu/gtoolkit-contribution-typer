@@ -5,7 +5,7 @@ Class {
 		'node',
 		'state',
 		'context',
-		'transfers'
+		'iterations'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -23,14 +23,6 @@ TypInfNode >> allNextNodes [
 	result := IdentitySet new.
 	self depthFirstNextDo: [ :n | result add: n ].
 	^ result
-]
-
-{ #category : #accessing }
-TypInfNode >> changesDiffFrom: aState [
-	"generates state diff per node instead of just changed or not.
-	useful for debugging"
-
-	^ aState diff: state
 ]
 
 { #category : #accessing }
@@ -62,6 +54,11 @@ TypInfNode >> constrainTo: aType from: aNode [
 TypInfNode >> context [
 
 	^ context
+]
+
+{ #category : #accessing }
+TypInfNode >> covariantPut: aType [
+	^ state at: self covariantPut: aType
 ]
 
 { #category : #accessing }
@@ -124,10 +121,11 @@ TypInfNode >> inSignalType [
 { #category : #initialization }
 TypInfNode >> initializeNode: aNode context: aContext [
 	self assert: [ aContext state isNotNil ].
-	transfers := 0.
 	node := aNode.
 	context := aContext.
-	state := aContext state withNode: self
+	state := aContext state copy.
+	iterations := OrderedCollection
+			new: TypInfCurrentConfiguration value maxIterations + 1
 ]
 
 { #category : #accessing }
@@ -231,42 +229,28 @@ TypInfNode >> printOn: aStream [
 ]
 
 { #category : #accessing }
+TypInfNode >> put: aType [
+	^ state at: self put: aType
+]
+
+{ #category : #accessing }
 TypInfNode >> slurp [
-	in
-		at: #next
-		ifPresent: [ :s | 
-			| states |
-			states := (s collect: [ :e | e origin state ] as: OrderedCollection)
-					sorted: [ :a :b | a size > b size ].
-			state := states removeFirst withNode: self.
-			state slurpAll: states ].
-	in
-		at: #constrain
-		ifPresent: [ :s | 
-			state
-				at: self
-				put: ((s
-						collect: [ :e | 
-							state
-								at: e
-								ifPresent: [ :t | e type covariant: t ]
-								ifAbsent: [ e type ] ])
-						, {state at: self ifAbsent: TypUnknownType instance}
-						reduce: [ :a :b | b covariant: a ]) ].
-	out at: #constrain ifPresent: [ :s | s copy do: #remove ].
-	state read removeAll
+	state
+		slurpAll: (in
+				at: #next
+				ifPresent: [ :s | s collect: [ :e | e origin state ] ]
+				ifAbsent: [ #() ]).
+	in at: #constrain ifPresent: [ :s | s do: [ :e | self covariantPut: e type ] ].
+	out at: #constrain ifPresent: [ :s | s copy do: #remove ]
 ]
 
 { #category : #accessing }
 TypInfNode >> slurpAndTransfer [
-	| oldState |
 	TypInfNodeSlurpAndTransferSignal emit: self.
-	oldState := state.
 	self
 		slurp;
 		transfer.
-	transfers := transfers + 1.
-	^ self perform: TypInfCurrentConfiguration value nodeChanges with: oldState
+	^ iterations add: state changes
 ]
 
 { #category : #accessing }
@@ -279,11 +263,6 @@ TypInfNode >> transfer [
 	"transfer the given state from in to out"
 
 	
-]
-
-{ #category : #accessing }
-TypInfNode >> transfers [
-	^ transfers
 ]
 
 { #category : #accessing }

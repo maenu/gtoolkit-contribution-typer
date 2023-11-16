@@ -6,5 +6,5 @@ Class {
 
 { #category : #accessing }
 TypInfAssignment >> transfer [
-	state at: self put: self previous
+	self put: self previous
 ]

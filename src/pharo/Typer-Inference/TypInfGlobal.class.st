@@ -6,5 +6,5 @@ Class {
 
 { #category : #initialization }
 TypInfGlobal >> transfer [
-	state at: self put: node variable value typInfType
+	self put: node variable value typInfType
 ]

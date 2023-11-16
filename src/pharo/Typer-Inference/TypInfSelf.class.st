@@ -16,5 +16,5 @@ TypInfSelf >> newMethodLookups: aMessage [
 
 { #category : #initialization }
 TypInfSelf >> transfer [
-	state at: self put: context self
+	self put: context self
 ]

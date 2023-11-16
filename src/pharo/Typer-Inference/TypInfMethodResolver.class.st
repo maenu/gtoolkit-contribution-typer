@@ -29,7 +29,7 @@ TypInfMethodResolver >> result: aLookup root: anotherLookup [
 		node: method ast
 		arguments: anotherLookup arguments
 		self: anotherLookup self
-		super: anotherLookup super) result root type
+		super: anotherLookup super) result ifNotNil: [ :c | c root type ]
 ]
 
 { #category : #accessing }

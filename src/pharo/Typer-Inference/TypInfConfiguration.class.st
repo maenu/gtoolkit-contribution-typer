@@ -2,19 +2,18 @@ Class {
 	#name : #TypInfConfiguration,
 	#superclass : #Object,
 	#instVars : [
-		'contextCleanup',
-		'nodeChanges',
 		'maxIterations',
 		'maxImplementors',
 		'maxMethodSize',
 		'maxWriters',
 		'maxNodeStackSize',
 		'maxInlinesPerSend',
-		'wantsTally'
+		'wantsTally',
+		'afterContextIterate'
 	],
 	#classInstVars : [
-		'default',
-		'debug'
+		'debug',
+		'default'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -23,8 +22,7 @@ Class {
 TypInfConfiguration class >> debug [
 	^ debug
 		ifNil: [ debug := self default copy
-					contextCleanup: #yourself;
-					nodeChanges: #changesDiffFrom:;
+					afterContextIterate: #yourself;
 					yourself ]
 ]
 
@@ -33,9 +31,8 @@ TypInfConfiguration class >> default [
 	^ default
 		ifNil: [ default := self new
 					wantsTally: false;
-					contextCleanup: #cleanup;
-					nodeChanges: #changesFrom:;
-					maxIterations: 12;
+					afterContextIterate: #reduce;
+					maxIterations: 16;
 					maxNodeStackSize: 5;
 					maxInlinesPerSend: 8;
 					maxImplementors: TypInfIndex instance implementors95Quantile;
@@ -51,13 +48,13 @@ TypInfConfiguration class >> invalidate [
 ]
 
 { #category : #accessing }
-TypInfConfiguration >> contextCleanup [
-	^ contextCleanup
+TypInfConfiguration >> afterContextIterate [
+	^ afterContextIterate
 ]
 
 { #category : #accessing }
-TypInfConfiguration >> contextCleanup: anObject [
-	contextCleanup := anObject
+TypInfConfiguration >> afterContextIterate: anObject [
+	afterContextIterate := anObject
 ]
 
 { #category : #accessing }
@@ -118,16 +115,6 @@ TypInfConfiguration >> maxWriters [
 { #category : #accessing }
 TypInfConfiguration >> maxWriters: anObject [
 	maxWriters := anObject
-]
-
-{ #category : #accessing }
-TypInfConfiguration >> nodeChanges [
-	^ nodeChanges
-]
-
-{ #category : #accessing }
-TypInfConfiguration >> nodeChanges: anObject [
-	nodeChanges := anObject
 ]
 
 { #category : #accessing }

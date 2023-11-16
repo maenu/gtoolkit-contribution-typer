@@ -16,7 +16,7 @@ TypInfSignalMessage >> newContexts [
 { #category : #accessing }
 TypInfSignalMessage >> transfer [
 	super transfer.
-	state at: self put: TypVoidType instance.
+	self put: TypVoidType instance.
 	contexts
 		ifNotEmpty: [ :c | 
 			| arguments |

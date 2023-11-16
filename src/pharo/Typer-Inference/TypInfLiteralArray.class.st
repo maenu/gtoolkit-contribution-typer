@@ -8,8 +8,7 @@ Class {
 
 { #category : #accessing }
 TypInfLiteralArray >> transfer [
-	state
-		at: self
+	self
 		put: (node isForByteArray
 				ifTrue: [ ByteArray typAsType ]
 				ifFalse: [ Array typAsType withParameters: {(self inArguments collect: #type) typAsType} ])

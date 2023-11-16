@@ -8,6 +8,6 @@ Class {
 
 { #category : #accessing }
 TypInfSequence >> transfer [
-	state at: self put: TypNilType instance.
-	self inArguments do: [ :e | state at: e put: TypNilType instance ]
+	self inArguments do: [ :e | state at: e put: TypNilType instance ].
+	self put: TypNilType instance
 ]
