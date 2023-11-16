@@ -48,11 +48,11 @@ TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollectio
 { #category : #accessing }
 TypMethodLookup class >> receiver: aType selector: aSymbol arguments: aCollection self: anotherType super: yetAnotherType [
 	^ self index
-		at: {aType.
+		typAt: {aType.
 				aSymbol asSymbol.
-				aCollection asArray.
 				anotherType.
-				yetAnotherType}
+				yetAnotherType.
+				aCollection size} , aCollection
 		ifAbsentPut: [ self new
 				initializeReceiver: aType selector: aSymbol asSymbol;
 				initializeArguments: aCollection asArray
@@ -182,7 +182,8 @@ TypMethodLookup >> withReceiver: aType [
 				selector: selector
 				arguments: arguments
 				self: (selfType covariant: aType)
-				super: (aType superOrNil ifNotNil: [ :t | superType covariant: t ]) ].
+				super: (aType superOrNil
+						ifNotNil: [ :t | superType ifNil: [ t ] ifNotNil: [ :tt | tt covariant: t ] ]) ].
 	aType > receiver
 		ifTrue: [ ^ self class
 				receiver: aType

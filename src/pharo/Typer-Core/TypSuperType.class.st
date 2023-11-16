@@ -20,6 +20,18 @@ TypSuperType >> classDescription [
 	^ superType classDescription
 ]
 
+{ #category : #accessing }
+TypSuperType >> contravariant: aType [
+	aType <= superType ifTrue: [ ^ aType ].
+	^ super contravariant: aType
+]
+
+{ #category : #accessing }
+TypSuperType >> covariant: aType [
+	aType >= superType ifTrue: [ ^ self ].
+	^ super covariant: aType
+]
+
 { #category : #invalidation }
 TypSuperType >> dependsOnClassDescription: aClassDescription [
 	(super dependsOnClassDescription: aClassDescription) ifTrue: [ ^ true ].

@@ -10,16 +10,12 @@ Class {
 
 { #category : #'instance creation' }
 TypEdgePragmaKey class >> selector: aSelector arguments: aCollection [
-
 	^ self index
-		  at: { 
-				  aSelector asSymbol.
-				  aCollection asArray }
-		  ifAbsentPut: [ 
-			  self new
-				  initializeSelector: aSelector asSymbol
-				  arguments: aCollection asArray;
-				  yourself ]
+		typAt: {aSelector asSymbol.
+				aCollection size} , aCollection
+		ifAbsentPut: [ self new
+				initializeSelector: aSelector asSymbol arguments: aCollection asArray;
+				yourself ]
 ]
 
 { #category : #comparing }

@@ -11,50 +11,55 @@ Class {
 
 { #category : #'instance creation' }
 TypNamedType class >> classDescription: aClassDescription [
-
-	<typPraArguments: 'ClassDescription'>
-	| instance |
-	instance := self new
-		            initializeClassDescription: aClassDescription;
-		            yourself.
 	^ self index
-		  at: { 
-				  aClassDescription name.
-				  instance superOrNil }
-		  ifAbsentPut: [ instance ]
+		typAt: {aClassDescription name asSymbol.
+				nil}
+		ifAbsentPut: [ | instance |
+			instance := self new
+					initializeClassDescription: aClassDescription;
+					yourself.
+			instance superOrNil
+				ifNotNil: [ :t | 
+					self index
+						typAt: {aClassDescription name asSymbol.
+								t}
+						put: instance ].
+			instance ]
 ]
 
 { #category : #'instance creation' }
 TypNamedType class >> classDescription: aClassDescription super: aType [
-
-	<typPraArguments: 'ClassDescription'>
 	^ self index
-		  at: { 
-				  aClassDescription name.
-				  aType }
-		  ifAbsentPut: [ 
-			  self new
-				  initializeClassDescription: aClassDescription;
-				  initializeSuper: aType;
-				  yourself ]
+		typAt: {aClassDescription name asSymbol.
+				aType}
+		ifAbsentPut: [ self new
+				initializeClassDescription: aClassDescription;
+				initializeSuper: aType;
+				yourself ]
 ]
 
 { #category : #'instance creation' }
 TypNamedType class >> named: aSymbol [
-	| instance |
-	instance := self new
-			initializeName: aSymbol asSymbol;
-			yourself.
 	^ self index
-		at: {aSymbol asSymbol.
-				instance superOrNil}
-		ifAbsentPut: [ instance ]
+		typAt: {aSymbol asSymbol.
+				nil}
+		ifAbsentPut: [ | instance |
+			instance := self new
+					initializeName: aSymbol asSymbol;
+					yourself.
+			instance superOrNil
+				ifNotNil: [ :t | 
+					self index
+						typAt: {aSymbol asSymbol.
+								t}
+						put: instance ].
+			instance ]
 ]
 
 { #category : #accessing }
 TypNamedType class >> named: aSymbol super: aType [
 	^ self index
-		at: {aSymbol asSymbol.
+		typAt: {aSymbol asSymbol.
 				aType}
 		ifAbsentPut: [ self new
 				initializeName: aSymbol asSymbol;

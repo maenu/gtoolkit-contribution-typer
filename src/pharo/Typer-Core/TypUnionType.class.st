@@ -9,13 +9,10 @@ Class {
 
 { #category : #'instance creation' }
 TypUnionType class >> types: aSet [
-	<typPraArguments: 'Set<IdentitySet>'>
-	| types |
-	types := aSet asIdentitySet.
 	^ self index
-		at: types
+		typAt: {aSet size} , (aSet sorted: [ :a :b | a identityHash < b identityHash ])
 		ifAbsentPut: [ self new
-				initializeTypes: types;
+				initializeTypes: aSet asIdentitySet;
 				yourself ]
 ]
 

@@ -82,6 +82,7 @@ TypManifest class >> invalidate [
 	logger ifNotNil: #stop.
 	logger ifNotNil: #reset.
 	logger := nil.
+	TypEdgeKey invalidateAll.
 	TypLookup invalidateAll.
 	TypIndex invalidateAll.
 	TypNode invalidateAll.
@@ -177,7 +178,8 @@ TypManifest class >> packages [
 
 { #category : #accessing }
 TypManifest class >> recompileAll [
-	(self packages flatCollect: #definedClasses) do: #recompile
+	(self packages flatCollect: #definedClasses) do: #recompile.
+	(self packages flatCollect: #extensionMethods) do: #recompile
 ]
 
 { #category : #accessing }

@@ -2,7 +2,10 @@ Extension { #name : #Dictionary }
 
 { #category : #'*Typer-Core' }
 Dictionary >> typAt: aPath [
-	^ aPath inject: self into: [ :r :e | r at: e ifAbsent: [ ^ #() ] ]
+	^ self
+		typAt: aPath
+		ifPresent: #yourself
+		ifAbsent: [ self errorKeyNotFound: aPath ]
 ]
 
 { #category : #'*Typer-Core' }
@@ -26,7 +29,7 @@ Dictionary >> typAt: aPath ifPresent: aBlock [
 	^ self
 		typAt: aPath
 		ifPresent: aBlock
-		ifAbsent: [  "noop" ]
+		ifAbsent: [ nil ]
 ]
 
 { #category : #'*Typer-Core' }
@@ -37,12 +40,14 @@ Dictionary >> typAt: aPath ifPresent: aBlock ifAbsent: anotherBlock [
 
 { #category : #'*Typer-Core' }
 Dictionary >> typAt: aPath ifPresent: aBlock ifAbsentPut: anotherBlock [
+	| current |
 	self assert: [ aPath isNotEmpty ].
-	^ (aPath size > 1
-		ifTrue: [ self
-				typAt: (aPath copyFrom: 1 to: aPath size - 1)
-				ifAbsentPut: [ self species new ] ]
-		ifFalse: [ self ])
+	current := self.
+	aPath
+		withIndexDo: [ :e :i | 
+			i < aPath size
+				ifTrue: [ current := current at: e ifAbsentPut: [ self species new ] ] ].
+	^ current
 		at: aPath last
 		ifPresent: aBlock
 		ifAbsentPut: anotherBlock
@@ -50,12 +55,27 @@ Dictionary >> typAt: aPath ifPresent: aBlock ifAbsentPut: anotherBlock [
 
 { #category : #'*Typer-Core' }
 Dictionary >> typAt: aPath put: anObject [
+	| current |
 	self assert: [ aPath isNotEmpty ].
-	^ (aPath size > 1
-		ifTrue: [ self
-				typAt: (aPath copyFrom: 1 to: aPath size - 1)
-				ifAbsentPut: [ self species new ] ]
-		ifFalse: [ self ]) at: aPath last put: anObject
+	current := self.
+	aPath
+		withIndexDo: [ :e :i | 
+			i < aPath size
+				ifTrue: [ current := current at: e ifAbsentPut: [ self species new ] ] ].
+	^ current at: aPath last put: anObject
+]
+
+{ #category : #'*Typer-Core' }
+Dictionary >> typFasterAt: anObject ifAbsentPut: aBlock [
+	| index |
+	index := self findElementOrNil: anObject.
+	^ (array at: index)
+		ifNil: [ | value |
+			value := aBlock value.
+			array at: index put: (Association key: anObject value: value).
+			tally := tally + 1.
+			value ]
+		ifNotNil: #value
 ]
 
 { #category : #'*Typer-Core' }

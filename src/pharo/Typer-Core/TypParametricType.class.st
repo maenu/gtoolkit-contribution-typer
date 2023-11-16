@@ -15,27 +15,37 @@ TypParametricType class >> classDescription: aClassDescription [
 
 { #category : #accessing }
 TypParametricType class >> classDescription: aClassDescription parameters: aCollection [
-	| instance |
-	instance := self new
-			initializeClassDescription: aClassDescription;
-			initializeParameters: (aCollection as: OrderedIdentityDictionary);
-			yourself.
+	| parameters |
+	parameters := aCollection as: OrderedIdentityDictionary.
 	^ self index
-		at: {aClassDescription name.
-				aCollection as: OrderedIdentityDictionary.
-				instance superOrNil}
-		ifAbsentPut: [ instance ]
+		typAt: {aClassDescription name asSymbol.
+				nil.
+				parameters size} , parameters keys , parameters values
+		ifAbsentPut: [ | instance |
+			instance := self new
+					initializeClassDescription: aClassDescription;
+					initializeParameters: parameters;
+					yourself.
+			instance superOrNil
+				ifNotNil: [ :t | 
+					self index
+						typAt: {aClassDescription name asSymbol.
+								t.
+								parameters size} , parameters keys , parameters values
+						put: instance ] ]
 ]
 
 { #category : #accessing }
 TypParametricType class >> classDescription: aClassDescription parameters: aDictionary super: aType [
+	| parameters |
+	parameters := aDictionary as: OrderedIdentityDictionary.
 	^ self index
-		at: {aClassDescription name.
-				aDictionary as: OrderedIdentityDictionary.
-				aType}
+		typAt: {aClassDescription name asSymbol.
+				aType.
+				parameters size} , parameters keys , parameters values
 		ifAbsentPut: [ self new
 				initializeClassDescription: aClassDescription;
-				initializeParameters: (aDictionary as: OrderedIdentityDictionary);
+				initializeParameters: parameters;
 				initializeSuper: aType;
 				yourself ]
 ]
@@ -54,27 +64,37 @@ TypParametricType class >> named: aString [
 
 { #category : #accessing }
 TypParametricType class >> named: aSymbol parameters: aDictionary [
-	| instance |
-	instance := self new
-			initializeName: aSymbol asSymbol;
-			initializeParameters: (aDictionary as: OrderedIdentityDictionary);
-			yourself.
+	| parameters |
+	parameters := aDictionary as: OrderedIdentityDictionary.
 	^ self index
-		at: {aSymbol asSymbol.
-				aDictionary as: OrderedIdentityDictionary.
-				instance superOrNil}
-		ifAbsentPut: [ instance ]
+		typAt: {aSymbol asSymbol.
+				nil.
+				parameters size} , parameters keys , parameters values
+		ifAbsentPut: [ | instance |
+			instance := self new
+					initializeName: aSymbol asSymbol;
+					initializeParameters: parameters;
+					yourself.
+			instance superOrNil
+				ifNotNil: [ :t | 
+					self index
+						typAt: {aSymbol asSymbol.
+								t.
+								parameters size} , parameters keys , parameters values
+						put: instance ] ]
 ]
 
 { #category : #accessing }
 TypParametricType class >> named: aSymbol parameters: aDictionary super: aType [
+	| parameters |
+	parameters := aDictionary as: OrderedIdentityDictionary.
 	^ self index
-		at: {aSymbol asSymbol.
-				aDictionary as: OrderedIdentityDictionary.
-				aType}
+		typAt: {aSymbol asSymbol.
+				aType.
+				parameters size} , parameters keys , parameters values
 		ifAbsentPut: [ self new
 				initializeName: aSymbol asSymbol;
-				initializeParameters: (aDictionary as: OrderedIdentityDictionary);
+				initializeParameters: parameters;
 				initializeSuper: aType;
 				yourself ]
 ]

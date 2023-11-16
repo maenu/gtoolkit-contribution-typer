@@ -9,8 +9,7 @@ Class {
 
 { #category : #initialization }
 TypEdgeKey class >> index [
-
-	^ index ifNil: [ index := Dictionary new ]
+	^ index ifNil: [ index := IdentityDictionary new ]
 ]
 
 { #category : #invalidation }

@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 TypTypeLookup class >> classDescription: aClassDescription [
 	^ self index
-		at: {aClassDescription}
+		typAt: {aClassDescription}
 		ifAbsentPut: [ self new
 				initializeClassDescription: aClassDescription;
 				yourself ]

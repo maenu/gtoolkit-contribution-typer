@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 TypVariableLookup class >> receiver: aType selector: aSymbol [
 	^ self index
-		at: {aType.
+		typAt: {aType.
 				aSymbol asSymbol}
 		ifAbsentPut: [ self new
 				initializeReceiver: aType selector: aSymbol asSymbol;

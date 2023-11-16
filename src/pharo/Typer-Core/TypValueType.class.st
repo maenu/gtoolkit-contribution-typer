@@ -9,16 +9,13 @@ Class {
 
 { #category : #accessing }
 TypValueType class >> super: aType value: anObject [
-
 	^ self index
-		  at: { 
-				  anObject identityHash.
-				  aType }
-		  ifAbsentPut: [ 
-			  self new
-				  initializeValue: anObject;
-				  initializeSuper: aType;
-				  yourself ]
+		typAt: {aType.
+				anObject identityHash}
+		ifAbsentPut: [ self new
+				initializeValue: anObject;
+				initializeSuper: aType;
+				yourself ]
 ]
 
 { #category : #comparing }

@@ -19,43 +19,59 @@ TypFunctionType class >> classDescription: aClassDescription parameters: aSequen
 
 { #category : #accessing }
 TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil node: aNodeOrNil [
-	| instance parameters |
 	self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
 	self assert: [ aCollection noneSatisfy: #isVoid ].
-	parameters := OrderedIdentityDictionary new.
-	parameters at: #'0' put: aType.
-	aCollection withIndexDo: [ :e :i | parameters at: i asString asSymbol put: e ].
-	instance := self new
-			initializeClassDescription: aClassDescription;
-			initializeParameters: parameters;
-			initializeArgumentsSize: parameters size - 1
-				argumentsOptional: aBoolean
-				signalsAlways: aTypeOrNil
-				signalsMaybe: anotherTypeOrNil
-				node: aNodeOrNil;
-			yourself.
 	^ self index
-		at: {aClassDescription name.
+		typAt: {aClassDescription name asSymbol.
 				aType.
-				aCollection asArray.
 				aBoolean.
 				aTypeOrNil.
 				anotherTypeOrNil.
 				aNodeOrNil.
-				instance superOrNil}
-		ifAbsentPut: [ instance ]
+				nil.
+				aCollection size} , aCollection
+		ifAbsentPut: [ | parameters instance |
+			parameters := OrderedIdentityDictionary new.
+			parameters at: #'0' put: aType.
+			aCollection
+				withIndexDo: [ :e :i | parameters at: i asString asSymbol put: e ].
+			instance := self new
+					initializeClassDescription: aClassDescription;
+					initializeParameters: parameters;
+					initializeArgumentsSize: parameters size - 1
+						argumentsOptional: aBoolean
+						signalsAlways: aTypeOrNil
+						signalsMaybe: anotherTypeOrNil
+						node: aNodeOrNil;
+					yourself.
+			instance superOrNil
+				ifNotNil: [ :t | 
+					self index
+						typAt: {aClassDescription name.
+								aType.
+								aBoolean.
+								aTypeOrNil.
+								anotherTypeOrNil.
+								aNodeOrNil.
+								t.
+								aCollection size} , aCollection
+						put: instance ].
+			instance ]
 ]
 
 { #category : #accessing }
 TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil node: aNodeOrNil super: anotherType [
+	self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
+	self assert: [ aCollection noneSatisfy: #isVoid ].
 	^ self index
-		at: {aClassDescription name.
+		typAt: {aClassDescription name asSymbol.
 				aType.
-				aCollection asArray.
 				aBoolean.
 				aTypeOrNil.
 				anotherTypeOrNil.
-				aNodeOrNil}
+				aNodeOrNil.
+				anotherType.
+				aCollection size} , aCollection
 		ifAbsentPut: [ | parameters |
 			parameters := OrderedIdentityDictionary new.
 			parameters at: #'0' put: aType.
@@ -81,43 +97,59 @@ TypFunctionType class >> named: aString parameters: aSequenceableCollection [
 
 { #category : #accessing }
 TypFunctionType class >> named: aSymbol result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil node: aNodeOrNil [
-	| instance parameters |
 	self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
-	parameters := OrderedIdentityDictionary new.
-	parameters at: #'0' put: aType.
-	aCollection withIndexDo: [ :e :i | parameters at: i asString asSymbol put: e ].
-	instance := self new
-			initializeName: aSymbol asSymbol;
-			initializeParameters: parameters;
-			initializeArgumentsSize: parameters size - 1
-				argumentsOptional: aBoolean
-				signalsAlways: aTypeOrNil
-				signalsMaybe: anotherTypeOrNil
-				node: aNodeOrNil;
-			yourself.
+	self assert: [ aCollection noneSatisfy: #isVoid ].
 	^ self index
-		at: {aSymbol asSymbol.
+		typAt: {aSymbol asSymbol.
 				aType.
-				aCollection asArray.
 				aBoolean.
 				aTypeOrNil.
 				anotherTypeOrNil.
 				aNodeOrNil.
-				instance superOrNil}
-		ifAbsentPut: [ instance ]
+				nil.
+				aCollection size} , aCollection
+		ifAbsentPut: [ | parameters instance |
+			parameters := OrderedIdentityDictionary new.
+			parameters at: #'0' put: aType.
+			aCollection
+				withIndexDo: [ :e :i | parameters at: i asString asSymbol put: e ].
+			instance := self new
+					initializeName: aSymbol asSymbol;
+					initializeParameters: parameters;
+					initializeArgumentsSize: parameters size - 1
+						argumentsOptional: aBoolean
+						signalsAlways: aTypeOrNil
+						signalsMaybe: anotherTypeOrNil
+						node: aNodeOrNil;
+					yourself.
+			instance superOrNil
+				ifNotNil: [ :t | 
+					self index
+						typAt: {aSymbol asSymbol.
+								aType.
+								aBoolean.
+								aTypeOrNil.
+								anotherTypeOrNil.
+								aNodeOrNil.
+								t.
+								aCollection size} , aCollection
+						put: instance ].
+			instance ]
 ]
 
 { #category : #accessing }
 TypFunctionType class >> named: aSymbol result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil node: aNodeOrNil super: anotherType [
+	self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
+	self assert: [ aCollection noneSatisfy: #isVoid ].
 	^ self index
-		at: {aSymbol asSymbol.
+		typAt: {aSymbol asSymbol.
 				aType.
-				aCollection asArray.
 				aBoolean.
 				aTypeOrNil.
 				anotherTypeOrNil.
 				aNodeOrNil.
-				anotherType}
+				anotherType.
+				aCollection size} , aCollection
 		ifAbsentPut: [ | parameters |
 			parameters := OrderedIdentityDictionary new.
 			parameters at: #'0' put: aType.

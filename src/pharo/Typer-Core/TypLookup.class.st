@@ -15,7 +15,7 @@ Class {
 
 { #category : #accessing }
 TypLookup class >> index [
-	^ index ifNil: [ index := Dictionary new ]
+	^ index ifNil: [ index := IdentityDictionary new ]
 ]
 
 { #category : #accessing }

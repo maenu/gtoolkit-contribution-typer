@@ -13,8 +13,7 @@ Class {
 
 { #category : #accessing }
 TypType class >> index [
-
-	^ index ifNil: [ index := Dictionary new ]
+	^ index ifNil: [ index := IdentityDictionary new ]
 ]
 
 { #category : #invalidation }
