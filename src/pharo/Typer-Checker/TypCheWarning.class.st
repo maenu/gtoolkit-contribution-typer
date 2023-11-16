@@ -2,17 +2,20 @@ Class {
 	#name : #TypCheWarning,
 	#superclass : #Warning,
 	#instVars : [
-		'node'
+		'node',
+		'lookup'
 	],
 	#category : #'Typer-Checker-Core'
 }
 
 { #category : #accessing }
-TypCheWarning class >> node: aNode message: aString [
-	^ self new
-		node: aNode;
-		messageText: aString;
-		yourself
+TypCheWarning >> lookup [
+	^ lookup
+]
+
+{ #category : #accessing }
+TypCheWarning >> lookup: anObject [
+	lookup := anObject
 ]
 
 { #category : #accessing }

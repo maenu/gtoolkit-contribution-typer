@@ -6,5 +6,9 @@ TypInfAssignment >> typCheOn: aStream [
 	expected := (self outAt: #next) type.
 	actual := self type.
 	expected >= actual
-		ifFalse: [ aStream nextPut: (TypCheIncompatible node: self expected: expected) ]
+		ifFalse: [ aStream
+				nextPut: (TypCheIncompatible
+						node: self
+						lookup: nil
+						expected: expected) ]
 ]

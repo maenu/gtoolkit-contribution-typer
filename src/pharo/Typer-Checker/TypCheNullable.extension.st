@@ -1,8 +1,4 @@
-Class {
-	#name : #TypCheNullable,
-	#superclass : #TypCheWarning,
-	#category : #'Typer-Checker-Core'
-}
+Extension { #name : #TypCheNullable }
 
 { #category : #'*Typer-Checker' }
 TypCheNullable class >> node: aNode lookup: aLookup message: aString [
@@ -11,9 +7,4 @@ TypCheNullable class >> node: aNode lookup: aLookup message: aString [
 		lookup: aLookup;
 		messageText: aString;
 		yourself
-]
-
-{ #category : #accessing }
-TypCheNullable >> priority [
-	^ 2
 ]

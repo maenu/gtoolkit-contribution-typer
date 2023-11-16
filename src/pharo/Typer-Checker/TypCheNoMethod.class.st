@@ -1,22 +1,14 @@
 Class {
 	#name : #TypCheNoMethod,
 	#superclass : #TypCheWarning,
-	#instVars : [
-		'selector'
-	],
 	#category : #'Typer-Checker-Core'
 }
 
-{ #category : #accessing }
-TypCheNoMethod class >> node: aNode message: aString [
-	self shouldNotImplement
-]
-
-{ #category : #accessing }
-TypCheNoMethod class >> node: aNode selector: aSymbol [
+{ #category : #'*Typer-Checker' }
+TypCheNoMethod class >> node: aNode lookup: aLookup [
 	^ self new
 		node: aNode;
-		selector: aSymbol;
+		lookup: aLookup;
 		yourself
 ]
 
@@ -24,23 +16,11 @@ TypCheNoMethod class >> node: aNode selector: aSymbol [
 TypCheNoMethod >> messageText [
 	messageText ifNotNil: [ ^ super messageText ].
 	^ messageText := '{1} cannot lookup {2}'
-			format: {node receiver.
-					selector}
+			format: {lookup receiver.
+					lookup selector}
 ]
 
 { #category : #accessing }
 TypCheNoMethod >> priority [
 	^ 0
-]
-
-{ #category : #accessing }
-TypCheNoMethod >> selector [
-	<typPraResult: 'Symbol'>
-	^ selector
-]
-
-{ #category : #accessing }
-TypCheNoMethod >> selector: anObject [
-	<typPraArguments: 'Symbol'>
-	selector := anObject
 ]

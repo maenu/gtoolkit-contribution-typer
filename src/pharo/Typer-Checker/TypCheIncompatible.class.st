@@ -7,17 +7,13 @@ Class {
 	#category : #'Typer-Checker-Core'
 }
 
-{ #category : #accessing }
-TypCheIncompatible class >> node: aNode expected: aType [
+{ #category : #'*Typer-Checker' }
+TypCheIncompatible class >> node: aNode lookup: aLookup expected: aType [
 	^ self new
 		node: aNode;
+		lookup: aLookup;
 		expected: aType;
 		yourself
-]
-
-{ #category : #accessing }
-TypCheIncompatible class >> node: aNode message: aString [
-	self shouldNotImplement
 ]
 
 { #category : #accessing }
