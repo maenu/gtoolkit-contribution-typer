@@ -12,9 +12,8 @@ TypInfMessage >> typGtColor [
 
 { #category : #'*Typer-GToolkit' }
 TypInfMessage >> typGtExpanderCoderViewModels [
-	^ contexts
-		select: #typGtHasCoderViewModel
-		thenCollect: #typGtAsCoderViewModel
+	^ (contexts select: #typGtHasCoderViewModel thenCollect: #typGtAsCoderViewModel)
+		asArray
 ]
 
 { #category : #'*Typer-GToolkit' }

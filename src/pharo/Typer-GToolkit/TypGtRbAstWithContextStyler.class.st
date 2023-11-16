@@ -17,7 +17,7 @@ TypGtRbAstWithContextStyler >> offset [
 	| node |
 	node := coderViewModel typGtContext node.
 	node isBlock ifFalse: [ ^ 0 ].
-	^ node body start - 1
+	^ node start - 1
 ]
 
 { #category : #styling }
@@ -26,7 +26,7 @@ TypGtRbAstWithContextStyler >> style: aText ast: anAst [
 	coderViewModel coderModel typGtContext ifNil: [ ^ self	"request style later" ].
 	text := aText.
 	[ self visitNode: coderViewModel typGtContext node ]
-		on: Error
+		on: Exception
 		do: [ :e | (GtStylerErrorSignal new signaledError: e) emit ].
 	text := nil
 ]

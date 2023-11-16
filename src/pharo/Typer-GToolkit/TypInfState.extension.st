@@ -3,14 +3,9 @@ Extension { #name : #TypInfState }
 { #category : #'*Typer-GToolkit' }
 TypInfState >> typGtItemsFor: aView [
 	<gtView>
-	^ aView columnedTree
-		title: 'Index';
+	^ aView forward
+		title: 'Cache';
 		priority: -1;
-		items: [ self associations ];
-		column: 'Key'
-			text: #key
-			spawn: #key;
-		column: 'Value'
-			text: #value
-			spawn: #value
+		object: [ self last ];
+		view: #gtItemsFor:
 ]

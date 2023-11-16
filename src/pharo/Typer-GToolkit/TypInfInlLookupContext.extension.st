@@ -2,10 +2,16 @@ Extension { #name : #TypInfInlLookupContext }
 
 { #category : #'*Typer-GToolkit' }
 TypInfInlLookupContext >> typGtAsCoderViewModel [
-	^ GtPharoMethodCoder new
-		attributeNamed: #typGtIndicator put: self typGtIndicator;
-		forMethod: (lookup typGtExpanderMethod ifNil: [ self class >> #noMethod ]);
-		asCoderViewModel
+	^ lookup typGtExpanderMethod
+		ifNil: [ GtPharoMethodCoder new
+				attributeNamed: #typGtIndicator put: 'l:?';
+				forMethod: self class >> #notFound;
+				asCoderViewModel ]
+		ifNotNil: [ :m | 
+			GtPharoMethodCoder new
+				attributeNamed: #typGtIndicator put: self typGtIndicator;
+				forMethod: m;
+				asCoderViewModel ]
 ]
 
 { #category : #'*Typer-GToolkit' }

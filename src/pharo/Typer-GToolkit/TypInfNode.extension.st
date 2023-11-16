@@ -57,7 +57,7 @@ TypInfNode >> typGtCoderFor: aView [
 TypInfNode >> typGtDecorate: anElement in: aMondrian [
 	| badge |
 	badge := BrBadge new
-			label: transfers;
+			label: iterations size;
 			exact: 8 @ 8;
 			aptitude: BrGlamorousBadgeWithLabelAptitude + BrGlamorousBadgeCircularAptitude;
 			constraintsDo: [ :c | c ignoreByLayout ];
@@ -156,8 +156,7 @@ TypInfNode >> typGtIterationsFor: aView [
 	^ aView forward
 		title: 'Iterations';
 		priority: 2;
-		object: [ context home iterations
-				collect: [ :d | d ifNil: [ nil ] ifNotNil: [ d at: self ifAbsent: [ nil ] ] ] ];
+		object: [ iterations ];
 		view: #gtLiveFor:
 ]
 
@@ -243,8 +242,6 @@ TypInfNode >> typGtShaCanType [
 { #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtStateFor: aView [
 	<gtView>
-	self flag: 'FIXME'.
-	state ifNil: [ ^ aView empty ].
 	^ aView forward
 		title: 'State';
 		priority: 11;
