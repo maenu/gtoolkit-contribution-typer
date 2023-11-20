@@ -119,6 +119,7 @@ TypInfContext >> initializeSender: aContext state: aState node: aNode lookup: aL
 TypInfContext >> install [
 	self assert: [ root isNil ].
 	self assert: [ current isNil ].
+	self assert: [ iterations isEmpty ].
 	current := root := self add: (node typInfRootNodeInContext: self).
 	node acceptVisitor: self
 ]
@@ -138,9 +139,20 @@ TypInfContext >> iterate [
 	self install.
 	TypInfNodeStack
 		push: node
-		during: [ | iteration |
+		during: [ | iteration queue done |
 			nodeStackDepth := TypInfNodeStack actives size.
-			[ iteration := root iterate.
+			[ TypInfNodeIterateSignal emit: self.
+			iteration := OrderedIdentityDictionary new.
+			queue := LinkedList with: root.
+			done := IdentitySet new.
+			[ queue isEmpty ]
+				whileFalse: [ | currentNode |
+					currentNode := queue removeLast.
+					(done includes: currentNode)
+						ifFalse: [ currentNode slurpAndTransfer
+								ifNotEmpty: [ :c | iteration at: currentNode put: c ].
+							done add: currentNode.
+							queue addAll: currentNode outNexts ] ].
 			iterations add: iteration.
 			iterations size <= TypInfCurrentConfiguration value maxIterations
 				and: [ iteration isNotEmpty ] ] whileTrue ]

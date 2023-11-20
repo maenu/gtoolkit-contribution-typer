@@ -66,19 +66,6 @@ Dictionary >> typAt: aPath put: anObject [
 ]
 
 { #category : #'*Typer-Core' }
-Dictionary >> typFasterAt: anObject ifAbsentPut: aBlock [
-	| index |
-	index := self findElementOrNil: anObject.
-	^ (array at: index)
-		ifNil: [ | value |
-			value := aBlock value.
-			array at: index put: (Association key: anObject value: value).
-			tally := tally + 1.
-			value ]
-		ifNotNil: #value
-]
-
-{ #category : #'*Typer-Core' }
 Dictionary >> typRemoveAt: aPath [
 	^ self
 		typAt: (aPath copyFrom: 1 to: aPath size - 1)

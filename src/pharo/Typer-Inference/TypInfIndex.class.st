@@ -140,54 +140,48 @@ TypInfIndex >> initialize [
 
 { #category : #accessing }
 TypInfIndex >> inlCanResolve: aLookup message: aMessage [
-	| resolved methods |
-	resolved := aLookup resolve.
-	aMessage context stackSize < TypInfCurrentConfiguration value maxNodeStackSize
-		ifFalse: [ ^ false ].
+	| resolved lookups |
+	TypInfNodeStack actives size
+		< (TypInfCurrentConfiguration value maxNodeStackSize + 1) ifFalse: [ ^ false ].
+	aMessage context stackSize
+		< (TypInfCurrentConfiguration value maxNodeStackSize + 1) ifFalse: [ ^ false ].
 	(aMessage couldBeSelfOrSuperSend or: [ aMessage hasNodes ])
 		ifFalse: [ ^ false ].
-	resolved receiver isNamed ifFalse: [ ^ false ].
-	resolved receiver hasClassDescription ifFalse: [ ^ false ].
-	(resolved receiver classDescription canUnderstand: resolved selector)
+	resolved := aLookup resolve.
+	resolved compiledMethod ifNil: [ ^ false ].
+	lookups := self inlLookups: aLookup.
+	(lookups size between: 1 and: TypInfCurrentConfiguration value maxImplementors)
 		ifFalse: [ ^ false ].
-	methods := self inlMethods: aLookup.
-	self flag: 'Q inline some of it, lookup the rest, like for variables?'.
-	(methods size between: 1 and: TypInfCurrentConfiguration value maxImplementors)
-		ifFalse: [ ^ false ].
-	^ methods
-		anySatisfy: [ :a | a value size <= TypInfCurrentConfiguration value maxMethodSize ]
+	^ lookups
+		anySatisfy: [ :l | l compiledMethod size <= TypInfCurrentConfiguration value maxMethodSize ]
 ]
 
 { #category : #accessing }
-TypInfIndex >> inlMethods: aLookup [
-	| method |
-	method := aLookup receiver classDescription lookupSelector: aLookup selector.
-	method isAbstract ifFalse: [ ^ {aLookup -> method} ].
+TypInfIndex >> inlLookups: aLookup [
+	aLookup compiledMethod isAbstract ifFalse: [ ^ {aLookup} ].
 	^ (aLookup self overriders: aLookup selector)
-		flatCollect: [ :m | self inlMethods: (aLookup withReceiver: m methodClass typAsType) ]
+		flatCollect: [ :m | self inlLookups: (aLookup withReceiver: m methodClass typAsType) ]
 		as: Set
 ]
 
 { #category : #accessing }
 TypInfIndex >> inlResolve: aLookup message: aMessage [
-	^ (self inlMethods: aLookup)
-		collect: [ :a | 
-			(a key resolver isKindOf: TypInfMethodResolver)
-				ifTrue: [ | node |
-					node := [ a value ast ]
-							on: OCUndeclaredVariableWarning
-							do: [ :e | e resume: e declareUndefined ].
-					TypInfInlContext
+	^ (self inlLookups: aLookup)
+		collect: [ :l | 
+			((l resolver isKindOf: TypInfMethodResolver) "or: [ aMessage hasNodes ]")
+				ifTrue: [ TypInfInlContext
 						sender: aMessage context
 						state: aMessage state
-						node: node
-						lookup: a key
+						node: ([ l compiledMethod ast ]
+								on: OCUndeclaredVariableWarning
+								do: [ :e | e resume: e declareUndefined ])
+						lookup: l
 						message: aMessage ]
 				ifFalse: [ TypInfInlLookupContext
 						sender: aMessage context
 						state: aMessage state
 						node: aMessage node
-						lookup: a key
+						lookup: l
 						message: aMessage ] ]
 ]
 

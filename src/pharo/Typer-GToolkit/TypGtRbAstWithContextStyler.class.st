@@ -33,8 +33,11 @@ TypGtRbAstWithContextStyler >> style: aText ast: anAst [
 
 { #category : #visiting }
 TypGtRbAstWithContextStyler >> styleNode: aNode [
+	| nodes |
+	nodes := coderViewModel typGtContext nodesAt: aNode.
+	nodes detect: [ :n | n type isUnknown not ] ifNone: [ ^ self ].
 	self
-		attributes: {TypGtTypeAttribute nodes: (coderViewModel typGtContext nodesAt: aNode)}
+		attributes: {TypGtTypeAttribute nodes: nodes}
 		from: aNode stopWithoutParentheses
 		to: aNode stopWithoutParentheses
 ]

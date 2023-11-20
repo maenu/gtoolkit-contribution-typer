@@ -1,8 +1,8 @@
 Class {
 	#name : #TypInfMessage,
 	#superclass : #TypInfNode,
-	#traits : 'TypInfTWithArguments',
-	#classTraits : 'TypInfTWithArguments classTrait',
+	#traits : 'TypInfTWithArguments + TypInfTFunction',
+	#classTraits : 'TypInfTWithArguments classTrait + TypInfTFunction classTrait',
 	#instVars : [
 		'contexts',
 		'newContexts'

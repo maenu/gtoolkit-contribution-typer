@@ -20,7 +20,7 @@ TypInfState >> at: aNode [
 TypInfState >> at: aNode covariantPut: aType [
 	| a |
 	a := cache
-			typFasterAt: aNode
+			at: aNode
 			ifAbsentPut: [ Array new: TypInfCurrentConfiguration value maxIterations + 1 ].
 	^ a
 		at: iteration
@@ -59,11 +59,11 @@ TypInfState >> at: anInteger keysAndValuesDo: aBlock [
 
 { #category : #accessing }
 TypInfState >> at: aNode put: aType [
-	^ (cache
-		typFasterAt: aNode
-		ifAbsentPut: [ Array new: TypInfCurrentConfiguration value maxIterations + 1 ])
-		at: iteration
-		put: aType
+	| a |
+	a := cache
+			at: aNode
+			ifAbsentPut: [ Array new: TypInfCurrentConfiguration value maxIterations + 1 ].
+	^ a at: iteration put: (a at: iteration put: aType)
 ]
 
 { #category : #accessing }
@@ -87,6 +87,11 @@ TypInfState >> initialize [
 ]
 
 { #category : #accessing }
+TypInfState >> iteration [
+	^ iteration
+]
+
+{ #category : #accessing }
 TypInfState >> last [
 	| result |
 	result := cache species new: cache size.
@@ -104,7 +109,14 @@ TypInfState >> postCopy [
 	| newCache |
 	super postCopy.
 	newCache := cache species new: 1000.
-	cache keysAndValuesDo: [ :n :t | newCache at: n put: t copy ].
+	iteration > 0
+		ifTrue: [ iteration := 1.
+			self
+				lastKeysAndValuesDo: [ :n :t | 
+					| a |
+					a := Array new: TypInfCurrentConfiguration value maxIterations.
+					a at: iteration put: t.
+					newCache at: n put: a ] ].
 	cache := newCache
 ]
 

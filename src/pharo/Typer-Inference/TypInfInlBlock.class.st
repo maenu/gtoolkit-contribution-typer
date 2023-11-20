@@ -1,8 +1,18 @@
 Class {
 	#name : #TypInfInlBlock,
 	#superclass : #TypInfBlock,
+	#traits : 'TypInfTFunction',
+	#classTraits : 'TypInfTFunction classTrait',
 	#category : #'Typer-Inference-Core'
 }
+
+{ #category : #accessing }
+TypInfInlBlock >> inReturnType [
+	^ (self in
+		at: #return
+		ifPresent: [ :s | (s collect: #origin) reject: #isDead thenCollect: #type ]
+		ifAbsent: [ IdentitySet new ]) typAsMinimizedType
+]
 
 { #category : #accessing }
 TypInfInlBlock >> transfer [

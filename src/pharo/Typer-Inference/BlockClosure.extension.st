@@ -18,6 +18,10 @@ BlockClosure >> typInfAbsCanResolveValue: aLookup message: aMessageNode [
 	<typInfAbsCanResolve: #value:value:>
 	<typInfAbsCanResolve: #value:value:value:>
 	<typInfAbsCanResolve: #value:value:value:value:>
+	<typInfAbsCanResolve: #cull:>
+	<typInfAbsCanResolve: #cull:cull:>
+	<typInfAbsCanResolve: #cull:cull:cull:>
+	<typInfAbsCanResolve: #cull:cull:cull:cull:>
 	^ aMessageNode receiver hasNode
 ]
 
@@ -46,6 +50,10 @@ BlockClosure >> typInfAbsResolveValue: aLookup message: aMessageNode [
 	<typInfAbsResolve: #value:value:>
 	<typInfAbsResolve: #value:value:value:>
 	<typInfAbsResolve: #value:value:value:value:>
+	<typInfAbsResolve: #cull:>
+	<typInfAbsResolve: #cull:cull:>
+	<typInfAbsResolve: #cull:cull:cull:>
+	<typInfAbsResolve: #cull:cull:cull:cull:>
 	| block |
 	block := aMessageNode receiver node.
 	^ TypInfBlockContext

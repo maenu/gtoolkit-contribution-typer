@@ -99,25 +99,6 @@ TypInfNode >> inNexts [
 		ifAbsent: [ #() ]
 ]
 
-{ #category : #accessing }
-TypInfNode >> inReturnType [
-	^ (in
-		at: #return
-		ifPresent: [ :s | s reject: [ :e | e origin isDead ] thenCollect: [ :e | e origin type ] ]
-		ifAbsent: [ #() ]) typAsMinimizedType
-]
-
-{ #category : #accessing }
-TypInfNode >> inSignalType [
-	^ in
-		at: #signal
-		ifPresent: [ :s | 
-			(s reject: [ :e | e origin isDead ])
-				ifEmpty: [ nil ]
-				ifNotEmpty: [ :ss | (ss collect: #exception) typAsType ] ]
-		ifAbsent: [ nil ]
-]
-
 { #category : #initialization }
 TypInfNode >> initializeNode: aNode context: aContext [
 	self assert: [ aContext state isNotNil ].
@@ -143,21 +124,6 @@ TypInfNode >> isLeaf [
 TypInfNode >> isLeaf: aContext [
 	(context stack includes: aContext) ifFalse: [ ^ false ].
 	^ self outNexts noneSatisfy: [ :n | n context stack includes: aContext ]
-]
-
-{ #category : #accessing }
-TypInfNode >> iterate [
-	| queue changes done |
-	TypInfNodeIterateSignal emit: self.
-	queue := LinkedList with: self.
-	changes := OrderedIdentityDictionary new.
-	done := IdentitySet new.
-	[ queue isEmpty ]
-		whileFalse: [ | current |
-			current := done add: queue removeLast.
-			current slurpAndTransfer ifNotEmpty: [ :c | changes at: current put: c ].
-			queue addAll: (current outNexts reject: [ :n | done includes: n ]) ].
-	^ changes
 ]
 
 { #category : #accessing }

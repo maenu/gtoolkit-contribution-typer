@@ -73,7 +73,7 @@ TypMethodLookup class >> resolver [
 { #category : #accessing }
 TypMethodLookup >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
-	anObject class = self class ifFalse: [ ^ false ].
+	super = anObject ifFalse: [ ^ false ].
 	anObject self = selfType ifFalse: [ ^ false ].
 	anObject super = superType ifFalse: [ ^ false ].
 	^ anObject arguments = arguments

@@ -7,11 +7,12 @@ Class {
 { #category : #visiting }
 TypGtDeclarationStyler >> visitMethodNode: aNode [
 	| nodes position |
+	super visitMethodNode: aNode.
 	nodes := coderViewModel typGtContext nodesAt: aNode.
+	nodes detect: [ :n | n type isUnknown not ] ifNone: [ ^ self ].
 	position := aNode arguments
 			ifEmpty: [ aNode keywordsIntervals last stop ]
 			ifNotEmpty: [ :c | c last stop ].
-	super visitMethodNode: aNode.
 	self
 		attributes: {TypGtTypeAttribute
 					nodes: nodes
