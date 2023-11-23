@@ -144,7 +144,9 @@ TypInfIndex >> inlCanResolve: aLookup message: aMessage [
 	TypInfNodeStack actives size
 		< (TypInfCurrentConfiguration value maxNodeStackSize + 1) ifFalse: [ ^ false ].
 	aMessage context stackSize
-		< (TypInfCurrentConfiguration value maxNodeStackSize + 1) ifFalse: [ ^ false ].
+		< (aMessage context home root iterations size + 3
+				min: TypInfCurrentConfiguration value maxNodeStackSize + 1)
+		ifFalse: [ ^ false ].
 	(aMessage couldBeSelfOrSuperSend or: [ aMessage hasNodes ])
 		ifFalse: [ ^ false ].
 	resolved := aLookup resolve.
@@ -152,8 +154,10 @@ TypInfIndex >> inlCanResolve: aLookup message: aMessage [
 	lookups := self inlLookups: aLookup.
 	(lookups size between: 1 and: TypInfCurrentConfiguration value maxImplementors)
 		ifFalse: [ ^ false ].
-	^ lookups
-		anySatisfy: [ :l | l compiledMethod size <= TypInfCurrentConfiguration value maxMethodSize ]
+	lookups
+		detect: [ :l | l compiledMethod size <= TypInfCurrentConfiguration value maxMethodSize ]
+		ifNone: [ ^ false ].
+	^ true
 ]
 
 { #category : #accessing }
@@ -168,7 +172,8 @@ TypInfIndex >> inlLookups: aLookup [
 TypInfIndex >> inlResolve: aLookup message: aMessage [
 	^ (self inlLookups: aLookup)
 		collect: [ :l | 
-			((l resolver isKindOf: TypInfMethodResolver) "or: [ aMessage hasNodes ]")
+			(l compiledMethod size <= TypInfCurrentConfiguration value maxMethodSize
+				and: [ (l resolver isKindOf: TypInfMethodResolver) or: [ aMessage hasNodes ] ])
 				ifTrue: [ TypInfInlContext
 						sender: aMessage context
 						state: aMessage state

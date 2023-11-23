@@ -26,11 +26,6 @@ TypInfNode >> allNextNodes [
 ]
 
 { #category : #accessing }
-TypInfNode >> changesFrom: aState [
-	^ aState = state ifTrue: [ #() ] ifFalse: [ {nil} ]
-]
-
-{ #category : #accessing }
 TypInfNode >> constrain: aNode to: aType [
 	state at: aNode covariantPut: aType.
 	aNode constrainTo: aType from: self
@@ -95,7 +90,7 @@ TypInfNode >> depthFirstNextReverseDo: aBlock skipping: anIdentitySet [
 TypInfNode >> inNexts [
 	^ in
 		at: #next
-		ifPresent: [ :s | s collect: #origin ]
+		ifPresent: [ :s | s reject: [ :e | e origin isDead ] thenCollect: #origin ]
 		ifAbsent: [ #() ]
 ]
 
@@ -153,12 +148,6 @@ TypInfNode >> leaves: aContext [
 ]
 
 { #category : #accessing }
-TypInfNode >> methodNode [
-
-	^ context root
-]
-
-{ #category : #accessing }
 TypInfNode >> newMethodLookups: aMessage [
 	^ aMessage receiver types
 		collect: [ :t | 
@@ -184,7 +173,8 @@ TypInfNode >> outNexts [
 { #category : #accessing }
 TypInfNode >> previous [
 	^ ((in at: #next)
-		collect: [ :e | state at: e origin ifAbsent: [  "happens for recursion"e origin type ] ])
+		reject: [ :e | e origin isDead ]
+		thenCollect: [ :e | state at: e origin ifAbsent: [  "happens for recursion"e origin type ] ])
 		typAsMinimizedType
 ]
 
@@ -200,12 +190,20 @@ TypInfNode >> put: aType [
 ]
 
 { #category : #accessing }
+TypInfNode >> reduceTo: aCollection [
+	| newState |
+	1 to: iterations size - 1 do: [ :i | iterations at: i put: nil ].
+	newState := TypInfState new: aCollection size.
+	aCollection
+		keysAndValuesDo: [ :n | state at: n ifPresent: [ :t | newState at: n put: t ] ].
+	state := newState
+]
+
+{ #category : #accessing }
 TypInfNode >> slurp [
-	state
-		slurpAll: (in
-				at: #next
-				ifPresent: [ :s | s collect: [ :e | e origin state ] ]
-				ifAbsent: [ #() ]).
+	in
+		at: #next
+		ifPresent: [ :s | state slurpAll: (s collect: [ :e | e origin state ]) ].
 	in at: #constrain ifPresent: [ :s | s do: [ :e | self covariantPut: e type ] ].
 	out at: #constrain ifPresent: [ :s | s copy do: #remove ]
 ]

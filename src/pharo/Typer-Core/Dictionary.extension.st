@@ -46,9 +46,9 @@ Dictionary >> typAt: aPath ifPresent: aBlock ifAbsentPut: anotherBlock [
 	aPath
 		withIndexDo: [ :e :i | 
 			i < aPath size
-				ifTrue: [ current := current at: e ifAbsentPut: [ self species new ] ] ].
+				ifTrue: [ current := current typFastWithCheckAt: e ifAbsentPut: [ self species new ] ] ].
 	^ current
-		at: aPath last
+		typFastWithCheckAt: aPath last
 		ifPresent: aBlock
 		ifAbsentPut: anotherBlock
 ]

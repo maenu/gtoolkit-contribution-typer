@@ -82,8 +82,7 @@ TypInfBlockContext >> install [
 	self visitNode: node body.
 	node body lastIsReturn
 		ifFalse: [ current outAdd: (TypInfReturnEdge origin: current target: root).
-			message outNextDisableds
-				do: [ :e | (self returns: e target context) ifFalse: [ e enableOrigin: current ] ] ]
+			message outNextDisabledsEnableOn: current ]
 ]
 
 { #category : #accessing }
@@ -111,7 +110,7 @@ TypInfBlockContext >> uninstall [
 TypInfBlockContext >> visitReturnNode: aReturnNode [
 	self visitNode: aReturnNode value.
 	current
-		outAdd: (TypInfReturnEdge
-				origin: current
-				target: (self home nodesAt: block node withAllParents first) first)
+		outAdd: (TypInfReturnEdge origin: current target: block outerContext root).
+	(block outerContext isKindOf: TypInfInlContext)
+		ifTrue: [ block outerContext message outNextDisabledsEnableOn: current ]
 ]

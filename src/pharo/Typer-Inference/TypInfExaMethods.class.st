@@ -85,6 +85,13 @@ TypInfExaMethods >> signalLookupAndHandle [
 	^ #notcaught
 ]
 
+{ #category : #accessing }
+TypInfExaMethods >> signalsMaybe: aDictionary [
+	| index |
+	index := aDictionary findElementOrNil: 1.
+	^ 12
+]
+
 { #category : #requirements }
 TypInfExaMethods >> symbol [
 	^ #symbol

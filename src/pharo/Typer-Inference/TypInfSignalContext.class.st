@@ -58,8 +58,8 @@ TypInfSignalContext >> install [
 	root
 		inReceiver: message inReceiver;
 		inArguments: message inArguments.
-	self stack
-		reverseDo: [ :c | 
+	self
+		stackDo: [ :c | 
 			root
 				outAdd: ((TypInfSignalEdge origin: root target: c root)
 						exception: exception;

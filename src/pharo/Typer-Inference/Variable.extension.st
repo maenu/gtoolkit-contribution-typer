@@ -19,6 +19,8 @@ Variable >> typInfAssignedTypeSelf: aType super: anotherType [
 										node: m ast
 										arguments: m selector typInfUnknownArguments
 										self: aType
-										super: anotherType) result typeAt: n ] ]
+										super: anotherType) result
+										ifNil: [ TypUnknownType instance ]
+										ifNotNil: [ :cc | cc typeAt: n ] ] ]
 						ifFalse: [ {TypUnknownType instance} ] ]) typAsMinimizedType ]
 ]

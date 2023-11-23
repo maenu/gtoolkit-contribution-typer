@@ -17,6 +17,12 @@ TypInfEdge >> disable [
 ]
 
 { #category : #accessing }
+TypInfEdge >> disableOrigin: aNode [
+	self assert: [ self isDisabled ].
+	^ aNode outAdd: self copy
+]
+
+{ #category : #accessing }
 TypInfEdge >> enableOrigin: aNode [
 	self assert: [ self isDisabled ].
 	^ aNode

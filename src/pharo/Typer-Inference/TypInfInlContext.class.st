@@ -65,9 +65,8 @@ TypInfInlContext >> install [
 	self visitNode: node body.
 	node body lastIsReturn
 		ifFalse: [ self next: RBVariableNode selfNode.
-			current outAdd: (TypInfReturnEdge origin: current target: root) ].
-	message outNextDisableds
-		do: [ :e | (self returns: e target context) ifFalse: [ e enableOrigin: current ] ]
+			current outAdd: (TypInfReturnEdge origin: current target: root).
+			message outNextDisabledsEnableOn: current ]
 ]
 
 { #category : #accessing }
@@ -84,4 +83,11 @@ TypInfInlContext >> message [
 TypInfInlContext >> uninstall [
 	sender children remove: self.
 	super uninstall
+]
+
+{ #category : #accessing }
+TypInfInlContext >> visitReturnNode: aReturnNode [
+	self visitNode: aReturnNode value.
+	current outAdd: (TypInfReturnEdge origin: current target: root).
+	message outNextDisabledsEnableOn: current
 ]

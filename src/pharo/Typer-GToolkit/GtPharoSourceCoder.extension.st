@@ -61,13 +61,13 @@ GtPharoSourceCoder >> typGtContextEnable: anAddOns viewModel: aViewModel [
 		addStyler: (TypGtContextExpanderStyler new
 				coderViewModel: aViewModel;
 				yourself);
+		addStyler: (TypGtCheStyler new
+				coderViewModel: aViewModel;
+				yourself);
 		addStyler: (TypGtValueStyler new
 				coderViewModel: aViewModel;
 				yourself);
 		addStyler: (TypGtStabilityStyler new
-				coderViewModel: aViewModel;
-				yourself);
-		addStyler: (TypGtCheStyler new
 				coderViewModel: aViewModel;
 				yourself).
 	aViewModel

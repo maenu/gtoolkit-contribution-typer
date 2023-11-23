@@ -129,6 +129,14 @@ TypInfContextLookup >> resultAsyncFor: aDuration [
 ]
 
 { #category : #accessing }
+TypInfContextLookup >> resultAsyncWithTallyFor: aDuration [
+	| tally |
+	tally := MessageTally new.
+	^ ([ tally spyEvery: 1 on: [ self result ] ] typAsAsyncFuture
+		typAwaitFor: aDuration) then: [ tally ] otherwise: [ tally ]
+]
+
+{ #category : #accessing }
 TypInfContextLookup >> self [
 	^ selfType
 ]

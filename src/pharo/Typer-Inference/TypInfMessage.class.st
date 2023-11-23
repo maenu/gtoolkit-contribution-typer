@@ -5,7 +5,8 @@ Class {
 	#classTraits : 'TypInfTWithArguments classTrait + TypInfTFunction classTrait',
 	#instVars : [
 		'contexts',
-		'newContexts'
+		'newContexts',
+		'lookups'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -30,7 +31,7 @@ TypInfMessage >> asFunction [
 
 { #category : #accessing }
 TypInfMessage >> canInstall [
-	newContexts := self newContexts.
+	newContexts := self newContexts asSet.
 	(newContexts size
 		between: 1
 		and: TypInfCurrentConfiguration value maxInlinesPerSend) ifFalse: [ ^ false ].
@@ -53,6 +54,11 @@ TypInfMessage >> constrainReceiver [
 		ifTrue: [ self
 				constrain: self inReceiver
 				to: (implementors collect: #typAsType) typAsMinimizedType ]
+]
+
+{ #category : #accessing }
+TypInfMessage >> contexts [
+	^ contexts
 ]
 
 { #category : #accessing }
@@ -87,7 +93,7 @@ TypInfMessage >> install [
 	| oldContexts |
 	oldContexts := contexts.
 	oldContexts ifEmpty: [ self outNextDisable ].
-	contexts := newContexts asSet
+	contexts := newContexts
 			collect: [ :c | 
 				oldContexts
 					detect: [ :cc | cc canAbsorb: c ]
@@ -102,7 +108,7 @@ TypInfMessage >> install [
 
 { #category : #accessing }
 TypInfMessage >> lookups [
-	^ self inReceiver newMethodLookups: self
+	^ lookups ifNil: [ lookups := self inReceiver newMethodLookups: self ]
 ]
 
 { #category : #accessing }
@@ -138,13 +144,8 @@ TypInfMessage >> outNextDisable [
 ]
 
 { #category : #accessing }
-TypInfMessage >> outNextDisableds [
-	^ out at: #nextDisabled ifAbsent: #()
-]
-
-{ #category : #accessing }
 TypInfMessage >> outNextDisabledsEnableOn: aNode [
-	self outNextDisableds do: [ :e | e enableOrigin: aNode ]
+	out at: #nextDisabled ifPresent: [ :s | s do: [ :e | e enableOrigin: aNode ] ]
 ]
 
 { #category : #accessing }
@@ -154,11 +155,13 @@ TypInfMessage >> receiver [
 
 { #category : #accessing }
 TypInfMessage >> recursiveContextOrNil [
-	^ (context stack copyWithout: context) reversed
-		detect: [ :c | 
-			c node isMethod
-				and: [ (c isKindOf: TypInfInlContext) and: [ self lookups includes: c root lookup ] ] ]
-		ifNone: nil
+	context
+		stackDo: [ :c | 
+			(c ~~ context
+				and: [ c node isMethod
+						and: [ (c isKindOf: TypInfInlContext) and: [ self lookups includes: c root lookup ] ] ])
+				ifTrue: [ ^ c ] ].
+	^ nil
 ]
 
 { #category : #accessing }
@@ -169,7 +172,7 @@ TypInfMessage >> selector [
 { #category : #accessing }
 TypInfMessage >> signalsAlways [
 	| signalsAlways |
-	signalsAlways := contexts collect: [ :c | c root type signalsAlways ].
+	signalsAlways := contexts collect: [ :c | c root asFunction signalsAlways ].
 	signalsAlways ifEmpty: [ ^ nil ].
 	(signalsAlways includes: nil) ifTrue: [ ^ nil ].
 	^ signalsAlways typAsMinimizedType
@@ -178,7 +181,7 @@ TypInfMessage >> signalsAlways [
 { #category : #accessing }
 TypInfMessage >> signalsMaybe [
 	| signalsMaybe |
-	signalsMaybe := (contexts collect: [ :c | c root type signalsMaybe ])
+	signalsMaybe := (contexts collect: [ :c | c root asFunction signalsMaybe ])
 			reject: #isNil.
 	signalsMaybe ifEmpty: [ ^ nil ].
 	^ signalsMaybe typAsType
@@ -186,6 +189,7 @@ TypInfMessage >> signalsMaybe [
 
 { #category : #accessing }
 TypInfMessage >> transfer [
+	lookups := nil.
 	self constrainReceiver.
 	self canInstall ifTrue: [ self install ].
 	self

@@ -240,16 +240,6 @@ TypInfNode >> typGtShaCanType [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypInfNode >> typGtStateFor: aView [
-	<gtView>
-	^ aView forward
-		title: 'State';
-		priority: 11;
-		object: [ state ];
-		view: #typGtItemsFor:
-]
-
-{ #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtTypeFor: aView [
 	<gtView>
 	state ifNil: [ ^ aView empty ].

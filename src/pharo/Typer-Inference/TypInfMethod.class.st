@@ -3,6 +3,9 @@ Class {
 	#superclass : #TypInfNode,
 	#traits : 'TypInfTWithArguments + TypInfTFunction',
 	#classTraits : 'TypInfTWithArguments classTrait + TypInfTFunction classTrait',
+	#instVars : [
+		'lookup'
+	],
 	#category : #'Typer-Inference-Core'
 }
 
@@ -18,23 +21,19 @@ TypInfMethod >> asFunction [
 
 { #category : #accessing }
 TypInfMethod >> lookup [
-	^ TypMethodLookup
-		receiver: context self
-		selector: node selector
-		arguments: self arguments
-		self: context self
-		super: context super
-]
-
-{ #category : #accessing }
-TypInfMethod >> methodNode [
-
-	^ self
+	^ lookup
+		ifNil: [ lookup := TypMethodLookup
+					receiver: context self
+					selector: node selector
+					arguments: self arguments
+					self: context self
+					super: context super ]
 ]
 
 { #category : #accessing }
 TypInfMethod >> transfer [
 	| return signal |
+	lookup := nil.
 	return := self inReturnType.
 	signal := self inSignalType.
 	self

@@ -10,6 +10,12 @@ TypInfInlLookupMessage >> inReturnType [
 ]
 
 { #category : #accessing }
+TypInfInlLookupMessage >> inSignalType [
+	^ ({self asFunction signalsAlways.
+		self asFunction signalsMaybe} reject: #isNil) typAsType
+]
+
+{ #category : #accessing }
 TypInfInlLookupMessage >> method [
 	^ context lookup resultOrUnknown
 ]

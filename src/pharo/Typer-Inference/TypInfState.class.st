@@ -2,37 +2,49 @@ Class {
 	#name : #TypInfState,
 	#superclass : #Object,
 	#instVars : [
-		'cache',
-		'iteration'
+		'a1',
+		'a2',
+		't1',
+		't2',
+		'tally',
+		'twoK',
+		'twoKL',
+		'random'
 	],
 	#category : #'Typer-Inference-Core'
 }
 
 { #category : #accessing }
+TypInfState >> associationsDo: aBlock [
+	t1 do: [ :a | a ifNotNil: aBlock ].
+	t2 do: [ :a | a ifNotNil: aBlock ]
+]
+
+{ #category : #accessing }
 TypInfState >> at: aNode [
-	^ self
-		at: aNode
-		ifPresent: #yourself
-		ifAbsent: [ cache errorKeyNotFound: aNode ]
+	^ self at: aNode ifAbsent: [ self error: 'not found' ]
 ]
 
 { #category : #accessing }
 TypInfState >> at: aNode covariantPut: aType [
-	| a |
-	a := cache
-			at: aNode
-			ifAbsentPut: [ Array new: TypInfCurrentConfiguration value maxIterations + 1 ].
-	^ a
-		at: iteration
-		put: ((a at: iteration) ifNil: [ aType ] ifNotNil: [ :t | t covariant: aType ])
+	self
+		privateAssociationAt: aNode
+		ifPresent: [ :a | 
+			^ a
+				at: 3
+				put: ((a at: 3) ifNil: [ aType ] ifNotNil: [ :t | t covariant: aType ]) ]
+		ifAbsentPut: [ {aNode.
+				nil.
+				aType} ].
+	^ aType
 ]
 
 { #category : #accessing }
-TypInfState >> at: aNode ifAbsent: anotherBlock [
+TypInfState >> at: aNode ifAbsent: aBlock [
 	^ self
 		at: aNode
 		ifPresent: #yourself
-		ifAbsent: anotherBlock
+		ifAbsent: aBlock
 ]
 
 { #category : #accessing }
@@ -40,102 +52,196 @@ TypInfState >> at: aNode ifPresent: aBlock [
 	^ self
 		at: aNode
 		ifPresent: aBlock
-		ifAbsent: [ nil ]
+		ifAbsent: nil
 ]
 
 { #category : #accessing }
 TypInfState >> at: aNode ifPresent: aBlock ifAbsent: anotherBlock [
-	^ cache
-		at: aNode
-		ifPresent: [ :a | (a at: iteration) ifNil: anotherBlock ifNotNil: aBlock ]
-		ifAbsent: anotherBlock
-]
-
-{ #category : #accessing }
-TypInfState >> at: anInteger keysAndValuesDo: aBlock [
-	^ cache
-		keysAndValuesDo: [ :n :a | (a at: anInteger) ifNotNil: [ :t | aBlock value: n value: t ] ]
+	| h x |
+	x := aNode identityHash.
+	h := x * a1 \\ twoK // twoKL + 1.
+	(t1 at: h)
+		ifNotNil: [ :aa | 
+			(aa at: 1) == aNode
+				ifTrue: [ ^ (aa at: 3)
+						ifNil: anotherBlock
+						ifNotNil: [ :t | aa at: 3 put: (aBlock value: t) ] ] ].
+	h := x * a2 \\ twoK // twoKL + 1.
+	(t2 at: h)
+		ifNotNil: [ :aa | 
+			(aa at: 1) == aNode
+				ifTrue: [ ^ (aa at: 3)
+						ifNil: anotherBlock
+						ifNotNil: [ :t | aa at: 3 put: (aBlock value: t) ] ] ].
+	^ anotherBlock value
 ]
 
 { #category : #accessing }
 TypInfState >> at: aNode put: aType [
-	| a |
-	a := cache
-			at: aNode
-			ifAbsentPut: [ Array new: TypInfCurrentConfiguration value maxIterations + 1 ].
-	^ a at: iteration put: (a at: iteration put: aType)
+	self
+		privateAssociationAt: aNode
+		ifPresent: [ :a | ^ a at: 3 put: aType ]
+		ifAbsentPut: [ {aNode.
+				nil.
+				aType} ].
+	^ aType
 ]
 
 { #category : #accessing }
 TypInfState >> changes [
-	| changes |
-	changes := cache species new: cache size.
-	cache
+	| result |
+	result := IdentityDictionary new: tally.
+	self
 		associationsDo: [ :a | 
-			| old new |
-			old := a value at: iteration - 1 ifAbsent: nil.
-			new := a value at: iteration ifAbsent: nil.
-			old = new ifFalse: [ changes at: a key put: new ] ].
-	^ changes
+			| t |
+			t := a at: 3.
+			(a at: 2) == t ifFalse: [ result at: (a at: 1) put: t ].
+			a at: 2 put: t ].
+	^ result
+]
+
+{ #category : #accessing }
+TypInfState >> growTo: anInteger [
+	| oldT1 oldT2 |
+	oldT1 := t1.
+	oldT2 := t2.
+	t1 := Array new: anInteger.
+	t2 := Array new: anInteger.
+	self randomize.
+	1
+		to: oldT1 size
+		do: [ :i | 
+			(oldT1 at: i)
+				ifNotNil: [ :a | 
+					self
+						privateAssociationAt: (a at: 1)
+						ifPresent: [ :aa | aa at: 3 put: (a at: 3)	"why does this happen?" ]
+						ifAbsentPut: [ a ] ] ].
+	1
+		to: oldT2 size
+		do: [ :i | 
+			(oldT2 at: i)
+				ifNotNil: [ :a | 
+					self
+						privateAssociationAt: (a at: 1)
+						ifPresent: [ :aa | aa at: 3 put: (a at: 3)	"why does this happen?" ]
+						ifAbsentPut: [ a ] ] ]
 ]
 
 { #category : #accessing }
 TypInfState >> initialize [
 	super initialize.
-	cache := IdentityDictionary new: 1000. "avoids grow for most graphs"
-	iteration := 0
-]
-
-{ #category : #accessing }
-TypInfState >> iteration [
-	^ iteration
-]
-
-{ #category : #accessing }
-TypInfState >> last [
-	| result |
-	result := cache species new: cache size.
-	self lastKeysAndValuesDo: [ :n :t | result at: n put: t ].
-	^ result
-]
-
-{ #category : #accessing }
-TypInfState >> lastKeysAndValuesDo: aBlock [
-	^ self at: iteration keysAndValuesDo: aBlock
+	t1 := Array new: 128.
+	t2 := Array new: 128.
+	tally := 0.
+	random := Random new.
+	self randomize
 ]
 
 { #category : #accessing }
 TypInfState >> postCopy [
-	| newCache |
+	| oldT1 oldT2 |
 	super postCopy.
-	newCache := cache species new: 1000.
-	iteration > 0
-		ifTrue: [ iteration := 1.
-			self
-				lastKeysAndValuesDo: [ :n :t | 
-					| a |
-					a := Array new: TypInfCurrentConfiguration value maxIterations.
-					a at: iteration put: t.
-					newCache at: n put: a ] ].
-	cache := newCache
+	oldT1 := t1.
+	oldT2 := t2.
+	t1 := Array new: oldT1 size.
+	t2 := Array new: oldT2 size.
+	1
+		to: oldT1 size
+		do: [ :i | (oldT1 at: i) ifNotNil: [ :a | t1 at: i put: a copy ] ].
+	1
+		to: oldT2 size
+		do: [ :i | (oldT2 at: i) ifNotNil: [ :a | t2 at: i put: a copy ] ]
 ]
 
 { #category : #accessing }
-TypInfState >> reduceTo: aCollection [
-	| newCache |
-	newCache := IdentityDictionary new: aCollection size.
-	aCollection
-		do: [ :n | 
-			cache
-				at: n
-				ifPresent: [ :a | (a at: iteration) ifNotNil: [ :t | newCache at: n put: {t} ] ] ].
-	cache := newCache.
-	iteration := 1
+TypInfState >> privateAssociationAt: aNode ifPresent: aBlock ifAbsentPut: anotherBlock [
+	| x h n aCurrent |
+	x := aNode identityHash.
+	h := x * a1 \\ twoK // twoKL + 1.
+	(t1 at: h) ifNotNil: [ :a | (a at: 1) == aNode ifTrue: [ ^ aBlock value: a ] ].
+	h := x * a2 \\ twoK // twoKL + 1.
+	(t2 at: h) ifNotNil: [ :a | (a at: 1) == aNode ifTrue: [ ^ aBlock value: a ] ].
+	n := t1 size + t2 size.
+	aCurrent := anotherBlock value.
+	1
+		to: n
+		do: [ :i | 
+			h := (aCurrent at: 1) identityHash * a1 \\ twoK // twoKL + 1.
+			(t1 at: h)
+				ifNil: [ t1 at: h put: aCurrent.
+					tally := tally + 1.
+					^ aCurrent at: 3 ]
+				ifNotNil: [ :a | 
+					t1 at: h put: aCurrent.
+					aCurrent := a ].
+			h := (aCurrent at: 1) identityHash * a2 \\ twoK // twoKL + 1.
+			(t2 at: h)
+				ifNil: [ t2 at: h put: aCurrent.
+					tally := tally + 1.
+					^ aCurrent at: 3 ]
+				ifNotNil: [ :a | 
+					t2 at: h put: aCurrent.
+					aCurrent := a ] ].
+	n - tally < (n // 2 max: 1)
+		ifTrue: [ self growTo: n ]
+		ifFalse: [ self growTo: n // 2 ].
+	^ self
+		privateAssociationAt: aNode
+		ifPresent: aBlock
+		ifAbsentPut: [ aCurrent ]
+]
+
+{ #category : #accessing }
+TypInfState >> randomize [
+	| k l |
+	k := 32.	"#identityHash is 32bit"
+	l := (t1 size log: 2) floor.
+	twoK := 2 ** k.
+	twoKL := 2 ** (k - l).
+	[ a1 := (random nextInteger: twoK) - 1 ] doWhileTrue: [ a1 \\ 2 = 0 ].
+	[ a2 := (random nextInteger: twoK) - 1 ] doWhileTrue: [ a2 \\ 2 = 0 ]
 ]
 
 { #category : #accessing }
 TypInfState >> slurpAll: aCollection [
-	iteration := iteration + 1.
+	| l |
+	l := aCollection size.
+	self associationsDo: [ :a | a at: 3 put: (Array new: l) ].
 	aCollection
-		do: [ :s | s lastKeysAndValuesDo: [ :n :t | self at: n covariantPut: t ] ]
+		withIndexDo: [ :s :i | 
+			s
+				associationsDo: [ :aOther | 
+					| n |
+					n := aOther at: 1.
+					(aOther at: 3)
+						ifNil: [ self
+								privateAssociationAt: n
+								ifPresent: [ :aSelf | aSelf ]
+								ifAbsentPut: [ {n.
+										nil.
+										Array new: l} ] ]
+						ifNotNil: [ :t | 
+							self
+								privateAssociationAt: n
+								ifPresent: [ :aSelf | (aSelf at: 3) at: i put: t ]
+								ifAbsentPut: [ {n.
+										nil.
+										(Array new: l)
+											at: i put: t;
+											yourself} ] ] ] ].
+	self
+		associationsDo: [ :a | 
+			| s |
+			s := a at: 3.
+			a
+				at: 3
+				put: (s size = 0
+						ifTrue: [ nil ]
+						ifFalse: [ | current |
+							s
+								do: [ :t | 
+									t
+										ifNotNil: [ current := current ifNil: [ t ] ifNotNil: [ current covariant: t ] ] ].
+							current ]) ]
 ]

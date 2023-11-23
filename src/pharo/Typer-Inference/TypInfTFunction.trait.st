@@ -10,7 +10,7 @@ TypInfTFunction >> inReturnType [
 			asIdentitySet.
 	actual := self in
 			at: #return
-			ifPresent: [ :s | (s collect: #origin) reject: #isDead ]
+			ifPresent: [ :s | s reject: [ :e | e origin isDead ] thenCollect: #origin ]
 			ifAbsent: [ IdentitySet new ].
 	^ (expected difference: (actual collect: #node))
 		ifEmpty: [ (actual collect: #type) typAsMinimizedType ]

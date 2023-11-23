@@ -262,6 +262,11 @@ TypUnionType >> types [
 	^ types copy
 ]
 
+{ #category : #'as yet unclassified' }
+TypUnionType >> withNode: aNode [
+	^ self class types: (types collect: [ :t | t withNode: aNode ])
+]
+
 { #category : #compatibility }
 TypUnionType >> withParameters: aCollection [
 	<typEdge>

@@ -110,7 +110,8 @@ TypInfContext >> initializeSender: aContext state: aState node: aNode lookup: aL
 	state := aState copy.
 	node := aNode.
 	lookup := aLookup.
-	iterations := OrderedCollection new.
+	iterations := OrderedCollection
+			new: TypInfCurrentConfiguration value maxIterations + 1.
 	nodes := IdentityDictionary new.
 	children := IdentitySet new
 ]
@@ -223,17 +224,7 @@ TypInfContext >> reduce [
 	| allNodes |
 	iterations := iterations collect: [ :s | nil ].
 	allNodes := self allNodes.
-	allNodes do: [ :e | e state reduceTo: allNodes ]
-]
-
-{ #category : #accessing }
-TypInfContext >> returns: aContext [
-	^ (root leaves: aContext)
-		allSatisfy: [ :n | 
-			n out
-				at: #return
-				ifPresent: [ :s | s anySatisfy: [ :e | e target == aContext root ] ]
-				ifAbsent: [ false ] ]
+	allNodes do: [ :e | e reduceTo: allNodes ]
 ]
 
 { #category : #accessing }
@@ -271,8 +262,9 @@ TypInfContext >> sender [
 ]
 
 { #category : #accessing }
-TypInfContext >> stack [
-	^ (sender ifNil: {} ifNotNil: #stack) , {self}
+TypInfContext >> stackDo: aBlock [
+	aBlock value: self.
+	sender ifNotNil: [ sender stackDo: aBlock ]
 ]
 
 { #category : #accessing }

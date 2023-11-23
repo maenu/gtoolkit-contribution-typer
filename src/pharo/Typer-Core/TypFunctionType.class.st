@@ -6,7 +6,9 @@ Class {
 		'argumentsOptional',
 		'signalsAlways',
 		'node',
-		'signalsMaybe'
+		'signalsMaybe',
+		'arguments',
+		'result'
 	],
 	#category : #'Typer-Core-Core'
 }
@@ -61,7 +63,7 @@ TypFunctionType class >> classDescription: aClassDescription result: aType argum
 
 { #category : #accessing }
 TypFunctionType class >> classDescription: aClassDescription result: aType arguments: aCollection argumentsOptional: aBoolean signalsAlways: aTypeOrNil signalsMaybe: anotherTypeOrNil node: aNodeOrNil super: anotherType [
-	self assert: [ aTypeOrNil == nil or: [ aType isVoid ] ].
+	self assert: [ aTypeOrNil == nil or: [ aType types anySatisfy: #isVoid ] ].
 	self assert: [ aCollection noneSatisfy: #isVoid ].
 	^ self index
 		typAt: {aClassDescription name asSymbol.
@@ -205,9 +207,7 @@ TypFunctionType >> > aType [
 
 { #category : #compatibility }
 TypFunctionType >> arguments [
-
-	<typPraResult: 'SequenceableCollection<TypType>'>
-	^ argumentsSize typTimesCollect: [ :i | self at: i asString asSymbol ]
+	^ arguments
 ]
 
 { #category : #accessing }
@@ -325,7 +325,10 @@ TypFunctionType >> initializeArgumentsSize: anInteger argumentsOptional: aBoolea
 	signalsAlways := aTypeOrNil.
 	signalsMaybe := anotherTypeOrNil.
 	node := aNodeOrNil.
-	hash := nil
+	hash := nil.
+	arguments := argumentsSize
+			typTimesCollect: [ :i | self at: i asString asSymbol ].
+	result := self at: #'0'
 ]
 
 { #category : #initialization }
@@ -374,8 +377,7 @@ TypFunctionType >> printOn: aStream skipping: anIdentitySet [
 
 { #category : #compatibility }
 TypFunctionType >> result [
-	<typPraResult: 'TypType'>
-	^ self at: #'0'
+	^ result
 ]
 
 { #category : #accessing }

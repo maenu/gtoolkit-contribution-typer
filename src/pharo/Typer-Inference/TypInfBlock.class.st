@@ -12,6 +12,19 @@ TypInfBlock >> asFunction [
 ]
 
 { #category : #accessing }
+TypInfBlock >> outerContext [
+	| method outerContext |
+	method := node methodNode.
+	outerContext := context.
+	[ outerContext isNotNil and: [ outerContext root node ~~ method ] ]
+		whileTrue: [ outerContext := (outerContext isKindOf: TypInfBlockContext)
+					ifTrue: [ outerContext block context ]
+					ifFalse: [ outerContext sender ] ].
+	outerContext ifNotNil: [ ^ outerContext ].
+	self error: 'no outer context found'
+]
+
+{ #category : #accessing }
 TypInfBlock >> transfer [
 	self
 		put: ((in
