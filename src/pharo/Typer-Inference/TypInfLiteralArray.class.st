@@ -11,5 +11,8 @@ TypInfLiteralArray >> transfer [
 	self
 		put: (node isForByteArray
 				ifTrue: [ ByteArray typAsType ]
-				ifFalse: [ Array typAsType withParameters: {(self inArguments collect: #type) typAsType} ])
+				ifFalse: [ Array typAsType
+						withParameters: {self inArguments
+									ifEmpty: [ TypUnknownType instance ]
+									ifNotEmpty: [ :s | s collect: #type typAsType ]} ])
 ]

@@ -10,5 +10,7 @@ Class {
 TypInfArray >> transfer [
 	self
 		put: (Array typAsType
-				withParameters: {(self inArguments collect: [ :e | state at: e ]) typAsType})
+				withParameters: {self inArguments
+							ifEmpty: [ TypUnknownType instance ]
+							ifNotEmpty: [ :s | (s collect: [ :e | state at: e ]) typAsType ]})
 ]

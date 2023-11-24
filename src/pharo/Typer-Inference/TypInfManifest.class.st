@@ -48,7 +48,8 @@ TypInfManifest class >> invalidate [
 TypInfManifest class >> randomContext [
 	<gtExample>
 	^ (Smalltalk globals allMethods
-		select: [ :m | m isInstalled and: [ m size < 100 ] ]) atRandom ast typInfContextLookup result
+		select: [ :m | m isInstalled and: [ m size < 100 ] ]) atRandom ast
+		typInfContextLookup resultAsyncFor: 10 seconds
 ]
 
 { #category : #accessing }

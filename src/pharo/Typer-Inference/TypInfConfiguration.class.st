@@ -32,7 +32,7 @@ TypInfConfiguration class >> default [
 		ifNil: [ default := self new
 					wantsTally: false;
 					afterContextIterate: #reduce;
-					maxIterations: 24;
+					maxIterations: 16;
 					maxNodeStackSize: 5;
 					maxInlinesPerSend: 8;
 					maxImplementors: TypInfIndex instance implementors95Quantile;

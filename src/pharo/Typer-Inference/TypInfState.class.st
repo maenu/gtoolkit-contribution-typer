@@ -9,7 +9,10 @@ Class {
 		'tally',
 		'twoK',
 		'twoKL',
-		'random'
+		'random',
+		'k',
+		'l',
+		'twoL'
 	],
 	#category : #'Typer-Inference-Core'
 }
@@ -58,7 +61,7 @@ TypInfState >> at: aNode ifPresent: aBlock [
 { #category : #accessing }
 TypInfState >> at: aNode ifPresent: aBlock ifAbsent: anotherBlock [
 	| h x |
-	x := aNode identityHash.
+	x := aNode basicIdentityHash.
 	h := x * a1 \\ twoK // twoKL + 1.
 	(t1 at: h)
 		ifNotNil: [ :aa | 
@@ -103,10 +106,13 @@ TypInfState >> changes [
 { #category : #accessing }
 TypInfState >> growTo: anInteger [
 	| oldT1 oldT2 |
+	l := (anInteger log: 2) ceiling.
+	twoL := 1 bitShift: l.
+	twoKL := 1 bitShift: k - l.
 	oldT1 := t1.
 	oldT2 := t2.
-	t1 := Array new: anInteger.
-	t2 := Array new: anInteger.
+	t1 := Array new: twoL.
+	t2 := Array new: twoL.
 	self randomize.
 	1
 		to: oldT1 size
@@ -131,10 +137,15 @@ TypInfState >> growTo: anInteger [
 { #category : #accessing }
 TypInfState >> initialize [
 	super initialize.
-	t1 := Array new: 128.
-	t2 := Array new: 128.
 	tally := 0.
 	random := Random new.
+	k := 22.	"ProtoObject>>#basicIdentityHash is 22bit"
+	twoK := 1 bitShift: k.
+	l := 7.
+	twoL := 1 bitShift: l.
+	twoKL := 1 bitShift: k - l.
+	t1 := Array new: twoL.	"size is always power of 2, otherwise there will be unused space"
+	t2 := Array new: twoL.
 	self randomize
 ]
 
@@ -156,58 +167,52 @@ TypInfState >> postCopy [
 
 { #category : #accessing }
 TypInfState >> privateAssociationAt: aNode ifPresent: aBlock ifAbsentPut: anotherBlock [
-	| x h n aCurrent |
-	x := aNode identityHash.
-	h := x * a1 \\ twoK // twoKL + 1.
-	(t1 at: h) ifNotNil: [ :a | (a at: 1) == aNode ifTrue: [ ^ aBlock value: a ] ].
-	h := x * a2 \\ twoK // twoKL + 1.
-	(t2 at: h) ifNotNil: [ :a | (a at: 1) == aNode ifTrue: [ ^ aBlock value: a ] ].
-	n := t1 size + t2 size.
-	aCurrent := anotherBlock value.
-	1
-		to: n
-		do: [ :i | 
-			h := (aCurrent at: 1) identityHash * a1 \\ twoK // twoKL + 1.
+	| x v i h |
+	x := aNode basicIdentityHash.
+	(t1 at: x * a1 \\ twoK // twoKL + 1)
+		ifNotNil: [ :a | (a at: 1) == aNode ifTrue: [ ^ aBlock value: a ] ].
+	(t2 at: x * a2 \\ twoK // twoKL + 1)
+		ifNotNil: [ :a | (a at: 1) == aNode ifTrue: [ ^ aBlock value: a ] ].
+	v := anotherBlock value.
+	i := 1.
+	[ (v at: 1) ~~ aNode or: [ i = 1 ] ]
+		whileTrue: [ h := (v at: 1) basicIdentityHash * a1 \\ twoK // twoKL + 1.
 			(t1 at: h)
-				ifNil: [ t1 at: h put: aCurrent.
+				ifNil: [ t1 at: h put: v.
 					tally := tally + 1.
-					^ aCurrent at: 3 ]
+					^ v at: 3 ]
 				ifNotNil: [ :a | 
-					t1 at: h put: aCurrent.
-					aCurrent := a ].
-			h := (aCurrent at: 1) identityHash * a2 \\ twoK // twoKL + 1.
+					t1 at: h put: v.
+					v := a ].
+			h := (v at: 1) basicIdentityHash * a2 \\ twoK // twoKL + 1.
 			(t2 at: h)
-				ifNil: [ t2 at: h put: aCurrent.
+				ifNil: [ t2 at: h put: v.
 					tally := tally + 1.
-					^ aCurrent at: 3 ]
+					^ v at: 3 ]
 				ifNotNil: [ :a | 
-					t2 at: h put: aCurrent.
-					aCurrent := a ] ].
-	n - tally < (n // 2 max: 1)
-		ifTrue: [ self growTo: n ]
-		ifFalse: [ self growTo: n // 2 ].
+					t2 at: h put: v.
+					v := a ].
+			i := i + 1 ].
+	tally > twoL
+		ifTrue: [ self growTo: (twoL bitShift: 1) ]
+		ifFalse: [ self growTo: twoL ].
 	^ self
 		privateAssociationAt: aNode
 		ifPresent: aBlock
-		ifAbsentPut: [ aCurrent ]
+		ifAbsentPut: [ v ]
 ]
 
 { #category : #accessing }
 TypInfState >> randomize [
-	| k l |
-	k := 32.	"#identityHash is 32bit"
-	l := (t1 size log: 2) floor.
-	twoK := 2 ** k.
-	twoKL := 2 ** (k - l).
-	[ a1 := (random nextInteger: twoK) - 1 ] doWhileTrue: [ a1 \\ 2 = 0 ].
-	[ a2 := (random nextInteger: twoK) - 1 ] doWhileTrue: [ a2 \\ 2 = 0 ]
+	[ a1 := (random nextInteger: twoK) - 1 ] doWhileTrue: [ a1 even ].
+	[ a2 := (random nextInteger: twoK) - 1 ] doWhileTrue: [ a2 even ]
 ]
 
 { #category : #accessing }
 TypInfState >> slurpAll: aCollection [
-	| l |
-	l := aCollection size.
-	self associationsDo: [ :a | a at: 3 put: (Array new: l) ].
+	| size |
+	size := aCollection size.
+	self associationsDo: [ :a | a at: 3 put: (Array new: size) ].
 	aCollection
 		withIndexDo: [ :s :i | 
 			s
@@ -220,14 +225,14 @@ TypInfState >> slurpAll: aCollection [
 								ifPresent: [ :aSelf | aSelf ]
 								ifAbsentPut: [ {n.
 										nil.
-										Array new: l} ] ]
+										Array new: size} ] ]
 						ifNotNil: [ :t | 
 							self
 								privateAssociationAt: n
 								ifPresent: [ :aSelf | (aSelf at: 3) at: i put: t ]
 								ifAbsentPut: [ {n.
 										nil.
-										(Array new: l)
+										(Array new: size)
 											at: i put: t;
 											yourself} ] ] ] ].
 	self

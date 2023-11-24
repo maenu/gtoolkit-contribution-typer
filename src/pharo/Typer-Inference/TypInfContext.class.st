@@ -69,11 +69,6 @@ TypInfContext >> canAbsorb: aContext [
 ]
 
 { #category : #accessing }
-TypInfContext >> canRun [
-	^ TypInfNodeStack canPush: node
-]
-
-{ #category : #accessing }
 TypInfContext >> children [
 	^ children
 ]
@@ -123,11 +118,6 @@ TypInfContext >> install [
 	self assert: [ iterations isEmpty ].
 	current := root := self add: (node typInfRootNodeInContext: self).
 	node acceptVisitor: self
-]
-
-{ #category : #accessing }
-TypInfContext >> isRun [
-	^ iterations size > 0
 ]
 
 { #category : #accessing }
@@ -235,7 +225,6 @@ TypInfContext >> root [
 { #category : #running }
 TypInfContext >> run [
 	| start stop tally |
-	self assert: [ self canRun ].
 	start := TypInfContextStartSignal node: self.
 	start emit.
 	(TypInfCurrentConfiguration value wantsTally

@@ -35,6 +35,11 @@ TypInfContextLookup class >> node: aNode arguments: aCollection self: aTypeOrNil
 ]
 
 { #category : #accessing }
+TypInfContextLookup class >> resolver [
+	^ resolver ifNil: [ resolver := TypInfContextResolver new ]
+]
+
+{ #category : #accessing }
 TypInfContextLookup >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	anObject class = self class ifFalse: [ ^ false ].
@@ -109,18 +114,14 @@ TypInfContextLookup >> reset [
 
 { #category : #accessing }
 TypInfContextLookup >> result [
-	result
-		ifNotNil: [ TypInfNodeStack actives size + 1 < result nodeStackDepth
-				ifTrue: [ result := nil ]
-				ifFalse: [ ^ result ] ].
-	result := TypInfContext
-			sender: nil
-			state: TypInfState new
-			node: node
-			lookup: self.
-	result canRun ifFalse: [ ^ result := nil ].
-	[ result run ] ifCurtailed: [ ^ result := nil ].
+	super result ifNil: [ ^ nil ].
+	result root ifNil: [ result run ].
 	^ result
+]
+
+{ #category : #accessing }
+TypInfContextLookup >> resultAsync [
+	^ [ self result ] typAsAsyncFuture typAwait
 ]
 
 { #category : #accessing }

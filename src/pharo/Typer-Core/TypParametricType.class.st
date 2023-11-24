@@ -196,6 +196,9 @@ TypParametricType >> initialize [
 TypParametricType >> initializeParameters: aDictionary [
 	self assert: [ aDictionary isKindOf: OrderedIdentityDictionary ].
 	self assert: [ aDictionary isNotEmpty ].
+	self
+		assert: [ aDictionary associations
+				allSatisfy: [ :a | a key = #'0' or: [ a value isVoid not ] ] ].	"#'0' can be void for functions"
 	parameters removeAll.
 	aDictionary
 		keysAndValuesDo: [ :k :v | parameters at: k put: (v isBound ifTrue: [ v ] ifFalse: [ v boundTo: self ]) ].

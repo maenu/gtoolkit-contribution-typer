@@ -45,6 +45,7 @@ TypInfInlLookupMessage >> newContexts [
 { #category : #accessing }
 TypInfInlLookupMessage >> transfer [
 	| method |
+	lookups := nil.
 	self constrainReceiver.
 	self canInstall ifTrue: [ self install ].
 	method := self method.

@@ -119,7 +119,7 @@ TypLookup >> result [
 					root: self
 					update: result ].
 	self resolve.
-	resolver ifNil: [ ^ result ].
+	resolver ifNil: [ ^ nil ].
 	^ result := resolver result: resolved root: self
 ]
 
