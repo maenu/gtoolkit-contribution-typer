@@ -8,7 +8,6 @@ Class {
 		'maxWriters',
 		'maxNodeStackSize',
 		'maxInlinesPerSend',
-		'wantsTally',
 		'afterContextIterate'
 	],
 	#classInstVars : [
@@ -30,7 +29,6 @@ TypInfConfiguration class >> debug [
 TypInfConfiguration class >> default [
 	^ default
 		ifNil: [ default := self new
-					wantsTally: false;
 					afterContextIterate: #reduce;
 					maxIterations: 16;
 					maxNodeStackSize: 5;
@@ -115,22 +113,4 @@ TypInfConfiguration >> maxWriters [
 { #category : #accessing }
 TypInfConfiguration >> maxWriters: anObject [
 	maxWriters := anObject
-]
-
-{ #category : #accessing }
-TypInfConfiguration >> wantsTally [
-	^ wantsTally
-]
-
-{ #category : #accessing }
-TypInfConfiguration >> wantsTally: anObject [
-	wantsTally := anObject
-]
-
-{ #category : #accessing }
-TypInfConfiguration >> withTally [
-	wantsTally ifTrue: [ ^ wantsTally ].
-	^ self copy
-		wantsTally: true;
-		yourself
 ]

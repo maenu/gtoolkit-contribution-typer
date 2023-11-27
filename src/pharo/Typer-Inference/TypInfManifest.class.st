@@ -38,6 +38,7 @@ TypInfManifest class >> findPathToIndex [
 
 { #category : #accessing }
 TypInfManifest class >> invalidate [
+	TypInfNode invalidateAll.
 	TypInfIndex invalidate.
 	TypInfNodeStack resetSoleInstance.
 	TypInfConfiguration invalidate.

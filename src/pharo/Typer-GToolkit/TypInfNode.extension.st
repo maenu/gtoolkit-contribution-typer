@@ -40,6 +40,19 @@ TypInfNode >> typGtAsShortString [
 ]
 
 { #category : #'*Typer-GToolkit' }
+TypInfNode >> typGtBackground: aNumber [
+	^ (self typGtColor alpha: aNumber) asBlBackground
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypInfNode >> typGtBorder: aNumber [
+	^ BlBorder builder
+		paint: (self typGtColor alpha: aNumber);
+		width: 1;
+		build
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtCoderFor: aView [
 	<gtView>
 	^ aView forward
@@ -145,6 +158,66 @@ TypInfNode >> typGtFlowPaintOn: aMondrian [
 				curvatureFraction: ((localEdges indexOf: e ifAbsent: 1) - 1) / (localEdges size * 2 + 1);
 				yourself ];
 		connect: (edges select: [ :e | e key = #next ] thenCollect: #value)
+			from: #origin
+			to: #target.
+	aMondrian layout force fix: self at: 0 @ 0
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypInfNode >> typGtGraphFor: aView [
+	<gtView>
+	^ aView typGtMondrian
+		title: 'Graph';
+		priority: 20;
+		painting: [ :m | self typGtGraphPaintOn: m ]
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypInfNode >> typGtGraphPaintOn: aMondrian [
+	| nodes edges connections |
+	nodes := nodes := self neighbors , {self}.
+	edges := (((nodes flatCollect: #inEdges)
+			select: [ :e | nodes includes: e origin ])
+			, ((nodes flatCollect: #outEdges) select: [ :e | nodes includes: e target ]))
+			asIdentitySet.
+	connections := (edges groupedBy: [ :e | e origin -> e target ]) associations
+			collect: [ :a | a key -> (a value sorted: [ :e :f | #(next return) includes: e key ]) ]
+			as: Dictionary.
+	aMondrian nodes
+		stencil: [ :e | 
+			| element |
+			element := e typGtAsElementIn: aMondrian.
+			e == self
+				ifTrue: [ element
+						outskirts: BlOutskirts outside;
+						border: (BlBorder paint: BrGlamorousColors defaultHeaderTextColor width: 3) ].
+			element ];
+		with: nodes.
+	aMondrian edges
+		passive;
+		fromNearestTightCircle;
+		toNearestTightCircle;
+		stencil: [ :e | 
+			| localEdges |
+			localEdges := connections at: e origin -> e target.
+			(e typGtAsElementIn: aMondrian)
+				curvatureFraction: (localEdges indexOf: e ifAbsent: 0) / (localEdges size * 2 + 1);
+				yourself ];
+		connect: (edges
+					reject: [ :e | #(next return) includes: e key ]
+					thenCollect: #value)
+			from: #origin
+			to: #target.
+	aMondrian edges
+		fromNearestTightCircle;
+		toNearestTightCircle;
+		stencil: [ :e | 
+			| localEdges |
+			localEdges := connections at: e origin -> e target.
+			(e typGtAsElementIn: aMondrian)
+				curvatureFraction: ((localEdges indexOf: e ifAbsent: 1) - 1) / (localEdges size * 2 + 1);
+				yourself ];
+		connect: (edges select: [ :e | #(next return) includes: e key ] thenCollect: #value)
 			from: #origin
 			to: #target.
 	aMondrian layout force fix: self at: 0 @ 0

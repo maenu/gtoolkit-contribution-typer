@@ -1,6 +1,6 @@
 Class {
 	#name : #TypType,
-	#superclass : #TypNode,
+	#superclass : #Object,
 	#instVars : [
 		'superType',
 		'hash'
@@ -18,9 +18,14 @@ TypType class >> index [
 
 { #category : #invalidation }
 TypType class >> invalidate [
-
 	<script>
 	index := nil
+]
+
+{ #category : #invalidation }
+TypType class >> invalidateAll [
+	<script>
+	self withAllSubclassesDo: #invalidate
 ]
 
 { #category : #comparing }

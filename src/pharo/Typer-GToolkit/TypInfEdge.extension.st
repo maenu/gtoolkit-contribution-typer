@@ -1,7 +1,7 @@
-Extension { #name : #TypEdge }
+Extension { #name : #TypInfEdge }
 
 { #category : #'*Typer-GToolkit' }
-TypEdge >> typGtAsElementIn: aMondrian [
+TypInfEdge >> typGtAsElementIn: aMondrian [
 	| label element |
 	label := BrLabel new
 			constraintsDo: [ :c | 
@@ -35,7 +35,7 @@ TypEdge >> typGtAsElementIn: aMondrian [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypEdge >> typGtAsElementIn: aMondrian with: aCollection [
+TypInfEdge >> typGtAsElementIn: aMondrian with: aCollection [
 	| label |
 	label := BrLabel new
 			constraintsDo: [ :c | 
@@ -65,12 +65,12 @@ TypEdge >> typGtAsElementIn: aMondrian with: aCollection [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypEdge >> typGtBackground: aNumber [
+TypInfEdge >> typGtBackground: aNumber [
 	^ (self typGtColor alpha: aNumber) asBlBackground
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypEdge >> typGtBorder: aNumber [
+TypInfEdge >> typGtBorder: aNumber [
 	^ BlBorder builder
 		paint: (self typGtColor alpha: aNumber);
 		width: 1;
@@ -78,12 +78,12 @@ TypEdge >> typGtBorder: aNumber [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypEdge >> typGtColor [
+TypInfEdge >> typGtColor [
 	^ BrGlamorousColors lightBorderColor
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypEdge >> typGtGraphFor: aView [
+TypInfEdge >> typGtGraphFor: aView [
 	<gtView>
 	^ aView typGtMondrian
 		title: 'Graph';
@@ -102,7 +102,7 @@ TypEdge >> typGtGraphFor: aView [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypEdge >> typGtGraphPaintOn: aMondrian [
+TypInfEdge >> typGtGraphPaintOn: aMondrian [
 	aMondrian nodes
 		stencil: [ :e | e typGtAsElementIn: aMondrian ];
 		with: {origin.
@@ -113,7 +113,7 @@ TypEdge >> typGtGraphPaintOn: aMondrian [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypEdge >> typGtKeyFor: aView [
+TypInfEdge >> typGtKeyFor: aView [
 	<gtView>
 	^ aView explicit
 		title: 'Key';

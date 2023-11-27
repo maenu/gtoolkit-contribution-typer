@@ -82,10 +82,9 @@ TypManifest class >> invalidate [
 	logger ifNotNil: #stop.
 	logger ifNotNil: #reset.
 	logger := nil.
-	TypEdgeKey invalidateAll.
+	TypType invalidateAll.
 	TypLookup invalidateAll.
 	TypIndex invalidateAll.
-	TypNode invalidateAll.
 	TypCoverage invalidate
 ]
 

@@ -52,7 +52,6 @@ TypUnionType >> arguments [
 
 { #category : #converting }
 TypUnionType >> asNonNullable [
-	<typEdge>
 	^ self isNullable
 		ifTrue: [ (types reject: #isNil) typAsType ]
 		ifFalse: [ self ]
@@ -60,7 +59,6 @@ TypUnionType >> asNonNullable [
 
 { #category : #converting }
 TypUnionType >> asNullable [
-	<typEdge>
 	^ self isNullable
 		ifTrue: [ self ]
 		ifFalse: [ (types , {TypNilType instance}) typAsType ]
@@ -68,7 +66,6 @@ TypUnionType >> asNullable [
 
 { #category : #compatibility }
 TypUnionType >> at: aString [
-	<typEdge>
 	^ (types collect: [ :e | e at: aString ]) typAsType
 ]
 
@@ -202,7 +199,6 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 
 { #category : #compatibility }
 TypUnionType >> result [
-	<typEdge>
 	^ (types collect: #result) typAsType
 ]
 
@@ -269,7 +265,6 @@ TypUnionType >> withNode: aNode [
 
 { #category : #compatibility }
 TypUnionType >> withParameters: aCollection [
-	<typEdge>
 	^ (types collect: [ :e | e withParameters: aCollection ]) typAsType
 ]
 

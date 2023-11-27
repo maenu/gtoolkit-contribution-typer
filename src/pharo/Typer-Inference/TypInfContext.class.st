@@ -1,6 +1,6 @@
 Class {
 	#name : #TypInfContext,
-	#superclass : #TypNode,
+	#superclass : #Object,
 	#traits : 'TRBProgramNodeVisitor',
 	#classTraits : 'TRBProgramNodeVisitor classTrait',
 	#instVars : [
@@ -224,19 +224,11 @@ TypInfContext >> root [
 
 { #category : #running }
 TypInfContext >> run [
-	| start stop tally |
+	| start stop |
 	start := TypInfContextStartSignal node: self.
 	start emit.
-	(TypInfCurrentConfiguration value wantsTally
-		and: [ MessageTally typInfIsRunning not ])
-		ifTrue: [ tally := MessageTally new
-					spyEvery: 1 on: [ self iterate ];
-					yourself ]
-		ifFalse: [ self iterate ].
-	stop := TypInfContextStopSignal
-			node: self
-			start: start
-			tally: tally.
+	self iterate.
+	stop := TypInfContextStopSignal node: self start: start.
 	stop emit
 ]
 
