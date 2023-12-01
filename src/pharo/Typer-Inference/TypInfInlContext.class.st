@@ -52,6 +52,7 @@ TypInfInlContext >> install [
 	self assert: [ current isNil ].
 	sender children add: self.
 	current := root := self add: (TypInfInlMethod node: node context: self).
+	nodeStackDepth := self stackSize.
 	message outAdd: (TypInfNextEdge origin: message target: root).
 	root
 		inArguments: (node arguments

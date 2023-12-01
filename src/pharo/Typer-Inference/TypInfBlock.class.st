@@ -16,7 +16,7 @@ TypInfBlock >> outerContext [
 	| method outerContext |
 	method := node methodNode.
 	outerContext := context.
-	[ outerContext isNotNil and: [ outerContext root node ~~ method ] ]
+	[ outerContext isNotNil and: [ outerContext node ~~ method ] ]
 		whileTrue: [ outerContext := (outerContext isKindOf: TypInfBlockContext)
 					ifTrue: [ outerContext block context ]
 					ifFalse: [ outerContext sender ] ].

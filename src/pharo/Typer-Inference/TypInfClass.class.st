@@ -30,7 +30,7 @@ TypInfClass >> transfer [
 			receiver: node variable owningClass typAsType
 			selector: node variable name.
 	type := (lookup resolver isKindOf: TypInfVariableResolver)
-			ifTrue: [ node variable typInfAssignedTypeSelf: context self super: context super ]
+			ifTrue: [ node variable typInfAssignedTypeIn: context ]
 			ifFalse: [ lookup resultOrUnknown ].
 	self covariantPut: type
 ]

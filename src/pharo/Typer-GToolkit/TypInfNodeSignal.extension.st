@@ -8,3 +8,13 @@ TypInfNodeSignal >> typGtNodeFor: aView [
 		priority: 0;
 		stencil: [ GtInspectorTool forObject: node ]
 ]
+
+{ #category : #'*Typer-GToolkit' }
+TypInfNodeSignal >> typGtStackFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Typer Stack';
+		priority: 1;
+		object: [ self typGtStack ];
+		view: #gtItemsFor:
+]

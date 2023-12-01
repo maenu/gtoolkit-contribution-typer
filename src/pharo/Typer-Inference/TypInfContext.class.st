@@ -132,7 +132,7 @@ TypInfContext >> iterate [
 		push: node
 		during: [ | iteration queue done |
 			nodeStackDepth := TypInfNodeStack actives size.
-			[ TypInfNodeIterateSignal emit: self.
+			[ TypInfContextIterateSignal emit: self.
 			iteration := OrderedIdentityDictionary new.
 			queue := LinkedList with: root.
 			done := IdentitySet new.

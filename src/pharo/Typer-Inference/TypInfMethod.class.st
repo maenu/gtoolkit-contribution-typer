@@ -27,7 +27,10 @@ TypInfMethod >> lookup [
 					selector: node selector
 					arguments: self arguments
 					self: context self
-					super: context super ]
+					super: context super.
+			((lookup resolver isKindOf: TypInfMethodResolver)
+				and: [ lookup context isNil ]) ifTrue: [ lookup context: context ].
+			lookup ]
 ]
 
 { #category : #accessing }

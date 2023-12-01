@@ -30,7 +30,8 @@ Class {
 	#instVars : [
 		'arguments',
 		'selfType',
-		'superType'
+		'superType',
+		'context'
 	],
 	#category : #'Typer-Core-Lookup'
 }
@@ -130,6 +131,26 @@ TypMethodLookup >> compiledMethod [
 	^ receiver classDescription lookupSelector: selector
 ]
 
+{ #category : #accessing }
+TypMethodLookup >> context [
+	resolved ifNil: [ self result ].
+	^ context
+]
+
+{ #category : #accessing }
+TypMethodLookup >> context: aContext [
+	context := aContext.
+	result := TypUnknownType instance
+]
+
+{ #category : #accessing }
+TypMethodLookup >> contextAsyncWithTallyFor: aDuration [
+	| tally |
+	tally := MessageTally new.
+	^ ([ tally spyEvery: 1 on: [ self context ] ] typAsAsyncFuture
+		typAwaitFor: aDuration) then: [ tally ] otherwise: [ tally ]
+]
+
 { #category : #invalidation }
 TypMethodLookup >> dependsOnCompiledMethod: aCompiledMethod [
 	(super dependsOnCompiledMethod: aCompiledMethod) ifTrue: [ ^ true ].
@@ -162,6 +183,31 @@ TypMethodLookup >> printOn: aStream [
 		nextPut: $};
 		nextPut: $ .
 	super printOn: aStream
+]
+
+{ #category : #accessing }
+TypMethodLookup >> reset [
+	resolved := nil.
+	result := nil.
+	context := nil
+]
+
+{ #category : #accessing }
+TypMethodLookup >> resultAsync [
+	^ [ self result ] typAsAsyncFuture typAwait
+]
+
+{ #category : #accessing }
+TypMethodLookup >> resultAsyncFor: aDuration [
+	^ [ self result ] typAsAsyncFuture typAwaitFor: aDuration
+]
+
+{ #category : #accessing }
+TypMethodLookup >> resultAsyncWithTallyFor: aDuration [
+	| tally |
+	tally := MessageTally new.
+	^ ([ tally spyEvery: 1 on: [ self result ] ] typAsAsyncFuture
+		typAwaitFor: aDuration) then: [ tally ] otherwise: [ tally ]
 ]
 
 { #category : #accessing }

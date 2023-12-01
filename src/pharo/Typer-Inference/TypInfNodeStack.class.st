@@ -15,8 +15,9 @@ TypInfNodeStack class >> actives [
 TypInfNodeStack class >> canPush: aNode [
 	| actives |
 	actives := self actives.
-	actives size < TypInfCurrentConfiguration value maxNodeStackSize ifFalse: [ ^ false ].
-	^ (actives includes: aNode) not
+	actives size < TypInfCurrentConfiguration value maxNodeStackSize
+		ifFalse: [ ^ false ].
+	^ actives noneSatisfy: [ :n | n == aNode ]
 ]
 
 { #category : #accessing }

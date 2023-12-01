@@ -74,11 +74,15 @@ RPackage >> typGtView2For: aView [
 						yourself ];
 				connect: methods
 					toAll: [ :f | 
-						((TypInfContextLookup
-							node: f ast
-							arguments: f selector typInfUnknownArguments
-							self: f methodClass typAsType
-							super: f methodClass typAsType superOrNil) resultAsyncFor: 1 second) wait
+						| lookup |
+						lookup := TypMethodLookup
+								receiver: f methodClass typAsType
+								selector: f selector
+								arguments: f selector typInfUnknownArguments
+								self: f methodClass typAsType
+								super: f methodClass typAsType superOrNil.
+						(lookup resultAsyncFor: 1 second) wait.
+						lookup context root typGtInvokedMethods
 							select: [ :g | methods includes: g ] ] ];
 		yourself
 ]

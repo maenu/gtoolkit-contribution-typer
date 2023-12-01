@@ -2,7 +2,7 @@ Extension { #name : #TypInfMethodResolver }
 
 { #category : #'*Typer-GToolkit' }
 TypInfMethodResolver >> typGtExpanderMethod: aLookup [
-	^ aLookup resolve receiver classDescription >> aLookup selector
+	^ aLookup resolve compiledMethod
 ]
 
 { #category : #'*Typer-GToolkit' }

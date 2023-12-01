@@ -67,6 +67,11 @@ TypInfNode >> typGtCoderFor: aView [
 ]
 
 { #category : #'*Typer-GToolkit' }
+TypInfNode >> typGtColor [
+	^ BrGlamorousColors primaryBorderColor
+]
+
+{ #category : #'*Typer-GToolkit' }
 TypInfNode >> typGtDecorate: anElement in: aMondrian [
 	| badge |
 	badge := BrBadge new
@@ -77,18 +82,13 @@ TypInfNode >> typGtDecorate: anElement in: aMondrian [
 			relocate: 6 @ -4;
 			visibility: BlVisibility hidden;
 			yourself.
-	anElement
-		when: BlMouseOverEvent
-			do: [ badge visibility: BlVisibility visible.
-				anElement fireEvent: (TypGtExpandContextRequest context: context) ];
-		when: BlMouseOutEvent do: [ badge visibility: BlVisibility hidden ].
-	super typGtDecorate: anElement in: aMondrian.
 	anElement userData
+		at: #typGtNode put: self;
 		at: #explainer
-		put: ((TypGtExplainerElementContext on: anElement)
-				isTarget: true;
-				model: self;
-				yourself).
+			put: ((TypGtExplainerElementContext on: anElement)
+					isTarget: true;
+					model: self;
+					yourself).
 	^ anElement
 		clipChildren: false;
 		addChild: badge;
@@ -102,6 +102,26 @@ TypInfNode >> typGtDecorate: anElement in: aMondrian [
 						hFitContent;
 						vFitContent;
 						yourself ]) + GtExplainerLinesAptitude new beForTarget;
+		when: BlMouseOverEvent
+			do: [ | edges nodes |
+				edges := self edges.
+				nodes := edges flatCollect: #nodes.
+				(aMondrian topStep root graph nodeChildren
+					groupedBy: [ :e | nodes includes: (e userData at: #typGtNode) ])
+					keysAndValuesDo: [ :b :e | b ifTrue: [ e do: #typGtOnMouseOver ] ifFalse: [ e do: #typGtOnMouseOut ] ].
+				(aMondrian topStep root graph edgeChildren
+					groupedBy: [ :e | edges includes: (e userData at: #typGtEdge) ])
+					keysAndValuesDo: [ :b :e | b ifTrue: [ e do: #typGtOnMouseOver ] ifFalse: [ e do: #typGtOnMouseOut ] ].
+				badge visibility: BlVisibility visible.
+				anElement fireEvent: (TypGtExpandContextRequest context: context) ];
+		when: BlMouseOutEvent
+			do: [ | edges nodes |
+				edges := self edges.
+				nodes := edges flatCollect: #nodes.
+				aMondrian topStep root graph nodeChildren do: #typGtOnReset.
+				aMondrian topStep root graph edgeChildren do: #typGtOnReset.
+				badge visibility: BlVisibility hidden ];
+		when: BlClickEvent do: [ anElement phlow spawnObject: self ];
 		yourself
 ]
 
@@ -221,6 +241,12 @@ TypInfNode >> typGtGraphPaintOn: aMondrian [
 			from: #origin
 			to: #target.
 	aMondrian layout force fix: self at: 0 @ 0
+]
+
+{ #category : #'*Typer-GToolkit' }
+TypInfNode >> typGtInvokedMethods [
+	^ node sendNodes
+		flatCollect: [ :m | m contexts collect: [ :c | c lookup compiledMethod ] thenReject: #isNil ]
 ]
 
 { #category : #'*Typer-GToolkit' }

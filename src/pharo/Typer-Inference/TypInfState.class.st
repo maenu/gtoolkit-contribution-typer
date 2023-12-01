@@ -66,16 +66,12 @@ TypInfState >> at: aNode ifPresent: aBlock ifAbsent: anotherBlock [
 	(t1 at: h)
 		ifNotNil: [ :aa | 
 			(aa at: 1) == aNode
-				ifTrue: [ ^ (aa at: 3)
-						ifNil: anotherBlock
-						ifNotNil: [ :t | aa at: 3 put: (aBlock value: t) ] ] ].
+				ifTrue: [ ^ (aa at: 3) ifNil: anotherBlock ifNotNil: [ :t | aBlock value: t ] ] ].
 	h := x * a2 \\ twoK // twoKL + 1.
 	(t2 at: h)
 		ifNotNil: [ :aa | 
 			(aa at: 1) == aNode
-				ifTrue: [ ^ (aa at: 3)
-						ifNil: anotherBlock
-						ifNotNil: [ :t | aa at: 3 put: (aBlock value: t) ] ] ].
+				ifTrue: [ ^ (aa at: 3) ifNil: anotherBlock ifNotNil: [ :t | aBlock value: t ] ] ].
 	^ anotherBlock value
 ]
 

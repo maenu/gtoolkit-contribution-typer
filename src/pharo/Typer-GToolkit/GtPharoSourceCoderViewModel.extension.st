@@ -26,7 +26,7 @@ GtPharoSourceCoderViewModel >> typGtContextPromise [
 		at: #typGtContextPromise
 			put: [ [ coderModel attributes
 					at: #typGtContext
-					put: self typGtRbAst typInfContextLookup reset result ]
+					put: self typGtRbAst typInfContext run ]
 					ensure: [ coderModel requestStyleSourceText ] ] typAsAsyncFuture typAwait
 ]
 

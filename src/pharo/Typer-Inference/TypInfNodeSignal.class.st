@@ -1,6 +1,6 @@
 Class {
 	#name : #TypInfNodeSignal,
-	#superclass : #BeaconSignal,
+	#superclass : #ContextStackSignal,
 	#instVars : [
 		'node'
 	],

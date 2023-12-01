@@ -27,6 +27,19 @@ CompiledMethod >> typInfAbsResolve [
 ]
 
 { #category : #'*Typer-Inference' }
+CompiledMethod >> typInfMethodLookup [
+	| selfType selector |
+	selfType := self methodClass typAsType.
+	selector := self selector.
+	^ TypMethodLookup
+		receiver: selfType
+		selector: selector
+		arguments: selector typInfUnknownArguments
+		self: selfType
+		super: selfType superOrNil
+]
+
+{ #category : #'*Typer-Inference' }
 CompiledMethod >> typInfType [
 	^ self class
 		typAsFunctionTypeWithResult: TypUnknownType instance

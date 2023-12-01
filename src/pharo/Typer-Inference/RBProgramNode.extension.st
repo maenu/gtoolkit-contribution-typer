@@ -20,12 +20,12 @@ RBProgramNode >> typInfAnnotated: aType [
 ]
 
 { #category : #'*Typer-Inference' }
-RBProgramNode >> typInfContextLookup [
-	^ TypInfContextLookup
+RBProgramNode >> typInfContext [
+	^ TypInfContext
+		sender: nil
+		state: TypInfDictionaryState new
 		node: self
-		arguments: #()
-		self: nil
-		super: nil
+		lookup: nil
 ]
 
 { #category : #'*Typer-Inference' }
