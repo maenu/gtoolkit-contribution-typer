@@ -154,8 +154,10 @@ TypMethodLookup >> contextAsyncWithTallyFor: aDuration [
 { #category : #invalidation }
 TypMethodLookup >> dependsOnCompiledMethod: aCompiledMethod [
 	(super dependsOnCompiledMethod: aCompiledMethod) ifTrue: [ ^ true ].
-	^ selector = aCompiledMethod selector
-		and: [ receiver dependsOnClassDescription: aCompiledMethod methodClass ]
+	aCompiledMethod selector = selector ifFalse: [ ^ false ].
+	(receiver dependsOnClassDescription: aCompiledMethod methodClass)
+		ifFalse: [ ^ false ].
+	^ true
 ]
 
 { #category : #accessing }

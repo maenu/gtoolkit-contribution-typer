@@ -20,7 +20,7 @@ TypInfMethodResolver >> result: aLookup root: anotherLookup [
 	(TypInfNodeStack canPush: aLookup compiledMethod ast) ifFalse: [ ^ nil ].
 	context := TypInfContext
 			sender: nil
-			state: TypInfDictionaryState new
+			state: TypInfState new
 			node: aLookup compiledMethod ast
 			lookup: anotherLookup.
 	anotherLookup context: context.

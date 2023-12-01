@@ -23,7 +23,7 @@ RBProgramNode >> typInfAnnotated: aType [
 RBProgramNode >> typInfContext [
 	^ TypInfContext
 		sender: nil
-		state: TypInfDictionaryState new
+		state: TypInfState new
 		node: self
 		lookup: nil
 ]

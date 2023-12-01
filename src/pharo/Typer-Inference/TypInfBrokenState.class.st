@@ -1,5 +1,10 @@
+"
+tried to compare with cuckoo state, but is broken.
+(Dictionary >> #scanFor:) typInfMethodLookup reset context 
+does not terminate
+"
 Class {
-	#name : #TypInfDictionaryState,
+	#name : #TypInfBrokenState,
 	#superclass : #Object,
 	#instVars : [
 		'cache'
@@ -8,17 +13,17 @@ Class {
 }
 
 { #category : #accessing }
-TypInfDictionaryState >> associationsDo: aBlock [
+TypInfBrokenState >> associationsDo: aBlock [
 	cache associationsDo: [ :a | aBlock value: a value ]
 ]
 
 { #category : #accessing }
-TypInfDictionaryState >> at: aNode [
+TypInfBrokenState >> at: aNode [
 	^ self at: aNode ifAbsent: [ cache errorKeyNotFound: aNode ]
 ]
 
 { #category : #accessing }
-TypInfDictionaryState >> at: aNode covariantPut: aType [
+TypInfBrokenState >> at: aNode covariantPut: aType [
 	cache
 		at: aNode
 		ifPresent: [ :a | 
@@ -32,7 +37,7 @@ TypInfDictionaryState >> at: aNode covariantPut: aType [
 ]
 
 { #category : #accessing }
-TypInfDictionaryState >> at: aNode ifAbsent: anotherBlock [
+TypInfBrokenState >> at: aNode ifAbsent: anotherBlock [
 	^ self
 		at: aNode
 		ifPresent: #yourself
@@ -40,7 +45,7 @@ TypInfDictionaryState >> at: aNode ifAbsent: anotherBlock [
 ]
 
 { #category : #accessing }
-TypInfDictionaryState >> at: aNode ifPresent: aBlock [
+TypInfBrokenState >> at: aNode ifPresent: aBlock [
 	^ self
 		at: aNode
 		ifPresent: aBlock
@@ -48,16 +53,15 @@ TypInfDictionaryState >> at: aNode ifPresent: aBlock [
 ]
 
 { #category : #accessing }
-TypInfDictionaryState >> at: aNode ifPresent: aBlock ifAbsent: anotherBlock [
+TypInfBrokenState >> at: aNode ifPresent: aBlock ifAbsent: anotherBlock [
 	^ cache
 		at: aNode
-		ifPresent: [ :a | ^ (a at: 3) ifNil: anotherBlock ifNotNil: [ :t | aBlock value: t ] ]
+		ifPresent: [ :a | (a at: 3) ifNil: anotherBlock ifNotNil: [ :t | aBlock value: t ] ]
 		ifAbsent: anotherBlock
 ]
 
 { #category : #accessing }
-TypInfDictionaryState >> at: aNode put: aType [
-	self assert: [ aType isKindOf: TypType ].
+TypInfBrokenState >> at: aNode put: aType [
 	cache
 		at: aNode
 		ifPresent: [ :a | ^ a at: 3 put: aType ]
@@ -68,7 +72,7 @@ TypInfDictionaryState >> at: aNode put: aType [
 ]
 
 { #category : #accessing }
-TypInfDictionaryState >> changes [
+TypInfBrokenState >> changes [
 	| result |
 	result := IdentityDictionary new: cache size.
 	self
@@ -81,13 +85,13 @@ TypInfDictionaryState >> changes [
 ]
 
 { #category : #accessing }
-TypInfDictionaryState >> initialize [
+TypInfBrokenState >> initialize [
 	super initialize.
 	cache := IdentityDictionary new: 1000	"avoids grow for most graphs"
 ]
 
 { #category : #accessing }
-TypInfDictionaryState >> postCopy [
+TypInfBrokenState >> postCopy [
 	| newCache |
 	super postCopy.
 	newCache := cache species new: cache capacity.
@@ -96,7 +100,7 @@ TypInfDictionaryState >> postCopy [
 ]
 
 { #category : #accessing }
-TypInfDictionaryState >> slurpAll: aCollection [
+TypInfBrokenState >> slurpAll: aCollection [
 	| size |
 	size := aCollection size.
 	self associationsDo: [ :a | a at: 3 put: (Array new: size) ].

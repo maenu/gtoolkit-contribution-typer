@@ -4,9 +4,7 @@ Class {
 	#instVars : [
 		'resolver',
 		'result',
-		'resolved',
-		'created',
-		'updated'
+		'resolved'
 	],
 	#classInstVars : [
 		'index',
@@ -116,14 +114,12 @@ TypLookup >> resolver [
 { #category : #accessing }
 TypLookup >> result [
 	result
-		ifNotNil: [ updated := (updated ifNil: 0) + 1.
-			^ result := resolver
+		ifNotNil: [ ^ result := resolver
 					result: resolved
 					root: self
 					update: result ].
 	self resolve.
 	resolver ifNil: [ ^ nil ].
-	created := (created ifNil: 0) + 1.
 	^ result := resolver result: resolved root: self
 ]
 

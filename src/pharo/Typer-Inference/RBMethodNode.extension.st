@@ -4,7 +4,7 @@ Extension { #name : #RBMethodNode }
 RBMethodNode >> typInfContext [
 	^ TypInfContext
 		sender: nil
-		state: TypInfDictionaryState new
+		state: TypInfState new
 		node: self
 		lookup: self compiledMethod typInfMethodLookup
 ]

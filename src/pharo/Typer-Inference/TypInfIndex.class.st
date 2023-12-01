@@ -142,7 +142,10 @@ TypInfIndex >> initialize [
 TypInfIndex >> inlCanResolve: aLookup message: aMessage [
 	| resolved lookups |
 	TypInfNodeStack actives size
-		< (TypInfCurrentConfiguration value maxNodeStackSize) ifFalse: [ ^ false ].
+		< TypInfCurrentConfiguration value maxNodeStackSize ifFalse: [ ^ false ].
+	aMessage context stackSize
+		< (aMessage context home root iterations size + 3
+				min: TypInfCurrentConfiguration value maxNodeStackSize) ifFalse: [ ^ false ].
 	(aMessage couldBeSelfOrSuperSend or: [ aMessage hasNodes ])
 		ifFalse: [ ^ false ].
 	resolved := aLookup resolve.
