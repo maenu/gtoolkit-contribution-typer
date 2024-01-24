@@ -3,11 +3,12 @@ Extension { #name : #TAsyncFuture }
 { #category : #'*Typer-Core' }
 TAsyncFuture >> typAwait [
 	| promise |
-	promise := AsyncPendingFuturePromise new
+	promise := AsyncFuturePromise new
 			priority: AsyncFutureExecutionDefaultPriority uniqueInstance;
 			group: (AsyncFutureExecutionValueGroup new
 					value: #Typer;
 					yourself);
+			errorHandler: TypLoggingErrorHandler uniqueInstance;
 			future: self;
 			yourself.
 	TypManifest threadPool schedule: promise.

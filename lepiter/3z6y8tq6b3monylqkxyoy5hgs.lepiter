@@ -52,6 +52,40 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2024-01-23T16:40:26.663109+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2024-01-23T18:25:06.27742+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "jKiWgADMDQCySwS9CnyRvA=="
+				},
+				"code" : "ReferenceFinder findPathTo: TypInfState allInstances atRandom"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
 						"dateAndTimeString" : "2023-10-04T14:39:47.922324+02:00"
 					}
 				},

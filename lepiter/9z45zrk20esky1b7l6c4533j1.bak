@@ -129,7 +129,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T21:03:36.334321+02:00"
+						"dateAndTimeString" : "2024-01-22T16:18:06.968287+01:00"
 					}
 				},
 				"editEmail" : {
@@ -140,12 +140,12 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-04T14:51:09.022804+02:00"
+						"dateAndTimeString" : "2024-01-22T17:10:15.886951+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
-					"uidString" : "KkXYKiLDDQCwBRsCAJXBTg=="
+					"uidString" : "hyjlEuzLDQCdZ6RoAbL7Bg=="
 				},
 				"paragraphStyle" : {
 					"__type" : "textStyle"
@@ -362,7 +362,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-02T21:13:40.588033+02:00"
+						"dateAndTimeString" : "2024-01-22T17:19:34.133891+01:00"
 					}
 				},
 				"uid" : {
@@ -372,7 +372,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "{{gtExample:TypInfManifest class>>#randomContext}}"
+				"string" : "{{gtExample:TypInfManifest class>>#randomContext|previewHeight=500}}"
 			},
 			{
 				"__type" : "textSnippet",
@@ -1431,6 +1431,108 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2024-01-22T17:54:50.508053+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2024-01-22T17:55:03.319781+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "SCbQbO3LDQCe44PJAbL7Bg=="
+				},
+				"code" : "TypInfIndex instance"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2024-01-22T18:00:13.411714+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2024-01-22T18:00:52.231475+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "20YPgO3LDQCfpiijAbL7Bg=="
+				},
+				"code" : "TypMethodLookup"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2024-01-22T18:00:56.714074+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2024-01-22T18:01:00.977895+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "jgSkgu3LDQCgNIMqAbL7Bg=="
+				},
+				"code" : "TypInfMethodResolver"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
 						"dateAndTimeString" : "2023-10-01T10:54:49.545894+02:00"
 					}
 				},
@@ -1484,40 +1586,6 @@
 					"uidString" : "3cf7XAbDDQCX6n9nB8jFlQ=="
 				},
 				"code" : "TypInfManifest  exampleMethods"
-			},
-			{
-				"__type" : "pharoSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-01T16:47:16.973481+02:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-01T16:48:41.425051+02:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "/RyPeArDDQC74pkCCQkFOg=="
-				},
-				"code" : "[ 2 seconds wait ]\r\ttypRunAtMost: 5 second\r\tonCompletion: [ :r :e | \r\t\t{r.\r\t\t\te} ]\r\tonTimeout: [ #timeout ]"
 			}
 		]
 	},

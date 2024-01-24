@@ -4,7 +4,7 @@ Extension { #name : #SystemAnnouncement }
 SystemAnnouncement >> typInvalidateAll [
 	((self class methods
 		select: [ :m | m hasPragmaNamed: #typInvalidate: ]
-		thenCollect: [ :m | m selector -> (m pragmaNamed: #typInvalidate:) arguments first ])
+		thenCollect: [ :m | m selector -> (m pragmaAt: #typInvalidate:) arguments first ])
 		asOrderedCollection sort: [ :a :b | a value < b value ])
-		do: [ :a | self perform: a value ]
+		do: [ :a | self perform: a key ]
 ]

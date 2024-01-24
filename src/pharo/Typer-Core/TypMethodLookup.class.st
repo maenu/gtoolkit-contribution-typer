@@ -179,12 +179,22 @@ TypMethodLookup >> initializeArguments: aCollection self: aType super: anotherTy
 
 { #category : #accessing }
 TypMethodLookup >> printOn: aStream [
-	aStream
-		nextPut: ${;
-		nextPutAll: (' ' join: (arguments collect: #asString));
-		nextPut: $};
-		nextPut: $ .
-	super printOn: aStream
+	receiver printOn: aStream.
+	aStream nextPutAll: '#'.
+	arguments
+		ifEmpty: [ aStream nextPutAll: selector ]
+		ifNotEmpty: [ selector keywords
+				with: arguments
+				do: [ :k :t | 
+					aStream
+						nextPutAll: k;
+						nextPut: Character space;
+						nextPutAll: t asString;
+						nextPut: Character space ] ].
+	resolved ifNil: [ ^ self ].
+	resolved == self ifTrue: [ ^ self ].
+	aStream nextPutAll: ' | '.
+	resolved printOn: aStream
 ]
 
 { #category : #accessing }

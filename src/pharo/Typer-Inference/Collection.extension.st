@@ -2,9 +2,8 @@ Extension { #name : #Collection }
 
 { #category : #'*Typer-Inference' }
 Collection >> typInfType [
-
-	^ self class typAsType withParameters:
-		  { self typInfTypes typAsType }
+	^ self class typAsType
+		withParameters: {self typInfTypes ifEmpty: TypUnknownType instance ifNotEmpty: #typAsType}
 ]
 
 { #category : #'*Typer-Inference' }

@@ -16,7 +16,7 @@ TypManifest class >> build [
 	self flag: 'FIXME ensure build is called'.
 	subscription := SystemAnnouncer uniqueInstance
 			when: ClassAnnouncement , MethodAnnouncement
-			do: [ [ :e | [ e typInvalidateAll ] typAsAsyncFuture typAwait ] ]
+			do: [ :e | [ e typInvalidateAll ] typAsAsyncFuture typAwait ]
 ]
 
 { #category : #accessing }
@@ -107,8 +107,8 @@ TypManifest class >> logger [
 	<noTest>
 	self flag: 'TODO remove gt dep by class-side gt conf'.
 	^ logger
-		ifNil: [ logger := TypInfMemoryLogger new
-					startFor: TypInfNodeSignal , GtStylerErrorSignal;
+		ifNil: [ logger := TypMemoryLogger new
+					startFor: TypExceptionSignal , TypInfNodeSignal , GtStylerErrorSignal;
 					yourself ]
 ]
 
@@ -192,6 +192,15 @@ TypManifest class >> tallySpace [
 		sorted: [ :a :b | a instanceCount > b instanceCount ]"
 	^ (SpaceTally new systemWideSpaceTally
 		select: [ :e | e analyzedClassName beginsWith: 'Typ' ])
+		sorted: [ :a :b | a instanceCount > b instanceCount ]
+]
+
+{ #category : #accessing }
+TypManifest class >> tallySpaceBigImage [
+	<gtExample>
+	<noTest>
+	^ ((SpaceTally new spaceTally: (self packages flatCollect: #definedClasses))
+		items select: [ :e | e analyzedClassName beginsWith: 'Typ' ])
 		sorted: [ :a :b | a instanceCount > b instanceCount ]
 ]
 

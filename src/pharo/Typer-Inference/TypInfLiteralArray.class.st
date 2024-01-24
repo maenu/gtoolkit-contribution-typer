@@ -14,5 +14,5 @@ TypInfLiteralArray >> transfer [
 				ifFalse: [ Array typAsType
 						withParameters: {self inArguments
 									ifEmpty: [ TypUnknownType instance ]
-									ifNotEmpty: [ :s | s collect: #type typAsType ]} ])
+									ifNotEmpty: [ :s | (s collect: #type) typAsType ]} ])
 ]

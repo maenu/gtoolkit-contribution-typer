@@ -1,7 +1,7 @@
-Extension { #name : #TypInfMemoryLogger }
+Extension { #name : #TypMemoryLogger }
 
 { #category : #'*Typer-GToolkit' }
-TypInfMemoryLogger >> typGtContextTreeFor: aView [
+TypMemoryLogger >> typGtContextTreeFor: aView [
 	<gtView>
 	| before after groups root current |
 	before := DateAndTime epoch.
@@ -45,7 +45,7 @@ TypInfMemoryLogger >> typGtContextTreeFor: aView [
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypInfMemoryLogger >> typGtContextsFor: aView [
+TypMemoryLogger >> typGtContextsFor: aView [
 	<gtView>
 	^ aView columnedList
 		title: 'Contexts' translated;
