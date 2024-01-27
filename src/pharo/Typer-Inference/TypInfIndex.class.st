@@ -38,11 +38,6 @@ TypInfIndex >> absResolve: aLookup message: aMessage [
 { #category : #accessing }
 TypInfIndex >> addBehavior: aBehavior [
 	| variables |
-	cache
-		typAt: {#indexed.
-				aBehavior}
-		ifPresent: [ ^ self ]
-		ifAbsentPut: [ true ].
 	variables := aBehavior allSlots asIdentitySet.
 	aBehavior isClass
 		ifTrue: [ variables addAll: aBehavior instanceSide allClassVariables ].
@@ -62,11 +57,6 @@ TypInfIndex >> addBehavior: aBehavior [
 
 { #category : #accessing }
 TypInfIndex >> addMethod: aMethod [
-	cache
-		typAt: {#indexed.
-				aMethod}
-		ifPresent: [ ^ self ]
-		ifAbsentPut: [ true ].
 	cache
 		typAt: {#variables.
 				aMethod methodClass}
@@ -107,104 +97,74 @@ TypInfIndex >> addMethod: aMethod [
 ]
 
 { #category : #accessing }
-TypInfIndex >> asdf [
-]
-
-{ #category : #accessing }
-TypInfIndex >> completeness [
-	^ OrderedCollection streamContents: [ :s | self completenessOn: s ]
-]
-
-{ #category : #accessing }
 TypInfIndex >> completenessAbsCanResolveOn: aStream [
-	Smalltalk
-		allClassesAndTraitsDo: [ :c | 
-			c
-				methodsDo: [ :m | 
-					m typInfAbsIsCanResolve
-						ifTrue: [ m typInfAbsCanResolve
-								do: [ :s | 
-									cache
-										typAt: {#absCanResolve.
-												m methodClass.
-												s}
-										ifPresent: [ :mm | 
-											mm == m
-												ifFalse: [ aStream
-														nextPut: {'found non-indexed absCanResolve method'.
-																c.
-																s.
-																m} ] ]
-										ifAbsent: [ aStream
-												nextPut: {'found non-indexed absCanResolve method'.
-														c.
-														s.
-														m} ] ] ] ] ]
-]
-
-{ #category : #accessing }
-TypInfIndex >> completenessAbsResolveOn: aStream [
-	Smalltalk
-		allClassesAndTraitsDo: [ :c | 
-			c
-				methodsDo: [ :m | 
-					m typInfAbsIsResolve
-						ifTrue: [ m typInfAbsResolve
-								do: [ :s | 
-									cache
-										typAt: {#absResolve.
-												m methodClass.
-												s}
-										ifPresent: [ :mm | 
-											mm == m
-												ifFalse: [ aStream
-														nextPut: {'found non-indexed absResolve method'.
-																c.
-																s.
-																m} ] ]
-										ifAbsent: [ aStream
-												nextPut: {'found non-indexed absResolve method'.
-														c.
-														s.
-														m} ] ] ] ] ]
-]
-
-{ #category : #accessing }
-TypInfIndex >> completenessImplementorsOn: aStream [
-	Smalltalk
-		allClassesAndTraitsDo: [ :c | 
-			c
-				methodsDo: [ :m | 
+	Smalltalk globals allMethods
+		select: #typInfAbsIsCanResolve
+		thenDo: [ :m | 
+			m typInfAbsCanResolve
+				do: [ :s | 
 					cache
-						typAt: {#implementors.
-								m selector}
-						ifPresent: [ :ms | 
-							(ms includes: m methodClass)
+						typAt: {#absCanResolve.
+								m methodClass.
+								s}
+						ifPresent: [ :mm | 
+							mm == m
 								ifFalse: [ aStream
-										nextPut: {'found non-indexed implementing method'.
+										nextPut: {'found non-indexed absCanResolve method'.
+												m methodClass.
+												s.
 												m} ] ]
 						ifAbsent: [ aStream
-								nextPut: {'found non-indexed implementing method'.
+								nextPut: {'found non-indexed absCanResolve method'.
+										m methodClass.
+										s.
 										m} ] ] ]
 ]
 
 { #category : #accessing }
-TypInfIndex >> completenessIndexedOn: aStream [
-	Smalltalk
-		allClassesDo: [ :c | 
-			((cache at: #indexed) includesKey: c)
-				ifFalse: [ aStream
-						nextPut: {'found non-indexed class'.
-								c} ].
-			((cache at: #indexed) includesKey: c class)
-				ifFalse: [ aStream
-						nextPut: {'found non-indexed class'.
-								c class} ] ]
+TypInfIndex >> completenessAbsResolveOn: aStream [
+	Smalltalk globals allMethods
+		select: #typInfAbsIsResolve
+		thenDo: [ :m | 
+			m typInfAbsResolve
+				do: [ :s | 
+					cache
+						typAt: {#absResolve.
+								m methodClass.
+								s}
+						ifPresent: [ :mm | 
+							mm == m
+								ifFalse: [ aStream
+										nextPut: {'found non-indexed absResolve method'.
+												m methodClass.
+												s.
+												m} ] ]
+						ifAbsent: [ aStream
+								nextPut: {'found non-indexed absResolve method'.
+										m methodClass.
+										s.
+										m} ] ] ]
+]
+
+{ #category : #accessing }
+TypInfIndex >> completenessImplementorsOn: aStream [
+	Smalltalk globals allMethods
+		do: [ :m | 
+			cache
+				typAt: {#implementors.
+						m selector}
+				ifPresent: [ :ms | 
+					(ms includes: m methodClass)
+						ifFalse: [ aStream
+								nextPut: {'found non-indexed implementing method'.
+										m} ] ]
+				ifAbsent: [ aStream
+						nextPut: {'found non-indexed implementing method'.
+								m} ] ]
 ]
 
 { #category : #accessing }
 TypInfIndex >> completenessOn: aStream [
-	self completenessIndexedOn: aStream.
 	self completenessVariablesOn: aStream.
 	self completenessWritersOn: aStream.
 	self completenessOverridersOn: aStream.
@@ -215,61 +175,59 @@ TypInfIndex >> completenessOn: aStream [
 
 { #category : #accessing }
 TypInfIndex >> completenessOverridersOn: aStream [
-	Smalltalk
-		allClassesAndTraitsDo: [ :c | 
-			c
-				methodsDo: [ :m | 
-					m overriddenMethods
-						do: [ :mm | 
-							cache
-								typAt: {#overriders.
-										mm}
-								ifPresent: [ :ms | 
-									(ms includes: m)
-										ifFalse: [ aStream
-												nextPut: {'found non-indexed overriding method'.
-														mm.
-														m} ] ]
-								ifAbsent: [ aStream
+	Smalltalk globals allMethods
+		do: [ :m | 
+			m overriddenMethods
+				do: [ :mm | 
+					cache
+						typAt: {#overriders.
+								mm}
+						ifPresent: [ :ms | 
+							(ms includes: m)
+								ifFalse: [ aStream
 										nextPut: {'found non-indexed overriding method'.
 												mm.
-												m} ] ] ] ]
+												m} ] ]
+						ifAbsent: [ aStream
+								nextPut: {'found non-indexed overriding method'.
+										mm.
+										m} ] ] ]
 ]
 
 { #category : #accessing }
 TypInfIndex >> completenessVariablesOn: aStream [
-	Smalltalk
-		allClassesAndTraitsDo: [ :c | 
+	Smalltalk globals allBehaviors
+		do: [ :b | 
 			| vs |
 			vs := cache
 					typAt: {#variables.
-							c}
+							b}
 					ifAbsent: [ #() ].
-			c instanceVariables
+			b slots
 				do: [ :v | 
 					(vs includes: v)
 						ifFalse: [ aStream
 								nextPut: {'found non-indexed variable'.
-										c.
+										b.
 										v} ] ].
-			c isClass
-				ifTrue: [ c classVariables
+			b isClass
+				ifTrue: [ b classVariables
 						do: [ :v | 
 							(vs includes: v)
 								ifFalse: [ aStream
 										nextPut: {'found non-indexed variable'.
-												c.
+												b.
 												v} ] ] ] ]
 ]
 
 { #category : #accessing }
 TypInfIndex >> completenessWritersOn: aStream [
-	Smalltalk
-		allClassesAndTraitsDo: [ :c | 
+	Smalltalk globals allBehaviors
+		do: [ :b | 
 			| vs |
-			vs := c allSlots
-					, (c isClass ifTrue: [ c instanceSide allClassVariables ] ifFalse: [ #() ]).
-			c methods
+			vs := b allSlots
+					, (b isClass ifTrue: [ b instanceSide allClassVariables ] ifFalse: [ #() ]).
+			b methods
 				do: [ :m | 
 					vs
 						do: [ :v | 
@@ -286,11 +244,6 @@ TypInfIndex >> completenessWritersOn: aStream [
 												nextPut: {'found non-indexed writer'.
 														v.
 														m} ] ] ] ] ]
-]
-
-{ #category : #accessing }
-TypInfIndex >> correcteness [
-	^ OrderedCollection streamContents: [ :s | self correctnessOn: s ]
 ]
 
 { #category : #accessing }
@@ -335,22 +288,7 @@ TypInfIndex >> correctnessImplementorsOn: aStream [
 ]
 
 { #category : #accessing }
-TypInfIndex >> correctnessIndexedOn: aStream [
-	(cache at: #indexed)
-		keysAndValuesDo: [ :c :b | 
-			(c isClass and: [ c isObsolete ])
-				ifTrue: [ aStream
-						nextPut: {'found obsolete class'.
-								c} ].
-			(c isCompiledMethod and: [ c isInstalled not ])
-				ifTrue: [ aStream
-						nextPut: {'found obsolete method'.
-								c} ] ]
-]
-
-{ #category : #accessing }
 TypInfIndex >> correctnessOn: aStream [
-	self correctnessIndexedOn: aStream.
 	self correctnessVariablesOn: aStream.
 	self correctnessWritersOn: aStream.
 	self correctnessOverridersOn: aStream.
@@ -416,10 +354,7 @@ TypInfIndex >> implementors: aSymbol [
 { #category : #accessing }
 TypInfIndex >> initialize [
 	super initialize.
-	(Smalltalk allClassesAndTraits sorted: [ :a :b | b inheritsFrom: a ])
-		do: [ :b | 
-			self addBehavior: b.
-			self addBehavior: b class ]
+	Smalltalk globals allBehaviors do: [ :b | self addBehavior: b ]
 ]
 
 { #category : #accessing }
@@ -490,13 +425,6 @@ TypInfIndex >> overriders: aCompiledMethod [
 
 { #category : #accessing }
 TypInfIndex >> removeBehavior: aBehavior [
-	cache
-		typAt: {#indexed.
-				aBehavior}
-		ifPresent: [ cache
-				typRemoveAt: {#indexed.
-						aBehavior} ]
-		ifAbsent: [ ^ self ].
 	(cache
 		typAt: {#variables.
 				aBehavior})
@@ -508,13 +436,6 @@ TypInfIndex >> removeBehavior: aBehavior [
 
 { #category : #accessing }
 TypInfIndex >> removeMethod: aMethod [
-	cache
-		typAt: {#indexed.
-				aMethod}
-		ifPresent: [ cache
-				typRemoveAt: {#indexed.
-						aMethod} ]
-		ifAbsent: [ ^ self ].
 	aMethod typInfAbsIsCanResolve
 		ifTrue: [ aMethod typInfAbsCanResolve
 				do: [ :selector | 

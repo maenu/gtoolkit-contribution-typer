@@ -17,3 +17,8 @@ TypTManifest classSide >> invalidate [
 TypTManifest classSide >> nil [
 	
 ]
+
+{ #category : #accessing }
+TypTManifest classSide >> shortName [
+	^ self explicitRequirement
+]

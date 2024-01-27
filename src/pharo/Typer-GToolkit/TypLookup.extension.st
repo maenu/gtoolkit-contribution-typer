@@ -1,28 +1,20 @@
 Extension { #name : #TypLookup }
 
 { #category : #'*Typer-GToolkit' }
-TypLookup >> typGtIndicator [
-	"i for inlined, has no resolver"
-
-	^ resolver ifNil: 'i' ifNotNil: #typGtIndicator
-]
-
-{ #category : #'*Typer-GToolkit' }
-TypLookup class >> typGtItemsFor: aView [
+TypLookup class >> typGtIndexFor: aView [
 	<gtView>
+	<gtClassView>
+	index ifNil: [ ^ aView empty ].
 	^ aView forward
-		title: 'Items';
-		priority: -100;
+		title: 'Index';
+		priority: -1;
 		object: [ index ];
 		view: #gtItemsFor:
 ]
 
 { #category : #'*Typer-GToolkit' }
-TypLookup class >> typGtNonFunctionItemsFor: aView [
-	<gtView>
-	^ aView forward
-		title: 'Non-function items';
-		priority: -101;
-		object: [ (index associations reject: [ :e | e key isFunction ]) as: index species ];
-		view: #gtItemsFor:
+TypLookup >> typGtIndicator [
+	"i for inlined, has no resolver"
+
+	^ resolver ifNil: 'i' ifNotNil: #typGtIndicator
 ]

@@ -59,5 +59,6 @@ TypMemoryLogger >> typGtContextsFor: aView [
 			text: [ :a | a value ]
 			width: 120;
 		column: 'Contents' translated
-			text: [ :c | String streamContents: [ :s | c printOn: s ] ]
+			text: [ :c | String streamContents: [ :s | c printOn: s ] ];
+		send: #key
 ]

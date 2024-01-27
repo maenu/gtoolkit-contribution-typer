@@ -7,6 +7,6 @@ Class {
 }
 
 { #category : #accessing }
-TypCheManifest >> noMethod [
-	self laksjdf
+TypCheManifest class >> shortName [
+	^ 'checker'
 ]

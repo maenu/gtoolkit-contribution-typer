@@ -5,3 +5,8 @@ Class {
 	#classTraits : 'TypTManifest classTrait',
 	#category : #'Typer-Pragma-Core'
 }
+
+{ #category : #accessing }
+TypPraManifest class >> shortName [
+	^ 'pragma'
+]

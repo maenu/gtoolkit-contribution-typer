@@ -464,9 +464,8 @@ TypInfNode >> put: aType [
 TypInfNode >> reduceTo: aCollection [
 	| newState |
 	1 to: iterations size - 1 do: [ :i | iterations at: i put: nil ].
-	newState := TypInfState new: aCollection size.
-	aCollection
-		keysAndValuesDo: [ :n | state at: n ifPresent: [ :t | newState at: n put: t ] ].
+	newState := TypInfState new.
+	aCollection do: [ :n | state at: n ifPresent: [ :t | newState at: n put: t ] ].
 	state := newState
 ]
 

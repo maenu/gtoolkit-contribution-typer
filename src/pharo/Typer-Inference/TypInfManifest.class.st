@@ -56,6 +56,11 @@ TypInfManifest class >> randomContext [
 ]
 
 { #category : #accessing }
+TypInfManifest class >> shortName [
+	^ 'inference'
+]
+
+{ #category : #accessing }
 TypInfManifest class >> signalContext [
 	<gtExample>
 	^ (TypInfExaMethods >> #signalAndHandle) typInfMethodLookup context

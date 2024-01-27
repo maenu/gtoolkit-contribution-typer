@@ -6,11 +6,6 @@ Class {
 
 { #category : #accessing }
 TypShaIndex >> addMethod: aMethod [
-	cache
-		typAt: {#indexed.
-				aMethod}
-		ifPresent: [ ^ self ]
-		ifAbsentPut: [ true ].
 	aMethod typShaIsResolveMethod
 		ifTrue: [ cache
 				typAt: {#method.
@@ -60,6 +55,109 @@ TypShaIndex >> canResolveVariable: aLookup [
 ]
 
 { #category : #accessing }
+TypShaIndex >> completenessMethodOn: aStream [
+	Smalltalk globals allBehaviors
+		do: [ :b | 
+			b methods
+				select: #typShaIsResolveMethod
+				thenDo: [ :m | 
+					cache
+						typAt: {#method.
+								b.
+								m typShaResolvedMethodSelector}
+						ifAbsent: [ aStream
+								nextPut: {'found non-indexed method'.
+										b.
+										m typShaResolvedMethodSelector} ] ] ]
+]
+
+{ #category : #accessing }
+TypShaIndex >> completenessOn: aStream [
+	self completenessTypeOn: aStream.
+	self completenessVariableOn: aStream.
+	self completenessMethodOn: aStream
+]
+
+{ #category : #accessing }
+TypShaIndex >> completenessTypeOn: aStream [
+	Smalltalk globals allBehaviors
+		do: [ :b | 
+			b methods
+				select: #typShaIsResolveType
+				thenDo: [ :m | 
+					cache
+						typAt: {#type.
+								b}
+						ifAbsent: [ aStream
+								nextPut: {'found non-indexed type'.
+										b.
+										m} ] ] ]
+]
+
+{ #category : #accessing }
+TypShaIndex >> completenessVariableOn: aStream [
+	Smalltalk globals allBehaviors
+		do: [ :b | 
+			b methods
+				select: #typShaIsResolveVariable
+				thenDo: [ :m | 
+					cache
+						typAt: {#variable.
+								b.
+								m typShaResolvedVariableSelector}
+						ifAbsent: [ aStream
+								nextPut: {'found non-indexed variable'.
+										b.
+										m typShaResolvedVariableSelector} ] ] ]
+]
+
+{ #category : #accessing }
+TypShaIndex >> correctnessMethodOn: aStream [
+	(cache at: #method)
+		keysAndValuesDo: [ :b :ms | 
+			ms
+				keysAndValuesDo: [ :s :m | 
+					(m typShaIsResolveMethod
+						and: [ m typShaResolvedMethodSelector = s and: [ m methodClass = b ] ])
+						ifFalse: [ aStream
+								nextPut: {'found non-method method'.
+										b.
+										m} ] ] ]
+]
+
+{ #category : #accessing }
+TypShaIndex >> correctnessOn: aStream [
+	self correctnessTypeOn: aStream.
+	self correctnessVariableOn: aStream.
+	self correctnessMethodOn: aStream
+]
+
+{ #category : #accessing }
+TypShaIndex >> correctnessTypeOn: aStream [
+	(cache at: #type)
+		keysAndValuesDo: [ :b :m | 
+			(m typShaIsResolveType and: [ m methodClass = b ])
+				ifFalse: [ aStream
+						nextPut: {'found non-type method'.
+								b.
+								m} ] ]
+]
+
+{ #category : #accessing }
+TypShaIndex >> correctnessVariableOn: aStream [
+	(cache at: #variable)
+		keysAndValuesDo: [ :b :vs | 
+			vs
+				keysAndValuesDo: [ :s :m | 
+					(m typShaIsResolveVariable
+						and: [ m typShaResolvedVariableSelector = s and: [ m methodClass = b ] ])
+						ifFalse: [ aStream
+								nextPut: {'found non-variable method'.
+										b.
+										m} ] ] ]
+]
+
+{ #category : #accessing }
 TypShaIndex >> initialize [
 	super initialize.
 	Smalltalk globals allMethods do: [ :m | self addMethod: m ]
@@ -67,13 +165,6 @@ TypShaIndex >> initialize [
 
 { #category : #accessing }
 TypShaIndex >> removeBehavior: aBehavior [
-	cache
-		typAt: {#indexed.
-				aBehavior}
-		ifPresent: [ cache
-				typRemoveAt: {#indexed.
-						aBehavior} ]
-		ifAbsent: [ ^ self ].
 	(cache at: #method) removeKey: aBehavior ifAbsent: [  "noop" ].
 	(cache at: #variable) removeKey: aBehavior ifAbsent: [  "noop" ].
 	(cache at: #type) removeKey: aBehavior ifAbsent: [  "noop" ]
@@ -81,13 +172,6 @@ TypShaIndex >> removeBehavior: aBehavior [
 
 { #category : #accessing }
 TypShaIndex >> removeMethod: aMethod [
-	cache
-		typAt: {#indexed.
-				aMethod}
-		ifPresent: [ cache
-				typRemoveAt: {#indexed.
-						aMethod} ]
-		ifAbsent: [ ^ self ].
 	aMethod typShaIsResolveMethod
 		ifTrue: [ (cache
 				typAt: {#method.

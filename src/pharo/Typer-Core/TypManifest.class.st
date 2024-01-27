@@ -13,10 +13,19 @@ Class {
 
 { #category : #accessing }
 TypManifest class >> build [
-	self flag: 'FIXME ensure build is called'.
-	subscription := SystemAnnouncer uniqueInstance
-			when: ClassAnnouncement , MethodAnnouncement
-			do: [ :e | [ e typInvalidateAll ] typAsAsyncFuture typAwait ]
+	logger
+		ifNil: [ logger := TypMemoryLogger new
+					startFor: TypExceptionSignal , TypInfNodeSignal , TypGtStylerErrorSignal;
+					yourself ].
+	threadPool
+		ifNil: [ threadPool := AsyncFutureThreadPool new
+					typMaxWorkers: 1;
+					yourself ].
+	subscription
+		ifNil: [ subscription := SystemAnnouncer uniqueInstance
+					when: ClassAnnouncement , MethodAnnouncement
+					send: #onChange:
+					to: self ]
 ]
 
 { #category : #accessing }
@@ -75,7 +84,7 @@ TypManifest class >> ifDead: aBlock ifAlive: anotherBlock ifUnknown: yetAnotherB
 
 { #category : #accessing }
 TypManifest class >> invalidate [
-	subscription ifNotNil: [ subscription announcer unsubscribe: subscription ].
+	subscription ifNotNil: [ subscription announcer unsubscribe: self ].
 	subscription := nil.
 	threadPool ifNotNil: #shutdown.
 	threadPool := nil.
@@ -103,18 +112,19 @@ TypManifest class >> isDead [
 
 { #category : #accessing }
 TypManifest class >> logger [
-	<gtExample>
-	<noTest>
-	self flag: 'TODO remove gt dep by class-side gt conf'.
+	threadPool ifNil: [ self buildAll ].
 	^ logger
-		ifNil: [ logger := TypMemoryLogger new
-					startFor: TypExceptionSignal , TypInfNodeSignal , GtStylerErrorSignal;
-					yourself ]
 ]
 
 { #category : #accessing }
 TypManifest class >> manifests [
-	^ (self packages collect: #packageManifestOrNil) reject: #isNil
+	^ {TypManifest.
+		TypInfManifest.
+		TypShaManifest.
+		TypPraManifest.
+		TypCheManifest.
+		TypDynManifest.
+		TypGtManifest}
 ]
 
 { #category : #accessing }
@@ -170,9 +180,15 @@ TypManifest class >> nuke [
 ]
 
 { #category : #accessing }
+TypManifest class >> onChange: anAnnouncement [
+	[ anAnnouncement typInvalidateAll ] typAsAsyncFuture typAwait
+]
+
+{ #category : #accessing }
 TypManifest class >> packages [
-	^ RPackageOrganizer default packages
-		select: [ :e | e name beginsWith: 'Typer' ]
+	^ (RPackageOrganizer default packages
+		select: [ :e | e name beginsWith: 'Typer' ])
+		sorted: [ :a :b | a name < b name ]
 ]
 
 { #category : #accessing }
@@ -182,14 +198,16 @@ TypManifest class >> recompileAll [
 ]
 
 { #category : #accessing }
+TypManifest class >> shortName [
+	^ 'core'
+]
+
+{ #category : #accessing }
 TypManifest class >> tallySpace [
 	"system-wide seems to be faster than querying ~100 classes"
 
 	<gtExample>
 	<noTest>
-	"^ ((SpaceTally new spaceTally: (self packages flatCollect: #definedClasses)) items
-		select: [ :e | e analyzedClassName beginsWith: 'Typ' ])
-		sorted: [ :a :b | a instanceCount > b instanceCount ]"
 	^ (SpaceTally new systemWideSpaceTally
 		select: [ :e | e analyzedClassName beginsWith: 'Typ' ])
 		sorted: [ :a :b | a instanceCount > b instanceCount ]
@@ -206,8 +224,6 @@ TypManifest class >> tallySpaceBigImage [
 
 { #category : #accessing }
 TypManifest class >> threadPool [
+	threadPool ifNil: [ self buildAll ].
 	^ threadPool
-		ifNil: [ threadPool := AsyncFutureThreadPool new
-					typMaxWorkers: 1;
-					yourself ]
 ]

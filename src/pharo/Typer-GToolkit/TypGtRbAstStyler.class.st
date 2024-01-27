@@ -11,6 +11,6 @@ TypGtRbAstStyler >> style: aText ast: anAst [
 	text := aText.
 	[ self visitNode: coderViewModel typGtRbAst ]
 		on: Error
-		do: [ :e | (GtStylerErrorSignal new signaledError: e) emit ].
+		do: [ :e | (TypGtStylerErrorSignal new signaledError: e) emit ].
 	text := nil
 ]

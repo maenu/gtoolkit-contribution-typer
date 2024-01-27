@@ -11,6 +11,11 @@ Class {
 }
 
 { #category : #accessing }
+TypIndex class >> hasInstance [
+	^ instance isNotNil
+]
+
+{ #category : #accessing }
 TypIndex class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
@@ -29,8 +34,39 @@ TypIndex class >> invalidateAll [
 ]
 
 { #category : #accessing }
+TypIndex class >> typGtInstanceFor: aView [
+	<gtClassView>
+	<gtView>
+	instance ifNil: [ ^ aView empty ].
+	^ aView explicit
+		title: 'Instance';
+		priority: -1;
+		stencil: [ GtInspectorTool forObject: instance ]
+]
+
+{ #category : #accessing }
 TypIndex >> cache [
 	^ cache
+]
+
+{ #category : #accessing }
+TypIndex >> completeness [
+	^ OrderedCollection streamContents: [ :s | self completenessOn: s ]
+]
+
+{ #category : #accessing }
+TypIndex >> completenessOn: aStream [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
+TypIndex >> correcteness [
+	^ OrderedCollection streamContents: [ :s | self correctnessOn: s ]
+]
+
+{ #category : #accessing }
+TypIndex >> correctnessOn: aStream [
+	self subclassResponsibility
 ]
 
 { #category : #invalidation }

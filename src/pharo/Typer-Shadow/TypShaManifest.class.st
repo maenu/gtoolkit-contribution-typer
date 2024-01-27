@@ -15,3 +15,8 @@ TypShaManifest class >> build [
 TypShaManifest class >> invalidate [
 	TypShaIndex invalidate
 ]
+
+{ #category : #accessing }
+TypShaManifest class >> shortName [
+	^ 'shadow'
+]

@@ -1,0 +1,21 @@
+Extension { #name : #TypGtManifest }
+
+{ #category : #'*Typer-GToolkit' }
+TypGtManifest class >> typGtStatisticsFor: aView [
+	<gtClassView>
+	<gtView>
+	^ aView columnedList
+		title: 'Statistics';
+		priority: 10;
+		items: [ (self package definedClasses
+				collect: [ :c | c -> c instanceCount ]
+				thenReject: [ :a | a value = 0 ]) sorted: [ :a :b | a value > b value ] ];
+		column: '#'
+			text: #value
+			width: 45;
+		column: 'Class'
+			text: #key
+			width: 400;
+		send: #key;
+		actionUpdateButton
+]
