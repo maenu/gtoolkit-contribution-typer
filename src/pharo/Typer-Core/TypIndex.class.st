@@ -60,7 +60,7 @@ TypIndex >> completenessOn: aStream [
 ]
 
 { #category : #accessing }
-TypIndex >> correcteness [
+TypIndex >> correctness [
 	^ OrderedCollection streamContents: [ :s | self correctnessOn: s ]
 ]
 

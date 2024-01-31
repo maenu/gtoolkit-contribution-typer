@@ -79,8 +79,8 @@ Dictionary >> typInfType [
 			b add: (e at: #B).
 			a add: (e at: #A) ].
 	^ self class typAsType
-		withParameters: {a typAsType.
-				b typAsType}
+		withParameters: {a ifEmpty: TypUnknownType instance ifNotEmpty: #typAsType.
+				b ifEmpty: TypUnknownType instance ifNotEmpty: #typAsType}
 ]
 
 { #category : #'*Typer-Inference' }

@@ -64,10 +64,10 @@ TypInfIndex >> addMethod: aMethod [
 			vs
 				select: [ :v | v isWrittenIn: aMethod ]
 				thenDo: [ :v | 
-					(cache
+					cache
 						typAt: {#writers.
 								v}
-						ifAbsentPut: [ IdentitySet new ]) add: aMethod ] ].
+						add: aMethod ] ].
 	aMethod typInfAbsIsCanResolve
 		ifTrue: [ aMethod typInfAbsCanResolve
 				do: [ :selector | 
@@ -84,16 +84,16 @@ TypInfIndex >> addMethod: aMethod [
 								aMethod methodClass.
 								selector}
 						put: aMethod ] ].
-	(cache
+	cache
 		typAt: {#implementors.
 				aMethod selector}
-		ifAbsentPut: [ IdentitySet new ]) add: aMethod methodClass.
+		add: aMethod methodClass.
 	aMethod overriddenMethods
 		do: [ :m | 
-			(cache
+			cache
 				typAt: {#overriders.
 						m}
-				ifAbsentPut: [ IdentitySet new ]) add: aMethod ]
+				add: aMethod ]
 ]
 
 { #category : #accessing }
@@ -353,8 +353,11 @@ TypInfIndex >> implementors: aSymbol [
 
 { #category : #accessing }
 TypInfIndex >> initialize [
+	"order is important. cache makes assumptions that classes are processed in hierarchical order, e.g. overriders"
+
 	super initialize.
-	Smalltalk globals allBehaviors do: [ :b | self addBehavior: b ]
+	(Smalltalk globals allBehaviors sorted: [ :a :b | b inheritsFrom: a ])
+		do: [ :b | self addBehavior: b ]
 ]
 
 { #category : #accessing }

@@ -9,6 +9,11 @@ Dictionary >> typAt: aPath [
 ]
 
 { #category : #'*Typer-Core' }
+Dictionary >> typAt: aPath add: anObject [
+	^ (self typAt: aPath ifAbsentPut: [ IdentitySet new ]) add: anObject
+]
+
+{ #category : #'*Typer-Core' }
 Dictionary >> typAt: aPath ifAbsent: aBlock [
 	^ self
 		typAt: aPath
