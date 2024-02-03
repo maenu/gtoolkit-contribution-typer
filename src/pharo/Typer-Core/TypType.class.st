@@ -213,8 +213,8 @@ TypType >> hashSkipping: anIdentitySet [
 	<typPraResult: 'Integer'>
 	(anIdentitySet includes: self) ifTrue: [ ^ 23 ].
 	anIdentitySet add: self.
-	self hasSuper ifFalse: [ ^ 23 ].
-	^ 23 bitXor: (self super hashSkipping: anIdentitySet)
+	superType ifNil: [ ^ 23 ].
+	^ 23 bitXor: (superType hashSkipping: anIdentitySet)
 ]
 
 { #category : #initialization }

@@ -7,6 +7,11 @@ Class {
 }
 
 { #category : #accessing }
+TypDynManifest class >> invalidate [
+	TypDynCollector allInstancesDo: #invalidate
+]
+
+{ #category : #accessing }
 TypDynManifest class >> shortName [
 	^ 'dynamic'
 ]

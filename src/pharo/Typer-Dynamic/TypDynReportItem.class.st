@@ -2,25 +2,23 @@ Class {
 	#name : #TypDynReportItem,
 	#superclass : #Object,
 	#instVars : [
-		'clazz',
-		'name',
 		'dyn',
 		'inf',
 		'infReduced',
-		'dynReduced'
+		'dynReduced',
+		'clazz',
+		'name'
 	],
 	#category : #'Typer-Dynamic-Core'
 }
 
 { #category : #accessing }
 TypDynReportItem >> clazz [
-
 	^ clazz
 ]
 
 { #category : #accessing }
 TypDynReportItem >> clazz: anObject [
-
 	clazz := anObject
 ]
 
@@ -62,33 +60,23 @@ TypDynReportItem >> infReduced [
 
 { #category : #accessing }
 TypDynReportItem >> isUnknown: aType [
-
+	aType ifNil: [ ^ true ].
 	^ aType isUnion not and: [ aType >= Object typAsType ]
 ]
 
 { #category : #accessing }
 TypDynReportItem >> name [
-
 	^ name
 ]
 
 { #category : #accessing }
 TypDynReportItem >> name: anObject [
-
 	name := anObject
 ]
 
-{ #category : #printing }
-TypDynReportItem >> printOn: aStream [
-
-	aStream
-		nextPutAll: dyn asString;
-		nextPutAll: ' ';
-		nextPutAll: inf asString;
-		nextPutAll: ' | ';
-		nextPutAll: dynReduced asString;
-		nextPutAll: ' ';
-		nextPutAll: infReduced asString
+{ #category : #accessing }
+TypDynReportItem >> path [
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

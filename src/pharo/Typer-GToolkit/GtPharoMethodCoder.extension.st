@@ -14,7 +14,7 @@ GtPharoMethodCoder >> typGtContextEnable: anAddOns viewModel: aViewModel [
 
 { #category : #'*Typer-GToolkit' }
 GtPharoMethodCoder >> typGtInitializeMethodAddOnsFor: anAst into: anAddOns viewModel: aViewModel [
-	<gtAstCoderAddOns: 11>
+	"<gtAstCoderAddOns: 11>"
 	anAddOns
 		addStyler: (TypGtCovStyler new
 				coderViewModel: aViewModel;

@@ -4,12 +4,6 @@ Class {
 	#category : #'Typer-Core-Core'
 }
 
-{ #category : #comparing }
-TypSuperType >> > aType [
-
-	^ superType >= aType
-]
-
 { #category : #accessing }
 TypSuperType >> allSelectors [
 	^ self super allSelectors
@@ -22,6 +16,7 @@ TypSuperType >> classDescription [
 
 { #category : #accessing }
 TypSuperType >> contravariant: aType [
+	aType isSuper ifTrue: [ ^ self contravariant: aType super ].
 	aType <= superType ifTrue: [ ^ aType ].
 	^ super contravariant: aType
 ]

@@ -29,8 +29,9 @@ TypValueType >> = anObject [
 
 { #category : #comparing }
 TypValueType >> > aType [
-
-	^ superType >= aType
+	(aType isKindOf: self class) ifTrue: [ ^ false ].
+	superType = aType ifTrue: [ ^ false ].
+	^ superType > aType
 ]
 
 { #category : #comparing }

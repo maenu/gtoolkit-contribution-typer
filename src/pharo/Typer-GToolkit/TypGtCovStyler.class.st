@@ -12,7 +12,7 @@ TypGtCovStyler >> styleNode: aNode [
 		ifPresent: [ :c | 
 			self
 				attributes: {BlTextHighlightAttribute
-							paint: ((c ifTrue: [ Color green ] ifFalse: [ Color red ]) alpha: 0.3)}
+							paint: ((c ifTrue: [ Color green ] ifFalse: [ Color red ]) alpha: 0.1)}
 				from: aNode startWithoutParentheses
 				to: aNode stopWithoutParentheses ]
 		ifAbsent: [  "noop" ]

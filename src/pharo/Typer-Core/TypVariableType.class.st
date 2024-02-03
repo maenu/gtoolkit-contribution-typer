@@ -51,9 +51,10 @@ TypVariableType >> = anObject [
 
 { #category : #comparing }
 TypVariableType >> > aType [
-
-	variance = #covariant ifTrue: [ ^ superType >= aType ].
-	^ superType <= aType
+	(aType isKindOf: self class) ifTrue: [ ^ false ].
+	superType = aType ifTrue: [ ^ false ].
+	variance = #covariant ifTrue: [ ^ superType > aType ].
+	^ superType < aType
 ]
 
 { #category : #compatibility }

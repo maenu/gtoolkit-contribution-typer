@@ -100,11 +100,11 @@ TypUnionType >> hasSuper [
 
 { #category : #comparing }
 TypUnionType >> hashSkipping: anIdentitySet [
-
 	(anIdentitySet includes: self) ifTrue: [ ^ 47 ].
+	types size > 10 ifTrue: [ ^ 47 bitXor: types size hash ].
 	^ types
-		  inject: (47 bitXor: (super hashSkipping: anIdentitySet))
-		  into: [ :r :e | r bitXor: (e hashSkipping: anIdentitySet) ]
+		inject: (47 bitXor: (super hashSkipping: anIdentitySet))
+		into: [ :r :e | r bitXor: (e hashSkipping: anIdentitySet) ]
 ]
 
 { #category : #initialization }
@@ -158,11 +158,10 @@ TypUnionType >> printNameOn: aStream skipping: anIdentitySet [
 
 { #category : #printing }
 TypUnionType >> printOn: aStream skipping: anIdentitySet [
-
 	| remains |
-	(anIdentitySet includes: self) ifTrue: [ 
-		aStream << '.'.
-		^ self ].
+	(anIdentitySet includes: self)
+		ifTrue: [ aStream << '.'.
+			^ self ].
 	anIdentitySet add: self.
 	remains := types copy.
 	aStream << '{'.
@@ -171,15 +170,13 @@ TypUnionType >> printOn: aStream skipping: anIdentitySet [
 		ifFound: [ :e | 
 			e printOn: aStream skipping: anIdentitySet.
 			remains := remains reject: #isNil.
-			remains ifNotEmpty: [ aStream << ',' ] ]
-		ifNone: [  ].
+			remains ifNotEmpty: [ aStream << ',' ] ].
 	remains
 		detect: #isUnknown
 		ifFound: [ :e | 
 			e printOn: aStream skipping: anIdentitySet.
 			remains := remains reject: #isUnknown.
-			remains ifNotEmpty: [ aStream << ',' ] ]
-		ifNone: [  ].
+			remains ifNotEmpty: [ aStream << ',' ] ].
 	remains size > 1 ifTrue: [ 
 		| type |
 		type := remains size = types size

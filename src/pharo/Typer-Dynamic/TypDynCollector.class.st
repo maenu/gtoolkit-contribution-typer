@@ -1,13 +1,9 @@
 Class {
 	#name : #TypDynCollector,
-	#superclass : #Object,
+	#superclass : #TypInfState,
 	#instVars : [
-		'return',
 		'assign',
-		'before',
-		'result',
-		'contexts',
-		'report'
+		'return'
 	],
 	#classInstVars : [
 		'instance'
@@ -15,86 +11,92 @@ Class {
 	#category : #'Typer-Dynamic-Core'
 }
 
+{ #category : #accessing }
+TypDynCollector >> asIdentityDictionary [
+	| result |
+	result := Dictionary new: tally.
+	self
+		associationsDo: [ :a | 
+			| key |
+			key := a at: 1.
+			(key isKindOf: CompiledMethod)
+				ifTrue: [ | results arguments |
+					results := IdentitySet new.
+					arguments := key numArgs typTimesCollect: [ :i | IdentitySet new ].
+					(a at: 3)
+						do: [ :e | 
+							results add: e value.
+							e key with: arguments do: [ :f :g | g add: f ] ].
+					results := (results collect: #typInfType) typAsType.
+					arguments := arguments collect: [ :c | (c collect: #typInfType) typAsType ].
+					(results isUnion and: [ results hasSuper ])
+						ifTrue: [ results := results super ].
+					arguments := arguments
+							collect: [ :e | (e isUnion and: [ e hasSuper ]) ifTrue: [ e super ] ifFalse: [ e ] ].
+					result
+						at: key methodClass -> key selector
+						put: (CompiledMethod typAsFunctionTypeWithResult: results arguments: arguments) ]
+				ifFalse: [ result at: key put: (a at: 3) typAsType ] ].
+	^ result
+]
+
 { #category : #initialization }
 TypDynCollector >> initialize [
-
 	super initialize.
-	before := MetaLink new
-		          metaObject: self;
-		          selector: #metaBefore:;
-		          arguments: #( context ).
 	return := MetaLink new
-		          metaObject: self;
-		          selector: #metaReturn:in:;
-		          arguments: #( value context ).
+			metaObject: self;
+			selector: #metaReturn:receiver:arguments:in:;
+			control: #after;
+			arguments: #(value receiver arguments originalmethod).
 	assign := MetaLink new
-		          metaObject: self;
-		          selector: #metaAssign:in:;
-		          control: #after;
-		          arguments: #( value node )
-]
-
-{ #category : #'as yet unclassified' }
-TypDynCollector >> install: aMethodNode [
-
-	aMethodNode link: before.
-	aMethodNode allChildren
-		select: #isReturn
-		thenDo: [ :e | e link: return ].
-	aMethodNode assignmentNodes
-		reject: [ :e | e variable isLocalVariable ]
-		thenDo: [ :e | e link: assign ]
+			metaObject: self;
+			selector: #metaAssign:in:;
+			control: #after;
+			arguments: #(newValue node)
 ]
 
 { #category : #accessing }
-TypDynCollector >> instrument: aPackage doing: aBlock [
-
-	report := TypDynReport
-		          package: aPackage
-		          variable: [ LinkedList new ]
-		          method: [ LinkedList new ].
-	contexts := Dictionary new.
-	aPackage methods do: [ :e | 
-		self install: (e ast
-				 doSemanticAnalysis;
-				 yourself) ].
-	aBlock ensure: [ self uninstall ].
-	contexts do: [ :e | 
-		(report methodAt: e key) add: (CompiledMethod
-				 typAsFunctionTypeWithResult: e value first
-				 arguments: e value allButFirst) ].
-	contexts removeAll.
-	report reduce.
-	^ report
-]
-
-{ #category : #'as yet unclassified' }
-TypDynCollector >> metaAssign: anObject in: aNode [
-
-	(report variableAt: aNode variable variable) add: anObject typInfType
-]
-
-{ #category : #'as yet unclassified' }
-TypDynCollector >> metaBefore: aContext [
-
-	contexts
-		at: aContext identityHash
-		put: aContext method -> ({ aContext receiver typInfType }
-			 , (aContext arguments collect: #typInfType))
+TypDynCollector >> instrument: aCollection doing: aBlock [
+	aCollection
+		do: [ :m | 
+			m ast link: return.
+			m ast assignmentNodes
+				reject: [ :n | n variable isLocalVariable ]
+				thenDo: [ :n | n link: assign ] ].
+	aBlock
+		ensure: [ return uninstall.
+			assign uninstall ]
 ]
 
 { #category : #accessing }
-TypDynCollector >> metaReturn: anObject in: aContext [
-
-	| association |
-	association := contexts at: aContext home identityHash.
-	association value at: 1 put: anObject typInfType
-]
-
-{ #category : #'as yet unclassified' }
-TypDynCollector >> uninstall [
-
-	before uninstall.
+TypDynCollector >> invalidate [
 	return uninstall.
-	assign uninstall
+	assign uninstall.
+	super initialize
+]
+
+{ #category : #accessing }
+TypDynCollector >> metaAssign: anObject in: aNode [
+	| key value |
+	key := aNode variable variable.
+	value := anObject typInfType.
+	self
+		privateAssociationAt: key
+		ifPresent: [ :a | (a at: 3) add: value ]
+		ifAbsentPut: [ {key.
+				nil.
+				OrderedCollection with: value} ]
+]
+
+{ #category : #accessing }
+TypDynCollector >> metaReturn: anotherObject receiver: anObject arguments: aCollection in: aMethod [
+	| key value |
+	key := aMethod.
+	value := aCollection -> (anotherObject ifNil: [ anObject ]).
+	self
+		privateAssociationAt: key
+		ifPresent: [ :a | (a at: 3) add: value ]
+		ifAbsentPut: [ {key.
+				nil.
+				OrderedCollection with: value} ]
 ]
