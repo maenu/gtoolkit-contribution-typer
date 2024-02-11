@@ -267,14 +267,48 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-11-08T20:08:38.401896+01:00"
+						"dateAndTimeString" : "2024-02-01T18:36:02.177482+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "HLtriwrGDQC1pYH8D6CpyQ=="
 				},
-				"code" : "1 + 1"
+				"code" : "TypDynExamples"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2024-01-31T13:41:00.753376+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2024-01-31T13:41:29.895833+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "Keue7Z7MDQC7qx7xB1IKAQ=="
+				},
+				"code" : "Smalltalk garbageCollect.\rSmalltalk vm statisticsReport"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -301,14 +335,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2023-10-12T20:26:56.277512+02:00"
+						"dateAndTimeString" : "2024-01-31T11:16:41.789751+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "/+yVfurDDQC+tXPHAr/cfg=="
 				},
-				"code" : "#typShaMethod: gtPragmas\r\tselect: [ :m | \r\t\tm typShaIsResolveMethod\r\t\t\tand: [ | overriders |\r\t\t\t\toverriders := TypInfIndex instance overriders: m.\r\t\t\t\toverriders isNotEmpty\r\t\t\t\t\tand: [ overriders anySatisfy: [ :mm | mm sendsToSuper not ] ] ] ]"
+				"code" : "#typShaMethod: gtPragmas\r\tselect: [ :m | \r\t\tm typShaIsResolveMethod\r\t\t\tand: [ | overriders |\r\t\t\t\toverriders := TypInfIndex instance overriders: m.\r\t\t\t\toverriders isNotEmpty\r\t\t\t\t\tand: [ overriders anySatisfy: [ :mm | mm sendsToSuper not ] ] ] ] "
 			},
 			{
 				"__type" : "pharoSnippet",

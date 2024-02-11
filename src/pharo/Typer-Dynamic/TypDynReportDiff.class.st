@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'dynamic',
-		'inference'
+		'inference',
+		'items'
 	],
 	#category : #'Typer-Dynamic-Core'
 }
@@ -16,48 +17,85 @@ TypDynReportDiff class >> dynamic: aReport inference: anotherReport [
 		  yourself
 ]
 
-{ #category : #initialization }
-TypDynReportDiff >> initializeDynamic: aReport inference: anotherReport [
-
-	dynamic := aReport.
-	inference := anotherReport
+{ #category : #accessing }
+TypDynReportDiff >> compare: a with: b [
+	| ca cb |
+	ca := self typGtColor: a.
+	cb := self typGtColor: b.
+	^ ca hue = cb hue
+		ifTrue: [ ca alpha = cb alpha
+				ifTrue: [ a class name > b class name ]
+				ifFalse: [ ca alpha > cb alpha ] ]
+		ifFalse: [ ca hue < cb hue ]
 ]
 
-{ #category : #accessing }
-TypDynReportDiff >> merged [
-	| result |
-	result := OrderedCollection new.
+{ #category : #initialization }
+TypDynReportDiff >> initializeDynamic: aReport inference: anotherReport [
+	dynamic := aReport.
+	inference := anotherReport.
+	items := OrderedCollection new.
 	inference
 		keysDo: [ :k | 
 			| dyn inf |
 			dyn := dynamic at: k ifAbsent: nil.
 			inf := inference at: k ifAbsent: nil.
 			(k isKindOf: Association)
-				ifTrue: [ inf parameters keys
-						do: [ :s | 
-							result
-								add: (TypDynReportMethodParameterItem new
+				ifTrue: [ items
+						add: (TypDynResult new
+								clazz: k key;
+								name: k value;
+								dyn: (dyn ifNotNil: #result);
+								inf: inf result;
+								yourself).
+					inf arguments
+						withIndexDo: [ :t :i | 
+							items
+								add: (TypDynArgument new
 										clazz: k key;
 										name: k value;
-										parameter: s;
-										dyn: (dyn ifNotNil: [ dyn at: s ]);
-										inf: (inf ifNotNil: [ inf at: s ]);
+										index: i;
+										dyn: (dyn ifNotNil: [ dyn arguments at: i ]);
+										inf: t;
 										yourself) ] ]
-				ifFalse: [ result
-						add: (TypDynReportVariableItem new
-								clazz: k owningClass;
-								name: k name;
-								dyn: dyn;
-								inf: inf;
-								yourself) ] ].
-	^ result
+				ifFalse: [ | item |
+					item := TypDynVariable new
+							clazz: k owningClass;
+							name: k name;
+							dyn: dyn;
+							inf: inf;
+							yourself.
+					items add: item ] ]
+]
+
+{ #category : #accessing }
+TypDynReportDiff >> sorted: aCollection [
+	aCollection isDictionary
+		ifTrue: [ ^ ((aCollection associations do: [ :e | e value: (self sorted: e value) ])
+				sorted: [ :a :b | self compare: a value with: b value ]) asOrderedDictionary ].
+	aCollection isCollection
+		ifTrue: [ ^ aCollection sorted: [ :a :b | self compare: a with: b ] ].
+	^ aCollection
+]
+
+{ #category : #accessing }
+TypDynReportDiff >> text: e [
+	^ (e isKindOf: RPackage)
+		ifTrue: [ e name ]
+		ifFalse: [ e isSymbol ifTrue: [ e asString ] ifFalse: [ e name ] ]
 ]
 
 { #category : #accessing }
 TypDynReportDiff >> typGtColor: anObject [
-	^ anObject isCollection
-		ifTrue: [ Color black alpha: 0.05 ]
-		ifFalse: [ anObject typGtColor ]
+	| colors |
+	anObject isCollection ifFalse: [ ^ anObject typGtColor ].
+	colors := (anObject isDictionary
+			ifTrue: [ anObject typLeafs ]
+			ifFalse: [ anObject ]) collect: #typGtColor.
+	^ (Color
+		h: (colors sum: [ :e | e hue / colors size ])
+		s: (colors sum: [ :e | e saturation / colors size ])
+		v: (colors sum: [ :e | e brightness / colors size ])
+		alpha: (colors sum: [ :e | e alpha / colors size ]) * 0.7)
 ]
 
 { #category : #accessing }
@@ -67,7 +105,6 @@ TypDynReportDiff >> typGtMondrianElement: anObject [
 				background: (self typGtColor: anObject);
 				margin: (BlInsets all: 1);
 				padding: (BlInsets all: 1);
-				layout: BlLinearLayout horizontal;
 				constraintsDo: [ :c | 
 					c vertical fitContent.
 					c horizontal fitContent ];
@@ -82,24 +119,13 @@ TypDynReportDiff >> typGtMondrianFlatFor: aView [
 		title: 'Graph flat';
 		priority: 1;
 		painting: [ :m | 
+			| index |
+			index := Dictionary new.
+			items do: [ :e | index typAt: (e path first: 3) add: e ].
 			m nodes
 				shape: [ :c | self typGtMondrianElement: c ];
-				with: ((self merged
-							sorted: [ :a :b | 
-								| ca cb |
-								ca := a typGtColor.
-								cb := b typGtColor.
-								ca hue = cb hue
-									ifTrue: [ ca saturation = cb saturation
-											ifTrue: [ a class name > b class name ]
-											ifFalse: [ ca saturation > cb saturation ] ]
-									ifFalse: [ ca hue < cb hue ] ]) groupedBy: #class)
-					forEach: [ :c | 
-						m nodes
-							shape: [ :e | self typGtMondrianElement: e ];
-							with: c.
-						m layout grid cellSpacing: 0 ].
-			m layout grid cellSpacing: 2 ]
+				with: (self sorted: index typLeafs).
+			m layout grid cellSpacing: 0 ]
 ]
 
 { #category : #accessing }
@@ -109,78 +135,202 @@ TypDynReportDiff >> typGtMondrianFor: aView [
 		title: 'Graph';
 		priority: 1;
 		painting: [ :m | 
-			| sort sorted root |
-			sort := [ :a :b | 
-				| ca cb |
-				ca := self typGtColor: a.
-				cb := self typGtColor: b.
-				ca hue = cb hue
-					ifTrue: [ ca saturation = cb saturation
-							ifTrue: [ a class name > b class name ]
-							ifFalse: [ ca saturation > cb saturation ] ]
-					ifFalse: [ ca hue < cb hue ] ].
-			sorted := [ :d | 
-				d isDictionary
-					ifTrue: [ ((d associations do: [ :e | e value: (sorted value: e value) ])
-							sorted: [ :a :b | sort value: a value value: b value ])
-							asOrderedDictionary ]
-					ifFalse: [ d sorted: sort ] ].
-			root := Dictionary new.
-			self merged
-				do: [ :e | 
-					((e path
-						inject: root
-						into: [ :r :ee | r at: ee ifAbsentPut: [ Dictionary new ] ])
-						at: e class
-						ifAbsentPut: [ OrderedCollection new ]) add: e ].
-			root := sorted value: root.
-			m nodes
-				shape: [ :package | self typGtMondrianElement: package value ];
-				with: root associations
-					forEach: [ :package | 
-						m nodes
-							shape: [ :category | self typGtMondrianElement: category value ];
-							with: package value associations
-								forEach: [ :category | 
-									m nodes
-										shape: [ :clazz | self typGtMondrianElement: clazz value ];
-										with: category value associations
-											forEach: [ :clazz | 
-												m nodes
-													shape: [ :e | 
-														BlElement new
-															layout: BlLinearLayout horizontal;
-															constraintsDo: [ :c | 
-																c vertical fitContent.
-																c horizontal fitContent ];
-															yourself ];
-													with: {clazz value
-																	at: true
-																	at: TypDynReportVariableItem
-																	ifAbsent: #().
-																clazz value
-																	at: false
-																	at: TypDynReportVariableItem
-																	ifAbsent: #().
-																clazz value
-																	at: true
-																	at: TypDynReportMethodParameterItem
-																	ifAbsent: #().
-																clazz value
-																	at: false
-																	at: TypDynReportMethodParameterItem
-																	ifAbsent: #()}
-														forEach: [ :c | 
-															m nodes
-																shape: [ :e | e typGtAsElement ];
-																with: c.
-															m layout grid cellSpacing: 0 ].
-												m layout grid
-													cellSpacing: 1;
-													columnCount: 2 ].
-									m layout rectanglePack ].
-						m layout rectanglePack ].
-			m layout rectanglePack ]
+			| index |
+			index := Dictionary new.
+			items do: [ :e | index typAt: (e path first: 3) add: e ].
+			self
+				typGtMondrianKey: 'Bloc-Layout' asPackage
+				dictionary: (self sorted: index)
+				in: m ]
+]
+
+{ #category : #accessing }
+TypDynReportDiff >> typGtMondrianKey: key dictionary: value in: aMondrian [
+	aMondrian nodes
+		shape: [ :e | 
+			| element |
+			element := BlElement new.
+			element
+				layout: BlLinearLayout vertical;
+				margin: (BlInsets all: 2);
+				background: (Color white alpha: 0.9);
+				clipChildren: false;
+				zIndex: 0;
+				geometry: (BlRoundedRectangleGeometry cornerRadius: 2);
+				constraintsDo: [ :c | 
+					c horizontal fitContent.
+					c vertical fitContent ];
+				addChild: (BrLabel new
+							aptitude: BrGlamorousLabelAptitude;
+							text: ((self text: e) asRopedText fontSize: 5);
+							yourself)
+					as: #label;
+				addChild: (BlElement new
+							layout: BlLinearLayout vertical;
+							constraintsDo: [ :c | 
+								c horizontal fitContent.
+								c vertical fitContent ];
+							clipChildren: false;
+							in: [ :ee | ee graph beChildrenContainer: #items ];
+							yourself)
+					as: #items;
+				when: BlMouseEnterEvent do: [ element zIndex: 1 ];
+				when: BlMouseLeaveEvent do: [ element zIndex: 0 ];
+				constraintsDo: [ :c | 
+					c vertical fitContent.
+					c horizontal fitContent ];
+				yourself ];
+		with: value associations;
+		forEach: [ :a | 
+				self
+					typGtMondrianKey: a key
+					value: a value
+					in: aMondrian ]
+			in: #items.
+	aMondrian layout rectanglePack
+]
+
+{ #category : #accessing }
+TypDynReportDiff >> typGtMondrianKey: key value: value in: aMondrian [
+	key isClass
+		ifTrue: [ aMondrian nodes
+				shape: [ :e | 
+					e typGtAsElement
+						when: BlMouseEnterEvent
+							do: [ :event | 
+								| elements i name |
+								elements := (event target parent children
+										select: [ :c | 
+											c graph model
+												ifNil: false
+												ifNotNil: [ :m | e path last isInteger and: [ e path allButLast = m path allButLast ] ] ])
+										sorted: [ :a :b | a graph model index < b graph model index ].
+								elements ifEmpty: [ elements := {event target} ].
+								i := elements detectIndex: [ :ee | ee == event target ].
+								elements
+									withIndexDo: [ :ee :ii | 
+										| dyn inf |
+										dyn := ee childNamed: #labelDyn.
+										dyn
+											visibility: BlVisibility visible;
+											transformDo: [ :t | t translateBy: dyn bounds width negated @ -2 - dyn position ].
+										inf := ee childNamed: #labelInf.
+										inf
+											visibility: BlVisibility visible;
+											transformDo: [ :t | t translateBy: 5 @ -2 - inf position ].
+										name := event target childNamed: #labelName.
+										name
+											visibility: BlVisibility hidden;
+											transformDo: [ :t | t translateBy: -2 @ -2 - name position ].
+										(ee childNamed: #icon)
+											transformDo: [ :t | t scaleBy: (ee == event target ifTrue: [ 1.5 ] ifFalse: [ 1 ]) ].
+										ee
+											zIndex: 2;
+											transformDo: [ :t | 
+												t
+													translateBy: event target position - ee position
+															+ (0 @ ((ii - i) * (event target bounds height + 2))) ] ].
+								name := event target childNamed: #labelName.
+								name
+									visibility: BlVisibility visible;
+									transformDo: [ :t | 
+										t
+											translateBy: ((name bounds width - 5) / 2) negated
+													@ (i negated * (event target bounds height + 2) - 2)
+													- name position ].
+								event target
+									zIndex: 1;
+									addAptitude: (event target userData at: #typDynAptitude ifAbsentPut: [ BrShadowAptitude new ]);
+									background: (Color white alpha: 0.9);
+									geometry: (TypGtRoundedRectangleGeometry
+											cornerRadius: 2
+											bounds: (elements
+													inject: BlBounds new
+													into: [ :r :ee | 
+														{ee childNamed: #labelDyn.
+															ee childNamed: #labelInf}
+															, (ee == event target ifTrue: [ {ee childNamed: #labelName} ] ifFalse: [ #() ])
+															do: [ :eee | 
+																| bounds |
+																bounds := ((eee bounds inParent: event target parent)
+																		inChild: event target) bounds.
+																r
+																	encompass: bounds topLeft;
+																	encompass: bounds bottomRight ].
+														r ])) ];
+						when: BlMouseLeaveEvent
+							do: [ :event | 
+								| elements i |
+								elements := (event target parent children
+										select: [ :c | 
+											c graph model
+												ifNil: false
+												ifNotNil: [ :m | e path last isInteger and: [ e path allButLast = m path allButLast ] ] ])
+										sorted: [ :a :b | a graph model index < b graph model index ].
+								elements ifEmpty: [ elements := {event target} ].
+								i := elements indexOf: e.
+								elements
+									withIndexDo: [ :ee :ii | 
+										(ee childNamed: #labelDyn) visibility: BlVisibility hidden.
+										(ee childNamed: #labelInf) visibility: BlVisibility hidden.
+										(ee childNamed: #labelName) visibility: BlVisibility hidden.
+										(ee childNamed: #icon) transformDo: [ :t | t scaleBy: 1 ].
+										ee
+											background: (Color white alpha: 0.9);
+											geometry: BlRectangleGeometry new;
+											zIndex: 0;
+											transformDo: [ :t | t translateBy: 0 @ 0 ] ].
+								event target
+									zIndex: 0;
+									removeAptitude: (event target userData at: #typDynAptitude);
+									background: Color transparent;
+									geometry: (BlRoundedRectangleGeometry cornerRadius: 2) ];
+						yourself ];
+				with: value.
+			aMondrian layout grid
+				cellSpacing: 0;
+				columnCount: value size sqrt ceiling.
+			(aMondrian topStep root parent childNamed: #label)
+				visibility: BlVisibility gone.
+			aMondrian topStep root
+				when: BlMouseEnterEvent
+					do: [ :event | 
+						(event target parent childNamed: #label) visibility: BlVisibility visible.
+						event target
+							childrenDo: [ :c | c graph model ifNotNil: [ :m | (c childNamed: #icon) geometry: m typGtGeometry ] ].
+						event target parent
+							aptitude: BrShadowAptitude;
+							zIndex: 2;
+							transformDo: [ :t | t scaleBy: 2.2 ].
+						event target
+							layout: (BlOnceLayout
+									on: (event target layout layout
+											cellSpacing: 2;
+											yourself)) ];
+				when: BlMouseLeaveEvent
+					do: [ :event | 
+						(event target parent childNamed: #label) visibility: BlVisibility gone.
+						event target
+							childrenDo: [ :c | 
+								c graph model
+									ifNotNil: [ :m | (c childNamed: #icon) geometry: BlRectangleGeometry new ] ].
+						event target parent
+							removeAptitude: event target parent aptitude;
+							zIndex: 1;
+							transformDo: [ :t | t scaleBy: 1 ].
+						event target
+							layout: (BlOnceLayout
+									on: (event target layout layout
+											cellSpacing: 0;
+											yourself)) ].
+			^ self ].
+	value isDictionary
+		ifTrue: [ self
+				typGtMondrianKey: key
+				dictionary: value
+				in: aMondrian.
+			^ self ].
+	self error
 ]
 
 { #category : #accessing }
@@ -214,13 +364,13 @@ TypDynReportDiff >> typGtSummaryFor: aView context: aContext [
 				n value isCollection
 					ifTrue: [ | partition v m |
 						partition := (n value groupedBy: #class) collect: #size.
-						v := partition at: TypDynReportVariableItem ifAbsent: [ 0 ].
-						m := partition at: TypDynReportMethodParameterItem ifAbsent: [ 0 ].
+						v := partition at: TypDynVariable ifAbsent: [ 0 ].
+						m := partition at: TypDynArgument ifAbsent: [ 0 ].
 						'{1}|{2}% variables, {3}|{4}% methods'
 							format: {v.
-									(100 * v / (whole at: TypDynReportVariableItem)) asInteger.
+									(100 * v / (whole at: TypDynVariable)) asInteger.
 									m.
-									(100 * m / (whole at: TypDynReportMethodParameterItem)) asInteger} ]
+									(100 * m / (whole at: TypDynArgument)) asInteger} ]
 					ifFalse: [ n value dyn asString ] ]
 			weight: 1;
 		column: 'inf'

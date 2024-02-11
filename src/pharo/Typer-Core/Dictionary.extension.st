@@ -71,6 +71,25 @@ Dictionary >> typAt: aPath put: anObject [
 ]
 
 { #category : #'*Typer-Core' }
+Dictionary >> typLeafs [
+	| result |
+	result := OrderedCollection new.
+	self typLeafsDo: [ :e | result add: e ].
+	^ result
+]
+
+{ #category : #'*Typer-Core' }
+Dictionary >> typLeafsDo: aBlock [
+	^ self
+		associationsDo: [ :a | 
+			a value isDictionary
+				ifTrue: [ a value typLeafsDo: aBlock ]
+				ifFalse: [ a value isCollection
+						ifTrue: [ a value do: aBlock ]
+						ifFalse: [ aBlock value: a value ] ] ]
+]
+
+{ #category : #'*Typer-Core' }
 Dictionary >> typRemoveAt: aPath [
 	^ self
 		typAt: (aPath copyFrom: 1 to: aPath size - 1)
