@@ -15,37 +15,38 @@ TypDynItem >> typGtAsElement [
 			as: #icon;
 		addChild: (BrLabel new
 					aptitude: BrGlamorousLabelAptitude;
-					text: (inf asString asRopedText fontSize: 5);
-					geometry: (BlRoundedRectangleGeometry cornerRadius: 2);
+					text: ((inf asString asRopedText foreground: BrGlamorousColors fadedTextColor)
+							"glamorousCodeFont" fontSize: 3);
 					relocate: -2 @ -2;
 					constraintsDo: [ :c | 
 						c ignoredByLayout.
 						c vertical exact: 9 ];
-					preventMeAndChildrenMouseEvents;
 					visibility: BlVisibility hidden;
+					preventMeAndChildrenMouseEvents;
 					yourself)
 			as: #labelInf;
 		addChild: (BrLabel new
 					aptitude: BrGlamorousLabelAptitude;
-					text: (dyn asString asRopedText fontSize: 5);
-					geometry: (BlRoundedRectangleGeometry cornerRadius: 2);
+					text: ((dyn asString asRopedText foreground: BrGlamorousColors fadedTextColor)
+							"glamorousCodeFont" fontSize: 3);
 					relocate: -2 @ -2;
 					constraintsDo: [ :c | 
 						c ignoredByLayout.
 						c vertical exact: 9 ];
-					preventMeAndChildrenMouseEvents;
 					visibility: BlVisibility hidden;
+					preventMeAndChildrenMouseEvents;
 					yourself)
 			as: #labelDyn;
 		addChild: (BrLabel new
 					aptitude: BrGlamorousLabelAptitude;
-					text: (name asString asRopedText fontSize: 5);
+					text: ((('#' , name) asRopedText "foreground: Color magenta muchDarker")
+							"glamorousCodeFont" fontSize: 4);
 					relocate: -2 @ -2;
 					constraintsDo: [ :c | 
 						c ignoredByLayout.
 						c vertical exact: 9 ];
-					preventMeAndChildrenMouseEvents;
 					visibility: BlVisibility hidden;
+					preventMeAndChildrenMouseEvents;
 					yourself)
 			as: #labelName;
 		yourself

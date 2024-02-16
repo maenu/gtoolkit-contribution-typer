@@ -196,6 +196,7 @@ TypDynReportDiff >> typGtMondrianKey: key value: value in: aMondrian [
 		ifTrue: [ aMondrian nodes
 				shape: [ :e | 
 					e typGtAsElement
+						transformDo: [ :t | t scaleBy: 1.1 ];
 						when: BlMouseEnterEvent
 							do: [ :event | 
 								| elements i name |
@@ -279,7 +280,10 @@ TypDynReportDiff >> typGtMondrianKey: key value: value in: aMondrian [
 											background: (Color white alpha: 0.9);
 											geometry: BlRectangleGeometry new;
 											zIndex: 0;
-											transformDo: [ :t | t translateBy: 0 @ 0 ] ].
+											transformDo: [ :t | 
+												t
+													translateBy: 0 @ 0;
+													scaleBy: 1.1 ] ].
 								event target
 									zIndex: 0;
 									removeAptitude: (event target userData at: #typDynAptitude);
